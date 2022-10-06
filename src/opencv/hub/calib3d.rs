@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Camera Calibration and 3D Reconstruction
 //! 
@@ -413,7 +414,7 @@ pub const USAC_PARALLEL: i32 = 33;
 /// USAC, sorted points, runs PROSAC
 pub const USAC_PROSAC: i32 = 37;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CirclesGridFinderParameters_GridType {
 	SYMMETRIC_GRID = 0,
 	ASYMMETRIC_GRID = 1,
@@ -422,7 +423,7 @@ pub enum CirclesGridFinderParameters_GridType {
 opencv_type_enum! { crate::calib3d::CirclesGridFinderParameters_GridType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum HandEyeCalibrationMethod {
 	/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Tsai89)
 	CALIB_HAND_EYE_TSAI = 0,
@@ -439,7 +440,7 @@ pub enum HandEyeCalibrationMethod {
 opencv_type_enum! { crate::calib3d::HandEyeCalibrationMethod }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LocalOptimMethod {
 	LOCAL_OPTIM_NULL = 0,
 	LOCAL_OPTIM_INNER_LO = 1,
@@ -451,7 +452,7 @@ pub enum LocalOptimMethod {
 opencv_type_enum! { crate::calib3d::LocalOptimMethod }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum NeighborSearchMethod {
 	NEIGH_FLANN_KNN = 0,
 	NEIGH_GRID = 1,
@@ -461,7 +462,7 @@ pub enum NeighborSearchMethod {
 opencv_type_enum! { crate::calib3d::NeighborSearchMethod }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RobotWorldHandEyeCalibrationMethod {
 	/// Solving the robot-world/hand-eye calibration problem using the kronecker product [Shah2013SolvingTR](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Shah2013SolvingTR)
 	CALIB_ROBOT_WORLD_HAND_EYE_SHAH = 0,
@@ -472,7 +473,7 @@ pub enum RobotWorldHandEyeCalibrationMethod {
 opencv_type_enum! { crate::calib3d::RobotWorldHandEyeCalibrationMethod }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SamplingMethod {
 	SAMPLING_UNIFORM = 0,
 	SAMPLING_PROGRESSIVE_NAPSAC = 1,
@@ -483,7 +484,7 @@ pub enum SamplingMethod {
 opencv_type_enum! { crate::calib3d::SamplingMethod }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ScoreMethod {
 	SCORE_METHOD_RANSAC = 0,
 	SCORE_METHOD_MSAC = 1,
@@ -494,7 +495,7 @@ pub enum ScoreMethod {
 opencv_type_enum! { crate::calib3d::ScoreMethod }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SolvePnPMethod {
 	/// Pose refinement using non-linear Levenberg-Marquardt minimization scheme [Madsen04](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Eade13) 
 	/// 
@@ -540,7 +541,7 @@ opencv_type_enum! { crate::calib3d::SolvePnPMethod }
 
 /// cv::undistort mode
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum UndistortTypes {
 	PROJ_SPHERICAL_ORTHO = 0,
 	PROJ_SPHERICAL_EQRECT = 1,

@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Optical Flow
 use crate::{mod_prelude::*, core, sys, types};
@@ -15,7 +16,7 @@ pub mod prelude {
 
 /// Supported optical flow performance levels.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PERF_LEVEL {
 	NV_OF_PERF_LEVEL_UNDEFINED = 0,
 	/// < Slow perf level results in lowest performance and best quality
@@ -31,7 +32,7 @@ opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0_NVIDIA_OF_PER
 
 /// Supported grid size for hint buffer.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE {
 	NV_OF_HINT_VECTOR_GRID_SIZE_UNDEFINED = 0,
 	/// < Hint buffer grid size is 1x1.
@@ -49,7 +50,7 @@ opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HIN
 
 /// Supported grid size for output buffer.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE {
 	NV_OF_OUTPUT_VECTOR_GRID_SIZE_UNDEFINED = 0,
 	/// < Output buffer grid size is 1x1
@@ -65,7 +66,7 @@ opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUT
 
 /// Supported optical flow performance levels.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL {
 	NV_OF_PERF_LEVEL_UNDEFINED = 0,
 	/// < Slow perf level results in lowest performance and best quality

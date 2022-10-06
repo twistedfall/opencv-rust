@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Barcode detecting and decoding methods
 use crate::{mod_prelude::*, core, sys, types};
@@ -20,7 +21,7 @@ pub const UPC_A: i32 = 3;
 pub const UPC_E: i32 = 4;
 pub const UPC_EAN_EXTENSION: i32 = 5;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum BarcodeType {
 	NONE = 0,
 	EAN_8 = 1,

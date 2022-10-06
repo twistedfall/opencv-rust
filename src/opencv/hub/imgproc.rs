@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Image Processing
 //! 
@@ -922,7 +923,7 @@ pub const WARP_POLAR_LOG: i32 = 256;
 /// ## See also
 /// adaptiveThreshold
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum AdaptiveThresholdTypes {
 	/// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2Cy%29) is a mean of the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BblockSize%7D%20%5Ctimes%0A%5Ctexttt%7BblockSize%7D) neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) minus C
 	ADAPTIVE_THRESH_MEAN_C = 0,
@@ -940,7 +941,7 @@ opencv_type_enum! { crate::imgproc::AdaptiveThresholdTypes }
 /// @ref imgproc_color_conversions
 /// @ingroup imgproc_color_conversions
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ColorConversionCodes {
 	/// add alpha channel to RGB or BGR image
 	COLOR_BGR2BGRA = 0,
@@ -1332,7 +1333,7 @@ opencv_type_enum! { crate::imgproc::ColorConversionCodes }
 
 /// GNU Octave/MATLAB equivalent colormaps
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ColormapTypes {
 	/// ![autumn](https://docs.opencv.org/4.6.0/colorscale_autumn.jpg)
 	COLORMAP_AUTUMN = 0,
@@ -1384,7 +1385,7 @@ opencv_type_enum! { crate::imgproc::ColormapTypes }
 
 /// connected components algorithm
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ConnectedComponentsAlgorithmsTypes {
 	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
 	CCL_DEFAULT = -1,
@@ -1406,7 +1407,7 @@ opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes }
 
 /// connected components statistics
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ConnectedComponentsTypes {
 	/// The leftmost (x) coordinate which is the inclusive start of the bounding
 	/// box in the horizontal direction.
@@ -1428,7 +1429,7 @@ opencv_type_enum! { crate::imgproc::ConnectedComponentsTypes }
 
 /// the contour approximation algorithm
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ContourApproximationModes {
 	/// stores absolutely all the contour points. That is, any 2 subsequent points (x1,y1) and
 	/// (x2,y2) of the contour will be either horizontal, vertical or diagonal neighbors, that is,
@@ -1447,7 +1448,7 @@ opencv_type_enum! { crate::imgproc::ContourApproximationModes }
 
 /// distanceTransform algorithm flags
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DistanceTransformLabelTypes {
 	/// each connected component of zeros in src (as well as all the non-zero pixels closest to the
 	/// connected component) will be assigned the same label
@@ -1460,7 +1461,7 @@ opencv_type_enum! { crate::imgproc::DistanceTransformLabelTypes }
 
 /// Mask size for distance transform
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DistanceTransformMasks {
 	/// mask=3
 	DIST_MASK_3 = 3,
@@ -1475,7 +1476,7 @@ opencv_type_enum! { crate::imgproc::DistanceTransformMasks }
 /// ## See also
 /// distanceTransform, fitLine
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DistanceTypes {
 	/// User defined distance
 	DIST_USER = -1,
@@ -1499,7 +1500,7 @@ opencv_type_enum! { crate::imgproc::DistanceTypes }
 
 /// floodfill algorithm flags
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FloodFillFlags {
 	/// If set, the difference between the current pixel and seed pixel is considered. Otherwise,
 	/// the difference between neighbor pixels is considered (that is, the range is floating).
@@ -1514,7 +1515,7 @@ opencv_type_enum! { crate::imgproc::FloodFillFlags }
 
 /// class of the pixel in GrabCut algorithm
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum GrabCutClasses {
 	/// an obvious background pixels
 	GC_BGD = 0,
@@ -1530,7 +1531,7 @@ opencv_type_enum! { crate::imgproc::GrabCutClasses }
 
 /// GrabCut algorithm flags
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum GrabCutModes {
 	/// The function initializes the state and the mask using the provided rectangle. After that it
 	/// runs iterCount iterations of the algorithm.
@@ -1550,7 +1551,7 @@ opencv_type_enum! { crate::imgproc::GrabCutModes }
 /// Only a subset of Hershey fonts <https://en.wikipedia.org/wiki/Hershey_fonts> are supported
 /// @ingroup imgproc_draw
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum HersheyFonts {
 	/// normal size sans-serif font
 	FONT_HERSHEY_SIMPLEX = 0,
@@ -1577,7 +1578,7 @@ opencv_type_enum! { crate::imgproc::HersheyFonts }
 /// Histogram comparison methods
 /// @ingroup imgproc_hist
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum HistCompMethods {
 	/// Correlation
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%20%5Cfrac%7B%5Csum%5FI%20%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%20%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%7D%7B%5Csqrt%7B%5Csum%5FI%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%5E2%20%5Csum%5FI%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%5E2%7D%7D)
@@ -1610,7 +1611,7 @@ opencv_type_enum! { crate::imgproc::HistCompMethods }
 
 /// Variants of a Hough transform
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum HoughModes {
 	/// classical or standard Hough transform. Every line is represented by two floating-point
 	/// numbers ![inline formula](https://latex.codecogs.com/png.latex?%28%5Crho%2C%20%5Ctheta%29) , where ![inline formula](https://latex.codecogs.com/png.latex?%5Crho) is a distance between (0,0) point and the line,
@@ -1635,7 +1636,7 @@ opencv_type_enum! { crate::imgproc::HoughModes }
 
 /// interpolation algorithm
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum InterpolationFlags {
 	/// nearest neighbor interpolation
 	INTER_NEAREST = 0,
@@ -1670,7 +1671,7 @@ pub enum InterpolationFlags {
 opencv_type_enum! { crate::imgproc::InterpolationFlags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum InterpolationMasks {
 	INTER_BITS = 5,
 	INTER_BITS2 = 10,
@@ -1682,7 +1683,7 @@ opencv_type_enum! { crate::imgproc::InterpolationMasks }
 
 /// Variants of Line Segment %Detector
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LineSegmentDetectorModes {
 	/// No refinement applied
 	LSD_REFINE_NONE = 0,
@@ -1698,7 +1699,7 @@ opencv_type_enum! { crate::imgproc::LineSegmentDetectorModes }
 /// types of line
 /// @ingroup imgproc_draw
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LineTypes {
 	FILLED = -1,
 	/// 4-connected line
@@ -1714,7 +1715,7 @@ opencv_type_enum! { crate::imgproc::LineTypes }
 /// Possible set of marker types used for the cv::drawMarker function
 /// @ingroup imgproc_draw
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MarkerTypes {
 	/// A crosshair marker shape
 	MARKER_CROSS = 0,
@@ -1736,7 +1737,7 @@ opencv_type_enum! { crate::imgproc::MarkerTypes }
 
 /// shape of the structuring element
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MorphShapes {
 	/// a rectangular structuring element:  ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%3D1)
 	MORPH_RECT = 0,
@@ -1752,7 +1753,7 @@ opencv_type_enum! { crate::imgproc::MorphShapes }
 
 /// type of morphological operation
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MorphTypes {
 	/// see #erode
 	MORPH_ERODE = 0,
@@ -1782,7 +1783,7 @@ opencv_type_enum! { crate::imgproc::MorphTypes }
 
 /// types of intersection between rectangles
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RectanglesIntersectTypes {
 	/// No intersection
 	INTERSECT_NONE = 0,
@@ -1796,7 +1797,7 @@ opencv_type_enum! { crate::imgproc::RectanglesIntersectTypes }
 
 /// mode of the contour retrieval algorithm
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RetrievalModes {
 	/// retrieves only the extreme outer contours. It sets `hierarchy[i][2]=hierarchy[i][3]=-1` for
 	/// all the contours.
@@ -1823,7 +1824,7 @@ opencv_type_enum! { crate::imgproc::RetrievalModes }
 /// 
 /// and ![inline formula](https://latex.codecogs.com/png.latex?h%5EA%5Fi%2C%20h%5EB%5Fi) are the Hu moments of ![inline formula](https://latex.codecogs.com/png.latex?A) and ![inline formula](https://latex.codecogs.com/png.latex?B) , respectively.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ShapeMatchModes {
 	/// ![block formula](https://latex.codecogs.com/png.latex?I%5F1%28A%2CB%29%20%3D%20%20%5Csum%20%5F%7Bi%3D1%2E%2E%2E7%7D%20%20%5Cleft%20%7C%20%20%5Cfrac%7B1%7D%7Bm%5EA%5Fi%7D%20%2D%20%20%5Cfrac%7B1%7D%7Bm%5EB%5Fi%7D%20%5Cright%20%7C)
 	CONTOURS_MATCH_I1 = 1,
@@ -1836,7 +1837,7 @@ pub enum ShapeMatchModes {
 opencv_type_enum! { crate::imgproc::ShapeMatchModes }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SpecialFilter {
 	FILTER_SCHARR = -1,
 }
@@ -1845,7 +1846,7 @@ opencv_type_enum! { crate::imgproc::SpecialFilter }
 
 /// type of the template matching operation
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum TemplateMatchModes {
 	/// !< ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20%5F%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%2DI%28x%2Bx%27%2Cy%2By%27%29%29%5E2)
 	/// with mask:
@@ -1878,7 +1879,7 @@ opencv_type_enum! { crate::imgproc::TemplateMatchModes }
 /// type of the threshold operation
 /// ![threshold types](https://docs.opencv.org/4.6.0/threshold.png)
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ThresholdTypes {
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bmaxval%7D%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B0%7D%7Botherwise%7D)
 	THRESH_BINARY = 0,
@@ -1903,7 +1904,7 @@ opencv_type_enum! { crate::imgproc::ThresholdTypes }
 /// ## See also
 /// warpPolar
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum WarpPolarMode {
 	/// Remaps an image to/from polar space.
 	WARP_POLAR_LINEAR = 0,

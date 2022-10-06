@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Images stitching
 //! 
@@ -67,7 +68,7 @@ pub const Detail_WAVE_CORRECT_AUTO: i32 = 2;
 pub const Detail_WAVE_CORRECT_HORIZ: i32 = 0;
 pub const Detail_WAVE_CORRECT_VERT: i32 = 1;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Detail_DpSeamFinder_CostFunction {
 	COLOR = 0,
 	COLOR_GRAD = 1,
@@ -76,7 +77,7 @@ pub enum Detail_DpSeamFinder_CostFunction {
 opencv_type_enum! { crate::stitching::Detail_DpSeamFinder_CostFunction }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Detail_GraphCutSeamFinderBase_CostType {
 	COST_COLOR = 0,
 	COST_COLOR_GRAD = 1,
@@ -85,7 +86,7 @@ pub enum Detail_GraphCutSeamFinderBase_CostType {
 opencv_type_enum! { crate::stitching::Detail_GraphCutSeamFinderBase_CostType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Detail_WaveCorrectKind {
 	WAVE_CORRECT_HORIZ = 0,
 	WAVE_CORRECT_VERT = 1,
@@ -95,7 +96,7 @@ pub enum Detail_WaveCorrectKind {
 opencv_type_enum! { crate::stitching::Detail_WaveCorrectKind }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Stitcher_Mode {
 	/// Mode for creating photo panoramas. Expects images under perspective
 	/// transformation and projects resulting pano to sphere.
@@ -112,7 +113,7 @@ pub enum Stitcher_Mode {
 opencv_type_enum! { crate::stitching::Stitcher_Mode }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Stitcher_Status {
 	OK = 0,
 	ERR_NEED_MORE_IMGS = 1,

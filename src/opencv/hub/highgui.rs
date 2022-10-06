@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # High-level GUI
 //! 
@@ -221,7 +222,7 @@ pub const WND_PROP_VISIBLE: i32 = 4;
 pub const WND_PROP_VSYNC: i32 = 6;
 /// Mouse Event Flags see cv::MouseCallback
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MouseEventFlags {
 	/// indicates that the left mouse button is down.
 	EVENT_FLAG_LBUTTON = 1,
@@ -241,7 +242,7 @@ opencv_type_enum! { crate::highgui::MouseEventFlags }
 
 /// Mouse Events see cv::MouseCallback
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MouseEventTypes {
 	/// indicates that the mouse pointer has moved over the window.
 	EVENT_MOUSEMOVE = 0,
@@ -273,7 +274,7 @@ opencv_type_enum! { crate::highgui::MouseEventTypes }
 
 /// Qt "button" type
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum QtButtonTypes {
 	/// Push button.
 	QT_PUSH_BUTTON = 0,
@@ -289,7 +290,7 @@ opencv_type_enum! { crate::highgui::QtButtonTypes }
 
 /// Qt font style
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum QtFontStyles {
 	/// Normal font.
 	QT_STYLE_NORMAL = 0,
@@ -303,7 +304,7 @@ opencv_type_enum! { crate::highgui::QtFontStyles }
 
 /// Qt font weight
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum QtFontWeights {
 	/// Weight of 25
 	QT_FONT_LIGHT = 25,
@@ -321,7 +322,7 @@ opencv_type_enum! { crate::highgui::QtFontWeights }
 
 /// Flags for cv::namedWindow
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum WindowFlags {
 	/// the user can resize the window (no constraint) / also use to switch a fullscreen window to a normal size.
 	WINDOW_NORMAL = 0,
@@ -345,7 +346,7 @@ opencv_type_enum! { crate::highgui::WindowFlags }
 
 /// Flags for cv::setWindowProperty / cv::getWindowProperty
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum WindowPropertyFlags {
 	/// fullscreen property    (can be WINDOW_NORMAL or WINDOW_FULLSCREEN).
 	WND_PROP_FULLSCREEN = 0,

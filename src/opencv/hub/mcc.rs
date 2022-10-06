@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Macbeth Chart module
 //!    # Color Correction Model
@@ -156,7 +157,7 @@ pub const MCC_SG140: i32 = 1;
 pub const MCC_VINYL18: i32 = 2;
 /// Enum of the possible types of ccm.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CCM_TYPE {
 	/// The CCM with the shape ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) performs linear transformation on color values.
 	CCM_3x3 = 0,
@@ -167,7 +168,7 @@ pub enum CCM_TYPE {
 opencv_type_enum! { crate::mcc::CCM_TYPE }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum COLOR_SPACE {
 	/// https://en.wikipedia.org/wiki/SRGB , RGB color space
 	COLOR_SPACE_sRGB = 0,
@@ -255,7 +256,7 @@ opencv_type_enum! { crate::mcc::COLOR_SPACE }
 
 /// Macbeth and Vinyl ColorChecker with 2deg D50
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CONST_COLOR {
 	/// Macbeth ColorChecker
 	COLORCHECKER_Macbeth = 0,
@@ -271,7 +272,7 @@ opencv_type_enum! { crate::mcc::CONST_COLOR }
 /// 
 /// See https://en.wikipedia.org/wiki/Color_difference for details
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DISTANCE_TYPE {
 	/// The 1976 formula is the first formula that related a measured color difference to a known set of CIELAB coordinates.
 	DISTANCE_CIE76 = 0,
@@ -292,7 +293,7 @@ opencv_type_enum! { crate::mcc::DISTANCE_TYPE }
 
 /// Enum of the possible types of initial method.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum INITIAL_METHOD_TYPE {
 	/// The white balance method. The initial value is:
 	/// 
@@ -428,7 +429,7 @@ opencv_type_enum! { crate::mcc::INITIAL_METHOD_TYPE }
 /// and:
 /// ![block formula](https://latex.codecogs.com/png.latex?%0Aln%28C%5F%7Bsl%7D%29%3Df%28ln%28C%5Fs%29%29%2C%20%5Cqquad%20C%5Fs%3E0%5C%5C%0AC%5Fsl%3D0%2C%20%5Cqquad%20C%5Fs%3D0%0A)
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LINEAR_TYPE {
 	/// no change is made
 	LINEARIZATION_IDENTITY = 0,
@@ -450,7 +451,7 @@ opencv_type_enum! { crate::mcc::LINEAR_TYPE }
 /// 
 /// \brief enum to hold the type of the checker
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MCC_TYPECHART {
 	/// Standard Macbeth Chart with 24 squares
 	MCC24 = 0,

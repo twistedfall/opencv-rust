@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Video I/O
 //! 
@@ -718,7 +719,7 @@ pub const VIDEO_ACCELERATION_VAAPI: i32 = 3;
 /// 
 /// Note: In case of FFmpeg backend, it translated to enum AVHWDeviceType (https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/hwcontext.h)
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum VideoAccelerationType {
 	/// Do not require any specific H/W acceleration, prefer software processing.
 	/// Reading of this value means that special H/W accelerated handling is not added or not detected by OpenCV.
@@ -748,7 +749,7 @@ opencv_type_enum! { crate::videoio::VideoAccelerationType }
 /// Note: Backends are available only if they have been built with your OpenCV binaries.
 /// See @ref videoio_overview for more information.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum VideoCaptureAPIs {
 	/// Auto detect == 0
 	CAP_ANY = 0,
@@ -831,7 +832,7 @@ opencv_type_enum! { crate::videoio::VideoCaptureAPIs }
 /// ## See also
 /// videoio_flags_others, VideoCapture::get(), VideoCapture::set()
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum VideoCaptureProperties {
 	/// Current position of the video file in milliseconds.
 	CAP_PROP_POS_MSEC = 0,
@@ -961,7 +962,7 @@ opencv_type_enum! { crate::videoio::VideoCaptureProperties }
 /// ## See also
 /// VideoWriter::get(), VideoWriter::set()
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum VideoWriterProperties {
 	/// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
 	VIDEOWRITER_PROP_QUALITY = 1,

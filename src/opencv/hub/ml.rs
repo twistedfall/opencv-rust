@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Machine Learning
 //! 
@@ -42,7 +43,7 @@ pub const VAR_NUMERICAL: i32 = 0;
 pub const VAR_ORDERED: i32 = 0;
 /// possible activation functions
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ANN_MLP_ActivationFunctions {
 	/// Identity function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dx)
 	IDENTITY = 0,
@@ -65,7 +66,7 @@ opencv_type_enum! { crate::ml::ANN_MLP_ActivationFunctions }
 
 /// Train options
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ANN_MLP_TrainFlags {
 	/// Update the network weights, rather than compute them from scratch. In the latter case
 	/// the weights are initialized using the Nguyen-Widrow algorithm.
@@ -86,7 +87,7 @@ opencv_type_enum! { crate::ml::ANN_MLP_TrainFlags }
 
 /// Available training methods
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ANN_MLP_TrainingMethods {
 	/// The back-propagation algorithm.
 	BACKPROP = 0,
@@ -101,7 +102,7 @@ opencv_type_enum! { crate::ml::ANN_MLP_TrainingMethods }
 /// Boosting type.
 /// Gentle AdaBoost and Real AdaBoost are often the preferable choices.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Boost_Types {
 	/// Discrete AdaBoost.
 	DISCRETE = 0,
@@ -119,7 +120,7 @@ opencv_type_enum! { crate::ml::Boost_Types }
 
 /// Predict options
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DTrees_Flags {
 	PREDICT_AUTO = 0,
 	PREDICT_SUM = 256,
@@ -131,7 +132,7 @@ opencv_type_enum! { crate::ml::DTrees_Flags }
 
 /// Type of covariation matrices
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum EM_Types {
 	/// A scaled identity matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Cmu%5Fk%20%2A%20I). There is the only
 	/// parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cmu%5Fk) to be estimated for each matrix. The option may be used in special cases,
@@ -160,7 +161,7 @@ opencv_type_enum! { crate::ml::EM_Types }
 
 /// %Error types
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ErrorTypes {
 	TEST_ERROR = 0,
 	TRAIN_ERROR = 1,
@@ -170,7 +171,7 @@ opencv_type_enum! { crate::ml::ErrorTypes }
 
 /// Implementations of KNearest algorithm
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum KNearest_Types {
 	BRUTE_FORCE = 1,
 	KDTREE = 2,
@@ -180,7 +181,7 @@ opencv_type_enum! { crate::ml::KNearest_Types }
 
 /// Training methods
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LogisticRegression_Methods {
 	BATCH = 0,
 	/// Set MiniBatchSize to a positive integer when using this method.
@@ -191,7 +192,7 @@ opencv_type_enum! { crate::ml::LogisticRegression_Methods }
 
 /// Regularization kinds
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LogisticRegression_RegKinds {
 	/// Regularization disabled
 	REG_DISABLE = -1,
@@ -205,7 +206,7 @@ opencv_type_enum! { crate::ml::LogisticRegression_RegKinds }
 
 /// Margin type.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SVMSGD_MarginType {
 	/// General case, suits to the case of non-linearly separable sets, allows outliers.
 	SOFT_MARGIN = 0,
@@ -218,7 +219,7 @@ opencv_type_enum! { crate::ml::SVMSGD_MarginType }
 /// SVMSGD type.
 /// ASGD is often the preferable choice.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SVMSGD_SvmsgdType {
 	/// Stochastic Gradient Descent
 	SGD = 0,
@@ -236,7 +237,7 @@ opencv_type_enum! { crate::ml::SVMSGD_SvmsgdType }
 /// Bright means max-score \> 0, dark means max-score \< 0.
 /// ![image](https://docs.opencv.org/4.6.0/SVM_Comparison.png)
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SVM_KernelTypes {
 	/// Returned by SVM::getKernelType in case when custom kernel has been set
 	CUSTOM = -1,
@@ -262,7 +263,7 @@ opencv_type_enum! { crate::ml::SVM_KernelTypes }
 
 /// %SVM params type
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SVM_ParamTypes {
 	C = 0,
 	GAMMA = 1,
@@ -276,7 +277,7 @@ opencv_type_enum! { crate::ml::SVM_ParamTypes }
 
 /// %SVM type
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SVM_Types {
 	/// C-Support Vector Classification. n-class classification (n ![inline formula](https://latex.codecogs.com/png.latex?%5Cgeq) 2), allows
 	/// imperfect separation of classes with penalty multiplier C for outliers.
@@ -302,7 +303,7 @@ opencv_type_enum! { crate::ml::SVM_Types }
 
 /// Sample types
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SampleTypes {
 	/// each training sample is a row of samples
 	ROW_SAMPLE = 0,
@@ -314,7 +315,7 @@ opencv_type_enum! { crate::ml::SampleTypes }
 
 /// Predict options
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum StatModel_Flags {
 	UPDATE_MODEL = 1,
 	// makes the method return the raw results (the sum), not the class label
@@ -327,7 +328,7 @@ opencv_type_enum! { crate::ml::StatModel_Flags }
 
 /// Variable types
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum VariableTypes {
 	/// same as VAR_ORDERED
 	VAR_NUMERICAL = 0,

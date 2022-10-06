@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # 3D Visualizer
 //! 
@@ -62,7 +63,7 @@ pub const WTrajectory_BOTH: i32 = 3;
 pub const WTrajectory_FRAMES: i32 = 1;
 pub const WTrajectory_PATH: i32 = 2;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum KeyboardEvent_Action {
 	KEY_UP = 0,
 	KEY_DOWN = 1,
@@ -71,7 +72,7 @@ pub enum KeyboardEvent_Action {
 opencv_type_enum! { crate::viz::KeyboardEvent_Action }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MouseEvent_MouseButton {
 	NoButton = 0,
 	LeftButton = 1,
@@ -83,7 +84,7 @@ pub enum MouseEvent_MouseButton {
 opencv_type_enum! { crate::viz::MouseEvent_MouseButton }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MouseEvent_Type {
 	MouseMove = 1,
 	MouseButtonPress = 2,
@@ -98,7 +99,7 @@ opencv_type_enum! { crate::viz::MouseEvent_Type }
 /// //////////////////////////////////////////////////////////////////////////
 /// Widget rendering properties
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RenderingProperties {
 	POINT_SIZE = 0,
 	OPACITY = 1,
@@ -114,7 +115,7 @@ pub enum RenderingProperties {
 opencv_type_enum! { crate::viz::RenderingProperties }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RepresentationValues {
 	REPRESENTATION_POINTS = 0,
 	REPRESENTATION_WIREFRAME = 1,
@@ -124,7 +125,7 @@ pub enum RepresentationValues {
 opencv_type_enum! { crate::viz::RepresentationValues }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ShadingValues {
 	SHADING_FLAT = 0,
 	SHADING_GOURAUD = 1,

@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # ArUco Marker Detection
 //! This module is dedicated to square fiducial markers (also known as Augmented Reality Markers)
@@ -103,7 +104,7 @@ pub const DICT_APRILTAG_36h11: i32 = 20;
 /// 6x6 bits, minimum hamming distance between any two codes = 3, 1024 codes
 pub const DICT_ARUCO_ORIGINAL: i32 = 16;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CornerRefineMethod {
 	/// Tag and corners detection based on the ArUco approach
 	CORNER_REFINE_NONE = 0,
@@ -122,7 +123,7 @@ opencv_type_enum! { crate::aruco::CornerRefineMethod }
 /// - DICT_ARUCO_ORIGINAL: standard ArUco Library Markers. 1024 markers, 5x5 bits, 0 minimum
 ///                        distance
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum PREDEFINED_DICTIONARY_NAME {
 	/// 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
 	DICT_4X4_50 = 0,
@@ -178,7 +179,7 @@ opencv_type_enum! { crate::aruco::PREDEFINED_DICTIONARY_NAME }
 /// ## See also
 /// estimatePoseSingleMarkers(), @ref tutorial_aruco_detection
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum PatternPos {
 	/// The marker coordinate system is centered on the middle of the marker.
 	/// The coordinates of the four corners (CCW order) of the marker in its own coordinate system are:

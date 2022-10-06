@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Deep Neural Network module
 //!   This module contains:
@@ -63,7 +64,7 @@ pub const SoftNMSMethod_SOFTNMS_LINEAR: i32 = 1;
 /// ## See also
 /// Net::setPreferableBackend
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Backend {
 	/// DNN_BACKEND_DEFAULT equals to DNN_BACKEND_INFERENCE_ENGINE if
 	/// OpenCV is built with Intel's Inference Engine library or
@@ -90,7 +91,7 @@ opencv_type_enum! { crate::dnn::Backend }
 /// ## See also
 /// softNMSBoxes
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SoftNMSMethod {
 	SOFTNMS_LINEAR = 1,
 	SOFTNMS_GAUSSIAN = 2,
@@ -102,7 +103,7 @@ opencv_type_enum! { crate::dnn::SoftNMSMethod }
 /// ## See also
 /// Net::setPreferableTarget
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Target {
 	DNN_TARGET_CPU = 0,
 	DNN_TARGET_OPENCL = 1,

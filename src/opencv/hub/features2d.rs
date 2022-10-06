@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # 2D Features Framework
 //!    # Feature Detection and Description
@@ -48,7 +49,7 @@ pub const FastFeatureDetector_FAST_N: i32 = 10002;
 pub const FastFeatureDetector_NONMAX_SUPPRESSION: i32 = 10001;
 pub const FastFeatureDetector_THRESHOLD: i32 = 10000;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum AKAZE_DescriptorType {
 	/// Upright descriptors, not invariant to rotation
 	DESCRIPTOR_KAZE_UPRIGHT = 2,
@@ -61,7 +62,7 @@ pub enum AKAZE_DescriptorType {
 opencv_type_enum! { crate::features2d::AKAZE_DescriptorType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum AgastFeatureDetector_DetectorType {
 	AGAST_5_8 = 0,
 	AGAST_7_12d = 1,
@@ -72,7 +73,7 @@ pub enum AgastFeatureDetector_DetectorType {
 opencv_type_enum! { crate::features2d::AgastFeatureDetector_DetectorType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DescriptorMatcher_MatcherType {
 	FLANNBASED = 1,
 	BRUTEFORCE = 2,
@@ -85,7 +86,7 @@ pub enum DescriptorMatcher_MatcherType {
 opencv_type_enum! { crate::features2d::DescriptorMatcher_MatcherType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DrawMatchesFlags {
 	/// Output image matrix will be created (Mat::create),
 	/// i.e. existing memory of output image may be reused.
@@ -106,7 +107,7 @@ pub enum DrawMatchesFlags {
 opencv_type_enum! { crate::features2d::DrawMatchesFlags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FastFeatureDetector_DetectorType {
 	TYPE_5_8 = 0,
 	TYPE_7_12 = 1,
@@ -116,7 +117,7 @@ pub enum FastFeatureDetector_DetectorType {
 opencv_type_enum! { crate::features2d::FastFeatureDetector_DetectorType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum KAZE_DiffusivityType {
 	DIFF_PM_G1 = 0,
 	DIFF_PM_G2 = 1,
@@ -127,7 +128,7 @@ pub enum KAZE_DiffusivityType {
 opencv_type_enum! { crate::features2d::KAZE_DiffusivityType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ORB_ScoreType {
 	HARRIS_SCORE = 0,
 	FAST_SCORE = 1,

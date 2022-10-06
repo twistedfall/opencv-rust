@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Video Stabilization
 //! 
@@ -46,7 +47,7 @@ pub const MM_TRANSLATION_AND_SCALE: i32 = 1;
 pub const MM_UNKNOWN: i32 = 7;
 /// Describes motion model between two point clouds.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MotionModel {
 	MM_TRANSLATION = 0,
 	MM_TRANSLATION_AND_SCALE = 1,

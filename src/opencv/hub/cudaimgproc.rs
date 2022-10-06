@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Image Processing
 //!    # Color space processing
@@ -59,7 +60,7 @@ pub const CUDA_COLOR_BayerRG2GRAY_MHT: i32 = 262;
 /// Bayer Demosaicing (Malvar, He, and Cutler)
 pub const CUDA_COLOR_BayerRG2RGB_MHT: i32 = 256;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CUDA_AlphaCompTypes {
 	ALPHA_OVER = 0,
 	ALPHA_IN = 1,
@@ -80,7 +81,7 @@ opencv_type_enum! { crate::cudaimgproc::CUDA_AlphaCompTypes }
 
 /// Connected Components Algorithm
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CUDA_ConnectedComponentsAlgorithmsTypes {
 	/// BKE [Allegretti2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	CCL_DEFAULT = -1,
@@ -91,7 +92,7 @@ pub enum CUDA_ConnectedComponentsAlgorithmsTypes {
 opencv_type_enum! { crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CUDA_DemosaicTypes {
 	/// Bayer Demosaicing (Malvar, He, and Cutler)
 	COLOR_BayerBG2BGR_MHT = 256,

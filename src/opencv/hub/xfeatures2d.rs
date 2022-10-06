@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Extra 2D Features Framework
 //!    # Experimental 2D Features Algorithms
@@ -41,7 +42,7 @@ pub const VGG_VGG_80: i32 = 101;
 /// Descriptor number of bits, each bit is a boosting weak-learner.
 /// The user can choose between 512 or 256 bits.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum BEBLID_BeblidSize {
 	SIZE_512_BITS = 100,
 	SIZE_256_BITS = 101,
@@ -50,7 +51,7 @@ pub enum BEBLID_BeblidSize {
 opencv_type_enum! { crate::xfeatures2d::BEBLID_BeblidSize }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DAISY_NormalizationType {
 	NRM_NONE = 100,
 	NRM_PARTIAL = 101,
@@ -62,7 +63,7 @@ opencv_type_enum! { crate::xfeatures2d::DAISY_NormalizationType }
 
 /// Lp distance function selector.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum PCTSignatures_DistanceFunction {
 	L0_25 = 0,
 	L0_5 = 1,
@@ -77,7 +78,7 @@ opencv_type_enum! { crate::xfeatures2d::PCTSignatures_DistanceFunction }
 
 /// Point distributions supported by random point generator.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum PCTSignatures_PointDistribution {
 	/// Generate numbers uniformly.
 	UNIFORM = 0,
@@ -99,7 +100,7 @@ opencv_type_enum! { crate::xfeatures2d::PCTSignatures_PointDistribution }
 /// 
 /// Note: For selected distance function: ![block formula](https://latex.codecogs.com/png.latex?%20d%28c%5Fi%2C%20c%5Fj%29%20)  and parameter: ![block formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20)
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum PCTSignatures_SimilarityFunction {
 	/// ![block formula](https://latex.codecogs.com/png.latex?%20%2Dd%28c%5Fi%2C%20c%5Fj%29%20)
 	MINUS = 0,
@@ -112,7 +113,7 @@ pub enum PCTSignatures_SimilarityFunction {
 opencv_type_enum! { crate::xfeatures2d::PCTSignatures_SimilarityFunction }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SURF_CUDA_KeypointLayout {
 	X_ROW = 0,
 	Y_ROW = 1,

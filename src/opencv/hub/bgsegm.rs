@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Improved Background-Foreground Segmentation Methods
 use crate::{mod_prelude::*, core, sys, types};
@@ -16,7 +17,7 @@ pub mod prelude {
 pub const LSBP_CAMERA_MOTION_COMPENSATION_LK: i32 = 1;
 pub const LSBP_CAMERA_MOTION_COMPENSATION_NONE: i32 = 0;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LSBPCameraMotionCompensation {
 	LSBP_CAMERA_MOTION_COMPENSATION_NONE = 0,
 	LSBP_CAMERA_MOTION_COMPENSATION_LK = 1,

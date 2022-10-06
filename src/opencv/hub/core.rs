@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Core functionality
 //!    # Basic structures
@@ -743,7 +744,7 @@ pub const USAGE_DEFAULT: i32 = 0;
 pub const WARP_SHUFFLE_FUNCTIONS: i32 = 30;
 pub const __UMAT_USAGE_FLAGS_32BIT: i32 = 2147483647;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum AccessFlag {
 	ACCESS_READ = 16777216,
 	ACCESS_WRITE = 33554432,
@@ -758,7 +759,7 @@ opencv_type_enum! { core::AccessFlag }
 /// ## See also
 /// borderInterpolate, copyMakeBorder
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum BorderTypes {
 	/// `iiiiii|abcdefgh|iiiiiii`  with some specified `i`
 	BORDER_CONSTANT = 0,
@@ -783,7 +784,7 @@ pub enum BorderTypes {
 opencv_type_enum! { core::BorderTypes }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Buffer_Access {
 	READ_ONLY = 35000,
 	WRITE_ONLY = 35001,
@@ -794,7 +795,7 @@ opencv_type_enum! { core::Buffer_Access }
 
 /// The target defines how you intend to use the buffer object.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Buffer_Target {
 	/// The buffer will be used as a source for vertex data
 	ARRAY_BUFFER = 34962,
@@ -810,7 +811,7 @@ opencv_type_enum! { core::Buffer_Target }
 
 /// comparison types
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CmpTypes {
 	/// src1 is equal to src2.
 	CMP_EQ = 0,
@@ -830,7 +831,7 @@ opencv_type_enum! { core::CmpTypes }
 
 /// error codes
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Code {
 	/// everything is ok
 	StsOk = 0,
@@ -939,7 +940,7 @@ opencv_type_enum! { core::Code }
 
 /// Covariation flags
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CovarFlags {
 	/// The output covariance matrix is calculated as:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bscale%7D%20%20%20%5Ccdot%20%20%5B%20%20%5Ctexttt%7Bvects%7D%20%20%5B0%5D%2D%20%20%5Ctexttt%7Bmean%7D%20%20%2C%20%5Ctexttt%7Bvects%7D%20%20%5B1%5D%2D%20%20%5Ctexttt%7Bmean%7D%20%20%2C%2E%2E%2E%5D%5ET%20%20%5Ccdot%20%20%5B%20%5Ctexttt%7Bvects%7D%20%20%5B0%5D%2D%20%5Ctexttt%7Bmean%7D%20%20%2C%20%5Ctexttt%7Bvects%7D%20%20%5B1%5D%2D%20%5Ctexttt%7Bmean%7D%20%20%2C%2E%2E%2E%5D%2C)
@@ -979,7 +980,7 @@ opencv_type_enum! { core::CovarFlags }
 
 /// Available CPU features.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CpuFeatures {
 	CPU_MMX = 1,
 	CPU_SSE = 2,
@@ -1036,7 +1037,7 @@ opencv_type_enum! { core::CpuFeatures }
 
 /// matrix decomposition types
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DecompTypes {
 	/// Gaussian elimination with the optimal pivot element chosen.
 	DECOMP_LU = 0,
@@ -1061,7 +1062,7 @@ pub enum DecompTypes {
 opencv_type_enum! { core::DecompTypes }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Detail_TestOp {
 	TEST_CUSTOM = 0,
 	TEST_EQ = 1,
@@ -1076,7 +1077,7 @@ pub enum Detail_TestOp {
 opencv_type_enum! { core::Detail_TestOp }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DeviceInfo_ComputeMode {
 	/// < default compute mode (Multiple threads can use cudaSetDevice with this device)
 	ComputeModeDefault = 0,
@@ -1091,7 +1092,7 @@ pub enum DeviceInfo_ComputeMode {
 opencv_type_enum! { core::DeviceInfo_ComputeMode }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DftFlags {
 	/// performs an inverse 1D or 2D transform instead of the default forward
 	/// transform.
@@ -1136,7 +1137,7 @@ pub enum DftFlags {
 opencv_type_enum! { core::DftFlags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Event_CreateFlags {
 	/// < Default event flag
 	DEFAULT = 0,
@@ -1151,7 +1152,7 @@ pub enum Event_CreateFlags {
 opencv_type_enum! { core::Event_CreateFlags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FLAGS {
 	FLAGS_NONE = 0,
 	FLAGS_MAPPING = 1,
@@ -1162,7 +1163,7 @@ opencv_type_enum! { core::FLAGS }
 
 /// Enumeration providing CUDA computing features.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FeatureSet {
 	FEATURE_SET_COMPUTE_10 = 10,
 	FEATURE_SET_COMPUTE_11 = 11,
@@ -1185,7 +1186,7 @@ opencv_type_enum! { core::FeatureSet }
 
 /// file storage mode
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FileStorage_Mode {
 	/// value, open the file for reading
 	READ = 0,
@@ -1215,7 +1216,7 @@ pub enum FileStorage_Mode {
 opencv_type_enum! { core::FileStorage_Mode }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FileStorage_State {
 	UNDEFINED = 0,
 	VALUE_EXPECTED = 1,
@@ -1226,7 +1227,7 @@ pub enum FileStorage_State {
 opencv_type_enum! { core::FileStorage_State }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Formatter_FormatType {
 	FMT_DEFAULT = 0,
 	FMT_MATLAB = 1,
@@ -1240,7 +1241,7 @@ opencv_type_enum! { core::Formatter_FormatType }
 
 /// generalized matrix multiplication flags
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum GemmFlags {
 	/// transposes src1
 	GEMM_1_T = 1,
@@ -1253,7 +1254,7 @@ pub enum GemmFlags {
 opencv_type_enum! { core::GemmFlags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum HostMem_AllocType {
 	PAGE_LOCKED = 1,
 	SHARED = 2,
@@ -1263,7 +1264,7 @@ pub enum HostMem_AllocType {
 opencv_type_enum! { core::HostMem_AllocType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum IMPL {
 	IMPL_PLAIN = 0,
 	IMPL_IPP = 1,
@@ -1274,7 +1275,7 @@ opencv_type_enum! { core::IMPL }
 
 /// k-Means flags
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum KmeansFlags {
 	/// Select random initial centers in each attempt.
 	KMEANS_RANDOM_CENTERS = 0,
@@ -1291,7 +1292,7 @@ opencv_type_enum! { core::KmeansFlags }
 
 /// Supported logging levels and their semantic
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LogLevel {
 	/// for using in setLogVevel() call
 	LOG_LEVEL_SILENT = 0,
@@ -1316,7 +1317,7 @@ opencv_type_enum! { core::LogLevel }
 /// 
 /// src1 and src2 denote input arrays.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum NormTypes {
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Anorm%20%3D%20%20%5Cforkthree%0A%7B%5C%7C%5Ctexttt%7Bsrc1%7D%5C%7C%5F%7BL%5F%7B%5Cinfty%7D%7D%20%3D%20%20%5Cmax%20%5FI%20%7C%20%5Ctexttt%7Bsrc1%7D%20%28I%29%7C%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM%5FINF%7D%5C%29%20%7D%0A%7B%5C%7C%5Ctexttt%7Bsrc1%7D%2D%5Ctexttt%7Bsrc2%7D%5C%7C%5F%7BL%5F%7B%5Cinfty%7D%7D%20%3D%20%20%5Cmax%20%5FI%20%7C%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%2D%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%7C%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM%5FINF%7D%5C%29%20%7D%0A%7B%5Cfrac%7B%5C%7C%5Ctexttt%7Bsrc1%7D%2D%5Ctexttt%7Bsrc2%7D%5C%7C%5F%7BL%5F%7B%5Cinfty%7D%7D%20%20%20%20%7D%7B%5C%7C%5Ctexttt%7Bsrc2%7D%5C%7C%5F%7BL%5F%7B%5Cinfty%7D%7D%20%7D%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM%5FRELATIVE%20%7C%20NORM%5FINF%7D%5C%29%20%7D%0A)
 	NORM_INF = 1,
@@ -1343,7 +1344,7 @@ pub enum NormTypes {
 opencv_type_enum! { core::NormTypes }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum OclVectorStrategy {
 	OCL_VECTOR_OWN = 0,
 	OCL_VECTOR_MAX = 1,
@@ -1353,7 +1354,7 @@ pub enum OclVectorStrategy {
 opencv_type_enum! { core::OclVectorStrategy }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum PCA_Flags {
 	/// indicates that the input samples are stored as matrix rows
 	DATA_AS_ROW = 0,
@@ -1365,7 +1366,7 @@ pub enum PCA_Flags {
 opencv_type_enum! { core::PCA_Flags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Param {
 	INT = 0,
 	BOOLEAN = 1,
@@ -1384,7 +1385,7 @@ pub enum Param {
 opencv_type_enum! { core::Param }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ReduceTypes {
 	/// the output is the sum of all rows/columns of the matrix.
 	REDUCE_SUM = 0,
@@ -1400,7 +1401,7 @@ opencv_type_enum! { core::ReduceTypes }
 
 /// render mode
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RenderModes {
 	POINTS = 0,
 	LINES = 1,
@@ -1417,7 +1418,7 @@ pub enum RenderModes {
 opencv_type_enum! { core::RenderModes }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RotateFlags {
 	/// Rotate 90 degrees clockwise
 	ROTATE_90_CLOCKWISE = 0,
@@ -1430,7 +1431,7 @@ pub enum RotateFlags {
 opencv_type_enum! { core::RotateFlags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SVD_Flags {
 	/// allow the algorithm to modify the decomposed matrix; it can save space and speed up
 	/// processing. currently ignored.
@@ -1448,7 +1449,7 @@ opencv_type_enum! { core::SVD_Flags }
 
 /// return codes for cv::solveLP() function
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SolveLPResult {
 	/// problem is unbounded (target function can achieve arbitrary high values)
 	SOLVELP_UNBOUNDED = -2,
@@ -1463,7 +1464,7 @@ pub enum SolveLPResult {
 opencv_type_enum! { core::SolveLPResult }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SortFlags {
 	/// each matrix row is sorted independently
 	SORT_EVERY_ROW = 0,
@@ -1483,7 +1484,7 @@ pub enum SortFlags {
 opencv_type_enum! { core::SortFlags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum TYPE {
 	TYPE_GENERAL = 0,
 	TYPE_MARKER = 1,
@@ -1495,7 +1496,7 @@ opencv_type_enum! { core::TYPE }
 
 /// Criteria type, can be one of: COUNT, EPS or COUNT + EPS
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum TermCriteria_Type {
 	/// the maximum number of iterations or elements to compute
 	COUNT = 1,
@@ -1509,7 +1510,7 @@ opencv_type_enum! { core::TermCriteria_Type }
 
 /// An Image Format describes the way that the images in Textures store their data.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Texture2D_Format {
 	NONE = 0,
 	/// Depth
@@ -1523,7 +1524,7 @@ pub enum Texture2D_Format {
 opencv_type_enum! { core::Texture2D_Format }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum UMatData_MemoryFlag {
 	COPY_ON_MAP = 1,
 	HOST_COPY_OBSOLETE = 2,
@@ -1547,7 +1548,7 @@ opencv_type_enum! { core::UMatData_MemoryFlag }
 /// runtime, call `cv::ocl::Context::getDefault().setUseSVM(true);` or similar
 /// code. Note that SVM is incompatible with OpenCL 1.x.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum UMatUsageFlags {
 	USAGE_DEFAULT = 0,
 	USAGE_ALLOCATE_HOST_MEMORY = 1,
@@ -1559,7 +1560,7 @@ pub enum UMatUsageFlags {
 opencv_type_enum! { core::UMatUsageFlags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum _InputArray_KindFlag {
 	KIND_SHIFT = 16,
 	FIXED_TYPE = -2147483648,
@@ -1588,7 +1589,7 @@ pub enum _InputArray_KindFlag {
 opencv_type_enum! { core::_InputArray_KindFlag }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum _OutputArray_DepthMask {
 	DEPTH_MASK_8U = 1,
 	DEPTH_MASK_8S = 2,

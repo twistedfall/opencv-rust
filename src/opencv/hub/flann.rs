@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Clustering and Search in Multi-Dimensional Spaces
 //! 
@@ -112,7 +113,7 @@ pub const USE_UNORDERED_MAP: i32 = 1;
 /// is no need to track down all the objects to free them.
 pub const WORDSIZE: u32 = 16;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FlannIndexType {
 	FLANN_INDEX_TYPE_8U = 0,
 	FLANN_INDEX_TYPE_8S = 1,
@@ -130,7 +131,7 @@ pub enum FlannIndexType {
 opencv_type_enum! { crate::flann::FlannIndexType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum flann_algorithm_t {
 	FLANN_INDEX_LINEAR = 0,
 	FLANN_INDEX_KDTREE = 1,
@@ -153,7 +154,7 @@ pub enum flann_algorithm_t {
 opencv_type_enum! { crate::flann::flann_algorithm_t }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum flann_centers_init_t {
 	FLANN_CENTERS_RANDOM = 0,
 	FLANN_CENTERS_GONZALES = 1,
@@ -167,7 +168,7 @@ pub enum flann_centers_init_t {
 opencv_type_enum! { crate::flann::flann_centers_init_t }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum flann_datatype_t {
 	FLANN_INT8 = 0,
 	FLANN_INT16 = 1,
@@ -184,7 +185,7 @@ pub enum flann_datatype_t {
 opencv_type_enum! { crate::flann::flann_datatype_t }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum flann_distance_t {
 	FLANN_DIST_EUCLIDEAN = 1,
 	// FLANN_DIST_L2 = 1 as isize, // duplicate discriminant
@@ -214,7 +215,7 @@ pub enum flann_distance_t {
 opencv_type_enum! { crate::flann::flann_distance_t }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum flann_log_level_t {
 	FLANN_LOG_NONE = 0,
 	FLANN_LOG_FATAL = 1,

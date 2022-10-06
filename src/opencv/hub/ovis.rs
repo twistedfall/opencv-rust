@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # OGRE 3D Visualiser
 //! 
@@ -66,7 +67,7 @@ pub const SCENE_SHADOWS: i32 = 32;
 /// draw coordinate system crosses for debugging
 pub const SCENE_SHOW_CS_CROSS: i32 = 4;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum EntityProperty {
 	ENTITY_MATERIAL = 0,
 	ENTITY_SCALE = 1,
@@ -78,7 +79,7 @@ pub enum EntityProperty {
 opencv_type_enum! { crate::ovis::EntityProperty }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum MaterialProperty {
 	MATERIAL_POINT_SIZE = 0,
 	MATERIAL_LINE_WIDTH = 1,
@@ -95,7 +96,7 @@ pub enum MaterialProperty {
 opencv_type_enum! { crate::ovis::MaterialProperty }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SceneSettings {
 	/// the window will use a separate scene. The scene will be shared otherwise.
 	SCENE_SEPARATE = 1,

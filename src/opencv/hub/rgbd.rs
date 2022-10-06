@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # RGB-Depth Processing
 //! 
@@ -28,7 +29,7 @@ pub const Odometry_TRANSLATION: i32 = 2;
 /// ``Modeling Kinect Sensor Noise for Improved 3d Reconstruction and Tracking``
 /// by C. Nguyen, S. Izadi, D. Lovel
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DepthCleaner_DEPTH_CLEANER_METHOD {
 	DEPTH_CLEANER_NIL = 0,
 }
@@ -36,7 +37,7 @@ pub enum DepthCleaner_DEPTH_CLEANER_METHOD {
 opencv_type_enum! { crate::rgbd::DepthCleaner_DEPTH_CLEANER_METHOD }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Kinfu_VolumeType {
 	TSDF = 0,
 	HASHTSDF = 1,
@@ -46,7 +47,7 @@ pub enum Kinfu_VolumeType {
 opencv_type_enum! { crate::rgbd::Kinfu_VolumeType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RgbdNormals_RGBD_NORMALS_METHOD {
 	RGBD_NORMALS_METHOD_FALS = 0,
 	RGBD_NORMALS_METHOD_LINEMOD = 1,
@@ -56,7 +57,7 @@ pub enum RgbdNormals_RGBD_NORMALS_METHOD {
 opencv_type_enum! { crate::rgbd::RgbdNormals_RGBD_NORMALS_METHOD }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RgbdPlane_RGBD_PLANE_METHOD {
 	RGBD_PLANE_METHOD_DEFAULT = 0,
 }

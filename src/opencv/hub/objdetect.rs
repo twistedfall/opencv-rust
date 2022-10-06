@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Object Detection
 //!    # Cascade Classifier for Object Detection
@@ -76,7 +77,7 @@ pub const CASCADE_SCALE_IMAGE: i32 = 2;
 /// Default nlevels value.
 pub const HOGDescriptor_DEFAULT_NLEVELS: i32 = 64;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DetectionBasedTracker_ObjectStatus {
 	DETECTED_NOT_SHOWN_YET = 0,
 	DETECTED = 1,
@@ -88,7 +89,7 @@ opencv_type_enum! { crate::objdetect::DetectionBasedTracker_ObjectStatus }
 
 /// Definition of distance used for calculating the distance between two face features
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FaceRecognizerSF_DisType {
 	FR_COSINE = 0,
 	FR_NORM_L2 = 1,
@@ -97,7 +98,7 @@ pub enum FaceRecognizerSF_DisType {
 opencv_type_enum! { crate::objdetect::FaceRecognizerSF_DisType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum HOGDescriptor_DescriptorStorageFormat {
 	DESCR_FORMAT_COL_BY_COL = 0,
 	DESCR_FORMAT_ROW_BY_ROW = 1,
@@ -106,7 +107,7 @@ pub enum HOGDescriptor_DescriptorStorageFormat {
 opencv_type_enum! { crate::objdetect::HOGDescriptor_DescriptorStorageFormat }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum HOGDescriptor_HistogramNormType {
 	/// Default histogramNormType
 	L2Hys = 0,
@@ -115,7 +116,7 @@ pub enum HOGDescriptor_HistogramNormType {
 opencv_type_enum! { crate::objdetect::HOGDescriptor_HistogramNormType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum QRCodeEncoder_CorrectionLevel {
 	CORRECT_LEVEL_L = 0,
 	CORRECT_LEVEL_M = 1,
@@ -126,7 +127,7 @@ pub enum QRCodeEncoder_CorrectionLevel {
 opencv_type_enum! { crate::objdetect::QRCodeEncoder_CorrectionLevel }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum QRCodeEncoder_ECIEncodings {
 	ECI_UTF8 = 26,
 }
@@ -134,7 +135,7 @@ pub enum QRCodeEncoder_ECIEncodings {
 opencv_type_enum! { crate::objdetect::QRCodeEncoder_ECIEncodings }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum QRCodeEncoder_EncodeMode {
 	MODE_AUTO = -1,
 	MODE_NUMERIC = 1,

@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Additional photo processing algorithms
 use crate::{mod_prelude::*, core, sys, types};
@@ -48,7 +49,7 @@ pub const INPAINT_FSR_FAST: i32 = 2;
 pub const INPAINT_SHIFTMAP: i32 = 0;
 /// BM3D algorithm steps
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Bm3dSteps {
 	/// Execute all steps of the algorithm
 	BM3D_STEPALL = 0,
@@ -64,7 +65,7 @@ opencv_type_enum! { crate::xphoto::Bm3dSteps }
 /// ## See also
 /// inpaint
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum InpaintTypes {
 	/// This algorithm searches for dominant correspondences (transformations) of
 	/// image patches and tries to seamlessly fill-in the area to be inpainted using this
@@ -97,7 +98,7 @@ opencv_type_enum! { crate::xphoto::InpaintTypes }
 
 /// BM3D transform types
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum TransformTypes {
 	/// Un-normalized Haar transform
 	HAAR = 0,

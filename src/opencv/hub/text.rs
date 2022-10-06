@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Scene Text Detection and Recognition
 //! 
@@ -107,7 +108,7 @@ pub const PSM_SINGLE_COLUMN: i32 = 4;
 pub const PSM_SINGLE_LINE: i32 = 7;
 pub const PSM_SINGLE_WORD: i32 = 8;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum classifier_type {
 	OCR_KNN_CLASSIFIER = 0,
 	OCR_CNN_CLASSIFIER = 1,
@@ -116,7 +117,7 @@ pub enum classifier_type {
 opencv_type_enum! { crate::text::classifier_type }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum decoder_mode {
 	OCR_DECODER_VITERBI = 0,
 }
@@ -125,7 +126,7 @@ opencv_type_enum! { crate::text::decoder_mode }
 
 /// text::erGrouping operation modes
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum erGrouping_Modes {
 	/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
 	/// The algorithm models a verification function for all the possible ER sequences. The
@@ -154,7 +155,7 @@ opencv_type_enum! { crate::text::erGrouping_Modes }
 
 /// Tesseract.OcrEngineMode Enumeration
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ocr_engine_mode {
 	OEM_TESSERACT_ONLY = 0,
 	OEM_CUBE_ONLY = 1,
@@ -166,7 +167,7 @@ opencv_type_enum! { crate::text::ocr_engine_mode }
 
 /// Tesseract.PageSegMode Enumeration
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum page_seg_mode {
 	PSM_OSD_ONLY = 0,
 	PSM_AUTO_OSD = 1,

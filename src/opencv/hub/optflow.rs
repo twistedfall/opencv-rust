@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Optical Flow Algorithms
 //! 
@@ -53,7 +54,7 @@ pub const ST_BILINEAR: i32 = 1;
 pub const ST_STANDART: i32 = 0;
 /// Descriptor types for the Global Patch Collider.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum GPCDescType {
 	/// Better quality but slow
 	GPC_DESCRIPTOR_DCT = 0,
@@ -64,7 +65,7 @@ pub enum GPCDescType {
 opencv_type_enum! { crate::optflow::GPCDescType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum InterpolationType {
 	/// <  Fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Geistert2016)
 	INTERP_GEO = 0,
@@ -77,7 +78,7 @@ pub enum InterpolationType {
 opencv_type_enum! { crate::optflow::InterpolationType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SolverType {
 	/// < Apply standard iterative refinement
 	ST_STANDART = 0,
@@ -89,7 +90,7 @@ pub enum SolverType {
 opencv_type_enum! { crate::optflow::SolverType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SupportRegionType {
 	/// <  Apply a constant support region
 	SR_FIXED = 0,

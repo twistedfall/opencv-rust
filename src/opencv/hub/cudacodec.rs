@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Video Encoding/Decoding
 use crate::{mod_prelude::*, core, sys, types};
@@ -77,7 +78,7 @@ pub const YUV422: i32 = 2;
 pub const YUV444: i32 = 3;
 /// Chroma formats supported by cudacodec::VideoReader.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ChromaFormat {
 	Monochrome = 0,
 	YUV420 = 1,
@@ -90,7 +91,7 @@ opencv_type_enum! { crate::cudacodec::ChromaFormat }
 
 /// Video codecs supported by cudacodec::VideoReader .
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Codec {
 	MPEG1 = 0,
 	MPEG2 = 1,
@@ -121,7 +122,7 @@ opencv_type_enum! { crate::cudacodec::Codec }
 
 /// ColorFormat for the frame returned by nextFrame()/retrieve().
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ColorFormat {
 	BGRA = 1,
 	BGR = 2,
@@ -138,7 +139,7 @@ opencv_type_enum! { crate::cudacodec::ColorFormat }
 /// Bob Drop one field.
 /// * Adaptive: Adaptive deinterlacing needs more video memory than other deinterlacing modes.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DeinterlaceMode {
 	Weave = 0,
 	Bob = 1,
@@ -148,7 +149,7 @@ pub enum DeinterlaceMode {
 opencv_type_enum! { crate::cudacodec::DeinterlaceMode }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum EncoderCallBack_PicType {
 	IFRAME = 1,
 	PFRAME = 2,
@@ -159,7 +160,7 @@ opencv_type_enum! { crate::cudacodec::EncoderCallBack_PicType }
 
 /// /////////////////////////////// Video Encoding //////////////////////////////////
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SurfaceFormat {
 	SF_UYVY = 0,
 	SF_YUY2 = 1,
@@ -174,7 +175,7 @@ opencv_type_enum! { crate::cudacodec::SurfaceFormat }
 
 /// cv::cudacodec::VideoReader generic properties identifier.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum VideoReaderProps {
 	/// Index for retrieving the decoded frame using retrieve().
 	PROP_DECODED_FRAME_IDX = 0,

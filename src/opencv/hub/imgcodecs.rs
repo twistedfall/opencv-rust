@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Image file reading and writing
 //!   # C API
@@ -123,7 +124,7 @@ pub const IMWRITE_TIFF_YDPI: i32 = 258;
 pub const IMWRITE_WEBP_QUALITY: i32 = 64;
 /// Imread flags
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ImreadModes {
 	/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
 	IMREAD_UNCHANGED = -1,
@@ -156,7 +157,7 @@ pub enum ImreadModes {
 opencv_type_enum! { crate::imgcodecs::ImreadModes }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ImwriteEXRCompressionFlags {
 	/// no compression
 	IMWRITE_EXR_COMPRESSION_NO = 0,
@@ -183,7 +184,7 @@ pub enum ImwriteEXRCompressionFlags {
 opencv_type_enum! { crate::imgcodecs::ImwriteEXRCompressionFlags }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ImwriteEXRTypeFlags {
 	/// store as HALF (FP16)
 	IMWRITE_EXR_TYPE_HALF = 1,
@@ -195,7 +196,7 @@ opencv_type_enum! { crate::imgcodecs::ImwriteEXRTypeFlags }
 
 /// Imwrite flags
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ImwriteFlags {
 	/// For JPEG, it can be a quality from 0 to 100 (the higher is the better). Default value is 95.
 	IMWRITE_JPEG_QUALITY = 1,
@@ -241,7 +242,7 @@ opencv_type_enum! { crate::imgcodecs::ImwriteFlags }
 
 /// Imwrite PAM specific tupletype flags used to define the 'TUPLETYPE' field of a PAM file.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ImwritePAMFlags {
 	IMWRITE_PAM_FORMAT_NULL = 0,
 	IMWRITE_PAM_FORMAT_BLACKANDWHITE = 1,
@@ -261,7 +262,7 @@ opencv_type_enum! { crate::imgcodecs::ImwritePAMFlags }
 /// *   The strategy parameter only affects the compression ratio but not the correctness of the compressed output even if it is not set appropriately.
 /// *   IMWRITE_PNG_STRATEGY_FIXED prevents the use of dynamic Huffman codes, allowing for a simpler decoder for special applications.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ImwritePNGFlags {
 	/// Use this value for normal data.
 	IMWRITE_PNG_STRATEGY_DEFAULT = 0,

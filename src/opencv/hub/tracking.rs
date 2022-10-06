@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Tracking API
 //!    # Tracking API implementation details
@@ -20,7 +21,7 @@ pub mod prelude {
 ///  *   "GRAY" -- Use grayscale values as the feature
 ///  *   "CN" -- Color-names feature
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum TrackerKCF_MODE {
 	GRAY = 1,
 	CN = 2,

@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # Extended Image Processing
 //!    # Structured forests for fast edge detection
@@ -120,7 +121,7 @@ pub const WMF_OFF: i32 = 32;
 /// Separate quarters and halves are written in orientation they should be in
 /// full Hough space.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum AngleRangeOption {
 	ARO_0_45 = 0,
 	ARO_45_90 = 1,
@@ -136,7 +137,7 @@ pub enum AngleRangeOption {
 opencv_type_enum! { crate::ximgproc::AngleRangeOption }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum EdgeAwareFiltersList {
 	DTF_NC = 0,
 	DTF_IC = 1,
@@ -148,7 +149,7 @@ pub enum EdgeAwareFiltersList {
 opencv_type_enum! { crate::ximgproc::EdgeAwareFiltersList }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum EdgeDrawing_GradientOperator {
 	PREWITT = 0,
 	SOBEL = 1,
@@ -162,7 +163,7 @@ opencv_type_enum! { crate::ximgproc::EdgeDrawing_GradientOperator }
 /// @details The enum specifies to do or not to do skewing of Hough transform image
 /// so it would be no cycling in Hough transform image through borders of image.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum HoughDeskewOption {
 	HDO_RAW = 0,
 	HDO_DESKEW = 1,
@@ -178,7 +179,7 @@ opencv_type_enum! { crate::ximgproc::HoughDeskewOption }
 ///           @f[ f: S \times S \to S @f]
 /// @ingroup MinUtils_MathOper
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum HoughOp {
 	FHT_MIN = 0,
 	FHT_MAX = 1,
@@ -190,7 +191,7 @@ opencv_type_enum! { crate::ximgproc::HoughOp }
 
 /// Specifies the binarization method to use in cv::ximgproc::niBlackThreshold
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum LocalBinarizationMethods {
 	/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Niblack1985) .
 	BINARIZATION_NIBLACK = 0,
@@ -208,7 +209,7 @@ opencv_type_enum! { crate::ximgproc::LocalBinarizationMethods }
 /// @details The enum specifies the degree of rules validation. This can be used,
 ///          for example, to choose a proper way of input arguments validation.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum RulesOption {
 	/// Validate each rule in a proper way.
 	RO_STRICT = 0,
@@ -219,7 +220,7 @@ pub enum RulesOption {
 opencv_type_enum! { crate::ximgproc::RulesOption }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum SLICType {
 	SLIC = 100,
 	SLICO = 101,
@@ -229,7 +230,7 @@ pub enum SLICType {
 opencv_type_enum! { crate::ximgproc::SLICType }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ThinningTypes {
 	THINNING_ZHANGSUEN = 0,
 	THINNING_GUOHALL = 1,
@@ -239,7 +240,7 @@ opencv_type_enum! { crate::ximgproc::ThinningTypes }
 
 /// Specifies weight types of weighted median filter.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum WMFWeightType {
 	/// ![inline formula](https://latex.codecogs.com/png.latex?exp%28%2D%7CI1%2DI2%7C%5E2%2F%282%2Asigma%5E2%29%29)
 	WMF_EXP = 1,

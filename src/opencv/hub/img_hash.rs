@@ -2,10 +2,11 @@
 	unused_parens,
 	clippy::excessive_precision,
 	clippy::missing_safety_doc,
-	clippy::not_unsafe_ptr_arg_deref,
 	clippy::should_implement_trait,
 	clippy::too_many_arguments,
 	clippy::unused_unit,
+	clippy::let_unit_value,
+	clippy::derive_partial_eq_without_eq,
 )]
 //! # The module brings implementations of different image hashing algorithms.
 //! 
@@ -76,7 +77,7 @@ pub const BLOCK_MEAN_HASH_MODE_0: i32 = 0;
 /// use block blocks(step sizes/2), generate 31*31/8 + 1 uchar hash value
 pub const BLOCK_MEAN_HASH_MODE_1: i32 = 1;
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum BlockMeanHashMode {
 	/// use fewer block and generate 16*16/8 uchar hash value
 	BLOCK_MEAN_HASH_MODE_0 = 0,
