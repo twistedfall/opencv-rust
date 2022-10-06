@@ -1,6 +1,6 @@
 use std::{
 	ffi::OsStr,
-	fs::{self, DirEntry, File, OpenOptions},
+	fs::{self, File, OpenOptions},
 	io::{self, BufRead, BufReader, Write},
 	path::{Path, PathBuf},
 	process::{Child, Command},
@@ -9,9 +9,8 @@ use std::{
 	time::Instant,
 };
 
-use glob::glob;
-
 use super::{
+	files_with_extension,
 	HOST_TRIPLE,
 	Library,
 	MODULES,
@@ -21,8 +20,15 @@ use super::{
 	SRC_DIR,
 };
 
-fn read_dir(path: &Path) -> Result<impl Iterator<Item=DirEntry>> {
-	Ok(path.read_dir()?.filter_map(|e| e.ok()))
+fn is_type_file(path: &Path, module: &str) -> bool {
+	path.file_stem().and_then(OsStr::to_str).map_or(false, |stem| {
+		let mut stem_chars = stem.chars();
+		(&mut stem_chars).take(3).all(|c| c.is_ascii_digit()) && // first 3 chars are digits
+			matches!(stem_chars.next(), Some('-')) && // dash
+			module.chars().zip(&mut stem_chars).all(|(m, s)| m == s) && // module name
+			matches!(stem_chars.next(), Some('-')) && // dash
+			stem.ends_with(".type") // ends with ".type"
+	})
 }
 
 fn copy_indent(mut read: impl BufRead, mut write: impl Write, indent: &str) -> Result<()> {
@@ -51,18 +57,17 @@ fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 }
 
 pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobserver::Client, generator_build: Child) -> Result<()> {
-	let out_dir_as_str = OUT_DIR.to_str().unwrap();
 	let target_hub_dir = SRC_DIR.join("opencv");
 	let target_module_dir = target_hub_dir.join("hub");
 	let manual_dir = SRC_DIR.join("manual");
 
-	eprintln!("=== Generating code in: {}", out_dir_as_str);
+	eprintln!("=== Generating code in: {}", OUT_DIR.display());
 	eprintln!("=== Placing generated bindings into: {}", target_hub_dir.display());
 	eprintln!("=== Using OpenCV headers from: {}", opencv_header_dir.display());
 
-	for entry in read_dir(&OUT_DIR)? {
+	for entry in OUT_DIR.read_dir()?.flatten() {
 		let path = entry.path();
-		if path.is_file() && path.extension().and_then(OsStr::to_str).map_or(true, |ext| !ext.eq_ignore_ascii_case("dll")) {
+		if path.is_file() && path.extension().map_or(true, |ext| !ext.eq_ignore_ascii_case("dll")) {
 			let _ = fs::remove_file(path);
 		}
 	}
@@ -128,11 +133,8 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobse
 	}
 	eprintln!("=== Total binding generation time: {:?}", start.elapsed());
 
-	for entry in read_dir(&target_module_dir)? {
-		let path = entry.path();
-		if path.extension().map_or(false, |e| e == "rs") {
-			let _ = fs::remove_file(path);
-		}
+	for path in files_with_extension(&target_module_dir, "rs")? {
+		let _ = fs::remove_file(path);
 	}
 
 	fn write_has_module(write: &mut File, module: &str) -> Result<()> {
@@ -163,10 +165,9 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobse
 		if module_cpp.is_file() {
 			let module_types_cpp = OUT_DIR.join(format!("{}_types.hpp", module));
 			let mut module_types_file = OpenOptions::new().create(true).truncate(true).write(true).open(&module_types_cpp)?;
-			let mut type_files: Vec<PathBuf> = glob(&format!("{}/???-{}-*.type.cpp", out_dir_as_str, module))?
-				.collect::<Result<_, glob::GlobError>>()?;
-			type_files.sort_unstable();
-			for entry in type_files.into_iter() {
+			let type_files = files_with_extension(&OUT_DIR, "cpp")?
+				.filter(|f| is_type_file(f, module));
+			for entry in type_files {
 				io::copy(&mut File::open(&entry)?, &mut module_types_file)?;
 				let _ = fs::remove_file(entry);
 			}
@@ -182,8 +183,11 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobse
 
 		// merge multiple *-.type.rs files into a single types.rs
 		let mut header_written = false;
-		for entry in glob(&format!("{}/???-{}-*.type.rs", out_dir_as_str, module))? {
-			let entry = entry?;
+		let mut type_files = files_with_extension(&OUT_DIR, "rs")?
+			.filter(|f| is_type_file(f, module))
+			.collect::<Vec<_>>();
+		type_files.sort_unstable();
+		for entry in type_files {
 			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
 				if !header_written {
 					write_has_module(&mut types_rs, module)?;

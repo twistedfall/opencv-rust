@@ -9,7 +9,6 @@ use std::{
 };
 
 use dunce::canonicalize;
-use glob::glob;
 use semver::Version;
 
 use super::{
@@ -184,6 +183,22 @@ impl Library {
 			.map(move |l| Self::emit_link_lib(&l, typ))
 	}
 
+	fn find_vcpkg_tool(vcpkg_root: &Path, tool_name: &str) -> Option<PathBuf> {
+		let tool_dirs = vcpkg_root.join("downloads/tools").read_dir().into_iter().flatten().flatten()
+			.map(|e| e.path())
+			.filter(|p| p.is_dir() && p.file_name().and_then(OsStr::to_str).map_or(false, |n| n.starts_with(tool_name)));
+
+		tool_dirs
+			.flat_map(|d| d.read_dir().into_iter().flatten().flatten()) // all subdirs inside tool dirs
+			.map(|e| e.path())
+			.filter(|p| p.is_dir())
+			.flat_map(|p| p.read_dir().into_iter().flatten().flatten()) // all subdirs inside those dirs
+			.map(|e| e.path())
+			.flat_map(|p| [p.join(format!("bin/{}", tool_name)), p.join(format!("bin/{}.exe", tool_name))])
+			.filter_map(|p| canonicalize(p).ok())
+			.find(|p| p.is_file())
+	}
+
 	pub fn probe_from_paths(include_paths: Option<EnvList>, link_paths: Option<EnvList>, link_libs: Option<EnvList>) -> Result<Self> {
 		if let (Some(include_paths), Some(link_paths), Some(link_libs)) = (include_paths, link_paths, link_libs) {
 			if include_paths.is_extend() || link_paths.is_extend() || link_libs.is_extend() {
@@ -353,28 +368,8 @@ impl Library {
 
 		let vcpkg_root = canonicalize(vcpkg::find_vcpkg_root(&config)?)?;
 		eprintln!("=== Discovered vcpkg root: {}", vcpkg_root.display());
-		let vcpkg_cmake = vcpkg_root.to_str()
-			.and_then(|vcpkg_root| {
-				glob(&format!("{}/downloads/tools/cmake*/*/bin/cmake", vcpkg_root)).ok()
-					.and_then(|cmake_iter| glob(&format!("{}/downloads/tools/cmake*/*/bin/cmake.exe", vcpkg_root)).ok()
-						.map(|cmake_exe_iter| cmake_iter.chain(cmake_exe_iter))
-					)
-			})
-			.and_then(|paths| paths.filter_map(|r| r.ok())
-				.filter_map(|p| canonicalize(p).ok())
-				.find(|p| p.is_file())
-			);
-		let vcpkg_ninja = vcpkg_root.to_str()
-			.and_then(|vcpkg_root| {
-				glob(&format!("{}/downloads/tools/ninja*/ninja", vcpkg_root)).ok()
-					.and_then(|ninja_iter| glob(&format!("{}/downloads/tools/ninja*/*/ninja.exe", vcpkg_root)).ok()
-						.map(|ninja_exe_iter| ninja_iter.chain(ninja_exe_iter))
-					)
-			})
-			.and_then(|paths| paths.filter_map(|r| r.ok())
-				.filter_map(|p| canonicalize(p).ok())
-				.find(|p| p.is_file())
-			);
+		let vcpkg_cmake = Self::find_vcpkg_tool(&vcpkg_root, "cmake");
+		let vcpkg_ninja = Self::find_vcpkg_tool(&vcpkg_root, "ninja");
 		let toolchain = vcpkg_root.join("scripts/buildsystems/vcpkg.cmake");
 		Self::probe_cmake(include_paths, link_paths, link_libs, Some(&toolchain), vcpkg_cmake.as_deref(), vcpkg_ninja.as_deref())
 	}

@@ -9,7 +9,6 @@ use std::{
 	process::{Child, Command, Stdio},
 };
 
-use glob::glob;
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
 
@@ -52,6 +51,12 @@ static ENV_VARS: [&str; 14] = [
 	"VCPKG_ROOT",
 	"VCPKGRS_DYNAMIC",
 ];
+
+fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Result<impl Iterator<Item=PathBuf> + 'e> {
+	Ok(dir.read_dir()?.flatten()
+		.map(|e| e.path())
+		.filter(move |p| p.is_file() && p.extension().map_or(false, |e| e.eq_ignore_ascii_case(extension.as_ref()))))
+}
 
 fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
 	let mut strip_performed = false;
@@ -160,17 +165,16 @@ fn make_modules(opencv_dir: &Path) -> Result<()> {
 			)
 		).collect::<HashSet<_>>();
 
-	let modules = glob(&format!("{}/*.hpp", opencv_dir.to_str().ok_or("Can't OpenCV header directory to UTF-8 string")?))?
-		.filter_map(|entry| {
-			let entry = entry.expect("Can't get path for module file");
-			let module = entry.file_stem()
-				.and_then(OsStr::to_str).expect("Can't calculate file stem");
-			Some(module)
-				.filter(|&m| !ignore_modules.contains(m))
-				.filter(|&m| enable_modules.contains(m))
-				.map(str::to_string)
-		})
-		.collect();
+	let mut modules = files_with_extension(opencv_dir, "hpp")?.filter_map(|entry| {
+		let module = entry.file_stem()
+			.and_then(OsStr::to_str).expect("Can't calculate file stem");
+		Some(module)
+			.filter(|&m| !ignore_modules.contains(m))
+			.filter(|&m| enable_modules.contains(m))
+			.map(str::to_string)
+	})
+		.collect::<Vec<_>>();
+	modules.sort_unstable();
 
 	MODULES.set(modules).expect("Can't set MODULES cache");
 	Ok(())
