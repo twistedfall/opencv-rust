@@ -1,4 +1,4 @@
-* 0.68.0
+* 0.69.0
   * Fix building with clang-15.
   * Rename `distort_points` to `fisheye_distort_points` for consistency.
 
