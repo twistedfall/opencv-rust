@@ -35,7 +35,7 @@ static OPENCV_BRANCH_32: Lazy<VersionReq> = Lazy::new(|| VersionReq::parse("~3.2
 static OPENCV_BRANCH_34: Lazy<VersionReq> = Lazy::new(|| VersionReq::parse("~3.4").expect("Can't parse OpenCV 3.4 version requirement"));
 static OPENCV_BRANCH_4: Lazy<VersionReq> = Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
 
-static ENV_VARS: [&str; 14] = [
+static ENV_VARS: [&str; 15] = [
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
 	"OPENCV_CMAKE_NAME",
@@ -50,6 +50,7 @@ static ENV_VARS: [&str; 14] = [
 	"PKG_CONFIG_PATH",
 	"VCPKG_ROOT",
 	"VCPKGRS_DYNAMIC",
+	"PATH",
 ];
 
 fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Result<impl Iterator<Item=PathBuf> + 'e> {
