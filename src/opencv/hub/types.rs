@@ -174,8 +174,6 @@ mod barcode_types {
 		cv_VectorOfBarcodeType_clone,
 	}
 	
-	unsafe impl Send for core::Vector<crate::barcode::BarcodeType> {}
-	
 }
 #[cfg(ocvrs_has_module_barcode)]
 pub use barcode_types::*;
@@ -874,8 +872,6 @@ mod core_types {
 		cv_VectorOfDMatch_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::DMatch> {}
-	
 	pub type VectorOfGpuMat = core::Vector<core::GpuMat>;
 	
 	impl VectorOfGpuMat {
@@ -893,8 +889,6 @@ mod core_types {
 		cv_VectorOfGpuMat_push, cv_VectorOfGpuMat_insert,
 	}
 	vector_non_copy_or_bool! { clone core::GpuMat }
-	
-	unsafe impl Send for core::Vector<core::GpuMat> {}
 	
 	pub type VectorOfKeyPoint = core::Vector<core::KeyPoint>;
 	
@@ -917,8 +911,6 @@ mod core_types {
 		cv_VectorOfKeyPoint_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::KeyPoint> {}
-	
 	pub type VectorOfMat = core::Vector<core::Mat>;
 	
 	impl VectorOfMat {
@@ -937,8 +929,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Mat }
 	
-	unsafe impl Send for core::Vector<core::Mat> {}
-	
 	pub type VectorOfPlatformInfo = core::Vector<core::PlatformInfo>;
 	
 	impl VectorOfPlatformInfo {
@@ -956,8 +946,6 @@ mod core_types {
 		cv_VectorOfPlatformInfo_push, cv_VectorOfPlatformInfo_insert,
 	}
 	vector_non_copy_or_bool! { core::PlatformInfo }
-	
-	unsafe impl Send for core::Vector<core::PlatformInfo> {}
 	
 	pub type VectorOfPoint = core::Vector<core::Point>;
 	
@@ -979,8 +967,6 @@ mod core_types {
 		cv_VectorOfPoint_data, cv_VectorOfPoint_data_mut, cv_VectorOfPoint_from_slice,
 		cv_VectorOfPoint_clone,
 	}
-	
-	unsafe impl Send for core::Vector<core::Point> {}
 	
 	impl core::ToInputArray for VectorOfPoint {
 		#[inline]
@@ -1041,8 +1027,6 @@ mod core_types {
 		cv_VectorOfPoint2d_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Point2d> {}
-	
 	impl core::ToInputArray for VectorOfPoint2d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -1101,8 +1085,6 @@ mod core_types {
 		cv_VectorOfPoint2f_data, cv_VectorOfPoint2f_data_mut, cv_VectorOfPoint2f_from_slice,
 		cv_VectorOfPoint2f_clone,
 	}
-	
-	unsafe impl Send for core::Vector<core::Point2f> {}
 	
 	impl core::ToInputArray for VectorOfPoint2f {
 		#[inline]
@@ -1163,8 +1145,6 @@ mod core_types {
 		cv_VectorOfPoint3d_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Point3d> {}
-	
 	impl core::ToInputArray for VectorOfPoint3d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -1223,8 +1203,6 @@ mod core_types {
 		cv_VectorOfPoint3f_data, cv_VectorOfPoint3f_data_mut, cv_VectorOfPoint3f_from_slice,
 		cv_VectorOfPoint3f_clone,
 	}
-	
-	unsafe impl Send for core::Vector<core::Point3f> {}
 	
 	impl core::ToInputArray for VectorOfPoint3f {
 		#[inline]
@@ -1285,8 +1263,6 @@ mod core_types {
 		cv_VectorOfPoint3i_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Point3i> {}
-	
 	impl core::ToInputArray for VectorOfPoint3i {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -1343,8 +1319,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { core::Range }
 	
-	unsafe impl Send for core::Vector<core::Range> {}
-	
 	pub type VectorOfRect = core::Vector<core::Rect>;
 	
 	impl VectorOfRect {
@@ -1365,8 +1339,6 @@ mod core_types {
 		cv_VectorOfRect_data, cv_VectorOfRect_data_mut, cv_VectorOfRect_from_slice,
 		cv_VectorOfRect_clone,
 	}
-	
-	unsafe impl Send for core::Vector<core::Rect> {}
 	
 	impl core::ToInputArray for VectorOfRect {
 		#[inline]
@@ -1427,8 +1399,6 @@ mod core_types {
 		cv_VectorOfRect2d_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Rect2d> {}
-	
 	impl core::ToInputArray for VectorOfRect2d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -1485,8 +1455,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { core::RotatedRect }
 	
-	unsafe impl Send for core::Vector<core::RotatedRect> {}
-	
 	pub type VectorOfScalar = core::Vector<core::Scalar>;
 	
 	impl VectorOfScalar {
@@ -1507,8 +1475,6 @@ mod core_types {
 		cv_VectorOfScalar_data, cv_VectorOfScalar_data_mut, cv_VectorOfScalar_from_slice,
 		cv_VectorOfScalar_clone,
 	}
-	
-	unsafe impl Send for core::Vector<core::Scalar> {}
 	
 	impl core::ToInputArray for VectorOfScalar {
 		#[inline]
@@ -1569,8 +1535,6 @@ mod core_types {
 		cv_VectorOfSize_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Size> {}
-	
 	impl core::ToInputArray for VectorOfSize {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -1627,8 +1591,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { String }
 	
-	unsafe impl Send for core::Vector<String> {}
-	
 	pub type VectorOfUMat = core::Vector<core::UMat>;
 	
 	impl VectorOfUMat {
@@ -1646,8 +1608,6 @@ mod core_types {
 		cv_VectorOfUMat_push, cv_VectorOfUMat_insert,
 	}
 	vector_non_copy_or_bool! { clone core::UMat }
-	
-	unsafe impl Send for core::Vector<core::UMat> {}
 	
 	pub type VectorOfVec2d = core::Vector<core::Vec2d>;
 	
@@ -1669,8 +1629,6 @@ mod core_types {
 		cv_VectorOfVec2d_data, cv_VectorOfVec2d_data_mut, cv_VectorOfVec2d_from_slice,
 		cv_VectorOfVec2d_clone,
 	}
-	
-	unsafe impl Send for core::Vector<core::Vec2d> {}
 	
 	impl core::ToInputArray for VectorOfVec2d {
 		#[inline]
@@ -1731,8 +1689,6 @@ mod core_types {
 		cv_VectorOfVec2f_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Vec2f> {}
-	
 	impl core::ToInputArray for VectorOfVec2f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -1791,8 +1747,6 @@ mod core_types {
 		cv_VectorOfVec2i_data, cv_VectorOfVec2i_data_mut, cv_VectorOfVec2i_from_slice,
 		cv_VectorOfVec2i_clone,
 	}
-	
-	unsafe impl Send for core::Vector<core::Vec2i> {}
 	
 	impl core::ToInputArray for VectorOfVec2i {
 		#[inline]
@@ -1853,8 +1807,6 @@ mod core_types {
 		cv_VectorOfVec3d_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Vec3d> {}
-	
 	impl core::ToInputArray for VectorOfVec3d {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -1913,8 +1865,6 @@ mod core_types {
 		cv_VectorOfVec3f_data, cv_VectorOfVec3f_data_mut, cv_VectorOfVec3f_from_slice,
 		cv_VectorOfVec3f_clone,
 	}
-	
-	unsafe impl Send for core::Vector<core::Vec3f> {}
 	
 	impl core::ToInputArray for VectorOfVec3f {
 		#[inline]
@@ -1975,8 +1925,6 @@ mod core_types {
 		cv_VectorOfVec3i_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Vec3i> {}
-	
 	impl core::ToInputArray for VectorOfVec3i {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -2035,8 +1983,6 @@ mod core_types {
 		cv_VectorOfVec4f_data, cv_VectorOfVec4f_data_mut, cv_VectorOfVec4f_from_slice,
 		cv_VectorOfVec4f_clone,
 	}
-	
-	unsafe impl Send for core::Vector<core::Vec4f> {}
 	
 	impl core::ToInputArray for VectorOfVec4f {
 		#[inline]
@@ -2097,8 +2043,6 @@ mod core_types {
 		cv_VectorOfVec4i_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Vec4i> {}
-	
 	impl core::ToInputArray for VectorOfVec4i {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -2158,8 +2102,6 @@ mod core_types {
 		cv_VectorOfVec6f_clone,
 	}
 	
-	unsafe impl Send for core::Vector<core::Vec6f> {}
-	
 	impl core::ToInputArray for VectorOfVec6f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -2216,8 +2158,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::DMatch> }
 	
-	unsafe impl Send for core::Vector<core::Vector<core::DMatch>> {}
-	
 	pub type VectorOfVectorOfKeyPoint = core::Vector<core::Vector<core::KeyPoint>>;
 	
 	impl VectorOfVectorOfKeyPoint {
@@ -2235,8 +2175,6 @@ mod core_types {
 		cv_VectorOfVectorOfKeyPoint_push, cv_VectorOfVectorOfKeyPoint_insert,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::KeyPoint> }
-	
-	unsafe impl Send for core::Vector<core::Vector<core::KeyPoint>> {}
 	
 	pub type VectorOfVectorOfMat = core::Vector<core::Vector<core::Mat>>;
 	
@@ -2256,8 +2194,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Mat> }
 	
-	unsafe impl Send for core::Vector<core::Vector<core::Mat>> {}
-	
 	pub type VectorOfVectorOfPoint = core::Vector<core::Vector<core::Point>>;
 	
 	impl VectorOfVectorOfPoint {
@@ -2275,8 +2211,6 @@ mod core_types {
 		cv_VectorOfVectorOfPoint_push, cv_VectorOfVectorOfPoint_insert,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point> }
-	
-	unsafe impl Send for core::Vector<core::Vector<core::Point>> {}
 	
 	impl core::ToInputArray for VectorOfVectorOfPoint {
 		#[inline]
@@ -2334,8 +2268,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point2f> }
 	
-	unsafe impl Send for core::Vector<core::Vector<core::Point2f>> {}
-	
 	impl core::ToInputArray for VectorOfVectorOfPoint2f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -2391,8 +2323,6 @@ mod core_types {
 		cv_VectorOfVectorOfPoint3d_push, cv_VectorOfVectorOfPoint3d_insert,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3d> }
-	
-	unsafe impl Send for core::Vector<core::Vector<core::Point3d>> {}
 	
 	impl core::ToInputArray for VectorOfVectorOfPoint3d {
 		#[inline]
@@ -2450,8 +2380,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3f> }
 	
-	unsafe impl Send for core::Vector<core::Vector<core::Point3f>> {}
-	
 	impl core::ToInputArray for VectorOfVectorOfPoint3f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -2507,8 +2435,6 @@ mod core_types {
 		cv_VectorOfVectorOfPoint3i_push, cv_VectorOfVectorOfPoint3i_insert,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3i> }
-	
-	unsafe impl Send for core::Vector<core::Vector<core::Point3i>> {}
 	
 	impl core::ToInputArray for VectorOfVectorOfPoint3i {
 		#[inline]
@@ -2566,8 +2492,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { core::Vector<core::Range> }
 	
-	unsafe impl Send for core::Vector<core::Vector<core::Range>> {}
-	
 	pub type VectorOfVectorOfVec2i = core::Vector<core::Vector<core::Vec2i>>;
 	
 	impl VectorOfVectorOfVec2i {
@@ -2585,8 +2509,6 @@ mod core_types {
 		cv_VectorOfVectorOfVec2i_push, cv_VectorOfVectorOfVec2i_insert,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec2i> }
-	
-	unsafe impl Send for core::Vector<core::Vector<core::Vec2i>> {}
 	
 	impl core::ToInputArray for VectorOfVectorOfVec2i {
 		#[inline]
@@ -2644,8 +2566,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec3f> }
 	
-	unsafe impl Send for core::Vector<core::Vector<core::Vec3f>> {}
-	
 	impl core::ToInputArray for VectorOfVectorOfVec3f {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -2701,8 +2621,6 @@ mod core_types {
 		cv_VectorOfVectorOff32_push, cv_VectorOfVectorOff32_insert,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<f32> }
-	
-	unsafe impl Send for core::Vector<core::Vector<f32>> {}
 	
 	impl core::ToInputArray for VectorOfVectorOff32 {
 		#[inline]
@@ -2760,8 +2678,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<f64> }
 	
-	unsafe impl Send for core::Vector<core::Vector<f64>> {}
-	
 	impl core::ToInputArray for VectorOfVectorOff64 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -2817,8 +2733,6 @@ mod core_types {
 		cv_VectorOfVectorOfi32_push, cv_VectorOfVectorOfi32_insert,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<i32> }
-	
-	unsafe impl Send for core::Vector<core::Vector<i32>> {}
 	
 	impl core::ToInputArray for VectorOfVectorOfi32 {
 		#[inline]
@@ -2876,8 +2790,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<i8> }
 	
-	unsafe impl Send for core::Vector<core::Vector<i8>> {}
-	
 	impl core::ToInputArray for VectorOfVectorOfi8 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -2933,8 +2845,6 @@ mod core_types {
 		cv_VectorOfVectorOfu8_push, cv_VectorOfVectorOfu8_insert,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<u8> }
-	
-	unsafe impl Send for core::Vector<core::Vector<u8>> {}
 	
 	impl core::ToInputArray for VectorOfVectorOfu8 {
 		#[inline]
@@ -2992,8 +2902,6 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone bool }
 	
-	unsafe impl Send for core::Vector<bool> {}
-	
 	pub type VectorOff32 = core::Vector<f32>;
 	
 	impl VectorOff32 {
@@ -3014,8 +2922,6 @@ mod core_types {
 		cv_VectorOff32_data, cv_VectorOff32_data_mut, cv_VectorOff32_from_slice,
 		cv_VectorOff32_clone,
 	}
-	
-	unsafe impl Send for core::Vector<f32> {}
 	
 	impl core::ToInputArray for VectorOff32 {
 		#[inline]
@@ -3076,8 +2982,6 @@ mod core_types {
 		cv_VectorOff64_clone,
 	}
 	
-	unsafe impl Send for core::Vector<f64> {}
-	
 	impl core::ToInputArray for VectorOff64 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -3136,8 +3040,6 @@ mod core_types {
 		cv_VectorOfi32_data, cv_VectorOfi32_data_mut, cv_VectorOfi32_from_slice,
 		cv_VectorOfi32_clone,
 	}
-	
-	unsafe impl Send for core::Vector<i32> {}
 	
 	impl core::ToInputArray for VectorOfi32 {
 		#[inline]
@@ -3198,8 +3100,6 @@ mod core_types {
 		cv_VectorOfi8_clone,
 	}
 	
-	unsafe impl Send for core::Vector<i8> {}
-	
 	impl core::ToInputArray for VectorOfi8 {
 		#[inline]
 		fn input_array(&self) -> Result<core::_InputArray> {
@@ -3259,8 +3159,6 @@ mod core_types {
 		cv_VectorOfsize_t_clone,
 	}
 	
-	unsafe impl Send for core::Vector<size_t> {}
-	
 	pub type VectorOfu8 = core::Vector<u8>;
 	
 	impl VectorOfu8 {
@@ -3281,8 +3179,6 @@ mod core_types {
 		cv_VectorOfu8_data, cv_VectorOfu8_data_mut, cv_VectorOfu8_from_slice,
 		cv_VectorOfu8_clone,
 	}
-	
-	unsafe impl Send for core::Vector<u8> {}
 	
 	impl core::ToInputArray for VectorOfu8 {
 		#[inline]
@@ -8110,8 +8006,6 @@ mod dnn_types {
 	}
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::BackendNode> }
 	
-	unsafe impl Send for core::Vector<core::Ptr<crate::dnn::BackendNode>> {}
-	
 	pub type VectorOfPtrOfBackendWrapper = core::Vector<core::Ptr<dyn crate::dnn::BackendWrapper>>;
 	
 	impl VectorOfPtrOfBackendWrapper {
@@ -8130,8 +8024,6 @@ mod dnn_types {
 	}
 	vector_non_copy_or_bool! { core::Ptr<dyn crate::dnn::BackendWrapper> }
 	
-	unsafe impl Send for core::Vector<core::Ptr<dyn crate::dnn::BackendWrapper>> {}
-	
 	pub type VectorOfPtrOfLayer = core::Vector<core::Ptr<crate::dnn::Layer>>;
 	
 	impl VectorOfPtrOfLayer {
@@ -8149,8 +8041,6 @@ mod dnn_types {
 		cv_VectorOfPtrOfLayer_push, cv_VectorOfPtrOfLayer_insert,
 	}
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::Layer> }
-	
-	unsafe impl Send for core::Vector<core::Ptr<crate::dnn::Layer>> {}
 	
 	pub type VectorOfTarget = core::Vector<crate::dnn::Target>;
 	
@@ -8173,8 +8063,6 @@ mod dnn_types {
 		cv_VectorOfTarget_clone,
 	}
 	
-	unsafe impl Send for core::Vector<crate::dnn::Target> {}
-	
 	pub type VectorOfVectorOfMatShape = core::Vector<core::Vector<crate::dnn::MatShape>>;
 	
 	impl VectorOfVectorOfMatShape {
@@ -8192,8 +8080,6 @@ mod dnn_types {
 		cv_VectorOfVectorOfMatShape_push, cv_VectorOfVectorOfMatShape_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector<crate::dnn::MatShape> }
-	
-	unsafe impl Send for core::Vector<core::Vector<crate::dnn::MatShape>> {}
 	
 }
 #[cfg(ocvrs_has_module_dnn)]
@@ -8268,8 +8154,6 @@ mod dpm_types {
 		cv_VectorOfDPMDetector_ObjectDetection_push, cv_VectorOfDPMDetector_ObjectDetection_insert,
 	}
 	vector_non_copy_or_bool! { crate::dpm::DPMDetector_ObjectDetection }
-	
-	unsafe impl Send for core::Vector<crate::dpm::DPMDetector_ObjectDetection> {}
 	
 }
 #[cfg(ocvrs_has_module_dpm)]
@@ -8672,8 +8556,6 @@ mod face_types {
 	}
 	vector_non_copy_or_bool! { crate::face::FacemarkAAM_Config }
 	
-	unsafe impl Send for core::Vector<crate::face::FacemarkAAM_Config> {}
-	
 	pub type VectorOfFacemarkAAM_Model_Texture = core::Vector<crate::face::FacemarkAAM_Model_Texture>;
 	
 	impl VectorOfFacemarkAAM_Model_Texture {
@@ -8691,8 +8573,6 @@ mod face_types {
 		cv_VectorOfFacemarkAAM_Model_Texture_push, cv_VectorOfFacemarkAAM_Model_Texture_insert,
 	}
 	vector_non_copy_or_bool! { crate::face::FacemarkAAM_Model_Texture }
-	
-	unsafe impl Send for core::Vector<crate::face::FacemarkAAM_Model_Texture> {}
 	
 }
 #[cfg(ocvrs_has_module_face)]
@@ -9346,8 +9226,6 @@ mod flann_types {
 		cv_VectorOfFlannIndexType_clone,
 	}
 	
-	unsafe impl Send for core::Vector<crate::flann::FlannIndexType> {}
-	
 }
 #[cfg(ocvrs_has_module_flann)]
 pub use flann_types::*;
@@ -9923,8 +9801,6 @@ mod line_descriptor_types {
 		cv_VectorOfKeyLine_clone,
 	}
 	
-	unsafe impl Send for core::Vector<crate::line_descriptor::KeyLine> {}
-	
 	pub type VectorOfVectorOfKeyLine = core::Vector<core::Vector<crate::line_descriptor::KeyLine>>;
 	
 	impl VectorOfVectorOfKeyLine {
@@ -9942,8 +9818,6 @@ mod line_descriptor_types {
 		cv_VectorOfVectorOfKeyLine_push, cv_VectorOfVectorOfKeyLine_insert,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<crate::line_descriptor::KeyLine> }
-	
-	unsafe impl Send for core::Vector<core::Vector<crate::line_descriptor::KeyLine>> {}
 	
 }
 #[cfg(ocvrs_has_module_line_descriptor)]
@@ -10056,8 +9930,6 @@ mod mcc_types {
 		cv_VectorOfPtrOfMCC_CChecker_push, cv_VectorOfPtrOfMCC_CChecker_insert,
 	}
 	vector_non_copy_or_bool! { core::Ptr<dyn crate::mcc::MCC_CChecker> }
-	
-	unsafe impl Send for core::Vector<core::Ptr<dyn crate::mcc::MCC_CChecker>> {}
 	
 }
 #[cfg(ocvrs_has_module_mcc)]
@@ -10518,8 +10390,6 @@ mod ml_types {
 	}
 	vector_non_copy_or_bool! { crate::ml::DTrees_Node }
 	
-	unsafe impl Send for core::Vector<crate::ml::DTrees_Node> {}
-	
 	pub type VectorOfDTrees_Split = core::Vector<crate::ml::DTrees_Split>;
 	
 	impl VectorOfDTrees_Split {
@@ -10537,8 +10407,6 @@ mod ml_types {
 		cv_VectorOfDTrees_Split_push, cv_VectorOfDTrees_Split_insert,
 	}
 	vector_non_copy_or_bool! { crate::ml::DTrees_Split }
-	
-	unsafe impl Send for core::Vector<crate::ml::DTrees_Split> {}
 	
 }
 #[cfg(ocvrs_has_module_ml)]
@@ -10688,8 +10556,6 @@ mod objdetect_types {
 	}
 	vector_non_copy_or_bool! { crate::objdetect::DetectionBasedTracker_ExtObject }
 	
-	unsafe impl Send for core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject> {}
-	
 	pub type VectorOfDetectionROI = core::Vector<crate::objdetect::DetectionROI>;
 	
 	impl VectorOfDetectionROI {
@@ -10707,8 +10573,6 @@ mod objdetect_types {
 		cv_VectorOfDetectionROI_push, cv_VectorOfDetectionROI_insert,
 	}
 	vector_non_copy_or_bool! { crate::objdetect::DetectionROI }
-	
-	unsafe impl Send for core::Vector<crate::objdetect::DetectionROI> {}
 	
 }
 #[cfg(ocvrs_has_module_objdetect)]
@@ -10932,8 +10796,6 @@ mod optflow_types {
 		cv_VectorOfGPCPatchDescriptor_push, cv_VectorOfGPCPatchDescriptor_insert,
 	}
 	vector_non_copy_or_bool! { crate::optflow::GPCPatchDescriptor }
-	
-	unsafe impl Send for core::Vector<crate::optflow::GPCPatchDescriptor> {}
 	
 }
 #[cfg(ocvrs_has_module_optflow)]
@@ -12317,8 +12179,6 @@ mod rgbd_types {
 		cv_VectorOfLinemod_Feature_clone,
 	}
 	
-	unsafe impl Send for core::Vector<crate::rgbd::Linemod_Feature> {}
-	
 	pub type VectorOfLinemod_Match = core::Vector<crate::rgbd::Linemod_Match>;
 	
 	impl VectorOfLinemod_Match {
@@ -12336,8 +12196,6 @@ mod rgbd_types {
 		cv_VectorOfLinemod_Match_push, cv_VectorOfLinemod_Match_insert,
 	}
 	vector_non_copy_or_bool! { crate::rgbd::Linemod_Match }
-	
-	unsafe impl Send for core::Vector<crate::rgbd::Linemod_Match> {}
 	
 	pub type VectorOfLinemod_Template = core::Vector<crate::rgbd::Linemod_Template>;
 	
@@ -12357,8 +12215,6 @@ mod rgbd_types {
 	}
 	vector_non_copy_or_bool! { crate::rgbd::Linemod_Template }
 	
-	unsafe impl Send for core::Vector<crate::rgbd::Linemod_Template> {}
-	
 	pub type VectorOfPtrOfLinemod_Modality = core::Vector<core::Ptr<dyn crate::rgbd::Linemod_Modality>>;
 	
 	impl VectorOfPtrOfLinemod_Modality {
@@ -12376,8 +12232,6 @@ mod rgbd_types {
 		cv_VectorOfPtrOfLinemod_Modality_push, cv_VectorOfPtrOfLinemod_Modality_insert,
 	}
 	vector_non_copy_or_bool! { core::Ptr<dyn crate::rgbd::Linemod_Modality> }
-	
-	unsafe impl Send for core::Vector<core::Ptr<dyn crate::rgbd::Linemod_Modality>> {}
 	
 }
 #[cfg(ocvrs_has_module_rgbd)]
@@ -13015,8 +12869,6 @@ mod stereo_types {
 		cv_VectorOfMatchQuasiDense_data, cv_VectorOfMatchQuasiDense_data_mut, cv_VectorOfMatchQuasiDense_from_slice,
 		cv_VectorOfMatchQuasiDense_clone,
 	}
-	
-	unsafe impl Send for core::Vector<crate::stereo::MatchQuasiDense> {}
 	
 }
 #[cfg(ocvrs_has_module_stereo)]
@@ -14384,8 +14236,6 @@ mod stitching_types {
 	}
 	vector_non_copy_or_bool! { crate::stitching::Detail_CameraParams }
 	
-	unsafe impl Send for core::Vector<crate::stitching::Detail_CameraParams> {}
-	
 	pub type VectorOfDetail_ImageFeatures = core::Vector<crate::stitching::Detail_ImageFeatures>;
 	
 	impl VectorOfDetail_ImageFeatures {
@@ -14404,8 +14254,6 @@ mod stitching_types {
 	}
 	vector_non_copy_or_bool! { crate::stitching::Detail_ImageFeatures }
 	
-	unsafe impl Send for core::Vector<crate::stitching::Detail_ImageFeatures> {}
-	
 	pub type VectorOfDetail_MatchesInfo = core::Vector<crate::stitching::Detail_MatchesInfo>;
 	
 	impl VectorOfDetail_MatchesInfo {
@@ -14423,8 +14271,6 @@ mod stitching_types {
 		cv_VectorOfDetail_MatchesInfo_push, cv_VectorOfDetail_MatchesInfo_insert,
 	}
 	vector_non_copy_or_bool! { crate::stitching::Detail_MatchesInfo }
-	
-	unsafe impl Send for core::Vector<crate::stitching::Detail_MatchesInfo> {}
 	
 }
 #[cfg(ocvrs_has_module_stitching)]
@@ -14822,8 +14668,6 @@ mod surface_matching_types {
 	}
 	vector_non_copy_or_bool! { crate::surface_matching::Pose3DPtr }
 	
-	unsafe impl Send for core::Vector<crate::surface_matching::Pose3DPtr> {}
-	
 }
 #[cfg(ocvrs_has_module_surface_matching)]
 pub use surface_matching_types::*;
@@ -15077,8 +14921,6 @@ mod text_types {
 	}
 	vector_non_copy_or_bool! { crate::text::ERStat }
 	
-	unsafe impl Send for core::Vector<crate::text::ERStat> {}
-	
 	pub type VectorOfVectorOfERStat = core::Vector<core::Vector<crate::text::ERStat>>;
 	
 	impl VectorOfVectorOfERStat {
@@ -15096,8 +14938,6 @@ mod text_types {
 		cv_VectorOfVectorOfERStat_push, cv_VectorOfVectorOfERStat_insert,
 	}
 	vector_non_copy_or_bool! { core::Vector<crate::text::ERStat> }
-	
-	unsafe impl Send for core::Vector<core::Vector<crate::text::ERStat>> {}
 	
 }
 #[cfg(ocvrs_has_module_text)]
@@ -15540,8 +15380,6 @@ mod videoio_types {
 	}
 	vector_non_copy_or_bool! { crate::videoio::VideoCapture }
 	
-	unsafe impl Send for core::Vector<crate::videoio::VideoCapture> {}
-	
 	pub type VectorOfVideoCaptureAPIs = core::Vector<crate::videoio::VideoCaptureAPIs>;
 	
 	impl VectorOfVideoCaptureAPIs {
@@ -15562,8 +15400,6 @@ mod videoio_types {
 		cv_VectorOfVideoCaptureAPIs_data, cv_VectorOfVideoCaptureAPIs_data_mut, cv_VectorOfVideoCaptureAPIs_from_slice,
 		cv_VectorOfVideoCaptureAPIs_clone,
 	}
-	
-	unsafe impl Send for core::Vector<crate::videoio::VideoCaptureAPIs> {}
 	
 }
 #[cfg(ocvrs_has_module_videoio)]
@@ -17556,8 +17392,6 @@ mod xfeatures2d_types {
 		cv_VectorOfElliptic_KeyPoint_push, cv_VectorOfElliptic_KeyPoint_insert,
 	}
 	vector_non_copy_or_bool! { crate::xfeatures2d::Elliptic_KeyPoint }
-	
-	unsafe impl Send for core::Vector<crate::xfeatures2d::Elliptic_KeyPoint> {}
 	
 }
 #[cfg(ocvrs_has_module_xfeatures2d)]

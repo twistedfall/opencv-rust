@@ -1953,7 +1953,7 @@ impl VideoWriter {
 	#[inline]
 	pub fn fourcc(c1: char, c2: char, c3: char, c4: char) -> Result<i32> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(u8::try_from(c1)? as i8, u8::try_from(c2)? as i8, u8::try_from(c3)? as i8, u8::try_from(c4)? as i8, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(u8::try_from(c1)? as c_char, u8::try_from(c2)? as c_char, u8::try_from(c3)? as c_char, u8::try_from(c4)? as c_char, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
