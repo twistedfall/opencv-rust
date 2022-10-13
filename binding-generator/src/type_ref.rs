@@ -1284,7 +1284,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				return format!("u8::try_from({name})?", name=name);
 			}
 			Some(Signedness::Signed) => {
-				return format!("u8::try_from({name})? as i8", name=name);
+				return format!("u8::try_from({name})? as c_char", name=name);
 			}
 			None => {}
 		}
