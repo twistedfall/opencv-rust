@@ -28,12 +28,13 @@ impl<'v, T: VectorElement> IntoIterator for &'v Vector<T> where Vector<T>: Vecto
 pub struct VectorIterator<T: VectorElement> where Vector<T>: VectorExtern<T> {
 	vec: Vector<T>,
 	i: size_t,
+	len: size_t,
 }
 
 impl<T: VectorElement> VectorIterator<T> where Vector<T>: VectorExtern<T> {
 	#[inline]
 	pub fn new(vec: Vector<T>) -> Self {
-		Self { vec, i: 0 }
+		Self { len: vec.len(), vec, i: 0 }
 	}
 }
 
@@ -42,20 +43,26 @@ impl<T: VectorElement> Iterator for VectorIterator<T> where Vector<T>: VectorExt
 
 	#[inline]
 	fn next(&mut self) -> Option<Self::Item> {
-		let out = self.vec.get(self.i);
-		self.i += 1;
-		out.ok()
+		let out = self.nth(self.i);
+		if out.is_some() {
+			self.i += 1;
+		}
+		out
 	}
 
 	#[inline]
 	fn size_hint(&self) -> (usize, Option<usize>) {
-		let len = self.vec.len() - self.i;
+		let len = self.len - self.i;
 		(len, Some(len))
 	}
 
 	#[inline]
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
-		self.vec.get(n).ok()
+		if n < self.len {
+			Some(unsafe { self.vec.get_unchecked(n) })
+		} else{
+			None
+		}
 	}
 }
 
@@ -66,12 +73,13 @@ impl<T: VectorElement> FusedIterator for VectorIterator<T> where Vector<T>: Vect
 pub struct VectorRefIterator<'v, T: VectorElement> where Vector<T>: VectorExtern<T> {
 	vec: &'v Vector<T>,
 	i: size_t,
+	len: size_t,
 }
 
 impl<'v, T: VectorElement> VectorRefIterator<'v, T> where Vector<T>: VectorExtern<T> {
 	#[inline]
 	pub fn new(vec: &'v Vector<T>) -> Self {
-		Self { vec, i: 0 }
+		Self { len: vec.len(), vec, i: 0 }
 	}
 }
 
@@ -80,20 +88,26 @@ impl<T: VectorElement> Iterator for VectorRefIterator<'_, T> where Vector<T>: Ve
 
 	#[inline]
 	fn next(&mut self) -> Option<Self::Item> {
-		let out = self.vec.get(self.i);
-		self.i += 1;
-		out.ok()
+		let out = self.nth(self.i);
+		if out.is_some() {
+			self.i += 1;
+		}
+		out
 	}
 
 	#[inline]
 	fn size_hint(&self) -> (usize, Option<usize>) {
-		let len = self.vec.len() - self.i;
+		let len = self.len - self.i;
 		(len, Some(len))
 	}
 
 	#[inline]
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
-		self.vec.get(n).ok()
+		if n < self.len {
+			Some(unsafe { self.vec.get_unchecked(n) })
+		} else{
+			None
+		}
 	}
 }
 

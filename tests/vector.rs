@@ -430,11 +430,13 @@ fn iter() -> Result<()> {
 		let mut vec_iter = vec.into_iter();
 		let mut len = vec_iter.len();
 		assert_eq!(4, len);
-		while let Some(..) = vec_iter.next() {
+		while let Some(n) = vec_iter.next() {
 			len -= 1;
+			assert_eq!(n, 4 - len as i32);
 			assert_eq!(len, vec_iter.len());
 			assert_eq!((len, Some(len)), vec_iter.size_hint());
 		}
+		assert_eq!((0, Some(0)), vec_iter.size_hint());
 	}
 
 	{
@@ -442,11 +444,13 @@ fn iter() -> Result<()> {
 		let mut vec_iter = vec.iter();
 		let mut len = vec_iter.len();
 		assert_eq!(4, len);
-		while let Some(..) = vec_iter.next() {
+		while let Some(n) = vec_iter.next() {
 			len -= 1;
+			assert_eq!(n, 4 - len as i32);
 			assert_eq!(len, vec_iter.len());
 			assert_eq!((len, Some(len)), vec_iter.size_hint());
 		}
+		assert_eq!((0, Some(0)), vec_iter.size_hint());
 	}
 
 	{
@@ -456,15 +460,17 @@ fn iter() -> Result<()> {
 		let mut len = vec_iter.len();
 		assert_eq!(3, len);
 		let mut vec_iter_clone = vec_iter.clone();
-		while let Some(..) = vec_iter.next() {
+		while let Some(n) = vec_iter.next() {
 			len -= 1;
+			assert_eq!(n, 4 - len as i32);
 			assert_eq!(len, vec_iter.len());
 			assert_eq!((len, Some(len)), vec_iter.size_hint());
 		}
 		let mut len = vec_iter_clone.len();
 		assert_eq!(3, len);
-		while let Some(..) = vec_iter_clone.next() {
+		while let Some(n) = vec_iter_clone.next() {
 			len -= 1;
+			assert_eq!(n, 4 - len as i32);
 			assert_eq!(len, vec_iter_clone.len());
 			assert_eq!((len, Some(len)), vec_iter_clone.size_hint());
 		}
