@@ -63,7 +63,6 @@ impl<T: VectorElement> ExactSizeIterator for VectorIterator<T> where Vector<T>: 
 
 impl<T: VectorElement> FusedIterator for VectorIterator<T> where Vector<T>: VectorExtern<T> {}
 
-#[derive(Clone)]
 pub struct VectorRefIterator<'v, T: VectorElement> where Vector<T>: VectorExtern<T> {
 	vec: &'v Vector<T>,
 	i: size_t,
@@ -101,3 +100,9 @@ impl<T: VectorElement> Iterator for VectorRefIterator<'_, T> where Vector<T>: Ve
 impl<T: VectorElement> ExactSizeIterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {}
 
 impl<T: VectorElement> FusedIterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {}
+
+impl<T: VectorElement> Clone for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {
+	fn clone(&self) -> Self {
+		Self { ..*self }
+	}
+}

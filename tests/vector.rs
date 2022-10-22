@@ -22,6 +22,7 @@ use opencv::{
 		VectorOfMat,
 		VectorOfPoint2d,
 		VectorOfPoint2f,
+		VectorOfRange,
 		VectorOfString,
 		VectorOfu8,
 		VectorOfVec4i,
@@ -56,10 +57,10 @@ fn boxed() -> Result<()> {
 
 	#[cfg(ocvrs_has_module_imgproc)]
 	{
-		use opencv::{imgproc, types, core::{Vec3b, Point}};
+		use opencv::{imgproc, core::{Vec3b, Point}};
 
 		let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::typ(), Scalar::default())?;
-		let mut ps = types::VectorOfMat::new();
+		let mut ps = VectorOfMat::new();
 		assert_eq!(ps.len(), 0);
 		let mut p1 = unsafe { Mat::new_rows_cols(3, 2, i32::typ()) }?;
 		p1.at_row_mut::<i32>(0)?.copy_from_slice(&[0, 0]);
@@ -114,10 +115,10 @@ fn boolean() -> Result<()> {
 	assert_eq!(true, vec.get(1)?);
 	assert_eq!(false, vec.get(2)?);
 	vec.set(0, false)?;
-	unsafe { vec.set_unchecked(1, true); }
+	unsafe { vec.set_unchecked(1, false); }
 	vec.set(2, true)?;
 	assert_eq!(false, unsafe { vec.get_unchecked(0) });
-	assert_eq!(true, unsafe { vec.get_unchecked(1) });
+	assert_eq!(false, unsafe { vec.get_unchecked(1) });
 	assert_eq!(true, unsafe { vec.get_unchecked(2) });
 	Ok(())
 }
@@ -446,6 +447,32 @@ fn iter() -> Result<()> {
 			assert_eq!(len, vec_iter.len());
 			assert_eq!((len, Some(len)), vec_iter.size_hint());
 		}
+	}
+
+	{
+		let vec = VectorOfi32::from_iter(vec![1, 2, 3, 4]);
+		let mut vec_iter = vec.iter();
+		assert_eq!(Some(1), vec_iter.next());
+		let mut len = vec_iter.len();
+		assert_eq!(3, len);
+		let mut vec_iter_clone = vec_iter.clone();
+		while let Some(..) = vec_iter.next() {
+			len -= 1;
+			assert_eq!(len, vec_iter.len());
+			assert_eq!((len, Some(len)), vec_iter.size_hint());
+		}
+		let mut len = vec_iter_clone.len();
+		assert_eq!(3, len);
+		while let Some(..) = vec_iter_clone.next() {
+			len -= 1;
+			assert_eq!(len, vec_iter_clone.len());
+			assert_eq!((len, Some(len)), vec_iter_clone.size_hint());
+		}
+	}
+
+	// clone works for iterators for &Vectors of non-Clone elements
+	{
+		let _ = VectorOfRange::new().iter().clone();
 	}
 
 	Ok(())
