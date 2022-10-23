@@ -222,6 +222,20 @@ fn vector_of_vector_simple_struct() -> Result<()> {
 }
 
 #[test]
+fn from_elem() {
+	let v = VectorOfi32::from_elem(5, 10);
+	assert_eq!(10, v.len());
+	assert!(v.iter().all(|v| v == 5));
+
+	let v = VectorOfMat::from_elem(Mat::default(), 0);
+	assert_eq!(0, v.len());
+
+	let v = VectorOfString::from_elem("test", 3);
+	assert_eq!(3, v.len());
+	assert!(v.iter().all(|v| v == "test"));
+}
+
+#[test]
 fn capacity() {
 	{
 		let mut vec = VectorOfi32::with_capacity(0);

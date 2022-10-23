@@ -56,6 +56,15 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 		unsafe { Self::from_raw(Self::extern_from_slice(s.as_ptr(), s.len())) }
 	}
 
+	#[inline]
+	pub fn from_elem<'a>(elem: <T as OpenCVType<'a>>::Arg, n: size_t) -> Self where <T as OpenCVType<'a>>::Arg: Clone {
+		let mut out = Self::with_capacity(n);
+		for _ in 0..n {
+			out.push(elem.clone());
+		}
+		out
+	}
+
 	/// Return Vector length
 	#[inline]
 	pub fn len(&self) -> size_t {
