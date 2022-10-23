@@ -3,71 +3,43 @@ use std::borrow::Cow;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::{
-	Class,
-	class::Kind,
-	CompiledInterpolation,
-	Constness,
-	ConstnessOverride,
-	Element,
-	Func,
-	get_debug,
-	IteratorExt,
-	NamePool,
-	StrExt,
-	type_ref::{FishStyle, NameStyle},
-};
+use crate::class::Kind;
+use crate::type_ref::{Constness, ConstnessOverride, FishStyle, NameStyle};
+use crate::{get_debug, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
 
 use super::RustNativeGeneratedElement;
 
 fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
-	static BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/boxed.tpl.rs").compile_interpolation()
-	);
+	static BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/boxed.tpl.rs").compile_interpolation());
 
-	static IMPL_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/impl.tpl.rs").compile_interpolation()
-	);
+	static IMPL_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/impl.tpl.rs").compile_interpolation());
 
-	static IMPL_CLONE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/impl_clone.tpl.rs").compile_interpolation()
-	);
+	static IMPL_CLONE_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/impl_clone.tpl.rs").compile_interpolation());
 
-	static IMPL_DEFAULT_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/impl_default.tpl.rs").compile_interpolation()
-	);
+	static IMPL_DEFAULT_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/impl_default.tpl.rs").compile_interpolation());
 
-	static SIMPLE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/simple.tpl.rs").compile_interpolation()
-	);
+	static SIMPLE_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/simple.tpl.rs").compile_interpolation());
 
-	static SIMPLE_FIELD_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/simple_field.tpl.rs").compile_interpolation()
-	);
+	static SIMPLE_FIELD_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/simple_field.tpl.rs").compile_interpolation());
 
-	static BASE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/base.tpl.rs").compile_interpolation()
-	);
+	static BASE_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/base.tpl.rs").compile_interpolation());
 
-	static BASE_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/base_cast.tpl.rs").compile_interpolation()
-	);
+	static BASE_CAST_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/base_cast.tpl.rs").compile_interpolation());
 
-	static DESCENDANT_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/descendant_cast.tpl.rs").compile_interpolation()
-	);
+	static DESCENDANT_CAST_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/descendant_cast.tpl.rs").compile_interpolation());
 
-	static SIMPLE_BASE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/simple_base.tpl.rs").compile_interpolation()
-	);
+	static SIMPLE_BASE_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/simple_base.tpl.rs").compile_interpolation());
 
-	static TRAIT_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/trait.tpl.rs").compile_interpolation()
-	);
+	static TRAIT_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/trait.tpl.rs").compile_interpolation());
 
-	static TRAIT_DYN_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/trait_dyn.tpl.rs").compile_interpolation()
-	);
+	static TRAIT_DYN_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/trait_dyn.tpl.rs").compile_interpolation());
 
 	let type_ref = c.type_ref();
 	let is_trait = c.is_trait();
@@ -93,11 +65,20 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let bases = c.bases();
 		let mut bases_const = Vec::with_capacity(bases.len());
 		let mut bases_mut = Vec::with_capacity(bases.len() + 1);
-		bases_mut.push(c.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const).into_owned());
+		bases_mut.push(
+			c.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const)
+				.into_owned(),
+		);
 		// todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
 		for b in bases.into_iter().filter(|b| !b.is_excluded() && !b.is_simple()) {
-			bases_const.push(b.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const).into_owned());
-			bases_mut.push(b.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut).into_owned());
+			bases_const.push(
+				b.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const)
+					.into_owned(),
+			);
+			bases_mut.push(
+				b.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut)
+					.into_owned(),
+			);
 		}
 		bases_const.sort_unstable();
 		bases_mut.sort_unstable();
@@ -121,9 +102,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			opencv_version,
 		);
 		let dyn_impl = if is_abstract {
-			let consts = consts.iter()
-				.map(|c| c.gen_rust(opencv_version))
-				.join("");
+			let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
 
 			let mut methods_pool = NamePool::with_capacity(method_count);
 			let const_methods = rust_generate_funcs(
@@ -181,7 +160,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
 		if !is_simple {
 			if c.is_polymorphic() {
-				let mut descendants = c.descendants()
+				let mut descendants = c
+					.descendants()
 					.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
 					.collect::<Vec<_>>();
 				descendants.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
@@ -211,7 +191,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		if is_trait {
 			bases.push(c.clone());
 		}
-		let bases = bases.into_iter()
+		let bases = bases
+			.into_iter()
 			.map(|base| {
 				let base_type_ref = base.type_ref();
 				let tpl = if is_simple {
@@ -231,7 +212,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.collect::<Vec<_>>();
 
 		let fields = if is_simple {
-			let mut out: Vec<_> = fields.iter()
+			let mut out: Vec<_> = fields
+				.iter()
 				.map(|f| {
 					let type_ref = f.type_ref();
 					let mut typ = type_ref.rust_full();
@@ -250,14 +232,12 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				})
 				.collect();
 			if out.is_empty() {
-				out.push(
-					SIMPLE_FIELD_TPL.interpolate(&hashmap! {
-						"doc_comment" => "",
-						"visibility" => "",
-						"name" => "__rust_private",
-						"type" => "[u8; 0]",
-					})
-				)
+				out.push(SIMPLE_FIELD_TPL.interpolate(&hashmap! {
+					"doc_comment" => "",
+					"visibility" => "",
+					"name" => "__rust_private",
+					"type" => "[u8; 0]",
+				}))
 			}
 			out
 		} else {
@@ -279,7 +259,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 		inherent_const_methods.push_str(&if is_trait {
 			rust_generate_funcs(
-				const_methods.iter()
+				const_methods
+					.iter()
 					.filter(|m| m.as_static_method().is_some() || m.as_constructor().is_some()),
 				&mut inherent_methods_pool,
 				opencv_version,
@@ -289,7 +270,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		});
 		inherent_mut_methods.push_str(&if is_trait {
 			rust_generate_funcs(
-				mut_methods.iter()
+				mut_methods
+					.iter()
 					.filter(|m| m.as_static_method().is_some() || m.as_constructor().is_some()),
 				&mut inherent_methods_pool,
 				opencv_version,
@@ -304,9 +286,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			&BOXED_TPL
 		};
 
-		let consts = consts.iter()
-			.map(|c| c.gen_rust(opencv_version))
-			.join("");
+		let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
 
 		out += &tpl.interpolate(&hashmap! {
 			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
@@ -341,17 +321,14 @@ fn gen_rust_exports_boxed(c: &Class) -> String {
 }
 
 fn gen_cpp_boxed(c: &Class) -> String {
-	static BOXED_CPP_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/boxed.tpl.cpp").compile_interpolation()
-	);
+	static BOXED_CPP_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/boxed.tpl.cpp").compile_interpolation());
 
-	static DESCENDANT_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/descendant_cast.tpl.cpp").compile_interpolation()
-	);
+	static DESCENDANT_CAST_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/descendant_cast.tpl.cpp").compile_interpolation());
 
-	static BASE_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/class/base_cast.tpl.cpp").compile_interpolation()
-	);
+	static BASE_CAST_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/base_cast.tpl.cpp").compile_interpolation());
 
 	let fields = c.fields();
 	let mut out = String::with_capacity(fields.len() * 512);
@@ -364,14 +341,17 @@ fn gen_cpp_boxed(c: &Class) -> String {
 	let mut casts = String::new();
 	if !c.is_abstract() {
 		let rust_local = c.rust_localname(FishStyle::No);
-		let mut bases = c.all_bases().into_iter()
+		let mut bases = c
+			.all_bases()
+			.into_iter()
 			.filter(|b| !b.is_excluded() && !b.is_simple() && !b.is_abstract())
 			.collect::<Vec<_>>();
 		bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
 		if !c.is_simple() {
 			let cpp_decl = c.type_ref().cpp_arg_func_decl("instance");
 			if c.is_polymorphic() {
-				let mut descendants = c.descendants()
+				let mut descendants = c
+					.descendants()
 					.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
 					.collect::<Vec<_>>();
 				descendants.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
@@ -400,16 +380,24 @@ fn gen_cpp_boxed(c: &Class) -> String {
 
 		let type_ref = c.type_ref();
 		out += &BOXED_CPP_TPL.interpolate(&hashmap! {
-				"rust_local" => type_ref.rust_local(),
-				"cpp_full" => type_ref.cpp_full(),
-				"cpp_extern" => type_ref.cpp_extern(),
-				"casts" => casts.into(),
-			})
+			"rust_local" => type_ref.rust_local(),
+			"cpp_full" => type_ref.cpp_full(),
+			"cpp_extern" => type_ref.cpp_extern(),
+			"casts" => casts.into(),
+		})
 	}
 	out
 }
 
-fn rust_generate_funcs<'f, 'tu, 'ge>(fns: impl Iterator<Item=&'f Func<'tu, 'ge>>, name_pool: &mut NamePool, opencv_version: &str) -> String where 'tu: 'ge, 'ge: 'f {
+fn rust_generate_funcs<'f, 'tu, 'ge>(
+	fns: impl Iterator<Item = &'f Func<'tu, 'ge>>,
+	name_pool: &mut NamePool,
+	opencv_version: &str,
+) -> String
+where
+	'tu: 'ge,
+	'ge: 'f,
+{
 	let fns = fns.filter(|f| !f.is_excluded());
 	fns.map(move |func| {
 		let mut func = Cow::Borrowed(func);
@@ -420,7 +408,7 @@ fn rust_generate_funcs<'f, 'tu, 'ge>(fns: impl Iterator<Item=&'f Func<'tu, 'ge>>
 		}
 		func.gen_rust(opencv_version) // fixme
 	})
-		.join("")
+	.join("")
 }
 
 impl RustNativeGeneratedElement for Class<'_, '_> {
@@ -430,26 +418,20 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
 		match self.kind() {
-			Kind::Simple | Kind::Boxed => {
-				gen_rust_class(self, opencv_version)
-			}
-			Kind::System | Kind::Excluded => {
-				"".to_string()
-			}
+			Kind::Simple | Kind::Boxed => gen_rust_class(self, opencv_version),
+			Kind::System | Kind::Excluded => "".to_string(),
 		}
 	}
 
 	fn gen_rust_exports(&self) -> String {
 		let out = match self.kind() {
-			Kind::Boxed => {
-				gen_rust_exports_boxed(self)
-			}
-			Kind::Simple | Kind::System | Kind::Excluded => {
-				"".to_string()
-			}
+			Kind::Boxed => gen_rust_exports_boxed(self),
+			Kind::Simple | Kind::System | Kind::Excluded => "".to_string(),
 		};
 
-		let mut methods = self.methods(None).into_iter()
+		let mut methods = self
+			.methods(None)
+			.into_iter()
 			.filter(|m| !m.is_excluded())
 			.map(|m| m.gen_rust_exports());
 
@@ -458,15 +440,13 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 	fn gen_cpp(&self) -> String {
 		let out = match self.kind() {
-			Kind::Boxed => {
-				gen_cpp_boxed(self)
-			}
-			Kind::Simple | Kind::System | Kind::Excluded => {
-				"".to_string()
-			}
+			Kind::Boxed => gen_cpp_boxed(self),
+			Kind::Simple | Kind::System | Kind::Excluded => "".to_string(),
 		};
 
-		let methods: Vec<_> = self.methods(None).into_iter()
+		let methods: Vec<_> = self
+			.methods(None)
+			.into_iter()
 			.filter(|m| !m.is_excluded())
 			.map(|m| m.gen_cpp())
 			.collect();

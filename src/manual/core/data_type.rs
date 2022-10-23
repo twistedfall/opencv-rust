@@ -27,10 +27,14 @@ macro_rules! data_type {
 	($rust_type: ty, $mat_depth: expr, $channels: expr) => {
 		impl $crate::core::DataType for $rust_type {
 			#[inline]
-			fn depth() -> i32 { $mat_depth }
+			fn depth() -> i32 {
+				$mat_depth
+			}
 
 			#[inline]
-			fn channels() -> i32 { $channels }
+			fn channels() -> i32 {
+				$channels
+			}
 		}
 
 		impl private::Sealed for $rust_type {}
@@ -67,42 +71,62 @@ data_type!(rgb::alt::ABGR8, core::CV_8U, 4);
 
 impl<T: DataType, const N: usize> DataType for VecN<T, N> {
 	#[inline]
-	fn depth() -> i32 { T::depth() }
+	fn depth() -> i32 {
+		T::depth()
+	}
 
 	#[inline]
-	fn channels() -> i32 { N as i32 }
+	fn channels() -> i32 {
+		N as i32
+	}
 }
 
 impl<T: DataType> DataType for Point_<T> {
 	#[inline]
-	fn depth() -> i32 { T::depth() }
+	fn depth() -> i32 {
+		T::depth()
+	}
 
 	#[inline]
-	fn channels() -> i32 { 2 }
+	fn channels() -> i32 {
+		2
+	}
 }
 
 impl<T: DataType> DataType for Point3_<T> {
 	#[inline]
-	fn depth() -> i32 { T::depth() }
+	fn depth() -> i32 {
+		T::depth()
+	}
 
 	#[inline]
-	fn channels() -> i32 { 3 }
+	fn channels() -> i32 {
+		3
+	}
 }
 
 impl<T: DataType> DataType for Size_<T> {
 	#[inline]
-	fn depth() -> i32 { T::depth() }
+	fn depth() -> i32 {
+		T::depth()
+	}
 
 	#[inline]
-	fn channels() -> i32 { 2 }
+	fn channels() -> i32 {
+		2
+	}
 }
 
 impl<T: DataType> DataType for Rect_<T> {
 	#[inline]
-	fn depth() -> i32 { T::depth() }
+	fn depth() -> i32 {
+		T::depth()
+	}
 
 	#[inline]
-	fn channels() -> i32 { 4 }
+	fn channels() -> i32 {
+		4
+	}
 }
 
 mod private {

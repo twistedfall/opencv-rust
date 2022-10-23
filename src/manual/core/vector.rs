@@ -1,32 +1,30 @@
-use std::{
-	borrow::Borrow,
-	ffi::c_void,
-	fmt,
-	iter::FromIterator,
-	marker::PhantomData,
-	mem::ManuallyDrop,
-	slice,
-};
+use std::{borrow::Borrow, ffi::c_void, fmt, iter::FromIterator, marker::PhantomData, mem::ManuallyDrop, slice};
 
 pub use iter::{VectorIterator, VectorRefIterator};
 pub use vector_extern::{VectorElement, VectorExtern, VectorExternCopyNonBool};
 
 use crate::{
 	platform_types::size_t,
-	Result,
 	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
+	Result,
 };
 
-mod vector_extern;
 mod iter;
+mod vector_extern;
 
 /// Wrapper for C++ [std::vector](https://en.cppreference.com/w/cpp/container/vector)
-pub struct Vector<T: VectorElement> where Self: VectorExtern<T> {
+pub struct Vector<T: VectorElement>
+where
+	Self: VectorExtern<T>,
+{
 	ptr: *mut c_void,
 	_d: PhantomData<T>,
 }
 
-impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
+impl<T: VectorElement> Vector<T>
+where
+	Self: VectorExtern<T>,
+{
 	/// Create a new Vector
 	#[inline]
 	pub fn new() -> Self {
@@ -43,7 +41,7 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 
 	/// Create a Vector from iterator
 	#[inline]
-	pub fn from_iter<'a>(s: impl IntoIterator<Item=<T as OpenCVType<'a>>::Arg>) -> Self {
+	pub fn from_iter<'a>(s: impl IntoIterator<Item = <T as OpenCVType<'a>>::Arg>) -> Self {
 		#![allow(clippy::should_implement_trait)]
 		let mut out = Self::new();
 		out.extend(s);
@@ -52,12 +50,18 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 
 	/// Create a Vector from slice, the element type needs to be Copy (and not bool)
 	#[inline]
-	pub fn from_slice(s: &[T]) -> Self where Self: VectorExternCopyNonBool<T> {
+	pub fn from_slice(s: &[T]) -> Self
+	where
+		Self: VectorExternCopyNonBool<T>,
+	{
 		unsafe { Self::from_raw(Self::extern_from_slice(s.as_ptr(), s.len())) }
 	}
 
 	#[inline]
-	pub fn from_elem<'a>(elem: <T as OpenCVType<'a>>::Arg, n: size_t) -> Self where <T as OpenCVType<'a>>::Arg: Clone {
+	pub fn from_elem<'a>(elem: <T as OpenCVType<'a>>::Arg, n: size_t) -> Self
+	where
+		<T as OpenCVType<'a>>::Arg: Clone,
+	{
 		let mut out = Self::with_capacity(n);
 		for _ in 0..n {
 			out.push(elem.clone());
@@ -187,10 +191,11 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// This method is only available for OpenCV types that are Copy, with the exception of bool
 	/// because bool is handled in a special way on the C++ side.
 	#[inline]
-	pub fn as_slice(&self) -> &[T] where Self: VectorExternCopyNonBool<T> {
-		unsafe {
-			slice::from_raw_parts(self.extern_data(), self.len())
-		}
+	pub fn as_slice(&self) -> &[T]
+	where
+		Self: VectorExternCopyNonBool<T>,
+	{
+		unsafe { slice::from_raw_parts(self.extern_data(), self.len()) }
 	}
 
 	/// Return mutable slice to the elements of the array.
@@ -198,10 +203,11 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	/// This method is only available for OpenCV types that are Copy, with the exception of bool
 	/// because bool is handled in a special way on the C++ side.
 	#[inline]
-	pub fn as_mut_slice(&mut self) -> &mut [T] where Self: VectorExternCopyNonBool<T> {
-		unsafe {
-			slice::from_raw_parts_mut(self.extern_data_mut(), self.len())
-		}
+	pub fn as_mut_slice(&mut self) -> &mut [T]
+	where
+		Self: VectorExternCopyNonBool<T>,
+	{
+		unsafe { slice::from_raw_parts_mut(self.extern_data_mut(), self.len()) }
 	}
 
 	#[inline]
@@ -210,56 +216,80 @@ impl<T: VectorElement> Vector<T> where Self: VectorExtern<T> {
 	}
 }
 
-impl<T: VectorElement> Default for Vector<T> where Self: VectorExtern<T> {
+impl<T: VectorElement> Default for Vector<T>
+where
+	Self: VectorExtern<T>,
+{
 	#[inline]
 	fn default() -> Vector<T> {
 		Vector::new()
 	}
 }
 
-impl<T: VectorElement> From<Vector<T>> for Vec<T> where Vector<T>: VectorExtern<T> {
+impl<T: VectorElement> From<Vector<T>> for Vec<T>
+where
+	Vector<T>: VectorExtern<T>,
+{
 	#[inline]
 	fn from(from: Vector<T>) -> Self {
 		from.to_vec()
 	}
 }
 
-impl<T: VectorElement> From<Vec<<T as OpenCVType<'_>>::Arg>> for Vector<T> where Vector<T>: VectorExtern<T> {
+impl<T: VectorElement> From<Vec<<T as OpenCVType<'_>>::Arg>> for Vector<T>
+where
+	Vector<T>: VectorExtern<T>,
+{
 	#[inline]
 	fn from(from: Vec<<T as OpenCVType<'_>>::Arg>) -> Self {
 		Self::from_iter(from)
 	}
 }
 
-impl<'a, T: VectorElement> FromIterator<<T as OpenCVType<'a>>::Arg> for Vector<T> where Self: VectorExtern<T> {
+impl<'a, T: VectorElement> FromIterator<<T as OpenCVType<'a>>::Arg> for Vector<T>
+where
+	Self: VectorExtern<T>,
+{
 	#[inline]
-	fn from_iter<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(s: I) -> Vector<T> {
+	fn from_iter<I: IntoIterator<Item = <T as OpenCVType<'a>>::Arg>>(s: I) -> Vector<T> {
 		Self::from_iter(s)
 	}
 }
 
-impl<T: VectorElement> AsRef<[T]> for Vector<T> where Self: VectorExtern<T> + VectorExternCopyNonBool<T> {
+impl<T: VectorElement> AsRef<[T]> for Vector<T>
+where
+	Self: VectorExtern<T> + VectorExternCopyNonBool<T>,
+{
 	#[inline]
 	fn as_ref(&self) -> &[T] {
 		self.as_slice()
 	}
 }
 
-impl<T: VectorElement> Borrow<[T]> for Vector<T> where Self: VectorExtern<T> + VectorExternCopyNonBool<T> {
+impl<T: VectorElement> Borrow<[T]> for Vector<T>
+where
+	Self: VectorExtern<T> + VectorExternCopyNonBool<T>,
+{
 	#[inline]
 	fn borrow(&self) -> &[T] {
 		self.as_slice()
 	}
 }
 
-impl<T: VectorElement + fmt::Debug> fmt::Debug for Vector<T> where Self: VectorExtern<T> {
+impl<T: VectorElement + fmt::Debug> fmt::Debug for Vector<T>
+where
+	Self: VectorExtern<T>,
+{
 	#[inline]
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		f.debug_list().entries(self.iter()).finish()
 	}
 }
 
-impl<T: VectorElement> Drop for Vector<T> where Self: VectorExtern<T> {
+impl<T: VectorElement> Drop for Vector<T>
+where
+	Self: VectorExtern<T>,
+{
 	fn drop(&mut self) {
 		unsafe { self.extern_delete() }
 	}
@@ -269,8 +299,11 @@ unsafe impl<T: Send + VectorElement> Send for Vector<T> where Self: VectorExtern
 
 unsafe impl<T: Sync + VectorElement> Sync for Vector<T> where Self: VectorExtern<T> {}
 
-impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T> where Self: VectorExtern<T> {
-	fn extend<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(&mut self, s: I) {
+impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T>
+where
+	Self: VectorExtern<T>,
+{
+	fn extend<I: IntoIterator<Item = <T as OpenCVType<'a>>::Arg>>(&mut self, s: I) {
 		let s = s.into_iter();
 		let (lo, hi) = s.size_hint();
 		self.reserve(hi.unwrap_or(lo));
@@ -280,7 +313,10 @@ impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T> wher
 	}
 }
 
-impl<T: VectorElement> Boxed for Vector<T> where Self: VectorExtern<T> {
+impl<T: VectorElement> Boxed for Vector<T>
+where
+	Self: VectorExtern<T>,
+{
 	#[inline]
 	unsafe fn from_raw(ptr: *mut c_void) -> Self {
 		Self { ptr, _d: PhantomData }
@@ -302,7 +338,10 @@ impl<T: VectorElement> Boxed for Vector<T> where Self: VectorExtern<T> {
 	}
 }
 
-impl<T: VectorElement> OpenCVType<'_> for Vector<T> where Self: VectorExtern<T> {
+impl<T: VectorElement> OpenCVType<'_> for Vector<T>
+where
+	Self: VectorExtern<T>,
+{
 	type Arg = Self;
 	type ExternReceive = *mut c_void;
 	type ExternContainer = Self;
@@ -318,7 +357,10 @@ impl<T: VectorElement> OpenCVType<'_> for Vector<T> where Self: VectorExtern<T> 
 	}
 }
 
-impl<T: VectorElement> OpenCVTypeArg<'_> for Vector<T> where Self: VectorExtern<T> {
+impl<T: VectorElement> OpenCVTypeArg<'_> for Vector<T>
+where
+	Self: VectorExtern<T>,
+{
 	type ExternContainer = Self;
 
 	#[inline]
@@ -327,7 +369,10 @@ impl<T: VectorElement> OpenCVTypeArg<'_> for Vector<T> where Self: VectorExtern<
 	}
 }
 
-impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: VectorExtern<T> {
+impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T>
+where
+	Self: VectorExtern<T>,
+{
 	type ExternSend = *const c_void;
 	type ExternSendMut = *mut c_void;
 
@@ -350,7 +395,10 @@ impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: Vecto
 #[inline(always)]
 fn vector_index_check(index: size_t, len: size_t) -> Result<()> {
 	if index >= len {
-		Err(crate::Error::new(crate::core::StsOutOfRange, format!("Index: {} out of bounds: 0..{}", index, len)))
+		Err(crate::Error::new(
+			crate::core::StsOutOfRange,
+			format!("Index: {} out of bounds: 0..{}", index, len),
+		))
 	} else {
 		Ok(())
 	}

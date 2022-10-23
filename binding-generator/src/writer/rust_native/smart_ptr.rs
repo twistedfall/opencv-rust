@@ -1,16 +1,8 @@
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::{
-	CompiledInterpolation,
-	Constness,
-	ConstnessOverride,
-	Element,
-	EntityElement,
-	SmartPtr,
-	StrExt,
-	type_ref::{self, FishStyle, NameStyle},
-};
+use crate::type_ref::{Constness, ConstnessOverride, FishStyle, NameStyle};
+use crate::{type_ref, CompiledInterpolation, Element, EntityElement, SmartPtr, StrExt};
 
 use super::RustNativeGeneratedElement;
 
@@ -20,21 +12,16 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 	}
 
 	fn gen_rust(&self, _opencv_version: &str) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/smart_ptr/rust.tpl.rs").compile_interpolation()
-		);
+		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/rust.tpl.rs").compile_interpolation());
 
-		static TRAIT_RAW_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/smart_ptr/trait_raw.tpl.rs").compile_interpolation()
-		);
+		static TRAIT_RAW_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/smart_ptr/trait_raw.tpl.rs").compile_interpolation());
 
-		static BASE_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/smart_ptr/base_cast.tpl.rs").compile_interpolation()
-		);
+		static BASE_CAST_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/smart_ptr/base_cast.tpl.rs").compile_interpolation());
 
-		static CTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/smart_ptr/ctor.tpl.rs").compile_interpolation()
-		);
+		static CTOR_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/smart_ptr/ctor.tpl.rs").compile_interpolation());
 
 		let type_ref = self.type_ref();
 		let pointee_type = self.pointee();
@@ -53,17 +40,37 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			gen_ctor |= !cls.is_abstract();
 			if cls.is_trait() {
 				inter_vars.insert("base_rust_local", cls.rust_localname(FishStyle::No).into_owned().into());
-				inter_vars.insert("base_rust_full", cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut).into_owned().into());
-				inter_vars.insert("base_const_rust_full", cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const).into_owned().into());
+				inter_vars.insert(
+					"base_rust_full",
+					cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut)
+						.into_owned()
+						.into(),
+				);
+				inter_vars.insert(
+					"base_const_rust_full",
+					cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const)
+						.into_owned()
+						.into(),
+				);
 				impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
-				let mut all_bases = cls.all_bases().into_iter()
-					.filter(|b| !b.is_excluded())
-					.collect::<Vec<_>>();
+				let mut all_bases = cls.all_bases().into_iter().filter(|b| !b.is_excluded()).collect::<Vec<_>>();
 				all_bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
 				for base in all_bases {
 					inter_vars.insert("base_rust_local", base.rust_localname(FishStyle::No).into_owned().into());
-					inter_vars.insert("base_rust_full", base.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut).into_owned().into());
-					inter_vars.insert("base_const_rust_full", base.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const).into_owned().into());
+					inter_vars.insert(
+						"base_rust_full",
+						base
+							.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut)
+							.into_owned()
+							.into(),
+					);
+					inter_vars.insert(
+						"base_const_rust_full",
+						base
+							.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const)
+							.into_owned()
+							.into(),
+					);
 					inter_vars.insert("base_rust_full_ref", base.type_ref().rust_full().into_owned().into());
 					impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 					if self.gen_env.is_used_in_smart_ptr(base.entity()) {
@@ -82,17 +89,13 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 	}
 
 	fn gen_cpp(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation()
-		);
+		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation());
 
-		static BASE_CAST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/smart_ptr/base_cast.tpl.cpp").compile_interpolation()
-		);
+		static BASE_CAST_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/smart_ptr/base_cast.tpl.cpp").compile_interpolation());
 
-		static CTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/smart_ptr/ctor.tpl.cpp").compile_interpolation()
-		);
+		static CTOR_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/smart_ptr/ctor.tpl.cpp").compile_interpolation());
 
 		let type_ref = self.type_ref();
 		let pointee_type = self.pointee();
@@ -125,7 +128,9 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		if let Some(cls) = pointee_type.as_class() {
 			gen_ctor |= !cls.is_abstract();
 			if cls.is_trait() {
-				let mut all_bases = cls.all_bases().into_iter()
+				let mut all_bases = cls
+					.all_bases()
+					.into_iter()
 					.filter(|b| !b.is_excluded() && self.gen_env.is_used_in_smart_ptr(b.entity()))
 					.collect::<Vec<_>>();
 				all_bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
@@ -143,7 +148,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		}
 		if gen_ctor {
 			let inner_cpp_func_call = if pointee_primitive {
-				format!("new {typ}(val)", typ=pointee_type.cpp_full()).into()
+				format!("new {typ}(val)", typ = pointee_type.cpp_full()).into()
 			} else {
 				let mut out = pointee_type.cpp_arg_func_call("val");
 				if out.starts_with('*') {

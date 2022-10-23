@@ -69,17 +69,9 @@ fn matx_input_array() -> Result<()> {
 
 #[test]
 fn matx_input_output_array() -> Result<()> {
-	let mut mat = Matx33d::from([
-		1., 2., 3.,
-		4., 5., 6.,
-		9., 8., 9.,
-	]);
+	let mut mat = Matx33d::from([1., 2., 3., 4., 5., 6., 9., 8., 9.]);
 	core::complete_symm(&mut mat, false)?;
-	let expected = Matx33d::from([
-		1., 2., 3.,
-		2., 5., 6.,
-		3., 6., 9.,
-	]);
+	let expected = Matx33d::from([1., 2., 3., 2., 5., 6., 3., 6., 9.]);
 	assert_eq!(expected, mat);
 	Ok(())
 }

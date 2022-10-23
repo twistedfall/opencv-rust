@@ -1,18 +1,10 @@
-use std::{
-	borrow::Cow,
-	fmt,
-};
+use std::borrow::Cow;
+use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult, Type};
 
-use crate::{
-	Element,
-	Field,
-	GeneratorEnv,
-	IteratorExt,
-	type_ref::{ConstnessOverride, FishStyle, NameStyle},
-	TypeRef,
-};
+use crate::type_ref::{ConstnessOverride, FishStyle, NameStyle};
+use crate::{Element, Field, GeneratorEnv, IteratorExt, TypeRef};
 
 #[derive(Clone)]
 pub struct Function<'tu, 'ge> {
@@ -23,7 +15,11 @@ pub struct Function<'tu, 'ge> {
 
 impl<'tu, 'ge> Function<'tu, 'ge> {
 	pub fn new(type_ref: Type<'tu>, parent_entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self { type_ref, parent_entity, gen_env }
+		Self {
+			type_ref,
+			parent_entity,
+			gen_env,
+		}
 	}
 
 	pub fn arguments(&self) -> Vec<Field<'tu, 'ge>> {
@@ -39,9 +35,7 @@ impl<'tu, 'ge> Function<'tu, 'ge> {
 
 	/// arguments without userdata
 	pub fn rust_arguments(&self) -> Vec<Field<'tu, 'ge>> {
-		self.arguments().into_iter()
-			.filter(|a| !a.is_user_data())
-			.collect()
+		self.arguments().into_iter().filter(|a| !a.is_user_data()).collect()
 	}
 
 	pub fn has_userdata(&self) -> bool {
@@ -53,11 +47,18 @@ impl<'tu, 'ge> Function<'tu, 'ge> {
 	}
 
 	pub fn rust_extern(&self) -> Cow<str> {
-		let args = self.arguments().into_iter()
+		let args = self
+			.arguments()
+			.into_iter()
 			.map(|a| a.type_ref().rust_extern(ConstnessOverride::No).into_owned())
 			.join(", ");
 		let ret = self.return_type();
-		format!(r#"Option<unsafe extern "C" fn({args}) -> {ret}>"#, args=args, ret=ret.rust_extern(ConstnessOverride::No)).into()
+		format!(
+			r#"Option<unsafe extern "C" fn({args}) -> {ret}>"#,
+			args = args,
+			ret = ret.rust_extern(ConstnessOverride::No)
+		)
+		.into()
 	}
 }
 
@@ -87,11 +88,13 @@ impl Element for Function<'_, '_> {
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
-		let args = self.arguments().into_iter()
+		let args = self
+			.arguments()
+			.into_iter()
 			.map(|a| a.type_ref().cpp_full_ext("", false).into_owned())
 			.join(", ");
 		let ret = self.return_type();
-		format!("{ret} (*)({args})", args=args, ret=ret.cpp_full()).into()
+		format!("{ret} (*)({args})", args = args, ret = ret.cpp_full()).into()
 	}
 
 	fn rust_module(&self) -> Cow<str> {
@@ -105,15 +108,18 @@ impl Element for Function<'_, '_> {
 	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
 		let ret = self.return_type();
 		if self.has_userdata() {
-			let args = self.rust_arguments().into_iter()
+			let args = self
+				.rust_arguments()
+				.into_iter()
 				.map(|a| a.type_ref().rust_extern(ConstnessOverride::No).into_owned())
 				.join(", ");
 			format!(
 				"Option{fish}<Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>>",
-				fish=fish_style.rust_qual(),
-				args=args,
-				ret=ret.rust_extern(ConstnessOverride::No),
-			).into()
+				fish = fish_style.rust_qual(),
+				args = args,
+				ret = ret.rust_extern(ConstnessOverride::No),
+			)
+			.into()
 		} else {
 			self.rust_extern()
 		}
@@ -129,7 +135,8 @@ impl fmt::Display for Function<'_, '_> {
 impl fmt::Debug for Function<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("Function");
-		self.update_debug_struct(&mut debug_struct)
+		self
+			.update_debug_struct(&mut debug_struct)
 			.field("arguments", &self.arguments())
 			.finish()
 	}

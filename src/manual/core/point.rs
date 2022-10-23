@@ -33,7 +33,10 @@ impl<T> Point_<T> {
 	}
 
 	#[inline]
-	pub fn cross(self, pt: Point_<T>) -> f64 where f64: From<T> {
+	pub fn cross(self, pt: Point_<T>) -> f64
+	where
+		f64: From<T>,
+	{
 		let self_x: f64 = From::from(self.x);
 		let self_y: f64 = From::from(self.y);
 		let pt_x: f64 = From::from(pt.x);
@@ -42,12 +45,18 @@ impl<T> Point_<T> {
 	}
 
 	#[inline]
-	pub fn dot(self, pt: Point_<T>) -> T where T: NumOps {
+	pub fn dot(self, pt: Point_<T>) -> T
+	where
+		T: NumOps,
+	{
 		self.x * pt.x + self.y * pt.y
 	}
 
 	#[inline]
-	pub fn ddot(self, pt: Point_<T>) -> f64 where f64: From<T> {
+	pub fn ddot(self, pt: Point_<T>) -> f64
+	where
+		f64: From<T>,
+	{
 		let self_x: f64 = From::from(self.x);
 		let self_y: f64 = From::from(self.y);
 		let pt_x: f64 = From::from(pt.x);
@@ -56,19 +65,28 @@ impl<T> Point_<T> {
 	}
 
 	#[inline]
-	pub fn inside(self, rect: Rect_<T>) -> bool where T: PartialOrd + Add<Output=T> + Copy {
+	pub fn inside(self, rect: Rect_<T>) -> bool
+	where
+		T: PartialOrd + Add<Output = T> + Copy,
+	{
 		rect.contains(self)
 	}
 
 	#[inline]
-	pub fn norm(self) -> f64 where f64: From<T> {
+	pub fn norm(self) -> f64
+	where
+		f64: From<T>,
+	{
 		let self_x: f64 = From::from(self.x);
 		let self_y: f64 = From::from(self.y);
 		(self_x.powi(2) + self_y.powi(2)).sqrt()
 	}
 
 	#[inline]
-	pub fn to<D: NumCast>(self) -> Option<Point_<D>> where T: ToPrimitive {
+	pub fn to<D: NumCast>(self) -> Option<Point_<D>>
+	where
+		T: ToPrimitive,
+	{
 		Some(Point_::new(D::from(self.x)?, D::from(self.y)?))
 	}
 
@@ -99,7 +117,10 @@ impl<T> From<Size_<T>> for Point_<T> {
 	}
 }
 
-impl<T> Add for Point_<T> where Self: AddAssign, {
+impl<T> Add for Point_<T>
+where
+	Self: AddAssign,
+{
 	type Output = Self;
 
 	fn add(mut self, rhs: Self) -> Self::Output {
@@ -108,7 +129,10 @@ impl<T> Add for Point_<T> where Self: AddAssign, {
 	}
 }
 
-impl<T> Sub for Point_<T> where Self: SubAssign {
+impl<T> Sub for Point_<T>
+where
+	Self: SubAssign,
+{
 	type Output = Self;
 
 	fn sub(mut self, rhs: Self) -> Self::Output {
@@ -117,7 +141,10 @@ impl<T> Sub for Point_<T> where Self: SubAssign {
 	}
 }
 
-impl<T> Mul<T> for Point_<T> where Self: MulAssign<T> {
+impl<T> Mul<T> for Point_<T>
+where
+	Self: MulAssign<T>,
+{
 	type Output = Self;
 
 	fn mul(mut self, rhs: T) -> Self::Output {
@@ -126,7 +153,10 @@ impl<T> Mul<T> for Point_<T> where Self: MulAssign<T> {
 	}
 }
 
-impl<T> Div<T> for Point_<T> where Self: DivAssign<T> {
+impl<T> Div<T> for Point_<T>
+where
+	Self: DivAssign<T>,
+{
 	type Output = Self;
 
 	fn div(mut self, rhs: T) -> Self::Output {

@@ -1,8 +1,6 @@
-use std::{
-	borrow::Cow,
-	collections::HashMap,
-	iter,
-};
+use std::borrow::Cow;
+use std::collections::HashMap;
+use std::iter;
 
 use once_cell::sync::Lazy;
 use regex::{CaptureLocations, Regex};
@@ -12,9 +10,18 @@ pub trait StringExt {
 	fn replace_in_place(&mut self, from: &str, to: &str) -> bool;
 	fn replacen_in_place_regex(&mut self, from: &Regex, limit: usize, to: &str) -> bool;
 	fn replace_in_place_regex(&mut self, from: &Regex, to: &str) -> bool;
-	fn replacen_in_place_regex_cb<'a>(&mut self, from: &Regex, limit: usize, replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a) -> bool;
-	fn replace_in_place_regex_cb<'a>(&mut self, from: &Regex, replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a) -> bool;
-	fn extend_join(&mut self, it: impl Iterator<Item=impl AsRef<str>>, sep: &str);
+	fn replacen_in_place_regex_cb<'a>(
+		&mut self,
+		from: &Regex,
+		limit: usize,
+		replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a,
+	) -> bool;
+	fn replace_in_place_regex_cb<'a>(
+		&mut self,
+		from: &Regex,
+		replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a,
+	) -> bool;
+	fn extend_join(&mut self, it: impl Iterator<Item = impl AsRef<str>>, sep: &str);
 	fn push_indented_str(&mut self, indent: Indent, val: &str);
 	fn bump_counter(&mut self);
 	fn cleanup_name(&mut self);
@@ -61,16 +68,23 @@ impl StringExt for String {
 						if next_char == '$' {
 							out.push(Elem::Literal(&rep[last_idx..next_idx]));
 							last_idx = next_idx + 1;
-							continue
+							continue;
 						}
-						if let Some(mut num_end_idx) = rep[next_idx..].char_indices().take_while(|(_, c)| c.is_ascii_digit()).map(|(i, _)| i).last() {
+						if let Some(mut num_end_idx) = rep[next_idx..]
+							.char_indices()
+							.take_while(|(_, c)| c.is_ascii_digit())
+							.map(|(i, _)| i)
+							.last()
+						{
 							num_end_idx += next_idx + 1;
 							out.push(Elem::Literal(&rep[last_idx..idx]));
-							out.push(Elem::CaptureGroup(rep[next_idx..num_end_idx].parse().expect("Can't parse as group number")));
+							out.push(Elem::CaptureGroup(
+								rep[next_idx..num_end_idx].parse().expect("Can't parse as group number"),
+							));
 							last_idx = num_end_idx;
 						}
 					} else {
-						break
+						break;
 					}
 				}
 				out.push(Elem::Literal(&rep[last_idx..]));
@@ -87,10 +101,8 @@ impl StringExt for String {
 							} else {
 								0
 							}
-						},
-						Elem::Literal(s) => {
-							s.len()
-						},
+						}
+						Elem::Literal(s) => s.len(),
 					}
 				});
 				let out = rep.iter().fold(String::with_capacity(cap_len), |out, x| {
@@ -101,10 +113,8 @@ impl StringExt for String {
 							} else {
 								""
 							}
-						},
-						Elem::Literal(s) => {
-							s
-						},
+						}
+						Elem::Literal(s) => s,
 					}
 				});
 				Some(out.into())
@@ -130,7 +140,12 @@ impl StringExt for String {
 		self.replacen_in_place_regex(from, 0, to)
 	}
 
-	fn replacen_in_place_regex_cb<'a>(&mut self, from: &Regex, limit: usize, mut replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a) -> bool {
+	fn replacen_in_place_regex_cb<'a>(
+		&mut self,
+		from: &Regex,
+		limit: usize,
+		mut replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a,
+	) -> bool {
 		let mut idx = 0;
 		let mut caps = from.capture_locations();
 		let mut count = 0;
@@ -152,11 +167,15 @@ impl StringExt for String {
 		count != 0
 	}
 
-	fn replace_in_place_regex_cb<'a>(&mut self, from: &Regex, replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a) -> bool {
+	fn replace_in_place_regex_cb<'a>(
+		&mut self,
+		from: &Regex,
+		replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a,
+	) -> bool {
 		self.replacen_in_place_regex_cb(from, 0, replacer)
 	}
 
-	fn extend_join(&mut self, it: impl IntoIterator<Item=impl AsRef<str>>, sep: &str) {
+	fn extend_join(&mut self, it: impl IntoIterator<Item = impl AsRef<str>>, sep: &str) {
 		let mut it = it.into_iter();
 		if let Some(first) = it.next() {
 			let first = first.as_ref();
@@ -184,16 +203,13 @@ impl StringExt for String {
 	}
 
 	fn bump_counter(&mut self) {
-		let idx = self.rfind(|c: char| !c.is_ascii_digit())
+		let idx = self
+			.rfind(|c: char| !c.is_ascii_digit())
 			.map_or_else(|| self.len(), |idx| idx + 1);
 		match self[idx..].parse::<u32>() {
 			// parsing an empty string yields an error so that makes sure that [idx - 1] doesn't panic
-			Ok(counter) if self.as_bytes()[idx - 1] == b'_' => {
-				self.replace_range(idx.., &(counter + 1).to_string())
-			}
-			_ => {
-				self.push_str("_1")
-			}
+			Ok(counter) if self.as_bytes()[idx - 1] == b'_' => self.replace_range(idx.., &(counter + 1).to_string()),
+			_ => self.push_str("_1"),
 		}
 	}
 
@@ -283,13 +299,15 @@ impl CompiledInterpolation<'_> {
 
 		const INVALID_PARAM_NAME: &str = "<parameter not found>";
 
-		let result_len = self.elems.iter()
-			.fold(0, |len, elem| len + match elem {
+		let result_len = self.elems.iter().fold(0, |len, elem| {
+			len + match elem {
 				Compiled::IntpLineStart(s) | Compiled::IntpLiteral(s) => s.len(),
 				Compiled::IntpLineEnd(s) | Compiled::LiteralLine(s) => s.len() + 1,
-				Compiled::Var(name) => params.get(name)
-					.map_or_else(|| INVALID_PARAM_NAME.len(), |x| x.as_ref().len())
-			});
+				Compiled::Var(name) => params
+					.get(name)
+					.map_or_else(|| INVALID_PARAM_NAME.len(), |x| x.as_ref().len()),
+			}
+		});
 		let mut out = String::with_capacity(result_len);
 		let mut line_indent = Indent::default();
 		// interpolate vars keeping indent
@@ -299,14 +317,9 @@ impl CompiledInterpolation<'_> {
 					line_indent = s.detect_indent();
 					out += s;
 				}
-				Compiled::IntpLiteral(s) =>
-					out += s,
+				Compiled::IntpLiteral(s) => out += s,
 				Compiled::Var(name) => {
-					out.push_indented_str(
-						line_indent,
-						params.get(name)
-							.map_or(INVALID_PARAM_NAME, |x| x.as_ref()),
-					)
+					out.push_indented_str(line_indent, params.get(name).map_or(INVALID_PARAM_NAME, |x| x.as_ref()))
 				}
 				Compiled::IntpLineEnd(s) => {
 					out += s;
@@ -364,14 +377,22 @@ impl StrExt for str {
 	}
 
 	fn lines_with_nl(&self) -> LinesWithNl {
-		LinesWithNl { string: self, len: self.len(), idx: 0 }
+		LinesWithNl {
+			string: self,
+			len: self.len(),
+			idx: 0,
+		}
 	}
 
 	fn detect_indent(&self) -> Indent {
-		self.char_indices()
+		self
+			.char_indices()
 			.take_while(|&(_, c)| c == ' ' || c == '\t')
 			.last()
-			.map(|(idx, chr)| Indent { len: idx + 1, symbol: chr })
+			.map(|(idx, chr)| Indent {
+				len: idx + 1,
+				symbol: chr,
+			})
 			.unwrap_or_default()
 	}
 
@@ -426,13 +447,15 @@ impl StrExt for str {
 	}
 
 	fn trim_start_idx(&self) -> usize {
-		self.char_indices()
+		self
+			.char_indices()
 			.find(|(_, c)| !c.is_whitespace())
 			.map_or_else(|| self.len(), |(i, _)| i)
 	}
 
 	fn trim_end_idx(&self) -> usize {
-		self.char_indices()
+		self
+			.char_indices()
 			.rfind(|(_, c)| !c.is_whitespace())
 			.map_or(0, |(i, _)| i + 1)
 	}

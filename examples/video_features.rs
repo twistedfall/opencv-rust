@@ -1,12 +1,4 @@
-use opencv::{
-	core,
-	features2d,
-	highgui,
-	imgproc,
-	prelude::*,
-	Result,
-	videoio,
-};
+use opencv::{core, features2d, highgui, imgproc, prelude::*, videoio, Result};
 
 fn main() -> Result<()> {
 	let window = "video capture";
@@ -27,12 +19,7 @@ fn main() -> Result<()> {
 		cam.read(&mut frame)?;
 		if frame.size()?.width > 0 {
 			let mut gray = Mat::default();
-			imgproc::cvt_color(
-				&frame,
-				&mut gray,
-				imgproc::COLOR_BGR2GRAY,
-				0,
-			)?;
+			imgproc::cvt_color(&frame, &mut gray, imgproc::COLOR_BGR2GRAY, 0)?;
 			let mut kps = opencv::types::VectorOfKeyPoint::new();
 			let mask = Mat::default();
 			orb.detect(&gray, &mut kps, &mask)?;

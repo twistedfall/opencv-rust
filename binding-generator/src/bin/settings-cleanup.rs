@@ -1,26 +1,13 @@
-use std::{
-	cell::RefCell,
-	collections::HashSet,
-	env,
-	fmt,
-	mem,
-	path::{Path, PathBuf},
-};
+use std::cell::RefCell;
+use std::collections::HashSet;
+use std::path::{Path, PathBuf};
+use std::{env, fmt, mem};
 
 use clang::{Clang, Entity, EntityKind, Type};
 
 use opencv_binding_generator::{
-	Class,
-	Element,
-	EntityExt,
-	EntityWalker,
-	EntityWalkerVisitor,
-	Func,
-	FuncId,
-	Generator,
+	opencv_module_from_path, settings, Class, Element, EntityExt, EntityWalker, EntityWalkerVisitor, Func, FuncId, Generator,
 	GeneratorEnv,
-	opencv_module_from_path,
-	settings,
 };
 
 struct FunctionFinder<'tu, 'f> {
@@ -62,12 +49,16 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> bool {
 		match entity.get_kind() {
-			EntityKind::ClassDecl | EntityKind::ClassTemplate | EntityKind::ClassTemplatePartialSpecialization
+			EntityKind::ClassDecl
+			| EntityKind::ClassTemplate
+			| EntityKind::ClassTemplatePartialSpecialization
 			| EntityKind::StructDecl => {
 				let c = Class::new(entity, &self.gen_env);
 				if !c.is_template() {
 					let fields = c.fields();
-					let mut methods = c.methods(None).into_iter()
+					let mut methods = c
+						.methods(None)
+						.into_iter()
 						.chain(c.field_methods(fields.iter(), None))
 						.collect::<Vec<_>>();
 					entity.walk_methods_while(|child| {
@@ -80,9 +71,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 					for f in methods {
 						self.update_used_func(&f);
 					}
-					entity.walk_classes_while(|child| {
-						self.visit_entity(child)
-					});
+					entity.walk_classes_while(|child| self.visit_entity(child));
 				}
 				true
 			}
@@ -91,16 +80,14 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 				self.update_used_func(&f);
 				true
 			}
-			_ => true
+			_ => true,
 		}
 	}
 }
 
-fn show<S: fmt::Display>(c: impl IntoIterator<Item=S>) {
+fn show<S: fmt::Display>(c: impl IntoIterator<Item = S>) {
 	let v = c.into_iter().collect::<Vec<_>>();
-	let mut sorted = v.iter()
-		.map(|s| s.to_string())
-		.collect::<Vec<_>>();
+	let mut sorted = v.iter().map(|s| s.to_string()).collect::<Vec<_>>();
 	sorted.sort_unstable();
 	for f in sorted {
 		println!("{}", f);
@@ -116,22 +103,22 @@ fn main() {
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
 	let mut func_manual_unused = settings::FUNC_MANUAL.keys().copied().collect::<HashSet<_>>();
 	let mut func_specialize_unused = settings::FUNC_SPECIALIZE.keys().copied().collect::<HashSet<_>>();
-	let mut argument_override_unused = settings::ARGUMENT_OVERRIDE.keys().cloned()
+	let mut argument_override_unused = settings::ARGUMENT_OVERRIDE
+		.keys()
+		.cloned()
 		.map(|func_id| func_id.name().to_string())
 		.collect::<HashSet<_>>();
 	for opencv_header_dir in opencv_header_dirs {
 		println!("Processing header dir: {}", opencv_header_dir.display());
-		let modules = opencv_header_dir.join("opencv2").read_dir().expect("Can't read dir")
+		let modules = opencv_header_dir
+			.join("opencv2")
+			.read_dir()
+			.expect("Can't read dir")
 			.map(|p| p.expect("Bad path").path())
-			.filter(|p| p.is_file()
-				&& p.extension()
-				.map_or(false, |e| e == "hpp")
-			)
+			.filter(|p| p.is_file() && p.extension().map_or(false, |e| e == "hpp"))
 			.filter_map(|mut p| {
 				p.set_extension("");
-				p.file_name()
-					.and_then(|f| f.to_str())
-					.map(|f| f.to_string())
+				p.file_name().and_then(|f| f.to_str()).map(|f| f.to_string())
 			});
 		let clang = Clang::new().expect("Cannot initialize clang");
 		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir, clang);
@@ -150,7 +137,7 @@ fn main() {
 					func_specialize_unused: RefCell::new(&mut func_specialize_unused),
 					argument_override_unused: RefCell::new(&mut argument_override_unused),
 				});
-				});
+			});
 		}
 	}
 	println!("Unused entries in settings::FUNC_RENAME ({}):", func_rename_unused.len());
@@ -161,8 +148,14 @@ fn main() {
 	show(func_unsafe_unused);
 	println!("Unused entries in settings::FUNC_UNSAFE ({}):", func_manual_unused.len());
 	show(func_manual_unused);
-	println!("Unused entries in settings::FUNC_SPECIALIZE ({}):", func_specialize_unused.len());
+	println!(
+		"Unused entries in settings::FUNC_SPECIALIZE ({}):",
+		func_specialize_unused.len()
+	);
 	show(func_specialize_unused);
-	println!("Unused entries in settings::ARGUMENT_OVERRIDE ({}):", argument_override_unused.len());
+	println!(
+		"Unused entries in settings::ARGUMENT_OVERRIDE ({}):",
+		argument_override_unused.len()
+	);
 	show(argument_override_unused);
 }

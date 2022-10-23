@@ -1,33 +1,13 @@
 use matches::assert_matches;
 
 use opencv::{
-	core::{
-		self,
-		DMatch,
-		Point2d,
-		Point2f,
-		Scalar,
-		SparseMat_Hdr,
-		Vec4i,
-	},
-	Error,
+	core::{self, DMatch, Point2d, Point2f, Scalar, SparseMat_Hdr, Vec4i},
 	prelude::*,
-	Result,
 	types::{
-		VectorOfbool,
-		VectorOfDMatch,
-		VectorOff64,
-		VectorOfi32,
-		VectorOfi8,
-		VectorOfMat,
-		VectorOfPoint2d,
-		VectorOfPoint2f,
-		VectorOfRange,
-		VectorOfString,
-		VectorOfu8,
-		VectorOfVec4i,
-		VectorOfVectorOfPoint2f,
-	}
+		VectorOfDMatch, VectorOfMat, VectorOfPoint2d, VectorOfPoint2f, VectorOfRange, VectorOfString, VectorOfVec4i,
+		VectorOfVectorOfPoint2f, VectorOfbool, VectorOff64, VectorOfi32, VectorOfi8, VectorOfu8,
+	},
+	Error, Result,
 };
 
 #[test]
@@ -45,7 +25,9 @@ fn boxed() -> Result<()> {
 		assert_eq!(i32::typ(), vec.get(2)?.typ());
 		assert_eq!(3, *vec.get(2)?.at_2d::<i32>(0, 1)?);
 		vec.set(0, Mat::new_rows_cols_with_default(1, 3, f32::typ(), Scalar::all(3.))?)?;
-		unsafe { vec.set_unchecked(1, Mat::new_rows_cols_with_default(1, 3, f64::typ(), Scalar::all(4.))?); }
+		unsafe {
+			vec.set_unchecked(1, Mat::new_rows_cols_with_default(1, 3, f64::typ(), Scalar::all(4.))?);
+		}
 		vec.set(2, Mat::new_rows_cols_with_default(1, 3, i16::typ(), Scalar::all(5.))?)?;
 		assert_eq!(f32::typ(), unsafe { vec.get_unchecked(0) }.typ());
 		assert_eq!(3., *unsafe { vec.get_unchecked(0) }.at_2d::<f32>(0, 1)?);
@@ -57,7 +39,10 @@ fn boxed() -> Result<()> {
 
 	#[cfg(ocvrs_has_module_imgproc)]
 	{
-		use opencv::{imgproc, core::{Vec3b, Point}};
+		use opencv::{
+			core::{Point, Vec3b},
+			imgproc,
+		};
 
 		let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::typ(), Scalar::default())?;
 		let mut ps = VectorOfMat::new();
@@ -96,7 +81,9 @@ fn string() -> Result<()> {
 	assert_eq!("888", vec.get(3)?);
 	assert_eq!("", vec.get(4)?);
 	vec.set(0, "qqq")?;
-	unsafe { vec.set_unchecked(1, "www"); }
+	unsafe {
+		vec.set_unchecked(1, "www");
+	}
 	vec.set(2, "eee")?;
 	assert_eq!("qqq", unsafe { vec.get_unchecked(0) });
 	assert_eq!("www", unsafe { vec.get_unchecked(1) });
@@ -115,7 +102,9 @@ fn boolean() -> Result<()> {
 	assert_eq!(true, vec.get(1)?);
 	assert_eq!(false, vec.get(2)?);
 	vec.set(0, false)?;
-	unsafe { vec.set_unchecked(1, false); }
+	unsafe {
+		vec.set_unchecked(1, false);
+	}
 	vec.set(2, true)?;
 	assert_eq!(false, unsafe { vec.get_unchecked(0) });
 	assert_eq!(false, unsafe { vec.get_unchecked(1) });
@@ -287,7 +276,13 @@ fn insert() -> Result<()> {
 	assert_eq!(5, vec.len());
 	assert_eq!(8, vec.get(0)?);
 	assert_eq!(1, vec.get(1)?);
-	assert_matches!(vec.insert(10, 10), Err(Error { code: core::StsOutOfRange, .. }));
+	assert_matches!(
+		vec.insert(10, 10),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
 	vec.insert(5, 10)?;
 	assert_eq!(6, vec.len());
 	assert_eq!(10, vec.get(5)?);
@@ -312,7 +307,13 @@ fn remove() -> Result<()> {
 	vec.clear();
 	assert_eq!(0, vec.len());
 	assert_eq!(10, vec.capacity());
-	assert_matches!(vec.remove(0), Err(Error { code: core::StsOutOfRange, .. }));
+	assert_matches!(
+		vec.remove(0),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
 	Ok(())
 }
 
@@ -329,8 +330,20 @@ fn swap() -> Result<()> {
 		assert_eq!(3, vec.get(0)?);
 		assert_eq!(1, vec.get(1)?);
 
-		assert_matches!(vec.swap(0, 4), Err(Error { code: core::StsOutOfRange, .. }));
-		assert_matches!(vec.swap(6, 1), Err(Error { code: core::StsOutOfRange, .. }));
+		assert_matches!(
+			vec.swap(0, 4),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			vec.swap(6, 1),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
 	}
 
 	{
@@ -380,11 +393,29 @@ fn nth() -> Result<()> {
 #[test]
 fn out_of_bounds() -> Result<()> {
 	let mut vec = VectorOff64::new();
-	assert_matches!(vec.get(0), Err(Error { code: core::StsOutOfRange, .. }));
+	assert_matches!(
+		vec.get(0),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
 	vec.push(1.);
 	vec.push(2.);
-	assert_matches!(vec.get(3), Err(Error { code: core::StsOutOfRange, .. }));
-	assert_matches!(vec.set(3, 5.), Err(Error { code: core::StsOutOfRange, .. }));
+	assert_matches!(
+		vec.get(3),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
+	assert_matches!(
+		vec.set(3, 5.),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
 	Ok(())
 }
 
@@ -529,7 +560,10 @@ fn as_slice() -> Result<()> {
 		slice[0].y = 90.;
 		slice[1] = Point2d::new(91.5, 92.6);
 		slice.swap(0, 1);
-		assert_eq!(&[Point2d::new(91.5, 92.6), Point2d::new(15., 90.), Point2d::new(-40.333, 89.)], vec.as_slice());
+		assert_eq!(
+			&[Point2d::new(91.5, 92.6), Point2d::new(15., 90.), Point2d::new(-40.333, 89.)],
+			vec.as_slice()
+		);
 	}
 	{
 		let default = DMatch::default()?;
@@ -675,7 +709,10 @@ fn clone() -> Result<()> {
 		let vec_of_vec_clone = vec_of_vec.clone();
 		assert_eq!(21., vec_of_vec.get(1)?.get(0)?.y);
 		assert_eq!(21., vec_of_vec_clone.get(1)?.get(0)?.y);
-		vec_of_vec.set(1, VectorOfPoint2f::from_iter(vec![Point2f::new(40., 41.), Point2f::new(42., 43.)]))?;
+		vec_of_vec.set(
+			1,
+			VectorOfPoint2f::from_iter(vec![Point2f::new(40., 41.), Point2f::new(42., 43.)]),
+		)?;
 		assert_eq!(41., vec_of_vec.get(1)?.get(0)?.y);
 		assert_eq!(21., vec_of_vec_clone.get(1)?.get(0)?.y);
 	}
@@ -727,4 +764,3 @@ fn sync() {
 	must_be_sync(VectorOfString::new());
 	must_be_sync(VectorOfPoint2d::new());
 }
-

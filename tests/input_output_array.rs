@@ -1,15 +1,15 @@
 use matches::assert_matches;
 
-use opencv::{
-	core::{self, Matx12d, Scalar, ToInputArray, ToInputOutputArray, ToOutputArray, UMat, UMatUsageFlags, Vec2b, VecN},
-	prelude::*,
-	Result,
-	types::{VectorOff64, VectorOfu8},
-};
 #[cfg(ocvrs_opencv_branch_4)]
 use opencv::core::AccessFlag::ACCESS_READ;
 #[cfg(not(ocvrs_opencv_branch_4))]
 use opencv::core::ACCESS_READ;
+use opencv::{
+	core::{self, Matx12d, Scalar, ToInputArray, ToInputOutputArray, ToOutputArray, UMat, UMatUsageFlags, Vec2b, VecN},
+	prelude::*,
+	types::{VectorOff64, VectorOfu8},
+	Result,
+};
 
 #[test]
 fn input_array() -> Result<()> {
@@ -33,9 +33,21 @@ fn input_output_array_types() -> Result<()> {
 	assert!(Matx12d::default().output_array()?.is_matx()?);
 	assert!(Matx12d::default().input_output_array()?.is_matx()?);
 
-	assert!(UMat::new_rows_cols_with_default(1, 1, u8::typ(), Scalar::from(8.), UMatUsageFlags::USAGE_DEFAULT)?.input_array()?.is_umat()?);
-	assert!(UMat::new_rows_cols_with_default(1, 1, u8::typ(), Scalar::from(8.), UMatUsageFlags::USAGE_DEFAULT)?.output_array()?.is_umat()?);
-	assert!(UMat::new_rows_cols_with_default(1, 1, u8::typ(), Scalar::from(8.), UMatUsageFlags::USAGE_DEFAULT)?.input_output_array()?.is_umat()?);
+	assert!(
+		UMat::new_rows_cols_with_default(1, 1, u8::typ(), Scalar::from(8.), UMatUsageFlags::USAGE_DEFAULT)?
+			.input_array()?
+			.is_umat()?
+	);
+	assert!(
+		UMat::new_rows_cols_with_default(1, 1, u8::typ(), Scalar::from(8.), UMatUsageFlags::USAGE_DEFAULT)?
+			.output_array()?
+			.is_umat()?
+	);
+	assert!(
+		UMat::new_rows_cols_with_default(1, 1, u8::typ(), Scalar::from(8.), UMatUsageFlags::USAGE_DEFAULT)?
+			.input_output_array()?
+			.is_umat()?
+	);
 
 	assert!(Scalar::default().input_array()?.is_matx()?);
 	assert!(Scalar::default().output_array()?.is_matx()?);
@@ -83,19 +95,9 @@ fn input_output_array() -> Result<()> {
 	}
 
 	{
-		let mut mat = Mat::from_slice_2d(&[
-			&[ 1,  2,  3,  4],
-			&[ 5,  6,  7,  8],
-			&[ 9, 10, 11, 12],
-			&[13, 14, 15, 16u8],
-		])?;
+		let mut mat = Mat::from_slice_2d(&[&[1, 2, 3, 4], &[5, 6, 7, 8], &[9, 10, 11, 12], &[13, 14, 15, 16u8]])?;
 		core::complete_symm(&mut mat, false)?;
-		let expected = Mat::from_slice_2d(&[
-			&[ 1,  2,  3,  4],
-			&[ 2,  6,  7,  8],
-			&[ 3,  7, 11, 12],
-			&[ 4,  8, 12, 16u8],
-		])?;
+		let expected = Mat::from_slice_2d(&[&[1, 2, 3, 4], &[2, 6, 7, 8], &[3, 7, 11, 12], &[4, 8, 12, 16u8]])?;
 		assert_eq!(mat.to_vec_2d::<u8>()?, expected.to_vec_2d()?);
 	}
 

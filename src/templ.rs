@@ -1,8 +1,4 @@
-use std::{
-	ffi::CStr,
-	os::raw::c_char,
-	slice,
-};
+use std::{ffi::CStr, os::raw::c_char, slice};
 
 use crate::platform_types::size_t;
 
@@ -65,7 +61,7 @@ macro_rules! userdata_arg {
 		} else {
 			0 as _ // fixme, remove previous callback
 		};
-	}
+	};
 }
 
 macro_rules! input_array_arg {
@@ -116,17 +112,14 @@ macro_rules! return_receive {
 /// The return type of this function goes into `receive_string`
 #[no_mangle]
 unsafe extern "C" fn ocvrs_create_string(s: *const c_char) -> *mut String {
-	let s = CStr::from_ptr(s)
-		.to_string_lossy()
-		.into_owned();
+	let s = CStr::from_ptr(s).to_string_lossy().into_owned();
 	Box::into_raw(Box::new(s))
 }
 
 /// The return type of this function goes into `receive_byte_string`
 #[no_mangle]
 unsafe extern "C" fn ocvrs_create_byte_string(v: *const u8, len: size_t) -> *mut Vec<u8> {
-	let v = slice::from_raw_parts(v, len)
-		.to_vec();
+	let v = slice::from_raw_parts(v, len).to_vec();
 	Box::into_raw(Box::new(v))
 }
 

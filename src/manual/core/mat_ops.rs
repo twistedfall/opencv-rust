@@ -106,15 +106,13 @@ macro_rules! impl_ops_core {
 					}
 					(MatExprResult::Err(e), MatExprResult::Ok(_)) => MatExprResult::Err(e),
 					(MatExprResult::Ok(_), MatExprResult::Err(e)) => MatExprResult::Err(e),
-					(MatExprResult::Err(lhs_e), MatExprResult::Err(rhs_e)) => {
-						MatExprResult::Err(crate::Error::new(
-							0,
-							format!(
-								"Both side of operator has error: lhs-error={} rhs-error={}",
-								lhs_e, rhs_e
-							),
-						))
-					}
+					(MatExprResult::Err(lhs_e), MatExprResult::Err(rhs_e)) => MatExprResult::Err(crate::Error::new(
+						0,
+						format!(
+							"Both side of operator has error: lhs-error={} rhs-error={}",
+							lhs_e, rhs_e
+						),
+					)),
 				}
 			}
 		}

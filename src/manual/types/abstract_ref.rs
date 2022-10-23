@@ -1,7 +1,4 @@
-use std::{
-	ffi::c_void,
-	marker::PhantomData,
-};
+use std::{ffi::c_void, marker::PhantomData};
 
 use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
 

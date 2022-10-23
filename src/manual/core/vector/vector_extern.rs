@@ -10,27 +10,57 @@ use crate::{
 ///
 /// It is mostly used internally, feasibility of implementing it for your own types hasn't been
 /// considered. Use is mostly for external type constraints.
-pub trait VectorElement: for<'a> OpenCVType<'a> where Vector<Self>: VectorExtern<Self> {
-	#[doc(hidden)] fn opencv_vector_to_vec(v: &Vector<Self>) -> Vec<Self>;
+pub trait VectorElement: for<'a> OpenCVType<'a>
+where
+	Vector<Self>: VectorExtern<Self>,
+{
+	#[doc(hidden)]
+	fn opencv_vector_to_vec(v: &Vector<Self>) -> Vec<Self>;
 }
 
 #[doc(hidden)]
 pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
-	#[doc(hidden)] unsafe fn extern_new() -> *mut c_void;
-	#[doc(hidden)] unsafe fn extern_delete(&mut self);
-	#[doc(hidden)] unsafe fn extern_len(&self) -> size_t;
-	#[doc(hidden)] unsafe fn extern_is_empty(&self) -> bool;
-	#[doc(hidden)] unsafe fn extern_capacity(&self) -> size_t;
-	#[doc(hidden)] unsafe fn extern_shrink_to_fit(&mut self);
-	#[doc(hidden)] unsafe fn extern_reserve(&mut self, additional: size_t);
-	#[doc(hidden)] unsafe fn extern_remove(&mut self, index: size_t);
-	#[doc(hidden)] unsafe fn extern_swap(&mut self, index1: size_t, index2: size_t);
-	#[doc(hidden)] unsafe fn extern_clear(&mut self);
-	#[doc(hidden)] unsafe fn extern_get(&self, index: size_t) -> <T as OpenCVType<'_>>::ExternReceive;
-	#[doc(hidden)] unsafe fn extern_push<'a>(&mut self, val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
-	#[doc(hidden)] unsafe fn extern_push_owned(&mut self, val: <<T as OpenCVType>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
-	#[doc(hidden)] unsafe fn extern_insert<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
-	#[doc(hidden)] unsafe fn extern_set<'a>(&mut self, index: size_t, val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
+	#[doc(hidden)]
+	unsafe fn extern_new() -> *mut c_void;
+	#[doc(hidden)]
+	unsafe fn extern_delete(&mut self);
+	#[doc(hidden)]
+	unsafe fn extern_len(&self) -> size_t;
+	#[doc(hidden)]
+	unsafe fn extern_is_empty(&self) -> bool;
+	#[doc(hidden)]
+	unsafe fn extern_capacity(&self) -> size_t;
+	#[doc(hidden)]
+	unsafe fn extern_shrink_to_fit(&mut self);
+	#[doc(hidden)]
+	unsafe fn extern_reserve(&mut self, additional: size_t);
+	#[doc(hidden)]
+	unsafe fn extern_remove(&mut self, index: size_t);
+	#[doc(hidden)]
+	unsafe fn extern_swap(&mut self, index1: size_t, index2: size_t);
+	#[doc(hidden)]
+	unsafe fn extern_clear(&mut self);
+	#[doc(hidden)]
+	unsafe fn extern_get(&self, index: size_t) -> <T as OpenCVType<'_>>::ExternReceive;
+	#[doc(hidden)]
+	unsafe fn extern_push<'a>(
+		&mut self,
+		val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend,
+	);
+	#[doc(hidden)]
+	unsafe fn extern_push_owned(&mut self, val: <<T as OpenCVType>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
+	#[doc(hidden)]
+	unsafe fn extern_insert<'a>(
+		&mut self,
+		index: size_t,
+		val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend,
+	);
+	#[doc(hidden)]
+	unsafe fn extern_set<'a>(
+		&mut self,
+		index: size_t,
+		val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend,
+	);
 }
 
 #[macro_export]
@@ -155,9 +185,12 @@ macro_rules! vector_extern {
 
 #[doc(hidden)]
 pub trait VectorExternCopyNonBool<T> {
-	#[doc(hidden)] unsafe fn extern_data(&self) -> *const T;
-	#[doc(hidden)] unsafe fn extern_data_mut(&mut self) -> *mut T;
-	#[doc(hidden)] unsafe fn extern_from_slice(data: *const T, len: size_t) -> *mut c_void;
+	#[doc(hidden)]
+	unsafe fn extern_data(&self) -> *const T;
+	#[doc(hidden)]
+	unsafe fn extern_data_mut(&mut self) -> *mut T;
+	#[doc(hidden)]
+	unsafe fn extern_from_slice(data: *const T, len: size_t) -> *mut c_void;
 }
 
 #[macro_export]
@@ -171,22 +204,33 @@ macro_rules! vector_copy_non_bool {
 		$extern_from_slice: ident,
 		$extern_clone: ident $(,)?
 	) => {
-		impl $crate::manual::core::Vector<$type> where $crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type> {
+		impl $crate::manual::core::Vector<$type>
+		where
+			$crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type>,
+		{
 			#[inline]
 			unsafe fn extern_clone(&self) -> $vector_extern_mut {
-				extern "C" { fn $extern_clone(instance: $vector_extern_const) -> $vector_extern_mut; }
+				extern "C" {
+					fn $extern_clone(instance: $vector_extern_const) -> $vector_extern_mut;
+				}
 				$extern_clone(self.as_raw())
 			}
 		}
 
-		impl $crate::manual::core::VectorElement for $type where $crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type> {
+		impl $crate::manual::core::VectorElement for $type
+		where
+			$crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type>,
+		{
 			#[inline]
 			fn opencv_vector_to_vec(v: &$crate::manual::core::Vector<$type>) -> std::vec::Vec<$type> {
 				v.as_slice().to_vec()
 			}
 		}
 
-		impl std::clone::Clone for $crate::manual::core::Vector<$type> where Self: $crate::manual::core::VectorExtern<$type> {
+		impl std::clone::Clone for $crate::manual::core::Vector<$type>
+		where
+			Self: $crate::manual::core::VectorExtern<$type>,
+		{
 			#[inline]
 			fn clone(&self) -> Self {
 				unsafe { Self::from_raw(self.extern_clone()) }
@@ -196,19 +240,25 @@ macro_rules! vector_copy_non_bool {
 		impl $crate::manual::core::VectorExternCopyNonBool<$type> for $crate::manual::core::Vector<$type> {
 			#[inline]
 			unsafe fn extern_data(&self) -> *const $type {
-				extern "C" { fn $extern_data_const(instance: $vector_extern_const) -> *const $type; }
+				extern "C" {
+					fn $extern_data_const(instance: $vector_extern_const) -> *const $type;
+				}
 				$extern_data_const(self.as_raw())
 			}
 
 			#[inline]
 			unsafe fn extern_data_mut(&mut self) -> *mut $type {
-				extern "C" { fn $extern_data_mut(instance: $vector_extern_mut) -> *mut $type; }
+				extern "C" {
+					fn $extern_data_mut(instance: $vector_extern_mut) -> *mut $type;
+				}
 				$extern_data_mut(self.as_raw_mut())
 			}
 
 			#[inline]
 			unsafe fn extern_from_slice(data: *const $type, len: $crate::platform_types::size_t) -> $vector_extern_mut {
-				extern "C" { fn $extern_from_slice(data: *const $type, len: $crate::platform_types::size_t) -> $vector_extern_mut; }
+				extern "C" {
+					fn $extern_from_slice(data: *const $type, len: $crate::platform_types::size_t) -> $vector_extern_mut;
+				}
 				$extern_from_slice(data, len)
 			}
 		}
@@ -218,23 +268,28 @@ macro_rules! vector_copy_non_bool {
 #[macro_export]
 macro_rules! vector_non_copy_or_bool {
 	(clone $type: ty) => {
-		impl std::clone::Clone for $crate::manual::core::Vector<$type> where Self: $crate::manual::core::VectorExtern<$type> {
+		impl std::clone::Clone for $crate::manual::core::Vector<$type>
+		where
+			Self: $crate::manual::core::VectorExtern<$type>,
+		{
 			#[inline]
 			fn clone(&self) -> Self {
 				let mut out = Self::with_capacity(self.capacity());
-				self.iter()
-					.for_each(|elem| out.push_owned(elem.clone()));
+				self.iter().for_each(|elem| out.push_owned(elem.clone()));
 				out
 			}
 		}
 		vector_non_copy_or_bool! { $type }
 	};
 	($type: ty) => {
-		impl $crate::manual::core::VectorElement for $type where $crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type> {
+		impl $crate::manual::core::VectorElement for $type
+		where
+			$crate::manual::core::Vector<$type>: $crate::manual::core::VectorExtern<$type>,
+		{
 			#[inline]
 			fn opencv_vector_to_vec(v: &$crate::manual::core::Vector<$type>) -> std::vec::Vec<$type> {
 				(0..v.len()).map(|x| unsafe { v.get_unchecked(x) }).collect()
 			}
 		}
-	}
+	};
 }

@@ -3,12 +3,9 @@ use std::collections::HashMap;
 use maplit::hashmap;
 use regex::Regex;
 
-use crate::{
-	comment::render_doc_comment,
-	StrExt,
-	string_ext::Indent,
-	StringExt,
-};
+use crate::comment::render_doc_comment;
+use crate::string_ext::Indent;
+use crate::{StrExt, StringExt};
 
 #[test]
 fn replace_in_place() {
@@ -205,17 +202,13 @@ fn replace_in_place_regex_cb() {
 
 	{
 		let mut s = "ABCABCABCABABC".to_string();
-		assert!(s.replace_in_place_regex_cb(&Regex::new("AB").unwrap(), |_, _| {
-			Some("!!!".into())
-		}));
+		assert!(s.replace_in_place_regex_cb(&Regex::new("AB").unwrap(), |_, _| { Some("!!!".into()) }));
 		assert_eq!(s, "!!!C!!!C!!!C!!!!!!C");
 	}
 
 	{
 		let mut s = "ABCABCABCABABC".to_string();
-		assert!(s.replace_in_place_regex_cb(&Regex::new("AB").unwrap(), |_, _| {
-			Some("!".into())
-		}));
+		assert!(s.replace_in_place_regex_cb(&Regex::new("AB").unwrap(), |_, _| { Some("!".into()) }));
 		assert_eq!(s, "!C!C!C!!C");
 	}
 
@@ -231,25 +224,19 @@ fn replace_in_place_regex_cb() {
 
 	{
 		let mut s = "".to_string();
-		assert!(!s.replace_in_place_regex_cb(&Regex::new("AB").unwrap(), |_, _| {
-			Some("!".into())
-		}));
+		assert!(!s.replace_in_place_regex_cb(&Regex::new("AB").unwrap(), |_, _| { Some("!".into()) }));
 		assert_eq!(s, "");
 	}
 
 	{
 		let mut s = "ABCABCABCABABC".to_string();
-		assert!(!s.replace_in_place_regex_cb(&Regex::new("D").unwrap(), |_, _| {
-			Some("!".into())
-		}));
+		assert!(!s.replace_in_place_regex_cb(&Regex::new("D").unwrap(), |_, _| { Some("!".into()) }));
 		assert_eq!(s, "ABCABCABCABABC");
 	}
 
 	{
 		let mut s = "ABC".to_string();
-		assert!(!s.replace_in_place_regex_cb(&Regex::new("").unwrap(), |_, _| {
-			Some("!".into())
-		}));
+		assert!(!s.replace_in_place_regex_cb(&Regex::new("").unwrap(), |_, _| { Some("!".into()) }));
 		assert_eq!(s, "ABC");
 	}
 }
@@ -339,8 +326,11 @@ fn interpolate() {
 			"name2" => "test2",
 			"name3" => "test3",
 		});
-		assert_eq!("test1, test2, {{name3
-		}}, {<parameter not found>}", res);
+		assert_eq!(
+			"test1, test2, {{name3
+		}}, {<parameter not found>}",
+			res
+		);
 	}
 
 	{
@@ -357,13 +347,15 @@ fn interpolate() {
 			"name3" => "test3",
 		});
 		assert_eq!(
-"test1 tt
+			"test1 tt
 line
 	start test21
 	test22 end
 test3 end
 
-", res);
+",
+			res
+		);
 	}
 
 	{
@@ -377,9 +369,11 @@ test3 end
 			"name3" => "",
 		});
 		assert_eq!(
-"test1
+			"test1
    test21
-   test22", res);
+   test22",
+			res
+		);
 	}
 
 	{

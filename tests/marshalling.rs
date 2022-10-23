@@ -1,11 +1,18 @@
 //! Contains all tests that cover marshalling types to and from C++
 
-use opencv::{core::{self, Scalar}, Error, prelude::*, Result};
+use opencv::{
+	core::{self, Scalar},
+	prelude::*,
+	Error, Result,
+};
 
 /// Passing simple struct as argument
 #[test]
 fn simple_struct_arg() -> Result<()> {
-	use opencv::{imgproc, core::{Point, Size}};
+	use opencv::{
+		core::{Point, Size},
+		imgproc,
+	};
 
 	let res = imgproc::get_structuring_element(imgproc::MORPH_CROSS, Size { width: 100, height: 100 }, Point { x: 50, y: 50 })?;
 	assert_eq!(res.typ(), 0);
@@ -57,12 +64,18 @@ fn callback() -> Result<()> {
 			highgui::named_window("test_1", 0)?;
 			let mut value = 50;
 			let cb_value = Arc::new(Mutex::new(0));
-			highgui::create_trackbar("test_track_1", "test_1", Some(&mut value), 100, Some(Box::new({
-				let cb_value = cb_value.clone();
-				move |s| {
-					*cb_value.lock().unwrap() = s;
-				}
-			})))?;
+			highgui::create_trackbar(
+				"test_track_1",
+				"test_1",
+				Some(&mut value),
+				100,
+				Some(Box::new({
+					let cb_value = cb_value.clone();
+					move |s| {
+						*cb_value.lock().unwrap() = s;
+					}
+				})),
+			)?;
 			assert_eq!(value, 50);
 			highgui::set_trackbar_pos("test_track_1", "test_1", 10)?;
 			assert_eq!(value, 10);
@@ -72,12 +85,18 @@ fn callback() -> Result<()> {
 		{
 			highgui::named_window("test_2", 0)?;
 			let cb_value = Arc::new(Mutex::new(0));
-			highgui::create_trackbar("test_track_2", "test_2", None, 100, Some(Box::new({
-				let cb_value = cb_value.clone();
-				move |s| {
-					*cb_value.lock().unwrap() = s;
-				}
-			})))?;
+			highgui::create_trackbar(
+				"test_track_2",
+				"test_2",
+				None,
+				100,
+				Some(Box::new({
+					let cb_value = cb_value.clone();
+					move |s| {
+						*cb_value.lock().unwrap() = s;
+					}
+				})),
+			)?;
 			highgui::set_trackbar_pos("test_track_2", "test_2", 10)?;
 			assert_eq!(*cb_value.lock().unwrap(), 10);
 		}
@@ -113,7 +132,7 @@ fn string_return() -> Result<()> {
 #[test]
 fn string_out_argument() -> Result<()> {
 	#![cfg(ocvrs_opencv_branch_4)]
-	use opencv::core::{FileStorage_Mode, FileStorage, FileNode};
+	use opencv::core::{FileNode, FileStorage, FileStorage_Mode};
 
 	use matches::assert_matches;
 
@@ -133,7 +152,13 @@ fn string_out_argument() -> Result<()> {
 		let st = FileStorage::new("", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32, "")?;
 		let node = FileNode::new(&st, 0, 0)?;
 		let mut out = String::new();
-		assert_matches!(core::read_str(&node, &mut out, "123"), Err(Error { code: core::StsAssert, .. }));
+		assert_matches!(
+			core::read_str(&node, &mut out, "123"),
+			Err(Error {
+				code: core::StsAssert,
+				..
+			})
+		);
 		assert_eq!("", out);
 	}
 
@@ -189,7 +214,10 @@ fn field_access_on_ptr() -> Result<()> {
 	ptr.set_corner_refinement_win_size(6);
 	assert_eq!(ptr.corner_refinement_win_size(), 6);
 
-	assert_eq!(plain.corner_refinement_max_iterations(), ptr.corner_refinement_max_iterations());
+	assert_eq!(
+		plain.corner_refinement_max_iterations(),
+		ptr.corner_refinement_max_iterations()
+	);
 	ptr.set_corner_refinement_max_iterations(31);
 	assert_eq!(ptr.corner_refinement_max_iterations(), 31);
 
@@ -201,11 +229,17 @@ fn field_access_on_ptr() -> Result<()> {
 	ptr.set_marker_border_bits(2);
 	assert_eq!(ptr.marker_border_bits(), 2);
 
-	assert_eq!(plain.perspective_remove_ignored_margin_per_cell(), ptr.perspective_remove_ignored_margin_per_cell());
+	assert_eq!(
+		plain.perspective_remove_ignored_margin_per_cell(),
+		ptr.perspective_remove_ignored_margin_per_cell()
+	);
 	ptr.set_perspective_remove_ignored_margin_per_cell(1.0);
 	assert_eq!(ptr.perspective_remove_ignored_margin_per_cell(), 1.0);
 
-	assert_eq!(plain.max_erroneous_bits_in_border_rate(), ptr.max_erroneous_bits_in_border_rate());
+	assert_eq!(
+		plain.max_erroneous_bits_in_border_rate(),
+		ptr.max_erroneous_bits_in_border_rate()
+	);
 	ptr.set_max_erroneous_bits_in_border_rate(1.0);
 	assert_eq!(ptr.max_erroneous_bits_in_border_rate(), 1.0);
 
@@ -217,7 +251,10 @@ fn field_access_on_ptr() -> Result<()> {
 	ptr.set_error_correction_rate(1.0);
 	assert_eq!(ptr.error_correction_rate(), 1.0);
 
-	assert_eq!(plain.perspective_remove_pixel_per_cell(), ptr.perspective_remove_pixel_per_cell());
+	assert_eq!(
+		plain.perspective_remove_pixel_per_cell(),
+		ptr.perspective_remove_pixel_per_cell()
+	);
 	ptr.set_perspective_remove_pixel_per_cell(5);
 	assert_eq!(ptr.perspective_remove_pixel_per_cell(), 5);
 
@@ -234,7 +271,7 @@ fn field_access_on_ptr() -> Result<()> {
 fn simple_struct_return_infallible() -> Result<()> {
 	#![cfg(ocvrs_has_module_imgproc)]
 	use opencv::{
-		core::{Vector, Rect, Point2f, Size2f},
+		core::{Point2f, Rect, Size2f, Vector},
 		imgproc,
 	};
 	/*

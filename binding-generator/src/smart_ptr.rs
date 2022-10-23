@@ -1,19 +1,10 @@
-use std::{
-	borrow::Cow,
-	fmt,
-};
+use std::borrow::Cow;
+use std::fmt;
 
 use clang::Entity;
 
-use crate::{
-	DefaultElement,
-	DependentType,
-	Element,
-	EntityElement,
-	GeneratorEnv,
-	type_ref::{DependentTypeMode, FishStyle, Lifetime, NameStyle, TemplateArg},
-	TypeRef,
-};
+use crate::type_ref::{DependentTypeMode, FishStyle, Lifetime, NameStyle, TemplateArg};
+use crate::{DefaultElement, DependentType, Element, EntityElement, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
 pub struct SmartPtr<'tu, 'ge> {
@@ -31,12 +22,18 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 	}
 
 	pub fn pointee(&self) -> TypeRef<'tu, 'ge> {
-		self.type_ref().template_specialization_args().into_iter()
-			.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
-				Some(type_ref)
-			} else {
-				None
-			}).expect("Smart pointer template argument list is empty")
+		self
+			.type_ref()
+			.template_specialization_args()
+			.into_iter()
+			.find_map(|a| {
+				if let TemplateArg::Typename(type_ref) = a {
+					Some(type_ref)
+				} else {
+					None
+				}
+			})
+			.expect("Smart pointer template argument list is empty")
 	}
 
 	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
@@ -48,7 +45,7 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 	}
 
 	pub fn rust_localalias(&self) -> Cow<str> {
-		format!("PtrOf{typ}", typ=self.pointee().rust_safe_id_ext(false)).into()
+		format!("PtrOf{typ}", typ = self.pointee().rust_safe_id_ext(false)).into()
 	}
 
 	pub fn rust_fullalias(&self) -> Cow<str> {
@@ -106,9 +103,12 @@ impl Element for SmartPtr<'_, '_> {
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
 		format!(
 			"Ptr{fish}<{typ}>",
-			fish=fish_style.rust_qual(),
-			typ=self.pointee().rust_name(NameStyle::Reference(FishStyle::Turbo), Lifetime::elided()),
-		).into()
+			fish = fish_style.rust_qual(),
+			typ = self
+				.pointee()
+				.rust_name(NameStyle::Reference(FishStyle::Turbo), Lifetime::elided()),
+		)
+		.into()
 	}
 
 	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
@@ -125,7 +125,8 @@ impl fmt::Display for SmartPtr<'_, '_> {
 impl fmt::Debug for SmartPtr<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("SmartPtr");
-		self.update_debug_struct(&mut debug_struct)
+		self
+			.update_debug_struct(&mut debug_struct)
 			.field("export_config", &self.gen_env.get_export_config(self.entity))
 			.field("pointee", &self.pointee())
 			.finish()

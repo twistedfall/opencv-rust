@@ -1,9 +1,9 @@
-use std::{
-	borrow::Cow,
-	fmt::{self, Write},
-};
+use std::borrow::Cow;
+use std::fmt;
+use std::fmt::Write;
 
-use crate::{Element, settings, StringExt, type_ref::{Dir, StrEnc, StrType}};
+use crate::type_ref::{Dir, StrEnc, StrType};
+use crate::{settings, Element, StringExt};
 
 use super::{Kind, TemplateArg, TypeRef};
 
@@ -57,7 +57,9 @@ impl IntoIterator for Lifetime {
 	type IntoIter = LifetimeIterator;
 
 	fn into_iter(self) -> LifetimeIterator {
-		LifetimeIterator { cur_lifetime: Some(self) }
+		LifetimeIterator {
+			cur_lifetime: Some(self),
+		}
 	}
 }
 
@@ -75,9 +77,7 @@ impl fmt::Display for Lifetime {
 			Ok(())
 		}
 		match *self {
-			Self::Elided => {
-				Ok(())
-			},
+			Self::Elided => Ok(()),
 			Self::Static => {
 				let s = "'static";
 				f.write_str(s)?;
@@ -175,7 +175,7 @@ impl Constness {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ConstnessOverride {
 	No,
-	Yes(Constness)
+	Yes(Constness),
 }
 
 impl ConstnessOverride {
@@ -253,61 +253,57 @@ impl FishStyle {
 fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, fish_style: FishStyle) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if !generic_types.is_empty() {
-		let const_generics_implemented = type_ref.as_class()
-			.map_or(false, |cls| settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_fullname().as_ref()));
+		let const_generics_implemented = type_ref.as_class().map_or(false, |cls| {
+			settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_fullname().as_ref())
+		});
 		let mut constant_suffix = String::new();
-		let generic_types = generic_types.iter()
-			.filter_map(|t| {
-				match t {
-					TemplateArg::Typename(type_ref) => {
-						Some(type_ref.render(renderer.recurse()))
-					}
-					TemplateArg::Constant(literal) => {
-						if let Some(cnst) = type_ref.gen_env.resolve_class_constant(literal).and_then(|c| c.value()) {
-							if const_generics_implemented {
-								return Some(cnst.to_string().into())
-							}
-							constant_suffix += &cnst.to_string();
-						} else {
-							if const_generics_implemented {
-								return Some(literal.into())
-							}
-							constant_suffix += literal;
+		let generic_types = generic_types
+			.iter()
+			.filter_map(|t| match t {
+				TemplateArg::Typename(type_ref) => Some(type_ref.render(renderer.recurse())),
+				TemplateArg::Constant(literal) => {
+					if let Some(cnst) = type_ref.gen_env.resolve_class_constant(literal).and_then(|c| c.value()) {
+						if const_generics_implemented {
+							return Some(cnst.to_string().into());
 						}
-						None
+						constant_suffix += &cnst.to_string();
+					} else {
+						if const_generics_implemented {
+							return Some(literal.into());
+						}
+						constant_suffix += literal;
 					}
-					TemplateArg::Unknown => {
-						None
-					}
+					None
 				}
+				TemplateArg::Unknown => None,
 			})
 			.collect::<Vec<_>>();
-		format!("{cnst}{fish}<{typ}>", cnst=constant_suffix, fish=fish_style.rust_qual(), typ=generic_types.join(", "))
+		format!(
+			"{cnst}{fish}<{typ}>",
+			cnst = constant_suffix,
+			fish = fish_style.rust_qual(),
+			typ = generic_types.join(", ")
+		)
 	} else {
 		"".to_string()
 	}
 }
 
- fn render_cpp_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef) -> String {
+fn render_cpp_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if !generic_types.is_empty() {
-		let generic_types = generic_types.into_iter()
-			.filter_map(|t| {
-				match t {
-					TemplateArg::Typename(type_ref) => {
-						Some(type_ref.render(renderer.recurse()).into_owned())
-					}
-					TemplateArg::Constant(literal) => {
-						if let Some(cnst) = type_ref.gen_env.resolve_class_constant(&literal).and_then(|c| c.value()) {
-							Some(cnst.to_string())
-						} else {
-							Some(literal)
-						}
-					}
-					TemplateArg::Unknown => {
-						None
+		let generic_types = generic_types
+			.into_iter()
+			.filter_map(|t| match t {
+				TemplateArg::Typename(type_ref) => Some(type_ref.render(renderer.recurse()).into_owned()),
+				TemplateArg::Constant(literal) => {
+					if let Some(cnst) = type_ref.gen_env.resolve_class_constant(&literal).and_then(|c| c.value()) {
+						Some(cnst.to_string())
+					} else {
+						Some(literal)
 					}
 				}
+				TemplateArg::Unknown => None,
 			})
 			.collect::<Vec<_>>();
 		format!("<{}>", generic_types.join(", "))
@@ -325,12 +321,21 @@ pub struct RustRenderer {
 
 impl RustRenderer {
 	pub fn new(name_style: NameStyle, lifetime: Lifetime, primitive_ref_as_ptr: bool) -> Self {
-		Self { name_style, lifetime, primitive_ref_as_ptr }
+		Self {
+			name_style,
+			lifetime,
+			primitive_ref_as_ptr,
+		}
 	}
 
 	fn wrap_nullable<'a>(&self, type_ref: &TypeRef, typ: Cow<'a, str>) -> Cow<'a, str> {
 		if type_ref.is_nullable() {
-			format!("Option{fish}<{typ}>", fish=self.name_style.rust_turbo_fish_qual(), typ=typ).into()
+			format!(
+				"Option{fish}<{typ}>",
+				fish = self.name_style.rust_turbo_fish_qual(),
+				typ = typ
+			)
+			.into()
 		} else {
 			typ
 		}
@@ -343,7 +348,11 @@ impl TypeRefRenderer<'_> for RustRenderer {
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		if let Some(str_type) = type_ref.as_string() {
 			#[allow(clippy::if_same_then_else)]
-			return if matches!(str_type, Dir::In(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) | Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary))) {
+			return if matches!(
+				str_type,
+				Dir::In(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary))
+					| Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary))
+			) {
 				if self.name_style.turbo_fish_style().is_turbo() {
 					"Vec::<u8>"
 				} else {
@@ -353,19 +362,16 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				"String" // todo implement receiving const str's
 			} else {
 				"String"
-			}.into();
+			}
+			.into();
 		}
 		match type_ref.kind() {
-			Kind::Primitive(rust, _) => {
-				rust.into()
-			}
+			Kind::Primitive(rust, _) => rust.into(),
 			Kind::Array(elem, size) => {
 				let typ = type_ref.format_as_array(&elem.render(self.recurse()), size);
 				self.wrap_nullable(type_ref, typ.into())
 			}
-			Kind::StdVector(vec) => {
-				vec.rust_name(self.name_style).into_owned().into()
-			}
+			Kind::StdVector(vec) => vec.rust_name(self.name_style).into_owned().into(),
 			Kind::Reference(inner) if (inner.as_simple_class().is_some() || inner.is_enum()) && inner.constness().is_const() => {
 				// const references to simple classes are passed by value for performance
 				// fixme: it kind of works now, but probably it's not the best idea
@@ -378,18 +384,14 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				} else {
 					inner.render(self.recurse())
 				};
-				format!(
-					"*{cnst}{typ}",
-					cnst=type_ref.constness().rust_qual(true),
-					typ=typ
-				).into()
+				format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual(true), typ = typ).into()
 			}
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
 				let typ = format!(
 					"&{lt: <}{cnst}{typ}",
-					cnst=type_ref.constness().rust_qual(false),
-					lt=self.lifetime,
-					typ=inner.render(self.recurse())
+					cnst = type_ref.constness().rust_qual(false),
+					lt = self.lifetime,
+					typ = inner.render(self.recurse())
 				);
 				self.wrap_nullable(type_ref, typ.into())
 			}
@@ -404,11 +406,10 @@ impl TypeRefRenderer<'_> for RustRenderer {
 					dyn=if self.name_style.is_reference() && cls.is_abstract() { "dyn " } else { "" },
 					name=cls.rust_name(self.name_style),
 					generic=render_rust_tpl_decl(self, type_ref, fish_style),
-				).into()
+				)
+				.into()
 			}
-			Kind::Enum(enm) => {
-				enm.rust_name(self.name_style).into_owned().into()
-			}
+			Kind::Enum(enm) => enm.rust_name(self.name_style).into_owned().into(),
 			Kind::Typedef(decl) => {
 				let mut out: String = decl.rust_name(self.name_style).into_owned();
 				let lifetime_count = decl.underlying_type_ref().rust_lifetime_count();
@@ -422,15 +423,9 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				}
 				out.into()
 			}
-			Kind::Generic(name) => {
-				name.into()
-			}
-			Kind::Function(func) => {
-				func.rust_name(self.name_style).into_owned().into()
-			}
-			Kind::Ignored => {
-				"<ignored>".into()
-			}
+			Kind::Generic(name) => name.into(),
+			Kind::Function(func) => func.rust_name(self.name_style).into_owned().into(),
+			Kind::Ignored => "<ignored>".into(),
 		}
 	}
 
@@ -453,7 +448,12 @@ pub struct CppRenderer<'s> {
 
 impl<'s> CppRenderer<'s> {
 	pub fn new(name_style: NameStyle, name: &'s str, extern_types: bool) -> Self {
-		Self { name_style, name, extern_types, constness_override: ConstnessOverride::No }
+		Self {
+			name_style,
+			name,
+			extern_types,
+			constness_override: ConstnessOverride::No,
+		}
 	}
 }
 
@@ -469,125 +469,94 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 		};
 		match type_ref.kind() {
 			Kind::Primitive(_, cpp) => {
-				format!(
-					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=cpp,
-					name=space_name,
-				)
+				format!("{cnst}{typ}{name}", cnst = cnst, typ = cpp, name = space_name,)
 			}
 			Kind::Array(inner, size) => {
 				if let Some(size) = size {
 					if self.name.is_empty() {
-						format!(
-							"{typ}**",
-							typ=inner.render(self.recurse()),
-						)
+						format!("{typ}**", typ = inner.render(self.recurse()),)
 					} else {
 						format!(
 							"{typ}(*{name})[{size}]",
-							typ=inner.render(self.recurse()),
-							name=self.name,
-							size=size,
+							typ = inner.render(self.recurse()),
+							name = self.name,
+							size = size,
 						)
 					}
 				} else {
-					format!(
-						"{typ}*{name}",
-						typ=inner.render(self.recurse()),
-						name=space_name,
-					)
+					format!("{typ}*{name}", typ = inner.render(self.recurse()), name = space_name,)
 				}
 			}
 			Kind::StdVector(vec) => {
 				format!(
 					"{cnst}{vec_type}<{elem_type}>{name}",
-					cnst=cnst,
-					vec_type=vec.cpp_name(self.name_style),
-					elem_type=vec.element_type().render(self.recurse()),
-					name=space_name,
+					cnst = cnst,
+					vec_type = vec.cpp_name(self.name_style),
+					elem_type = vec.element_type().render(self.recurse()),
+					name = space_name,
 				)
 			}
 			Kind::Reference(inner) if !self.extern_types => {
-				format!(
-					"{typ}&{name}",
-					typ=inner.render(self.recurse()),
-					name=space_const_name,
-				)
+				format!("{typ}&{name}", typ = inner.render(self.recurse()), name = space_const_name,)
 			}
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
-				format!(
-					"{typ}*{name}",
-					typ=inner.render(self.recurse()),
-					name=space_const_name,
-				)
+				format!("{typ}*{name}", typ = inner.render(self.recurse()), name = space_const_name,)
 			}
 			Kind::SmartPtr(ptr) => {
 				format!(
 					"{cnst}{ptr_type}<{inner_type}>{name}",
-					cnst=cnst,
-					ptr_type=ptr.cpp_name(self.name_style),
-					inner_type=ptr.pointee().render(self.recurse()),
-					name=space_name,
+					cnst = cnst,
+					ptr_type = ptr.cpp_name(self.name_style),
+					inner_type = ptr.pointee().render(self.recurse()),
+					name = space_name,
 				)
 			}
 			Kind::Class(cls) => {
 				let mut out: String = cls.cpp_name(self.name_style).into_owned();
-				if !type_ref.is_std_string() { // fixme prevents emission of std::string<char>
+				if !type_ref.is_std_string() {
+					// fixme prevents emission of std::string<char>
 					out += &render_cpp_tpl_decl(self, type_ref);
 				}
-				format!(
-					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=out,
-					name=space_name,
-				)
+				format!("{cnst}{typ}{name}", cnst = cnst, typ = out, name = space_name,)
 			}
 			Kind::Enum(enm) => {
 				format!(
 					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=enm.cpp_name(self.name_style),
-					name=space_name,
+					cnst = cnst,
+					typ = enm.cpp_name(self.name_style),
+					name = space_name,
 				)
 			}
 			Kind::Typedef(tdef) => {
 				let underlying_type = tdef.underlying_type_ref();
-				let typ = if underlying_type.as_reference().is_some() { // references can't be used in lvalue position
+				let typ = if underlying_type.as_reference().is_some() {
+					// references can't be used in lvalue position
 					underlying_type.render(self.recurse())
 				} else {
 					tdef.cpp_name(self.name_style).into_owned().into()
 				};
-				format!(
-					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=typ,
-					name=space_name,
-				)
+				format!("{cnst}{typ}{name}", cnst = cnst, typ = typ, name = space_name,)
 			}
 			Kind::Generic(generic_name) => {
-				format!(
-					"{cnst}{typ}{name}",
-					cnst=cnst,
-					typ=generic_name,
-					name=space_name,
-				)
+				format!("{cnst}{typ}{name}", cnst = cnst, typ = generic_name, name = space_name,)
 			}
 			Kind::Function(func) => {
 				let mut typ = func.cpp_name(self.name_style);
 				if typ.contains("(*)") {
 					if !self.name.is_empty() {
-						typ.to_mut().replacen_in_place("(*)", 1, &format!("(*{name})", name=self.name));
+						typ.to_mut()
+							.replacen_in_place("(*)", 1, &format!("(*{name})", name = self.name));
 					}
 					typ.into_owned()
 				} else {
-					format!("{typ}{name}", typ=typ, name=space_name)
+					format!("{typ}{name}", typ = typ, name = space_name)
 				}
 			}
 			Kind::Ignored => {
-				format!("<ignored>{name}", name=space_name)
+				format!("<ignored>{name}", name = space_name)
 			}
-		}.into()
+		}
+		.into()
 	}
 
 	fn recurse(&self) -> Self {

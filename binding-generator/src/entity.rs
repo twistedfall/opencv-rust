@@ -2,11 +2,8 @@ use std::borrow::Cow;
 
 use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
 
-use crate::{
-	element::{DefaultElement, EntityElement},
-	Element,
-	type_ref::FishStyle,
-};
+use crate::type_ref::FishStyle;
+use crate::{DefaultElement, Element, EntityElement};
 
 impl<'tu> EntityElement<'tu> for Entity<'tu> {
 	fn entity(&self) -> Entity<'tu> {
@@ -64,65 +61,47 @@ impl<'tu> EntityExt<'tu> for Entity<'tu> {
 	/// * `predicate`: returns true to continue iteration or false to break
 	/// returns: true if predicate returned false, false otherwise
 	fn walk_children_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
-		self.visit_children(|child, _| if predicate(child) {
-			EntityVisitResult::Continue
-		} else {
-			EntityVisitResult::Break
+		self.visit_children(|child, _| {
+			if predicate(child) {
+				EntityVisitResult::Continue
+			} else {
+				EntityVisitResult::Break
+			}
 		})
 	}
 
 	fn walk_bases_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
 		self.walk_children_while(|child| match child.get_kind() {
-			EntityKind::BaseSpecifier => {
-				predicate(child)
-			}
-			_ => {
-				true
-			}
+			EntityKind::BaseSpecifier => predicate(child),
+			_ => true,
 		})
 	}
 
 	fn walk_enums_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
 		self.walk_children_while(|child| match child.get_kind() {
-			EntityKind::EnumDecl => {
-				predicate(child)
-			}
-			_ => {
-				true
-			}
+			EntityKind::EnumDecl => predicate(child),
+			_ => true,
 		})
 	}
 
 	fn walk_classes_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
 		self.walk_children_while(|child| match child.get_kind() {
-			EntityKind::ClassDecl | EntityKind::StructDecl => {
-				predicate(child)
-			}
-			_ => {
-				true
-			}
+			EntityKind::ClassDecl | EntityKind::StructDecl => predicate(child),
+			_ => true,
 		})
 	}
 
 	fn walk_typedefs_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
 		self.walk_children_while(|child| match child.get_kind() {
-			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
-				predicate(child)
-			}
-			_ => {
-				true
-			}
+			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => predicate(child),
+			_ => true,
 		})
 	}
 
 	fn walk_fields_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
 		self.walk_children_while(|child| match child.get_kind() {
-			EntityKind::FieldDecl => {
-				predicate(child)
-			}
-			_ => {
-				true
-			}
+			EntityKind::FieldDecl => predicate(child),
+			_ => true,
 		})
 	}
 
@@ -140,22 +119,16 @@ impl<'tu> EntityExt<'tu> for Entity<'tu> {
 					panic!("Non-static constant: {:#?}", child)
 				}
 			}
-			_ => {
-				true
-			}
+			_ => true,
 		})
 	}
 
 	fn walk_methods_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> bool) -> bool {
 		self.walk_children_while(|child| match child.get_kind() {
-			EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
-			| EntityKind::ConversionFunction => {
+			EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate | EntityKind::ConversionFunction => {
 				predicate(child)
 			}
-			_ => {
-				true
-			}
+			_ => true,
 		})
 	}
 }
-

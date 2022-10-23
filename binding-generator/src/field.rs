@@ -1,31 +1,15 @@
 // todo public static properties like opencv2/core/base.hpp:384 Hamming::normType
 // todo test returning reference to array like cv_MatStep_buf
 
-use std::{
-	borrow::Cow,
-	fmt,
-};
+use std::borrow::Cow;
+use std::fmt;
 
-use clang::{
-	Entity,
-	EntityKind,
-	EntityVisitResult,
-	token::TokenKind,
-	Type,
-};
+use clang::token::TokenKind;
+use clang::{Entity, EntityKind, EntityVisitResult, Type};
 
-use crate::{
-	Class,
-	constant,
-	DefaultElement,
-	Element,
-	EntityElement,
-	GeneratorEnv,
-	NamePool,
-	settings::ArgOverride,
-	type_ref::{FishStyle, TypeRefTypeHint},
-	TypeRef,
-};
+use crate::settings::ArgOverride;
+use crate::type_ref::{FishStyle, TypeRefTypeHint};
+use crate::{constant, Class, DefaultElement, Element, EntityElement, GeneratorEnv, NamePool, TypeRef};
 
 #[derive(Clone, Copy, Debug)]
 pub enum FieldTypeHint<'tu> {
@@ -54,19 +38,31 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	}
 
 	pub fn new_ext(entity: Entity<'tu>, type_hint: FieldTypeHint<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self { entity, type_hint, gen_env }
+		Self {
+			entity,
+			type_hint,
+			gen_env,
+		}
 	}
 
-	pub fn rust_disambiguate_names<I: IntoIterator<Item=Field<'tu, 'ge>>>(args: I) -> impl Iterator<Item=(String, Field<'tu, 'ge>)> where 'tu: 'ge {
+	pub fn rust_disambiguate_names<I: IntoIterator<Item = Field<'tu, 'ge>>>(
+		args: I,
+	) -> impl Iterator<Item = (String, Field<'tu, 'ge>)>
+	where
+		'tu: 'ge,
+	{
 		let args = args.into_iter();
-		NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
-			.into_disambiguator(args, |f| f.rust_leafname(FishStyle::No))
+		NamePool::with_capacity(args.size_hint().1.unwrap_or_default()).into_disambiguator(args, |f| f.rust_leafname(FishStyle::No))
 	}
 
-	pub fn cpp_disambiguate_names(args: impl IntoIterator<Item=Field<'tu, 'ge>>) -> impl Iterator<Item=(String, Field<'tu, 'ge>)> where 'tu: 'ge {
+	pub fn cpp_disambiguate_names(
+		args: impl IntoIterator<Item = Field<'tu, 'ge>>,
+	) -> impl Iterator<Item = (String, Field<'tu, 'ge>)>
+	where
+		'tu: 'ge,
+	{
 		let args = args.into_iter();
-		NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
-			.into_disambiguator(args, |f| f.cpp_localname())
+		NamePool::with_capacity(args.size_hint().1.unwrap_or_default()).into_disambiguator(args, |f| f.cpp_localname())
 	}
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
@@ -76,7 +72,12 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 			FieldTypeHint::FieldSetter => TypeRefTypeHint::PrimitiveRefAsPointer,
 			_ => TypeRefTypeHint::None,
 		};
-		TypeRef::new_ext(self.entity.get_type().expect("Can't get type"), type_hint, Some(self.entity), self.gen_env)
+		TypeRef::new_ext(
+			self.entity.get_type().expect("Can't get type"),
+			type_hint,
+			Some(self.entity),
+			self.gen_env,
+		)
 	}
 
 	pub fn default_value(&self) -> Option<String> {
@@ -96,7 +97,8 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 
 		if let Some(range) = self.entity.get_range() {
 			let mut tokens = range.tokenize();
-			let equal_pos = tokens.iter()
+			let equal_pos = tokens
+				.iter()
 				.position(|t| t.get_kind() == TokenKind::Punctuation && t.get_spelling() == "=");
 			if let Some(equal_pos) = equal_pos {
 				tokens.drain(..equal_pos + 1);
@@ -109,9 +111,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	pub fn parent(&self) -> Class<'tu, 'ge> {
 		let parent_entity = self.entity.get_semantic_parent().expect("Can't get parent of field");
 		match parent_entity.get_kind() {
-			EntityKind::ClassDecl | EntityKind::StructDecl | EntityKind::ClassTemplate => {
-				Class::new(parent_entity, self.gen_env)
-			},
+			EntityKind::ClassDecl | EntityKind::StructDecl | EntityKind::ClassTemplate => Class::new(parent_entity, self.gen_env),
 			_ => {
 				panic!("Unexpected field parent entity: {:#?}", parent_entity);
 			}

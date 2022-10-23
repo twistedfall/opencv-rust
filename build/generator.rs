@@ -1,24 +1,13 @@
-use std::{
-	ffi::OsStr,
-	fs::{self, File, OpenOptions},
-	io::{self, BufRead, BufReader, Write},
-	path::{Path, PathBuf},
-	process::{Child, Command},
-	sync::Arc,
-	thread,
-	time::Instant,
-};
+use std::ffi::OsStr;
+use std::fs::{File, OpenOptions};
+use std::io::{BufRead, BufReader, Write};
+use std::path::{Path, PathBuf};
+use std::process::{Child, Command};
+use std::sync::Arc;
+use std::time::Instant;
+use std::{fs, io, thread};
 
-use super::{
-	files_with_extension,
-	HOST_TRIPLE,
-	Library,
-	MODULES,
-	OUT_DIR,
-	Result,
-	SRC_CPP_DIR,
-	SRC_DIR,
-};
+use super::{files_with_extension, Library, Result, HOST_TRIPLE, MODULES, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
 
 fn is_type_file(path: &Path, module: &str) -> bool {
 	path.file_stem().and_then(OsStr::to_str).map_or(false, |stem| {
@@ -45,8 +34,7 @@ fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 	if !target_dir.exists() {
 		fs::create_dir_all(&target_dir)?;
 	}
-	let src_filename = src_file.file_name()
-		.ok_or("Can't calculate filename")?;
+	let src_filename = src_file.file_name().ok_or("Can't calculate filename")?;
 	let target_file = target_dir.join(src_filename);
 	// rename doesn't work across fs boundaries for example
 	if fs::rename(&src_file, &target_file).is_err() {
@@ -56,7 +44,12 @@ fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 	Ok(target_file)
 }
 
-pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobserver::Client, generator_build: Child) -> Result<()> {
+pub fn gen_wrapper(
+	opencv_header_dir: &Path,
+	opencv: &Library,
+	job_server: jobserver::Client,
+	generator_build: Child,
+) -> Result<()> {
 	let target_hub_dir = SRC_DIR.join("opencv");
 	let target_module_dir = target_hub_dir.join("hub");
 	let manual_dir = SRC_DIR.join("manual");
@@ -72,7 +65,9 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobse
 		}
 	}
 
-	let additional_include_dirs = opencv.include_paths.iter()
+	let additional_include_dirs = opencv
+		.include_paths
+		.iter()
 		.filter(|&include_path| include_path != opencv_header_dir)
 		.cloned()
 		.collect::<Vec<_>>();
@@ -94,9 +89,16 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobse
 		return Err("Failed to build the bindings generator".into());
 	}
 
-	let additional_include_dirs = Arc::new(additional_include_dirs.iter().cloned()
-		.map(|p| p.to_str().expect("Can't convert additional include dir to UTF-8 string").to_string())
-		.collect::<Vec<_>>()
+	let additional_include_dirs = Arc::new(
+		additional_include_dirs
+			.iter()
+			.cloned()
+			.map(|p| {
+				p.to_str()
+					.expect("Can't convert additional include dir to UTF-8 string")
+					.to_string()
+			})
+			.collect::<Vec<_>>(),
 	);
 	let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
 	let modules = MODULES.get().expect("MODULES not initialized");
@@ -112,7 +114,8 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobse
 					Some(host_triple) => Command::new(OUT_DIR.join(format!("{}/release/binding-generator", host_triple))),
 					None => Command::new(OUT_DIR.join("release/binding-generator")),
 				};
-				bin_generator.arg(&*opencv_header_dir)
+				bin_generator
+					.arg(&*opencv_header_dir)
 					.arg(&*SRC_CPP_DIR)
 					.arg(&*OUT_DIR)
 					.arg(&module)
@@ -164,9 +167,12 @@ pub fn gen_wrapper(opencv_header_dir: &Path, opencv: &Library, job_server: jobse
 		let module_cpp = OUT_DIR.join(format!("{}.cpp", module));
 		if module_cpp.is_file() {
 			let module_types_cpp = OUT_DIR.join(format!("{}_types.hpp", module));
-			let mut module_types_file = OpenOptions::new().create(true).truncate(true).write(true).open(&module_types_cpp)?;
-			let type_files = files_with_extension(&OUT_DIR, "cpp")?
-				.filter(|f| is_type_file(f, module));
+			let mut module_types_file = OpenOptions::new()
+				.create(true)
+				.truncate(true)
+				.write(true)
+				.open(&module_types_cpp)?;
+			let type_files = files_with_extension(&OUT_DIR, "cpp")?.filter(|f| is_type_file(f, module));
 			for entry in type_files {
 				io::copy(&mut File::open(&entry)?, &mut module_types_file)?;
 				let _ = fs::remove_file(entry);

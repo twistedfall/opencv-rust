@@ -1,30 +1,15 @@
-use std::{
-	collections::{HashMap, HashSet},
-	fmt,
-	fs::File,
-	io::{Read, Seek, SeekFrom},
-	path::{Path, PathBuf},
-};
+use std::collections::{HashMap, HashSet};
+use std::fmt;
+use std::fs::File;
+use std::io::{Read, Seek, SeekFrom};
+use std::path::{Path, PathBuf};
 
 use clang::{Entity, EntityKind, EntityVisitResult, StorageClass, Type};
 
+use crate::class::Kind as ClassKind;
 use crate::{
-	Class,
-	class::Kind as ClassKind,
-	comment,
-	Const,
-	Element,
-	EntityWalker,
-	EntityWalkerVisitor,
-	Func,
-	is_ephemeral_header,
-	is_opencv_path,
-	memo_map,
-	MemoizeMap,
-	NamePool,
-	opencv_module_from_path,
-	settings,
-	TypeRef,
+	comment, is_ephemeral_header, is_opencv_path, memo_map, opencv_module_from_path, settings, Class, Const, Element,
+	EntityWalker, EntityWalkerVisitor, Func, MemoizeMap, NamePool, TypeRef,
 };
 
 #[derive(Clone, Debug, Default)]
@@ -43,7 +28,10 @@ pub struct RenameConfig {
 
 impl ExportConfig {
 	pub fn simple() -> Self {
-		ExportConfig { simple: true, ..Default::default() }
+		ExportConfig {
+			simple: true,
+			..Default::default()
+		}
 	}
 
 	pub fn make_noexcept(src: &mut ExportConfig) {
@@ -87,7 +75,9 @@ impl<'tu> DbPopulator<'tu, '_> {
 	}
 
 	fn add_used_in_smart_ptr(&mut self, func: Entity<'tu>) {
-		let args = Func::new(func, self.gen_env).arguments().into_iter()
+		let args = Func::new(func, self.gen_env)
+			.arguments()
+			.into_iter()
 			.filter_map(|arg| arg.type_ref().as_smart_ptr())
 			.filter_map(|smart_ptr| smart_ptr.pointee().clang_type().get_declaration())
 			.collect::<Vec<_>>();
@@ -118,11 +108,16 @@ impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 					match c.get_kind() {
 						EntityKind::BaseSpecifier => {
 							let c_decl = c.get_definition().expect("Can't get base class definition");
-							self.gen_env.descendants.entry(c_decl.cpp_fullname().into_owned())
+							self
+								.gen_env
+								.descendants
+								.entry(c_decl.cpp_fullname().into_owned())
 								.or_insert_with(|| HashSet::with_capacity(4))
 								.insert(entity);
 						}
-						EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
+						EntityKind::Constructor
+						| EntityKind::Method
+						| EntityKind::FunctionTemplate
 						| EntityKind::ConversionFunction => {
 							self.add_func_comment(c);
 							self.add_used_in_smart_ptr(c);
@@ -188,20 +183,25 @@ impl<'tu> GeneratorEnv<'tu> {
 	fn key(entity: Entity) -> ExportIdx {
 		let (loc, offset) = if entity.get_kind() == EntityKind::MacroExpansion {
 			// sometimes CV_EXPORT macros are located on a separate line so for those we compensate the offset
-			let l = entity.get_range().expect("Can't get exported macro range").get_end().get_spelling_location();
+			let l = entity
+				.get_range()
+				.expect("Can't get exported macro range")
+				.get_end()
+				.get_spelling_location();
 			let path = l.file.expect("Can't get exported macro file").get_path();
 			if is_ephemeral_header(&path) {
 				(l, 0)
 			} else {
 				let mut f = File::open(path).expect("Can't open export macro file");
-				f.seek(SeekFrom::Start(l.offset as u64)).expect("Can't seek export macro file");
+				f.seek(SeekFrom::Start(l.offset as u64))
+					.expect("Can't seek export macro file");
 				let mut buf = [0; 8];
 				let read = f.read(&mut buf).expect("Can't read file");
-				let line_offset = buf[0..read].iter()
-					.take_while(|&&c| c == b'\n')
-					.count();
+				let line_offset = buf[0..read].iter().take_while(|&&c| c == b'\n').count();
 				if line_offset > 1 {
-					panic!("Line offset more than 1 is not supported, modify fuzzy_key in get_export_config() to support higher values");
+					panic!(
+						"Line offset more than 1 is not supported, modify fuzzy_key in get_export_config() to support higher values"
+					);
 				}
 				(l, line_offset as u32)
 			}
@@ -211,7 +211,10 @@ impl<'tu> GeneratorEnv<'tu> {
 			} else {
 				// for some reason Apple libclang on macos has problems with get_range() on FacemarkLBF::Params::pupils
 				// see https://github.com/twistedfall/opencv-rust/issues/159#issuecomment-668234058
-				entity.get_location().expect("Can't get entity location").get_spelling_location()
+				entity
+					.get_location()
+					.expect("Can't get entity location")
+					.get_spelling_location()
 			};
 			(loc, 0)
 		};
@@ -229,21 +232,23 @@ impl<'tu> GeneratorEnv<'tu> {
 		f(&key).or_else(|| {
 			// for cases where CV_EXPORTS is on the separate line but entity.get_range() spans into it
 			let fuzzy_key = (key.0, key.1, 1);
-			f(&fuzzy_key).or_else(|| if fuzzy_key.1 >= 1 {
-				// for cases where CV_EXPORTS is on the separate line but entity.get_range() start on the next line
-				let fuzzy_key = (fuzzy_key.0, fuzzy_key.1 - 1, fuzzy_key.2);
-				f(&fuzzy_key)
-			} else {
-				None
+			f(&fuzzy_key).or_else(|| {
+				if fuzzy_key.1 >= 1 {
+					// for cases where CV_EXPORTS is on the separate line but entity.get_range() start on the next line
+					let fuzzy_key = (fuzzy_key.0, fuzzy_key.1 - 1, fuzzy_key.2);
+					f(&fuzzy_key)
+				} else {
+					None
+				}
 			})
 		})
 	}
 
 	pub fn get_export_config(&self, entity: Entity) -> Option<ExportConfig> {
 		let cpp_fullname = entity.cpp_fullname();
-		settings::ELEMENT_EXPORT_MANUAL.get(cpp_fullname.as_ref()).or_else(|| {
-			Self::get_with_fuzzy_key(entity, |key| self.export_map.get(key))
-		})
+		settings::ELEMENT_EXPORT_MANUAL
+			.get(cpp_fullname.as_ref())
+			.or_else(|| Self::get_with_fuzzy_key(entity, |key| self.export_map.get(key)))
 			.cloned()
 			.map(|mut e| {
 				if let Some(cb) = settings::ELEMENT_EXPORT_TWEAK.get(cpp_fullname.as_ref()) {
@@ -255,7 +260,10 @@ impl<'tu> GeneratorEnv<'tu> {
 
 	pub fn make_rename_config(&mut self, entity: Entity) -> &mut RenameConfig {
 		let key = Self::key(entity);
-		self.rename_map.entry(key).or_insert_with(|| RenameConfig { rename: String::new() })
+		self
+			.rename_map
+			.entry(key)
+			.or_insert_with(|| RenameConfig { rename: String::new() })
 	}
 
 	pub fn get_rename_config(&self, entity: Entity) -> Option<&RenameConfig> {
@@ -263,12 +271,16 @@ impl<'tu> GeneratorEnv<'tu> {
 	}
 
 	pub fn get_func_comment(&self, line: u32, cpp_fullname: &str) -> Option<&str> {
-		self.func_comments.get(cpp_fullname)
-			.and_then(|comments| comments.iter()
+		self
+			.func_comments
+			.get(cpp_fullname)
+			.and_then(|comments| {
+				comments.iter()
 				// try to find the source function comment that is closest to the requested
 				.find(|(source_line, _)| *source_line <= line)
 				// if it fails return at least something
-				.or_else(|| comments.last()))
+				.or_else(|| comments.last())
+			})
 			.map(|(_, comment)| comment.as_str())
 	}
 
@@ -280,7 +292,8 @@ impl<'tu> GeneratorEnv<'tu> {
 					tpl_decl
 				} else {
 					entity
-				}.get_name_ranges();
+				}
+				.get_name_ranges();
 				if !name_ranges.is_empty() {
 					let file_location = range.get_start().get_file_location();
 					if let Some(file) = file_location.file {
@@ -293,16 +306,16 @@ impl<'tu> GeneratorEnv<'tu> {
 						}
 						let export_decl = String::from_utf8(buf).expect("Not a valid UTF-8");
 						if export_decl.contains("CV_EXPORTS_W_SIMPLE") || export_decl.contains("CV_EXPORTS_W_MAP") {
-							return Some(ClassKind::Simple)
+							return Some(ClassKind::Simple);
 						} else if export_decl.contains("CV_EXPORTS") || export_decl.contains("GAPI_EXPORTS") {
-							return Some(ClassKind::Boxed)
+							return Some(ClassKind::Boxed);
 						}
 					}
 				}
 			}
 			let cls = Class::new(entity, self);
 			if cls.detect_class_simplicity() {
-				return Some(ClassKind::Simple)
+				return Some(ClassKind::Simple);
 			}
 			None
 		})
@@ -326,7 +339,10 @@ impl fmt::Debug for GeneratorEnv<'_> {
 		f.debug_struct("GeneratorEnv")
 			.field("export_map", &format!("{} elements", self.export_map.len()))
 			.field("func_comments", &format!("{} elements", self.func_comments.len()))
-			.field("class_kind_cache", &format!("{} elements", self.class_kind_cache.borrow().len()))
+			.field(
+				"class_kind_cache",
+				&format!("{} elements", self.class_kind_cache.borrow().len()),
+			)
 			.field("type_resolve_cache", &format!("{} elements", self.type_resolve_cache.len()))
 			.finish()
 	}

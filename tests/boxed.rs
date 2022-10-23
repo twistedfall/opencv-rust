@@ -1,13 +1,10 @@
-use std::{
-	ffi::c_void,
-	mem::transmute,
-};
+use std::{ffi::c_void, mem::transmute};
 
 use opencv::{
 	core::{Algorithm, Scalar, Vec4f},
 	prelude::*,
-	Result,
 	types::{PtrOfFeature2D, VectorOfVec4f},
+	Result,
 };
 
 #[test]
@@ -63,13 +60,13 @@ fn into_raw() -> Result<()> {
 #[test]
 fn smart_ptr_crate_and_cast_to_base_class() -> Result<()> {
 	#![cfg(ocvrs_has_module_videostab)]
+	#[cfg(ocvrs_opencv_branch_4)]
+	use opencv::features2d::FastFeatureDetector_DetectorType;
 	use opencv::{
 		core::Ptr,
 		features2d::{FastFeatureDetector, Feature2D},
 		videostab::{KeypointBasedMotionEstimator, MotionEstimatorRansacL2, MotionModel},
 	};
-	#[cfg(ocvrs_opencv_branch_4)]
-	use opencv::features2d::FastFeatureDetector_DetectorType;
 
 	let est = MotionEstimatorRansacL2::new(MotionModel::MM_AFFINE).unwrap();
 	let est_ptr = Ptr::new(est);
@@ -112,7 +109,7 @@ fn smart_ptr_cast_base() -> Result<()> {
 #[test]
 fn cast_base() -> Result<()> {
 	#![cfg(ocvrs_has_module_features2d)]
-	use opencv::{features2d::BFMatcher, core::NORM_L2};
+	use opencv::{core::NORM_L2, features2d::BFMatcher};
 
 	let m = BFMatcher::new(NORM_L2, false)?;
 	assert!(<dyn AlgorithmTrait>::empty(&m)?);
@@ -126,8 +123,8 @@ fn cast_base() -> Result<()> {
 #[test]
 fn cast_descendant() -> Result<()> {
 	#![cfg(ocvrs_has_module_rgbd)]
-	use std::convert::TryFrom;
 	use opencv::rgbd::{OdometryFrame, RgbdFrame};
+	use std::convert::TryFrom;
 
 	let image = Mat::new_rows_cols_with_default(1, 2, i32::typ(), Scalar::from(1.))?;
 	let depth = Mat::default();
@@ -150,12 +147,12 @@ fn cast_descendant() -> Result<()> {
 #[test]
 fn cast_descendant_fail() -> Result<()> {
 	#![cfg(ocvrs_has_module_stitching)]
-	use std::convert::TryFrom;
 	use opencv::{
 		core,
-		stitching::{Detail_FeatherBlender, Detail_MultiBandBlender, Detail_Blender},
+		stitching::{Detail_Blender, Detail_FeatherBlender, Detail_MultiBandBlender},
 		Error,
 	};
+	use std::convert::TryFrom;
 
 	let child = Detail_FeatherBlender::new(43.)?;
 	assert_eq!(43., child.sharpness()?);
@@ -163,7 +160,13 @@ fn cast_descendant_fail() -> Result<()> {
 	let correct_child = Detail_FeatherBlender::try_from(base)?;
 	let base = Detail_Blender::from(correct_child);
 	let incorrect_child = Detail_MultiBandBlender::try_from(base);
-	if !matches!(incorrect_child, Err(Error { code: core::StsBadArg, .. })) {
+	if !matches!(
+		incorrect_child,
+		Err(Error {
+			code: core::StsBadArg,
+			..
+		})
+	) {
 		panic!("It shouldn't be possible to downcast to the incorrect descendant class");
 	}
 	Ok(())

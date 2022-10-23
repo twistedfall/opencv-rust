@@ -1,8 +1,4 @@
-use opencv::{
-	highgui,
-	imgcodecs,
-	Result,
-};
+use opencv::{highgui, imgcodecs, Result};
 
 fn main() -> Result<()> {
 	let image = imgcodecs::imread("lena.jpg", 0)?;

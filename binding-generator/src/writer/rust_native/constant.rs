@@ -5,15 +5,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::{
-	CompiledInterpolation,
-	Const,
-	constant::ValueKind,
-	Element,
-	EntityElement,
-	get_debug,
-	settings,
-	StrExt,
-	type_ref::FishStyle,
+	constant::ValueKind, get_debug, settings, type_ref::FishStyle, CompiledInterpolation, Const, Element, EntityElement, StrExt,
 };
 
 use super::RustNativeGeneratedElement;
@@ -24,28 +16,22 @@ impl RustNativeGeneratedElement for Const<'_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		static STRING_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/const/string.tpl.rs").compile_interpolation()
-		);
+		static STRING_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/const/string.tpl.rs").compile_interpolation());
 
-		static INT_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/const/int.tpl.rs").compile_interpolation()
-		);
+		static INT_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/const/int.tpl.rs").compile_interpolation());
 
-		static UINT_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/const/uint.tpl.rs").compile_interpolation()
-		);
+		static UINT_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/const/uint.tpl.rs").compile_interpolation());
 
-		static USIZE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/const/usize.tpl.rs").compile_interpolation()
-		);
+		static USIZE_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/const/usize.tpl.rs").compile_interpolation());
 
-		static FLOAT_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/const/float.tpl.rs").compile_interpolation()
-		);
+		static FLOAT_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/const/float.tpl.rs").compile_interpolation());
 
-		let parent_is_class = self.entity().get_lexical_parent()
-			.map_or(false, |p| matches!(p.get_kind(), EntityKind::ClassDecl | EntityKind::StructDecl));
+		let parent_is_class = self.entity().get_lexical_parent().map_or(false, |p| {
+			matches!(p.get_kind(), EntityKind::ClassDecl | EntityKind::StructDecl)
+		});
 		let name = if parent_is_class {
 			self.rust_leafname(FishStyle::No)
 		} else {

@@ -1,8 +1,4 @@
-use opencv::{
-	core::SparseMat_Hdr,
-	prelude::*,
-	Result,
-};
+use opencv::{core::SparseMat_Hdr, prelude::*, Result};
 
 #[test]
 fn slice_override() -> Result<()> {

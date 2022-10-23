@@ -1,11 +1,11 @@
 #![cfg(ocvrs_has_module_imgproc)]
 
 use opencv::{
-	core::{Point, Point2f, Scalar, Size, Vec2f, Mat_AUTO_STEP},
+	core::{Mat_AUTO_STEP, Point, Point2f, Scalar, Size, Vec2f},
 	imgproc,
 	prelude::*,
-	Result,
 	types::VectorOfPoint,
+	Result,
 };
 
 #[test]
@@ -44,12 +44,7 @@ fn get_rotation_matrix_2d() -> Result<()> {
 
 #[test]
 fn line_iterator() -> Result<()> {
-	let mut data = [
-		 1,  2,  3,
-		 4,  5,  6,
-		 7,  8,  9,
-		10, 11, 12u8,
-	];
+	let mut data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12u8];
 	let mat = unsafe { Mat::new_rows_cols_with_data(4, 3, u8::typ(), data.as_mut_ptr() as *mut _, Mat_AUTO_STEP) }?;
 	let mut line_iter = imgproc::LineIterator::new(&mat, Point::new(0, 0), Point::new(2, 2), 8, false)?;
 	assert_eq!(3, line_iter.count());

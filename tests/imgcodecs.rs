@@ -23,7 +23,15 @@ fn decode() -> Result<()> {
 
 	{
 		let mut bytes = PIXEL.to_vec();
-		let src = unsafe { Mat::new_rows_cols_with_data(1, PIXEL.len() as _, u8::typ(), bytes.as_mut_ptr() as *mut c_void, core::Mat_AUTO_STEP) }?;
+		let src = unsafe {
+			Mat::new_rows_cols_with_data(
+				1,
+				PIXEL.len() as _,
+				u8::typ(),
+				bytes.as_mut_ptr() as *mut c_void,
+				core::Mat_AUTO_STEP,
+			)
+		}?;
 		let mut dest = Mat::default();
 		imgcodecs::imdecode_to(&src, imgcodecs::IMREAD_COLOR, &mut dest)?;
 		assert_eq!(dest.size()?, Size::new(1, 1));

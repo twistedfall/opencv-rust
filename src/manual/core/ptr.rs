@@ -1,25 +1,31 @@
-use std::{
-	ffi::c_void,
-	marker::PhantomData,
-	mem::ManuallyDrop,
-};
+use std::{ffi::c_void, marker::PhantomData, mem::ManuallyDrop};
 
 pub use ptr_extern::{PtrExtern, PtrExternCtor};
 
 use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
 
-mod ptr_f32;
 mod ptr_extern;
+mod ptr_f32;
 
 /// [docs.opencv.org 3.x](https://docs.opencv.org/3.4/d0/de7/structcv_1_1Ptr.html)
 /// [docs.opencv.org 4.x](https://en.cppreference.com/w/cpp/memory/shared_ptr)
-pub struct Ptr<T: ?Sized> where Self: PtrExtern {
+pub struct Ptr<T: ?Sized>
+where
+	Self: PtrExtern,
+{
 	ptr: *mut c_void,
 	_d: PhantomData<T>,
 }
 
-impl<T: ?Sized> Ptr<T> where Self: PtrExtern {
-	pub fn new(val: T) -> Self where T: Sized + for<'a> OpenCVType<'a>, Self: PtrExternCtor<T> {
+impl<T: ?Sized> Ptr<T>
+where
+	Self: PtrExtern,
+{
+	pub fn new(val: T) -> Self
+	where
+		T: Sized + for<'a> OpenCVType<'a>,
+		Self: PtrExternCtor<T>,
+	{
 		let val = val.opencv_into_extern_container_nofail();
 		unsafe { Self::from_raw(Self::extern_new(val.opencv_into_extern())) }
 	}
@@ -35,7 +41,10 @@ impl<T: ?Sized> Ptr<T> where Self: PtrExtern {
 	}
 }
 
-impl<T: ?Sized> Boxed for Ptr<T> where Self: PtrExtern {
+impl<T: ?Sized> Boxed for Ptr<T>
+where
+	Self: PtrExtern,
+{
 	#[inline]
 	unsafe fn from_raw(ptr: *mut c_void) -> Self {
 		Self { ptr, _d: PhantomData }
@@ -57,7 +66,10 @@ impl<T: ?Sized> Boxed for Ptr<T> where Self: PtrExtern {
 	}
 }
 
-impl<T: ?Sized> OpenCVType<'_> for Ptr<T> where Self: PtrExtern {
+impl<T: ?Sized> OpenCVType<'_> for Ptr<T>
+where
+	Self: PtrExtern,
+{
 	type Arg = Self;
 	type ExternReceive = *mut c_void;
 	type ExternContainer = Self;
@@ -73,7 +85,10 @@ impl<T: ?Sized> OpenCVType<'_> for Ptr<T> where Self: PtrExtern {
 	}
 }
 
-impl<T: ?Sized> OpenCVTypeArg<'_> for Ptr<T> where Self: PtrExtern {
+impl<T: ?Sized> OpenCVTypeArg<'_> for Ptr<T>
+where
+	Self: PtrExtern,
+{
 	type ExternContainer = Self;
 
 	#[inline]
@@ -82,7 +97,10 @@ impl<T: ?Sized> OpenCVTypeArg<'_> for Ptr<T> where Self: PtrExtern {
 	}
 }
 
-impl<T: ?Sized> OpenCVTypeExternContainer for Ptr<T> where Self: PtrExtern {
+impl<T: ?Sized> OpenCVTypeExternContainer for Ptr<T>
+where
+	Self: PtrExtern,
+{
 	type ExternSend = *const c_void;
 	type ExternSendMut = *mut c_void;
 
@@ -101,7 +119,10 @@ impl<T: ?Sized> OpenCVTypeExternContainer for Ptr<T> where Self: PtrExtern {
 	}
 }
 
-impl<T: ?Sized> Drop for Ptr<T> where Self: PtrExtern {
+impl<T: ?Sized> Drop for Ptr<T>
+where
+	Self: PtrExtern,
+{
 	fn drop(&mut self) {
 		unsafe { self.extern_delete() }
 	}

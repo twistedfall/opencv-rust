@@ -1,34 +1,15 @@
-use std::{
-	borrow::Cow,
-	cmp,
-	collections::HashSet,
-	fmt,
-	hash,
-	iter,
-};
+use std::borrow::Cow;
+use std::collections::HashSet;
+use std::{cmp, fmt, hash, iter};
 
 use clang::Entity;
 
-use crate::{
-	Const,
-	Constness,
-	DefaultElement,
-	DefinitionLocation,
-	DependentType,
-	DependentTypeMode,
-	Element,
-	EntityElement,
-	EntityExt,
-	Field,
-	Func,
-	FunctionTypeHint,
-	GeneratorEnv,
-	settings,
-	StrExt,
-	type_ref::{FishStyle, NameStyle},
-	TypeRef,
-};
 use crate::return_type_wrapper::ReturnTypeWrapper;
+use crate::type_ref::{Constness, FishStyle, NameStyle};
+use crate::{
+	settings, Const, DefaultElement, DefinitionLocation, DependentType, DependentTypeMode, Element, EntityElement, EntityExt,
+	Field, Func, FunctionTypeHint, GeneratorEnv, StrExt, TypeRef,
+};
 
 #[derive(Clone, Copy, Debug, PartialOrd, PartialEq, Eq)]
 pub enum Kind {
@@ -47,17 +28,25 @@ pub struct Class<'tu, 'ge> {
 
 impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self { entity, custom_fullname: None, gen_env }
+		Self {
+			entity,
+			custom_fullname: None,
+			gen_env,
+		}
 	}
 
 	pub fn new_ext(entity: Entity<'tu>, custom_fullname: String, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self { entity, custom_fullname: Some(custom_fullname), gen_env }
+		Self {
+			entity,
+			custom_fullname: Some(custom_fullname),
+			gen_env,
+		}
 	}
 
 	pub fn kind(&self) -> Kind {
 		let cpp_fullname = self.cpp_fullname();
 		if settings::ELEMENT_EXCLUDE.contains(cpp_fullname.as_ref()) {
-			return Kind::Excluded
+			return Kind::Excluded;
 		}
 		match self.gen_env.get_export_config(self.entity).map(|c| c.simple) {
 			Some(true) => {
@@ -74,7 +63,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				} else {
 					Kind::Simple
 				}
-			},
+			}
 			Some(false) => Kind::Boxed,
 			None => {
 				if self.is_system() {
@@ -93,15 +82,11 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn detect_class_simplicity(&self) -> bool {
-		!self.has_bases()
-			&& self.fields().into_iter()
-			.map(|f| f.type_ref())
-			.all(|t| t.is_copy())
+		!self.has_bases() && self.fields().into_iter().map(|f| f.type_ref()).all(|t| t.is_copy())
 	}
 
 	pub fn as_template(&self) -> Option<Class<'tu, 'ge>> {
-		self.entity.get_template()
-			.map(|t| Class::new(t, self.gen_env))
+		self.entity.get_template().map(|t| Class::new(t, self.gen_env))
 	}
 
 	pub fn is_simple(&self) -> bool {
@@ -124,7 +109,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		self.entity.is_abstract_record()
 		// fixme, or maybe we want?
 		// is_abstract_record() also check parent classes for presence of pure virtual methods, we don't want that
-//		self.entity.walk_methods_while(|child| !Func::new(child, self.gen_env).is_abstract())
+		//		self.entity.walk_methods_while(|child| !Func::new(child, self.gen_env).is_abstract())
 	}
 
 	pub fn is_polymorphic(&self) -> bool {
@@ -133,7 +118,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn is_trait(&self) -> bool {
 		self.is_boxed()
-//		self.is_abstract() || self.has_descendants() || settings::FORCE_CLASS_TRAIT.contains(self.cpp_fullname().as_ref())
+		//		self.is_abstract() || self.has_descendants() || settings::FORCE_CLASS_TRAIT.contains(self.cpp_fullname().as_ref())
 	}
 
 	pub fn is_by_ptr(&self) -> bool {
@@ -170,14 +155,19 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			self.entity
 		};
 		entity.walk_bases_while(|child| {
-			out.push(Class::new(child.get_definition().expect("Can't get base class definition"), self.gen_env));
+			out.push(Class::new(
+				child.get_definition().expect("Can't get base class definition"),
+				self.gen_env,
+			));
 			true
 		});
 		out
 	}
 
 	pub fn all_bases(&self) -> HashSet<Class<'tu, 'ge>> {
-		self.bases().into_iter()
+		self
+			.bases()
+			.into_iter()
 			.flat_map(|b| {
 				let mut out = b.all_bases();
 				out.insert(b);
@@ -186,9 +176,12 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			.collect()
 	}
 
-	pub fn descendants(&self) -> impl Iterator<Item=Class<'tu, 'ge>> {
+	pub fn descendants(&self) -> impl Iterator<Item = Class<'tu, 'ge>> {
 		let gen_env = self.gen_env;
-		gen_env.descendants.get(self.cpp_fullname().as_ref()).into_iter()
+		gen_env
+			.descendants
+			.get(self.cpp_fullname().as_ref())
+			.into_iter()
 			.flat_map(move |desc| desc.iter().map(move |e| Class::new(*e, gen_env)))
 	}
 
@@ -208,7 +201,12 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				if func.is_generic() {
 					if let Some(specs) = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref()) {
 						for spec in specs {
-							out.push(Func::new_ext(func.entity(), FunctionTypeHint::Specialized(spec), None, self.gen_env));
+							out.push(Func::new_ext(
+								func.entity(),
+								FunctionTypeHint::Specialized(spec),
+								None,
+								self.gen_env,
+							));
 						}
 						return true;
 					}
@@ -247,27 +245,36 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		out
 	}
 
-	pub fn field_methods<'f>(&self, fields: impl Iterator<Item=&'f Field<'tu, 'ge>>, constness_filter: Option<Constness>) -> Vec<Func<'tu, 'ge>> where 'tu: 'f, 'ge: 'f {
+	pub fn field_methods<'f>(
+		&self,
+		fields: impl Iterator<Item = &'f Field<'tu, 'ge>>,
+		constness_filter: Option<Constness>,
+	) -> Vec<Func<'tu, 'ge>>
+	where
+		'tu: 'f,
+		'ge: 'f,
+	{
 		let mut out = Vec::with_capacity(fields.size_hint().1.map_or(8, |x| x * 2));
-		out.extend(fields
-			.flat_map(|fld| {
-				iter::from_fn({
-					let fld_type_ref = fld.type_ref();
-					let read_func = Func::new(fld.entity(), self.gen_env);
-					let mut read_yield = if constness_filter.map_or(true, |c| c == read_func.constness()) {
-						Some(read_func)
-					} else {
-						None
-					};
-					let mut write_yield = if constness_filter.map_or(true, |c| c.is_mut()) && !fld_type_ref.constness().is_const() && !fld_type_ref.as_fixed_array().is_some() {
-						Some(Func::new_ext(fld.entity(), FunctionTypeHint::FieldSetter, None, self.gen_env))
-					} else {
-						None
-					};
-					move || read_yield.take().or_else(|| write_yield.take())
-				})
+		out.extend(fields.flat_map(|fld| {
+			iter::from_fn({
+				let fld_type_ref = fld.type_ref();
+				let read_func = Func::new(fld.entity(), self.gen_env);
+				let mut read_yield = if constness_filter.map_or(true, |c| c == read_func.constness()) {
+					Some(read_func)
+				} else {
+					None
+				};
+				let mut write_yield = if constness_filter.map_or(true, |c| c.is_mut())
+					&& !fld_type_ref.constness().is_const()
+					&& !fld_type_ref.as_fixed_array().is_some()
+				{
+					Some(Func::new_ext(fld.entity(), FunctionTypeHint::FieldSetter, None, self.gen_env))
+				} else {
+					None
+				};
+				move || read_yield.take().or_else(|| write_yield.take())
 			})
-		);
+		}));
 		out
 	}
 
@@ -275,35 +282,43 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		let class_loc = self.entity.get_location();
 		let def_loc = self.entity.get_definition().and_then(|d| d.get_location());
 		match (class_loc, def_loc) {
-			(Some(class_loc), Some(def_loc)) => {
-				class_loc == def_loc
-			}
-			(_, None) => {
-				false
-			}
-			_ => {
-				true
-			}
+			(Some(class_loc), Some(def_loc)) => class_loc == def_loc,
+			(_, None) => false,
+			_ => true,
 		}
 	}
 
 	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
-		let dep_types = self.fields().into_iter()
+		let dep_types = self
+			.fields()
+			.into_iter()
 			.filter(|f| !f.is_excluded())
-			.flat_map(|f| f.type_ref().dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
-			.chain(self.methods(None).into_iter()
-				.filter(|m| !m.is_excluded())
-				.flat_map(|m| m.dependent_types())
+			.flat_map(|f| {
+				f.type_ref()
+					.dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module))
+			})
+			.chain(
+				self
+					.methods(None)
+					.into_iter()
+					.filter(|m| !m.is_excluded())
+					.flat_map(|m| m.dependent_types()),
 			);
 		if !self.is_simple() {
-			dep_types.chain(self.descendants().into_iter()
-				.filter(|b| !b.is_excluded() && !b.is_simple() && !b.is_abstract())
-				.map(|b| DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
-					b.type_ref(),
-					DefinitionLocation::Type,
-					self.gen_env,
-				)))
-			)
+			dep_types
+				.chain(
+					self
+						.descendants()
+						.into_iter()
+						.filter(|b| !b.is_excluded() && !b.is_simple() && !b.is_abstract())
+						.map(|b| {
+							DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
+								b.type_ref(),
+								DefinitionLocation::Type,
+								self.gen_env,
+							))
+						}),
+				)
 				.collect()
 		} else {
 			dep_types.collect()
@@ -319,21 +334,18 @@ impl<'tu> EntityElement<'tu> for Class<'tu, '_> {
 
 impl Element for Class<'_, '_> {
 	fn is_excluded(&self) -> bool {
-		DefaultElement::is_excluded(self)
-			|| matches!(self.kind(), Kind::Excluded)
-			|| self.cpp_namespace() == "" // we don't process out of namespace (legacy C) items, so mark them as excluded
+		DefaultElement::is_excluded(self) || matches!(self.kind(), Kind::Excluded) || self.cpp_namespace() == ""
+		// we don't process out of namespace (legacy C) items, so mark them as excluded
 	}
 
 	fn is_ignored(&self) -> bool {
 		DefaultElement::is_ignored(self)
 			|| self.is_template()
-			|| self.is_template_specialization() &&
-			{
+			|| self.is_template_specialization() && {
 				let cpp_fullname = self.cpp_fullname();
 				!settings::IMPLEMENTED_GENERICS.contains(cpp_fullname.as_ref())
 					&& !settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_fullname.as_ref())
-			}
-			|| !self.is_template_specialization() && !self.is_definition()
+			} || !self.is_template_specialization() && !self.is_definition()
 	}
 
 	fn is_system(&self) -> bool {

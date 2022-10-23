@@ -1,5 +1,4 @@
 pub use affine3::*;
-pub use CV_MAKETYPE as CV_MAKE_TYPE;
 pub use data_type::*;
 pub use gpumat::*;
 pub use input_output_array::*;
@@ -15,6 +14,7 @@ pub use size::*;
 pub use sized::*;
 pub use vec::*;
 pub use vector::*;
+pub use CV_MAKETYPE as CV_MAKE_TYPE;
 
 mod affine3;
 mod data_type;
@@ -23,8 +23,8 @@ mod input_output_array;
 mod mat;
 mod mat_ops;
 mod matx;
-mod point3;
 mod point;
+mod point3;
 pub(crate) mod ptr;
 mod rect;
 mod scalar;

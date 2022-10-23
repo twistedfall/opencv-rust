@@ -21,4 +21,3 @@ impl DerefMut for Ptr<f32> {
 		unsafe { (self.inner_as_raw() as *mut f32).as_mut() }.expect("Got null mut inner pointer for Ptr<f32>")
 	}
 }
-

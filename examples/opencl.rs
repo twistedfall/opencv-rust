@@ -2,11 +2,9 @@ use std::{env, time};
 
 use opencv::{
 	core::{self, UMat, UMatUsageFlags},
-	imgcodecs,
-	imgproc,
+	imgcodecs, imgproc,
 	prelude::*,
-	Result,
-	types,
+	types, Result,
 };
 opencv::opencv_branch_4! {
 	use opencv::core::AccessFlag::ACCESS_READ;
@@ -38,8 +36,16 @@ fn main() -> Result<()> {
 	let opencl_use = core::use_opencl()?;
 	println!(
 		"OpenCL is {} and {}",
-		if opencl_have { "available" } else { "not available" },
-		if opencl_use { "enabled" } else { "disabled" },
+		if opencl_have {
+			"available"
+		} else {
+			"not available"
+		},
+		if opencl_use {
+			"enabled"
+		} else {
+			"disabled"
+		},
 	);
 	println!("Timing CPU implementation... ");
 	let img = imgcodecs::imread(&img_file, imgcodecs::IMREAD_COLOR)?;

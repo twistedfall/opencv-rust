@@ -3,15 +3,8 @@ use std::borrow::Cow;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::{
-	CompiledInterpolation,
-	Element,
-	get_debug,
-	IteratorExt,
-	StrExt,
-	type_ref::{FishStyle, Lifetime, NameStyle},
-	Typedef,
-};
+use crate::type_ref::{FishStyle, Lifetime, NameStyle};
+use crate::{get_debug, CompiledInterpolation, Element, IteratorExt, StrExt, Typedef};
 
 use super::RustNativeGeneratedElement;
 
@@ -21,11 +14,11 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/typedef/tpl.rs").compile_interpolation()
-		);
+		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/typedef/tpl.rs").compile_interpolation());
 		let underlying_type = self.underlying_type_ref();
-		let lifetimes = Lifetime::explicit().into_iter().take(underlying_type.rust_lifetime_count())
+		let lifetimes = Lifetime::explicit()
+			.into_iter()
+			.take(underlying_type.rust_lifetime_count())
 			.map(|l| l.to_string())
 			.join(", ");
 		let generic_args = if lifetimes.is_empty() {

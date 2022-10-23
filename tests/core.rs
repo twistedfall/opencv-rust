@@ -1,8 +1,8 @@
 use opencv::{
-	core::{self, CV_32S, CV_64F, CV_8U, CV_MAKETYPE, Moments, Point2f, RotatedRect, Scalar, Size2f, Vec3b},
+	core::{self, Moments, Point2f, RotatedRect, Scalar, Size2f, Vec3b, CV_32S, CV_64F, CV_8U, CV_MAKETYPE},
 	prelude::*,
-	Result,
 	types::VectorOfMat,
+	Result,
 };
 
 #[test]
@@ -44,16 +44,8 @@ fn rotated_rect() -> Result<()> {
 #[test]
 fn in_range() -> Result<()> {
 	let mut cs = VectorOfMat::new();
-	cs.push(Mat::from_slice_2d(&[
-		&[1., 2., 3.],
-		&[4., 5., 6.],
-		&[7., 8., 9.],
-	])?);
-	cs.push(Mat::from_slice_2d(&[
-		&[11., 12., 13.],
-		&[14., 15., 16.],
-		&[17., 18., 19.],
-	])?);
+	cs.push(Mat::from_slice_2d(&[&[1., 2., 3.], &[4., 5., 6.], &[7., 8., 9.]])?);
+	cs.push(Mat::from_slice_2d(&[&[11., 12., 13.], &[14., 15., 16.], &[17., 18., 19.]])?);
 	let mut m = Mat::default();
 	core::merge(&cs, &mut m)?;
 	let mut out = Mat::default();
@@ -65,7 +57,7 @@ fn in_range() -> Result<()> {
 #[test]
 #[cfg(ocvrs_opencv_branch_4)]
 fn file_storage() -> Result<()> {
-	use opencv::core::{FileStorage_Mode, FileStorage};
+	use opencv::core::{FileStorage, FileStorage_Mode};
 
 	{
 		let mut st = FileStorage::new(".yml", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32, "")?;

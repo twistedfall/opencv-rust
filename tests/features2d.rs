@@ -2,14 +2,7 @@
 
 use std::path::PathBuf;
 
-use opencv::{
-	core::Size,
-	features2d::ORB,
-	imgcodecs,
-	prelude::*,
-	Result,
-	types::VectorOfKeyPoint,
-};
+use opencv::{core::Size, features2d::ORB, imgcodecs, prelude::*, types::VectorOfKeyPoint, Result};
 
 #[test]
 fn orb() -> Result<()> {
@@ -19,7 +12,11 @@ fn orb() -> Result<()> {
 	let mut kp = VectorOfKeyPoint::new();
 	let mut des = Mat::default();
 	orb.detect_and_compute(&img, &Mat::default(), &mut kp, &mut des, false)?;
-	let size = if cfg!(ocvrs_opencv_branch_32) { 296 } else { 290 };
+	let size = if cfg!(ocvrs_opencv_branch_32) {
+		296
+	} else {
+		290
+	};
 	assert_eq!(size, kp.len());
 	assert_eq!(Size::new(32, size as i32), des.size()?);
 	Ok(())

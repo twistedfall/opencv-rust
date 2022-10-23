@@ -1,51 +1,22 @@
-use std::{
-	borrow::Cow,
-	collections::{HashMap, HashSet},
-	fmt::{self, Write},
-	fs::File,
-	io::BufReader,
-	path::{Path, PathBuf},
-};
+use std::borrow::Cow;
+use std::collections::{HashMap, HashSet};
+use std::fmt;
+use std::fmt::Write;
+use std::fs::File;
+use std::io::BufReader;
+use std::path::{Path, PathBuf};
 
-use clang::{
-	Clang,
-	diagnostic::Diagnostic,
-	diagnostic::Severity,
-	Entity,
-	EntityKind,
-	EntityVisitResult,
-	Index,
-	TranslationUnit,
-	Type,
-	Unsaved,
-};
+use clang::diagnostic::{Diagnostic, Severity};
+use clang::{Clang, Entity, EntityKind, EntityVisitResult, Index, TranslationUnit, Type, Unsaved};
 use dunce::canonicalize;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
+use crate::type_ref::{FishStyle, Kind as TypeRefKind};
 use crate::{
-	AbstractRefWrapper,
-	Class,
-	CompiledInterpolation,
-	Const,
-	Element,
-	EntityExt,
-	EntityWalker,
-	EntityWalkerVisitor,
-	Enum,
-	Func,
-	FunctionTypeHint,
-	GeneratorEnv,
-	get_definition_text,
-	line_reader,
-	opencv_module_from_path,
-	return_type_wrapper::ReturnTypeWrapper,
-	settings,
-	smart_ptr::SmartPtr,
-	StrExt,
-	type_ref::{FishStyle, Kind as TypeRefKind},
-	Typedef,
-	vector::Vector,
+	get_definition_text, line_reader, opencv_module_from_path, settings, AbstractRefWrapper, Class, CompiledInterpolation, Const,
+	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint, GeneratorEnv, ReturnTypeWrapper,
+	SmartPtr, StrExt, Typedef, Vector,
 };
 
 #[derive(Debug)]
@@ -76,7 +47,9 @@ impl<'tu, 'ge> DependentType<'tu, 'ge> {
 
 #[allow(unused)]
 pub trait GeneratorVisitor {
-	fn wants_file(&mut self, path: &Path) -> bool { true }
+	fn wants_file(&mut self, path: &Path) -> bool {
+		true
+	}
 
 	fn visit_module_comment(&mut self, comment: String) {}
 	fn visit_const(&mut self, cnst: Const) {}
@@ -107,8 +80,13 @@ impl<'m> EphemeralGenerator<'m> {
 	fn add_used_in_smart_ptr(&mut self, func: Entity) {
 		for arg in func.get_arguments().into_iter().flatten() {
 			if let Some(arg_type) = arg.get_type() {
-				if arg_type.get_declaration().map_or(false, |ent| ent.cpp_fullname().starts_with("cv::Ptr")) {
-					let inner_type_ent = arg_type.get_template_argument_types().into_iter()
+				if arg_type
+					.get_declaration()
+					.map_or(false, |ent| ent.cpp_fullname().starts_with("cv::Ptr"))
+				{
+					let inner_type_ent = arg_type
+						.get_template_argument_types()
+						.into_iter()
 						.flatten()
 						.flatten()
 						.next()
@@ -122,9 +100,8 @@ impl<'m> EphemeralGenerator<'m> {
 	}
 
 	pub fn generate_header(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/ephemeral/ephemeral.tpl.hpp").compile_interpolation()
-		);
+		static TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("../tpl/ephemeral/ephemeral.tpl.hpp").compile_interpolation());
 
 		let mut includes = String::with_capacity(128);
 		let mut resolve_types = String::with_capacity(1024);
@@ -177,14 +154,16 @@ impl EntityWalkerVisitor<'_> for &mut EphemeralGenerator<'_> {
 					match c.get_kind() {
 						EntityKind::BaseSpecifier => {
 							let c_decl = c.get_definition().expect("Can't get base class definition");
-							self.descendants.entry(c_decl.cpp_fullname().into_owned())
+							self
+								.descendants
+								.entry(c_decl.cpp_fullname().into_owned())
 								.or_insert_with(|| HashSet::with_capacity(4))
 								.insert(entity.cpp_fullname().into_owned());
 						}
-						EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate
-						| EntityKind::ConversionFunction => {
-							self.add_used_in_smart_ptr(c)
-						}
+						EntityKind::Constructor
+						| EntityKind::Method
+						| EntityKind::FunctionTemplate
+						| EntityKind::ConversionFunction => self.add_used_in_smart_ptr(c),
 						_ => {}
 					}
 					EntityVisitResult::Continue
@@ -228,7 +207,9 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 					if let Some(c) = entity.get_comment() {
 						if c.contains("@defgroup") {
 							if let Some(entity_file) = entity.get_location().and_then(|loc| loc.get_file_location().file) {
-								if !settings::IGNORE_CLANG_MODULE_COMMENT.contains(self.module) && opencv_module_from_path(&entity_file.get_path()).map_or(false, |m| m == self.module) {
+								if !settings::IGNORE_CLANG_MODULE_COMMENT.contains(self.module)
+									&& opencv_module_from_path(&entity_file.get_path()).map_or(false, |m| m == self.module)
+								{
 									self.comment_found = true;
 									self.visitor.visit_module_comment(c)
 								}
@@ -237,9 +218,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 					}
 				}
 			}
-			EntityKind::MacroDefinition => {
-				self.process_const(entity)
-			}
+			EntityKind::MacroDefinition => self.process_const(entity),
 			EntityKind::MacroExpansion => {
 				if let Some(name) = entity.get_name() {
 					if name == "CV_EXPORTS" || name == "CV_EXPORTS_W" || name == "CV_WRAP" || name == "GAPI_EXPORTS" {
@@ -270,16 +249,12 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 					}
 				}
 			}
-			EntityKind::ClassDecl | EntityKind::ClassTemplate | EntityKind::ClassTemplatePartialSpecialization
-			| EntityKind::StructDecl => {
-				Self::process_class(&mut self.visitor, &mut self.gen_env, entity)
-			}
-			EntityKind::EnumDecl => {
-				Self::process_enum(&mut self.visitor, entity)
-			}
-			EntityKind::FunctionDecl => {
-				Self::process_func(&mut self.visitor, &mut self.gen_env, entity)
-			}
+			EntityKind::ClassDecl
+			| EntityKind::ClassTemplate
+			| EntityKind::ClassTemplatePartialSpecialization
+			| EntityKind::StructDecl => Self::process_class(&mut self.visitor, &mut self.gen_env, entity),
+			EntityKind::EnumDecl => Self::process_enum(&mut self.visitor, entity),
+			EntityKind::FunctionDecl => Self::process_func(&mut self.visitor, &mut self.gen_env, entity),
 			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
 				Self::process_typedef(&mut self.visitor, &mut self.gen_env, entity)
 			}
@@ -300,7 +275,13 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 
 impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 	pub fn new(opencv_module_header_dir: &'r Path, module: &'r str, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
-		Self { opencv_module_header_dir, module, visitor, gen_env, comment_found: false }
+		Self {
+			opencv_module_header_dir,
+			module,
+			visitor,
+			gen_env,
+			comment_found: false,
+		}
 	}
 
 	fn process_const(&mut self, const_decl: Entity) {
@@ -314,10 +295,9 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 		if gen_env.get_export_config(class_decl).is_some() {
 			let cls = Class::new(class_decl, gen_env);
 			if !cls.is_excluded() {
-				cls.dependent_types().into_iter()
-					.for_each(|dep| {
-						visitor.visit_dependent_type(dep);
-					});
+				cls.dependent_types().into_iter().for_each(|dep| {
+					visitor.visit_dependent_type(dep);
+				});
 				class_decl.walk_enums_while(|enm| {
 					let enm = Enum::new(enm);
 					if enm.rust_leafname(FishStyle::No) != "unnamed" {
@@ -375,25 +355,26 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 		if let Some(only_dependent_types) = gen_env.get_export_config(func_decl).map(|e| e.only_dependent_types) {
 			let func = Func::new(func_decl, gen_env);
 			if !func.is_excluded() {
-				let specs = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref())
-					.map_or_else(|| vec![FunctionTypeHint::None], |specs| specs.iter()
-						.map(FunctionTypeHint::Specialized)
-						.collect::<Vec<_>>(),
-					);
+				let specs = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref()).map_or_else(
+					|| vec![FunctionTypeHint::None],
+					|specs| specs.iter().map(FunctionTypeHint::Specialized).collect::<Vec<_>>(),
+				);
 				for type_hint in specs {
 					let mut name_hint = None;
 					if !only_dependent_types {
-						let mut name = Func::new_ext(func_decl, type_hint, None, gen_env).rust_leafname(FishStyle::No).into_owned().into();
+						let mut name = Func::new_ext(func_decl, type_hint, None, gen_env)
+							.rust_leafname(FishStyle::No)
+							.into_owned()
+							.into();
 						gen_env.func_names.make_unique_name(&mut name);
 						if let Cow::Owned(name) = name {
 							name_hint = Some(name);
 						}
 					}
 					let func = Func::new_ext(func_decl, type_hint, name_hint, gen_env);
-					func.dependent_types().into_iter()
-						.for_each(|dep| {
-							visitor.visit_dependent_type(dep);
-						});
+					func.dependent_types().into_iter().for_each(|dep| {
+						visitor.visit_dependent_type(dep);
+					});
 					if !only_dependent_types {
 						visitor.visit_func(func);
 					}
@@ -422,18 +403,18 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 			underlying_type.as_function().is_some()
 				|| !underlying_type.is_excluded()
 				|| if let Some(templ) = underlying_type.as_template() {
-				let cpp_fullname = templ.cpp_fullname();
-				settings::IMPLEMENTED_GENERICS.contains(cpp_fullname.as_ref())
-					|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_fullname.as_ref())
-			} else {
-				false
-			}
+					let cpp_fullname = templ.cpp_fullname();
+					settings::IMPLEMENTED_GENERICS.contains(cpp_fullname.as_ref())
+						|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_fullname.as_ref())
+				} else {
+					false
+				}
 		};
 		if export && !typedef.is_excluded() {
-			typedef.dependent_types().into_iter()
-				.for_each(|dep| {
-					visitor.visit_dependent_type(dep)
-				});
+			typedef
+				.dependent_types()
+				.into_iter()
+				.for_each(|dep| visitor.visit_dependent_type(dep));
 			visitor.visit_typedef(typedef)
 		}
 	}
@@ -490,7 +471,8 @@ impl Generator {
 				Err(err) => {
 					eprintln!(
 						"=== Cannot canonicalize one of the additional_include_dirs: {}, reason: {}",
-						additional_dir.display(), err
+						additional_dir.display(),
+						err
 					);
 				}
 			};
@@ -529,17 +511,14 @@ impl Generator {
 	}
 
 	pub fn build_clang_command_line_args(&self) -> Vec<Cow<'static, str>> {
-		let mut args = self.clang_include_dirs.iter()
+		let mut args = self
+			.clang_include_dirs
+			.iter()
 			.map(|d| format!("-isystem{}", d.to_str().expect("Incorrect system include path")).into())
-			.chain([&self.opencv_include_dir, &self.src_cpp_dir].iter()
-				.flat_map(|d| {
-					let include_path = d.to_str().expect("Incorrect include path");
-					[
-						format!("-I{}", include_path).into(),
-						format!("-F{}", include_path).into(),
-					]
-				})
-			)
+			.chain([&self.opencv_include_dir, &self.src_cpp_dir].iter().flat_map(|d| {
+				let include_path = d.to_str().expect("Incorrect include path");
+				[format!("-I{}", include_path).into(), format!("-F{}", include_path).into()]
+			}))
 			.collect::<Vec<_>>();
 		args.push("-DOCVRS_PARSING_HEADERS".into());
 		args.push("-includeocvrs_ephemeral.hpp".into());
@@ -554,17 +533,21 @@ impl Generator {
 		if !module_file.exists() {
 			module_file = self.opencv_module_header_dir.join(format!("{}.hpp", module));
 		}
-		let mut root_tu: TranslationUnit = index.parser(module_file)
+		let mut root_tu: TranslationUnit = index
+			.parser(module_file)
 			.unsaved(&[self.make_ephemeral_header("")])
 			.arguments(&self.build_clang_command_line_args())
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
-			.parse().unwrap_or_else(|_| panic!("Cannot parse module: {}", module));
+			.parse()
+			.unwrap_or_else(|_| panic!("Cannot parse module: {}", module));
 		let mut ephem_gen = EphemeralGenerator::new(module);
 		let walker = EntityWalker::new(root_tu.get_entity());
 		walker.walk_opencv_entities(&mut ephem_gen);
 		let hdr = ephem_gen.generate_header();
-		root_tu = root_tu.reparse(&[self.make_ephemeral_header(&hdr)]).expect("Can't reparse file");
+		root_tu = root_tu
+			.reparse(&[self.make_ephemeral_header(&hdr)])
+			.expect("Can't reparse file");
 		Self::handle_diags(&root_tu.get_diagnostics(), panic_on_error);
 		entity_processor(root_tu, &hdr);
 	}
@@ -574,12 +557,7 @@ impl Generator {
 			let root_entity = root_tu.get_entity();
 			visitor.visit_ephemeral_header(ephemeral_header);
 			let gen_env = GeneratorEnv::new(root_entity, module);
-			let opencv_walker = OpenCvWalker::new(
-				&self.opencv_module_header_dir,
-				module,
-				visitor,
-				gen_env,
-			);
+			let opencv_walker = OpenCvWalker::new(&self.opencv_module_header_dir, module, visitor, gen_env);
 			let walker = EntityWalker::new(root_entity);
 			walker.walk_opencv_entities(opencv_walker);
 		});

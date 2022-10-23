@@ -3,14 +3,8 @@ use std::collections::HashSet;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::{
-	CompiledInterpolation,
-	Element,
-	Enum,
-	get_debug,
-	StrExt,
-	type_ref::FishStyle,
-};
+use crate::type_ref::FishStyle;
+use crate::{get_debug, CompiledInterpolation, Element, Enum, StrExt};
 
 use super::RustNativeGeneratedElement;
 
@@ -20,21 +14,17 @@ impl RustNativeGeneratedElement for Enum<'_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		static ENUM_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/enum/enum.tpl.rs").compile_interpolation()
-		);
+		static ENUM_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/enum/enum.tpl.rs").compile_interpolation());
 
-		static CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/enum/const.tpl.rs").compile_interpolation()
-		);
+		static CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/enum/const.tpl.rs").compile_interpolation());
 
-		static CONST_IGNORED_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/enum/const_ignored.tpl.rs").compile_interpolation()
-		);
+		static CONST_IGNORED_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/enum/const_ignored.tpl.rs").compile_interpolation());
 
 		let consts = self.consts();
 		let mut generated_values = HashSet::with_capacity(consts.len());
-		let consts = consts.into_iter()
+		let consts = consts
+			.into_iter()
 			.map(|c| {
 				let name = c.rust_leafname(FishStyle::No);
 				let value = c.value().expect("Can't get value of enum variant").to_string();
@@ -55,7 +45,8 @@ impl RustNativeGeneratedElement for Enum<'_> {
 					"name" => name.into_owned(),
 					"value" => value,
 				})
-			}).collect::<Vec<_>>();
+			})
+			.collect::<Vec<_>>();
 		ENUM_TPL.interpolate(&hashmap! {
 			"doc_comment" => self.rendered_doc_comment(opencv_version).into(),
 			"debug" => get_debug(self).into(),

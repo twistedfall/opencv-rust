@@ -4,14 +4,18 @@ use crate::traits::{OpenCVType, OpenCVTypeExternContainer};
 
 #[doc(hidden)]
 pub trait PtrExtern {
-	#[doc(hidden)]	unsafe fn extern_delete(&mut self);
-	#[doc(hidden)]	unsafe fn extern_inner_as_ptr(&self) -> *const c_void;
-	#[doc(hidden)]	unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut c_void;
+	#[doc(hidden)]
+	unsafe fn extern_delete(&mut self);
+	#[doc(hidden)]
+	unsafe fn extern_inner_as_ptr(&self) -> *const c_void;
+	#[doc(hidden)]
+	unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut c_void;
 }
 
 #[doc(hidden)]
 pub trait PtrExternCtor<T: for<'a> OpenCVType<'a>>: Sized {
-	#[doc(hidden)]	unsafe fn extern_new(val: <<T as OpenCVType>::ExternContainer as OpenCVTypeExternContainer>::ExternSendMut) -> *mut c_void;
+	#[doc(hidden)]
+	unsafe fn extern_new(val: <<T as OpenCVType>::ExternContainer as OpenCVTypeExternContainer>::ExternSendMut) -> *mut c_void;
 }
 
 #[macro_export]
@@ -45,11 +49,17 @@ macro_rules! ptr_extern {
 #[macro_export]
 macro_rules! ptr_extern_ctor {
 	($type: ty, $extern_new: ident $(,)?) => {
-		extern "C" { fn $extern_new(val: <<$type as $crate::traits::OpenCVType>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut) -> *mut std::ffi::c_void; }
+		extern "C" {
+			fn $extern_new(
+				val: <<$type as $crate::traits::OpenCVType>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut,
+			) -> *mut std::ffi::c_void;
+		}
 
 		impl $crate::manual::core::PtrExternCtor<$type> for $crate::manual::core::Ptr<$type> {
 			#[inline]
-			unsafe fn extern_new(val: <<$type as $crate::traits::OpenCVType>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut) -> *mut std::ffi::c_void {
+			unsafe fn extern_new(
+				val: <<$type as $crate::traits::OpenCVType>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut,
+			) -> *mut std::ffi::c_void {
 				$extern_new(val)
 			}
 		}
@@ -59,7 +69,9 @@ macro_rules! ptr_extern_ctor {
 #[macro_export]
 macro_rules! ptr_cast_base {
 	($type: ty, $base: ty, $extern_convert: ident $(,)?) => {
-		extern "C" { fn $extern_convert(val: *mut std::ffi::c_void) -> *mut std::ffi::c_void; }
+		extern "C" {
+			fn $extern_convert(val: *mut std::ffi::c_void) -> *mut std::ffi::c_void;
+		}
 
 		impl ::std::convert::From<$type> for $base {
 			#[inline]

@@ -1,19 +1,10 @@
-use std::{
-	borrow::Cow,
-	fmt,
-};
+use std::borrow::Cow;
+use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
 
-use crate::{
-	Const,
-	DefaultElement,
-	Element,
-	EntityElement,
-	EntityExt,
-	StrExt,
-	type_ref::FishStyle,
-};
+use crate::type_ref::FishStyle;
+use crate::{Const, DefaultElement, Element, EntityElement, EntityExt, StrExt};
 
 #[derive(Clone)]
 pub struct Enum<'tu> {
@@ -23,11 +14,17 @@ pub struct Enum<'tu> {
 
 impl<'tu> Enum<'tu> {
 	pub fn new(entity: Entity<'tu>) -> Self {
-		Self { entity, custom_fullname: None }
+		Self {
+			entity,
+			custom_fullname: None,
+		}
 	}
 
 	pub fn new_ext(entity: Entity<'tu>, custom_fullname: String) -> Self {
-		Self { entity, custom_fullname: Some(custom_fullname) }
+		Self {
+			entity,
+			custom_fullname: Some(custom_fullname),
+		}
 	}
 
 	pub fn as_typedefed(&self) -> Option<Entity> {
@@ -117,14 +114,19 @@ impl Element for Enum<'_> {
 
 impl fmt::Display for Enum<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		write!(f, "{}", self.entity.get_display_name().unwrap_or_else(|| "unnamed".to_string()))
+		write!(
+			f,
+			"{}",
+			self.entity.get_display_name().unwrap_or_else(|| "unnamed".to_string())
+		)
 	}
 }
 
 impl fmt::Debug for Enum<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("Enum");
-		self.update_debug_struct(&mut debug_struct)
+		self
+			.update_debug_struct(&mut debug_struct)
 			.field("consts", &self.consts())
 			.finish()
 	}

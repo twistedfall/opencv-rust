@@ -30,7 +30,7 @@ macro_rules! opencv_branch_32 {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_branch_32 {
-	($($tt:tt)*) => {}
+	($($tt:tt)*) => {};
 }
 
 /// Conditional compilation macro based on OpenCV branch version for usage in external crates.
@@ -65,7 +65,7 @@ macro_rules! not_opencv_branch_32 {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! not_opencv_branch_32 {
-	($($tt:tt)*) => {}
+	($($tt:tt)*) => {};
 }
 
 /// Conditional compilation macro based on OpenCV branch version for usage in external crates.
@@ -100,7 +100,7 @@ macro_rules! opencv_branch_34 {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_branch_34 {
-	($($tt:tt)*) => {}
+	($($tt:tt)*) => {};
 }
 
 /// Conditional compilation macro based on OpenCV branch version for usage in external crates.
@@ -135,7 +135,7 @@ macro_rules! not_opencv_branch_34 {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! not_opencv_branch_34 {
-	($($tt:tt)*) => {}
+	($($tt:tt)*) => {};
 }
 
 /// Conditional compilation macro based on OpenCV branch version for usage in external crates.
@@ -170,7 +170,7 @@ macro_rules! opencv_branch_4 {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_branch_4 {
-	($($tt:tt)*) => {}
+	($($tt:tt)*) => {};
 }
 
 /// Conditional compilation macro based on OpenCV branch version for usage in external crates.
@@ -205,5 +205,5 @@ macro_rules! not_opencv_branch_4 {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! not_opencv_branch_4 {
-	($($tt:tt)*) => {}
+	($($tt:tt)*) => {};
 }

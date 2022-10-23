@@ -1,33 +1,16 @@
-use std::{
-	borrow::Cow,
-	collections::HashMap,
-	fmt::{self, Write},
-};
+use std::borrow::Cow;
+use std::collections::HashMap;
+use std::fmt;
+use std::fmt::Write;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 use once_cell::sync::Lazy;
 use regex::Regex;
 
+use crate::type_ref::{Constness, FishStyle, TypeRefTypeHint};
 use crate::{
-	Class,
-	comment,
-	Constness,
-	DefaultElement,
-	DefinitionLocation,
-	DependentType,
-	DependentTypeMode,
-	Element,
-	EntityElement,
-	EntityExt,
-	Field,
-	FieldTypeHint,
-	GeneratorEnv,
-	reserved_rename,
-	settings,
-	StrExt,
-	StringExt,
-	type_ref::{FishStyle, TypeRefTypeHint},
-	TypeRef,
+	comment, reserved_rename, settings, Class, DefaultElement, DefinitionLocation, DependentType, DependentTypeMode, Element,
+	EntityElement, EntityExt, Field, FieldTypeHint, GeneratorEnv, StrExt, StringExt, TypeRef,
 };
 
 #[derive(Debug, PartialEq, Eq)]
@@ -47,15 +30,9 @@ pub enum OperatorKind {
 impl OperatorKind {
 	pub fn new(token: &str, arg_count: usize) -> Self {
 		match token.trim() {
-			"[]" => {
-				OperatorKind::Index
-			}
-			"+" => {
-				OperatorKind::Add
-			}
-			"-" => {
-				OperatorKind::Sub
-			}
+			"[]" => OperatorKind::Index,
+			"+" => OperatorKind::Add,
+			"-" => OperatorKind::Sub,
 			"*" => {
 				if arg_count == 0 {
 					OperatorKind::Deref
@@ -63,21 +40,11 @@ impl OperatorKind {
 					OperatorKind::Mul
 				}
 			}
-			"/" => {
-				OperatorKind::Div
-			}
-			"==" => {
-				OperatorKind::Equals
-			}
-			"++" => {
-				OperatorKind::Incr
-			}
-			"--" => {
-				OperatorKind::Decr
-			}
-			_ => {
-				OperatorKind::Unsupported
-			},
+			"/" => OperatorKind::Div,
+			"==" => OperatorKind::Equals,
+			"++" => OperatorKind::Incr,
+			"--" => OperatorKind::Decr,
+			_ => OperatorKind::Unsupported,
 		}
 	}
 }
@@ -126,19 +93,17 @@ impl<'f> FuncId<'f> {
 			let mut args = vec![];
 			entity.walk_children_while(|child| {
 				if child.get_kind() == EntityKind::ParmDecl {
-					args.push(child.get_name()
-						.map(Cow::Owned)
-						.unwrap_or_else(|| "unnamed".into()));
+					args.push(child.get_name().map(Cow::Owned).unwrap_or_else(|| "unnamed".into()));
 				}
 				true
 			});
 			args
 		} else {
-			entity.get_arguments().into_iter()
+			entity
+				.get_arguments()
+				.into_iter()
 				.flatten()
-				.map(|a| a.get_name()
-					.map(Cow::Owned)
-					.unwrap_or_else(|| "unnamed".into()))
+				.map(|a| a.get_name().map(Cow::Owned).unwrap_or_else(|| "unnamed".into()))
 				.collect()
 		};
 		Self { name, args }
@@ -169,11 +134,26 @@ pub struct Func<'tu, 'ge> {
 
 impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self { entity, type_hint: FunctionTypeHint::None, name_hint: None, gen_env }
+		Self {
+			entity,
+			type_hint: FunctionTypeHint::None,
+			name_hint: None,
+			gen_env,
+		}
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, type_hint: FunctionTypeHint, name_hint: Option<String>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self { entity, type_hint, name_hint, gen_env }
+	pub fn new_ext(
+		entity: Entity<'tu>,
+		type_hint: FunctionTypeHint,
+		name_hint: Option<String>,
+		gen_env: &'ge GeneratorEnv<'tu>,
+	) -> Self {
+		Self {
+			entity,
+			type_hint,
+			name_hint,
+			gen_env,
+		}
 	}
 
 	pub fn set_name_hint(&mut self, name_hint: Option<String>) {
@@ -199,12 +179,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					Kind::Function
 				}
 			}
-			EntityKind::Constructor => {
-				Kind::Constructor(Class::new(
-					self.entity.get_semantic_parent().expect("Can't get parent of constructor"),
-					self.gen_env,
-				))
-			}
+			EntityKind::Constructor => Kind::Constructor(Class::new(
+				self.entity.get_semantic_parent().expect("Can't get parent of constructor"),
+				self.gen_env,
+			)),
 			EntityKind::Method => {
 				let class = Class::new(
 					self.entity.get_semantic_parent().expect("Can't get parent of method"),
@@ -219,29 +197,19 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					Kind::InstanceMethod(class)
 				}
 			}
-			EntityKind::FieldDecl | EntityKind::VarDecl => {
-				Kind::FieldAccessor(Field::new(self.entity, self.gen_env).parent())
-			}
-			EntityKind::ConversionFunction => {
-				Kind::ConversionMethod(Class::new(
-					self.entity.get_semantic_parent().expect("Can't get parent of method"),
+			EntityKind::FieldDecl | EntityKind::VarDecl => Kind::FieldAccessor(Field::new(self.entity, self.gen_env).parent()),
+			EntityKind::ConversionFunction => Kind::ConversionMethod(Class::new(
+				self.entity.get_semantic_parent().expect("Can't get parent of method"),
+				self.gen_env,
+			)),
+			EntityKind::FunctionTemplate => match self.entity.get_template_kind() {
+				Some(EntityKind::Method) => Kind::GenericInstanceMethod(Class::new(
+					self.entity.get_semantic_parent().expect("Can't get parent of generic method"),
 					self.gen_env,
-				))
-			}
-			EntityKind::FunctionTemplate => {
-				match self.entity.get_template_kind() {
-					Some(EntityKind::Method) => {
-						Kind::GenericInstanceMethod(Class::new(
-							self.entity.get_semantic_parent().expect("Can't get parent of generic method"),
-							self.gen_env,
-						))
-					}
-					_ => {
-						Kind::GenericFunction
-					}
-				}
-			}
-			_ => unreachable!("Unknown function entity: {:#?}", self.entity)
+				)),
+				_ => Kind::GenericFunction,
+			},
+			_ => unreachable!("Unknown function entity: {:#?}", self.entity),
 		}
 	}
 
@@ -255,13 +223,12 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn as_instance_method(&self) -> Option<Class<'tu, 'ge>> {
 		match self.kind() {
-			Kind::InstanceMethod(out) | Kind::FieldAccessor(out) | Kind::GenericInstanceMethod(out)
-			| Kind::ConversionMethod(out) | Kind::InstanceOperator(out, ..) => {
-				Some(out)
-			}
-			_ => {
-				None
-			}
+			Kind::InstanceMethod(out)
+			| Kind::FieldAccessor(out)
+			| Kind::GenericInstanceMethod(out)
+			| Kind::ConversionMethod(out)
+			| Kind::InstanceOperator(out, ..) => Some(out),
+			_ => None,
 		}
 	}
 
@@ -299,15 +266,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn as_operator(&self) -> Option<OperatorKind> {
 		match self.kind() {
-			Kind::FunctionOperator(kind) => {
-				Some(kind)
-			}
-			Kind::InstanceOperator(_, kind) => {
-				Some(kind)
-			}
-			_ => {
-				None
-			}
+			Kind::FunctionOperator(kind) => Some(kind),
+			Kind::InstanceOperator(_, kind) => Some(kind),
+			_ => None,
 		}
 	}
 
@@ -322,7 +283,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				Constness::from_is_mut(
 					type_ref.as_array().is_some()
 						|| type_ref.as_smart_ptr().is_some()
-						|| type_ref.as_pointer().map_or(false, |r| r.constness().is_mut())
+						|| type_ref.as_pointer().map_or(false, |r| r.constness().is_mut()),
 				)
 			}
 		} else {
@@ -336,26 +297,32 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn is_generic(&self) -> bool {
 		match self.kind() {
-			Kind::GenericFunction | Kind::GenericInstanceMethod(..) => {
-				!self.as_specialized().is_some()
-			}
-			Kind::Function | Kind::Constructor(..) | Kind::InstanceMethod(..)
-			| Kind::StaticMethod(..) | Kind::FieldAccessor(..) | Kind::ConversionMethod(..)
-			| Kind::FunctionOperator(..) | Kind::InstanceOperator(..) => {
-				false
-			}
+			Kind::GenericFunction | Kind::GenericInstanceMethod(..) => !self.as_specialized().is_some(),
+			Kind::Function
+			| Kind::Constructor(..)
+			| Kind::InstanceMethod(..)
+			| Kind::StaticMethod(..)
+			| Kind::FieldAccessor(..)
+			| Kind::ConversionMethod(..)
+			| Kind::FunctionOperator(..)
+			| Kind::InstanceOperator(..) => false,
 		}
 	}
 
 	pub fn is_infallible(&self) -> bool {
 		self.as_field_accessor().is_some()
-			|| matches!(self.entity.get_exception_specification(), Some(ExceptionSpecification::BasicNoexcept) | Some(ExceptionSpecification::Unevaluated))
-			|| settings::FORCE_INFALLIBLE.contains(&self.func_id())
+			|| matches!(
+				self.entity.get_exception_specification(),
+				Some(ExceptionSpecification::BasicNoexcept) | Some(ExceptionSpecification::Unevaluated)
+			) || settings::FORCE_INFALLIBLE.contains(&self.func_id())
 	}
 
 	pub fn is_unsafe(&self) -> bool {
 		settings::FUNC_UNSAFE.contains(&self.func_id())
-			|| self.arguments().into_iter().any(|a| a.type_ref().is_pass_by_ptr() && !a.is_user_data())
+			|| self
+				.arguments()
+				.into_iter()
+				.any(|a| a.type_ref().is_pass_by_ptr() && !a.is_user_data())
 	}
 
 	pub fn is_default_constructor(&self) -> bool {
@@ -381,8 +348,11 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn is_naked_return(&self) -> bool {
 		self.is_infallible() && {
 			let ret_type = self.return_type();
-			ret_type.is_primitive() || ret_type.as_pointer().is_some() || ret_type.as_array().is_some()
-				|| ret_type.is_by_ptr() || ret_type.as_string().is_some()
+			ret_type.is_primitive()
+				|| ret_type.as_pointer().is_some()
+				|| ret_type.as_array().is_some()
+				|| ret_type.is_by_ptr()
+				|| ret_type.as_string().is_some()
 		}
 	}
 
@@ -396,16 +366,25 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn return_type(&self) -> TypeRef<'tu, 'ge> {
 		match self.kind() {
-			Kind::Constructor(cls) => {
-				cls.type_ref()
-			}
-			Kind::Function | Kind::InstanceMethod(..) | Kind::StaticMethod(..)
-			| Kind::ConversionMethod(..) | Kind::GenericInstanceMethod(..) | Kind::GenericFunction
-			| Kind::FunctionOperator(..) | Kind::InstanceOperator(..) => {
-				let mut out = TypeRef::new_ext(self.entity.get_result_type().expect("Can't get return type"), TypeRefTypeHint::PrimitiveRefAsPointer, None, self.gen_env);
+			Kind::Constructor(cls) => cls.type_ref(),
+			Kind::Function
+			| Kind::InstanceMethod(..)
+			| Kind::StaticMethod(..)
+			| Kind::ConversionMethod(..)
+			| Kind::GenericInstanceMethod(..)
+			| Kind::GenericFunction
+			| Kind::FunctionOperator(..)
+			| Kind::InstanceOperator(..) => {
+				let mut out = TypeRef::new_ext(
+					self.entity.get_result_type().expect("Can't get return type"),
+					TypeRefTypeHint::PrimitiveRefAsPointer,
+					None,
+					self.gen_env,
+				);
 				if let Some(spec) = self.as_specialized() {
 					if out.is_generic() {
-						let spec_type = spec.get(out.base().cpp_full().as_ref())
+						let spec_type = spec
+							.get(out.base().cpp_full().as_ref())
 							.and_then(|s| self.gen_env.resolve_type(s));
 						if let Some(spec_type) = spec_type {
 							out.set_type_hint(TypeRefTypeHint::Specialized(spec_type));
@@ -422,7 +401,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			}
 			Kind::FieldAccessor(..) => {
 				if self.type_hint == FunctionTypeHint::FieldSetter {
-					TypeRef::new(self.gen_env.resolve_type("void").expect("Can't resolve void type"), self.gen_env)
+					TypeRef::new(
+						self.gen_env.resolve_type("void").expect("Can't resolve void type"),
+						self.gen_env,
+					)
 				} else {
 					let mut out = Field::new(self.entity, self.gen_env).type_ref();
 					out.set_type_hint(TypeRefTypeHint::PrimitiveRefAsPointer);
@@ -455,9 +437,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					vec![]
 				}
 			}
-			_ => {
-				self.entity.get_arguments().expect("Can't get arguments")
-			}
+			_ => self.entity.get_arguments().expect("Can't get arguments"),
 		}
 	}
 
@@ -468,14 +448,15 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		let is_field_setter = self.as_field_setter().is_some();
 		let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
 
-		self.clang_arguments().into_iter()
+		self
+			.clang_arguments()
+			.into_iter()
 			.map(|a| {
 				if is_field_setter {
-					return Field::new_ext(a, FieldTypeHint::FieldSetter, self.gen_env)
+					return Field::new_ext(a, FieldTypeHint::FieldSetter, self.gen_env);
 				}
 
-				let arg_override = arg_overrides
-					.and_then(|o| a.get_name().and_then(|arg_name| o.get(arg_name.as_str())));
+				let arg_override = arg_overrides.and_then(|o| a.get_name().and_then(|arg_name| o.get(arg_name.as_str())));
 				if let Some(arg_override) = arg_override {
 					return Field::new_ext(a, FieldTypeHint::ArgOverride(*arg_override), self.gen_env);
 				}
@@ -483,7 +464,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				let out = Field::new(a, self.gen_env);
 				let type_ref = out.type_ref();
 				if type_ref.is_generic() {
-					let spec_type = spec.get(type_ref.base().cpp_full().as_ref())
+					let spec_type = spec
+						.get(type_ref.base().cpp_full().as_ref())
 						.and_then(|s| self.gen_env.resolve_type(s));
 					if let Some(spec_type) = spec_type {
 						return Field::new_ext(a, FieldTypeHint::Specialized(spec_type), self.gen_env);
@@ -495,11 +477,17 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
-		self.arguments().into_iter()
+		self
+			.arguments()
+			.into_iter()
 			.map(|a| a.type_ref())
 			.filter(|t| !t.is_ignored())
 			.flat_map(|t| t.dependent_types(DependentTypeMode::None))
-			.chain(self.return_type().dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)))
+			.chain(
+				self
+					.return_type()
+					.dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)),
+			)
 			.collect()
 	}
 
@@ -570,12 +558,12 @@ impl Element for Func<'_, '_> {
 				} else {
 					false
 				}
-			})
-			|| if let Some(cls) = self.as_constructor() { // don't generate constructors of abstract classes
-				cls.is_abstract()
-			} else {
-				false
-			}
+			}) || if let Some(cls) = self.as_constructor() {
+			// don't generate constructors of abstract classes
+			cls.is_abstract()
+		} else {
+			false
+		}
 	}
 
 	fn is_ignored(&self) -> bool {
@@ -588,10 +576,12 @@ impl Element for Func<'_, '_> {
 			|| self.as_operator().map_or(false, |op| op == OperatorKind::Unsupported)
 			|| self.arguments().into_iter().any(|a| a.type_ref().is_ignored())
 			|| {
-					let ret = self.return_type();
-					ret.is_ignored() || ret.as_class().map_or(false, |cls| cls.is_abstract())
-				}
-			|| settings::FUNC_RENAME.get(identifier.as_ref()).filter(|&&n| n == "-").is_some()
+				let ret = self.return_type();
+				ret.is_ignored() || ret.as_class().map_or(false, |cls| cls.is_abstract())
+			} || settings::FUNC_RENAME
+			.get(identifier.as_ref())
+			.filter(|&&n| n == "-")
+			.is_some()
 	}
 
 	fn is_system(&self) -> bool {
@@ -637,8 +627,13 @@ impl Element for Func<'_, '_> {
 					if default_args_comment.is_empty() {
 						default_args_comment += "## C++ default parameters";
 					}
-					write!(&mut default_args_comment, "\n* {name}: {val}", name = arg.rust_leafname(FishStyle::No), val = def_val)
-						.expect("write! to String shouldn't fail");
+					write!(
+						&mut default_args_comment,
+						"\n* {name}: {val}",
+						name = arg.rust_leafname(FishStyle::No),
+						val = def_val
+					)
+					.expect("write! to String shouldn't fail");
 				}
 			}
 			if !default_args_comment.is_empty() {
@@ -689,7 +684,8 @@ impl Element for Func<'_, '_> {
 							ptr.pointee()
 						} else {
 							typ
-						}.as_class()
+						}
+						.as_class()
 					});
 					if let Some(other) = class_arg {
 						if cls == other {
@@ -702,7 +698,8 @@ impl Element for Func<'_, '_> {
 					}
 				}
 				break 'ctor_name "new";
-			}.into()
+			}
+			.into()
 		} else if let Some(..) = self.as_conversion_method() {
 			let mut name: String = self.return_type().rust_local().into_owned();
 			name.cleanup_name();
@@ -710,9 +707,7 @@ impl Element for Func<'_, '_> {
 		} else if let Some(kind) = self.as_operator() {
 			if cpp_name.starts_with("operator") {
 				match kind {
-					OperatorKind::Unsupported => {
-						cpp_name
-					}
+					OperatorKind::Unsupported => cpp_name,
 					OperatorKind::Index => {
 						if self.constness().is_const() {
 							"get".into()
@@ -720,18 +715,10 @@ impl Element for Func<'_, '_> {
 							"get_mut".into()
 						}
 					}
-					OperatorKind::Add => {
-						"add".into()
-					}
-					OperatorKind::Sub => {
-						"sub".into()
-					}
-					OperatorKind::Mul => {
-						"mul".into()
-					}
-					OperatorKind::Div => {
-						"div".into()
-					}
+					OperatorKind::Add => "add".into(),
+					OperatorKind::Sub => "sub".into(),
+					OperatorKind::Mul => "mul".into(),
+					OperatorKind::Div => "div".into(),
 					OperatorKind::Deref => {
 						if self.constness().is_const() {
 							"try_deref".into()
@@ -739,16 +726,10 @@ impl Element for Func<'_, '_> {
 							"try_deref_mut".into()
 						}
 					}
-					OperatorKind::Equals => {
-						"equals".into()
-					}
+					OperatorKind::Equals => "equals".into(),
 
-					OperatorKind::Incr => {
-						"incr".into()
-					}
-					OperatorKind::Decr => {
-						"decr".into()
-					}
+					OperatorKind::Incr => "incr".into(),
+					OperatorKind::Decr => "decr".into(),
 				}
 			} else {
 				cpp_name
@@ -781,7 +762,8 @@ impl fmt::Display for Func<'_, '_> {
 impl fmt::Debug for Func<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("Func");
-		self.update_debug_struct(&mut debug_struct)
+		self
+			.update_debug_struct(&mut debug_struct)
 			.field("export_config", &self.gen_env.get_export_config(self.entity))
 			.field("is_const", &self.constness())
 			.field("is_infallible", &self.is_infallible())

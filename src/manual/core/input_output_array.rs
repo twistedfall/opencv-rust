@@ -2,10 +2,9 @@ use std::os::raw::c_void;
 
 use crate::{
 	core::{_InputArray, _InputArrayTrait, _InputOutputArray, _InputOutputArrayTrait, _OutputArray, _OutputArrayTrait},
-	input_output_array,
-	Result,
-	sys,
+	input_output_array, sys,
 	traits::Boxed,
+	Result,
 };
 
 /// Trait to serve as a replacement for `InputArray` in C++ OpenCV
@@ -43,36 +42,39 @@ pub trait ToInputOutputArray {
 impl<T: _InputArrayTrait> ToInputArray for T {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
-		extern "C" { fn cv_InputArray_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+		extern "C" {
+			fn cv_InputArray_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>);
+		}
 		return_send!(via ocvrs_return);
 		unsafe { cv_InputArray_input_array(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) }
 		return_receive!(unsafe ocvrs_return => ret);
-		ret.into_result()
-			.map(|ptr| unsafe { _InputArray::from_raw(ptr) })
+		ret.into_result().map(|ptr| unsafe { _InputArray::from_raw(ptr) })
 	}
 }
 
 impl<T: _OutputArrayTrait> ToOutputArray for T {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
-		extern "C" { fn cv_OutputArray_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+		extern "C" {
+			fn cv_OutputArray_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>);
+		}
 		return_send!(via ocvrs_return);
 		unsafe { cv_OutputArray_output_array(self.as_raw_mut__OutputArray(), ocvrs_return.as_mut_ptr()) }
 		return_receive!(unsafe ocvrs_return => ret);
-		ret.into_result()
-			.map(|ptr| unsafe { _OutputArray::from_raw(ptr) })
+		ret.into_result().map(|ptr| unsafe { _OutputArray::from_raw(ptr) })
 	}
 }
 
 impl<T: _InputOutputArrayTrait> ToInputOutputArray for T {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
-		extern "C" { fn cv_InputOutputArray_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>); }
+		extern "C" {
+			fn cv_InputOutputArray_input_output_array(instance: *mut c_void, ocvrs_return: *mut sys::Result<*mut c_void>);
+		}
 		return_send!(via ocvrs_return);
 		unsafe { cv_InputOutputArray_input_output_array(self.as_raw_mut__InputOutputArray(), ocvrs_return.as_mut_ptr()) }
 		return_receive!(unsafe ocvrs_return => ret);
-		ret.into_result()
-			.map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) })
+		ret.into_result().map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) })
 	}
 }
 
@@ -146,5 +148,5 @@ macro_rules! input_output_array_ref_forward {
 	($type: ty) => {
 		$crate::input_array_ref_forward! { $type }
 		$crate::output_array_ref_forward! { $type }
-	}
+	};
 }

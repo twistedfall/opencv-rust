@@ -1,13 +1,10 @@
-use std::{
-	collections::HashSet,
-	env,
-	ffi::OsStr,
-	fs::File,
-	io::{BufRead, BufReader},
-	io,
-	path::{Path, PathBuf},
-	process::{Child, Command, Stdio},
-};
+use std::collections::HashSet;
+use std::ffi::OsStr;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+use std::path::{Path, PathBuf};
+use std::process::{Child, Command, Stdio};
+use std::{env, io};
 
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
@@ -26,14 +23,18 @@ type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 static MODULES: OnceCell<Vec<String>> = OnceCell::new();
 
 static OUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var")));
-static MANIFEST_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var")));
+static MANIFEST_DIR: Lazy<PathBuf> =
+	Lazy::new(|| PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var")));
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
 static HOST_TRIPLE: Lazy<Option<String>> = Lazy::new(|| env::var("HOST_TRIPLE").ok());
 
-static OPENCV_BRANCH_32: Lazy<VersionReq> = Lazy::new(|| VersionReq::parse("~3.2").expect("Can't parse OpenCV 3.2 version requirement"));
-static OPENCV_BRANCH_34: Lazy<VersionReq> = Lazy::new(|| VersionReq::parse("~3.4").expect("Can't parse OpenCV 3.4 version requirement"));
-static OPENCV_BRANCH_4: Lazy<VersionReq> = Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
+static OPENCV_BRANCH_32: Lazy<VersionReq> =
+	Lazy::new(|| VersionReq::parse("~3.2").expect("Can't parse OpenCV 3.2 version requirement"));
+static OPENCV_BRANCH_34: Lazy<VersionReq> =
+	Lazy::new(|| VersionReq::parse("~3.4").expect("Can't parse OpenCV 3.4 version requirement"));
+static OPENCV_BRANCH_4: Lazy<VersionReq> =
+	Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
 
 static ENV_VARS: [&str; 15] = [
 	"OPENCV_PACKAGE_NAME",
@@ -53,8 +54,10 @@ static ENV_VARS: [&str; 15] = [
 	"PATH",
 ];
 
-fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Result<impl Iterator<Item=PathBuf> + 'e> {
-	Ok(dir.read_dir()?.flatten()
+fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Result<impl Iterator<Item = PathBuf> + 'e> {
+	Ok(dir
+		.read_dir()?
+		.flatten()
 		.map(|e| e.path())
 		.filter(move |p| p.is_file() && p.extension().map_or(false, |e| e.eq_ignore_ascii_case(extension.as_ref()))))
 }
@@ -74,10 +77,11 @@ fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
 	if let Some(mut file) = filename_path.file_name().and_then(OsStr::to_str) {
 		let orig_len = file.len();
 		file = file.strip_prefix("lib").unwrap_or(file);
-		LIB_EXTS.iter()
-			.for_each(|&inner_ext| if let Some(inner_ext_idx) = file.find(inner_ext) {
+		LIB_EXTS.iter().for_each(|&inner_ext| {
+			if let Some(inner_ext_idx) = file.find(inner_ext) {
 				file = &file[..inner_ext_idx];
-			});
+			}
+		});
 		if orig_len != file.len() {
 			strip_performed = true;
 			filename_path = Path::new(file);
@@ -149,31 +153,25 @@ fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
 }
 
 fn make_modules(opencv_dir: &Path) -> Result<()> {
-	let ignore_modules = IntoIterator::into_iter([
-		"core_detect",
-		"cudalegacy",
-		"cudev",
-		"gapi",
-		"opencv",
-		"opencv_modules",
-	]).collect::<HashSet<_>>();
+	let ignore_modules =
+		IntoIterator::into_iter(["core_detect", "cudalegacy", "cudev", "gapi", "opencv", "opencv_modules"]).collect::<HashSet<_>>();
 
 	let enable_modules = IntoIterator::into_iter(["core".to_string()])
-		.chain(env::vars_os()
-			.filter_map(|(k, _)| k.to_str()
+		.chain(env::vars_os().filter_map(|(k, _)| {
+			k.to_str()
 				.and_then(|s| s.strip_prefix("CARGO_FEATURE_"))
 				.map(str::to_lowercase)
-			)
-		).collect::<HashSet<_>>();
+		}))
+		.collect::<HashSet<_>>();
 
-	let mut modules = files_with_extension(opencv_dir, "hpp")?.filter_map(|entry| {
-		let module = entry.file_stem()
-			.and_then(OsStr::to_str).expect("Can't calculate file stem");
-		Some(module)
-			.filter(|&m| !ignore_modules.contains(m))
-			.filter(|&m| enable_modules.contains(m))
-			.map(str::to_string)
-	})
+	let mut modules = files_with_extension(opencv_dir, "hpp")?
+		.filter_map(|entry| {
+			let module = entry.file_stem().and_then(OsStr::to_str).expect("Can't calculate file stem");
+			Some(module)
+				.filter(|&m| !ignore_modules.contains(m))
+				.filter(|&m| enable_modules.contains(m))
+				.map(str::to_string)
+		})
 		.collect::<Vec<_>>();
 	modules.sort_unstable();
 
@@ -215,26 +213,23 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 			.flag("-wd5054") // deprecated between enumerations of different types
 			.flag("-wd4190") // has C-linkage specified, but returns UDT 'Result<cv::Rect_<int>>' which is incompatible with C
 			.flag("-wd4702") // core.cpp(386) : unreachable code
-			.pic(false)
-		;
+			.pic(false);
 	} else {
-		out.flag("-std=c++11")
-			.flag_if_supported("-Wa,-mbig-obj")
-		;
+		out.flag("-std=c++11").flag_if_supported("-Wa,-mbig-obj");
 	}
 	out
 }
 
 fn build_job_server() -> Option<jobserver::Client> {
-	unsafe { jobserver::Client::from_env() }
-		.or_else(|| {
-			let num_jobs = env::var("NUM_JOBS").ok()
-				.and_then(|jobs| jobs.parse().ok())
-				.unwrap_or(2)
-				.max(1);
-			eprintln!("=== Creating a new job server with num_jobs: {}", num_jobs);
-			jobserver::Client::new(num_jobs).ok()
-		})
+	unsafe { jobserver::Client::from_env() }.or_else(|| {
+		let num_jobs = env::var("NUM_JOBS")
+			.ok()
+			.and_then(|jobs| jobs.parse().ok())
+			.unwrap_or(2)
+			.max(1);
+		eprintln!("=== Creating a new job server with num_jobs: {}", num_jobs);
+		jobserver::Client::new(num_jobs).ok()
+	})
 }
 
 // todo: replace by https://github.com/rust-lang/cargo/issues/9096 when stable
@@ -242,7 +237,15 @@ fn build_clang_generator() -> io::Result<Child> {
 	let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or_else(|| "cargo".into()));
 	let mut cargo = Command::new(cargo_bin);
 	// generator script is quite slow in debug mode, so we force it to be built in release mode
-	cargo.args(&["build", "--release", "--package", "opencv-binding-generator", "--bin", "binding-generator"])
+	cargo
+		.args(&[
+			"build",
+			"--release",
+			"--package",
+			"opencv-binding-generator",
+			"--bin",
+			"binding-generator",
+		])
 		.env("CARGO_TARGET_DIR", &*OUT_DIR);
 	if let Some(host_triple) = HOST_TRIPLE.as_ref() {
 		cargo.args(&["--target", host_triple]);
@@ -275,7 +278,8 @@ fn build_wrapper(opencv: &Library) {
 	let mut cc = build_compiler(opencv);
 	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
 	let modules = MODULES.get().expect("MODULES not initialized");
-	for module in &["sys", "types"] { // special internal modules
+	for module in &["sys", "types"] {
+		// special internal modules
 		println!("cargo:rustc-cfg=ocvrs_has_module_{}", module);
 	}
 	for module in modules.iter() {
@@ -290,13 +294,13 @@ fn build_wrapper(opencv: &Library) {
 }
 
 fn main() -> Result<()> {
-	if cfg!(feature = "docs-only") { // fake setup for docs.rs
+	if cfg!(feature = "docs-only") {
+		// fake setup for docs.rs
 		println!(r#"cargo:rustc-cfg=ocvrs_opencv_branch_4"#);
 		for entry in SRC_DIR.join("opencv/hub").read_dir().expect("Can't read hub dir") {
 			let entry = entry.expect("Can't read directory entry");
 			let path = entry.path();
-			if entry.file_type().map(|f| f.is_file()).unwrap_or(false)
-				&& path.extension().map_or(false, |e| e == "rs") {
+			if entry.file_type().map(|f| f.is_file()).unwrap_or(false) && path.extension().map_or(false, |e| e == "rs") {
 				if let Some(module) = path.file_stem().and_then(OsStr::to_str) {
 					println!("cargo:rustc-cfg=ocvrs_has_module_{}", module);
 				}
@@ -314,19 +318,18 @@ fn main() -> Result<()> {
 		eprintln!("===   {} = {:?}", v, env::var_os(v));
 	}
 	eprintln!("=== Enabled features:");
-	let features = env::vars()
-		.filter_map(|(mut name, val)| {
-			if val != "1" {
-				return None;
-			}
-			const PREFIX: &str = "CARGO_FEATURE_";
-			if name.starts_with(PREFIX) {
-				name.drain(..PREFIX.len());
-				Some(name)
-			} else {
-				None
-			}
-		});
+	let features = env::vars().filter_map(|(mut name, val)| {
+		if val != "1" {
+			return None;
+		}
+		const PREFIX: &str = "CARGO_FEATURE_";
+		if name.starts_with(PREFIX) {
+			name.drain(..PREFIX.len());
+			Some(name)
+		} else {
+			None
+		}
+	});
 	for feature in features {
 		eprintln!("===   {}", feature);
 	}
@@ -340,14 +343,22 @@ fn main() -> Result<()> {
 	} else if OPENCV_BRANCH_32.matches(&opencv.version) {
 		println!("cargo:rustc-cfg=ocvrs_opencv_branch_32");
 	} else {
-		panic!("Unsupported OpenCV version: {}, must be from 3.2, 3.4 or 4.x branch", opencv.version);
+		panic!(
+			"Unsupported OpenCV version: {}, must be from 3.2, 3.4 or 4.x branch",
+			opencv.version
+		);
 	}
-	let opencv_header_dir = opencv.include_paths.iter()
+	let opencv_header_dir = opencv
+		.include_paths
+		.iter()
 		.find(|p| get_version_header(p).is_some())
 		.expect("Discovered OpenCV include paths is empty or contains non-existent paths");
 
 	let opencv_module_header_dir = get_module_header_dir(opencv_header_dir).expect("Can't find OpenCV module header dir");
-	eprintln!("=== Detected OpenCV module header dir at: {}", opencv_module_header_dir.display());
+	eprintln!(
+		"=== Detected OpenCV module header dir at: {}",
+		opencv_module_header_dir.display()
+	);
 	make_modules(&opencv_module_header_dir)?;
 
 	if let Some(header_version) = get_version_from_headers(opencv_header_dir) {
@@ -360,9 +371,16 @@ fn main() -> Result<()> {
 				opencv.include_paths,
 			);
 		}
-		eprintln!("=== Found OpenCV version: {} in headers located at: {}", header_version, opencv_header_dir.display());
+		eprintln!(
+			"=== Found OpenCV version: {} in headers located at: {}",
+			header_version,
+			opencv_header_dir.display()
+		);
 	} else {
-		panic!("Unable to find OpenCV version in headers located at: {}", opencv_header_dir.display())
+		panic!(
+			"Unable to find OpenCV version in headers located at: {}",
+			opencv_header_dir.display()
+		)
 	}
 
 	setup_rerun()?;

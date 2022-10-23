@@ -1,20 +1,10 @@
-use std::{
-	borrow::Cow,
-	fmt,
-};
+use std::borrow::Cow;
+use std::fmt;
 
 use clang::Entity;
 
-use crate::{
-	DefaultElement,
-	DependentType,
-	Element,
-	EntityElement,
-	GeneratorEnv,
-	settings,
-	type_ref::{DependentTypeMode, FishStyle, Kind, TypeRefTypeHint},
-	TypeRef,
-};
+use crate::type_ref::{DependentTypeMode, FishStyle, Kind, TypeRefTypeHint};
+use crate::{settings, DefaultElement, DependentType, Element, EntityElement, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
 pub struct Typedef<'tu, 'ge> {
@@ -33,7 +23,10 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 
 	pub fn underlying_type_ref(&self) -> TypeRef<'tu, 'ge> {
 		TypeRef::new_ext(
-			self.entity.get_typedef_underlying_type().expect("Can't get typedef underlying type"),
+			self
+				.entity
+				.get_typedef_underlying_type()
+				.expect("Can't get typedef underlying type"),
 			TypeRefTypeHint::None,
 			Some(self.entity),
 			self.gen_env,
@@ -92,13 +85,8 @@ impl Element for Typedef<'_, '_> {
 
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		match self.underlying_type_ref().source().kind() {
-			Kind::Class(..) | Kind::Function(..) | Kind::StdVector(..)
-			| Kind::SmartPtr(..) => {
-				DefaultElement::cpp_localname(self)
-			}
-			_ => {
-				DefaultElement::rust_leafname(self)
-			}
+			Kind::Class(..) | Kind::Function(..) | Kind::StdVector(..) | Kind::SmartPtr(..) => DefaultElement::cpp_localname(self),
+			_ => DefaultElement::rust_leafname(self),
 		}
 	}
 
@@ -116,7 +104,8 @@ impl fmt::Display for Typedef<'_, '_> {
 impl fmt::Debug for Typedef<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("Typedef");
-		self.update_debug_struct(&mut debug_struct)
+		self
+			.update_debug_struct(&mut debug_struct)
 			.field("export_config", &self.gen_env.get_export_config(self.entity))
 			.field("underlying_type_ref", &self.underlying_type_ref())
 			.finish()

@@ -9,23 +9,19 @@ pub use crate::opencv::hub::*;
 mod templ;
 
 mod error;
-mod opencv;
 mod manual;
+mod opencv;
 mod traits;
 
 pub mod prelude {
-	pub use crate::{
-		hub_prelude::*,
-		manual::prelude::*,
-		traits::Boxed,
-	};
 	#[cfg(ocvrs_has_module_core)]
 	pub use crate::core::{DataType, Mat};
+	pub use crate::{hub_prelude::*, manual::prelude::*, traits::Boxed};
 }
 
 /// Reexported platform types that are used by OpenCV
 pub mod platform_types {
-	pub use libc::{clock_t, FILE, ptrdiff_t, size_t};
+	pub use libc::{clock_t, ptrdiff_t, size_t, FILE};
 }
 
 /// Prelude for sys (externs) module and types
@@ -40,28 +36,18 @@ pub(crate) mod mod_prelude_sys {
 
 /// Prelude for generated modules and types
 pub(crate) mod mod_prelude {
-	pub use std::convert::TryFrom;
 	pub use crate::{
-		Error,
-		Result,
-		core::{CV_MAKE_TYPE, CV_MAKETYPE},
+		boxed_cast_base, boxed_cast_descendant,
+		core::{CV_MAKETYPE, CV_MAKE_TYPE},
 		hub_prelude::*,
-		mod_prelude_sys::*,
-		boxed_cast_base,
-		boxed_cast_descendant,
 		input_output_array_ref_forward,
-		opencv_type_boxed,
-		opencv_type_enum,
-		opencv_type_simple,
-		ptr_cast_base,
-		ptr_extern,
-		ptr_extern_ctor,
-		vector_copy_non_bool,
-		vector_extern,
-		vector_non_copy_or_bool,
+		mod_prelude_sys::*,
+		opencv_type_boxed, opencv_type_enum, opencv_type_simple, ptr_cast_base, ptr_extern, ptr_extern_ctor, vector_copy_non_bool,
+		vector_extern, vector_non_copy_or_bool, Error, Result,
 	};
+	pub use std::convert::TryFrom;
 }
 
+mod cond_macros;
 #[cfg(test)]
 mod test;
-mod cond_macros;

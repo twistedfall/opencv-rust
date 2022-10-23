@@ -1,10 +1,11 @@
 use std::fmt::Write;
 
 use once_cell::sync::Lazy;
-use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
+use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 use regex::Regex;
 
-use crate::{StrExt, string_ext::Indent, StringExt};
+use crate::string_ext::Indent;
+use crate::{StrExt, StringExt};
 
 pub fn strip_comment_markers(comment: &str) -> String {
 	const MULTILINE_PREFIX: &str = "/*";
@@ -75,8 +76,7 @@ pub fn strip_comment_markers(comment: &str) -> String {
 		if !singleline_delimited {
 			*last_line = last_line.trim_end();
 			if last_line.ends_with(MULTILINE_SUFFIX) {
-				*last_line = last_line[..last_line.len() - MULTILINE_SUFFIX.len()]
-					.trim_end();
+				*last_line = last_line[..last_line.len() - MULTILINE_SUFFIX.len()].trim_end();
 			}
 		}
 	}
@@ -140,7 +140,8 @@ pub fn strip_comment_markers(comment: &str) -> String {
 
 fn preprocess_formula(formula: &str) -> String {
 	const ARG_REGEX: &str = r"\s*\{([^}]*?)\}";
-	static MACROS: Lazy<Vec<(Regex, &str)>> = Lazy::new(|| vec![
+	static MACROS: Lazy<Vec<(Regex, &str)>> = Lazy::new(|| {
+		vec![
 		(
 			Regex::new(&format!("\\\\matTT{}", ARG_REGEX.repeat(9))).unwrap(),
 			"\\[ \\left|\\begin{array}{ccc} $1 & $2 & $3\\\\ $4 & $5 & $6\\\\ $7 & $8 & $9 \\end{array}\\right| \\]",
@@ -177,7 +178,8 @@ fn preprocess_formula(formula: &str) -> String {
 			Regex::new(&format!("\\\\bordermatrix{}", ARG_REGEX.repeat(9))).unwrap(),
 			"\\matrix{$1}",
 		),
-	]);
+	]
+	});
 
 	let mut out = formula.to_string();
 	for (re, repl) in &*MACROS {
@@ -190,7 +192,12 @@ pub fn render_doc_comment(doc_comment: &str, prefix: &str, opencv_version: &str)
 	render_doc_comment_with_processor(doc_comment, prefix, opencv_version, |_| {})
 }
 
-pub fn render_doc_comment_with_processor(doc_comment: &str, prefix: &str, opencv_version: &str, mut post_processor: impl FnMut(&mut String)) -> String {
+pub fn render_doc_comment_with_processor(
+	doc_comment: &str,
+	prefix: &str,
+	opencv_version: &str,
+	mut post_processor: impl FnMut(&mut String),
+) -> String {
 	let mut out = strip_comment_markers(doc_comment);
 	out.replace_in_place("\r\n", "\n");
 	// module titles
@@ -221,20 +228,27 @@ pub fn render_doc_comment_with_processor(doc_comment: &str, prefix: &str, opencv
 		let (path_start, path_end) = caps.get(1).expect("Impossible");
 		let path = &s[path_start..path_end];
 		let (name_start, name_end) = caps.get(2).expect("Impossible");
-		if path.starts_with("samples/") { // fixme: hack to detect hdf snippets
-			Some(format!(
-				"[{name}](https://github.com/opencv/opencv_contrib/blob/{version}/modules/hdf/{path}#L1)",
-				name=&s[name_start..name_end],
-				version=opencv_version,
-				path=path,
-			).into())
+		if path.starts_with("samples/") {
+			// fixme: hack to detect hdf snippets
+			Some(
+				format!(
+					"[{name}](https://github.com/opencv/opencv_contrib/blob/{version}/modules/hdf/{path}#L1)",
+					name = &s[name_start..name_end],
+					version = opencv_version,
+					path = path,
+				)
+				.into(),
+			)
 		} else {
-			Some(format!(
-				"[{name}](https://github.com/opencv/opencv/blob/{version}/samples/cpp/tutorial_code/{path}#L1)",
-				name=&s[name_start..name_end],
-				version=opencv_version,
-				path=path,
-			).into())
+			Some(
+				format!(
+					"[{name}](https://github.com/opencv/opencv/blob/{version}/samples/cpp/tutorial_code/{path}#L1)",
+					name = &s[name_start..name_end],
+					version = opencv_version,
+					path = path,
+				)
+				.into(),
+			)
 		}
 	});
 
@@ -253,7 +267,13 @@ pub fn render_doc_comment_with_processor(doc_comment: &str, prefix: &str, opencv
 
 	// citation links
 	static CITE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@cite\s+([\w:]+)"#).unwrap());
-	out.replace_in_place_regex(&CITE, &format!("[$1](https://docs.opencv.org/{}/d0/de3/citelist.html#CITEREF_$1)", opencv_version));
+	out.replace_in_place_regex(
+		&CITE,
+		&format!(
+			"[$1](https://docs.opencv.org/{}/d0/de3/citelist.html#CITEREF_$1)",
+			opencv_version
+		),
+	);
 
 	// images
 	static IMAGE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"!\[(.*?)]\((?:.*/)?(.+)?\)"#).unwrap());
@@ -312,15 +332,14 @@ pub fn render_doc_comment_with_processor(doc_comment: &str, prefix: &str, opencv
 	let mut out = if out.is_empty() || prefix.is_empty() {
 		out
 	} else {
-		out.lines_with_nl()
-			.fold(
-				String::with_capacity(out.len() + (prefix.len() + 1) * 128),
-				|mut out_prefixed, line| {
-					out_prefixed.push_str(prefix);
-					out_prefixed.push(' ');
-					out_prefixed + line
-				},
-			)
+		out.lines_with_nl().fold(
+			String::with_capacity(out.len() + (prefix.len() + 1) * 128),
+			|mut out_prefixed, line| {
+				out_prefixed.push_str(prefix);
+				out_prefixed.push(' ');
+				out_prefixed + line
+			},
+		)
 	};
 	if let Some(deprecated) = deprecated {
 		write!(&mut out, "\n#[deprecated = \"{}\"]", deprecated).expect("write! to String shouldn't fail");

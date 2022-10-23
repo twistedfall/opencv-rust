@@ -1,24 +1,12 @@
-use std::{
-	borrow::Cow,
-	ffi::OsStr,
-	fmt,
-	path::{Component, Path},
-};
+use std::borrow::Cow;
+use std::ffi::OsStr;
+use std::fmt;
+use std::path::{Component, Path};
 
-use clang::{
-	Accessibility,
-	Entity,
-	EntityKind,
-};
+use clang::{Accessibility, Entity, EntityKind};
 
-use crate::{
-	comment,
-	IteratorExt,
-	reserved_rename,
-	settings,
-	StrExt,
-	type_ref::{FishStyle, NameStyle},
-};
+use crate::type_ref::{FishStyle, NameStyle};
+use crate::{comment, reserved_rename, settings, IteratorExt, StrExt};
 
 pub struct DefaultElement;
 
@@ -32,17 +20,21 @@ impl DefaultElement {
 	}
 
 	pub fn is_system<'tu>(this: &impl EntityElement<'tu>) -> bool {
-		this.entity().is_in_system_header() && !is_opencv_path(&this.entity()
-				.get_location().expect("Can't get entity location")
-				.get_spelling_location()
-				.file.expect("Can't get location path")
-				.get_path()
-		)
+		this.entity().is_in_system_header()
+			&& !is_opencv_path(
+				&this
+					.entity()
+					.get_location()
+					.expect("Can't get entity location")
+					.get_spelling_location()
+					.file
+					.expect("Can't get location path")
+					.get_path(),
+			)
 	}
 
 	pub fn is_public<'tu>(this: &impl EntityElement<'tu>) -> bool {
-		this.entity().get_accessibility()
-			.map_or(true, |a| Accessibility::Public == a)
+		this.entity().get_accessibility().map_or(true, |a| Accessibility::Public == a)
 	}
 
 	pub fn usr<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
@@ -62,8 +54,12 @@ impl DefaultElement {
 		let mut e = this.entity();
 		while let Some(parent) = e.get_semantic_parent() {
 			match parent.get_kind() {
-				EntityKind::ClassDecl | EntityKind::Namespace | EntityKind::StructDecl
-				| EntityKind::EnumDecl | EntityKind::UnionDecl | EntityKind::ClassTemplate
+				EntityKind::ClassDecl
+				| EntityKind::Namespace
+				| EntityKind::StructDecl
+				| EntityKind::EnumDecl
+				| EntityKind::UnionDecl
+				| EntityKind::ClassTemplate
 				| EntityKind::ClassTemplatePartialSpecialization => {
 					// handle anonymous enums inside classes and anonymous namespaces
 					if let Some(parent_name) = parent.get_name() {
@@ -77,9 +73,7 @@ impl DefaultElement {
 			}
 			e = parent;
 		}
-		parts.into_iter()
-			.rev()
-			.join("::")
+		parts.into_iter().rev().join("::")
 	}
 
 	pub fn cpp_name(this: &(impl Element + ?Sized), style: NameStyle) -> Cow<str> {
@@ -106,11 +100,15 @@ impl DefaultElement {
 	}
 
 	pub fn rust_module<'tu>(this: &(impl EntityElement<'tu> + ?Sized)) -> Cow<str> {
-		let loc = this.entity().get_location().expect("Can't get location")
-			.get_spelling_location().file.expect("Can't file")
+		let loc = this
+			.entity()
+			.get_location()
+			.expect("Can't get location")
+			.get_spelling_location()
+			.file
+			.expect("Can't file")
 			.get_path();
-		opencv_module_from_path(&loc)
-			.map_or_else(|| "core".into(), |x| x.to_string().into())
+		opencv_module_from_path(&loc).map_or_else(|| "core".into(), |x| x.to_string().into())
 	}
 
 	pub fn rust_namespace(this: &(impl Element + ?Sized)) -> Cow<str> {
@@ -124,12 +122,8 @@ impl DefaultElement {
 
 	pub fn rust_name(this: &(impl Element + ?Sized), name_style: NameStyle) -> Cow<str> {
 		match name_style {
-			NameStyle::Declaration => {
-				this.rust_localname(FishStyle::No)
-			}
-			NameStyle::Reference(fish_style) => {
-				this.rust_fullname(fish_style)
-			}
+			NameStyle::Declaration => this.rust_localname(FishStyle::No),
+			NameStyle::Reference(fish_style) => this.rust_fullname(fish_style),
 		}
 	}
 
@@ -156,27 +150,28 @@ impl DefaultElement {
 					break;
 				}
 				EntityKind::Namespace => {
-					let no_skip_prefix = settings::NO_SKIP_NAMESPACE_IN_LOCALNAME.get(module.as_ref())
+					let no_skip_prefix = settings::NO_SKIP_NAMESPACE_IN_LOCALNAME
+						.get(module.as_ref())
 						.or_else(|| settings::NO_SKIP_NAMESPACE_IN_LOCALNAME.get("*"))
 						.and_then(|config| config.get(parent.get_name().expect("Can't get parent name").as_str()));
 					if let Some(&prefix) = no_skip_prefix {
 						parts.push(prefix.to_string());
 					} else {
-						break
+						break;
 					}
 				}
-				EntityKind::Constructor | EntityKind::FunctionTemplate | EntityKind::FunctionDecl
-				| EntityKind::Method | EntityKind::NotImplemented => {}
+				EntityKind::Constructor
+				| EntityKind::FunctionTemplate
+				| EntityKind::FunctionDecl
+				| EntityKind::Method
+				| EntityKind::NotImplemented => {}
 				_ => {
 					unreachable!("Can't get kind of parent: {:#?} for element: {:#?}", parent, e)
 				}
 			}
 			e = parent;
 		}
-		parts.into_iter()
-			.rev()
-			.join("_")
-			.into()
+		parts.into_iter().rev().join("_").into()
 	}
 
 	pub fn rust_fullname(this: &(impl Element + ?Sized), fish_style: FishStyle) -> Cow<str> {
@@ -185,8 +180,12 @@ impl DefaultElement {
 }
 
 pub trait Element: fmt::Debug {
-	fn update_debug_struct<'dref, 'a, 'b>(&self, struct_debug: &'dref mut fmt::DebugStruct<'a, 'b>) -> &'dref mut fmt::DebugStruct<'a, 'b> {
-		struct_debug.field("cpp_fullname", &self.cpp_fullname())
+	fn update_debug_struct<'dref, 'a, 'b>(
+		&self,
+		struct_debug: &'dref mut fmt::DebugStruct<'a, 'b>,
+	) -> &'dref mut fmt::DebugStruct<'a, 'b> {
+		struct_debug
+			.field("cpp_fullname", &self.cpp_fullname())
 			.field("rust_fullname", &self.rust_fullname(FishStyle::No))
 			.field("is_excluded", &self.is_excluded())
 			.field("is_ignored", &self.is_ignored())
@@ -254,7 +253,8 @@ pub trait EntityElement<'tu> {
 }
 
 pub fn is_opencv_path(path: &Path) -> bool {
-	path.components()
+	path
+		.components()
 		.rfind(|c| {
 			if let Component::Normal(c) = c {
 				if *c == "opencv2" || *c == "Headers" {
@@ -269,9 +269,16 @@ pub fn is_opencv_path(path: &Path) -> bool {
 /// Returns path component that corresponds to OpenCV module name. It's either a directory
 /// (e.g. "calib3d") or a header file (e.g. "dnn.hpp")
 fn opencv_module_component(path: &Path) -> Option<&OsStr> {
-	let mut module_comp = path.components()
+	let mut module_comp = path
+		.components()
 		.rev()
-		.filter_map(|c| if let Component::Normal(c) = c { Some(c) } else { None })
+		.filter_map(|c| {
+			if let Component::Normal(c) = c {
+				Some(c)
+			} else {
+				None
+			}
+		})
 		.peekable();
 	let mut module = None;
 	while let Some(cur) = module_comp.next() {

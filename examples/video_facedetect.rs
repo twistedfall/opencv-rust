@@ -1,15 +1,6 @@
 use std::{thread, time::Duration};
 
-use opencv::{
-	core,
-	highgui,
-	imgproc,
-	objdetect,
-	prelude::*,
-	Result,
-	types,
-	videoio,
-};
+use opencv::{core, highgui, imgproc, objdetect, prelude::*, types, videoio, Result};
 
 fn main() -> Result<()> {
 	let window = "video capture";
@@ -43,20 +34,12 @@ fn main() -> Result<()> {
 			continue;
 		}
 		let mut gray = Mat::default();
-		imgproc::cvt_color(
-			&frame,
-			&mut gray,
-			imgproc::COLOR_BGR2GRAY,
-			0,
-		)?;
+		imgproc::cvt_color(&frame, &mut gray, imgproc::COLOR_BGR2GRAY, 0)?;
 		let mut reduced = Mat::default();
 		imgproc::resize(
 			&gray,
 			&mut reduced,
-			core::Size {
-				width: 0,
-				height: 0,
-			},
+			core::Size { width: 0, height: 0 },
 			0.25f64,
 			0.25f64,
 			imgproc::INTER_LINEAR,
@@ -68,14 +51,8 @@ fn main() -> Result<()> {
 			1.1,
 			2,
 			objdetect::CASCADE_SCALE_IMAGE,
-			core::Size {
-				width: 30,
-				height: 30,
-			},
-			core::Size {
-				width: 0,
-				height: 0,
-			},
+			core::Size { width: 30, height: 30 },
+			core::Size { width: 0, height: 0 },
 		)?;
 		println!("faces: {}", faces.len());
 		for face in faces {
@@ -86,14 +63,7 @@ fn main() -> Result<()> {
 				width: face.width * 4,
 				height: face.height * 4,
 			};
-			imgproc::rectangle(
-				&mut frame,
-				scaled_face,
-				core::Scalar::new(0f64, -1f64, -1f64, -1f64),
-				1,
-				8,
-				0,
-			)?;
+			imgproc::rectangle(&mut frame, scaled_face, core::Scalar::new(0f64, -1f64, -1f64, -1f64), 1, 8, 0)?;
 		}
 		highgui::imshow(window, &frame)?;
 		if highgui::wait_key(10)? > 0 {

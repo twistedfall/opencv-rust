@@ -1,11 +1,6 @@
 use std::ffi::c_void;
 
-use opencv::{
-	flann::IndexParams,
-	prelude::*,
-	Result,
-	types::PtrOfIndexParams,
-};
+use opencv::{flann::IndexParams, prelude::*, types::PtrOfIndexParams, Result};
 
 /// Ptr<f32> creation, value mutation and read
 #[test]

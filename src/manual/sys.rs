@@ -3,13 +3,9 @@
 // note to self, you can't use union here to store both result and error code because C++ side doesn't
 // support non-POD types as union fields
 
-use std::{
-	ffi::c_void,
-	marker::PhantomData,
-	mem::MaybeUninit,
-};
+use std::{ffi::c_void, marker::PhantomData, mem::MaybeUninit};
 
-use crate::{Error, Result as CrateResult, types::Unit};
+use crate::{types::Unit, Error, Result as CrateResult};
 
 #[repr(C)]
 pub struct Result<S, O = S> {
@@ -25,7 +21,9 @@ impl<S: Into<O>, O> Result<S, O> {
 		if self.error_msg.is_null() {
 			Ok(unsafe { self.result.assume_init() }.into())
 		} else {
-			Err(Error::new(self.error_code, unsafe { crate::templ::receive_string(self.error_msg as *mut String) }))
+			Err(Error::new(self.error_code, unsafe {
+				crate::templ::receive_string(self.error_msg as *mut String)
+			}))
 		}
 	}
 }

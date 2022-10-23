@@ -3,24 +3,11 @@ use std::borrow::Cow;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
+use crate::func::Kind;
+use crate::type_ref::{Constness, ConstnessOverride, Dir, FishStyle, StrEnc, StrType};
 use crate::{
-	Class,
-	CompiledInterpolation,
-	Constness,
-	ConstnessOverride,
-	DefaultElement,
-	Element,
-	Field,
-	Func,
-	func::Kind,
-	FunctionTypeHint,
-	get_debug,
-	IteratorExt,
-	settings,
-	StrExt,
-	StringExt,
-	type_ref::{Dir, FishStyle, StrEnc, StrType},
-	TypeRef,
+	get_debug, settings, Class, CompiledInterpolation, DefaultElement, Element, Field, Func, FunctionTypeHint, IteratorExt,
+	StrExt, StringExt, TypeRef,
 };
 
 use super::RustNativeGeneratedElement;
@@ -33,9 +20,7 @@ fn pre_post_arg_handle(mut arg: String, args: &mut Vec<String>) {
 }
 
 fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
-	static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-		|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation()
-	);
+	static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
 
 	let args = Field::rust_disambiguate_names(f.arguments()).collect::<Vec<_>>();
 	let as_instance_method = f.as_instance_method();
@@ -55,7 +40,10 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		let type_ref = arg.type_ref();
 		if arg.is_user_data() {
 			pre_post_arg_handle(
-				type_ref.rust_userdata_pre_call(&name, callback_arg_name.as_deref().expect("Can't get name of the callback arg")),
+				type_ref.rust_userdata_pre_call(
+					&name,
+					callback_arg_name.as_deref().expect("Can't get name of the callback arg"),
+				),
 				&mut pre_call_args,
 			);
 		} else {
@@ -69,9 +57,13 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		}
 		if let Some((slice_arg, len_div)) = arg.as_slice_len() {
 			let slice_call = if len_div > 1 {
-				format!("({slice_arg}.len() / {len_div}) as _", slice_arg=slice_arg, len_div=len_div)
+				format!(
+					"({slice_arg}.len() / {len_div}) as _",
+					slice_arg = slice_arg,
+					len_div = len_div
+				)
 			} else {
-				format!("{slice_arg}.len() as _", slice_arg=slice_arg)
+				format!("{slice_arg}.len() as _", slice_arg = slice_arg)
 			};
 			call_args.push(slice_call);
 		} else {
@@ -186,49 +178,33 @@ fn cpp_method_call_name(c: &Class, method_name: &str) -> String {
 }
 
 fn cpp_call_invoke(f: &Func) -> String {
-	static VOID_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-		"{{name}}({{args}});".compile_interpolation()
-	);
+	static VOID_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{name}}({{args}});".compile_interpolation());
 
-	static NORMAL_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-		"{{ret_type}} = {{doref}}{{name}}{{generic}}({{args}});".compile_interpolation()
-	);
+	static NORMAL_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| "{{ret_type}} = {{doref}}{{name}}{{generic}}({{args}});".compile_interpolation());
 
-	static FIELD_READ_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-		"{{ret_type}} = {{doref}}{{name}};".compile_interpolation()
-	);
+	static FIELD_READ_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{ret_type}} = {{doref}}{{name}};".compile_interpolation());
 
-	static FIELD_WRITE_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-		"{{name}} = {{args}};".compile_interpolation()
-	);
+	static FIELD_WRITE_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{name}} = {{args}};".compile_interpolation());
 
-	static CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-		"{{ret_type}} ret({{args}});".compile_interpolation()
-	);
+	static CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{ret_type}} ret({{args}});".compile_interpolation());
 
-	static CONSTRUCTOR_NO_ARGS_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-		"{{ret_type}} ret;".compile_interpolation()
-	);
+	static CONSTRUCTOR_NO_ARGS_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{ret_type}} ret;".compile_interpolation());
 
-	static BOXED_CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(||
-		"{{ret_type}}* ret = new {{ret_type}}({{args}});".compile_interpolation()
-	);
+	static BOXED_CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| "{{ret_type}}* ret = new {{ret_type}}({{args}});".compile_interpolation());
 
 	let call_name = match f.kind() {
-		Kind::Function | Kind::GenericFunction | Kind::StaticMethod(..)
-		| Kind::FunctionOperator(..) => {
-			f.cpp_fullname()
-		}
-		Kind::Constructor(class) => {
-			class.cpp_fullname().into_owned().into()
-		}
+		Kind::Function | Kind::GenericFunction | Kind::StaticMethod(..) | Kind::FunctionOperator(..) => f.cpp_fullname(),
+		Kind::Constructor(class) => class.cpp_fullname().into_owned().into(),
 		Kind::FieldAccessor(class) if f.type_hint() == FunctionTypeHint::FieldSetter => {
 			cpp_method_call_name(&class, DefaultElement::cpp_localname(f).as_ref()).into()
 		}
-		Kind::InstanceMethod(class) | Kind::FieldAccessor(class) | Kind::GenericInstanceMethod(class)
-		| Kind::ConversionMethod(class) | Kind::InstanceOperator(class, ..) => {
-			cpp_method_call_name(&class, f.cpp_localname().as_ref()).into()
-		}
+		Kind::InstanceMethod(class)
+		| Kind::FieldAccessor(class)
+		| Kind::GenericInstanceMethod(class)
+		| Kind::ConversionMethod(class)
+		| Kind::InstanceOperator(class, ..) => cpp_method_call_name(&class, f.cpp_localname().as_ref()).into(),
 	};
 
 	let mut generic = String::new();
@@ -274,41 +250,33 @@ fn cpp_call_invoke(f: &Func) -> String {
 		""
 	};
 	tpl.interpolate(&hashmap! {
-			"ret_type" => ret_type,
-			"doref" => doref.into(),
-			"name" => call_name,
-			"generic" => generic.into(),
-			"args" => args.into(),
-		})
+		"ret_type" => ret_type,
+		"doref" => doref.into(),
+		"name" => call_name,
+		"generic" => generic.into(),
+		"args" => args.into(),
+	})
 }
 
 fn cpp_method_return<'f>(f: &'f Func, return_type: &TypeRef) -> (Cow<'f, str>, bool) {
 	if return_type.is_void() {
 		("".into(), false)
 	} else if return_type.is_by_ptr() && !f.as_constructor().is_some() {
-		let out = return_type.source()
-			.as_class()
-			.and_then(|cls| if cls.is_abstract() {
+		let out = return_type.source().as_class().and_then(|cls| {
+			if cls.is_abstract() {
 				Some(Cow::Borrowed("ret"))
 			} else {
 				None
-			});
+			}
+		});
 		let out = out.unwrap_or_else(|| format!("new {typ}(ret)", typ = return_type.cpp_full()).into());
 		(out, false)
 	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
 		let str_mk = match string_type {
-			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => {
-				"ocvrs_create_string(ret.c_str())".into()
-			},
-			StrType::CharPtr => {
-				"ocvrs_create_string(ret)".into()
-			},
-			StrType::StdString(StrEnc::Binary) => {
-				"ocvrs_create_byte_string(ret.data(), ret.size())".into()
-			}
-			StrType::CvString(StrEnc::Binary) => {
-				"ocvrs_create_byte_string(ret.begin(), ret.size())".into()
-			}
+			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => "ocvrs_create_string(ret.c_str())".into(),
+			StrType::CharPtr => "ocvrs_create_string(ret)".into(),
+			StrType::StdString(StrEnc::Binary) => "ocvrs_create_byte_string(ret.data(), ret.size())".into(),
+			StrType::CvString(StrEnc::Binary) => "ocvrs_create_byte_string(ret.begin(), ret.size())".into(),
 		};
 		(str_mk, false)
 	} else if return_type.as_fixed_array().is_some() {
@@ -335,9 +303,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 	}
 
 	fn gen_rust_exports(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/func/rust_extern.tpl.rs").compile_interpolation()
-		);
+		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust_extern.tpl.rs").compile_interpolation());
 
 		let identifier = self.identifier();
 
@@ -383,9 +349,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 	}
 
 	fn gen_cpp(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation()
-		);
+		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation());
 
 		let identifier = self.identifier();
 		if settings::FUNC_MANUAL.contains_key(identifier.as_ref()) {
@@ -444,14 +408,17 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 				ret
 			}
 		} else {
-			pre_post_arg_handle(format!("{typ} f_ret = {expr}", typ=cpp_extern_return, expr=ret), &mut post_call_args);
+			pre_post_arg_handle(
+				format!("{typ} f_ret = {expr}", typ = cpp_extern_return, expr = ret),
+				&mut post_call_args,
+			);
 			"f_ret".into()
 		};
 		let ret = if naked_return {
 			if ret.is_empty() {
 				"".into()
 			} else if ret_cast {
-				format!("return ({typ}){ret};", typ=ret_wrapper_full, ret=ret).into()
+				format!("return ({typ}){ret};", typ = ret_wrapper_full, ret = ret).into()
 			} else {
 				format!("return {};", ret).into()
 			}
@@ -464,7 +431,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else if ret.is_empty() {
 			"Ok(ocvrs_return);".into()
 		} else if ret_cast {
-			format!("Ok<{typ}>({ret}, ocvrs_return);", typ=cpp_extern_return, ret=ret).into()
+			format!("Ok<{typ}>({ret}, ocvrs_return);", typ = cpp_extern_return, ret = ret).into()
 		} else {
 			format!("Ok({}, ocvrs_return);", ret).into()
 		};
@@ -478,7 +445,11 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let func_catch = if is_infallible {
 			Cow::Borrowed("")
 		} else {
-			format!("}} OCVRS_CATCH(OCVRS_TYPE({return_wrapper_full}))", return_wrapper_full= mut_ret_wrapper_full).into()
+			format!(
+				"}} OCVRS_CATCH(OCVRS_TYPE({return_wrapper_full}))",
+				return_wrapper_full = mut_ret_wrapper_full
+			)
+			.into()
 		};
 
 		TPL.interpolate(&hashmap! {
@@ -498,4 +469,3 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		})
 	}
 }
-

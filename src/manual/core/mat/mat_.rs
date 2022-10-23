@@ -1,18 +1,16 @@
-use std::{
-	convert::TryFrom,
-	ffi::c_void,
-	fmt,
-	marker::PhantomData,
-};
+use std::convert::TryFrom;
+use std::ffi::c_void;
+use std::fmt;
+use std::marker::PhantomData;
 
-use crate::{
-	core::{_InputArray, _InputOutputArray, _OutputArray, Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray, ToInputOutputArray, ToOutputArray},
-	Error,
-	Result,
-	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
+use crate::core::{
+	Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray, ToInputOutputArray, ToOutputArray,
+	_InputArray, _InputOutputArray, _OutputArray,
 };
+use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::{Error, Result};
 
-use super::{DataType, match_dims, match_format, match_is_continuous, match_total};
+use super::{match_dims, match_format, match_is_continuous, match_total, DataType};
 
 /// [docs.opencv.org](https://docs.opencv.org/master/df/dfc/classcv_1_1Mat__.html)
 ///
@@ -29,8 +27,10 @@ impl<T: DataType> TryFrom<Mat> for Mat_<T> {
 
 	#[inline]
 	fn try_from(mat: Mat) -> Result<Self, Self::Error> {
-		match_format::<T>(mat.typ())
-			.map(|_| Self { inner: mat, _type: PhantomData })
+		match_format::<T>(mat.typ()).map(|_| Self {
+			inner: mat,
+			_type: PhantomData,
+		})
 	}
 }
 
@@ -73,15 +73,13 @@ impl<T: DataType> Mat_<T> {
 
 	#[inline]
 	pub fn at_mut(&mut self, i0: i32) -> Result<&mut T> {
-		match_dims(self, 2)
-			.and_then(|_| match_total(self, i0))?;
+		match_dims(self, 2).and_then(|_| match_total(self, i0))?;
 		unsafe { self.at_unchecked_mut(i0) }
 	}
 
 	#[inline]
 	pub fn data_typed(&self) -> Result<&[T]> {
-		match_is_continuous(self)
-			.and_then(|_| unsafe { self.data_typed_unchecked() })
+		match_is_continuous(self).and_then(|_| unsafe { self.data_typed_unchecked() })
 	}
 
 	#[inline]
@@ -93,18 +91,25 @@ impl<T: DataType> Mat_<T> {
 
 impl<T> MatTraitConst for Mat_<T> {
 	#[inline]
-	fn as_raw_Mat(&self) -> *const c_void { self.inner.as_raw_Mat() }
+	fn as_raw_Mat(&self) -> *const c_void {
+		self.inner.as_raw_Mat()
+	}
 }
 
 impl<T> MatTrait for Mat_<T> {
 	#[inline]
-	fn as_raw_mut_Mat(&mut self) -> *mut c_void { self.inner.as_raw_mut_Mat() }
+	fn as_raw_mut_Mat(&mut self) -> *mut c_void {
+		self.inner.as_raw_mut_Mat()
+	}
 }
 
 impl<T> Boxed for Mat_<T> {
 	#[inline]
 	unsafe fn from_raw(ptr: *mut c_void) -> Self {
-		Self { inner: Mat::from_raw(ptr), _type: PhantomData }
+		Self {
+			inner: Mat::from_raw(ptr),
+			_type: PhantomData,
+		}
 	}
 
 	#[inline]

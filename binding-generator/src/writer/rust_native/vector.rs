@@ -3,16 +3,8 @@ use std::borrow::Cow;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::{
-	CompiledInterpolation,
-	Constness,
-	ConstnessOverride,
-	Element,
-	settings,
-	StrExt,
-	type_ref::FishStyle,
-	Vector,
-};
+use crate::type_ref::{Constness, ConstnessOverride, FishStyle};
+use crate::{settings, CompiledInterpolation, Element, StrExt, Vector};
 
 use super::RustNativeGeneratedElement;
 
@@ -22,28 +14,24 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 	}
 
 	fn gen_rust(&self, _opencv_version: &str) -> String {
-		static TYPE_ALIAS_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/vector/rust_type_alias.tpl.rs").compile_interpolation()
-		);
+		static TYPE_ALIAS_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust_type_alias.tpl.rs").compile_interpolation());
 
-		static COMMON_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/vector/rust.tpl.rs").compile_interpolation()
-		);
+		static COMMON_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust.tpl.rs").compile_interpolation());
 
-		static ADD_COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/vector/rust_copy_non_bool.tpl.rs").compile_interpolation()
-		);
+		static ADD_COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust_copy_non_bool.tpl.rs").compile_interpolation());
 
-		static ADD_NON_COPY_OR_BOOL_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/vector/rust_non_copy_or_bool.tpl.rs").compile_interpolation()
-		);
+		static ADD_NON_COPY_OR_BOOL_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust_non_copy_or_bool.tpl.rs").compile_interpolation());
 
-		static INPUT_OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/vector/rust_input_output_array.tpl.rs").compile_interpolation()
-		);
+		static INPUT_OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust_input_output_array.tpl.rs").compile_interpolation());
 
 		let vec_type = self.type_ref();
-		if vec_type.constness().is_const() { // todo we should generate smth like VectorRef in this case
+		if vec_type.constness().is_const() {
+			// todo we should generate smth like VectorRef in this case
 			return "".to_string();
 		}
 		let element_type = self.element_type();
@@ -68,11 +56,15 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			if element_type.is_copy() && !element_type.is_bool() {
 				additional_methods += &ADD_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 			} else {
-				inter_vars.insert("clone", if vec_type.is_clone() {
-					"clone "
-				} else {
-					""
-				}.into());
+				inter_vars.insert(
+					"clone",
+					if vec_type.is_clone() {
+						"clone "
+					} else {
+						""
+					}
+					.into(),
+				);
 				additional_methods += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 			}
 			if self.is_data_type(&element_type) {
@@ -82,24 +74,23 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			inter_vars.insert("additional_methods", additional_methods.into());
 			inter_vars.insert("impls", impls.into());
 			&COMMON_TPL
-		}.interpolate(&inter_vars)
+		}
+		.interpolate(&inter_vars)
 	}
 
 	fn gen_cpp(&self) -> String {
-		static COMMON_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/vector/cpp.tpl.cpp").compile_interpolation()
-		);
+		static COMMON_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/cpp.tpl.cpp").compile_interpolation());
 
-		static METHODS_COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/vector/cpp_methods_copy_non_bool.tpl.cpp").compile_interpolation()
-		);
+		static METHODS_COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/cpp_methods_copy_non_bool.tpl.cpp").compile_interpolation());
 
-		static INPUT_OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/vector/cpp_input_output_array.tpl.cpp").compile_interpolation()
-		);
+		static INPUT_OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/cpp_input_output_array.tpl.cpp").compile_interpolation());
 
 		let vec_type = self.type_ref();
-		if vec_type.constness().is_const() { // todo we should generate smth like VectorRef in this case
+		if vec_type.constness().is_const() {
+			// todo we should generate smth like VectorRef in this case
 			return "".to_string();
 		}
 		let element_type = self.element_type();

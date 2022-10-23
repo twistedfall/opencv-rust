@@ -1,14 +1,8 @@
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::{
-	AbstractRefWrapper,
-	CompiledInterpolation,
-	Constness,
-	ConstnessOverride,
-	StrExt,
-	type_ref::{FishStyle, NameStyle},
-};
+use crate::type_ref::{Constness, ConstnessOverride, FishStyle, NameStyle};
+use crate::{AbstractRefWrapper, CompiledInterpolation, StrExt};
 
 use super::RustNativeGeneratedElement;
 
@@ -23,9 +17,8 @@ impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 	}
 
 	fn gen_rust(&self, _opencv_version: &str) -> String {
-		static RUST: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("tpl/abstract_ref_wrapper/rust.tpl.rs").compile_interpolation()
-		);
+		static RUST: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/abstract_ref_wrapper/rust.tpl.rs").compile_interpolation());
 
 		let type_ref = self.type_ref().source();
 		let cls = type_ref.as_class().expect("Can only make an abstract ref to a class");

@@ -1,24 +1,14 @@
-use std::{
-	borrow::Cow,
-	fmt::{self, Write},
-};
+use std::borrow::Cow;
+use std::fmt;
+use std::fmt::Write;
 
-use clang::{
-	Entity,
-	EntityKind,
-	EvaluationResult,
-	token::{Token, TokenKind},
-};
+use clang::token::{Token, TokenKind};
+use clang::{Entity, EntityKind, EvaluationResult};
 
-use crate::{
-	DefaultElement,
-	Element,
-	EntityElement,
-	settings,
-	type_ref::FishStyle,
-};
+use crate::type_ref::FishStyle;
+use crate::{settings, DefaultElement, Element, EntityElement};
 
-pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item=Token<'f>>) -> Option<Value> {
+pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> Option<Value> {
 	let mut out = Value {
 		kind: ValueKind::Integer,
 		value: String::with_capacity(128),
@@ -76,9 +66,8 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item=Token<'f>>) -> Op
 	Some(out)
 }
 
-pub fn render_constant_cpp<'f>(tokens: impl IntoIterator<Item=Token<'f>>) -> String {
-	tokens.into_iter()
-		.fold(String::new(), |out, x| out + &x.get_spelling())
+pub fn render_constant_cpp<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> String {
+	tokens.into_iter().fold(String::new(), |out, x| out + &x.get_spelling())
 }
 
 pub fn render_evaluation_result_rust(result: EvaluationResult) -> Value {
@@ -86,31 +75,25 @@ pub fn render_evaluation_result_rust(result: EvaluationResult) -> Value {
 		EvaluationResult::Unexposed => {
 			panic!("Can't render evaluation result")
 		}
-		EvaluationResult::SignedInteger(x) => {
-			Value {
-				kind: ValueKind::Integer,
-				value: x.to_string(),
-			}
-		}
-		EvaluationResult::UnsignedInteger(x) => {
-			Value {
-				kind: ValueKind::UnsignedInteger,
-				value: x.to_string(),
-			}
-		}
-		EvaluationResult::Float(x) => {
-			Value {
-				kind: ValueKind::Float,
-				value: x.to_string(),
-			}
-		}
-		EvaluationResult::String(x) | EvaluationResult::ObjCString(x) | EvaluationResult::CFString(x)
-		| EvaluationResult::Other(x) => {
-			Value {
-				kind: ValueKind::String,
-				value: format!(r#""{}""#, x.to_string_lossy()),
-			}
-		}
+		EvaluationResult::SignedInteger(x) => Value {
+			kind: ValueKind::Integer,
+			value: x.to_string(),
+		},
+		EvaluationResult::UnsignedInteger(x) => Value {
+			kind: ValueKind::UnsignedInteger,
+			value: x.to_string(),
+		},
+		EvaluationResult::Float(x) => Value {
+			kind: ValueKind::Float,
+			value: x.to_string(),
+		},
+		EvaluationResult::String(x)
+		| EvaluationResult::ObjCString(x)
+		| EvaluationResult::CFString(x)
+		| EvaluationResult::Other(x) => Value {
+			kind: ValueKind::String,
+			value: format!(r#""{}""#, x.to_string_lossy()),
+		},
 	}
 }
 
@@ -127,8 +110,7 @@ impl<'tu> Const<'tu> {
 	pub fn value(&self) -> Option<Value> {
 		match self.entity.get_kind() {
 			EntityKind::MacroDefinition => {
-				let mut tokens = self.entity.get_range().expect("Can't get macro definition range")
-					.tokenize();
+				let mut tokens = self.entity.get_range().expect("Can't get macro definition range").tokenize();
 				if tokens.len() <= 1 {
 					None
 				} else if let Some(ident_tok) = tokens.get(0) {
@@ -141,15 +123,16 @@ impl<'tu> Const<'tu> {
 					None
 				}
 			}
-			EntityKind::EnumConstantDecl => {
-				Some(Value {
-					kind: ValueKind::Integer,
-					value: self.entity.get_enum_constant_value().expect("Can't get enum constant value").0.to_string(),
-				})
-			}
-			EntityKind::VarDecl => {
-				self.entity.evaluate().map(render_evaluation_result_rust)
-			}
+			EntityKind::EnumConstantDecl => Some(Value {
+				kind: ValueKind::Integer,
+				value: self
+					.entity
+					.get_enum_constant_value()
+					.expect("Can't get enum constant value")
+					.0
+					.to_string(),
+			}),
+			EntityKind::VarDecl => self.entity.evaluate().map(render_evaluation_result_rust),
 			_ => {
 				unreachable!("Invalid entity type for constant")
 			}
@@ -166,7 +149,8 @@ impl<'tu> EntityElement<'tu> for Const<'tu> {
 impl Element for Const<'_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
-			|| (self.entity.is_function_like_macro() && !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_fullname().as_ref()))
+			|| (self.entity.is_function_like_macro()
+				&& !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_fullname().as_ref()))
 	}
 
 	fn is_system(&self) -> bool {
@@ -241,4 +225,3 @@ impl fmt::Display for Value {
 		}
 	}
 }
-

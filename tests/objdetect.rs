@@ -2,14 +2,7 @@
 
 use std::path::Path;
 
-use opencv::{
-	core,
-	imgcodecs,
-	objdetect,
-	prelude::*,
-	Result,
-	types::VectorOfPoint,
-};
+use opencv::{core, imgcodecs, objdetect, prelude::*, types::VectorOfPoint, Result};
 
 #[test]
 fn qr_code() -> Result<()> {
@@ -91,5 +84,5 @@ fn output_byte_string() -> Result<()> {
 	assert_eq!(out, b"https://crates.io/crates/opencv");
 	assert!(!straight.empty());
 
-		Ok(())
+	Ok(())
 }

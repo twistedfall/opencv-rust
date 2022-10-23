@@ -26,7 +26,9 @@ pub trait OpenCVType<'a>: Sized {
 	/// Convert Self into external container with possible error result, it shouldn't panic
 	#[doc(hidden)]
 	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> { Ok(self.opencv_into_extern_container_nofail()) }
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		Ok(self.opencv_into_extern_container_nofail())
+	}
 	/// Convert Self into external container in the nofail context, this can panic
 	#[doc(hidden)]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer;
@@ -45,7 +47,9 @@ pub trait OpenCVTypeArg<'a>: Sized {
 	/// Convert Self into external container with possible error result, it shouldn't panic
 	#[doc(hidden)]
 	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> { Ok(self.opencv_into_extern_container_nofail()) }
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		Ok(self.opencv_into_extern_container_nofail())
+	}
 	/// Convert Self into external container in the nofail context, this can panic
 	#[doc(hidden)]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer;
@@ -119,25 +123,49 @@ macro_rules! opencv_type_simple {
 			type ExternReceive = Self;
 			type ExternContainer = Self;
 
-			#[inline] fn opencv_into_extern_container(self) -> $crate::Result<Self> { Ok(self) }
-			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
-			#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
+			#[inline]
+			fn opencv_into_extern_container(self) -> $crate::Result<Self> {
+				Ok(self)
+			}
+			#[inline]
+			fn opencv_into_extern_container_nofail(self) -> Self {
+				self
+			}
+			#[inline]
+			unsafe fn opencv_from_extern(s: Self) -> Self {
+				s
+			}
 		}
 
 		impl $crate::traits::OpenCVTypeArg<'_> for $type {
 			type ExternContainer = Self;
 
-			#[inline] fn opencv_into_extern_container(self) -> $crate::Result<Self> { Ok(self) }
-			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
+			#[inline]
+			fn opencv_into_extern_container(self) -> $crate::Result<Self> {
+				Ok(self)
+			}
+			#[inline]
+			fn opencv_into_extern_container_nofail(self) -> Self {
+				self
+			}
 		}
 
 		impl $crate::traits::OpenCVTypeExternContainer for $type {
 			type ExternSend = *const Self;
 			type ExternSendMut = *mut Self;
 
-			#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
-			#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
-			#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
+			#[inline]
+			fn opencv_as_extern(&self) -> Self::ExternSend {
+				self
+			}
+			#[inline]
+			fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
+				self
+			}
+			#[inline]
+			fn opencv_into_extern(self) -> Self::ExternSendMut {
+				&mut *std::mem::ManuallyDrop::new(self) as _
+			}
 		}
 	};
 }
@@ -175,9 +203,7 @@ macro_rules! opencv_type_simple_generic {
 
 pub fn cstring_new_nofail(bytes: impl Into<Vec<u8>>) -> CString {
 	match CString::new(bytes) {
-		Ok(s) => {
-			s
-		}
+		Ok(s) => s,
 		Err(e) => {
 			let nul_pos = e.nul_position();
 			let mut bytes = e.into_vec();
