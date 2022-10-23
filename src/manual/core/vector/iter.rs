@@ -62,11 +62,8 @@ where
 
 	#[inline]
 	fn next(&mut self) -> Option<Self::Item> {
-		let out = self.nth(self.i);
-		if out.is_some() {
-			self.i += 1;
-		}
-		out
+		#![allow(clippy::iter_nth_zero)]
+		self.nth(0)
 	}
 
 	#[inline]
@@ -77,8 +74,11 @@ where
 
 	#[inline]
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
-		if n < self.len {
-			Some(unsafe { self.vec.get_unchecked(n) })
+		self.i += n;
+		if self.i < self.len {
+			let out = Some(unsafe { self.vec.get_unchecked(self.i) });
+			self.i += 1;
+			out
 		} else {
 			None
 		}
@@ -120,11 +120,8 @@ where
 
 	#[inline]
 	fn next(&mut self) -> Option<Self::Item> {
-		let out = self.nth(self.i);
-		if out.is_some() {
-			self.i += 1;
-		}
-		out
+		#![allow(clippy::iter_nth_zero)]
+		self.nth(0)
 	}
 
 	#[inline]
@@ -135,8 +132,11 @@ where
 
 	#[inline]
 	fn nth(&mut self, n: usize) -> Option<Self::Item> {
-		if n < self.len {
-			Some(unsafe { self.vec.get_unchecked(n) })
+		self.i += n;
+		if self.i < self.len {
+			let out = Some(unsafe { self.vec.get_unchecked(self.i) });
+			self.i += 1;
+			out
 		} else {
 			None
 		}

@@ -385,6 +385,12 @@ fn nth() -> Result<()> {
 		assert_eq!(Some(1), vec.iter().nth(0));
 		assert_eq!(Some(2), vec.iter().nth(1));
 		assert_eq!(Some(3), vec.iter().nth(2));
+		assert_eq!(None, vec.iter().nth(3));
+
+		let mut iter = vec.iter();
+		assert_eq!(Some(1), iter.nth(0));
+		assert_eq!(Some(3), iter.nth(1));
+		assert_eq!(None, iter.nth(0));
 	}
 
 	Ok(())
