@@ -78,12 +78,6 @@ pub enum TypeRefTypeHint<'tu> {
 	Specialized(Type<'tu>),
 }
 
-impl Default for TypeRefTypeHint<'_> {
-	fn default() -> Self {
-		TypeRefTypeHint::None
-	}
-}
-
 #[derive(Clone)]
 pub struct TypeRef<'tu, 'ge> {
 	type_ref: Type<'tu>,
@@ -94,7 +88,7 @@ pub struct TypeRef<'tu, 'ge> {
 
 impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn new(type_ref: Type<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self::new_ext(type_ref, Default::default(), None, gen_env)
+		Self::new_ext(type_ref, TypeRefTypeHint::None, None, gen_env)
 	}
 
 	pub fn new_ext(
@@ -393,11 +387,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn clang_constness(&self) -> Constness {
-		if self.type_ref.is_const_qualified() {
-			Constness::Const
-		} else {
-			Constness::Mut
-		}
+		Constness::from_is_const(self.type_ref.is_const_qualified())
 	}
 
 	fn get_const_hint(&self, type_ref: &TypeRef) -> ConstnessOverride {
@@ -533,15 +523,11 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_void(&self) -> bool {
-		if let Kind::Primitive(_, cpp) = self.canonical().kind() {
-			cpp == "void"
-		} else {
-			false
-		}
+		matches!(self.canonical().kind(), Kind::Primitive(_, "void"))
 	}
 
 	pub fn is_bool(&self) -> bool {
-		matches!(self.canonical().kind(), Kind::Primitive("bool", _))
+		matches!(self.canonical().kind(), Kind::Primitive(_, "bool"))
 	}
 
 	pub fn is_void_ptr(&self) -> bool {
@@ -746,27 +732,23 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn rust_safe_id(&self) -> Cow<str> {
-		self.rust_safe_id_ext(true)
-	}
-
-	pub fn rust_safe_id_ext(&self, add_const: bool) -> Cow<str> {
+	pub fn rust_safe_id(&self, add_const: bool) -> Cow<str> {
 		let mut out = String::with_capacity(64);
 		let kind = self.kind();
 		if add_const && self.clang_constness().is_const() {
 			out.push_str("const_");
 		}
 		out.push_str(&match kind {
-			Kind::Array(inner, ..) => inner.rust_safe_id().into_owned() + "_X",
+			Kind::Array(inner, ..) => inner.rust_safe_id(add_const).into_owned() + "_X",
 			Kind::StdVector(vec) => vec.rust_localalias().into_owned(),
 			Kind::Pointer(inner) => {
-				let mut inner_safe_id: String = inner.rust_safe_id().into_owned();
+				let mut inner_safe_id: String = inner.rust_safe_id(add_const).into_owned();
 				if !self.is_by_ptr() {
 					inner_safe_id += "_X";
 				}
 				inner_safe_id
 			}
-			Kind::Reference(inner) => inner.rust_safe_id().into_owned(),
+			Kind::Reference(inner) => inner.rust_safe_id(add_const).into_owned(),
 			Kind::SmartPtr(ptr) => ptr.rust_localalias().into_owned(),
 			Kind::Class(cls) => cls.rust_localname(FishStyle::No).into_owned(),
 			Kind::Primitive(..) | Kind::Enum(..) | Kind::Function(..) | Kind::Typedef(..) | Kind::Generic(..) | Kind::Ignored => {
@@ -1116,20 +1098,20 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				format!(
 					"{name}.as_raw_{rust_safe_id}()",
 					name = name,
-					rust_safe_id = typ.rust_safe_id_ext(false)
+					rust_safe_id = typ.rust_safe_id(false)
 				)
 			} else {
 				format!(
 					"{name}.as_raw_mut_{rust_safe_id}()",
 					name = name,
-					rust_safe_id = typ.rust_safe_id_ext(false)
+					rust_safe_id = typ.rust_safe_id(false)
 				)
 			};
 			return if self.is_nullable() {
 				format!(
 					"{name}.map_or({null_ptr}, |{name}| {by_ptr})",
 					name = name,
-					null_ptr = constness.with(self.constness()).rust_null_ptr_full(),
+					null_ptr = constness.with(self.constness()).rust_null_ptr(),
 					by_ptr = by_ptr
 				)
 			} else {
@@ -1146,7 +1128,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				format!(
 					"{name}.map_or({null_ptr}, |{name}| {arr})",
 					name = name,
-					null_ptr = constness.with(self.constness()).rust_null_ptr_full(),
+					null_ptr = constness.with(self.constness()).rust_null_ptr(),
 					arr = arr
 				)
 			} else {
@@ -1178,7 +1160,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			return format!(
 				"{name}.map_or({null_ptr}, |{name}| {arg})",
 				name = name,
-				null_ptr = constness.with(self.constness()).rust_null_ptr_full(),
+				null_ptr = constness.with(self.constness()).rust_null_ptr(),
 				arg = arg,
 			);
 		}
@@ -1596,7 +1578,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		}
 		let props = props.join(", ");
 		let mut dbg = f.debug_struct("TypeRef");
-		dbg.field("rust_safe_id", &self.rust_safe_id())
+		dbg.field("rust_safe_id", &self.rust_safe_id(true))
 			.field("rust_full", &self.rust_full())
 			.field("rust_extern", &self.rust_extern(ConstnessOverride::No))
 			.field("cpp_safe_id", &self.cpp_safe_id())
@@ -1617,4 +1599,13 @@ pub enum TemplateArg<'tu, 'ge> {
 	Unknown,
 	Typename(TypeRef<'tu, 'ge>),
 	Constant(String),
+}
+
+impl<'tu, 'ge> TemplateArg<'tu, 'ge> {
+	pub fn into_typename(self) -> Option<TypeRef<'tu, 'ge>> {
+		match self {
+			TemplateArg::Typename(t) => Some(t),
+			TemplateArg::Unknown | TemplateArg::Constant(_) => None,
+		}
+	}
 }

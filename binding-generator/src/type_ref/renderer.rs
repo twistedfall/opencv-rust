@@ -155,7 +155,7 @@ impl Constness {
 		}
 	}
 
-	pub fn rust_null_ptr_full(self) -> &'static str {
+	pub fn rust_null_ptr(self) -> &'static str {
 		if self.is_const() {
 			"::core::ptr::null()"
 		} else {
@@ -442,6 +442,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 pub struct CppRenderer<'s> {
 	pub name_style: NameStyle,
 	pub name: &'s str,
+	/// true for rendering in extern contexts, references are treated as pointers
 	pub extern_types: bool,
 	pub constness_override: ConstnessOverride,
 }
@@ -469,12 +470,12 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 		};
 		match type_ref.kind() {
 			Kind::Primitive(_, cpp) => {
-				format!("{cnst}{typ}{name}", cnst = cnst, typ = cpp, name = space_name,)
+				format!("{cnst}{typ}{name}", cnst = cnst, typ = cpp, name = space_name)
 			}
 			Kind::Array(inner, size) => {
 				if let Some(size) = size {
 					if self.name.is_empty() {
-						format!("{typ}**", typ = inner.render(self.recurse()),)
+						format!("{typ}**", typ = inner.render(self.recurse()))
 					} else {
 						format!(
 							"{typ}(*{name})[{size}]",
@@ -484,7 +485,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 						)
 					}
 				} else {
-					format!("{typ}*{name}", typ = inner.render(self.recurse()), name = space_name,)
+					format!("{typ}*{name}", typ = inner.render(self.recurse()), name = space_name)
 				}
 			}
 			Kind::StdVector(vec) => {
@@ -497,10 +498,10 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 				)
 			}
 			Kind::Reference(inner) if !self.extern_types => {
-				format!("{typ}&{name}", typ = inner.render(self.recurse()), name = space_const_name,)
+				format!("{typ}&{name}", typ = inner.render(self.recurse()), name = space_const_name)
 			}
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
-				format!("{typ}*{name}", typ = inner.render(self.recurse()), name = space_const_name,)
+				format!("{typ}*{name}", typ = inner.render(self.recurse()), name = space_const_name)
 			}
 			Kind::SmartPtr(ptr) => {
 				format!(
@@ -517,7 +518,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					// fixme prevents emission of std::string<char>
 					out += &render_cpp_tpl_decl(self, type_ref);
 				}
-				format!("{cnst}{typ}{name}", cnst = cnst, typ = out, name = space_name,)
+				format!("{cnst}{typ}{name}", cnst = cnst, typ = out, name = space_name)
 			}
 			Kind::Enum(enm) => {
 				format!(
@@ -535,10 +536,10 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 				} else {
 					tdef.cpp_name(self.name_style).into_owned().into()
 				};
-				format!("{cnst}{typ}{name}", cnst = cnst, typ = typ, name = space_name,)
+				format!("{cnst}{typ}{name}", cnst = cnst, typ = typ, name = space_name)
 			}
 			Kind::Generic(generic_name) => {
-				format!("{cnst}{typ}{name}", cnst = cnst, typ = generic_name, name = space_name,)
+				format!("{cnst}{typ}{name}", cnst = cnst, typ = generic_name, name = space_name)
 			}
 			Kind::Function(func) => {
 				let mut typ = func.cpp_name(self.name_style);

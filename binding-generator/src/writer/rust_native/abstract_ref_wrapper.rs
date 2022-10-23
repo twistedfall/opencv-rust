@@ -13,7 +13,7 @@ impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 
 	fn element_safe_id(&self) -> String {
 		let type_ref = self.type_ref();
-		format!("{}-{}", type_ref.rust_module(), type_ref.rust_safe_id())
+		format!("{}-{}", type_ref.rust_module(), type_ref.rust_safe_id(true))
 	}
 
 	fn gen_rust(&self, _opencv_version: &str) -> String {

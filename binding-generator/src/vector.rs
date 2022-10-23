@@ -33,13 +33,7 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 			.type_ref()
 			.template_specialization_args()
 			.into_iter()
-			.find_map(|a| {
-				if let TemplateArg::Typename(type_ref) = a {
-					Some(type_ref)
-				} else {
-					None
-				}
-			})
+			.find_map(TemplateArg::into_typename)
 			.expect("vector template argument list is empty")
 	}
 
@@ -112,11 +106,7 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 	}
 
 	pub fn rust_localalias(&self) -> Cow<str> {
-		format!("VectorOf{typ}", typ = self.element_type().rust_safe_id()).into()
-	}
-
-	pub fn rust_fullalias(&self) -> Cow<str> {
-		format!("types::{}", self.rust_localalias()).into()
+		format!("VectorOf{typ}", typ = self.element_type().rust_safe_id(true)).into()
 	}
 }
 
