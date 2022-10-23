@@ -265,6 +265,10 @@ impl<T: VectorElement> Drop for Vector<T> where Self: VectorExtern<T> {
 	}
 }
 
+unsafe impl<T: Send + VectorElement> Send for Vector<T> where Self: VectorExtern<T> {}
+
+unsafe impl<T: Sync + VectorElement> Sync for Vector<T> where Self: VectorExtern<T> {}
+
 impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T> where Self: VectorExtern<T> {
 	fn extend<I: IntoIterator<Item=<T as OpenCVType<'a>>::Arg>>(&mut self, s: I) {
 		let s = s.into_iter();

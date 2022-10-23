@@ -708,3 +708,23 @@ fn from_slice() -> Result<()> {
 
 	Ok(())
 }
+
+#[test]
+fn send() {
+	fn must_be_send<T: Send>(_: T) {}
+
+	must_be_send(VectorOfi32::new());
+	must_be_send(VectorOfMat::new());
+	must_be_send(VectorOfString::new());
+	must_be_send(VectorOfPoint2d::new());
+}
+
+#[test]
+fn sync() {
+	fn must_be_sync<T: Sync>(_: T) {}
+
+	must_be_sync(VectorOfi32::new());
+	must_be_sync(VectorOfString::new());
+	must_be_sync(VectorOfPoint2d::new());
+}
+
