@@ -36,10 +36,10 @@ jobs:
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
       OPENCV_VERSION: ${{ matrix.version.opencv }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/build
           key: ${{ runner.os }}-${{ matrix.version.opencv }}-build
@@ -59,7 +59,7 @@ jobs:
         shell: bash
 
       - name: Upload bindings if test failed
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.opencv }}
@@ -86,10 +86,10 @@ jobs:
       VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
       VCPKG_TREE_COMMIT: 2022.02.23
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/build
           key: ${{ runner.os }}-${{ matrix.version.vcpkg }}-build
@@ -109,7 +109,7 @@ jobs:
         shell: bash
 
       - name: Upload bindings if test failed
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: generated-failed-bindings-${{ runner.os }}-vcpkg-${{ matrix.version.vcpkg }}
@@ -156,7 +156,7 @@ jobs:
       OPENCV_VERSION: ${{ matrix.version.opencv }}
       BREW_OPENCV_VERSION: ${{ matrix.version.brew }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install dependencies
         run: ci/install.sh
@@ -173,7 +173,7 @@ jobs:
         shell: bash
 
       - name: Upload bindings if test failed
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.opencv }}
@@ -182,7 +182,7 @@ jobs:
   docs-rs:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
