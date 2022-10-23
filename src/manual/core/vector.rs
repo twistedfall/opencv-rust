@@ -335,7 +335,7 @@ impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T> where Self: Vecto
 }
 
 #[inline(always)]
-fn vector_index_check(index: size_t, len: size_t) -> crate::Result<()> {
+fn vector_index_check(index: size_t, len: size_t) -> Result<()> {
 	if index >= len {
 		Err(crate::Error::new(crate::core::StsOutOfRange, format!("Index: {} out of bounds: 0..{}", index, len)))
 	} else {
