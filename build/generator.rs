@@ -172,7 +172,10 @@ pub fn gen_wrapper(
 				.truncate(true)
 				.write(true)
 				.open(&module_types_cpp)?;
-			let type_files = files_with_extension(&OUT_DIR, "cpp")?.filter(|f| is_type_file(f, module));
+			let mut type_files = files_with_extension(&OUT_DIR, "cpp")?
+				.filter(|f| is_type_file(f, module))
+				.collect::<Vec<_>>();
+			type_files.sort_unstable();
 			for entry in type_files {
 				io::copy(&mut File::open(&entry)?, &mut module_types_file)?;
 				let _ = fs::remove_file(entry);
