@@ -175,14 +175,23 @@ impl Constness {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ConstnessOverride {
 	No,
-	Yes(Constness),
+	Const,
+	Mut,
 }
 
 impl ConstnessOverride {
+	pub fn force(constness: Constness) -> Self {
+		match constness {
+			Constness::Const => Self::Const,
+			Constness::Mut => Self::Mut,
+		}
+	}
+
 	pub fn with(self, constness: Constness) -> Constness {
 		match self {
 			ConstnessOverride::No => constness,
-			ConstnessOverride::Yes(cnst) => cnst,
+			ConstnessOverride::Const => Constness::Const,
+			ConstnessOverride::Mut => Constness::Mut,
 		}
 	}
 }

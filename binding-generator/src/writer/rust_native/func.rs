@@ -4,7 +4,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::func::Kind;
-use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, Dir, FishStyle, NameStyle, StrEnc, StrType};
+use crate::type_ref::{ConstnessOverride, CppNameStyle, Dir, FishStyle, NameStyle, StrEnc, StrType};
 use crate::{
 	get_debug, settings, Class, CompiledInterpolation, DefaultElement, Element, Field, Func, FunctionTypeHint, IteratorExt,
 	StrExt, StringExt, TypeRef,
@@ -390,9 +390,9 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			return_type.cpp_extern_return_wrapper_full(ConstnessOverride::No)
 		};
 		let mut_ret_wrapper_full = if is_infallible {
-			return_type.cpp_extern_return(ConstnessOverride::Yes(Constness::Mut))
+			return_type.cpp_extern_return(ConstnessOverride::Mut)
 		} else {
-			return_type.cpp_extern_return_wrapper_full(ConstnessOverride::Yes(Constness::Mut))
+			return_type.cpp_extern_return_wrapper_full(ConstnessOverride::Mut)
 		};
 		if !naked_return {
 			decl_args.push(format!("{}* ocvrs_return", mut_ret_wrapper_full));

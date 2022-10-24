@@ -29,8 +29,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"rust_full" => self.rust_name(NameStyle::ref_()),
-			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
-			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
+			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Const),
+			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Mut),
 			"inner_rust_full" => pointee_type.rust_name(NameStyle::ref_()),
 		};
 
@@ -94,14 +94,14 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let pointee_type = self.pointee();
 
 		let mut inner_cpp_extern = pointee_type.cpp_extern_return(ConstnessOverride::No);
-		let mut inner_cpp_extern_const = pointee_type.cpp_extern_return(ConstnessOverride::Yes(Constness::Const));
+		let mut inner_cpp_extern_const = pointee_type.cpp_extern_return(ConstnessOverride::Const);
 		if !pointee_type.is_by_ptr() {
 			inner_cpp_extern.to_mut().push('*');
 			inner_cpp_extern_const.to_mut().push('*');
 		}
 
 		let mut const_renderer = type_ref::CppRenderer::new(CppNameStyle::Reference, "", true);
-		const_renderer.constness_override = ConstnessOverride::Yes(Constness::Const);
+		const_renderer.constness_override = ConstnessOverride::Const;
 		let cpp_ref_const = type_ref.render(const_renderer);
 
 		let mut inter_vars = hashmap! {

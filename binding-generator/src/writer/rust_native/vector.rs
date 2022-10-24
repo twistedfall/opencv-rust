@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, NameStyle};
+use crate::type_ref::{ConstnessOverride, CppNameStyle, NameStyle};
 use crate::{settings, CompiledInterpolation, Element, StrExt, Vector};
 
 use super::RustNativeGeneratedElement;
@@ -38,8 +38,8 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"rust_full" => self.rust_name(NameStyle::ref_()),
-			"rust_extern_const" => vec_type.rust_extern(ConstnessOverride::Yes(Constness::Const)),
-			"rust_extern_mut" => vec_type.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
+			"rust_extern_const" => vec_type.rust_extern(ConstnessOverride::Const),
+			"rust_extern_mut" => vec_type.rust_extern(ConstnessOverride::Mut),
 			"inner_rust_full" => element_type.rust_name(NameStyle::ref_()),
 			"inner_rust_extern_return" => element_type.rust_extern_return(),
 		};

@@ -396,7 +396,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	fn get_const_hint(&self, type_ref: &TypeRef) -> ConstnessOverride {
 		let constness = self.constness();
 		match constness {
-			Constness::Const if type_ref.clang_constness().is_mut() => ConstnessOverride::Yes(constness),
+			Constness::Const if type_ref.clang_constness().is_mut() => ConstnessOverride::Const,
 			_ => ConstnessOverride::No,
 		}
 	}
@@ -850,7 +850,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				} else if self.as_string().is_some() {
 					out += "c_char";
 				} else {
-					out += inner.rust_extern(ConstnessOverride::Yes(constness)).as_ref()
+					out += inner.rust_extern(ConstnessOverride::force(constness)).as_ref()
 				}
 				break 'typ out.into();
 			}
@@ -858,7 +858,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				break 'typ format!(
 					"*{cnst}[{typ}; {len}]",
 					cnst = self.constness().rust_qual(true),
-					typ = elem.rust_extern(ConstnessOverride::Yes(constness)),
+					typ = elem.rust_extern(ConstnessOverride::force(constness)),
 					len = len,
 				)
 				.into();
@@ -869,7 +869,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					// argv is treated as array of output arguments and it doesn't seem to be meant this way
 					format!("*{cnst}c_char", cnst = elem.clang_constness().rust_qual(true)).into()
 				} else {
-					elem.rust_extern(ConstnessOverride::Yes(constness))
+					elem.rust_extern(ConstnessOverride::force(constness))
 				};
 				break 'typ format!("*{cnst}{typ}", cnst = self.constness().rust_qual(true), typ = typ,).into();
 			}
@@ -1061,7 +1061,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		self.rust_arg_func_call(
 			"self",
 			if method_constness.is_const() {
-				ConstnessOverride::Yes(Constness::Const)
+				ConstnessOverride::Const
 			} else {
 				ConstnessOverride::No
 			},
@@ -1178,7 +1178,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn rust_extern_self_func_decl(&self, method_constness: Constness) -> String {
-		self.rust_extern_arg_func_decl("instance", ConstnessOverride::Yes(method_constness))
+		self.rust_extern_arg_func_decl("instance", ConstnessOverride::force(method_constness))
 	}
 
 	pub fn rust_extern_arg_func_decl(&self, name: &str, constness: ConstnessOverride) -> String {
@@ -1193,7 +1193,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		if self.as_string().is_some() {
 			"*mut c_void".into()
 		} else {
-			self.rust_extern(ConstnessOverride::Yes(Constness::Mut))
+			self.rust_extern(ConstnessOverride::Mut)
 		}
 	}
 
