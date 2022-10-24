@@ -194,10 +194,22 @@ pub enum NameStyle {
 }
 
 impl NameStyle {
+	pub fn decl() -> Self {
+		Self::Declaration
+	}
+
+	pub fn ref_() -> Self {
+		Self::Reference(FishStyle::No)
+	}
+
+	pub fn ref_fish() -> Self {
+		Self::Reference(FishStyle::Turbo)
+	}
+
 	pub fn is_declaration(&self) -> bool {
 		match self {
-			NameStyle::Declaration => true,
-			NameStyle::Reference(..) => false,
+			Self::Declaration => true,
+			Self::Reference(..) => false,
 		}
 	}
 
@@ -207,15 +219,15 @@ impl NameStyle {
 
 	pub fn turbo_fish_style(&self) -> FishStyle {
 		match self {
-			NameStyle::Reference(fish_style) => *fish_style,
-			NameStyle::Declaration => FishStyle::No,
+			Self::Reference(fish_style) => *fish_style,
+			Self::Declaration => FishStyle::No,
 		}
 	}
 
 	pub fn rust_turbo_fish_qual(&self) -> &'static str {
 		match self {
-			NameStyle::Declaration => "",
-			NameStyle::Reference(fish) => fish.rust_qual(),
+			Self::Declaration => "",
+			Self::Reference(fish) => fish.rust_qual(),
 		}
 	}
 }
@@ -250,11 +262,30 @@ impl FishStyle {
 	}
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CppNameStyle {
+	Declaration,
+	Reference,
+}
+
+impl CppNameStyle {
+	pub fn is_declaration(&self) -> bool {
+		match self {
+			Self::Declaration => true,
+			Self::Reference => false,
+		}
+	}
+
+	pub fn is_reference(&self) -> bool {
+		!self.is_declaration()
+	}
+}
+
 fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, fish_style: FishStyle) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if !generic_types.is_empty() {
 		let const_generics_implemented = type_ref.as_class().map_or(false, |cls| {
-			settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_fullname().as_ref())
+			settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_name(CppNameStyle::Reference).as_ref())
 		});
 		let mut constant_suffix = String::new();
 		let generic_types = generic_types
@@ -440,7 +471,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 
 #[derive(Debug)]
 pub struct CppRenderer<'s> {
-	pub name_style: NameStyle,
+	pub name_style: CppNameStyle,
 	pub name: &'s str,
 	/// true for rendering in extern contexts, references are treated as pointers
 	pub extern_types: bool,
@@ -448,7 +479,7 @@ pub struct CppRenderer<'s> {
 }
 
 impl<'s> CppRenderer<'s> {
-	pub fn new(name_style: NameStyle, name: &'s str, extern_types: bool) -> Self {
+	pub fn new(name_style: CppNameStyle, name: &'s str, extern_types: bool) -> Self {
 		Self {
 			name_style,
 			name,
@@ -595,7 +626,7 @@ impl<'a> TypeRefRenderer<'a> for CppExternReturnRenderer {
 	}
 
 	fn recurse(&self) -> Self::Recursed {
-		let mut out = CppRenderer::new(NameStyle::Reference(FishStyle::Turbo), "", true);
+		let mut out = CppRenderer::new(CppNameStyle::Reference, "", true);
 		out.constness_override = self.constness_override;
 		out
 	}

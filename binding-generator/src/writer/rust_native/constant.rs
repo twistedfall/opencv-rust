@@ -4,15 +4,15 @@ use clang::EntityKind;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::{
-	constant::ValueKind, get_debug, settings, type_ref::FishStyle, CompiledInterpolation, Const, Element, EntityElement, StrExt,
-};
+use crate::constant::ValueKind;
+use crate::type_ref::{FishStyle, NameStyle};
+use crate::{get_debug, settings, CompiledInterpolation, Const, Element, EntityElement, StrExt};
 
 use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for Const<'_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
+		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
@@ -35,7 +35,7 @@ impl RustNativeGeneratedElement for Const<'_> {
 		let name = if parent_is_class {
 			self.rust_leafname(FishStyle::No)
 		} else {
-			self.rust_localname(FishStyle::No)
+			self.rust_name(NameStyle::decl())
 		};
 
 		if let Some(value) = self.value() {

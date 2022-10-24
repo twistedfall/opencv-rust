@@ -7,7 +7,7 @@ use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 use once_cell::sync::Lazy;
 use regex::Regex;
 
-use crate::type_ref::{Constness, FishStyle, TypeRefTypeHint};
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefTypeHint};
 use crate::{
 	comment, reserved_rename, settings, Class, DefaultElement, DefinitionLocation, DependentType, DependentTypeMode, Element,
 	EntityElement, EntityExt, Field, FieldTypeHint, GeneratorEnv, StrExt, StringExt, TypeRef,
@@ -88,7 +88,7 @@ impl<'f> FuncId<'f> {
 	}
 
 	pub fn from_entity(entity: Entity) -> Self {
-		let name = entity.cpp_fullname().into_owned().into();
+		let name = entity.cpp_name(CppNameStyle::Reference).into_owned().into();
 		let args = if let EntityKind::FunctionTemplate = entity.get_kind() {
 			let mut args = vec![];
 			entity.walk_children_while(|child| {
@@ -172,7 +172,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		const OPERATOR: &str = "operator";
 		match self.entity.get_kind() {
 			EntityKind::FunctionDecl => {
-				if let Some(operator) = self.entity.cpp_localname().strip_prefix(OPERATOR) {
+				if let Some(operator) = self.entity.cpp_name(CppNameStyle::Declaration).strip_prefix(OPERATOR) {
 					let arg_count = self.entity.get_arguments().map_or(0, |v| v.len());
 					Kind::FunctionOperator(OperatorKind::new(operator.trim(), arg_count))
 				} else {
@@ -190,7 +190,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				);
 				if self.entity.is_static_method() {
 					Kind::StaticMethod(class)
-				} else if let Some(operator) = self.entity.cpp_localname().strip_prefix(OPERATOR) {
+				} else if let Some(operator) = self.entity.cpp_name(CppNameStyle::Declaration).strip_prefix(OPERATOR) {
 					let arg_count = self.entity.get_arguments().map_or(0, |v| v.len());
 					Kind::InstanceOperator(class, OperatorKind::new(operator.trim(), arg_count))
 				} else {
@@ -273,7 +273,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn constness(&self) -> Constness {
-		if settings::FORCE_CONSTANT_METHOD.contains(self.cpp_fullname().as_ref()) {
+		if settings::FORCE_CONSTANT_METHOD.contains(self.cpp_name(CppNameStyle::Reference).as_ref()) {
 			Constness::Const
 		} else if let Some(fld) = self.as_field_accessor() {
 			if self.type_hint == FunctionTypeHint::FieldSetter {
@@ -384,7 +384,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				if let Some(spec) = self.as_specialized() {
 					if out.is_generic() {
 						let spec_type = spec
-							.get(out.base().cpp_full().as_ref())
+							.get(out.base().cpp_name(CppNameStyle::Reference).as_ref())
 							.and_then(|s| self.gen_env.resolve_type(s));
 						if let Some(spec_type) = spec_type {
 							out.set_type_hint(TypeRefTypeHint::Specialized(spec_type));
@@ -465,7 +465,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				let type_ref = out.type_ref();
 				if type_ref.is_generic() {
 					let spec_type = spec
-						.get(type_ref.base().cpp_full().as_ref())
+						.get(type_ref.base().cpp_name(CppNameStyle::Reference).as_ref())
 						.and_then(|s| self.gen_env.resolve_type(s));
 					if let Some(spec_type) = spec_type {
 						return Field::new_ext(a, FieldTypeHint::Specialized(spec_type), self.gen_env);
@@ -497,7 +497,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			if !out.is_empty() {
 				out += "::";
 			}
-			let local_name = DefaultElement::cpp_localname(self);
+			let local_name = DefaultElement::cpp_name(self, CppNameStyle::Declaration);
 			let (first_letter, rest) = local_name.split_at(1);
 			if self.as_field_setter().is_some() {
 				write!(&mut out, "setProp{}{}", first_letter.to_uppercase(), rest).expect("write! to String shouldn't fail");
@@ -506,7 +506,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			}
 			out
 		} else {
-			self.cpp_fullname().into_owned()
+			self.cpp_name(CppNameStyle::Reference).into_owned()
 		};
 		out.cleanup_name();
 		if let Some(spec) = self.as_specialized() {
@@ -601,7 +601,10 @@ impl Element for Func<'_, '_> {
 		let line = self.entity.get_location().map(|l| l.get_file_location().line).unwrap_or(0);
 		const OVERLOAD: &str = "@overload";
 		if let Some(idx) = comment.find(OVERLOAD) {
-			let rep = if let Some(copy) = self.gen_env.get_func_comment(line, self.entity.cpp_fullname().as_ref()) {
+			let rep = if let Some(copy) = self
+				.gen_env
+				.get_func_comment(line, self.entity.cpp_name(CppNameStyle::Reference).as_ref())
+			{
 				format!("{}\n\n## Overloaded parameters\n", copy)
 			} else {
 				"This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.".to_string()
@@ -649,15 +652,19 @@ impl Element for Func<'_, '_> {
 		DefaultElement::cpp_namespace(self).into()
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		if self.as_conversion_method().is_some() {
-			format!("operator {}", self.return_type().cpp_full()).into()
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+		let decl_name = if self.as_conversion_method().is_some() {
+			format!("operator {}", self.return_type().cpp_name(CppNameStyle::Reference))
 		} else if self.as_field_setter().is_some() {
-			let name = DefaultElement::cpp_localname(self);
+			let name = DefaultElement::cpp_name(self, CppNameStyle::Declaration);
 			let (first_letter, rest) = name.split_at(1);
-			format!("set{}{}", first_letter.to_uppercase(), rest).into()
+			format!("set{}{}", first_letter.to_uppercase(), rest)
 		} else {
-			DefaultElement::cpp_localname(self)
+			return DefaultElement::cpp_name(self, style);
+		};
+		match style {
+			CppNameStyle::Declaration => decl_name.into(),
+			CppNameStyle::Reference => DefaultElement::cpp_decl_name_with_namespace(self, &decl_name),
 		}
 	}
 
@@ -665,11 +672,15 @@ impl Element for Func<'_, '_> {
 		DefaultElement::rust_module(self)
 	}
 
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::rust_name(self, style)
+	}
+
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		let cpp_name = if let Some(name) = self.gen_env.get_rename_config(self.entity).map(|c| &c.rename) {
 			name.into()
 		} else {
-			self.cpp_localname()
+			self.cpp_name(CppNameStyle::Declaration)
 		};
 		let rust_name = if let Some(cls) = self.as_constructor() {
 			let args = self.arguments();
@@ -701,7 +712,7 @@ impl Element for Func<'_, '_> {
 			}
 			.into()
 		} else if let Some(..) = self.as_conversion_method() {
-			let mut name: String = self.return_type().rust_local().into_owned();
+			let mut name: String = self.return_type().rust_name(NameStyle::decl()).into_owned();
 			name.cleanup_name();
 			format!("to_{}", name).into()
 		} else if let Some(kind) = self.as_operator() {
@@ -746,10 +757,6 @@ impl Element for Func<'_, '_> {
 		} else {
 			reserved_rename(rust_name.to_snake_case().into())
 		}
-	}
-
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

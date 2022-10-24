@@ -8,8 +8,8 @@ use once_cell::unsync::Lazy as UnsyncLazy;
 use regex::{Captures, Regex};
 
 pub use renderer::{
-	Constness, ConstnessOverride, CppExternReturnRenderer, CppRenderer, FishStyle, Lifetime, NameStyle, RustRenderer,
-	TypeRefRenderer,
+	Constness, ConstnessOverride, CppExternReturnRenderer, CppNameStyle, CppRenderer, FishStyle, Lifetime, NameStyle,
+	RustRenderer, TypeRefRenderer,
 };
 
 use crate::{
@@ -190,12 +190,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 			TypeKind::Record | TypeKind::Unexposed => {
 				if let Some(decl) = self.type_ref.get_declaration() {
-					let cpp_fullname = decl.cpp_fullname();
+					let cpp_refname = decl.cpp_name(CppNameStyle::Reference);
 					let kind = decl.get_kind();
 					let is_decl = kind == EntityKind::StructDecl || kind == EntityKind::ClassDecl;
-					if cpp_fullname.starts_with("std::") && cpp_fullname.contains("::vector") {
+					if cpp_refname.starts_with("std::") && cpp_refname.contains("::vector") {
 						Kind::StdVector(Vector::new(self.type_ref, self.gen_env))
-					} else if is_decl && cpp_fullname.starts_with("cv::Ptr") {
+					} else if is_decl && cpp_refname.starts_with("cv::Ptr") {
 						Kind::SmartPtr(SmartPtr::new(decl, self.gen_env))
 					} else {
 						Kind::Class(Class::new(decl, self.gen_env))
@@ -219,7 +219,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 			TypeKind::Typedef => {
 				let decl = self.type_ref.get_declaration().expect("Can't get typedef declaration");
-				let decl_name = decl.cpp_fullname();
+				let decl_name = decl.cpp_name(CppNameStyle::Reference);
 				if let Some(&(rust, cpp)) = settings::PRIMITIVE_TYPEDEFS.get(decl_name.as_ref()) {
 					Kind::Primitive(rust, cpp)
 				} else if decl.is_system() {
@@ -235,12 +235,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 							EntityKind::StructDecl if child.get_name().is_none() => {
 								non_typedef = Some(Kind::Class(Class::new_ext(
 									child,
-									decl.cpp_fullname().into_owned(),
+									decl.cpp_name(CppNameStyle::Reference).into_owned(),
 									self.gen_env,
 								)));
 							}
 							EntityKind::EnumDecl if child.get_name().is_none() => {
-								non_typedef = Some(Kind::Enum(Enum::new_ext(child, decl.cpp_fullname().into_owned())));
+								non_typedef = Some(Kind::Enum(Enum::new_ext(
+									child,
+									decl.cpp_name(CppNameStyle::Reference).into_owned(),
+								)));
 							}
 							_ => {}
 						}
@@ -347,7 +350,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				Kind::Class(cls) => cls.is_ignored(),
 				Kind::Typedef(tdef) => tdef.is_ignored(),
 				Kind::Ignored => true,
-				_ => settings::ELEMENT_IGNORE.contains(self.cpp_full().as_ref()),
+				_ => settings::ELEMENT_IGNORE.contains(self.cpp_name(CppNameStyle::Reference).as_ref()),
 			}
 	}
 
@@ -408,8 +411,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn as_string(&self) -> Option<Dir<StrType>> {
 		let class_string_type = |cls: Class| -> Option<StrType> {
-			let cpp_fullname = cls.cpp_fullname();
-			if cpp_fullname.starts_with("std::") && cpp_fullname.ends_with("::string") {
+			let cpp_refname = cls.cpp_name(CppNameStyle::Reference);
+			if cpp_refname.starts_with("std::") && cpp_refname.ends_with("::string") {
 				Some(StrType::StdString(
 					if matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::StringAsBytes)) {
 						StrEnc::Binary
@@ -417,7 +420,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 						StrEnc::Text
 					},
 				))
-			} else if cpp_fullname == "cv::String" {
+			} else if cpp_refname == "cv::String" {
 				Some(StrType::CvString(
 					if matches!(self.type_hint, TypeRefTypeHint::ArgOverride(ArgOverride::StringAsBytes)) {
 						StrEnc::Binary
@@ -453,8 +456,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 						Some(Dir::Out(typ))
 					};
 				} else {
-					let inner_cpp_full = inner.cpp_full();
-					if inner_cpp_full == "char" || inner_cpp_full == "const char" {
+					let inner_cpp_ref = inner.cpp_name(CppNameStyle::Reference);
+					if inner_cpp_ref == "char" || inner_cpp_ref == "const char" {
 						return if inner.clang_constness().is_const() {
 							Some(Dir::In(StrType::CharPtr))
 						} else {
@@ -464,8 +467,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				}
 			}
 			Kind::Array(inner, ..) => {
-				let inner_cpp_full = inner.cpp_full();
-				if inner_cpp_full == "char" || inner_cpp_full == "const char" {
+				let inner_cpp_ref = inner.cpp_name(CppNameStyle::Reference);
+				if inner_cpp_ref == "char" || inner_cpp_ref == "const char" {
 					return Some(Dir::In(StrType::CharPtr));
 				}
 			}
@@ -489,10 +492,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn is_input_array(&self) -> bool {
 		match self.kind() {
 			Kind::Reference(inner) => inner.is_input_array(),
-			Kind::Class(cls) => cls.cpp_fullname() == "cv::_InputArray",
+			Kind::Class(cls) => cls.cpp_name(CppNameStyle::Reference) == "cv::_InputArray",
 			Kind::Typedef(tdef) => {
-				let cpp_fullname = tdef.cpp_fullname();
-				cpp_fullname == "cv::InputArray" || cpp_fullname == "cv::InputArrayOfArrays"
+				let cpp_refname = tdef.cpp_name(CppNameStyle::Reference);
+				cpp_refname == "cv::InputArray" || cpp_refname == "cv::InputArrayOfArrays"
 			}
 			_ => false,
 		}
@@ -501,10 +504,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn is_output_array(&self) -> bool {
 		match self.kind() {
 			Kind::Reference(inner) => inner.is_output_array(),
-			Kind::Class(cls) => cls.cpp_fullname() == "cv::_OutputArray",
+			Kind::Class(cls) => cls.cpp_name(CppNameStyle::Reference) == "cv::_OutputArray",
 			Kind::Typedef(tdef) => {
-				let cpp_fullname = tdef.cpp_fullname();
-				cpp_fullname == "cv::OutputArray" || cpp_fullname == "cv::OutputArrayOfArrays"
+				let cpp_refname = tdef.cpp_name(CppNameStyle::Reference);
+				cpp_refname == "cv::OutputArray" || cpp_refname == "cv::OutputArrayOfArrays"
 			}
 			_ => false,
 		}
@@ -513,10 +516,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn is_input_output_array(&self) -> bool {
 		match self.kind() {
 			Kind::Reference(inner) => inner.is_input_output_array(),
-			Kind::Class(cls) => cls.cpp_fullname() == "cv::_InputOutputArray",
+			Kind::Class(cls) => cls.cpp_name(CppNameStyle::Reference) == "cv::_InputOutputArray",
 			Kind::Typedef(tdef) => {
-				let cpp_fullname = tdef.cpp_fullname();
-				cpp_fullname == "cv::InputOutputArray" || cpp_fullname == "cv::InputOutputArrayOfArrays"
+				let cpp_refname = tdef.cpp_name(CppNameStyle::Reference);
+				cpp_refname == "cv::InputOutputArray" || cpp_refname == "cv::InputOutputArrayOfArrays"
 			}
 			_ => false,
 		}
@@ -681,7 +684,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_data_type(&self) -> bool {
-		settings::DATA_TYPES.contains(self.cpp_full().as_ref())
+		settings::DATA_TYPES.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
 	}
 
 	pub fn can_pass_by_ptr(&self) -> bool {
@@ -750,9 +753,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			}
 			Kind::Reference(inner) => inner.rust_safe_id(add_const).into_owned(),
 			Kind::SmartPtr(ptr) => ptr.rust_localalias().into_owned(),
-			Kind::Class(cls) => cls.rust_localname(FishStyle::No).into_owned(),
+			Kind::Class(cls) => cls.rust_name(NameStyle::decl()).into_owned(),
 			Kind::Primitive(..) | Kind::Enum(..) | Kind::Function(..) | Kind::Typedef(..) | Kind::Generic(..) | Kind::Ignored => {
-				self.rust_local().into_owned()
+				self.rust_name(NameStyle::decl()).into_owned()
 			}
 		});
 		out.cleanup_name();
@@ -775,16 +778,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn rust_name(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str> {
+	pub fn rust_name(&self, name_style: NameStyle) -> Cow<str> {
+		self.rust_name_ext(name_style, Lifetime::elided())
+	}
+
+	pub fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str> {
 		self.render(RustRenderer::new(name_style, lifetime, self.is_pass_by_ptr()))
-	}
-
-	pub fn rust_local(&self) -> Cow<str> {
-		self.rust_name(NameStyle::Declaration, Lifetime::elided())
-	}
-
-	pub fn rust_full(&self) -> Cow<str> {
-		self.rust_name(NameStyle::Reference(FishStyle::No), Lifetime::elided())
 	}
 
 	pub fn rust_lifetime_count(&self) -> usize {
@@ -877,7 +876,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			if let Some(func) = self.as_function() {
 				break 'typ func.rust_extern().into_owned().into();
 			}
-			break 'typ self.rust_full();
+			break 'typ self.rust_name(NameStyle::ref_());
 		}
 	}
 
@@ -916,7 +915,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			} else if self.as_char8().is_some() {
 				break 'decl_type "char".into();
 			}
-			break 'decl_type self.rust_full();
+			break 'decl_type self.rust_name(NameStyle::ref_());
 		};
 		let mutable =
 			if self.is_by_ptr() && !self.constness().is_const() && !self.as_pointer().is_some() && !self.as_reference().is_some() {
@@ -927,7 +926,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		format!("{mutable}{name}: {typ}", mutable = mutable, name = name, typ = typ)
 	}
 
-	pub fn rust_return_func_decl(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str> {
+	pub fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str> {
 		if self.as_abstract_class_ptr().is_some() {
 			format!(
 				"types::AbstractRef{mut_suf}{fish}<{lt}{typ}>",
@@ -942,19 +941,17 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				} else {
 					""
 				},
-				typ = self
-					.source()
-					.rust_name(NameStyle::Reference(turbo_fish_style), Lifetime::elided()),
+				typ = self.source().rust_name(NameStyle::Reference(turbo_fish_style)),
 			)
 			.into()
 		} else if self.is_by_ptr() {
 			self
 				.source()
-				.rust_name(NameStyle::Reference(turbo_fish_style), Lifetime::elided())
+				.rust_name(NameStyle::Reference(turbo_fish_style))
 				.into_owned()
 				.into()
 		} else {
-			self.rust_name(NameStyle::Reference(turbo_fish_style), Lifetime::elided())
+			self.rust_name(NameStyle::Reference(turbo_fish_style))
 		}
 	}
 
@@ -968,7 +965,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			format!(
 				"let ret = {unsafety_call}{{ {typ}::opencv_from_extern(ret) }};",
 				unsafety_call = unsafety_call,
-				typ = self.rust_return_func_decl(FishStyle::Turbo, is_static_func),
+				typ = self.rust_return(FishStyle::Turbo, is_static_func),
 			)
 			.into()
 		} else if self.as_pointer().map_or(false, |i| !i.is_void()) && !self.is_pass_by_ptr() || self.as_fixed_array().is_some() {
@@ -1340,7 +1337,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn cpp_safe_id(&self) -> Cow<str> {
-		let mut out: String = self.cpp_local_ext(false).into_owned();
+		let mut out: String = self.cpp_name_ext(CppNameStyle::Declaration, "", false).into_owned();
 		out.cleanup_name();
 		out.into()
 	}
@@ -1350,20 +1347,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		renderer.render(self)
 	}
 
-	pub fn cpp_local(&self) -> Cow<str> {
-		self.cpp_local_ext(true)
+	pub fn cpp_name(&self, name_style: CppNameStyle) -> Cow<str> {
+		self.cpp_name_ext(name_style, "", true)
 	}
 
-	pub fn cpp_local_ext(&self, extern_types: bool) -> Cow<str> {
-		self.render(CppRenderer::new(NameStyle::Declaration, "", extern_types))
-	}
-
-	pub fn cpp_full(&self) -> Cow<str> {
-		self.cpp_full_ext("", true)
-	}
-
-	pub fn cpp_full_ext(&self, name: &str, extern_types: bool) -> Cow<str> {
-		self.render(CppRenderer::new(NameStyle::Reference(FishStyle::Turbo), name, extern_types))
+	pub fn cpp_name_ext(&self, name_style: CppNameStyle, name: &str, extern_types: bool) -> Cow<str> {
+		self.render(CppRenderer::new(name_style, name, extern_types))
 	}
 
 	pub fn cpp_extern(&self) -> Cow<str> {
@@ -1383,12 +1372,17 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			}
 		} else if self.is_by_ptr() {
 			if self.as_pointer().is_some() || self.as_reference().is_some() {
-				format!("{typ}{name}", typ = self.cpp_full(), name = space_name).into()
+				format!("{typ}{name}", typ = self.cpp_name(CppNameStyle::Reference), name = space_name).into()
 			} else {
-				format!("{typ}*{name}", typ = self.cpp_full(), name = space_name).into()
+				format!(
+					"{typ}*{name}",
+					typ = self.cpp_name(CppNameStyle::Reference),
+					name = space_name
+				)
+				.into()
 			}
 		} else {
-			self.cpp_full_ext(name, true)
+			self.cpp_name_ext(CppNameStyle::Reference, name, true)
 		}
 	}
 
@@ -1399,9 +1393,17 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			""
 		};
 		if self.is_by_ptr() {
-			format!("{cnst}{typ}* instance", cnst = cnst, typ = self.cpp_full())
+			format!(
+				"{cnst}{typ}* instance",
+				cnst = cnst,
+				typ = self.cpp_name(CppNameStyle::Reference)
+			)
 		} else {
-			format!("{cnst}{typ} instance", cnst = cnst, typ = self.cpp_full())
+			format!(
+				"{cnst}{typ} instance",
+				cnst = cnst,
+				typ = self.cpp_name(CppNameStyle::Reference)
+			)
 		}
 	}
 
@@ -1579,10 +1581,10 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		let props = props.join(", ");
 		let mut dbg = f.debug_struct("TypeRef");
 		dbg.field("rust_safe_id", &self.rust_safe_id(true))
-			.field("rust_full", &self.rust_full())
+			.field("rust_full", &self.rust_name(NameStyle::ref_()))
 			.field("rust_extern", &self.rust_extern(ConstnessOverride::No))
 			.field("cpp_safe_id", &self.cpp_safe_id())
-			.field("cpp_full", &self.cpp_full())
+			.field("cpp_full", &self.cpp_name(CppNameStyle::Reference))
 			.field("cpp_extern", &self.cpp_extern())
 			.field("props", &props)
 			.field("constness", &self.constness())

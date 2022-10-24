@@ -6,8 +6,8 @@ use std::{env, fmt, mem};
 use clang::{Clang, Entity, EntityKind, Type};
 
 use opencv_binding_generator::{
-	opencv_module_from_path, settings, Class, Element, EntityExt, EntityWalker, EntityWalkerVisitor, Func, FuncId, Generator,
-	GeneratorEnv,
+	opencv_module_from_path, settings, Class, CppNameStyle, Element, EntityExt, EntityWalker, EntityWalkerVisitor, Func, FuncId,
+	Generator, GeneratorEnv,
 };
 
 struct FunctionFinder<'tu, 'f> {
@@ -24,7 +24,7 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 	pub fn update_used_func(&self, f: &Func) {
 		let identifier = f.identifier();
 		let func_id = f.func_id();
-		let cpp_fullname = f.cpp_fullname();
+		let cpp_refname = f.cpp_name(CppNameStyle::Reference);
 
 		self.func_rename_unused.borrow_mut().remove(identifier.as_ref());
 		self.func_cfg_attr_unused.borrow_mut().remove(identifier.as_ref());
@@ -34,7 +34,7 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 		}
 		self.func_manual_unused.borrow_mut().remove(identifier.as_ref());
 		self.func_specialize_unused.borrow_mut().remove(identifier.as_ref());
-		self.argument_override_unused.borrow_mut().remove(cpp_fullname.as_ref());
+		self.argument_override_unused.borrow_mut().remove(cpp_refname.as_ref());
 	}
 }
 

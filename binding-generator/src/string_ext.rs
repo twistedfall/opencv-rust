@@ -22,6 +22,7 @@ pub trait StringExt {
 		replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a,
 	) -> bool;
 	fn extend_join(&mut self, it: impl Iterator<Item = impl AsRef<str>>, sep: &str);
+	fn extend_sep(&mut self, sep: &str, s: &str);
 	fn push_indented_str(&mut self, indent: Indent, val: &str);
 	fn bump_counter(&mut self);
 	fn cleanup_name(&mut self);
@@ -177,18 +178,32 @@ impl StringExt for String {
 
 	fn extend_join(&mut self, it: impl IntoIterator<Item = impl AsRef<str>>, sep: &str) {
 		let mut it = it.into_iter();
-		if let Some(first) = it.next() {
+		let first = it.find(|e| !e.as_ref().is_empty());
+		if let Some(first) = first {
 			let first = first.as_ref();
-			let needed_cap = it.size_hint().1.unwrap_or(16) + first.len();
-			if needed_cap > self.capacity() {
-				self.reserve(needed_cap - self.capacity());
+			if !first.is_empty() {
+				let needed_cap = it.size_hint().1.unwrap_or(8) * (first.len() + sep.len());
+				if needed_cap > self.capacity() {
+					self.reserve(needed_cap - self.capacity());
+				}
+				self.push_str(first);
+				it.for_each(|part| {
+					let part = part.as_ref();
+					if !part.is_empty() {
+						self.push_str(sep);
+						self.push_str(part.as_ref());
+					}
+				})
 			}
-			self.push_str(first);
-			it.for_each(|part| {
-				self.push_str(sep);
-				self.push_str(part.as_ref());
-			})
 		}
+	}
+
+	fn extend_sep(&mut self, sep: &str, s: &str) {
+		self.reserve(s.len() + sep.len());
+		if !self.is_empty() {
+			self.push_str(sep);
+		}
+		self.push_str(s);
 	}
 
 	fn push_indented_str(&mut self, indent: Indent, val: &str) {

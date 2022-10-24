@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult, Type};
 
-use crate::type_ref::{ConstnessOverride, FishStyle, NameStyle};
+use crate::type_ref::{ConstnessOverride, CppNameStyle, NameStyle};
 use crate::{Element, Field, GeneratorEnv, IteratorExt, TypeRef};
 
 #[derive(Clone)]
@@ -83,29 +83,21 @@ impl Element for Function<'_, '_> {
 		"<unset>".into()
 	}
 
-	fn cpp_name(&self, _style: NameStyle) -> Cow<str> {
-		self.cpp_localname()
-	}
-
-	fn cpp_localname(&self) -> Cow<str> {
+	fn cpp_name(&self, _style: CppNameStyle) -> Cow<str> {
 		let args = self
 			.arguments()
 			.into_iter()
-			.map(|a| a.type_ref().cpp_full_ext("", false).into_owned())
+			.map(|a| a.type_ref().cpp_name_ext(CppNameStyle::Reference, "", false).into_owned())
 			.join(", ");
 		let ret = self.return_type();
-		format!("{ret} (*)({args})", args = args, ret = ret.cpp_full()).into()
+		format!("{ret} (*)({args})", args = args, ret = ret.cpp_name(CppNameStyle::Reference)).into()
 	}
 
 	fn rust_module(&self) -> Cow<str> {
 		"<unset>".into()
 	}
 
-	fn rust_name(&self, _style: NameStyle) -> Cow<str> {
-		self.rust_localname(FishStyle::No)
-	}
-
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
 		let ret = self.return_type();
 		if self.has_userdata() {
 			let args = self
@@ -115,7 +107,7 @@ impl Element for Function<'_, '_> {
 				.join(", ");
 			format!(
 				"Option{fish}<Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>>",
-				fish = fish_style.rust_qual(),
+				fish = style.turbo_fish_style().rust_qual(),
 				args = args,
 				ret = ret.rust_extern(ConstnessOverride::No),
 			)
@@ -128,7 +120,7 @@ impl Element for Function<'_, '_> {
 
 impl fmt::Display for Function<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		write!(f, "{}", self.cpp_fullname())
+		write!(f, "{}", self.cpp_name(CppNameStyle::Reference))
 	}
 }
 

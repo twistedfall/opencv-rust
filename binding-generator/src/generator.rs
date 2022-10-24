@@ -12,7 +12,7 @@ use dunce::canonicalize;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{FishStyle, Kind as TypeRefKind};
+use crate::type_ref::{CppNameStyle, FishStyle, Kind as TypeRefKind};
 use crate::{
 	get_definition_text, line_reader, opencv_module_from_path, settings, AbstractRefWrapper, Class, CompiledInterpolation, Const,
 	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint, GeneratorEnv, ReturnTypeWrapper,
@@ -82,7 +82,7 @@ impl<'m> EphemeralGenerator<'m> {
 			if let Some(arg_type) = arg.get_type() {
 				if arg_type
 					.get_declaration()
-					.map_or(false, |ent| ent.cpp_fullname().starts_with("cv::Ptr"))
+					.map_or(false, |ent| ent.cpp_name(CppNameStyle::Reference).starts_with("cv::Ptr"))
 				{
 					let inner_type_ent = arg_type
 						.get_template_argument_types()
@@ -92,7 +92,9 @@ impl<'m> EphemeralGenerator<'m> {
 						.next()
 						.and_then(|t| t.get_declaration());
 					if let Some(inner_type_ent) = inner_type_ent {
-						self.used_in_smart_ptr.insert(inner_type_ent.cpp_fullname().into_owned());
+						self
+							.used_in_smart_ptr
+							.insert(inner_type_ent.cpp_name(CppNameStyle::Reference).into_owned());
 					}
 				}
 			}
@@ -156,9 +158,9 @@ impl EntityWalkerVisitor<'_> for &mut EphemeralGenerator<'_> {
 							let c_decl = c.get_definition().expect("Can't get base class definition");
 							self
 								.descendants
-								.entry(c_decl.cpp_fullname().into_owned())
+								.entry(c_decl.cpp_name(CppNameStyle::Reference).into_owned())
 								.or_insert_with(|| HashSet::with_capacity(4))
-								.insert(entity.cpp_fullname().into_owned());
+								.insert(entity.cpp_name(CppNameStyle::Reference).into_owned());
 						}
 						EntityKind::Constructor
 						| EntityKind::Method
@@ -403,9 +405,9 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 			underlying_type.as_function().is_some()
 				|| !underlying_type.is_excluded()
 				|| if let Some(templ) = underlying_type.as_template() {
-					let cpp_fullname = templ.cpp_fullname();
-					settings::IMPLEMENTED_GENERICS.contains(cpp_fullname.as_ref())
-						|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_fullname.as_ref())
+					let cpp_refname = templ.cpp_name(CppNameStyle::Reference);
+					settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
+						|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_refname.as_ref())
 				} else {
 					false
 				}

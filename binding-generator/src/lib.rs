@@ -46,6 +46,7 @@ use name_pool::NamePool;
 use return_type_wrapper::{DefinitionLocation, ReturnTypeWrapper};
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
+pub use type_ref::{CppNameStyle, NameStyle};
 use type_ref::{DependentTypeMode, TypeRef};
 pub use typedef::Typedef;
 use vector::Vector;

@@ -2,7 +2,7 @@ use std::borrow::Cow;
 
 use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
 
-use crate::type_ref::FishStyle;
+use crate::type_ref::{CppNameStyle, NameStyle};
 use crate::{DefaultElement, Element, EntityElement};
 
 impl<'tu> EntityElement<'tu> for Entity<'tu> {
@@ -32,16 +32,16 @@ impl Element for Entity<'_> {
 		DefaultElement::cpp_namespace(self).into()
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		DefaultElement::cpp_localname(self)
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+		DefaultElement::cpp_name(self, style)
 	}
 
 	fn rust_module(&self) -> Cow<str> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_localname(self, fish_style)
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::rust_name(self, style)
 	}
 }
 

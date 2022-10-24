@@ -5,7 +5,7 @@ use std::{cmp, fmt, hash, iter};
 use clang::Entity;
 
 use crate::return_type_wrapper::ReturnTypeWrapper;
-use crate::type_ref::{Constness, FishStyle, NameStyle};
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
 use crate::{
 	settings, Const, DefaultElement, DefinitionLocation, DependentType, DependentTypeMode, Element, EntityElement, EntityExt,
 	Field, Func, FunctionTypeHint, GeneratorEnv, StrExt, TypeRef,
@@ -44,8 +44,8 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn kind(&self) -> Kind {
-		let cpp_fullname = self.cpp_fullname();
-		if settings::ELEMENT_EXCLUDE.contains(cpp_fullname.as_ref()) {
+		let cpp_refname = self.cpp_name(CppNameStyle::Reference);
+		if settings::ELEMENT_EXCLUDE.contains(cpp_refname.as_ref()) {
 			return Kind::Excluded;
 		}
 		match self.gen_env.get_export_config(self.entity).map(|c| c.simple) {
@@ -55,7 +55,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					let non_copy_field = type_ref.as_string().is_some()
 						|| type_ref.as_vector().is_some()
 						|| type_ref.as_class().map_or(false, |c| !c.is_simple())
-						|| self.gen_env.descendants.contains_key(cpp_fullname.as_ref());
+						|| self.gen_env.descendants.contains_key(cpp_refname.as_ref());
 					!non_copy_field
 				});
 				if has_non_copy_fields {
@@ -118,7 +118,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn is_trait(&self) -> bool {
 		self.is_boxed()
-		//		self.is_abstract() || self.has_descendants() || settings::FORCE_CLASS_TRAIT.contains(self.cpp_fullname().as_ref())
+		//		self.is_abstract() || self.has_descendants() || settings::FORCE_CLASS_TRAIT.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
 	}
 
 	pub fn is_by_ptr(&self) -> bool {
@@ -180,7 +180,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		let gen_env = self.gen_env;
 		gen_env
 			.descendants
-			.get(self.cpp_fullname().as_ref())
+			.get(self.cpp_name(CppNameStyle::Reference).as_ref())
 			.into_iter()
 			.flat_map(move |desc| desc.iter().map(move |e| Class::new(*e, gen_env)))
 	}
@@ -342,9 +342,9 @@ impl Element for Class<'_, '_> {
 		DefaultElement::is_ignored(self)
 			|| self.is_template()
 			|| self.is_template_specialization() && {
-				let cpp_fullname = self.cpp_fullname();
-				!settings::IMPLEMENTED_GENERICS.contains(cpp_fullname.as_ref())
-					&& !settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_fullname.as_ref())
+				let cpp_refname = self.cpp_name(CppNameStyle::Reference);
+				!settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
+					&& !settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_refname.as_ref())
 			} || !self.is_template_specialization() && !self.is_definition()
 	}
 
@@ -365,26 +365,21 @@ impl Element for Class<'_, '_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		if self.custom_fullname.is_some() {
-			self.cpp_fullname().namespace().to_string().into()
+		if let Some(custom_fullname) = &self.custom_fullname {
+			custom_fullname.namespace().into()
 		} else {
 			DefaultElement::cpp_namespace(self).into()
 		}
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		if self.custom_fullname.is_some() {
-			self.cpp_fullname().localname().to_string().into()
-		} else {
-			DefaultElement::cpp_localname(self)
-		}
-	}
-
-	fn cpp_fullname(&self) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
 		if let Some(custom_fullname) = &self.custom_fullname {
-			custom_fullname.into()
+			match style {
+				CppNameStyle::Declaration => custom_fullname.localname().into(),
+				CppNameStyle::Reference => custom_fullname.into(),
+			}
 		} else {
-			DefaultElement::cpp_fullname(self)
+			DefaultElement::cpp_name(self, style)
 		}
 	}
 
@@ -392,21 +387,21 @@ impl Element for Class<'_, '_> {
 		DefaultElement::rust_module(self)
 	}
 
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::rust_name(self, style)
+	}
+
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		if self.type_ref().as_string().is_some() {
 			"String".into()
 		} else {
-			let cpp_localname = self.cpp_localname();
-			if cpp_localname == "Vec" {
+			let cpp_declname = self.cpp_name(CppNameStyle::Declaration);
+			if cpp_declname == "Vec" {
 				"VecN".into()
 			} else {
-				cpp_localname
+				cpp_declname
 			}
 		}
-	}
-
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

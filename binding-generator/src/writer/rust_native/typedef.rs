@@ -3,14 +3,14 @@ use std::borrow::Cow;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{FishStyle, Lifetime, NameStyle};
+use crate::type_ref::{Lifetime, NameStyle};
 use crate::{get_debug, CompiledInterpolation, Element, IteratorExt, StrExt, Typedef};
 
 use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for Typedef<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
+		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
@@ -30,9 +30,9 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 		TPL.interpolate(&hashmap! {
 			"doc_comment" => Cow::Owned(self.rendered_doc_comment(opencv_version)),
 			"debug" => get_debug(self).into(),
-			"rust_local" => self.rust_localname(FishStyle::No),
+			"rust_local" => self.rust_name(NameStyle::decl()),
 			"generic_args" => generic_args.into(),
-			"definition" => underlying_type.rust_name(NameStyle::Reference(FishStyle::No), Lifetime::explicit()),
+			"definition" => underlying_type.rust_name_ext(NameStyle::ref_(), Lifetime::explicit()),
 		})
 	}
 }

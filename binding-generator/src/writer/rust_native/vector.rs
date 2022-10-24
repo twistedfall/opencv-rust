@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{Constness, ConstnessOverride, FishStyle};
+use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, NameStyle};
 use crate::{settings, CompiledInterpolation, Element, StrExt, Vector};
 
 use super::RustNativeGeneratedElement;
@@ -37,16 +37,16 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let element_type = self.element_type();
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
-			"rust_full" => self.rust_fullname(FishStyle::No),
+			"rust_full" => self.rust_name(NameStyle::ref_()),
 			"rust_extern_const" => vec_type.rust_extern(ConstnessOverride::Yes(Constness::Const)),
 			"rust_extern_mut" => vec_type.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
-			"inner_rust_full" => element_type.rust_full(),
+			"inner_rust_full" => element_type.rust_name(NameStyle::ref_()),
 			"inner_rust_extern_return" => element_type.rust_extern_return(),
 		};
 		if element_type.as_typedef().is_some()
 			&& !element_type.is_data_type()
 			&& !element_type.as_string().is_some()
-			&& !settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_full().as_ref())
+			&& !settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref())
 		{
 			&TYPE_ALIAS_TPL
 		} else {
@@ -103,9 +103,9 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		};
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
-			"cpp_full" => vec_type.cpp_full(),
+			"cpp_full" => vec_type.cpp_name(CppNameStyle::Reference),
 			"cpp_extern_return" => vec_type.cpp_extern_return(ConstnessOverride::No),
-			"inner_cpp_full" => element_type.cpp_full(),
+			"inner_cpp_full" => element_type.cpp_name(CppNameStyle::Reference),
 			"inner_cpp_func_decl" => element_type.cpp_arg_func_decl("val").into(),
 			"inner_cpp_func_call" => element_type.cpp_arg_func_call("val"),
 			"inner_cpp_extern_return" => element_type.cpp_extern_return(ConstnessOverride::No),
@@ -116,7 +116,11 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let mut prefix = Cow::Borrowed("");
 		let mut suffix = Cow::Borrowed("");
 		if element_type.is_by_ptr() {
-			prefix = format!("new {inner_cpp_full}(", inner_cpp_full = element_type.cpp_full()).into();
+			prefix = format!(
+				"new {inner_cpp_full}(",
+				inner_cpp_full = element_type.cpp_name(CppNameStyle::Reference)
+			)
+			.into();
 			suffix = ")".into();
 		} else if element_type.as_string().is_some() {
 			prefix = "ocvrs_create_string(".into();

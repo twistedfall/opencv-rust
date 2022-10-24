@@ -5,7 +5,7 @@ use std::fmt::Write;
 use clang::token::{Token, TokenKind};
 use clang::{Entity, EntityKind, EvaluationResult};
 
-use crate::type_ref::FishStyle;
+use crate::type_ref::{CppNameStyle, FishStyle, NameStyle};
 use crate::{settings, DefaultElement, Element, EntityElement};
 
 pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> Option<Value> {
@@ -150,7 +150,7 @@ impl Element for Const<'_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
 			|| (self.entity.is_function_like_macro()
-				&& !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_fullname().as_ref()))
+				&& !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_name(CppNameStyle::Reference).as_ref()))
 	}
 
 	fn is_system(&self) -> bool {
@@ -173,26 +173,26 @@ impl Element for Const<'_> {
 		DefaultElement::cpp_namespace(self).into()
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		DefaultElement::cpp_localname(self)
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+		DefaultElement::cpp_name(self, style)
 	}
 
 	fn rust_module(&self) -> Cow<str> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		self.cpp_localname()
-	}
-
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		let mut out = DefaultElement::rust_localname(self, fish_style);
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		let mut out = DefaultElement::rust_name(self, style);
 		const SUFFIX: &str = "_OCVRS_OVERRIDE";
 		if out.ends_with(SUFFIX) {
 			let suffix_start = out.len() - SUFFIX.len();
 			out.to_mut().drain(suffix_start..);
 		}
 		out
+	}
+
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+		self.cpp_name(CppNameStyle::Declaration)
 	}
 }
 

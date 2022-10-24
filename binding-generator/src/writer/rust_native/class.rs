@@ -4,7 +4,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::class::Kind;
-use crate::type_ref::{Constness, ConstnessOverride, FishStyle, NameStyle};
+use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, FishStyle, NameStyle};
 use crate::{get_debug, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
 
 use super::RustNativeGeneratedElement;
@@ -65,20 +65,11 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let bases = c.bases();
 		let mut bases_const = Vec::with_capacity(bases.len());
 		let mut bases_mut = Vec::with_capacity(bases.len() + 1);
-		bases_mut.push(
-			c.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const)
-				.into_owned(),
-		);
+		bases_mut.push(c.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned());
 		// todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
 		for b in bases.into_iter().filter(|b| !b.is_excluded() && !b.is_simple()) {
-			bases_const.push(
-				b.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const)
-					.into_owned(),
-			);
-			bases_mut.push(
-				b.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut)
-					.into_owned(),
-			);
+			bases_const.push(b.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned());
+			bases_mut.push(b.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned());
 		}
 		bases_const.sort_unstable();
 		bases_mut.sort_unstable();
@@ -117,7 +108,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			);
 			if !const_methods.is_empty() || !mut_methods.is_empty() || !consts.is_empty() {
 				TRAIT_DYN_TPL.interpolate(&hashmap! {
-					"rust_local" => c.rust_trait_name(NameStyle::Declaration, Constness::Mut),
+					"rust_local" => c.rust_trait_name(NameStyle::decl(), Constness::Mut),
 					"consts" => consts.into(),
 					"const_methods" => const_methods.into(),
 					"mut_methods" => mut_methods.into(),
@@ -131,9 +122,9 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		out = TRAIT_TPL.interpolate(&hashmap! {
 			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
 			"debug" => get_debug(c).into(),
-			"rust_trait_local" => c.rust_trait_name(NameStyle::Declaration, Constness::Mut),
-			"rust_trait_local_const" => c.rust_trait_name(NameStyle::Declaration, Constness::Const),
-			"rust_local" => type_ref.rust_local(),
+			"rust_trait_local" => c.rust_trait_name(NameStyle::decl(), Constness::Mut),
+			"rust_trait_local_const" => c.rust_trait_name(NameStyle::decl(), Constness::Const),
+			"rust_local" => type_ref.rust_name(NameStyle::decl()),
 			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
 			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
 			"trait_bases_const" => trait_bases_const.into(),
@@ -145,7 +136,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	}
 
 	if !is_abstract {
-		let rust_local = c.rust_localname(FishStyle::No);
+		let rust_local = c.rust_name(NameStyle::decl());
 		let mut impls = if const_methods.iter().any(|m| m.is_clone()) {
 			IMPL_CLONE_TPL.interpolate(&hashmap! {
 				"rust_local" => rust_local.as_ref(),
@@ -157,17 +148,23 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let mut bases = c.all_bases().into_iter()
 			.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
 			.collect::<Vec<_>>();
-		bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
+		bases.sort_unstable_by(|a, b| {
+			a.cpp_name(CppNameStyle::Declaration)
+				.cmp(&b.cpp_name(CppNameStyle::Declaration))
+		});
 		if !is_simple {
 			if c.is_polymorphic() {
 				let mut descendants = c
 					.descendants()
 					.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
 					.collect::<Vec<_>>();
-				descendants.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
+				descendants.sort_unstable_by(|a, b| {
+					a.cpp_name(CppNameStyle::Declaration)
+						.cmp(&b.cpp_name(CppNameStyle::Declaration))
+				});
 				for d in descendants {
-					let desc_local = d.rust_localname(FishStyle::No);
-					let desc_full = d.rust_fullname(FishStyle::No);
+					let desc_local = d.rust_name(NameStyle::decl());
+					let desc_full = d.rust_name(NameStyle::ref_());
 					impls += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
 						"rust_local" => rust_local.as_ref(),
 						"descendant_rust_local" => desc_local.as_ref(),
@@ -177,8 +174,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			}
 			for b in &bases {
 				if !b.is_abstract() {
-					let base_local = b.rust_localname(FishStyle::No);
-					let base_full = b.rust_fullname(FishStyle::No);
+					let base_local = b.rust_name(NameStyle::decl());
+					let base_full = b.rust_name(NameStyle::ref_());
 					impls += &BASE_CAST_TPL.interpolate(&hashmap! {
 						"rust_local" => rust_local.as_ref(),
 						"base_rust_local" => base_local.as_ref(),
@@ -201,10 +198,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					&BASE_TPL
 				};
 				tpl.interpolate(&hashmap! {
-					"base_rust_full" => base.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut),
-					"base_const_rust_full" => base.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const),
-					"rust_local" => type_ref.rust_local(),
-					"base_rust_local" => base_type_ref.rust_local(),
+					"base_rust_full" => base.rust_trait_name(NameStyle::ref_(), Constness::Mut),
+					"base_const_rust_full" => base.rust_trait_name(NameStyle::ref_(), Constness::Const),
+					"rust_local" => type_ref.rust_name(NameStyle::decl()),
+					"base_rust_local" => base_type_ref.rust_name(NameStyle::decl()),
 					"base_rust_extern_const" => base_type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
 					"base_rust_extern_mut" => base_type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
 				})
@@ -216,7 +213,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				.iter()
 				.map(|f| {
 					let type_ref = f.type_ref();
-					let mut typ = type_ref.rust_full();
+					let mut typ = type_ref.rust_name(NameStyle::ref_());
 					// hack for converting the references to array types in struct definitions
 					if type_ref.as_fixed_array().is_some() {
 						if let Some(new_typ) = typ.strip_prefix("&mut ") {
@@ -292,7 +289,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
 			"debug" => get_debug(c).into(),
 			"rust_local" => rust_local.clone(),
-			"rust_full" => c.rust_fullname(FishStyle::No),
+			"rust_full" => c.rust_name(NameStyle::ref_()),
 			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
 			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
 			"fields" => fields.join("").into(),
@@ -340,13 +337,16 @@ fn gen_cpp_boxed(c: &Class) -> String {
 
 	let mut casts = String::new();
 	if !c.is_abstract() {
-		let rust_local = c.rust_localname(FishStyle::No);
+		let rust_local = c.rust_name(NameStyle::decl());
 		let mut bases = c
 			.all_bases()
 			.into_iter()
 			.filter(|b| !b.is_excluded() && !b.is_simple() && !b.is_abstract())
 			.collect::<Vec<_>>();
-		bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
+		bases.sort_unstable_by(|a, b| {
+			a.cpp_name(CppNameStyle::Declaration)
+				.cmp(&b.cpp_name(CppNameStyle::Declaration))
+		});
 		if !c.is_simple() {
 			let cpp_decl = c.type_ref().cpp_arg_func_decl("instance");
 			if c.is_polymorphic() {
@@ -354,21 +354,24 @@ fn gen_cpp_boxed(c: &Class) -> String {
 					.descendants()
 					.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
 					.collect::<Vec<_>>();
-				descendants.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
+				descendants.sort_unstable_by(|a, b| {
+					a.cpp_name(CppNameStyle::Declaration)
+						.cmp(&b.cpp_name(CppNameStyle::Declaration))
+				});
 				for d in descendants {
-					let desc_rust_local = d.rust_localname(FishStyle::No);
-					let desc_cpp_full = d.cpp_fullname();
+					let desc_rust_local = d.rust_name(NameStyle::decl());
+					let desc_cpp_ref = d.cpp_name(CppNameStyle::Reference);
 					casts += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
 						"rust_local" => rust_local.as_ref(),
 						"descendant_rust_local" => desc_rust_local.as_ref(),
-						"descendant_cpp_full" => desc_cpp_full.as_ref(),
+						"descendant_cpp_full" => desc_cpp_ref.as_ref(),
 						"cpp_decl" => &cpp_decl,
 					});
 				}
 			}
 			for b in bases {
-				let base_rust_local = b.rust_localname(FishStyle::No);
-				let base_cpp_full = b.cpp_fullname();
+				let base_rust_local = b.rust_name(NameStyle::decl());
+				let base_cpp_full = b.cpp_name(CppNameStyle::Reference);
 				casts += &BASE_CAST_TPL.interpolate(&hashmap! {
 					"rust_local" => rust_local.as_ref(),
 					"base_rust_local" => base_rust_local.as_ref(),
@@ -380,8 +383,8 @@ fn gen_cpp_boxed(c: &Class) -> String {
 
 		let type_ref = c.type_ref();
 		out += &BOXED_CPP_TPL.interpolate(&hashmap! {
-			"rust_local" => type_ref.rust_local(),
-			"cpp_full" => type_ref.cpp_full(),
+			"rust_local" => type_ref.rust_name(NameStyle::decl()),
+			"cpp_full" => type_ref.cpp_name(CppNameStyle::Reference),
 			"cpp_extern" => type_ref.cpp_extern(),
 			"casts" => casts.into(),
 		})
@@ -413,7 +416,7 @@ where
 
 impl RustNativeGeneratedElement for Class<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
+		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {

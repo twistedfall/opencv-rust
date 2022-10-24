@@ -10,7 +10,7 @@ use once_cell::sync::Lazy;
 
 use element::RustNativeGeneratedElement;
 
-use crate::type_ref::{Constness, FishStyle, NameStyle};
+use crate::type_ref::{Constness, CppNameStyle, NameStyle};
 use crate::{
 	comment, is_ephemeral_header, opencv_module_from_path, settings, Class, CompiledInterpolation, Const, DependentType, Element,
 	Enum, Func, GeneratorVisitor, IteratorExt, StrExt, Typedef,
@@ -113,7 +113,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	fn visit_const(&mut self, cnst: Const) {
 		self.emit_debug_log(&cnst);
 		self.consts.push((
-			cnst.rust_localname(FishStyle::No).into_owned(),
+			cnst.rust_name(NameStyle::decl()).into_owned(),
 			cnst.gen_rust(self.opencv_version),
 		));
 	}
@@ -121,7 +121,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	fn visit_enum(&mut self, enm: Enum) {
 		self.emit_debug_log(&enm);
 		self.enums.push((
-			enm.rust_localname(FishStyle::No).into_owned(),
+			enm.rust_name(NameStyle::decl()).into_owned(),
 			enm.gen_rust(self.opencv_version),
 		));
 	}
@@ -136,9 +136,10 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 
 	fn visit_typedef(&mut self, typedef: Typedef) {
 		self.emit_debug_log(&typedef);
-		self
-			.rust_typedefs
-			.push((typedef.cpp_fullname().into_owned(), typedef.gen_rust(self.opencv_version)))
+		self.rust_typedefs.push((
+			typedef.cpp_name(CppNameStyle::Reference).into_owned(),
+			typedef.gen_rust(self.opencv_version),
+		))
 	}
 
 	fn visit_class(&mut self, class: Class) {
@@ -146,14 +147,14 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		if class.is_trait() {
 			self.found_traits.push(format!(
 				"super::{}",
-				class.rust_trait_name(NameStyle::Declaration, Constness::Const).into_owned()
+				class.rust_trait_name(NameStyle::decl(), Constness::Const).into_owned()
 			));
 			self.found_traits.push(format!(
 				"super::{}",
-				class.rust_trait_name(NameStyle::Declaration, Constness::Mut).into_owned()
+				class.rust_trait_name(NameStyle::decl(), Constness::Mut).into_owned()
 			));
 		}
-		let name: String = class.cpp_fullname().into_owned();
+		let name: String = class.cpp_name(CppNameStyle::Reference).into_owned();
 		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));
 		self.export_classes.push((name.clone(), class.gen_rust_exports()));
 		self.cpp_classes.push((name, class.gen_cpp()));

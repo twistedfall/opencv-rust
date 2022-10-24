@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::{Entity, Type};
 
-use crate::type_ref::{ConstnessOverride, FishStyle, TemplateArg};
+use crate::type_ref::{ConstnessOverride, CppNameStyle, FishStyle, NameStyle, TemplateArg};
 use crate::{
 	DefaultElement, DefinitionLocation, DependentType, DependentTypeMode, Element, EntityElement, GeneratorEnv, ReturnTypeWrapper,
 	TypeRef,
@@ -138,11 +138,12 @@ impl Element for Vector<'_, '_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
+		// force this to be std because on some systems the actual namespace for vector is something like "std::__1"
 		"std".into()
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		"vector".into()
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+		DefaultElement::cpp_name(self, style)
 	}
 
 	fn rust_module(&self) -> Cow<str> {
@@ -151,6 +152,10 @@ impl Element for Vector<'_, '_> {
 
 	fn rust_namespace(&self) -> Cow<str> {
 		"core".into()
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::rust_name(self, style)
 	}
 
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
@@ -162,13 +167,9 @@ impl Element for Vector<'_, '_> {
 		format!(
 			"Vector{fish}<{typ}>",
 			fish = fish_style.rust_qual(),
-			typ = inner_typ.rust_full(),
+			typ = inner_typ.rust_name(NameStyle::ref_()),
 		)
 		.into()
-	}
-
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

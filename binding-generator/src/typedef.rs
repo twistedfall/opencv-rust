@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::Entity;
 
-use crate::type_ref::{DependentTypeMode, FishStyle, Kind, TypeRefTypeHint};
+use crate::type_ref::{CppNameStyle, DependentTypeMode, FishStyle, Kind, NameStyle, TypeRefTypeHint};
 use crate::{settings, DefaultElement, DependentType, Element, EntityElement, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
@@ -47,8 +47,8 @@ impl<'tu> EntityElement<'tu> for Typedef<'tu, '_> {
 impl Element for Typedef<'_, '_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
-			|| self.rust_fullname(FishStyle::No) == self.underlying_type_ref().rust_full() // fixes recursive typedefs like Cv16suf
-			|| settings::PRIMITIVE_TYPEDEFS.contains_key(self.cpp_fullname().as_ref())
+			|| self.rust_name(NameStyle::ref_()) == self.underlying_type_ref().rust_name(NameStyle::ref_()) // fixes recursive typedefs like Cv16suf
+			|| settings::PRIMITIVE_TYPEDEFS.contains_key(self.cpp_name(CppNameStyle::Reference).as_ref())
 	}
 
 	fn is_ignored(&self) -> bool {
@@ -75,23 +75,25 @@ impl Element for Typedef<'_, '_> {
 		DefaultElement::cpp_namespace(self).into()
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		DefaultElement::cpp_localname(self)
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+		DefaultElement::cpp_name(self, style)
 	}
 
 	fn rust_module(&self) -> Cow<str> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		match self.underlying_type_ref().source().kind() {
-			Kind::Class(..) | Kind::Function(..) | Kind::StdVector(..) | Kind::SmartPtr(..) => DefaultElement::cpp_localname(self),
-			_ => DefaultElement::rust_leafname(self),
-		}
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::rust_name(self, style)
 	}
 
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_localname(self, fish_style)
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+		match self.underlying_type_ref().source().kind() {
+			Kind::Class(..) | Kind::Function(..) | Kind::StdVector(..) | Kind::SmartPtr(..) => {
+				DefaultElement::cpp_name(self, CppNameStyle::Declaration)
+			}
+			_ => DefaultElement::rust_leafname(self),
+		}
 	}
 }
 

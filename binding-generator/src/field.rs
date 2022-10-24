@@ -8,7 +8,7 @@ use clang::token::TokenKind;
 use clang::{Entity, EntityKind, EntityVisitResult, Type};
 
 use crate::settings::ArgOverride;
-use crate::type_ref::{FishStyle, TypeRefTypeHint};
+use crate::type_ref::{CppNameStyle, FishStyle, NameStyle, TypeRefTypeHint};
 use crate::{constant, Class, DefaultElement, Element, EntityElement, GeneratorEnv, NamePool, TypeRef};
 
 #[derive(Clone, Copy, Debug)]
@@ -62,7 +62,8 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		'tu: 'ge,
 	{
 		let args = args.into_iter();
-		NamePool::with_capacity(args.size_hint().1.unwrap_or_default()).into_disambiguator(args, |f| f.cpp_localname())
+		NamePool::with_capacity(args.size_hint().1.unwrap_or_default())
+			.into_disambiguator(args, |f| f.cpp_name(CppNameStyle::Declaration))
 	}
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
@@ -124,7 +125,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 			return false;
 		}
 		let type_ref = self.type_ref();
-		let leafname = self.cpp_localname();
+		let leafname = self.cpp_name(CppNameStyle::Declaration);
 		(leafname == "userdata" || leafname == "userData" || leafname == "cookie" || leafname == "unnamed")
 			&& type_ref.is_void_ptr()
 	}
@@ -169,16 +170,20 @@ impl Element for Field<'_, '_> {
 		DefaultElement::cpp_namespace(self).into()
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
 		if matches!(self.type_hint, FieldTypeHint::FieldSetter) {
 			"val".into()
 		} else {
-			DefaultElement::cpp_localname(self)
+			DefaultElement::cpp_name(self, style)
 		}
 	}
 
 	fn rust_module(&self) -> Cow<str> {
 		DefaultElement::rust_module(self)
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::rust_name(self, style)
 	}
 
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
@@ -187,10 +192,6 @@ impl Element for Field<'_, '_> {
 		} else {
 			DefaultElement::rust_leafname(self)
 		}
-	}
-
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 
@@ -203,7 +204,7 @@ impl fmt::Display for Field<'_, '_> {
 impl fmt::Debug for Field<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		f.debug_struct("Field")
-			.field("rust_name", &self.rust_localname(FishStyle::No))
+			.field("rust_name", &self.rust_name(NameStyle::decl()))
 			.field("type_hint", &self.type_hint)
 			.field("type_ref", &self.type_ref())
 			.field("default_value", &self.default_value())

@@ -7,6 +7,7 @@ use std::path::{Path, PathBuf};
 use clang::{Entity, EntityKind, EntityVisitResult, StorageClass, Type};
 
 use crate::class::Kind as ClassKind;
+use crate::type_ref::CppNameStyle;
 use crate::{
 	comment, is_ephemeral_header, is_opencv_path, memo_map, opencv_module_from_path, settings, Class, Const, Element,
 	EntityWalker, EntityWalkerVisitor, Func, MemoizeMap, NamePool, TypeRef,
@@ -53,7 +54,7 @@ impl<'tu> DbPopulator<'tu, '_> {
 	fn add_func_comment(&mut self, entity: Entity) {
 		let raw_comment = entity.get_comment().unwrap_or_default();
 		if !raw_comment.is_empty() && !raw_comment.contains("@overload") {
-			let name = entity.cpp_fullname().into_owned();
+			let name = entity.cpp_name(CppNameStyle::Reference).into_owned();
 			let line = entity.get_location().map(|l| l.get_file_location().line).unwrap_or(0);
 			let defs = self.gen_env.func_comments.entry(name).or_insert_with(Vec::new);
 			defs.push((line, comment::strip_comment_markers(&raw_comment)));
@@ -64,7 +65,7 @@ impl<'tu> DbPopulator<'tu, '_> {
 
 	fn add_class_constant(&mut self, cnst: Entity<'tu>) {
 		let cnst = Const::new(cnst);
-		let mut full_name = cnst.cpp_fullname().into_owned();
+		let mut full_name = cnst.cpp_name(CppNameStyle::Reference).into_owned();
 		self.gen_env.class_constants.insert(full_name.clone(), cnst.clone());
 		const SEP: &str = "::";
 		while let Some(idx) = full_name.find(SEP) {
@@ -96,7 +97,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 
 	fn visit_resolve_type(&mut self, typ: Type<'tu>) -> bool {
 		let type_ref = TypeRef::new(typ, self.gen_env);
-		let name = type_ref.cpp_full().into_owned();
+		let name = type_ref.cpp_name(CppNameStyle::Reference).into_owned();
 		self.gen_env.type_resolve_cache.insert(name, typ);
 		true
 	}
@@ -111,7 +112,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 							self
 								.gen_env
 								.descendants
-								.entry(c_decl.cpp_fullname().into_owned())
+								.entry(c_decl.cpp_name(CppNameStyle::Reference).into_owned())
 								.or_insert_with(|| HashSet::with_capacity(4))
 								.insert(entity);
 						}
@@ -245,13 +246,13 @@ impl<'tu> GeneratorEnv<'tu> {
 	}
 
 	pub fn get_export_config(&self, entity: Entity) -> Option<ExportConfig> {
-		let cpp_fullname = entity.cpp_fullname();
+		let cpp_refname = entity.cpp_name(CppNameStyle::Reference);
 		settings::ELEMENT_EXPORT_MANUAL
-			.get(cpp_fullname.as_ref())
+			.get(cpp_refname.as_ref())
 			.or_else(|| Self::get_with_fuzzy_key(entity, |key| self.export_map.get(key)))
 			.cloned()
 			.map(|mut e| {
-				if let Some(cb) = settings::ELEMENT_EXPORT_TWEAK.get(cpp_fullname.as_ref()) {
+				if let Some(cb) = settings::ELEMENT_EXPORT_TWEAK.get(cpp_refname.as_ref()) {
 					cb(&mut e);
 				}
 				e
@@ -270,10 +271,10 @@ impl<'tu> GeneratorEnv<'tu> {
 		Self::get_with_fuzzy_key(entity, |key| self.rename_map.get(key))
 	}
 
-	pub fn get_func_comment(&self, line: u32, cpp_fullname: &str) -> Option<&str> {
+	pub fn get_func_comment(&self, line: u32, cpp_refname: &str) -> Option<&str> {
 		self
 			.func_comments
-			.get(cpp_fullname)
+			.get(cpp_refname)
 			.and_then(|comments| {
 				comments.iter()
 				// try to find the source function comment that is closest to the requested

@@ -4,7 +4,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::func::Kind;
-use crate::type_ref::{Constness, ConstnessOverride, Dir, FishStyle, StrEnc, StrType};
+use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, Dir, FishStyle, NameStyle, StrEnc, StrType};
 use crate::{
 	get_debug, settings, Class, CompiledInterpolation, DefaultElement, Element, Field, Func, FunctionTypeHint, IteratorExt,
 	StrExt, StringExt, TypeRef,
@@ -94,9 +94,9 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	let is_static_func = matches!(f.kind(), Kind::StaticMethod(..) | Kind::Function);
 	let return_type = f.return_type();
 	let return_type_func_decl = if is_infallible {
-		return_type.rust_return_func_decl(FishStyle::No, is_static_func)
+		return_type.rust_return(FishStyle::No, is_static_func)
 	} else {
-		format!("Result<{}>", return_type.rust_return_func_decl(FishStyle::No, is_static_func)).into()
+		format!("Result<{}>", return_type.rust_return(FishStyle::No, is_static_func)).into()
 	};
 	let return_type_func_decl = if return_type_func_decl == "()" {
 		Cow::Borrowed("")
@@ -195,16 +195,18 @@ fn cpp_call_invoke(f: &Func) -> String {
 		Lazy::new(|| "{{ret_type}}* ret = new {{ret_type}}({{args}});".compile_interpolation());
 
 	let call_name = match f.kind() {
-		Kind::Function | Kind::GenericFunction | Kind::StaticMethod(..) | Kind::FunctionOperator(..) => f.cpp_fullname(),
-		Kind::Constructor(class) => class.cpp_fullname().into_owned().into(),
+		Kind::Function | Kind::GenericFunction | Kind::StaticMethod(..) | Kind::FunctionOperator(..) => {
+			f.cpp_name(CppNameStyle::Reference)
+		}
+		Kind::Constructor(class) => class.cpp_name(CppNameStyle::Reference).into_owned().into(),
 		Kind::FieldAccessor(class) if f.type_hint() == FunctionTypeHint::FieldSetter => {
-			cpp_method_call_name(&class, DefaultElement::cpp_localname(f).as_ref()).into()
+			cpp_method_call_name(&class, DefaultElement::cpp_name(f, CppNameStyle::Declaration).as_ref()).into()
 		}
 		Kind::InstanceMethod(class)
 		| Kind::FieldAccessor(class)
 		| Kind::GenericInstanceMethod(class)
 		| Kind::ConversionMethod(class)
-		| Kind::InstanceOperator(class, ..) => cpp_method_call_name(&class, f.cpp_localname().as_ref()).into(),
+		| Kind::InstanceOperator(class, ..) => cpp_method_call_name(&class, f.cpp_name(CppNameStyle::Declaration).as_ref()).into(),
 	};
 
 	let mut generic = String::new();
@@ -240,9 +242,9 @@ fn cpp_call_invoke(f: &Func) -> String {
 		&NORMAL_TPL
 	};
 	let ret_type = if f.as_constructor().is_some() {
-		return_type.cpp_full()
+		return_type.cpp_name(CppNameStyle::Reference)
 	} else {
-		return_type.cpp_full_ext("ret", true)
+		return_type.cpp_name_ext(CppNameStyle::Reference, "ret", true)
 	};
 	let doref = if return_type.as_fixed_array().is_some() {
 		"&"
@@ -269,7 +271,7 @@ fn cpp_method_return<'f>(f: &'f Func, return_type: &TypeRef) -> (Cow<'f, str>, b
 				None
 			}
 		});
-		let out = out.unwrap_or_else(|| format!("new {typ}(ret)", typ = return_type.cpp_full()).into());
+		let out = out.unwrap_or_else(|| format!("new {typ}(ret)", typ = return_type.cpp_name(CppNameStyle::Reference)).into());
 		(out, false)
 	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
 		let str_mk = match string_type {
@@ -288,7 +290,7 @@ fn cpp_method_return<'f>(f: &'f Func, return_type: &TypeRef) -> (Cow<'f, str>, b
 
 impl RustNativeGeneratedElement for Func<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
+		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {

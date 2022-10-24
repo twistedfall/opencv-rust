@@ -589,7 +589,7 @@ pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {
 	}
 });
 
-/// cpp_fullname
+/// cpp_name(Reference)
 pub static ELEMENT_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 	hashset! {
 		"cv::String",
@@ -598,7 +598,7 @@ pub static ELEMENT_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 	}
 });
 
-/// cpp_fullname
+/// cpp_name(Reference)
 pub static ELEMENT_IGNORE: Lazy<HashSet<&str>> = Lazy::new(|| {
 	hashset! {
 		"CV_DEPRECATED",
@@ -618,7 +618,7 @@ pub static ELEMENT_IGNORE: Lazy<HashSet<&str>> = Lazy::new(|| {
 	}
 });
 
-/// Manual export config in form of "cpp_fullname" => ExportConfig, will totally override what's
+/// Manual export config in form of "cpp_name(Reference)" => ExportConfig, will totally override what's
 /// detected from the headers. Use it to add export config where none exists.
 pub static ELEMENT_EXPORT_MANUAL: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| {
 	hashmap! {
@@ -809,14 +809,14 @@ pub static FUNC_SPECIALIZE: Lazy<HashMap<&str, Vec<HashMap<&str, &str>>>> = Lazy
 	}
 });
 
-/// set of classes that must be generated as traits, elements are Class.cpp_fullname()
+/// set of classes that must be generated as traits, elements are Class.cpp_name(Reference)()
 pub static FORCE_CLASS_ABSTRACT: Lazy<HashSet<&str>> = Lazy::new(|| {
 	hashset! {
 		"cv::detail::BlocksCompensator",
 	}
 });
 
-/// cpp_fullname
+/// cpp_name(Reference)
 pub static FORCE_CONSTANT_METHOD: Lazy<HashSet<&str>> = Lazy::new(|| {
 	hashset! {
 		"cv::Mat::size",
@@ -876,7 +876,7 @@ pub static FORCE_INFALLIBLE: Lazy<HashSet<FuncId>> = Lazy::new(|| {
 	}
 });
 
-/// cpp_fullname => ( rust_fullname, cpp_fullname )
+/// cpp_name(Reference) => ( rust_name(Reference(No)), cpp_name(Reference) )
 pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {
 	hashmap! {
 		"size_t" => ("size_t", "size_t"),
@@ -924,7 +924,7 @@ pub static DATA_TYPES: Lazy<BTreeSet<&str>> = Lazy::new(|| {
 	}
 });
 
-/// cpp_fullname
+/// cpp_name(Reference)
 pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| {
 	hashset! {
 		"cv::Affine3",
@@ -938,7 +938,7 @@ pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| {
 	}
 });
 
-/// cpp_fullname
+/// cpp_name(Reference)
 pub static IMPLEMENTED_CONST_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| {
 	hashset! {
 		"cv::Vec",

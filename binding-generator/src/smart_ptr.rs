@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::Entity;
 
-use crate::type_ref::{DependentTypeMode, FishStyle, Lifetime, NameStyle, TemplateArg};
+use crate::type_ref::{CppNameStyle, DependentTypeMode, FishStyle, NameStyle, TemplateArg};
 use crate::{DefaultElement, DependentType, Element, EntityElement, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
@@ -78,8 +78,8 @@ impl Element for SmartPtr<'_, '_> {
 		"cv".into()
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		"Ptr".into()
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+		DefaultElement::cpp_name(self, style)
 	}
 
 	fn rust_module(&self) -> Cow<str> {
@@ -90,19 +90,17 @@ impl Element for SmartPtr<'_, '_> {
 		"core".into()
 	}
 
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::rust_name(self, style)
+	}
+
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
 		format!(
 			"Ptr{fish}<{typ}>",
 			fish = fish_style.rust_qual(),
-			typ = self
-				.pointee()
-				.rust_name(NameStyle::Reference(FishStyle::Turbo), Lifetime::elided()),
+			typ = self.pointee().rust_name(NameStyle::ref_()),
 		)
 		.into()
-	}
-
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_localname(self, fish_style)
 	}
 }
 

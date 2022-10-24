@@ -1,7 +1,7 @@
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{Constness, ConstnessOverride, FishStyle, NameStyle};
+use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, NameStyle};
 use crate::{type_ref, CompiledInterpolation, Element, EntityElement, SmartPtr, StrExt};
 
 use super::RustNativeGeneratedElement;
@@ -28,10 +28,10 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
-			"rust_full" => self.rust_fullname(FishStyle::No),
+			"rust_full" => self.rust_name(NameStyle::ref_()),
 			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Const)),
 			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Yes(Constness::Mut)),
-			"inner_rust_full" => pointee_type.rust_full(),
+			"inner_rust_full" => pointee_type.rust_name(NameStyle::ref_()),
 		};
 
 		let mut impls = String::new();
@@ -39,39 +39,32 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		if let Some(cls) = pointee_type.as_class() {
 			gen_ctor |= !cls.is_abstract();
 			if cls.is_trait() {
-				inter_vars.insert("base_rust_local", cls.rust_localname(FishStyle::No).into_owned().into());
+				inter_vars.insert("base_rust_local", cls.rust_name(NameStyle::decl()).into_owned().into());
 				inter_vars.insert(
 					"base_rust_full",
-					cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut)
-						.into_owned()
-						.into(),
+					cls.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
 				);
 				inter_vars.insert(
 					"base_const_rust_full",
-					cls.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const)
-						.into_owned()
-						.into(),
+					cls.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned().into(),
 				);
 				impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 				let mut all_bases = cls.all_bases().into_iter().filter(|b| !b.is_excluded()).collect::<Vec<_>>();
-				all_bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
+				all_bases.sort_unstable_by(|a, b| a.cpp_name(CppNameStyle::Reference).cmp(&b.cpp_name(CppNameStyle::Reference)));
 				for base in all_bases {
-					inter_vars.insert("base_rust_local", base.rust_localname(FishStyle::No).into_owned().into());
+					inter_vars.insert("base_rust_local", base.rust_name(NameStyle::decl()).into_owned().into());
 					inter_vars.insert(
 						"base_rust_full",
-						base
-							.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Mut)
-							.into_owned()
-							.into(),
+						base.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
 					);
 					inter_vars.insert(
 						"base_const_rust_full",
-						base
-							.rust_trait_name(NameStyle::Reference(FishStyle::Turbo), Constness::Const)
-							.into_owned()
-							.into(),
+						base.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned().into(),
 					);
-					inter_vars.insert("base_rust_full_ref", base.type_ref().rust_full().into_owned().into());
+					inter_vars.insert(
+						"base_rust_full_ref",
+						base.type_ref().rust_name(NameStyle::ref_()).into_owned().into(),
+					);
 					impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 					if self.gen_env.is_used_in_smart_ptr(base.entity()) {
 						impls += &BASE_CAST_TPL.interpolate(&inter_vars);
@@ -107,17 +100,17 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			inner_cpp_extern_const.to_mut().push('*');
 		}
 
-		let mut const_renderer = type_ref::CppRenderer::new(NameStyle::Reference(FishStyle::Turbo), "", true);
+		let mut const_renderer = type_ref::CppRenderer::new(CppNameStyle::Reference, "", true);
 		const_renderer.constness_override = ConstnessOverride::Yes(Constness::Const);
-		let cpp_full_const = type_ref.render(const_renderer);
+		let cpp_ref_const = type_ref.render(const_renderer);
 
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"cpp_extern" => type_ref.cpp_extern(),
 			"cpp_decl" => type_ref.cpp_arg_func_decl("instance").into(),
-			"cpp_full" => type_ref.cpp_full(),
-			"cpp_full_const" => cpp_full_const,
-			"inner_cpp_full" => pointee_type.cpp_full(),
+			"cpp_full" => type_ref.cpp_name(CppNameStyle::Reference),
+			"cpp_full_const" => cpp_ref_const,
+			"inner_cpp_full" => pointee_type.cpp_name(CppNameStyle::Reference),
 			"inner_cpp_extern" => inner_cpp_extern,
 			"inner_cpp_extern_const" => inner_cpp_extern_const,
 		};
@@ -133,10 +126,10 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 					.into_iter()
 					.filter(|b| !b.is_excluded() && self.gen_env.is_used_in_smart_ptr(b.entity()))
 					.collect::<Vec<_>>();
-				all_bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
+				all_bases.sort_unstable_by(|a, b| a.cpp_name(CppNameStyle::Reference).cmp(&b.cpp_name(CppNameStyle::Reference)));
 				for base in all_bases {
-					inter_vars.insert("base_cpp_full", base.cpp_fullname().into_owned().into());
-					inter_vars.insert("base_rust_local", base.rust_localname(FishStyle::No).into_owned().into());
+					inter_vars.insert("base_cpp_full", base.cpp_name(CppNameStyle::Reference).into_owned().into());
+					inter_vars.insert("base_rust_local", base.rust_name(NameStyle::decl()).into_owned().into());
 					let new_base_cast = BASE_CAST_TPL.interpolate(&inter_vars);
 					if base_cast.is_empty() {
 						base_cast = new_base_cast;
@@ -148,7 +141,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		}
 		if gen_ctor {
 			let inner_cpp_func_call = if pointee_primitive {
-				format!("new {typ}(val)", typ = pointee_type.cpp_full()).into()
+				format!("new {typ}(val)", typ = pointee_type.cpp_name(CppNameStyle::Reference)).into()
 			} else {
 				let mut out = pointee_type.cpp_arg_func_call("val");
 				if out.starts_with('*') {

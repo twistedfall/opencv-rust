@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
 
-use crate::type_ref::FishStyle;
+use crate::type_ref::{CppNameStyle, FishStyle, NameStyle};
 use crate::{Const, DefaultElement, Element, EntityElement, EntityExt, StrExt};
 
 #[derive(Clone)]
@@ -76,26 +76,21 @@ impl Element for Enum<'_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		if self.custom_fullname.is_some() {
-			self.cpp_fullname().namespace().to_string().into()
+		if let Some(custom_fullname) = &self.custom_fullname {
+			custom_fullname.namespace().into()
 		} else {
 			DefaultElement::cpp_namespace(self).into()
 		}
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		if self.custom_fullname.is_some() {
-			self.cpp_fullname().localname().to_string().into()
-		} else {
-			DefaultElement::cpp_localname(self)
-		}
-	}
-
-	fn cpp_fullname(&self) -> Cow<str> {
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
 		if let Some(custom_fullname) = &self.custom_fullname {
-			custom_fullname.into()
+			match style {
+				CppNameStyle::Declaration => custom_fullname.localname().into(),
+				CppNameStyle::Reference => custom_fullname.into(),
+			}
 		} else {
-			DefaultElement::cpp_fullname(self)
+			DefaultElement::cpp_name(self, style)
 		}
 	}
 
@@ -103,12 +98,12 @@ impl Element for Enum<'_> {
 		DefaultElement::rust_module(self)
 	}
 
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		self.cpp_localname()
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultElement::rust_name(self, style)
 	}
 
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_localname(self, fish_style)
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+		self.cpp_name(CppNameStyle::Declaration)
 	}
 }
 

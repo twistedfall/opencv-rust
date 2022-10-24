@@ -3,14 +3,14 @@ use std::collections::HashSet;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::FishStyle;
+use crate::type_ref::{FishStyle, NameStyle};
 use crate::{get_debug, CompiledInterpolation, Element, Enum, StrExt};
 
 use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for Enum<'_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname(FishStyle::No))
+		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
@@ -50,8 +50,8 @@ impl RustNativeGeneratedElement for Enum<'_> {
 		ENUM_TPL.interpolate(&hashmap! {
 			"doc_comment" => self.rendered_doc_comment(opencv_version).into(),
 			"debug" => get_debug(self).into(),
-			"rust_local" => self.rust_localname(FishStyle::No),
-			"rust_full" => self.rust_fullname(FishStyle::No),
+			"rust_local" => self.rust_name(NameStyle::decl()),
+			"rust_full" => self.rust_name(NameStyle::ref_()),
 			"consts" => consts.join("").into(),
 		})
 	}
