@@ -10,6 +10,7 @@ use crate::{
 	StrExt, StringExt, TypeRef,
 };
 
+use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
 fn pre_post_arg_handle(mut arg: String, args: &mut Vec<String>) {

@@ -22,8 +22,10 @@ mod constant;
 mod element;
 mod enumeration;
 mod func;
+pub mod renderer;
 mod return_type_wrapper;
 mod smart_ptr;
+mod type_ref;
 mod typedef;
 mod vector;
 

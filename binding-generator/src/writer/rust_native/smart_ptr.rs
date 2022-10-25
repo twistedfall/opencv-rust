@@ -4,6 +4,7 @@ use once_cell::sync::Lazy;
 use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, NameStyle};
 use crate::{type_ref, CompiledInterpolation, Element, EntityElement, SmartPtr, StrExt};
 
+use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for SmartPtr<'_, '_> {

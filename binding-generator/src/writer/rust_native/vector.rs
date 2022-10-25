@@ -6,6 +6,7 @@ use once_cell::sync::Lazy;
 use crate::type_ref::{ConstnessOverride, CppNameStyle, NameStyle};
 use crate::{settings, CompiledInterpolation, Element, StrExt, Vector};
 
+use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for Vector<'_, '_> {

@@ -7,6 +7,7 @@ use crate::class::Kind;
 use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, FishStyle, NameStyle};
 use crate::{get_debug, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
 
+use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
 fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
