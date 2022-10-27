@@ -1,10 +1,8 @@
 //! Contains all tests that cover marshalling types to and from C++
 
-use opencv::{
-	core::{self, Scalar},
-	prelude::*,
-	Error, Result,
-};
+use opencv::core::{self, Scalar};
+use opencv::prelude::*;
+use opencv::Result;
 
 /// Passing simple struct as argument
 #[test]
@@ -133,6 +131,7 @@ fn string_return() -> Result<()> {
 fn string_out_argument() -> Result<()> {
 	#![cfg(ocvrs_opencv_branch_4)]
 	use opencv::core::{FileNode, FileStorage, FileStorage_Mode};
+	use opencv::Error;
 
 	use matches::assert_matches;
 
@@ -294,6 +293,45 @@ fn simple_struct_return_infallible() -> Result<()> {
 	assert_eq!(Size2f::new(10., 10.), min_area_rect.size());
 	// different versions of OpenCV return -90 and 90
 	assert_eq!(90., min_area_rect.angle().abs());
+	Ok(())
+}
+
+#[test]
+fn tuple() -> Result<()> {
+	#[cfg(all(ocvrs_has_module_imgproc, ocvrs_opencv_branch_4))]
+	{
+		use opencv::types::TupleOfi32_f32;
+
+		let src_tuple = (10, 20.);
+		let tuple = TupleOfi32_f32::new(src_tuple);
+		assert_eq!(src_tuple, tuple.into_tuple());
+	}
+
+	#[cfg(ocvrs_has_module_objdetect)]
+	{
+		use opencv::core::Rect;
+		use opencv::types::TupleOfRect_i32;
+
+		let src_tuple = (Rect::new(1, 2, 3, 4), 98);
+		let tuple = TupleOfRect_i32::new(src_tuple);
+		assert_eq!(src_tuple, tuple.into_tuple());
+	}
+
+	#[cfg(all(ocvrs_has_module_stitching, ocvrs_opencv_branch_4))]
+	{
+		use opencv::core::{AccessFlag, UMatUsageFlags};
+		use opencv::types::TupleOfUMat_u8;
+
+		let mat = Mat::new_rows_cols_with_default(10, 20, f64::typ(), Scalar::all(76.))?;
+		let src_tuple = (mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?, 8);
+		let tuple = TupleOfUMat_u8::new(src_tuple);
+		let (res_umat, res_val) = tuple.into_tuple();
+		let res_mat = res_umat.get_mat(AccessFlag::ACCESS_READ)?;
+		assert_eq!(10, res_mat.rows());
+		assert_eq!(20, res_mat.cols());
+		assert_eq!(76., *res_mat.at_2d::<f64>(5, 5)?);
+		assert_eq!(8, res_val);
+	}
 	Ok(())
 }
 

@@ -89,7 +89,7 @@ impl Element for Typedef<'_, '_> {
 
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		match self.underlying_type_ref().source().kind() {
-			Kind::Class(..) | Kind::Function(..) | Kind::StdVector(..) | Kind::SmartPtr(..) => {
+			Kind::Class(..) | Kind::Function(..) | Kind::StdVector(..) | Kind::SmartPtr(..) | Kind::StdTuple(..) => {
 				DefaultElement::cpp_name(self, CppNameStyle::Declaration)
 			}
 			_ => DefaultElement::rust_leafname(self),

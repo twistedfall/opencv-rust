@@ -16,7 +16,7 @@ use crate::type_ref::{CppNameStyle, FishStyle, Kind as TypeRefKind};
 use crate::{
 	get_definition_text, line_reader, opencv_module_from_path, settings, AbstractRefWrapper, Class, CompiledInterpolation, Const,
 	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint, GeneratorEnv, ReturnTypeWrapper,
-	SmartPtr, StrExt, Typedef, Vector,
+	SmartPtr, StrExt, Tuple, Typedef, Vector,
 };
 
 #[derive(Debug)]
@@ -25,6 +25,7 @@ pub enum DependentType<'tu, 'ge> {
 	AbstractRefWrapper(AbstractRefWrapper<'tu, 'ge>),
 	Vector(Vector<'tu, 'ge>),
 	SmartPtr(SmartPtr<'tu, 'ge>),
+	Tuple(Tuple<'tu, 'ge>),
 }
 
 impl<'tu, 'ge> DependentType<'tu, 'ge> {

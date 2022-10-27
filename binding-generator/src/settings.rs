@@ -639,6 +639,7 @@ pub static ELEMENT_EXPORT_MANUAL: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(
 		"cv::cudacodec::FormatInfo" => ExportConfig::simple(),
 		"cv::kinfu::Intr" => ExportConfig::simple(),
 		"cv::videostab::MaskFrameSource" => ExportConfig::default(),
+		"cv::ConfidenceMap" => ExportConfig::default(),
 
 		// override boxed
 		"cv::DetectionBasedTracker::ExtObject" => ExportConfig::default(),

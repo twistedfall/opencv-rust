@@ -11,7 +11,7 @@ pub use crate::writer::rust_native::renderer::{CppExternReturnRenderer, CppRende
 use crate::{
 	settings::{self, ArgOverride},
 	AbstractRefWrapper, Class, DefinitionLocation, DependentType, Element, EntityExt, Enum, Function, GeneratorEnv,
-	ReturnTypeWrapper, SmartPtr, StringExt, Typedef, Vector,
+	ReturnTypeWrapper, SmartPtr, StringExt, Tuple, Typedef, Vector,
 };
 
 pub trait TypeRefRenderer<'a> {
@@ -67,6 +67,7 @@ pub enum Kind<'tu, 'ge> {
 	/// (element type, array size)
 	Array(TypeRef<'tu, 'ge>, Option<usize>),
 	StdVector(Vector<'tu, 'ge>),
+	StdTuple(Tuple<'tu, 'ge>),
 	Pointer(TypeRef<'tu, 'ge>),
 	Reference(TypeRef<'tu, 'ge>),
 	RValueReference(TypeRef<'tu, 'ge>),
@@ -206,6 +207,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					let is_decl = kind == EntityKind::StructDecl || kind == EntityKind::ClassDecl;
 					if cpp_refname.starts_with("std::") && cpp_refname.contains("::vector") {
 						Kind::StdVector(Vector::new(self.type_ref, self.gen_env))
+					} else if cpp_refname.starts_with("std::") && cpp_refname.contains("::tuple") {
+						Kind::StdTuple(Tuple::new(self.type_ref, self.gen_env))
+					} else if cpp_refname.starts_with("std::") && cpp_refname.contains("::pair") {
+						Kind::StdTuple(Tuple::pair(self.type_ref, self.gen_env))
 					} else if is_decl && cpp_refname.starts_with("cv::Ptr") {
 						Kind::SmartPtr(SmartPtr::new(decl, self.gen_env))
 					} else {
@@ -356,6 +361,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			|| match self.kind() {
 				Kind::Array(inner, ..) => inner.is_ignored(),
 				Kind::StdVector(vec) => vec.is_ignored(),
+				Kind::StdTuple(tuple) => tuple.is_ignored(),
 				Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => inner.is_ignored(),
 				Kind::SmartPtr(ptr) => ptr.is_ignored(),
 				Kind::Class(cls) => cls.is_ignored(),
@@ -393,6 +399,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				}
 				Kind::Array(elem, ..) => elem.clang_constness(),
 				Kind::StdVector(vec) => vec.element_type().clang_constness(),
+				Kind::StdTuple(tuple) => tuple.constness(),
 				Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => inner.clang_constness(),
 				Kind::SmartPtr(ptr) => ptr.pointee().clang_constness(),
 				Kind::Typedef(decl) => decl.underlying_type_ref().constness(),
@@ -675,6 +682,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	pub fn as_tuple(&self) -> Option<Tuple<'tu, 'ge>> {
+		if let Kind::StdTuple(out) = self.canonical().kind() {
+			Some(out)
+		} else {
+			None
+		}
+	}
+
 	pub fn as_function(&self) -> Option<Function<'tu, 'ge>> {
 		match self.canonical().kind() {
 			Kind::Function(out) => Some(out),
@@ -693,7 +708,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		match self.canonical().kind() {
 			Kind::Class(inner) => inner.is_by_ptr(),
 			Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => inner.is_extern_by_ptr(),
-			Kind::SmartPtr(..) | Kind::StdVector(..) => true,
+			Kind::SmartPtr(_) | Kind::StdVector(_) | Kind::StdTuple(_) => true,
 			_ => false,
 		}
 	}
@@ -774,6 +789,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		out.push_str(&match kind {
 			Kind::Array(inner, ..) => inner.rust_safe_id(add_const).into_owned() + "_X",
 			Kind::StdVector(vec) => vec.rust_localalias().into_owned(),
+			Kind::StdTuple(tuple) => tuple.rust_localalias().into_owned(),
 			Kind::Pointer(inner) => {
 				let mut inner_safe_id: String = inner.rust_safe_id(add_const).into_owned();
 				if !self.is_extern_by_ptr() {
@@ -796,6 +812,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		match self.kind() {
 			Kind::Primitive(..) => "core".into(),
 			Kind::StdVector(vec) => vec.rust_element_module().into_owned().into(),
+			Kind::StdTuple(tuple) => tuple.rust_element_module().into_owned().into(),
 			Kind::Array(inner, ..) | Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => {
 				inner.rust_module().into_owned().into()
 			}
@@ -969,6 +986,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				}
 				out
 			}
+			Kind::StdTuple(tuple) => vec![DependentType::Tuple(tuple)],
 			Kind::SmartPtr(ptr) => {
 				let mut out = ptr.dependent_types();
 				if let DependentTypeMode::ForReturn(def_location) = mode {

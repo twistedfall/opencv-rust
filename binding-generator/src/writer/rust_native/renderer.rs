@@ -131,6 +131,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				self.wrap_nullable(type_ref, typ.into())
 			}
 			Kind::StdVector(vec) => vec.rust_name(self.name_style).into_owned().into(),
+			Kind::StdTuple(tuple) => tuple.rust_name(self.name_style).into_owned().into(),
 			Kind::Reference(inner) if (inner.as_simple_class().is_some() || inner.is_enum()) && inner.constness().is_const() => {
 				// const references to simple classes are passed by value for performance
 				// fixme: it kind of works now, but probably it's not the best idea
@@ -256,6 +257,12 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					name = space_name,
 				)
 			}
+			Kind::StdTuple(tuple) => format!(
+				"{cnst}{typ}{name}",
+				cnst = tuple.constness().cpp_qual(),
+				typ = tuple.cpp_name(self.name_style),
+				name = space_name,
+			),
 			Kind::Reference(inner) if !self.extern_types => {
 				format!("{typ}&{name}", typ = inner.render(self.recurse()), name = space_const_name)
 			}

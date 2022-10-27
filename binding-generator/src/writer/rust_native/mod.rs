@@ -26,6 +26,7 @@ mod func_desc;
 pub mod renderer;
 mod return_type_wrapper;
 mod smart_ptr;
+mod tuple;
 mod type_ref;
 mod typedef;
 mod vector;

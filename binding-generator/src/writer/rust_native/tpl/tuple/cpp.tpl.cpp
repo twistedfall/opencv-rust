@@ -1,0 +1,5 @@
+extern "C" {
+	{{methods}}
+}
+
+

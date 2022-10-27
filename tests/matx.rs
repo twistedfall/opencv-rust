@@ -1,11 +1,9 @@
 use matches::assert_matches;
 
-use opencv::{
-	core::{self, Matx22d, Matx23f, Matx32f, Matx33d, Matx66f, Point2f, Scalar},
-	imgproc,
-	prelude::*,
-	Result,
-};
+use opencv::core;
+use opencv::core::{Matx22d, Matx23f, Matx32f, Matx33d, Matx66f, Scalar};
+use opencv::prelude::*;
+use opencv::Result;
 
 #[test]
 fn matx_get() {
@@ -40,6 +38,9 @@ fn matx_set() {
 #[cfg(all(ocvrs_opencv_branch_4, not(target_env = "msvc")))]
 #[test]
 fn matx_return() -> Result<()> {
+	use opencv::core::Point2f;
+	use opencv::imgproc;
+
 	let mat = imgproc::get_rotation_matrix_2d_matx(Point2f::new(10., 10.), 90., 2.)?;
 	assert_eq!(2, mat.rows());
 	assert_eq!(3, mat.cols());

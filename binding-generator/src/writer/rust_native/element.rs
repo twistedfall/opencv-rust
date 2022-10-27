@@ -28,6 +28,7 @@ impl RustNativeGeneratedElement for DependentType<'_, '_> {
 			DependentType::AbstractRefWrapper(r) => r.element_order(),
 			DependentType::Vector(vec) => vec.element_order(),
 			DependentType::SmartPtr(ptr) => ptr.element_order(),
+			DependentType::Tuple(tuple) => tuple.element_order(),
 		}
 	}
 
@@ -37,6 +38,7 @@ impl RustNativeGeneratedElement for DependentType<'_, '_> {
 			DependentType::AbstractRefWrapper(r) => r.element_safe_id(),
 			DependentType::Vector(vec) => vec.element_safe_id(),
 			DependentType::SmartPtr(ptr) => ptr.element_safe_id(),
+			DependentType::Tuple(tuple) => tuple.element_safe_id(),
 		}
 	}
 
@@ -46,6 +48,7 @@ impl RustNativeGeneratedElement for DependentType<'_, '_> {
 			DependentType::AbstractRefWrapper(r) => r.gen_rust(opencv_version),
 			DependentType::Vector(vec) => vec.gen_rust(opencv_version),
 			DependentType::SmartPtr(ptr) => ptr.gen_rust(opencv_version),
+			DependentType::Tuple(tuple) => tuple.gen_rust(opencv_version),
 		}
 	}
 
@@ -55,6 +58,7 @@ impl RustNativeGeneratedElement for DependentType<'_, '_> {
 			DependentType::AbstractRefWrapper(r) => r.gen_rust_exports(),
 			DependentType::Vector(vec) => vec.gen_rust_exports(),
 			DependentType::SmartPtr(ptr) => ptr.gen_rust_exports(),
+			DependentType::Tuple(tuple) => tuple.gen_rust_exports(),
 		}
 	}
 
@@ -64,6 +68,7 @@ impl RustNativeGeneratedElement for DependentType<'_, '_> {
 			DependentType::AbstractRefWrapper(r) => r.gen_cpp(),
 			DependentType::Vector(vec) => vec.gen_cpp(),
 			DependentType::SmartPtr(ptr) => ptr.gen_cpp(),
+			DependentType::Tuple(tuple) => tuple.gen_cpp(),
 		}
 	}
 }

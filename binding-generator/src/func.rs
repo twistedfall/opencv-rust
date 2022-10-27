@@ -413,6 +413,15 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
+	pub fn return_types(&self) -> Vec<TypeRef<'tu, 'ge>> {
+		let return_type = self.return_type();
+		if let Some(tuple) = return_type.as_tuple() {
+			tuple.elements()
+		} else {
+			vec![return_type]
+		}
+	}
+
 	pub fn return_type(&self) -> TypeRef<'tu, 'ge> {
 		match self.kind() {
 			Kind::Constructor(cls) => cls.type_ref(),

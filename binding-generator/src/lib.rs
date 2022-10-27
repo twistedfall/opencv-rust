@@ -3,7 +3,6 @@
 // todo add support for more operators
 // todo add support for arrays in dnn::DictValue
 // todo allow ergonomically combining of enum variants with |
-// todo implement std::pair wrapper
 // todo cv_utils_logging_internal_getGlobalLogTag() returns LogTag**, but Rust interprets it as LogTag*, check why it doesn't crash and fix if needed
 // todo almost everything from the manual module must be connected to the binding generator, not the main crate
 // todo check that FN_FaceDetector works at all (receiving InputArray, passing as callback)
@@ -46,6 +45,7 @@ use name_pool::NamePool;
 use return_type_wrapper::{DefinitionLocation, ReturnTypeWrapper};
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
+use tuple::Tuple;
 pub use type_ref::{CppNameStyle, NameStyle};
 use type_ref::{DependentTypeMode, TypeRef};
 pub use typedef::Typedef;
@@ -73,6 +73,7 @@ mod smart_ptr;
 mod string_ext;
 #[cfg(test)]
 mod test;
+mod tuple;
 mod type_ref;
 mod typedef;
 mod vector;
