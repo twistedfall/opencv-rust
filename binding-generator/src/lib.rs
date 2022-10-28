@@ -36,18 +36,17 @@ pub use func::{Func, FuncId, FunctionTypeHint};
 use function::Function;
 #[allow(unused)]
 use generator::{dbg_clang_entity, dbg_clang_type};
-pub use generator::{is_ephemeral_header, DependentType, Generator, GeneratorVisitor};
+pub use generator::{is_ephemeral_header, GeneratedType, Generator, GeneratorVisitor};
 pub use generator_env::{ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 #[allow(unused)]
 use memoize::{memo, memo_map, Memoize, MemoizeMap};
 use name_pool::NamePool;
-use return_type_wrapper::{DefinitionLocation, ReturnTypeWrapper};
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
 use tuple::Tuple;
+use type_ref::TypeRef;
 pub use type_ref::{CppNameStyle, NameStyle};
-use type_ref::{DependentTypeMode, TypeRef};
 pub use typedef::Typedef;
 use vector::Vector;
 pub use walker::{EntityWalker, EntityWalkerVisitor};
@@ -67,7 +66,6 @@ mod generator_env;
 mod iterator_ext;
 mod memoize;
 mod name_pool;
-mod return_type_wrapper;
 pub mod settings;
 mod smart_ptr;
 mod string_ext;

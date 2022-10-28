@@ -15,35 +15,16 @@ use once_cell::sync::Lazy;
 use crate::type_ref::{CppNameStyle, FishStyle, Kind as TypeRefKind};
 use crate::{
 	get_definition_text, line_reader, opencv_module_from_path, settings, AbstractRefWrapper, Class, CompiledInterpolation, Const,
-	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint, GeneratorEnv, ReturnTypeWrapper,
-	SmartPtr, StrExt, Tuple, Typedef, Vector,
+	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint, GeneratorEnv, SmartPtr, StrExt, Tuple,
+	Typedef, Vector,
 };
 
 #[derive(Debug)]
-pub enum DependentType<'tu, 'ge> {
-	ReturnTypeWrapper(ReturnTypeWrapper<'tu, 'ge>),
+pub enum GeneratedType<'tu, 'ge> {
 	AbstractRefWrapper(AbstractRefWrapper<'tu, 'ge>),
 	Vector(Vector<'tu, 'ge>),
 	SmartPtr(SmartPtr<'tu, 'ge>),
 	Tuple(Tuple<'tu, 'ge>),
-}
-
-impl<'tu, 'ge> DependentType<'tu, 'ge> {
-	pub fn from_return_type_wrapper(s: ReturnTypeWrapper<'tu, 'ge>) -> Self {
-		DependentType::ReturnTypeWrapper(s)
-	}
-
-	pub fn from_abstract_ref_wrapper(s: AbstractRefWrapper<'tu, 'ge>) -> Self {
-		DependentType::AbstractRefWrapper(s)
-	}
-
-	pub fn from_vector(s: Vector<'tu, 'ge>) -> Self {
-		DependentType::Vector(s)
-	}
-
-	pub fn from_smart_ptr(s: SmartPtr<'tu, 'ge>) -> Self {
-		DependentType::SmartPtr(s)
-	}
 }
 
 #[allow(unused)]
@@ -58,7 +39,7 @@ pub trait GeneratorVisitor {
 	fn visit_func(&mut self, func: Func) {}
 	fn visit_typedef(&mut self, typedef: Typedef) {}
 	fn visit_class(&mut self, class: Class) {}
-	fn visit_dependent_type(&mut self, typ: DependentType) {}
+	fn visit_generated_type(&mut self, typ: GeneratedType) {}
 
 	fn visit_ephemeral_header(&mut self, contents: &str) {}
 }
@@ -248,7 +229,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 					} else if name == "CV_NODISCARD_STD" || name == "CV_NODISCARD" {
 						self.gen_env.make_export_config(entity).no_discard = true;
 					} else if name == "OCVRS_ONLY_DEPENDENT_TYPES" {
-						self.gen_env.make_export_config(entity).only_dependent_types = true;
+						self.gen_env.make_export_config(entity).only_generated_types = true;
 					}
 				}
 			}
@@ -298,8 +279,8 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 		if gen_env.get_export_config(class_decl).is_some() {
 			let cls = Class::new(class_decl, gen_env);
 			if !cls.is_excluded() {
-				cls.dependent_types().into_iter().for_each(|dep| {
-					visitor.visit_dependent_type(dep);
+				cls.generated_types().into_iter().for_each(|dep| {
+					visitor.visit_generated_type(dep);
 				});
 				class_decl.walk_enums_while(|enm| {
 					let enm = Enum::new(enm);
@@ -355,7 +336,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 	}
 
 	fn process_func(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
-		if let Some(only_dependent_types) = gen_env.get_export_config(func_decl).map(|e| e.only_dependent_types) {
+		if let Some(e) = gen_env.get_export_config(func_decl) {
 			let func = Func::new(func_decl, gen_env);
 			if !func.is_excluded() {
 				let specs = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref()).map_or_else(
@@ -364,7 +345,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 				);
 				for type_hint in specs {
 					let mut name_hint = None;
-					if !only_dependent_types {
+					if !e.only_generated_types {
 						let mut name = Func::new_ext(func_decl, type_hint, None, gen_env)
 							.rust_leafname(FishStyle::No)
 							.into_owned()
@@ -375,10 +356,10 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						}
 					}
 					let func = Func::new_ext(func_decl, type_hint, name_hint, gen_env);
-					func.dependent_types().into_iter().for_each(|dep| {
-						visitor.visit_dependent_type(dep);
+					func.generated_types().into_iter().for_each(|dep| {
+						visitor.visit_generated_type(dep);
 					});
-					if !only_dependent_types {
+					if !e.only_generated_types {
 						visitor.visit_func(func);
 					}
 				}
@@ -390,35 +371,33 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 		let typedef = Typedef::new(typedef_decl, gen_env);
 		let type_ref = typedef.type_ref();
 		match type_ref.kind() {
-			TypeRefKind::Class(..) => {
-				return Self::process_class(visitor, gen_env, typedef_decl);
-			}
-			TypeRefKind::Enum(..) => {
-				return Self::process_enum(visitor, typedef_decl);
-			}
-			_ => {}
-		}
-		let mut export = gen_env.get_export_config(typedef_decl).is_some()
-			// we need to have a typedef even if it's not exported for e.g. cv::Size
-			|| type_ref.is_data_type();
-		export = export || {
-			let underlying_type = typedef.underlying_type_ref();
-			underlying_type.as_function().is_some()
-				|| !underlying_type.is_excluded()
-				|| if let Some(templ) = underlying_type.as_template() {
-					let cpp_refname = templ.cpp_name(CppNameStyle::Reference);
-					settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
-						|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_refname.as_ref())
-				} else {
-					false
+			TypeRefKind::Class(..) => Self::process_class(visitor, gen_env, typedef_decl),
+			TypeRefKind::Enum(..) => Self::process_enum(visitor, typedef_decl),
+			_ => {
+				if !typedef.is_excluded() {
+					let export = gen_env.get_export_config(typedef_decl).is_some()
+						// we need to have a typedef even if it's not exported for e.g. cv::Size
+						|| type_ref.is_data_type()
+						|| {
+						let underlying_type = typedef.underlying_type_ref();
+						underlying_type.as_function().is_some()
+							|| !underlying_type.is_excluded()
+							|| underlying_type.as_template().map_or(false, |templ| {
+							let cpp_refname = templ.cpp_name(CppNameStyle::Reference);
+							settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
+								|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_refname.as_ref())
+						})
+					};
+
+					if export {
+						typedef
+							.generated_types()
+							.into_iter()
+							.for_each(|dep| visitor.visit_generated_type(dep));
+						visitor.visit_typedef(typedef)
+					}
 				}
-		};
-		if export && !typedef.is_excluded() {
-			typedef
-				.dependent_types()
-				.into_iter()
-				.for_each(|dep| visitor.visit_dependent_type(dep));
-			visitor.visit_typedef(typedef)
+			}
 		}
 	}
 }

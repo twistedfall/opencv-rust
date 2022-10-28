@@ -3,8 +3,8 @@ use std::fmt;
 
 use clang::Entity;
 
-use crate::type_ref::{CppNameStyle, DependentTypeMode, FishStyle, NameStyle, TemplateArg};
-use crate::{DefaultElement, DependentType, Element, EntityElement, GeneratorEnv, TypeRef};
+use crate::type_ref::{CppNameStyle, FishStyle, NameStyle, TemplateArg};
+use crate::{DefaultElement, Element, EntityElement, GeneratedType, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
 pub struct SmartPtr<'tu, 'ge> {
@@ -30,9 +30,9 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 			.expect("Smart pointer template argument list is empty")
 	}
 
-	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
+	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
 		if self.pointee().as_typedef().is_some() {
-			self.type_ref().canonical_clang().dependent_types(DependentTypeMode::None)
+			self.type_ref().canonical_clang().generated_types()
 		} else {
 			vec![]
 		}

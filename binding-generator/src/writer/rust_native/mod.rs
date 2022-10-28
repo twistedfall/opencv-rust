@@ -12,8 +12,8 @@ use element::RustNativeGeneratedElement;
 
 use crate::type_ref::{Constness, CppNameStyle, NameStyle};
 use crate::{
-	comment, is_ephemeral_header, opencv_module_from_path, settings, Class, CompiledInterpolation, Const, DependentType, Element,
-	Enum, Func, GeneratorVisitor, IteratorExt, StrExt, Typedef,
+	comment, is_ephemeral_header, opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func,
+	GeneratedType, GeneratorVisitor, IteratorExt, StrExt, Typedef,
 };
 
 mod abstract_ref_wrapper;
@@ -24,7 +24,6 @@ mod enumeration;
 mod func;
 mod func_desc;
 pub mod renderer;
-mod return_type_wrapper;
 mod smart_ptr;
 mod tuple;
 mod type_ref;
@@ -164,7 +163,8 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		self.cpp_classes.push((name, class.gen_cpp()));
 	}
 
-	fn visit_dependent_type(&mut self, typ: DependentType) {
+	fn visit_generated_type(&mut self, typ: GeneratedType) {
+		let typ = typ.as_ref();
 		let prio = typ.element_order();
 		let safe_id = typ.element_safe_id();
 

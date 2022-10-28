@@ -9,8 +9,8 @@ use regex::Regex;
 
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefTypeHint};
 use crate::{
-	comment, reserved_rename, settings, Class, DefaultElement, DefinitionLocation, DependentType, DependentTypeMode, Element,
-	EntityElement, EntityExt, Field, FieldTypeHint, GeneratorEnv, IteratorExt, StrExt, StringExt, TypeRef,
+	comment, reserved_rename, settings, Class, DefaultElement, Element, EntityElement, EntityExt, Field, FieldTypeHint,
+	GeneratedType, GeneratorEnv, IteratorExt, StrExt, StringExt, TypeRef,
 };
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -531,18 +531,14 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			.collect()
 	}
 
-	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
+	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
 		self
 			.arguments()
 			.into_iter()
 			.map(|a| a.type_ref())
 			.filter(|t| !t.is_ignored())
-			.flat_map(|t| t.dependent_types(DependentTypeMode::None))
-			.chain(
-				self
-					.return_type()
-					.dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module)),
-			)
+			.flat_map(|t| t.generated_types())
+			.chain(self.return_type().generated_types())
 			.collect()
 	}
 

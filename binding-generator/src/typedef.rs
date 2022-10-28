@@ -3,8 +3,8 @@ use std::fmt;
 
 use clang::Entity;
 
-use crate::type_ref::{CppNameStyle, DependentTypeMode, FishStyle, Kind, NameStyle, TypeRefTypeHint};
-use crate::{settings, DefaultElement, DependentType, Element, EntityElement, GeneratorEnv, TypeRef};
+use crate::type_ref::{CppNameStyle, FishStyle, Kind, NameStyle, TypeRefTypeHint};
+use crate::{settings, DefaultElement, Element, EntityElement, GeneratedType, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
 pub struct Typedef<'tu, 'ge> {
@@ -33,8 +33,8 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 		)
 	}
 
-	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
-		self.underlying_type_ref().dependent_types(DependentTypeMode::None)
+	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
+		self.underlying_type_ref().generated_types()
 	}
 }
 
@@ -47,8 +47,12 @@ impl<'tu> EntityElement<'tu> for Typedef<'tu, '_> {
 impl Element for Typedef<'_, '_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
-			|| self.rust_name(NameStyle::ref_()) == self.underlying_type_ref().rust_name(NameStyle::ref_()) // fixes recursive typedefs like Cv16suf
 			|| settings::PRIMITIVE_TYPEDEFS.contains_key(self.cpp_name(CppNameStyle::Reference).as_ref())
+			|| {
+				let underlying_type = self.underlying_type_ref();
+				// fixes recursive typedefs like Cv16suf
+				self.rust_name(NameStyle::ref_()) == underlying_type.rust_name(NameStyle::ref_()) || underlying_type.is_ignored()
+			}
 	}
 
 	fn is_ignored(&self) -> bool {

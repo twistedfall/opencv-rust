@@ -4,11 +4,10 @@ use std::{cmp, fmt, hash, iter};
 
 use clang::Entity;
 
-use crate::return_type_wrapper::ReturnTypeWrapper;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
 use crate::{
-	settings, Const, DefaultElement, DefinitionLocation, DependentType, DependentTypeMode, Element, EntityElement, EntityExt,
-	Field, Func, FunctionTypeHint, GeneratorEnv, StrExt, TypeRef,
+	settings, Const, DefaultElement, Element, EntityElement, EntityExt, Field, Func, FunctionTypeHint, GeneratedType,
+	GeneratorEnv, StrExt, TypeRef,
 };
 
 #[derive(Clone, Copy, Debug, PartialOrd, PartialEq, Eq)]
@@ -288,41 +287,20 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
-	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
-		let dep_types = self
+	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
+		self
 			.fields()
 			.into_iter()
 			.filter(|f| !f.is_excluded())
-			.flat_map(|f| {
-				f.type_ref()
-					.dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Module))
-			})
+			.flat_map(|f| f.type_ref().generated_types())
 			.chain(
 				self
 					.methods(None)
 					.into_iter()
 					.filter(|m| !m.is_excluded())
-					.flat_map(|m| m.dependent_types()),
-			);
-		if !self.is_simple() {
-			dep_types
-				.chain(
-					self
-						.descendants()
-						.into_iter()
-						.filter(|b| !b.is_excluded() && !b.is_simple() && !b.is_abstract())
-						.map(|b| {
-							DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
-								b.type_ref(),
-								DefinitionLocation::Type,
-								self.gen_env,
-							))
-						}),
-				)
-				.collect()
-		} else {
-			dep_types.collect()
-		}
+					.flat_map(|m| m.generated_types()),
+			)
+			.collect()
 	}
 }
 

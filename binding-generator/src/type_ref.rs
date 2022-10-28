@@ -10,8 +10,8 @@ use regex::{Captures, Regex};
 pub use crate::writer::rust_native::renderer::{CppExternReturnRenderer, CppRenderer, RustRenderer};
 use crate::{
 	settings::{self, ArgOverride},
-	AbstractRefWrapper, Class, DefinitionLocation, DependentType, Element, EntityExt, Enum, Function, GeneratorEnv,
-	ReturnTypeWrapper, SmartPtr, StringExt, Tuple, Typedef, Vector,
+	AbstractRefWrapper, Class, Element, EntityExt, Enum, Function, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Tuple,
+	Typedef, Vector,
 };
 
 pub trait TypeRefRenderer<'a> {
@@ -19,12 +19,6 @@ pub trait TypeRefRenderer<'a> {
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str>;
 	fn recurse(&self) -> Self::Recursed;
-}
-
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub enum DependentTypeMode {
-	None,
-	ForReturn(DefinitionLocation),
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -409,14 +403,6 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn clang_constness(&self) -> Constness {
 		Constness::from_is_const(self.type_ref.is_const_qualified())
-	}
-
-	fn get_const_hint(&self, type_ref: &TypeRef) -> ConstnessOverride {
-		let constness = self.constness();
-		match constness {
-			Constness::Const if type_ref.clang_constness().is_mut() => ConstnessOverride::Const,
-			_ => ConstnessOverride::No,
-		}
 	}
 
 	pub fn is_primitive(&self) -> bool {
@@ -932,114 +918,47 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn dependent_types(&self, mode: DependentTypeMode) -> Vec<DependentType<'tu, 'ge>> {
+	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
 		match self.source().kind() {
 			Kind::StdVector(vec) => {
-				let mut out = vec.dependent_types();
+				let mut out = vec.generated_types();
 				out.reserve(2);
 				if let Some(Dir::In(str_type)) = vec.element_type().as_string() {
-					// We need to generate return wrappers for std::vector<cv::String>, but it has several issues:
-					// * we can't use get_canonical_type() because it resolves into compiler dependent inner type like
-					//   std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>
-					// * we can't generate both vector<cv::String> and vector<std::string> because for OpenCV 4
-					//   cv::String is an typedef to std::string and it would lead to duplicate definition error
-					// That's why we try to resolve both types and check if they are the same, if they are we only generate
-					// vector<std::string> if not - both.
-					let vec_cv_string = self.gen_env.resolve_typeref("std::vector<cv::String>");
-					if let DependentTypeMode::ForReturn(def_location) = mode {
-						let vec_std_string = self.gen_env.resolve_typeref("std::vector<std::string>");
-						let vec_type_ref = if vec_cv_string.canonical() == vec_std_string.canonical() {
-							vec_std_string
-						} else {
-							vec.type_ref()
-						};
-						let const_hint = self.get_const_hint(&vec_type_ref);
-						out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
-							vec_type_ref,
-							const_hint,
-							def_location,
-							self.gen_env,
-						)));
-					}
 					// implement workaround for race when type with std::string gets generated first
 					// we only want vector<cv::String> because it's more compatible across OpenCV versions
 					if matches!(str_type, StrType::StdString(_)) {
-						let tref = vec_cv_string;
-						out.push(DependentType::from_vector(
-							tref.as_vector().expect("Not possible unless something is terribly broken"),
+						// We need to generate return wrappers for std::vector<cv::String>, but it has several issues:
+						// * we can't use get_canonical_type() because it resolves into compiler dependent inner type like
+						//   std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>
+						// * we can't generate both vector<cv::String> and vector<std::string> because for OpenCV 4
+						//   cv::String is an typedef to std::string and it would lead to duplicate definition error
+						// That's why we try to resolve both types and check if they are the same, if they are we only generate
+						// vector<std::string> if not - both.
+						let vec_cv_string = self.gen_env.resolve_typeref("std::vector<cv::String>");
+						out.push(GeneratedType::Vector(
+							vec_cv_string
+								.as_vector()
+								.expect("Not possible unless something is terribly broken"),
 						));
 					} else {
-						out.push(DependentType::from_vector(vec))
+						out.push(GeneratedType::Vector(vec))
 					}
 				} else {
-					if let DependentTypeMode::ForReturn(def_location) = mode {
-						let vec_type_ref = vec.type_ref().canonical_clang();
-						let const_hint = self.get_const_hint(&vec_type_ref);
-						out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
-							vec_type_ref,
-							const_hint,
-							def_location,
-							self.gen_env,
-						)));
-					}
-					out.push(DependentType::from_vector(vec));
+					out.push(GeneratedType::Vector(vec));
 				}
 				out
 			}
-			Kind::StdTuple(tuple) => vec![DependentType::Tuple(tuple)],
+			Kind::StdTuple(tuple) => vec![GeneratedType::Tuple(tuple)],
 			Kind::SmartPtr(ptr) => {
-				let mut out = ptr.dependent_types();
-				if let DependentTypeMode::ForReturn(def_location) = mode {
-					let ptr_type_ref = ptr.type_ref().canonical_clang();
-					let const_hint = self.get_const_hint(&ptr_type_ref);
-					out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
-						ptr_type_ref,
-						const_hint,
-						def_location,
-						self.gen_env,
-					)));
-				}
-				out.push(DependentType::from_smart_ptr(ptr));
+				let mut out = ptr.generated_types();
+				out.push(GeneratedType::SmartPtr(ptr));
 				out
 			}
-			Kind::Typedef(typedef) => typedef.dependent_types(),
+			Kind::Typedef(typedef) => typedef.generated_types(),
 			_ => {
 				let mut out = vec![];
-				if let DependentTypeMode::ForReturn(def_location) = mode {
-					if !self.is_generic() && !self.is_void() {
-						if self.as_string().is_some() {
-							let type_ref = TypeRef::new(
-								self
-									.gen_env
-									.resolve_type(self.cpp_extern_return(ConstnessOverride::No).as_ref())
-									.expect("Can't resolve string cpp_extern_return()"),
-								self.gen_env,
-							);
-							let def_location = match def_location {
-								DefinitionLocation::Type => DefinitionLocation::Custom(self.rust_module().into_owned()),
-								dl => dl,
-							};
-							out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
-								type_ref,
-								def_location,
-								self.gen_env,
-							)));
-						} else {
-							let type_ref = self.canonical_clang();
-							let const_hint = self.get_const_hint(&type_ref);
-							out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new_ext(
-								type_ref,
-								const_hint,
-								def_location,
-								self.gen_env,
-							)));
-							if self.as_abstract_class_ptr().is_some() {
-								out.push(DependentType::from_abstract_ref_wrapper(AbstractRefWrapper::new(
-									self.clone(),
-								)))
-							}
-						}
-					}
+				if self.as_abstract_class_ptr().is_some() {
+					out.push(GeneratedType::AbstractRefWrapper(AbstractRefWrapper::new(self.clone())))
 				}
 				out
 			}

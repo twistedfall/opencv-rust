@@ -3,11 +3,8 @@ use std::fmt;
 
 use clang::{Entity, Type};
 
-use crate::type_ref::{ConstnessOverride, CppNameStyle, FishStyle, NameStyle, TemplateArg};
-use crate::{
-	DefaultElement, DefinitionLocation, DependentType, DependentTypeMode, Element, EntityElement, GeneratorEnv, ReturnTypeWrapper,
-	TypeRef,
-};
+use crate::type_ref::{CppNameStyle, FishStyle, NameStyle, TemplateArg};
+use crate::{DefaultElement, Element, EntityElement, GeneratedType, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
 pub struct Vector<'tu, 'ge> {
@@ -41,72 +38,8 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 			.expect("vector template argument list is empty")
 	}
 
-	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
-		let element_type = self.element_type();
-		let is_data_type = self.is_data_type(&element_type);
-		let mut out = element_type.dependent_types(DependentTypeMode::ForReturn(DefinitionLocation::Type));
-		out.reserve(
-			1 + if is_data_type {
-				3
-			} else {
-				0
-			},
-		);
-		if element_type.as_string().is_some() {
-			out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
-				TypeRef::new(
-					self
-						.gen_env
-						.resolve_type(&element_type.cpp_extern_return(ConstnessOverride::No))
-						.expect("Can't resolve string cpp_extern_return()"),
-					self.gen_env,
-				),
-				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
-				self.gen_env,
-			)));
-		} else {
-			out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
-				element_type.canonical_clang(),
-				DefinitionLocation::Module,
-				self.gen_env,
-			)));
-		}
-		if is_data_type {
-			out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
-				TypeRef::new(
-					self
-						.gen_env
-						.resolve_type("cv::_InputArray")
-						.expect("Can't resolve _InputArray"),
-					self.gen_env,
-				),
-				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
-				self.gen_env,
-			)));
-			out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
-				TypeRef::new(
-					self
-						.gen_env
-						.resolve_type("cv::_OutputArray")
-						.expect("Can't resolve _OutputArray"),
-					self.gen_env,
-				),
-				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
-				self.gen_env,
-			)));
-			out.push(DependentType::from_return_type_wrapper(ReturnTypeWrapper::new(
-				TypeRef::new(
-					self
-						.gen_env
-						.resolve_type("cv::_InputOutputArray")
-						.expect("Can't resolve _InputOutputArray"),
-					self.gen_env,
-				),
-				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
-				self.gen_env,
-			)));
-		}
-		out
+	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
+		self.element_type().generated_types()
 	}
 
 	pub fn rust_localalias(&self) -> Cow<str> {
