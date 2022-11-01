@@ -113,12 +113,6 @@ impl<F: Float> VecN<F, 4> {
 impl<T, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	type Arg = Self;
 	type ExternReceive = Self;
-	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self {
-		self
-	}
 
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self) -> Self {

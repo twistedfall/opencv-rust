@@ -48,7 +48,7 @@ pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
 		val: <<<T as OpenCVType<'a>>::Arg as OpenCVTypeArg<'a>>::ExternContainer as OpenCVTypeExternContainer>::ExternSend,
 	);
 	#[doc(hidden)]
-	unsafe fn extern_push_owned(&mut self, val: <<T as OpenCVType>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
+	unsafe fn extern_push_owned(&mut self, val: <<T as OpenCVTypeArg>::ExternContainer as OpenCVTypeExternContainer>::ExternSend);
 	#[doc(hidden)]
 	unsafe fn extern_insert<'a>(
 		&mut self,
@@ -166,7 +166,7 @@ macro_rules! vector_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_push_owned(&mut self, val: <<$type as $crate::traits::OpenCVType>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend) {
+			unsafe fn extern_push_owned(&mut self, val: <<$type as $crate::traits::OpenCVTypeArg>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSend) {
 				$extern_push(self.as_raw_mut(), val)
 			}
 

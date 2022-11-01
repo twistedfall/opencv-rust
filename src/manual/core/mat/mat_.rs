@@ -152,12 +152,6 @@ impl<T> ToInputOutputArray for Mat_<T> {
 impl<T> OpenCVType<'_> for Mat_<T> {
 	type Arg = Self;
 	type ExternReceive = *mut c_void;
-	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-		self
-	}
 
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {

@@ -1,7 +1,5 @@
-use std::{
-	ffi::{c_void, CString},
-	os::raw::c_char,
-};
+use std::ffi::{c_void, CString};
+use std::os::raw::c_char;
 
 use crate::Result;
 
@@ -10,7 +8,7 @@ use crate::Result;
 /// This trait is somewhat unnecessary complex because of the need of handling String, we need to be able to
 /// pass &str as argument to functions that await String and do necessary conversion through CString.
 #[doc(hidden)]
-pub trait OpenCVType<'a>: Sized {
+pub trait OpenCVType<'a>: Sized + OpenCVTypeArg<'a> {
 	/// Type when passed as argument to function, e.g. &str for String, for most other types it's Self
 	#[doc(hidden)]
 	type Arg: OpenCVTypeArg<'a>;
@@ -18,25 +16,15 @@ pub trait OpenCVType<'a>: Sized {
 	/// types, *mut c_void for complex ones
 	#[doc(hidden)]
 	type ExternReceive;
-	/// Container to help marshall type over FFI boundary, e.g. CString for String or &str, for most other
-	/// types it's Self
-	#[doc(hidden)]
-	type ExternContainer: OpenCVTypeExternContainer;
 
-	/// Convert Self into external container with possible error result, it shouldn't panic
-	#[doc(hidden)]
-	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
-		Ok(self.opencv_into_extern_container_nofail())
-	}
-	/// Convert Self into external container in the nofail context, this can panic
-	#[doc(hidden)]
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer;
 	/// Construct the new Self from the data received from C++ function
 	#[doc(hidden)]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self;
 }
 
+/// Common trait for types that can be used as argument that will be converted into a OpenCV type.
+///
+/// Mostly necessary to be able to pass `&str` argument for types that otherwise have `String` Rust representation.
 #[doc(hidden)]
 pub trait OpenCVTypeArg<'a>: Sized {
 	/// Container to help marshall type over FFI boundary, e.g. CString for String or &str, for most other
@@ -82,17 +70,13 @@ macro_rules! opencv_type_copy {
 			impl $crate::traits::OpenCVType<'_> for $type {
 				type Arg = Self;
 				type ExternReceive = Self;
-				type ExternContainer = Self;
 
-				#[inline] fn opencv_into_extern_container(self) -> $crate::Result<Self> { Ok(self) }
-				#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
 				#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
 			}
 
 			impl $crate::traits::OpenCVTypeArg<'_> for $type {
 				type ExternContainer = Self;
 
-				#[inline] fn opencv_into_extern_container(self) -> $crate::Result<Self> { Ok(self) }
 				#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
 			}
 
@@ -121,16 +105,7 @@ macro_rules! opencv_type_simple {
 		impl $crate::traits::OpenCVType<'_> for $type {
 			type Arg = Self;
 			type ExternReceive = Self;
-			type ExternContainer = Self;
 
-			#[inline]
-			fn opencv_into_extern_container(self) -> $crate::Result<Self> {
-				Ok(self)
-			}
-			#[inline]
-			fn opencv_into_extern_container_nofail(self) -> Self {
-				self
-			}
 			#[inline]
 			unsafe fn opencv_from_extern(s: Self) -> Self {
 				s
@@ -140,10 +115,6 @@ macro_rules! opencv_type_simple {
 		impl $crate::traits::OpenCVTypeArg<'_> for $type {
 			type ExternContainer = Self;
 
-			#[inline]
-			fn opencv_into_extern_container(self) -> $crate::Result<Self> {
-				Ok(self)
-			}
 			#[inline]
 			fn opencv_into_extern_container_nofail(self) -> Self {
 				self
@@ -176,17 +147,13 @@ macro_rules! opencv_type_simple_generic {
 		impl<T: $trait$( + $more)*> $crate::traits::OpenCVType<'_> for $type<T> {
 			type Arg = Self;
 			type ExternReceive = Self;
-			type ExternContainer = Self;
 
-			#[inline] fn opencv_into_extern_container(self) -> $crate::Result<Self> { Ok(self) }
-			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
 			#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
 		}
 
 		impl<T: $trait$( + $more)*> $crate::traits::OpenCVTypeArg<'_> for $type<T> {
 			type ExternContainer = Self;
 
-			#[inline] fn opencv_into_extern_container(self) -> $crate::Result<Self> { Ok(self) }
 			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
 		}
 
@@ -216,6 +183,14 @@ pub fn cstring_new_nofail(bytes: impl Into<Vec<u8>>) -> CString {
 impl<'a> OpenCVType<'a> for String {
 	type Arg = &'a str;
 	type ExternReceive = *mut c_void;
+
+	#[inline]
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
+		crate::templ::receive_string(s as *mut String)
+	}
+}
+
+impl OpenCVTypeArg<'_> for String {
 	type ExternContainer = CString;
 
 	#[inline]
@@ -226,11 +201,6 @@ impl<'a> OpenCVType<'a> for String {
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
 		cstring_new_nofail(self)
-	}
-
-	#[inline]
-	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		crate::templ::receive_string(s as *mut String)
 	}
 }
 
@@ -268,20 +238,9 @@ impl OpenCVTypeExternContainer for CString {
 	}
 }
 
-impl<'a> OpenCVType<'a> for Vec<u8> {
+impl OpenCVType<'_> for Vec<u8> {
 	type Arg = Self;
 	type ExternReceive = *mut c_void;
-	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
-		Ok(self)
-	}
-
-	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-		self
-	}
 
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {

@@ -180,12 +180,7 @@ impl<T, A: SizedArray<T>> std::ops::IndexMut<(usize, usize)> for Matx<T, A> {
 impl<T, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
 	type Arg = Self;
 	type ExternReceive = Self;
-	type ExternContainer = Self;
 
-	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-		self
-	}
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self) -> Self {
 		s

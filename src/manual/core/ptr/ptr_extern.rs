@@ -1,6 +1,6 @@
 use std::ffi::c_void;
 
-use crate::traits::{OpenCVType, OpenCVTypeExternContainer};
+use crate::traits::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
 
 #[doc(hidden)]
 pub trait PtrExtern {
@@ -15,7 +15,7 @@ pub trait PtrExtern {
 #[doc(hidden)]
 pub trait PtrExternCtor<T: for<'a> OpenCVType<'a>>: Sized {
 	#[doc(hidden)]
-	unsafe fn extern_new(val: <<T as OpenCVType>::ExternContainer as OpenCVTypeExternContainer>::ExternSendMut) -> *mut c_void;
+	unsafe fn extern_new(val: <<T as OpenCVTypeArg>::ExternContainer as OpenCVTypeExternContainer>::ExternSendMut) -> *mut c_void;
 }
 
 #[macro_export]
@@ -51,14 +51,14 @@ macro_rules! ptr_extern_ctor {
 	($type: ty, $extern_new: ident $(,)?) => {
 		extern "C" {
 			fn $extern_new(
-				val: <<$type as $crate::traits::OpenCVType>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut,
+				val: <<$type as $crate::traits::OpenCVTypeArg>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut,
 			) -> *mut std::ffi::c_void;
 		}
 
 		impl $crate::manual::core::PtrExternCtor<$type> for $crate::manual::core::Ptr<$type> {
 			#[inline]
 			unsafe fn extern_new(
-				val: <<$type as $crate::traits::OpenCVType>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut,
+				val: <<$type as $crate::traits::OpenCVTypeArg>::ExternContainer as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut,
 			) -> *mut std::ffi::c_void {
 				$extern_new(val)
 			}

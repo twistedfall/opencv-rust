@@ -53,17 +53,6 @@ macro_rules! opencv_type_boxed {
 		impl $crate::traits::OpenCVType<'_> for $type {
 			type Arg = Self;
 			type ExternReceive = *mut ::std::ffi::c_void;
-			type ExternContainer = Self;
-
-			#[inline]
-			fn opencv_into_extern_container(self) -> $crate::Result<Self::ExternContainer> {
-				Ok(self)
-			}
-
-			#[inline]
-			fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-				self
-			}
 
 			#[inline]
 			unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
@@ -73,11 +62,6 @@ macro_rules! opencv_type_boxed {
 
 		impl $crate::traits::OpenCVTypeArg<'_> for $type {
 			type ExternContainer = Self;
-
-			#[inline]
-			fn opencv_into_extern_container(self) -> $crate::Result<Self::ExternContainer> {
-				Ok(self)
-			}
 
 			#[inline]
 			fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
