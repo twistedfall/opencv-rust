@@ -409,10 +409,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			}
 			Kind::FieldAccessor(..) => {
 				if self.type_hint == FunctionTypeHint::FieldSetter {
-					TypeRef::new(
-						self.gen_env.resolve_type("void").expect("Can't resolve void type"),
-						self.gen_env,
-					)
+					self.gen_env.resolve_typeref("void")
 				} else {
 					let mut out = Field::new(self.entity, self.gen_env).type_ref();
 					out.set_type_hint(TypeRefTypeHint::PrimitiveRefAsPointer);

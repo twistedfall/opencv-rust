@@ -12,7 +12,7 @@ use crate::{
 #[derive(Clone)]
 pub struct Vector<'tu, 'ge> {
 	type_ref: Type<'tu>,
-	gen_env: &'ge GeneratorEnv<'tu>,
+	pub(crate) gen_env: &'ge GeneratorEnv<'tu>,
 }
 
 impl<'tu, 'ge> Vector<'tu, 'ge> {
@@ -26,6 +26,10 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		TypeRef::new(self.type_ref, self.gen_env)
+	}
+
+	pub fn rust_element_module(&self) -> Cow<str> {
+		self.element_type().rust_module().into_owned().into()
 	}
 
 	pub fn element_type(&self) -> TypeRef<'tu, 'ge> {
@@ -147,11 +151,7 @@ impl Element for Vector<'_, '_> {
 	}
 
 	fn rust_module(&self) -> Cow<str> {
-		self.element_type().rust_module().into_owned().into()
-	}
-
-	fn rust_namespace(&self) -> Cow<str> {
-		"core".into()
+		DefaultElement::rust_module(self)
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {

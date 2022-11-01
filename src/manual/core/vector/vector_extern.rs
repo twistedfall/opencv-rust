@@ -233,7 +233,7 @@ macro_rules! vector_copy_non_bool {
 		{
 			#[inline]
 			fn clone(&self) -> Self {
-				unsafe { Self::from_raw(self.extern_clone()) }
+				unsafe { Self::opencv_from_extern(self.extern_clone()) }
 			}
 		}
 

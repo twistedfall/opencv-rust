@@ -330,6 +330,13 @@ impl<'tu> GeneratorEnv<'tu> {
 		self.type_resolve_cache.get(typ).copied()
 	}
 
+	pub fn resolve_typeref<'ge>(&'ge self, typ: &str) -> TypeRef<'tu, 'ge> {
+		self
+			.resolve_type(typ)
+			.map(|typ| TypeRef::new(typ, self))
+			.expect(&format!("Can't resolve type: {}", typ))
+	}
+
 	pub fn is_used_in_smart_ptr(&self, entity: Entity) -> bool {
 		self.used_in_smart_ptr.contains(&entity)
 	}

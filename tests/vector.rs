@@ -749,6 +749,14 @@ fn from_slice() -> Result<()> {
 		assert_eq!(points, v.as_slice());
 	}
 
+	{
+		let bytes: &[u8] = &[1, 2, 3, 4, 5];
+		let mut v = VectorOfu8::from_slice(bytes);
+		v.set(2, 10)?;
+		assert_eq!(v.get(2)?, 10);
+		assert_eq!(bytes[2], 3);
+	}
+
 	Ok(())
 }
 

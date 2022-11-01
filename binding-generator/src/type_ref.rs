@@ -762,7 +762,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn rust_module(&self) -> Cow<str> {
 		match self.kind() {
 			Kind::Primitive(..) => "core".into(),
-			Kind::StdVector(vec) => vec.rust_module().into_owned().into(),
+			Kind::StdVector(vec) => vec.rust_element_module().into_owned().into(),
 			Kind::Array(inner, ..) | Kind::Pointer(inner) | Kind::Reference(inner) => inner.rust_module().into_owned().into(),
 			Kind::SmartPtr(ptr) => ptr.rust_module().into_owned().into(),
 			Kind::Class(cls) => cls.rust_module().into_owned().into(),
@@ -889,17 +889,11 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					//   cv::String is an typedef to std::string and it would lead to duplicate definition error
 					// That's why we try to resolve both types and check if they are the same, if they are we only generate
 					// vector<std::string> if not - both.
-					let vec_cv_string = self
-						.gen_env
-						.resolve_type("std::vector<cv::String>")
-						.expect("Can't resolve std::vector<cv::String>");
+					let vec_cv_string = self.gen_env.resolve_typeref("std::vector<cv::String>");
 					if let DependentTypeMode::ForReturn(def_location) = mode {
-						let vec_std_string = self
-							.gen_env
-							.resolve_type("std::vector<std::string>")
-							.expect("Can't resolve std::vector<std::string>");
-						let vec_type_ref = if vec_cv_string.get_canonical_type() == vec_std_string.get_canonical_type() {
-							TypeRef::new(vec_std_string, self.gen_env)
+						let vec_std_string = self.gen_env.resolve_typeref("std::vector<std::string>");
+						let vec_type_ref = if vec_cv_string.canonical() == vec_std_string.canonical() {
+							vec_std_string
 						} else {
 							vec.type_ref()
 						};
@@ -914,7 +908,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					// implement workaround for race when type with std::string gets generated first
 					// we only want vector<cv::String> because it's more compatible across OpenCV versions
 					if matches!(str_type, StrType::StdString(_)) {
-						let tref = TypeRef::new(vec_cv_string, self.gen_env);
+						let tref = vec_cv_string;
 						out.push(DependentType::from_vector(
 							tref.as_vector().expect("Not possible unless something is terribly broken"),
 						));
