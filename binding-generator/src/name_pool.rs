@@ -21,11 +21,11 @@ impl NamePool {
 		self.names.insert(name.clone().into_owned());
 	}
 
-	pub fn into_disambiguator<T>(
-		mut self,
-		args: impl IntoIterator<Item = T>,
-		mut name_cb: impl for<'a> FnMut(&'a T) -> Cow<'a, str>,
-	) -> impl Iterator<Item = (String, T)> {
+	pub fn into_disambiguator<T, I, CB>(mut self, args: I, mut name_cb: CB) -> impl Iterator<Item = (String, T)>
+	where
+		I: IntoIterator<Item = T>,
+		CB: for<'a> FnMut(&'a T) -> Cow<'a, str>,
+	{
 		args.into_iter().map(move |f| {
 			let mut name = name_cb(&f);
 			self.make_unique_name(&mut name);

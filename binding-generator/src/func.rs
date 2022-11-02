@@ -13,7 +13,7 @@ use crate::{
 	EntityElement, EntityExt, Field, FieldTypeHint, GeneratorEnv, StrExt, StringExt, TypeRef,
 };
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum OperatorKind {
 	Unsupported,
 	Index,
@@ -56,11 +56,56 @@ pub enum Kind<'tu, 'ge> {
 	Constructor(Class<'tu, 'ge>),
 	InstanceMethod(Class<'tu, 'ge>),
 	StaticMethod(Class<'tu, 'ge>),
-	FieldAccessor(Class<'tu, 'ge>),
+	FieldAccessor(Class<'tu, 'ge>, Field<'tu, 'ge>),
 	ConversionMethod(Class<'tu, 'ge>),
 	InstanceOperator(Class<'tu, 'ge>, OperatorKind),
 	GenericFunction,
 	GenericInstanceMethod(Class<'tu, 'ge>),
+}
+
+impl<'tu, 'ge> Kind<'tu, 'ge> {
+	pub fn as_instance_method(&self) -> Option<&Class<'tu, 'ge>> {
+		match self {
+			Kind::InstanceMethod(out)
+			| Kind::FieldAccessor(out, _)
+			| Kind::GenericInstanceMethod(out)
+			| Kind::ConversionMethod(out)
+			| Kind::InstanceOperator(out, ..) => Some(out),
+			_ => None,
+		}
+	}
+
+	pub fn as_constructor(&self) -> Option<&Class<'tu, 'ge>> {
+		if let Kind::Constructor(out) = self {
+			Some(out)
+		} else {
+			None
+		}
+	}
+
+	pub fn as_static_method(&self) -> Option<&Class<'tu, 'ge>> {
+		if let Kind::StaticMethod(out) = self {
+			Some(out)
+		} else {
+			None
+		}
+	}
+
+	pub fn as_conversion_method(&self) -> Option<&Class<'tu, 'ge>> {
+		if let Kind::ConversionMethod(out) = self {
+			Some(out)
+		} else {
+			None
+		}
+	}
+
+	pub fn as_operator(&self) -> Option<OperatorKind> {
+		match self {
+			Kind::FunctionOperator(kind) => Some(*kind),
+			Kind::InstanceOperator(_, kind) => Some(*kind),
+			_ => None,
+		}
+	}
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -68,6 +113,16 @@ pub enum FunctionTypeHint {
 	None,
 	FieldSetter,
 	Specialized(&'static HashMap<&'static str, &'static str>),
+}
+
+impl FunctionTypeHint {
+	pub fn as_specialized(&self) -> Option<&'static HashMap<&'static str, &'static str>> {
+		if let FunctionTypeHint::Specialized(spec) = self {
+			Some(spec)
+		} else {
+			None
+		}
+	}
 }
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
@@ -197,7 +252,11 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					Kind::InstanceMethod(class)
 				}
 			}
-			EntityKind::FieldDecl | EntityKind::VarDecl => Kind::FieldAccessor(Field::new(self.entity, self.gen_env).parent()),
+			EntityKind::FieldDecl | EntityKind::VarDecl => {
+				let fld = Field::new(self.entity, self.gen_env);
+				let cls = fld.parent();
+				Kind::FieldAccessor(cls, fld)
+			}
 			EntityKind::ConversionFunction => Kind::ConversionMethod(Class::new(
 				self.entity.get_semantic_parent().expect("Can't get parent of method"),
 				self.gen_env,
@@ -210,33 +269,6 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				_ => Kind::GenericFunction,
 			},
 			_ => unreachable!("Unknown function entity: {:#?}", self.entity),
-		}
-	}
-
-	pub fn as_constructor(&self) -> Option<Class<'tu, 'ge>> {
-		if let Kind::Constructor(out) = self.kind() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_instance_method(&self) -> Option<Class<'tu, 'ge>> {
-		match self.kind() {
-			Kind::InstanceMethod(out)
-			| Kind::FieldAccessor(out)
-			| Kind::GenericInstanceMethod(out)
-			| Kind::ConversionMethod(out)
-			| Kind::InstanceOperator(out, ..) => Some(out),
-			_ => None,
-		}
-	}
-
-	pub fn as_static_method(&self) -> Option<Class<'tu, 'ge>> {
-		if let Kind::StaticMethod(out) = self.kind() {
-			Some(out)
-		} else {
-			None
 		}
 	}
 
@@ -253,22 +285,6 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			Some(Field::new_ext(self.entity, FieldTypeHint::FieldSetter, self.gen_env))
 		} else {
 			None
-		}
-	}
-
-	pub fn as_conversion_method(&self) -> Option<Class<'tu, 'ge>> {
-		if let Kind::ConversionMethod(out) = self.kind() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_operator(&self) -> Option<OperatorKind> {
-		match self.kind() {
-			Kind::FunctionOperator(kind) => Some(kind),
-			Kind::InstanceOperator(_, kind) => Some(kind),
-			_ => None,
 		}
 	}
 
@@ -297,7 +313,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn is_generic(&self) -> bool {
 		match self.kind() {
-			Kind::GenericFunction | Kind::GenericInstanceMethod(..) => !self.as_specialized().is_some(),
+			Kind::GenericFunction | Kind::GenericInstanceMethod(..) => !self.type_hint.as_specialized().is_some(),
 			Kind::Function
 			| Kind::Constructor(..)
 			| Kind::InstanceMethod(..)
@@ -331,8 +347,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn is_clone(&self) -> bool {
 		if self.rust_leafname(FishStyle::No) == "clone" {
-			if let Some(c) = self.as_instance_method() {
-				!self.has_arguments() && self.return_type().as_class().map_or(false, |r| r == c)
+			if let Some(c) = self.kind().as_instance_method() {
+				!self.has_arguments() && self.return_type().as_class().map_or(false, |r| r == *c)
 			} else {
 				false
 			}
@@ -356,14 +372,6 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_specialized(&self) -> Option<&'static HashMap<&'static str, &'static str>> {
-		if let FunctionTypeHint::Specialized(spec) = self.type_hint {
-			Some(spec)
-		} else {
-			None
-		}
-	}
-
 	pub fn return_type(&self) -> TypeRef<'tu, 'ge> {
 		match self.kind() {
 			Kind::Constructor(cls) => cls.type_ref(),
@@ -381,7 +389,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					None,
 					self.gen_env,
 				);
-				if let Some(spec) = self.as_specialized() {
+				if let Some(spec) = self.type_hint.as_specialized() {
 					if out.is_generic() {
 						let spec_type = spec
 							.get(out.base().cpp_name(CppNameStyle::Reference).as_ref())
@@ -443,7 +451,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn arguments(&self) -> Vec<Field<'tu, 'ge>> {
 		let empty_spec_hashmap = HashMap::new();
-		let spec = self.as_specialized().unwrap_or(&empty_spec_hashmap);
+		let spec = self.type_hint.as_specialized().unwrap_or(&empty_spec_hashmap);
 
 		let is_field_setter = self.as_field_setter().is_some();
 		let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
@@ -509,7 +517,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			self.cpp_name(CppNameStyle::Reference).into_owned()
 		};
 		out.cleanup_name();
-		if let Some(spec) = self.as_specialized() {
+		if let Some(spec) = self.type_hint.as_specialized() {
 			for typ in spec.values() {
 				out.push('_');
 				let mut typ = typ.to_string();
@@ -551,14 +559,14 @@ impl Element for Func<'_, '_> {
 		}
 		DefaultElement::is_excluded(self)
 			|| self.is_generic()
-			|| self.as_operator().map_or(false, |kind| {
+			|| self.kind().as_operator().map_or(false, |kind| {
 				if matches!(kind, OperatorKind::Incr | OperatorKind::Decr) {
 					// filter out postfix version of ++ and --: https://en.cppreference.com/w/cpp/language/operator_incdec
 					self.clang_arguments().len() == 1
 				} else {
 					false
 				}
-			}) || if let Some(cls) = self.as_constructor() {
+			}) || if let Some(cls) = self.kind().as_constructor() {
 			// don't generate constructors of abstract classes
 			cls.is_abstract()
 		} else {
@@ -573,7 +581,7 @@ impl Element for Func<'_, '_> {
 		}
 		DefaultElement::is_ignored(self)
 			|| self.entity.get_availability() == Availability::Unavailable
-			|| self.as_operator().map_or(false, |op| op == OperatorKind::Unsupported)
+			|| self.kind().as_operator().map_or(false, |op| op == OperatorKind::Unsupported)
 			|| self.arguments().into_iter().any(|a| a.type_ref().is_ignored())
 			|| {
 				let ret = self.return_type();
@@ -653,7 +661,7 @@ impl Element for Func<'_, '_> {
 	}
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
-		let decl_name = if self.as_conversion_method().is_some() {
+		let decl_name = if self.kind().as_conversion_method().is_some() {
 			format!("operator {}", self.return_type().cpp_name(CppNameStyle::Reference))
 		} else if self.as_field_setter().is_some() {
 			let name = DefaultElement::cpp_name(self, CppNameStyle::Declaration);
@@ -682,7 +690,8 @@ impl Element for Func<'_, '_> {
 		} else {
 			self.cpp_name(CppNameStyle::Declaration)
 		};
-		let rust_name = if let Some(cls) = self.as_constructor() {
+		let kind = self.kind();
+		let rust_name = if let Some(cls) = kind.as_constructor() {
 			let args = self.arguments();
 			#[allow(clippy::never_loop)] // fixme use named block when stable
 			'ctor_name: loop {
@@ -699,7 +708,7 @@ impl Element for Func<'_, '_> {
 						.as_class()
 					});
 					if let Some(other) = class_arg {
-						if cls == other {
+						if *cls == other {
 							break 'ctor_name if arg_typeref.constness().is_const() {
 								"copy"
 							} else {
@@ -711,11 +720,11 @@ impl Element for Func<'_, '_> {
 				break 'ctor_name "new";
 			}
 			.into()
-		} else if let Some(..) = self.as_conversion_method() {
+		} else if let Some(..) = kind.as_conversion_method() {
 			let mut name: String = self.return_type().rust_name(NameStyle::decl()).into_owned();
 			name.cleanup_name();
 			format!("to_{}", name).into()
-		} else if let Some(kind) = self.as_operator() {
+		} else if let Some(kind) = kind.as_operator() {
 			if cpp_name.starts_with("operator") {
 				match kind {
 					OperatorKind::Unsupported => cpp_name,

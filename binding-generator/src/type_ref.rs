@@ -1049,7 +1049,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		self.render(CppExternReturnRenderer::new(constness))
 	}
 
-	pub fn cpp_extern_return_wrapper_full(&self, constness: ConstnessOverride) -> Cow<str> {
+	pub fn cpp_extern_return_fallible(&self, constness: ConstnessOverride) -> Cow<str> {
 		if self.is_void() {
 			"Result_void".into()
 		} else {

@@ -19,9 +19,8 @@ pub trait TypeRefExt {
 	fn rust_arg_forward(&self, name: &str) -> String;
 	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String;
 	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str>;
-	fn rust_return_map(&self, is_safe_context: bool, is_static_func: bool, is_infallible: bool) -> Cow<str>;
 	fn rust_extern_return(&self) -> Cow<str>;
-	fn rust_extern_return_wrapper_full(&self) -> Cow<str>;
+	fn rust_extern_return_fallible(&self) -> Cow<str>;
 
 	fn cpp_self_func_decl(&self, method_constness: Constness) -> String;
 	fn cpp_arg_func_decl(&self, name: &str) -> String;
@@ -326,42 +325,6 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		}
 	}
 
-	fn rust_return_map(&self, is_safe_context: bool, is_static_func: bool, is_infallible: bool) -> Cow<str> {
-		let unsafety_call = if is_safe_context {
-			"unsafe "
-		} else {
-			""
-		};
-		if self.as_string().is_some() || self.is_by_ptr() {
-			format!(
-				"let ret = {unsafety_call}{{ {typ}::opencv_from_extern(ret) }};",
-				unsafety_call = unsafety_call,
-				typ = self.rust_return(FishStyle::Turbo, is_static_func),
-			)
-			.into()
-		} else if self.as_pointer().map_or(false, |i| !i.is_void()) && !self.is_pass_by_ptr() || self.as_fixed_array().is_some() {
-			let ptr_call = if self.constness().is_const() {
-				"ref"
-			} else {
-				"mut"
-			};
-			let error_handling = if is_infallible {
-				".expect(\"Function returned null pointer\")"
-			} else {
-				".ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned null pointer\"))?"
-			};
-			format!(
-				"let ret = {unsafety_call}{{ ret.as_{ptr_call}() }}{error_handling};",
-				unsafety_call = unsafety_call,
-				ptr_call = ptr_call,
-				error_handling = error_handling,
-			)
-			.into()
-		} else {
-			"".into()
-		}
-	}
-
 	fn rust_extern_return(&self) -> Cow<str> {
 		if self.as_string().is_some() {
 			"*mut c_void".into()
@@ -370,7 +333,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		}
 	}
 
-	fn rust_extern_return_wrapper_full(&self) -> Cow<str> {
+	fn rust_extern_return_fallible(&self) -> Cow<str> {
 		if self.is_void() {
 			"Result_void".into()
 		} else {

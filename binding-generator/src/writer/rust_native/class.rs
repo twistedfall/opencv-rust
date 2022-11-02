@@ -84,12 +84,12 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		};
 		let mut trait_methods_pool = NamePool::with_capacity(method_count);
 		let trait_const_methods = rust_generate_funcs(
-			const_methods.iter().filter(|m| m.as_instance_method().is_some()),
+			const_methods.iter().filter(|m| m.kind().as_instance_method().is_some()),
 			&mut trait_methods_pool,
 			opencv_version,
 		);
 		let trait_mut_methods = rust_generate_funcs(
-			mut_methods.iter().filter(|m| m.as_instance_method().is_some()),
+			mut_methods.iter().filter(|m| m.kind().as_instance_method().is_some()),
 			&mut trait_methods_pool,
 			opencv_version,
 		);
@@ -98,12 +98,12 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 			let mut methods_pool = NamePool::with_capacity(method_count);
 			let const_methods = rust_generate_funcs(
-				const_methods.iter().filter(|m| m.as_static_method().is_some()),
+				const_methods.iter().filter(|m| m.kind().as_static_method().is_some()),
 				&mut methods_pool,
 				opencv_version,
 			);
 			let mut_methods = rust_generate_funcs(
-				mut_methods.iter().filter(|m| m.as_static_method().is_some()),
+				mut_methods.iter().filter(|m| m.kind().as_static_method().is_some()),
 				&mut methods_pool,
 				opencv_version,
 			);
@@ -257,9 +257,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 		inherent_const_methods.push_str(&if is_trait {
 			rust_generate_funcs(
-				const_methods
-					.iter()
-					.filter(|m| m.as_static_method().is_some() || m.as_constructor().is_some()),
+				const_methods.iter().filter(|m| {
+					let kind = m.kind();
+					kind.as_static_method().is_some() || kind.as_constructor().is_some()
+				}),
 				&mut inherent_methods_pool,
 				opencv_version,
 			)
@@ -268,9 +269,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		});
 		inherent_mut_methods.push_str(&if is_trait {
 			rust_generate_funcs(
-				mut_methods
-					.iter()
-					.filter(|m| m.as_static_method().is_some() || m.as_constructor().is_some()),
+				mut_methods.iter().filter(|m| {
+					let kind = m.kind();
+					kind.as_static_method().is_some() || kind.as_constructor().is_some()
+				}),
 				&mut inherent_methods_pool,
 				opencv_version,
 			)

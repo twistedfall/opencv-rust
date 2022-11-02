@@ -18,17 +18,20 @@
 // needed to be able to handle commas in the type name in call to OCVRS_CATCH
 #define OCVRS_TYPE(...) __VA_ARGS__
 
-#define CODE_CATCH(return_type, exc_type, code, msg) \
-catch (exc_type) { \
-	Err<return_type>(code, msg, ocvrs_return); \
+#define OCVRS_HANDLE(code, msg, return_type, return_name) Err<return_type>(code, msg, return_name)
+
+#define OCVRS_HANDLE_OPENCV(e, return_type, return_name) \
+OCVRS_HANDLE(e.code, e.what(), OCVRS_TYPE(return_type), return_name)
+
+#define OCVRS_HANDLE_UNSPECIFIED(return_type, return_name) \
+OCVRS_HANDLE(-99999, "unspecified error in OpenCV guts", OCVRS_TYPE(return_type), return_name)
+
+#define OCVRS_CATCH(return_type, return_name) \
+catch (cv::Exception& e) { \
+	OCVRS_HANDLE_OPENCV(e, OCVRS_TYPE(return_type), return_name); \
+} catch (...) { \
+	OCVRS_HANDLE_UNSPECIFIED(OCVRS_TYPE(return_type), return_name); \
 }
-
-#define OCVRS_CATCH(return_type) \
-CODE_CATCH(OCVRS_TYPE(return_type), cv::Exception& e, e.code, e.what()) \
-CODE_CATCH(OCVRS_TYPE(return_type), ..., -99999, "unspecified error in OpenCV guts")
-
-#define VEC_CATCH(return_type) \
-CODE_CATCH(OCVRS_TYPE(return_type), std::out_of_range, cv::Error::Code::StsOutOfRange, "index out of bounds")
 
 // defined in src/templ.rs
 extern "C" void* ocvrs_create_string(const char*);

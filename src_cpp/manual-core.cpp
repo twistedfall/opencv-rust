@@ -7,19 +7,19 @@ template struct Result<const unsigned char*>;
 template<typename T> inline void ocvrs_input_array(const T* instance, Result<void*>* ocvrs_return) {
 	try {
 		Ok<void*>(new cv::_InputArray(*instance), ocvrs_return);
-	} OCVRS_CATCH(Result<void*>)
+	} OCVRS_CATCH(Result<void*>, ocvrs_return)
 }
 
 template<typename T> inline void ocvrs_output_array(T* instance, Result<void*>* ocvrs_return) {
 	try {
 		Ok<void*>(new cv::_OutputArray(*instance), ocvrs_return);
-	} OCVRS_CATCH(Result<void*>)
+	} OCVRS_CATCH(Result<void*>, ocvrs_return)
 }
 
 template<typename T> inline void ocvrs_input_output_array(T* instance, Result<void*>* ocvrs_return) {
 	try {
 		Ok<void*>(new cv::_InputOutputArray(*instance), ocvrs_return);
-	} OCVRS_CATCH(Result<void*>)
+	} OCVRS_CATCH(Result<void*>, ocvrs_return)
 }
 
 #define ocvrs_ioa(base) \
@@ -43,14 +43,14 @@ extern "C" {
 	void cv_manual_Mat_size(const cv::Mat* instance, Result<cv::Size>* ocvrs_return) {
 		try {
 			Ok<cv::Size>(instance->size(), ocvrs_return);
-		} OCVRS_CATCH(Result<cv::Size>)
+		} OCVRS_CATCH(Result<cv::Size>, ocvrs_return)
 	}
 
 	void cv_manual_Mat_set(cv::Mat* instance, cv::Scalar s, Result_void* ocvrs_return) {
 		try {
 			*instance = s;
 			Ok(ocvrs_return);
-		} OCVRS_CATCH(Result_void)
+		} OCVRS_CATCH(Result_void, ocvrs_return)
 	}
 
 	const unsigned char* cv_manual_Mat_data(const cv::Mat* instance) {
@@ -60,7 +60,7 @@ extern "C" {
 	void cv_manual_UMat_size(const cv::UMat* instance, Result<cv::Size>* ocvrs_return) {
 		try {
 			Ok<cv::Size>(instance->size(), ocvrs_return);
-		} OCVRS_CATCH(Result<cv::Size>)
+		} OCVRS_CATCH(Result<cv::Size>, ocvrs_return)
 	}
 
 	int cv_manual_MatSize_dims(const cv::MatSize* instance) {

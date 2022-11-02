@@ -7,6 +7,6 @@ extern "C" {
 	void cv_ORB_create(Result<void*>* ocvrs_return) {
 		try {
 			return Ok<void*>(new cv::Ptr<cv::ORB>(cv::ORB::create()), ocvrs_return);
-		} OCVRS_CATCH(Result<void*>)
+		} OCVRS_CATCH(Result<void*>, ocvrs_return)
 	}
 }
