@@ -84,7 +84,7 @@ jobs:
       OS_FAMILY: ${{ matrix.os.family }}
       RUST_TOOLCHAIN: ${{ matrix.rust }}
       VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
-      VCPKG_TREE_COMMIT: 2022.02.23
+      VCPKG_TREE_COMMIT: 2022.10.19
     steps:
       - uses: actions/checkout@v3
 
@@ -132,7 +132,7 @@ jobs:
             opencv: 3.4.16
             brew: "@3"
           - branch: 4
-            opencv: 4.5.5
+            opencv: 4.6.0
             brew: "@4"
         include:
           - os:

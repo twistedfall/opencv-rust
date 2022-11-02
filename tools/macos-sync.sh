@@ -8,4 +8,6 @@ script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 
 cd "$script_dir/.."
 
-rsync -av --progress --exclude "/target" --exclude "/.idea" ./ "$MACOS_ADDR:opencv-rust/"
+rsync -av --progress --delete \
+	--exclude "/.idea" --exclude "/.git" --exclude "/out" --exclude "/target" --exclude "/ci/test-proj/target" \
+	./ "$MACOS_ADDR:opencv-rust/"
