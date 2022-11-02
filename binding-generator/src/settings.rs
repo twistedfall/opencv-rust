@@ -1040,6 +1040,9 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 			"minIdx" => ArgOverride::Nullable,
 			"maxIdx" => ArgOverride::Nullable,
 		},
+		FuncId::new("cv::EMD", ["signature1", "signature2", "distType", "cost", "lowerBound", "flow"]) => hashmap! {
+			"lowerBound" => ArgOverride::Nullable,
+		},
 		FuncId::new("cv::decodeQRCode", ["in", "points", "decoded_info", "straight_qrcode"]) => hashmap! {
 			"decoded_info" => ArgOverride::StringAsBytes,
 		},
