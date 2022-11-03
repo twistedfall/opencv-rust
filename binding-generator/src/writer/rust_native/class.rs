@@ -5,7 +5,8 @@ use once_cell::sync::Lazy;
 
 use crate::class::Kind;
 use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, FishStyle, NameStyle};
-use crate::{get_debug, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
+use crate::writer::rust_native::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
+use crate::{get_debug, Class, CompiledInterpolation, Element, Func, FunctionTypeHint, IteratorExt, NamePool, StrExt, TypeRef};
 
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
@@ -385,11 +386,13 @@ fn gen_cpp_boxed(c: &Class) -> String {
 		}
 
 		let type_ref = c.type_ref();
+		let delete = method_delete(&rust_local, ClassDesc::from(c), c.gen_env.resolve_typeref("void"));
 		out += &BOXED_CPP_TPL.interpolate(&hashmap! {
 			"rust_local" => type_ref.rust_name(NameStyle::decl()),
 			"cpp_full" => type_ref.cpp_name(CppNameStyle::Reference),
 			"cpp_extern" => type_ref.cpp_extern(),
 			"casts" => casts.into(),
+			"delete" => delete.into(),
 		})
 	}
 	out
@@ -459,4 +462,20 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 		out + &methods.join("")
 	}
+}
+
+fn method_delete(rust_local: &str, class_desc: ClassDesc, void: TypeRef) -> String {
+	CppFuncDesc {
+		extern_name: format!("cv_{}_delete", rust_local).into(),
+		constness: Constness::Mut,
+		is_infallible: true,
+		is_naked_return: true,
+		return_type: void,
+		kind: FuncDescKind::InstanceMethod(class_desc),
+		type_hint: FunctionTypeHint::None,
+		call: FuncDescCppCall::Manual("delete instance".compile_interpolation()),
+		debug: "".to_string(),
+		arguments: vec![],
+	}
+	.gen_cpp()
 }

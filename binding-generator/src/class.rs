@@ -23,7 +23,7 @@ pub enum Kind {
 pub struct Class<'tu, 'ge> {
 	entity: Entity<'tu>,
 	custom_fullname: Option<String>,
-	gen_env: &'ge GeneratorEnv<'tu>,
+	pub(crate) gen_env: &'ge GeneratorEnv<'tu>,
 }
 
 impl<'tu, 'ge> Class<'tu, 'ge> {
