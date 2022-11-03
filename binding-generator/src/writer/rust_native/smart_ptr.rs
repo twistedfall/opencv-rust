@@ -1,8 +1,10 @@
 use maplit::hashmap;
 use once_cell::sync::Lazy;
+use std::borrow::Cow;
 
 use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, NameStyle};
-use crate::{type_ref, CompiledInterpolation, Element, EntityElement, SmartPtr, StrExt};
+use crate::writer::rust_native::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
+use crate::{type_ref, CompiledInterpolation, Element, EntityElement, FunctionTypeHint, SmartPtr, StrExt, TypeRef};
 
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
@@ -88,9 +90,6 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		static BASE_CAST_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/smart_ptr/base_cast.tpl.cpp").compile_interpolation());
 
-		static CTOR_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/smart_ptr/ctor.tpl.cpp").compile_interpolation());
-
 		let type_ref = self.type_ref();
 		let pointee_type = self.pointee();
 
@@ -105,20 +104,17 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		const_renderer.constness_override = ConstnessOverride::Const;
 		let cpp_ref_const = type_ref.render(const_renderer);
 
+		let rust_localalias = self.rust_localalias();
 		let mut inter_vars = hashmap! {
-			"rust_localalias" => self.rust_localalias(),
-			"cpp_extern" => type_ref.cpp_extern(),
+			"rust_localalias" => rust_localalias.as_ref().into(),
 			"cpp_decl" => type_ref.cpp_arg_func_decl("instance").into(),
-			"cpp_full" => type_ref.cpp_name(CppNameStyle::Reference),
 			"cpp_full_const" => cpp_ref_const,
-			"inner_cpp_full" => pointee_type.cpp_name(CppNameStyle::Reference),
 			"inner_cpp_extern" => inner_cpp_extern,
 			"inner_cpp_extern_const" => inner_cpp_extern_const,
 		};
 
 		let mut base_cast = String::new();
-		let pointee_primitive = pointee_type.is_primitive();
-		let mut gen_ctor = pointee_primitive;
+		let mut gen_ctor = pointee_type.is_copy();
 		if let Some(cls) = pointee_type.as_class() {
 			gen_ctor |= !cls.is_abstract();
 			if cls.is_trait() {
@@ -140,24 +136,59 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 				}
 			}
 		}
+		let mut methods = vec![];
 		if gen_ctor {
-			let inner_cpp_func_call = if pointee_primitive {
-				format!("new {typ}(val)", typ = pointee_type.cpp_name(CppNameStyle::Reference)).into()
-			} else {
-				let mut out = pointee_type.cpp_arg_func_call("val");
-				if out.starts_with('*') {
-					out.to_mut().drain(..1);
-				}
-				out
-			};
-			inter_vars.insert("inner_cpp_func_decl", pointee_type.cpp_arg_func_decl("val").into());
-			inter_vars.insert("inner_cpp_func_call", inner_cpp_func_call);
-			inter_vars.insert("ctor", CTOR_TPL.interpolate(&inter_vars).into());
-		} else {
-			inter_vars.insert("ctor", "".into());
+			methods.push(method_new(&rust_localalias, &type_ref, &pointee_type).into());
 		};
+		let smartptr_desc = ClassDesc {
+			is_by_ptr: true,
+			cpp_name_ref: type_ref.cpp_name(CppNameStyle::Reference).into_owned(),
+		};
+		methods.push(method_delete(
+			&rust_localalias,
+			&smartptr_desc,
+			&self.gen_env.resolve_typeref("void"),
+		));
+		inter_vars.insert("methods", methods.join("").into());
 		inter_vars.insert("base_cast", base_cast.into());
 
 		TPL.interpolate(&inter_vars)
 	}
+}
+
+fn method_new(rust_localalias: &str, smartptr_type: &TypeRef, pointee_type: &TypeRef) -> String {
+	let val = if pointee_type.is_copy() {
+		format!("new {typ}(val)", typ = pointee_type.cpp_name(CppNameStyle::Reference)).into()
+	} else {
+		Cow::Borrowed("val")
+	};
+	CppFuncDesc {
+		extern_name: format!("cv_{}_new", rust_localalias).into(),
+		constness: Constness::Const,
+		is_infallible: true,
+		is_naked_return: true,
+		return_type: smartptr_type.clone(),
+		kind: FuncDescKind::Function,
+		type_hint: FunctionTypeHint::None,
+		call: FuncDescCppCall::Manual(format!("{{{{ret_type}}}}({val})", val = val).compile_interpolation()),
+		debug: "".to_string(),
+		arguments: vec![("val".to_string(), pointee_type.clone())],
+	}
+	.gen_cpp()
+}
+
+fn method_delete(rust_localalias: &str, smartptr_desc: &ClassDesc, void: &TypeRef) -> String {
+	CppFuncDesc {
+		extern_name: format!("cv_{}_delete", rust_localalias).into(),
+		constness: Constness::Mut,
+		is_infallible: true,
+		is_naked_return: true,
+		return_type: void.clone(),
+		kind: FuncDescKind::InstanceMethod(smartptr_desc.clone()),
+		type_hint: FunctionTypeHint::None,
+		call: FuncDescCppCall::Manual("delete instance".compile_interpolation()),
+		debug: "".to_string(),
+		arguments: vec![],
+	}
+	.gen_cpp()
 }
