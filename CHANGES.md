@@ -1,3 +1,9 @@
+* 0.72.0
+  * Make `lower_bound` argument of `imgproc::emd()` optional.
+  * Fix semantics of `VectorIterator::nth` to follow the documentation for `Iterator`.
+  * Fix Android build failure introduced ([#392](https://github.com/twistedfall/opencv-rust/issues/392))
+  * Fix constant crate recompilation ([#390](https://github.com/twistedfall/opencv-rust/issues/390))
+
 * 0.71.0
   * Multiple improvements to the `Vector` type:
     * `VectorRefIterator` is not cloneable.
