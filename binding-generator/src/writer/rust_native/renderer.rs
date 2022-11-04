@@ -75,15 +75,15 @@ fn render_cpp_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRe
 pub struct RustRenderer {
 	pub name_style: NameStyle,
 	pub lifetime: Lifetime,
-	pub primitive_ref_as_ptr: bool,
+	pub pass_by_ptr: bool,
 }
 
 impl RustRenderer {
-	pub fn new(name_style: NameStyle, lifetime: Lifetime, primitive_ref_as_ptr: bool) -> Self {
+	pub fn new(name_style: NameStyle, lifetime: Lifetime, pass_by_ptr: bool) -> Self {
 		Self {
 			name_style,
 			lifetime,
-			primitive_ref_as_ptr,
+			pass_by_ptr,
 		}
 	}
 
@@ -137,7 +137,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				//  because some functions can potentially save the pointer to the value, but it will be destroyed after function call
 				inner.render(self.recurse()).into_owned().into()
 			}
-			Kind::Pointer(inner) if self.primitive_ref_as_ptr || inner.is_void() => {
+			Kind::Pointer(inner) if self.pass_by_ptr => {
 				let typ = if inner.is_void() {
 					"c_void".into()
 				} else {
@@ -177,7 +177,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 						unimplemented!("Support for lifetime count >= 2 is not implemented yet");
 					}
 					if self.lifetime.is_explicit() {
-						out.write_fmt(format_args!("<{}>", self.lifetime)).expect("Impossible");
+						write!(out, "<{}>", self.lifetime).expect("Impossible");
 					}
 				}
 				out.into()
@@ -190,9 +190,8 @@ impl TypeRefRenderer<'_> for RustRenderer {
 
 	fn recurse(&self) -> Self {
 		Self {
-			name_style: self.name_style,
 			lifetime: self.lifetime.next().expect("Too many lifetimes"),
-			primitive_ref_as_ptr: self.primitive_ref_as_ptr,
+			..*self
 		}
 	}
 }
@@ -272,7 +271,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 				)
 			}
 			Kind::Class(cls) => {
-				let mut out: String = cls.cpp_name(self.name_style).into_owned();
+				let mut out = cls.cpp_name(self.name_style).into_owned();
 				if !type_ref.is_std_string() {
 					// fixme prevents emission of std::string<char>
 					out += &render_cpp_tpl_decl(self, type_ref);
@@ -346,7 +345,7 @@ impl<'a> TypeRefRenderer<'a> for CppExternReturnRenderer {
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		if type_ref.as_string().is_some() {
 			"void*".into()
-		} else if type_ref.is_by_ptr() && !type_ref.as_abstract_class_ptr().is_some() {
+		} else if type_ref.is_extern_by_ptr() && !type_ref.as_abstract_class_ptr().is_some() {
 			format!("{typ}*", typ = self.recurse().render(type_ref)).into()
 		} else {
 			self.recurse().render(type_ref)

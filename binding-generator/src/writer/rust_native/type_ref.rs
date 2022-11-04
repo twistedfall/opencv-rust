@@ -41,7 +41,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	}
 
 	fn rust_self_func_decl(&self, method_constness: Constness) -> String {
-		if self.is_by_ptr() {
+		if self.is_extern_by_ptr() {
 			if method_constness.is_const() {
 				"&self".to_string()
 			} else {
@@ -53,7 +53,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	}
 
 	fn rust_arg_func_decl(&self, name: &str) -> String {
-		#[allow(clippy::never_loop)] // fixme use named block when stable
+		#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
 		let typ = 'decl_type: loop {
 			if let Some(dir) = self.as_string() {
 				break 'decl_type match dir {
@@ -77,13 +77,13 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 			}
 			break 'decl_type self.rust_name(NameStyle::ref_());
 		};
-		let mutable =
-			if self.is_by_ptr() && !self.constness().is_const() && !self.as_pointer().is_some() && !self.as_reference().is_some() {
-				"mut "
-			} else {
-				""
-			};
-		format!("{mutable}{name}: {typ}", mutable = mutable, name = name, typ = typ)
+		let cnst = Constness::from_is_mut(
+			self.is_extern_by_ptr()
+				&& !self.constness().is_const()
+				&& !self.as_pointer().is_some()
+				&& !self.as_reference().is_some(),
+		);
+		format!("{cnst}{name}: {typ}", cnst = cnst.rust_qual(false), name = name, typ = typ)
 	}
 
 	fn rust_extern_self_func_decl(&self, method_constness: Constness) -> String {
@@ -196,7 +196,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		if self.as_simple_class().is_some() {
 			return format!("{name}.opencv_as_extern()", name = name);
 		}
-		if self.is_by_ptr() {
+		if self.is_extern_by_ptr() {
 			let typ = self.source();
 			let by_ptr = if constness.with(self.constness()).is_const() {
 				format!(
@@ -314,7 +314,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 				typ = self.source().rust_name(NameStyle::Reference(turbo_fish_style)),
 			)
 			.into()
-		} else if self.is_by_ptr() {
+		} else if self.is_extern_by_ptr() {
 			self
 				.source()
 				.rust_name(NameStyle::Reference(turbo_fish_style))
@@ -347,7 +347,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		} else {
 			""
 		};
-		if self.is_by_ptr() {
+		if self.is_extern_by_ptr() {
 			format!(
 				"{cnst}{typ}* instance",
 				cnst = cnst,
@@ -404,7 +404,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 			}
 			Some(Dir::In(StrType::CharPtr)) | None => {}
 		}
-		if self.is_by_ptr() {
+		if self.is_extern_by_ptr() {
 			return if self.as_pointer().is_some() {
 				name
 			} else {

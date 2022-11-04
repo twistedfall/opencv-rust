@@ -342,7 +342,7 @@ pub fn render_doc_comment_with_processor(
 		)
 	};
 	if let Some(deprecated) = deprecated {
-		write!(&mut out, "\n#[deprecated = \"{}\"]", deprecated).expect("write! to String shouldn't fail");
+		write!(out, "\n#[deprecated = \"{}\"]", deprecated).expect("write! to String shouldn't fail");
 	}
 	out
 }

@@ -670,10 +670,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn is_by_ptr(&self) -> bool {
+	pub fn is_extern_by_ptr(&self) -> bool {
 		match self.canonical().kind() {
 			Kind::Class(inner) => inner.is_by_ptr(),
-			Kind::Reference(inner) | Kind::Pointer(inner) => inner.is_by_ptr(),
+			Kind::Reference(inner) | Kind::Pointer(inner) => inner.is_extern_by_ptr(),
 			Kind::SmartPtr(..) | Kind::StdVector(..) => true,
 			_ => false,
 		}
@@ -683,7 +683,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		settings::DATA_TYPES.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
 	}
 
-	pub fn can_pass_by_ptr(&self) -> bool {
+	fn can_pass_by_ptr(&self) -> bool {
 		if let Some(inner) = self.as_pointer() {
 			if inner.is_primitive() && !self.as_string().is_some() {
 				return true;
@@ -692,6 +692,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		false
 	}
 
+	/// True for types that get passed by Rust pointer
 	pub fn is_pass_by_ptr(&self) -> bool {
 		self.is_void_ptr() || matches!(self.type_hint, TypeRefTypeHint::PrimitiveRefAsPointer) && self.can_pass_by_ptr()
 	}
@@ -742,7 +743,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			Kind::StdVector(vec) => vec.rust_localalias().into_owned(),
 			Kind::Pointer(inner) => {
 				let mut inner_safe_id: String = inner.rust_safe_id(add_const).into_owned();
-				if !self.is_by_ptr() {
+				if !self.is_extern_by_ptr() {
 					inner_safe_id += "_X";
 				}
 				inner_safe_id
@@ -813,7 +814,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn rust_extern(&self, constness: ConstnessOverride) -> Cow<str> {
 		let constness = constness.with(self.constness());
-		#[allow(clippy::never_loop)] // fixme use named block when stable
+		#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
 		'typ: loop {
 			if let Some(dir) = self.as_string() {
 				match dir {
@@ -829,7 +830,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					}
 				}
 			}
-			if self.is_by_ptr() {
+			if self.is_extern_by_ptr() {
 				break 'typ if constness.is_const() {
 					"*const c_void"
 				} else {
@@ -839,8 +840,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			}
 			if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
 				let mut out = String::with_capacity(64);
-				out.write_fmt(format_args!("*{}", self.constness().rust_qual(true)))
-					.expect("Impossible");
+				write!(out, "*{}", self.constness().rust_qual(true)).expect("Impossible");
 				if inner.is_void() {
 					out += "c_void";
 				} else if self.as_string().is_some() {
@@ -1029,7 +1029,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				Dir::In(_) => format!("{cnst}char*{name}", cnst = self.constness().cpp_qual(), name = space_name).into(),
 				Dir::Out(_) => format!("{cnst}void*{name}", cnst = self.constness().cpp_qual(), name = space_name).into(),
 			}
-		} else if self.is_by_ptr() {
+		} else if self.is_extern_by_ptr() {
 			if self.as_pointer().is_some() || self.as_reference().is_some() {
 				format!("{typ}{name}", typ = self.cpp_name(CppNameStyle::Reference), name = space_name).into()
 			} else {
@@ -1121,7 +1121,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		if self.is_copy() {
 			props.push("copy");
 		}
-		if self.is_by_ptr() {
+		if self.is_extern_by_ptr() {
 			props.push("by_ptr");
 		}
 		if self.is_generic() {

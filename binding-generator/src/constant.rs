@@ -16,7 +16,7 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> 
 	for t in tokens {
 		match t.get_kind() {
 			TokenKind::Comment => {
-				write!(&mut out.value, "/* {} */", t.get_spelling()).expect("write! to String shouldn't fail");
+				write!(out.value, "/* {} */", t.get_spelling()).expect("write! to String shouldn't fail");
 			}
 			TokenKind::Identifier => {
 				let spelling = t.get_spelling();

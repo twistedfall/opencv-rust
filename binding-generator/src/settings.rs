@@ -492,7 +492,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		// ### stitching ###
 		"cv_Stitcher_composePanorama_const__InputArrayR_const__OutputArrayR" => "+_images",
 		"cv_Stitcher_stitch_const__InputArrayR_const__InputArrayR_const__OutputArrayR" => "+_mask",
-		"cv_Stitcher_stitch_const__InputArrayR_const_vector_vector_Rect__R_const__OutputArrayR" => "+_rois", // 3.2 3.4
 
 		// ### surface_matching ###
 		"cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vector_Pose3DPtr_R" => "+_vec",

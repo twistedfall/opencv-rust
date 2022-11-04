@@ -367,7 +367,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			ret_type.is_primitive()
 				|| ret_type.as_pointer().is_some()
 				|| ret_type.as_array().is_some()
-				|| ret_type.is_by_ptr()
+				|| ret_type.is_extern_by_ptr()
 				|| ret_type.as_string().is_some()
 		}
 	}
@@ -508,9 +508,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			let local_name = DefaultElement::cpp_name(self, CppNameStyle::Declaration);
 			let (first_letter, rest) = local_name.split_at(1);
 			if self.as_field_setter().is_some() {
-				write!(&mut out, "setProp{}{}", first_letter.to_uppercase(), rest).expect("write! to String shouldn't fail");
+				write!(out, "setProp{}{}", first_letter.to_uppercase(), rest).expect("write! to String shouldn't fail");
 			} else {
-				write!(&mut out, "getProp{}{}", first_letter.to_uppercase(), rest).expect("write! to String shouldn't fail");
+				write!(out, "getProp{}{}", first_letter.to_uppercase(), rest).expect("write! to String shouldn't fail");
 			}
 			out
 		} else {
@@ -693,7 +693,7 @@ impl Element for Func<'_, '_> {
 		let kind = self.kind();
 		let rust_name = if let Some(cls) = kind.as_constructor() {
 			let args = self.arguments();
-			#[allow(clippy::never_loop)] // fixme use named block when stable
+			#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
 			'ctor_name: loop {
 				if args.is_empty() {
 					break 'ctor_name "default";

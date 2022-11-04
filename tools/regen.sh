@@ -17,6 +17,7 @@ rm -rf "$bindings_dir"
 mkdir -p "$bindings_dir"
 
 temp_proj="opencv-temp-$branch"
+rm -rf "$temp_proj"
 git clone --depth=1 "file://$script_dir/.." "$temp_proj"
 rm -rf "$temp_proj/.git"
 pushd "$temp_proj"

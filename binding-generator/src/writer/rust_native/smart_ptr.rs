@@ -96,7 +96,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 
 		let mut inner_cpp_extern = pointee_type.cpp_extern_return(ConstnessOverride::No);
 		let mut inner_cpp_extern_const = pointee_type.cpp_extern_return(ConstnessOverride::Const);
-		if !pointee_type.is_by_ptr() {
+		if !pointee_type.is_extern_by_ptr() {
 			inner_cpp_extern.to_mut().push('*');
 			inner_cpp_extern_const.to_mut().push('*');
 		}

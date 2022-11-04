@@ -191,7 +191,7 @@ fn rust_return_map(
 	} else {
 		""
 	};
-	if return_type.as_string().is_some() || return_type.is_by_ptr() {
+	if return_type.as_string().is_some() || return_type.is_extern_by_ptr() {
 		format!(
 			"{unsafety_call}{{ {typ}::opencv_from_extern({ret_name}) }}",
 			unsafety_call = unsafety_call,
@@ -203,9 +203,9 @@ fn rust_return_map(
 		|| return_type.as_fixed_array().is_some()
 	{
 		let ptr_call = if return_type.constness().is_const() {
-			"ref"
+			"as_ref"
 		} else {
-			"mut"
+			"as_mut"
 		};
 		let error_handling = if is_infallible {
 			".expect(\"Function returned null pointer\")"
@@ -213,7 +213,7 @@ fn rust_return_map(
 			".ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned null pointer\"))?"
 		};
 		format!(
-			"{unsafety_call}{{ {ret_name}.as_{ptr_call}() }}{error_handling}",
+			"{unsafety_call}{{ {ret_name}.{ptr_call}() }}{error_handling}",
 			unsafety_call = unsafety_call,
 			ret_name = ret_name,
 			ptr_call = ptr_call,
@@ -228,7 +228,7 @@ fn rust_return_map(
 pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: bool) -> (Cow<'f, str>, bool) {
 	if return_type.is_void() {
 		("".into(), false)
-	} else if return_type.is_by_ptr() && !is_constructor {
+	} else if return_type.is_extern_by_ptr() && !is_constructor {
 		let out = return_type.source().as_class().filter(|cls| cls.is_abstract()).map_or_else(
 			|| {
 				format!(

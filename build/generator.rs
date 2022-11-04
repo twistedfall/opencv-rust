@@ -156,11 +156,11 @@ pub fn gen_wrapper(
 	let mut hub_rs = File::create(target_hub_dir.join("hub.rs"))?;
 
 	let mut types_rs = File::create(target_module_dir.join("types.rs"))?;
-	writeln!(&mut types_rs)?;
+	writeln!(types_rs)?;
 
 	let mut sys_rs = File::create(target_module_dir.join("sys.rs"))?;
-	writeln!(&mut sys_rs, "use crate::{{mod_prelude_sys::*, core}};")?;
-	writeln!(&mut sys_rs)?;
+	writeln!(sys_rs, "use crate::{{mod_prelude_sys::*, core}};")?;
+	writeln!(sys_rs)?;
 
 	for module in modules {
 		// merge multiple *-type.cpp files into a single module_types.hpp
@@ -184,7 +184,7 @@ pub fn gen_wrapper(
 
 		// add module entry to hub.rs and move the file into src/opencv/hub
 		write_has_module(&mut hub_rs, module)?;
-		writeln!(&mut hub_rs, "pub mod {};", module)?;
+		writeln!(hub_rs, "pub mod {};", module)?;
 		let module_filename = format!("{}.rs", module);
 		let target_file = file_move_to_dir(&OUT_DIR.join(&module_filename), &target_module_dir)?;
 		let mut f = OpenOptions::new().append(true).open(&target_file)?;
@@ -200,9 +200,9 @@ pub fn gen_wrapper(
 			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
 				if !header_written {
 					write_has_module(&mut types_rs, module)?;
-					writeln!(&mut types_rs, "mod {}_types {{", module)?;
-					writeln!(&mut types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
-					writeln!(&mut types_rs)?;
+					writeln!(types_rs, "mod {}_types {{", module)?;
+					writeln!(types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
+					writeln!(types_rs)?;
 					header_written = true;
 				}
 				copy_indent(BufReader::new(File::open(&entry)?), &mut types_rs, "\t")?;
@@ -210,41 +210,41 @@ pub fn gen_wrapper(
 			let _ = fs::remove_file(entry);
 		}
 		if header_written {
-			writeln!(&mut types_rs, "}}")?;
+			writeln!(types_rs, "}}")?;
 			write_has_module(&mut types_rs, module)?;
-			writeln!(&mut types_rs, "pub use {}_types::*;", module)?;
-			writeln!(&mut types_rs)?;
+			writeln!(types_rs, "pub use {}_types::*;", module)?;
+			writeln!(types_rs)?;
 		}
 
 		// merge module-specific *.externs.rs into a single sys.rs
 		let externs_rs = OUT_DIR.join(format!("{}.externs.rs", module));
 		write_has_module(&mut sys_rs, module)?;
-		writeln!(&mut sys_rs, "mod {}_sys {{", module)?;
-		writeln!(&mut sys_rs, "\tuse super::*;")?;
-		writeln!(&mut sys_rs)?;
+		writeln!(sys_rs, "mod {}_sys {{", module)?;
+		writeln!(sys_rs, "\tuse super::*;")?;
+		writeln!(sys_rs)?;
 		copy_indent(BufReader::new(File::open(&externs_rs)?), &mut sys_rs, "\t")?;
 		let _ = fs::remove_file(externs_rs);
-		writeln!(&mut sys_rs, "}}")?;
+		writeln!(sys_rs, "}}")?;
 		write_has_module(&mut sys_rs, module)?;
-		writeln!(&mut sys_rs, "pub use {}_sys::*;", module)?;
-		writeln!(&mut sys_rs)?;
+		writeln!(sys_rs, "pub use {}_sys::*;", module)?;
+		writeln!(sys_rs)?;
 	}
-	writeln!(&mut hub_rs, "pub mod types;")?;
-	writeln!(&mut hub_rs, "#[doc(hidden)]")?;
-	writeln!(&mut hub_rs, "pub mod sys;")?;
+	writeln!(hub_rs, "pub mod types;")?;
+	writeln!(hub_rs, "#[doc(hidden)]")?;
+	writeln!(hub_rs, "pub mod sys;")?;
 
 	add_manual(&mut types_rs, "types")?;
 
 	add_manual(&mut sys_rs, "sys")?;
 
 	// write hub_prelude that imports all module-specific preludes
-	writeln!(&mut hub_rs, "pub mod hub_prelude {{")?;
+	writeln!(hub_rs, "pub mod hub_prelude {{")?;
 	for module in modules {
-		write!(&mut hub_rs, "\t")?;
+		write!(hub_rs, "\t")?;
 		write_has_module(&mut hub_rs, module)?;
-		writeln!(&mut hub_rs, "\tpub use super::{}::prelude::*;", module)?;
+		writeln!(hub_rs, "\tpub use super::{}::prelude::*;", module)?;
 	}
-	writeln!(&mut hub_rs, "}}")?;
+	writeln!(hub_rs, "}}")?;
 
 	Ok(())
 }

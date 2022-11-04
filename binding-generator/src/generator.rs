@@ -114,10 +114,10 @@ impl<'m> EphemeralGenerator<'m> {
 		let module_tweaks = settings::GENERATOR_MODULE_TWEAKS.get(self.module);
 		for tweak in global_tweaks.iter().chain(module_tweaks.iter()) {
 			for &include in &tweak.includes {
-				writeln!(&mut includes, "#include <opencv2/{}>", include).expect("Can't fail");
+				writeln!(includes, "#include <opencv2/{}>", include).expect("Can't fail");
 			}
 			for &res_type in &tweak.resolve_types {
-				writeln!(&mut resolve_types, "typedef {} ephem{};", res_type, resolve_types_idx).expect("Can't fail");
+				writeln!(resolve_types, "typedef {} ephem{};", res_type, resolve_types_idx).expect("Can't fail");
 				resolve_types_idx += 1;
 			}
 			for &gen_type in &tweak.generate_types {
