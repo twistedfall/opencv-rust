@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
-use std::{env, io};
+use std::{env, io, iter};
 
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
@@ -36,7 +36,7 @@ static OPENCV_BRANCH_34: Lazy<VersionReq> =
 static OPENCV_BRANCH_4: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
 
-static ENV_VARS: [&str; 15] = [
+static ENV_VARS: [&str; 14] = [
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
 	"OPENCV_CMAKE_NAME",
@@ -51,7 +51,6 @@ static ENV_VARS: [&str; 15] = [
 	"PKG_CONFIG_PATH",
 	"VCPKG_ROOT",
 	"VCPKGRS_DYNAMIC",
-	"PATH",
 ];
 
 fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Result<impl Iterator<Item = PathBuf> + 'e> {
@@ -314,7 +313,7 @@ fn main() -> Result<()> {
 
 	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));
 	eprintln!("=== Environment configuration:");
-	for &v in ENV_VARS.iter() {
+	for v in ENV_VARS.iter().copied().chain(iter::once("PATH")) {
 		eprintln!("===   {} = {:?}", v, env::var_os(v));
 	}
 	eprintln!("=== Enabled features:");
