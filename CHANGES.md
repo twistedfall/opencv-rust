@@ -1,4 +1,4 @@
-* 0.72.0
+* 0.72.0/0.72.1
   * Make `lower_bound` argument of `imgproc::emd()` optional.
   * Fix semantics of `VectorIterator::nth` to follow the documentation for `Iterator`.
   * Fix Android build failure introduced ([#392](https://github.com/twistedfall/opencv-rust/issues/392))
