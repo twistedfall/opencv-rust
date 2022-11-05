@@ -154,6 +154,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				);
 				self.wrap_nullable(type_ref, typ.into())
 			}
+			Kind::RValueReference(inner) => inner.render(self.recurse()).into_owned().into(),
 			Kind::SmartPtr(ptr) => {
 				let typ = ptr.rust_name(self.name_style).into_owned();
 				self.wrap_nullable(type_ref, typ.into())
@@ -258,7 +259,10 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 			Kind::Reference(inner) if !self.extern_types => {
 				format!("{typ}&{name}", typ = inner.render(self.recurse()), name = space_const_name)
 			}
-			Kind::Pointer(inner) | Kind::Reference(inner) => {
+			Kind::RValueReference(inner) if !self.extern_types => {
+				format!("{typ}&&{name}", typ = inner.render(self.recurse()), name = space_const_name)
+			}
+			Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => {
 				format!("{typ}*{name}", typ = inner.render(self.recurse()), name = space_const_name)
 			}
 			Kind::SmartPtr(ptr) => {

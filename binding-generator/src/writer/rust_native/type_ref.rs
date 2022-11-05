@@ -78,10 +78,11 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 			break 'decl_type self.rust_name(NameStyle::ref_());
 		};
 		let cnst = Constness::from_is_mut(
-			self.is_extern_by_ptr()
-				&& !self.constness().is_const()
-				&& !self.as_pointer().is_some()
-				&& !self.as_reference().is_some(),
+			self.is_by_move()
+				|| self.is_extern_by_ptr()
+					&& self.constness().is_mut()
+					&& !self.as_pointer().is_some()
+					&& !self.as_reference().is_some(),
 		);
 		format!("{cnst}{name}: {typ}", cnst = cnst.rust_qual(false), name = name, typ = typ)
 	}
@@ -189,9 +190,11 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 			};
 		}
 		if self.as_reference().map_or(false, |inner| {
-			(inner.as_simple_class().is_some() || inner.is_enum()) && (constness.with(inner.constness()).is_const())
+			(inner.as_simple_class().is_some() || inner.is_enum())
+				&& (constness.with(inner.constness()).is_const() || self.is_by_move())
 		}) {
-			return format!("&{name}", name = name);
+			let cnst = constness.with(self.constness());
+			return format!("&{cnst}{name}", cnst = cnst.rust_qual(false), name = name);
 		}
 		if self.as_simple_class().is_some() {
 			return format!("{name}.opencv_as_extern()", name = name);
@@ -403,6 +406,9 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 				return format!("cv::String({name})", name = name).into();
 			}
 			Some(Dir::In(StrType::CharPtr)) | None => {}
+		}
+		if self.is_by_move() {
+			return format!("std::move(*{name})", name = name).into();
 		}
 		if self.is_extern_by_ptr() {
 			return if self.as_pointer().is_some() {

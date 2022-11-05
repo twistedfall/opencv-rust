@@ -62,6 +62,7 @@ pub enum Kind<'tu, 'ge> {
 	StdVector(Vector<'tu, 'ge>),
 	Pointer(TypeRef<'tu, 'ge>),
 	Reference(TypeRef<'tu, 'ge>),
+	RValueReference(TypeRef<'tu, 'ge>),
 	SmartPtr(SmartPtr<'tu, 'ge>),
 	Class(Class<'tu, 'ge>),
 	Enum(Enum<'tu>),
@@ -157,7 +158,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				}
 			}
 
-			TypeKind::LValueReference | TypeKind::RValueReference => Kind::Reference(TypeRef::new_ext(
+			TypeKind::LValueReference => Kind::Reference(TypeRef::new_ext(
+				self.type_ref.get_pointee_type().expect("No pointee type for reference"),
+				self.type_hint,
+				self.parent_entity,
+				self.gen_env,
+			)),
+
+			TypeKind::RValueReference => Kind::RValueReference(TypeRef::new_ext(
 				self.type_ref.get_pointee_type().expect("No pointee type for reference"),
 				self.type_hint,
 				self.parent_entity,
@@ -308,7 +316,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn source(&self) -> TypeRef<'tu, 'ge> {
 		let canonical = self.canonical();
 		match canonical.kind() {
-			Kind::Pointer(inner) | Kind::Reference(inner) => inner.source(),
+			Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => inner.source(),
 			_ => canonical,
 		}
 	}
@@ -341,7 +349,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			|| match self.kind() {
 				Kind::Array(inner, ..) => inner.is_ignored(),
 				Kind::StdVector(vec) => vec.is_ignored(),
-				Kind::Pointer(inner) | Kind::Reference(inner) => inner.is_ignored(),
+				Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => inner.is_ignored(),
 				Kind::SmartPtr(ptr) => ptr.is_ignored(),
 				Kind::Class(cls) => cls.is_ignored(),
 				Kind::Typedef(tdef) => tdef.is_ignored(),
@@ -378,7 +386,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				}
 				Kind::Array(elem, ..) => elem.clang_constness(),
 				Kind::StdVector(vec) => vec.element_type().clang_constness(),
-				Kind::Pointer(inner) | Kind::Reference(inner) => inner.clang_constness(),
+				Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => inner.clang_constness(),
 				Kind::SmartPtr(ptr) => ptr.pointee().clang_constness(),
 				Kind::Typedef(decl) => decl.underlying_type_ref().constness(),
 			}
@@ -541,8 +549,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	pub fn is_by_move(&self) -> bool {
+		matches!(self.canonical().kind(), Kind::RValueReference(_))
+	}
+
 	pub fn as_reference(&self) -> Option<TypeRef<'tu, 'ge>> {
-		if let Kind::Reference(out) = self.canonical().kind() {
+		if let Kind::Reference(out) | Kind::RValueReference(out) = self.canonical().kind() {
 			Some(out)
 		} else {
 			None
@@ -673,7 +685,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn is_extern_by_ptr(&self) -> bool {
 		match self.canonical().kind() {
 			Kind::Class(inner) => inner.is_by_ptr(),
-			Kind::Reference(inner) | Kind::Pointer(inner) => inner.is_extern_by_ptr(),
+			Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => inner.is_extern_by_ptr(),
 			Kind::SmartPtr(..) | Kind::StdVector(..) => true,
 			_ => false,
 		}
@@ -748,7 +760,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				}
 				inner_safe_id
 			}
-			Kind::Reference(inner) => inner.rust_safe_id(add_const).into_owned(),
+			Kind::Reference(inner) | Kind::RValueReference(inner) => inner.rust_safe_id(add_const).into_owned(),
 			Kind::SmartPtr(ptr) => ptr.rust_localalias().into_owned(),
 			Kind::Class(cls) => cls.rust_name(NameStyle::decl()).into_owned(),
 			Kind::Primitive(..) | Kind::Enum(..) | Kind::Function(..) | Kind::Typedef(..) | Kind::Generic(..) | Kind::Ignored => {
@@ -763,7 +775,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		match self.kind() {
 			Kind::Primitive(..) => "core".into(),
 			Kind::StdVector(vec) => vec.rust_element_module().into_owned().into(),
-			Kind::Array(inner, ..) | Kind::Pointer(inner) | Kind::Reference(inner) => inner.rust_module().into_owned().into(),
+			Kind::Array(inner, ..) | Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => {
+				inner.rust_module().into_owned().into()
+			}
 			Kind::SmartPtr(ptr) => ptr.rust_module().into_owned().into(),
 			Kind::Class(cls) => cls.rust_module().into_owned().into(),
 			Kind::Enum(enm) => enm.rust_module().into_owned().into(),
