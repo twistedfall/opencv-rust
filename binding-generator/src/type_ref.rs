@@ -744,6 +744,20 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	/// For when a type needs to be part of the user-visible Rust method name
+	///
+	/// Return a lightweight lowercase type representation, might not be precise. For example it's used for operator bindings so
+	/// that `operator &` on 2 `Mat`s translates into `and_mat_mat()`.
+	pub fn rust_simple_name(&self) -> String {
+		let maybe_ptr = self.as_pointer().or_else(|| self.as_reference());
+		let type_ref = if let Some(inner) = maybe_ptr.as_ref() {
+			inner
+		} else {
+			self
+		};
+		type_ref.rust_name(NameStyle::Declaration).to_lowercase()
+	}
+
 	pub fn rust_safe_id(&self, add_const: bool) -> Cow<str> {
 		let mut out = String::with_capacity(64);
 		let kind = self.kind();

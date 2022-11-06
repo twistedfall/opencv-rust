@@ -231,12 +231,13 @@ impl StringExt for String {
 	fn cleanup_name(&mut self) {
 		// todo aho-corasick?
 		self.replace_in_place(" ", "_");
-		self.replace_in_place("<", "_");
-		self.replace_in_place(">", "_");
+		self.replace_in_place(">=", "GE");
+		self.replace_in_place("<=", "LE");
+		self.replace_in_place("<", "L");
+		self.replace_in_place(">", "G");
 		self.replace_in_place("(", "_");
 		self.replace_in_place(")", "_");
 		self.replace_in_place("*", "X");
-		self.replace_in_place("&&", "R");
 		self.replace_in_place("&", "R");
 		self.replace_in_place(",", "_");
 		self.replace_in_place("[", "_");
@@ -246,6 +247,10 @@ impl StringExt for String {
 		self.replace_in_place("-", "S");
 		self.replace_in_place("/", "D");
 		self.replace_in_place("==", "EQ");
+		self.replace_in_place("!=", "NE");
+		self.replace_in_place("|", "OR");
+		self.replace_in_place("^", "XOR");
+		self.replace_in_place("~", "NOTB");
 	}
 }
 

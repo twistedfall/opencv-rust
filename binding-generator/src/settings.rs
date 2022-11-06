@@ -26,7 +26,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_bioinspired_createRetina_OCL_Size_const_bool_int_const_bool_const_float_const_float" => "+_ext", // 3.2 only
 
 		// ### calib3d ###
-		"cv_LMSolver_create_const_Ptr_Callback_R_int_double" => "+_ext",
+		"cv_LMSolver_create_const_PtrLCallbackGR_int_double" => "+_ext",
 		"cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR" => "+_matrix",
 		"cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double" => "+_mask",
 		"cv_findHomography_const__InputArrayR_const__InputArrayR_int_double_const__OutputArrayR_const_int_const_double" => "+_ext",
@@ -44,7 +44,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_double_const__InputOutputArrayR" => "+_2_cameras",
 
 		// ### core ###
-		"cv_Algorithm_write_const_const_Ptr_FileStorage_R_const_StringR" => "+_with_name",
+		"cv_Algorithm_write_const_const_PtrLFileStorageGR_const_StringR" => "+_with_name",
 		"cv_AsyncArray_get_const_const__OutputArrayR_double" => "+_with_timeout_f64",
 		"cv_AsyncArray_get_const_const__OutputArrayR_int64_t" => "+_with_timeout",
 		"cv_AsyncArray_wait_for_const_double" => "+_f64",
@@ -52,12 +52,12 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_DMatch_DMatch_int_int_int_float" => "new_index",
 		"cv_FileStorage_write_const_StringR_const_MatR" => "+_mat",
 		"cv_FileStorage_write_const_StringR_const_StringR" => "+_str",
-		"cv_FileStorage_write_const_StringR_const_vector_String_R" => "+_str_vec",
+		"cv_FileStorage_write_const_StringR_const_vectorLStringGR" => "+_str_vec",
 		"cv_FileStorage_write_const_StringR_double" => "+_f64",
 		"cv_FileStorage_write_const_StringR_int" => "+_i32",
 		"cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int" => "+_point",
 		"cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int" => "+_coords",
-		"cv_KeyPoint_convert_const_vector_Point2f_R_vector_KeyPoint_R_float_float_int_int" => "+_to",
+		"cv_KeyPoint_convert_const_vectorLPoint2fGR_vectorLKeyPointGR_float_float_int_int" => "+_to",
 		"cv_LDA_LDA_const__InputArrayR_const__InputArrayR_int" => "+_with_data",
 		"cv_LU_floatX_size_t_int_floatX_size_t_int" => "lu_f32",
 		"cv_MatConstIterator_MatConstIterator_const_MatX" => "over",
@@ -79,10 +79,10 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_Mat_Mat_const_GpuMatR" => "from_gpumat",
 		"cv_Mat_Mat_const_MatR_const_RangeR_const_RangeR" => "rowscols",
 		"cv_Mat_Mat_const_MatR_const_RectR" => "roi",
-		"cv_Mat_Mat_const_MatR_const_vector_Range_R" => "ranges",
-		"cv_Mat_Mat_const_vector_int_R_int" => "+_nd_vec",
-		"cv_Mat_Mat_const_vector_int_R_int_const_ScalarR" => "+_nd_vec_with_default",
-		"cv_Mat_Mat_const_vector_int_R_int_voidX_const_size_tX" => "+_nd_vec_with_data",
+		"cv_Mat_Mat_const_MatR_const_vectorLRangeGR" => "ranges",
+		"cv_Mat_Mat_const_vectorLintGR_int" => "+_nd_vec",
+		"cv_Mat_Mat_const_vectorLintGR_int_const_ScalarR" => "+_nd_vec_with_default",
+		"cv_Mat_Mat_const_vectorLintGR_int_voidX_const_size_tX" => "+_nd_vec_with_data",
 		"cv_Mat_Mat_int_const_intX_int" => "+_nd",
 		"cv_Mat_Mat_int_const_intX_int_const_ScalarR" => "+_nd_with_default",
 		"cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX" => "+_nd_with_data",
@@ -101,7 +101,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_Mat_colRange_const_int_int" => "col_bounds",
 		"cv_Mat_copyTo_const_const__OutputArrayR_const__InputArrayR" => "+_masked",
 		"cv_Mat_create_Size_int" => "+_size",
-		"cv_Mat_create_const_vector_int_R_int" => "+_nd_vec",
+		"cv_Mat_create_const_vectorLintGR_int" => "+_nd_vec",
 		"cv_Mat_create_int_const_intX_int" => "+_nd",
 		"cv_Mat_create_int_int_int" => "+_rows_cols",
 		"cv_Mat_diag_const_MatR" => "+_mat",
@@ -120,7 +120,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_Mat_ptr_int" => "+_mut",
 		"cv_Mat_ptr_int_int" => "+_2d_mut",
 		"cv_Mat_ptr_int_int_int" => "+_3d_mut",
-		"cv_Mat_reshape_const_int_const_vector_int_R" => "+_nd_vec",
+		"cv_Mat_reshape_const_int_const_vectorLintGR" => "+_nd_vec",
 		"cv_Mat_reshape_const_int_int_const_intX" => "+_nd",
 		"cv_Mat_resize_size_t_const_ScalarR" => "+_with_default",
 		"cv_Mat_rowRange_const_int_int" => "row_bounds",
@@ -145,7 +145,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_UMat_UMat_Size_int_const_ScalarR_UMatUsageFlags" => "+_size_with_default",
 		"cv_UMat_UMat_const_UMatR_const_RangeR_const_RangeR" => "rowscols",
 		"cv_UMat_UMat_const_UMatR_const_RectR" => "roi",
-		"cv_UMat_UMat_const_UMatR_const_vector_Range_R" => "ranges",
+		"cv_UMat_UMat_const_UMatR_const_vectorLRangeGR" => "ranges",
 		"cv_UMat_UMat_int_const_intX_int_UMatUsageFlags" => "+_nd",
 		"cv_UMat_UMat_int_const_intX_int_const_ScalarR_UMatUsageFlags" => "+_nd_with_default",
 		"cv_UMat_UMat_int_int_int_UMatUsageFlags" => "+_rows_cols",
@@ -153,7 +153,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_UMat_colRange_const_int_int" => "col_bounds",
 		"cv_UMat_copyTo_const_const__OutputArrayR_const__InputArrayR" => "+_masked",
 		"cv_UMat_create_Size_int_UMatUsageFlags" => "+_size",
-		"cv_UMat_create_const_vector_int_R_int_UMatUsageFlags" => "+_nd_vec",
+		"cv_UMat_create_const_vectorLintGR_int_UMatUsageFlags" => "+_nd_vec",
 		"cv_UMat_create_int_const_intX_int_UMatUsageFlags" => "+_nd",
 		"cv_UMat_create_int_int_int_UMatUsageFlags" => "+_rows_cols",
 		"cv_UMat_getPropSize_const" => "mat_size",
@@ -166,10 +166,10 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv__InputArray__InputArray_const_MatR" => "from_mat",
 		"cv__InputArray__InputArray_const_UMatR" => "from_umat",
 		"cv__InputArray__InputArray_const_doubleR" => "from_f64",
-		"cv__InputArray__InputArray_const_vector_GpuMat_R" => "from_gpumat_vec",
-		"cv__InputArray__InputArray_const_vector_Mat_R" => "from_mat_vec",
-		"cv__InputArray__InputArray_const_vector_UMat_R" => "from_umat_vec",
-		"cv__InputArray__InputArray_const_vector_bool_R" => "from_bool_vec",
+		"cv__InputArray__InputArray_const_vectorLGpuMatGR" => "from_gpumat_vec",
+		"cv__InputArray__InputArray_const_vectorLMatGR" => "from_mat_vec",
+		"cv__InputArray__InputArray_const_vectorLUMatGR" => "from_umat_vec",
+		"cv__InputArray__InputArray_const_vectorLboolGR" => "from_bool_vec",
 		"cv__InputArray_copyTo_const_const__OutputArrayR_const__InputArrayR" => "+_masked",
 		"cv__InputOutputArray__InputOutputArray_GpuMatR" => "from_gpumat_mut",
 		"cv__InputOutputArray__InputOutputArray_HostMemR" => "from_hostmem_mut",
@@ -179,11 +179,11 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv__InputOutputArray__InputOutputArray_const_HostMemR" => "from_hostmem",
 		"cv__InputOutputArray__InputOutputArray_const_MatR" => "from_mat",
 		"cv__InputOutputArray__InputOutputArray_const_UMatR" => "from_umat",
-		"cv__InputOutputArray__InputOutputArray_const_vector_GpuMat_R" => "from_gpumat_vec",
-		"cv__InputOutputArray__InputOutputArray_const_vector_Mat_R" => "from_mat_vec",
-		"cv__InputOutputArray__InputOutputArray_const_vector_UMat_R" => "from_umat_vec",
-		"cv__InputOutputArray__InputOutputArray_vector_Mat_R" => "from_mat_vec_mut",
-		"cv__InputOutputArray__InputOutputArray_vector_UMat_R" => "from_umat_vec_mut",
+		"cv__InputOutputArray__InputOutputArray_const_vectorLGpuMatGR" => "from_gpumat_vec",
+		"cv__InputOutputArray__InputOutputArray_const_vectorLMatGR" => "from_mat_vec",
+		"cv__InputOutputArray__InputOutputArray_const_vectorLUMatGR" => "from_umat_vec",
+		"cv__InputOutputArray__InputOutputArray_vectorLMatGR" => "from_mat_vec_mut",
+		"cv__InputOutputArray__InputOutputArray_vectorLUMatGR" => "from_umat_vec_mut",
 		"cv__OutputArray__OutputArray_GpuMatR" => "from_gpumat_mut",
 		"cv__OutputArray__OutputArray_HostMemR" => "from_hostmem_mut",
 		"cv__OutputArray__OutputArray_MatR" => "from_mat_mut",
@@ -192,12 +192,12 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv__OutputArray__OutputArray_const_HostMemR" => "from_hostmem",
 		"cv__OutputArray__OutputArray_const_MatR" => "from_mat",
 		"cv__OutputArray__OutputArray_const_UMatR" => "from_umat",
-		"cv__OutputArray__OutputArray_const_vector_GpuMat_R" => "from_gpumat_vec",
-		"cv__OutputArray__OutputArray_const_vector_Mat_R" => "from_mat_vec",
-		"cv__OutputArray__OutputArray_const_vector_UMat_R" => "from_umat_vec",
-		"cv__OutputArray__OutputArray_vector_GpuMat_R" => "from_gpumat_vec_mut",
-		"cv__OutputArray__OutputArray_vector_Mat_R" => "from_mat_vec_mut",
-		"cv__OutputArray__OutputArray_vector_UMat_R" => "from_umat_vec_mut",
+		"cv__OutputArray__OutputArray_const_vectorLGpuMatGR" => "from_gpumat_vec",
+		"cv__OutputArray__OutputArray_const_vectorLMatGR" => "from_mat_vec",
+		"cv__OutputArray__OutputArray_const_vectorLUMatGR" => "from_umat_vec",
+		"cv__OutputArray__OutputArray_vectorLGpuMatGR" => "from_gpumat_vec_mut",
+		"cv__OutputArray__OutputArray_vectorLMatGR" => "from_mat_vec_mut",
+		"cv__OutputArray__OutputArray_vectorLUMatGR" => "from_umat_vec_mut",
 		"cv__OutputArray_create_const_Size_int_int_bool_DepthMask" => "+_size",
 		"cv__OutputArray_create_const_Size_int_int_bool_int" => "+_size", // 3.2
 		"cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask" => "+_nd",
@@ -229,7 +229,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_min_const_MatR_double" => "+_mat_f64",
 		"cv_min_const_UMatR_const_UMatR_UMatR" => "+_umat_to",
 		"cv_min_double_const_MatR" => "+_f64_mat",
-		"cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_vector_int_R" => "+_vec",
+		"cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_vectorLintGR" => "+_vec",
 		"cv_norm_const_SparseMatR_int" => "+_sparse",
 		"cv_norm_const__InputArrayR_const__InputArrayR_int_const__InputArrayR" => "+2",
 		"cv_normalize_const_SparseMatR_SparseMatR_double_int" => "+_sparse",
@@ -241,43 +241,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_ocl_ProgramSource_ProgramSource_const_StringR" => "from_str",
 		"cv_ocl_Program_getPrefix_const_StringR" => "+_build_flags",
 		"cv_ogl_Buffer_create_Size_int_Target_bool" => "+_size",
-		"cv_operatorA_const_MatExprR_const_MatExprR" => "+_matexpr_matexpr",
-		"cv_operatorA_const_MatExprR_const_MatR" => "+_matexpr_mat",
-		"cv_operatorA_const_MatExprR_const_ScalarR" => "+_matexpr_scalar",
-		"cv_operatorA_const_MatR_const_MatExprR" => "+_mat_matexpr",
-		"cv_operatorA_const_MatR_const_MatR" => "+_mat_mat",
-		"cv_operatorA_const_MatR_const_ScalarR" => "+_mat_scalar",
-		"cv_operatorA_const_ScalarR_const_MatExprR" => "+_scalar_matexpr",
-		"cv_operatorA_const_ScalarR_const_MatR" => "+_scalar_mat",
-		"cv_operatorD_const_MatExprR_const_MatExprR" => "+_matexpr_matexpr",
-		"cv_operatorD_const_MatExprR_const_MatR" => "+_matexpr_mat",
-		"cv_operatorD_const_MatExprR_double" => "+_matexpr_f64",
-		"cv_operatorD_const_MatR_const_MatExprR" => "+_mat_matexpr",
-		"cv_operatorD_const_MatR_const_MatR" => "+_mat_mat",
-		"cv_operatorD_const_MatR_double" => "+_mat_f64",
-		"cv_operatorD_double_const_MatExprR" => "+_f64_matexpr",
-		"cv_operatorD_double_const_MatR" => "+_f64_mat",
-		"cv_operatorEQ_const_FileNodeIteratorR_const_FileNodeIteratorR" => "+_filenode_iter",
-		"cv_operatorEQ_const_MatR_double" => "+_mat_f64",
-		"cv_operatorEQ_double_const_MatR" => "+_f64_mat",
-		"cv_operatorS_const_MatExprR" => "+_matexpr",
-		"cv_operatorS_const_MatExprR_const_MatExprR" => "+_matexpr_matexpr",
-		"cv_operatorS_const_MatExprR_const_MatR" => "+_matexpr_mat",
-		"cv_operatorS_const_MatExprR_const_ScalarR" => "+_matexpr_scalar",
-		"cv_operatorS_const_MatR" => "+_mat",
-		"cv_operatorS_const_MatR_const_MatExprR" => "+_mat_matexpr",
-		"cv_operatorS_const_MatR_const_MatR" => "+_mat_mat",
-		"cv_operatorS_const_MatR_const_ScalarR" => "+_mat_scalar",
-		"cv_operatorS_const_ScalarR_const_MatExprR" => "+_scalar_matexpr",
-		"cv_operatorS_const_ScalarR_const_MatR" => "+_scalar_mat",
-		"cv_operatorX_const_MatExprR_const_MatExprR" => "+_matexpr_matexpr",
-		"cv_operatorX_const_MatExprR_const_MatR" => "+_matexpr_mat",
-		"cv_operatorX_const_MatExprR_double" => "+_matexpr_f64",
-		"cv_operatorX_const_MatR_const_MatExprR" => "+_mat_matexpr",
-		"cv_operatorX_const_MatR_const_MatR" => "+_mat_mat",
-		"cv_operatorX_const_MatR_double" => "+_mat_f64",
-		"cv_operatorX_double_const_MatExprR" => "+_f64_matexpr",
-		"cv_operatorX_double_const_MatR" => "+_f64_mat",
 		"cv_read_const_FileNodeR_DMatchR_const_DMatchR" => "+_dmatch",
 		"cv_read_const_FileNodeR_KeyPointR_const_KeyPointR" => "+_keypoint",
 		"cv_read_const_FileNodeR_MatR_const_MatR" => "+_mat",
@@ -286,8 +249,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_read_const_FileNodeR_floatR_float" => "+_f32",
 		"cv_read_const_FileNodeR_intR_int" => "+_i32",
 		"cv_read_const_FileNodeR_stringR_const_stringR" => "+_str",
-		"cv_read_const_FileNodeR_vector_DMatch_R" => "+_dmatch_vec_legacy",
-		"cv_read_const_FileNodeR_vector_KeyPoint_R" => "+_keypoint_vec_legacy",
+		"cv_read_const_FileNodeR_vectorLDMatchGR" => "+_dmatch_vec_legacy",
+		"cv_read_const_FileNodeR_vectorLKeyPointGR" => "+_keypoint_vec_legacy",
 		"cv_rectangle_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int" => "+_points",
 		"cv_repeat_const__InputArrayR_int_int_const__OutputArrayR" => "+_to",
 		"cv_split_const_MatR_MatX" => "+_slice",
@@ -300,8 +263,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_write_FileStorageR_const_StringR_const_MatR" => "+_mat",
 		"cv_write_FileStorageR_const_StringR_const_SparseMatR" => "+_sparsemat",
 		"cv_write_FileStorageR_const_StringR_const_StringR" => "+_str",
-		"cv_write_FileStorageR_const_StringR_const_vector_DMatch_R" => "+_dmatch_vec",
-		"cv_write_FileStorageR_const_StringR_const_vector_KeyPoint_R" => "+_keypoint_vec",
+		"cv_write_FileStorageR_const_StringR_const_vectorLDMatchGR" => "+_dmatch_vec",
+		"cv_write_FileStorageR_const_StringR_const_vectorLKeyPointGR" => "+_keypoint_vec",
 		"cv_write_FileStorageR_const_StringR_double" => "+_f64",
 		"cv_write_FileStorageR_const_StringR_float" => "+_f32",
 		"cv_write_FileStorageR_const_StringR_int" => "+_i32",
@@ -353,57 +316,55 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_dnn_Dict_set_cv_String_const_StringR_const_StringR" => "+_str",
 		"cv_dnn_Dict_set_double_const_StringR_const_doubleR" => "+_f64",
 		"cv_dnn_Dict_set_int64_t_const_StringR_const_int64_tR" => "+_i64",
-		"cv_dnn_Layer_finalize_const_vector_Mat_R" => "+_mat",
-		"cv_dnn_Layer_finalize_const_vector_Mat_R_vector_Mat_R" => "+_mat_to",
-		"cv_dnn_Layer_forward_vector_MatX_R_vector_Mat_R_vector_Mat_R" => "+_mat",
-		"cv_dnn_NMSBoxes_const_vector_Rect2d_R_const_vector_float_R_const_float_const_float_vector_int_R_const_float_const_int" => "+_f64",
+		"cv_dnn_Layer_finalize_const_vectorLMatGR" => "+_mat",
+		"cv_dnn_Layer_finalize_const_vectorLMatGR_vectorLMatGR" => "+_mat_to",
+		"cv_dnn_Layer_forward_vectorLMatXGR_vectorLMatGR_vectorLMatGR" => "+_mat",
+		"cv_dnn_NMSBoxes_const_vectorLRect2dGR_const_vectorLfloatGR_const_float_const_float_vectorLintGR_const_float_const_int" => "+_f64",
 		"cv_dnn_Net_addLayerToPrev_const_StringR_const_StringR_const_intR_LayerParamsR" => "+_type",
 		"cv_dnn_Net_addLayer_const_StringR_const_StringR_const_intR_LayerParamsR" => "+_type",
 		"cv_dnn_Net_connect_String_String" => "+_first_second",
 		"cv_dnn_Net_forward_const_StringR" => "+_single",
 		"cv_dnn_Net_forward_const__OutputArrayR_const_StringR" => "+_layer",
-		"cv_dnn_Net_getMemoryConsumption_const_const_int_const_vector_MatShape_R_size_tR_size_tR" => "+_for_layer",
-		"cv_dnn_Net_getMemoryConsumption_const_const_vector_MatShape_R_vector_int_R_vector_size_t_R_vector_size_t_R" => "+_for_layers",
+		"cv_dnn_Net_getMemoryConsumption_const_const_int_const_vectorLMatShapeGR_size_tR_size_tR" => "+_for_layer",
+		"cv_dnn_Net_getMemoryConsumption_const_const_vectorLMatShapeGR_vectorLintGR_vectorLsize_tGR_vectorLsize_tGR" => "+_for_layers",
 		"cv_dnn_TextDetectionModel_EAST_TextDetectionModel_EAST_const_stringR_const_stringR" => "from_file",
-		"cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vector_vector_Point__R_vector_float_R" => "+_with_confidences",
+		"cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vectorLvectorLPointGGR_vectorLfloatGR" => "+_with_confidences",
 		"cv_dnn_TextRecognitionModel_TextRecognitionModel_const_stringR_const_stringR" => "from_file",
 		"cv_dnn_blobFromImage_const__InputArrayR_const__OutputArrayR_double_const_SizeR_const_ScalarR_bool_bool_int" => "+_to",
 		"cv_dnn_blobFromImages_const__InputArrayR_const__OutputArrayR_double_Size_const_ScalarR_bool_bool_int" => "+_to",
 		"cv_dnn_readNetFromCaffe_const_charX_size_t_const_charX_size_t" => "+_str",
-		"cv_dnn_readNetFromCaffe_const_vector_unsigned_char_R_const_vector_unsigned_char_R" => "+_buffer",
+		"cv_dnn_readNetFromCaffe_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR" => "+_buffer",
 		"cv_dnn_readNetFromDarknet_const_charX_size_t_const_charX_size_t" => "+_str",
-		"cv_dnn_readNetFromDarknet_const_vector_unsigned_char_R_const_vector_unsigned_char_R" => "+_buffer",
+		"cv_dnn_readNetFromDarknet_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR" => "+_buffer",
 		"cv_dnn_readNetFromONNX_const_charX_size_t" => "+_str",
-		"cv_dnn_readNetFromONNX_const_vector_unsigned_char_R" => "+_buffer",
+		"cv_dnn_readNetFromONNX_const_vectorLunsigned_charGR" => "+_buffer",
 		"cv_dnn_readNetFromTensorflow_const_charX_size_t_const_charX_size_t" => "+_str",
-		"cv_dnn_readNetFromTensorflow_const_vector_unsigned_char_R_const_vector_unsigned_char_R" => "+_buffer",
+		"cv_dnn_readNetFromTensorflow_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR" => "+_buffer",
 
 		"cv_dnn_DictValue_DictValue_const_StringR" => "-", // effectively duplicate of cv_dnn_DictValue_DictValue_const_charX
-		"cv_dnn_Layer_finalize_const_vector_MatX_R_vector_Mat_R" => "-", // dup of cv_dnn_Layer_finalize_const_vector_Mat_X_vector_Mat_X
+		"cv_dnn_Layer_finalize_const_vectorLMatXGR_vectorLMatGR" => "-", // dup of cv_dnn_Layer_finalize_const__InputArrayR_const__OutputArrayR
 		"cv_dnn_Model_operator_cv_dnn_Net_const" => "-", // fixme, should generate fine, it's a dup of get_network_() anyway
 
 		// ### face ###
 		"cv_face_FacemarkLBF_Params_getPropPupils" => "-", // fixme array of vectors
 
 		// ### features2d ###
-		"cv_AGAST_const__InputArrayR_vector_KeyPoint_R_int_bool" => "AGAST",
-		"cv_AGAST_const__InputArrayR_vector_KeyPoint_R_int_bool_DetectorType" => "AGAST_with_type",
-		"cv_AGAST_const__InputArrayR_vector_KeyPoint_R_int_bool_int" => "AGAST_with_type", // 3.x only
-		"cv_BOWImgDescriptorExtractor_compute2_const_MatR_vector_KeyPoint_R_MatR" => "compute2",
-		"cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vector_KeyPoint_R_const__OutputArrayR_vector_vector_int__X_MatX" => "+_desc",
+		"cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType" => "+_with_type",
+		"cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_int" => "+_with_type", // 3.x only
+		"cv_BOWImgDescriptorExtractor_compute2_const_MatR_vectorLKeyPointGR_MatR" => "compute2",
+		"cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_vectorLvectorLintGGX_MatX" => "+_desc",
 		"cv_BOWTrainer_cluster_const_const_MatR" => "+_with_descriptors", // 3.2
-		"cv_BRISK_create_const_vector_float_R_const_vector_int_R_float_float_const_vector_int_R" => "+_with_pattern",
-		"cv_BRISK_create_int_int_const_vector_float_R_const_vector_int_R_float_float_const_vector_int_R" => "+_with_pattern_threshold_octaves",
+		"cv_BRISK_create_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR" => "+_with_pattern",
+		"cv_BRISK_create_int_int_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR" => "+_with_pattern_threshold_octaves",
 		"cv_DescriptorMatcher_create_const_MatcherTypeR" => "+_with_matcher_type",
 		"cv_DescriptorMatcher_create_int" => "+_with_matcher_type", // 3.x only
-		"cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vector_vector_DMatch__R_int_const__InputArrayR_bool" => "knn_train_match",
-		"cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vector_DMatch_R_const__InputArrayR" => "train_match",
-		"cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vector_vector_DMatch__R_float_const__InputArrayR_bool" => "radius_train_match",
-		"cv_FAST_const__InputArrayR_vector_KeyPoint_R_int_bool" => "FAST",
-		"cv_FAST_const__InputArrayR_vector_KeyPoint_R_int_bool_DetectorType" => "FAST_with_type",
-		"cv_FAST_const__InputArrayR_vector_KeyPoint_R_int_bool_int" => "FAST_with_type", // 3.x only
-		"cv_Feature2D_compute_const__InputArrayR_vector_vector_KeyPoint__R_const__OutputArrayR" => "+_multiple",
-		"cv_Feature2D_detect_const__InputArrayR_vector_vector_KeyPoint__R_const__InputArrayR" => "+_multiple",
+		"cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool" => "knn_train_match",
+		"cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vectorLDMatchGR_const__InputArrayR" => "train_match",
+		"cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool" => "radius_train_match",
+		"cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType" => "+_with_type",
+		"cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_int" => "+_with_type", // 3.x only
+		"cv_Feature2D_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR" => "+_multiple",
+		"cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR_const__InputArrayR" => "+_multiple",
 		"cv_GFTTDetector_create_int_double_double_int_int_bool_double" => "+_with_gradient",
 
 		// ### gapi ###
@@ -418,21 +379,21 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int" => "+_with_font",
 		"cv_resizeWindow_const_StringR_const_SizeR" => "+_size",
 		"cv_selectROI_const_StringR_const__InputArrayR_bool_bool" => "+_for_window",
-		"cv_selectROIs_const_StringR_const__InputArrayR_vector_Rect_R_bool_bool" => "select_rois",
+		"cv_selectROIs_const_StringR_const__InputArrayR_vectorLRectGR_bool_bool" => "select_rois",
 
 		// ### imgcodecs ###
 		"cv_imdecode_const__InputArrayR_int_MatX" => "+_to",
-		"cv_imreadmulti_const_StringR_vector_Mat_R_int_int_int" => "+_range",
+		"cv_imreadmulti_const_StringR_vectorLMatGR_int_int_int" => "+_range",
 
 		// ### imgproc ###
 		"cv_Canny_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool" => "+_derivative",
 		"cv_GeneralizedHough_detect_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR" => "+_with_edges",
-		"cv_Subdiv2D_insert_const_vector_Point2f_R" => "+_multiple",
+		"cv_Subdiv2D_insert_const_vectorLPoint2fGR" => "+_multiple",
 		"cv_applyColorMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR" => "+_user",
 		"cv_clipLine_Size2l_Point2lR_Point2lR" => "+_size_i64",
 		"cv_clipLine_Size_PointR_PointR" => "clip_line_size",
-		"cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_R" => "ellipse_2_poly_f64",
-		"cv_ellipse2Poly_Point_Size_int_int_int_int_vector_Point_R" => "ellipse_2_poly",
+		"cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vectorLPoint2dGR" => "ellipse_2_poly_f64",
+		"cv_ellipse2Poly_Point_Size_int_int_int_int_vectorLPointGR" => "ellipse_2_poly",
 		"cv_ellipse_const__InputOutputArrayR_const_RotatedRectR_const_ScalarR_int_int" => "ellipse_rotated_rect",
 		"cv_findContours_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point" => "+_with_hierarchy", // 4.x
 		"cv_findContours_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point" => "+_with_hierarchy", // 3.2 3.4
@@ -455,74 +416,74 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_polylines_const__InputOutputArrayR_const_PointXX_const_intX_int_bool_const_ScalarR_int_int_int" => "-",
 
 		// ### line_descriptor ###
-		"cv_line_descriptor_LSDDetector_detect_const_const_vector_Mat_R_vector_vector_KeyLine__R_int_int_const_vector_Mat_R" => "+_multiple",
+		"cv_line_descriptor_LSDDetector_detect_const_const_vectorLMatGR_vectorLvectorLKeyLineGGR_int_int_const_vectorLMatGR" => "+_multiple",
 
 		// ### ml ###
 		"cv_ml_ParamGrid_ParamGrid_double_double_double" => "for_range",
-		"cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__bool" => "+_with_data",
-		"cv_ml_StatModel_train_const_Ptr_TrainData_R_int" => "+_with_data",
+		"cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_bool" => "+_with_data",
+		"cv_ml_StatModel_train_const_PtrLTrainDataGR_int" => "+_with_data",
 
 		// ### objdetect ###
-		"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_double_int_int_Size_Size" => "+_num",
-		"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_int_R_vector_double_R_double_int_int_Size_Size_bool" => "+_levels",
+		"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_double_int_int_Size_Size" => "+_num",
+		"cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool" => "+_levels",
 		"cv_HOGDescriptor_HOGDescriptor_const_StringR" => "+_from_file",
-		"cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vector_Rect_R_vector_double_R_double_Size_Size_double_double_bool" => "+_weights",
-		"cv_HOGDescriptor_detect_const_const_MatR_vector_Point_R_vector_double_R_double_Size_Size_const_vector_Point_R" => "+_weights", // 3.2 3.4
-		"cv_HOGDescriptor_detect_const_const__InputArrayR_vector_Point_R_vector_double_R_double_Size_Size_const_vector_Point_R" => "+_weights", // 4.x
-		"cv_HOGDescriptor_setPropSvmDetector_vector_float_" => "+_vec",
-		"cv_groupRectangles_vector_Rect_R_vector_int_R_vector_double_R_int_double" => "+_levels",
-		"cv_groupRectangles_vector_Rect_R_vector_int_R_int_double" => "+_weights",
-		"cv_groupRectangles_vector_Rect_R_int_double_vector_int_X_vector_double_X" => "+_levelweights",
+		"cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool" => "+_weights",
+		"cv_HOGDescriptor_detect_const_const_MatR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR" => "+_weights", // 3.2 3.4
+		"cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR" => "+_weights", // 4.x
+		"cv_HOGDescriptor_setPropSvmDetector_vectorLfloatG" => "+_vec",
+		"cv_groupRectangles_vectorLRectGR_vectorLintGR_vectorLdoubleGR_int_double" => "+_levels",
+		"cv_groupRectangles_vectorLRectGR_vectorLintGR_int_double" => "+_weights",
+		"cv_groupRectangles_vectorLRectGR_int_double_vectorLintGX_vectorLdoubleGX" => "+_levelweights",
 
-		"cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vector_string_R_const__OutputArrayR_const__OutputArrayR" => "-", // fixme: stores data to Vector<String>, that doesn't work yet
+		"cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vectorLstringGR_const__OutputArrayR_const__OutputArrayR" => "-", // fixme: stores data to Vector<String>, that doesn't work yet
 
 		// ### optflow ###
 		"cv_optflow_GPCTrainingSamples_operator_cv_optflow_GPCSamplesVector" => "-", // support of "operator &" missing
 
 		// ### photo ###
-		"cv_AlignMTB_process_const__InputArrayR_vector_Mat_R_const__InputArrayR_const__InputArrayR" => "+_with_response",
+		"cv_AlignMTB_process_const__InputArrayR_vectorLMatGR_const__InputArrayR_const__InputArrayR" => "+_with_response",
 		"cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR" => "+_with_response",
 		"cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR" => "+_with_response",
 		"cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR" => "+_with_response",
 		"cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int_StreamR" => "+_cuda",
 		"cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_StreamR" => "+_cuda",
-		"cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vector_float_R_int_int_int" => "+_vec",
-		"cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vector_float_R_int_int_int" => "+_vec",
+		"cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vectorLfloatGR_int_int_int" => "+_vec",
+		"cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vectorLfloatGR_int_int_int" => "+_vec",
 
 		// ### stitching ###
 		"cv_Stitcher_composePanorama_const__InputArrayR_const__OutputArrayR" => "+_images",
 		"cv_Stitcher_stitch_const__InputArrayR_const__InputArrayR_const__OutputArrayR" => "+_mask",
 
 		// ### surface_matching ###
-		"cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vector_Pose3DPtr_R" => "+_vec",
+		"cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vectorLPose3DPtrGR" => "+_vec",
 
 		// ### text ###
-		"cv_text_BaseOCR_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_mask",
+		"cv_text_BaseOCR_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int" => "+_mask",
 		"cv_text_ERStat_getPropPixels" => "-", // fixme: reference to a vector, we don't handle it too well yet
-		"cv_text_ERStat_setPropPixels_vector_int_X" => "-", // fixme: reference to a vector, we don't handle it too well yet
+		"cv_text_ERStat_setPropPixels_vectorLintGX" => "-", // fixme: reference to a vector, we don't handle it too well yet
 		"cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int" => "+_from_file",
-		"cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
-		"cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
+		"cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int" => "+_multiple_mask",
+		"cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int" => "+_multiple",
 		"cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int_int" => "+_mask",
 		"cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int" => "+_from_file",
-		"cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
-		"cv_text_OCRHMMDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
+		"cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int" => "+_multiple_mask",
+		"cv_text_OCRHMMDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int" => "+_multiple",
 		"cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int_int" => "+_mask",
-		"cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_mask",
-		"cv_text_OCRTesseract_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple_mask",
-		"cv_text_OCRTesseract_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int" => "+_multiple",
+		"cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int" => "+_mask",
+		"cv_text_OCRTesseract_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int" => "+_multiple_mask",
+		"cv_text_OCRTesseract_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int" => "+_multiple",
 		"cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int_int" => "+_mask",
-		"cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vector_Size_" => "+_with_sizes",
+		"cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vectorLSizeG" => "+_with_sizes",
 		"cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float" => "+_from_file",
 		"cv_text_createERFilterNM2_const_StringR_float" => "+_from_file",
-		"cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_Rect_R_int_const_StringR_float" => "+_from_file",
+		"cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLRectGR_int_const_StringR_float" => "+_from_file",
 
 		// ### videoio ###
 		"cv_VideoCapture_VideoCapture_const_StringR" => "from_file_default", // 3.2
 		"cv_VideoCapture_VideoCapture_const_StringR_int" => "from_file",
-		"cv_VideoCapture_VideoCapture_const_StringR_int_const_vector_int_R" => "from_file_with_params",
+		"cv_VideoCapture_VideoCapture_const_StringR_int_const_vectorLintGR" => "from_file_with_params",
 		"cv_VideoCapture_VideoCapture_int" => "+_default", // 3.4
-		"cv_VideoCapture_VideoCapture_int_int_const_vector_int_R" => "+_with_params",
+		"cv_VideoCapture_VideoCapture_int_int_const_vectorLintGR" => "+_with_params",
 		"cv_VideoCapture_open_const_StringR" => "+_file_default", // 3.2
 		"cv_VideoCapture_open_const_StringR_int" => "+_file",
 		"cv_VideoCapture_open_const_StringR_int" => "+_file",
@@ -537,9 +498,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		// ### core ###
 		"cv_MatConstIterator_MatConstIterator_const_MatX_const_intX" => "-",
 		"cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX" => "-",
-		"cv__OutputArray__OutputArray_const_vector_GpuMat_R" => "-",
 		"cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR" => "-",
-		"cv_getImpl_vector_int_R_vector_String_R" => "-",
+		"cv_getImpl_vectorLintGR_vectorLStringGR" => "-",
 		// ### dnn ###
 		"cv_dnn_BackendNode_BackendNode_int" => "-",
 		// ### stitching ###
@@ -570,6 +530,7 @@ pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {
 	hashmap! {
 		// ### core ###
 		"cv_SparseMatConstIterator_operatorSS" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
+		"cv__OutputArray__OutputArray_const_vectorLGpuMatGR" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),
 
 		// ### imgproc ###
 		"cv_getRotationMatrix2D__Point2f_double_double" => ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)"),

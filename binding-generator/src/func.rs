@@ -10,7 +10,7 @@ use regex::Regex;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefTypeHint};
 use crate::{
 	comment, reserved_rename, settings, Class, DefaultElement, DefinitionLocation, DependentType, DependentTypeMode, Element,
-	EntityElement, EntityExt, Field, FieldTypeHint, GeneratorEnv, StrExt, StringExt, TypeRef,
+	EntityElement, EntityExt, Field, FieldTypeHint, GeneratorEnv, IteratorExt, StrExt, StringExt, TypeRef,
 };
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -23,8 +23,17 @@ pub enum OperatorKind {
 	Div,
 	Deref,
 	Equals,
+	NotEquals,
+	GreaterThan,
+	GreaterThanOrEqual,
+	LessThan,
+	LessThanOrEqual,
 	Incr,
 	Decr,
+	And,
+	Or,
+	Xor,
+	BitwiseNot,
 }
 
 impl OperatorKind {
@@ -42,9 +51,41 @@ impl OperatorKind {
 			}
 			"/" => OperatorKind::Div,
 			"==" => OperatorKind::Equals,
+			"!=" => OperatorKind::NotEquals,
+			">" => OperatorKind::GreaterThan,
+			">=" => OperatorKind::GreaterThanOrEqual,
+			"<" => OperatorKind::LessThan,
+			"<=" => OperatorKind::LessThanOrEqual,
 			"++" => OperatorKind::Incr,
 			"--" => OperatorKind::Decr,
+			"&" => OperatorKind::And,
+			"|" => OperatorKind::Or,
+			"^" => OperatorKind::Xor,
+			"~" => OperatorKind::BitwiseNot,
 			_ => OperatorKind::Unsupported,
+		}
+	}
+
+	pub fn add_args_to_name(&self) -> bool {
+		match self {
+			OperatorKind::Index | OperatorKind::BitwiseNot => false,
+			OperatorKind::Unsupported
+			| OperatorKind::Add
+			| OperatorKind::Sub
+			| OperatorKind::Mul
+			| OperatorKind::Div
+			| OperatorKind::Deref
+			| OperatorKind::Equals
+			| OperatorKind::NotEquals
+			| OperatorKind::GreaterThan
+			| OperatorKind::GreaterThanOrEqual
+			| OperatorKind::LessThan
+			| OperatorKind::LessThanOrEqual
+			| OperatorKind::Incr
+			| OperatorKind::Decr
+			| OperatorKind::And
+			| OperatorKind::Or
+			| OperatorKind::Xor => true,
 		}
 	}
 }
@@ -99,10 +140,10 @@ impl<'tu, 'ge> Kind<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_operator(&self) -> Option<OperatorKind> {
+	pub fn as_operator(&self) -> Option<(Option<&Class<'tu, 'ge>>, OperatorKind)> {
 		match self {
-			Kind::FunctionOperator(kind) => Some(*kind),
-			Kind::InstanceOperator(_, kind) => Some(*kind),
+			Kind::FunctionOperator(kind) => Some((None, *kind)),
+			Kind::InstanceOperator(cls, kind) => Some((Some(cls), *kind)),
 			_ => None,
 		}
 	}
@@ -557,7 +598,7 @@ impl Element for Func<'_, '_> {
 		DefaultElement::is_excluded(self)
 			|| self.is_generic()
 			|| self.kind().as_operator().map_or(false, |kind| {
-				if matches!(kind, OperatorKind::Incr | OperatorKind::Decr) {
+				if matches!(kind, (_, OperatorKind::Incr | OperatorKind::Decr)) {
 					// filter out postfix version of ++ and --: https://en.cppreference.com/w/cpp/language/operator_incdec
 					self.clang_arguments().len() == 1
 				} else {
@@ -578,7 +619,10 @@ impl Element for Func<'_, '_> {
 		}
 		DefaultElement::is_ignored(self)
 			|| self.entity.get_availability() == Availability::Unavailable
-			|| self.kind().as_operator().map_or(false, |op| op == OperatorKind::Unsupported)
+			|| self
+				.kind()
+				.as_operator()
+				.map_or(false, |(_, op)| op == OperatorKind::Unsupported)
 			|| self.arguments().into_iter().any(|a| a.type_ref().is_ignored())
 			|| {
 				let ret = self.return_type();
@@ -721,32 +765,60 @@ impl Element for Func<'_, '_> {
 			let mut name: String = self.return_type().rust_name(NameStyle::decl()).into_owned();
 			name.cleanup_name();
 			format!("to_{}", name).into()
-		} else if let Some(kind) = kind.as_operator() {
+		} else if let Some((cls, kind)) = kind.as_operator() {
 			if cpp_name.starts_with("operator") {
-				match kind {
-					OperatorKind::Unsupported => cpp_name,
+				let name = match kind {
+					OperatorKind::Unsupported => cpp_name.as_ref(),
 					OperatorKind::Index => {
 						if self.constness().is_const() {
-							"get".into()
+							"get"
 						} else {
-							"get_mut".into()
+							"get_mut"
 						}
 					}
-					OperatorKind::Add => "add".into(),
-					OperatorKind::Sub => "sub".into(),
-					OperatorKind::Mul => "mul".into(),
-					OperatorKind::Div => "div".into(),
+					OperatorKind::Add => "add",
+					OperatorKind::Sub => "sub",
+					OperatorKind::Mul => "mul",
+					OperatorKind::Div => "div",
 					OperatorKind::Deref => {
 						if self.constness().is_const() {
-							"try_deref".into()
+							"try_deref"
 						} else {
-							"try_deref_mut".into()
+							"try_deref_mut"
 						}
 					}
-					OperatorKind::Equals => "equals".into(),
-
-					OperatorKind::Incr => "incr".into(),
-					OperatorKind::Decr => "decr".into(),
+					OperatorKind::Equals => "equals",
+					OperatorKind::NotEquals => "not_equals",
+					OperatorKind::GreaterThan => "greater_than",
+					OperatorKind::GreaterThanOrEqual => "greater_than_or_equal",
+					OperatorKind::LessThan => "less_than",
+					OperatorKind::LessThanOrEqual => "less_than_or_equal",
+					OperatorKind::Incr => "incr",
+					OperatorKind::Decr => "decr",
+					OperatorKind::And => "and",
+					OperatorKind::Or => "or",
+					OperatorKind::Xor => "xor",
+					OperatorKind::BitwiseNot => "negate",
+				};
+				if kind.add_args_to_name() {
+					let args = self.arguments();
+					let is_single_arg_same_as_class = if let (Some(cls), [single_arg]) = (cls, args.as_slice()) {
+						single_arg
+							.type_ref()
+							.source()
+							.as_class()
+							.map_or(false, |single_class| &single_class == cls)
+					} else {
+						false
+					};
+					if args.is_empty() || is_single_arg_same_as_class {
+						name.into()
+					} else {
+						let args = args.into_iter().map(|arg| arg.type_ref().rust_simple_name()).join("_");
+						format!("{}_{}", name, args).into()
+					}
+				} else {
+					name.into()
 				}
 			} else {
 				cpp_name
