@@ -222,8 +222,13 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 							self.gen_env,
 						));
 					}
-					generic_type.replace_in_place("const ", "");
-					Kind::Generic(generic_type)
+					// uint64_t in gapi module ends here for some reason
+					if let Some(&(rust, cpp)) = settings::PRIMITIVE_TYPEDEFS.get(generic_type.as_str()) {
+						Kind::Primitive(rust, cpp)
+					} else {
+						generic_type.replace_in_place("const ", "");
+						Kind::Generic(generic_type)
+					}
 				}
 			}
 

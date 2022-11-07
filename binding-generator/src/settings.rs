@@ -368,12 +368,10 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_GFTTDetector_create_int_double_double_int_int_bool_double" => "+_with_gradient",
 
 		// ### gapi ###
-		// "cv_GComputation_apply_const_vector_Mat_R_const_vector_Mat_R_GCompileArgsR" => "-",
-		// "cv_GComputation_apply_const_vector_Mat_R_vector_Mat_R_GCompileArgsR" => "-",
-		// "cv_GComputation_apply_Mat_Mat_ScalarR_GCompileArgsR" => "-",
-		// "cv_GComputation_apply_Mat_Mat_MatR_GCompileArgsR" => "-",
-		// "cv_GComputation_apply_Mat_ScalarR_GCompileArgsR" => "-",
-		// "cv_GComputation_apply_Mat_MatR_GCompileArgsR" => "-",
+		"cv_MediaFrame_IAdapter_access_Access" => "-", // use of deleted function ‘cv::MediaFrame::View::View(const cv::MediaFrame::View&)’
+		"cv_MediaFrame_access_const_Access" => "-", // use of deleted function ‘cv::MediaFrame::View::View(const cv::MediaFrame::View&)’
+		"cv_RMat_IAdapter_access_Access" => "-", // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
+		"cv_RMat_access_const_Access" => "-", // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
 
 		// ### highgui ###
 		"cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int" => "+_with_font",
@@ -486,8 +484,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_VideoCapture_VideoCapture_int_int_const_vectorLintGR" => "+_with_params",
 		"cv_VideoCapture_open_const_StringR" => "+_file_default", // 3.2
 		"cv_VideoCapture_open_const_StringR_int" => "+_file",
-		"cv_VideoCapture_open_const_StringR_int" => "+_file",
-		"cv_VideoCapture_open_int" => "+_device_default", // 3.2
+		"cv_VideoCapture_open_const_StringR_int_const_vectorLintGR" => "+_file_with_params",
+		"cv_VideoCapture_open_int" => "+_default", // 3.2
+		"cv_VideoCapture_open_int_int_const_vectorLintGR" => "+_with_params",
 		"cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size_bool" => "+_with_backend",
 		"cv_VideoWriter_open_const_StringR_int_int_double_Size_bool" => "+_with_backend",
 
@@ -573,6 +572,7 @@ pub static ELEMENT_IGNORE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv::MatAllocator", // doesn't handle cpp part too well
 		"cv::NAryMatIterator", // uses pointers of pointers
 		"cv::Node", // template class
+		"cv::gapi::own::Mat", // internal alias to Mat
 		"std::exception_ptr",
 		"std::random_access_iterator_tag",
 	}
@@ -640,6 +640,18 @@ pub static ELEMENT_EXPORT_MANUAL: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(
 		"cv::kinfu::Intr" => ExportConfig::simple(),
 		"cv::videostab::MaskFrameSource" => ExportConfig::default(),
 		"cv::ConfidenceMap" => ExportConfig::default(),
+
+		// gapi
+		"cv::GCompileArg" => ExportConfig::default(),
+		"cv::GCompileArgs" => ExportConfig::default(),
+		"cv::GKinds" => ExportConfig::default(),
+		"cv::GRunArgs" => ExportConfig::default(),
+		"cv::GShapes" => ExportConfig::default(),
+		"cv::RMat::IAdapter" => ExportConfig::default(),
+		"cv::detail::ExtractArgsCallback" => ExportConfig::default(),
+		"cv::detail::ExtractMetaCallback" => ExportConfig::default(),
+		"cv::gapi::GFunctor" => ExportConfig::default(),
+		"cv::util::any" => ExportConfig::default(),
 
 		// override boxed
 		"cv::DetectionBasedTracker::ExtObject" => ExportConfig::default(),
@@ -1064,7 +1076,7 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 			"mcc" => "MCC",
 		},
 		"gapi" => hashmap! {
-			"own" => "Own",
+			"imgproc" => "ImgProc",
 		}
 	}
 });

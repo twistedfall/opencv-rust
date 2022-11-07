@@ -1212,7 +1212,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// 
 	/// The method first calls VideoCapture::release to close the already opened file or camera.
 	#[inline]
-	fn open(&mut self, filename: &str, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
+	fn open_file_with_params(&mut self, filename: &str, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_VideoCapture_open_const_StringR_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
@@ -1234,7 +1234,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// ## C++ default parameters
 	/// * api_preference: CAP_ANY
 	#[inline]
-	fn open_1(&mut self, index: i32, api_preference: i32) -> Result<bool> {
+	fn open(&mut self, index: i32, api_preference: i32) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_VideoCapture_open_int_int(self.as_raw_mut_VideoCapture(), index, api_preference, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1254,7 +1254,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// 
 	/// The method first calls VideoCapture::release to close the already opened file or camera.
 	#[inline]
-	fn open_2(&mut self, index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
+	fn open_with_params(&mut self, index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_VideoCapture_open_int_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

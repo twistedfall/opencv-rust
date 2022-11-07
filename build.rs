@@ -152,9 +152,6 @@ fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
 }
 
 fn make_modules(opencv_dir: &Path) -> Result<()> {
-	let ignore_modules =
-		IntoIterator::into_iter(["core_detect", "cudalegacy", "cudev", "gapi", "opencv", "opencv_modules"]).collect::<HashSet<_>>();
-
 	let enable_modules = IntoIterator::into_iter(["core".to_string()])
 		.chain(env::vars_os().filter_map(|(k, _)| {
 			k.to_str()
@@ -165,9 +162,9 @@ fn make_modules(opencv_dir: &Path) -> Result<()> {
 
 	let mut modules = files_with_extension(opencv_dir, "hpp")?
 		.filter_map(|entry| {
-			let module = entry.file_stem().and_then(OsStr::to_str).expect("Can't calculate file stem");
-			Some(module)
-				.filter(|&m| !ignore_modules.contains(m))
+			entry
+				.file_stem()
+				.and_then(OsStr::to_str)
 				.filter(|&m| enable_modules.contains(m))
 				.map(str::to_string)
 		})

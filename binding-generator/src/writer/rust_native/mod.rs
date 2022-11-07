@@ -168,7 +168,11 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		let prio = typ.element_order();
 		let safe_id = typ.element_safe_id();
 
-		let path = self.types_dir.join(format!("{:03}-{}.type.rs", prio, safe_id));
+		let suffix = ".type.rs";
+		let mut file_name = format!("{:03}-{}", prio, safe_id);
+		ensure_filename_length(&mut file_name, suffix.len());
+		file_name.push_str(suffix);
+		let path = self.types_dir.join(file_name);
 		let file = OpenOptions::new().create_new(true).write(true).open(&path);
 		match file {
 			Ok(mut file) => {
@@ -187,7 +191,12 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 			}
 		}
 
-		let path = self.types_dir.join(format!("{:03}-{}.type.cpp", prio, safe_id));
+		let suffix = ".type.cpp";
+		let mut filename = format!("{:03}-{}", prio, safe_id);
+		ensure_filename_length(&mut filename, suffix.len());
+		filename.push_str(suffix);
+
+		let path = self.types_dir.join(filename);
 		let file = OpenOptions::new().create_new(true).write(true).open(&path);
 		match file {
 			Ok(mut file) => {
@@ -289,5 +298,15 @@ impl Drop for RustNativeBindingWriter<'_> {
 					.as_bytes(),
 			)
 			.expect("Can't write rust exports file");
+	}
+}
+
+fn ensure_filename_length(file_name: &mut String, reserve: usize) {
+	const MAX_FILENAME_LEN: usize = 255;
+
+	let max_length = MAX_FILENAME_LEN - reserve;
+
+	if file_name.len() > max_length {
+		*file_name = file_name[..max_length].to_string();
 	}
 }

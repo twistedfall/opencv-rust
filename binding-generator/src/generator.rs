@@ -205,21 +205,28 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 			EntityKind::MacroDefinition => self.process_const(entity),
 			EntityKind::MacroExpansion => {
 				if let Some(name) = entity.get_name() {
-					if name == "CV_EXPORTS" || name == "CV_EXPORTS_W" || name == "CV_WRAP" || name == "GAPI_EXPORTS" {
+					const BOXED: [&str; 6] = [
+						"CV_EXPORTS",
+						"CV_EXPORTS_W",
+						"CV_WRAP",
+						"GAPI_EXPORTS",
+						"GAPI_EXPORTS_W",
+						"GAPI_WRAP",
+					];
+					const SIMPLE: [&str; 3] = ["CV_EXPORTS_W_SIMPLE", "CV_EXPORTS_W_MAP", "GAPI_EXPORTS_W_SIMPLE"];
+					const RENAME: [&str; 2] = ["CV_EXPORTS_AS", "CV_WRAP_AS"];
+					if BOXED.contains(&name.as_str()) {
 						self.gen_env.make_export_config(entity);
-					} else if name == "CV_EXPORTS_W_SIMPLE" || name == "CV_EXPORTS_W_MAP" {
+					} else if SIMPLE.contains(&name.as_str()) {
 						self.gen_env.make_export_config(entity).simple = true;
-					} else if name == "CV_EXPORTS_AS" || name == "CV_WRAP_AS" {
-						let definition = get_definition_text(entity);
-						let definition = if let Some(d) = definition.strip_prefix("CV_EXPORTS_AS(").and_then(|d| d.strip_suffix(')')) {
-							d.trim()
-						} else if let Some(d) = definition.strip_prefix("CV_WRAP_AS(").and_then(|d| d.strip_suffix(')')) {
-							d.trim()
-						} else {
-							unreachable!("Incorrect CV_EXPORTS_AS(..) or CV_WRAP_AS(..) usage")
-						};
-						self.gen_env.make_export_config(entity);
-						self.gen_env.make_rename_config(entity).rename = definition.to_string();
+					} else if let Some(rename_macro) = RENAME.iter().find(|&r| r == &name) {
+						if let Some(new_name) = get_definition_text(entity)
+							.strip_prefix(&format!("{}(", rename_macro))
+							.and_then(|d| d.strip_suffix(')'))
+						{
+							self.gen_env.make_export_config(entity);
+							self.gen_env.make_rename_config(entity).rename = new_name.trim().to_string();
+						}
 					} else if name == "CV_NORETURN" {
 						self.gen_env.make_export_config(entity).no_return = true;
 					} else if name == "CV_NOEXCEPT" {
