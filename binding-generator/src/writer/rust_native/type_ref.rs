@@ -2,7 +2,7 @@ use crate::{Field, IteratorExt};
 use std::borrow::Cow;
 
 use crate::type_ref::{
-	Constness, ConstnessOverride, CppNameStyle, Dir, FishStyle, NameStyle, Signedness, StrEnc, StrType, TypeRef,
+	Constness, ConstnessOverride, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, Signedness, StrEnc, StrType, TypeRef,
 };
 
 pub trait TypeRefExt {
@@ -19,7 +19,6 @@ pub trait TypeRefExt {
 	fn rust_arg_forward(&self, name: &str) -> String;
 	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String;
 	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str>;
-	fn rust_extern_return(&self) -> Cow<str>;
 	fn rust_extern_return_fallible(&self) -> Cow<str>;
 
 	fn cpp_self_func_decl(&self, method_constness: Constness) -> String;
@@ -92,11 +91,11 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	}
 
 	fn rust_extern_arg_func_decl(&self, name: &str, constness: ConstnessOverride) -> String {
-		let mut typ = self.rust_extern(constness);
-		if self.as_simple_class().is_some() {
-			*typ.to_mut() = format!("*const {}", typ)
-		}
-		format!("{name}: {typ}", name = name, typ = typ)
+		format!(
+			"{name}: {typ}",
+			name = name,
+			typ = self.rust_extern(ExternDir::ToCpp(constness))
+		)
 	}
 
 	fn rust_arg_pre_call(&self, name: &str, is_function_infallible: bool) -> String {
@@ -147,10 +146,10 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 					"callback_arg!({name}_trampoline({tramp_args}) -> {tramp_ret} => {tramp_userdata_arg} in callbacks => {name}({fw_args}) -> {fw_ret})",
 					name=name,
 					tramp_args=tramp_args,
-					tramp_ret=ret.rust_extern(ConstnessOverride::No),
+					tramp_ret=ret.rust_extern(ExternDir::FromCpp),
 					tramp_userdata_arg=userdata_name,
 					fw_args=fw_args,
-					fw_ret=ret.rust_extern(ConstnessOverride::No),
+					fw_ret=ret.rust_extern(ExternDir::FromCpp),
 				);
 			}
 		}
@@ -328,19 +327,11 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		}
 	}
 
-	fn rust_extern_return(&self) -> Cow<str> {
-		if self.as_string().is_some() {
-			"*mut c_void".into()
-		} else {
-			self.rust_extern(ConstnessOverride::Mut)
-		}
-	}
-
 	fn rust_extern_return_fallible(&self) -> Cow<str> {
 		if self.is_void() {
 			"Result_void".into()
 		} else {
-			format!("Result<{ext}>", ext = self.rust_extern_return()).into()
+			format!("Result<{ext}>", ext = self.rust_extern(ExternDir::FromCpp)).into()
 		}
 	}
 

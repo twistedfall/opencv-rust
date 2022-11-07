@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult, Type};
 
-use crate::type_ref::{ConstnessOverride, CppNameStyle, NameStyle};
+use crate::type_ref::{CppNameStyle, ExternDir, NameStyle};
 use crate::{Element, Field, GeneratorEnv, IteratorExt, TypeRef};
 
 #[derive(Clone)]
@@ -50,13 +50,13 @@ impl<'tu, 'ge> Function<'tu, 'ge> {
 		let args = self
 			.arguments()
 			.into_iter()
-			.map(|a| a.type_ref().rust_extern(ConstnessOverride::No).into_owned())
+			.map(|a| a.type_ref().rust_extern(ExternDir::Pure).into_owned())
 			.join(", ");
 		let ret = self.return_type();
 		format!(
 			r#"Option<unsafe extern "C" fn({args}) -> {ret}>"#,
 			args = args,
-			ret = ret.rust_extern(ConstnessOverride::No)
+			ret = ret.rust_extern(ExternDir::Pure)
 		)
 		.into()
 	}
@@ -103,13 +103,13 @@ impl Element for Function<'_, '_> {
 			let args = self
 				.rust_arguments()
 				.into_iter()
-				.map(|a| a.type_ref().rust_extern(ConstnessOverride::No).into_owned())
+				.map(|a| a.type_ref().rust_extern(ExternDir::Pure).into_owned())
 				.join(", ");
 			format!(
 				"Option{fish}<Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>>",
 				fish = style.turbo_fish_style().rust_qual(),
 				args = args,
-				ret = ret.rust_extern(ConstnessOverride::No),
+				ret = ret.rust_extern(ExternDir::Pure),
 			)
 			.into()
 		} else {

@@ -5,7 +5,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::func::Kind;
-use crate::type_ref::{ConstnessOverride, CppNameStyle, Dir, FishStyle, NameStyle, StrEnc, StrType};
+use crate::type_ref::{ConstnessOverride, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType};
 use crate::writer::rust_native::func_desc::{pre_post_arg_handle, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use crate::{get_debug, settings, CompiledInterpolation, Element, Field, Func, StrExt, TypeRef};
 
@@ -337,7 +337,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let is_infallible = self.is_infallible();
 		let return_type = self.return_type();
 		let return_wrapper_type = if is_infallible {
-			return_type.rust_extern_return()
+			return_type.rust_extern(ExternDir::FromCpp)
 		} else {
 			return_type.rust_extern_return_fallible()
 		};

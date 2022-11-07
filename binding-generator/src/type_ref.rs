@@ -53,6 +53,13 @@ pub enum Dir<T> {
 	Out(T),
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ExternDir {
+	Pure, // used for inner type (e.g. for Point*) and for callbacks
+	ToCpp(ConstnessOverride),
+	FromCpp,
+}
+
 #[derive(Clone, Debug)]
 pub enum Kind<'tu, 'ge> {
 	/// (rust name, cpp name)
@@ -840,23 +847,22 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		Lifetime::explicit().into_iter().take(self.rust_lifetime_count())
 	}
 
-	pub fn rust_extern(&self, constness: ConstnessOverride) -> Cow<str> {
-		let constness = constness.with(self.constness());
+	pub fn rust_extern(&self, dir: ExternDir) -> Cow<str> {
+		let constness = match dir {
+			ExternDir::Pure => self.constness(),
+			ExternDir::ToCpp(constness) => constness.with(self.constness()),
+			ExternDir::FromCpp => Constness::Mut,
+		};
 		#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
 		'typ: loop {
-			if let Some(dir) = self.as_string() {
-				match dir {
-					Dir::In(_) => {
-						break 'typ if constness.is_const() {
-							"*const c_char".into()
-						} else {
-							"*mut c_char".into()
-						};
-					}
-					Dir::Out(_) => {
-						break 'typ "*mut *mut c_void".into();
-					}
-				}
+			if let Some(arg_dir) = self.as_string() {
+				break 'typ match dir {
+					ExternDir::ToCpp(_) | ExternDir::Pure => match arg_dir {
+						Dir::In(_) => format!("*{}c_char", constness.rust_qual(true)).into(),
+						Dir::Out(_) => "*mut *mut c_void".into(),
+					},
+					ExternDir::FromCpp => "*mut c_void".into(),
+				};
 			}
 			if self.is_extern_by_ptr() {
 				break 'typ if constness.is_const() {
@@ -874,7 +880,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				} else if self.as_string().is_some() {
 					out += "c_char";
 				} else {
-					out += inner.rust_extern(ConstnessOverride::force(constness)).as_ref()
+					out += inner.rust_extern(ExternDir::Pure).as_ref()
 				}
 				break 'typ out.into();
 			}
@@ -882,7 +888,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				break 'typ format!(
 					"*{cnst}[{typ}; {len}]",
 					cnst = self.constness().rust_qual(true),
-					typ = elem.rust_extern(ConstnessOverride::force(constness)),
+					typ = elem.rust_extern(ExternDir::Pure),
 					len = len,
 				)
 				.into();
@@ -893,12 +899,17 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					// argv is treated as array of output arguments and it doesn't seem to be meant this way
 					format!("*{cnst}c_char", cnst = elem.clang_constness().rust_qual(true)).into()
 				} else {
-					elem.rust_extern(ConstnessOverride::force(constness))
+					elem.rust_extern(ExternDir::Pure)
 				};
-				break 'typ format!("*{cnst}{typ}", cnst = self.constness().rust_qual(true), typ = typ,).into();
+				break 'typ format!("*{cnst}{typ}", cnst = self.constness().rust_qual(true), typ = typ).into();
 			}
 			if let Some(func) = self.as_function() {
 				break 'typ func.rust_extern().into_owned().into();
+			}
+			if self.as_simple_class().is_some() {
+				if matches!(dir, ExternDir::ToCpp(_)) {
+					break 'typ format!("*const {}", self.rust_name(NameStyle::ref_())).into();
+				}
 			}
 			break 'typ self.rust_name(NameStyle::ref_());
 		}
@@ -1153,7 +1164,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		let mut dbg = f.debug_struct("TypeRef");
 		dbg.field("rust_safe_id", &self.rust_safe_id(true))
 			.field("rust_full", &self.rust_name(NameStyle::ref_()))
-			.field("rust_extern", &self.rust_extern(ConstnessOverride::No))
+			.field("rust_extern", &self.rust_extern(ExternDir::ToCpp(ConstnessOverride::No)))
 			.field("cpp_safe_id", &self.cpp_safe_id())
 			.field("cpp_full", &self.cpp_name(CppNameStyle::Reference))
 			.field("cpp_extern", &self.cpp_extern())

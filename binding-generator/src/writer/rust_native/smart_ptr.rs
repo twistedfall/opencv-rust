@@ -2,7 +2,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 use std::borrow::Cow;
 
-use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, NameStyle};
+use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, ExternDir, NameStyle};
 use crate::writer::rust_native::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use crate::{type_ref, CompiledInterpolation, Element, EntityElement, FunctionTypeHint, SmartPtr, StrExt, TypeRef};
 
@@ -32,8 +32,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let mut inter_vars = hashmap! {
 			"rust_localalias" => self.rust_localalias(),
 			"rust_full" => self.rust_name(NameStyle::ref_()),
-			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Const),
-			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Mut),
+			"rust_extern_const" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+			"rust_extern_mut" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
 			"inner_rust_full" => pointee_type.rust_name(NameStyle::ref_()),
 		};
 

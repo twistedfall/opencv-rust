@@ -4,7 +4,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::class::Kind;
-use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, FishStyle, NameStyle};
+use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, ExternDir, FishStyle, NameStyle};
 use crate::writer::rust_native::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use crate::{get_debug, Class, CompiledInterpolation, Element, Func, FunctionTypeHint, IteratorExt, NamePool, StrExt, TypeRef};
 
@@ -127,8 +127,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"rust_trait_local" => c.rust_trait_name(NameStyle::decl(), Constness::Mut),
 			"rust_trait_local_const" => c.rust_trait_name(NameStyle::decl(), Constness::Const),
 			"rust_local" => type_ref.rust_name(NameStyle::decl()),
-			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Const),
-			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Mut),
+			"rust_extern_const" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+			"rust_extern_mut" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
 			"trait_bases_const" => trait_bases_const.into(),
 			"trait_bases_mut" => trait_bases_mut.into(),
 			"trait_const_methods" => trait_const_methods.into(),
@@ -204,8 +204,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					"base_const_rust_full" => base.rust_trait_name(NameStyle::ref_(), Constness::Const),
 					"rust_local" => type_ref.rust_name(NameStyle::decl()),
 					"base_rust_local" => base_type_ref.rust_name(NameStyle::decl()),
-					"base_rust_extern_const" => base_type_ref.rust_extern(ConstnessOverride::Const),
-					"base_rust_extern_mut" => base_type_ref.rust_extern(ConstnessOverride::Mut),
+					"base_rust_extern_const" => base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+					"base_rust_extern_mut" => base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
 				})
 			})
 			.collect::<Vec<_>>();
@@ -294,8 +294,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"debug" => get_debug(c).into(),
 			"rust_local" => rust_local.clone(),
 			"rust_full" => c.rust_name(NameStyle::ref_()),
-			"rust_extern_const" => type_ref.rust_extern(ConstnessOverride::Const),
-			"rust_extern_mut" => type_ref.rust_extern(ConstnessOverride::Mut),
+			"rust_extern_const" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+			"rust_extern_mut" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
 			"fields" => fields.join("").into(),
 			"bases" => bases.join("").into(),
 			"impl" => IMPL_TPL.interpolate(&hashmap! {
