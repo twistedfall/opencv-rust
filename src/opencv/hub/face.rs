@@ -149,7 +149,7 @@ pub fn load_dataset_list(image_list: &str, annotation_list: &str, images: &mut c
 	extern_container_arg!(mut image_list);
 	extern_container_arg!(mut annotation_list);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_face_loadDatasetList_String_String_vector_String_R_vector_String_R(image_list.opencv_as_extern_mut(), annotation_list.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), annotations.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_face_loadDatasetList_String_String_vectorLStringGR_vectorLStringGR(image_list.opencv_as_extern_mut(), annotation_list.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), annotations.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -244,7 +244,7 @@ pub fn load_training_data_1(image_list: &str, ground_truth: &str, images: &mut c
 	extern_container_arg!(mut ground_truth);
 	output_array_arg!(face_points);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_face_loadTrainingData_String_String_vector_String_R_const__OutputArrayR_float(image_list.opencv_as_extern_mut(), ground_truth.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_face_loadTrainingData_String_String_vectorLStringGR_const__OutputArrayR_float(image_list.opencv_as_extern_mut(), ground_truth.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -286,7 +286,7 @@ pub fn load_training_data(filename: &str, images: &mut core::Vector<String>, fac
 	extern_container_arg!(mut filename);
 	output_array_arg!(face_points);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_face_loadTrainingData_String_vector_String_R_const__OutputArrayR_char_float(filename.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), delim, offset, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_face_loadTrainingData_String_vectorLStringGR_const__OutputArrayR_char_float(filename.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), delim, offset, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -312,7 +312,7 @@ pub fn load_training_data(filename: &str, images: &mut core::Vector<String>, fac
 #[inline]
 pub fn load_training_data_2(mut filename: core::Vector<String>, trainlandmarks: &mut core::Vector<core::Vector<core::Point2f>>, trainimages: &mut core::Vector<String>) -> Result<bool> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_face_loadTrainingData_vector_String__vector_vector_Point2f__R_vector_String_R(filename.as_raw_mut_VectorOfString(), trainlandmarks.as_raw_mut_VectorOfVectorOfPoint2f(), trainimages.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_face_loadTrainingData_vectorLStringG_vectorLvectorLPoint2fGGR_vectorLStringGR(filename.as_raw_mut_VectorOfString(), trainlandmarks.as_raw_mut_VectorOfVectorOfPoint2f(), trainimages.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -926,7 +926,7 @@ pub trait FaceRecognizerConst: core::AlgorithmTraitConst {
 	fn predict_collect(&self, src: &dyn core::ToInputArray, mut collector: core::Ptr<dyn crate::face::PredictCollector>) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_Ptr_PredictCollector_(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_mut_PtrOfPredictCollector(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_PtrLPredictCollectorG(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_mut_PtrOfPredictCollector(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1305,7 +1305,7 @@ pub trait FacemarkAAM: crate::face::FacemarkAAMConst + crate::face::FacemarkTrai
 		input_array_arg!(roi);
 		output_array_arg!(_landmarks);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_FacemarkAAM_fitConfig_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_vector_Config_R(self.as_raw_mut_FacemarkAAM(), image.as_raw__InputArray(), roi.as_raw__InputArray(), _landmarks.as_raw__OutputArray(), runtime_params.as_raw_VectorOfFacemarkAAM_Config(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_FacemarkAAM_fitConfig_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_vectorLConfigGR(self.as_raw_mut_FacemarkAAM(), image.as_raw__InputArray(), roi.as_raw__InputArray(), _landmarks.as_raw__OutputArray(), runtime_params.as_raw_VectorOfFacemarkAAM_Config(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1451,7 +1451,7 @@ pub trait FacemarkAAM_DataTrait: crate::face::FacemarkAAM_DataTraitConst {
 
 	#[inline]
 	fn set_s0(&mut self, mut val: core::Vector<core::Point2f>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Data_setPropS0_vector_Point2f_(self.as_raw_mut_FacemarkAAM_Data(), val.as_raw_mut_VectorOfPoint2f()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Data_setPropS0_vectorLPoint2fG(self.as_raw_mut_FacemarkAAM_Data(), val.as_raw_mut_VectorOfPoint2f()) };
 		ret
 	}
 	
@@ -1537,25 +1537,25 @@ pub trait FacemarkAAM_ModelTrait: crate::face::FacemarkAAM_ModelTraitConst {
 
 	#[inline]
 	fn set_scales(&mut self, mut val: core::Vector<f32>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_setPropScales_vector_float_(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOff32()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_setPropScales_vectorLfloatG(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOff32()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_triangles(&mut self, mut val: core::Vector<core::Vec3i>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_setPropTriangles_vector_Vec3i_(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOfVec3i()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_setPropTriangles_vectorLVec3iG(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOfVec3i()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_textures(&mut self, mut val: core::Vector<crate::face::FacemarkAAM_Model_Texture>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_setPropTextures_vector_Texture_(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOfFacemarkAAM_Model_Texture()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_setPropTextures_vectorLTextureG(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOfFacemarkAAM_Model_Texture()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_s0(&mut self, mut val: core::Vector<core::Point2f>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_setPropS0_vector_Point2f_(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOfPoint2f()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_setPropS0_vectorLPoint2fG(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_mut_VectorOfPoint2f()) };
 		ret
 	}
 	
@@ -1718,25 +1718,25 @@ pub trait FacemarkAAM_Model_TextureTrait: crate::face::FacemarkAAM_Model_Texture
 	
 	#[inline]
 	fn set_texture_idx(&mut self, mut val: core::Vector<core::Vector<core::Point>>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropTextureIdx_vector_vector_Point__(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfVectorOfPoint()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropTextureIdx_vectorLvectorLPointGG(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfVectorOfPoint()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_base_shape(&mut self, mut val: core::Vector<core::Point2f>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropBase_shape_vector_Point2f_(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfPoint2f()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropBase_shape_vectorLPoint2fG(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfPoint2f()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_ind1(&mut self, mut val: core::Vector<i32>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropInd1_vector_int_(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfi32()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropInd1_vectorLintG(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfi32()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_ind2(&mut self, mut val: core::Vector<i32>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropInd2_vector_int_(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfi32()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_setPropInd2_vectorLintG(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_mut_VectorOfi32()) };
 		ret
 	}
 	
@@ -1905,7 +1905,7 @@ pub trait FacemarkAAM_ParamsTrait: crate::face::FacemarkAAM_ParamsTraitConst {
 	
 	#[inline]
 	fn set_scales(&mut self, mut val: core::Vector<f32>) {
-		let ret = unsafe { sys::cv_face_FacemarkAAM_Params_setPropScales_vector_float_(self.as_raw_mut_FacemarkAAM_Params(), val.as_raw_mut_VectorOff32()) };
+		let ret = unsafe { sys::cv_face_FacemarkAAM_Params_setPropScales_vectorLfloatG(self.as_raw_mut_FacemarkAAM_Params(), val.as_raw_mut_VectorOff32()) };
 		ret
 	}
 	
@@ -1984,7 +1984,7 @@ pub trait FacemarkKazemi: crate::face::Facemark + crate::face::FacemarkKazemiCon
 		extern_container_arg!(mut configfile);
 		extern_container_arg!(mut model_filename);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_FacemarkKazemi_training_vector_Mat_R_vector_vector_Point2f__R_string_Size_string(self.as_raw_mut_FacemarkKazemi(), images.as_raw_mut_VectorOfMat(), landmarks.as_raw_mut_VectorOfVectorOfPoint2f(), configfile.opencv_as_extern_mut(), scale.opencv_as_extern(), model_filename.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_FacemarkKazemi_training_vectorLMatGR_vectorLvectorLPoint2fGGR_string_Size_string(self.as_raw_mut_FacemarkKazemi(), images.as_raw_mut_VectorOfMat(), landmarks.as_raw_mut_VectorOfVectorOfPoint2f(), configfile.opencv_as_extern_mut(), scale.opencv_as_extern(), model_filename.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2422,13 +2422,13 @@ pub trait FacemarkLBF_ParamsTrait: crate::face::FacemarkLBF_ParamsTraitConst {
 	
 	#[inline]
 	fn set_feats_m(&mut self, mut val: core::Vector<i32>) {
-		let ret = unsafe { sys::cv_face_FacemarkLBF_Params_setPropFeats_m_vector_int_(self.as_raw_mut_FacemarkLBF_Params(), val.as_raw_mut_VectorOfi32()) };
+		let ret = unsafe { sys::cv_face_FacemarkLBF_Params_setPropFeats_m_vectorLintG(self.as_raw_mut_FacemarkLBF_Params(), val.as_raw_mut_VectorOfi32()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_radius_m(&mut self, mut val: core::Vector<f64>) {
-		let ret = unsafe { sys::cv_face_FacemarkLBF_Params_setPropRadius_m_vector_double_(self.as_raw_mut_FacemarkLBF_Params(), val.as_raw_mut_VectorOff64()) };
+		let ret = unsafe { sys::cv_face_FacemarkLBF_Params_setPropRadius_m_vectorLdoubleG(self.as_raw_mut_FacemarkLBF_Params(), val.as_raw_mut_VectorOff64()) };
 		ret
 	}
 	
@@ -3146,6 +3146,23 @@ pub trait StandardCollectorTraitConst: crate::face::PredictCollectorConst {
 		unsafe { sys::cv_face_StandardCollector_getMinDist_const(self.as_raw_StandardCollector(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Return results as vector
+	/// ## Parameters
+	/// * sorted: If set, results will be sorted by distance
+	/// Each values is a pair of label and distance.
+	/// 
+	/// ## C++ default parameters
+	/// * sorted: false
+	#[inline]
+	fn get_results(&self, sorted: bool) -> Result<core::Vector<core::Tuple<(i32, f64)>>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_face_StandardCollector_getResults_const_bool(self.as_raw_StandardCollector(), sorted, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<core::Tuple<(i32, f64)>>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	

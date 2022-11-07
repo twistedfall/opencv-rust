@@ -1038,7 +1038,7 @@ pub fn select_rois(window_name: &str, img: &dyn core::ToInputArray, bounding_box
 	extern_container_arg!(window_name);
 	input_array_arg!(img);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_selectROIs_const_StringR_const__InputArrayR_vector_Rect_R_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), bounding_boxes.as_raw_mut_VectorOfRect(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_selectROIs_const_StringR_const__InputArrayR_vectorLRectGR_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), bounding_boxes.as_raw_mut_VectorOfRect(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)

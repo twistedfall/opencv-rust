@@ -70,7 +70,7 @@ pub trait WBDetector: crate::xobjdetect::WBDetectorConst {
 	#[inline]
 	fn detect(&mut self, img: &core::Mat, bboxes: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_xobjdetect_WBDetector_detect_const_MatR_vector_Rect_R_vector_double_R(self.as_raw_mut_WBDetector(), img.as_raw_Mat(), bboxes.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_xobjdetect_WBDetector_detect_const_MatR_vectorLRectGR_vectorLdoubleGR(self.as_raw_mut_WBDetector(), img.as_raw_Mat(), bboxes.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

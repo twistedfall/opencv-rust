@@ -943,7 +943,7 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	#[inline]
 	fn set_input(&mut self, frame_source: &core::Ptr<dyn crate::superres::Superres_FrameSource>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_superres_SuperResolution_setInput_const_Ptr_FrameSource_R(self.as_raw_mut_Superres_SuperResolution(), frame_source.as_raw_PtrOfSuperres_FrameSource(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_superres_SuperResolution_setInput_const_PtrLFrameSourceGR(self.as_raw_mut_Superres_SuperResolution(), frame_source.as_raw_PtrOfSuperres_FrameSource(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1096,7 +1096,7 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	#[inline]
 	fn set_optical_flow(&mut self, val: &core::Ptr<dyn crate::superres::Superres_DenseOpticalFlowExt>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_superres_SuperResolution_setOpticalFlow_const_Ptr_DenseOpticalFlowExt_R(self.as_raw_mut_Superres_SuperResolution(), val.as_raw_PtrOfSuperres_DenseOpticalFlowExt(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_superres_SuperResolution_setOpticalFlow_const_PtrLDenseOpticalFlowExtGR(self.as_raw_mut_Superres_SuperResolution(), val.as_raw_PtrOfSuperres_DenseOpticalFlowExt(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

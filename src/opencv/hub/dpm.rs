@@ -92,7 +92,7 @@ pub trait DPMDetector: crate::dpm::DPMDetectorConst {
 	#[inline]
 	fn detect(&mut self, image: &mut core::Mat, objects: &mut core::Vector<crate::dpm::DPMDetector_ObjectDetection>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dpm_DPMDetector_detect_MatR_vector_ObjectDetection_R(self.as_raw_mut_DPMDetector(), image.as_raw_mut_Mat(), objects.as_raw_mut_VectorOfDPMDetector_ObjectDetection(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_dpm_DPMDetector_detect_MatR_vectorLObjectDetectionGR(self.as_raw_mut_DPMDetector(), image.as_raw_mut_Mat(), objects.as_raw_mut_VectorOfDPMDetector_ObjectDetection(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -114,7 +114,7 @@ impl dyn DPMDetector + '_ {
 	#[inline]
 	pub fn create(filenames: &core::Vector<String>, class_names: &core::Vector<String>) -> Result<core::Ptr<dyn crate::dpm::DPMDetector>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dpm_DPMDetector_create_const_vector_string_R_const_vector_string_R(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_dpm_DPMDetector_create_const_vectorLstringGR_const_vectorLstringGR(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::dpm::DPMDetector>::opencv_from_extern(ret) };

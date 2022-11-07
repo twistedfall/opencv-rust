@@ -133,6 +133,15 @@ opencv_type_simple! { crate::stereo::MatchQuasiDense }
 
 impl MatchQuasiDense {
 	#[inline]
+	pub fn apply(self, rhs: crate::stereo::MatchQuasiDense) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_stereo_MatchQuasiDense_operatorL_const_const_MatchQuasiDenseR(self.opencv_as_extern(), &rhs, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
 	pub fn default() -> Result<crate::stereo::MatchQuasiDense> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_stereo_MatchQuasiDense_MatchQuasiDense(ocvrs_return.as_mut_ptr()) };
@@ -267,7 +276,7 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	#[inline]
 	fn get_sparse_matches(&mut self, s_matches: &mut core::Vector<crate::stereo::MatchQuasiDense>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getSparseMatches_vector_MatchQuasiDense_R(self.as_raw_mut_QuasiDenseStereo(), s_matches.as_raw_mut_VectorOfMatchQuasiDense(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereo_QuasiDenseStereo_getSparseMatches_vectorLMatchQuasiDenseGR(self.as_raw_mut_QuasiDenseStereo(), s_matches.as_raw_mut_VectorOfMatchQuasiDense(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -283,7 +292,7 @@ pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	#[inline]
 	fn get_dense_matches(&mut self, dense_matches: &mut core::Vector<crate::stereo::MatchQuasiDense>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getDenseMatches_vector_MatchQuasiDense_R(self.as_raw_mut_QuasiDenseStereo(), dense_matches.as_raw_mut_VectorOfMatchQuasiDense(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereo_QuasiDenseStereo_getDenseMatches_vectorLMatchQuasiDenseGR(self.as_raw_mut_QuasiDenseStereo(), dense_matches.as_raw_mut_VectorOfMatchQuasiDense(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

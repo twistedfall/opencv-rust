@@ -799,7 +799,7 @@ pub fn create_disparity_wls_filter_generic(use_confidence: bool) -> Result<core:
 #[inline]
 pub fn create_disparity_wls_filter(mut matcher_left: core::Ptr<dyn crate::calib3d::StereoMatcher>) -> Result<core::Ptr<dyn crate::ximgproc::DisparityWLSFilter>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ximgproc_createDisparityWLSFilter_Ptr_StereoMatcher_(matcher_left.as_raw_mut_PtrOfStereoMatcher(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ximgproc_createDisparityWLSFilter_PtrLStereoMatcherG(matcher_left.as_raw_mut_PtrOfStereoMatcher(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::ximgproc::DisparityWLSFilter>::opencv_from_extern(ret) };
@@ -1035,7 +1035,7 @@ pub fn create_ric_interpolator() -> Result<core::Ptr<dyn crate::ximgproc::RICInt
 #[inline]
 pub fn create_right_matcher(mut matcher_left: core::Ptr<dyn crate::calib3d::StereoMatcher>) -> Result<core::Ptr<dyn crate::calib3d::StereoMatcher>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ximgproc_createRightMatcher_Ptr_StereoMatcher_(matcher_left.as_raw_mut_PtrOfStereoMatcher(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ximgproc_createRightMatcher_PtrLStereoMatcherG(matcher_left.as_raw_mut_PtrOfStereoMatcher(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::calib3d::StereoMatcher>::opencv_from_extern(ret) };
@@ -1086,7 +1086,7 @@ pub fn create_scan_segment(image_width: i32, image_height: i32, num_superpixels:
 pub fn create_structured_edge_detection(model: &str, how_to_get_features: Option<core::Ptr<dyn crate::ximgproc::RFFeatureGetter>>) -> Result<core::Ptr<dyn crate::ximgproc::StructuredEdgeDetection>> {
 	extern_container_arg!(model);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_Ptr_const_RFFeatureGetter_(model.opencv_as_extern(), how_to_get_features.map_or(::core::ptr::null(), |how_to_get_features| how_to_get_features.as_raw_PtrOfRFFeatureGetter()), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR_PtrLconst_RFFeatureGetterG(model.opencv_as_extern(), how_to_get_features.map_or(::core::ptr::null(), |how_to_get_features| how_to_get_features.as_raw_PtrOfRFFeatureGetter()), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(ret) };
@@ -1639,7 +1639,7 @@ pub fn read_gt(src_path: &str, dst: &mut dyn core::ToOutputArray) -> Result<i32>
 pub fn create_rle_image(runs: &core::Vector<core::Point3i>, res: &mut dyn core::ToOutputArray, size: core::Size) -> Result<()> {
 	output_array_arg!(res);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ximgproc_rl_createRLEImage_const_vector_Point3i_R_const__OutputArrayR_Size(runs.as_raw_VectorOfPoint3i(), res.as_raw__OutputArray(), size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ximgproc_rl_createRLEImage_const_vectorLPoint3iGR_const__OutputArrayR_Size(runs.as_raw_VectorOfPoint3i(), res.as_raw__OutputArray(), size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -1909,7 +1909,7 @@ pub fn create_selective_search_segmentation_strategy_multiple() -> Result<core::
 #[inline]
 pub fn create_selective_search_segmentation_strategy_multiple_1(mut s1: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_Ptr_SelectiveSearchSegmentationStrategy_(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_PtrLSelectiveSearchSegmentationStrategyG(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(ret) };
@@ -1923,7 +1923,7 @@ pub fn create_selective_search_segmentation_strategy_multiple_1(mut s1: core::Pt
 #[inline]
 pub fn create_selective_search_segmentation_strategy_multiple_2(mut s1: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy_(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(ret) };
@@ -1938,7 +1938,7 @@ pub fn create_selective_search_segmentation_strategy_multiple_2(mut s1: core::Pt
 #[inline]
 pub fn create_selective_search_segmentation_strategy_multiple_3(mut s1: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s3: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy_(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s3.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s3.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(ret) };
@@ -1954,7 +1954,7 @@ pub fn create_selective_search_segmentation_strategy_multiple_3(mut s1: core::Pt
 #[inline]
 pub fn create_selective_search_segmentation_strategy_multiple_4(mut s1: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s2: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s3: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, mut s4: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy__Ptr_SelectiveSearchSegmentationStrategy_(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s3.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s4.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ximgproc_segmentation_createSelectiveSearchSegmentationStrategyMultiple_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG_PtrLSelectiveSearchSegmentationStrategyG(s1.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s2.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s3.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), s4.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>::opencv_from_extern(ret) };
@@ -2951,7 +2951,7 @@ pub trait EdgeBoxes: core::AlgorithmTrait + crate::ximgproc::EdgeBoxesConst {
 		input_array_arg!(orientation_map);
 		output_array_arg!(scores);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ximgproc_EdgeBoxes_getBoundingBoxes_const__InputArrayR_const__InputArrayR_vector_Rect_R_const__OutputArrayR(self.as_raw_mut_EdgeBoxes(), edge_map.as_raw__InputArray(), orientation_map.as_raw__InputArray(), boxes.as_raw_mut_VectorOfRect(), scores.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ximgproc_EdgeBoxes_getBoundingBoxes_const__InputArrayR_const__InputArrayR_vectorLRectGR_const__OutputArrayR(self.as_raw_mut_EdgeBoxes(), edge_map.as_raw__InputArray(), orientation_map.as_raw__InputArray(), boxes.as_raw_mut_VectorOfRect(), scores.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4675,7 +4675,7 @@ pub trait SelectiveSearchSegmentation: core::AlgorithmTrait + crate::ximgproc::S
 	#[inline]
 	fn add_graph_segmentation(&mut self, mut g: core::Ptr<dyn crate::ximgproc::GraphSegmentation>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_addGraphSegmentation_Ptr_GraphSegmentation_(self.as_raw_mut_SelectiveSearchSegmentation(), g.as_raw_mut_PtrOfGraphSegmentation(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_addGraphSegmentation_PtrLGraphSegmentationG(self.as_raw_mut_SelectiveSearchSegmentation(), g.as_raw_mut_PtrOfGraphSegmentation(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4697,7 +4697,7 @@ pub trait SelectiveSearchSegmentation: core::AlgorithmTrait + crate::ximgproc::S
 	#[inline]
 	fn add_strategy(&mut self, mut s: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_addStrategy_Ptr_SelectiveSearchSegmentationStrategy_(self.as_raw_mut_SelectiveSearchSegmentation(), s.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_addStrategy_PtrLSelectiveSearchSegmentationStrategyG(self.as_raw_mut_SelectiveSearchSegmentation(), s.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4719,7 +4719,7 @@ pub trait SelectiveSearchSegmentation: core::AlgorithmTrait + crate::ximgproc::S
 	#[inline]
 	fn process(&mut self, rects: &mut core::Vector<core::Rect>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_process_vector_Rect_R(self.as_raw_mut_SelectiveSearchSegmentation(), rects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_process_vectorLRectGR(self.as_raw_mut_SelectiveSearchSegmentation(), rects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4826,7 +4826,7 @@ pub trait SelectiveSearchSegmentationStrategyMultiple: crate::ximgproc::Selectiv
 	#[inline]
 	fn add_strategy(&mut self, mut g: core::Ptr<dyn crate::ximgproc::SelectiveSearchSegmentationStrategy>, weight: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_addStrategy_Ptr_SelectiveSearchSegmentationStrategy__float(self.as_raw_mut_SelectiveSearchSegmentationStrategyMultiple(), g.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), weight, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_addStrategy_PtrLSelectiveSearchSegmentationStrategyG_float(self.as_raw_mut_SelectiveSearchSegmentationStrategyMultiple(), g.as_raw_mut_PtrOfSelectiveSearchSegmentationStrategy(), weight, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

@@ -1,7 +1,14 @@
+* 0.73.0
+  * Add basic support for the Graph-API (gapi) module.
+  * Generate bindings for `std::tuple` and `std::pair`.
+  * Add support for the following operators: `!=`, `>`, `>=`, `<`, `<=`, `&`, `|`, `^`, `~`.
+  * Correctly handle rvalue reference (`&&`) as move operation.
+  * Due to multiple internal improvements some functions have slightly changed names.
+
 * 0.72.0/0.72.1
   * Make `lower_bound` argument of `imgproc::emd()` optional.
   * Fix semantics of `VectorIterator::nth` to follow the documentation for `Iterator`.
-  * Fix Android build failure introduced ([#392](https://github.com/twistedfall/opencv-rust/issues/392))
+  * Fix Android build failure ([#392](https://github.com/twistedfall/opencv-rust/issues/392))
   * Fix constant crate recompilation ([#390](https://github.com/twistedfall/opencv-rust/issues/390))
 
 * 0.71.0

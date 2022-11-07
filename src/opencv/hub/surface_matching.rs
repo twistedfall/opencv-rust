@@ -429,7 +429,7 @@ pub trait ICPTrait: crate::surface_matching::ICPTraitConst {
 	#[inline]
 	fn register_model_to_scene_vec(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, poses: &mut core::Vector<crate::surface_matching::Pose3DPtr>) -> Result<i32> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vector_Pose3DPtr_R(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_mut_VectorOfPose3DPtr(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vectorLPose3DPtrGR(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_mut_VectorOfPose3DPtr(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -587,7 +587,7 @@ pub trait PPF3DDetectorTrait: crate::surface_matching::PPF3DDetectorTraitConst {
 	#[inline]
 	fn match_(&mut self, scene: &core::Mat, results: &mut core::Vector<crate::surface_matching::Pose3DPtr>, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vector_Pose3DPtr_R_const_double_const_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vectorLPose3DPtrGR_const_double_const_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -942,7 +942,7 @@ pub trait PoseCluster3DTrait: crate::surface_matching::PoseCluster3DTraitConst {
 
 	#[inline]
 	fn set_pose_list(&mut self, mut val: core::Vector<crate::surface_matching::Pose3DPtr>) {
-		let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setPropPoseList_vector_Pose3DPtr_(self.as_raw_mut_PoseCluster3D(), val.as_raw_mut_VectorOfPose3DPtr()) };
+		let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setPropPoseList_vectorLPose3DPtrG(self.as_raw_mut_PoseCluster3D(), val.as_raw_mut_VectorOfPose3DPtr()) };
 		ret
 	}
 	

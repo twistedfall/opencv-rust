@@ -420,7 +420,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	#[inline]
 	fn get_pattern_points(&mut self, original_points: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ccalib_CustomPattern_getPatternPoints_vector_KeyPoint_R(self.as_raw_mut_CustomPattern(), original_points.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ccalib_CustomPattern_getPatternPoints_vectorLKeyPointGR(self.as_raw_mut_CustomPattern(), original_points.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -438,7 +438,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	#[inline]
 	fn set_feature_detector(&mut self, mut feature_detector: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ccalib_CustomPattern_setFeatureDetector_Ptr_Feature2D_(self.as_raw_mut_CustomPattern(), feature_detector.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ccalib_CustomPattern_setFeatureDetector_PtrLFeature2DG(self.as_raw_mut_CustomPattern(), feature_detector.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -447,7 +447,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	#[inline]
 	fn set_descriptor_extractor(&mut self, mut extractor: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ccalib_CustomPattern_setDescriptorExtractor_Ptr_Feature2D_(self.as_raw_mut_CustomPattern(), extractor.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ccalib_CustomPattern_setDescriptorExtractor_PtrLFeature2DG(self.as_raw_mut_CustomPattern(), extractor.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -456,7 +456,7 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	#[inline]
 	fn set_descriptor_matcher(&mut self, mut matcher: core::Ptr<dyn crate::features2d::DescriptorMatcher>) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ccalib_CustomPattern_setDescriptorMatcher_Ptr_DescriptorMatcher_(self.as_raw_mut_CustomPattern(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ccalib_CustomPattern_setDescriptorMatcher_PtrLDescriptorMatcherG(self.as_raw_mut_CustomPattern(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -772,7 +772,7 @@ impl MultiCameraCalibration {
 	pub fn new(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32, verbose: i32, show_extration: i32, n_mini_matches: i32, flags: i32, criteria: core::TermCriteria, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<dyn crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::MultiCameraCalibration> {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_Ptr_Feature2D__Ptr_Feature2D__Ptr_DescriptorMatcher_(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, criteria.opencv_as_extern(), detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, criteria.opencv_as_extern(), detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
@@ -986,7 +986,7 @@ pub trait RandomPatternCornerFinderTrait: crate::ccalib::RandomPatternCornerFind
 	#[inline]
 	fn load_pattern_1(&mut self, pattern_image: &core::Mat, pattern_key_points: &core::Vector<core::KeyPoint>, pattern_descriptors: &core::Mat) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_loadPattern_const_MatR_const_vector_KeyPoint_R_const_MatR(self.as_raw_mut_RandomPatternCornerFinder(), pattern_image.as_raw_Mat(), pattern_key_points.as_raw_VectorOfKeyPoint(), pattern_descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_loadPattern_const_MatR_const_vectorLKeyPointGR_const_MatR(self.as_raw_mut_RandomPatternCornerFinder(), pattern_image.as_raw_Mat(), pattern_key_points.as_raw_VectorOfKeyPoint(), pattern_descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -995,7 +995,7 @@ pub trait RandomPatternCornerFinderTrait: crate::ccalib::RandomPatternCornerFind
 	#[inline]
 	fn compute_object_image_points(&mut self, mut input_images: core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_computeObjectImagePoints_vector_Mat_(self.as_raw_mut_RandomPatternCornerFinder(), input_images.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_computeObjectImagePoints_vectorLMatG(self.as_raw_mut_RandomPatternCornerFinder(), input_images.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1077,7 +1077,7 @@ impl RandomPatternCornerFinder {
 	#[inline]
 	pub fn new(pattern_width: f32, pattern_height: f32, nmini_match: i32, depth: i32, verbose: i32, show_extraction: i32, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<dyn crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::RandomPatternCornerFinder> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_Ptr_Feature2D__Ptr_Feature2D__Ptr_DescriptorMatcher_(pattern_width, pattern_height, nmini_match, depth, verbose, show_extraction, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(pattern_width, pattern_height, nmini_match, depth, verbose, show_extraction, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };

@@ -204,7 +204,7 @@ opencv_type_enum! { crate::text::page_seg_mode }
 pub fn mse_rs_to_er_stats(image: &dyn core::ToInputArray, contours: &mut core::Vector<core::Vector<core::Point>>, regions: &mut core::Vector<core::Vector<crate::text::ERStat>>) -> Result<()> {
 	input_array_arg!(image);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_MSERsToERStats_const__InputArrayR_vector_vector_Point__R_vector_vector_ERStat__R(image.as_raw__InputArray(), contours.as_raw_mut_VectorOfVectorOfPoint(), regions.as_raw_mut_VectorOfVectorOfERStat(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_MSERsToERStats_const__InputArrayR_vectorLvectorLPointGGR_vectorLvectorLERStatGGR(image.as_raw__InputArray(), contours.as_raw_mut_VectorOfVectorOfPoint(), regions.as_raw_mut_VectorOfVectorOfERStat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -269,7 +269,7 @@ pub fn compute_nm_channels(_src: &dyn core::ToInputArray, _channels: &mut dyn co
 #[inline]
 pub fn create_er_filter_nm1(cb: &core::Ptr<dyn crate::text::ERFilter_Callback>, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr<dyn crate::text::ERFilter>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_createERFilterNM1_const_Ptr_Callback_R_int_float_float_float_bool_float(cb.as_raw_PtrOfERFilter_Callback(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_createERFilterNM1_const_PtrLCallbackGR_int_float_float_float_bool_float(cb.as_raw_PtrOfERFilter_Callback(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(ret) };
@@ -337,7 +337,7 @@ pub fn create_er_filter_nm1_from_file(filename: &str, threshold_delta: i32, min_
 #[inline]
 pub fn create_er_filter_nm2(cb: &core::Ptr<dyn crate::text::ERFilter_Callback>, min_probability: f32) -> Result<core::Ptr<dyn crate::text::ERFilter>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_createERFilterNM2_const_Ptr_Callback_R_float(cb.as_raw_PtrOfERFilter_Callback(), min_probability, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_createERFilterNM2_const_PtrLCallbackGR_float(cb.as_raw_PtrOfERFilter_Callback(), min_probability, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(ret) };
@@ -378,7 +378,7 @@ pub fn create_er_filter_nm2_from_file(filename: &str, min_probability: f32) -> R
 pub fn create_ocrhmm_transitions_table_1(vocabulary: &str, lexicon: &mut core::Vector<String>) -> Result<core::Mat> {
 	extern_container_arg!(vocabulary);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_createOCRHMMTransitionsTable_const_StringR_vector_String_R(vocabulary.opencv_as_extern(), lexicon.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_createOCRHMMTransitionsTable_const_StringR_vectorLStringGR(vocabulary.opencv_as_extern(), lexicon.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -404,7 +404,7 @@ pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut co
 	string_arg_output_send!(via vocabulary_via);
 	output_array_arg!(transition_probabilities_table);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_createOCRHMMTransitionsTable_stringR_vector_string_R_const__OutputArrayR(&mut vocabulary_via, lexicon.as_raw_mut_VectorOfString(), transition_probabilities_table.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_createOCRHMMTransitionsTable_stringR_vectorLstringGR_const__OutputArrayR(&mut vocabulary_via, lexicon.as_raw_mut_VectorOfString(), transition_probabilities_table.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	string_arg_output_receive!(vocabulary_via => vocabulary);
@@ -431,7 +431,7 @@ pub fn detect_regions_from_file(image: &dyn core::ToInputArray, er_filter1: &cor
 	input_array_arg!(image);
 	extern_container_arg!(filename);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_Rect_R_int_const_StringR_float(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probability, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLRectGR_int_const_StringR_float(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probability, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -441,7 +441,7 @@ pub fn detect_regions_from_file(image: &dyn core::ToInputArray, er_filter1: &cor
 pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &core::Ptr<dyn crate::text::ERFilter>, er_filter2: &core::Ptr<dyn crate::text::ERFilter>, regions: &mut core::Vector<core::Vector<core::Point>>) -> Result<()> {
 	input_array_arg!(image);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_Ptr_ERFilter_R_const_Ptr_ERFilter_R_vector_vector_Point__R(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLvectorLPointGGR(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -464,7 +464,7 @@ pub fn detect_text_swt(input: &dyn core::ToInputArray, result: &mut core::Vector
 	output_array_arg!(draw);
 	output_array_arg!(chain_b_bs);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_detectTextSWT_const__InputArrayR_vector_Rect_R_bool_const__OutputArrayR_const__OutputArrayR(input.as_raw__InputArray(), result.as_raw_mut_VectorOfRect(), dark_on_light, draw.as_raw__OutputArray(), chain_b_bs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_detectTextSWT_const__InputArrayR_vectorLRectGR_bool_const__OutputArrayR_const__OutputArrayR(input.as_raw__InputArray(), result.as_raw_mut_VectorOfRect(), dark_on_light, draw.as_raw__OutputArray(), chain_b_bs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -504,7 +504,7 @@ pub fn er_grouping(img: &dyn core::ToInputArray, channels: &dyn core::ToInputArr
 	input_array_arg!(channels);
 	extern_container_arg!(filename);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vector_vector_ERStat__R_vector_vector_Vec2i__R_vector_Rect_R_int_const_stringR_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLERStatGGR_vectorLvectorLVec2iGGR_vectorLRectGR_int_const_stringR_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -520,7 +520,7 @@ pub fn er_grouping_1(image: &dyn core::ToInputArray, channel: &dyn core::ToInput
 	input_array_arg!(channel);
 	extern_container_arg!(filename);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vector_vector_Point___vector_Rect_R_int_const_StringR_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLPointGG_vectorLRectGR_int_const_StringR_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -664,7 +664,7 @@ pub trait BaseOCR: crate::text::BaseOCRConst {
 	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_BaseOCR_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_BaseOCR_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -680,7 +680,7 @@ pub trait BaseOCR: crate::text::BaseOCRConst {
 	fn run_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_BaseOCR_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_BaseOCR_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -726,7 +726,7 @@ pub trait ERFilter: core::AlgorithmTrait + crate::text::ERFilterConst {
 	fn run(&mut self, image: &dyn core::ToInputArray, regions: &mut core::Vector<crate::text::ERStat>) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_ERFilter_run_const__InputArrayR_vector_ERStat_R(self.as_raw_mut_ERFilter(), image.as_raw__InputArray(), regions.as_raw_mut_VectorOfERStat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_ERFilter_run_const__InputArrayR_vectorLERStatGR(self.as_raw_mut_ERFilter(), image.as_raw__InputArray(), regions.as_raw_mut_VectorOfERStat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -736,7 +736,7 @@ pub trait ERFilter: core::AlgorithmTrait + crate::text::ERFilterConst {
 	#[inline]
 	fn set_callback(&mut self, cb: &core::Ptr<dyn crate::text::ERFilter_Callback>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_ERFilter_setCallback_const_Ptr_Callback_R(self.as_raw_mut_ERFilter(), cb.as_raw_PtrOfERFilter_Callback(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_ERFilter_setCallback_const_PtrLCallbackGR(self.as_raw_mut_ERFilter(), cb.as_raw_PtrOfERFilter_Callback(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1190,7 +1190,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR + crate::text::OCRBeam
 	fn run_multiple(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -1206,7 +1206,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR + crate::text::OCRBeam
 	fn run_multiple_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -1309,7 +1309,7 @@ impl OCRBeamSearchDecoder {
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_Ptr_ClassifierCallback__const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
@@ -1386,7 +1386,7 @@ pub trait OCRBeamSearchDecoder_ClassifierCallbackTrait: crate::text::OCRBeamSear
 	fn eval(&mut self, image: &dyn core::ToInputArray, recognition_probabilities: &mut core::Vector<core::Vector<f64>>, oversegmentation: &mut core::Vector<i32>) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_eval_const__InputArrayR_vector_vector_double__R_vector_int_R(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), image.as_raw__InputArray(), recognition_probabilities.as_raw_mut_VectorOfVectorOff64(), oversegmentation.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_eval_const__InputArrayR_vectorLvectorLdoubleGGR_vectorLintGR(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), image.as_raw__InputArray(), recognition_probabilities.as_raw_mut_VectorOfVectorOff64(), oversegmentation.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1492,7 +1492,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR + crate::text::OCRHMMDecoderT
 	fn run_multiple(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -1532,7 +1532,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR + crate::text::OCRHMMDecoderT
 	fn run_multiple_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -1632,7 +1632,7 @@ impl OCRHMMDecoder {
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRHMMDecoder_create_const_Ptr_ClassifierCallback__const_StringR_const__InputArrayR_const__InputArrayR_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRHMMDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
@@ -1707,7 +1707,7 @@ pub trait OCRHMMDecoder_ClassifierCallbackTrait: crate::text::OCRHMMDecoder_Clas
 	fn eval(&mut self, image: &dyn core::ToInputArray, out_class: &mut core::Vector<i32>, out_confidence: &mut core::Vector<f64>) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_eval_const__InputArrayR_vector_int_R_vector_double_R(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback(), image.as_raw__InputArray(), out_class.as_raw_mut_VectorOfi32(), out_confidence.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_eval_const__InputArrayR_vectorLintGR_vectorLdoubleGR(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback(), image.as_raw__InputArray(), out_class.as_raw_mut_VectorOfi32(), out_confidence.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1773,7 +1773,7 @@ pub trait OCRHolisticWordRecognizer: crate::text::BaseOCR + crate::text::OCRHoli
 	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -1813,7 +1813,7 @@ pub trait OCRHolisticWordRecognizer: crate::text::BaseOCR + crate::text::OCRHoli
 	fn run_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -1884,7 +1884,7 @@ pub trait OCRTesseract: crate::text::BaseOCR + crate::text::OCRTesseractConst {
 	fn run_multiple(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRTesseract_run_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRTesseract_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -1900,7 +1900,7 @@ pub trait OCRTesseract: crate::text::BaseOCR + crate::text::OCRTesseractConst {
 	fn run_multiple_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_OCRTesseract_run_MatR_MatR_stringR_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_OCRTesseract_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(output_text_via => output_text);
@@ -2001,7 +2001,7 @@ pub trait TextDetector: crate::text::TextDetectorConst {
 	fn detect(&mut self, input_image: &dyn core::ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
 		input_array_arg!(input_image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_TextDetector_detect_const__InputArrayR_vector_Rect_R_vector_float_R(self.as_raw_mut_TextDetector(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_TextDetector_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetector(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2033,7 +2033,7 @@ pub trait TextDetectorCNN: crate::text::TextDetector + crate::text::TextDetector
 	fn detect(&mut self, input_image: &dyn core::ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
 		input_array_arg!(input_image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_TextDetectorCNN_detect_const__InputArrayR_vector_Rect_R_vector_float_R(self.as_raw_mut_TextDetectorCNN(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_TextDetectorCNN_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetectorCNN(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2054,7 +2054,7 @@ impl dyn TextDetectorCNN + '_ {
 		extern_container_arg!(model_arch_filename);
 		extern_container_arg!(model_weights_filename);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vector_Size_(model_arch_filename.opencv_as_extern(), model_weights_filename.opencv_as_extern(), detection_sizes.as_raw_mut_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vectorLSizeG(model_arch_filename.opencv_as_extern(), model_weights_filename.opencv_as_extern(), detection_sizes.as_raw_mut_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(ret) };

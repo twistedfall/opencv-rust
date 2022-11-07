@@ -123,7 +123,7 @@ pub fn create_norm_histogram_cost_extractor(flag: i32, n_dummies: i32, default_c
 #[inline]
 pub fn create_shape_context_distance_extractor(n_angular_bins: i32, n_radial_bins: i32, inner_radius: f32, outer_radius: f32, iterations: i32, comparer: &core::Ptr<dyn crate::shape::HistogramCostExtractor>, transformer: &core::Ptr<dyn crate::shape::ShapeTransformer>) -> Result<core::Ptr<dyn crate::shape::ShapeContextDistanceExtractor>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_createShapeContextDistanceExtractor_int_int_float_float_int_const_Ptr_HistogramCostExtractor_R_const_Ptr_ShapeTransformer_R(n_angular_bins, n_radial_bins, inner_radius, outer_radius, iterations, comparer.as_raw_PtrOfHistogramCostExtractor(), transformer.as_raw_PtrOfShapeTransformer(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_createShapeContextDistanceExtractor_int_int_float_float_int_const_PtrLHistogramCostExtractorGR_const_PtrLShapeTransformerGR(n_angular_bins, n_radial_bins, inner_radius, outer_radius, iterations, comparer.as_raw_PtrOfHistogramCostExtractor(), transformer.as_raw_PtrOfShapeTransformer(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::shape::ShapeContextDistanceExtractor>::opencv_from_extern(ret) };
@@ -660,7 +660,7 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeContextDistanceExtra
 	#[inline]
 	fn set_cost_extractor(&mut self, mut comparer: core::Ptr<dyn crate::shape::HistogramCostExtractor>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ShapeContextDistanceExtractor_setCostExtractor_Ptr_HistogramCostExtractor_(self.as_raw_mut_ShapeContextDistanceExtractor(), comparer.as_raw_mut_PtrOfHistogramCostExtractor(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ShapeContextDistanceExtractor_setCostExtractor_PtrLHistogramCostExtractorG(self.as_raw_mut_ShapeContextDistanceExtractor(), comparer.as_raw_mut_PtrOfHistogramCostExtractor(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -687,7 +687,7 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeContextDistanceExtra
 	#[inline]
 	fn set_transform_algorithm(&mut self, mut transformer: core::Ptr<dyn crate::shape::ShapeTransformer>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ShapeContextDistanceExtractor_setTransformAlgorithm_Ptr_ShapeTransformer_(self.as_raw_mut_ShapeContextDistanceExtractor(), transformer.as_raw_mut_PtrOfShapeTransformer(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ShapeContextDistanceExtractor_setTransformAlgorithm_PtrLShapeTransformerG(self.as_raw_mut_ShapeContextDistanceExtractor(), transformer.as_raw_mut_PtrOfShapeTransformer(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -769,7 +769,7 @@ pub trait ShapeTransformer: core::AlgorithmTrait + crate::shape::ShapeTransforme
 		input_array_arg!(transforming_shape);
 		input_array_arg!(target_shape);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ShapeTransformer_estimateTransformation_const__InputArrayR_const__InputArrayR_vector_DMatch_R(self.as_raw_mut_ShapeTransformer(), transforming_shape.as_raw__InputArray(), target_shape.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ShapeTransformer_estimateTransformation_const__InputArrayR_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_ShapeTransformer(), transforming_shape.as_raw__InputArray(), target_shape.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

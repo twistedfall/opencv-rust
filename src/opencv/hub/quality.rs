@@ -117,7 +117,7 @@ impl QualityBRISQUE {
 	#[inline]
 	pub fn create_1(model: &core::Ptr<dyn crate::ml::SVM>, range: &core::Mat) -> Result<core::Ptr<crate::quality::QualityBRISQUE>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_quality_QualityBRISQUE_create_const_Ptr_SVM_R_const_MatR(model.as_raw_PtrOfSVM(), range.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_quality_QualityBRISQUE_create_const_PtrLSVMGR_const_MatR(model.as_raw_PtrOfSVM(), range.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::quality::QualityBRISQUE>::opencv_from_extern(ret) };

@@ -454,7 +454,7 @@ pub fn decolor(src: &dyn core::ToInputArray, grayscale: &mut dyn core::ToOutputA
 #[inline]
 pub fn denoise_tvl1(observations: &core::Vector<core::Mat>, result: &mut core::Mat, lambda: f64, niters: i32) -> Result<()> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_denoise_TVL1_const_vector_Mat_R_MatR_double_int(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), lambda, niters, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_denoise_TVL1_const_vectorLMatGR_MatR_double_int(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), lambda, niters, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -617,7 +617,7 @@ pub fn fast_nl_means_denoising_multi_vec(src_imgs: &dyn core::ToInputArray, dst:
 	input_array_arg!(src_imgs);
 	output_array_arg!(dst);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vector_float_R_int_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vectorLfloatGR_int_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -696,7 +696,7 @@ pub fn fast_nl_means_denoising_vec(src: &dyn core::ToInputArray, dst: &mut dyn c
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vector_float_R_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vectorLfloatGR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -936,7 +936,7 @@ pub trait AlignExposures: core::AlgorithmTrait + crate::photo::AlignExposuresCon
 		input_array_arg!(times);
 		input_array_arg!(response);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_AlignExposures_process_const__InputArrayR_vector_Mat_R_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignExposures(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_AlignExposures_process_const__InputArrayR_vectorLMatGR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignExposures(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -993,7 +993,7 @@ pub trait AlignMTB: crate::photo::AlignExposures + crate::photo::AlignMTBConst {
 		input_array_arg!(times);
 		input_array_arg!(response);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vector_Mat_R_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vectorLMatGR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1008,7 +1008,7 @@ pub trait AlignMTB: crate::photo::AlignExposures + crate::photo::AlignMTBConst {
 	fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut core::Vector<core::Mat>) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vector_Mat_R(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vectorLMatGR(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

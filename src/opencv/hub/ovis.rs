@@ -387,7 +387,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	#[inline]
 	fn set_compositors(&mut self, names: &core::Vector<String>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ovis_WindowScene_setCompositors_const_vector_String_R(self.as_raw_mut_WindowScene(), names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ovis_WindowScene_setCompositors_const_vectorLStringGR(self.as_raw_mut_WindowScene(), names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -619,7 +619,7 @@ pub trait WindowScene: crate::ovis::WindowSceneConst {
 	fn get_entity_animations(&mut self, name: &str, out: &mut core::Vector<String>) -> Result<()> {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ovis_WindowScene_getEntityAnimations_const_StringR_vector_String_R(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), out.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ovis_WindowScene_getEntityAnimations_const_StringR_vectorLStringGR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), out.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

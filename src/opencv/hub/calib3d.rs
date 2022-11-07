@@ -2246,7 +2246,7 @@ pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::S
 	input_array_arg!(image);
 	output_array_arg!(centers);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -2292,7 +2292,7 @@ pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Siz
 	input_array_arg!(image);
 	output_array_arg!(centers);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_Ptr_Feature2D_R_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -5356,7 +5356,7 @@ impl dyn LMSolver + '_ {
 	#[inline]
 	pub fn create(cb: &core::Ptr<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32) -> Result<core::Ptr<dyn crate::calib3d::LMSolver>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_R_int(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_LMSolver_create_const_PtrLCallbackGR_int(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::calib3d::LMSolver>::opencv_from_extern(ret) };
@@ -5366,7 +5366,7 @@ impl dyn LMSolver + '_ {
 	#[inline]
 	pub fn create_ext(cb: &core::Ptr<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32, eps: f64) -> Result<core::Ptr<dyn crate::calib3d::LMSolver>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_R_int_double(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, eps, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_LMSolver_create_const_PtrLCallbackGR_int_double(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, eps, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::calib3d::LMSolver>::opencv_from_extern(ret) };

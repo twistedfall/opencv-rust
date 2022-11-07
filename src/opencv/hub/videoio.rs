@@ -1215,7 +1215,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	fn open_file_with_params(&mut self, filename: &str, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoCapture_open_const_StringR_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoCapture_open_const_StringR_int_const_vectorLintGR(self.as_raw_mut_VideoCapture(), filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1256,7 +1256,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	#[inline]
 	fn open_with_params(&mut self, index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoCapture_open_int_int_const_vector_int_R(self.as_raw_mut_VideoCapture(), index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoCapture_open_int_int_const_vectorLintGR(self.as_raw_mut_VideoCapture(), index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1516,7 +1516,7 @@ impl VideoCapture {
 	pub fn from_file_with_params(filename: &str, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int_const_vector_int_R(filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoCapture_VideoCapture_const_StringR_int_const_vectorLintGR(filename.opencv_as_extern(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
@@ -1568,7 +1568,7 @@ impl VideoCapture {
 	#[inline]
 	pub fn new_with_params(index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoCapture_VideoCapture_int_int_const_vector_int_R(index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoCapture_VideoCapture_int_int_const_vectorLintGR(index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
@@ -1596,7 +1596,7 @@ impl VideoCapture {
 	#[inline]
 	pub fn wait_any(streams: &core::Vector<crate::videoio::VideoCapture>, ready_index: &mut core::Vector<i32>, timeout_ns: i64) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoCapture_waitAny_const_vector_VideoCapture_R_vector_int_R_int64_t(streams.as_raw_VectorOfVideoCapture(), ready_index.as_raw_mut_VectorOfi32(), timeout_ns, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoCapture_waitAny_const_vectorLVideoCaptureGR_vectorLintGR_int64_t(streams.as_raw_VectorOfVideoCapture(), ready_index.as_raw_mut_VectorOfi32(), timeout_ns, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1715,7 +1715,7 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	fn open_1(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_const_SizeR_const_vector_int_R(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_const_SizeR_const_vectorLintGR(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1735,7 +1735,7 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	fn open_2(&mut self, filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_const_SizeR_const_vector_int_R(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_const_SizeR_const_vectorLintGR(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1917,7 +1917,7 @@ impl VideoWriter {
 	pub fn new_1(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<crate::videoio::VideoWriter> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_const_SizeR_const_vector_int_R(filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_const_SizeR_const_vectorLintGR(filename.opencv_as_extern(), fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
@@ -1936,7 +1936,7 @@ impl VideoWriter {
 	pub fn new_2(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<crate::videoio::VideoWriter> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_const_SizeR_const_vector_int_R(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_const_SizeR_const_vectorLintGR(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
@@ -1953,7 +1953,7 @@ impl VideoWriter {
 	#[inline]
 	pub fn fourcc(c1: char, c2: char, c3: char, c4: char) -> Result<i32> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(u8::try_from(c1)? as c_char, u8::try_from(c2)? as c_char, u8::try_from(c3)? as c_char, u8::try_from(c4)? as c_char, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(u8::try_from(c1)? as i8, u8::try_from(c2)? as i8, u8::try_from(c3)? as i8, u8::try_from(c4)? as i8, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

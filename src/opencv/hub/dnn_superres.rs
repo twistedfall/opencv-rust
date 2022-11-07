@@ -128,7 +128,7 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	fn upsample_multioutput(&mut self, img: &dyn core::ToInputArray, imgs_new: &mut core::Vector<core::Mat>, scale_factors: &core::Vector<i32>, node_names: &core::Vector<String>) -> Result<()> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayR_vector_Mat_R_const_vector_int_R_const_vector_String_R(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), imgs_new.as_raw_mut_VectorOfMat(), scale_factors.as_raw_VectorOfi32(), node_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayR_vectorLMatGR_const_vectorLintGR_const_vectorLStringGR(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), imgs_new.as_raw_mut_VectorOfMat(), scale_factors.as_raw_VectorOfi32(), node_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

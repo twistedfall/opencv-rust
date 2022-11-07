@@ -222,7 +222,7 @@ opencv_type_enum! { crate::cudacodec::VideoReaderProps }
 #[inline]
 pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSource>, params: crate::cudacodec::VideoReaderInitParams) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoReader_const_Ptr_RawVideoSource_R_const_VideoReaderInitParams(source.as_raw_PtrOfRawVideoSource(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR_const_VideoReaderInitParams(source.as_raw_PtrOfRawVideoSource(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
@@ -248,7 +248,7 @@ pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSo
 pub fn create_video_reader(filename: &str, source_params: &core::Vector<i32>, params: crate::cudacodec::VideoReaderInitParams) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
 	extern_container_arg!(filename);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoReader_const_StringR_const_vector_int_R_const_VideoReaderInitParams(filename.opencv_as_extern(), source_params.as_raw_VectorOfi32(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cudacodec_createVideoReader_const_StringR_const_vectorLintGR_const_VideoReaderInitParams(filename.opencv_as_extern(), source_params.as_raw_VectorOfi32(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
@@ -283,7 +283,7 @@ pub fn create_video_reader(filename: &str, source_params: &core::Vector<i32>, pa
 #[inline]
 pub fn create_video_writer_2(encoder_callback: &core::Ptr<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, format, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_PtrLEncoderCallBackGR_Size_double_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, format, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
@@ -319,7 +319,7 @@ pub fn create_video_writer_2(encoder_callback: &core::Ptr<dyn crate::cudacodec::
 #[inline]
 pub fn create_video_writer_3(encoder_callback: &core::Ptr<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, params: &crate::cudacodec::EncoderParams, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_Ptr_EncoderCallBack_R_Size_double_const_EncoderParamsR_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_PtrLEncoderCallBackGR_Size_double_const_EncoderParamsR_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };

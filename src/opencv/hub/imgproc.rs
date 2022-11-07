@@ -2952,7 +2952,7 @@ pub fn calc_back_project(images: &dyn core::ToInputArray, channels: &core::Vecto
 	input_array_arg!(hist);
 	output_array_arg!(dst);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_calcBackProject_const__InputArrayR_const_vector_int_R_const__InputArrayR_const__OutputArrayR_const_vector_float_R_double(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), hist.as_raw__InputArray(), dst.as_raw__OutputArray(), ranges.as_raw_VectorOff32(), scale, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_calcBackProject_const__InputArrayR_const_vectorLintGR_const__InputArrayR_const__OutputArrayR_const_vectorLfloatGR_double(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), hist.as_raw__InputArray(), dst.as_raw__OutputArray(), ranges.as_raw_VectorOff32(), scale, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -3002,7 +3002,7 @@ pub fn calc_hist(images: &dyn core::ToInputArray, channels: &core::Vector<i32>, 
 	input_array_arg!(mask);
 	output_array_arg!(hist);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_calcHist_const__InputArrayR_const_vector_int_R_const__InputArrayR_const__OutputArrayR_const_vector_int_R_const_vector_float_R_bool(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), mask.as_raw__InputArray(), hist.as_raw__OutputArray(), hist_size.as_raw_VectorOfi32(), ranges.as_raw_VectorOff32(), accumulate, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_calcHist_const__InputArrayR_const_vectorLintGR_const__InputArrayR_const__OutputArrayR_const_vectorLintGR_const_vectorLfloatGR_bool(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), mask.as_raw__InputArray(), hist.as_raw__OutputArray(), hist_size.as_raw_VectorOfi32(), ranges.as_raw_VectorOff32(), accumulate, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -4174,7 +4174,7 @@ pub fn draw_marker(img: &mut dyn core::ToInputOutputArray, position: core::Point
 #[inline]
 pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector<core::Point2d>) -> Result<()> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_R(center.opencv_as_extern(), axes.opencv_as_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint2d(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vectorLPoint2dGR(center.opencv_as_extern(), axes.opencv_as_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint2d(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -4197,7 +4197,7 @@ pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32,
 #[inline]
 pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut core::Vector<core::Point>) -> Result<()> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_ellipse2Poly_Point_Size_int_int_int_int_vector_Point_R(center.opencv_as_extern(), axes.opencv_as_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_ellipse2Poly_Point_Size_int_int_int_int_vectorLPointGR(center.opencv_as_extern(), axes.opencv_as_extern(), angle, arc_start, arc_end, delta, pts.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -6836,7 +6836,7 @@ pub fn emd_1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInput
 	input_array_arg!(cost);
 	output_array_arg!(flow);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_wrapperEMD_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_Ptr_float__const__OutputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound.as_raw_mut_PtrOff32(), flow.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_wrapperEMD_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_PtrLfloatG_const__OutputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound.as_raw_mut_PtrOff32(), flow.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -7860,7 +7860,7 @@ pub trait Subdiv2DTraitConst {
 	#[inline]
 	fn get_edge_list(&self, edge_list: &mut core::Vector<core::Vec4f>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Subdiv2D_getEdgeList_const_vector_Vec4f_R(self.as_raw_Subdiv2D(), edge_list.as_raw_mut_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Subdiv2D_getEdgeList_const_vectorLVec4fGR(self.as_raw_Subdiv2D(), edge_list.as_raw_mut_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7875,7 +7875,7 @@ pub trait Subdiv2DTraitConst {
 	#[inline]
 	fn get_leading_edge_list(&self, leading_edge_list: &mut core::Vector<i32>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Subdiv2D_getLeadingEdgeList_const_vector_int_R(self.as_raw_Subdiv2D(), leading_edge_list.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Subdiv2D_getLeadingEdgeList_const_vectorLintGR(self.as_raw_Subdiv2D(), leading_edge_list.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7891,7 +7891,7 @@ pub trait Subdiv2DTraitConst {
 	#[inline]
 	fn get_triangle_list(&self, triangle_list: &mut core::Vector<core::Vec6f>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Subdiv2D_getTriangleList_const_vector_Vec6f_R(self.as_raw_Subdiv2D(), triangle_list.as_raw_mut_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Subdiv2D_getTriangleList_const_vectorLVec6fGR(self.as_raw_Subdiv2D(), triangle_list.as_raw_mut_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8081,7 +8081,7 @@ pub trait Subdiv2DTrait: crate::imgproc::Subdiv2DTraitConst {
 	#[inline]
 	fn insert_multiple(&mut self, ptvec: &core::Vector<core::Point2f>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Subdiv2D_insert_const_vector_Point2f_R(self.as_raw_mut_Subdiv2D(), ptvec.as_raw_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Subdiv2D_insert_const_vectorLPoint2fGR(self.as_raw_mut_Subdiv2D(), ptvec.as_raw_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8151,7 +8151,7 @@ pub trait Subdiv2DTrait: crate::imgproc::Subdiv2DTraitConst {
 	#[inline]
 	fn get_voronoi_facet_list(&mut self, idx: &core::Vector<i32>, facet_list: &mut core::Vector<core::Vector<core::Point2f>>, facet_centers: &mut core::Vector<core::Point2f>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Subdiv2D_getVoronoiFacetList_const_vector_int_R_vector_vector_Point2f__R_vector_Point2f_R(self.as_raw_mut_Subdiv2D(), idx.as_raw_VectorOfi32(), facet_list.as_raw_mut_VectorOfVectorOfPoint2f(), facet_centers.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Subdiv2D_getVoronoiFacetList_const_vectorLintGR_vectorLvectorLPoint2fGGR_vectorLPoint2fGR(self.as_raw_mut_Subdiv2D(), idx.as_raw_VectorOfi32(), facet_list.as_raw_mut_VectorOfVectorOfPoint2f(), facet_centers.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

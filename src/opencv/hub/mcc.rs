@@ -881,7 +881,7 @@ pub trait MCC_CChecker: crate::mcc::MCC_CCheckerConst {
 	#[inline]
 	fn set_box(&mut self, mut _box: core::Vector<core::Point2f>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_mcc_CChecker_setBox_vector_Point2f_(self.as_raw_mut_MCC_CChecker(), _box.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_mcc_CChecker_setBox_vectorLPoint2fG(self.as_raw_mut_MCC_CChecker(), _box.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1051,7 +1051,7 @@ pub trait MCC_CCheckerDetector: core::AlgorithmTrait + crate::mcc::MCC_CCheckerD
 	fn process_with_roi(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vector_Rect_R_const_int_bool_const_Ptr_DetectorParameters_R(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vectorLRectGR_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1085,7 +1085,7 @@ pub trait MCC_CCheckerDetector: core::AlgorithmTrait + crate::mcc::MCC_CCheckerD
 	fn process(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_int_bool_const_Ptr_DetectorParameters_R(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1183,7 +1183,7 @@ impl dyn MCC_CCheckerDraw + '_ {
 	#[inline]
 	pub fn create(mut p_checker: core::Ptr<dyn crate::mcc::MCC_CChecker>, color: core::Scalar, thickness: i32) -> Result<core::Ptr<dyn crate::mcc::MCC_CCheckerDraw>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_mcc_CCheckerDraw_create_Ptr_CChecker__Scalar_int(p_checker.as_raw_mut_PtrOfMCC_CChecker(), color.opencv_as_extern(), thickness, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_mcc_CCheckerDraw_create_PtrLCCheckerG_Scalar_int(p_checker.as_raw_mut_PtrOfMCC_CChecker(), color.opencv_as_extern(), thickness, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };

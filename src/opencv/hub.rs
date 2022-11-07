@@ -52,6 +52,8 @@ pub mod flann;
 pub mod freetype;
 #[cfg(ocvrs_has_module_fuzzy)]
 pub mod fuzzy;
+#[cfg(ocvrs_has_module_gapi)]
+pub mod gapi;
 #[cfg(ocvrs_has_module_hdf)]
 pub mod hdf;
 #[cfg(ocvrs_has_module_hfs)]
@@ -186,6 +188,8 @@ pub mod hub_prelude {
 	pub use super::freetype::prelude::*;
 	#[cfg(ocvrs_has_module_fuzzy)]
 	pub use super::fuzzy::prelude::*;
+	#[cfg(ocvrs_has_module_gapi)]
+	pub use super::gapi::prelude::*;
 	#[cfg(ocvrs_has_module_hdf)]
 	pub use super::hdf::prelude::*;
 	#[cfg(ocvrs_has_module_hfs)]

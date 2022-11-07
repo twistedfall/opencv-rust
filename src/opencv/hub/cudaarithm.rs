@@ -831,7 +831,7 @@ pub fn lshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut d
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -1123,7 +1123,7 @@ pub fn merge(src: &core::GpuMat, n: size_t, dst: &mut dyn core::ToOutputArray, s
 pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 	output_array_arg!(dst);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cuda_merge_const_vector_GpuMat_R_const__OutputArrayR_StreamR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cuda_merge_const_vectorLGpuMatGR_const__OutputArrayR_StreamR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -1529,7 +1529,7 @@ pub fn rshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut d
 	input_array_arg!(src);
 	output_array_arg!(dst);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar__int__const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -1586,7 +1586,7 @@ pub fn split(src: &dyn core::ToInputArray, dst: &mut core::GpuMat, stream: &mut 
 pub fn split_1(src: &dyn core::ToInputArray, dst: &mut core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
 	input_array_arg!(src);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cuda_split_const__InputArrayR_vector_GpuMat_R_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cuda_split_const__InputArrayR_vectorLGpuMatGR_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)

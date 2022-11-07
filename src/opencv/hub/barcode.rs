@@ -68,7 +68,7 @@ pub trait BarcodeDetectorTraitConst {
 		input_array_arg!(img);
 		input_array_arg!(points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_barcode_BarcodeDetector_decode_const_const__InputArrayR_const__InputArrayR_vector_string_R_vector_BarcodeType_R(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfBarcodeType(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_barcode_BarcodeDetector_decode_const_const__InputArrayR_const__InputArrayR_vectorLstringGR_vectorLBarcodeTypeGR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfBarcodeType(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -89,7 +89,7 @@ pub trait BarcodeDetectorTraitConst {
 		input_array_arg!(img);
 		output_array_arg!(points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_barcode_BarcodeDetector_detectAndDecode_const_const__InputArrayR_vector_string_R_vector_BarcodeType_R_const__OutputArrayR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfBarcodeType(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_barcode_BarcodeDetector_detectAndDecode_const_const__InputArrayR_vectorLstringGR_vectorLBarcodeTypeGR_const__OutputArrayR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfBarcodeType(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

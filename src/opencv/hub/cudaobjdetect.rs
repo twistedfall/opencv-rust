@@ -204,7 +204,7 @@ pub trait CascadeClassifier: core::AlgorithmTrait + crate::cudaobjdetect::Cascad
 	fn convert(&mut self, gpu_objects: &mut dyn core::ToOutputArray, objects: &mut core::Vector<core::Rect>) -> Result<()> {
 		output_array_arg!(gpu_objects);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_CascadeClassifier_convert_const__OutputArrayR_vector_Rect_R(self.as_raw_mut_CascadeClassifier(), gpu_objects.as_raw__OutputArray(), objects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_CascadeClassifier_convert_const__OutputArrayR_vectorLRectGR(self.as_raw_mut_CascadeClassifier(), gpu_objects.as_raw__OutputArray(), objects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -500,7 +500,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	fn detect(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vector_Point_R_vector_double_X(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGX(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -510,7 +510,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	fn detect_1(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vector_Point_R_vector_double_R(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -525,7 +525,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	fn detect_without_conf(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>) -> Result<()> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_HOG_detectWithoutConf_const__InputArrayR_vector_Point_R(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_HOG_detectWithoutConf_const__InputArrayR_vectorLPointGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -544,7 +544,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	fn detect_multi_scale(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_double_X(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGX(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -554,7 +554,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	fn detect_multi_scale_1(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vector_Rect_R_vector_double_R(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -569,7 +569,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	fn detect_multi_scale_without_conf(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>) -> Result<()> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_HOG_detectMultiScaleWithoutConf_const__InputArrayR_vector_Rect_R(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_HOG_detectMultiScaleWithoutConf_const__InputArrayR_vectorLRectGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

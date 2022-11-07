@@ -349,7 +349,7 @@ impl dyn SinusoidalPattern + '_ {
 	#[inline]
 	pub fn create(mut parameters: core::Ptr<crate::structured_light::SinusoidalPattern_Params>) -> Result<core::Ptr<dyn crate::structured_light::SinusoidalPattern>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_structured_light_SinusoidalPattern_create_Ptr_Params_(parameters.as_raw_mut_PtrOfSinusoidalPattern_Params(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_structured_light_SinusoidalPattern_create_PtrLParamsG(parameters.as_raw_mut_PtrOfSinusoidalPattern_Params(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::structured_light::SinusoidalPattern>::opencv_from_extern(ret) };
@@ -480,7 +480,7 @@ pub trait SinusoidalPattern_ParamsTrait: crate::structured_light::SinusoidalPatt
 	
 	#[inline]
 	fn set_markers_location(&mut self, mut val: core::Vector<core::Point2f>) {
-		let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropMarkersLocation_vector_Point2f_(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_mut_VectorOfPoint2f()) };
+		let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropMarkersLocation_vectorLPoint2fG(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_mut_VectorOfPoint2f()) };
 		ret
 	}
 	
@@ -557,7 +557,7 @@ pub trait StructuredLightPatternConst: core::AlgorithmTraitConst {
 		input_array_arg!(black_images);
 		input_array_arg!(white_images);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_structured_light_StructuredLightPattern_decode_const_const_vector_vector_Mat__R_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfVectorOfMat(), disparity_map.as_raw__OutputArray(), black_images.as_raw__InputArray(), white_images.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_structured_light_StructuredLightPattern_decode_const_const_vectorLvectorLMatGGR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfVectorOfMat(), disparity_map.as_raw__OutputArray(), black_images.as_raw__InputArray(), white_images.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

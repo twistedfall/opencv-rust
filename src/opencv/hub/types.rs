@@ -851,6 +851,71 @@ mod core_types {
 		#[inline] pub fn as_raw_mut_PtrOff32(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	pub type TupleOfPoint2i_Point2i = core::Tuple<(core::Point2i, core::Point2i)>;
+	
+	impl TupleOfPoint2i_Point2i {
+		pub fn as_raw_TupleOfPoint2i_Point2i(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfPoint2i_Point2i(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (core::Point2i, core::Point2i), *const c_void, *mut c_void,
+		cv_TupleOfPoint2i_Point2i_new, cv_TupleOfPoint2i_Point2i_delete,
+		arg: *const core::Point2i = 0, cv_TupleOfPoint2i_Point2i_get_0: core::Point2i => get_0: core::Point2i,
+		arg_1: *const core::Point2i = 1, cv_TupleOfPoint2i_Point2i_get_1: core::Point2i => get_1: core::Point2i
+	}
+	
+	pub type TupleOfRect_i32 = core::Tuple<(core::Rect, i32)>;
+	
+	impl TupleOfRect_i32 {
+		pub fn as_raw_TupleOfRect_i32(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfRect_i32(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (core::Rect, i32), *const c_void, *mut c_void,
+		cv_TupleOfRect_i32_new, cv_TupleOfRect_i32_delete,
+		arg: *const core::Rect = 0, cv_TupleOfRect_i32_get_0: core::Rect => get_0: core::Rect,
+		arg_1: i32 = 1, cv_TupleOfRect_i32_get_1: i32 => get_1: i32
+	}
+	
+	pub type TupleOfUMat_u8 = core::Tuple<(core::UMat, u8)>;
+	
+	impl TupleOfUMat_u8 {
+		pub fn as_raw_TupleOfUMat_u8(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfUMat_u8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (core::UMat, u8), *const c_void, *mut c_void,
+		cv_TupleOfUMat_u8_new, cv_TupleOfUMat_u8_delete,
+		arg: *mut c_void = 0, cv_TupleOfUMat_u8_get_0: *mut c_void => get_0: core::UMat,
+		arg_1: u8 = 1, cv_TupleOfUMat_u8_get_1: u8 => get_1: u8
+	}
+	
+	pub type TupleOfi32_f32 = core::Tuple<(i32, f32)>;
+	
+	impl TupleOfi32_f32 {
+		pub fn as_raw_TupleOfi32_f32(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfi32_f32(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (i32, f32), *const c_void, *mut c_void,
+		cv_TupleOfi32_f32_new, cv_TupleOfi32_f32_delete,
+		arg: i32 = 0, cv_TupleOfi32_f32_get_0: i32 => get_0: i32,
+		arg_1: f32 = 1, cv_TupleOfi32_f32_get_1: f32 => get_1: f32
+	}
+	
+	pub type TupleOfi32_f64 = core::Tuple<(i32, f64)>;
+	
+	impl TupleOfi32_f64 {
+		pub fn as_raw_TupleOfi32_f64(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfi32_f64(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (i32, f64), *const c_void, *mut c_void,
+		cv_TupleOfi32_f64_new, cv_TupleOfi32_f64_delete,
+		arg: i32 = 0, cv_TupleOfi32_f64_get_0: i32 => get_0: i32,
+		arg_1: f64 = 1, cv_TupleOfi32_f64_get_1: f64 => get_1: f64
+	}
+	
 	pub type VectorOfDMatch = core::Vector<core::DMatch>;
 	
 	impl VectorOfDMatch {
@@ -1590,6 +1655,60 @@ mod core_types {
 		cv_VectorOfString_push, cv_VectorOfString_insert,
 	}
 	vector_non_copy_or_bool! { String }
+	
+	pub type VectorOfTupleOfPoint2i_Point2i = core::Vector<core::Tuple<(core::Point2i, core::Point2i)>>;
+	
+	impl VectorOfTupleOfPoint2i_Point2i {
+		pub fn as_raw_VectorOfTupleOfPoint2i_Point2i(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfTupleOfPoint2i_Point2i(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Tuple<(core::Point2i, core::Point2i)>, *const c_void, *mut c_void,
+		cv_VectorOfTupleOfPoint2i_Point2i_new, cv_VectorOfTupleOfPoint2i_Point2i_delete,
+		cv_VectorOfTupleOfPoint2i_Point2i_len, cv_VectorOfTupleOfPoint2i_Point2i_is_empty,
+		cv_VectorOfTupleOfPoint2i_Point2i_capacity, cv_VectorOfTupleOfPoint2i_Point2i_shrink_to_fit,
+		cv_VectorOfTupleOfPoint2i_Point2i_reserve, cv_VectorOfTupleOfPoint2i_Point2i_remove,
+		cv_VectorOfTupleOfPoint2i_Point2i_swap, cv_VectorOfTupleOfPoint2i_Point2i_clear,
+		cv_VectorOfTupleOfPoint2i_Point2i_get, cv_VectorOfTupleOfPoint2i_Point2i_set,
+		cv_VectorOfTupleOfPoint2i_Point2i_push, cv_VectorOfTupleOfPoint2i_Point2i_insert,
+	}
+	vector_non_copy_or_bool! { core::Tuple<(core::Point2i, core::Point2i)> }
+	
+	pub type VectorOfTupleOfUMat_u8 = core::Vector<core::Tuple<(core::UMat, u8)>>;
+	
+	impl VectorOfTupleOfUMat_u8 {
+		pub fn as_raw_VectorOfTupleOfUMat_u8(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfTupleOfUMat_u8(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Tuple<(core::UMat, u8)>, *const c_void, *mut c_void,
+		cv_VectorOfTupleOfUMat_u8_new, cv_VectorOfTupleOfUMat_u8_delete,
+		cv_VectorOfTupleOfUMat_u8_len, cv_VectorOfTupleOfUMat_u8_is_empty,
+		cv_VectorOfTupleOfUMat_u8_capacity, cv_VectorOfTupleOfUMat_u8_shrink_to_fit,
+		cv_VectorOfTupleOfUMat_u8_reserve, cv_VectorOfTupleOfUMat_u8_remove,
+		cv_VectorOfTupleOfUMat_u8_swap, cv_VectorOfTupleOfUMat_u8_clear,
+		cv_VectorOfTupleOfUMat_u8_get, cv_VectorOfTupleOfUMat_u8_set,
+		cv_VectorOfTupleOfUMat_u8_push, cv_VectorOfTupleOfUMat_u8_insert,
+	}
+	vector_non_copy_or_bool! { core::Tuple<(core::UMat, u8)> }
+	
+	pub type VectorOfTupleOfi32_f64 = core::Vector<core::Tuple<(i32, f64)>>;
+	
+	impl VectorOfTupleOfi32_f64 {
+		pub fn as_raw_VectorOfTupleOfi32_f64(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfTupleOfi32_f64(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Tuple<(i32, f64)>, *const c_void, *mut c_void,
+		cv_VectorOfTupleOfi32_f64_new, cv_VectorOfTupleOfi32_f64_delete,
+		cv_VectorOfTupleOfi32_f64_len, cv_VectorOfTupleOfi32_f64_is_empty,
+		cv_VectorOfTupleOfi32_f64_capacity, cv_VectorOfTupleOfi32_f64_shrink_to_fit,
+		cv_VectorOfTupleOfi32_f64_reserve, cv_VectorOfTupleOfi32_f64_remove,
+		cv_VectorOfTupleOfi32_f64_swap, cv_VectorOfTupleOfi32_f64_clear,
+		cv_VectorOfTupleOfi32_f64_get, cv_VectorOfTupleOfi32_f64_set,
+		cv_VectorOfTupleOfi32_f64_push, cv_VectorOfTupleOfi32_f64_insert,
+	}
+	vector_non_copy_or_bool! { core::Tuple<(i32, f64)> }
 	
 	pub type VectorOfUMat = core::Vector<core::UMat>;
 	
@@ -7981,6 +8100,19 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
+	pub type TupleOfBackend_Target = core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>;
+	
+	impl TupleOfBackend_Target {
+		pub fn as_raw_TupleOfBackend_Target(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfBackend_Target(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (crate::dnn::Backend, crate::dnn::Target), *const c_void, *mut c_void,
+		cv_TupleOfBackend_Target_new, cv_TupleOfBackend_Target_delete,
+		arg: crate::dnn::Backend = 0, cv_TupleOfBackend_Target_get_0: crate::dnn::Backend => get_0: crate::dnn::Backend,
+		arg_1: crate::dnn::Target = 1, cv_TupleOfBackend_Target_get_1: crate::dnn::Target => get_1: crate::dnn::Target
+	}
+	
 	pub type VectorOfMatShape = core::Vector<crate::dnn::MatShape>;
 	
 	impl VectorOfMatShape {
@@ -8062,6 +8194,24 @@ mod dnn_types {
 		cv_VectorOfTarget_data, cv_VectorOfTarget_data_mut, cv_VectorOfTarget_from_slice,
 		cv_VectorOfTarget_clone,
 	}
+	
+	pub type VectorOfTupleOfBackend_Target = core::Vector<core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>>;
+	
+	impl VectorOfTupleOfBackend_Target {
+		pub fn as_raw_VectorOfTupleOfBackend_Target(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfTupleOfBackend_Target(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>, *const c_void, *mut c_void,
+		cv_VectorOfTupleOfBackend_Target_new, cv_VectorOfTupleOfBackend_Target_delete,
+		cv_VectorOfTupleOfBackend_Target_len, cv_VectorOfTupleOfBackend_Target_is_empty,
+		cv_VectorOfTupleOfBackend_Target_capacity, cv_VectorOfTupleOfBackend_Target_shrink_to_fit,
+		cv_VectorOfTupleOfBackend_Target_reserve, cv_VectorOfTupleOfBackend_Target_remove,
+		cv_VectorOfTupleOfBackend_Target_swap, cv_VectorOfTupleOfBackend_Target_clear,
+		cv_VectorOfTupleOfBackend_Target_get, cv_VectorOfTupleOfBackend_Target_set,
+		cv_VectorOfTupleOfBackend_Target_push, cv_VectorOfTupleOfBackend_Target_insert,
+	}
+	vector_non_copy_or_bool! { core::Tuple<(crate::dnn::Backend, crate::dnn::Target)> }
 	
 	pub type VectorOfVectorOfMatShape = core::Vector<core::Vector<crate::dnn::MatShape>>;
 	
@@ -9264,6 +9414,232 @@ mod freetype_types {
 }
 #[cfg(ocvrs_has_module_freetype)]
 pub use freetype_types::*;
+
+#[cfg(ocvrs_has_module_gapi)]
+mod gapi_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub type TupleOfGBackend_GKernelImpl = core::Tuple<(crate::gapi::GBackend, crate::gapi::GKernelImpl)>;
+	
+	impl TupleOfGBackend_GKernelImpl {
+		pub fn as_raw_TupleOfGBackend_GKernelImpl(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfGBackend_GKernelImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (crate::gapi::GBackend, crate::gapi::GKernelImpl), *const c_void, *mut c_void,
+		cv_TupleOfGBackend_GKernelImpl_new, cv_TupleOfGBackend_GKernelImpl_delete,
+		arg: *mut c_void = 0, cv_TupleOfGBackend_GKernelImpl_get_0: *mut c_void => get_0: crate::gapi::GBackend,
+		arg_1: *mut c_void = 1, cv_TupleOfGBackend_GKernelImpl_get_1: *mut c_void => get_1: crate::gapi::GKernelImpl
+	}
+	
+	pub type TupleOfGMat_GMat = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>;
+	
+	impl TupleOfGMat_GMat {
+		pub fn as_raw_TupleOfGMat_GMat(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfGMat_GMat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (crate::gapi::GMat, crate::gapi::GMat), *const c_void, *mut c_void,
+		cv_TupleOfGMat_GMat_new, cv_TupleOfGMat_GMat_delete,
+		arg: *mut c_void = 0, cv_TupleOfGMat_GMat_get_0: *mut c_void => get_0: crate::gapi::GMat,
+		arg_1: *mut c_void = 1, cv_TupleOfGMat_GMat_get_1: *mut c_void => get_1: crate::gapi::GMat
+	}
+	
+	pub type TupleOfGMat_GMat_GMat = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
+	
+	impl TupleOfGMat_GMat_GMat {
+		pub fn as_raw_TupleOfGMat_GMat_GMat(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfGMat_GMat_GMat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat), *const c_void, *mut c_void,
+		cv_TupleOfGMat_GMat_GMat_new, cv_TupleOfGMat_GMat_GMat_delete,
+		arg: *mut c_void = 0, cv_TupleOfGMat_GMat_GMat_get_0: *mut c_void => get_0: crate::gapi::GMat,
+		arg_1: *mut c_void = 1, cv_TupleOfGMat_GMat_GMat_get_1: *mut c_void => get_1: crate::gapi::GMat,
+		arg_2: *mut c_void = 2, cv_TupleOfGMat_GMat_GMat_get_2: *mut c_void => get_2: crate::gapi::GMat
+	}
+	
+	pub type TupleOfGMat_GMat_GMat_GMat = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
+	
+	impl TupleOfGMat_GMat_GMat_GMat {
+		pub fn as_raw_TupleOfGMat_GMat_GMat_GMat(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfGMat_GMat_GMat_GMat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat), *const c_void, *mut c_void,
+		cv_TupleOfGMat_GMat_GMat_GMat_new, cv_TupleOfGMat_GMat_GMat_GMat_delete,
+		arg: *mut c_void = 0, cv_TupleOfGMat_GMat_GMat_GMat_get_0: *mut c_void => get_0: crate::gapi::GMat,
+		arg_1: *mut c_void = 1, cv_TupleOfGMat_GMat_GMat_GMat_get_1: *mut c_void => get_1: crate::gapi::GMat,
+		arg_2: *mut c_void = 2, cv_TupleOfGMat_GMat_GMat_GMat_get_2: *mut c_void => get_2: crate::gapi::GMat,
+		arg_3: *mut c_void = 3, cv_TupleOfGMat_GMat_GMat_GMat_get_3: *mut c_void => get_3: crate::gapi::GMat
+	}
+	
+	pub type TupleOfGMat_GScalar = core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)>;
+	
+	impl TupleOfGMat_GScalar {
+		pub fn as_raw_TupleOfGMat_GScalar(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_TupleOfGMat_GScalar(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	tuple_extern! { (crate::gapi::GMat, crate::gapi::GScalar), *const c_void, *mut c_void,
+		cv_TupleOfGMat_GScalar_new, cv_TupleOfGMat_GScalar_delete,
+		arg: *mut c_void = 0, cv_TupleOfGMat_GScalar_get_0: *mut c_void => get_0: crate::gapi::GMat,
+		arg_1: *mut c_void = 1, cv_TupleOfGMat_GScalar_get_1: *mut c_void => get_1: crate::gapi::GScalar
+	}
+	
+	pub type VectorOfGArg = core::Vector<crate::gapi::GArg>;
+	
+	impl VectorOfGArg {
+		pub fn as_raw_VectorOfGArg(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfGArg(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::gapi::GArg, *const c_void, *mut c_void,
+		cv_VectorOfGArg_new, cv_VectorOfGArg_delete,
+		cv_VectorOfGArg_len, cv_VectorOfGArg_is_empty,
+		cv_VectorOfGArg_capacity, cv_VectorOfGArg_shrink_to_fit,
+		cv_VectorOfGArg_reserve, cv_VectorOfGArg_remove,
+		cv_VectorOfGArg_swap, cv_VectorOfGArg_clear,
+		cv_VectorOfGArg_get, cv_VectorOfGArg_set,
+		cv_VectorOfGArg_push, cv_VectorOfGArg_insert,
+	}
+	vector_non_copy_or_bool! { crate::gapi::GArg }
+	
+	pub type VectorOfGBackend = core::Vector<crate::gapi::GBackend>;
+	
+	impl VectorOfGBackend {
+		pub fn as_raw_VectorOfGBackend(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfGBackend(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::gapi::GBackend, *const c_void, *mut c_void,
+		cv_VectorOfGBackend_new, cv_VectorOfGBackend_delete,
+		cv_VectorOfGBackend_len, cv_VectorOfGBackend_is_empty,
+		cv_VectorOfGBackend_capacity, cv_VectorOfGBackend_shrink_to_fit,
+		cv_VectorOfGBackend_reserve, cv_VectorOfGBackend_remove,
+		cv_VectorOfGBackend_swap, cv_VectorOfGBackend_clear,
+		cv_VectorOfGBackend_get, cv_VectorOfGBackend_set,
+		cv_VectorOfGBackend_push, cv_VectorOfGBackend_insert,
+	}
+	vector_non_copy_or_bool! { crate::gapi::GBackend }
+	
+	pub type VectorOfGCompileArg = core::Vector<crate::gapi::GCompileArg>;
+	
+	impl VectorOfGCompileArg {
+		pub fn as_raw_VectorOfGCompileArg(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfGCompileArg(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::gapi::GCompileArg, *const c_void, *mut c_void,
+		cv_VectorOfGCompileArg_new, cv_VectorOfGCompileArg_delete,
+		cv_VectorOfGCompileArg_len, cv_VectorOfGCompileArg_is_empty,
+		cv_VectorOfGCompileArg_capacity, cv_VectorOfGCompileArg_shrink_to_fit,
+		cv_VectorOfGCompileArg_reserve, cv_VectorOfGCompileArg_remove,
+		cv_VectorOfGCompileArg_swap, cv_VectorOfGCompileArg_clear,
+		cv_VectorOfGCompileArg_get, cv_VectorOfGCompileArg_set,
+		cv_VectorOfGCompileArg_push, cv_VectorOfGCompileArg_insert,
+	}
+	vector_non_copy_or_bool! { crate::gapi::GCompileArg }
+	
+	pub type VectorOfGMat = core::Vector<crate::gapi::GMat>;
+	
+	impl VectorOfGMat {
+		pub fn as_raw_VectorOfGMat(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfGMat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::gapi::GMat, *const c_void, *mut c_void,
+		cv_VectorOfGMat_new, cv_VectorOfGMat_delete,
+		cv_VectorOfGMat_len, cv_VectorOfGMat_is_empty,
+		cv_VectorOfGMat_capacity, cv_VectorOfGMat_shrink_to_fit,
+		cv_VectorOfGMat_reserve, cv_VectorOfGMat_remove,
+		cv_VectorOfGMat_swap, cv_VectorOfGMat_clear,
+		cv_VectorOfGMat_get, cv_VectorOfGMat_set,
+		cv_VectorOfGMat_push, cv_VectorOfGMat_insert,
+	}
+	vector_non_copy_or_bool! { crate::gapi::GMat }
+	
+	pub type VectorOfGRunArg = core::Vector<crate::gapi::GRunArg>;
+	
+	impl VectorOfGRunArg {
+		pub fn as_raw_VectorOfGRunArg(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfGRunArg(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::gapi::GRunArg, *const c_void, *mut c_void,
+		cv_VectorOfGRunArg_new, cv_VectorOfGRunArg_delete,
+		cv_VectorOfGRunArg_len, cv_VectorOfGRunArg_is_empty,
+		cv_VectorOfGRunArg_capacity, cv_VectorOfGRunArg_shrink_to_fit,
+		cv_VectorOfGRunArg_reserve, cv_VectorOfGRunArg_remove,
+		cv_VectorOfGRunArg_swap, cv_VectorOfGRunArg_clear,
+		cv_VectorOfGRunArg_get, cv_VectorOfGRunArg_set,
+		cv_VectorOfGRunArg_push, cv_VectorOfGRunArg_insert,
+	}
+	vector_non_copy_or_bool! { crate::gapi::GRunArg }
+	
+	pub type VectorOfGShape = core::Vector<crate::gapi::GShape>;
+	
+	impl VectorOfGShape {
+		pub fn as_raw_VectorOfGShape(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfGShape(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::gapi::GShape, *const c_void, *mut c_void,
+		cv_VectorOfGShape_new, cv_VectorOfGShape_delete,
+		cv_VectorOfGShape_len, cv_VectorOfGShape_is_empty,
+		cv_VectorOfGShape_capacity, cv_VectorOfGShape_shrink_to_fit,
+		cv_VectorOfGShape_reserve, cv_VectorOfGShape_remove,
+		cv_VectorOfGShape_swap, cv_VectorOfGShape_clear,
+		cv_VectorOfGShape_get, cv_VectorOfGShape_set,
+		cv_VectorOfGShape_push, cv_VectorOfGShape_insert,
+	}
+	vector_copy_non_bool! { crate::gapi::GShape, *const c_void, *mut c_void,
+		cv_VectorOfGShape_data, cv_VectorOfGShape_data_mut, cv_VectorOfGShape_from_slice,
+		cv_VectorOfGShape_clone,
+	}
+	
+	pub type VectorOfGTransform = core::Vector<crate::gapi::GTransform>;
+	
+	impl VectorOfGTransform {
+		pub fn as_raw_VectorOfGTransform(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfGTransform(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::gapi::GTransform, *const c_void, *mut c_void,
+		cv_VectorOfGTransform_new, cv_VectorOfGTransform_delete,
+		cv_VectorOfGTransform_len, cv_VectorOfGTransform_is_empty,
+		cv_VectorOfGTransform_capacity, cv_VectorOfGTransform_shrink_to_fit,
+		cv_VectorOfGTransform_reserve, cv_VectorOfGTransform_remove,
+		cv_VectorOfGTransform_swap, cv_VectorOfGTransform_clear,
+		cv_VectorOfGTransform_get, cv_VectorOfGTransform_set,
+		cv_VectorOfGTransform_push, cv_VectorOfGTransform_insert,
+	}
+	vector_non_copy_or_bool! { crate::gapi::GTransform }
+	
+	pub type VectorOfOpaqueKind = core::Vector<crate::gapi::OpaqueKind>;
+	
+	impl VectorOfOpaqueKind {
+		pub fn as_raw_VectorOfOpaqueKind(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfOpaqueKind(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::gapi::OpaqueKind, *const c_void, *mut c_void,
+		cv_VectorOfOpaqueKind_new, cv_VectorOfOpaqueKind_delete,
+		cv_VectorOfOpaqueKind_len, cv_VectorOfOpaqueKind_is_empty,
+		cv_VectorOfOpaqueKind_capacity, cv_VectorOfOpaqueKind_shrink_to_fit,
+		cv_VectorOfOpaqueKind_reserve, cv_VectorOfOpaqueKind_remove,
+		cv_VectorOfOpaqueKind_swap, cv_VectorOfOpaqueKind_clear,
+		cv_VectorOfOpaqueKind_get, cv_VectorOfOpaqueKind_set,
+		cv_VectorOfOpaqueKind_push, cv_VectorOfOpaqueKind_insert,
+	}
+	vector_copy_non_bool! { crate::gapi::OpaqueKind, *const c_void, *mut c_void,
+		cv_VectorOfOpaqueKind_data, cv_VectorOfOpaqueKind_data_mut, cv_VectorOfOpaqueKind_from_slice,
+		cv_VectorOfOpaqueKind_clone,
+	}
+	
+}
+#[cfg(ocvrs_has_module_gapi)]
+pub use gapi_types::*;
 
 #[cfg(ocvrs_has_module_hdf)]
 mod hdf_types {
@@ -10555,6 +10931,24 @@ mod objdetect_types {
 		cv_VectorOfDetectionBasedTracker_ExtObject_push, cv_VectorOfDetectionBasedTracker_ExtObject_insert,
 	}
 	vector_non_copy_or_bool! { crate::objdetect::DetectionBasedTracker_ExtObject }
+	
+	pub type VectorOfDetectionBasedTracker_Object = core::Vector<crate::objdetect::DetectionBasedTracker_Object>;
+	
+	impl VectorOfDetectionBasedTracker_Object {
+		pub fn as_raw_VectorOfDetectionBasedTracker_Object(&self) -> *const c_void { self.as_raw() }
+		pub fn as_raw_mut_VectorOfDetectionBasedTracker_Object(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::objdetect::DetectionBasedTracker_Object, *const c_void, *mut c_void,
+		cv_VectorOfDetectionBasedTracker_Object_new, cv_VectorOfDetectionBasedTracker_Object_delete,
+		cv_VectorOfDetectionBasedTracker_Object_len, cv_VectorOfDetectionBasedTracker_Object_is_empty,
+		cv_VectorOfDetectionBasedTracker_Object_capacity, cv_VectorOfDetectionBasedTracker_Object_shrink_to_fit,
+		cv_VectorOfDetectionBasedTracker_Object_reserve, cv_VectorOfDetectionBasedTracker_Object_remove,
+		cv_VectorOfDetectionBasedTracker_Object_swap, cv_VectorOfDetectionBasedTracker_Object_clear,
+		cv_VectorOfDetectionBasedTracker_Object_get, cv_VectorOfDetectionBasedTracker_Object_set,
+		cv_VectorOfDetectionBasedTracker_Object_push, cv_VectorOfDetectionBasedTracker_Object_insert,
+	}
+	vector_non_copy_or_bool! { crate::objdetect::DetectionBasedTracker_Object }
 	
 	pub type VectorOfDetectionROI = core::Vector<crate::objdetect::DetectionROI>;
 	

@@ -133,7 +133,7 @@ opencv_type_enum! { crate::stitching::Stitcher_Status }
 #[inline]
 pub fn auto_detect_wave_correct_kind(rmats: &core::Vector<core::Mat>) -> Result<crate::stitching::Detail_WaveCorrectKind> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_autoDetectWaveCorrectKind_const_vector_Mat_R(rmats.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_autoDetectWaveCorrectKind_const_vectorLMatGR(rmats.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -154,7 +154,7 @@ pub fn compute_image_features2(features_finder: &core::Ptr<crate::features2d::Fe
 	input_array_arg!(image);
 	input_array_arg!(mask);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_computeImageFeatures_const_Ptr_Feature2D_R_const__InputArrayR_ImageFeaturesR_const__InputArrayR(features_finder.as_raw_PtrOfFeature2D(), image.as_raw__InputArray(), features.as_raw_mut_Detail_ImageFeatures(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_computeImageFeatures_const_PtrLFeature2DGR_const__InputArrayR_ImageFeaturesR_const__InputArrayR(features_finder.as_raw_PtrOfFeature2D(), image.as_raw__InputArray(), features.as_raw_mut_Detail_ImageFeatures(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -175,7 +175,7 @@ pub fn compute_image_features(features_finder: &core::Ptr<crate::features2d::Fea
 	input_array_arg!(images);
 	input_array_arg!(masks);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_computeImageFeatures_const_Ptr_Feature2D_R_const__InputArrayR_vector_ImageFeatures_R_const__InputArrayR(features_finder.as_raw_PtrOfFeature2D(), images.as_raw__InputArray(), features.as_raw_mut_VectorOfDetail_ImageFeatures(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_computeImageFeatures_const_PtrLFeature2DGR_const__InputArrayR_vectorLImageFeaturesGR_const__InputArrayR(features_finder.as_raw_PtrOfFeature2D(), images.as_raw__InputArray(), features.as_raw_mut_VectorOfDetail_ImageFeatures(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -185,7 +185,7 @@ pub fn compute_image_features(features_finder: &core::Ptr<crate::features2d::Fea
 pub fn create_laplace_pyr_gpu(img: &dyn core::ToInputArray, num_levels: i32, pyr: &mut core::Vector<core::UMat>) -> Result<()> {
 	input_array_arg!(img);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_createLaplacePyrGpu_const__InputArrayR_int_vector_UMat_R(img.as_raw__InputArray(), num_levels, pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_createLaplacePyrGpu_const__InputArrayR_int_vectorLUMatGR(img.as_raw__InputArray(), num_levels, pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -195,7 +195,7 @@ pub fn create_laplace_pyr_gpu(img: &dyn core::ToInputArray, num_levels: i32, pyr
 pub fn create_laplace_pyr(img: &dyn core::ToInputArray, num_levels: i32, pyr: &mut core::Vector<core::UMat>) -> Result<()> {
 	input_array_arg!(img);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_createLaplacePyr_const__InputArrayR_int_vector_UMat_R(img.as_raw__InputArray(), num_levels, pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_createLaplacePyr_const__InputArrayR_int_vectorLUMatGR(img.as_raw__InputArray(), num_levels, pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -215,7 +215,7 @@ pub fn create_weight_map(mask: &dyn core::ToInputArray, sharpness: f32, weight: 
 #[inline]
 pub fn find_max_spanning_tree(num_images: i32, pairwise_matches: &core::Vector<crate::stitching::Detail_MatchesInfo>, span_tree: &mut crate::stitching::Detail_Graph, centers: &mut core::Vector<i32>) -> Result<()> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_findMaxSpanningTree_int_const_vector_MatchesInfo_R_GraphR_vector_int_R(num_images, pairwise_matches.as_raw_VectorOfDetail_MatchesInfo(), span_tree.as_raw_mut_Detail_Graph(), centers.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_findMaxSpanningTree_int_const_vectorLMatchesInfoGR_GraphR_vectorLintGR(num_images, pairwise_matches.as_raw_VectorOfDetail_MatchesInfo(), span_tree.as_raw_mut_Detail_Graph(), centers.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -224,7 +224,7 @@ pub fn find_max_spanning_tree(num_images: i32, pairwise_matches: &core::Vector<c
 #[inline]
 pub fn leave_biggest_component(features: &mut core::Vector<crate::stitching::Detail_ImageFeatures>, pairwise_matches: &mut core::Vector<crate::stitching::Detail_MatchesInfo>, conf_threshold: f32) -> Result<core::Vector<i32>> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_leaveBiggestComponent_vector_ImageFeatures_R_vector_MatchesInfo_R_float(features.as_raw_mut_VectorOfDetail_ImageFeatures(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), conf_threshold, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_leaveBiggestComponent_vectorLImageFeaturesGR_vectorLMatchesInfoGR_float(features.as_raw_mut_VectorOfDetail_ImageFeatures(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), conf_threshold, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
@@ -235,7 +235,7 @@ pub fn leave_biggest_component(features: &mut core::Vector<crate::stitching::Det
 #[inline]
 pub fn matches_graph_as_string(pathes: &mut core::Vector<String>, pairwise_matches: &mut core::Vector<crate::stitching::Detail_MatchesInfo>, conf_threshold: f32) -> Result<String> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_matchesGraphAsString_vector_String_R_vector_MatchesInfo_R_float(pathes.as_raw_mut_VectorOfString(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), conf_threshold, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_matchesGraphAsString_vectorLStringGR_vectorLMatchesInfoGR_float(pathes.as_raw_mut_VectorOfString(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), conf_threshold, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { String::opencv_from_extern(ret) };
@@ -267,7 +267,7 @@ pub fn overlap_roi(tl1: core::Point, tl2: core::Point, sz1: core::Size, sz2: cor
 #[inline]
 pub fn restore_image_from_laplace_pyr_gpu(pyr: &mut core::Vector<core::UMat>) -> Result<()> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_restoreImageFromLaplacePyrGpu_vector_UMat_R(pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_restoreImageFromLaplacePyrGpu_vectorLUMatGR(pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -276,7 +276,7 @@ pub fn restore_image_from_laplace_pyr_gpu(pyr: &mut core::Vector<core::UMat>) ->
 #[inline]
 pub fn restore_image_from_laplace_pyr(pyr: &mut core::Vector<core::UMat>) -> Result<()> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_restoreImageFromLaplacePyr_vector_UMat_R(pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_restoreImageFromLaplacePyr_vectorLUMatGR(pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -285,7 +285,7 @@ pub fn restore_image_from_laplace_pyr(pyr: &mut core::Vector<core::UMat>) -> Res
 #[inline]
 pub fn result_roi_intersection(corners: &core::Vector<core::Point>, sizes: &core::Vector<core::Size>) -> Result<core::Rect> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_resultRoiIntersection_const_vector_Point_R_const_vector_Size_R(corners.as_raw_VectorOfPoint(), sizes.as_raw_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_resultRoiIntersection_const_vectorLPointGR_const_vectorLSizeGR(corners.as_raw_VectorOfPoint(), sizes.as_raw_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -294,7 +294,7 @@ pub fn result_roi_intersection(corners: &core::Vector<core::Point>, sizes: &core
 #[inline]
 pub fn result_roi_1(corners: &core::Vector<core::Point>, sizes: &core::Vector<core::Size>) -> Result<core::Rect> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_resultRoi_const_vector_Point_R_const_vector_Size_R(corners.as_raw_VectorOfPoint(), sizes.as_raw_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_resultRoi_const_vectorLPointGR_const_vectorLSizeGR(corners.as_raw_VectorOfPoint(), sizes.as_raw_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -303,7 +303,7 @@ pub fn result_roi_1(corners: &core::Vector<core::Point>, sizes: &core::Vector<co
 #[inline]
 pub fn result_roi(corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>) -> Result<core::Rect> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_resultRoi_const_vector_Point_R_const_vector_UMat_R(corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_resultRoi_const_vectorLPointGR_const_vectorLUMatGR(corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -312,7 +312,7 @@ pub fn result_roi(corners: &core::Vector<core::Point>, images: &core::Vector<cor
 #[inline]
 pub fn result_tl(corners: &core::Vector<core::Point>) -> Result<core::Point> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_resultTl_const_vector_Point_R(corners.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_resultTl_const_vectorLPointGR(corners.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -321,7 +321,7 @@ pub fn result_tl(corners: &core::Vector<core::Point>) -> Result<core::Point> {
 #[inline]
 pub fn select_random_subset(count: i32, size: i32, subset: &mut core::Vector<i32>) -> Result<()> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_selectRandomSubset_int_int_vector_int_R(count, size, subset.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_selectRandomSubset_int_int_vectorLintGR(count, size, subset.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -344,7 +344,7 @@ pub fn stitching_log_level() -> Result<i32> {
 #[inline]
 pub fn wave_correct(rmats: &mut core::Vector<core::Mat>, kind: crate::stitching::Detail_WaveCorrectKind) -> Result<()> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_detail_waveCorrect_vector_Mat_R_WaveCorrectKind(rmats.as_raw_mut_VectorOfMat(), kind, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_detail_waveCorrect_vectorLMatGR_WaveCorrectKind(rmats.as_raw_mut_VectorOfMat(), kind, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -1660,7 +1660,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	#[inline]
 	fn set_features_finder(&mut self, mut features_finder: core::Ptr<crate::features2d::Feature2D>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setFeaturesFinder_Ptr_Feature2D_(self.as_raw_mut_Stitcher(), features_finder.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setFeaturesFinder_PtrLFeature2DG(self.as_raw_mut_Stitcher(), features_finder.as_raw_mut_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1679,7 +1679,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	#[inline]
 	fn set_features_matcher(&mut self, mut features_matcher: core::Ptr<dyn crate::stitching::Detail_FeaturesMatcher>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setFeaturesMatcher_Ptr_FeaturesMatcher_(self.as_raw_mut_Stitcher(), features_matcher.as_raw_mut_PtrOfDetail_FeaturesMatcher(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setFeaturesMatcher_PtrLFeaturesMatcherG(self.as_raw_mut_Stitcher(), features_matcher.as_raw_mut_PtrOfDetail_FeaturesMatcher(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1707,7 +1707,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	#[inline]
 	fn set_bundle_adjuster(&mut self, mut bundle_adjuster: core::Ptr<dyn crate::stitching::Detail_BundleAdjusterBase>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setBundleAdjuster_Ptr_BundleAdjusterBase_(self.as_raw_mut_Stitcher(), bundle_adjuster.as_raw_mut_PtrOfDetail_BundleAdjusterBase(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setBundleAdjuster_PtrLBundleAdjusterBaseG(self.as_raw_mut_Stitcher(), bundle_adjuster.as_raw_mut_PtrOfDetail_BundleAdjusterBase(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1726,7 +1726,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	#[inline]
 	fn set_estimator(&mut self, mut estimator: core::Ptr<dyn crate::stitching::Detail_Estimator>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setEstimator_Ptr_Estimator_(self.as_raw_mut_Stitcher(), estimator.as_raw_mut_PtrOfDetail_Estimator(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setEstimator_PtrLEstimatorG(self.as_raw_mut_Stitcher(), estimator.as_raw_mut_PtrOfDetail_Estimator(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1745,7 +1745,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	#[inline]
 	fn set_warper(&mut self, mut creator: core::Ptr<dyn crate::stitching::WarperCreator>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setWarper_Ptr_WarperCreator_(self.as_raw_mut_Stitcher(), creator.as_raw_mut_PtrOfWarperCreator(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setWarper_PtrLWarperCreatorG(self.as_raw_mut_Stitcher(), creator.as_raw_mut_PtrOfWarperCreator(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1764,7 +1764,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	#[inline]
 	fn set_exposure_compensator(&mut self, mut exposure_comp: core::Ptr<dyn crate::stitching::Detail_ExposureCompensator>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setExposureCompensator_Ptr_ExposureCompensator_(self.as_raw_mut_Stitcher(), exposure_comp.as_raw_mut_PtrOfDetail_ExposureCompensator(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setExposureCompensator_PtrLExposureCompensatorG(self.as_raw_mut_Stitcher(), exposure_comp.as_raw_mut_PtrOfDetail_ExposureCompensator(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1783,7 +1783,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	#[inline]
 	fn set_seam_finder(&mut self, mut seam_finder: core::Ptr<dyn crate::stitching::Detail_SeamFinder>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setSeamFinder_Ptr_SeamFinder_(self.as_raw_mut_Stitcher(), seam_finder.as_raw_mut_PtrOfDetail_SeamFinder(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setSeamFinder_PtrLSeamFinderG(self.as_raw_mut_Stitcher(), seam_finder.as_raw_mut_PtrOfDetail_SeamFinder(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1802,7 +1802,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	#[inline]
 	fn set_blender(&mut self, mut b: core::Ptr<crate::stitching::Detail_Blender>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setBlender_Ptr_Blender_(self.as_raw_mut_Stitcher(), b.as_raw_mut_PtrOfDetail_Blender(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setBlender_PtrLBlenderG(self.as_raw_mut_Stitcher(), b.as_raw_mut_PtrOfDetail_Blender(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1846,7 +1846,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	fn set_transform(&mut self, images: &dyn core::ToInputArray, cameras: &core::Vector<crate::stitching::Detail_CameraParams>, component: &core::Vector<i32>) -> Result<crate::stitching::Stitcher_Status> {
 		input_array_arg!(images);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setTransform_const__InputArrayR_const_vector_CameraParams_R_const_vector_int_R(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), cameras.as_raw_VectorOfDetail_CameraParams(), component.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setTransform_const__InputArrayR_const_vectorLCameraParamsGR_const_vectorLintGR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), cameras.as_raw_VectorOfDetail_CameraParams(), component.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1867,7 +1867,7 @@ pub trait StitcherTrait: crate::stitching::StitcherTraitConst {
 	fn set_transform_1(&mut self, images: &dyn core::ToInputArray, cameras: &core::Vector<crate::stitching::Detail_CameraParams>) -> Result<crate::stitching::Stitcher_Status> {
 		input_array_arg!(images);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_Stitcher_setTransform_const__InputArrayR_const_vector_CameraParams_R(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), cameras.as_raw_VectorOfDetail_CameraParams(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_Stitcher_setTransform_const__InputArrayR_const_vectorLCameraParamsGR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), cameras.as_raw_VectorOfDetail_CameraParams(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2641,7 +2641,7 @@ pub trait Detail_BlenderTrait: crate::stitching::Detail_BlenderTraitConst {
 	#[inline]
 	fn prepare(&mut self, corners: &core::Vector<core::Point>, sizes: &core::Vector<core::Size>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_Blender_prepare_const_vector_Point_R_const_vector_Size_R(self.as_raw_mut_Detail_Blender(), corners.as_raw_VectorOfPoint(), sizes.as_raw_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_Blender_prepare_const_vectorLPointGR_const_vectorLSizeGR(self.as_raw_mut_Detail_Blender(), corners.as_raw_VectorOfPoint(), sizes.as_raw_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2753,6 +2753,15 @@ pub trait Detail_BlocksChannelsCompensatorTraitConst: crate::stitching::Detail_B
 pub trait Detail_BlocksChannelsCompensatorTrait: crate::stitching::Detail_BlocksChannelsCompensatorTraitConst + crate::stitching::Detail_BlocksCompensator {
 	fn as_raw_mut_Detail_BlocksChannelsCompensator(&mut self) -> *mut c_void;
 
+	#[inline]
+	fn feed(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>, masks: &core::Vector<core::Tuple<(core::UMat, u8)>>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_BlocksChannelsCompensator_feed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLpairLcv_UMat__unsigned_charGGR(self.as_raw_mut_Detail_BlocksChannelsCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfTupleOfUMat_u8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
@@ -2863,7 +2872,7 @@ pub trait Detail_BlocksCompensator: crate::stitching::Detail_BlocksCompensatorCo
 	#[inline]
 	fn get_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_BlocksCompensator_getMatGains_vector_Mat_R(self.as_raw_mut_Detail_BlocksCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_BlocksCompensator_getMatGains_vectorLMatGR(self.as_raw_mut_Detail_BlocksCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2872,7 +2881,7 @@ pub trait Detail_BlocksCompensator: crate::stitching::Detail_BlocksCompensatorCo
 	#[inline]
 	fn set_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_BlocksCompensator_setMatGains_vector_Mat_R(self.as_raw_mut_Detail_BlocksCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_BlocksCompensator_setMatGains_vectorLMatGR(self.as_raw_mut_Detail_BlocksCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2945,6 +2954,15 @@ pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_BlocksComp
 	fn as_raw_mut_Detail_BlocksGainCompensator(&mut self) -> *mut c_void;
 
 	#[inline]
+	fn feed(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>, masks: &core::Vector<core::Tuple<(core::UMat, u8)>>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_BlocksGainCompensator_feed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLpairLcv_UMat__unsigned_charGGR(self.as_raw_mut_Detail_BlocksGainCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfTupleOfUMat_u8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
 	fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(mask);
@@ -2958,7 +2976,7 @@ pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_BlocksComp
 	#[inline]
 	fn get_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_BlocksGainCompensator_getMatGains_vector_Mat_R(self.as_raw_mut_Detail_BlocksGainCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_BlocksGainCompensator_getMatGains_vectorLMatGR(self.as_raw_mut_Detail_BlocksGainCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2967,7 +2985,7 @@ pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_BlocksComp
 	#[inline]
 	fn set_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_BlocksGainCompensator_setMatGains_vector_Mat_R(self.as_raw_mut_Detail_BlocksGainCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_BlocksGainCompensator_setMatGains_vectorLMatGR(self.as_raw_mut_Detail_BlocksGainCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3584,6 +3602,15 @@ pub trait Detail_ChannelsCompensatorTrait: crate::stitching::Detail_ChannelsComp
 	fn as_raw_mut_Detail_ChannelsCompensator(&mut self) -> *mut c_void;
 
 	#[inline]
+	fn feed(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>, masks: &core::Vector<core::Tuple<(core::UMat, u8)>>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_ChannelsCompensator_feed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLpairLcv_UMat__unsigned_charGGR(self.as_raw_mut_Detail_ChannelsCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfTupleOfUMat_u8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
 	fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(mask);
@@ -3597,7 +3624,7 @@ pub trait Detail_ChannelsCompensatorTrait: crate::stitching::Detail_ChannelsComp
 	#[inline]
 	fn get_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_ChannelsCompensator_getMatGains_vector_Mat_R(self.as_raw_mut_Detail_ChannelsCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_ChannelsCompensator_getMatGains_vectorLMatGR(self.as_raw_mut_Detail_ChannelsCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3606,7 +3633,7 @@ pub trait Detail_ChannelsCompensatorTrait: crate::stitching::Detail_ChannelsComp
 	#[inline]
 	fn set_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_ChannelsCompensator_setMatGains_vector_Mat_R(self.as_raw_mut_Detail_ChannelsCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_ChannelsCompensator_setMatGains_vectorLMatGR(self.as_raw_mut_Detail_ChannelsCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4385,13 +4412,13 @@ pub trait Detail_DisjointSetsTrait: crate::stitching::Detail_DisjointSetsTraitCo
 
 	#[inline]
 	fn set_parent(&mut self, mut val: core::Vector<i32>) {
-		let ret = unsafe { sys::cv_detail_DisjointSets_setPropParent_vector_int_(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
+		let ret = unsafe { sys::cv_detail_DisjointSets_setPropParent_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_size(&mut self, mut val: core::Vector<i32>) {
-		let ret = unsafe { sys::cv_detail_DisjointSets_setPropSize_vector_int_(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
+		let ret = unsafe { sys::cv_detail_DisjointSets_setPropSize_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
 		ret
 	}
 	
@@ -4501,7 +4528,7 @@ pub trait Detail_DpSeamFinderTrait: crate::stitching::Detail_DpSeamFinderTraitCo
 	#[inline]
 	fn find(&mut self, src: &core::Vector<core::UMat>, corners: &core::Vector<core::Point>, masks: &mut core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_DpSeamFinder_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(self.as_raw_mut_Detail_DpSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_DpSeamFinder_find_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_DpSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4601,7 +4628,23 @@ pub trait Detail_ExposureCompensator: crate::stitching::Detail_ExposureCompensat
 	#[inline]
 	fn feed(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>, masks: &core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_ExposureCompensator_feed_const_vector_Point_R_const_vector_UMat_R_const_vector_UMat_R(self.as_raw_mut_Detail_ExposureCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_ExposureCompensator_feed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLUMatGR(self.as_raw_mut_Detail_ExposureCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * corners: Source image top-left corners
+	/// * images: Source images
+	/// * masks: Image masks to update (second value in pair specifies the value which should be used
+	/// to detect where image is)
+	/// 
+	/// ## Overloaded parameters
+	#[inline]
+	fn feed_1(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>, masks: &core::Vector<core::Tuple<(core::UMat, u8)>>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_ExposureCompensator_feed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLpairLcv_UMat__unsigned_charGGR(self.as_raw_mut_Detail_ExposureCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfTupleOfUMat_u8(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4628,7 +4671,7 @@ pub trait Detail_ExposureCompensator: crate::stitching::Detail_ExposureCompensat
 	#[inline]
 	fn get_mat_gains(&mut self, unnamed: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_ExposureCompensator_getMatGains_vector_Mat_R(self.as_raw_mut_Detail_ExposureCompensator(), unnamed.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_ExposureCompensator_getMatGains_vectorLMatGR(self.as_raw_mut_Detail_ExposureCompensator(), unnamed.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4637,7 +4680,7 @@ pub trait Detail_ExposureCompensator: crate::stitching::Detail_ExposureCompensat
 	#[inline]
 	fn set_mat_gains(&mut self, unnamed: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_ExposureCompensator_setMatGains_vector_Mat_R(self.as_raw_mut_Detail_ExposureCompensator(), unnamed.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_ExposureCompensator_setMatGains_vectorLMatGR(self.as_raw_mut_Detail_ExposureCompensator(), unnamed.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4738,7 +4781,7 @@ pub trait Detail_FeatherBlenderTrait: crate::stitching::Detail_BlenderTrait + cr
 	#[inline]
 	fn create_weight_maps(&mut self, masks: &core::Vector<core::UMat>, corners: &core::Vector<core::Point>, weight_maps: &mut core::Vector<core::UMat>) -> Result<core::Rect> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_FeatherBlender_createWeightMaps_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(self.as_raw_mut_Detail_FeatherBlender(), masks.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), weight_maps.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_FeatherBlender_createWeightMaps_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_FeatherBlender(), masks.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), weight_maps.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4975,6 +5018,24 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 	fn as_raw_mut_Detail_GainCompensator(&mut self) -> *mut c_void;
 
 	#[inline]
+	fn feed(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>, masks: &core::Vector<core::Tuple<(core::UMat, u8)>>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_GainCompensator_feed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLpairLcv_UMat__unsigned_charGGR(self.as_raw_mut_Detail_GainCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfTupleOfUMat_u8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn single_feed(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>, masks: &core::Vector<core::Tuple<(core::UMat, u8)>>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_GainCompensator_singleFeed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLpairLcv_UMat__unsigned_charGGR(self.as_raw_mut_Detail_GainCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfTupleOfUMat_u8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
 	fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(mask);
@@ -4988,7 +5049,7 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 	#[inline]
 	fn get_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_GainCompensator_getMatGains_vector_Mat_R(self.as_raw_mut_Detail_GainCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_GainCompensator_getMatGains_vectorLMatGR(self.as_raw_mut_Detail_GainCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4997,7 +5058,7 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 	#[inline]
 	fn set_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_GainCompensator_setMatGains_vector_Mat_R(self.as_raw_mut_Detail_GainCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_GainCompensator_setMatGains_vectorLMatGR(self.as_raw_mut_Detail_GainCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5033,7 +5094,7 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 	#[inline]
 	fn prepare_similarity_mask(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_GainCompensator_prepareSimilarityMask_const_vector_Point_R_const_vector_UMat_R(self.as_raw_mut_Detail_GainCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_GainCompensator_prepareSimilarityMask_const_vectorLPointGR_const_vectorLUMatGR(self.as_raw_mut_Detail_GainCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5184,7 +5245,7 @@ pub trait Detail_GraphCutSeamFinderTrait: crate::stitching::Detail_GraphCutSeamF
 	#[inline]
 	fn find(&mut self, src: &core::Vector<core::UMat>, corners: &core::Vector<core::Point>, masks: &mut core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_GraphCutSeamFinder_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(self.as_raw_mut_Detail_GraphCutSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_GraphCutSeamFinder_find_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_GraphCutSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5314,7 +5375,7 @@ pub trait Detail_GraphCutSeamFinderGpuTrait: crate::stitching::Detail_GraphCutSe
 	#[inline]
 	fn find(&mut self, src: &core::Vector<core::UMat>, corners: &core::Vector<core::Point>, masks: &mut core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_GraphCutSeamFinderGpu_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(self.as_raw_mut_Detail_GraphCutSeamFinderGpu(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_GraphCutSeamFinderGpu_find_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_GraphCutSeamFinderGpu(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5416,6 +5477,24 @@ pub trait Detail_GraphEdgeTraitConst {
 	fn weight(&self) -> f32 {
 		let ret = unsafe { sys::cv_detail_GraphEdge_getPropWeight_const(self.as_raw_Detail_GraphEdge()) };
 		ret
+	}
+	
+	#[inline]
+	fn less_than(&self, other: &crate::stitching::Detail_GraphEdge) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_GraphEdge_operatorL_const_const_GraphEdgeR(self.as_raw_Detail_GraphEdge(), other.as_raw_Detail_GraphEdge(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn greater_than(&self, other: &crate::stitching::Detail_GraphEdge) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_GraphEdge_operatorG_const_const_GraphEdgeR(self.as_raw_Detail_GraphEdge(), other.as_raw_Detail_GraphEdge(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
 	
 }
@@ -5588,7 +5667,7 @@ pub trait Detail_ImageFeaturesTrait: crate::stitching::Detail_ImageFeaturesTrait
 	
 	#[inline]
 	fn set_keypoints(&mut self, mut val: core::Vector<core::KeyPoint>) {
-		let ret = unsafe { sys::cv_detail_ImageFeatures_setPropKeypoints_vector_KeyPoint_(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_VectorOfKeyPoint()) };
+		let ret = unsafe { sys::cv_detail_ImageFeatures_setPropKeypoints_vectorLKeyPointG(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_VectorOfKeyPoint()) };
 		ret
 	}
 	
@@ -5716,14 +5795,14 @@ pub trait Detail_MatchesInfoTrait: crate::stitching::Detail_MatchesInfoTraitCons
 	
 	#[inline]
 	fn set_matches(&mut self, mut val: core::Vector<core::DMatch>) {
-		let ret = unsafe { sys::cv_detail_MatchesInfo_setPropMatches_vector_DMatch_(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfDMatch()) };
+		let ret = unsafe { sys::cv_detail_MatchesInfo_setPropMatches_vectorLDMatchG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfDMatch()) };
 		ret
 	}
 	
 	/// Geometrically consistent matches mask
 	#[inline]
 	fn set_inliers_mask(&mut self, mut val: core::Vector<u8>) {
-		let ret = unsafe { sys::cv_detail_MatchesInfo_setPropInliers_mask_vector_unsigned_char_(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfu8()) };
+		let ret = unsafe { sys::cv_detail_MatchesInfo_setPropInliers_mask_vectorLunsigned_charG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfu8()) };
 		ret
 	}
 	
@@ -6125,6 +6204,15 @@ pub trait Detail_NoExposureCompensatorTrait: crate::stitching::Detail_ExposureCo
 	fn as_raw_mut_Detail_NoExposureCompensator(&mut self) -> *mut c_void;
 
 	#[inline]
+	fn feed(&mut self, unnamed: &core::Vector<core::Point>, unnamed_1: &core::Vector<core::UMat>, unnamed_2: &core::Vector<core::Tuple<(core::UMat, u8)>>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_NoExposureCompensator_feed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLpairLcv_UMat__unsigned_charGGR(self.as_raw_mut_Detail_NoExposureCompensator(), unnamed.as_raw_VectorOfPoint(), unnamed_1.as_raw_VectorOfUMat(), unnamed_2.as_raw_VectorOfTupleOfUMat_u8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
 	fn apply(&mut self, unnamed: i32, unnamed_1: core::Point, unnamed_2: &mut dyn core::ToInputOutputArray, unnamed_3: &dyn core::ToInputArray) -> Result<()> {
 		input_output_array_arg!(unnamed_2);
 		input_array_arg!(unnamed_3);
@@ -6138,7 +6226,7 @@ pub trait Detail_NoExposureCompensatorTrait: crate::stitching::Detail_ExposureCo
 	#[inline]
 	fn get_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_NoExposureCompensator_getMatGains_vector_Mat_R(self.as_raw_mut_Detail_NoExposureCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_NoExposureCompensator_getMatGains_vectorLMatGR(self.as_raw_mut_Detail_NoExposureCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6147,7 +6235,7 @@ pub trait Detail_NoExposureCompensatorTrait: crate::stitching::Detail_ExposureCo
 	#[inline]
 	fn set_mat_gains(&mut self, umv: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_NoExposureCompensator_setMatGains_vector_Mat_R(self.as_raw_mut_Detail_NoExposureCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_NoExposureCompensator_setMatGains_vectorLMatGR(self.as_raw_mut_Detail_NoExposureCompensator(), umv.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6202,7 +6290,7 @@ pub trait Detail_NoSeamFinderTrait: crate::stitching::Detail_NoSeamFinderTraitCo
 	#[inline]
 	fn find(&mut self, unnamed: &core::Vector<core::UMat>, unnamed_1: &core::Vector<core::Point>, unnamed_2: &mut core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_NoSeamFinder_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(self.as_raw_mut_Detail_NoSeamFinder(), unnamed.as_raw_VectorOfUMat(), unnamed_1.as_raw_VectorOfPoint(), unnamed_2.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_NoSeamFinder_find_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_NoSeamFinder(), unnamed.as_raw_VectorOfUMat(), unnamed_1.as_raw_VectorOfPoint(), unnamed_2.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6257,7 +6345,7 @@ pub trait Detail_PairwiseSeamFinder: crate::stitching::Detail_PairwiseSeamFinder
 	#[inline]
 	fn find(&mut self, src: &core::Vector<core::UMat>, corners: &core::Vector<core::Point>, masks: &mut core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_PairwiseSeamFinder_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(self.as_raw_mut_Detail_PairwiseSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_PairwiseSeamFinder_find_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_PairwiseSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7358,7 +7446,7 @@ pub trait Detail_SeamFinder: crate::stitching::Detail_SeamFinderConst {
 	#[inline]
 	fn find(&mut self, src: &core::Vector<core::UMat>, corners: &core::Vector<core::Point>, masks: &mut core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_SeamFinder_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(self.as_raw_mut_Detail_SeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_SeamFinder_find_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_SeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7982,7 +8070,7 @@ pub trait Detail_VoronoiSeamFinderTrait: crate::stitching::Detail_PairwiseSeamFi
 	#[inline]
 	fn find(&mut self, src: &core::Vector<core::UMat>, corners: &core::Vector<core::Point>, masks: &mut core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_VoronoiSeamFinder_find_const_vector_UMat_R_const_vector_Point_R_vector_UMat_R(self.as_raw_mut_Detail_VoronoiSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_VoronoiSeamFinder_find_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_VoronoiSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7991,7 +8079,7 @@ pub trait Detail_VoronoiSeamFinderTrait: crate::stitching::Detail_PairwiseSeamFi
 	#[inline]
 	fn find_1(&mut self, size: &core::Vector<core::Size>, corners: &core::Vector<core::Point>, masks: &mut core::Vector<core::UMat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_VoronoiSeamFinder_find_const_vector_Size_R_const_vector_Point_R_vector_UMat_R(self.as_raw_mut_Detail_VoronoiSeamFinder(), size.as_raw_VectorOfSize(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_VoronoiSeamFinder_find_const_vectorLSizeGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_VoronoiSeamFinder(), size.as_raw_VectorOfSize(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

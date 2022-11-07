@@ -1784,7 +1784,7 @@ pub trait EMConst: crate::ml::StatModelConst {
 	#[inline]
 	fn get_covs(&self, covs: &mut core::Vector<core::Mat>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ml_EM_getCovs_const_vector_Mat_R(self.as_raw_EM(), covs.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ml_EM_getCovs_const_vectorLMatGR(self.as_raw_EM(), covs.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3217,7 +3217,7 @@ pub trait SVM: crate::ml::SVMConst + crate::ml::StatModel {
 	#[inline]
 	fn set_custom_kernel(&mut self, _kernel: &core::Ptr<dyn crate::ml::SVM_Kernel>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ml_SVM_setCustomKernel_const_Ptr_Kernel_R(self.as_raw_mut_SVM(), _kernel.as_raw_PtrOfSVM_Kernel(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ml_SVM_setCustomKernel_const_PtrLKernelGR(self.as_raw_mut_SVM(), _kernel.as_raw_PtrOfSVM_Kernel(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3270,7 +3270,7 @@ pub trait SVM: crate::ml::SVMConst + crate::ml::StatModel {
 	#[inline]
 	fn train_auto(&mut self, data: &core::Ptr<dyn crate::ml::TrainData>, k_fold: i32, mut cgrid: crate::ml::ParamGrid, mut gamma_grid: crate::ml::ParamGrid, mut p_grid: crate::ml::ParamGrid, mut nu_grid: crate::ml::ParamGrid, mut coeff_grid: crate::ml::ParamGrid, mut degree_grid: crate::ml::ParamGrid, balanced: bool) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ml_SVM_trainAuto_const_Ptr_TrainData_R_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(self.as_raw_mut_SVM(), data.as_raw_PtrOfTrainData(), k_fold, cgrid.as_raw_mut_ParamGrid(), gamma_grid.as_raw_mut_ParamGrid(), p_grid.as_raw_mut_ParamGrid(), nu_grid.as_raw_mut_ParamGrid(), coeff_grid.as_raw_mut_ParamGrid(), degree_grid.as_raw_mut_ParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ml_SVM_trainAuto_const_PtrLTrainDataGR_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(self.as_raw_mut_SVM(), data.as_raw_PtrOfTrainData(), k_fold, cgrid.as_raw_mut_ParamGrid(), gamma_grid.as_raw_mut_ParamGrid(), p_grid.as_raw_mut_ParamGrid(), nu_grid.as_raw_mut_ParamGrid(), coeff_grid.as_raw_mut_ParamGrid(), degree_grid.as_raw_mut_ParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3319,7 +3319,7 @@ pub trait SVM: crate::ml::SVMConst + crate::ml::StatModel {
 		input_array_arg!(samples);
 		input_array_arg!(responses);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__bool(self.as_raw_mut_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), k_fold, cgrid.as_raw_mut_PtrOfParamGrid(), gamma_grid.as_raw_mut_PtrOfParamGrid(), p_grid.as_raw_mut_PtrOfParamGrid(), nu_grid.as_raw_mut_PtrOfParamGrid(), coeff_grid.as_raw_mut_PtrOfParamGrid(), degree_grid.as_raw_mut_PtrOfParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_bool(self.as_raw_mut_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), k_fold, cgrid.as_raw_mut_PtrOfParamGrid(), gamma_grid.as_raw_mut_PtrOfParamGrid(), p_grid.as_raw_mut_PtrOfParamGrid(), nu_grid.as_raw_mut_PtrOfParamGrid(), coeff_grid.as_raw_mut_PtrOfParamGrid(), degree_grid.as_raw_mut_PtrOfParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3792,7 +3792,7 @@ pub trait StatModelConst: core::AlgorithmTraitConst {
 	fn calc_error(&self, data: &core::Ptr<dyn crate::ml::TrainData>, test: bool, resp: &mut dyn core::ToOutputArray) -> Result<f32> {
 		output_array_arg!(resp);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ml_StatModel_calcError_const_const_Ptr_TrainData_R_bool_const__OutputArrayR(self.as_raw_StatModel(), data.as_raw_PtrOfTrainData(), test, resp.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ml_StatModel_calcError_const_const_PtrLTrainDataGR_bool_const__OutputArrayR(self.as_raw_StatModel(), data.as_raw_PtrOfTrainData(), test, resp.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3837,7 +3837,7 @@ pub trait StatModel: core::AlgorithmTrait + crate::ml::StatModelConst {
 	#[inline]
 	fn train_with_data(&mut self, train_data: &core::Ptr<dyn crate::ml::TrainData>, flags: i32) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ml_StatModel_train_const_Ptr_TrainData_R_int(self.as_raw_mut_StatModel(), train_data.as_raw_PtrOfTrainData(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ml_StatModel_train_const_PtrLTrainDataGR_int(self.as_raw_mut_StatModel(), train_data.as_raw_PtrOfTrainData(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4229,7 +4229,7 @@ pub trait TrainDataConst {
 	#[inline]
 	fn get_names(&self, names: &mut core::Vector<String>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ml_TrainData_getNames_const_vector_String_R(self.as_raw_TrainData(), names.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ml_TrainData_getNames_const_vectorLStringGR(self.as_raw_TrainData(), names.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

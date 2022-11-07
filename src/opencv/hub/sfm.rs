@@ -664,7 +664,7 @@ pub fn reconstruct_2(images: core::Vector<String>, ps: &mut dyn core::ToOutputAr
 	output_array_arg!(points3d);
 	input_output_array_arg!(k);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_sfm_reconstruct_const_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(images.as_raw_VectorOfString(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_sfm_reconstruct_const_vectorLStringG_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(images.as_raw_VectorOfString(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -696,7 +696,7 @@ pub fn reconstruct_3(images: core::Vector<String>, rs: &mut dyn core::ToOutputAr
 	input_output_array_arg!(k);
 	output_array_arg!(points3d);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_sfm_reconstruct_const_vector_String__const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR_bool(images.as_raw_VectorOfString(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_sfm_reconstruct_const_vectorLStringG_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR_bool(images.as_raw_VectorOfString(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -820,7 +820,7 @@ pub trait BaseSFM: crate::sfm::BaseSFMConst {
 	#[inline]
 	fn run_2(&mut self, images: &core::Vector<String>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_sfm_BaseSFM_run_const_vector_String_R(self.as_raw_mut_BaseSFM(), images.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_sfm_BaseSFM_run_const_vectorLStringGR(self.as_raw_mut_BaseSFM(), images.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -833,7 +833,7 @@ pub trait BaseSFM: crate::sfm::BaseSFMConst {
 		output_array_arg!(ts);
 		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_sfm_BaseSFM_run_const_vector_String_R_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_BaseSFM(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_sfm_BaseSFM_run_const_vectorLStringGR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_BaseSFM(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -963,7 +963,7 @@ pub trait SFMLibmvEuclideanReconstruction: crate::sfm::BaseSFM + crate::sfm::SFM
 	#[inline]
 	fn run_2(&mut self, images: &core::Vector<String>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_const_vector_String_R(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), images.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_const_vectorLStringGR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), images.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -988,7 +988,7 @@ pub trait SFMLibmvEuclideanReconstruction: crate::sfm::BaseSFM + crate::sfm::SFM
 		output_array_arg!(ts);
 		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_const_vector_String_R_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_const_vectorLStringGR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

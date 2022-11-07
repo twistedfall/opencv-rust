@@ -99,7 +99,7 @@ pub fn colormap(quantized: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 pub fn draw_features(img: &mut dyn core::ToInputOutputArray, templates: &core::Vector<crate::rgbd::Linemod_Template>, tl: core::Point2i, size: i32) -> Result<()> {
 	input_output_array_arg!(img);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_linemod_drawFeatures_const__InputOutputArrayR_const_vector_Template_R_const_Point2iR_int(img.as_raw__InputOutputArray(), templates.as_raw_VectorOfLinemod_Template(), &tl, size, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_linemod_drawFeatures_const__InputOutputArrayR_const_vectorLTemplateGR_const_Point2iR_int(img.as_raw__InputOutputArray(), templates.as_raw_VectorOfLinemod_Template(), &tl, size, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -500,7 +500,7 @@ impl dyn ColoredKinfu_ColoredKinFu + '_ {
 	#[inline]
 	pub fn create(_params: &core::Ptr<crate::rgbd::ColoredKinfu_Params>) -> Result<core::Ptr<dyn crate::rgbd::ColoredKinfu_ColoredKinFu>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_colored_kinfu_ColoredKinFu_create_const_Ptr_Params_R(_params.as_raw_PtrOfColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_colored_kinfu_ColoredKinFu_create_const_PtrLParamsGR(_params.as_raw_PtrOfColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::rgbd::ColoredKinfu_ColoredKinFu>::opencv_from_extern(ret) };
@@ -860,7 +860,7 @@ pub trait ColoredKinfu_ParamsTrait: crate::rgbd::ColoredKinfu_ParamsTraitConst {
 	/// number of ICP iterations for each pyramid level
 	#[inline]
 	fn set_icp_iterations(&mut self, mut val: core::Vector<i32>) {
-		let ret = unsafe { sys::cv_colored_kinfu_Params_setPropIcpIterations_vector_int_(self.as_raw_mut_ColoredKinfu_Params(), val.as_raw_mut_VectorOfi32()) };
+		let ret = unsafe { sys::cv_colored_kinfu_Params_setPropIcpIterations_vectorLintG(self.as_raw_mut_ColoredKinfu_Params(), val.as_raw_mut_VectorOfi32()) };
 		ret
 	}
 	
@@ -1189,7 +1189,7 @@ impl dyn Dynafu_DynaFu + '_ {
 	#[inline]
 	pub fn create(_params: &core::Ptr<crate::rgbd::Kinfu_Params>) -> Result<core::Ptr<dyn crate::rgbd::Dynafu_DynaFu>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_dynafu_DynaFu_create_const_Ptr_Params_R(_params.as_raw_PtrOfKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_dynafu_DynaFu_create_const_PtrLParamsGR(_params.as_raw_PtrOfKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::rgbd::Dynafu_DynaFu>::opencv_from_extern(ret) };
@@ -1507,7 +1507,7 @@ impl dyn Kinfu_KinFu + '_ {
 	#[inline]
 	pub fn create(_params: &core::Ptr<crate::rgbd::Kinfu_Params>) -> Result<core::Ptr<dyn crate::rgbd::Kinfu_KinFu>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_kinfu_KinFu_create_const_Ptr_Params_R(_params.as_raw_PtrOfKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_kinfu_KinFu_create_const_PtrLParamsGR(_params.as_raw_PtrOfKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::rgbd::Kinfu_KinFu>::opencv_from_extern(ret) };
@@ -1853,7 +1853,7 @@ pub trait Kinfu_ParamsTrait: crate::rgbd::Kinfu_ParamsTraitConst {
 	/// number of ICP iterations for each pyramid level
 	#[inline]
 	fn set_icp_iterations(&mut self, mut val: core::Vector<i32>) {
-		let ret = unsafe { sys::cv_kinfu_Params_setPropIcpIterations_vector_int_(self.as_raw_mut_Kinfu_Params(), val.as_raw_mut_VectorOfi32()) };
+		let ret = unsafe { sys::cv_kinfu_Params_setPropIcpIterations_vectorLintG(self.as_raw_mut_Kinfu_Params(), val.as_raw_mut_VectorOfi32()) };
 		ret
 	}
 	
@@ -2639,7 +2639,7 @@ impl dyn LargeKinfu + '_ {
 	#[inline]
 	pub fn create(_params: &core::Ptr<crate::rgbd::Params>) -> Result<core::Ptr<dyn crate::rgbd::LargeKinfu>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_large_kinfu_LargeKinfu_create_const_Ptr_Params_R(_params.as_raw_PtrOfParams(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_large_kinfu_LargeKinfu_create_const_PtrLParamsGR(_params.as_raw_PtrOfParams(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<dyn crate::rgbd::LargeKinfu>::opencv_from_extern(ret) };
@@ -2868,7 +2868,7 @@ pub trait ParamsTrait: crate::rgbd::ParamsTraitConst {
 	/// number of ICP iterations for each pyramid level
 	#[inline]
 	fn set_icp_iterations(&mut self, mut val: core::Vector<i32>) {
-		let ret = unsafe { sys::cv_large_kinfu_Params_setPropIcpIterations_vector_int_(self.as_raw_mut_Params(), val.as_raw_mut_VectorOfi32()) };
+		let ret = unsafe { sys::cv_large_kinfu_Params_setPropIcpIterations_vectorLintG(self.as_raw_mut_Params(), val.as_raw_mut_VectorOfi32()) };
 		ret
 	}
 	
@@ -3287,7 +3287,7 @@ pub trait Linemod_DetectorTraitConst {
 	fn match_(&self, sources: &core::Vector<core::Mat>, threshold: f32, matches: &mut core::Vector<crate::rgbd::Linemod_Match>, class_ids: &core::Vector<String>, quantized_images: &mut dyn core::ToOutputArray, masks: &core::Vector<core::Mat>) -> Result<()> {
 		output_array_arg!(quantized_images);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_linemod_Detector_match_const_const_vector_Mat_R_float_vector_Match_R_const_vector_String_R_const__OutputArrayR_const_vector_Mat_R(self.as_raw_Linemod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLinemod_Match(), class_ids.as_raw_VectorOfString(), quantized_images.as_raw__OutputArray(), masks.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_linemod_Detector_match_const_const_vectorLMatGR_float_vectorLMatchGR_const_vectorLStringGR_const__OutputArrayR_const_vectorLMatGR(self.as_raw_Linemod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLinemod_Match(), class_ids.as_raw_VectorOfString(), quantized_images.as_raw__OutputArray(), masks.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3431,7 +3431,7 @@ pub trait Linemod_DetectorTrait: crate::rgbd::Linemod_DetectorTraitConst {
 	fn add_template(&mut self, sources: &core::Vector<core::Mat>, class_id: &str, object_mask: &core::Mat, bounding_box: &mut core::Rect) -> Result<i32> {
 		extern_container_arg!(class_id);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_linemod_Detector_addTemplate_const_vector_Mat_R_const_StringR_const_MatR_RectX(self.as_raw_mut_Linemod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), bounding_box, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_linemod_Detector_addTemplate_const_vectorLMatGR_const_StringR_const_MatR_RectX(self.as_raw_mut_Linemod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), bounding_box, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3442,7 +3442,7 @@ pub trait Linemod_DetectorTrait: crate::rgbd::Linemod_DetectorTraitConst {
 	fn add_synthetic_template(&mut self, templates: &core::Vector<crate::rgbd::Linemod_Template>, class_id: &str) -> Result<i32> {
 		extern_container_arg!(class_id);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_linemod_Detector_addSyntheticTemplate_const_vector_Template_R_const_StringR(self.as_raw_mut_Linemod_Detector(), templates.as_raw_VectorOfLinemod_Template(), class_id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_linemod_Detector_addSyntheticTemplate_const_vectorLTemplateGR_const_StringR(self.as_raw_mut_Linemod_Detector(), templates.as_raw_VectorOfLinemod_Template(), class_id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3476,7 +3476,7 @@ pub trait Linemod_DetectorTrait: crate::rgbd::Linemod_DetectorTraitConst {
 	fn read_classes(&mut self, class_ids: &core::Vector<String>, format: &str) -> Result<()> {
 		extern_container_arg!(format);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_linemod_Detector_readClasses_const_vector_String_R_const_StringR(self.as_raw_mut_Linemod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_linemod_Detector_readClasses_const_vectorLStringGR_const_StringR(self.as_raw_mut_Linemod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3529,7 +3529,7 @@ impl Linemod_Detector {
 	#[inline]
 	pub fn new(modalities: &core::Vector<core::Ptr<dyn crate::rgbd::Linemod_Modality>>, t_pyramid: &core::Vector<i32>) -> Result<crate::rgbd::Linemod_Detector> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_linemod_Detector_Detector_const_vector_Ptr_Modality__R_const_vector_int_R(modalities.as_raw_VectorOfPtrOfLinemod_Modality(), t_pyramid.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_linemod_Detector_Detector_const_vectorLPtrLModalityGGR_const_vectorLintGR(modalities.as_raw_VectorOfPtrOfLinemod_Modality(), t_pyramid.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::rgbd::Linemod_Detector::opencv_from_extern(ret) };
@@ -3624,6 +3624,16 @@ pub trait Linemod_MatchTraitConst {
 	fn template_id(&self) -> i32 {
 		let ret = unsafe { sys::cv_linemod_Match_getPropTemplate_id_const(self.as_raw_Linemod_Match()) };
 		ret
+	}
+	
+	/// Sort matches with high similarity to the front
+	#[inline]
+	fn less_than(&self, rhs: &crate::rgbd::Linemod_Match) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_linemod_Match_operatorL_const_const_MatchR(self.as_raw_Linemod_Match(), rhs.as_raw_Linemod_Match(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
@@ -3919,7 +3929,7 @@ pub trait Linemod_TemplateTrait: crate::rgbd::Linemod_TemplateTraitConst {
 	
 	#[inline]
 	fn set_features(&mut self, mut val: core::Vector<crate::rgbd::Linemod_Feature>) {
-		let ret = unsafe { sys::cv_linemod_Template_setPropFeatures_vector_Feature_(self.as_raw_mut_Linemod_Template(), val.as_raw_mut_VectorOfLinemod_Feature()) };
+		let ret = unsafe { sys::cv_linemod_Template_setPropFeatures_vectorLFeatureG(self.as_raw_mut_Linemod_Template(), val.as_raw_mut_VectorOfLinemod_Feature()) };
 		ret
 	}
 	
@@ -4131,7 +4141,7 @@ pub trait FastICPOdometryTraitConst: crate::rgbd::OdometryConst {
 	#[inline]
 	fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_FastICPOdometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(self.as_raw_FastICPOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_FastICPOdometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_FastICPOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4372,7 +4382,7 @@ impl FastICPOdometry {
 	#[inline]
 	pub fn new(camera_matrix: &core::Mat, max_dist_diff: f32, angle_threshold: f32, sigma_depth: f32, sigma_spatial: f32, kernel_size: i32, iter_counts: &core::Vector<i32>) -> Result<crate::rgbd::FastICPOdometry> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_FastICPOdometry_FastICPOdometry_const_MatR_float_float_float_float_int_const_vector_int_R(camera_matrix.as_raw_Mat(), max_dist_diff, angle_threshold, sigma_depth, sigma_spatial, kernel_size, iter_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_FastICPOdometry_FastICPOdometry_const_MatR_float_float_float_float_int_const_vectorLintGR(camera_matrix.as_raw_Mat(), max_dist_diff, angle_threshold, sigma_depth, sigma_spatial, kernel_size, iter_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::rgbd::FastICPOdometry::opencv_from_extern(ret) };
@@ -4389,7 +4399,7 @@ impl FastICPOdometry {
 	#[inline]
 	pub fn create(camera_matrix: &core::Mat, max_dist_diff: f32, angle_threshold: f32, sigma_depth: f32, sigma_spatial: f32, kernel_size: i32, iter_counts: &core::Vector<i32>) -> Result<core::Ptr<crate::rgbd::FastICPOdometry>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_FastICPOdometry_create_const_MatR_float_float_float_float_int_const_vector_int_R(camera_matrix.as_raw_Mat(), max_dist_diff, angle_threshold, sigma_depth, sigma_spatial, kernel_size, iter_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_FastICPOdometry_create_const_MatR_float_float_float_float_int_const_vectorLintGR(camera_matrix.as_raw_Mat(), max_dist_diff, angle_threshold, sigma_depth, sigma_spatial, kernel_size, iter_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::rgbd::FastICPOdometry>::opencv_from_extern(ret) };
@@ -4408,7 +4418,7 @@ pub trait ICPOdometryTraitConst: crate::rgbd::OdometryConst {
 	#[inline]
 	fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_ICPOdometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(self.as_raw_ICPOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_ICPOdometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_ICPOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4668,7 +4678,7 @@ impl ICPOdometry {
 	#[inline]
 	pub fn new(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, transform_type: i32) -> Result<crate::rgbd::ICPOdometry> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_ICPOdometry_ICPOdometry_const_MatR_float_float_float_float_const_vector_int_R_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), transform_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_ICPOdometry_ICPOdometry_const_MatR_float_float_float_float_const_vectorLintGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), transform_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::rgbd::ICPOdometry::opencv_from_extern(ret) };
@@ -4686,7 +4696,7 @@ impl ICPOdometry {
 	#[inline]
 	pub fn create(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, transform_type: i32) -> Result<core::Ptr<crate::rgbd::ICPOdometry>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_ICPOdometry_create_const_MatR_float_float_float_float_const_vector_int_R_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), transform_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_ICPOdometry_create_const_MatR_float_float_float_float_const_vectorLintGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), transform_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::rgbd::ICPOdometry>::opencv_from_extern(ret) };
@@ -4741,7 +4751,7 @@ pub trait OdometryConst: core::AlgorithmTraitConst {
 	fn compute2(&self, src_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, dst_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, rt: &mut dyn core::ToOutputArray, init_rt: &core::Mat) -> Result<bool> {
 		output_array_arg!(rt);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_Odometry_compute_const_Ptr_OdometryFrame_R_Ptr_OdometryFrame_R_const__OutputArrayR_const_MatR(self.as_raw_Odometry(), src_frame.as_raw_mut_PtrOfOdometryFrame(), dst_frame.as_raw_mut_PtrOfOdometryFrame(), rt.as_raw__OutputArray(), init_rt.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_Odometry_compute_const_PtrLOdometryFrameGR_PtrLOdometryFrameGR_const__OutputArrayR_const_MatR(self.as_raw_Odometry(), src_frame.as_raw_mut_PtrOfOdometryFrame(), dst_frame.as_raw_mut_PtrOfOdometryFrame(), rt.as_raw__OutputArray(), init_rt.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4756,7 +4766,7 @@ pub trait OdometryConst: core::AlgorithmTraitConst {
 	#[inline]
 	fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_Odometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(self.as_raw_Odometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_Odometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_Odometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4957,55 +4967,55 @@ pub trait OdometryFrameTrait: crate::rgbd::OdometryFrameTraitConst + crate::rgbd
 
 	#[inline]
 	fn set_pyramid_image(&mut self, mut val: core::Vector<core::Mat>) {
-		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidImage_vector_Mat_(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidImage_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_pyramid_depth(&mut self, mut val: core::Vector<core::Mat>) {
-		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidDepth_vector_Mat_(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidDepth_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_pyramid_mask(&mut self, mut val: core::Vector<core::Mat>) {
-		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidMask_vector_Mat_(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidMask_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_pyramid_cloud(&mut self, mut val: core::Vector<core::Mat>) {
-		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidCloud_vector_Mat_(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidCloud_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_pyramid_d_i_dx(&mut self, mut val: core::Vector<core::Mat>) {
-		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramid_dI_dx_vector_Mat_(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramid_dI_dx_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_pyramid_d_i_dy(&mut self, mut val: core::Vector<core::Mat>) {
-		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramid_dI_dy_vector_Mat_(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramid_dI_dy_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_pyramid_textured_mask(&mut self, mut val: core::Vector<core::Mat>) {
-		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidTexturedMask_vector_Mat_(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidTexturedMask_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_pyramid_normals(&mut self, mut val: core::Vector<core::Mat>) {
-		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidNormals_vector_Mat_(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidNormals_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 		ret
 	}
 	
 	#[inline]
 	fn set_pyramid_normals_mask(&mut self, mut val: core::Vector<core::Mat>) {
-		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidNormalsMask_vector_Mat_(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+		let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidNormalsMask_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 		ret
 	}
 	
@@ -5268,7 +5278,7 @@ pub trait RgbdICPOdometryTraitConst: crate::rgbd::OdometryConst {
 	#[inline]
 	fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_RgbdICPOdometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(self.as_raw_RgbdICPOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_RgbdICPOdometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_RgbdICPOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5549,7 +5559,7 @@ impl RgbdICPOdometry {
 	#[inline]
 	pub fn new(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, transform_type: i32) -> Result<crate::rgbd::RgbdICPOdometry> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_RgbdICPOdometry_RgbdICPOdometry_const_MatR_float_float_float_float_const_vector_int_R_const_vector_float_R_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), transform_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_RgbdICPOdometry_RgbdICPOdometry_const_MatR_float_float_float_float_const_vectorLintGR_const_vectorLfloatGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), transform_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::rgbd::RgbdICPOdometry::opencv_from_extern(ret) };
@@ -5568,7 +5578,7 @@ impl RgbdICPOdometry {
 	#[inline]
 	pub fn create(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, transform_type: i32) -> Result<core::Ptr<crate::rgbd::RgbdICPOdometry>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_RgbdICPOdometry_create_const_MatR_float_float_float_float_const_vector_int_R_const_vector_float_R_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), transform_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_RgbdICPOdometry_create_const_MatR_float_float_float_float_const_vectorLintGR_const_vectorLfloatGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), transform_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::rgbd::RgbdICPOdometry>::opencv_from_extern(ret) };
@@ -5818,7 +5828,7 @@ pub trait RgbdOdometryTraitConst: crate::rgbd::OdometryConst {
 	#[inline]
 	fn prepare_frame_cache(&self, frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, cache_type: i32) -> Result<core::Size> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_RgbdOdometry_prepareFrameCache_const_Ptr_OdometryFrame_R_int(self.as_raw_RgbdOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_RgbdOdometry_prepareFrameCache_const_PtrLOdometryFrameGR_int(self.as_raw_RgbdOdometry(), frame.as_raw_mut_PtrOfOdometryFrame(), cache_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6090,7 +6100,7 @@ impl RgbdOdometry {
 	#[inline]
 	pub fn new(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, max_points_part: f32, transform_type: i32) -> Result<crate::rgbd::RgbdOdometry> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatR_float_float_float_const_vector_int_R_const_vector_float_R_float_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), max_points_part, transform_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatR_float_float_float_const_vectorLintGR_const_vectorLfloatGR_float_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), max_points_part, transform_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::rgbd::RgbdOdometry::opencv_from_extern(ret) };
@@ -6109,7 +6119,7 @@ impl RgbdOdometry {
 	#[inline]
 	pub fn create(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, max_points_part: f32, transform_type: i32) -> Result<core::Ptr<crate::rgbd::RgbdOdometry>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rgbd_RgbdOdometry_create_const_MatR_float_float_float_const_vector_int_R_const_vector_float_R_float_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), max_points_part, transform_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rgbd_RgbdOdometry_create_const_MatR_float_float_float_const_vectorLintGR_const_vectorLfloatGR_float_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), max_points_part, transform_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::rgbd::RgbdOdometry>::opencv_from_extern(ret) };
