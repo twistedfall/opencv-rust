@@ -363,7 +363,7 @@ where
 	}
 }
 
-impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T>
+impl<T: VectorElement> OpenCVTypeExternContainer<'_> for Vector<T>
 where
 	Self: VectorExtern<T>,
 {

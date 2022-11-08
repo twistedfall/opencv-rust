@@ -284,7 +284,7 @@ impl OpenCVTypeExternContainer<'_> for CString {
 
 	#[inline]
 	fn opencv_into_extern(self) -> Self::ExternSendMut {
-		self.into_raw()
+		unimplemented!("This is intentionally left unimplemented as there seems to be no need for it and it's difficult to implement it without leakage")
 	}
 }
 
@@ -303,7 +303,7 @@ impl OpenCVTypeArg<'_> for Vec<u8> {
 
 	#[inline]
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-		self.to_vec()
+		self
 	}
 }
 

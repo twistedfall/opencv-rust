@@ -1,6 +1,6 @@
 
 
-vector_extern! { {{inner_rust_full}}, {{rust_extern_const}}, {{rust_extern_mut}},
+vector_extern! { {{inner_rust_full}},
 	cv_{{rust_localalias}}_new, cv_{{rust_localalias}}_delete,
 	cv_{{rust_localalias}}_len, cv_{{rust_localalias}}_is_empty,
 	cv_{{rust_localalias}}_capacity, cv_{{rust_localalias}}_shrink_to_fit,
