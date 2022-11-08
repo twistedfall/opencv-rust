@@ -8,6 +8,8 @@ Experimental Rust bindings for OpenCV 3 and 4.
 
 The API is usable, but unstable and not very battle-tested; use at your own risk.
 
+[Changelog](https://github.com/twistedfall/opencv-rust/blob/master/CHANGES.md)
+
 ## Quickstart
 
 Make sure the supported OpenCV version (3.2, 3.4 or 4.x) and Clang (part of LLVM, needed for automatic binding

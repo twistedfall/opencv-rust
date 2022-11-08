@@ -229,7 +229,7 @@ impl OpenCVTypeExternContainer for CString {
 
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-		self.as_ptr() as _ // fixme: use as_mut_ptr() when it's stabilized
+		self.as_ptr() as _ // fixme: use as_mut_ptr() when it's stabilized or cast_mut() when MSRV is 1.65
 	}
 
 	#[inline]

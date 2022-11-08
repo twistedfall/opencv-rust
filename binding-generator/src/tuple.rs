@@ -36,10 +36,6 @@ impl<'tu, 'ge> Tuple<'tu, 'ge> {
 		TypeRef::new(self.type_ref, self.gen_env)
 	}
 
-	pub fn element_count(&self) -> usize {
-		self.type_ref.get_template_argument_types().map_or(0, |args| args.len())
-	}
-
 	pub fn elements(&self) -> Vec<TypeRef<'tu, 'ge>> {
 		self
 			.type_ref()
