@@ -61,7 +61,7 @@ where
 	}
 }
 
-impl<T> OpenCVTypeExternContainer for Tuple<T>
+impl<T> OpenCVTypeExternContainer<'_> for Tuple<T>
 where
 	Tuple<T>: TupleExtern<T>,
 {
@@ -102,27 +102,25 @@ pub trait TupleExtern<T> {
 macro_rules! tuple_extern {
 	(
 		$type: ty,
-		$extern_const: ty,
-		$extern_mut: ty,
 		$extern_new: ident, $extern_delete: ident,
-		$($arg: ident: $extern_element_type: ty = $num: tt, $extern_element_get: ident: $extern_element_return: ty => $element_get: ident: $element_type: ty),+
+		$($num: tt = $arg: ident: $element_type: ty, $element_get: ident via $extern_element_get: ident),+
 	) => {
 		extern "C" {
-			fn $extern_new($( $arg: $extern_element_type ),+) -> $extern_mut;
-			fn $extern_delete(instance: $extern_mut);
+			fn $extern_new<'a>($( $arg: extern_arg_send!($element_type: 'a) ),+) -> extern_receive!($crate::core::Tuple<$type>: 'a);
+			fn $extern_delete(instance: extern_send!(mut $crate::core::Tuple<$type>));
 			$(
-				fn $extern_element_get(instance: $extern_const, ocvrs_return: *mut <$extern_element_return as $crate::traits::OpenCVType<'_>>::ExternReceive);
+				fn $extern_element_get(instance: extern_send!($crate::core::Tuple<$type>), ocvrs_return: *mut extern_receive!($element_type));
 			)+
 		}
 
-		impl $crate::manual::core::TupleExtern<$type> for $crate::manual::core::Tuple<$type> {
+		impl $crate::core::TupleExtern<$type> for $crate::core::Tuple<$type> {
 			#[inline]
 			unsafe fn extern_delete(&mut self) {
 				$extern_delete(self.as_raw_mut())
 			}
 		}
 
-		impl $crate::manual::core::Tuple<$type> {
+		impl $crate::core::Tuple<$type> {
 			$(
 			#[inline]
 			pub fn $element_get(&self) -> $element_type {

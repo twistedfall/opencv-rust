@@ -1,7 +1,7 @@
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{Constness, ConstnessOverride, ExternDir};
+use crate::type_ref::Constness;
 use crate::writer::rust_native::func::disambiguate_single_name;
 use crate::writer::rust_native::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use crate::{CompiledInterpolation, CppNameStyle, Element, FunctionTypeHint, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
@@ -16,8 +16,6 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 	fn gen_rust(&self, _opencv_version: &str) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/rust.tpl.rs").compile_interpolation());
 
-		let tuple_type = self.type_ref();
-
 		let rust_localalias = self.rust_localalias();
 
 		let mut rets = disambiguate_single_name("arg");
@@ -29,13 +27,11 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 			.map(|(i, typ)| {
 				let ret_name = rets.next().expect("Endless iterator");
 				format!(
-					"{ret_name}: {extern_type_mut} = {num}, cv_{alias}_get_{num}: {extern_return} => get_{num}: {typ}",
-					ret_name = ret_name,
-					extern_type_mut = typ.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
-					alias = rust_localalias,
+					"{num} = {ret_name}: {typ}, get_{num} via cv_{alias}_get_{num}",
 					num = i,
+					ret_name = ret_name,
 					typ = typ.rust_name(NameStyle::ref_()),
-					extern_return = typ.rust_extern(ExternDir::FromCpp)
+					alias = rust_localalias,
 				)
 			})
 			.join(",\n");
@@ -43,8 +39,6 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		RUST_TPL.interpolate(&hashmap! {
 			"rust_localalias" => rust_localalias,
 			"rust_full" => self.rust_name(NameStyle::ref_()),
-			"rust_extern_const" => tuple_type.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
-			"rust_extern_mut" => tuple_type.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
 			"inner_rust_full" => self.rust_inner().into(),
 			"getters" => getters.into(),
 		})
