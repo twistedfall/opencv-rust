@@ -1,3 +1,6 @@
+* 0.74.0
+  * Add support aruco_detector module present in the future opencv_contrib.
+
 * 0.73.0
   * Add basic support for the Graph-API (gapi) module.
   * Generate bindings for `std::tuple` and `std::pair`.
