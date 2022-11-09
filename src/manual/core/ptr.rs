@@ -91,7 +91,7 @@ where
 	}
 }
 
-impl<T: ?Sized> OpenCVTypeExternContainer for Ptr<T>
+impl<T: ?Sized> OpenCVTypeExternContainer<'_> for Ptr<T>
 where
 	Self: PtrExtern,
 {
