@@ -1,7 +1,7 @@
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{Constness, ConstnessOverride, ExternDir, NameStyle};
+use crate::type_ref::{Constness, NameStyle};
 use crate::{AbstractRefWrapper, CompiledInterpolation, StrExt};
 
 use super::RustNativeGeneratedElement;
@@ -26,8 +26,6 @@ impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 			"rust_full" => cls.rust_trait_name(NameStyle::ref_(), Constness::Mut),
 			"rust_const_full" => cls.rust_trait_name(NameStyle::ref_(), Constness::Const),
 			"rust_local" => type_ref.rust_name(NameStyle::decl()),
-			"rust_extern_mut" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
-			"rust_extern_const" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
 		})
 	}
 }
