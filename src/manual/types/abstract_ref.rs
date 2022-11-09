@@ -48,7 +48,7 @@ impl<'r, T: ?Sized> OpenCVTypeArg<'r> for AbstractRefMut<'r, T> {
 	}
 }
 
-impl<T: ?Sized> OpenCVTypeExternContainer for AbstractRefMut<'_, T> {
+impl<T: ?Sized> OpenCVTypeExternContainer<'_> for AbstractRefMut<'_, T> {
 	type ExternSend = *const c_void;
 	type ExternSendMut = *mut c_void;
 

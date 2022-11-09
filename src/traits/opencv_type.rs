@@ -30,7 +30,7 @@ pub trait OpenCVTypeArg<'a>: Sized {
 	/// Container to help marshall type over FFI boundary, e.g. CString for String or &str, for most other
 	/// types it's Self
 	#[doc(hidden)]
-	type ExternContainer: OpenCVTypeExternContainer;
+	type ExternContainer: OpenCVTypeExternContainer<'a>;
 
 	/// Convert Self into external container with possible error result, it shouldn't panic
 	#[doc(hidden)]
@@ -45,7 +45,7 @@ pub trait OpenCVTypeArg<'a>: Sized {
 
 /// Common trait for the type that is used to help marshall OpenCV related type over the FFI boundary
 #[doc(hidden)]
-pub trait OpenCVTypeExternContainer {
+pub trait OpenCVTypeExternContainer<'a> {
 	/// Type when constant Self is sent to C++ function, usually it's Self for simple types or *const c_void
 	/// for complex ones
 	#[doc(hidden)]
@@ -61,6 +61,56 @@ pub trait OpenCVTypeExternContainer {
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut;
 	#[doc(hidden)]
 	fn opencv_into_extern(self) -> Self::ExternSendMut;
+}
+
+/// Extern type to receive the OpenCVType over FFI boundary, used to improve readability
+#[macro_export]
+macro_rules! extern_receive {
+	($typ: ty) => {
+		extern_receive!($typ: '_)
+	};
+	($typ: ty: $lt: lifetime) => {
+		<$typ as $crate::traits::OpenCVType<$lt>>::ExternReceive
+	};
+}
+
+/// Extern type to send the OpenCVTypeExternContainer over FFI boundary, used to improve readability
+#[macro_export]
+macro_rules! extern_send {
+	(mut $typ: ty: $lt: lifetime) => {
+		<$typ as OpenCVTypeExternContainer<$lt>>::ExternSendMut
+	};
+	($typ: ty: $lt: lifetime) => {
+		<$typ as OpenCVTypeExternContainer<$lt>>::ExternSend
+	};
+	(mut $typ: ty) => {
+		extern_send!(mut $typ: '_)
+	};
+	($typ: ty) => {
+		extern_send!($typ: '_)
+	};
+}
+
+/// Extern type to send the owned OpenCVType over FFI boundary, used to improve readability
+#[macro_export]
+macro_rules! extern_container_send {
+	(mut $typ: ty: $lt: lifetime) => {
+		extern_send!(mut <$typ as OpenCVTypeArg<$lt>>::ExternContainer: $lt)
+	};
+	($typ: ty: $lt: lifetime) => {
+		extern_send!(<$typ as OpenCVTypeArg<$lt>>::ExternContainer: $lt)
+	};
+}
+
+/// Extern type to send the ::Arg of a OpenCVType over FFI boundary, used to improve readability
+#[macro_export]
+macro_rules! extern_arg_send {
+	(mut $typ: ty: $lt: lifetime) => {
+		extern_container_send!(mut <$typ as OpenCVType<$lt>>::Arg: $lt)
+	};
+	($typ: ty: $lt: lifetime) => {
+		extern_container_send!(<$typ as OpenCVType<$lt>>::Arg: $lt)
+	};
 }
 
 #[macro_export]
@@ -80,7 +130,7 @@ macro_rules! opencv_type_copy {
 				#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
 			}
 
-			impl $crate::traits::OpenCVTypeExternContainer for $type {
+			impl $crate::traits::OpenCVTypeExternContainer<'_> for $type {
 				type ExternSend = Self;
 				type ExternSendMut = Self;
 
@@ -121,7 +171,7 @@ macro_rules! opencv_type_simple {
 			}
 		}
 
-		impl $crate::traits::OpenCVTypeExternContainer for $type {
+		impl $crate::traits::OpenCVTypeExternContainer<'_> for $type {
 			type ExternSend = *const Self;
 			type ExternSendMut = *mut Self;
 
@@ -157,7 +207,7 @@ macro_rules! opencv_type_simple_generic {
 			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
 		}
 
-		impl<T: $trait$( + $more)*> $crate::traits::OpenCVTypeExternContainer for $type<T> {
+		impl<T: $trait$( + $more)*> $crate::traits::OpenCVTypeExternContainer<'_> for $type<T> {
 			type ExternSend = *const Self;
 			type ExternSendMut = *mut Self;
 
@@ -218,7 +268,7 @@ impl OpenCVTypeArg<'_> for &str {
 	}
 }
 
-impl OpenCVTypeExternContainer for CString {
+impl OpenCVTypeExternContainer<'_> for CString {
 	type ExternSend = *const c_char;
 	type ExternSendMut = *mut c_char;
 
@@ -257,7 +307,7 @@ impl OpenCVTypeArg<'_> for Vec<u8> {
 	}
 }
 
-impl OpenCVTypeExternContainer for Vec<u8> {
+impl OpenCVTypeExternContainer<'_> for Vec<u8> {
 	type ExternSend = *const u8;
 	type ExternSendMut = *mut u8;
 

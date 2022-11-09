@@ -168,7 +168,7 @@ impl<T> OpenCVTypeArg<'_> for Mat_<T> {
 	}
 }
 
-impl<T> OpenCVTypeExternContainer for Mat_<T> {
+impl<T> OpenCVTypeExternContainer<'_> for Mat_<T> {
 	type ExternSend = *const c_void;
 	type ExternSendMut = *mut c_void;
 

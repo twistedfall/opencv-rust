@@ -81,7 +81,7 @@ impl<T: _InputOutputArrayTrait> ToInputOutputArray for T {
 #[macro_export]
 macro_rules! input_output_array {
 	($type: ty, $const_cons: ident) => {
-		impl $crate::manual::core::ToInputArray for $type {
+		impl $crate::core::ToInputArray for $type {
 			#[inline]
 			fn input_array(&self) -> $crate::Result<$crate::core::_InputArray> {
 				$crate::core::_InputArray::$const_cons(self)
@@ -94,14 +94,14 @@ macro_rules! input_output_array {
 	($type: ty, $const_cons: ident, $mut_cons: ident) => {
 		$crate::input_output_array! { $type, $const_cons }
 
-		impl $crate::manual::core::ToOutputArray for $type {
+		impl $crate::core::ToOutputArray for $type {
 			#[inline]
 			fn output_array(&mut self) -> $crate::Result<$crate::core::_OutputArray> {
 				$crate::core::_OutputArray::$mut_cons(self)
 			}
 		}
 
-		impl $crate::manual::core::ToInputOutputArray for $type {
+		impl $crate::core::ToInputOutputArray for $type {
 			#[inline]
 			fn input_output_array(&mut self) -> $crate::Result<$crate::core::_InputOutputArray> {
 				$crate::core::_InputOutputArray::$mut_cons(self)
@@ -115,7 +115,7 @@ macro_rules! input_output_array {
 #[macro_export]
 macro_rules! input_array_ref_forward {
 	($type: ty) => {
-		impl $crate::manual::core::ToInputArray for &$type {
+		impl $crate::core::ToInputArray for &$type {
 			#[inline]
 			fn input_array(&self) -> $crate::Result<$crate::core::_InputArray> {
 				(*self).input_array()
@@ -127,14 +127,14 @@ macro_rules! input_array_ref_forward {
 #[macro_export]
 macro_rules! output_array_ref_forward {
 	($type: ty) => {
-		impl $crate::manual::core::ToOutputArray for &mut $type {
+		impl $crate::core::ToOutputArray for &mut $type {
 			#[inline]
 			fn output_array(&mut self) -> $crate::Result<$crate::core::_OutputArray> {
 				(*self).output_array()
 			}
 		}
 
-		impl $crate::manual::core::ToInputOutputArray for &mut $type {
+		impl $crate::core::ToInputOutputArray for &mut $type {
 			#[inline]
 			fn input_output_array(&mut self) -> $crate::Result<$crate::core::_InputOutputArray> {
 				(*self).input_output_array()

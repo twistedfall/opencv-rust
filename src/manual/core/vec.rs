@@ -1,17 +1,11 @@
-use std::{
-	array,
-	ffi::c_void,
-	ops::{Deref, DerefMut, MulAssign},
-};
+use std::array;
+use std::ops::{Deref, DerefMut, MulAssign};
 
 use num_traits::Float;
 
-use crate::{
-	core::{ToInputArray, ToInputOutputArray, ToOutputArray, _InputArray, _InputOutputArray, _OutputArray},
-	sys,
-	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
-	Result,
-};
+use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray, _InputArray, _InputOutputArray, _OutputArray};
+use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::{extern_receive, extern_send, sys, Result};
 
 mod operations;
 
@@ -129,7 +123,7 @@ impl<T, const N: usize> OpenCVTypeArg<'_> for VecN<T, N> {
 	}
 }
 
-impl<T, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
+impl<T, const N: usize> OpenCVTypeExternContainer<'_> for VecN<T, N> {
 	type ExternSend = *const Self;
 	type ExternSendMut = *mut Self;
 
@@ -218,19 +212,24 @@ where
 #[doc(hidden)]
 pub trait VecExtern<T, const N: usize> {
 	#[doc(hidden)]
-	unsafe fn extern_input_array(&self) -> sys::Result<*mut c_void>;
+	unsafe fn extern_input_array(&self) -> sys::Result<extern_receive!(_InputArray)>;
 	#[doc(hidden)]
-	unsafe fn extern_output_array(&mut self) -> sys::Result<*mut c_void>;
+	unsafe fn extern_output_array(&mut self) -> sys::Result<extern_receive!(_OutputArray)>;
 	#[doc(hidden)]
-	unsafe fn extern_input_output_array(&mut self) -> sys::Result<*mut c_void>;
+	unsafe fn extern_input_output_array(&mut self) -> sys::Result<extern_receive!(_InputOutputArray)>;
 }
 
 macro_rules! vecn_extern {
 	($type: ty, $len: expr, $extern_input_array: ident, $extern_ouput_array: ident, $extern_input_array_output: ident) => {
-		impl $crate::manual::core::VecExtern<$type, $len> for $crate::manual::core::VecN<$type, $len> {
+		extern "C" {
+			fn $extern_input_array(instance: extern_send!($crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_InputArray)>);
+			fn $extern_ouput_array(instance: extern_send!(mut $crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_OutputArray)>);
+			fn $extern_input_array_output(instance: extern_send!(mut $crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_InputOutputArray)>);
+		}
+
+		impl $crate::core::VecExtern<$type, $len> for $crate::core::VecN<$type, $len> {
 			#[inline]
-			unsafe fn extern_input_array(&self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_input_array(instance: *const $crate::manual::core::VecN<$type, $len>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+			unsafe fn extern_input_array(&self) -> $crate::sys::Result<extern_receive!($crate::core::_InputArray)> {
 				return_send!(via ocvrs_return);
 				$extern_input_array(self, ocvrs_return.as_mut_ptr());
 				return_receive!(ocvrs_return => ret);
@@ -238,8 +237,7 @@ macro_rules! vecn_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_output_array(&mut self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_ouput_array(instance: *mut $crate::manual::core::VecN<$type, $len>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+			unsafe fn extern_output_array(&mut self) -> $crate::sys::Result<extern_receive!($crate::core::_OutputArray)> {
 				return_send!(via ocvrs_return);
 				$extern_ouput_array(self, ocvrs_return.as_mut_ptr());
 				return_receive!(ocvrs_return => ret);
@@ -247,8 +245,7 @@ macro_rules! vecn_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_input_output_array(&mut self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_input_array_output(instance: *mut $crate::manual::core::VecN<$type, $len>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+			unsafe fn extern_input_output_array(&mut self) -> $crate::sys::Result<extern_receive!($crate::core::_InputOutputArray)> {
 				return_send!(via ocvrs_return);
 				$extern_input_array_output(self, ocvrs_return.as_mut_ptr());
 				return_receive!(ocvrs_return => ret);

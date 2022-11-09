@@ -39,6 +39,7 @@ pub(crate) mod mod_prelude {
 	pub use crate::{
 		boxed_cast_base, boxed_cast_descendant,
 		core::{CV_MAKETYPE, CV_MAKE_TYPE},
+		extern_arg_send, extern_container_send, extern_receive, extern_send,
 		hub_prelude::*,
 		input_output_array_ref_forward,
 		mod_prelude_sys::*,
