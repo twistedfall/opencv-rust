@@ -139,7 +139,10 @@ impl<'r> CmakeProbe<'r> {
 					link_paths.push(path);
 				}
 			} else if let Some(lib) = arg.strip_prefix("-l") {
-				link_libs.push(lib.trim_start().to_string());
+				// unresolved cmake dependency specification like Qt5::Core
+				if !lib.contains("::") {
+					link_libs.push(lib.trim_start().to_string());
+				}
 			} else if !arg.starts_with('-') {
 				let path = Path::new(arg);
 				if let Some(file) = path.file_name().and_then(super::cleanup_lib_filename) {

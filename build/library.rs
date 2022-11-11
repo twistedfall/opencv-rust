@@ -89,26 +89,25 @@ pub struct Library {
 }
 
 impl Library {
-	fn process_library_list(libs: impl IntoIterator<Item = impl Into<PathBuf>>) -> impl Iterator<Item = String> {
+	fn process_library_list(libs: impl IntoIterator<Item = impl AsRef<Path>>) -> impl Iterator<Item = String> {
 		libs.into_iter().filter_map(|x| {
-			let mut path: PathBuf = x.into();
+			let path: &Path = x.as_ref();
 			let is_framework = path
 				.extension()
 				.and_then(OsStr::to_str)
 				.map_or(false, |e| e.eq_ignore_ascii_case("framework"));
-			if let Some(filename) = path.file_name().and_then(cleanup_lib_filename) {
-				let filename = filename.to_owned();
-				path.set_file_name(filename);
-			}
-			path.file_name().and_then(|f| {
-				f.to_str().map(|f| {
+			if let Some(filename) = path.file_name() {
+				let filename = cleanup_lib_filename(filename).unwrap_or(filename);
+				filename.to_str().map(|f| {
 					if is_framework {
 						format!("framework={}", f)
 					} else {
 						f.to_owned()
 					}
 				})
-			})
+			} else {
+				None
+			}
 		})
 	}
 

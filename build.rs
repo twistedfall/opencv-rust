@@ -61,33 +61,38 @@ fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Re
 		.filter(move |p| p.is_file() && p.extension().map_or(false, |e| e.eq_ignore_ascii_case(extension.as_ref()))))
 }
 
+/// Returns Some(new_file_name) if some parts of the filename were removed, None otherwise
 fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
-	let mut strip_performed = false;
-	let mut filename_path = Path::new(filename);
-	// used to check for the file extension (with dots stripped) and for the part of the filename
-	const LIB_EXTS: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
-	if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
-		if LIB_EXTS.iter().any(|e| e.trim_matches('.').eq_ignore_ascii_case(extension)) {
-			filename_path = Path::new(stem);
-			strip_performed = true;
-		}
-	}
-
-	if let Some(mut file) = filename_path.file_name().and_then(OsStr::to_str) {
-		let orig_len = file.len();
-		file = file.strip_prefix("lib").unwrap_or(file);
-		LIB_EXTS.iter().for_each(|&inner_ext| {
-			if let Some(inner_ext_idx) = file.find(inner_ext) {
-				file = &file[..inner_ext_idx];
+	if let Some(mut new_filename) = Path::new(filename).file_name() {
+		// used to check for the file extension (with dots stripped) and for the part of the filename
+		const LIB_EXTS: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
+		let filename_path = Path::new(new_filename);
+		// strip lib extension from the filename
+		if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
+			if LIB_EXTS.iter().any(|e| e.trim_matches('.').eq_ignore_ascii_case(extension)) {
+				new_filename = stem;
 			}
-		});
-		if orig_len != file.len() {
-			strip_performed = true;
-			filename_path = Path::new(file);
 		}
-	}
-	if strip_performed {
-		Some(filename_path.as_os_str())
+		if let Some(mut file) = new_filename.to_str() {
+			let orig_len = file.len();
+			// strip "lib" prefix from the filename
+			file = file.strip_prefix("lib").unwrap_or(file);
+
+			// strip lib extension + suffix (e.g. .so.4.6.0) from the filename
+			LIB_EXTS.iter().for_each(|&inner_ext| {
+				if let Some(inner_ext_idx) = file.find(inner_ext) {
+					file = &file[..inner_ext_idx];
+				}
+			});
+			if orig_len != file.len() {
+				new_filename = OsStr::new(file);
+			}
+		}
+		if new_filename.len() != filename.len() {
+			Some(new_filename)
+		} else {
+			None
+		}
 	} else {
 		None
 	}
