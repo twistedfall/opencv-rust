@@ -881,7 +881,7 @@ pub static STATIC_MODULES: Lazy<BTreeSet<&str>> = Lazy::new(|| {
 // fixme, it can be made better
 pub static DATA_TYPES: Lazy<BTreeSet<&str>> = Lazy::new(|| {
 	btreeset! {
-		"unsigned char", "char", "unsigned short", "short", "int",
+		"unsigned char", "char", "uint8_t", "unsigned short", "short", "int",
 		"float", "double",
 		"cv::Vec2b", "cv::Vec3b", "cv::Vec4b",
 		"cv::Vec2s", "cv::Vec3s", "cv::Vec4s",

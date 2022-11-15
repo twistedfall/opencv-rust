@@ -17,6 +17,7 @@ fi
 
 all_modules="alphamat
 	aruco
+	aruco_detector
 	barcode
 	bgsegm
 	bioinspired

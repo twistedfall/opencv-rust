@@ -84,6 +84,7 @@ docs-only = []
 default = [
 	"alphamat",
 	"aruco",
+	"aruco_detector",
 	"barcode",
 	"bgsegm",
 	"bioinspired",
@@ -142,16 +143,17 @@ default = [
 	"videoio",
 	"videostab",
 	"viz",
+	"wechat_qrcode",
 	"xfeatures2d",
 	"ximgproc",
 	"xobjdetect",
 	"xphoto",
-	"wechat_qrcode",
 ]
 
 # OpenCV modules
 alphamat = []
 aruco = []
+aruco_detector = ["aruco"]
 barcode = []
 bgsegm = ["video"]
 bioinspired = []

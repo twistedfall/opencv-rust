@@ -167,8 +167,11 @@ fn string_out_argument() -> Result<()> {
 /// Setting and getting fields through Ptr
 #[test]
 fn field_access_on_ptr() -> Result<()> {
-	#![cfg(ocvrs_has_module_aruco)]
+	#![cfg(any(ocvrs_has_module_aruco, ocvrs_has_module_aruco_detector))]
+	#[cfg(not(ocvrs_has_module_aruco_detector))]
 	use opencv::aruco::DetectorParameters;
+	#[cfg(ocvrs_has_module_aruco_detector)]
+	use opencv::aruco_detector::DetectorParameters;
 
 	let mut ptr = DetectorParameters::create()?;
 	let mut plain = DetectorParameters::default()?;
