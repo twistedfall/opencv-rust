@@ -15,8 +15,9 @@ if [ ! -e "$VCPKG_ROOT" ]; then
 fi
 pushd "$VCPKG_ROOT"
 git fetch --all --prune --tags
+git status
 git checkout .
-git checkout "$VCPKG_TREE_COMMIT"
+git checkout "$VCPKG_VERSION"
 ./bootstrap-vcpkg.sh -disableMetrics
 #./vcpkg integrate install
 echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-linux.cmake
@@ -24,6 +25,5 @@ export VCPKG_DEFAULT_TRIPLET=x64-linux
 #./vcpkg install llvm  # takes very long time
 # workaround to make clang_sys crate detect installed libclang
 sudo ln -s libclang.so.1 /usr/lib/llvm-10/lib/libclang.so
-./vcpkg upgrade --no-dry-run
-./vcpkg install --recurse "opencv${VCPKG_OPENCV_VERSION}[contrib,nonfree]"
+./vcpkg install --recurse "opencv[contrib,nonfree]"
 popd

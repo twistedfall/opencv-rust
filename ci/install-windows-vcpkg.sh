@@ -2,6 +2,7 @@
 
 set -vex
 
+# remove system vcpkg
 rm -rf "$VCPKG_INSTALLATION_ROOT"
 export VCPKG_ROOT="$HOME/build/vcpkg"
 if [[ -e "$VCPKG_ROOT" && ! -e "$VCPKG_ROOT/.git" ]]; then
@@ -12,16 +13,16 @@ if [ ! -e "$VCPKG_ROOT" ]; then
 fi
 pushd "$VCPKG_ROOT"
 git fetch --all --prune --tags
+git status
 git checkout .
-git checkout "$VCPKG_TREE_COMMIT"
+git checkout "$VCPKG_VERSION"
 ./bootstrap-vcpkg.sh -disableMetrics
 #./vcpkg integrate install
-echo "set(VCPKG_BUILD_TYPE release)" >> "$VCPKG_ROOT/triplets/x64-windows.cmake"
-echo "set(VCPKG_BUILD_TYPE release)" >> "$VCPKG_ROOT/triplets/x64-windows-static.cmake"
-echo "set(VCPKG_BUILD_TYPE release)" >> "$VCPKG_ROOT/triplets/x86-windows.cmake"
+echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-windows.cmake
+echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-windows-static.cmake
+echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x86-windows.cmake
 export VCPKG_DEFAULT_TRIPLET=x64-windows
 #./vcpkg install llvm  # takes very long time
-choco install -y llvm --version 15.0.3
-"$VCPKG_ROOT/vcpkg" upgrade --no-dry-run
-"$VCPKG_ROOT/vcpkg" install --recurse "opencv${VCPKG_OPENCV_VERSION}[contrib,nonfree]"
+choco install -y llvm --version 15.0.5
+./vcpkg install --recurse "opencv[contrib,nonfree]"
 popd

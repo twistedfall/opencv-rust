@@ -2,10 +2,10 @@
 
 set -vex
 
-if [[ "$OS_FAMILY" == "windows" ]]; then
+if [[ "$OS_FAMILY" == "Windows" ]]; then
 	export PATH="/C/Program Files/LLVM/bin:$PATH"
 	export LIBCLANG_PATH="/C/Program Files/LLVM/bin"
-	if [[ "$VCPKG_OPENCV_VERSION" != "" ]]; then # vcpkg build
+	if [[ "$VCPKG_VERSION" != "" ]]; then # vcpkg build
 		export VCPKGRS_DYNAMIC=1
 		export VCPKG_ROOT="$HOME/build/vcpkg"
 		echo "=== Installed vcpkg packages:"
@@ -18,7 +18,7 @@ if [[ "$OS_FAMILY" == "windows" ]]; then
 	fi
 	echo "=== Installed chocolatey packages:"
 	choco list --local-only
-elif [[ "$OS_FAMILY" == "osx" ]]; then
+elif [[ "$OS_FAMILY" == "macOS" ]]; then
 	toolchain_path="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
 	export DYLD_FALLBACK_LIBRARY_PATH="$toolchain_path/usr/lib/"
 	if [[ "$BREW_OPENCV_VERSION" != "" ]]; then # brew build
@@ -33,8 +33,8 @@ elif [[ "$OS_FAMILY" == "osx" ]]; then
 	fi
 	echo "=== Installed brew packages:"
 	brew list --versions
-elif [[ "$OS_FAMILY" == "linux" ]]; then
-	if [[ "$VCPKG_OPENCV_VERSION" != "" ]]; then # vcpkg build
+elif [[ "$OS_FAMILY" == "Linux" ]]; then
+	if [[ "$VCPKG_VERSION" != "" ]]; then # vcpkg build
 		export VCPKG_ROOT="$HOME/build/vcpkg"
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list
