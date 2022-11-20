@@ -54,12 +54,18 @@ fn callback() -> Result<()> {
 	#![cfg(ocvrs_has_module_highgui)]
 	use std::sync::{Arc, Mutex};
 
-	use opencv::highgui;
+	use opencv::{core, highgui, Error};
 
 	// only run under X11 on linux
 	if cfg!(target_os = "linux") && option_env!("DISPLAY").is_some() {
 		{
-			highgui::named_window("test_1", 0)?;
+			if let Err(Error {
+				code: core::StsError, ..
+			}) = highgui::named_window("test_1", 0)
+			{
+				// means that OpenCV is not built with GUI support, just skip the test
+				return Ok(());
+			}
 			let mut value = 50;
 			let cb_value = Arc::new(Mutex::new(0));
 			highgui::create_trackbar(

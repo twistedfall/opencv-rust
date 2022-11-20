@@ -101,6 +101,14 @@ requires some additional configuration.
 You need to set up the following environment variables to point to the installed files of your OpenCV build: 
 `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` (see below for details).
 
+### Static build
+
+Static linking to OpenCV is supported and tested at least on Linux. For some hints on building OpenCV statically
+please check this [comment](https://github.com/twistedfall/opencv-rust/issues/364#issuecomment-1308794985). Also,
+some you can get information on how to perform the build in CI scripts:
+[install-focal.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-focal.sh) and
+[script.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh), search for `non_static_version` variable.
+
 ## Troubleshooting
 
 1. One of the common problems is link errors in the end of the build.

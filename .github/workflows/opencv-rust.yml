@@ -23,6 +23,10 @@ jobs:
           - os-image: macos-11
             version:
               opencv: 3.4.17
+        include:
+          - os-image: ubuntu-20.04
+            version:
+              opencv: 4.6.0-static
     runs-on: ${{ matrix.os-image }}
     env:
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
