@@ -268,7 +268,7 @@ fn build_clang_generator() -> io::Result<Child> {
 	if let Some(host_triple) = HOST_TRIPLE.as_ref() {
 		cargo.args(&["--target", host_triple]);
 	}
-	println!("running: {:?}", &cargo);
+	println!("=== Running: {:?}", &cargo);
 	cargo.stdout(Stdio::piped());
 	cargo.stderr(Stdio::piped());
 	cargo.spawn()

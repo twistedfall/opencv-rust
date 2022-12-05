@@ -48,7 +48,7 @@ pub fn gen_wrapper(
 	opencv_header_dir: &Path,
 	opencv: &Library,
 	job_server: jobserver::Client,
-	generator_build: Child,
+	mut generator_build: Child,
 ) -> Result<()> {
 	let target_hub_dir = SRC_DIR.join("opencv");
 	let target_module_dir = target_hub_dir.join("hub");
@@ -77,15 +77,19 @@ pub fn gen_wrapper(
 	let gen = binding_generator::Generator::new(opencv_header_dir, &additional_include_dirs, &*SRC_CPP_DIR, clang);
 	eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 
-	eprintln!("=== Waiting until the binding-generator binary is built...");
-	let res = generator_build.wait_with_output()?;
-	if let Err(e) = io::stdout().write(&res.stdout) {
-		eprintln!("=== Can't write stdout: {:?}, error: {}", res.stdout, e)
+	eprintln!("=== Building binding-generator binary:");
+	if let Some(child_stderr) = generator_build.stderr.take() {
+		for line in BufReader::new(child_stderr).lines().flatten() {
+			eprintln!("=== {}", line);
+		}
 	}
-	if let Err(e) = io::stderr().write(&res.stderr) {
-		eprintln!("=== Can't write stderr: {:?}, error: {}", res.stdout, e)
+	if let Some(child_stdout) = generator_build.stdout.take() {
+		for line in BufReader::new(child_stdout).lines().flatten() {
+			eprintln!("=== {}", line);
+		}
 	}
-	if !res.status.success() {
+	let child_status = generator_build.wait()?;
+	if !child_status.success() {
 		return Err("Failed to build the bindings generator".into());
 	}
 
