@@ -1,3 +1,6 @@
+* 0.74.1
+  * Fix building when `-j1` cargo option is specified (fixes https://github.com/twistedfall/opencv-rust/issues/380).
+
 * 0.74.0
   * Add support aruco_detector module present in the future opencv_contrib.
 
