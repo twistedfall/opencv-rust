@@ -222,15 +222,32 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 }
 
 fn build_job_server() -> Option<jobserver::Client> {
-	unsafe { jobserver::Client::from_env() }.or_else(|| {
-		let num_jobs = env::var("NUM_JOBS")
-			.ok()
-			.and_then(|jobs| jobs.parse().ok())
-			.unwrap_or(2)
-			.max(1);
-		eprintln!("=== Creating a new job server with num_jobs: {}", num_jobs);
-		jobserver::Client::new(num_jobs).ok()
-	})
+	unsafe { jobserver::Client::from_env() }
+		.and_then(|c| {
+			let available_jobs = c.available().unwrap_or(0);
+			if available_jobs > 0 {
+				eprintln!(
+					"=== Using environment job server with the the amount of available jobs: {}",
+					available_jobs
+				);
+				Some(c)
+			} else {
+				eprintln!(
+					"=== Available jobs from the environment created jobserver is: {} or there is an error reading that value",
+					available_jobs
+				);
+				None
+			}
+		})
+		.or_else(|| {
+			let num_jobs = env::var("NUM_JOBS")
+				.ok()
+				.and_then(|jobs| jobs.parse().ok())
+				.unwrap_or(2)
+				.max(1);
+			eprintln!("=== Creating a new job server with num_jobs: {}", num_jobs);
+			jobserver::Client::new(num_jobs).ok()
+		})
 }
 
 // todo: replace by https://github.com/rust-lang/cargo/issues/9096 when stable
