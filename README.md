@@ -31,13 +31,17 @@ use opencv::prelude::*;
 
 #### Arch Linux:
 
-OpenCV package in Arch is suitable for this.
+OpenCV package in Arch is suitable for this:
 
 `pacman -S clang qt5-base opencv`
 
+and additionally to support more OpenCV modules:
+
+`pacman -S vtk glew fmt openmpi`
+
 #### Ubuntu:
 
-`sudo apt install libopencv-dev clang libclang-dev`
+`apt install libopencv-dev clang libclang-dev`
 
 #### Other Linux:
 You have several options of getting the OpenCV library:
