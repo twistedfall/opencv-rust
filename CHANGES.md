@@ -1,3 +1,6 @@
+* 0.74.2
+  * Adjust dependencies to ensure that `jobserver` is the appropriate version (fixes https://github.com/twistedfall/opencv-rust/issues/400).
+
 * 0.74.1
   * Fix building when `-j1` cargo option is specified (fixes https://github.com/twistedfall/opencv-rust/issues/380).
 
