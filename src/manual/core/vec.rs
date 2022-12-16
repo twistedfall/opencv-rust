@@ -145,7 +145,7 @@ impl<T, const N: usize> OpenCVTypeExternContainer<'_> for VecN<T, N> {
 
 impl<T, const N: usize> ToInputArray for VecN<T, N>
 where
-	Self: VecExtern<T, N>,
+	Self: VecExtern,
 {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
@@ -157,7 +157,7 @@ where
 
 impl<T, const N: usize> ToInputArray for &VecN<T, N>
 where
-	VecN<T, N>: VecExtern<T, N>,
+	VecN<T, N>: VecExtern,
 {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
@@ -167,7 +167,7 @@ where
 
 impl<T, const N: usize> ToOutputArray for VecN<T, N>
 where
-	Self: VecExtern<T, N>,
+	Self: VecExtern,
 {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
@@ -179,7 +179,7 @@ where
 
 impl<T, const N: usize> ToOutputArray for &mut VecN<T, N>
 where
-	VecN<T, N>: VecExtern<T, N>,
+	VecN<T, N>: VecExtern,
 {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
@@ -189,7 +189,7 @@ where
 
 impl<T, const N: usize> ToInputOutputArray for VecN<T, N>
 where
-	Self: VecExtern<T, N>,
+	Self: VecExtern,
 {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
@@ -201,7 +201,7 @@ where
 
 impl<T, const N: usize> ToInputOutputArray for &mut VecN<T, N>
 where
-	VecN<T, N>: VecExtern<T, N>,
+	VecN<T, N>: VecExtern,
 {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
@@ -210,7 +210,7 @@ where
 }
 
 #[doc(hidden)]
-pub trait VecExtern<T, const N: usize> {
+pub trait VecExtern {
 	#[doc(hidden)]
 	unsafe fn extern_input_array(&self) -> sys::Result<extern_receive!(_InputArray)>;
 	#[doc(hidden)]
@@ -227,7 +227,7 @@ macro_rules! vecn_extern {
 			fn $extern_input_array_output(instance: extern_send!(mut $crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_InputOutputArray)>);
 		}
 
-		impl $crate::core::VecExtern<$type, $len> for $crate::core::VecN<$type, $len> {
+		impl $crate::core::VecExtern for $crate::core::VecN<$type, $len> {
 			#[inline]
 			unsafe fn extern_input_array(&self) -> $crate::sys::Result<extern_receive!($crate::core::_InputArray)> {
 				return_send!(via ocvrs_return);

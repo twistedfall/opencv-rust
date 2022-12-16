@@ -5,7 +5,7 @@ use std::mem::ManuallyDrop;
 
 pub struct Tuple<T>
 where
-	Self: TupleExtern<T>,
+	Self: TupleExtern,
 {
 	ptr: *mut c_void,
 	_d: PhantomData<T>,
@@ -13,7 +13,7 @@ where
 
 impl<T> Boxed for Tuple<T>
 where
-	Self: TupleExtern<T>,
+	Self: TupleExtern,
 {
 	#[inline]
 	unsafe fn from_raw(ptr: *mut c_void) -> Self {
@@ -38,7 +38,7 @@ where
 
 impl<T> OpenCVType<'_> for Tuple<T>
 where
-	Self: TupleExtern<T>,
+	Self: TupleExtern,
 {
 	type Arg = Self;
 	type ExternReceive = *mut c_void;
@@ -51,7 +51,7 @@ where
 
 impl<T> OpenCVTypeArg<'_> for Tuple<T>
 where
-	Tuple<T>: TupleExtern<T>,
+	Tuple<T>: TupleExtern,
 {
 	type ExternContainer = Self;
 
@@ -63,7 +63,7 @@ where
 
 impl<T> OpenCVTypeExternContainer<'_> for Tuple<T>
 where
-	Tuple<T>: TupleExtern<T>,
+	Tuple<T>: TupleExtern,
 {
 	type ExternSend = *const c_void;
 	type ExternSendMut = *mut c_void;
@@ -86,14 +86,14 @@ where
 
 impl<T> Drop for Tuple<T>
 where
-	Tuple<T>: TupleExtern<T>,
+	Tuple<T>: TupleExtern,
 {
 	fn drop(&mut self) {
 		unsafe { self.extern_delete() }
 	}
 }
 
-pub trait TupleExtern<T> {
+pub trait TupleExtern {
 	#[doc(hidden)]
 	unsafe fn extern_delete(&mut self);
 }
@@ -113,7 +113,7 @@ macro_rules! tuple_extern {
 			)+
 		}
 
-		impl $crate::core::TupleExtern<$type> for $crate::core::Tuple<$type> {
+		impl $crate::core::TupleExtern for $crate::core::Tuple<$type> {
 			#[inline]
 			unsafe fn extern_delete(&mut self) {
 				$extern_delete(self.as_raw_mut())

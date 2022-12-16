@@ -232,7 +232,7 @@ impl<T, A: SizedArray<T>> fmt::Debug for Matx<T, A> {
 
 impl<T, A: SizedArray<T>> ToInputArray for Matx<T, A>
 where
-	Self: MatxExtern<T, A>,
+	Self: MatxExtern,
 {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
@@ -244,7 +244,7 @@ where
 
 impl<T, A: SizedArray<T>> ToInputArray for &Matx<T, A>
 where
-	Matx<T, A>: MatxExtern<T, A>,
+	Matx<T, A>: MatxExtern,
 {
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
@@ -254,7 +254,7 @@ where
 
 impl<T, A: SizedArray<T>> ToOutputArray for Matx<T, A>
 where
-	Self: MatxExtern<T, A>,
+	Self: MatxExtern,
 {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
@@ -266,7 +266,7 @@ where
 
 impl<T, A: SizedArray<T>> ToOutputArray for &mut Matx<T, A>
 where
-	Matx<T, A>: MatxExtern<T, A>,
+	Matx<T, A>: MatxExtern,
 {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
@@ -276,7 +276,7 @@ where
 
 impl<T, A: SizedArray<T>> ToInputOutputArray for Matx<T, A>
 where
-	Self: MatxExtern<T, A>,
+	Self: MatxExtern,
 {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
@@ -288,7 +288,7 @@ where
 
 impl<T, A: SizedArray<T>> ToInputOutputArray for &mut Matx<T, A>
 where
-	Matx<T, A>: MatxExtern<T, A>,
+	Matx<T, A>: MatxExtern,
 {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
@@ -297,7 +297,7 @@ where
 }
 
 #[doc(hidden)]
-pub trait MatxExtern<T, A: SizedArray<T>> {
+pub trait MatxExtern {
 	#[doc(hidden)]
 	unsafe fn extern_input_array(&self) -> sys::Result<extern_receive!(_InputArray)>;
 	#[doc(hidden)]
@@ -314,7 +314,7 @@ macro_rules! matx_extern {
 			fn $extern_input_array_output(instance: extern_send!(mut $crate::core::Matx<$type, $array>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_InputOutputArray)>);
 		}
 
-		impl $crate::core::MatxExtern<$type, $array> for $crate::core::Matx<$type, $array> {
+		impl $crate::core::MatxExtern for $crate::core::Matx<$type, $array> {
 			#[inline]
 			unsafe fn extern_input_array(&self) -> $crate::sys::Result<extern_receive!($crate::core::_InputArray)> {
 				return_send!(via ocvrs_return);
