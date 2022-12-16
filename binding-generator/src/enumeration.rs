@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
 
-use crate::type_ref::{CppNameStyle, FishStyle, NameStyle};
+use crate::type_ref::CppNameStyle;
 use crate::{Const, DefaultElement, Element, EntityElement, EntityExt, StrExt};
 
 #[derive(Clone)]
@@ -92,18 +92,6 @@ impl Element for Enum<'_> {
 		} else {
 			DefaultElement::cpp_name(self, style)
 		}
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		DefaultElement::rust_module(self)
-	}
-
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultElement::rust_name(self, style)
-	}
-
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		self.cpp_name(CppNameStyle::Declaration)
 	}
 }
 

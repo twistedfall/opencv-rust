@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::{Entity, Type};
 
-use crate::type_ref::{CppNameStyle, FishStyle, NameStyle, TemplateArg};
+use crate::type_ref::{CppNameStyle, TemplateArg};
 use crate::{DefaultElement, Element, EntityElement, GeneratedType, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
@@ -25,10 +25,6 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 		TypeRef::new(self.type_ref, self.gen_env)
 	}
 
-	pub fn rust_element_module(&self) -> Cow<str> {
-		self.element_type().rust_module().into_owned().into()
-	}
-
 	pub fn element_type(&self) -> TypeRef<'tu, 'ge> {
 		self
 			.type_ref()
@@ -40,10 +36,6 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 
 	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
 		self.element_type().generated_types()
-	}
-
-	pub fn rust_localalias(&self) -> Cow<str> {
-		format!("VectorOf{typ}", typ = self.element_type().rust_safe_id(true)).into()
 	}
 }
 
@@ -81,28 +73,6 @@ impl Element for Vector<'_, '_> {
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
 		DefaultElement::cpp_name(self, style)
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		DefaultElement::rust_module(self)
-	}
-
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultElement::rust_name(self, style)
-	}
-
-	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
-		let mut inner_typ = self.element_type();
-		if let Some(inner) = inner_typ.as_pointer() {
-			// fixme, implement references properly, use MatRef/Mut type
-			inner_typ = inner;
-		}
-		format!(
-			"Vector{fish}<{typ}>",
-			fish = fish_style.rust_qual(),
-			typ = inner_typ.rust_name(NameStyle::ref_()),
-		)
-		.into()
 	}
 }
 

@@ -1,12 +1,36 @@
+use std::borrow::Cow;
+use std::collections::HashSet;
+
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::Constness;
-use crate::writer::rust_native::func::disambiguate_single_name;
-use crate::writer::rust_native::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
-use crate::{CompiledInterpolation, CppNameStyle, Element, FunctionTypeHint, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
+use crate::type_ref::{Constness, FishStyle};
+use crate::{CompiledInterpolation, CppNameStyle, FunctionTypeHint, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::func::disambiguate_single_name;
+use super::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
+use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
+
+impl RustElement for Tuple<'_, '_> {
+	fn rust_module(&self) -> Cow<str> {
+		DefaultRustNativeElement::rust_module(self)
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultRustNativeElement::rust_name(self, style)
+	}
+
+	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
+		format!(
+			"Tuple{fish}<{inner}>",
+			fish = fish_style.rust_qual(),
+			inner = self.rust_inner()
+		)
+		.into()
+	}
+}
 
 impl RustNativeGeneratedElement for Tuple<'_, '_> {
 	fn element_safe_id(&self) -> String {
@@ -68,6 +92,59 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		CPP_TPL.interpolate(&hashmap! {
 			"methods" => methods.join(""),
 		})
+	}
+}
+
+pub trait TupleExt {
+	fn rust_localalias(&self) -> Cow<str>;
+	fn rust_inner(&self) -> String;
+	fn rust_element_module(&self) -> Cow<str>;
+}
+
+impl TupleExt for Tuple<'_, '_> {
+	fn rust_localalias(&self) -> Cow<str> {
+		format!(
+			"TupleOf{typ}",
+			typ = self
+				.elements()
+				.into_iter()
+				.map(|e| e.rust_safe_id(true).into_owned())
+				.join("_")
+		)
+		.into()
+	}
+
+	fn rust_inner(&self) -> String {
+		let mut out = "(".to_string();
+		out.push_str(
+			&self
+				.elements()
+				.into_iter()
+				.map(|e| e.rust_name(NameStyle::ref_()).into_owned())
+				.join(", "),
+		);
+		out.push(')');
+		out
+	}
+
+	fn rust_element_module(&self) -> Cow<str> {
+		let mut elem_modules = self
+			.elements()
+			.into_iter()
+			.map(|elem_type| elem_type.rust_module().into_owned())
+			.collect::<HashSet<_>>()
+			.into_iter()
+			.filter(|m| m != "core")
+			.collect::<Vec<_>>();
+		if let Some(module) = elem_modules.pop() {
+			if elem_modules.is_empty() {
+				module.into()
+			} else {
+				panic!("Too many element modules: {:?} + {:?}", module, elem_modules)
+			}
+		} else {
+			self.rust_module()
+		}
 	}
 }
 

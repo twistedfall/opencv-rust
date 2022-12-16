@@ -6,9 +6,30 @@ use once_cell::sync::Lazy;
 
 use crate::constant::ValueKind;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{get_debug, settings, CompiledInterpolation, Const, Element, EntityElement, StrExt};
+use crate::{get_debug, settings, CompiledInterpolation, Const, CppNameStyle, Element, EntityElement, StrExt};
 
+use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
+
+impl RustElement for Const<'_> {
+	fn rust_module(&self) -> Cow<str> {
+		DefaultRustNativeElement::rust_module(self)
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		let mut out = DefaultRustNativeElement::rust_name(self, style);
+		const SUFFIX: &str = "_OCVRS_OVERRIDE";
+		if out.ends_with(SUFFIX) {
+			let suffix_start = out.len() - SUFFIX.len();
+			out.to_mut().drain(suffix_start..);
+		}
+		out
+	}
+
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+		self.cpp_name(CppNameStyle::Declaration)
+	}
+}
 
 impl RustNativeGeneratedElement for Const<'_> {
 	fn element_safe_id(&self) -> String {

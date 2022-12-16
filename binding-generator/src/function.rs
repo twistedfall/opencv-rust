@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult, Type};
 
-use crate::type_ref::{CppNameStyle, ExternDir, NameStyle};
+use crate::type_ref::CppNameStyle;
 use crate::{Element, Field, GeneratorEnv, IteratorExt, TypeRef};
 
 #[derive(Clone)]
@@ -33,32 +33,12 @@ impl<'tu, 'ge> Function<'tu, 'ge> {
 		out
 	}
 
-	/// arguments without userdata
-	pub fn rust_arguments(&self) -> Vec<Field<'tu, 'ge>> {
-		self.arguments().into_iter().filter(|a| !a.is_user_data()).collect()
-	}
-
 	pub fn has_userdata(&self) -> bool {
 		self.arguments().into_iter().any(|f| f.is_user_data())
 	}
 
 	pub fn return_type(&self) -> TypeRef<'tu, 'ge> {
 		TypeRef::new(self.type_ref.get_result_type().expect("Can't get result type"), self.gen_env)
-	}
-
-	pub fn rust_extern(&self) -> Cow<str> {
-		let args = self
-			.arguments()
-			.into_iter()
-			.map(|a| a.type_ref().rust_extern(ExternDir::Pure).into_owned())
-			.join(", ");
-		let ret = self.return_type();
-		format!(
-			r#"Option<unsafe extern "C" fn({args}) -> {ret}>"#,
-			args = args,
-			ret = ret.rust_extern(ExternDir::Pure)
-		)
-		.into()
 	}
 }
 
@@ -91,30 +71,6 @@ impl Element for Function<'_, '_> {
 			.join(", ");
 		let ret = self.return_type();
 		format!("{ret} (*)({args})", args = args, ret = ret.cpp_name(CppNameStyle::Reference)).into()
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		"<unset>".into()
-	}
-
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		let ret = self.return_type();
-		if self.has_userdata() {
-			let args = self
-				.rust_arguments()
-				.into_iter()
-				.map(|a| a.type_ref().rust_extern(ExternDir::Pure).into_owned())
-				.join(", ");
-			format!(
-				"Option{fish}<Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>>",
-				fish = style.turbo_fish_style().rust_qual(),
-				args = args,
-				ret = ret.rust_extern(ExternDir::Pure),
-			)
-			.into()
-		} else {
-			self.rust_extern()
-		}
 	}
 }
 

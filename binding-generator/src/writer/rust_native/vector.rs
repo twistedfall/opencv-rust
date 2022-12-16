@@ -1,12 +1,39 @@
+use std::borrow::Cow;
+
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, NameStyle};
-use crate::writer::rust_native::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
-use crate::{settings, CompiledInterpolation, Element, FunctionTypeHint, StrExt, TypeRef, Vector};
+use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, FishStyle, NameStyle};
+use crate::{settings, CompiledInterpolation, FunctionTypeHint, StrExt, TypeRef, Vector};
 
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
+
+impl RustElement for Vector<'_, '_> {
+	fn rust_module(&self) -> Cow<str> {
+		DefaultRustNativeElement::rust_module(self)
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultRustNativeElement::rust_name(self, style)
+	}
+
+	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
+		let mut inner_typ = self.element_type();
+		if let Some(inner) = inner_typ.as_pointer() {
+			// fixme, implement references properly, use MatRef/Mut type
+			inner_typ = inner;
+		}
+		format!(
+			"Vector{fish}<{typ}>",
+			fish = fish_style.rust_qual(),
+			typ = inner_typ.rust_name(NameStyle::ref_()),
+		)
+		.into()
+	}
+}
 
 impl RustNativeGeneratedElement for Vector<'_, '_> {
 	fn element_safe_id(&self) -> String {
@@ -149,6 +176,21 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		inter_vars.insert("exports", exports.into());
 
 		COMMON_TPL.interpolate(&inter_vars)
+	}
+}
+
+pub trait VectorExt {
+	fn rust_element_module(&self) -> Cow<str>;
+	fn rust_localalias(&self) -> Cow<str>;
+}
+
+impl VectorExt for Vector<'_, '_> {
+	fn rust_element_module(&self) -> Cow<str> {
+		self.element_type().rust_module().into_owned().into()
+	}
+
+	fn rust_localalias(&self) -> Cow<str> {
+		format!("VectorOf{typ}", typ = self.element_type().rust_safe_id(true)).into()
 	}
 }
 

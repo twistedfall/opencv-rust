@@ -4,13 +4,17 @@ use std::iter;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::func::Kind;
+use crate::func::{Kind, OperatorKind};
 use crate::type_ref::{ConstnessOverride, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType};
-use crate::writer::rust_native::func_desc::{pre_post_arg_handle, CppFuncDesc, FuncDescCppCall, FuncDescKind};
-use crate::{get_debug, settings, CompiledInterpolation, Element, Field, Func, StrExt, TypeRef};
+use crate::{
+	get_debug, reserved_rename, settings, CompiledInterpolation, Element, EntityElement, Func, IteratorExt, StrExt, StringExt,
+	TypeRef,
+};
 
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::func_desc::{pre_post_arg_handle, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
-use super::RustNativeGeneratedElement;
+use super::{rust_disambiguate_names, RustNativeGeneratedElement};
 
 pub fn disambiguate_single_name(name: &str) -> impl Iterator<Item = String> + '_ {
 	let mut i = 0;
@@ -31,7 +35,7 @@ pub fn disambiguate_num(counter: usize) -> String {
 fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
 
-	let args = Field::rust_disambiguate_names(f.arguments()).collect::<Vec<_>>();
+	let args = rust_disambiguate_names(f.arguments()).collect::<Vec<_>>();
 	let kind = f.kind();
 	let as_instance_method = kind.as_instance_method();
 	let method_constness = f.constness();
@@ -296,6 +300,128 @@ pub fn cpp_return_handle(
 	}
 }
 
+impl RustElement for Func<'_, '_> {
+	fn rust_module(&self) -> Cow<str> {
+		DefaultRustNativeElement::rust_module(self)
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultRustNativeElement::rust_name(self, style)
+	}
+
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+		let cpp_name = if let Some(name) = self.gen_env().get_rename_config(self.entity()).map(|c| &c.rename) {
+			name.into()
+		} else {
+			self.cpp_name(CppNameStyle::Declaration)
+		};
+		let kind = self.kind();
+		let rust_name = if let Some(cls) = kind.as_constructor() {
+			let args = self.arguments();
+			#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
+			'ctor_name: loop {
+				if args.is_empty() {
+					break 'ctor_name "default";
+				} else if args.len() == 1 {
+					let arg_typeref = args[0].type_ref();
+					let class_arg = arg_typeref.as_reference().and_then(|typ| {
+						if let Some(ptr) = typ.as_smart_ptr() {
+							ptr.pointee()
+						} else {
+							typ
+						}
+						.as_class()
+					});
+					if let Some(other) = class_arg {
+						if *cls == other {
+							break 'ctor_name if arg_typeref.constness().is_const() {
+								"copy"
+							} else {
+								"copy_mut"
+							};
+						}
+					}
+				}
+				break 'ctor_name "new";
+			}
+			.into()
+		} else if let Some(..) = kind.as_conversion_method() {
+			let mut name: String = self.return_type().rust_name(NameStyle::decl()).into_owned();
+			name.cleanup_name();
+			format!("to_{}", name).into()
+		} else if let Some((cls, kind)) = kind.as_operator() {
+			if cpp_name.starts_with("operator") {
+				let name = match kind {
+					OperatorKind::Unsupported => cpp_name.as_ref(),
+					OperatorKind::Index => {
+						if self.constness().is_const() {
+							"get"
+						} else {
+							"get_mut"
+						}
+					}
+					OperatorKind::Add => "add",
+					OperatorKind::Sub => "sub",
+					OperatorKind::Mul => "mul",
+					OperatorKind::Div => "div",
+					OperatorKind::Deref => {
+						if self.constness().is_const() {
+							"try_deref"
+						} else {
+							"try_deref_mut"
+						}
+					}
+					OperatorKind::Equals => "equals",
+					OperatorKind::NotEquals => "not_equals",
+					OperatorKind::GreaterThan => "greater_than",
+					OperatorKind::GreaterThanOrEqual => "greater_than_or_equal",
+					OperatorKind::LessThan => "less_than",
+					OperatorKind::LessThanOrEqual => "less_than_or_equal",
+					OperatorKind::Incr => "incr",
+					OperatorKind::Decr => "decr",
+					OperatorKind::And => "and",
+					OperatorKind::Or => "or",
+					OperatorKind::Xor => "xor",
+					OperatorKind::BitwiseNot => "negate",
+				};
+				if kind.add_args_to_name() {
+					let args = self.arguments();
+					let is_single_arg_same_as_class = if let (Some(cls), [single_arg]) = (cls, args.as_slice()) {
+						single_arg
+							.type_ref()
+							.source()
+							.as_class()
+							.map_or(false, |single_class| &single_class == cls)
+					} else {
+						false
+					};
+					if args.is_empty() || is_single_arg_same_as_class {
+						name.into()
+					} else {
+						let args = args.into_iter().map(|arg| arg.type_ref().rust_simple_name()).join("_");
+						format!("{}_{}", name, args).into()
+					}
+				} else {
+					name.into()
+				}
+			} else {
+				cpp_name
+			}
+		} else {
+			cpp_name
+		};
+		if let Some(&name) = settings::FUNC_RENAME.get(self.identifier().as_ref()) {
+			if name.contains('+') {
+				reserved_rename(name.replace('+', rust_name.as_ref()).to_snake_case().into())
+			} else {
+				name.into()
+			}
+		} else {
+			reserved_rename(rust_name.to_snake_case().into())
+		}
+	}
+}
+
 impl RustNativeGeneratedElement for Func<'_, '_> {
 	fn element_safe_id(&self) -> String {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
@@ -329,7 +455,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		if let Some(cls) = self.kind().as_instance_method() {
 			args.push(cls.type_ref().rust_extern_self_func_decl(self.constness()));
 		}
-		for (name, arg) in Field::rust_disambiguate_names(self.arguments()) {
+		for (name, arg) in rust_disambiguate_names(self.arguments()) {
 			args.push(arg.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
 		}
 

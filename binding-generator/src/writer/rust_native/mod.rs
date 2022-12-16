@@ -8,9 +8,12 @@ use dunce::canonicalize;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use element::RustNativeGeneratedElement;
+use class::ClassExt;
+use element::{RustElement, RustNativeGeneratedElement};
 
-use crate::type_ref::{Constness, CppNameStyle, NameStyle};
+use crate::field::Field;
+use crate::name_pool::NamePool;
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
 use crate::{
 	comment, is_ephemeral_header, opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func,
 	GeneratedType, GeneratorVisitor, IteratorExt, StrExt, Typedef,
@@ -19,14 +22,16 @@ use crate::{
 mod abstract_ref_wrapper;
 mod class;
 mod constant;
-mod element;
+pub mod element;
 mod enumeration;
+mod field;
 mod func;
 mod func_desc;
+mod function;
 pub mod renderer;
 mod smart_ptr;
 mod tuple;
-mod type_ref;
+pub mod type_ref;
 mod typedef;
 mod vector;
 
@@ -309,4 +314,14 @@ fn ensure_filename_length(file_name: &mut String, reserve: usize) {
 	if file_name.len() > max_length {
 		*file_name = file_name[..max_length].to_string();
 	}
+}
+
+fn rust_disambiguate_names<'tu, 'ge, I: IntoIterator<Item = Field<'tu, 'ge>>>(
+	args: I,
+) -> impl Iterator<Item = (String, Field<'tu, 'ge>)>
+where
+	'tu: 'ge,
+{
+	let args = args.into_iter();
+	NamePool::with_capacity(args.size_hint().1.unwrap_or_default()).into_disambiguator(args, |f| f.rust_leafname(FishStyle::No))
 }

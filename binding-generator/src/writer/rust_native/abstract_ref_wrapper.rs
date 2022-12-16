@@ -4,6 +4,8 @@ use once_cell::sync::Lazy;
 use crate::type_ref::{Constness, NameStyle};
 use crate::{AbstractRefWrapper, CompiledInterpolation, StrExt};
 
+use super::class::ClassExt;
+use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {

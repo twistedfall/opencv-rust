@@ -5,7 +5,7 @@ use std::fmt::Write;
 use clang::token::{Token, TokenKind};
 use clang::{Entity, EntityKind, EvaluationResult};
 
-use crate::type_ref::{CppNameStyle, FishStyle, NameStyle};
+use crate::type_ref::CppNameStyle;
 use crate::{settings, DefaultElement, Element, EntityElement};
 
 pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> Option<Value> {
@@ -175,24 +175,6 @@ impl Element for Const<'_> {
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
 		DefaultElement::cpp_name(self, style)
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		DefaultElement::rust_module(self)
-	}
-
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		let mut out = DefaultElement::rust_name(self, style);
-		const SUFFIX: &str = "_OCVRS_OVERRIDE";
-		if out.ends_with(SUFFIX) {
-			let suffix_start = out.len() - SUFFIX.len();
-			out.to_mut().drain(suffix_start..);
-		}
-		out
-	}
-
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		self.cpp_name(CppNameStyle::Declaration)
 	}
 }
 

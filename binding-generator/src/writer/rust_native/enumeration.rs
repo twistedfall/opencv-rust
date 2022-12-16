@@ -1,12 +1,28 @@
+use std::borrow::Cow;
 use std::collections::HashSet;
 
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{get_debug, CompiledInterpolation, Element, Enum, StrExt};
+use crate::{get_debug, CompiledInterpolation, CppNameStyle, Element, Enum, StrExt};
 
+use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
+
+impl RustElement for Enum<'_> {
+	fn rust_module(&self) -> Cow<str> {
+		DefaultRustNativeElement::rust_module(self)
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultRustNativeElement::rust_name(self, style)
+	}
+
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+		self.cpp_name(CppNameStyle::Declaration)
+	}
+}
 
 impl RustNativeGeneratedElement for Enum<'_> {
 	fn element_safe_id(&self) -> String {

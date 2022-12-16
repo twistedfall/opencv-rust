@@ -13,6 +13,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::type_ref::{CppNameStyle, FishStyle, Kind as TypeRefKind};
+use crate::writer::rust_native::element::RustElement;
 use crate::{
 	get_definition_text, line_reader, opencv_module_from_path, settings, AbstractRefWrapper, Class, CompiledInterpolation, Const,
 	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint, GeneratorEnv, SmartPtr, StrExt, Tuple,
@@ -291,7 +292,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 				});
 				class_decl.walk_enums_while(|enm| {
 					let enm = Enum::new(enm);
-					if enm.rust_leafname(FishStyle::No) != "unnamed" {
+					if enm.cpp_name(CppNameStyle::Declaration) != "unnamed" {
 						if !enm.is_excluded() {
 							visitor.visit_enum(enm);
 						}

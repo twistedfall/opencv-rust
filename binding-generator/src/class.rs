@@ -4,7 +4,7 @@ use std::{cmp, fmt, hash, iter};
 
 use clang::Entity;
 
-use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
+use crate::type_ref::{Constness, CppNameStyle};
 use crate::{
 	settings, Const, DefaultElement, Element, EntityElement, EntityExt, Field, Func, FunctionTypeHint, GeneratedType,
 	GeneratorEnv, StrExt, TypeRef,
@@ -129,17 +129,6 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn has_clone(&self) -> bool {
 		self.for_each_method(|m| !m.is_clone())
-	}
-
-	pub fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str> {
-		let mut out = self.rust_name(style);
-		if self.is_trait() && !self.is_abstract() {
-			out.to_mut().push_str("Trait");
-		}
-		if constness.is_const() {
-			out.to_mut().push_str("Const");
-		}
-		out
 	}
 
 	pub fn has_bases(&self) -> bool {
@@ -358,27 +347,6 @@ impl Element for Class<'_, '_> {
 			}
 		} else {
 			DefaultElement::cpp_name(self, style)
-		}
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		DefaultElement::rust_module(self)
-	}
-
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultElement::rust_name(self, style)
-	}
-
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		if self.type_ref().as_string().is_some() {
-			"String".into()
-		} else {
-			let cpp_declname = self.cpp_name(CppNameStyle::Declaration);
-			if cpp_declname == "Vec" {
-				"VecN".into()
-			} else {
-				cpp_declname
-			}
 		}
 	}
 }

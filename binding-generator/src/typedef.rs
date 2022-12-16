@@ -3,7 +3,9 @@ use std::fmt;
 
 use clang::Entity;
 
-use crate::type_ref::{CppNameStyle, FishStyle, Kind, NameStyle, TypeRefTypeHint};
+use crate::type_ref::{CppNameStyle, NameStyle, TypeRefTypeHint};
+use crate::writer::rust_native::element::RustElement;
+use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{settings, DefaultElement, Element, EntityElement, GeneratedType, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
@@ -81,23 +83,6 @@ impl Element for Typedef<'_, '_> {
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
 		DefaultElement::cpp_name(self, style)
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		DefaultElement::rust_module(self)
-	}
-
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultElement::rust_name(self, style)
-	}
-
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		match self.underlying_type_ref().source().kind() {
-			Kind::Class(..) | Kind::Function(..) | Kind::StdVector(..) | Kind::SmartPtr(..) | Kind::StdTuple(..) => {
-				DefaultElement::cpp_name(self, CppNameStyle::Declaration)
-			}
-			_ => DefaultElement::rust_leafname(self),
-		}
 	}
 }
 

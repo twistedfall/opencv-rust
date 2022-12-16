@@ -3,10 +3,31 @@ use std::borrow::Cow;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{Lifetime, NameStyle};
-use crate::{get_debug, CompiledInterpolation, Element, IteratorExt, StrExt, Typedef};
+use crate::type_ref::{FishStyle, Kind, NameStyle};
+use crate::{get_debug, CompiledInterpolation, CppNameStyle, DefaultElement, Element, IteratorExt, StrExt, Typedef};
 
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::type_ref::{Lifetime, TypeRefExt};
 use super::RustNativeGeneratedElement;
+
+impl RustElement for Typedef<'_, '_> {
+	fn rust_module(&self) -> Cow<str> {
+		DefaultRustNativeElement::rust_module(self)
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultRustNativeElement::rust_name(self, style)
+	}
+
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+		match self.underlying_type_ref().source().kind() {
+			Kind::Class(..) | Kind::Function(..) | Kind::StdVector(..) | Kind::SmartPtr(..) | Kind::StdTuple(..) => {
+				DefaultElement::cpp_name(self, CppNameStyle::Declaration)
+			}
+			_ => DefaultRustNativeElement::rust_leafname(self),
+		}
+	}
+}
 
 impl RustNativeGeneratedElement for Typedef<'_, '_> {
 	fn element_safe_id(&self) -> String {

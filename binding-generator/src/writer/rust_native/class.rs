@@ -5,9 +5,10 @@ use once_cell::sync::Lazy;
 
 use crate::class::Kind;
 use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, ExternDir, FishStyle, NameStyle};
-use crate::writer::rust_native::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use crate::{get_debug, Class, CompiledInterpolation, Element, Func, FunctionTypeHint, IteratorExt, NamePool, StrExt, TypeRef};
 
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
@@ -420,6 +421,29 @@ where
 	.join("")
 }
 
+impl RustElement for Class<'_, '_> {
+	fn rust_module(&self) -> Cow<str> {
+		DefaultRustNativeElement::rust_module(self)
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultRustNativeElement::rust_name(self, style)
+	}
+
+	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+		if self.type_ref().as_string().is_some() {
+			"String".into()
+		} else {
+			let cpp_declname = self.cpp_name(CppNameStyle::Declaration);
+			if cpp_declname == "Vec" {
+				"VecN".into()
+			} else {
+				cpp_declname
+			}
+		}
+	}
+}
+
 impl RustNativeGeneratedElement for Class<'_, '_> {
 	fn element_safe_id(&self) -> String {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
@@ -478,4 +502,21 @@ fn method_delete(rust_local: &str, class_desc: ClassDesc, void: TypeRef) -> Stri
 		arguments: vec![],
 	}
 	.gen_cpp()
+}
+
+pub trait ClassExt {
+	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str>;
+}
+
+impl ClassExt for Class<'_, '_> {
+	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str> {
+		let mut out = self.rust_name(style);
+		if self.is_trait() && !self.is_abstract() {
+			out.to_mut().push_str("Trait");
+		}
+		if constness.is_const() {
+			out.to_mut().push_str("Const");
+		}
+		out
+	}
 }

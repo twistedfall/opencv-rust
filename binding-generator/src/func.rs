@@ -7,10 +7,11 @@ use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 use once_cell::sync::Lazy;
 use regex::Regex;
 
-use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefTypeHint};
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, TypeRefTypeHint};
+use crate::writer::rust_native::element::RustElement;
 use crate::{
-	comment, reserved_rename, settings, Class, DefaultElement, Element, EntityElement, EntityExt, Field, FieldTypeHint,
-	GeneratedType, GeneratorEnv, IteratorExt, StrExt, StringExt, TypeRef,
+	comment, settings, Class, DefaultElement, Element, EntityElement, EntityExt, Field, FieldTypeHint, GeneratedType,
+	GeneratorEnv, StringExt, TypeRef,
 };
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -260,6 +261,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		self.name_hint.as_deref()
 	}
 
+	pub fn gen_env(&self) -> &'ge GeneratorEnv<'tu> {
+		self.gen_env
+	}
+
 	pub fn type_hint(&self) -> FunctionTypeHint {
 		self.type_hint
 	}
@@ -387,6 +392,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn is_clone(&self) -> bool {
+		// fixme, don't rely on the rust name of "clone", so that it doesn't depend on Rust generator specific functionality
 		if self.rust_leafname(FishStyle::No) == "clone" {
 			if let Some(c) = self.kind().as_instance_method() {
 				!self.has_arguments() && self.return_type().as_class().map_or(false, |r| r == *c)
@@ -710,126 +716,6 @@ impl Element for Func<'_, '_> {
 		match style {
 			CppNameStyle::Declaration => decl_name.into(),
 			CppNameStyle::Reference => DefaultElement::cpp_decl_name_with_namespace(self, &decl_name),
-		}
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		DefaultElement::rust_module(self)
-	}
-
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultElement::rust_name(self, style)
-	}
-
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		let cpp_name = if let Some(name) = self.gen_env.get_rename_config(self.entity).map(|c| &c.rename) {
-			name.into()
-		} else {
-			self.cpp_name(CppNameStyle::Declaration)
-		};
-		let kind = self.kind();
-		let rust_name = if let Some(cls) = kind.as_constructor() {
-			let args = self.arguments();
-			#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
-			'ctor_name: loop {
-				if args.is_empty() {
-					break 'ctor_name "default";
-				} else if args.len() == 1 {
-					let arg_typeref = args[0].type_ref();
-					let class_arg = arg_typeref.as_reference().and_then(|typ| {
-						if let Some(ptr) = typ.as_smart_ptr() {
-							ptr.pointee()
-						} else {
-							typ
-						}
-						.as_class()
-					});
-					if let Some(other) = class_arg {
-						if *cls == other {
-							break 'ctor_name if arg_typeref.constness().is_const() {
-								"copy"
-							} else {
-								"copy_mut"
-							};
-						}
-					}
-				}
-				break 'ctor_name "new";
-			}
-			.into()
-		} else if let Some(..) = kind.as_conversion_method() {
-			let mut name: String = self.return_type().rust_name(NameStyle::decl()).into_owned();
-			name.cleanup_name();
-			format!("to_{}", name).into()
-		} else if let Some((cls, kind)) = kind.as_operator() {
-			if cpp_name.starts_with("operator") {
-				let name = match kind {
-					OperatorKind::Unsupported => cpp_name.as_ref(),
-					OperatorKind::Index => {
-						if self.constness().is_const() {
-							"get"
-						} else {
-							"get_mut"
-						}
-					}
-					OperatorKind::Add => "add",
-					OperatorKind::Sub => "sub",
-					OperatorKind::Mul => "mul",
-					OperatorKind::Div => "div",
-					OperatorKind::Deref => {
-						if self.constness().is_const() {
-							"try_deref"
-						} else {
-							"try_deref_mut"
-						}
-					}
-					OperatorKind::Equals => "equals",
-					OperatorKind::NotEquals => "not_equals",
-					OperatorKind::GreaterThan => "greater_than",
-					OperatorKind::GreaterThanOrEqual => "greater_than_or_equal",
-					OperatorKind::LessThan => "less_than",
-					OperatorKind::LessThanOrEqual => "less_than_or_equal",
-					OperatorKind::Incr => "incr",
-					OperatorKind::Decr => "decr",
-					OperatorKind::And => "and",
-					OperatorKind::Or => "or",
-					OperatorKind::Xor => "xor",
-					OperatorKind::BitwiseNot => "negate",
-				};
-				if kind.add_args_to_name() {
-					let args = self.arguments();
-					let is_single_arg_same_as_class = if let (Some(cls), [single_arg]) = (cls, args.as_slice()) {
-						single_arg
-							.type_ref()
-							.source()
-							.as_class()
-							.map_or(false, |single_class| &single_class == cls)
-					} else {
-						false
-					};
-					if args.is_empty() || is_single_arg_same_as_class {
-						name.into()
-					} else {
-						let args = args.into_iter().map(|arg| arg.type_ref().rust_simple_name()).join("_");
-						format!("{}_{}", name, args).into()
-					}
-				} else {
-					name.into()
-				}
-			} else {
-				cpp_name
-			}
-		} else {
-			cpp_name
-		};
-		if let Some(&name) = settings::FUNC_RENAME.get(self.identifier().as_ref()) {
-			if name.contains('+') {
-				reserved_rename(name.replace('+', rust_name.as_ref()).to_snake_case().into())
-			} else {
-				name.into()
-			}
-		} else {
-			reserved_rename(rust_name.to_snake_case().into())
 		}
 	}
 }

@@ -1,16 +1,18 @@
-use maplit::hashmap;
-use once_cell::sync::Lazy;
 use std::borrow::Cow;
 use std::fmt::Debug;
 
+use maplit::hashmap;
+use once_cell::sync::Lazy;
+
 use crate::func::{Kind, OperatorKind};
 use crate::type_ref::{Constness, ConstnessOverride};
-use crate::writer::rust_native::func::{cpp_return_handle, cpp_return_map, disambiguate_single_name};
-use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
 	settings, Class, CompiledInterpolation, CppNameStyle, Element, Field, FunctionTypeHint, IteratorExt, NamePool, StrExt,
 	StringExt, TypeRef,
 };
+
+use super::func::{cpp_return_handle, cpp_return_map, disambiguate_single_name};
+use super::type_ref::TypeRefExt;
 
 /// Allows generation of functions without tying them to the real C++ items
 pub struct CppFuncDesc<'tu, 'ge, 'r> {

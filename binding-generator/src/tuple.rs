@@ -1,10 +1,9 @@
 use std::borrow::Cow;
-use std::collections::HashSet;
 use std::fmt;
 
 use clang::{Entity, Type};
 
-use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TemplateArg};
+use crate::type_ref::{Constness, CppNameStyle, TemplateArg};
 use crate::{DefaultElement, Element, EntityElement, GeneratorEnv, IteratorExt, TypeRef};
 
 #[derive(Clone)]
@@ -47,51 +46,6 @@ impl<'tu, 'ge> Tuple<'tu, 'ge> {
 
 	pub fn constness(&self) -> Constness {
 		Constness::from_is_const(self.type_ref.is_const_qualified())
-	}
-
-	pub fn rust_localalias(&self) -> Cow<str> {
-		format!(
-			"TupleOf{typ}",
-			typ = self
-				.elements()
-				.into_iter()
-				.map(|e| e.rust_safe_id(true).into_owned())
-				.join("_")
-		)
-		.into()
-	}
-
-	pub fn rust_inner(&self) -> String {
-		let mut out = "(".to_string();
-		out.push_str(
-			&self
-				.elements()
-				.into_iter()
-				.map(|e| e.rust_name(NameStyle::ref_()).into_owned())
-				.join(", "),
-		);
-		out.push(')');
-		out
-	}
-
-	pub fn rust_element_module(&self) -> Cow<str> {
-		let mut elem_modules = self
-			.elements()
-			.into_iter()
-			.map(|elem_type| elem_type.rust_module().into_owned())
-			.collect::<HashSet<_>>()
-			.into_iter()
-			.filter(|m| m != "core")
-			.collect::<Vec<_>>();
-		if let Some(module) = elem_modules.pop() {
-			if elem_modules.is_empty() {
-				module.into()
-			} else {
-				panic!("Too many element modules: {:?} + {:?}", module, elem_modules)
-			}
-		} else {
-			self.rust_module()
-		}
 	}
 }
 
@@ -140,23 +94,6 @@ impl Element for Tuple<'_, '_> {
 			CppNameStyle::Declaration => decl_name.into(),
 			CppNameStyle::Reference => DefaultElement::cpp_decl_name_with_namespace(self, &decl_name),
 		}
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		DefaultElement::rust_module(self)
-	}
-
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultElement::rust_name(self, style)
-	}
-
-	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
-		format!(
-			"Tuple{fish}<{inner}>",
-			fish = fish_style.rust_qual(),
-			inner = self.rust_inner()
-		)
-		.into()
 	}
 }
 

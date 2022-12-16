@@ -66,6 +66,7 @@ mod generator_env;
 mod iterator_ext;
 mod memoize;
 mod name_pool;
+mod renderer;
 pub mod settings;
 mod smart_ptr;
 mod string_ext;

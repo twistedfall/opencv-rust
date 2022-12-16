@@ -1,13 +1,40 @@
-use maplit::hashmap;
-use once_cell::sync::Lazy;
 use std::borrow::Cow;
 
-use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, NameStyle};
-use crate::writer::rust_native::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
-use crate::{type_ref, CompiledInterpolation, Element, EntityElement, FunctionTypeHint, SmartPtr, StrExt, TypeRef};
+use maplit::hashmap;
+use once_cell::sync::Lazy;
 
+use crate::renderer::CppRenderer;
+use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, FishStyle, NameStyle};
+use crate::{CompiledInterpolation, Element, EntityElement, FunctionTypeHint, SmartPtr, StrExt, TypeRef};
+
+use super::class::ClassExt;
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
+
+impl RustElement for SmartPtr<'_, '_> {
+	fn rust_module(&self) -> Cow<str> {
+		self.pointee().rust_module().into_owned().into()
+	}
+
+	fn rust_namespace(&self) -> Cow<str> {
+		"core".into()
+	}
+
+	fn rust_name(&self, style: NameStyle) -> Cow<str> {
+		DefaultRustNativeElement::rust_name(self, style)
+	}
+
+	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
+		format!(
+			"Ptr{fish}<{typ}>",
+			fish = fish_style.rust_qual(),
+			typ = self.pointee().rust_name(NameStyle::ref_()),
+		)
+		.into()
+	}
+}
 
 impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 	fn element_safe_id(&self) -> String {
@@ -97,7 +124,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			inner_cpp_extern_const.to_mut().push('*');
 		}
 
-		let mut const_renderer = type_ref::CppRenderer::new(CppNameStyle::Reference, "", true);
+		let mut const_renderer = CppRenderer::new(CppNameStyle::Reference, "", true);
 		const_renderer.constness_override = ConstnessOverride::Const;
 		let cpp_ref_const = type_ref.render(const_renderer);
 
@@ -150,6 +177,16 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		inter_vars.insert("base_cast", base_cast.into());
 
 		TPL.interpolate(&inter_vars)
+	}
+}
+
+pub trait SmartPtrExt {
+	fn rust_localalias(&self) -> Cow<str>;
+}
+
+impl SmartPtrExt for SmartPtr<'_, '_> {
+	fn rust_localalias(&self) -> Cow<str> {
+		format!("PtrOf{typ}", typ = self.pointee().rust_safe_id(false)).into()
 	}
 }
 

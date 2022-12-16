@@ -1,12 +1,28 @@
-use crate::{Field, IteratorExt};
 use std::borrow::Cow;
+use std::fmt;
+use std::fmt::Write;
 
 use crate::type_ref::{
-	Constness, ConstnessOverride, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, Signedness, StrEnc, StrType, TypeRef,
+	Constness, ConstnessOverride, CppNameStyle, Dir, ExternDir, FishStyle, Kind, NameStyle, Signedness, StrEnc, StrType, TypeRef,
 };
+use crate::{IteratorExt, StringExt};
+
+use super::element::RustElement;
+use super::function::FunctionExt;
+use super::renderer::RustRenderer;
+use super::rust_disambiguate_names;
+use super::smart_ptr::SmartPtrExt;
+use super::tuple::TupleExt;
+use super::vector::VectorExt;
 
 pub trait TypeRefExt {
 	fn format_as_array(&self, elem_type: &str, size: Option<usize>) -> String;
+
+	fn rust_safe_id(&self, add_const: bool) -> Cow<str>;
+	fn rust_module(&self) -> Cow<str>;
+	fn rust_simple_name(&self) -> String;
+	fn rust_name(&self, name_style: NameStyle) -> Cow<str>;
+	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str>;
 
 	fn rust_self_func_decl(&self, method_constness: Constness) -> String;
 	fn rust_arg_func_decl(&self, name: &str) -> String;
@@ -18,8 +34,10 @@ pub trait TypeRefExt {
 	fn rust_arg_func_call(&self, name: &str, constness: ConstnessOverride) -> String;
 	fn rust_arg_forward(&self, name: &str) -> String;
 	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String;
+	fn rust_extern(&self, dir: ExternDir) -> Cow<str>;
 	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str>;
 	fn rust_extern_return_fallible(&self) -> Cow<str>;
+	fn rust_lifetime_count(&self) -> usize;
 
 	fn cpp_self_func_decl(&self, method_constness: Constness) -> String;
 	fn cpp_arg_func_decl(&self, name: &str) -> String;
@@ -37,6 +55,75 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 			typ = elem_type,
 			size = size.map_or_else(|| "".to_string(), |s| format!("; {}", s))
 		)
+	}
+
+	fn rust_safe_id(&self, add_const: bool) -> Cow<str> {
+		let mut out = String::with_capacity(64);
+		let kind = self.kind();
+		if add_const && self.clang_constness().is_const() {
+			out.push_str("const_");
+		}
+		out.push_str(&match kind {
+			Kind::Array(inner, ..) => inner.rust_safe_id(add_const).into_owned() + "_X",
+			Kind::StdVector(vec) => vec.rust_localalias().into_owned(),
+			Kind::StdTuple(tuple) => tuple.rust_localalias().into_owned(),
+			Kind::Pointer(inner) => {
+				let mut inner_safe_id: String = inner.rust_safe_id(add_const).into_owned();
+				if !self.is_extern_by_ptr() {
+					inner_safe_id += "_X";
+				}
+				inner_safe_id
+			}
+			Kind::Reference(inner) | Kind::RValueReference(inner) => inner.rust_safe_id(add_const).into_owned(),
+			Kind::SmartPtr(ptr) => ptr.rust_localalias().into_owned(),
+			Kind::Class(cls) => cls.rust_name(NameStyle::decl()).into_owned(),
+			Kind::Primitive(..) | Kind::Enum(..) | Kind::Function(..) | Kind::Typedef(..) | Kind::Generic(..) | Kind::Ignored => {
+				self.rust_name(NameStyle::decl()).into_owned()
+			}
+		});
+		out.cleanup_name();
+		out.into()
+	}
+
+	fn rust_module(&self) -> Cow<str> {
+		match self.kind() {
+			Kind::Primitive(..) => "core".into(),
+			Kind::StdVector(vec) => vec.rust_element_module().into_owned().into(),
+			Kind::StdTuple(tuple) => tuple.rust_element_module().into_owned().into(),
+			Kind::Array(inner, ..) | Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => {
+				inner.rust_module().into_owned().into()
+			}
+			Kind::SmartPtr(ptr) => ptr.rust_module().into_owned().into(),
+			Kind::Class(cls) => cls.rust_module().into_owned().into(),
+			Kind::Enum(enm) => enm.rust_module().into_owned().into(),
+			Kind::Function(..) => {
+				"core".into() // fixme
+			}
+			Kind::Typedef(tdef) => tdef.rust_module().into_owned().into(),
+			Kind::Generic(..) | Kind::Ignored => "core".into(),
+		}
+	}
+
+	/// For when a type needs to be part of the user-visible Rust method name
+	///
+	/// Return a lightweight lowercase type representation, might not be precise. For example it's used for operator bindings so
+	/// that `operator &` on 2 `Mat`s translates into `and_mat_mat()`.
+	fn rust_simple_name(&self) -> String {
+		let maybe_ptr = self.as_pointer().or_else(|| self.as_reference());
+		let type_ref = if let Some(inner) = maybe_ptr.as_ref() {
+			inner
+		} else {
+			self
+		};
+		type_ref.rust_name(NameStyle::Declaration).to_lowercase()
+	}
+
+	fn rust_name(&self, name_style: NameStyle) -> Cow<str> {
+		self.rust_name_ext(name_style, Lifetime::elided())
+	}
+
+	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str> {
+		self.render(RustRenderer::new(name_style, lifetime, self.is_pass_by_ptr()))
 	}
 
 	fn rust_self_func_decl(&self, method_constness: Constness) -> String {
@@ -132,14 +219,14 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 				format!("string_array_arg_mut!({name})", name = name)
 			};
 		} else if let Some(func) = self.as_function() {
-			let args = Field::rust_disambiguate_names(func.arguments()).collect::<Vec<_>>();
+			let args = rust_disambiguate_names(func.arguments()).collect::<Vec<_>>();
 			if let Some((userdata_name, _)) = args.iter().find(|(_, f)| f.is_user_data()).cloned() {
 				let ret = func.return_type();
 				let tramp_args = args
 					.into_iter()
 					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
 					.join(", ");
-				let fw_args = Field::rust_disambiguate_names(func.rust_arguments())
+				let fw_args = rust_disambiguate_names(func.rust_arguments())
 					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
 					.join(", ");
 				return format!(
@@ -298,6 +385,72 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		}
 	}
 
+	fn rust_extern(&self, dir: ExternDir) -> Cow<str> {
+		let constness = match dir {
+			ExternDir::Pure => self.constness(),
+			ExternDir::ToCpp(constness) => constness.with(self.constness()),
+			ExternDir::FromCpp => Constness::Mut,
+		};
+		#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
+		'typ: loop {
+			if let Some(arg_dir) = self.as_string() {
+				break 'typ match dir {
+					ExternDir::ToCpp(_) | ExternDir::Pure => match arg_dir {
+						Dir::In(_) => format!("*{}c_char", constness.rust_qual(true)).into(),
+						Dir::Out(_) => "*mut *mut c_void".into(),
+					},
+					ExternDir::FromCpp => "*mut c_void".into(),
+				};
+			}
+			if self.is_extern_by_ptr() {
+				break 'typ if constness.is_const() {
+					"*const c_void"
+				} else {
+					"*mut c_void"
+				}
+				.into();
+			}
+			if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
+				let mut out = String::with_capacity(64);
+				write!(out, "*{}", self.constness().rust_qual(true)).expect("Impossible");
+				if inner.is_void() {
+					out += "c_void";
+				} else if self.as_string().is_some() {
+					out += "c_char";
+				} else {
+					out += inner.rust_extern(ExternDir::Pure).as_ref()
+				}
+				break 'typ out.into();
+			}
+			if let Some((elem, len)) = self.as_fixed_array() {
+				break 'typ format!(
+					"*{cnst}[{typ}; {len}]",
+					cnst = self.constness().rust_qual(true),
+					typ = elem.rust_extern(ExternDir::Pure),
+					len = len,
+				)
+				.into();
+			}
+			if let Some(elem) = self.as_variable_array() {
+				let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr))) {
+					// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
+					// argv is treated as array of output arguments and it doesn't seem to be meant this way
+					format!("*{cnst}c_char", cnst = elem.clang_constness().rust_qual(true)).into()
+				} else {
+					elem.rust_extern(ExternDir::Pure)
+				};
+				break 'typ format!("*{cnst}{typ}", cnst = self.constness().rust_qual(true), typ = typ).into();
+			}
+			if let Some(func) = self.as_function() {
+				break 'typ func.rust_extern().into_owned().into();
+			}
+			if self.as_simple_class().is_some() && matches!(dir, ExternDir::ToCpp(_)) {
+				break 'typ format!("*const {}", self.rust_name(NameStyle::ref_())).into();
+			}
+			break 'typ self.rust_name(NameStyle::ref_());
+		}
+	}
+
 	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str> {
 		if self.as_abstract_class_ptr().is_some() {
 			format!(
@@ -334,6 +487,35 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 			format!("Result<{ext}>", ext = self.rust_extern(ExternDir::FromCpp)).into()
 		}
 	}
+
+	fn rust_lifetime_count(&self) -> usize {
+		if self.as_string().is_some() {
+			0
+		} else {
+			match self.kind() {
+				Kind::Pointer(inner) => {
+					if inner.is_void() {
+						0
+					} else {
+						1 + inner.rust_lifetime_count()
+					}
+				}
+				Kind::Reference(inner) => {
+					if !((inner.as_simple_class().is_some() || inner.is_enum()) && inner.clang_constness().is_const()) {
+						1 + inner.rust_lifetime_count()
+					} else {
+						0
+					}
+				}
+				Kind::Typedef(tdef) => tdef.underlying_type_ref().rust_lifetime_count(),
+				_ => 0,
+			}
+		}
+	}
+
+	// fn rust_lifetimes(&self) -> impl Iterator<Item = Lifetime> {
+	// 	Lifetime::explicit().into_iter().take(self.rust_lifetime_count())
+	// }
 
 	fn cpp_self_func_decl(&self, method_constness: Constness) -> String {
 		let cnst = if method_constness.is_const() {
@@ -446,5 +628,100 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 			return format!("delete[] {name}_out", name = name);
 		}
 		"".to_string()
+	}
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Lifetime {
+	Elided,
+	Static,
+	Explicit(u8),
+}
+
+impl Lifetime {
+	pub fn elided() -> Self {
+		Self::Elided
+	}
+
+	pub fn statik() -> Self {
+		Self::Static
+	}
+
+	pub fn explicit() -> Self {
+		Self::Explicit(0)
+	}
+
+	pub fn is_elided(&self) -> bool {
+		matches!(self, Self::Elided)
+	}
+
+	pub fn is_explicit(&self) -> bool {
+		matches!(self, Self::Explicit(_))
+	}
+
+	pub fn next(self) -> Option<Self> {
+		match self {
+			Self::Elided => Some(Self::Elided),
+			Self::Static => Some(Self::Static),
+			Self::Explicit(n) if n >= 25 => None,
+			Self::Explicit(n) => Some(Self::Explicit(n + 1)),
+		}
+	}
+}
+
+impl IntoIterator for Lifetime {
+	type Item = Lifetime;
+	type IntoIter = LifetimeIterator;
+
+	fn into_iter(self) -> LifetimeIterator {
+		LifetimeIterator {
+			cur_lifetime: Some(self),
+		}
+	}
+}
+
+impl fmt::Display for Lifetime {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		#[inline]
+		fn write_align(f: &mut fmt::Formatter) -> fmt::Result {
+			if f.align().is_some() {
+				match f.fill() {
+					',' => f.write_str(", ")?,
+					' ' => f.write_char(' ')?,
+					_ => {}
+				}
+			}
+			Ok(())
+		}
+		match *self {
+			Self::Elided => Ok(()),
+			Self::Static => {
+				let s = "'static";
+				f.write_str(s)?;
+				write_align(f)
+			}
+			Self::Explicit(n) if n >= 25 => {
+				panic!("Too many lifetimes")
+			}
+			Self::Explicit(n) => {
+				f.write_char('\'')?;
+				f.write_char(char::from(b'a' + n))?;
+				write_align(f)
+			}
+		}
+	}
+}
+
+pub struct LifetimeIterator {
+	cur_lifetime: Option<Lifetime>,
+}
+
+impl Iterator for LifetimeIterator {
+	type Item = Lifetime;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		let out = self.cur_lifetime;
+		self.cur_lifetime = self.cur_lifetime.and_then(|l| l.next());
+		out
 	}
 }
