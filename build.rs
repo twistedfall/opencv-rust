@@ -256,7 +256,7 @@ fn build_clang_generator() -> io::Result<Child> {
 	let mut cargo = Command::new(cargo_bin);
 	// generator script is quite slow in debug mode, so we force it to be built in release mode
 	cargo
-		.args(&[
+		.args([
 			"build",
 			"--release",
 			"--package",
@@ -266,7 +266,7 @@ fn build_clang_generator() -> io::Result<Child> {
 		])
 		.env("CARGO_TARGET_DIR", &*OUT_DIR);
 	if let Some(host_triple) = HOST_TRIPLE.as_ref() {
-		cargo.args(&["--target", host_triple]);
+		cargo.args(["--target", host_triple]);
 	}
 	println!("=== Running: {:?}", &cargo);
 	cargo.stdout(Stdio::piped());

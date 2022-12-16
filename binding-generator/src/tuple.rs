@@ -70,7 +70,7 @@ impl<'tu, 'ge> Tuple<'tu, 'ge> {
 				.map(|e| e.rust_name(NameStyle::ref_()).into_owned())
 				.join(", "),
 		);
-		out.push_str(")");
+		out.push(')');
 		out
 	}
 
@@ -84,7 +84,7 @@ impl<'tu, 'ge> Tuple<'tu, 'ge> {
 			.filter(|m| m != "core")
 			.collect::<Vec<_>>();
 		if let Some(module) = elem_modules.pop() {
-			if elem_modules.len() == 0 {
+			if elem_modules.is_empty() {
 				module.into()
 			} else {
 				panic!("Too many element modules: {:?} + {:?}", module, elem_modules)

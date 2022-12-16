@@ -140,8 +140,8 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		ret_convert.push(format!("let ret = {};", ret_map).into());
 	}
 	let mut attributes = String::new();
-	if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
-		attributes = format!("#[cfg({})]", attrs.0);
+	if let Some((rust_attr, _)) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
+		attributes = format!("#[cfg({})]", rust_attr);
 	}
 	if f.is_no_discard() {
 		attributes.push_str("#[must_use]");
@@ -322,8 +322,8 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		}
 
 		let mut attributes = String::new();
-		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
-			attributes = format!("#[cfg({})]", attrs.0);
+		if let Some((rust_attr, _)) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
+			attributes = format!("#[cfg({})]", rust_attr);
 		}
 		let mut args = vec![];
 		if let Some(cls) = self.kind().as_instance_method() {

@@ -183,7 +183,7 @@ fn preprocess_formula(formula: &str) -> String {
 
 	let mut out = formula.to_string();
 	for (re, repl) in &*MACROS {
-		out.replace_in_place_regex(re, *repl);
+		out.replace_in_place_regex(re, repl);
 	}
 	out
 }

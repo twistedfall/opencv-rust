@@ -283,7 +283,7 @@ fn simple_struct_return_infallible() -> Result<()> {
 		imgproc,
 	};
 	/*
-	There previously was in issue that return of the small simple structs like Point2f (2 floats, 64 bits in total) was handled
+	There previously was an issue that return of the small simple structs like Point2f (2 floats, 64 bits in total) was handled
 	differently by Rust (v1.57.0) and default compilers in Ubuntu 20.04 (Gcc 9.3.0 & Clang 10.0.0). That mismatch led to
 	miscellaneous memory problems like segmentation faults. That shouldn't happen anymore because such returns are now handled by
 	the output argument.
@@ -313,6 +313,8 @@ fn tuple() -> Result<()> {
 
 		let src_tuple = (10, 20.);
 		let tuple = TupleOfi32_f32::new(src_tuple);
+		assert_eq!(10, tuple.get_0());
+		assert_eq!(20., tuple.get_1());
 		assert_eq!(src_tuple, tuple.into_tuple());
 	}
 
@@ -323,6 +325,8 @@ fn tuple() -> Result<()> {
 
 		let src_tuple = (Rect::new(1, 2, 3, 4), 98);
 		let tuple = TupleOfRect_i32::new(src_tuple);
+		assert_eq!(Rect::new(1, 2, 3, 4), tuple.get_0());
+		assert_eq!(98, tuple.get_1());
 		assert_eq!(src_tuple, tuple.into_tuple());
 	}
 
@@ -334,6 +338,8 @@ fn tuple() -> Result<()> {
 		let mat = Mat::new_rows_cols_with_default(10, 20, f64::typ(), Scalar::all(76.))?;
 		let src_tuple = (mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?, 8);
 		let tuple = TupleOfUMat_u8::new(src_tuple);
+		assert_eq!(10, tuple.get_0().rows());
+		assert_eq!(8, tuple.get_1());
 		let (res_umat, res_val) = tuple.into_tuple();
 		let res_mat = res_umat.get_mat(AccessFlag::ACCESS_READ)?;
 		assert_eq!(10, res_mat.rows());

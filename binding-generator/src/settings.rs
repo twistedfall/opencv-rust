@@ -525,6 +525,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 	}
 });
 
+/// identifier => (rust_attr, cpp_attr)
 pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {
 	hashmap! {
 		// ### core ###

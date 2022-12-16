@@ -8,7 +8,7 @@ use crate::Result;
 /// This trait is somewhat unnecessary complex because of the need of handling String, we need to be able to
 /// pass &str as argument to functions that await String and do necessary conversion through CString.
 #[doc(hidden)]
-pub trait OpenCVType<'a>: Sized + OpenCVTypeArg<'a> {
+pub trait OpenCVType<'a>: OpenCVTypeArg<'a> {
 	/// Type when passed as argument to function, e.g. &str for String, for most other types it's Self
 	#[doc(hidden)]
 	type Arg: OpenCVTypeArg<'a>;

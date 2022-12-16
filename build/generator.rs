@@ -32,13 +32,13 @@ fn copy_indent(mut read: impl BufRead, mut write: impl Write, indent: &str) -> R
 
 fn file_move_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 	if !target_dir.exists() {
-		fs::create_dir_all(&target_dir)?;
+		fs::create_dir_all(target_dir)?;
 	}
 	let src_filename = src_file.file_name().ok_or("Can't calculate filename")?;
 	let target_file = target_dir.join(src_filename);
 	// rename doesn't work across fs boundaries for example
-	if fs::rename(&src_file, &target_file).is_err() {
-		fs::copy(&src_file, &target_file)?;
+	if fs::rename(src_file, &target_file).is_err() {
+		fs::copy(src_file, &target_file)?;
 		fs::remove_file(src_file)?;
 	}
 	Ok(target_file)
@@ -74,7 +74,7 @@ pub fn gen_wrapper(
 
 	let clang = clang::Clang::new().expect("Cannot initialize clang");
 	eprintln!("=== Clang: {}", clang::get_version());
-	let gen = binding_generator::Generator::new(opencv_header_dir, &additional_include_dirs, &*SRC_CPP_DIR, clang);
+	let gen = binding_generator::Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR, clang);
 	eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 
 	eprintln!("=== Building binding-generator binary:");
@@ -122,7 +122,7 @@ pub fn gen_wrapper(
 					.arg(&*opencv_header_dir)
 					.arg(&*SRC_CPP_DIR)
 					.arg(&*OUT_DIR)
-					.arg(&module)
+					.arg(module)
 					.arg(additional_include_dirs.join(","));
 				eprintln!("=== Running: {:#?}", bin_generator);
 				let res = bin_generator.status().expect("Can't run bindings generator");
@@ -175,7 +175,7 @@ pub fn gen_wrapper(
 				.create(true)
 				.truncate(true)
 				.write(true)
-				.open(&module_types_cpp)?;
+				.open(module_types_cpp)?;
 			let mut type_files = files_with_extension(&OUT_DIR, "cpp")?
 				.filter(|f| is_type_file(f, module))
 				.collect::<Vec<_>>();
@@ -190,8 +190,8 @@ pub fn gen_wrapper(
 		write_has_module(&mut hub_rs, module)?;
 		writeln!(hub_rs, "pub mod {};", module)?;
 		let module_filename = format!("{}.rs", module);
-		let target_file = file_move_to_dir(&OUT_DIR.join(&module_filename), &target_module_dir)?;
-		let mut f = OpenOptions::new().append(true).open(&target_file)?;
+		let target_file = file_move_to_dir(&OUT_DIR.join(module_filename), &target_module_dir)?;
+		let mut f = OpenOptions::new().append(true).open(target_file)?;
 		add_manual(&mut f, module)?;
 
 		// merge multiple *-.type.rs files into a single types.rs

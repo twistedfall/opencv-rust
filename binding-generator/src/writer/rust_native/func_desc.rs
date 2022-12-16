@@ -137,8 +137,8 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 		// attributes
 		let mut attributes_begin = String::new();
 		let mut attributes_end = String::new();
-		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(self.extern_name.as_ref()) {
-			attributes_begin = format!("#if {}", attrs.1);
+		if let Some((_, cpp_attr)) = settings::FUNC_CFG_ATTR.get(self.extern_name.as_ref()) {
+			attributes_begin = format!("#if {}", cpp_attr);
 			attributes_end = "#endif".to_string();
 		}
 
@@ -209,7 +209,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 		let catch = if self.is_infallible {
 			"".into()
 		} else {
-			let typ = if mut_ret_wrapper_full.contains(",") {
+			let typ = if mut_ret_wrapper_full.contains(',') {
 				format!("OCVRS_TYPE({})", mut_ret_wrapper_full).into()
 			} else {
 				mut_ret_wrapper_full
@@ -228,7 +228,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 			"call" => self.cpp_call_invoke().into(),
 			"post_call_args" => post_call_args.join("\n").into(),
 			"cleanup_args" => cleanup_args.join("\n").into(),
-			"return" => ret.into(),
+			"return" => ret,
 			"catch" => catch,
 			"attributes_end" => attributes_end.into(),
 		})

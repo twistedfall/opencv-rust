@@ -135,7 +135,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		}
 		let mut methods = vec![];
 		if gen_ctor {
-			methods.push(method_new(&rust_localalias, &type_ref, &pointee_type).into());
+			methods.push(method_new(&rust_localalias, &type_ref, &pointee_type));
 		};
 		let smartptr_desc = ClassDesc {
 			is_by_ptr: true,

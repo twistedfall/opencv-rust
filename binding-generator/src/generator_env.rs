@@ -335,7 +335,7 @@ impl<'tu> GeneratorEnv<'tu> {
 		self
 			.resolve_type(typ)
 			.map(|typ| TypeRef::new(typ, self))
-			.expect(&format!("Can't resolve type: {}", typ))
+			.unwrap_or_else(|| panic!("Can't resolve type: {}", typ))
 	}
 
 	pub fn is_used_in_smart_ptr(&self, entity: Entity) -> bool {

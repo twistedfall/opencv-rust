@@ -12,37 +12,41 @@ use super::{cleanup_lib_filename, cmake_probe::CmakeProbe, get_version_from_head
 struct PackageName;
 
 impl PackageName {
-	pub fn env() -> Option<Cow<'static, str>> {
-		env::var("OPENCV_PACKAGE_NAME").ok().map(|x| x.into())
+	pub fn env() -> Option<String> {
+		env::var("OPENCV_PACKAGE_NAME").ok()
 	}
 
-	pub fn env_pkg_config() -> Option<Cow<'static, str>> {
-		env::var("OPENCV_PKGCONFIG_NAME").ok().map(|x| x.into())
+	pub fn env_pkg_config() -> Option<String> {
+		env::var("OPENCV_PKGCONFIG_NAME").ok()
 	}
 
-	pub fn env_cmake() -> Option<Cow<'static, str>> {
-		env::var("OPENCV_CMAKE_NAME").ok().map(|x| x.into())
+	pub fn env_cmake() -> Option<String> {
+		env::var("OPENCV_CMAKE_NAME").ok()
 	}
 
-	pub fn env_vcpkg() -> Option<Cow<'static, str>> {
-		env::var("OPENCV_VCPKG_NAME").ok().map(|x| x.into())
+	pub fn env_vcpkg() -> Option<String> {
+		env::var("OPENCV_VCPKG_NAME").ok()
 	}
 
 	pub fn pkg_config() -> Vec<Cow<'static, str>> {
 		if let Some(env_name) = Self::env().or_else(Self::env_pkg_config) {
-			vec![env_name]
+			vec![env_name.into()]
 		} else {
 			vec!["opencv4".into(), "opencv".into()]
 		}
 	}
 
 	pub fn cmake() -> Cow<'static, str> {
-		Self::env().or_else(Self::env_cmake).unwrap_or_else(|| "OpenCV".into())
+		if let Some(env_name) = Self::env().or_else(Self::env_cmake) {
+			env_name.into()
+		} else {
+			"OpenCV".into()
+		}
 	}
 
 	pub fn vcpkg() -> Vec<Cow<'static, str>> {
 		if let Some(env_name) = Self::env().or_else(Self::env_vcpkg) {
-			vec![env_name]
+			vec![env_name.into()]
 		} else {
 			vec!["opencv4".into(), "opencv3".into()]
 		}
@@ -487,6 +491,7 @@ impl Library {
 				match probe() {
 					Ok(lib) => {
 						out = Some(lib);
+						eprintln!("=== Successfully probed using: {}", name);
 						break;
 					}
 					Err(e) => {

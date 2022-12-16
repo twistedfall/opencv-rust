@@ -914,10 +914,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			if let Some(func) = self.as_function() {
 				break 'typ func.rust_extern().into_owned().into();
 			}
-			if self.as_simple_class().is_some() {
-				if matches!(dir, ExternDir::ToCpp(_)) {
-					break 'typ format!("*const {}", self.rust_name(NameStyle::ref_())).into();
-				}
+			if self.as_simple_class().is_some() && matches!(dir, ExternDir::ToCpp(_)) {
+				break 'typ format!("*const {}", self.rust_name(NameStyle::ref_())).into();
 			}
 			break 'typ self.rust_name(NameStyle::ref_());
 		}
