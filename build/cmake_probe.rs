@@ -60,8 +60,8 @@ impl<'r> CmakeProbe<'r> {
 	fn make_cmd(&self) -> Command {
 		let mut out = Command::new(&self.cmake_bin);
 		out.current_dir(&self.build_dir)
-			.args(&["-S"])
-			.arg(&self.src_dir)
+			.args(["-S"])
+			.arg(self.src_dir)
 			.arg(format!("-DOCVRS_PACKAGE_NAME={}", &self.package_name));
 
 		if let Some(toolchain) = self.toolchain {
@@ -156,7 +156,7 @@ impl<'r> CmakeProbe<'r> {
 					link_libs.push(file.to_str().expect("Non-UTF8 filename").to_string());
 				}
 			} else {
-				eprintln!("=== Unexpected cmake compiler argument found: {}", arg);
+				eprintln!("=== Unexpected cmake compiler argument found: {arg}");
 			}
 		}
 	}
@@ -207,14 +207,14 @@ impl<'r> CmakeProbe<'r> {
 		self.prepare()?;
 
 		let mut cmd = self.make_cmd();
-		cmd.args(&["-G", "Unix Makefiles"]);
+		cmd.args(["-G", "Unix Makefiles"]);
 
 		let mut version = None;
 		let mut include_paths = Vec::with_capacity(2);
 		let mut link_paths = Vec::with_capacity(2);
 		let mut link_libs = Vec::with_capacity(64);
 
-		eprintln!("=== cmake makefiles probe command: {:?}", cmd);
+		eprintln!("=== cmake makefiles probe command: {cmd:?}");
 		cmd.output()
 			.map_err(Box::<dyn std::error::Error>::from)
 			.and_then(|output| Self::extract_from_output(&output, &mut version, &mut include_paths))?;
@@ -234,7 +234,7 @@ impl<'r> CmakeProbe<'r> {
 		self.prepare()?;
 
 		let mut cmd = self.make_cmd();
-		cmd.args(&["-G", "Ninja"]);
+		cmd.args(["-G", "Ninja"]);
 		if let Some(ninja_bin) = ninja_bin {
 			cmd.arg(format!(
 				"-DCMAKE_MAKE_PROGRAM={}",
@@ -247,7 +247,7 @@ impl<'r> CmakeProbe<'r> {
 		let mut link_paths = Vec::with_capacity(2);
 		let mut link_libs = Vec::with_capacity(64);
 
-		eprintln!("=== cmake ninja probe command: {:?}", cmd);
+		eprintln!("=== cmake ninja probe command: {cmd:?}");
 		cmd.output()
 			.map_err(Box::<dyn std::error::Error>::from)
 			.and_then(|output| Self::extract_from_output(&output, &mut version, &mut include_paths))?;
@@ -270,13 +270,13 @@ impl<'r> CmakeProbe<'r> {
 		let mut link_paths = Vec::with_capacity(2);
 		let mut link_libs = Vec::with_capacity(64);
 		let mut cmd = self.make_cmd();
-		cmd.args(&["--find-package", "-DCOMPILER_ID=GNU", "-DLANGUAGE=CXX", "-DMODE=COMPILE"])
+		cmd.args(["--find-package", "-DCOMPILER_ID=GNU", "-DLANGUAGE=CXX", "-DMODE=COMPILE"])
 			.arg(format!("-DNAME={}", self.package_name));
-		eprintln!("=== cmake find-package compile probe command: {:?}", cmd);
+		eprintln!("=== cmake find-package compile probe command: {cmd:?}");
 		cmd.output().map_err(Box::<dyn std::error::Error>::from).and_then(|output| {
 			if output.status.success() {
 				let stdout = String::from_utf8(output.stdout)?;
-				eprintln!("=== cmake include arguments: {:#?}", stdout);
+				eprintln!("=== cmake include arguments: {stdout:#?}");
 				Self::extract_from_cmdline(&stdout, &mut include_paths, &mut link_paths, &mut link_libs);
 				Ok(())
 			} else {
@@ -292,13 +292,13 @@ impl<'r> CmakeProbe<'r> {
 		})?;
 
 		cmd = self.make_cmd();
-		cmd.args(&["--find-package", "-DCOMPILER_ID=GNU", "-DLANGUAGE=CXX", "-DMODE=LINK"])
+		cmd.args(["--find-package", "-DCOMPILER_ID=GNU", "-DLANGUAGE=CXX", "-DMODE=LINK"])
 			.arg(format!("-DNAME={}", self.package_name));
-		eprintln!("=== cmake find-package link probe command: {:?}", cmd);
+		eprintln!("=== cmake find-package link probe command: {cmd:?}");
 		cmd.output().map_err(Box::<dyn std::error::Error>::from).and_then(|output| {
 			if output.status.success() {
 				let stdout = String::from_utf8(output.stdout)?;
-				eprintln!("=== cmake link arguments: {:#?}", stdout);
+				eprintln!("=== cmake link arguments: {stdout:#?}");
 				Self::extract_from_cmdline(&stdout, &mut include_paths, &mut link_paths, &mut link_libs);
 				Ok(())
 			} else {

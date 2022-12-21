@@ -100,7 +100,7 @@ impl Library {
 				let filename = cleanup_lib_filename(filename).unwrap_or(filename);
 				filename.to_str().map(|f| {
 					if is_framework {
-						format!("framework={}", f)
+						format!("framework={f}")
 					} else {
 						f.to_owned()
 					}
@@ -119,7 +119,7 @@ impl Library {
 	fn emit_link_search(path: &Path, typ: Option<&str>) -> String {
 		format!(
 			"cargo:rustc-link-search={}{}",
-			typ.map_or_else(|| "".to_string(), |t| format!("{}=", t)),
+			typ.map_or_else(|| "".to_string(), |t| format!("{t}=")),
 			path.to_str().expect("Can't convert link search path to UTF-8 string")
 		)
 	}
@@ -128,7 +128,7 @@ impl Library {
 	fn emit_link_lib(lib: &str, typ: Option<&str>) -> String {
 		format!(
 			"cargo:rustc-link-lib={}{}",
-			typ.map_or_else(|| "".to_string(), |t| format!("{}=", t)),
+			typ.map_or_else(|| "".to_string(), |t| format!("{t}=")),
 			lib
 		)
 	}
@@ -198,7 +198,7 @@ impl Library {
 			.filter(|p| p.is_dir())
 			.flat_map(|p| p.read_dir().into_iter().flatten().flatten()) // all subdirs inside those dirs
 			.map(|e| e.path())
-			.flat_map(|p| [p.join(format!("bin/{}", tool_name)), p.join(format!("bin/{}.exe", tool_name))])
+			.flat_map(|p| [p.join(format!("bin/{tool_name}")), p.join(format!("bin/{tool_name}.exe"))])
 			.filter_map(|p| canonicalize(p).ok())
 			.find(|p| p.is_file())
 	}
@@ -213,9 +213,9 @@ impl Library {
 				return Err("Some environment variables extend the system default paths (i.e. start with '+')".into());
 			}
 			eprintln!("=== Configuring OpenCV library from the environment:");
-			eprintln!("===   include_paths: {}", include_paths);
-			eprintln!("===   link_paths: {}", link_paths);
-			eprintln!("===   link_libs: {}", link_libs);
+			eprintln!("===   include_paths: {include_paths}");
+			eprintln!("===   link_paths: {link_paths}");
+			eprintln!("===   link_libs: {link_libs}");
 			let mut cargo_metadata = Vec::with_capacity(64);
 			let include_paths: Vec<_> = include_paths.iter().map(PathBuf::from).collect();
 
@@ -309,15 +309,13 @@ impl Library {
 			.probe_ninja(ninja_bin)
 			.or_else(|e| {
 				eprintln!(
-					"=== Probing with cmake ninja generator failed, will try Makefile generator, error: {}",
-					e
+					"=== Probing with cmake ninja generator failed, will try Makefile generator, error: {e}"
 				);
 				cmake.probe_makefile()
 			})
 			.or_else(|e| {
 				eprintln!(
-					"=== Probing with cmake Makefile generator failed, will try deprecated find_package, error: {}",
-					e
+					"=== Probing with cmake Makefile generator failed, will try deprecated find_package, error: {e}"
 				);
 				cmake.probe_find_package()
 			})?;
@@ -426,8 +424,7 @@ impl Library {
 			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
 		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some() || cfg!(target_os = "windows");
 		eprintln!(
-			"=== Detected probe priority based on environment vars: pkg_config: {}, cmake: {}, vcpkg: {}",
-			explicit_pkg_config, explicit_cmake, explicit_vcpkg
+			"=== Detected probe priority based on environment vars: pkg_config: {explicit_pkg_config}, cmake: {explicit_cmake}, vcpkg: {explicit_vcpkg}"
 		);
 
 		let disabled_probes = env::var("OPENCV_DISABLE_PROBES");
@@ -479,7 +476,7 @@ impl Library {
 		}
 
 		let probe_list = probes.iter().map(|(name, _)| *name).collect::<Vec<_>>().join(", ");
-		eprintln!("=== Probing the OpenCV library in the following order: {}", probe_list);
+		eprintln!("=== Probing the OpenCV library in the following order: {probe_list}");
 
 		let mut out = None;
 		for &(name, probe) in &probes {
@@ -491,13 +488,12 @@ impl Library {
 					}
 					Err(e) => {
 						eprintln!(
-							"=== Can't probe using: {}, continuing with other methods because: {}",
-							name, e
+							"=== Can't probe using: {name}, continuing with other methods because: {e}"
 						);
 					}
 				}
 			} else {
-				eprintln!("=== Skipping probe: {} because of the environment configuration", name);
+				eprintln!("=== Skipping probe: {name} because of the environment configuration");
 			}
 		}
 		out.ok_or_else(|| {
@@ -507,7 +503,7 @@ impl Library {
 				.filter(|&name| !disabled_probes.contains(name))
 				.collect::<Vec<_>>()
 				.join(", ");
-			format!("Failed to find OpenCV package using probes: {}", methods).into()
+			format!("Failed to find OpenCV package using probes: {methods}").into()
 		})
 	}
 
@@ -523,7 +519,7 @@ impl Library {
 
 	pub fn emit_cargo_metadata(&self) {
 		self.cargo_metadata.iter().for_each(|meta| {
-			println!("{}", meta);
+			println!("{meta}");
 		});
 	}
 }

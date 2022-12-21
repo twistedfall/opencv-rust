@@ -34,7 +34,7 @@ fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 		let out_type = core::type_to_string(out_type)?;
 		Err(Error::new(
 			core::StsUnmatchedFormats,
-			format!("Mat type is: {}, but requested type is: {}", mat_type, out_type),
+			format!("Mat type is: {mat_type}, but requested type is: {out_type}"),
 		))
 	}
 }
@@ -47,7 +47,7 @@ fn match_dims(mat: &(impl MatTraitConst + ?Sized), dims: usize) -> Result<()> {
 	} else {
 		Err(Error::new(
 			core::StsUnmatchedSizes,
-			format!("Mat dims is: {}, but requested dims is: {}", mat_dims, dims),
+			format!("Mat dims is: {mat_dims}, but requested dims is: {dims}"),
 		))
 	}
 }
@@ -77,7 +77,7 @@ fn match_total(mat: &(impl MatTraitConst + ?Sized), idx: i32) -> Result<()> {
 	} else {
 		Err(Error::new(
 			core::StsOutOfRange,
-			format!("Index: {} out of bounds: 0..{}", idx, size),
+			format!("Index: {idx} out of bounds: 0..{size}"),
 		))
 	}
 }
