@@ -10,7 +10,7 @@
 )]
 //! # silhouette based 3D object tracking
 //! 
-//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_drummond2002real)
+//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_drummond2002real)
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::TrackerConst, super::Tracker, super::RapidConst, super::Rapid, super::OLSTrackerConst, super::OLSTracker, super::GOSTrackerConst, super::GOSTracker };
@@ -103,7 +103,7 @@ pub fn draw_wireframe(img: &mut dyn core::ToInputOutputArray, pts2d: &dyn core::
 
 /// Extract control points from the projected silhouette of a mesh
 /// 
-/// see [drummond2002real](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_drummond2002real) Sec 2.1, Step b
+/// see [drummond2002real](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_drummond2002real) Sec 2.1, Step b
 /// ## Parameters
 /// * num: number of control points
 /// * len: search radius (used to restrict the ROI)
@@ -173,7 +173,7 @@ pub fn find_correspondencies(bundle: &dyn core::ToInputArray, cols: &mut dyn cor
 	Ok(ret)
 }
 
-/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
+/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
 /// 
 /// 1. @ref extractControlPoints
 /// 2. @ref extractLineBundle
@@ -211,7 +211,7 @@ pub fn rapid(img: &dyn core::ToInputArray, num: i32, len: i32, pts3d: &dyn core:
 	Ok(ret)
 }
 
-/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_wang2015global)
+/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_wang2015global)
 pub trait GOSTrackerConst: crate::rapid::TrackerConst {
 	fn as_raw_GOSTracker(&self) -> *const c_void;
 
@@ -240,7 +240,7 @@ impl dyn GOSTracker + '_ {
 	
 }
 /// implements "Optimal local searching for fast and robust textureless 3D object tracking in highly
-/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_seo2013optimal)
+/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_seo2013optimal)
 pub trait OLSTrackerConst: crate::rapid::TrackerConst {
 	fn as_raw_OLSTracker(&self) -> *const c_void;
 

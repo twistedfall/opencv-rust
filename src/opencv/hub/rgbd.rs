@@ -324,7 +324,7 @@ pub fn warp_frame(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, rt: &c
 /// KinectFusion implementation
 /// 
 /// This class implements a 3d reconstruction algorithm described in
-/// [kinectfusion](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+/// [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
 /// 
 /// It takes a sequence of depth images taken from depth sensor
 /// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
@@ -332,7 +332,7 @@ pub fn warp_frame(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, rt: &c
 /// or can be Phong-rendered from given camera pose.
 /// 
 /// An internal representation of a model is a voxel cuboid that keeps TSDF values
-/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
 /// There is no interface to that representation yet.
 /// 
 /// KinFu uses OpenCL acceleration automatically if available.
@@ -1335,7 +1335,7 @@ impl Kinfu_Intr_Reprojector {
 /// KinectFusion implementation
 /// 
 /// This class implements a 3d reconstruction algorithm described in
-/// [kinectfusion](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+/// [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
 /// 
 /// It takes a sequence of depth images taken from depth sensor
 /// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
@@ -1343,7 +1343,7 @@ impl Kinfu_Intr_Reprojector {
 /// or can be Phong-rendered from given camera pose.
 /// 
 /// An internal representation of a model is a voxel cuboid that keeps TSDF values
-/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
 /// There is no interface to that representation yet.
 /// 
 /// KinFu uses OpenCL acceleration automatically if available.
@@ -2521,7 +2521,7 @@ impl dyn Kinfu_Detail_PoseGraph + '_ {
 /// Phong-rendered from given camera pose.
 /// 
 /// An internal representation of a model is a spatially hashed voxel cube that stores TSDF values
-/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_kinectfusion) article
+/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article
 /// about TSDF). There is no interface to that representation yet.
 /// 
 /// For posegraph optimization, a Submap abstraction over the Volume class is created.
@@ -3974,6 +3974,21 @@ impl Linemod_Template {
 pub trait DepthCleanerTraitConst: core::AlgorithmTraitConst {
 	fn as_raw_DepthCleaner(&self) -> *const c_void;
 
+	/// Given a set of 3d points in a depth image, compute the normals at each point.
+	/// ## Parameters
+	/// * points: a rows x cols x 3 matrix of CV_32F/CV64F or a rows x cols x 1 CV_U16S
+	/// * depth: a rows x cols matrix of the cleaned up depth
+	#[inline]
+	fn apply(&self, points: &dyn core::ToInputArray, depth: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points);
+		output_array_arg!(depth);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rgbd_DepthCleaner_operator___const_const__InputArrayR_const__OutputArrayR(self.as_raw_DepthCleaner(), points.as_raw__InputArray(), depth.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Initializes some data that is cached for later computation
 	/// If that function is not called, it will be called the first time normals are computed
 	#[inline]
@@ -5601,6 +5616,21 @@ boxed_cast_base! { RgbdICPOdometry, core::Algorithm, cv_RgbdICPOdometry_to_Algor
 pub trait RgbdNormalsTraitConst: core::AlgorithmTraitConst {
 	fn as_raw_RgbdNormals(&self) -> *const c_void;
 
+	/// Given a set of 3d points in a depth image, compute the normals at each point.
+	/// ## Parameters
+	/// * points: a rows x cols x 3 matrix of CV_32F/CV64F or a rows x cols x 1 CV_U16S
+	/// * normals: a rows x cols x 3 matrix
+	#[inline]
+	fn apply(&self, points: &dyn core::ToInputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points);
+		output_array_arg!(normals);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rgbd_RgbdNormals_operator___const_const__InputArrayR_const__OutputArrayR(self.as_raw_RgbdNormals(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Initializes some data that is cached for later computation
 	/// If that function is not called, it will be called the first time normals are computed
 	#[inline]
@@ -6202,6 +6232,45 @@ pub trait RgbdPlaneTraitConst: core::AlgorithmTraitConst {
 pub trait RgbdPlaneTrait: core::AlgorithmTrait + crate::rgbd::RgbdPlaneTraitConst {
 	fn as_raw_mut_RgbdPlane(&mut self) -> *mut c_void;
 
+	/// Find The planes in a depth image
+	/// ## Parameters
+	/// * points3d: the 3d points organized like the depth image: rows x cols with 3 channels
+	/// * normals: the normals for every point in the depth image
+	/// * mask: An image where each pixel is labeled with the plane it belongs to
+	///        and 255 if it does not belong to any plane
+	/// * plane_coefficients: the coefficients of the corresponding planes (a,b,c,d) such that ax+by+cz+d=0, norm(a,b,c)=1
+	///        and c < 0 (so that the normal points towards the camera)
+	#[inline]
+	fn apply(&mut self, points3d: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, plane_coefficients: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points3d);
+		input_array_arg!(normals);
+		output_array_arg!(mask);
+		output_array_arg!(plane_coefficients);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rgbd_RgbdPlane_operator___const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_RgbdPlane(), points3d.as_raw__InputArray(), normals.as_raw__InputArray(), mask.as_raw__OutputArray(), plane_coefficients.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Find The planes in a depth image but without doing a normal check, which is faster but less accurate
+	/// ## Parameters
+	/// * points3d: the 3d points organized like the depth image: rows x cols with 3 channels
+	/// * mask: An image where each pixel is labeled with the plane it belongs to
+	///        and 255 if it does not belong to any plane
+	/// * plane_coefficients: the coefficients of the corresponding planes (a,b,c,d) such that ax+by+cz+d=0
+	#[inline]
+	fn apply_1(&mut self, points3d: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, plane_coefficients: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points3d);
+		output_array_arg!(mask);
+		output_array_arg!(plane_coefficients);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rgbd_RgbdPlane_operator___const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_RgbdPlane(), points3d.as_raw__InputArray(), mask.as_raw__OutputArray(), plane_coefficients.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	#[inline]
 	fn set_block_size(&mut self, val: i32) -> Result<()> {
 		return_send!(via ocvrs_return);

@@ -87,7 +87,8 @@ pub enum MaterialProperty {
 	MATERIAL_EMISSIVE = 3,
 	MATERIAL_DIFFUSE = 4,
 	MATERIAL_TEXTURE0 = 5,
-	// MATERIAL_TEXTURE = 5 as isize, // duplicate discriminant
+	// Duplicate, use MATERIAL_TEXTURE0 instead
+	// MATERIAL_TEXTURE = 5,
 	MATERIAL_TEXTURE1 = 6,
 	MATERIAL_TEXTURE2 = 7,
 	MATERIAL_TEXTURE3 = 8,

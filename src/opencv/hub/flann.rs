@@ -13,7 +13,7 @@
 //! This section documents OpenCV's interface to the FLANN library. FLANN (Fast Library for Approximate
 //! Nearest Neighbors) is a library that contains a collection of algorithms optimized for fast nearest
 //! neighbor search in large datasets and for high dimensional features. More information about FLANN
-//! can be found in [Muja2009](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Muja2009) .
+//! can be found in [Muja2009](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Muja2009) .
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::IndexParamsTraitConst, super::IndexParamsTrait, super::KDTreeIndexParamsTraitConst, super::KDTreeIndexParamsTrait, super::LinearIndexParamsTraitConst, super::LinearIndexParamsTrait, super::CompositeIndexParamsTraitConst, super::CompositeIndexParamsTrait, super::AutotunedIndexParamsTraitConst, super::AutotunedIndexParamsTrait, super::HierarchicalClusteringIndexParamsTraitConst, super::HierarchicalClusteringIndexParamsTrait, super::KMeansIndexParamsTraitConst, super::KMeansIndexParamsTrait, super::LshIndexParamsTraitConst, super::LshIndexParamsTrait, super::SavedIndexParamsTraitConst, super::SavedIndexParamsTrait, super::SearchParamsTraitConst, super::SearchParamsTrait, super::IndexTraitConst, super::IndexTrait };
@@ -125,7 +125,8 @@ pub enum FlannIndexType {
 	FLANN_INDEX_TYPE_STRING = 7,
 	FLANN_INDEX_TYPE_BOOL = 8,
 	FLANN_INDEX_TYPE_ALGORITHM = 9,
-	// LAST_VALUE_FLANN_INDEX_TYPE = 9 as isize, // duplicate discriminant
+	// Duplicate, use FLANN_INDEX_TYPE_ALGORITHM instead
+	// LAST_VALUE_FLANN_INDEX_TYPE = 9,
 }
 
 opencv_type_enum! { crate::flann::FlannIndexType }
@@ -142,13 +143,20 @@ pub enum flann_algorithm_t {
 	FLANN_INDEX_LSH = 6,
 	FLANN_INDEX_SAVED = 254,
 	FLANN_INDEX_AUTOTUNED = 255,
-	// LINEAR = 0 as isize, // duplicate discriminant
-	// KDTREE = 1 as isize, // duplicate discriminant
-	// KMEANS = 2 as isize, // duplicate discriminant
-	// COMPOSITE = 3 as isize, // duplicate discriminant
-	// KDTREE_SINGLE = 4 as isize, // duplicate discriminant
-	// SAVED = 254 as isize, // duplicate discriminant
-	// AUTOTUNED = 255 as isize, // duplicate discriminant
+	// Duplicate, use FLANN_INDEX_LINEAR instead
+	// LINEAR = 0,
+	// Duplicate, use FLANN_INDEX_KDTREE instead
+	// KDTREE = 1,
+	// Duplicate, use FLANN_INDEX_KMEANS instead
+	// KMEANS = 2,
+	// Duplicate, use FLANN_INDEX_COMPOSITE instead
+	// COMPOSITE = 3,
+	// Duplicate, use FLANN_INDEX_KDTREE_SINGLE instead
+	// KDTREE_SINGLE = 4,
+	// Duplicate, use FLANN_INDEX_SAVED instead
+	// SAVED = 254,
+	// Duplicate, use FLANN_INDEX_AUTOTUNED instead
+	// AUTOTUNED = 255,
 }
 
 opencv_type_enum! { crate::flann::flann_algorithm_t }
@@ -160,9 +168,12 @@ pub enum flann_centers_init_t {
 	FLANN_CENTERS_GONZALES = 1,
 	FLANN_CENTERS_KMEANSPP = 2,
 	FLANN_CENTERS_GROUPWISE = 3,
-	// CENTERS_RANDOM = 0 as isize, // duplicate discriminant
-	// CENTERS_GONZALES = 1 as isize, // duplicate discriminant
-	// CENTERS_KMEANSPP = 2 as isize, // duplicate discriminant
+	// Duplicate, use FLANN_CENTERS_RANDOM instead
+	// CENTERS_RANDOM = 0,
+	// Duplicate, use FLANN_CENTERS_GONZALES instead
+	// CENTERS_GONZALES = 1,
+	// Duplicate, use FLANN_CENTERS_KMEANSPP instead
+	// CENTERS_KMEANSPP = 2,
 }
 
 opencv_type_enum! { crate::flann::flann_centers_init_t }
@@ -188,28 +199,41 @@ opencv_type_enum! { crate::flann::flann_datatype_t }
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum flann_distance_t {
 	FLANN_DIST_EUCLIDEAN = 1,
-	// FLANN_DIST_L2 = 1 as isize, // duplicate discriminant
+	// Duplicate, use FLANN_DIST_EUCLIDEAN instead
+	// FLANN_DIST_L2 = 1,
 	FLANN_DIST_MANHATTAN = 2,
-	// FLANN_DIST_L1 = 2 as isize, // duplicate discriminant
+	// Duplicate, use FLANN_DIST_MANHATTAN instead
+	// FLANN_DIST_L1 = 2,
 	FLANN_DIST_MINKOWSKI = 3,
 	FLANN_DIST_MAX = 4,
 	FLANN_DIST_HIST_INTERSECT = 5,
 	FLANN_DIST_HELLINGER = 6,
 	FLANN_DIST_CHI_SQUARE = 7,
-	// FLANN_DIST_CS = 7 as isize, // duplicate discriminant
+	// Duplicate, use FLANN_DIST_CHI_SQUARE instead
+	// FLANN_DIST_CS = 7,
 	FLANN_DIST_KULLBACK_LEIBLER = 8,
-	// FLANN_DIST_KL = 8 as isize, // duplicate discriminant
+	// Duplicate, use FLANN_DIST_KULLBACK_LEIBLER instead
+	// FLANN_DIST_KL = 8,
 	FLANN_DIST_HAMMING = 9,
 	FLANN_DIST_DNAMMING = 10,
-	// EUCLIDEAN = 1 as isize, // duplicate discriminant
-	// MANHATTAN = 2 as isize, // duplicate discriminant
-	// MINKOWSKI = 3 as isize, // duplicate discriminant
-	// MAX_DIST = 4 as isize, // duplicate discriminant
-	// HIST_INTERSECT = 5 as isize, // duplicate discriminant
-	// HELLINGER = 6 as isize, // duplicate discriminant
-	// CS = 7 as isize, // duplicate discriminant
-	// KL = 8 as isize, // duplicate discriminant
-	// KULLBACK_LEIBLER = 8 as isize, // duplicate discriminant
+	// Duplicate, use FLANN_DIST_L2 instead
+	// EUCLIDEAN = 1,
+	// Duplicate, use FLANN_DIST_L1 instead
+	// MANHATTAN = 2,
+	// Duplicate, use FLANN_DIST_MINKOWSKI instead
+	// MINKOWSKI = 3,
+	// Duplicate, use FLANN_DIST_MAX instead
+	// MAX_DIST = 4,
+	// Duplicate, use FLANN_DIST_HIST_INTERSECT instead
+	// HIST_INTERSECT = 5,
+	// Duplicate, use FLANN_DIST_HELLINGER instead
+	// HELLINGER = 6,
+	// Duplicate, use FLANN_DIST_CS instead
+	// CS = 7,
+	// Duplicate, use FLANN_DIST_KL instead
+	// KL = 8,
+	// Duplicate, use KL instead
+	// KULLBACK_LEIBLER = 8,
 }
 
 opencv_type_enum! { crate::flann::flann_distance_t }

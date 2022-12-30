@@ -52,12 +52,12 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	/// 
 	/// ## Parameters
 	/// * fontFileName: FontFile Name
-	/// * id: face_index to select a font faces in a single file.
+	/// * idx: face_index to select a font faces in a single file.
 	#[inline]
-	fn load_font_data(&mut self, font_file_name: &str, id: i32) -> Result<()> {
+	fn load_font_data(&mut self, font_file_name: &str, idx: i32) -> Result<()> {
 		extern_container_arg!(mut font_file_name);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern_mut(), id, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern_mut(), idx, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -85,7 +85,7 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	/// The function putText renders the specified text string in the image. Symbols that cannot be rendered using the specified font are replaced by "Tofu" or non-drawn.
 	/// 
 	/// ## Parameters
-	/// * img: Image. (Only 8UC3 image is supported.)
+	/// * img: Image. (Only 8UC1/8UC3/8UC4 2D mat is supported.)
 	/// * text: Text string to be drawn.
 	/// * org: Bottom-left/Top-left corner of the text string in the image.
 	/// * fontHeight: Drawing font size by pixel unit.
@@ -112,7 +112,7 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	///    String text = "Funny text inside the box";
 	///    int fontHeight = 60;
 	///    int thickness = -1;
-	///    int linestyle = 8;
+	///    int linestyle = LINE_8;
 	/// 
 	///    Mat img(600, 800, CV_8UC3, Scalar::all(0));
 	/// 

@@ -11,8 +11,8 @@
 //! # Object Detection
 //!    # Cascade Classifier for Object Detection
 //! 
-//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Viola01) and
-//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
+//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Viola01) and
+//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
 //! 
 //! First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 //! trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -38,7 +38,7 @@
 //! classifiers, and are calculated as described below. The current algorithm uses the following
 //! Haar-like features:
 //! 
-//! ![image](https://docs.opencv.org/4.6.0/haarfeatures.png)
+//! ![image](https://docs.opencv.org/4.7.0/haarfeatures.png)
 //! 
 //! The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 //! the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -65,17 +65,99 @@
 //!    # DNN-based face detection and recognition
 //! Check @ref tutorial_dnn_face "the corresponding tutorial" for more details.
 //!    # Common functions and classes
+//!    # ArUco markers and boards detection for robust camera pose estimation
+//!        ArUco Marker Detection
+//!        Square fiducial markers (also known as Augmented Reality Markers) are useful for easy,
+//!        fast and robust camera pose estimation.
+//! 
+//!        The main functionality of ArucoDetector class is detection of markers in an image. If the markers are grouped
+//!        as a board, then you can try to recover the missing markers with ArucoDetector::refineDetectedMarkers().
+//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
+//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
+//! 
+//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Aruco2014).
+//! 
+//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+//! ## See also
+//! [Aruco2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Aruco2014)
+//!        This code has been originally developed by Sergio Garrido-Jurado as a project
+//!        for Google Summer of Code 2015 (GSoC 15).
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::SimilarRectsTraitConst, super::SimilarRectsTrait, super::BaseCascadeClassifier_MaskGeneratorConst, super::BaseCascadeClassifier_MaskGenerator, super::BaseCascadeClassifierConst, super::BaseCascadeClassifier, super::CascadeClassifierTraitConst, super::CascadeClassifierTrait, super::DetectionROITraitConst, super::DetectionROITrait, super::HOGDescriptorTraitConst, super::HOGDescriptorTrait, super::QRCodeEncoderConst, super::QRCodeEncoder, super::QRCodeDetectorTraitConst, super::QRCodeDetectorTrait, super::DetectionBasedTracker_ParametersTraitConst, super::DetectionBasedTracker_ParametersTrait, super::DetectionBasedTracker_IDetectorConst, super::DetectionBasedTracker_IDetector, super::DetectionBasedTracker_ExtObjectTraitConst, super::DetectionBasedTracker_ExtObjectTrait, super::DetectionBasedTrackerTraitConst, super::DetectionBasedTrackerTrait, super::FaceDetectorYNConst, super::FaceDetectorYN, super::FaceRecognizerSFConst, super::FaceRecognizerSF };
+	pub use { super::SimilarRectsTraitConst, super::SimilarRectsTrait, super::BaseCascadeClassifier_MaskGeneratorConst, super::BaseCascadeClassifier_MaskGenerator, super::BaseCascadeClassifierConst, super::BaseCascadeClassifier, super::CascadeClassifierTraitConst, super::CascadeClassifierTrait, super::DetectionROITraitConst, super::DetectionROITrait, super::HOGDescriptorTraitConst, super::HOGDescriptorTrait, super::QRCodeEncoderConst, super::QRCodeEncoder, super::QRCodeDetectorTraitConst, super::QRCodeDetectorTrait, super::DetectionBasedTracker_ParametersTraitConst, super::DetectionBasedTracker_ParametersTrait, super::DetectionBasedTracker_IDetectorConst, super::DetectionBasedTracker_IDetector, super::DetectionBasedTracker_ExtObjectTraitConst, super::DetectionBasedTracker_ExtObjectTrait, super::DetectionBasedTrackerTraitConst, super::DetectionBasedTrackerTrait, super::FaceDetectorYNConst, super::FaceDetectorYN, super::FaceRecognizerSFConst, super::FaceRecognizerSF, super::DictionaryTraitConst, super::DictionaryTrait, super::BoardTraitConst, super::BoardTrait, super::GridBoardTraitConst, super::GridBoardTrait, super::CharucoBoardTraitConst, super::CharucoBoardTrait, super::DetectorParametersTraitConst, super::DetectorParametersTrait, super::ArucoDetectorTraitConst, super::ArucoDetectorTrait, super::CharucoParametersTraitConst, super::CharucoParametersTrait, super::CharucoDetectorTraitConst, super::CharucoDetectorTrait };
 }
 
 pub const CASCADE_DO_CANNY_PRUNING: i32 = 1;
 pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
 pub const CASCADE_FIND_BIGGEST_OBJECT: i32 = 4;
 pub const CASCADE_SCALE_IMAGE: i32 = 2;
+/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+pub const CORNER_REFINE_APRILTAG: i32 = 3;
+/// ArUco approach and refine the corners locations using the contour-points line fitting
+pub const CORNER_REFINE_CONTOUR: i32 = 2;
+/// Tag and corners detection based on the ArUco approach
+pub const CORNER_REFINE_NONE: i32 = 0;
+/// ArUco approach and refine the corners locations using corner subpixel accuracy
+pub const CORNER_REFINE_SUBPIX: i32 = 1;
+/// 4x4 bits, minimum hamming distance between any two codes = 3, 100 codes
+pub const DICT_4X4_100: i32 = 1;
+/// 4x4 bits, minimum hamming distance between any two codes = 2, 1000 codes
+pub const DICT_4X4_1000: i32 = 3;
+/// 4x4 bits, minimum hamming distance between any two codes = 3, 250 codes
+pub const DICT_4X4_250: i32 = 2;
+/// 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
+pub const DICT_4X4_50: i32 = 0;
+/// 5x5 bits, minimum hamming distance between any two codes = 7, 100 codes
+pub const DICT_5X5_100: i32 = 5;
+/// 5x5 bits, minimum hamming distance between any two codes = 5, 1000 codes
+pub const DICT_5X5_1000: i32 = 7;
+/// 5x5 bits, minimum hamming distance between any two codes = 6, 250 codes
+pub const DICT_5X5_250: i32 = 6;
+/// 5x5 bits, minimum hamming distance between any two codes = 8, 50 codes
+pub const DICT_5X5_50: i32 = 4;
+/// 6x6 bits, minimum hamming distance between any two codes = 12, 100 codes
+pub const DICT_6X6_100: i32 = 9;
+/// 6x6 bits, minimum hamming distance between any two codes = 9, 1000 codes
+pub const DICT_6X6_1000: i32 = 11;
+/// 6x6 bits, minimum hamming distance between any two codes = 11, 250 codes
+pub const DICT_6X6_250: i32 = 10;
+/// 6x6 bits, minimum hamming distance between any two codes = 13, 50 codes
+pub const DICT_6X6_50: i32 = 8;
+/// 7x7 bits, minimum hamming distance between any two codes = 18, 100 codes
+pub const DICT_7X7_100: i32 = 13;
+/// 7x7 bits, minimum hamming distance between any two codes = 14, 1000 codes
+pub const DICT_7X7_1000: i32 = 15;
+/// 7x7 bits, minimum hamming distance between any two codes = 17, 250 codes
+pub const DICT_7X7_250: i32 = 14;
+/// 7x7 bits, minimum hamming distance between any two codes = 19, 50 codes
+pub const DICT_7X7_50: i32 = 12;
+/// 4x4 bits, minimum hamming distance between any two codes = 5, 30 codes
+pub const DICT_APRILTAG_16h5: i32 = 17;
+/// 5x5 bits, minimum hamming distance between any two codes = 9, 35 codes
+pub const DICT_APRILTAG_25h9: i32 = 18;
+/// 6x6 bits, minimum hamming distance between any two codes = 10, 2320 codes
+pub const DICT_APRILTAG_36h10: i32 = 19;
+/// 6x6 bits, minimum hamming distance between any two codes = 11, 587 codes
+pub const DICT_APRILTAG_36h11: i32 = 20;
+/// 6x6 bits, minimum hamming distance between any two codes = 3, 1024 codes
+pub const DICT_ARUCO_ORIGINAL: i32 = 16;
 /// Default nlevels value.
 pub const HOGDescriptor_DEFAULT_NLEVELS: i32 = 64;
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum CornerRefineMethod {
+	/// Tag and corners detection based on the ArUco approach
+	CORNER_REFINE_NONE = 0,
+	/// ArUco approach and refine the corners locations using corner subpixel accuracy
+	CORNER_REFINE_SUBPIX = 1,
+	/// ArUco approach and refine the corners locations using the contour-points line fitting
+	CORNER_REFINE_CONTOUR = 2,
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+	CORNER_REFINE_APRILTAG = 3,
+}
+
+opencv_type_enum! { crate::objdetect::CornerRefineMethod }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DetectionBasedTracker_ObjectStatus {
@@ -115,6 +197,60 @@ pub enum HOGDescriptor_HistogramNormType {
 
 opencv_type_enum! { crate::objdetect::HOGDescriptor_HistogramNormType }
 
+/// Predefined markers dictionaries/sets
+/// 
+/// Each dictionary indicates the number of bits and the number of markers contained
+/// - DICT_ARUCO_ORIGINAL: standard ArUco Library Markers. 1024 markers, 5x5 bits, 0 minimum
+///                        distance
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum PredefinedDictionaryType {
+	/// 4x4 bits, minimum hamming distance between any two codes = 4, 50 codes
+	DICT_4X4_50 = 0,
+	/// 4x4 bits, minimum hamming distance between any two codes = 3, 100 codes
+	DICT_4X4_100 = 1,
+	/// 4x4 bits, minimum hamming distance between any two codes = 3, 250 codes
+	DICT_4X4_250 = 2,
+	/// 4x4 bits, minimum hamming distance between any two codes = 2, 1000 codes
+	DICT_4X4_1000 = 3,
+	/// 5x5 bits, minimum hamming distance between any two codes = 8, 50 codes
+	DICT_5X5_50 = 4,
+	/// 5x5 bits, minimum hamming distance between any two codes = 7, 100 codes
+	DICT_5X5_100 = 5,
+	/// 5x5 bits, minimum hamming distance between any two codes = 6, 250 codes
+	DICT_5X5_250 = 6,
+	/// 5x5 bits, minimum hamming distance between any two codes = 5, 1000 codes
+	DICT_5X5_1000 = 7,
+	/// 6x6 bits, minimum hamming distance between any two codes = 13, 50 codes
+	DICT_6X6_50 = 8,
+	/// 6x6 bits, minimum hamming distance between any two codes = 12, 100 codes
+	DICT_6X6_100 = 9,
+	/// 6x6 bits, minimum hamming distance between any two codes = 11, 250 codes
+	DICT_6X6_250 = 10,
+	/// 6x6 bits, minimum hamming distance between any two codes = 9, 1000 codes
+	DICT_6X6_1000 = 11,
+	/// 7x7 bits, minimum hamming distance between any two codes = 19, 50 codes
+	DICT_7X7_50 = 12,
+	/// 7x7 bits, minimum hamming distance between any two codes = 18, 100 codes
+	DICT_7X7_100 = 13,
+	/// 7x7 bits, minimum hamming distance between any two codes = 17, 250 codes
+	DICT_7X7_250 = 14,
+	/// 7x7 bits, minimum hamming distance between any two codes = 14, 1000 codes
+	DICT_7X7_1000 = 15,
+	/// 6x6 bits, minimum hamming distance between any two codes = 3, 1024 codes
+	DICT_ARUCO_ORIGINAL = 16,
+	/// 4x4 bits, minimum hamming distance between any two codes = 5, 30 codes
+	DICT_APRILTAG_16h5 = 17,
+	/// 5x5 bits, minimum hamming distance between any two codes = 9, 35 codes
+	DICT_APRILTAG_25h9 = 18,
+	/// 6x6 bits, minimum hamming distance between any two codes = 10, 2320 codes
+	DICT_APRILTAG_36h10 = 19,
+	/// 6x6 bits, minimum hamming distance between any two codes = 11, 587 codes
+	DICT_APRILTAG_36h11 = 20,
+}
+
+opencv_type_enum! { crate::objdetect::PredefinedDictionaryType }
+
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum QRCodeEncoder_CorrectionLevel {
@@ -149,6 +285,167 @@ pub enum QRCodeEncoder_EncodeMode {
 opencv_type_enum! { crate::objdetect::QRCodeEncoder_EncodeMode }
 
 pub type DetectionBasedTracker_Object = core::Tuple<(core::Rect, i32)>;
+/// Draws a set of Charuco corners
+/// ## Parameters
+/// * image: input/output image. It must have 1 or 3 channels. The number of channels is not
+/// altered.
+/// * charucoCorners: vector of detected charuco corners
+/// * charucoIds: list of identifiers for each corner in charucoCorners
+/// * cornerColor: color of the square surrounding each corner
+/// 
+/// This function draws a set of detected Charuco corners. If identifiers vector is provided, it also
+/// draws the id of each corner.
+/// 
+/// ## C++ default parameters
+/// * charuco_ids: noArray()
+/// * corner_color: Scalar(255,0,0)
+#[inline]
+pub fn draw_detected_corners_charuco(image: &mut dyn core::ToInputOutputArray, charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, corner_color: core::Scalar) -> Result<()> {
+	input_output_array_arg!(image);
+	input_array_arg!(charuco_corners);
+	input_array_arg!(charuco_ids);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_aruco_drawDetectedCornersCharuco_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(image.as_raw__InputOutputArray(), charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), corner_color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Draw a set of detected ChArUco Diamond markers
+/// 
+/// ## Parameters
+/// * image: input/output image. It must have 1 or 3 channels. The number of channels is not
+/// altered.
+/// * diamondCorners: positions of diamond corners in the same format returned by
+/// detectCharucoDiamond(). (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers,
+/// the dimensions of this array should be Nx4. The order of the corners should be clockwise.
+/// * diamondIds: vector of identifiers for diamonds in diamondCorners, in the same format
+/// returned by detectCharucoDiamond() (e.g. std::vector<Vec4i>).
+/// Optional, if not provided, ids are not painted.
+/// * borderColor: color of marker borders. Rest of colors (text color and first corner color)
+/// are calculated based on this one.
+/// 
+/// Given an array of detected diamonds, this functions draws them in the image. The marker borders
+/// are painted and the markers identifiers if provided.
+/// Useful for debugging purposes.
+/// 
+/// ## C++ default parameters
+/// * diamond_ids: noArray()
+/// * border_color: Scalar(0,0,255)
+#[inline]
+pub fn draw_detected_diamonds(image: &mut dyn core::ToInputOutputArray, diamond_corners: &dyn core::ToInputArray, diamond_ids: &dyn core::ToInputArray, border_color: core::Scalar) -> Result<()> {
+	input_output_array_arg!(image);
+	input_array_arg!(diamond_corners);
+	input_array_arg!(diamond_ids);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_aruco_drawDetectedDiamonds_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(image.as_raw__InputOutputArray(), diamond_corners.as_raw__InputArray(), diamond_ids.as_raw__InputArray(), border_color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Draw detected markers in image
+/// 
+/// ## Parameters
+/// * image: input/output image. It must have 1 or 3 channels. The number of channels is not altered.
+/// * corners: positions of marker corners on input image.
+/// (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers, the dimensions of
+/// this array should be Nx4. The order of the corners should be clockwise.
+/// * ids: vector of identifiers for markers in markersCorners .
+/// Optional, if not provided, ids are not painted.
+/// * borderColor: color of marker borders. Rest of colors (text color and first corner color)
+/// are calculated based on this one to improve visualization.
+/// 
+/// Given an array of detected marker corners and its corresponding ids, this functions draws
+/// the markers in the image. The marker borders are painted and the markers identifiers if provided.
+/// Useful for debugging purposes.
+/// 
+/// ## C++ default parameters
+/// * ids: noArray()
+/// * border_color: Scalar(0,255,0)
+#[inline]
+pub fn draw_detected_markers(image: &mut dyn core::ToInputOutputArray, corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, border_color: core::Scalar) -> Result<()> {
+	input_output_array_arg!(image);
+	input_array_arg!(corners);
+	input_array_arg!(ids);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_aruco_drawDetectedMarkers_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(image.as_raw__InputOutputArray(), corners.as_raw__InputArray(), ids.as_raw__InputArray(), border_color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Extend base dictionary by new nMarkers
+/// 
+/// ## Parameters
+/// * nMarkers: number of markers in the dictionary
+/// * markerSize: number of bits per dimension of each markers
+/// * baseDictionary: Include the markers in this dictionary at the beginning (optional)
+/// * randomSeed: a user supplied seed for theRNG()
+/// 
+/// This function creates a new dictionary composed by nMarkers markers and each markers composed
+/// by markerSize x markerSize bits. If baseDictionary is provided, its markers are directly
+/// included and the rest are generated based on them. If the size of baseDictionary is higher
+/// than nMarkers, only the first nMarkers in baseDictionary are taken and no new marker is added.
+/// 
+/// ## C++ default parameters
+/// * base_dictionary: Dictionary()
+/// * random_seed: 0
+#[inline]
+pub fn extend_dictionary(n_markers: i32, marker_size: i32, base_dictionary: &crate::objdetect::Dictionary, random_seed: i32) -> Result<crate::objdetect::Dictionary> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_aruco_extendDictionary_int_int_const_DictionaryR_int(n_markers, marker_size, base_dictionary.as_raw_Dictionary(), random_seed, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Generate a canonical marker image
+/// 
+/// ## Parameters
+/// * dictionary: dictionary of markers indicating the type of markers
+/// * id: identifier of the marker that will be returned. It has to be a valid id in the specified dictionary.
+/// * sidePixels: size of the image in pixels
+/// * img: output image with the marker
+/// * borderBits: width of the marker border.
+/// 
+/// This function returns a marker image in its canonical form (i.e. ready to be printed)
+/// 
+/// ## C++ default parameters
+/// * border_bits: 1
+#[inline]
+pub fn generate_image_marker(dictionary: &crate::objdetect::Dictionary, id: i32, side_pixels: i32, img: &mut dyn core::ToOutputArray, border_bits: i32) -> Result<()> {
+	output_array_arg!(img);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_aruco_generateImageMarker_const_DictionaryR_int_int_const__OutputArrayR_int(dictionary.as_raw_Dictionary(), id, side_pixels, img.as_raw__OutputArray(), border_bits, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns one of the predefined dictionaries defined in PredefinedDictionaryType
+#[inline]
+pub fn get_predefined_dictionary(name: crate::objdetect::PredefinedDictionaryType) -> Result<crate::objdetect::Dictionary> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_aruco_getPredefinedDictionary_PredefinedDictionaryType(name, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Returns one of the predefined dictionaries referenced by DICT_*.
+#[inline]
+pub fn get_predefined_dictionary_i32(dict: i32) -> Result<crate::objdetect::Dictionary> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_aruco_getPredefinedDictionary_int(dict, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
 #[inline]
 pub fn create_face_detection_mask_generator() -> Result<core::Ptr<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
 	return_send!(via ocvrs_return);
@@ -1450,7 +1747,7 @@ impl dyn FaceRecognizerSF + '_ {
 }
 /// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 /// 
-/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
+/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 /// 
 /// useful links:
 /// 
@@ -2044,7 +2341,7 @@ pub trait HOGDescriptorTrait: crate::objdetect::HOGDescriptorTraitConst {
 
 /// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 /// 
-/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
+/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 /// 
 /// useful links:
 /// 
@@ -2282,6 +2579,18 @@ pub trait QRCodeDetectorTrait: crate::objdetect::QRCodeDetectorTraitConst {
 		Ok(ret)
 	}
 	
+	/// use markers to improve the position of the corners of the QR code
+	/// 
+	/// alignmentMarkers using by default
+	#[inline]
+	fn set_use_alignment_markers(&mut self, use_alignment_markers: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_QRCodeDetector_setUseAlignmentMarkers_bool(self.as_raw_mut_QRCodeDetector(), use_alignment_markers, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Decodes QR code in image once it's found by the detect() method.
 	/// 
 	/// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
@@ -2512,6 +2821,15 @@ pub trait SimilarRectsTraitConst {
 		ret
 	}
 	
+	#[inline]
+	fn apply(&self, r1: core::Rect, r2: core::Rect) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_SimilarRects_operator___const_const_RectR_const_RectR(self.as_raw_SimilarRects(), &r1, &r2, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 pub trait SimilarRectsTrait: crate::objdetect::SimilarRectsTraitConst {
@@ -2559,6 +2877,1883 @@ impl SimilarRects {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::objdetect::SimilarRects::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+/// The main functionality of ArucoDetector class is detection of markers in an image with detectMarkers() method.
+/// 
+/// After detecting some markers in the image, you can try to find undetected markers from this dictionary with
+/// refineDetectedMarkers() method.
+/// ## See also
+/// DetectorParameters, RefineParameters
+pub trait ArucoDetectorTraitConst: core::AlgorithmTraitConst {
+	fn as_raw_ArucoDetector(&self) -> *const c_void;
+
+	/// Basic marker detection
+	/// 
+	/// ## Parameters
+	/// * image: input image
+	/// * corners: vector of detected marker corners. For each marker, its four corners
+	/// are provided, (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers,
+	/// the dimensions of this array is Nx4. The order of the corners is clockwise.
+	/// * ids: vector of identifiers of the detected markers. The identifier is of type int
+	/// (e.g. std::vector<int>). For N detected markers, the size of ids is also N.
+	/// The identifiers have the same order than the markers in the imgPoints array.
+	/// * rejectedImgPoints: contains the imgPoints of those squares whose inner code has not a
+	/// correct codification. Useful for debugging purposes.
+	/// 
+	/// Performs marker detection in the input image. Only markers included in the specific dictionary
+	/// are searched. For each detected marker, it returns the 2D position of its corner in the image
+	/// and its corresponding identifier.
+	/// Note that this function does not perform pose estimation.
+	/// 
+	/// Note: The function does not correct lens distortion or takes it into account. It's recommended to undistort
+	/// input image with corresponging camera model, if camera parameters are known
+	/// ## See also
+	/// undistort, estimatePoseSingleMarkers,  estimatePoseBoard
+	/// 
+	/// ## C++ default parameters
+	/// * rejected_img_points: noArray()
+	#[inline]
+	fn detect_markers(&self, image: &dyn core::ToInputArray, corners: &mut dyn core::ToOutputArray, ids: &mut dyn core::ToOutputArray, rejected_img_points: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(corners);
+		output_array_arg!(ids);
+		output_array_arg!(rejected_img_points);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_detectMarkers_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), rejected_img_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Refind not detected markers based on the already detected and the board layout
+	/// 
+	/// ## Parameters
+	/// * image: input image
+	/// * board: layout of markers in the board.
+	/// * detectedCorners: vector of already detected marker corners.
+	/// * detectedIds: vector of already detected marker identifiers.
+	/// * rejectedCorners: vector of rejected candidates during the marker detection process.
+	/// * cameraMatrix: optional input 3x3 floating-point camera matrix
+	/// ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D)
+	/// * distCoeffs: optional vector of distortion coefficients
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5D%2C%5Bs%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5D%5D%29) of 4, 5, 8 or 12 elements
+	/// * recoveredIdxs: Optional array to returns the indexes of the recovered candidates in the
+	/// original rejectedCorners array.
+	/// 
+	/// This function tries to find markers that were not detected in the basic detecMarkers function.
+	/// First, based on the current detected marker and the board layout, the function interpolates
+	/// the position of the missing markers. Then it tries to find correspondence between the reprojected
+	/// markers and the rejected candidates based on the minRepDistance and errorCorrectionRate parameters.
+	/// If camera parameters and distortion coefficients are provided, missing markers are reprojected
+	/// using projectPoint function. If not, missing marker projections are interpolated using global
+	/// homography, and all the marker corners in the board must have the same Z coordinate.
+	/// 
+	/// ## C++ default parameters
+	/// * camera_matrix: noArray()
+	/// * dist_coeffs: noArray()
+	/// * recovered_idxs: noArray()
+	#[inline]
+	fn refine_detected_markers(&self, image: &dyn core::ToInputArray, board: &crate::objdetect::Board, detected_corners: &mut dyn core::ToInputOutputArray, detected_ids: &mut dyn core::ToInputOutputArray, rejected_corners: &mut dyn core::ToInputOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, recovered_idxs: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		input_output_array_arg!(detected_corners);
+		input_output_array_arg!(detected_ids);
+		input_output_array_arg!(rejected_corners);
+		input_array_arg!(camera_matrix);
+		input_array_arg!(dist_coeffs);
+		output_array_arg!(recovered_idxs);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_refineDetectedMarkers_const_const__InputArrayR_const_BoardR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), board.as_raw_Board(), detected_corners.as_raw__InputOutputArray(), detected_ids.as_raw__InputOutputArray(), rejected_corners.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), recovered_idxs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_dictionary(&self) -> Result<crate::objdetect::Dictionary> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_getDictionary_const(self.as_raw_ArucoDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_detector_parameters(&self) -> Result<crate::objdetect::DetectorParameters> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_getDetectorParameters_const(self.as_raw_ArucoDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::DetectorParameters::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_refine_parameters(&self) -> Result<crate::objdetect::RefineParameters> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_getRefineParameters_const(self.as_raw_ArucoDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Stores algorithm parameters in a file storage
+	#[inline]
+	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_write_const_FileStorageR(self.as_raw_ArucoDetector(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub trait ArucoDetectorTrait: core::AlgorithmTrait + crate::objdetect::ArucoDetectorTraitConst {
+	fn as_raw_mut_ArucoDetector(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn set_dictionary(&mut self, dictionary: &crate::objdetect::Dictionary) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_setDictionary_const_DictionaryR(self.as_raw_mut_ArucoDetector(), dictionary.as_raw_Dictionary(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_detector_parameters(&mut self, detector_parameters: &crate::objdetect::DetectorParameters) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_setDetectorParameters_const_DetectorParametersR(self.as_raw_mut_ArucoDetector(), detector_parameters.as_raw_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_refine_parameters(&mut self, refine_parameters: crate::objdetect::RefineParameters) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_setRefineParameters_const_RefineParametersR(self.as_raw_mut_ArucoDetector(), &refine_parameters, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// simplified API for language bindings
+	#[inline]
+	fn write_1(&mut self, fs: &mut core::FileStorage, name: &str) -> Result<()> {
+		extern_container_arg!(name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_write_FileStorageR_const_StringR(self.as_raw_mut_ArucoDetector(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Reads algorithm parameters from a file storage
+	#[inline]
+	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_read_const_FileNodeR(self.as_raw_mut_ArucoDetector(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+/// The main functionality of ArucoDetector class is detection of markers in an image with detectMarkers() method.
+/// 
+/// After detecting some markers in the image, you can try to find undetected markers from this dictionary with
+/// refineDetectedMarkers() method.
+/// ## See also
+/// DetectorParameters, RefineParameters
+pub struct ArucoDetector {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { ArucoDetector }
+
+impl Drop for ArucoDetector {
+	fn drop(&mut self) {
+		extern "C" { fn cv_ArucoDetector_delete(instance: *mut c_void); }
+		unsafe { cv_ArucoDetector_delete(self.as_raw_mut_ArucoDetector()) };
+	}
+}
+
+unsafe impl Send for ArucoDetector {}
+
+impl core::AlgorithmTraitConst for ArucoDetector {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for ArucoDetector {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::objdetect::ArucoDetectorTraitConst for ArucoDetector {
+	#[inline] fn as_raw_ArucoDetector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::ArucoDetectorTrait for ArucoDetector {
+	#[inline] fn as_raw_mut_ArucoDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl ArucoDetector {
+	/// Basic ArucoDetector constructor
+	/// 
+	/// ## Parameters
+	/// * dictionary: indicates the type of markers that will be searched
+	/// * detectorParams: marker detection parameters
+	/// * refineParams: marker refine detection parameters
+	/// 
+	/// ## C++ default parameters
+	/// * dictionary: getPredefinedDictionary(cv::aruco::DICT_4X4_50)
+	/// * detector_params: DetectorParameters()
+	/// * refine_params: RefineParameters()
+	#[inline]
+	pub fn new(dictionary: &crate::objdetect::Dictionary, detector_params: &crate::objdetect::DetectorParameters, refine_params: crate::objdetect::RefineParameters) -> Result<crate::objdetect::ArucoDetector> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_ArucoDetector_ArucoDetector_const_DictionaryR_const_DetectorParametersR_const_RefineParametersR(dictionary.as_raw_Dictionary(), detector_params.as_raw_DetectorParameters(), &refine_params, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::ArucoDetector::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { ArucoDetector, core::Algorithm, cv_ArucoDetector_to_Algorithm }
+
+/// Board of ArUco markers
+/// 
+/// A board is a set of markers in the 3D space with a common coordinate system.
+/// The common form of a board of marker is a planar (2D) board, however any 3D layout can be used.
+/// A Board object is composed by:
+/// - The object points of the marker corners, i.e. their coordinates respect to the board system.
+/// - The dictionary which indicates the type of markers of the board
+/// - The identifier of all the markers in the board.
+pub trait BoardTraitConst {
+	fn as_raw_Board(&self) -> *const c_void;
+
+	/// return the Dictionary of markers employed for this board
+	#[inline]
+	fn get_dictionary(&self) -> Result<crate::objdetect::Dictionary> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Board_getDictionary_const(self.as_raw_Board(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// return array of object points of all the marker corners in the board.
+	/// 
+	/// Each marker include its 4 corners in this order:
+	/// *   objPoints[i][0] - left-top point of i-th marker
+	/// *   objPoints[i][1] - right-top point of i-th marker
+	/// *   objPoints[i][2] - right-bottom point of i-th marker
+	/// *   objPoints[i][3] - left-bottom point of i-th marker
+	/// 
+	/// Markers are placed in a certain order - row by row, left to right in every row. For M markers, the size is Mx4.
+	#[inline]
+	fn get_obj_points(&self) -> Result<core::Vector<core::Vector<core::Point3f>>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Board_getObjPoints_const(self.as_raw_Board(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<core::Vector<core::Point3f>>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// vector of the identifiers of the markers in the board (should be the same size as objPoints)
+	/// ## Returns
+	/// vector of the identifiers of the markers
+	#[inline]
+	fn get_ids(&self) -> Result<core::Vector<i32>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Board_getIds_const(self.as_raw_Board(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// get coordinate of the bottom right corner of the board, is set when calling the function create()
+	#[inline]
+	fn get_right_bottom_corner(&self) -> Result<core::Point3f> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Board_getRightBottomCorner_const(self.as_raw_Board(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Given a board configuration and a set of detected markers, returns the corresponding
+	/// image points and object points to call solvePnP()
+	/// 
+	/// ## Parameters
+	/// * detectedCorners: List of detected marker corners of the board.
+	/// For CharucoBoard class you can set list of charuco corners.
+	/// * detectedIds: List of identifiers for each marker or list of charuco identifiers for each corner.
+	/// For CharucoBoard class you can set list of charuco identifiers for each corner.
+	/// * objPoints: Vector of vectors of board marker points in the board coordinate space.
+	/// * imgPoints: Vector of vectors of the projections of board marker corner points.
+	#[inline]
+	fn match_image_points(&self, detected_corners: &dyn core::ToInputArray, detected_ids: &dyn core::ToInputArray, obj_points: &mut dyn core::ToOutputArray, img_points: &mut dyn core::ToOutputArray) -> Result<()> {
+		input_array_arg!(detected_corners);
+		input_array_arg!(detected_ids);
+		output_array_arg!(obj_points);
+		output_array_arg!(img_points);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Board_matchImagePoints_const_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Board(), detected_corners.as_raw__InputArray(), detected_ids.as_raw__InputArray(), obj_points.as_raw__OutputArray(), img_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Draw a planar board
+	/// 
+	/// ## Parameters
+	/// * outSize: size of the output image in pixels.
+	/// * img: output image with the board. The size of this image will be outSize
+	/// and the board will be on the center, keeping the board proportions.
+	/// * marginSize: minimum margins (in pixels) of the board in the output image
+	/// * borderBits: width of the marker borders.
+	/// 
+	/// This function return the image of the board, ready to be printed.
+	/// 
+	/// ## C++ default parameters
+	/// * margin_size: 0
+	/// * border_bits: 1
+	#[inline]
+	fn generate_image(&self, out_size: core::Size, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
+		output_array_arg!(img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Board_generateImage_const_Size_const__OutputArrayR_int_int(self.as_raw_Board(), out_size.opencv_as_extern(), img.as_raw__OutputArray(), margin_size, border_bits, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub trait BoardTrait: crate::objdetect::BoardTraitConst {
+	fn as_raw_mut_Board(&mut self) -> *mut c_void;
+
+}
+
+/// Board of ArUco markers
+/// 
+/// A board is a set of markers in the 3D space with a common coordinate system.
+/// The common form of a board of marker is a planar (2D) board, however any 3D layout can be used.
+/// A Board object is composed by:
+/// - The object points of the marker corners, i.e. their coordinates respect to the board system.
+/// - The dictionary which indicates the type of markers of the board
+/// - The identifier of all the markers in the board.
+pub struct Board {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { Board }
+
+impl Drop for Board {
+	fn drop(&mut self) {
+		extern "C" { fn cv_Board_delete(instance: *mut c_void); }
+		unsafe { cv_Board_delete(self.as_raw_mut_Board()) };
+	}
+}
+
+unsafe impl Send for Board {}
+
+impl crate::objdetect::BoardTraitConst for Board {
+	#[inline] fn as_raw_Board(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::BoardTrait for Board {
+	#[inline] fn as_raw_mut_Board(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl Board {
+	/// Common Board constructor
+	/// 
+	/// ## Parameters
+	/// * objPoints: array of object points of all the marker corners in the board
+	/// * dictionary: the dictionary of markers employed for this board
+	/// * ids: vector of the identifiers of the markers in the board
+	#[inline]
+	pub fn new(obj_points: &dyn core::ToInputArray, dictionary: &crate::objdetect::Dictionary, ids: &dyn core::ToInputArray) -> Result<crate::objdetect::Board> {
+		input_array_arg!(obj_points);
+		input_array_arg!(ids);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Board_Board_const__InputArrayR_const_DictionaryR_const__InputArrayR(obj_points.as_raw__InputArray(), dictionary.as_raw_Dictionary(), ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::Board::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	pub fn default() -> Result<crate::objdetect::Board> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Board_Board(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::Board::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+/// ChArUco board is a planar chessboard where the markers are placed inside the white squares of a chessboard.
+/// 
+/// The benefits of ChArUco boards is that they provide both, ArUco markers versatility and chessboard corner precision,
+/// which is important for calibration and pose estimation. The board image can be drawn using generateImage() method.
+pub trait CharucoBoardTraitConst: crate::objdetect::BoardTraitConst {
+	fn as_raw_CharucoBoard(&self) -> *const c_void;
+
+	#[inline]
+	fn get_chessboard_size(&self) -> Result<core::Size> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoBoard_getChessboardSize_const(self.as_raw_CharucoBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_square_length(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoBoard_getSquareLength_const(self.as_raw_CharucoBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_marker_length(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoBoard_getMarkerLength_const(self.as_raw_CharucoBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// get CharucoBoard::chessboardCorners
+	#[inline]
+	fn get_chessboard_corners(&self) -> Result<core::Vector<core::Point3f>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoBoard_getChessboardCorners_const(self.as_raw_CharucoBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<core::Point3f>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// get CharucoBoard::nearestMarkerIdx
+	#[inline]
+	fn get_nearest_marker_idx(&self) -> Result<core::Vector<core::Vector<i32>>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoBoard_getNearestMarkerIdx_const(self.as_raw_CharucoBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<core::Vector<i32>>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// get CharucoBoard::nearestMarkerCorners
+	#[inline]
+	fn get_nearest_marker_corners(&self) -> Result<core::Vector<core::Vector<i32>>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoBoard_getNearestMarkerCorners_const(self.as_raw_CharucoBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<core::Vector<i32>>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// check whether the ChArUco markers are collinear
+	/// 
+	/// ## Parameters
+	/// * charucoIds: list of identifiers for each corner in charucoCorners per frame.
+	/// ## Returns
+	/// bool value, 1 (true) if detected corners form a line, 0 (false) if they do not.
+	/// solvePnP, calibration functions will fail if the corners are collinear (true).
+	/// 
+	/// The number of ids in charucoIDs should be <= the number of chessboard corners in the board.
+	/// This functions checks whether the charuco corners are on a straight line (returns true, if so), or not (false).
+	/// Axis parallel, as well as diagonal and other straight lines detected.  Degenerate cases:
+	/// for number of charucoIDs <= 2,the function returns true.
+	#[inline]
+	fn check_charuco_corners_collinear(&self, charuco_ids: &dyn core::ToInputArray) -> Result<bool> {
+		input_array_arg!(charuco_ids);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoBoard_checkCharucoCornersCollinear_const_const__InputArrayR(self.as_raw_CharucoBoard(), charuco_ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub trait CharucoBoardTrait: crate::objdetect::BoardTrait + crate::objdetect::CharucoBoardTraitConst {
+	fn as_raw_mut_CharucoBoard(&mut self) -> *mut c_void;
+
+}
+
+/// ChArUco board is a planar chessboard where the markers are placed inside the white squares of a chessboard.
+/// 
+/// The benefits of ChArUco boards is that they provide both, ArUco markers versatility and chessboard corner precision,
+/// which is important for calibration and pose estimation. The board image can be drawn using generateImage() method.
+pub struct CharucoBoard {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { CharucoBoard }
+
+impl Drop for CharucoBoard {
+	fn drop(&mut self) {
+		extern "C" { fn cv_CharucoBoard_delete(instance: *mut c_void); }
+		unsafe { cv_CharucoBoard_delete(self.as_raw_mut_CharucoBoard()) };
+	}
+}
+
+unsafe impl Send for CharucoBoard {}
+
+impl crate::objdetect::BoardTraitConst for CharucoBoard {
+	#[inline] fn as_raw_Board(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::BoardTrait for CharucoBoard {
+	#[inline] fn as_raw_mut_Board(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::objdetect::CharucoBoardTraitConst for CharucoBoard {
+	#[inline] fn as_raw_CharucoBoard(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::CharucoBoardTrait for CharucoBoard {
+	#[inline] fn as_raw_mut_CharucoBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl CharucoBoard {
+	/// CharucoBoard constructor
+	/// 
+	/// ## Parameters
+	/// * size: number of chessboard squares in x and y directions
+	/// * squareLength: squareLength chessboard square side length (normally in meters)
+	/// * markerLength: marker side length (same unit than squareLength)
+	/// * dictionary: dictionary of markers indicating the type of markers
+	/// * ids: array of id used markers
+	/// The first markers in the dictionary are used to fill the white chessboard squares.
+	/// 
+	/// ## C++ default parameters
+	/// * ids: noArray()
+	#[inline]
+	pub fn new(size: core::Size, square_length: f32, marker_length: f32, dictionary: &crate::objdetect::Dictionary, ids: &dyn core::ToInputArray) -> Result<crate::objdetect::CharucoBoard> {
+		input_array_arg!(ids);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoBoard_CharucoBoard_const_SizeR_float_float_const_DictionaryR_const__InputArrayR(&size, square_length, marker_length, dictionary.as_raw_Dictionary(), ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::CharucoBoard::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	pub fn default() -> Result<crate::objdetect::CharucoBoard> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoBoard_CharucoBoard(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::CharucoBoard::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { CharucoBoard, crate::objdetect::Board, cv_CharucoBoard_to_Board }
+
+pub trait CharucoDetectorTraitConst: core::AlgorithmTraitConst {
+	fn as_raw_CharucoDetector(&self) -> *const c_void;
+
+	#[inline]
+	fn get_board(&self) -> Result<crate::objdetect::CharucoBoard> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_getBoard_const(self.as_raw_CharucoDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::CharucoBoard::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_charuco_parameters(&self) -> Result<crate::objdetect::CharucoParameters> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_getCharucoParameters_const(self.as_raw_CharucoDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::CharucoParameters::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_detector_parameters(&self) -> Result<crate::objdetect::DetectorParameters> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_getDetectorParameters_const(self.as_raw_CharucoDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::DetectorParameters::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_refine_parameters(&self) -> Result<crate::objdetect::RefineParameters> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_getRefineParameters_const(self.as_raw_CharucoDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// detect aruco markers and interpolate position of ChArUco board corners
+	/// ## Parameters
+	/// * image: input image necesary for corner refinement. Note that markers are not detected and
+	/// should be sent in corners and ids parameters.
+	/// * charucoCorners: interpolated chessboard corners.
+	/// * charucoIds: interpolated chessboard corners identifiers.
+	/// * markerCorners: vector of already detected markers corners. For each marker, its four
+	/// corners are provided, (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers, the
+	/// dimensions of this array should be Nx4. The order of the corners should be clockwise.
+	/// If markerCorners and markerCorners are empty, the function detect aruco markers and ids.
+	/// * markerIds: list of identifiers for each marker in corners.
+	///  If markerCorners and markerCorners are empty, the function detect aruco markers and ids.
+	/// 
+	/// This function receives the detected markers and returns the 2D position of the chessboard corners
+	/// from a ChArUco board using the detected Aruco markers.
+	/// 
+	/// If markerCorners and markerCorners are empty, the detectMarkers() will run and detect aruco markers and ids.
+	/// 
+	/// If camera parameters are provided, the process is based in an approximated pose estimation, else it is based on local homography.
+	/// Only visible corners are returned. For each corner, its corresponding identifier is also returned in charucoIds.
+	/// ## See also
+	/// findChessboardCorners
+	/// 
+	/// ## C++ default parameters
+	/// * marker_corners: noArray()
+	/// * marker_ids: noArray()
+	#[inline]
+	fn detect_board(&self, image: &dyn core::ToInputArray, charuco_corners: &mut dyn core::ToOutputArray, charuco_ids: &mut dyn core::ToOutputArray, marker_corners: &mut dyn core::ToInputOutputArray, marker_ids: &mut dyn core::ToInputOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(charuco_corners);
+		output_array_arg!(charuco_ids);
+		input_output_array_arg!(marker_corners);
+		input_output_array_arg!(marker_ids);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_detectBoard_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_CharucoDetector(), image.as_raw__InputArray(), charuco_corners.as_raw__OutputArray(), charuco_ids.as_raw__OutputArray(), marker_corners.as_raw__InputOutputArray(), marker_ids.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Detect ChArUco Diamond markers
+	/// 
+	/// ## Parameters
+	/// * image: input image necessary for corner subpixel.
+	/// * diamondCorners: output list of detected diamond corners (4 corners per diamond). The order
+	/// is the same than in marker corners: top left, top right, bottom right and bottom left. Similar
+	/// format than the corners returned by detectMarkers (e.g std::vector<std::vector<cv::Point2f> > ).
+	/// * diamondIds: ids of the diamonds in diamondCorners. The id of each diamond is in fact of
+	/// type Vec4i, so each diamond has 4 ids, which are the ids of the aruco markers composing the
+	/// diamond.
+	/// * markerCorners: list of detected marker corners from detectMarkers function.
+	/// If markerCorners and markerCorners are empty, the function detect aruco markers and ids.
+	/// * markerIds: list of marker ids in markerCorners.
+	/// If markerCorners and markerCorners are empty, the function detect aruco markers and ids.
+	/// 
+	/// This function detects Diamond markers from the previous detected ArUco markers. The diamonds
+	/// are returned in the diamondCorners and diamondIds parameters. If camera calibration parameters
+	/// are provided, the diamond search is based on reprojection. If not, diamond search is based on
+	/// homography. Homography is faster than reprojection, but less accurate.
+	/// 
+	/// ## C++ default parameters
+	/// * marker_corners: noArray()
+	/// * marker_ids: noArray()
+	#[inline]
+	fn detect_diamonds(&self, image: &dyn core::ToInputArray, diamond_corners: &mut dyn core::ToOutputArray, diamond_ids: &mut dyn core::ToOutputArray, marker_corners: &mut dyn core::ToInputOutputArray, marker_ids: &mut dyn core::ToInputOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(diamond_corners);
+		output_array_arg!(diamond_ids);
+		input_output_array_arg!(marker_corners);
+		input_output_array_arg!(marker_ids);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_detectDiamonds_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_CharucoDetector(), image.as_raw__InputArray(), diamond_corners.as_raw__OutputArray(), diamond_ids.as_raw__OutputArray(), marker_corners.as_raw__InputOutputArray(), marker_ids.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub trait CharucoDetectorTrait: core::AlgorithmTrait + crate::objdetect::CharucoDetectorTraitConst {
+	fn as_raw_mut_CharucoDetector(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn set_board(&mut self, board: &crate::objdetect::CharucoBoard) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_setBoard_const_CharucoBoardR(self.as_raw_mut_CharucoDetector(), board.as_raw_CharucoBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_charuco_parameters(&mut self, charuco_parameters: &mut crate::objdetect::CharucoParameters) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_setCharucoParameters_CharucoParametersR(self.as_raw_mut_CharucoDetector(), charuco_parameters.as_raw_mut_CharucoParameters(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_detector_parameters(&mut self, detector_parameters: &crate::objdetect::DetectorParameters) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_setDetectorParameters_const_DetectorParametersR(self.as_raw_mut_CharucoDetector(), detector_parameters.as_raw_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_refine_parameters(&mut self, refine_parameters: crate::objdetect::RefineParameters) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_setRefineParameters_const_RefineParametersR(self.as_raw_mut_CharucoDetector(), &refine_parameters, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub struct CharucoDetector {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { CharucoDetector }
+
+impl Drop for CharucoDetector {
+	fn drop(&mut self) {
+		extern "C" { fn cv_CharucoDetector_delete(instance: *mut c_void); }
+		unsafe { cv_CharucoDetector_delete(self.as_raw_mut_CharucoDetector()) };
+	}
+}
+
+unsafe impl Send for CharucoDetector {}
+
+impl core::AlgorithmTraitConst for CharucoDetector {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for CharucoDetector {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::objdetect::CharucoDetectorTraitConst for CharucoDetector {
+	#[inline] fn as_raw_CharucoDetector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::CharucoDetectorTrait for CharucoDetector {
+	#[inline] fn as_raw_mut_CharucoDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl CharucoDetector {
+	/// Basic CharucoDetector constructor
+	/// 
+	/// ## Parameters
+	/// * board: ChAruco board
+	/// * charucoParams: charuco detection parameters
+	/// * detectorParams: marker detection parameters
+	/// * refineParams: marker refine detection parameters
+	/// 
+	/// ## C++ default parameters
+	/// * charuco_params: CharucoParameters()
+	/// * detector_params: DetectorParameters()
+	/// * refine_params: RefineParameters()
+	#[inline]
+	pub fn new(board: &crate::objdetect::CharucoBoard, charuco_params: &crate::objdetect::CharucoParameters, detector_params: &crate::objdetect::DetectorParameters, refine_params: crate::objdetect::RefineParameters) -> Result<crate::objdetect::CharucoDetector> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoDetector_CharucoDetector_const_CharucoBoardR_const_CharucoParametersR_const_DetectorParametersR_const_RefineParametersR(board.as_raw_CharucoBoard(), charuco_params.as_raw_CharucoParameters(), detector_params.as_raw_DetectorParameters(), &refine_params, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::CharucoDetector::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { CharucoDetector, core::Algorithm, cv_CharucoDetector_to_Algorithm }
+
+pub trait CharucoParametersTraitConst {
+	fn as_raw_CharucoParameters(&self) -> *const c_void;
+
+	/// cameraMatrix optional 3x3 floating-point camera matrix
+	#[inline]
+	fn camera_matrix(&self) -> core::Mat {
+		let ret = unsafe { sys::cv_aruco_CharucoParameters_getPropCameraMatrix_const(self.as_raw_CharucoParameters()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
+	}
+	
+	/// distCoeffs optional vector of distortion coefficients
+	#[inline]
+	fn dist_coeffs(&self) -> core::Mat {
+		let ret = unsafe { sys::cv_aruco_CharucoParameters_getPropDistCoeffs_const(self.as_raw_CharucoParameters()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
+	}
+	
+	/// minMarkers number of adjacent markers that must be detected to return a charuco corner, default = 2
+	#[inline]
+	fn min_markers(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_CharucoParameters_getPropMinMarkers_const(self.as_raw_CharucoParameters()) };
+		ret
+	}
+	
+	/// try to use refine board, default false
+	#[inline]
+	fn try_refine_markers(&self) -> bool {
+		let ret = unsafe { sys::cv_aruco_CharucoParameters_getPropTryRefineMarkers_const(self.as_raw_CharucoParameters()) };
+		ret
+	}
+	
+}
+
+pub trait CharucoParametersTrait: crate::objdetect::CharucoParametersTraitConst {
+	fn as_raw_mut_CharucoParameters(&mut self) -> *mut c_void;
+
+	/// cameraMatrix optional 3x3 floating-point camera matrix
+	#[inline]
+	fn set_camera_matrix(&mut self, mut val: core::Mat) {
+		let ret = unsafe { sys::cv_aruco_CharucoParameters_setPropCameraMatrix_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_mut_Mat()) };
+		ret
+	}
+	
+	/// distCoeffs optional vector of distortion coefficients
+	#[inline]
+	fn set_dist_coeffs(&mut self, mut val: core::Mat) {
+		let ret = unsafe { sys::cv_aruco_CharucoParameters_setPropDistCoeffs_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_mut_Mat()) };
+		ret
+	}
+	
+	/// minMarkers number of adjacent markers that must be detected to return a charuco corner, default = 2
+	#[inline]
+	fn set_min_markers(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_CharucoParameters_setPropMinMarkers_int(self.as_raw_mut_CharucoParameters(), val) };
+		ret
+	}
+	
+	/// try to use refine board, default false
+	#[inline]
+	fn set_try_refine_markers(&mut self, val: bool) {
+		let ret = unsafe { sys::cv_aruco_CharucoParameters_setPropTryRefineMarkers_bool(self.as_raw_mut_CharucoParameters(), val) };
+		ret
+	}
+	
+}
+
+pub struct CharucoParameters {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { CharucoParameters }
+
+impl Drop for CharucoParameters {
+	fn drop(&mut self) {
+		extern "C" { fn cv_CharucoParameters_delete(instance: *mut c_void); }
+		unsafe { cv_CharucoParameters_delete(self.as_raw_mut_CharucoParameters()) };
+	}
+}
+
+unsafe impl Send for CharucoParameters {}
+
+impl crate::objdetect::CharucoParametersTraitConst for CharucoParameters {
+	#[inline] fn as_raw_CharucoParameters(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::CharucoParametersTrait for CharucoParameters {
+	#[inline] fn as_raw_mut_CharucoParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl CharucoParameters {
+	#[inline]
+	pub fn default() -> Result<crate::objdetect::CharucoParameters> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_CharucoParameters_CharucoParameters(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::CharucoParameters::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+/// struct DetectorParameters is used by ArucoDetector
+pub trait DetectorParametersTraitConst {
+	fn as_raw_DetectorParameters(&self) -> *const c_void;
+
+	/// minimum window size for adaptive thresholding before finding contours (default 3).
+	#[inline]
+	fn adaptive_thresh_win_size_min(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAdaptiveThreshWinSizeMin_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// maximum window size for adaptive thresholding before finding contours (default 23).
+	#[inline]
+	fn adaptive_thresh_win_size_max(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAdaptiveThreshWinSizeMax_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// increments from adaptiveThreshWinSizeMin to adaptiveThreshWinSizeMax during the thresholding (default 10).
+	#[inline]
+	fn adaptive_thresh_win_size_step(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAdaptiveThreshWinSizeStep_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// constant for adaptive thresholding before finding contours (default 7)
+	#[inline]
+	fn adaptive_thresh_constant(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAdaptiveThreshConstant_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// determine minimum perimeter for marker contour to be detected.
+	/// 
+	/// This is defined as a rate respect to the maximum dimension of the input image (default 0.03).
+	#[inline]
+	fn min_marker_perimeter_rate(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMinMarkerPerimeterRate_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// determine maximum perimeter for marker contour to be detected.
+	/// 
+	/// This is defined as a rate respect to the maximum dimension of the input image (default 4.0).
+	#[inline]
+	fn max_marker_perimeter_rate(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMaxMarkerPerimeterRate_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// minimum accuracy during the polygonal approximation process to determine which contours are squares. (default 0.03)
+	#[inline]
+	fn polygonal_approx_accuracy_rate(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropPolygonalApproxAccuracyRate_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// minimum distance between corners for detected markers relative to its perimeter (default 0.05)
+	#[inline]
+	fn min_corner_distance_rate(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMinCornerDistanceRate_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// minimum distance of any corner to the image border for detected markers (in pixels) (default 3)
+	#[inline]
+	fn min_distance_to_border(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMinDistanceToBorder_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// minimum mean distance beetween two marker corners to be considered imilar, so that the smaller one is removed.
+	/// 
+	/// The rate is relative to the smaller perimeter of the two markers (default 0.05).
+	#[inline]
+	fn min_marker_distance_rate(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMinMarkerDistanceRate_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// default value CORNER_REFINE_NONE
+	#[inline]
+	fn corner_refinement_method(&self) -> crate::objdetect::CornerRefineMethod {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_DetectorParameters_getPropCornerRefinementMethod_const(self.as_raw_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+	
+	/// window size for the corner refinement process (in pixels) (default 5).
+	#[inline]
+	fn corner_refinement_win_size(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropCornerRefinementWinSize_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// maximum number of iterations for stop criteria of the corner refinement process (default 30).
+	#[inline]
+	fn corner_refinement_max_iterations(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropCornerRefinementMaxIterations_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// minimum error for the stop cristeria of the corner refinement process (default: 0.1)
+	#[inline]
+	fn corner_refinement_min_accuracy(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropCornerRefinementMinAccuracy_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// number of bits of the marker border, i.e. marker border width (default 1).
+	#[inline]
+	fn marker_border_bits(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMarkerBorderBits_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// number of bits (per dimension) for each cell of the marker when removing the perspective (default 4).
+	#[inline]
+	fn perspective_remove_pixel_per_cell(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropPerspectiveRemovePixelPerCell_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// width of the margin of pixels on each cell not considered for the determination of the cell bit.
+	/// 
+	/// Represents the rate respect to the total size of the cell, i.e. perspectiveRemovePixelPerCell (default 0.13)
+	#[inline]
+	fn perspective_remove_ignored_margin_per_cell(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropPerspectiveRemoveIgnoredMarginPerCell_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// maximum number of accepted erroneous bits in the border (i.e. number of allowed white bits in the border).
+	/// 
+	/// Represented as a rate respect to the total number of bits per marker (default 0.35).
+	#[inline]
+	fn max_erroneous_bits_in_border_rate(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMaxErroneousBitsInBorderRate_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// minimun standard deviation in pixels values during the decodification step to apply Otsu
+	/// thresholding (otherwise, all the bits are set to 0 or 1 depending on mean higher than 128 or not) (default 5.0)
+	#[inline]
+	fn min_otsu_std_dev(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMinOtsuStdDev_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// error correction rate respect to the maximun error correction capability for each dictionary (default 0.6).
+	#[inline]
+	fn error_correction_rate(&self) -> f64 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropErrorCorrectionRate_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// April :: User-configurable parameters.
+	/// 
+	/// Detection of quads can be done on a lower-resolution image, improving speed at a cost of
+	/// pose accuracy and a slight decrease in detection rate. Decoding the binary payload is still
+	#[inline]
+	fn april_tag_quad_decimate(&self) -> f32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAprilTagQuadDecimate_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// what Gaussian blur should be applied to the segmented image (used for quad detection?)
+	#[inline]
+	fn april_tag_quad_sigma(&self) -> f32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAprilTagQuadSigma_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// reject quads containing too few pixels (default 5).
+	#[inline]
+	fn april_tag_min_cluster_pixels(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAprilTagMinClusterPixels_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// how many corner candidates to consider when segmenting a group of pixels into a quad (default 10).
+	#[inline]
+	fn april_tag_max_nmaxima(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAprilTagMaxNmaxima_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// reject quads where pairs of edges have angles that are close to straight or close to 180 degrees.
+	/// 
+	/// Zero means that no quads are rejected. (In radians) (default 10*PI/180)
+	#[inline]
+	fn april_tag_critical_rad(&self) -> f32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAprilTagCriticalRad_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// when fitting lines to the contours, what is the maximum mean squared error
+	#[inline]
+	fn april_tag_max_line_fit_mse(&self) -> f32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAprilTagMaxLineFitMse_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// add an extra check that the white model must be (overall) brighter than the black model.
+	/// 
+	/// When we build our model of black & white pixels, we add an extra check that the white model must be (overall)
+	/// brighter than the black model. How much brighter? (in pixel values, [0,255]), (default 5)
+	#[inline]
+	fn april_tag_min_white_black_diff(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAprilTagMinWhiteBlackDiff_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// should the thresholded image be deglitched? Only useful for very noisy images (default 0).
+	#[inline]
+	fn april_tag_deglitch(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropAprilTagDeglitch_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// to check if there is a white marker.
+	/// 
+	/// In order to generate a "white" marker just invert a normal marker by using a tilde, ~markerImage. (default false)
+	#[inline]
+	fn detect_inverted_marker(&self) -> bool {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropDetectInvertedMarker_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// enable the new and faster Aruco detection strategy.
+	/// 
+	/// Proposed in the paper:
+	/// Romero-Ramirez et al: Speeded up detection of squared fiducial markers (2018)
+	/// https://www.researchgate.net/publication/325787310_Speeded_Up_Detection_of_Squared_Fiducial_Markers
+	#[inline]
+	fn use_aruco3_detection(&self) -> bool {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropUseAruco3Detection_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// minimum side length of a marker in the canonical image. Latter is the binarized image in which contours are searched.
+	#[inline]
+	fn min_side_length_canonical_img(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMinSideLengthCanonicalImg_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+	/// range [0,1], eq (2) from paper. The parameter tau_i has a direct influence on the processing speed.
+	#[inline]
+	fn min_marker_length_ratio_original_img(&self) -> f32 {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropMinMarkerLengthRatioOriginalImg_const(self.as_raw_DetectorParameters()) };
+		ret
+	}
+	
+}
+
+pub trait DetectorParametersTrait: crate::objdetect::DetectorParametersTraitConst {
+	fn as_raw_mut_DetectorParameters(&mut self) -> *mut c_void;
+
+	/// minimum window size for adaptive thresholding before finding contours (default 3).
+	#[inline]
+	fn set_adaptive_thresh_win_size_min(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAdaptiveThreshWinSizeMin_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// maximum window size for adaptive thresholding before finding contours (default 23).
+	#[inline]
+	fn set_adaptive_thresh_win_size_max(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAdaptiveThreshWinSizeMax_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// increments from adaptiveThreshWinSizeMin to adaptiveThreshWinSizeMax during the thresholding (default 10).
+	#[inline]
+	fn set_adaptive_thresh_win_size_step(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAdaptiveThreshWinSizeStep_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// constant for adaptive thresholding before finding contours (default 7)
+	#[inline]
+	fn set_adaptive_thresh_constant(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAdaptiveThreshConstant_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// determine minimum perimeter for marker contour to be detected.
+	/// 
+	/// This is defined as a rate respect to the maximum dimension of the input image (default 0.03).
+	#[inline]
+	fn set_min_marker_perimeter_rate(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMinMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// determine maximum perimeter for marker contour to be detected.
+	/// 
+	/// This is defined as a rate respect to the maximum dimension of the input image (default 4.0).
+	#[inline]
+	fn set_max_marker_perimeter_rate(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMaxMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// minimum accuracy during the polygonal approximation process to determine which contours are squares. (default 0.03)
+	#[inline]
+	fn set_polygonal_approx_accuracy_rate(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropPolygonalApproxAccuracyRate_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// minimum distance between corners for detected markers relative to its perimeter (default 0.05)
+	#[inline]
+	fn set_min_corner_distance_rate(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMinCornerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// minimum distance of any corner to the image border for detected markers (in pixels) (default 3)
+	#[inline]
+	fn set_min_distance_to_border(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMinDistanceToBorder_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// minimum mean distance beetween two marker corners to be considered imilar, so that the smaller one is removed.
+	/// 
+	/// The rate is relative to the smaller perimeter of the two markers (default 0.05).
+	#[inline]
+	fn set_min_marker_distance_rate(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMinMarkerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// default value CORNER_REFINE_NONE
+	#[inline]
+	fn set_corner_refinement_method(&mut self, val: crate::objdetect::CornerRefineMethod) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropCornerRefinementMethod_CornerRefineMethod(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// window size for the corner refinement process (in pixels) (default 5).
+	#[inline]
+	fn set_corner_refinement_win_size(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropCornerRefinementWinSize_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// maximum number of iterations for stop criteria of the corner refinement process (default 30).
+	#[inline]
+	fn set_corner_refinement_max_iterations(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropCornerRefinementMaxIterations_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// minimum error for the stop cristeria of the corner refinement process (default: 0.1)
+	#[inline]
+	fn set_corner_refinement_min_accuracy(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropCornerRefinementMinAccuracy_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// number of bits of the marker border, i.e. marker border width (default 1).
+	#[inline]
+	fn set_marker_border_bits(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMarkerBorderBits_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// number of bits (per dimension) for each cell of the marker when removing the perspective (default 4).
+	#[inline]
+	fn set_perspective_remove_pixel_per_cell(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropPerspectiveRemovePixelPerCell_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// width of the margin of pixels on each cell not considered for the determination of the cell bit.
+	/// 
+	/// Represents the rate respect to the total size of the cell, i.e. perspectiveRemovePixelPerCell (default 0.13)
+	#[inline]
+	fn set_perspective_remove_ignored_margin_per_cell(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropPerspectiveRemoveIgnoredMarginPerCell_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// maximum number of accepted erroneous bits in the border (i.e. number of allowed white bits in the border).
+	/// 
+	/// Represented as a rate respect to the total number of bits per marker (default 0.35).
+	#[inline]
+	fn set_max_erroneous_bits_in_border_rate(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMaxErroneousBitsInBorderRate_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// minimun standard deviation in pixels values during the decodification step to apply Otsu
+	/// thresholding (otherwise, all the bits are set to 0 or 1 depending on mean higher than 128 or not) (default 5.0)
+	#[inline]
+	fn set_min_otsu_std_dev(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMinOtsuStdDev_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// error correction rate respect to the maximun error correction capability for each dictionary (default 0.6).
+	#[inline]
+	fn set_error_correction_rate(&mut self, val: f64) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropErrorCorrectionRate_double(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// April :: User-configurable parameters.
+	/// 
+	/// Detection of quads can be done on a lower-resolution image, improving speed at a cost of
+	/// pose accuracy and a slight decrease in detection rate. Decoding the binary payload is still
+	#[inline]
+	fn set_april_tag_quad_decimate(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAprilTagQuadDecimate_float(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// what Gaussian blur should be applied to the segmented image (used for quad detection?)
+	#[inline]
+	fn set_april_tag_quad_sigma(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAprilTagQuadSigma_float(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// reject quads containing too few pixels (default 5).
+	#[inline]
+	fn set_april_tag_min_cluster_pixels(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAprilTagMinClusterPixels_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// how many corner candidates to consider when segmenting a group of pixels into a quad (default 10).
+	#[inline]
+	fn set_april_tag_max_nmaxima(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAprilTagMaxNmaxima_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// reject quads where pairs of edges have angles that are close to straight or close to 180 degrees.
+	/// 
+	/// Zero means that no quads are rejected. (In radians) (default 10*PI/180)
+	#[inline]
+	fn set_april_tag_critical_rad(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAprilTagCriticalRad_float(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// when fitting lines to the contours, what is the maximum mean squared error
+	#[inline]
+	fn set_april_tag_max_line_fit_mse(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAprilTagMaxLineFitMse_float(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// add an extra check that the white model must be (overall) brighter than the black model.
+	/// 
+	/// When we build our model of black & white pixels, we add an extra check that the white model must be (overall)
+	/// brighter than the black model. How much brighter? (in pixel values, [0,255]), (default 5)
+	#[inline]
+	fn set_april_tag_min_white_black_diff(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAprilTagMinWhiteBlackDiff_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// should the thresholded image be deglitched? Only useful for very noisy images (default 0).
+	#[inline]
+	fn set_april_tag_deglitch(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropAprilTagDeglitch_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// to check if there is a white marker.
+	/// 
+	/// In order to generate a "white" marker just invert a normal marker by using a tilde, ~markerImage. (default false)
+	#[inline]
+	fn set_detect_inverted_marker(&mut self, val: bool) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropDetectInvertedMarker_bool(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// enable the new and faster Aruco detection strategy.
+	/// 
+	/// Proposed in the paper:
+	/// Romero-Ramirez et al: Speeded up detection of squared fiducial markers (2018)
+	/// https://www.researchgate.net/publication/325787310_Speeded_Up_Detection_of_Squared_Fiducial_Markers
+	#[inline]
+	fn set_use_aruco3_detection(&mut self, val: bool) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropUseAruco3Detection_bool(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// minimum side length of a marker in the canonical image. Latter is the binarized image in which contours are searched.
+	#[inline]
+	fn set_min_side_length_canonical_img(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMinSideLengthCanonicalImg_int(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// range [0,1], eq (2) from paper. The parameter tau_i has a direct influence on the processing speed.
+	#[inline]
+	fn set_min_marker_length_ratio_original_img(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropMinMarkerLengthRatioOriginalImg_float(self.as_raw_mut_DetectorParameters(), val) };
+		ret
+	}
+	
+	/// Read a new set of DetectorParameters from FileNode (use FileStorage.root()).
+	#[inline]
+	fn read_detector_parameters(&mut self, fn_: &core::FileNode) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_DetectorParameters_readDetectorParameters_const_FileNodeR(self.as_raw_mut_DetectorParameters(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Write a set of DetectorParameters to FileStorage
+	/// 
+	/// ## C++ default parameters
+	/// * name: String()
+	#[inline]
+	fn write_detector_parameters(&mut self, fs: &mut core::FileStorage, name: &str) -> Result<bool> {
+		extern_container_arg!(name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_DetectorParameters_writeDetectorParameters_FileStorageR_const_StringR(self.as_raw_mut_DetectorParameters(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+/// struct DetectorParameters is used by ArucoDetector
+pub struct DetectorParameters {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { DetectorParameters }
+
+impl Drop for DetectorParameters {
+	fn drop(&mut self) {
+		extern "C" { fn cv_DetectorParameters_delete(instance: *mut c_void); }
+		unsafe { cv_DetectorParameters_delete(self.as_raw_mut_DetectorParameters()) };
+	}
+}
+
+unsafe impl Send for DetectorParameters {}
+
+impl crate::objdetect::DetectorParametersTraitConst for DetectorParameters {
+	#[inline] fn as_raw_DetectorParameters(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::DetectorParametersTrait for DetectorParameters {
+	#[inline] fn as_raw_mut_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl DetectorParameters {
+	#[inline]
+	pub fn default() -> Result<crate::objdetect::DetectorParameters> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_DetectorParameters_DetectorParameters(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::DetectorParameters::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+/// Dictionary/Set of markers, it contains the inner codification
+/// 
+/// BytesList contains the marker codewords where:
+/// - bytesList.rows is the dictionary size
+/// - each marker is encoded using `nbytes = ceil(markerSize*markerSize/8.)`
+/// - each row contains all 4 rotations of the marker, so its length is `4*nbytes`
+/// 
+/// `bytesList.ptr(i)[k*nbytes + j]` is then the j-th byte of i-th marker, in its k-th rotation.
+pub trait DictionaryTraitConst {
+	fn as_raw_Dictionary(&self) -> *const c_void;
+
+	#[inline]
+	fn bytes_list(&self) -> core::Mat {
+		let ret = unsafe { sys::cv_aruco_Dictionary_getPropBytesList_const(self.as_raw_Dictionary()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
+	}
+	
+	#[inline]
+	fn marker_size(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_Dictionary_getPropMarkerSize_const(self.as_raw_Dictionary()) };
+		ret
+	}
+	
+	#[inline]
+	fn max_correction_bits(&self) -> i32 {
+		let ret = unsafe { sys::cv_aruco_Dictionary_getPropMaxCorrectionBits_const(self.as_raw_Dictionary()) };
+		ret
+	}
+	
+	/// Given a matrix of bits. Returns whether if marker is identified or not.
+	/// 
+	/// It returns by reference the correct id (if any) and the correct rotation
+	#[inline]
+	fn identify(&self, only_bits: &core::Mat, idx: &mut i32, rotation: &mut i32, max_correction_rate: f64) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_identify_const_const_MatR_intR_intR_double(self.as_raw_Dictionary(), only_bits.as_raw_Mat(), idx, rotation, max_correction_rate, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Returns the distance of the input bits to the specific id.
+	/// 
+	/// If allRotations is true, the four posible bits rotation are considered
+	/// 
+	/// ## C++ default parameters
+	/// * all_rotations: true
+	#[inline]
+	fn get_distance_to_id(&self, bits: &dyn core::ToInputArray, id: i32, all_rotations: bool) -> Result<i32> {
+		input_array_arg!(bits);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_getDistanceToId_const_const__InputArrayR_int_bool(self.as_raw_Dictionary(), bits.as_raw__InputArray(), id, all_rotations, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Generate a canonical marker image
+	/// 
+	/// ## C++ default parameters
+	/// * border_bits: 1
+	#[inline]
+	fn generate_image_marker(&self, id: i32, side_pixels: i32, _img: &mut dyn core::ToOutputArray, border_bits: i32) -> Result<()> {
+		output_array_arg!(_img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_generateImageMarker_const_int_int_const__OutputArrayR_int(self.as_raw_Dictionary(), id, side_pixels, _img.as_raw__OutputArray(), border_bits, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub trait DictionaryTrait: crate::objdetect::DictionaryTraitConst {
+	fn as_raw_mut_Dictionary(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn set_bytes_list(&mut self, mut val: core::Mat) {
+		let ret = unsafe { sys::cv_aruco_Dictionary_setPropBytesList_Mat(self.as_raw_mut_Dictionary(), val.as_raw_mut_Mat()) };
+		ret
+	}
+	
+	#[inline]
+	fn set_marker_size(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_Dictionary_setPropMarkerSize_int(self.as_raw_mut_Dictionary(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_max_correction_bits(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_aruco_Dictionary_setPropMaxCorrectionBits_int(self.as_raw_mut_Dictionary(), val) };
+		ret
+	}
+	
+	/// Read a new dictionary from FileNode.
+	/// 
+	/// Dictionary format:
+	/// 
+	/// nmarkers: 35
+	/// 
+	/// markersize: 6
+	/// 
+	/// maxCorrectionBits: 5
+	/// 
+	/// marker_0: "101011111011111001001001101100000000"
+	/// 
+	/// ...
+	/// 
+	/// marker_34: "011111010000111011111110110101100101"
+	#[inline]
+	fn read_dictionary(&mut self, fn_: &core::FileNode) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_readDictionary_const_FileNodeR(self.as_raw_mut_Dictionary(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Write a dictionary to FileStorage, format is the same as in readDictionary().
+	/// 
+	/// ## C++ default parameters
+	/// * name: String()
+	#[inline]
+	fn write_dictionary(&mut self, fs: &mut core::FileStorage, name: &str) -> Result<()> {
+		extern_container_arg!(name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_writeDictionary_FileStorageR_const_StringR(self.as_raw_mut_Dictionary(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+/// Dictionary/Set of markers, it contains the inner codification
+/// 
+/// BytesList contains the marker codewords where:
+/// - bytesList.rows is the dictionary size
+/// - each marker is encoded using `nbytes = ceil(markerSize*markerSize/8.)`
+/// - each row contains all 4 rotations of the marker, so its length is `4*nbytes`
+/// 
+/// `bytesList.ptr(i)[k*nbytes + j]` is then the j-th byte of i-th marker, in its k-th rotation.
+pub struct Dictionary {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { Dictionary }
+
+impl Drop for Dictionary {
+	fn drop(&mut self) {
+		extern "C" { fn cv_Dictionary_delete(instance: *mut c_void); }
+		unsafe { cv_Dictionary_delete(self.as_raw_mut_Dictionary()) };
+	}
+}
+
+unsafe impl Send for Dictionary {}
+
+impl crate::objdetect::DictionaryTraitConst for Dictionary {
+	#[inline] fn as_raw_Dictionary(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::DictionaryTrait for Dictionary {
+	#[inline] fn as_raw_mut_Dictionary(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl Dictionary {
+	#[inline]
+	pub fn default() -> Result<crate::objdetect::Dictionary> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_Dictionary(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## C++ default parameters
+	/// * maxcorr: 0
+	#[inline]
+	pub fn new(bytes_list: &core::Mat, _marker_size: i32, maxcorr: i32) -> Result<crate::objdetect::Dictionary> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_Dictionary_const_MatR_int_int(bytes_list.as_raw_Mat(), _marker_size, maxcorr, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Transform matrix of bits to list of bytes in the 4 rotations
+	#[inline]
+	pub fn get_byte_list_from_bits(bits: &core::Mat) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_getByteListFromBits_const_MatR(bits.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Transform list of bytes to matrix of bits
+	#[inline]
+	pub fn get_bits_from_byte_list(byte_list: &core::Mat, marker_size: i32) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_Dictionary_getBitsFromByteList_const_MatR_int(byte_list.as_raw_Mat(), marker_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+/// Planar board with grid arrangement of markers
+/// 
+/// More common type of board. All markers are placed in the same plane in a grid arrangement.
+/// The board image can be drawn using generateImage() method.
+pub trait GridBoardTraitConst: crate::objdetect::BoardTraitConst {
+	fn as_raw_GridBoard(&self) -> *const c_void;
+
+	#[inline]
+	fn get_grid_size(&self) -> Result<core::Size> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_GridBoard_getGridSize_const(self.as_raw_GridBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_marker_length(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_GridBoard_getMarkerLength_const(self.as_raw_GridBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_marker_separation(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_GridBoard_getMarkerSeparation_const(self.as_raw_GridBoard(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub trait GridBoardTrait: crate::objdetect::BoardTrait + crate::objdetect::GridBoardTraitConst {
+	fn as_raw_mut_GridBoard(&mut self) -> *mut c_void;
+
+}
+
+/// Planar board with grid arrangement of markers
+/// 
+/// More common type of board. All markers are placed in the same plane in a grid arrangement.
+/// The board image can be drawn using generateImage() method.
+pub struct GridBoard {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { GridBoard }
+
+impl Drop for GridBoard {
+	fn drop(&mut self) {
+		extern "C" { fn cv_GridBoard_delete(instance: *mut c_void); }
+		unsafe { cv_GridBoard_delete(self.as_raw_mut_GridBoard()) };
+	}
+}
+
+unsafe impl Send for GridBoard {}
+
+impl crate::objdetect::BoardTraitConst for GridBoard {
+	#[inline] fn as_raw_Board(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::BoardTrait for GridBoard {
+	#[inline] fn as_raw_mut_Board(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::objdetect::GridBoardTraitConst for GridBoard {
+	#[inline] fn as_raw_GridBoard(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::objdetect::GridBoardTrait for GridBoard {
+	#[inline] fn as_raw_mut_GridBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl GridBoard {
+	/// GridBoard constructor
+	/// 
+	/// ## Parameters
+	/// * size: number of markers in x and y directions
+	/// * markerLength: marker side length (normally in meters)
+	/// * markerSeparation: separation between two markers (same unit as markerLength)
+	/// * dictionary: dictionary of markers indicating the type of markers
+	/// * ids: set of marker ids in dictionary to use on board.
+	/// 
+	/// ## C++ default parameters
+	/// * ids: noArray()
+	#[inline]
+	pub fn new(size: core::Size, marker_length: f32, marker_separation: f32, dictionary: &crate::objdetect::Dictionary, ids: &dyn core::ToInputArray) -> Result<crate::objdetect::GridBoard> {
+		input_array_arg!(ids);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_GridBoard_GridBoard_const_SizeR_float_float_const_DictionaryR_const__InputArrayR(&size, marker_length, marker_separation, dictionary.as_raw_Dictionary(), ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::GridBoard::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	pub fn default() -> Result<crate::objdetect::GridBoard> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_GridBoard_GridBoard(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::GridBoard::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { GridBoard, crate::objdetect::Board, cv_GridBoard_to_Board }
+
+/// struct RefineParameters is used by ArucoDetector
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct RefineParameters {
+	/// minRepDistance minimum distance between the corners of the rejected candidate and the reprojected marker
+	/// in order to consider it as a correspondence.
+	pub min_rep_distance: f32,
+	/// minRepDistance rate of allowed erroneous bits respect to the error correction capability of the used dictionary.
+	/// 
+	/// -1 ignores the error correction step.
+	pub error_correction_rate: f32,
+	/// checkAllOrders consider the four posible corner orders in the rejectedCorners array.
+	/// 
+	/// If it set to false, only the provided corner order is considered (default true).
+	pub check_all_orders: bool,
+}
+
+opencv_type_simple! { crate::objdetect::RefineParameters }
+
+impl RefineParameters {
+	/// ## C++ default parameters
+	/// * min_rep_distance: 10.f
+	/// * error_correction_rate: 3.f
+	/// * check_all_orders: true
+	#[inline]
+	pub fn new(min_rep_distance: f32, error_correction_rate: f32, check_all_orders: bool) -> Result<crate::objdetect::RefineParameters> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_RefineParameters_RefineParameters_float_float_bool(min_rep_distance, error_correction_rate, check_all_orders, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Read a new set of RefineParameters from FileNode (use FileStorage.root()).
+	#[inline]
+	pub fn read_refine_parameters(self, fn_: &core::FileNode) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_RefineParameters_readRefineParameters_const_FileNodeR(self.opencv_as_extern(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Write a set of RefineParameters to FileStorage
+	/// 
+	/// ## C++ default parameters
+	/// * name: String()
+	#[inline]
+	pub fn write_refine_parameters(self, fs: &mut core::FileStorage, name: &str) -> Result<bool> {
+		extern_container_arg!(name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_RefineParameters_writeRefineParameters_FileStorageR_const_StringR(self.opencv_as_extern(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	

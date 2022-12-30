@@ -15,7 +15,7 @@
 //!   # MacOS(OSX) glue
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use {  };
+	pub use { super::ImageCollection_iteratorTraitConst, super::ImageCollection_iteratorTrait, super::ImageCollectionTraitConst, super::ImageCollectionTrait };
 }
 
 /// If set, the image is read in any possible color format.
@@ -66,12 +66,18 @@ pub const IMWRITE_EXR_COMPRESSION_RLE: i32 = 1;
 pub const IMWRITE_EXR_COMPRESSION_ZIP: i32 = 3;
 /// zlib compression, one scan line at a time
 pub const IMWRITE_EXR_COMPRESSION_ZIPS: i32 = 2;
+/// override EXR DWA compression level (45 is default)
+pub const IMWRITE_EXR_DWA_COMPRESSION_LEVEL: i32 = 50;
 /// override EXR storage type (FLOAT (FP32) is default)
 pub const IMWRITE_EXR_TYPE: i32 = 48;
 /// store as FP32 (default)
 pub const IMWRITE_EXR_TYPE_FLOAT: i32 = 2;
 /// store as HALF (FP16)
 pub const IMWRITE_EXR_TYPE_HALF: i32 = 1;
+/// specify HDR compression
+pub const IMWRITE_HDR_COMPRESSION: i32 = 80;
+pub const IMWRITE_HDR_COMPRESSION_NONE: i32 = 0;
+pub const IMWRITE_HDR_COMPRESSION_RLE: i32 = 1;
 /// For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
 pub const IMWRITE_JPEG2000_COMPRESSION_X1000: i32 = 272;
 /// Separate chroma quality level, 0 - 100, default is -1 - don't use.
@@ -86,6 +92,18 @@ pub const IMWRITE_JPEG_PROGRESSIVE: i32 = 2;
 pub const IMWRITE_JPEG_QUALITY: i32 = 1;
 /// JPEG restart interval, 0 - 65535, default is 0 - no restart.
 pub const IMWRITE_JPEG_RST_INTERVAL: i32 = 4;
+/// For JPEG, set sampling factor. See cv::ImwriteJPEGSamplingFactorParams.
+pub const IMWRITE_JPEG_SAMPLING_FACTOR: i32 = 7;
+/// 4x1,1x1,1x1
+pub const IMWRITE_JPEG_SAMPLING_FACTOR_411: i32 = 4264209;
+/// 2x2,1x1,1x1(Default)
+pub const IMWRITE_JPEG_SAMPLING_FACTOR_420: i32 = 2232593;
+/// 2x1,1x1,1x1
+pub const IMWRITE_JPEG_SAMPLING_FACTOR_422: i32 = 2167057;
+/// 1x2,1x1,1x1
+pub const IMWRITE_JPEG_SAMPLING_FACTOR_440: i32 = 1184017;
+/// 1x1,1x1,1x1(No subsampling)
+pub const IMWRITE_JPEG_SAMPLING_FACTOR_444: i32 = 1118481;
 pub const IMWRITE_PAM_FORMAT_BLACKANDWHITE: i32 = 1;
 pub const IMWRITE_PAM_FORMAT_GRAYSCALE: i32 = 2;
 pub const IMWRITE_PAM_FORMAT_GRAYSCALE_ALPHA: i32 = 3;
@@ -210,6 +228,8 @@ pub enum ImwriteFlags {
 	IMWRITE_JPEG_LUMA_QUALITY = 5,
 	/// Separate chroma quality level, 0 - 100, default is -1 - don't use.
 	IMWRITE_JPEG_CHROMA_QUALITY = 6,
+	/// For JPEG, set sampling factor. See cv::ImwriteJPEGSamplingFactorParams.
+	IMWRITE_JPEG_SAMPLING_FACTOR = 7,
 	/// For PNG, it can be the compression level from 0 to 9. A higher value means a smaller size and longer compression time. If specified, strategy is changed to IMWRITE_PNG_STRATEGY_DEFAULT (Z_DEFAULT_STRATEGY). Default value is 1 (best speed setting).
 	IMWRITE_PNG_COMPRESSION = 16,
 	/// One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
@@ -222,8 +242,12 @@ pub enum ImwriteFlags {
 	IMWRITE_EXR_TYPE = 48,
 	/// override EXR compression type (ZIP_COMPRESSION = 3 is default)
 	IMWRITE_EXR_COMPRESSION = 49,
+	/// override EXR DWA compression level (45 is default)
+	IMWRITE_EXR_DWA_COMPRESSION_LEVEL = 50,
 	/// For WEBP, it can be a quality from 1 to 100 (the higher is the better). By default (without any parameter) and for quality above 100 the lossless compression is used.
 	IMWRITE_WEBP_QUALITY = 64,
+	/// specify HDR compression
+	IMWRITE_HDR_COMPRESSION = 80,
 	/// For PAM, sets the TUPLETYPE field to the corresponding string value that is defined for the format
 	IMWRITE_PAM_TUPLETYPE = 128,
 	/// For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values
@@ -239,6 +263,33 @@ pub enum ImwriteFlags {
 }
 
 opencv_type_enum! { crate::imgcodecs::ImwriteFlags }
+
+/// Imwrite HDR specific values for IMWRITE_HDR_COMPRESSION parameter key
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum ImwriteHDRCompressionFlags {
+	IMWRITE_HDR_COMPRESSION_NONE = 0,
+	IMWRITE_HDR_COMPRESSION_RLE = 1,
+}
+
+opencv_type_enum! { crate::imgcodecs::ImwriteHDRCompressionFlags }
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum ImwriteJPEGSamplingFactorParams {
+	/// 4x1,1x1,1x1
+	IMWRITE_JPEG_SAMPLING_FACTOR_411 = 4264209,
+	/// 2x2,1x1,1x1(Default)
+	IMWRITE_JPEG_SAMPLING_FACTOR_420 = 2232593,
+	/// 2x1,1x1,1x1
+	IMWRITE_JPEG_SAMPLING_FACTOR_422 = 2167057,
+	/// 1x2,1x1,1x1
+	IMWRITE_JPEG_SAMPLING_FACTOR_440 = 1184017,
+	/// 1x1,1x1,1x1(No subsampling)
+	IMWRITE_JPEG_SAMPLING_FACTOR_444 = 1118481,
+}
+
+opencv_type_enum! { crate::imgcodecs::ImwriteJPEGSamplingFactorParams }
 
 /// Imwrite PAM specific tupletype flags used to define the 'TUPLETYPE' field of a PAM file.
 #[repr(C)]
@@ -375,6 +426,29 @@ pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Reads a multi-page image from a buffer in memory.
+/// 
+/// The function imdecodemulti reads a multi-page image from the specified buffer in the memory. If the buffer is too short or
+/// contains invalid data, the function returns false.
+/// 
+/// See cv::imreadmulti for the list of supported formats and flags description.
+/// 
+/// 
+/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
+/// ## Parameters
+/// * buf: Input array or vector of bytes.
+/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+/// * mats: A vector of Mat objects holding each page, if more than one.
+#[inline]
+pub fn imdecodemulti(buf: &dyn core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
+	input_array_arg!(buf);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
 	Ok(ret)
 }
 
@@ -570,4 +644,229 @@ pub fn imwritemulti(filename: &str, img: &dyn core::ToInputArray, params: &core:
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
+}
+
+/// To read Multi Page images on demand
+/// 
+/// The ImageCollection class provides iterator API to read multi page images on demand. Create iterator
+/// to the collection of the images and iterate over the collection. Decode the necessary page with operator*.
+/// 
+/// The performance of page decoding is O(1) if collection is increment sequentially. If the user wants to access random page,
+/// then the time Complexity is O(n) because the collection has to be reinitialized every time in order to go to the correct page.
+/// However, the intermediate pages are not decoded during the process, so typically it's quite fast.
+/// This is required because multipage codecs does not support going backwards.
+/// After decoding the one page, it is stored inside the collection cache. Hence, trying to get Mat object from already decoded page is O(1).
+/// If you need memory, you can use .releaseCache() method to release cached index.
+/// The space complexity is O(n) if all pages are decoded into memory. The user is able to decode and release images on demand.
+pub trait ImageCollectionTraitConst {
+	fn as_raw_ImageCollection(&self) -> *const c_void;
+
+	#[inline]
+	fn size(&self) -> Result<size_t> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_size_const(self.as_raw_ImageCollection(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub trait ImageCollectionTrait: crate::imgcodecs::ImageCollectionTraitConst {
+	fn as_raw_mut_ImageCollection(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn init(&mut self, img: &str, flags: i32) -> Result<()> {
+		extern_container_arg!(img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_init_const_StringR_int(self.as_raw_mut_ImageCollection(), img.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn at(&mut self, index: i32) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_at_int(self.as_raw_mut_ImageCollection(), index, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_mut(&mut self, index: i32) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_operator___int(self.as_raw_mut_ImageCollection(), index, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn release_cache(&mut self, index: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_releaseCache_int(self.as_raw_mut_ImageCollection(), index, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn begin(&mut self) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_begin(self.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn end(&mut self) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_end(self.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+/// To read Multi Page images on demand
+/// 
+/// The ImageCollection class provides iterator API to read multi page images on demand. Create iterator
+/// to the collection of the images and iterate over the collection. Decode the necessary page with operator*.
+/// 
+/// The performance of page decoding is O(1) if collection is increment sequentially. If the user wants to access random page,
+/// then the time Complexity is O(n) because the collection has to be reinitialized every time in order to go to the correct page.
+/// However, the intermediate pages are not decoded during the process, so typically it's quite fast.
+/// This is required because multipage codecs does not support going backwards.
+/// After decoding the one page, it is stored inside the collection cache. Hence, trying to get Mat object from already decoded page is O(1).
+/// If you need memory, you can use .releaseCache() method to release cached index.
+/// The space complexity is O(n) if all pages are decoded into memory. The user is able to decode and release images on demand.
+pub struct ImageCollection {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { ImageCollection }
+
+impl Drop for ImageCollection {
+	fn drop(&mut self) {
+		extern "C" { fn cv_ImageCollection_delete(instance: *mut c_void); }
+		unsafe { cv_ImageCollection_delete(self.as_raw_mut_ImageCollection()) };
+	}
+}
+
+unsafe impl Send for ImageCollection {}
+
+impl crate::imgcodecs::ImageCollectionTraitConst for ImageCollection {
+	#[inline] fn as_raw_ImageCollection(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::imgcodecs::ImageCollectionTrait for ImageCollection {
+	#[inline] fn as_raw_mut_ImageCollection(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl ImageCollection {
+	#[inline]
+	pub fn default() -> Result<crate::imgcodecs::ImageCollection> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_ImageCollection(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	pub fn new(filename: &str, flags: i32) -> Result<crate::imgcodecs::ImageCollection> {
+		extern_container_arg!(filename);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_ImageCollection_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+pub trait ImageCollection_iteratorTraitConst {
+	fn as_raw_ImageCollection_iterator(&self) -> *const c_void;
+
+}
+
+pub trait ImageCollection_iteratorTrait: crate::imgcodecs::ImageCollection_iteratorTraitConst {
+	fn as_raw_mut_ImageCollection_iterator(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn try_deref_mut(&mut self) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_iterator_operatorX(self.as_raw_mut_ImageCollection_iterator(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn incr(&mut self) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_iterator_operatorAA(self.as_raw_mut_ImageCollection_iterator(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+pub struct ImageCollection_iterator {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { ImageCollection_iterator }
+
+impl Drop for ImageCollection_iterator {
+	fn drop(&mut self) {
+		extern "C" { fn cv_ImageCollection_iterator_delete(instance: *mut c_void); }
+		unsafe { cv_ImageCollection_iterator_delete(self.as_raw_mut_ImageCollection_iterator()) };
+	}
+}
+
+unsafe impl Send for ImageCollection_iterator {}
+
+impl crate::imgcodecs::ImageCollection_iteratorTraitConst for ImageCollection_iterator {
+	#[inline] fn as_raw_ImageCollection_iterator(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::imgcodecs::ImageCollection_iteratorTrait for ImageCollection_iterator {
+	#[inline] fn as_raw_mut_ImageCollection_iterator(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl ImageCollection_iterator {
+	#[inline]
+	pub fn new(col: &mut crate::imgcodecs::ImageCollection) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX(col.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	pub fn new_1(col: &mut crate::imgcodecs::ImageCollection, end: i32) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX_int(col.as_raw_mut_ImageCollection(), end, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 }

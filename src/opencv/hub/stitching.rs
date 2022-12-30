@@ -15,9 +15,9 @@
 //! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 //! one can combine and use them separately.
 //! 
-//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BL07) .
+//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BL07) .
 //! 
-//! ![stitching pipeline](https://docs.opencv.org/4.6.0/StitchingPipeline.jpg)
+//! ![stitching pipeline](https://docs.opencv.org/4.7.0/StitchingPipeline.jpg)
 //! 
 //! Camera models
 //! -------------
@@ -50,7 +50,7 @@
 //!    # Image Blenders
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::Detail_RotationWarperConst, super::Detail_RotationWarper, super::Detail_ProjectorBaseTraitConst, super::Detail_ProjectorBaseTrait, super::Detail_PlaneProjectorTraitConst, super::Detail_PlaneProjectorTrait, super::Detail_PlaneWarperTraitConst, super::Detail_PlaneWarperTrait, super::Detail_AffineWarperTraitConst, super::Detail_AffineWarperTrait, super::Detail_SphericalWarperTraitConst, super::Detail_SphericalWarperTrait, super::Detail_CylindricalProjectorTraitConst, super::Detail_CylindricalProjectorTrait, super::Detail_CylindricalWarperTraitConst, super::Detail_CylindricalWarperTrait, super::Detail_FisheyeProjectorTraitConst, super::Detail_FisheyeProjectorTrait, super::Detail_FisheyeWarperTraitConst, super::Detail_FisheyeWarperTrait, super::Detail_StereographicProjectorTraitConst, super::Detail_StereographicProjectorTrait, super::Detail_StereographicWarperTraitConst, super::Detail_StereographicWarperTrait, super::Detail_CompressedRectilinearProjectorTraitConst, super::Detail_CompressedRectilinearProjectorTrait, super::Detail_CompressedRectilinearWarperTraitConst, super::Detail_CompressedRectilinearWarperTrait, super::Detail_CompressedRectilinearPortraitProjectorTraitConst, super::Detail_CompressedRectilinearPortraitProjectorTrait, super::Detail_CompressedRectilinearPortraitWarperTraitConst, super::Detail_CompressedRectilinearPortraitWarperTrait, super::Detail_PaniniProjectorTraitConst, super::Detail_PaniniProjectorTrait, super::Detail_PaniniWarperTraitConst, super::Detail_PaniniWarperTrait, super::Detail_PaniniPortraitProjectorTraitConst, super::Detail_PaniniPortraitProjectorTrait, super::Detail_PaniniPortraitWarperTraitConst, super::Detail_PaniniPortraitWarperTrait, super::Detail_MercatorProjectorTraitConst, super::Detail_MercatorProjectorTrait, super::Detail_MercatorWarperTraitConst, super::Detail_MercatorWarperTrait, super::Detail_TransverseMercatorProjectorTraitConst, super::Detail_TransverseMercatorProjectorTrait, super::Detail_TransverseMercatorWarperTraitConst, super::Detail_TransverseMercatorWarperTrait, super::Detail_PlaneWarperGpuTraitConst, super::Detail_PlaneWarperGpuTrait, super::Detail_SphericalWarperGpuTraitConst, super::Detail_SphericalWarperGpuTrait, super::Detail_CylindricalWarperGpuTraitConst, super::Detail_CylindricalWarperGpuTrait, super::Detail_SphericalPortraitProjectorTraitConst, super::Detail_SphericalPortraitProjectorTrait, super::Detail_SphericalPortraitWarperTraitConst, super::Detail_SphericalPortraitWarperTrait, super::Detail_CylindricalPortraitProjectorTraitConst, super::Detail_CylindricalPortraitProjectorTrait, super::Detail_CylindricalPortraitWarperTraitConst, super::Detail_CylindricalPortraitWarperTrait, super::Detail_PlanePortraitProjectorTraitConst, super::Detail_PlanePortraitProjectorTrait, super::Detail_PlanePortraitWarperTraitConst, super::Detail_PlanePortraitWarperTrait, super::PyRotationWarperTraitConst, super::PyRotationWarperTrait, super::WarperCreatorConst, super::WarperCreator, super::PlaneWarperTraitConst, super::PlaneWarperTrait, super::AffineWarperTraitConst, super::AffineWarperTrait, super::CylindricalWarperTraitConst, super::CylindricalWarperTrait, super::SphericalWarperTraitConst, super::SphericalWarperTrait, super::FisheyeWarperTraitConst, super::FisheyeWarperTrait, super::StereographicWarperTraitConst, super::StereographicWarperTrait, super::CompressedRectilinearWarperTraitConst, super::CompressedRectilinearWarperTrait, super::CompressedRectilinearPortraitWarperTraitConst, super::CompressedRectilinearPortraitWarperTrait, super::PaniniWarperTraitConst, super::PaniniWarperTrait, super::PaniniPortraitWarperTraitConst, super::PaniniPortraitWarperTrait, super::MercatorWarperTraitConst, super::MercatorWarperTrait, super::TransverseMercatorWarperTraitConst, super::TransverseMercatorWarperTrait, super::PlaneWarperGpuTraitConst, super::PlaneWarperGpuTrait, super::CylindricalWarperGpuTraitConst, super::CylindricalWarperGpuTrait, super::SphericalWarperGpuTraitConst, super::SphericalWarperGpuTrait, super::Detail_ImageFeaturesTraitConst, super::Detail_ImageFeaturesTrait, super::Detail_MatchesInfoTraitConst, super::Detail_MatchesInfoTrait, super::Detail_FeaturesMatcherConst, super::Detail_FeaturesMatcher, super::Detail_BestOf2NearestMatcherTraitConst, super::Detail_BestOf2NearestMatcherTrait, super::Detail_BestOf2NearestRangeMatcherTraitConst, super::Detail_BestOf2NearestRangeMatcherTrait, super::Detail_AffineBestOf2NearestMatcherTraitConst, super::Detail_AffineBestOf2NearestMatcherTrait, super::Detail_DisjointSetsTraitConst, super::Detail_DisjointSetsTrait, super::Detail_GraphEdgeTraitConst, super::Detail_GraphEdgeTrait, super::Detail_GraphTraitConst, super::Detail_GraphTrait, super::Detail_CameraParamsTraitConst, super::Detail_CameraParamsTrait, super::Detail_EstimatorConst, super::Detail_Estimator, super::Detail_HomographyBasedEstimatorTraitConst, super::Detail_HomographyBasedEstimatorTrait, super::Detail_AffineBasedEstimatorTraitConst, super::Detail_AffineBasedEstimatorTrait, super::Detail_BundleAdjusterBaseConst, super::Detail_BundleAdjusterBase, super::Detail_NoBundleAdjusterTraitConst, super::Detail_NoBundleAdjusterTrait, super::Detail_BundleAdjusterReprojTraitConst, super::Detail_BundleAdjusterReprojTrait, super::Detail_BundleAdjusterRayTraitConst, super::Detail_BundleAdjusterRayTrait, super::Detail_BundleAdjusterAffineTraitConst, super::Detail_BundleAdjusterAffineTrait, super::Detail_BundleAdjusterAffinePartialTraitConst, super::Detail_BundleAdjusterAffinePartialTrait, super::Detail_ExposureCompensatorConst, super::Detail_ExposureCompensator, super::Detail_NoExposureCompensatorTraitConst, super::Detail_NoExposureCompensatorTrait, super::Detail_GainCompensatorTraitConst, super::Detail_GainCompensatorTrait, super::Detail_ChannelsCompensatorTraitConst, super::Detail_ChannelsCompensatorTrait, super::Detail_BlocksCompensatorConst, super::Detail_BlocksCompensator, super::Detail_BlocksGainCompensatorTraitConst, super::Detail_BlocksGainCompensatorTrait, super::Detail_BlocksChannelsCompensatorTraitConst, super::Detail_BlocksChannelsCompensatorTrait, super::Detail_SeamFinderConst, super::Detail_SeamFinder, super::Detail_NoSeamFinderTraitConst, super::Detail_NoSeamFinderTrait, super::Detail_PairwiseSeamFinderConst, super::Detail_PairwiseSeamFinder, super::Detail_VoronoiSeamFinderTraitConst, super::Detail_VoronoiSeamFinderTrait, super::Detail_DpSeamFinderTraitConst, super::Detail_DpSeamFinderTrait, super::Detail_GraphCutSeamFinderBaseTraitConst, super::Detail_GraphCutSeamFinderBaseTrait, super::Detail_GraphCutSeamFinderTraitConst, super::Detail_GraphCutSeamFinderTrait, super::Detail_GraphCutSeamFinderGpuTraitConst, super::Detail_GraphCutSeamFinderGpuTrait, super::Detail_BlenderTraitConst, super::Detail_BlenderTrait, super::Detail_FeatherBlenderTraitConst, super::Detail_FeatherBlenderTrait, super::Detail_MultiBandBlenderTraitConst, super::Detail_MultiBandBlenderTrait, super::StitcherTraitConst, super::StitcherTrait };
+	pub use { super::Detail_RotationWarperConst, super::Detail_RotationWarper, super::Detail_ProjectorBaseTraitConst, super::Detail_ProjectorBaseTrait, super::Detail_PlaneProjectorTraitConst, super::Detail_PlaneProjectorTrait, super::Detail_PlaneWarperTraitConst, super::Detail_PlaneWarperTrait, super::Detail_AffineWarperTraitConst, super::Detail_AffineWarperTrait, super::Detail_SphericalProjectorTraitConst, super::Detail_SphericalProjectorTrait, super::Detail_SphericalWarperTraitConst, super::Detail_SphericalWarperTrait, super::Detail_CylindricalProjectorTraitConst, super::Detail_CylindricalProjectorTrait, super::Detail_CylindricalWarperTraitConst, super::Detail_CylindricalWarperTrait, super::Detail_FisheyeProjectorTraitConst, super::Detail_FisheyeProjectorTrait, super::Detail_FisheyeWarperTraitConst, super::Detail_FisheyeWarperTrait, super::Detail_StereographicProjectorTraitConst, super::Detail_StereographicProjectorTrait, super::Detail_StereographicWarperTraitConst, super::Detail_StereographicWarperTrait, super::Detail_CompressedRectilinearProjectorTraitConst, super::Detail_CompressedRectilinearProjectorTrait, super::Detail_CompressedRectilinearWarperTraitConst, super::Detail_CompressedRectilinearWarperTrait, super::Detail_CompressedRectilinearPortraitProjectorTraitConst, super::Detail_CompressedRectilinearPortraitProjectorTrait, super::Detail_CompressedRectilinearPortraitWarperTraitConst, super::Detail_CompressedRectilinearPortraitWarperTrait, super::Detail_PaniniProjectorTraitConst, super::Detail_PaniniProjectorTrait, super::Detail_PaniniWarperTraitConst, super::Detail_PaniniWarperTrait, super::Detail_PaniniPortraitProjectorTraitConst, super::Detail_PaniniPortraitProjectorTrait, super::Detail_PaniniPortraitWarperTraitConst, super::Detail_PaniniPortraitWarperTrait, super::Detail_MercatorProjectorTraitConst, super::Detail_MercatorProjectorTrait, super::Detail_MercatorWarperTraitConst, super::Detail_MercatorWarperTrait, super::Detail_TransverseMercatorProjectorTraitConst, super::Detail_TransverseMercatorProjectorTrait, super::Detail_TransverseMercatorWarperTraitConst, super::Detail_TransverseMercatorWarperTrait, super::Detail_PlaneWarperGpuTraitConst, super::Detail_PlaneWarperGpuTrait, super::Detail_SphericalWarperGpuTraitConst, super::Detail_SphericalWarperGpuTrait, super::Detail_CylindricalWarperGpuTraitConst, super::Detail_CylindricalWarperGpuTrait, super::Detail_SphericalPortraitProjectorTraitConst, super::Detail_SphericalPortraitProjectorTrait, super::Detail_SphericalPortraitWarperTraitConst, super::Detail_SphericalPortraitWarperTrait, super::Detail_CylindricalPortraitProjectorTraitConst, super::Detail_CylindricalPortraitProjectorTrait, super::Detail_CylindricalPortraitWarperTraitConst, super::Detail_CylindricalPortraitWarperTrait, super::Detail_PlanePortraitProjectorTraitConst, super::Detail_PlanePortraitProjectorTrait, super::Detail_PlanePortraitWarperTraitConst, super::Detail_PlanePortraitWarperTrait, super::PyRotationWarperTraitConst, super::PyRotationWarperTrait, super::WarperCreatorConst, super::WarperCreator, super::PlaneWarperTraitConst, super::PlaneWarperTrait, super::AffineWarperTraitConst, super::AffineWarperTrait, super::CylindricalWarperTraitConst, super::CylindricalWarperTrait, super::SphericalWarperTraitConst, super::SphericalWarperTrait, super::FisheyeWarperTraitConst, super::FisheyeWarperTrait, super::StereographicWarperTraitConst, super::StereographicWarperTrait, super::CompressedRectilinearWarperTraitConst, super::CompressedRectilinearWarperTrait, super::CompressedRectilinearPortraitWarperTraitConst, super::CompressedRectilinearPortraitWarperTrait, super::PaniniWarperTraitConst, super::PaniniWarperTrait, super::PaniniPortraitWarperTraitConst, super::PaniniPortraitWarperTrait, super::MercatorWarperTraitConst, super::MercatorWarperTrait, super::TransverseMercatorWarperTraitConst, super::TransverseMercatorWarperTrait, super::PlaneWarperGpuTraitConst, super::PlaneWarperGpuTrait, super::CylindricalWarperGpuTraitConst, super::CylindricalWarperGpuTrait, super::SphericalWarperGpuTraitConst, super::SphericalWarperGpuTrait, super::Detail_ImageFeaturesTraitConst, super::Detail_ImageFeaturesTrait, super::Detail_MatchesInfoTraitConst, super::Detail_MatchesInfoTrait, super::Detail_FeaturesMatcherConst, super::Detail_FeaturesMatcher, super::Detail_BestOf2NearestMatcherTraitConst, super::Detail_BestOf2NearestMatcherTrait, super::Detail_BestOf2NearestRangeMatcherTraitConst, super::Detail_BestOf2NearestRangeMatcherTrait, super::Detail_AffineBestOf2NearestMatcherTraitConst, super::Detail_AffineBestOf2NearestMatcherTrait, super::Detail_DisjointSetsTraitConst, super::Detail_DisjointSetsTrait, super::Detail_GraphEdgeTraitConst, super::Detail_GraphEdgeTrait, super::Detail_GraphTraitConst, super::Detail_GraphTrait, super::Detail_CameraParamsTraitConst, super::Detail_CameraParamsTrait, super::Detail_EstimatorConst, super::Detail_Estimator, super::Detail_HomographyBasedEstimatorTraitConst, super::Detail_HomographyBasedEstimatorTrait, super::Detail_AffineBasedEstimatorTraitConst, super::Detail_AffineBasedEstimatorTrait, super::Detail_BundleAdjusterBaseConst, super::Detail_BundleAdjusterBase, super::Detail_NoBundleAdjusterTraitConst, super::Detail_NoBundleAdjusterTrait, super::Detail_BundleAdjusterReprojTraitConst, super::Detail_BundleAdjusterReprojTrait, super::Detail_BundleAdjusterRayTraitConst, super::Detail_BundleAdjusterRayTrait, super::Detail_BundleAdjusterAffineTraitConst, super::Detail_BundleAdjusterAffineTrait, super::Detail_BundleAdjusterAffinePartialTraitConst, super::Detail_BundleAdjusterAffinePartialTrait, super::Detail_ExposureCompensatorConst, super::Detail_ExposureCompensator, super::Detail_NoExposureCompensatorTraitConst, super::Detail_NoExposureCompensatorTrait, super::Detail_GainCompensatorTraitConst, super::Detail_GainCompensatorTrait, super::Detail_ChannelsCompensatorTraitConst, super::Detail_ChannelsCompensatorTrait, super::Detail_BlocksCompensatorConst, super::Detail_BlocksCompensator, super::Detail_BlocksGainCompensatorTraitConst, super::Detail_BlocksGainCompensatorTrait, super::Detail_BlocksChannelsCompensatorTraitConst, super::Detail_BlocksChannelsCompensatorTrait, super::Detail_SeamFinderConst, super::Detail_SeamFinder, super::Detail_NoSeamFinderTraitConst, super::Detail_NoSeamFinderTrait, super::Detail_PairwiseSeamFinderConst, super::Detail_PairwiseSeamFinder, super::Detail_VoronoiSeamFinderTraitConst, super::Detail_VoronoiSeamFinderTrait, super::Detail_DpSeamFinderTraitConst, super::Detail_DpSeamFinderTrait, super::Detail_GraphCutSeamFinderBaseTraitConst, super::Detail_GraphCutSeamFinderBaseTrait, super::Detail_GraphCutSeamFinderTraitConst, super::Detail_GraphCutSeamFinderTrait, super::Detail_GraphCutSeamFinderGpuTraitConst, super::Detail_GraphCutSeamFinderGpuTrait, super::Detail_BlenderTraitConst, super::Detail_BlenderTrait, super::Detail_FeatherBlenderTraitConst, super::Detail_FeatherBlenderTrait, super::Detail_MultiBandBlenderTraitConst, super::Detail_MultiBandBlenderTrait, super::StitcherTraitConst, super::StitcherTrait };
 }
 
 pub const Detail_Blender_FEATHER: i32 = 1;
@@ -1569,6 +1569,13 @@ pub trait StitcherTraitConst {
 		Ok(ret)
 	}
 	
+	/// Return the mask of the panorama.
+	/// 
+	/// The mask is a 8U UMat with the values: 0xFF (white) for pixels filled by the input images,
+	/// 0 (black) for unused pixels. It can be used as the mask for inpaint.
+	/// 
+	/// ## Returns
+	/// The mask.
 	#[inline]
 	fn result_mask(&self) -> Result<core::UMat> {
 		return_send!(via ocvrs_return);
@@ -2515,16 +2522,19 @@ impl Detail_BestOf2NearestMatcher {
 	/// estimation used in the inliers classification step
 	/// * num_matches_thresh2: Minimum number of matches required for the 2D projective transform
 	/// re-estimation on inliers
+	/// * matches_confindece_thresh: Matching confidence threshold to take the match into account.
+	/// The threshold was determined experimentally and set to 3 by default.
 	/// 
 	/// ## C++ default parameters
 	/// * try_use_gpu: false
 	/// * match_conf: 0.3f
 	/// * num_matches_thresh1: 6
 	/// * num_matches_thresh2: 6
+	/// * matches_confindece_thresh: 3.
 	#[inline]
-	pub fn new(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32) -> Result<crate::stitching::Detail_BestOf2NearestMatcher> {
+	pub fn new(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32, matches_confindece_thresh: f64) -> Result<crate::stitching::Detail_BestOf2NearestMatcher> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_BestOf2NearestMatcher_BestOf2NearestMatcher_bool_float_int_int(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_BestOf2NearestMatcher_BestOf2NearestMatcher_bool_float_int_int_double(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, matches_confindece_thresh, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::stitching::Detail_BestOf2NearestMatcher::opencv_from_extern(ret) };
@@ -2536,10 +2546,11 @@ impl Detail_BestOf2NearestMatcher {
 	/// * match_conf: 0.3f
 	/// * num_matches_thresh1: 6
 	/// * num_matches_thresh2: 6
+	/// * matches_confindece_thresh: 3.
 	#[inline]
-	pub fn create(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32) -> Result<core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>> {
+	pub fn create(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32, matches_confindece_thresh: f64) -> Result<core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_BestOf2NearestMatcher_create_bool_float_int_int(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_detail_BestOf2NearestMatcher_create_bool_float_int_int_double(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, matches_confindece_thresh, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::stitching::Detail_BestOf2NearestMatcher>::opencv_from_extern(ret) };
@@ -2944,7 +2955,7 @@ pub trait Detail_BlocksCompensator: crate::stitching::Detail_BlocksCompensatorCo
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-/// intensities, see [UES01](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+/// intensities, see [UES01](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 pub trait Detail_BlocksGainCompensatorTraitConst: crate::stitching::Detail_BlocksCompensatorConst {
 	fn as_raw_Detail_BlocksGainCompensator(&self) -> *const c_void;
 
@@ -2994,7 +3005,7 @@ pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_BlocksComp
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-/// intensities, see [UES01](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+/// intensities, see [UES01](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 pub struct Detail_BlocksGainCompensator {
 	ptr: *mut c_void
 }
@@ -4609,6 +4620,23 @@ pub trait Detail_EstimatorConst {
 pub trait Detail_Estimator: crate::stitching::Detail_EstimatorConst {
 	fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void;
 
+	/// Estimates camera parameters.
+	/// 
+	/// ## Parameters
+	/// * features: Features of images
+	/// * pairwise_matches: Pairwise matches of images
+	/// * cameras: Estimated camera parameters
+	/// ## Returns
+	/// True in case of success, false otherwise
+	#[inline]
+	fn apply(&mut self, features: &core::Vector<crate::stitching::Detail_ImageFeatures>, pairwise_matches: &core::Vector<crate::stitching::Detail_MatchesInfo>, cameras: &mut core::Vector<crate::stitching::Detail_CameraParams>) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_Estimator_operator___const_vectorLImageFeaturesGR_const_vectorLMatchesInfoGR_vectorLCameraParamsGR(self.as_raw_mut_Detail_Estimator(), features.as_raw_VectorOfDetail_ImageFeatures(), pairwise_matches.as_raw_VectorOfDetail_MatchesInfo(), cameras.as_raw_mut_VectorOfDetail_CameraParams(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 /// Base class for all exposure compensators.
@@ -4858,6 +4886,53 @@ pub trait Detail_FeaturesMatcherConst {
 pub trait Detail_FeaturesMatcher: crate::stitching::Detail_FeaturesMatcherConst {
 	fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void;
 
+	/// Performs images matching.
+	/// 
+	/// ## Parameters
+	/// * features: Features of the source images
+	/// * pairwise_matches: Found pairwise matches
+	/// * mask: Mask indicating which image pairs must be matched
+	/// 
+	/// The function is parallelized with the TBB library.
+	/// ## See also
+	/// detail::MatchesInfo
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * features1: First image features
+	/// * features2: Second image features
+	/// * matches_info: Found matches
+	#[inline]
+	fn apply(&mut self, features1: &crate::stitching::Detail_ImageFeatures, features2: &crate::stitching::Detail_ImageFeatures, matches_info: &mut crate::stitching::Detail_MatchesInfo) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_FeaturesMatcher_operator___const_ImageFeaturesR_const_ImageFeaturesR_MatchesInfoR(self.as_raw_mut_Detail_FeaturesMatcher(), features1.as_raw_Detail_ImageFeatures(), features2.as_raw_Detail_ImageFeatures(), matches_info.as_raw_mut_Detail_MatchesInfo(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs images matching.
+	/// 
+	/// ## Parameters
+	/// * features: Features of the source images
+	/// * pairwise_matches: Found pairwise matches
+	/// * mask: Mask indicating which image pairs must be matched
+	/// 
+	/// The function is parallelized with the TBB library.
+	/// ## See also
+	/// detail::MatchesInfo
+	/// 
+	/// ## C++ default parameters
+	/// * mask: cv::UMat()
+	#[inline]
+	fn apply2(&mut self, features: &core::Vector<crate::stitching::Detail_ImageFeatures>, pairwise_matches: &mut core::Vector<crate::stitching::Detail_MatchesInfo>, mask: &core::UMat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_FeaturesMatcher_operator___const_vectorLImageFeaturesGR_vectorLMatchesInfoGR_const_UMatR(self.as_raw_mut_Detail_FeaturesMatcher(), features.as_raw_VectorOfDetail_ImageFeatures(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), mask.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Frees unused memory allocated before if there is any.
 	#[inline]
 	fn collect_garbage(&mut self) -> Result<()> {
@@ -4989,7 +5064,7 @@ impl Detail_FisheyeWarper {
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-/// intensities, see [BL07](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+/// intensities, see [BL07](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 pub trait Detail_GainCompensatorTraitConst: crate::stitching::Detail_ExposureCompensatorConst {
 	fn as_raw_Detail_GainCompensator(&self) -> *const c_void;
 
@@ -5103,7 +5178,7 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-/// intensities, see [BL07](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+/// intensities, see [BL07](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 pub struct Detail_GainCompensator {
 	ptr: *mut c_void
 }
@@ -5233,7 +5308,7 @@ impl Detail_Graph {
 	
 }
 
-/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_V03) .
+/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_V03) .
 pub trait Detail_GraphCutSeamFinderTraitConst: crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst + crate::stitching::Detail_SeamFinderConst {
 	fn as_raw_Detail_GraphCutSeamFinder(&self) -> *const c_void;
 
@@ -5253,7 +5328,7 @@ pub trait Detail_GraphCutSeamFinderTrait: crate::stitching::Detail_GraphCutSeamF
 	
 }
 
-/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_V03) .
+/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_V03) .
 pub struct Detail_GraphCutSeamFinder {
 	ptr: *mut c_void
 }
@@ -6019,7 +6094,7 @@ impl Detail_MercatorWarper {
 	
 }
 
-/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BA83)).
+/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BA83)).
 pub trait Detail_MultiBandBlenderTraitConst: crate::stitching::Detail_BlenderTraitConst {
 	fn as_raw_Detail_MultiBandBlender(&self) -> *const c_void;
 
@@ -6079,7 +6154,7 @@ pub trait Detail_MultiBandBlenderTrait: crate::stitching::Detail_BlenderTrait + 
 	
 }
 
-/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BA83)).
+/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BA83)).
 pub struct Detail_MultiBandBlender {
 	ptr: *mut c_void
 }
@@ -7584,34 +7659,69 @@ impl Detail_SphericalPortraitWarper {
 	
 }
 
-#[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
-pub struct Detail_SphericalProjector {
-	__rust_private: [u8; 0],
+pub trait Detail_SphericalProjectorTraitConst: crate::stitching::Detail_ProjectorBaseTraitConst {
+	fn as_raw_Detail_SphericalProjector(&self) -> *const c_void;
+
 }
 
-opencv_type_simple! { crate::stitching::Detail_SphericalProjector }
+pub trait Detail_SphericalProjectorTrait: crate::stitching::Detail_ProjectorBaseTrait + crate::stitching::Detail_SphericalProjectorTraitConst {
+	fn as_raw_mut_Detail_SphericalProjector(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn map_forward(&mut self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_SphericalProjector_mapForward_float_float_floatR_floatR(self.as_raw_mut_Detail_SphericalProjector(), x, y, u, v, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn map_backward(&mut self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_SphericalProjector_mapBackward_float_float_floatR_floatR(self.as_raw_mut_Detail_SphericalProjector(), u, v, x, y, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
+pub struct Detail_SphericalProjector {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { Detail_SphericalProjector }
+
+impl Drop for Detail_SphericalProjector {
+	fn drop(&mut self) {
+		extern "C" { fn cv_Detail_SphericalProjector_delete(instance: *mut c_void); }
+		unsafe { cv_Detail_SphericalProjector_delete(self.as_raw_mut_Detail_SphericalProjector()) };
+	}
+}
+
+unsafe impl Send for Detail_SphericalProjector {}
+
+impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_SphericalProjector {
+	#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::stitching::Detail_ProjectorBaseTrait for Detail_SphericalProjector {
+	#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::stitching::Detail_SphericalProjectorTraitConst for Detail_SphericalProjector {
+	#[inline] fn as_raw_Detail_SphericalProjector(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::stitching::Detail_SphericalProjectorTrait for Detail_SphericalProjector {
+	#[inline] fn as_raw_mut_Detail_SphericalProjector(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
 
 impl Detail_SphericalProjector {
-	#[inline]
-	pub fn map_forward(self, x: f32, y: f32, u: &mut f32, v: &mut f32) -> Result<()> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_SphericalProjector_mapForward_float_float_floatR_floatR(self.opencv_as_extern(), x, y, u, v, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
-	#[inline]
-	pub fn map_backward(self, u: f32, v: f32, x: &mut f32, y: &mut f32) -> Result<()> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_detail_SphericalProjector_mapBackward_float_float_floatR_floatR(self.opencv_as_extern(), u, v, x, y, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
 }
+
+boxed_cast_base! { Detail_SphericalProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_SphericalProjector_to_Detail_ProjectorBase }
 
 /// Warper that maps an image onto the unit sphere located at the origin.
 /// 

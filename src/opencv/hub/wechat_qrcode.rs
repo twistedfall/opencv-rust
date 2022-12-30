@@ -51,6 +51,34 @@ pub trait WeChatQRCodeTrait: crate::wechat_qrcode::WeChatQRCodeTraitConst {
 		Ok(ret)
 	}
 	
+	/// set scale factor
+	/// QR code detector use neural network to detect QR.
+	/// Before running the neural network, the input image is pre-processed by scaling.
+	/// By default, the input image is scaled to an image with an area of 160000 pixels.
+	/// The scale factor allows to use custom scale the input image:
+	/// width = scaleFactor*width
+	/// height = scaleFactor*width
+	/// 
+	/// scaleFactor valuse must be > 0 and <= 1, otherwise the scaleFactor value is set to -1
+	/// and use default scaled to an image with an area of 160000 pixels.
+	#[inline]
+	fn set_scale_factor(&mut self, _scaling_factor: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_wechat_qrcode_WeChatQRCode_setScaleFactor_float(self.as_raw_mut_WeChatQRCode(), _scaling_factor, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_scale_factor(&mut self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_wechat_qrcode_WeChatQRCode_getScaleFactor(self.as_raw_mut_WeChatQRCode(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 /// * WeChat QRCode includes two CNN-based models:

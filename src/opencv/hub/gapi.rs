@@ -17,7 +17,7 @@
 //!    # G-API Serialization functionality
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::anyTraitConst, super::anyTrait, super::TextTraitConst, super::TextTrait, super::ImageTraitConst, super::ImageTrait, super::PolyTraitConst, super::PolyTrait, super::GCompileArgTraitConst, super::GCompileArgTrait, super::GMatTraitConst, super::GMatTrait, super::GMatPTraitConst, super::GMatPTrait, super::GMatDescTraitConst, super::GMatDescTrait, super::GScalarTraitConst, super::GScalarTrait, super::GArrayUTraitConst, super::GArrayUTrait, super::GOpaqueUTraitConst, super::GOpaqueUTrait, super::GFrameTraitConst, super::GFrameTrait, super::GFrameDescTraitConst, super::GFrameDescTrait, super::ScalarTraitConst, super::ScalarTrait, super::MediaFrameTraitConst, super::MediaFrameTrait, super::MediaFrame_ViewTraitConst, super::MediaFrame_ViewTrait, super::MediaFrame_IAdapterConst, super::MediaFrame_IAdapter, super::RMat_ViewTraitConst, super::RMat_ViewTrait, super::RMat_IAdapterConst, super::RMat_IAdapter, super::RMatTraitConst, super::RMatTrait, super::GArgTraitConst, super::GArgTrait, super::GRunArgTraitConst, super::GRunArgTrait, super::DataTraitConst, super::DataTrait, super::ExtractArgsCallbackTraitConst, super::ExtractArgsCallbackTrait, super::ExtractMetaCallbackTraitConst, super::ExtractMetaCallbackTrait, super::GCompiledTraitConst, super::GCompiledTrait, super::GStreamingCompiledTraitConst, super::GStreamingCompiledTrait, super::GComputationTraitConst, super::GComputationTrait, super::GCallTraitConst, super::GCallTrait, super::GTransformTraitConst, super::GTransformTrait, super::GKernelTraitConst, super::GKernelTrait, super::GKernelImplTraitConst, super::GKernelImplTrait, super::GBackendTraitConst, super::GBackendTrait, super::GFunctorConst, super::GFunctor, super::GKernelPackageTraitConst, super::GKernelPackageTrait, super::use_onlyTraitConst, super::use_onlyTrait };
+	pub use { super::anyTraitConst, super::anyTrait, super::TextTraitConst, super::TextTrait, super::ImageTraitConst, super::ImageTrait, super::PolyTraitConst, super::PolyTrait, super::GCompileArgTraitConst, super::GCompileArgTrait, super::GMatTraitConst, super::GMatTrait, super::GMatPTraitConst, super::GMatPTrait, super::GMatDescTraitConst, super::GMatDescTrait, super::GScalarTraitConst, super::GScalarTrait, super::GScalarDescTraitConst, super::GScalarDescTrait, super::GArrayDescTraitConst, super::GArrayDescTrait, super::GArrayUTraitConst, super::GArrayUTrait, super::GOpaqueDescTraitConst, super::GOpaqueDescTrait, super::GOpaqueUTraitConst, super::GOpaqueUTrait, super::GFrameTraitConst, super::GFrameTrait, super::GFrameDescTraitConst, super::GFrameDescTrait, super::ScalarTraitConst, super::ScalarTrait, super::MediaFrameTraitConst, super::MediaFrameTrait, super::MediaFrame_ViewTraitConst, super::MediaFrame_ViewTrait, super::MediaFrame_IAdapterConst, super::MediaFrame_IAdapter, super::RMat_ViewTraitConst, super::RMat_ViewTrait, super::RMat_IAdapterConst, super::RMat_IAdapter, super::RMatTraitConst, super::RMatTrait, super::GArgTraitConst, super::GArgTrait, super::GRunArgTraitConst, super::GRunArgTrait, super::DataTraitConst, super::DataTrait, super::ExtractArgsCallbackTraitConst, super::ExtractArgsCallbackTrait, super::ExtractMetaCallbackTraitConst, super::ExtractMetaCallbackTrait, super::GCompiledTraitConst, super::GCompiledTrait, super::GStreamingCompiledTraitConst, super::GStreamingCompiledTrait, super::GComputationTraitConst, super::GComputationTrait, super::GCallTraitConst, super::GCallTrait, super::GTransformTraitConst, super::GTransformTrait, super::GTypeInfoTraitConst, super::GTypeInfoTrait, super::GKernelTraitConst, super::GKernelTrait, super::GKernelImplTraitConst, super::GKernelImplTrait, super::GBackendTraitConst, super::GBackendTrait, super::GFunctorConst, super::GFunctor, super::GKernelPackageTraitConst, super::GKernelPackageTrait, super::use_onlyTraitConst, super::use_onlyTrait };
 }
 
 pub const ArgKind_GARRAY: i32 = 6;
@@ -39,16 +39,17 @@ pub const MediaFormat_GRAY: i32 = 2;
 pub const MediaFormat_NV12: i32 = 1;
 pub const OpaqueKind_CV_BOOL: i32 = 1;
 pub const OpaqueKind_CV_DOUBLE: i32 = 4;
-pub const OpaqueKind_CV_DRAW_PRIM: i32 = 14;
+pub const OpaqueKind_CV_DRAW_PRIM: i32 = 15;
 pub const OpaqueKind_CV_FLOAT: i32 = 5;
 pub const OpaqueKind_CV_INT: i32 = 2;
 pub const OpaqueKind_CV_INT64: i32 = 3;
-pub const OpaqueKind_CV_MAT: i32 = 13;
+pub const OpaqueKind_CV_MAT: i32 = 14;
 pub const OpaqueKind_CV_POINT: i32 = 8;
 pub const OpaqueKind_CV_POINT2F: i32 = 9;
-pub const OpaqueKind_CV_RECT: i32 = 11;
-pub const OpaqueKind_CV_SCALAR: i32 = 12;
-pub const OpaqueKind_CV_SIZE: i32 = 10;
+pub const OpaqueKind_CV_POINT3F: i32 = 10;
+pub const OpaqueKind_CV_RECT: i32 = 12;
+pub const OpaqueKind_CV_SCALAR: i32 = 13;
+pub const OpaqueKind_CV_SIZE: i32 = 11;
 pub const OpaqueKind_CV_STRING: i32 = 7;
 pub const OpaqueKind_CV_UINT64: i32 = 6;
 pub const OpaqueKind_CV_UNKNOWN: i32 = 0;
@@ -56,7 +57,8 @@ pub const OpaqueKind_CV_UNKNOWN: i32 = 0;
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ArgKind {
 	OPAQUE_VAL = 0,
-	// OPAQUE = 0 as isize, // duplicate discriminant
+	// Duplicate, use OPAQUE_VAL instead
+	// OPAQUE = 0,
 	GOBJREF = 1,
 	GMAT = 2,
 	GMATP = 3,
@@ -117,11 +119,12 @@ pub enum OpaqueKind {
 	CV_STRING = 7,
 	CV_POINT = 8,
 	CV_POINT2F = 9,
-	CV_SIZE = 10,
-	CV_RECT = 11,
-	CV_SCALAR = 12,
-	CV_MAT = 13,
-	CV_DRAW_PRIM = 14,
+	CV_POINT3F = 10,
+	CV_SIZE = 11,
+	CV_RECT = 12,
+	CV_SCALAR = 13,
+	CV_MAT = 14,
+	CV_DRAW_PRIM = 15,
 }
 
 opencv_type_enum! { crate::gapi::OpaqueKind }
@@ -139,6 +142,7 @@ pub type GCompileArgs = core::Vector<crate::gapi::GCompileArg>;
 pub type GKinds = core::Vector<crate::gapi::OpaqueKind>;
 pub type GRunArgs = core::Vector<crate::gapi::GRunArg>;
 pub type GShapes = core::Vector<crate::gapi::GShape>;
+pub type GTypesInfo = core::Vector<crate::gapi::GTypeInfo>;
 pub type RMat_Adapter = dyn crate::gapi::RMat_IAdapter;
 pub type RMat_View_stepsT = core::Vector<size_t>;
 pub type GMat2 = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>;
@@ -185,6 +189,7 @@ pub fn descr_of_3(scalar: core::Scalar) -> Result<crate::gapi::GScalarDesc> {
 	unsafe { sys::cv_descr_of_const_ScalarR(&scalar, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
+	let ret = unsafe { crate::gapi::GScalarDesc::opencv_from_extern(ret) };
 	Ok(ret)
 }
 
@@ -204,6 +209,7 @@ pub fn empty_array_desc() -> Result<crate::gapi::GArrayDesc> {
 	unsafe { sys::cv_empty_array_desc(ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
+	let ret = unsafe { crate::gapi::GArrayDesc::opencv_from_extern(ret) };
 	Ok(ret)
 }
 
@@ -213,6 +219,7 @@ pub fn empty_gopaque_desc() -> Result<crate::gapi::GOpaqueDesc> {
 	unsafe { sys::cv_empty_gopaque_desc(ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
+	let ret = unsafe { crate::gapi::GOpaqueDesc::opencv_from_extern(ret) };
 	Ok(ret)
 }
 
@@ -222,6 +229,7 @@ pub fn empty_scalar_desc() -> Result<crate::gapi::GScalarDesc> {
 	unsafe { sys::cv_empty_scalar_desc(ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
+	let ret = unsafe { crate::gapi::GScalarDesc::opencv_from_extern(ret) };
 	Ok(ret)
 }
 
@@ -4543,24 +4551,50 @@ impl GArg {
 }
 
 /// \addtogroup gapi_meta_args
-#[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
-pub struct GArrayDesc {
-	__rust_private: [u8; 0],
-}
+pub trait GArrayDescTraitConst {
+	fn as_raw_GArrayDesc(&self) -> *const c_void;
 
-opencv_type_simple! { crate::gapi::GArrayDesc }
-
-impl GArrayDesc {
 	#[inline]
-	pub fn equals(self, unnamed: crate::gapi::GArrayDesc) -> Result<bool> {
+	fn equals(&self, unnamed: &crate::gapi::GArrayDesc) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_GArrayDesc_operatorEQ_const_const_GArrayDescR(self.opencv_as_extern(), &unnamed, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_GArrayDesc_operatorEQ_const_const_GArrayDescR(self.as_raw_GArrayDesc(), unnamed.as_raw_GArrayDesc(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
+}
+
+pub trait GArrayDescTrait: crate::gapi::GArrayDescTraitConst {
+	fn as_raw_mut_GArrayDesc(&mut self) -> *mut c_void;
+
+}
+
+/// \addtogroup gapi_meta_args
+pub struct GArrayDesc {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { GArrayDesc }
+
+impl Drop for GArrayDesc {
+	fn drop(&mut self) {
+		extern "C" { fn cv_GArrayDesc_delete(instance: *mut c_void); }
+		unsafe { cv_GArrayDesc_delete(self.as_raw_mut_GArrayDesc()) };
+	}
+}
+
+unsafe impl Send for GArrayDesc {}
+
+impl crate::gapi::GArrayDescTraitConst for GArrayDesc {
+	#[inline] fn as_raw_GArrayDesc(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::gapi::GArrayDescTrait for GArrayDesc {
+	#[inline] fn as_raw_mut_GArrayDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl GArrayDesc {
 }
 
 pub trait GCallTraitConst {
@@ -4836,6 +4870,193 @@ pub trait GCompiledTraitConst {
 pub trait GCompiledTrait: crate::gapi::GCompiledTraitConst {
 	fn as_raw_mut_GCompiled(&mut self) -> *mut c_void;
 
+	/// Execute an unary computation
+	/// 
+	///  Run the compiled computation, a generic version.
+	/// 
+	/// ## Parameters
+	/// * ins: vector of inputs to process.
+	/// * outs: vector of outputs to produce.
+	/// 
+	/// Input/output vectors must have the same number of elements as
+	/// defined in the cv::GComputation protocol (at the moment of its
+	/// construction). Shapes of elements also must conform to protocol
+	/// (e.g. cv::Mat needs to be passed where cv::GMat has been
+	/// declared as input, and so on). Run-time exception is generated
+	/// otherwise.
+	/// 
+	/// Objects in output vector may remain empty (like cv::Mat) --
+	/// G-API will automatically initialize output objects to proper formats.
+	/// 
+	/// 
+	/// Note: Don't construct GRunArgs/GRunArgsP objects manually, use
+	/// cv::gin()/cv::gout() wrappers instead.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * in: input cv::Mat for unary computation
+	/// * out: output cv::Mat for unary computation
+	///  process.
+	#[inline]
+	fn apply(&mut self, mut in_: core::Mat, out: &mut core::Mat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_GCompiled_operator___Mat_MatR(self.as_raw_mut_GCompiled(), in_.as_raw_mut_Mat(), out.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Execute an unary computation
+	/// 
+	///  Run the compiled computation, a generic version.
+	/// 
+	/// ## Parameters
+	/// * ins: vector of inputs to process.
+	/// * outs: vector of outputs to produce.
+	/// 
+	/// Input/output vectors must have the same number of elements as
+	/// defined in the cv::GComputation protocol (at the moment of its
+	/// construction). Shapes of elements also must conform to protocol
+	/// (e.g. cv::Mat needs to be passed where cv::GMat has been
+	/// declared as input, and so on). Run-time exception is generated
+	/// otherwise.
+	/// 
+	/// Objects in output vector may remain empty (like cv::Mat) --
+	/// G-API will automatically initialize output objects to proper formats.
+	/// 
+	/// 
+	/// Note: Don't construct GRunArgs/GRunArgsP objects manually, use
+	/// cv::gin()/cv::gout() wrappers instead.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * in: input cv::Mat for unary computation
+	/// * out: output cv::Scalar for unary computation
+	///  process.
+	#[inline]
+	fn apply_1(&mut self, mut in_: core::Mat, out: &mut core::Scalar) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_GCompiled_operator___Mat_ScalarR(self.as_raw_mut_GCompiled(), in_.as_raw_mut_Mat(), out, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Execute a binary computation
+	/// 
+	///  Run the compiled computation, a generic version.
+	/// 
+	/// ## Parameters
+	/// * ins: vector of inputs to process.
+	/// * outs: vector of outputs to produce.
+	/// 
+	/// Input/output vectors must have the same number of elements as
+	/// defined in the cv::GComputation protocol (at the moment of its
+	/// construction). Shapes of elements also must conform to protocol
+	/// (e.g. cv::Mat needs to be passed where cv::GMat has been
+	/// declared as input, and so on). Run-time exception is generated
+	/// otherwise.
+	/// 
+	/// Objects in output vector may remain empty (like cv::Mat) --
+	/// G-API will automatically initialize output objects to proper formats.
+	/// 
+	/// 
+	/// Note: Don't construct GRunArgs/GRunArgsP objects manually, use
+	/// cv::gin()/cv::gout() wrappers instead.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * in1: first input cv::Mat for binary computation
+	/// * in2: second input cv::Mat for binary computation
+	/// * out: output cv::Mat for binary computation
+	///  process.
+	#[inline]
+	fn apply_2(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Mat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_GCompiled_operator___Mat_Mat_MatR(self.as_raw_mut_GCompiled(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Execute an binary computation
+	/// 
+	///  Run the compiled computation, a generic version.
+	/// 
+	/// ## Parameters
+	/// * ins: vector of inputs to process.
+	/// * outs: vector of outputs to produce.
+	/// 
+	/// Input/output vectors must have the same number of elements as
+	/// defined in the cv::GComputation protocol (at the moment of its
+	/// construction). Shapes of elements also must conform to protocol
+	/// (e.g. cv::Mat needs to be passed where cv::GMat has been
+	/// declared as input, and so on). Run-time exception is generated
+	/// otherwise.
+	/// 
+	/// Objects in output vector may remain empty (like cv::Mat) --
+	/// G-API will automatically initialize output objects to proper formats.
+	/// 
+	/// 
+	/// Note: Don't construct GRunArgs/GRunArgsP objects manually, use
+	/// cv::gin()/cv::gout() wrappers instead.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * in1: first input cv::Mat for binary computation
+	/// * in2: second input cv::Mat for binary computation
+	/// * out: output cv::Scalar for binary computation
+	///  process.
+	#[inline]
+	fn apply_3(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Scalar) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_GCompiled_operator___Mat_Mat_ScalarR(self.as_raw_mut_GCompiled(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Execute a computation with arbitrary number of
+	///  inputs/outputs.
+	/// 
+	///  Run the compiled computation, a generic version.
+	/// 
+	/// ## Parameters
+	/// * ins: vector of inputs to process.
+	/// * outs: vector of outputs to produce.
+	/// 
+	/// Input/output vectors must have the same number of elements as
+	/// defined in the cv::GComputation protocol (at the moment of its
+	/// construction). Shapes of elements also must conform to protocol
+	/// (e.g. cv::Mat needs to be passed where cv::GMat has been
+	/// declared as input, and so on). Run-time exception is generated
+	/// otherwise.
+	/// 
+	/// Objects in output vector may remain empty (like cv::Mat) --
+	/// G-API will automatically initialize output objects to proper formats.
+	/// 
+	/// 
+	/// Note: Don't construct GRunArgs/GRunArgsP objects manually, use
+	/// cv::gin()/cv::gout() wrappers instead.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * ins: vector of input cv::Mat objects to process by the
+	///  computation.
+	/// * outs: vector of output cv::Mat objects to produce by the
+	///  computation.
+	/// 
+	///  Numbers of elements in ins/outs vectors must match numbers of
+	///  inputs/outputs which were used to define the source GComputation.
+	#[inline]
+	fn apply_4(&mut self, ins: &core::Vector<core::Mat>, outs: &core::Vector<core::Mat>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_GCompiled_operator___const_vectorLMatGR_const_vectorLMatGR(self.as_raw_mut_GCompiled(), ins.as_raw_VectorOfMat(), outs.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Prepare inner kernels states for a new video-stream.
 	/// 
 	/// GCompiled objects may be used to process video streams frame by frame.
@@ -4941,11 +5162,11 @@ impl GCompiled {
 ///  executed. The below example expresses calculation of Sobel operator
 ///  for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
 /// 
-///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 /// 
 ///  Full pipeline can be now captured with this object declaration:
 /// 
-///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 /// 
 ///  Input/output data objects on which a call graph should be
 ///  reconstructed are passed using special wrappers cv::GIn and
@@ -4958,7 +5179,7 @@ impl GCompiled {
 ///  expects that image gradients are already pre-calculated may be
 ///  defined like this:
 /// 
-///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 /// 
 ///  The resulting graph would expect two inputs and produce one
 ///  output. In this case, it doesn't matter if gx/gy data objects are
@@ -5216,11 +5437,11 @@ pub trait GComputationTrait: crate::gapi::GComputationTraitConst {
 ///  executed. The below example expresses calculation of Sobel operator
 ///  for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
 /// 
-///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 /// 
 ///  Full pipeline can be now captured with this object declaration:
 /// 
-///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 /// 
 ///  Input/output data objects on which a call graph should be
 ///  reconstructed are passed using special wrappers cv::GIn and
@@ -5233,7 +5454,7 @@ pub trait GComputationTrait: crate::gapi::GComputationTraitConst {
 ///  expects that image gradients are already pre-calculated may be
 ///  defined like this:
 /// 
-///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 /// 
 ///  The resulting graph would expect two inputs and produce one
 ///  output. In this case, it doesn't matter if gx/gy data objects are
@@ -6424,24 +6645,50 @@ impl GMatP {
 boxed_cast_base! { GMatP, crate::gapi::GMat, cv_GMatP_to_GMat }
 
 /// \addtogroup gapi_meta_args
-#[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
-pub struct GOpaqueDesc {
-	__rust_private: [u8; 0],
-}
+pub trait GOpaqueDescTraitConst {
+	fn as_raw_GOpaqueDesc(&self) -> *const c_void;
 
-opencv_type_simple! { crate::gapi::GOpaqueDesc }
-
-impl GOpaqueDesc {
 	#[inline]
-	pub fn equals(self, unnamed: crate::gapi::GOpaqueDesc) -> Result<bool> {
+	fn equals(&self, unnamed: &crate::gapi::GOpaqueDesc) -> Result<bool> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_GOpaqueDesc_operatorEQ_const_const_GOpaqueDescR(self.opencv_as_extern(), &unnamed, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_GOpaqueDesc_operatorEQ_const_const_GOpaqueDescR(self.as_raw_GOpaqueDesc(), unnamed.as_raw_GOpaqueDesc(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
+}
+
+pub trait GOpaqueDescTrait: crate::gapi::GOpaqueDescTraitConst {
+	fn as_raw_mut_GOpaqueDesc(&mut self) -> *mut c_void;
+
+}
+
+/// \addtogroup gapi_meta_args
+pub struct GOpaqueDesc {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { GOpaqueDesc }
+
+impl Drop for GOpaqueDesc {
+	fn drop(&mut self) {
+		extern "C" { fn cv_GOpaqueDesc_delete(instance: *mut c_void); }
+		unsafe { cv_GOpaqueDesc_delete(self.as_raw_mut_GOpaqueDesc()) };
+	}
+}
+
+unsafe impl Send for GOpaqueDesc {}
+
+impl crate::gapi::GOpaqueDescTraitConst for GOpaqueDesc {
+	#[inline] fn as_raw_GOpaqueDesc(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::gapi::GOpaqueDescTrait for GOpaqueDesc {
+	#[inline] fn as_raw_mut_GOpaqueDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl GOpaqueDesc {
 }
 
 pub trait GRunArgTraitConst {
@@ -6674,7 +6921,7 @@ impl GScalar {
 	///  This constructor overload is not marked `explicit` and can be
 	///  used in G-API expression code like this:
 	/// 
-	///  [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.6.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///  [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	///  Here operator+(GMat,GScalar) is used to wrap cv::gapi::addC()
 	///  and a value-initialized GScalar is created on the fly.
@@ -6693,33 +6940,59 @@ impl GScalar {
 }
 
 /// \addtogroup gapi_meta_args
-#[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
-pub struct GScalarDesc {
-	__rust_private: [u8; 0],
+pub trait GScalarDescTraitConst {
+	fn as_raw_GScalarDesc(&self) -> *const c_void;
+
+	#[inline]
+	fn equals(&self, unnamed: &crate::gapi::GScalarDesc) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_GScalarDesc_operatorEQ_const_const_GScalarDescR(self.as_raw_GScalarDesc(), unnamed.as_raw_GScalarDesc(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn not_equals(&self, rhs: &crate::gapi::GScalarDesc) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_GScalarDesc_operatorNE_const_const_GScalarDescR(self.as_raw_GScalarDesc(), rhs.as_raw_GScalarDesc(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
-opencv_type_simple! { crate::gapi::GScalarDesc }
+pub trait GScalarDescTrait: crate::gapi::GScalarDescTraitConst {
+	fn as_raw_mut_GScalarDesc(&mut self) -> *mut c_void;
+
+}
+
+/// \addtogroup gapi_meta_args
+pub struct GScalarDesc {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { GScalarDesc }
+
+impl Drop for GScalarDesc {
+	fn drop(&mut self) {
+		extern "C" { fn cv_GScalarDesc_delete(instance: *mut c_void); }
+		unsafe { cv_GScalarDesc_delete(self.as_raw_mut_GScalarDesc()) };
+	}
+}
+
+unsafe impl Send for GScalarDesc {}
+
+impl crate::gapi::GScalarDescTraitConst for GScalarDesc {
+	#[inline] fn as_raw_GScalarDesc(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::gapi::GScalarDescTrait for GScalarDesc {
+	#[inline] fn as_raw_mut_GScalarDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
 
 impl GScalarDesc {
-	#[inline]
-	pub fn equals(self, unnamed: crate::gapi::GScalarDesc) -> Result<bool> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_GScalarDesc_operatorEQ_const_const_GScalarDescR(self.opencv_as_extern(), &unnamed, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
-	#[inline]
-	pub fn not_equals(self, rhs: crate::gapi::GScalarDesc) -> Result<bool> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_GScalarDesc_operatorNE_const_const_GScalarDescR(self.opencv_as_extern(), &rhs, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
 }
 
 /// \addtogroup gapi_main_classes
@@ -7004,6 +7277,70 @@ impl crate::gapi::GTransformTrait for GTransform {
 }
 
 impl GTransform {
+}
+
+pub trait GTypeInfoTraitConst {
+	fn as_raw_GTypeInfo(&self) -> *const c_void;
+
+	#[inline]
+	fn shape(&self) -> crate::gapi::GShape {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_GTypeInfo_getPropShape_const(self.as_raw_GTypeInfo(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+	
+	#[inline]
+	fn kind(&self) -> crate::gapi::OpaqueKind {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_GTypeInfo_getPropKind_const(self.as_raw_GTypeInfo(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+	
+}
+
+pub trait GTypeInfoTrait: crate::gapi::GTypeInfoTraitConst {
+	fn as_raw_mut_GTypeInfo(&mut self) -> *mut c_void;
+
+	#[inline]
+	fn set_shape(&mut self, val: crate::gapi::GShape) {
+		let ret = unsafe { sys::cv_GTypeInfo_setPropShape_GShape(self.as_raw_mut_GTypeInfo(), val) };
+		ret
+	}
+	
+	#[inline]
+	fn set_kind(&mut self, val: crate::gapi::OpaqueKind) {
+		let ret = unsafe { sys::cv_GTypeInfo_setPropKind_OpaqueKind(self.as_raw_mut_GTypeInfo(), val) };
+		ret
+	}
+	
+}
+
+pub struct GTypeInfo {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { GTypeInfo }
+
+impl Drop for GTypeInfo {
+	fn drop(&mut self) {
+		extern "C" { fn cv_GTypeInfo_delete(instance: *mut c_void); }
+		unsafe { cv_GTypeInfo_delete(self.as_raw_mut_GTypeInfo()) };
+	}
+}
+
+unsafe impl Send for GTypeInfo {}
+
+impl crate::gapi::GTypeInfoTraitConst for GTypeInfo {
+	#[inline] fn as_raw_GTypeInfo(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::gapi::GTypeInfoTrait for GTypeInfo {
+	#[inline] fn as_raw_mut_GTypeInfo(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl GTypeInfo {
 }
 
 /// \addtogroup gapi_data_structures
@@ -7512,6 +7849,16 @@ impl Default for RMat_View {
 pub trait ExtractArgsCallbackTraitConst {
 	fn as_raw_ExtractArgsCallback(&self) -> *const c_void;
 
+	#[inline]
+	fn apply(&self, info: &crate::gapi::GTypesInfo) -> Result<core::Vector<crate::gapi::GRunArg>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_ExtractArgsCallback_operator___const_const_GTypesInfoR(self.as_raw_ExtractArgsCallback(), info.as_raw_VectorOfGTypeInfo(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<crate::gapi::GRunArg>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 }
 
 pub trait ExtractArgsCallbackTrait: crate::gapi::ExtractArgsCallbackTraitConst {

@@ -21,11 +21,11 @@
 //!    # Experimental 2D Features Matching Algorithm
 //! 
 //! This section describes the following matching strategies:
-//!    - GMS: Grid-based Motion Statistics, [Bian2017gms](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bian2017gms)
-//!    - LOGOS: Local geometric support for high-outlier spatial verification, [Lowry2018LOGOSLG](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG)
+//!    - GMS: Grid-based Motion Statistics, [Bian2017gms](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bian2017gms)
+//!    - LOGOS: Local geometric support for high-outlier spatial verification, [Lowry2018LOGOSLG](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG)
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::SURFConst, super::SURF, super::FREAKTraitConst, super::FREAKTrait, super::StarDetectorTraitConst, super::StarDetectorTrait, super::BriefDescriptorExtractorTraitConst, super::BriefDescriptorExtractorTrait, super::LUCIDTraitConst, super::LUCIDTrait, super::LATCHTraitConst, super::LATCHTrait, super::BEBLIDTraitConst, super::BEBLIDTrait, super::DAISYConst, super::DAISY, super::MSDDetectorTraitConst, super::MSDDetectorTrait, super::VGGConst, super::VGG, super::BoostDescConst, super::BoostDesc, super::PCTSignaturesConst, super::PCTSignatures, super::PCTSignaturesSQFDConst, super::PCTSignaturesSQFD, super::Elliptic_KeyPointTraitConst, super::Elliptic_KeyPointTrait, super::HarrisLaplaceFeatureDetectorTraitConst, super::HarrisLaplaceFeatureDetectorTrait, super::AffineFeature2DConst, super::AffineFeature2D, super::TBMRConst, super::TBMR, super::SURF_CUDATraitConst, super::SURF_CUDATrait };
+	pub use { super::SURFConst, super::SURF, super::FREAKConst, super::FREAK, super::StarDetectorConst, super::StarDetector, super::BriefDescriptorExtractorConst, super::BriefDescriptorExtractor, super::LUCIDConst, super::LUCID, super::LATCHConst, super::LATCH, super::BEBLIDConst, super::BEBLID, super::TEBLIDTraitConst, super::TEBLIDTrait, super::DAISYConst, super::DAISY, super::MSDDetectorConst, super::MSDDetector, super::VGGConst, super::VGG, super::BoostDescConst, super::BoostDesc, super::PCTSignaturesConst, super::PCTSignatures, super::PCTSignaturesSQFDConst, super::PCTSignaturesSQFD, super::Elliptic_KeyPointTraitConst, super::Elliptic_KeyPointTrait, super::HarrisLaplaceFeatureDetectorConst, super::HarrisLaplaceFeatureDetector, super::AffineFeature2DConst, super::AffineFeature2D, super::TBMRConst, super::TBMR, super::SURF_CUDATraitConst, super::SURF_CUDATrait };
 }
 
 pub const BoostDesc_BGM: i32 = 100;
@@ -96,7 +96,7 @@ opencv_type_enum! { crate::xfeatures2d::PCTSignatures_PointDistribution }
 ///       Signature quadratic form distance.
 ///       In Proceedings of the ACM International Conference on Image and Video Retrieval, pages 438-445.
 ///       ACM, 2010.
-/// [BeecksUS10](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
+/// [BeecksUS10](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
 /// 
 /// Note: For selected distance function: ![block formula](https://latex.codecogs.com/png.latex?%20d%28c%5Fi%2C%20c%5Fj%29%20)  and parameter: ![block formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20)
 #[repr(C)]
@@ -127,6 +127,17 @@ pub enum SURF_CUDA_KeypointLayout {
 
 opencv_type_enum! { crate::xfeatures2d::SURF_CUDA_KeypointLayout }
 
+/// Descriptor number of bits, each bit is a box average difference.
+/// The user can choose between 256 or 512 bits.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum TEBLID_TeblidSize {
+	SIZE_256_BITS = 102,
+	SIZE_512_BITS = 103,
+}
+
+opencv_type_enum! { crate::xfeatures2d::TEBLID_TeblidSize }
+
 pub type SurfDescriptorExtractor = dyn crate::xfeatures2d::SURF;
 pub type SurfFeatureDetector = dyn crate::xfeatures2d::SURF;
 /// Estimates cornerness for prespecified KeyPoints using the FAST algorithm
@@ -143,7 +154,7 @@ pub type SurfFeatureDetector = dyn crate::xfeatures2d::SURF;
 /// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 /// FastFeatureDetector::TYPE_5_8
 /// 
-/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 /// 
 /// ## C++ default parameters
 /// * nonmax_suppression: true
@@ -158,7 +169,7 @@ pub fn fast_for_point_set(image: &dyn core::ToInputArray, keypoints: &mut core::
 	Ok(ret)
 }
 
-/// GMS (Grid-based Motion Statistics) feature matching strategy described in [Bian2017gms](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bian2017gms) .
+/// GMS (Grid-based Motion Statistics) feature matching strategy described in [Bian2017gms](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bian2017gms) .
 /// ## Parameters
 /// * size1: Input size of image1.
 /// * size2: Input size of image2.
@@ -188,7 +199,7 @@ pub fn match_gms(size1: core::Size, size2: core::Size, keypoints1: &core::Vector
 	Ok(ret)
 }
 
-/// LOGOS (Local geometric support for high-outlier spatial verification) feature matching strategy described in [Lowry2018LOGOSLG](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG) .
+/// LOGOS (Local geometric support for high-outlier spatial verification) feature matching strategy described in [Lowry2018LOGOSLG](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG) .
 /// ## Parameters
 /// * keypoints1: Input keypoints of image1.
 /// * keypoints2: Input keypoints of image2.
@@ -451,6 +462,39 @@ pub trait SURF_CUDATrait: crate::xfeatures2d::SURF_CUDATraitConst {
 		Ok(ret)
 	}
 	
+	/// finds the keypoints using fast hessian detector used in SURF
+	/// supports CV_8UC1 images
+	/// keypoints will have nFeature cols and 6 rows
+	/// keypoints.ptr<float>(X_ROW)[i] will contain x coordinate of i'th feature
+	/// keypoints.ptr<float>(Y_ROW)[i] will contain y coordinate of i'th feature
+	/// keypoints.ptr<float>(LAPLACIAN_ROW)[i] will contain laplacian sign of i'th feature
+	/// keypoints.ptr<float>(OCTAVE_ROW)[i] will contain octave of i'th feature
+	/// keypoints.ptr<float>(SIZE_ROW)[i] will contain size of i'th feature
+	/// keypoints.ptr<float>(ANGLE_ROW)[i] will contain orientation of i'th feature
+	/// keypoints.ptr<float>(HESSIAN_ROW)[i] will contain response of i'th feature
+	#[inline]
+	fn apply(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::GpuMat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_GpuMatR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// finds the keypoints and computes their descriptors.
+	/// Optionally it can compute descriptors for the user-provided keypoints and recompute keypoints direction
+	/// 
+	/// ## C++ default parameters
+	/// * use_provided_keypoints: false
+	#[inline]
+	fn apply_1(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::GpuMat, descriptors: &mut core::GpuMat, use_provided_keypoints: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), descriptors.as_raw_mut_GpuMat(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Finds the keypoints using fast hessian detector used in SURF
 	/// 
 	/// ## Parameters
@@ -461,6 +505,26 @@ pub trait SURF_CUDATrait: crate::xfeatures2d::SURF_CUDATraitConst {
 	fn detect(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::GpuMat) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_SURF_CUDA_detect_const_GpuMatR_const_GpuMatR_GpuMatR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn apply_2(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_vectorLKeyPointGR(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## C++ default parameters
+	/// * use_provided_keypoints: false
+	#[inline]
+	fn apply_3(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut core::GpuMat, use_provided_keypoints: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_vectorLKeyPointGR_GpuMatR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw_mut_GpuMat(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -481,6 +545,17 @@ pub trait SURF_CUDATrait: crate::xfeatures2d::SURF_CUDATraitConst {
 	fn detect_with_descriptors(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::GpuMat, descriptors: &mut core::GpuMat, use_provided_keypoints: bool) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_SURF_CUDA_detectWithDescriptors_const_GpuMatR_const_GpuMatR_GpuMatR_GpuMatR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_GpuMat(), descriptors.as_raw_mut_GpuMat(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## C++ default parameters
+	/// * use_provided_keypoints: false
+	#[inline]
+	fn apply_4(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut core::Vector<f32>, use_provided_keypoints: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_SURF_CUDA_operator___const_GpuMatR_const_GpuMatR_vectorLKeyPointGR_vectorLfloatGR_bool(self.as_raw_mut_SURF_CUDA(), img.as_raw_GpuMat(), mask.as_raw_GpuMat(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw_mut_VectorOff32(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -688,7 +763,7 @@ impl dyn AffineFeature2D + '_ {
 	
 }
 /// Class implementing BEBLID (Boosted Efficient Binary Local Image Descriptor),
-///  described in [Suarez2020BEBLID](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID) .
+///  described in [Suarez2020BEBLID](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID) .
 /// 
 /// BEBLID \cite Suarez2020BEBLID is a efficient binary descriptor learned with boosting.
 /// It is able to describe keypoints from any detector just by changing the scale_factor parameter.
@@ -704,81 +779,49 @@ impl dyn AffineFeature2D + '_ {
 /// 
 /// The descriptor was trained using 1 million of randomly sampled pairs of patches
 /// (20% positives and 80% negatives) from the Liberty split of the UBC datasets
-/// \cite winder2007learning as described in the paper [Suarez2020BEBLID](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID).
+/// \cite winder2007learning as described in the paper [Suarez2020BEBLID](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID).
 /// You can check in the [AKAZE example](https://raw.githubusercontent.com/opencv/opencv/master/samples/cpp/tutorial_code/features2D/AKAZE_match.cpp)
 /// how well BEBLID works. Detecting 10000 keypoints with ORB and describing with BEBLID obtains
 /// 561 inliers (75%) whereas describing with ORB obtains only 493 inliers (63%).
-pub trait BEBLIDTraitConst: crate::features2d::Feature2DTraitConst {
+pub trait BEBLIDConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_BEBLID(&self) -> *const c_void;
 
+	#[inline]
+	fn get_scale_factor(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_BEBLID_getScaleFactor_const(self.as_raw_BEBLID(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_BEBLID_getDefaultName_const(self.as_raw_BEBLID(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 }
 
-pub trait BEBLIDTrait: crate::features2d::Feature2DTrait + crate::xfeatures2d::BEBLIDTraitConst {
+pub trait BEBLID: crate::features2d::Feature2DTrait + crate::xfeatures2d::BEBLIDConst {
 	fn as_raw_mut_BEBLID(&mut self) -> *mut c_void;
 
-}
-
-/// Class implementing BEBLID (Boosted Efficient Binary Local Image Descriptor),
-///  described in [Suarez2020BEBLID](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID) .
-/// 
-/// BEBLID \cite Suarez2020BEBLID is a efficient binary descriptor learned with boosting.
-/// It is able to describe keypoints from any detector just by changing the scale_factor parameter.
-/// In several benchmarks it has proved to largely improve other binary descriptors like ORB or
-/// BRISK with the same efficiency. BEBLID describes using the difference of mean gray values in
-/// different regions of the image around the KeyPoint, the descriptor is specifically optimized for
-/// image matching and patch retrieval addressing the asymmetries of these problems.
-/// 
-/// If you find this code useful, please add a reference to the following paper:
-/// <BLOCKQUOTE> Iago Suárez, Ghesn Sfeir, José M. Buenaposada, and Luis Baumela.
-/// BEBLID: Boosted efficient binary local image descriptor.
-/// Pattern Recognition Letters, 133:366–372, 2020. </BLOCKQUOTE>
-/// 
-/// The descriptor was trained using 1 million of randomly sampled pairs of patches
-/// (20% positives and 80% negatives) from the Liberty split of the UBC datasets
-/// \cite winder2007learning as described in the paper [Suarez2020BEBLID](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID).
-/// You can check in the [AKAZE example](https://raw.githubusercontent.com/opencv/opencv/master/samples/cpp/tutorial_code/features2D/AKAZE_match.cpp)
-/// how well BEBLID works. Detecting 10000 keypoints with ORB and describing with BEBLID obtains
-/// 561 inliers (75%) whereas describing with ORB obtains only 493 inliers (63%).
-pub struct BEBLID {
-	ptr: *mut c_void
-}
-
-opencv_type_boxed! { BEBLID }
-
-impl Drop for BEBLID {
-	fn drop(&mut self) {
-		extern "C" { fn cv_BEBLID_delete(instance: *mut c_void); }
-		unsafe { cv_BEBLID_delete(self.as_raw_mut_BEBLID()) };
+	#[inline]
+	fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_BEBLID_setScaleFactor_float(self.as_raw_mut_BEBLID(), scale_factor, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
+	
 }
 
-unsafe impl Send for BEBLID {}
-
-impl core::AlgorithmTraitConst for BEBLID {
-	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-}
-
-impl core::AlgorithmTrait for BEBLID {
-	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::features2d::Feature2DTraitConst for BEBLID {
-	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::features2d::Feature2DTrait for BEBLID {
-	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::xfeatures2d::BEBLIDTraitConst for BEBLID {
-	#[inline] fn as_raw_BEBLID(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::xfeatures2d::BEBLIDTrait for BEBLID {
-	#[inline] fn as_raw_mut_BEBLID(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl BEBLID {
+impl dyn BEBLID + '_ {
 	/// Creates the BEBLID descriptor.
 	/// ## Parameters
 	/// * scale_factor: Adjust the sampling window around detected keypoints:
@@ -792,23 +835,18 @@ impl BEBLID {
 	/// ## C++ default parameters
 	/// * n_bits: BEBLID::SIZE_512_BITS
 	#[inline]
-	pub fn create(scale_factor: f32, n_bits: i32) -> Result<core::Ptr<crate::xfeatures2d::BEBLID>> {
+	pub fn create(scale_factor: f32, n_bits: i32) -> Result<core::Ptr<dyn crate::xfeatures2d::BEBLID>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_BEBLID_create_float_int(scale_factor, n_bits, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::xfeatures2d::BEBLID>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::BEBLID>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 }
-
-boxed_cast_base! { BEBLID, core::Algorithm, cv_BEBLID_to_Algorithm }
-
-boxed_cast_base! { BEBLID, crate::features2d::Feature2D, cv_BEBLID_to_Feature2D }
-
 /// Class implementing BoostDesc (Learning Image Descriptors with Boosting), described in
-/// [Trzcinski13a](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Trzcinski13a) and [Trzcinski13b](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Trzcinski13b).
+/// [Trzcinski13a](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Trzcinski13a) and [Trzcinski13b](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Trzcinski13b).
 /// 
 /// ## Parameters
 /// * desc: type of descriptor to use, BoostDesc::BINBOOST_256 is default (256 bit long dimension)
@@ -836,6 +874,16 @@ boxed_cast_base! { BEBLID, crate::features2d::Feature2D, cv_BEBLID_to_Feature2D 
 pub trait BoostDescConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_BoostDesc(&self) -> *const c_void;
 
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_BoostDesc_getDefaultName_const(self.as_raw_BoostDesc(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	#[inline]
 	fn get_use_scale_orientation(&self) -> Result<bool> {
 		return_send!(via ocvrs_return);
@@ -895,86 +943,83 @@ impl dyn BoostDesc + '_ {
 	}
 	
 }
-/// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_calon2010) .
+/// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_calon2010) .
 /// 
 /// ## Parameters
 /// * bytes: legth of the descriptor in bytes, valid values are: 16, 32 (default) or 64 .
 /// * use_orientation: sample patterns using keypoints orientation, disabled by default.
-pub trait BriefDescriptorExtractorTraitConst: crate::features2d::Feature2DTraitConst {
+pub trait BriefDescriptorExtractorConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_BriefDescriptorExtractor(&self) -> *const c_void;
 
-}
-
-pub trait BriefDescriptorExtractorTrait: crate::features2d::Feature2DTrait + crate::xfeatures2d::BriefDescriptorExtractorTraitConst {
-	fn as_raw_mut_BriefDescriptorExtractor(&mut self) -> *mut c_void;
-
-}
-
-/// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_calon2010) .
-/// 
-/// ## Parameters
-/// * bytes: legth of the descriptor in bytes, valid values are: 16, 32 (default) or 64 .
-/// * use_orientation: sample patterns using keypoints orientation, disabled by default.
-pub struct BriefDescriptorExtractor {
-	ptr: *mut c_void
-}
-
-opencv_type_boxed! { BriefDescriptorExtractor }
-
-impl Drop for BriefDescriptorExtractor {
-	fn drop(&mut self) {
-		extern "C" { fn cv_BriefDescriptorExtractor_delete(instance: *mut c_void); }
-		unsafe { cv_BriefDescriptorExtractor_delete(self.as_raw_mut_BriefDescriptorExtractor()) };
-	}
-}
-
-unsafe impl Send for BriefDescriptorExtractor {}
-
-impl core::AlgorithmTraitConst for BriefDescriptorExtractor {
-	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-}
-
-impl core::AlgorithmTrait for BriefDescriptorExtractor {
-	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::features2d::Feature2DTraitConst for BriefDescriptorExtractor {
-	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::features2d::Feature2DTrait for BriefDescriptorExtractor {
-	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::xfeatures2d::BriefDescriptorExtractorTraitConst for BriefDescriptorExtractor {
-	#[inline] fn as_raw_BriefDescriptorExtractor(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::xfeatures2d::BriefDescriptorExtractorTrait for BriefDescriptorExtractor {
-	#[inline] fn as_raw_mut_BriefDescriptorExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl BriefDescriptorExtractor {
-	/// ## C++ default parameters
-	/// * bytes: 32
-	/// * use_orientation: false
 	#[inline]
-	pub fn create(bytes: i32, use_orientation: bool) -> Result<core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>> {
+	fn get_descriptor_size(&self) -> Result<i32> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_create_int_bool(bytes, use_orientation, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_getDescriptorSize_const(self.as_raw_BriefDescriptorExtractor(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::xfeatures2d::BriefDescriptorExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_use_orientation(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_getUseOrientation_const(self.as_raw_BriefDescriptorExtractor(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_getDefaultName_const(self.as_raw_BriefDescriptorExtractor(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 }
 
-boxed_cast_base! { BriefDescriptorExtractor, core::Algorithm, cv_BriefDescriptorExtractor_to_Algorithm }
+pub trait BriefDescriptorExtractor: crate::features2d::Feature2DTrait + crate::xfeatures2d::BriefDescriptorExtractorConst {
+	fn as_raw_mut_BriefDescriptorExtractor(&mut self) -> *mut c_void;
 
-boxed_cast_base! { BriefDescriptorExtractor, crate::features2d::Feature2D, cv_BriefDescriptorExtractor_to_Feature2D }
+	#[inline]
+	fn set_descriptor_size(&mut self, bytes: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_setDescriptorSize_int(self.as_raw_mut_BriefDescriptorExtractor(), bytes, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_use_orientation(&mut self, use_orientation: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_setUseOrientation_bool(self.as_raw_mut_BriefDescriptorExtractor(), use_orientation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
 
-/// Class implementing DAISY descriptor, described in [Tola10](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Tola10)
+impl dyn BriefDescriptorExtractor + '_ {
+	/// ## C++ default parameters
+	/// * bytes: 32
+	/// * use_orientation: false
+	#[inline]
+	pub fn create(bytes: i32, use_orientation: bool) -> Result<core::Ptr<dyn crate::xfeatures2d::BriefDescriptorExtractor>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_create_int_bool(bytes, use_orientation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::BriefDescriptorExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+/// Class implementing DAISY descriptor, described in [Tola10](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Tola10)
 /// 
 /// ## Parameters
 /// * radius: radius of the descriptor at the initial scale
@@ -992,6 +1037,89 @@ boxed_cast_base! { BriefDescriptorExtractor, crate::features2d::Feature2D, cv_Br
 pub trait DAISYConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_DAISY(&self) -> *const c_void;
 
+	#[inline]
+	fn get_radius(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_getRadius_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_q_radius(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_getQRadius_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_q_theta(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_getQTheta_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_q_hist(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_getQHist_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_norm(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_getNorm_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_h(&self) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_getH_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_interpolation(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_getInterpolation_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_use_orientation(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_getUseOrientation_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_getDefaultName_const(self.as_raw_DAISY(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// ## Parameters
 	/// * y: position y on image
 	/// * x: position x on image
@@ -1055,6 +1183,79 @@ pub trait DAISYConst: crate::features2d::Feature2DTraitConst {
 pub trait DAISY: crate::features2d::Feature2DTrait + crate::xfeatures2d::DAISYConst {
 	fn as_raw_mut_DAISY(&mut self) -> *mut c_void;
 
+	#[inline]
+	fn set_radius(&mut self, radius: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_setRadius_float(self.as_raw_mut_DAISY(), radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_q_radius(&mut self, q_radius: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_setQRadius_int(self.as_raw_mut_DAISY(), q_radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_q_theta(&mut self, q_theta: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_setQTheta_int(self.as_raw_mut_DAISY(), q_theta, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_q_hist(&mut self, q_hist: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_setQHist_int(self.as_raw_mut_DAISY(), q_hist, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_norm(&mut self, norm: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_setNorm_int(self.as_raw_mut_DAISY(), norm, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_h(&mut self, h: &dyn core::ToInputArray) -> Result<()> {
+		input_array_arg!(h);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_setH_const__InputArrayR(self.as_raw_mut_DAISY(), h.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_interpolation(&mut self, interpolation: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_setInterpolation_bool(self.as_raw_mut_DAISY(), interpolation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_use_orientation(&mut self, use_orientation: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_DAISY_setUseOrientation_bool(self.as_raw_mut_DAISY(), use_orientation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// ## Parameters
 	/// * image: image to extract descriptors
@@ -1138,7 +1339,7 @@ impl dyn DAISY + '_ {
 	
 }
 /// Elliptic region around an interest point.
-pub trait Elliptic_KeyPointTraitConst {
+pub trait Elliptic_KeyPointTraitConst: core::KeyPointTraitConst {
 	fn as_raw_Elliptic_KeyPoint(&self) -> *const c_void;
 
 	/// the lengths of the major and minor ellipse axes
@@ -1168,7 +1369,7 @@ pub trait Elliptic_KeyPointTraitConst {
 	
 }
 
-pub trait Elliptic_KeyPointTrait: crate::xfeatures2d::Elliptic_KeyPointTraitConst {
+pub trait Elliptic_KeyPointTrait: core::KeyPointTrait + crate::xfeatures2d::Elliptic_KeyPointTraitConst {
 	fn as_raw_mut_Elliptic_KeyPoint(&mut self) -> *mut c_void;
 
 	/// the lengths of the major and minor ellipse axes
@@ -1210,6 +1411,14 @@ impl Drop for Elliptic_KeyPoint {
 
 unsafe impl Send for Elliptic_KeyPoint {}
 
+impl core::KeyPointTraitConst for Elliptic_KeyPoint {
+	#[inline] fn as_raw_KeyPoint(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::KeyPointTrait for Elliptic_KeyPoint {
+	#[inline] fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
 impl crate::xfeatures2d::Elliptic_KeyPointTraitConst for Elliptic_KeyPoint {
 	#[inline] fn as_raw_Elliptic_KeyPoint(&self) -> *const c_void { self.as_raw() }
 }
@@ -1241,7 +1450,9 @@ impl Elliptic_KeyPoint {
 	
 }
 
-/// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_AOV12) .
+boxed_cast_base! { Elliptic_KeyPoint, core::KeyPoint, cv_Elliptic_KeyPoint_to_KeyPoint }
+
+/// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_AOV12) .
 /// 
 /// The algorithm propose a novel keypoint descriptor inspired by the human visual system and more
 /// precisely the retina, coined Fast Retina Key- point (FREAK). A cascade of binary strings is
@@ -1253,68 +1464,99 @@ impl Elliptic_KeyPoint {
 /// Note:
 ///    *   An example on how to use the FREAK descriptor can be found at
 ///        opencv_source_code/samples/cpp/freak_demo.cpp
-pub trait FREAKTraitConst: crate::features2d::Feature2DTraitConst {
+pub trait FREAKConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_FREAK(&self) -> *const c_void;
 
+	#[inline]
+	fn get_orientation_normalized(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_FREAK_getOrientationNormalized_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_scale_normalized(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_FREAK_getScaleNormalized_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_pattern_scale(&self) -> Result<f64> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_FREAK_getPatternScale_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_n_octaves(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_FREAK_getNOctaves_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_FREAK_getDefaultName_const(self.as_raw_FREAK(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 }
 
-pub trait FREAKTrait: crate::features2d::Feature2DTrait + crate::xfeatures2d::FREAKTraitConst {
+pub trait FREAK: crate::features2d::Feature2DTrait + crate::xfeatures2d::FREAKConst {
 	fn as_raw_mut_FREAK(&mut self) -> *mut c_void;
 
-}
-
-/// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_AOV12) .
-/// 
-/// The algorithm propose a novel keypoint descriptor inspired by the human visual system and more
-/// precisely the retina, coined Fast Retina Key- point (FREAK). A cascade of binary strings is
-/// computed by efficiently comparing image intensities over a retinal sampling pattern. FREAKs are in
-/// general faster to compute with lower memory load and also more robust than SIFT, SURF or BRISK.
-/// They are competitive alternatives to existing keypoints in particular for embedded applications.
-/// 
-/// 
-/// Note:
-///    *   An example on how to use the FREAK descriptor can be found at
-///        opencv_source_code/samples/cpp/freak_demo.cpp
-pub struct FREAK {
-	ptr: *mut c_void
-}
-
-opencv_type_boxed! { FREAK }
-
-impl Drop for FREAK {
-	fn drop(&mut self) {
-		extern "C" { fn cv_FREAK_delete(instance: *mut c_void); }
-		unsafe { cv_FREAK_delete(self.as_raw_mut_FREAK()) };
+	#[inline]
+	fn set_orientation_normalized(&mut self, orientation_normalized: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_FREAK_setOrientationNormalized_bool(self.as_raw_mut_FREAK(), orientation_normalized, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
+	
+	#[inline]
+	fn set_scale_normalized(&mut self, scale_normalized: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_FREAK_setScaleNormalized_bool(self.as_raw_mut_FREAK(), scale_normalized, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_pattern_scale(&mut self, pattern_scale: f64) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_FREAK_setPatternScale_double(self.as_raw_mut_FREAK(), pattern_scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_n_octaves(&mut self, n_octaves: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_FREAK_setNOctaves_int(self.as_raw_mut_FREAK(), n_octaves, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
-unsafe impl Send for FREAK {}
-
-impl core::AlgorithmTraitConst for FREAK {
-	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-}
-
-impl core::AlgorithmTrait for FREAK {
-	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::features2d::Feature2DTraitConst for FREAK {
-	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::features2d::Feature2DTrait for FREAK {
-	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::xfeatures2d::FREAKTraitConst for FREAK {
-	#[inline] fn as_raw_FREAK(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::xfeatures2d::FREAKTrait for FREAK {
-	#[inline] fn as_raw_mut_FREAK(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl FREAK {
+impl dyn FREAK + '_ {
 	pub const NB_SCALES: i32 = 64;
 	pub const NB_PAIRS: i32 = 512;
 	pub const NB_ORIENPAIRS: i32 = 45;
@@ -1332,73 +1574,128 @@ impl FREAK {
 	/// * n_octaves: 4
 	/// * selected_pairs: std::vector<int>()
 	#[inline]
-	pub fn create(orientation_normalized: bool, scale_normalized: bool, pattern_scale: f32, n_octaves: i32, selected_pairs: &core::Vector<i32>) -> Result<core::Ptr<crate::xfeatures2d::FREAK>> {
+	pub fn create(orientation_normalized: bool, scale_normalized: bool, pattern_scale: f32, n_octaves: i32, selected_pairs: &core::Vector<i32>) -> Result<core::Ptr<dyn crate::xfeatures2d::FREAK>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_FREAK_create_bool_bool_float_int_const_vectorLintGR(orientation_normalized, scale_normalized, pattern_scale, n_octaves, selected_pairs.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::xfeatures2d::FREAK>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::FREAK>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+/// Class implementing the Harris-Laplace feature detector as described in [Mikolajczyk2004](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Mikolajczyk2004).
+pub trait HarrisLaplaceFeatureDetectorConst: crate::features2d::Feature2DTraitConst {
+	fn as_raw_HarrisLaplaceFeatureDetector(&self) -> *const c_void;
+
+	#[inline]
+	fn get_num_octaves(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getNumOctaves_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_corn_thresh(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getCornThresh_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_dog_thresh(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getDOGThresh_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_max_corners(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getMaxCorners_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_num_layers(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getNumLayers_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_getDefaultName_const(self.as_raw_HarrisLaplaceFeatureDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 }
 
-boxed_cast_base! { FREAK, core::Algorithm, cv_FREAK_to_Algorithm }
-
-boxed_cast_base! { FREAK, crate::features2d::Feature2D, cv_FREAK_to_Feature2D }
-
-/// Class implementing the Harris-Laplace feature detector as described in [Mikolajczyk2004](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Mikolajczyk2004).
-pub trait HarrisLaplaceFeatureDetectorTraitConst: crate::features2d::Feature2DTraitConst {
-	fn as_raw_HarrisLaplaceFeatureDetector(&self) -> *const c_void;
-
-}
-
-pub trait HarrisLaplaceFeatureDetectorTrait: crate::features2d::Feature2DTrait + crate::xfeatures2d::HarrisLaplaceFeatureDetectorTraitConst {
+pub trait HarrisLaplaceFeatureDetector: crate::features2d::Feature2DTrait + crate::xfeatures2d::HarrisLaplaceFeatureDetectorConst {
 	fn as_raw_mut_HarrisLaplaceFeatureDetector(&mut self) -> *mut c_void;
 
-}
-
-/// Class implementing the Harris-Laplace feature detector as described in [Mikolajczyk2004](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Mikolajczyk2004).
-pub struct HarrisLaplaceFeatureDetector {
-	ptr: *mut c_void
-}
-
-opencv_type_boxed! { HarrisLaplaceFeatureDetector }
-
-impl Drop for HarrisLaplaceFeatureDetector {
-	fn drop(&mut self) {
-		extern "C" { fn cv_HarrisLaplaceFeatureDetector_delete(instance: *mut c_void); }
-		unsafe { cv_HarrisLaplaceFeatureDetector_delete(self.as_raw_mut_HarrisLaplaceFeatureDetector()) };
+	#[inline]
+	fn set_num_octaves(&mut self, num_octaves_: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setNumOctaves_int(self.as_raw_mut_HarrisLaplaceFeatureDetector(), num_octaves_, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
+	
+	#[inline]
+	fn set_corn_thresh(&mut self, corn_thresh_: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setCornThresh_float(self.as_raw_mut_HarrisLaplaceFeatureDetector(), corn_thresh_, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_dog_thresh(&mut self, dog_thresh_: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setDOGThresh_float(self.as_raw_mut_HarrisLaplaceFeatureDetector(), dog_thresh_, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_max_corners(&mut self, max_corners_: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setMaxCorners_int(self.as_raw_mut_HarrisLaplaceFeatureDetector(), max_corners_, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_num_layers(&mut self, num_layers_: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_setNumLayers_int(self.as_raw_mut_HarrisLaplaceFeatureDetector(), num_layers_, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
-unsafe impl Send for HarrisLaplaceFeatureDetector {}
-
-impl core::AlgorithmTraitConst for HarrisLaplaceFeatureDetector {
-	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-}
-
-impl core::AlgorithmTrait for HarrisLaplaceFeatureDetector {
-	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::features2d::Feature2DTraitConst for HarrisLaplaceFeatureDetector {
-	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::features2d::Feature2DTrait for HarrisLaplaceFeatureDetector {
-	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::xfeatures2d::HarrisLaplaceFeatureDetectorTraitConst for HarrisLaplaceFeatureDetector {
-	#[inline] fn as_raw_HarrisLaplaceFeatureDetector(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::xfeatures2d::HarrisLaplaceFeatureDetectorTrait for HarrisLaplaceFeatureDetector {
-	#[inline] fn as_raw_mut_HarrisLaplaceFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl HarrisLaplaceFeatureDetector {
+impl dyn HarrisLaplaceFeatureDetector + '_ {
 	/// Creates a new implementation instance.
 	/// 
 	/// ## Parameters
@@ -1415,188 +1712,205 @@ impl HarrisLaplaceFeatureDetector {
 	/// * max_corners: 5000
 	/// * num_layers: 4
 	#[inline]
-	pub fn create(num_octaves: i32, corn_thresh: f32, dog_thresh: f32, max_corners: i32, num_layers: i32) -> Result<core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>> {
+	pub fn create(num_octaves: i32, corn_thresh: f32, dog_thresh: f32, max_corners: i32, num_layers: i32) -> Result<core::Ptr<dyn crate::xfeatures2d::HarrisLaplaceFeatureDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_create_int_float_float_int_int(num_octaves, corn_thresh, dog_thresh, max_corners, num_layers, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::xfeatures2d::HarrisLaplaceFeatureDetector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::HarrisLaplaceFeatureDetector>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+/// latch Class for computing the LATCH descriptor.
+/// If you find this code useful, please add a reference to the following paper in your work:
+/// Gil Levi and Tal Hassner, "LATCH: Learned Arrangements of Three Patch Codes", arXiv preprint arXiv:1501.03719, 15 Jan. 2015
+/// 
+/// LATCH is a binary descriptor based on learned comparisons of triplets of image patches.
+/// 
+/// * bytes is the size of the descriptor - can be 64, 32, 16, 8, 4, 2 or 1
+/// * rotationInvariance - whether or not the descriptor should compansate for orientation changes.
+/// * half_ssd_size - the size of half of the mini-patches size. For example, if we would like to compare triplets of patches of size 7x7x
+///    then the half_ssd_size should be (7-1)/2 = 3.
+/// * sigma - sigma value for GaussianBlur smoothing of the source image. Source image will be used without smoothing in case sigma value is 0.
+/// 
+/// Note: the descriptor can be coupled with any keypoint extractor. The only demand is that if you use set rotationInvariance = True then
+///    you will have to use an extractor which estimates the patch orientation (in degrees). Examples for such extractors are ORB and SIFT.
+/// 
+/// Note: a complete example can be found under /samples/cpp/tutorial_code/xfeatures2D/latch_match.cpp
+pub trait LATCHConst: crate::features2d::Feature2DTraitConst {
+	fn as_raw_LATCH(&self) -> *const c_void;
+
+	#[inline]
+	fn get_bytes(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LATCH_getBytes_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_rotation_invariance(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LATCH_getRotationInvariance_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_half_ss_dsize(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LATCH_getHalfSSDsize_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_sigma(&self) -> Result<f64> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LATCH_getSigma_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LATCH_getDefaultName_const(self.as_raw_LATCH(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 }
 
-boxed_cast_base! { HarrisLaplaceFeatureDetector, core::Algorithm, cv_HarrisLaplaceFeatureDetector_to_Algorithm }
-
-boxed_cast_base! { HarrisLaplaceFeatureDetector, crate::features2d::Feature2D, cv_HarrisLaplaceFeatureDetector_to_Feature2D }
-
-/// latch Class for computing the LATCH descriptor.
-/// If you find this code useful, please add a reference to the following paper in your work:
-/// Gil Levi and Tal Hassner, "LATCH: Learned Arrangements of Three Patch Codes", arXiv preprint arXiv:1501.03719, 15 Jan. 2015
-/// 
-/// LATCH is a binary descriptor based on learned comparisons of triplets of image patches.
-/// 
-/// * bytes is the size of the descriptor - can be 64, 32, 16, 8, 4, 2 or 1
-/// * rotationInvariance - whether or not the descriptor should compansate for orientation changes.
-/// * half_ssd_size - the size of half of the mini-patches size. For example, if we would like to compare triplets of patches of size 7x7x
-///    then the half_ssd_size should be (7-1)/2 = 3.
-/// * sigma - sigma value for GaussianBlur smoothing of the source image. Source image will be used without smoothing in case sigma value is 0.
-/// 
-/// Note: the descriptor can be coupled with any keypoint extractor. The only demand is that if you use set rotationInvariance = True then
-///    you will have to use an extractor which estimates the patch orientation (in degrees). Examples for such extractors are ORB and SIFT.
-/// 
-/// Note: a complete example can be found under /samples/cpp/tutorial_code/xfeatures2D/latch_match.cpp
-pub trait LATCHTraitConst: crate::features2d::Feature2DTraitConst {
-	fn as_raw_LATCH(&self) -> *const c_void;
-
-}
-
-pub trait LATCHTrait: crate::features2d::Feature2DTrait + crate::xfeatures2d::LATCHTraitConst {
+pub trait LATCH: crate::features2d::Feature2DTrait + crate::xfeatures2d::LATCHConst {
 	fn as_raw_mut_LATCH(&mut self) -> *mut c_void;
 
-}
-
-/// latch Class for computing the LATCH descriptor.
-/// If you find this code useful, please add a reference to the following paper in your work:
-/// Gil Levi and Tal Hassner, "LATCH: Learned Arrangements of Three Patch Codes", arXiv preprint arXiv:1501.03719, 15 Jan. 2015
-/// 
-/// LATCH is a binary descriptor based on learned comparisons of triplets of image patches.
-/// 
-/// * bytes is the size of the descriptor - can be 64, 32, 16, 8, 4, 2 or 1
-/// * rotationInvariance - whether or not the descriptor should compansate for orientation changes.
-/// * half_ssd_size - the size of half of the mini-patches size. For example, if we would like to compare triplets of patches of size 7x7x
-///    then the half_ssd_size should be (7-1)/2 = 3.
-/// * sigma - sigma value for GaussianBlur smoothing of the source image. Source image will be used without smoothing in case sigma value is 0.
-/// 
-/// Note: the descriptor can be coupled with any keypoint extractor. The only demand is that if you use set rotationInvariance = True then
-///    you will have to use an extractor which estimates the patch orientation (in degrees). Examples for such extractors are ORB and SIFT.
-/// 
-/// Note: a complete example can be found under /samples/cpp/tutorial_code/xfeatures2D/latch_match.cpp
-pub struct LATCH {
-	ptr: *mut c_void
-}
-
-opencv_type_boxed! { LATCH }
-
-impl Drop for LATCH {
-	fn drop(&mut self) {
-		extern "C" { fn cv_LATCH_delete(instance: *mut c_void); }
-		unsafe { cv_LATCH_delete(self.as_raw_mut_LATCH()) };
+	#[inline]
+	fn set_bytes(&mut self, bytes: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LATCH_setBytes_int(self.as_raw_mut_LATCH(), bytes, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
+	
+	#[inline]
+	fn set_rotation_invariance(&mut self, rotation_invariance: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LATCH_setRotationInvariance_bool(self.as_raw_mut_LATCH(), rotation_invariance, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_half_ss_dsize(&mut self, half_ssd_size: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LATCH_setHalfSSDsize_int(self.as_raw_mut_LATCH(), half_ssd_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_sigma(&mut self, sigma: f64) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LATCH_setSigma_double(self.as_raw_mut_LATCH(), sigma, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
-unsafe impl Send for LATCH {}
-
-impl core::AlgorithmTraitConst for LATCH {
-	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-}
-
-impl core::AlgorithmTrait for LATCH {
-	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::features2d::Feature2DTraitConst for LATCH {
-	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::features2d::Feature2DTrait for LATCH {
-	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::xfeatures2d::LATCHTraitConst for LATCH {
-	#[inline] fn as_raw_LATCH(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::xfeatures2d::LATCHTrait for LATCH {
-	#[inline] fn as_raw_mut_LATCH(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl LATCH {
+impl dyn LATCH + '_ {
 	/// ## C++ default parameters
 	/// * bytes: 32
 	/// * rotation_invariance: true
 	/// * half_ssd_size: 3
 	/// * sigma: 2.0
 	#[inline]
-	pub fn create(bytes: i32, rotation_invariance: bool, half_ssd_size: i32, sigma: f64) -> Result<core::Ptr<crate::xfeatures2d::LATCH>> {
+	pub fn create(bytes: i32, rotation_invariance: bool, half_ssd_size: i32, sigma: f64) -> Result<core::Ptr<dyn crate::xfeatures2d::LATCH>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_LATCH_create_int_bool_int_double(bytes, rotation_invariance, half_ssd_size, sigma, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::xfeatures2d::LATCH>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::LATCH>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+/// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LUCID)
+/// 
+/// An image descriptor that can be computed very fast, while being
+/// about as robust as, for example, SURF or BRIEF.
+/// 
+/// 
+/// Note: It requires a color image as input.
+pub trait LUCIDConst: crate::features2d::Feature2DTraitConst {
+	fn as_raw_LUCID(&self) -> *const c_void;
+
+	#[inline]
+	fn get_lucid_kernel(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LUCID_getLucidKernel_const(self.as_raw_LUCID(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_blur_kernel(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LUCID_getBlurKernel_const(self.as_raw_LUCID(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LUCID_getDefaultName_const(self.as_raw_LUCID(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 }
 
-boxed_cast_base! { LATCH, core::Algorithm, cv_LATCH_to_Algorithm }
-
-boxed_cast_base! { LATCH, crate::features2d::Feature2D, cv_LATCH_to_Feature2D }
-
-/// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_LUCID)
-/// 
-/// An image descriptor that can be computed very fast, while being
-/// about as robust as, for example, SURF or BRIEF.
-/// 
-/// 
-/// Note: It requires a color image as input.
-pub trait LUCIDTraitConst: crate::features2d::Feature2DTraitConst {
-	fn as_raw_LUCID(&self) -> *const c_void;
-
-}
-
-pub trait LUCIDTrait: crate::features2d::Feature2DTrait + crate::xfeatures2d::LUCIDTraitConst {
+pub trait LUCID: crate::features2d::Feature2DTrait + crate::xfeatures2d::LUCIDConst {
 	fn as_raw_mut_LUCID(&mut self) -> *mut c_void;
 
-}
-
-/// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_LUCID)
-/// 
-/// An image descriptor that can be computed very fast, while being
-/// about as robust as, for example, SURF or BRIEF.
-/// 
-/// 
-/// Note: It requires a color image as input.
-pub struct LUCID {
-	ptr: *mut c_void
-}
-
-opencv_type_boxed! { LUCID }
-
-impl Drop for LUCID {
-	fn drop(&mut self) {
-		extern "C" { fn cv_LUCID_delete(instance: *mut c_void); }
-		unsafe { cv_LUCID_delete(self.as_raw_mut_LUCID()) };
+	#[inline]
+	fn set_lucid_kernel(&mut self, lucid_kernel: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LUCID_setLucidKernel_int(self.as_raw_mut_LUCID(), lucid_kernel, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
+	
+	#[inline]
+	fn set_blur_kernel(&mut self, blur_kernel: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_LUCID_setBlurKernel_int(self.as_raw_mut_LUCID(), blur_kernel, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
-unsafe impl Send for LUCID {}
-
-impl core::AlgorithmTraitConst for LUCID {
-	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-}
-
-impl core::AlgorithmTrait for LUCID {
-	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::features2d::Feature2DTraitConst for LUCID {
-	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::features2d::Feature2DTrait for LUCID {
-	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::xfeatures2d::LUCIDTraitConst for LUCID {
-	#[inline] fn as_raw_LUCID(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::xfeatures2d::LUCIDTrait for LUCID {
-	#[inline] fn as_raw_mut_LUCID(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl LUCID {
+impl dyn LUCID + '_ {
 	/// ## Parameters
 	/// * lucid_kernel: kernel for descriptor construction, where 1=3x3, 2=5x5, 3=7x7 and so forth
 	/// * blur_kernel: kernel for blurring image prior to descriptor construction, where 1=3x3, 2=5x5, 3=7x7 and so forth
@@ -1605,91 +1919,209 @@ impl LUCID {
 	/// * lucid_kernel: 1
 	/// * blur_kernel: 2
 	#[inline]
-	pub fn create(lucid_kernel: i32, blur_kernel: i32) -> Result<core::Ptr<crate::xfeatures2d::LUCID>> {
+	pub fn create(lucid_kernel: i32, blur_kernel: i32) -> Result<core::Ptr<dyn crate::xfeatures2d::LUCID>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_LUCID_create_const_int_const_int(lucid_kernel, blur_kernel, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::xfeatures2d::LUCID>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::LUCID>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+/// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Tombari14).
+/// 
+/// The algorithm implements a novel interest point detector stemming from the intuition that image patches
+/// which are highly dissimilar over a relatively large extent of their surroundings hold the property of
+/// being repeatable and distinctive. This concept of "contextual self-dissimilarity" reverses the key
+/// paradigm of recent successful techniques such as the Local Self-Similarity descriptor and the Non-Local
+/// Means filter, which build upon the presence of similar - rather than dissimilar - patches. Moreover,
+/// it extends to contextual information the local self-dissimilarity notion embedded in established
+/// detectors of corner-like interest points, thereby achieving enhanced repeatability, distinctiveness and
+/// localization accuracy.
+pub trait MSDDetectorConst: crate::features2d::Feature2DTraitConst {
+	fn as_raw_MSDDetector(&self) -> *const c_void;
+
+	#[inline]
+	fn get_patch_radius(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getPatchRadius_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_search_area_radius(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getSearchAreaRadius_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_nms_radius(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getNmsRadius_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_nms_scale_radius(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getNmsScaleRadius_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_th_saliency(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getThSaliency_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_knn(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getKNN_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_scale_factor(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getScaleFactor_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_n_scales(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getNScales_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_compute_orientation(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getComputeOrientation_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_getDefaultName_const(self.as_raw_MSDDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 }
 
-boxed_cast_base! { LUCID, core::Algorithm, cv_LUCID_to_Algorithm }
-
-boxed_cast_base! { LUCID, crate::features2d::Feature2D, cv_LUCID_to_Feature2D }
-
-/// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Tombari14).
-/// 
-/// The algorithm implements a novel interest point detector stemming from the intuition that image patches
-/// which are highly dissimilar over a relatively large extent of their surroundings hold the property of
-/// being repeatable and distinctive. This concept of "contextual self-dissimilarity" reverses the key
-/// paradigm of recent successful techniques such as the Local Self-Similarity descriptor and the Non-Local
-/// Means filter, which build upon the presence of similar - rather than dissimilar - patches. Moreover,
-/// it extends to contextual information the local self-dissimilarity notion embedded in established
-/// detectors of corner-like interest points, thereby achieving enhanced repeatability, distinctiveness and
-/// localization accuracy.
-pub trait MSDDetectorTraitConst: crate::features2d::Feature2DTraitConst {
-	fn as_raw_MSDDetector(&self) -> *const c_void;
-
-}
-
-pub trait MSDDetectorTrait: crate::features2d::Feature2DTrait + crate::xfeatures2d::MSDDetectorTraitConst {
+pub trait MSDDetector: crate::features2d::Feature2DTrait + crate::xfeatures2d::MSDDetectorConst {
 	fn as_raw_mut_MSDDetector(&mut self) -> *mut c_void;
 
-}
-
-/// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Tombari14).
-/// 
-/// The algorithm implements a novel interest point detector stemming from the intuition that image patches
-/// which are highly dissimilar over a relatively large extent of their surroundings hold the property of
-/// being repeatable and distinctive. This concept of "contextual self-dissimilarity" reverses the key
-/// paradigm of recent successful techniques such as the Local Self-Similarity descriptor and the Non-Local
-/// Means filter, which build upon the presence of similar - rather than dissimilar - patches. Moreover,
-/// it extends to contextual information the local self-dissimilarity notion embedded in established
-/// detectors of corner-like interest points, thereby achieving enhanced repeatability, distinctiveness and
-/// localization accuracy.
-pub struct MSDDetector {
-	ptr: *mut c_void
-}
-
-opencv_type_boxed! { MSDDetector }
-
-impl Drop for MSDDetector {
-	fn drop(&mut self) {
-		extern "C" { fn cv_MSDDetector_delete(instance: *mut c_void); }
-		unsafe { cv_MSDDetector_delete(self.as_raw_mut_MSDDetector()) };
+	#[inline]
+	fn set_patch_radius(&mut self, patch_radius: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_setPatchRadius_int(self.as_raw_mut_MSDDetector(), patch_radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
+	
+	#[inline]
+	fn set_search_area_radius(&mut self, use_orientation: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_setSearchAreaRadius_int(self.as_raw_mut_MSDDetector(), use_orientation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_nms_radius(&mut self, nms_radius: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_setNmsRadius_int(self.as_raw_mut_MSDDetector(), nms_radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_nms_scale_radius(&mut self, nms_scale_radius: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_setNmsScaleRadius_int(self.as_raw_mut_MSDDetector(), nms_scale_radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_th_saliency(&mut self, th_saliency: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_setThSaliency_float(self.as_raw_mut_MSDDetector(), th_saliency, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_knn(&mut self, k_nn: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_setKNN_int(self.as_raw_mut_MSDDetector(), k_nn, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_scale_factor(&mut self, scale_factor: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_setScaleFactor_float(self.as_raw_mut_MSDDetector(), scale_factor, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_n_scales(&mut self, use_orientation: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_setNScales_int(self.as_raw_mut_MSDDetector(), use_orientation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_compute_orientation(&mut self, compute_orientation: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_MSDDetector_setComputeOrientation_bool(self.as_raw_mut_MSDDetector(), compute_orientation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
-unsafe impl Send for MSDDetector {}
-
-impl core::AlgorithmTraitConst for MSDDetector {
-	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-}
-
-impl core::AlgorithmTrait for MSDDetector {
-	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::features2d::Feature2DTraitConst for MSDDetector {
-	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::features2d::Feature2DTrait for MSDDetector {
-	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::xfeatures2d::MSDDetectorTraitConst for MSDDetector {
-	#[inline] fn as_raw_MSDDetector(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::xfeatures2d::MSDDetectorTrait for MSDDetector {
-	#[inline] fn as_raw_mut_MSDDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl MSDDetector {
+impl dyn MSDDetector + '_ {
 	/// ## C++ default parameters
 	/// * m_patch_radius: 3
 	/// * m_search_area_radius: 5
@@ -1701,23 +2133,18 @@ impl MSDDetector {
 	/// * m_n_scales: -1
 	/// * m_compute_orientation: false
 	#[inline]
-	pub fn create(m_patch_radius: i32, m_search_area_radius: i32, m_nms_radius: i32, m_nms_scale_radius: i32, m_th_saliency: f32, m_k_nn: i32, m_scale_factor: f32, m_n_scales: i32, m_compute_orientation: bool) -> Result<core::Ptr<crate::xfeatures2d::MSDDetector>> {
+	pub fn create(m_patch_radius: i32, m_search_area_radius: i32, m_nms_radius: i32, m_nms_scale_radius: i32, m_th_saliency: f32, m_k_nn: i32, m_scale_factor: f32, m_n_scales: i32, m_compute_orientation: bool) -> Result<core::Ptr<dyn crate::xfeatures2d::MSDDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_MSDDetector_create_int_int_int_int_float_int_float_int_bool(m_patch_radius, m_search_area_radius, m_nms_radius, m_nms_scale_radius, m_th_saliency, m_k_nn, m_scale_factor, m_n_scales, m_compute_orientation, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::xfeatures2d::MSDDetector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::MSDDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 }
-
-boxed_cast_base! { MSDDetector, core::Algorithm, cv_MSDDetector_to_Algorithm }
-
-boxed_cast_base! { MSDDetector, crate::features2d::Feature2D, cv_MSDDetector_to_Feature2D }
-
 /// Class implementing PCT (position-color-texture) signature extraction
-///       as described in [KrulisLS16](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_KrulisLS16).
+///       as described in [KrulisLS16](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_KrulisLS16).
 ///       The algorithm is divided to a feature sampler and a clusterizer.
 ///       Feature sampler produces samples at given set of coordinates.
 ///       Clusterizer then produces clusters of these samples using k-means algorithm.
@@ -1726,8 +2153,8 @@ boxed_cast_base! { MSDDetector, crate::features2d::Feature2D, cv_MSDDetector_to_
 ///       A signature is an array of SIGNATURE_DIMENSION-dimensional points.
 ///       Used dimensions are:
 ///       weight, x, y position; lab color, contrast, entropy.
-/// [KrulisLS16](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_KrulisLS16)
-/// [BeecksUS10](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
+/// [KrulisLS16](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_KrulisLS16)
+/// [BeecksUS10](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
 pub trait PCTSignaturesConst: core::AlgorithmTraitConst {
 	fn as_raw_PCTSignatures(&self) -> *const c_void;
 
@@ -2376,7 +2803,7 @@ impl dyn PCTSignatures + '_ {
 ///   Signature quadratic form distance.
 ///   In Proceedings of the ACM International Conference on Image and Video Retrieval, pages 438-445.
 ///   ACM, 2010.
-/// [BeecksUS10](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
+/// [BeecksUS10](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
 pub trait PCTSignaturesSQFDConst: core::AlgorithmTraitConst {
 	fn as_raw_PCTSignaturesSQFD(&self) -> *const c_void;
 
@@ -2442,7 +2869,7 @@ impl dyn PCTSignaturesSQFD + '_ {
 	}
 	
 }
-/// Class for extracting Speeded Up Robust Features from an image [Bay06](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bay06) .
+/// Class for extracting Speeded Up Robust Features from an image [Bay06](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bay06) .
 /// 
 /// The algorithm parameters:
 /// *   member int extended
@@ -2516,6 +2943,16 @@ pub trait SURFConst: crate::features2d::Feature2DTraitConst {
 		unsafe { sys::cv_xfeatures2d_SURF_getUpright_const(self.as_raw_SURF(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_SURF_getDefaultName_const(self.as_raw_SURF(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -2598,58 +3035,118 @@ impl dyn SURF + '_ {
 	}
 	
 }
-/// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
-pub trait StarDetectorTraitConst: crate::features2d::Feature2DTraitConst {
+/// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
+pub trait StarDetectorConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_StarDetector(&self) -> *const c_void;
 
+	#[inline]
+	fn get_max_size(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_getMaxSize_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_response_threshold(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_getResponseThreshold_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_line_threshold_projected(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_getLineThresholdProjected_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_line_threshold_binarized(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_getLineThresholdBinarized_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_suppress_nonmax_size(&self) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_getSuppressNonmaxSize_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_getDefaultName_const(self.as_raw_StarDetector(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 }
 
-pub trait StarDetectorTrait: crate::features2d::Feature2DTrait + crate::xfeatures2d::StarDetectorTraitConst {
+pub trait StarDetector: crate::features2d::Feature2DTrait + crate::xfeatures2d::StarDetectorConst {
 	fn as_raw_mut_StarDetector(&mut self) -> *mut c_void;
 
-}
-
-/// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
-pub struct StarDetector {
-	ptr: *mut c_void
-}
-
-opencv_type_boxed! { StarDetector }
-
-impl Drop for StarDetector {
-	fn drop(&mut self) {
-		extern "C" { fn cv_StarDetector_delete(instance: *mut c_void); }
-		unsafe { cv_StarDetector_delete(self.as_raw_mut_StarDetector()) };
+	#[inline]
+	fn set_max_size(&mut self, _max_size: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_setMaxSize_int(self.as_raw_mut_StarDetector(), _max_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
+	
+	#[inline]
+	fn set_response_threshold(&mut self, _response_threshold: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_setResponseThreshold_int(self.as_raw_mut_StarDetector(), _response_threshold, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_line_threshold_projected(&mut self, _line_threshold_projected: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_setLineThresholdProjected_int(self.as_raw_mut_StarDetector(), _line_threshold_projected, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_line_threshold_binarized(&mut self, _line_threshold_binarized: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_setLineThresholdBinarized_int(self.as_raw_mut_StarDetector(), _line_threshold_binarized, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn set_suppress_nonmax_size(&mut self, _suppress_nonmax_size: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_StarDetector_setSuppressNonmaxSize_int(self.as_raw_mut_StarDetector(), _suppress_nonmax_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
-unsafe impl Send for StarDetector {}
-
-impl core::AlgorithmTraitConst for StarDetector {
-	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-}
-
-impl core::AlgorithmTrait for StarDetector {
-	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::features2d::Feature2DTraitConst for StarDetector {
-	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::features2d::Feature2DTrait for StarDetector {
-	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl crate::xfeatures2d::StarDetectorTraitConst for StarDetector {
-	#[inline] fn as_raw_StarDetector(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::xfeatures2d::StarDetectorTrait for StarDetector {
-	#[inline] fn as_raw_mut_StarDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
-
-impl StarDetector {
+impl dyn StarDetector + '_ {
 	/// the full constructor
 	/// 
 	/// ## C++ default parameters
@@ -2659,23 +3156,18 @@ impl StarDetector {
 	/// * line_threshold_binarized: 8
 	/// * suppress_nonmax_size: 5
 	#[inline]
-	pub fn create(max_size: i32, response_threshold: i32, line_threshold_projected: i32, line_threshold_binarized: i32, suppress_nonmax_size: i32) -> Result<core::Ptr<crate::xfeatures2d::StarDetector>> {
+	pub fn create(max_size: i32, response_threshold: i32, line_threshold_projected: i32, line_threshold_binarized: i32, suppress_nonmax_size: i32) -> Result<core::Ptr<dyn crate::xfeatures2d::StarDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_StarDetector_create_int_int_int_int_int(max_size, response_threshold, line_threshold_projected, line_threshold_binarized, suppress_nonmax_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::xfeatures2d::StarDetector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<dyn crate::xfeatures2d::StarDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 }
-
-boxed_cast_base! { StarDetector, core::Algorithm, cv_StarDetector_to_Algorithm }
-
-boxed_cast_base! { StarDetector, crate::features2d::Feature2D, cv_StarDetector_to_Feature2D }
-
 /// Class implementing the Tree Based Morse Regions (TBMR) as described in
-/// [Najman2014](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Najman2014) extended with scaled extraction ability.
+/// [Najman2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Najman2014) extended with scaled extraction ability.
 /// 
 /// ## Parameters
 /// * min_area: prune areas smaller than minArea
@@ -2789,8 +3281,134 @@ impl dyn TBMR + '_ {
 	}
 	
 }
+/// Class implementing TEBLID (Triplet-based Efficient Binary Local Image Descriptor),
+///  described in [Suarez2021TEBLID](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Suarez2021TEBLID).
+/// 
+/// TEBLID stands for Triplet-based Efficient Binary Local Image Descriptor, although originally it was called BAD
+/// \cite Suarez2021TEBLID. It is an improvement over BEBLID \cite Suarez2020BEBLID, that uses triplet loss,
+/// hard negative mining, and anchor swap to improve the image matching results.
+/// It is able to describe keypoints from any detector just by changing the scale_factor parameter.
+/// TEBLID is as efficient as ORB, BEBLID or BRISK, but the triplet-based training objective selected more
+/// discriminative features that explain the accuracy gain. It is also more compact than BEBLID,
+/// when running the [AKAZE example](https://github.com/opencv/opencv/blob/4.x/samples/cpp/tutorial_code/features2D/AKAZE_match.cpp)
+/// with 10000 keypoints detected by ORB, BEBLID obtains 561 inliers (75%) with 512 bits, whereas
+/// TEBLID obtains 621 (75.2%) with 256 bits. ORB obtains only 493 inliers (63%).
+/// 
+/// If you find this code useful, please add a reference to the following paper:
+/// <BLOCKQUOTE> Iago Suárez, José M. Buenaposada, and Luis Baumela.
+/// Revisiting Binary Local Image Description for Resource Limited Devices.
+/// IEEE Robotics and Automation Letters, vol. 6, no. 4, pp. 8317-8324, Oct. 2021. </BLOCKQUOTE>
+/// 
+/// The descriptor was trained in Liberty split of the UBC datasets \cite winder2007learning .
+pub trait TEBLIDTraitConst: crate::features2d::Feature2DTraitConst {
+	fn as_raw_TEBLID(&self) -> *const c_void;
+
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_TEBLID_getDefaultName_const(self.as_raw_TEBLID(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+pub trait TEBLIDTrait: crate::features2d::Feature2DTrait + crate::xfeatures2d::TEBLIDTraitConst {
+	fn as_raw_mut_TEBLID(&mut self) -> *mut c_void;
+
+}
+
+/// Class implementing TEBLID (Triplet-based Efficient Binary Local Image Descriptor),
+///  described in [Suarez2021TEBLID](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Suarez2021TEBLID).
+/// 
+/// TEBLID stands for Triplet-based Efficient Binary Local Image Descriptor, although originally it was called BAD
+/// \cite Suarez2021TEBLID. It is an improvement over BEBLID \cite Suarez2020BEBLID, that uses triplet loss,
+/// hard negative mining, and anchor swap to improve the image matching results.
+/// It is able to describe keypoints from any detector just by changing the scale_factor parameter.
+/// TEBLID is as efficient as ORB, BEBLID or BRISK, but the triplet-based training objective selected more
+/// discriminative features that explain the accuracy gain. It is also more compact than BEBLID,
+/// when running the [AKAZE example](https://github.com/opencv/opencv/blob/4.x/samples/cpp/tutorial_code/features2D/AKAZE_match.cpp)
+/// with 10000 keypoints detected by ORB, BEBLID obtains 561 inliers (75%) with 512 bits, whereas
+/// TEBLID obtains 621 (75.2%) with 256 bits. ORB obtains only 493 inliers (63%).
+/// 
+/// If you find this code useful, please add a reference to the following paper:
+/// <BLOCKQUOTE> Iago Suárez, José M. Buenaposada, and Luis Baumela.
+/// Revisiting Binary Local Image Description for Resource Limited Devices.
+/// IEEE Robotics and Automation Letters, vol. 6, no. 4, pp. 8317-8324, Oct. 2021. </BLOCKQUOTE>
+/// 
+/// The descriptor was trained in Liberty split of the UBC datasets \cite winder2007learning .
+pub struct TEBLID {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { TEBLID }
+
+impl Drop for TEBLID {
+	fn drop(&mut self) {
+		extern "C" { fn cv_TEBLID_delete(instance: *mut c_void); }
+		unsafe { cv_TEBLID_delete(self.as_raw_mut_TEBLID()) };
+	}
+}
+
+unsafe impl Send for TEBLID {}
+
+impl core::AlgorithmTraitConst for TEBLID {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for TEBLID {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::features2d::Feature2DTraitConst for TEBLID {
+	#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::features2d::Feature2DTrait for TEBLID {
+	#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl crate::xfeatures2d::TEBLIDTraitConst for TEBLID {
+	#[inline] fn as_raw_TEBLID(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::xfeatures2d::TEBLIDTrait for TEBLID {
+	#[inline] fn as_raw_mut_TEBLID(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl TEBLID {
+	/// Creates the TEBLID descriptor.
+	/// ## Parameters
+	/// * scale_factor: Adjust the sampling window around detected keypoints:
+	/// - <b> 1.00f </b> should be the scale for ORB keypoints
+	/// - <b> 6.75f </b> should be the scale for SIFT detected keypoints
+	/// - <b> 6.25f </b> is default and fits for KAZE, SURF detected keypoints
+	/// - <b> 5.00f </b> should be the scale for AKAZE, MSD, AGAST, FAST, BRISK keypoints
+	/// * n_bits: Determine the number of bits in the descriptor. Should be either
+	///  TEBLID::SIZE_256_BITS or TEBLID::SIZE_512_BITS.
+	/// 
+	/// ## C++ default parameters
+	/// * n_bits: TEBLID::SIZE_256_BITS
+	#[inline]
+	pub fn create(scale_factor: f32, n_bits: i32) -> Result<core::Ptr<crate::xfeatures2d::TEBLID>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_TEBLID_create_float_int(scale_factor, n_bits, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xfeatures2d::TEBLID>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+boxed_cast_base! { TEBLID, core::Algorithm, cv_TEBLID_to_Algorithm }
+
+boxed_cast_base! { TEBLID, crate::features2d::Feature2D, cv_TEBLID_to_Feature2D }
+
 /// Class implementing VGG (Oxford Visual Geometry Group) descriptor trained end to end
-/// using "Descriptor Learning Using Convex Optimisation" (DLCO) aparatus described in [Simonyan14](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Simonyan14).
+/// using "Descriptor Learning Using Convex Optimisation" (DLCO) aparatus described in [Simonyan14](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Simonyan14).
 /// 
 /// ## Parameters
 /// * desc: type of descriptor to use, VGG::VGG_120 is default (120 dimensions float)
@@ -2808,6 +3426,16 @@ impl dyn TBMR + '_ {
 pub trait VGGConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_VGG(&self) -> *const c_void;
 
+	#[inline]
+	fn get_default_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xfeatures2d_VGG_getDefaultName_const(self.as_raw_VGG(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	#[inline]
 	fn get_sigma(&self) -> Result<f32> {
 		return_send!(via ocvrs_return);

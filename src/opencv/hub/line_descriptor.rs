@@ -27,8 +27,8 @@
 //! ---------------------------------
 //! 
 //! To obtatin a binary descriptor representing a certain line detected from a certain octave of an
-//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
-//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
+//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
+//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
 //! rectangular region centered at it and called *line support region (LSR)*. Such region is divided
 //! into a set of bands ![inline formula](https://latex.codecogs.com/png.latex?%5C%7BB%5F1%2C%20B%5F2%2C%20%2E%2E%2E%2C%20B%5Fm%5C%7D), whose length equals the one of line.
 //! 
@@ -80,7 +80,7 @@
 //! representation of a single LBD.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::BinaryDescriptor_ParamsTraitConst, super::BinaryDescriptor_ParamsTrait, super::BinaryDescriptorTraitConst, super::BinaryDescriptorTrait, super::LSDDetectorTraitConst, super::LSDDetectorTrait, super::BinaryDescriptorMatcherTraitConst, super::BinaryDescriptorMatcherTrait };
+	pub use { super::BinaryDescriptor_ParamsTraitConst, super::BinaryDescriptor_ParamsTrait, super::BinaryDescriptorTraitConst, super::BinaryDescriptorTrait, super::LSDDetectorTraitConst, super::LSDDetectorTrait, super::BinaryDescriptorMatcherTraitConst, super::BinaryDescriptorMatcherTrait, super::DrawLinesMatchesFlagsTraitConst, super::DrawLinesMatchesFlagsTrait };
 }
 
 /// Output image matrix will be created (Mat::create),
@@ -271,6 +271,34 @@ pub trait BinaryDescriptorTraitConst: core::AlgorithmTraitConst {
 	fn default_norm(&self) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_defaultNorm_const(self.as_raw_BinaryDescriptor(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Define operator '()' to perform detection of KeyLines and computation of descriptors in a row.
+	/// 
+	/// ## Parameters
+	/// * image: input image
+	/// * mask: mask matrix to select which lines in KeyLines must be accepted among the ones
+	/// extracted (used when *keylines* is not empty)
+	/// * keylines: vector that contains input lines (when filled, the detection part will be skipped
+	/// and input lines will be passed as input to the algorithm computing descriptors)
+	/// * descriptors: matrix that will store final descriptors
+	/// * useProvidedKeyLines: flag (when set to true, detection phase will be skipped and only
+	/// computation of descriptors will be executed, using lines provided in *keylines*)
+	/// * returnFloatDescr: flag (when set to true, original non-binary descriptors are returned)
+	/// 
+	/// ## C++ default parameters
+	/// * use_provided_key_lines: false
+	/// * return_float_descr: false
+	#[inline]
+	fn apply(&self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut dyn core::ToOutputArray, use_provided_key_lines: bool, return_float_descr: bool) -> Result<()> {
+		input_array_arg!(image);
+		input_array_arg!(mask);
+		output_array_arg!(descriptors);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_line_descriptor_BinaryDescriptor_operator___const_const__InputArrayR_const__InputArrayR_vectorLKeyLineGR_const__OutputArrayR_bool_bool(self.as_raw_BinaryDescriptor(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keylines.as_raw_mut_VectorOfKeyLine(), descriptors.as_raw__OutputArray(), use_provided_key_lines, return_float_descr, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -600,7 +628,7 @@ impl BinaryDescriptor_Params {
 /// Multi-Index Hashing
 /// -------------------
 /// 
-/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
+/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
 /// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
 /// has been divided into. Thus, given a query code, all the entries close to it at least in one
 /// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
@@ -854,7 +882,7 @@ pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait + crate::line_descr
 /// Multi-Index Hashing
 /// -------------------
 /// 
-/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
+/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
 /// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
 /// has been divided into. Thus, given a query code, all the entries close to it at least in one
 /// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
@@ -938,13 +966,39 @@ impl BinaryDescriptorMatcher {
 boxed_cast_base! { BinaryDescriptorMatcher, core::Algorithm, cv_BinaryDescriptorMatcher_to_Algorithm }
 
 /// struct for drawing options
-#[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
-pub struct DrawLinesMatchesFlags {
-	__rust_private: [u8; 0],
+pub trait DrawLinesMatchesFlagsTraitConst {
+	fn as_raw_DrawLinesMatchesFlags(&self) -> *const c_void;
+
 }
 
-opencv_type_simple! { crate::line_descriptor::DrawLinesMatchesFlags }
+pub trait DrawLinesMatchesFlagsTrait: crate::line_descriptor::DrawLinesMatchesFlagsTraitConst {
+	fn as_raw_mut_DrawLinesMatchesFlags(&mut self) -> *mut c_void;
+
+}
+
+/// struct for drawing options
+pub struct DrawLinesMatchesFlags {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { DrawLinesMatchesFlags }
+
+impl Drop for DrawLinesMatchesFlags {
+	fn drop(&mut self) {
+		extern "C" { fn cv_DrawLinesMatchesFlags_delete(instance: *mut c_void); }
+		unsafe { cv_DrawLinesMatchesFlags_delete(self.as_raw_mut_DrawLinesMatchesFlags()) };
+	}
+}
+
+unsafe impl Send for DrawLinesMatchesFlags {}
+
+impl crate::line_descriptor::DrawLinesMatchesFlagsTraitConst for DrawLinesMatchesFlags {
+	#[inline] fn as_raw_DrawLinesMatchesFlags(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::line_descriptor::DrawLinesMatchesFlagsTrait for DrawLinesMatchesFlags {
+	#[inline] fn as_raw_mut_DrawLinesMatchesFlags(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
 
 impl DrawLinesMatchesFlags {
 }
@@ -1196,7 +1250,7 @@ boxed_cast_base! { LSDDetector, core::Algorithm, cv_LSDDetector_to_Algorithm }
 /// Lines extraction methodology
 /// ----------------------------
 /// 
-/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_EDL) . The
+/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EDL) . The
 /// extraction starts with a Gaussian pyramid generated from an original image, downsampled N-1 times,
 /// blurred N times, to obtain N layers (one for each octave), with layer 0 corresponding to input
 /// image. Then, from each layer (octave) in the pyramid, lines are extracted using LSD algorithm.

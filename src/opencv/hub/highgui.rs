@@ -24,7 +24,7 @@
 //!    # OpenGL support
 //!    # Qt New Functions
 //! 
-//!    ![image](https://docs.opencv.org/4.6.0/qtgui.png)
+//!    ![image](https://docs.opencv.org/4.7.0/qtgui.png)
 //! 
 //!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 //!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
@@ -331,13 +331,16 @@ pub enum WindowFlags {
 	/// window with opengl support.
 	WINDOW_OPENGL = 4096,
 	// change the window to fullscreen.
-	// WINDOW_FULLSCREEN = 1 as isize, // duplicate discriminant
+	// Duplicate, use WINDOW_AUTOSIZE instead
+	// WINDOW_FULLSCREEN = 1,
 	/// the image expends as much as it can (no ratio constraint).
 	WINDOW_FREERATIO = 256,
 	// the ratio of the image is respected.
-	// WINDOW_KEEPRATIO = 0 as isize, // duplicate discriminant
+	// Duplicate, use WINDOW_NORMAL instead
+	// WINDOW_KEEPRATIO = 0,
 	// status bar and tool bar
-	// WINDOW_GUI_EXPANDED = 0 as isize, // duplicate discriminant
+	// Duplicate, use WINDOW_KEEPRATIO instead
+	// WINDOW_GUI_EXPANDED = 0,
 	/// old fashious way
 	WINDOW_GUI_NORMAL = 16,
 }

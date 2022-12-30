@@ -1,3 +1,7 @@
+* 0.75.0
+  * Add support for OpenCV 4.7.0.
+  * Add support for C++ function call operator: `operator ()`.
+
 * 0.74.2
   * Adjust dependencies to ensure that `jobserver` is the appropriate version (fixes https://github.com/twistedfall/opencv-rust/issues/400).
 

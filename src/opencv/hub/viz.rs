@@ -2235,7 +2235,7 @@ impl crate::viz::WCameraPositionTrait for WCameraPosition {
 impl WCameraPosition {
 	/// Creates camera coordinate frame at the origin.
 	/// 
-	/// ![Camera coordinate frame](https://docs.opencv.org/4.6.0/cpw1.png)
+	/// ![Camera coordinate frame](https://docs.opencv.org/4.7.0/cpw1.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
@@ -2257,7 +2257,7 @@ impl WCameraPosition {
 	/// 
 	/// Creates viewing frustum of the camera based on its intrinsic matrix K.
 	/// 
-	/// ![Camera viewing frustum](https://docs.opencv.org/4.6.0/cpw2.png)
+	/// ![Camera viewing frustum](https://docs.opencv.org/4.7.0/cpw2.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
@@ -2280,7 +2280,7 @@ impl WCameraPosition {
 	/// 
 	/// Creates viewing frustum of the camera based on its field of view fov.
 	/// 
-	/// ![Camera viewing frustum](https://docs.opencv.org/4.6.0/cpw2.png)
+	/// ![Camera viewing frustum](https://docs.opencv.org/4.7.0/cpw2.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
@@ -2306,7 +2306,7 @@ impl WCameraPosition {
 	/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 	/// the far end plane.
 	/// 
-	/// ![Camera viewing frustum with image](https://docs.opencv.org/4.6.0/cpw3.png)
+	/// ![Camera viewing frustum with image](https://docs.opencv.org/4.7.0/cpw3.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
@@ -2333,7 +2333,7 @@ impl WCameraPosition {
 	/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 	/// the far end plane.
 	/// 
-	/// ![Camera viewing frustum with image](https://docs.opencv.org/4.6.0/cpw3.png)
+	/// ![Camera viewing frustum with image](https://docs.opencv.org/4.7.0/cpw3.png)
 	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
@@ -3044,7 +3044,7 @@ impl WCube {
 	/// * wire_frame: If true, cube is represented as wireframe.
 	/// * color: Color of the cube.
 	/// 
-	/// ![Cube Widget](https://docs.opencv.org/4.6.0/cube_widget.png)
+	/// ![Cube Widget](https://docs.opencv.org/4.7.0/cube_widget.png)
 	/// 
 	/// ## C++ default parameters
 	/// * min_point: Vec3d::all(-0.5)

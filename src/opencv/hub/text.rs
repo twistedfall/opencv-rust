@@ -18,7 +18,7 @@
 //! --------------------------------------------------------
 //! 
 //! The scene text detection algorithm described below has been initially proposed by Lukás Neumann &
-//! Jiri Matas [Neumann11](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann11). The main idea behind Class-specific Extremal Regions is similar to the MSER
+//! Jiri Matas [Neumann11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann11). The main idea behind Class-specific Extremal Regions is similar to the MSER
 //! in that suitable Extremal Regions (ERs) are selected from the whole component tree of the image.
 //! However, this technique differs from MSER in that selection of suitable ERs is done by a sequential
 //! classifier trained for character detection, i.e. dropping the stability requirement of MSERs and
@@ -28,7 +28,7 @@
 //! from 0 to 255 and then linking the obtained connected components from successive levels in a
 //! hierarchy by their inclusion relation:
 //! 
-//! ![image](https://docs.opencv.org/4.6.0/component_tree.png)
+//! ![image](https://docs.opencv.org/4.7.0/component_tree.png)
 //! 
 //! The component tree may contain a huge number of regions even for a very simple image as shown in
 //! the previous image. This number can easily reach the order of 1 x 10\^6 regions for an average 1
@@ -51,9 +51,9 @@
 //! 
 //! After the ER filtering is done on each input channel, character candidates must be grouped in
 //! high-level text blocks (i.e. words, text lines, paragraphs, ...). The opencv_text module implements
-//! two different grouping algorithms: the Exhaustive Search algorithm proposed in [Neumann12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann12) for
+//! two different grouping algorithms: the Exhaustive Search algorithm proposed in [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12) for
 //! grouping horizontally aligned text, and the method proposed by Lluis Gomez and Dimosthenis Karatzas
-//! in [Gomez13](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text (see erGrouping).
+//! in [Gomez13](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text (see erGrouping).
 //! 
 //! To see the text detector at work, have a look at the textdetection demo:
 //! <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/textdetection.cpp>
@@ -66,7 +66,7 @@ pub mod prelude {
 
 pub const ERFILTER_NM_IHSGrad: i32 = 1;
 pub const ERFILTER_NM_RGBLGrad: i32 = 0;
-/// Text grouping method proposed in [Gomez13](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text. Regions
+/// Text grouping method proposed in [Gomez13](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text. Regions
 /// are agglomerated by Single Linkage Clustering in a weighted feature space that combines proximity
 /// (x,y coordinates) and similarity measures (color, size, gradient magnitude, stroke width, etc.).
 /// SLC provides a dendrogram where each node represents a text group hypothesis. Then the algorithm
@@ -77,7 +77,7 @@ pub const ERFILTER_NM_RGBLGrad: i32 = 0;
 /// 
 /// Note: This mode is not supported due NFA code removal ( https://github.com/opencv/opencv_contrib/issues/2235 )
 pub const ERGROUPING_ORIENTATION_ANY: i32 = 1;
-/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
+/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
 /// The algorithm models a verification function for all the possible ER sequences. The
 /// verification fuction for ER pairs consists in a set of threshold-based pairwise rules which
 /// compare measurements of two regions (height ratio, centroid angle, and region distance). The
@@ -128,7 +128,7 @@ opencv_type_enum! { crate::text::decoder_mode }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum erGrouping_Modes {
-	/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
+	/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
 	/// The algorithm models a verification function for all the possible ER sequences. The
 	/// verification fuction for ER pairs consists in a set of threshold-based pairwise rules which
 	/// compare measurements of two regions (height ratio, centroid angle, and region distance). The
@@ -138,7 +138,7 @@ pub enum erGrouping_Modes {
 	/// approximated by verifying that the text line parameters of all (sub)sequences of length 3 are
 	/// consistent.
 	ERGROUPING_ORIENTATION_HORIZ = 0,
-	/// Text grouping method proposed in [Gomez13](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text. Regions
+	/// Text grouping method proposed in [Gomez13](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text. Regions
 	/// are agglomerated by Single Linkage Clustering in a weighted feature space that combines proximity
 	/// (x,y coordinates) and similarity measures (color, size, gradient magnitude, stroke width, etc.).
 	/// SLC provides a dendrogram where each node represents a text group hypothesis. Then the algorithm
@@ -210,7 +210,7 @@ pub fn mse_rs_to_er_stats(image: &dyn core::ToInputArray, contours: &mut core::V
 	Ok(ret)
 }
 
-/// Compute the different channels to be processed independently in the N&M algorithm [Neumann12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann12).
+/// Compute the different channels to be processed independently in the N&M algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12).
 /// 
 /// ## Parameters
 /// * _src: Source image. Must be RGB CV_8UC3.
@@ -238,7 +238,7 @@ pub fn compute_nm_channels(_src: &dyn core::ToInputArray, _channels: &mut dyn co
 	Ok(ret)
 }
 
-/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann12).
+/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12).
 /// 
 /// ## Parameters
 /// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
@@ -279,7 +279,7 @@ pub fn create_er_filter_nm1(cb: &core::Ptr<dyn crate::text::ERFilter_Callback>, 
 /// Reads an Extremal Region Filter for the 1st stage classifier of N&M algorithm
 ///    from the provided path e.g. /path/to/cpp/trained_classifierNM1.xml
 /// 
-/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann12).
+/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12).
 /// 
 /// ## Parameters
 /// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
@@ -320,7 +320,7 @@ pub fn create_er_filter_nm1_from_file(filename: &str, threshold_delta: i32, min_
 	Ok(ret)
 }
 
-/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann12).
+/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12).
 /// 
 /// ## Parameters
 /// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
@@ -347,7 +347,7 @@ pub fn create_er_filter_nm2(cb: &core::Ptr<dyn crate::text::ERFilter_Callback>, 
 /// Reads an Extremal Region Filter for the 2nd stage classifier of N&M algorithm
 ///    from the provided path e.g. /path/to/cpp/trained_classifierNM2.xml
 /// 
-/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann12).
+/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12).
 /// 
 /// ## Parameters
 /// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
@@ -415,8 +415,8 @@ pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut co
 /// 
 /// ## Parameters
 /// * image: Source image where text blocks needs to be extracted from.  Should be CV_8UC3 (color).
-/// * er_filter1: Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann12)
-/// * er_filter2: Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann12)
+/// * er_filter1: Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12)
+/// * er_filter2: Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12)
 /// * groups_rects: Output list of rectangle blocks with text
 /// * method: Grouping method (see text::erGrouping_Modes). Can be one of ERGROUPING_ORIENTATION_HORIZ, ERGROUPING_ORIENTATION_ANY.
 /// * filename: The XML or YAML file with the classifier model (e.g. samples/trained_classifier_erGrouping.xml). Only to use when grouping method is ERGROUPING_ORIENTATION_ANY.
@@ -689,7 +689,7 @@ pub trait BaseOCR: crate::text::BaseOCRConst {
 	
 }
 
-/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Neumann12). :
+/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12). :
 /// 
 /// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given classifier.
 pub trait ERFilterConst: core::AlgorithmTraitConst {
@@ -2011,7 +2011,7 @@ pub trait TextDetector: crate::text::TextDetectorConst {
 
 /// TextDetectorCNN class provides the functionallity of text bounding box detection.
 /// This class is representing to find bounding boxes of text words given an input image.
-/// This class uses OpenCV dnn module to load pre-trained model described in [LiaoSBWL17](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17).
+/// This class uses OpenCV dnn module to load pre-trained model described in [LiaoSBWL17](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17).
 /// The original repository with the modified SSD Caffe version: https://github.com/MhLiao/TextBoxes.
 /// Model can be downloaded from [DropBox](https://www.dropbox.com/s/g8pjzv2de9gty8g/TextBoxes_icdar13.caffemodel?dl=0).
 /// Modified .prototxt file with the model description can be found in `opencv_contrib/modules/text/samples/textbox.prototxt`.
@@ -2048,7 +2048,7 @@ impl dyn TextDetectorCNN + '_ {
 	/// * modelArchFilename: the relative or absolute path to the prototxt file describing the classifiers architecture.
 	/// * modelWeightsFilename: the relative or absolute path to the file containing the pretrained weights of the model in caffe-binary form.
 	/// * detectionSizes: a list of sizes for multiscale detection. The values`[(300,300),(700,500),(700,300),(700,700),(1600,1600)]` are
-	/// recommended in [LiaoSBWL17](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17) to achieve the best quality.
+	/// recommended in [LiaoSBWL17](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17) to achieve the best quality.
 	#[inline]
 	pub fn create_with_sizes(model_arch_filename: &str, model_weights_filename: &str, mut detection_sizes: core::Vector<core::Size>) -> Result<core::Ptr<dyn crate::text::TextDetectorCNN>> {
 		extern_container_arg!(model_arch_filename);
@@ -2067,7 +2067,7 @@ impl dyn TextDetectorCNN + '_ {
 	/// * modelArchFilename: the relative or absolute path to the prototxt file describing the classifiers architecture.
 	/// * modelWeightsFilename: the relative or absolute path to the file containing the pretrained weights of the model in caffe-binary form.
 	/// * detectionSizes: a list of sizes for multiscale detection. The values`[(300,300),(700,500),(700,300),(700,700),(1600,1600)]` are
-	/// recommended in [LiaoSBWL17](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17) to achieve the best quality.
+	/// recommended in [LiaoSBWL17](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17) to achieve the best quality.
 	/// 
 	/// ## Overloaded parameters
 	#[inline]

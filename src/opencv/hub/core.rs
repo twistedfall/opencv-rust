@@ -40,7 +40,7 @@
 //!        # Parallel backends API
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::HammingTraitConst, super::HammingTrait, super::Detail_CheckContextTraitConst, super::Detail_CheckContextTrait, super::Matx_AddOpTraitConst, super::Matx_AddOpTrait, super::Matx_SubOpTraitConst, super::Matx_SubOpTrait, super::Matx_ScaleOpTraitConst, super::Matx_ScaleOpTrait, super::Matx_MulOpTraitConst, super::Matx_MulOpTrait, super::Matx_DivOpTraitConst, super::Matx_DivOpTrait, super::Matx_MatMulOpTraitConst, super::Matx_MatMulOpTrait, super::Matx_TOpTraitConst, super::Matx_TOpTrait, super::RotatedRectTraitConst, super::RotatedRectTrait, super::RangeTraitConst, super::RangeTrait, super::_InputArrayTraitConst, super::_InputArrayTrait, super::_OutputArrayTraitConst, super::_OutputArrayTrait, super::_InputOutputArrayTraitConst, super::_InputOutputArrayTrait, super::UMatDataTraitConst, super::UMatDataTrait, super::MatSizeTraitConst, super::MatSizeTrait, super::MatStepTraitConst, super::MatStepTrait, super::MatTraitConst, super::MatTrait, super::UMatTraitConst, super::UMatTrait, super::SparseMat_HdrTraitConst, super::SparseMat_HdrTrait, super::SparseMat_NodeTraitConst, super::SparseMat_NodeTrait, super::SparseMatTraitConst, super::SparseMatTrait, super::MatConstIteratorTraitConst, super::MatConstIteratorTrait, super::SparseMatConstIteratorTraitConst, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTraitConst, super::SparseMatIteratorTrait, super::MatOpConst, super::MatOp, super::MatExprTraitConst, super::MatExprTrait, super::FileStorageTraitConst, super::FileStorageTrait, super::FileNodeTraitConst, super::FileNodeTrait, super::FileNodeIteratorTraitConst, super::FileNodeIteratorTrait, super::WriteStructContextTraitConst, super::WriteStructContextTrait, super::ExceptionTraitConst, super::ExceptionTrait, super::PCATraitConst, super::PCATrait, super::LDATraitConst, super::LDATrait, super::SVDTraitConst, super::SVDTrait, super::RNGTraitConst, super::RNGTrait, super::RNG_MT19937TraitConst, super::RNG_MT19937Trait, super::FormattedConst, super::Formatted, super::FormatterConst, super::Formatter, super::AlgorithmTraitConst, super::AlgorithmTrait, super::TickMeterTraitConst, super::TickMeterTrait, super::ParallelLoopBodyConst, super::ParallelLoopBody, super::CommandLineParserTraitConst, super::CommandLineParserTrait, super::TLSDataContainerConst, super::TLSDataContainer, super::NodeDataTraitConst, super::NodeDataTrait, super::MinProblemSolver_FunctionConst, super::MinProblemSolver_Function, super::MinProblemSolverConst, super::MinProblemSolver, super::DownhillSolverConst, super::DownhillSolver, super::ConjGradSolverConst, super::ConjGradSolver, super::DeviceTraitConst, super::DeviceTrait, super::Context_UserContextTraitConst, super::Context_UserContextTrait, super::ContextTraitConst, super::ContextTrait, super::PlatformTraitConst, super::PlatformTrait, super::QueueTraitConst, super::QueueTrait, super::KernelArgTraitConst, super::KernelArgTrait, super::KernelTraitConst, super::KernelTrait, super::ProgramTraitConst, super::ProgramTrait, super::ProgramSourceTraitConst, super::ProgramSourceTrait, super::PlatformInfoTraitConst, super::PlatformInfoTrait, super::Image2DTraitConst, super::Image2DTrait, super::TimerTraitConst, super::TimerTrait, super::OpenCLExecutionContextTraitConst, super::OpenCLExecutionContextTrait, super::GpuMat_AllocatorConst, super::GpuMat_Allocator, super::GpuMatTraitConst, super::GpuMatTrait, super::GpuDataTraitConst, super::GpuDataTrait, super::GpuMatNDTraitConst, super::GpuMatNDTrait, super::BufferPoolTraitConst, super::BufferPoolTrait, super::HostMemTraitConst, super::HostMemTrait, super::StreamTraitConst, super::StreamTrait, super::EventTraitConst, super::EventTrait, super::TargetArchsTraitConst, super::TargetArchsTrait, super::DeviceInfoTraitConst, super::DeviceInfoTrait, super::BufferTraitConst, super::BufferTrait, super::Texture2DTraitConst, super::Texture2DTrait, super::ArraysTraitConst, super::ArraysTrait, super::AsyncArrayTraitConst, super::AsyncArrayTrait, super::AsyncPromiseTraitConst, super::AsyncPromiseTrait, super::LogTagTraitConst, super::LogTagTrait, super::OriginalClassNameTraitConst, super::OriginalClassNameTrait };
+	pub use { super::HammingTraitConst, super::HammingTrait, super::Detail_CheckContextTraitConst, super::Detail_CheckContextTrait, super::Matx_AddOpTraitConst, super::Matx_AddOpTrait, super::Matx_SubOpTraitConst, super::Matx_SubOpTrait, super::Matx_ScaleOpTraitConst, super::Matx_ScaleOpTrait, super::Matx_MulOpTraitConst, super::Matx_MulOpTrait, super::Matx_DivOpTraitConst, super::Matx_DivOpTrait, super::Matx_MatMulOpTraitConst, super::Matx_MatMulOpTrait, super::Matx_TOpTraitConst, super::Matx_TOpTrait, super::RotatedRectTraitConst, super::RotatedRectTrait, super::RangeTraitConst, super::RangeTrait, super::KeyPointTraitConst, super::KeyPointTrait, super::_InputArrayTraitConst, super::_InputArrayTrait, super::_OutputArrayTraitConst, super::_OutputArrayTrait, super::_InputOutputArrayTraitConst, super::_InputOutputArrayTrait, super::UMatDataTraitConst, super::UMatDataTrait, super::MatSizeTraitConst, super::MatSizeTrait, super::MatStepTraitConst, super::MatStepTrait, super::MatTraitConst, super::MatTrait, super::UMatTraitConst, super::UMatTrait, super::SparseMat_HdrTraitConst, super::SparseMat_HdrTrait, super::SparseMat_NodeTraitConst, super::SparseMat_NodeTrait, super::SparseMatTraitConst, super::SparseMatTrait, super::MatConstIteratorTraitConst, super::MatConstIteratorTrait, super::SparseMatConstIteratorTraitConst, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTraitConst, super::SparseMatIteratorTrait, super::MatOpConst, super::MatOp, super::MatExprTraitConst, super::MatExprTrait, super::FileStorageTraitConst, super::FileStorageTrait, super::FileNodeTraitConst, super::FileNodeTrait, super::FileNodeIteratorTraitConst, super::FileNodeIteratorTrait, super::WriteStructContextTraitConst, super::WriteStructContextTrait, super::ExceptionTraitConst, super::ExceptionTrait, super::PCATraitConst, super::PCATrait, super::LDATraitConst, super::LDATrait, super::SVDTraitConst, super::SVDTrait, super::RNGTraitConst, super::RNGTrait, super::RNG_MT19937TraitConst, super::RNG_MT19937Trait, super::FormattedConst, super::Formatted, super::FormatterConst, super::Formatter, super::AlgorithmTraitConst, super::AlgorithmTrait, super::TickMeterTraitConst, super::TickMeterTrait, super::ParallelLoopBodyConst, super::ParallelLoopBody, super::CommandLineParserTraitConst, super::CommandLineParserTrait, super::TLSDataContainerConst, super::TLSDataContainer, super::NodeDataTraitConst, super::NodeDataTrait, super::MinProblemSolver_FunctionConst, super::MinProblemSolver_Function, super::MinProblemSolverConst, super::MinProblemSolver, super::DownhillSolverConst, super::DownhillSolver, super::ConjGradSolverConst, super::ConjGradSolver, super::DeviceTraitConst, super::DeviceTrait, super::Context_UserContextTraitConst, super::Context_UserContextTrait, super::ContextTraitConst, super::ContextTrait, super::PlatformTraitConst, super::PlatformTrait, super::QueueTraitConst, super::QueueTrait, super::KernelArgTraitConst, super::KernelArgTrait, super::KernelTraitConst, super::KernelTrait, super::ProgramTraitConst, super::ProgramTrait, super::ProgramSourceTraitConst, super::ProgramSourceTrait, super::PlatformInfoTraitConst, super::PlatformInfoTrait, super::Image2DTraitConst, super::Image2DTrait, super::TimerTraitConst, super::TimerTrait, super::OpenCLExecutionContextTraitConst, super::OpenCLExecutionContextTrait, super::GpuMat_AllocatorConst, super::GpuMat_Allocator, super::GpuMatTraitConst, super::GpuMatTrait, super::GpuDataTraitConst, super::GpuDataTrait, super::GpuMatNDTraitConst, super::GpuMatNDTrait, super::BufferPoolTraitConst, super::BufferPoolTrait, super::HostMemTraitConst, super::HostMemTrait, super::StreamTraitConst, super::StreamTrait, super::EventTraitConst, super::EventTrait, super::TargetArchsTraitConst, super::TargetArchsTrait, super::DeviceInfoTraitConst, super::DeviceInfoTrait, super::BufferTraitConst, super::BufferTrait, super::Texture2DTraitConst, super::Texture2DTrait, super::ArraysTraitConst, super::ArraysTrait, super::AsyncArrayTraitConst, super::AsyncArrayTrait, super::AsyncPromiseTraitConst, super::AsyncPromiseTrait, super::LogTagTraitConst, super::LogTagTrait, super::OriginalClassNameTraitConst, super::OriginalClassNameTrait };
 }
 
 pub const ACCESS_FAST: i32 = 67108864;
@@ -170,10 +170,12 @@ pub const CPU_AVX_512VNNI: i32 = 23;
 pub const CPU_AVX_512VPOPCNTDQ: i32 = 25;
 pub const CPU_FMA3: i32 = 12;
 pub const CPU_FP16: i32 = 9;
+pub const CPU_LASX: i32 = 230;
 pub const CPU_MAX_FEATURE: i32 = 512;
 pub const CPU_MMX: i32 = 1;
 pub const CPU_MSA: i32 = 150;
 pub const CPU_NEON: i32 = 100;
+pub const CPU_NEON_DOTPROD: i32 = 101;
 pub const CPU_POPCNT: i32 = 8;
 pub const CPU_RISCVV: i32 = 170;
 pub const CPU_RVV: i32 = 210;
@@ -280,9 +282,11 @@ pub const CV_CPU_AVX_512VNNI: i32 = 23;
 pub const CV_CPU_AVX_512VPOPCNTDQ: i32 = 25;
 pub const CV_CPU_FMA3: i32 = 12;
 pub const CV_CPU_FP16: i32 = 9;
+pub const CV_CPU_LASX: i32 = 230;
 pub const CV_CPU_MMX: i32 = 1;
 pub const CV_CPU_MSA: i32 = 150;
 pub const CV_CPU_NEON: i32 = 100;
+pub const CV_CPU_NEON_DOTPROD: i32 = 101;
 pub const CV_CPU_NONE: i32 = 0;
 pub const CV_CPU_POPCNT: i32 = 8;
 pub const CV_CPU_RISCVV: i32 = 170;
@@ -340,6 +344,7 @@ pub const CV_IMPL_IPP: i32 = 0x04;
 pub const CV_IMPL_MT: i32 = 0x10;
 pub const CV_IMPL_OCL: i32 = 0x02;
 pub const CV_IMPL_PLAIN: i32 = 0x01;
+pub const CV_LASX: i32 = 0;
 pub const CV_LOG2: f64 = 0.69314718055994530941723212145818;
 pub const CV_LOG_LEVEL_DEBUG: i32 = 5;
 pub const CV_LOG_LEVEL_ERROR: i32 = 2;
@@ -373,9 +378,9 @@ pub const CV_STRONG_ALIGNMENT: i32 = 0;
 pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-pub const CV_VERSION: &str = "4.6.0";
+pub const CV_VERSION: &str = "4.7.0";
 pub const CV_VERSION_MAJOR: i32 = 4;
-pub const CV_VERSION_MINOR: i32 = 6;
+pub const CV_VERSION_MINOR: i32 = 7;
 pub const CV_VERSION_REVISION: i32 = 0;
 pub const CV_VERSION_STATUS: &str = "";
 pub const CV_VSX: i32 = 0;
@@ -749,7 +754,8 @@ pub enum AccessFlag {
 	ACCESS_READ = 16777216,
 	ACCESS_WRITE = 33554432,
 	ACCESS_RW = 50331648,
-	// ACCESS_MASK = 50331648 as isize, // duplicate discriminant
+	// Duplicate, use ACCESS_RW instead
+	// ACCESS_MASK = 50331648,
 	ACCESS_FAST = 67108864,
 }
 
@@ -774,9 +780,11 @@ pub enum BorderTypes {
 	/// `uvwxyz|abcdefgh|ijklmno`
 	BORDER_TRANSPARENT = 5,
 	// same as BORDER_REFLECT_101
-	// BORDER_REFLECT101 = 4 as isize, // duplicate discriminant
+	// Duplicate, use BORDER_REFLECT_101 instead
+	// BORDER_REFLECT101 = 4,
 	// same as BORDER_REFLECT_101
-	// BORDER_DEFAULT = 4 as isize, // duplicate discriminant
+	// Duplicate, use BORDER_REFLECT101 instead
+	// BORDER_DEFAULT = 4,
 	/// do not look outside of ROI
 	BORDER_ISOLATED = 16,
 }
@@ -1000,7 +1008,8 @@ pub enum CpuFeatures {
 	CPU_AVX_512DQ = 16,
 	CPU_AVX_512ER = 17,
 	CPU_AVX_512IFMA512 = 18,
-	// CPU_AVX_512IFMA = 18 as isize, // duplicate discriminant
+	// Duplicate, use CPU_AVX_512IFMA512 instead
+	// CPU_AVX_512IFMA = 18,
 	CPU_AVX_512PF = 19,
 	CPU_AVX_512VBMI = 20,
 	CPU_AVX_512VL = 21,
@@ -1011,11 +1020,13 @@ pub enum CpuFeatures {
 	CPU_AVX_5124VNNIW = 26,
 	CPU_AVX_5124FMAPS = 27,
 	CPU_NEON = 100,
+	CPU_NEON_DOTPROD = 101,
 	CPU_MSA = 150,
 	CPU_RISCVV = 170,
 	CPU_VSX = 200,
 	CPU_VSX3 = 201,
 	CPU_RVV = 210,
+	CPU_LASX = 230,
 	/// Skylake-X with AVX-512F/CD/BW/DQ/VL
 	CPU_AVX512_SKX = 256,
 	/// Common instructions AVX-512F/CD for all CPUs that support AVX-512
@@ -1126,12 +1137,14 @@ pub enum DftFlags {
 	/// already considered complex.
 	DFT_COMPLEX_INPUT = 64,
 	// performs an inverse 1D or 2D transform instead of the default forward transform.
-	// DCT_INVERSE = 1 as isize, // duplicate discriminant
+	// Duplicate, use DFT_INVERSE instead
+	// DCT_INVERSE = 1,
 	// performs a forward or inverse transform of every individual row of the input
 	// matrix. This flag enables you to transform multiple vectors simultaneously and can be used to
 	// decrease the overhead (which is sometimes several times larger than the processing itself) to
 	// perform 3D and higher-dimensional transforms and so forth.
-	// DCT_ROWS = 4 as isize, // duplicate discriminant
+	// Duplicate, use DFT_ROWS instead
+	// DCT_ROWS = 4,
 }
 
 opencv_type_enum! { core::DftFlags }
@@ -1175,11 +1188,16 @@ pub enum FeatureSet {
 	FEATURE_SET_COMPUTE_32 = 32,
 	FEATURE_SET_COMPUTE_35 = 35,
 	FEATURE_SET_COMPUTE_50 = 50,
-	// GLOBAL_ATOMICS = 11 as isize, // duplicate discriminant
-	// SHARED_ATOMICS = 12 as isize, // duplicate discriminant
-	// NATIVE_DOUBLE = 13 as isize, // duplicate discriminant
-	// WARP_SHUFFLE_FUNCTIONS = 30 as isize, // duplicate discriminant
-	// DYNAMIC_PARALLELISM = 35 as isize, // duplicate discriminant
+	// Duplicate, use FEATURE_SET_COMPUTE_11 instead
+	// GLOBAL_ATOMICS = 11,
+	// Duplicate, use FEATURE_SET_COMPUTE_12 instead
+	// SHARED_ATOMICS = 12,
+	// Duplicate, use FEATURE_SET_COMPUTE_13 instead
+	// NATIVE_DOUBLE = 13,
+	// Duplicate, use FEATURE_SET_COMPUTE_30 instead
+	// WARP_SHUFFLE_FUNCTIONS = 30,
+	// Duplicate, use FEATURE_SET_COMPUTE_35 instead
+	// DYNAMIC_PARALLELISM = 35,
 }
 
 opencv_type_enum! { core::FeatureSet }
@@ -1200,7 +1218,8 @@ pub enum FileStorage_Mode {
 	/// mask for format flags
 	FORMAT_MASK = 56,
 	// flag, auto format
-	// FORMAT_AUTO = 0 as isize, // duplicate discriminant
+	// Duplicate, use READ instead
+	// FORMAT_AUTO = 0,
 	/// flag, XML format
 	FORMAT_XML = 8,
 	/// flag, YAML format
@@ -1334,7 +1353,8 @@ pub enum NormTypes {
 	/// be added and treated as a single bit to be used in the same calculation as NORM_HAMMING.
 	NORM_HAMMING2 = 7,
 	// bit-mask which can be used to separate norm type from norm flags
-	// NORM_TYPE_MASK = 7 as isize, // duplicate discriminant
+	// Duplicate, use NORM_HAMMING2 instead
+	// NORM_TYPE_MASK = 7,
 	/// flag
 	NORM_RELATIVE = 8,
 	/// flag
@@ -1348,7 +1368,8 @@ opencv_type_enum! { core::NormTypes }
 pub enum OclVectorStrategy {
 	OCL_VECTOR_OWN = 0,
 	OCL_VECTOR_MAX = 1,
-	// OCL_VECTOR_DEFAULT = 0 as isize, // duplicate discriminant
+	// Duplicate, use OCL_VECTOR_OWN instead
+	// OCL_VECTOR_DEFAULT = 0,
 }
 
 opencv_type_enum! { core::OclVectorStrategy }
@@ -1474,7 +1495,8 @@ pub enum SortFlags {
 	SORT_EVERY_COLUMN = 1,
 	// each matrix row is sorted in the ascending
 	// order.
-	// SORT_ASCENDING = 0 as isize, // duplicate discriminant
+	// Duplicate, use SORT_EVERY_ROW instead
+	// SORT_ASCENDING = 0,
 	/// each matrix row is sorted in the
 	/// descending order; this flag and the previous one are also
 	/// mutually exclusive.
@@ -1501,7 +1523,8 @@ pub enum TermCriteria_Type {
 	/// the maximum number of iterations or elements to compute
 	COUNT = 1,
 	// ditto
-	// MAX_ITER = 1 as isize, // duplicate discriminant
+	// Duplicate, use COUNT instead
+	// MAX_ITER = 1,
 	/// the desired accuracy or change in parameters at which the iterative algorithm stops
 	EPS = 2,
 }
@@ -3032,7 +3055,7 @@ pub fn check_failed_mat_type(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) 
 }
 
 #[inline]
-pub fn check_failed_auto_9(v: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_10(v: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_Size_LintG_const_CheckContextR(v.opencv_as_extern(), ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3041,7 +3064,7 @@ pub fn check_failed_auto_9(v: core::Size_<i32>, ctx: &core::Detail_CheckContext)
 }
 
 #[inline]
-pub fn check_failed_auto_4(v1: core::Size_<i32>, v2: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_5(v1: core::Size_<i32>, v2: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_Size_LintG_const_Size_LintG_const_CheckContextR(v1.opencv_as_extern(), v2.opencv_as_extern(), ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3050,7 +3073,16 @@ pub fn check_failed_auto_4(v1: core::Size_<i32>, v2: core::Size_<i32>, ctx: &cor
 }
 
 #[inline]
-pub fn check_failed_auto_8(v: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto(v1: bool, v2: bool, ctx: &core::Detail_CheckContext) -> Result<()> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_detail_check_failed_auto_const_bool_const_bool_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+#[inline]
+pub fn check_failed_auto_9(v: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_double_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3059,7 +3091,7 @@ pub fn check_failed_auto_8(v: f64, ctx: &core::Detail_CheckContext) -> Result<()
 }
 
 #[inline]
-pub fn check_failed_auto_3(v1: f64, v2: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_4(v1: f64, v2: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_double_const_double_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3068,7 +3100,7 @@ pub fn check_failed_auto_3(v1: f64, v2: f64, ctx: &core::Detail_CheckContext) ->
 }
 
 #[inline]
-pub fn check_failed_auto_7(v: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_8(v: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_float_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3077,7 +3109,7 @@ pub fn check_failed_auto_7(v: f32, ctx: &core::Detail_CheckContext) -> Result<()
 }
 
 #[inline]
-pub fn check_failed_auto_2(v1: f32, v2: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_3(v1: f32, v2: f32, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_float_const_float_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3086,7 +3118,7 @@ pub fn check_failed_auto_2(v1: f32, v2: f32, ctx: &core::Detail_CheckContext) ->
 }
 
 #[inline]
-pub fn check_failed_auto_5(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_6(v: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_int_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3095,7 +3127,7 @@ pub fn check_failed_auto_5(v: i32, ctx: &core::Detail_CheckContext) -> Result<()
 }
 
 #[inline]
-pub fn check_failed_auto(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_1(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_int_const_int_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3104,7 +3136,7 @@ pub fn check_failed_auto(v1: i32, v2: i32, ctx: &core::Detail_CheckContext) -> R
 }
 
 #[inline]
-pub fn check_failed_auto_6(v: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_7(v: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3113,7 +3145,7 @@ pub fn check_failed_auto_6(v: size_t, ctx: &core::Detail_CheckContext) -> Result
 }
 
 #[inline]
-pub fn check_failed_auto_1(v1: size_t, v2: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_2(v1: size_t, v2: size_t, ctx: &core::Detail_CheckContext) -> Result<()> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_size_t_const_size_t_const_CheckContextR(v1, v2, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3122,10 +3154,28 @@ pub fn check_failed_auto_1(v1: size_t, v2: size_t, ctx: &core::Detail_CheckConte
 }
 
 #[inline]
-pub fn check_failed_auto_10(v1: &str, ctx: &core::Detail_CheckContext) -> Result<()> {
+pub fn check_failed_auto_11(v1: &str, ctx: &core::Detail_CheckContext) -> Result<()> {
 	extern_container_arg!(v1);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_detail_check_failed_auto_const_stringR_const_CheckContextR(v1.opencv_as_extern(), ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+#[inline]
+pub fn check_failed_false(v: bool, ctx: &core::Detail_CheckContext) -> Result<()> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_detail_check_failed_false_const_bool_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+#[inline]
+pub fn check_failed_true(v: bool, ctx: &core::Detail_CheckContext) -> Result<()> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_detail_check_failed_true_const_bool_const_CheckContextR(v, ctx.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -3625,6 +3675,22 @@ pub fn find_non_zero(src: &dyn core::ToInputArray, idx: &mut dyn core::ToOutputA
 	output_array_arg!(idx);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findNonZero_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Flips a n-dimensional at given axis
+/// ## Parameters
+/// * src: input array
+/// * dst: output array that has the same shape of src
+/// * axis: axis that performs a flip on. 0 <= axis < src.dims.
+#[inline]
+pub fn flip_nd(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, axis: i32) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_flipND_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -4645,7 +4711,7 @@ pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Resu
 /// advanced way, use cv::mixChannels.
 /// 
 /// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 /// 
 /// ## Parameters
 /// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -5231,7 +5297,7 @@ pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_
 /// \f}
 /// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 /// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.6.0/NormTypes_OneArray_1-2-INF.png)
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.7.0/NormTypes_OneArray_1-2-INF.png)
 /// 
 /// When the mask parameter is specified and it is not empty, the norm is
 /// 
@@ -6760,9 +6826,9 @@ pub fn read_dmatch(node: &core::FileNode, value: &mut core::DMatch, default_valu
 }
 
 #[inline]
-pub fn read_keypoint(node: &core::FileNode, value: &mut core::KeyPoint, default_value: core::KeyPoint) -> Result<()> {
+pub fn read_keypoint(node: &core::FileNode, value: &mut core::KeyPoint, default_value: &core::KeyPoint) -> Result<()> {
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_read_const_FileNodeR_KeyPointR_const_KeyPointR(node.as_raw_FileNode(), value, &default_value, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_read_const_FileNodeR_KeyPointR_const_KeyPointR(node.as_raw_FileNode(), value.as_raw_mut_KeyPoint(), default_value.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
@@ -6848,6 +6914,23 @@ pub fn read_keypoint_vec_legacy(node: &core::FileNode, keypoints: &mut core::Vec
 	Ok(ret)
 }
 
+/// Finds out if there is any intersection between two rectangles
+/// 
+/// mainly useful for language bindings
+/// ## Parameters
+/// * rect1: First rectangle
+/// * rect2: Second rectangle
+/// ## Returns
+/// the area of the intersection
+#[inline]
+pub fn rectangle_intersection_area(a: core::Rect2d, b: core::Rect2d) -> Result<f64> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_rectangleIntersectionArea_const_Rect2dR_const_Rect2dR(&a, &b, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
 /// Finds indices of max elements along provided axis
 /// 
 /// 
@@ -6918,10 +7001,10 @@ pub fn reduce_arg_min(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// And multi-channel arrays are also supported in these two reduction modes.
 /// 
 /// The following code demonstrates its usage for a single channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 /// 
 /// And the following code demonstrates its usage for a two-channel matrix.
-/// [example2](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+/// [example2](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input 2D matrix.
@@ -7467,7 +7550,7 @@ pub fn sort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fla
 /// mixChannels .
 /// 
 /// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-/// [example](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input multi-channel array.
@@ -7492,7 +7575,7 @@ pub fn split_slice(src: &core::Mat, mvbegin: &mut core::Mat) -> Result<()> {
 /// mixChannels .
 /// 
 /// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-/// [example](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input multi-channel array.
@@ -7879,6 +7962,16 @@ pub fn dump_input_output_array(argument: &mut dyn core::ToInputOutputArray) -> R
 }
 
 #[inline]
+pub fn dump_int64(argument: i64) -> Result<String> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_utils_dumpInt64_int64_t(argument, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+#[inline]
 pub fn dump_int(argument: i32) -> Result<String> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_utils_dumpInt_int(argument, ocvrs_return.as_mut_ptr()) };
@@ -7943,6 +8036,18 @@ pub fn dump_string(argument: &str) -> Result<String> {
 pub fn dump_term_criteria(argument: core::TermCriteria) -> Result<String> {
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_utils_dumpTermCriteria_const_TermCriteriaR(&argument, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { String::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// ## C++ default parameters
+/// * value: cv::Vec2i(42,24)
+#[inline]
+pub fn dump_vec2i(value: core::Vec2i) -> Result<String> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_utils_dumpVec2i_const_Vec2i(value.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { String::opencv_from_extern(ret) };
@@ -8505,7 +8610,7 @@ pub fn write_i32(fs: &mut core::FileStorage, name: &str, value: i32) -> Result<(
 /// etc.).
 /// 
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-/// [Algorithm](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [Algorithm](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 pub trait AlgorithmTraitConst {
 	fn as_raw_Algorithm(&self) -> *const c_void;
 
@@ -8519,10 +8624,20 @@ pub trait AlgorithmTraitConst {
 		Ok(ret)
 	}
 	
-	/// simplified API for language bindings
-	///  Stores algorithm parameters in a file storage
+	/// Stores algorithm parameters in a file storage
 	/// 
 	/// ## Overloaded parameters
+	#[inline]
+	fn write_1(&self, fs: &mut core::FileStorage, name: &str) -> Result<()> {
+		extern_container_arg!(name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_Algorithm_write_const_FileStorageR_const_StringR(self.as_raw_Algorithm(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @deprecated
 	/// 
 	/// ## C++ default parameters
 	/// * name: String()
@@ -8606,7 +8721,7 @@ pub trait AlgorithmTrait: core::AlgorithmTraitConst {
 /// etc.).
 /// 
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-/// [Algorithm](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [Algorithm](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 pub struct Algorithm {
 	ptr: *mut c_void
 }
@@ -10884,6 +10999,16 @@ impl dyn Formatter + '_ {
 pub trait HammingTraitConst {
 	fn as_raw_Hamming(&self) -> *const c_void;
 
+	/// this will count the bits in a ^ b
+	#[inline]
+	fn apply(&self, a: &u8, b: &u8, size: i32) -> Result<core::Hamming_result_type> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_Hamming_operator___const_const_unsigned_charX_const_unsigned_charX_int(self.as_raw_Hamming(), a, b, size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 pub trait HammingTrait: core::HammingTraitConst {
@@ -10928,37 +11053,149 @@ impl Hamming {
 /// keypoint neighborhood is then analyzed by another algorithm that builds a descriptor (usually
 /// represented as a feature vector). The keypoints representing the same object in different images
 /// can then be matched using %KDTree or another method.
-#[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
-pub struct KeyPoint {
+pub trait KeyPointTraitConst {
+	fn as_raw_KeyPoint(&self) -> *const c_void;
+
 	/// coordinates of the keypoints
-	pub pt: core::Point2f,
+	#[inline]
+	fn pt(&self) -> core::Point2f {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_KeyPoint_getPropPt_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+	
 	/// diameter of the meaningful keypoint neighborhood
-	pub size: f32,
+	#[inline]
+	fn size(&self) -> f32 {
+		let ret = unsafe { sys::cv_KeyPoint_getPropSize_const(self.as_raw_KeyPoint()) };
+		ret
+	}
+	
 	/// computed orientation of the keypoint (-1 if not applicable);
 	/// it's in [0,360) degrees and measured relative to
 	/// image coordinate system, ie in clockwise.
-	pub angle: f32,
-	/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
-	pub response: f32,
-	/// octave (pyramid layer) from which the keypoint has been extracted
-	pub octave: i32,
-	/// object class (if the keypoints need to be clustered by an object they belong to)
-	pub class_id: i32,
-}
-
-opencv_type_simple! { core::KeyPoint }
-
-impl KeyPoint {
 	#[inline]
-	pub fn hash(self) -> Result<size_t> {
+	fn angle(&self) -> f32 {
+		let ret = unsafe { sys::cv_KeyPoint_getPropAngle_const(self.as_raw_KeyPoint()) };
+		ret
+	}
+	
+	/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
+	#[inline]
+	fn response(&self) -> f32 {
+		let ret = unsafe { sys::cv_KeyPoint_getPropResponse_const(self.as_raw_KeyPoint()) };
+		ret
+	}
+	
+	/// octave (pyramid layer) from which the keypoint has been extracted
+	#[inline]
+	fn octave(&self) -> i32 {
+		let ret = unsafe { sys::cv_KeyPoint_getPropOctave_const(self.as_raw_KeyPoint()) };
+		ret
+	}
+	
+	/// object class (if the keypoints need to be clustered by an object they belong to)
+	#[inline]
+	fn class_id(&self) -> i32 {
+		let ret = unsafe { sys::cv_KeyPoint_getPropClass_id_const(self.as_raw_KeyPoint()) };
+		ret
+	}
+	
+	#[inline]
+	fn hash(&self) -> Result<size_t> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_KeyPoint_hash_const(self.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_KeyPoint_hash_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
+}
+
+pub trait KeyPointTrait: core::KeyPointTraitConst {
+	fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void;
+
+	/// coordinates of the keypoints
+	#[inline]
+	fn set_pt(&mut self, val: core::Point2f) {
+		let ret = unsafe { sys::cv_KeyPoint_setPropPt_Point2f(self.as_raw_mut_KeyPoint(), val.opencv_as_extern()) };
+		ret
+	}
+	
+	/// diameter of the meaningful keypoint neighborhood
+	#[inline]
+	fn set_size(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_KeyPoint_setPropSize_float(self.as_raw_mut_KeyPoint(), val) };
+		ret
+	}
+	
+	/// computed orientation of the keypoint (-1 if not applicable);
+	/// it's in [0,360) degrees and measured relative to
+	/// image coordinate system, ie in clockwise.
+	#[inline]
+	fn set_angle(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_KeyPoint_setPropAngle_float(self.as_raw_mut_KeyPoint(), val) };
+		ret
+	}
+	
+	/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
+	#[inline]
+	fn set_response(&mut self, val: f32) {
+		let ret = unsafe { sys::cv_KeyPoint_setPropResponse_float(self.as_raw_mut_KeyPoint(), val) };
+		ret
+	}
+	
+	/// octave (pyramid layer) from which the keypoint has been extracted
+	#[inline]
+	fn set_octave(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_KeyPoint_setPropOctave_int(self.as_raw_mut_KeyPoint(), val) };
+		ret
+	}
+	
+	/// object class (if the keypoints need to be clustered by an object they belong to)
+	#[inline]
+	fn set_class_id(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_KeyPoint_setPropClass_id_int(self.as_raw_mut_KeyPoint(), val) };
+		ret
+	}
+	
+}
+
+/// Data structure for salient point detectors.
+/// 
+/// The class instance stores a keypoint, i.e. a point feature found by one of many available keypoint
+/// detectors, such as Harris corner detector, #FAST, %StarDetector, %SURF, %SIFT etc.
+/// 
+/// The keypoint is characterized by the 2D position, scale (proportional to the diameter of the
+/// neighborhood that needs to be taken into account), orientation and some other parameters. The
+/// keypoint neighborhood is then analyzed by another algorithm that builds a descriptor (usually
+/// represented as a feature vector). The keypoints representing the same object in different images
+/// can then be matched using %KDTree or another method.
+pub struct KeyPoint {
+	ptr: *mut c_void
+}
+
+opencv_type_boxed! { KeyPoint }
+
+impl Drop for KeyPoint {
+	fn drop(&mut self) {
+		extern "C" { fn cv_KeyPoint_delete(instance: *mut c_void); }
+		unsafe { cv_KeyPoint_delete(self.as_raw_mut_KeyPoint()) };
+	}
+}
+
+unsafe impl Send for KeyPoint {}
+
+impl core::KeyPointTraitConst for KeyPoint {
+	#[inline] fn as_raw_KeyPoint(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::KeyPointTrait for KeyPoint {
+	#[inline] fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+impl KeyPoint {
 	/// the default constructor
 	#[inline]
 	pub fn default() -> Result<core::KeyPoint> {
@@ -10966,6 +11203,7 @@ impl KeyPoint {
 		unsafe { sys::cv_KeyPoint_KeyPoint(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -10988,6 +11226,7 @@ impl KeyPoint {
 		unsafe { sys::cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(pt.opencv_as_extern(), size, angle, response, octave, class_id, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -11011,6 +11250,7 @@ impl KeyPoint {
 		unsafe { sys::cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(x, y, size, angle, response, octave, class_id, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -11073,9 +11313,9 @@ impl KeyPoint {
 	/// * kp1: First keypoint
 	/// * kp2: Second keypoint
 	#[inline]
-	pub fn overlap(kp1: core::KeyPoint, kp2: core::KeyPoint) -> Result<f32> {
+	pub fn overlap(kp1: &core::KeyPoint, kp2: &core::KeyPoint) -> Result<f32> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_KeyPoint_overlap_const_KeyPointR_const_KeyPointR(&kp1, &kp2, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_KeyPoint_overlap_const_KeyPointR_const_KeyPointR(kp1.as_raw_KeyPoint(), kp2.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -12114,6 +12354,102 @@ pub trait MatTraitConst {
 		Ok(ret)
 	}
 	
+	/// Extracts a rectangular submatrix.
+	/// 
+	/// The operators make a new header for the specified sub-array of \*this . They are the most
+	/// generalized forms of Mat::row, Mat::col, Mat::rowRange, and Mat::colRange . For example,
+	/// `A(Range(0, 10), Range::all())` is equivalent to `A.rowRange(0, 10)`. Similarly to all of the above,
+	/// the operators are O(1) operations, that is, no matrix data is copied.
+	/// ## Parameters
+	/// * rowRange: Start and end row of the extracted submatrix. The upper boundary is not included. To
+	/// select all the rows, use Range::all().
+	/// * colRange: Start and end column of the extracted submatrix. The upper boundary is not included.
+	/// To select all the columns, use Range::all().
+	#[inline]
+	fn apply(&self, mut row_range: core::Range, mut col_range: core::Range) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_Mat_operator___const_Range_Range(self.as_raw_Mat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Extracts a rectangular submatrix.
+	/// 
+	/// The operators make a new header for the specified sub-array of \*this . They are the most
+	/// generalized forms of Mat::row, Mat::col, Mat::rowRange, and Mat::colRange . For example,
+	/// `A(Range(0, 10), Range::all())` is equivalent to `A.rowRange(0, 10)`. Similarly to all of the above,
+	/// the operators are O(1) operations, that is, no matrix data is copied.
+	/// ## Parameters
+	/// * rowRange: Start and end row of the extracted submatrix. The upper boundary is not included. To
+	/// select all the rows, use Range::all().
+	/// * colRange: Start and end column of the extracted submatrix. The upper boundary is not included.
+	/// To select all the columns, use Range::all().
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * roi: Extracted submatrix specified as a rectangle.
+	#[inline]
+	fn apply_1(&self, roi: core::Rect) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_Mat_operator___const_const_RectR(self.as_raw_Mat(), &roi, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Extracts a rectangular submatrix.
+	/// 
+	/// The operators make a new header for the specified sub-array of \*this . They are the most
+	/// generalized forms of Mat::row, Mat::col, Mat::rowRange, and Mat::colRange . For example,
+	/// `A(Range(0, 10), Range::all())` is equivalent to `A.rowRange(0, 10)`. Similarly to all of the above,
+	/// the operators are O(1) operations, that is, no matrix data is copied.
+	/// ## Parameters
+	/// * rowRange: Start and end row of the extracted submatrix. The upper boundary is not included. To
+	/// select all the rows, use Range::all().
+	/// * colRange: Start and end column of the extracted submatrix. The upper boundary is not included.
+	/// To select all the columns, use Range::all().
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * ranges: Array of selected ranges along each array dimension.
+	#[inline]
+	fn apply_2(&self, ranges: &core::Range) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_Mat_operator___const_const_RangeX(self.as_raw_Mat(), ranges.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Extracts a rectangular submatrix.
+	/// 
+	/// The operators make a new header for the specified sub-array of \*this . They are the most
+	/// generalized forms of Mat::row, Mat::col, Mat::rowRange, and Mat::colRange . For example,
+	/// `A(Range(0, 10), Range::all())` is equivalent to `A.rowRange(0, 10)`. Similarly to all of the above,
+	/// the operators are O(1) operations, that is, no matrix data is copied.
+	/// ## Parameters
+	/// * rowRange: Start and end row of the extracted submatrix. The upper boundary is not included. To
+	/// select all the rows, use Range::all().
+	/// * colRange: Start and end column of the extracted submatrix. The upper boundary is not included.
+	/// To select all the columns, use Range::all().
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * ranges: Array of selected ranges along each array dimension.
+	#[inline]
+	fn apply_3(&self, ranges: &core::Vector<core::Range>) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_Mat_operator___const_const_vectorLRangeGR(self.as_raw_Mat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Reports whether the matrix is continuous or not.
 	/// 
 	/// The method returns true if the matrix elements are stored continuously without gaps at the end of
@@ -12330,10 +12666,10 @@ pub trait MatTraitConst {
 	///        that an element may have multiple channels.
 	/// 
 	/// The following code demonstrates its usage for a 2-d matrix:
-	/// [example-2d](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+	/// [example-2d](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 	/// 
 	/// The following code demonstrates its usage for a 3-d matrix:
-	/// [example-3d](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+	/// [example-3d](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 	/// 
 	/// ## C++ default parameters
 	/// * depth: -1
@@ -14696,6 +15032,26 @@ pub trait MatExprTraitConst {
 	}
 	
 	#[inline]
+	fn apply(&self, row_range: &core::Range, col_range: &core::Range) -> Result<core::MatExpr> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_MatExpr_operator___const_const_RangeR_const_RangeR(self.as_raw_MatExpr(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn apply_1(&self, roi: core::Rect) -> Result<core::MatExpr> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_MatExpr_operator___const_const_RectR(self.as_raw_MatExpr(), &roi, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
 	fn t(&self) -> Result<core::MatExpr> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_MatExpr_t_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
@@ -15177,6 +15533,15 @@ pub trait MatSizeTraitConst {
 	fn dims(&self) -> i32 {
 		let ret = unsafe { sys::cv_MatSize_dims_const(self.as_raw_MatSize()) };
 		ret
+	}
+	
+	#[inline]
+	fn apply(&self) -> Result<core::Size> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_MatSize_operator___const(self.as_raw_MatSize(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
 	
 	#[inline]
@@ -16268,6 +16633,85 @@ pub trait PCATrait: core::PCATraitConst {
 		ret
 	}
 	
+	/// performs %PCA
+	/// 
+	/// The operator performs %PCA of the supplied dataset. It is safe to reuse
+	/// the same PCA structure for multiple datasets. That is, if the structure
+	/// has been previously used with another dataset, the existing internal
+	/// data is reclaimed and the new @ref eigenvalues, @ref eigenvectors and @ref
+	/// mean are allocated and computed.
+	/// 
+	/// The computed @ref eigenvalues are sorted from the largest to the smallest and
+	/// the corresponding @ref eigenvectors are stored as eigenvectors rows.
+	/// 
+	/// ## Parameters
+	/// * data: input samples stored as the matrix rows or as the matrix
+	/// columns.
+	/// * mean: optional mean value; if the matrix is empty (noArray()),
+	/// the mean is computed from the data.
+	/// * flags: operation flags; currently the parameter is only used to
+	/// specify the data layout. (Flags)
+	/// * maxComponents: maximum number of components that PCA should
+	/// retain; by default, all the components are retained.
+	/// 
+	/// ## C++ default parameters
+	/// * max_components: 0
+	#[inline]
+	fn apply(&mut self, data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
+		input_array_arg!(data);
+		input_array_arg!(mean);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// performs %PCA
+	/// 
+	/// The operator performs %PCA of the supplied dataset. It is safe to reuse
+	/// the same PCA structure for multiple datasets. That is, if the structure
+	/// has been previously used with another dataset, the existing internal
+	/// data is reclaimed and the new @ref eigenvalues, @ref eigenvectors and @ref
+	/// mean are allocated and computed.
+	/// 
+	/// The computed @ref eigenvalues are sorted from the largest to the smallest and
+	/// the corresponding @ref eigenvectors are stored as eigenvectors rows.
+	/// 
+	/// ## Parameters
+	/// * data: input samples stored as the matrix rows or as the matrix
+	/// columns.
+	/// * mean: optional mean value; if the matrix is empty (noArray()),
+	/// the mean is computed from the data.
+	/// * flags: operation flags; currently the parameter is only used to
+	/// specify the data layout. (Flags)
+	/// * maxComponents: maximum number of components that PCA should
+	/// retain; by default, all the components are retained.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * data: input samples stored as the matrix rows or as the matrix
+	///    columns.
+	/// * mean: optional mean value; if the matrix is empty (noArray()),
+	///    the mean is computed from the data.
+	/// * flags: operation flags; currently the parameter is only used to
+	///    specify the data layout. (PCA::Flags)
+	/// * retainedVariance: Percentage of variance that %PCA should retain.
+	///    Using this parameter will let the %PCA decided how many components to
+	///    retain but it will always keep at least 2.
+	#[inline]
+	fn apply_1(&mut self, data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
+		input_array_arg!(data);
+		input_array_arg!(mean);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int_double(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// load PCA objects
 	/// 
 	/// Loads @ref eigenvalues @ref eigenvectors and @ref mean from specified FileNode
@@ -16451,6 +16895,15 @@ impl PCA {
 pub trait ParallelLoopBodyConst {
 	fn as_raw_ParallelLoopBody(&self) -> *const c_void;
 
+	#[inline]
+	fn apply(&self, range: &core::Range) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ParallelLoopBody_operator___const_const_RangeR(self.as_raw_ParallelLoopBody(), range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 pub trait ParallelLoopBody: core::ParallelLoopBodyConst {
@@ -16588,6 +17041,41 @@ pub trait RNGTrait: core::RNGTraitConst {
 	fn to_f64(&mut self) -> Result<f64> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_RNG_operator_double(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// returns a random integer sampled uniformly from [0, N).
+	/// 
+	/// The methods transform the state using the MWC algorithm and return the
+	/// next random number. The first form is equivalent to RNG::next . The
+	/// second form returns the random number modulo N , which means that the
+	/// result is in the range [0, N) .
+	#[inline]
+	fn apply(&mut self) -> Result<u32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_RNG_operator__(self.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// returns a random integer sampled uniformly from [0, N).
+	/// 
+	/// The methods transform the state using the MWC algorithm and return the
+	/// next random number. The first form is equivalent to RNG::next . The
+	/// second form returns the random number modulo N , which means that the
+	/// result is in the range [0, N) .
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## Parameters
+	/// * N: upper non-inclusive boundary of the returned random number.
+	#[inline]
+	fn apply_1(&mut self, n: u32) -> Result<u32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_RNG_operator___unsigned_int(self.as_raw_mut_RNG(), n, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -16945,6 +17433,24 @@ pub trait RNG_MT19937Trait: core::RNG_MT19937TraitConst {
 		Ok(ret)
 	}
 	
+	#[inline]
+	fn apply(&mut self, n: u32) -> Result<u32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_RNG_MT19937_operator___unsigned_int(self.as_raw_mut_RNG_MT19937(), n, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn apply_1(&mut self) -> Result<u32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_RNG_MT19937_operator__(self.as_raw_mut_RNG_MT19937(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// returns uniformly distributed integer random number from [a,b) range
 	#[inline]
 	fn uniform(&mut self, a: i32, b: i32) -> Result<i32> {
@@ -17188,8 +17694,8 @@ impl Range {
 /// #Size2f structure) and the rotation angle in degrees.
 /// 
 /// The sample below demonstrates how to use RotatedRect:
-/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ![image](https://docs.opencv.org/4.6.0/rotatedrect.png)
+/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// ![image](https://docs.opencv.org/4.7.0/rotatedrect.png)
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
 pub trait RotatedRectTraitConst {
@@ -17286,8 +17792,8 @@ pub trait RotatedRectTrait: core::RotatedRectTraitConst {
 /// #Size2f structure) and the rotation angle in degrees.
 /// 
 /// The sample below demonstrates how to use RotatedRect:
-/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ![image](https://docs.opencv.org/4.6.0/rotatedrect.png)
+/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// ![image](https://docs.opencv.org/4.7.0/rotatedrect.png)
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
 pub struct RotatedRect {
@@ -17447,6 +17953,31 @@ pub trait SVDTrait: core::SVDTraitConst {
 	fn set_vt(&mut self, mut val: core::Mat) {
 		let ret = unsafe { sys::cv_SVD_setPropVt_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
 		ret
+	}
+	
+	/// the operator that performs SVD. The previously allocated u, w and vt are released.
+	/// 
+	/// The operator performs the singular value decomposition of the supplied
+	/// matrix. The u,`vt` , and the vector of singular values w are stored in
+	/// the structure. The same SVD structure can be reused many times with
+	/// different matrices. Each time, if needed, the previous u,`vt` , and w
+	/// are reclaimed and the new matrices are created, which is all handled by
+	/// Mat::create.
+	/// ## Parameters
+	/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
+	/// * flags: operation flags (SVD::Flags)
+	/// 
+	/// ## C++ default parameters
+	/// * flags: 0
+	#[inline]
+	fn apply(&mut self, src: &dyn core::ToInputArray, flags: i32) -> Result<core::SVD> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_SVD_operator___const__InputArrayR_int(self.as_raw_mut_SVD(), src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::SVD::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 }
@@ -18954,10 +19485,10 @@ impl TermCriteria {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub trait TickMeterTraitConst {
@@ -19084,10 +19615,10 @@ pub trait TickMeterTrait: core::TickMeterTraitConst {
 /// 
 /// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 /// execution time in seconds:
-/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// 
 /// It is also possible to compute the average time over multiple runs:
-/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 /// ## See also
 /// getTickCount, getTickFrequency
 pub struct TickMeter {
@@ -19429,6 +19960,47 @@ pub trait UMatTraitConst {
 		unsafe { sys::cv_UMat_locateROI_const_SizeR_PointR(self.as_raw_UMat(), whole_size, ofs, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// extracts a rectangular sub-matrix
+	#[inline]
+	fn apply(&self, mut row_range: core::Range, mut col_range: core::Range) -> Result<core::UMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_UMat_operator___const_Range_Range(self.as_raw_UMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn apply_1(&self, roi: core::Rect) -> Result<core::UMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_UMat_operator___const_const_RectR(self.as_raw_UMat(), &roi, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn apply_2(&self, ranges: &core::Range) -> Result<core::UMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_UMat_operator___const_const_RangeX(self.as_raw_UMat(), ranges.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn apply_3(&self, ranges: &core::Vector<core::Range>) -> Result<core::UMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_UMat_operator___const_const_vectorLRangeGR(self.as_raw_UMat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -23263,6 +23835,27 @@ pub trait GpuMatTraitConst {
 		Ok(ret)
 	}
 	
+	/// extracts a rectangular sub-GpuMat (this is a generalized form of row, rowRange etc.)
+	#[inline]
+	fn apply(&self, mut row_range: core::Range, mut col_range: core::Range) -> Result<core::GpuMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_GpuMat_operator___const_Range_Range(self.as_raw_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	#[inline]
+	fn apply_1(&self, roi: core::Rect) -> Result<core::GpuMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_GpuMat_operator___const_Rect(self.as_raw_GpuMat(), roi.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// creates alternative GpuMat header for the same data, with different
 	/// number of channels and/or different number of rows
 	/// 
@@ -23959,6 +24552,21 @@ pub trait GpuMatNDTraitConst {
 		Ok(ret)
 	}
 	
+	/// Extracts a sub-matrix.
+	/// The operator makes a new header for the specified sub-array of \*this.
+	/// The operator is an O(1) operation, that is, no matrix data is copied.
+	/// ## Parameters
+	/// * ranges: Array of selected ranges along each dimension.
+	#[inline]
+	fn apply(&self, ranges: &core::Vector<core::Range>) -> Result<core::GpuMatND> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_GpuMatND_operator___const_const_vectorLRangeGR(self.as_raw_GpuMatND(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Creates a GpuMat header for a 2D plane part of an n-dim matrix.
 	/// 
 	/// Note: The returned GpuMat is constructed with the constructor for user-allocated data.
@@ -23994,6 +24602,21 @@ pub trait GpuMatNDTraitConst {
 	fn create_gpu_mat_header_1(&self) -> Result<core::GpuMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMatND_createGpuMatHeader_const(self.as_raw_GpuMatND(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Extracts a 2D plane part of an n-dim matrix.
+	/// It differs from createGpuMatHeader(IndexArray, Range, Range) in that it clones a part of this
+	/// GpuMatND to the returned GpuMat.
+	/// 
+	/// Note: This operator does not increment this GpuMatND's reference counter;
+	#[inline]
+	fn apply_1(&self, mut idx: core::GpuMatND_IndexArray, mut row_range: core::Range, mut col_range: core::Range) -> Result<core::GpuMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_GpuMatND_operator___const_IndexArray_Range_Range(self.as_raw_GpuMatND(), idx.as_raw_mut_VectorOfi32(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
@@ -29388,6 +30011,30 @@ impl Texture2D {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+}
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct ClassWithKeywordProperties {
+	pub lambda: i32,
+	pub except: i32,
+}
+
+opencv_type_simple! { core::ClassWithKeywordProperties }
+
+impl ClassWithKeywordProperties {
+	/// ## C++ default parameters
+	/// * lambda_arg: 24
+	/// * except_arg: 42
+	#[inline]
+	pub fn new(lambda_arg: i32, except_arg: i32) -> Result<core::ClassWithKeywordProperties> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_ClassWithKeywordProperties_ClassWithKeywordProperties_int_int(lambda_arg, except_arg, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	

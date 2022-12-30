@@ -66,7 +66,7 @@ pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background
 /// 
 /// The class discriminates between foreground and background pixels by building and maintaining a model
 /// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_MOG2001) .
+/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MOG2001) .
 /// ## See also
 /// BackgroundSubtractorMOG
 /// 
@@ -190,7 +190,7 @@ pub trait CUDA_BackgroundSubtractorMOG: crate::cudabgsegm::CUDA_BackgroundSubtra
 /// 
 /// The class discriminates between foreground and background pixels by building and maintaining a model
 /// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
+/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
 /// ## See also
 /// BackgroundSubtractorMOG2
 pub trait CUDA_BackgroundSubtractorMOG2Const: crate::video::BackgroundSubtractorMOG2Const {

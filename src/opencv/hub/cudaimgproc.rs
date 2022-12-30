@@ -31,9 +31,9 @@ pub const CUDA_ALPHA_PLUS_PREMUL: i32 = 11;
 pub const CUDA_ALPHA_PREMUL: i32 = 12;
 pub const CUDA_ALPHA_XOR: i32 = 4;
 pub const CUDA_ALPHA_XOR_PREMUL: i32 = 10;
-/// BKE [Allegretti2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 pub const CUDA_CCL_BKE: i32 = 0;
-/// BKE [Allegretti2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 pub const CUDA_CCL_DEFAULT: i32 = -1;
 /// Bayer Demosaicing (Malvar, He, and Cutler)
 pub const CUDA_COLOR_BayerBG2BGR_MHT: i32 = 256;
@@ -83,9 +83,9 @@ opencv_type_enum! { crate::cudaimgproc::CUDA_AlphaCompTypes }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CUDA_ConnectedComponentsAlgorithmsTypes {
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	CCL_DEFAULT = -1,
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	CCL_BKE = 0,
 }
 
@@ -103,13 +103,17 @@ pub enum CUDA_DemosaicTypes {
 	/// Bayer Demosaicing (Malvar, He, and Cutler)
 	COLOR_BayerGR2BGR_MHT = 259,
 	// Bayer Demosaicing (Malvar, He, and Cutler)
-	// COLOR_BayerBG2RGB_MHT = 258 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerRG2BGR_MHT instead
+	// COLOR_BayerBG2RGB_MHT = 258,
 	// Bayer Demosaicing (Malvar, He, and Cutler)
-	// COLOR_BayerGB2RGB_MHT = 259 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGR2BGR_MHT instead
+	// COLOR_BayerGB2RGB_MHT = 259,
 	// Bayer Demosaicing (Malvar, He, and Cutler)
-	// COLOR_BayerRG2RGB_MHT = 256 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBG2BGR_MHT instead
+	// COLOR_BayerRG2RGB_MHT = 256,
 	// Bayer Demosaicing (Malvar, He, and Cutler)
-	// COLOR_BayerGR2RGB_MHT = 257 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGB2BGR_MHT instead
+	// COLOR_BayerGR2RGB_MHT = 257,
 	/// Bayer Demosaicing (Malvar, He, and Cutler)
 	COLOR_BayerBG2GRAY_MHT = 260,
 	/// Bayer Demosaicing (Malvar, He, and Cutler)
@@ -269,7 +273,7 @@ pub fn calc_hist(src: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArra
 /// ltype specifies the output label image type, an important consideration based on the total
 /// number of labels or alternatively the total number of pixels in the source image.
 /// ccltype specifies the connected components labeling algorithm to use, currently
-/// BKE [Allegretti2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the #ConnectedComponentsAlgorithmsTypes
+/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the #ConnectedComponentsAlgorithmsTypes
 /// for details. Note that labels in the output are not required to be sequential.
 /// 
 /// ## Parameters
@@ -313,7 +317,7 @@ pub fn connected_components(image: &dyn core::ToInputArray, labels: &mut dyn cor
 /// ltype specifies the output label image type, an important consideration based on the total
 /// number of labels or alternatively the total number of pixels in the source image.
 /// ccltype specifies the connected components labeling algorithm to use, currently
-/// BKE [Allegretti2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the #ConnectedComponentsAlgorithmsTypes
+/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the #ConnectedComponentsAlgorithmsTypes
 /// for details. Note that labels in the output are not required to be sequential.
 /// 
 /// ## Parameters
@@ -382,7 +386,7 @@ pub fn create_canny_edge_detector(low_thresh: f64, high_thresh: f64, apperture_s
 	Ok(ret)
 }
 
-/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 #[inline]
 pub fn create_generalized_hough_ballard() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughBallard>> {
 	return_send!(via ocvrs_return);
@@ -393,7 +397,7 @@ pub fn create_generalized_hough_ballard() -> Result<core::Ptr<dyn crate::imgproc
 	Ok(ret)
 }
 
-/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 #[inline]
 pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughGuil>> {
 	return_send!(via ocvrs_return);
@@ -646,7 +650,7 @@ pub fn cvt_color(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 ///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 ///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
 /// 
-/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_MHT2011))
+/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MHT2011))
 /// 
 ///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 ///    >     COLOR_BayerGR2GRAY_MHT
@@ -961,7 +965,7 @@ pub trait CUDA_CannyEdgeDetectorConst: core::AlgorithmTraitConst {
 pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CannyEdgeDetectorConst {
 	fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void;
 
-	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 	/// 
 	/// ## Parameters
 	/// * image: Single-channel 8-bit input image.
@@ -981,7 +985,7 @@ pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait + crate::cudaimgproc::CUD
 		Ok(ret)
 	}
 	
-	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+	/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 	/// 
 	/// ## Parameters
 	/// * image: Single-channel 8-bit input image.

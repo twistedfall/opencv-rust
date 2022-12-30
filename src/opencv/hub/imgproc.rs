@@ -38,11 +38,16 @@
 //! --------------------------|----------------------
 //! CV_8U                     | -1/CV_16S/CV_32F/CV_64F
 //! CV_16U/CV_16S             | -1/CV_32F/CV_64F
-//! CV_32F                    | -1/CV_32F/CV_64F
+//! CV_32F                    | -1/CV_32F
 //! CV_64F                    | -1/CV_64F
 //! 
 //! 
 //! Note: when ddepth=-1, the output image will have the same depth as the source.
+//! 
+//! 
+//! Note: if you need double floating-point accuracy and using single floating-point input data
+//! (CV_32F input and CV_64F output depth combination), you can use @ref Mat.convertTo to convert
+//! the input data to the desired precision.
 //! 
 //!    # Geometric Image Transformations
 //! 
@@ -136,7 +141,7 @@
 //! In the figure below, the Delaunay's triangulation is marked with black lines and the Voronoi
 //! diagram with red lines.
 //! 
-//! ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.6.0/delaunay_voronoi.png)
+//! ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.7.0/delaunay_voronoi.png)
 //! 
 //! The subdivisions can be used for the 3D piece-wise transformation of a plane, morphing, fast
 //! location of points on the plane, building special graphs (such as NNG,RNG), and so forth.
@@ -165,17 +170,17 @@ pub const ADAPTIVE_THRESH_GAUSSIAN_C: i32 = 1;
 pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
 /// Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
 pub const CCL_BBDT: i32 = 4;
-/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
+/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
 pub const CCL_BOLELLI: i32 = 2;
-/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
+/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
 pub const CCL_DEFAULT: i32 = -1;
-/// BBDT [Grana2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
+/// BBDT [Grana2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 pub const CCL_GRANA: i32 = 1;
 /// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
 pub const CCL_SAUF: i32 = 3;
 /// Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
 pub const CCL_SPAGHETTI: i32 = 5;
-/// SAUF [Wu2009](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+/// SAUF [Wu2009](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 pub const CCL_WU: i32 = 0;
 /// The total area (in pixels) of the connected component
 pub const CC_STAT_AREA: i32 = 4;
@@ -198,53 +203,53 @@ pub const CHAIN_APPROX_NONE: i32 = 1;
 /// compresses horizontal, vertical, and diagonal segments and leaves only their end points.
 /// For example, an up-right rectangular contour is encoded with 4 points.
 pub const CHAIN_APPROX_SIMPLE: i32 = 2;
-/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_TehChin89)
+/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_TehChin89)
 pub const CHAIN_APPROX_TC89_KCOS: i32 = 4;
-/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_TehChin89)
+/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_TehChin89)
 pub const CHAIN_APPROX_TC89_L1: i32 = 3;
-/// ![autumn](https://docs.opencv.org/4.6.0/colorscale_autumn.jpg)
+/// ![autumn](https://docs.opencv.org/4.7.0/colorscale_autumn.jpg)
 pub const COLORMAP_AUTUMN: i32 = 0;
-/// ![bone](https://docs.opencv.org/4.6.0/colorscale_bone.jpg)
+/// ![bone](https://docs.opencv.org/4.7.0/colorscale_bone.jpg)
 pub const COLORMAP_BONE: i32 = 1;
-/// ![cividis](https://docs.opencv.org/4.6.0/colorscale_cividis.jpg)
+/// ![cividis](https://docs.opencv.org/4.7.0/colorscale_cividis.jpg)
 pub const COLORMAP_CIVIDIS: i32 = 17;
-/// ![cool](https://docs.opencv.org/4.6.0/colorscale_cool.jpg)
+/// ![cool](https://docs.opencv.org/4.7.0/colorscale_cool.jpg)
 pub const COLORMAP_COOL: i32 = 8;
-/// ![deepgreen](https://docs.opencv.org/4.6.0/colorscale_deepgreen.jpg)
+/// ![deepgreen](https://docs.opencv.org/4.7.0/colorscale_deepgreen.jpg)
 pub const COLORMAP_DEEPGREEN: i32 = 21;
-/// ![hot](https://docs.opencv.org/4.6.0/colorscale_hot.jpg)
+/// ![hot](https://docs.opencv.org/4.7.0/colorscale_hot.jpg)
 pub const COLORMAP_HOT: i32 = 11;
-/// ![HSV](https://docs.opencv.org/4.6.0/colorscale_hsv.jpg)
+/// ![HSV](https://docs.opencv.org/4.7.0/colorscale_hsv.jpg)
 pub const COLORMAP_HSV: i32 = 9;
-/// ![inferno](https://docs.opencv.org/4.6.0/colorscale_inferno.jpg)
+/// ![inferno](https://docs.opencv.org/4.7.0/colorscale_inferno.jpg)
 pub const COLORMAP_INFERNO: i32 = 14;
-/// ![jet](https://docs.opencv.org/4.6.0/colorscale_jet.jpg)
+/// ![jet](https://docs.opencv.org/4.7.0/colorscale_jet.jpg)
 pub const COLORMAP_JET: i32 = 2;
-/// ![magma](https://docs.opencv.org/4.6.0/colorscale_magma.jpg)
+/// ![magma](https://docs.opencv.org/4.7.0/colorscale_magma.jpg)
 pub const COLORMAP_MAGMA: i32 = 13;
-/// ![ocean](https://docs.opencv.org/4.6.0/colorscale_ocean.jpg)
+/// ![ocean](https://docs.opencv.org/4.7.0/colorscale_ocean.jpg)
 pub const COLORMAP_OCEAN: i32 = 5;
-/// ![parula](https://docs.opencv.org/4.6.0/colorscale_parula.jpg)
+/// ![parula](https://docs.opencv.org/4.7.0/colorscale_parula.jpg)
 pub const COLORMAP_PARULA: i32 = 12;
-/// ![pink](https://docs.opencv.org/4.6.0/colorscale_pink.jpg)
+/// ![pink](https://docs.opencv.org/4.7.0/colorscale_pink.jpg)
 pub const COLORMAP_PINK: i32 = 10;
-/// ![plasma](https://docs.opencv.org/4.6.0/colorscale_plasma.jpg)
+/// ![plasma](https://docs.opencv.org/4.7.0/colorscale_plasma.jpg)
 pub const COLORMAP_PLASMA: i32 = 15;
-/// ![rainbow](https://docs.opencv.org/4.6.0/colorscale_rainbow.jpg)
+/// ![rainbow](https://docs.opencv.org/4.7.0/colorscale_rainbow.jpg)
 pub const COLORMAP_RAINBOW: i32 = 4;
-/// ![spring](https://docs.opencv.org/4.6.0/colorscale_spring.jpg)
+/// ![spring](https://docs.opencv.org/4.7.0/colorscale_spring.jpg)
 pub const COLORMAP_SPRING: i32 = 7;
-/// ![summer](https://docs.opencv.org/4.6.0/colorscale_summer.jpg)
+/// ![summer](https://docs.opencv.org/4.7.0/colorscale_summer.jpg)
 pub const COLORMAP_SUMMER: i32 = 6;
-/// ![turbo](https://docs.opencv.org/4.6.0/colorscale_turbo.jpg)
+/// ![turbo](https://docs.opencv.org/4.7.0/colorscale_turbo.jpg)
 pub const COLORMAP_TURBO: i32 = 20;
-/// ![twilight](https://docs.opencv.org/4.6.0/colorscale_twilight.jpg)
+/// ![twilight](https://docs.opencv.org/4.7.0/colorscale_twilight.jpg)
 pub const COLORMAP_TWILIGHT: i32 = 18;
-/// ![twilight shifted](https://docs.opencv.org/4.6.0/colorscale_twilight_shifted.jpg)
+/// ![twilight shifted](https://docs.opencv.org/4.7.0/colorscale_twilight_shifted.jpg)
 pub const COLORMAP_TWILIGHT_SHIFTED: i32 = 19;
-/// ![viridis](https://docs.opencv.org/4.6.0/colorscale_viridis.jpg)
+/// ![viridis](https://docs.opencv.org/4.7.0/colorscale_viridis.jpg)
 pub const COLORMAP_VIRIDIS: i32 = 16;
-/// ![winter](https://docs.opencv.org/4.6.0/colorscale_winter.jpg)
+/// ![winter](https://docs.opencv.org/4.7.0/colorscale_winter.jpg)
 pub const COLORMAP_WINTER: i32 = 3;
 /// convert between RGB/BGR and BGR555 (16-bit images)
 pub const COLOR_BGR2BGR555: i32 = 22;
@@ -717,7 +722,7 @@ pub const HISTCMP_BHATTACHARYYA: i32 = 3;
 pub const HISTCMP_CHISQR: i32 = 1;
 /// Alternative Chi-Square
 /// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%202%20%2A%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%2BH%5F2%28I%29%7D)
-/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
+/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
 pub const HISTCMP_CHISQR_ALT: i32 = 4;
 /// Correlation
 /// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%20%5Cfrac%7B%5Csum%5FI%20%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%20%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%7D%7B%5Csqrt%7B%5Csum%5FI%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%5E2%20%5Csum%5FI%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%5E2%7D%7D)
@@ -733,7 +738,7 @@ pub const HISTCMP_INTERSECT: i32 = 2;
 /// Kullback-Leibler divergence
 /// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%5Csum%20%5FI%20H%5F1%28I%29%20%5Clog%20%5Cleft%28%5Cfrac%7BH%5F1%28I%29%7D%7BH%5F2%28I%29%7D%5Cright%29)
 pub const HISTCMP_KL_DIV: i32 = 5;
-/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Yuen90)
+/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yuen90)
 pub const HOUGH_GRADIENT: i32 = 3;
 /// variation of HOUGH_GRADIENT to get better accuracy
 pub const HOUGH_GRADIENT_ALT: i32 = 4;
@@ -945,26 +950,34 @@ opencv_type_enum! { crate::imgproc::AdaptiveThresholdTypes }
 pub enum ColorConversionCodes {
 	/// add alpha channel to RGB or BGR image
 	COLOR_BGR2BGRA = 0,
-	// COLOR_RGB2RGBA = 0 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BGR2BGRA instead
+	// COLOR_RGB2RGBA = 0,
 	/// remove alpha channel from RGB or BGR image
 	COLOR_BGRA2BGR = 1,
-	// COLOR_RGBA2RGB = 1 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BGRA2BGR instead
+	// COLOR_RGBA2RGB = 1,
 	/// convert between RGB and BGR color spaces (with or without alpha channel)
 	COLOR_BGR2RGBA = 2,
-	// COLOR_RGB2BGRA = 2 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BGR2RGBA instead
+	// COLOR_RGB2BGRA = 2,
 	COLOR_RGBA2BGR = 3,
-	// COLOR_BGRA2RGB = 3 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_RGBA2BGR instead
+	// COLOR_BGRA2RGB = 3,
 	COLOR_BGR2RGB = 4,
-	// COLOR_RGB2BGR = 4 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BGR2RGB instead
+	// COLOR_RGB2BGR = 4,
 	COLOR_BGRA2RGBA = 5,
-	// COLOR_RGBA2BGRA = 5 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BGRA2RGBA instead
+	// COLOR_RGBA2BGRA = 5,
 	/// convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
 	COLOR_BGR2GRAY = 6,
 	COLOR_RGB2GRAY = 7,
 	COLOR_GRAY2BGR = 8,
-	// COLOR_GRAY2RGB = 8 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_GRAY2BGR instead
+	// COLOR_GRAY2RGB = 8,
 	COLOR_GRAY2BGRA = 9,
-	// COLOR_GRAY2RGBA = 9 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_GRAY2BGRA instead
+	// COLOR_GRAY2RGBA = 9,
 	COLOR_BGRA2GRAY = 10,
 	COLOR_RGBA2GRAY = 11,
 	/// convert between RGB/BGR and BGR565 (16-bit images)
@@ -1057,9 +1070,11 @@ pub enum ColorConversionCodes {
 	/// YUV 4:2:0 family to RGB
 	COLOR_YUV2BGR_NV21 = 93,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420sp2RGB = 92 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGB_NV21 instead
+	// COLOR_YUV420sp2RGB = 92,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420sp2BGR = 93 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGR_NV21 instead
+	// COLOR_YUV420sp2BGR = 93,
 	/// YUV 4:2:0 family to RGB
 	COLOR_YUV2RGBA_NV12 = 94,
 	/// YUV 4:2:0 family to RGB
@@ -1069,9 +1084,11 @@ pub enum ColorConversionCodes {
 	/// YUV 4:2:0 family to RGB
 	COLOR_YUV2BGRA_NV21 = 97,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420sp2RGBA = 96 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGBA_NV21 instead
+	// COLOR_YUV420sp2RGBA = 96,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420sp2BGRA = 97 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGRA_NV21 instead
+	// COLOR_YUV420sp2BGRA = 97,
 	/// YUV 4:2:0 family to RGB
 	COLOR_YUV2RGB_YV12 = 98,
 	/// YUV 4:2:0 family to RGB
@@ -1081,13 +1098,17 @@ pub enum ColorConversionCodes {
 	/// YUV 4:2:0 family to RGB
 	COLOR_YUV2BGR_IYUV = 101,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV2RGB_I420 = 100 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGB_IYUV instead
+	// COLOR_YUV2RGB_I420 = 100,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV2BGR_I420 = 101 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGR_IYUV instead
+	// COLOR_YUV2BGR_I420 = 101,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420p2RGB = 98 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGB_YV12 instead
+	// COLOR_YUV420p2RGB = 98,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420p2BGR = 99 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGR_YV12 instead
+	// COLOR_YUV420p2BGR = 99,
 	/// YUV 4:2:0 family to RGB
 	COLOR_YUV2RGBA_YV12 = 102,
 	/// YUV 4:2:0 family to RGB
@@ -1097,53 +1118,72 @@ pub enum ColorConversionCodes {
 	/// YUV 4:2:0 family to RGB
 	COLOR_YUV2BGRA_IYUV = 105,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV2RGBA_I420 = 104 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGBA_IYUV instead
+	// COLOR_YUV2RGBA_I420 = 104,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV2BGRA_I420 = 105 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGRA_IYUV instead
+	// COLOR_YUV2BGRA_I420 = 105,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420p2RGBA = 102 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGBA_YV12 instead
+	// COLOR_YUV420p2RGBA = 102,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420p2BGRA = 103 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGRA_YV12 instead
+	// COLOR_YUV420p2BGRA = 103,
 	/// YUV 4:2:0 family to RGB
 	COLOR_YUV2GRAY_420 = 106,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV2GRAY_NV21 = 106 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_420 instead
+	// COLOR_YUV2GRAY_NV21 = 106,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV2GRAY_NV12 = 106 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_NV21 instead
+	// COLOR_YUV2GRAY_NV12 = 106,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV2GRAY_YV12 = 106 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_NV12 instead
+	// COLOR_YUV2GRAY_YV12 = 106,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV2GRAY_IYUV = 106 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_YV12 instead
+	// COLOR_YUV2GRAY_IYUV = 106,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV2GRAY_I420 = 106 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_IYUV instead
+	// COLOR_YUV2GRAY_I420 = 106,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420sp2GRAY = 106 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_I420 instead
+	// COLOR_YUV420sp2GRAY = 106,
 	// YUV 4:2:0 family to RGB
-	// COLOR_YUV420p2GRAY = 106 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV420sp2GRAY instead
+	// COLOR_YUV420p2GRAY = 106,
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2RGB_UYVY = 107,
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2BGR_UYVY = 108,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2RGB_Y422 = 107 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGB_UYVY instead
+	// COLOR_YUV2RGB_Y422 = 107,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2BGR_Y422 = 108 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGR_UYVY instead
+	// COLOR_YUV2BGR_Y422 = 108,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2RGB_UYNV = 107 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGB_Y422 instead
+	// COLOR_YUV2RGB_UYNV = 107,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2BGR_UYNV = 108 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGR_Y422 instead
+	// COLOR_YUV2BGR_UYNV = 108,
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2RGBA_UYVY = 111,
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2BGRA_UYVY = 112,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2RGBA_Y422 = 111 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGBA_UYVY instead
+	// COLOR_YUV2RGBA_Y422 = 111,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2BGRA_Y422 = 112 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGRA_UYVY instead
+	// COLOR_YUV2BGRA_Y422 = 112,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2RGBA_UYNV = 111 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGBA_Y422 instead
+	// COLOR_YUV2RGBA_UYNV = 111,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2BGRA_UYNV = 112 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGRA_Y422 instead
+	// COLOR_YUV2BGRA_UYNV = 112,
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2RGB_YUY2 = 115,
 	/// YUV 4:2:2 family to RGB
@@ -1153,13 +1193,17 @@ pub enum ColorConversionCodes {
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2BGR_YVYU = 118,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2RGB_YUYV = 115 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGB_YUY2 instead
+	// COLOR_YUV2RGB_YUYV = 115,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2BGR_YUYV = 116 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGR_YUY2 instead
+	// COLOR_YUV2BGR_YUYV = 116,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2RGB_YUNV = 115 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGB_YUYV instead
+	// COLOR_YUV2RGB_YUNV = 115,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2BGR_YUNV = 116 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGR_YUYV instead
+	// COLOR_YUV2BGR_YUNV = 116,
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2RGBA_YUY2 = 119,
 	/// YUV 4:2:2 family to RGB
@@ -1169,27 +1213,36 @@ pub enum ColorConversionCodes {
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2BGRA_YVYU = 122,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2RGBA_YUYV = 119 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGBA_YUY2 instead
+	// COLOR_YUV2RGBA_YUYV = 119,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2BGRA_YUYV = 120 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGRA_YUY2 instead
+	// COLOR_YUV2BGRA_YUYV = 120,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2RGBA_YUNV = 119 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2RGBA_YUYV instead
+	// COLOR_YUV2RGBA_YUNV = 119,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2BGRA_YUNV = 120 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2BGRA_YUYV instead
+	// COLOR_YUV2BGRA_YUNV = 120,
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2GRAY_UYVY = 123,
 	/// YUV 4:2:2 family to RGB
 	COLOR_YUV2GRAY_YUY2 = 124,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2GRAY_Y422 = 123 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_UYVY instead
+	// COLOR_YUV2GRAY_Y422 = 123,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2GRAY_UYNV = 123 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_Y422 instead
+	// COLOR_YUV2GRAY_UYNV = 123,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2GRAY_YVYU = 124 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_YUY2 instead
+	// COLOR_YUV2GRAY_YVYU = 124,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2GRAY_YUYV = 124 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_YVYU instead
+	// COLOR_YUV2GRAY_YUYV = 124,
 	// YUV 4:2:2 family to RGB
-	// COLOR_YUV2GRAY_YUNV = 124 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_YUV2GRAY_YUYV instead
+	// COLOR_YUV2GRAY_YUNV = 124,
 	/// alpha premultiplication
 	COLOR_RGBA2mRGBA = 125,
 	/// alpha premultiplication
@@ -1199,17 +1252,21 @@ pub enum ColorConversionCodes {
 	/// RGB to YUV 4:2:0 family
 	COLOR_BGR2YUV_I420 = 128,
 	// RGB to YUV 4:2:0 family
-	// COLOR_RGB2YUV_IYUV = 127 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_RGB2YUV_I420 instead
+	// COLOR_RGB2YUV_IYUV = 127,
 	// RGB to YUV 4:2:0 family
-	// COLOR_BGR2YUV_IYUV = 128 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BGR2YUV_I420 instead
+	// COLOR_BGR2YUV_IYUV = 128,
 	/// RGB to YUV 4:2:0 family
 	COLOR_RGBA2YUV_I420 = 129,
 	/// RGB to YUV 4:2:0 family
 	COLOR_BGRA2YUV_I420 = 130,
 	// RGB to YUV 4:2:0 family
-	// COLOR_RGBA2YUV_IYUV = 129 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_RGBA2YUV_I420 instead
+	// COLOR_RGBA2YUV_IYUV = 129,
 	// RGB to YUV 4:2:0 family
-	// COLOR_BGRA2YUV_IYUV = 130 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BGRA2YUV_I420 instead
+	// COLOR_BGRA2YUV_IYUV = 130,
 	/// RGB to YUV 4:2:0 family
 	COLOR_RGB2YUV_YV12 = 131,
 	/// RGB to YUV 4:2:0 family
@@ -1226,22 +1283,34 @@ pub enum ColorConversionCodes {
 	COLOR_BayerRG2BGR = 48,
 	/// equivalent to GBRG Bayer pattern
 	COLOR_BayerGR2BGR = 49,
-	// COLOR_BayerRGGB2BGR = 46 as isize, // duplicate discriminant
-	// COLOR_BayerGRBG2BGR = 47 as isize, // duplicate discriminant
-	// COLOR_BayerBGGR2BGR = 48 as isize, // duplicate discriminant
-	// COLOR_BayerGBRG2BGR = 49 as isize, // duplicate discriminant
-	// COLOR_BayerRGGB2RGB = 48 as isize, // duplicate discriminant
-	// COLOR_BayerGRBG2RGB = 49 as isize, // duplicate discriminant
-	// COLOR_BayerBGGR2RGB = 46 as isize, // duplicate discriminant
-	// COLOR_BayerGBRG2RGB = 47 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBG2BGR instead
+	// COLOR_BayerRGGB2BGR = 46,
+	// Duplicate, use COLOR_BayerGB2BGR instead
+	// COLOR_BayerGRBG2BGR = 47,
+	// Duplicate, use COLOR_BayerRG2BGR instead
+	// COLOR_BayerBGGR2BGR = 48,
+	// Duplicate, use COLOR_BayerGR2BGR instead
+	// COLOR_BayerGBRG2BGR = 49,
+	// Duplicate, use COLOR_BayerBGGR2BGR instead
+	// COLOR_BayerRGGB2RGB = 48,
+	// Duplicate, use COLOR_BayerGBRG2BGR instead
+	// COLOR_BayerGRBG2RGB = 49,
+	// Duplicate, use COLOR_BayerRGGB2BGR instead
+	// COLOR_BayerBGGR2RGB = 46,
+	// Duplicate, use COLOR_BayerGRBG2BGR instead
+	// COLOR_BayerGBRG2RGB = 47,
 	// equivalent to RGGB Bayer pattern
-	// COLOR_BayerBG2RGB = 48 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerRGGB2RGB instead
+	// COLOR_BayerBG2RGB = 48,
 	// equivalent to GRBG Bayer pattern
-	// COLOR_BayerGB2RGB = 49 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGRBG2RGB instead
+	// COLOR_BayerGB2RGB = 49,
 	// equivalent to BGGR Bayer pattern
-	// COLOR_BayerRG2RGB = 46 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBGGR2RGB instead
+	// COLOR_BayerRG2RGB = 46,
 	// equivalent to GBRG Bayer pattern
-	// COLOR_BayerGR2RGB = 47 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGBRG2RGB instead
+	// COLOR_BayerGR2RGB = 47,
 	/// equivalent to RGGB Bayer pattern
 	COLOR_BayerBG2GRAY = 86,
 	/// equivalent to GRBG Bayer pattern
@@ -1250,10 +1319,14 @@ pub enum ColorConversionCodes {
 	COLOR_BayerRG2GRAY = 88,
 	/// equivalent to GBRG Bayer pattern
 	COLOR_BayerGR2GRAY = 89,
-	// COLOR_BayerRGGB2GRAY = 86 as isize, // duplicate discriminant
-	// COLOR_BayerGRBG2GRAY = 87 as isize, // duplicate discriminant
-	// COLOR_BayerBGGR2GRAY = 88 as isize, // duplicate discriminant
-	// COLOR_BayerGBRG2GRAY = 89 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBG2GRAY instead
+	// COLOR_BayerRGGB2GRAY = 86,
+	// Duplicate, use COLOR_BayerGB2GRAY instead
+	// COLOR_BayerGRBG2GRAY = 87,
+	// Duplicate, use COLOR_BayerRG2GRAY instead
+	// COLOR_BayerBGGR2GRAY = 88,
+	// Duplicate, use COLOR_BayerGR2GRAY instead
+	// COLOR_BayerGBRG2GRAY = 89,
 	/// equivalent to RGGB Bayer pattern
 	COLOR_BayerBG2BGR_VNG = 62,
 	/// equivalent to GRBG Bayer pattern
@@ -1262,22 +1335,34 @@ pub enum ColorConversionCodes {
 	COLOR_BayerRG2BGR_VNG = 64,
 	/// equivalent to GBRG Bayer pattern
 	COLOR_BayerGR2BGR_VNG = 65,
-	// COLOR_BayerRGGB2BGR_VNG = 62 as isize, // duplicate discriminant
-	// COLOR_BayerGRBG2BGR_VNG = 63 as isize, // duplicate discriminant
-	// COLOR_BayerBGGR2BGR_VNG = 64 as isize, // duplicate discriminant
-	// COLOR_BayerGBRG2BGR_VNG = 65 as isize, // duplicate discriminant
-	// COLOR_BayerRGGB2RGB_VNG = 64 as isize, // duplicate discriminant
-	// COLOR_BayerGRBG2RGB_VNG = 65 as isize, // duplicate discriminant
-	// COLOR_BayerBGGR2RGB_VNG = 62 as isize, // duplicate discriminant
-	// COLOR_BayerGBRG2RGB_VNG = 63 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBG2BGR_VNG instead
+	// COLOR_BayerRGGB2BGR_VNG = 62,
+	// Duplicate, use COLOR_BayerGB2BGR_VNG instead
+	// COLOR_BayerGRBG2BGR_VNG = 63,
+	// Duplicate, use COLOR_BayerRG2BGR_VNG instead
+	// COLOR_BayerBGGR2BGR_VNG = 64,
+	// Duplicate, use COLOR_BayerGR2BGR_VNG instead
+	// COLOR_BayerGBRG2BGR_VNG = 65,
+	// Duplicate, use COLOR_BayerBGGR2BGR_VNG instead
+	// COLOR_BayerRGGB2RGB_VNG = 64,
+	// Duplicate, use COLOR_BayerGBRG2BGR_VNG instead
+	// COLOR_BayerGRBG2RGB_VNG = 65,
+	// Duplicate, use COLOR_BayerRGGB2BGR_VNG instead
+	// COLOR_BayerBGGR2RGB_VNG = 62,
+	// Duplicate, use COLOR_BayerGRBG2BGR_VNG instead
+	// COLOR_BayerGBRG2RGB_VNG = 63,
 	// equivalent to RGGB Bayer pattern
-	// COLOR_BayerBG2RGB_VNG = 64 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerRGGB2RGB_VNG instead
+	// COLOR_BayerBG2RGB_VNG = 64,
 	// equivalent to GRBG Bayer pattern
-	// COLOR_BayerGB2RGB_VNG = 65 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGRBG2RGB_VNG instead
+	// COLOR_BayerGB2RGB_VNG = 65,
 	// equivalent to BGGR Bayer pattern
-	// COLOR_BayerRG2RGB_VNG = 62 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBGGR2RGB_VNG instead
+	// COLOR_BayerRG2RGB_VNG = 62,
 	// equivalent to GBRG Bayer pattern
-	// COLOR_BayerGR2RGB_VNG = 63 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGBRG2RGB_VNG instead
+	// COLOR_BayerGR2RGB_VNG = 63,
 	/// equivalent to RGGB Bayer pattern
 	COLOR_BayerBG2BGR_EA = 135,
 	/// equivalent to GRBG Bayer pattern
@@ -1286,22 +1371,34 @@ pub enum ColorConversionCodes {
 	COLOR_BayerRG2BGR_EA = 137,
 	/// equivalent to GBRG Bayer pattern
 	COLOR_BayerGR2BGR_EA = 138,
-	// COLOR_BayerRGGB2BGR_EA = 135 as isize, // duplicate discriminant
-	// COLOR_BayerGRBG2BGR_EA = 136 as isize, // duplicate discriminant
-	// COLOR_BayerBGGR2BGR_EA = 137 as isize, // duplicate discriminant
-	// COLOR_BayerGBRG2BGR_EA = 138 as isize, // duplicate discriminant
-	// COLOR_BayerRGGB2RGB_EA = 137 as isize, // duplicate discriminant
-	// COLOR_BayerGRBG2RGB_EA = 138 as isize, // duplicate discriminant
-	// COLOR_BayerBGGR2RGB_EA = 135 as isize, // duplicate discriminant
-	// COLOR_BayerGBRG2RGB_EA = 136 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBG2BGR_EA instead
+	// COLOR_BayerRGGB2BGR_EA = 135,
+	// Duplicate, use COLOR_BayerGB2BGR_EA instead
+	// COLOR_BayerGRBG2BGR_EA = 136,
+	// Duplicate, use COLOR_BayerRG2BGR_EA instead
+	// COLOR_BayerBGGR2BGR_EA = 137,
+	// Duplicate, use COLOR_BayerGR2BGR_EA instead
+	// COLOR_BayerGBRG2BGR_EA = 138,
+	// Duplicate, use COLOR_BayerBGGR2BGR_EA instead
+	// COLOR_BayerRGGB2RGB_EA = 137,
+	// Duplicate, use COLOR_BayerGBRG2BGR_EA instead
+	// COLOR_BayerGRBG2RGB_EA = 138,
+	// Duplicate, use COLOR_BayerRGGB2BGR_EA instead
+	// COLOR_BayerBGGR2RGB_EA = 135,
+	// Duplicate, use COLOR_BayerGRBG2BGR_EA instead
+	// COLOR_BayerGBRG2RGB_EA = 136,
 	// equivalent to RGGB Bayer pattern
-	// COLOR_BayerBG2RGB_EA = 137 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerRGGB2RGB_EA instead
+	// COLOR_BayerBG2RGB_EA = 137,
 	// equivalent to GRBG Bayer pattern
-	// COLOR_BayerGB2RGB_EA = 138 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGRBG2RGB_EA instead
+	// COLOR_BayerGB2RGB_EA = 138,
 	// equivalent to BGGR Bayer pattern
-	// COLOR_BayerRG2RGB_EA = 135 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBGGR2RGB_EA instead
+	// COLOR_BayerRG2RGB_EA = 135,
 	// equivalent to GBRG Bayer pattern
-	// COLOR_BayerGR2RGB_EA = 136 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGBRG2RGB_EA instead
+	// COLOR_BayerGR2RGB_EA = 136,
 	/// equivalent to RGGB Bayer pattern
 	COLOR_BayerBG2BGRA = 139,
 	/// equivalent to GRBG Bayer pattern
@@ -1310,22 +1407,34 @@ pub enum ColorConversionCodes {
 	COLOR_BayerRG2BGRA = 141,
 	/// equivalent to GBRG Bayer pattern
 	COLOR_BayerGR2BGRA = 142,
-	// COLOR_BayerRGGB2BGRA = 139 as isize, // duplicate discriminant
-	// COLOR_BayerGRBG2BGRA = 140 as isize, // duplicate discriminant
-	// COLOR_BayerBGGR2BGRA = 141 as isize, // duplicate discriminant
-	// COLOR_BayerGBRG2BGRA = 142 as isize, // duplicate discriminant
-	// COLOR_BayerRGGB2RGBA = 141 as isize, // duplicate discriminant
-	// COLOR_BayerGRBG2RGBA = 142 as isize, // duplicate discriminant
-	// COLOR_BayerBGGR2RGBA = 139 as isize, // duplicate discriminant
-	// COLOR_BayerGBRG2RGBA = 140 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBG2BGRA instead
+	// COLOR_BayerRGGB2BGRA = 139,
+	// Duplicate, use COLOR_BayerGB2BGRA instead
+	// COLOR_BayerGRBG2BGRA = 140,
+	// Duplicate, use COLOR_BayerRG2BGRA instead
+	// COLOR_BayerBGGR2BGRA = 141,
+	// Duplicate, use COLOR_BayerGR2BGRA instead
+	// COLOR_BayerGBRG2BGRA = 142,
+	// Duplicate, use COLOR_BayerBGGR2BGRA instead
+	// COLOR_BayerRGGB2RGBA = 141,
+	// Duplicate, use COLOR_BayerGBRG2BGRA instead
+	// COLOR_BayerGRBG2RGBA = 142,
+	// Duplicate, use COLOR_BayerRGGB2BGRA instead
+	// COLOR_BayerBGGR2RGBA = 139,
+	// Duplicate, use COLOR_BayerGRBG2BGRA instead
+	// COLOR_BayerGBRG2RGBA = 140,
 	// equivalent to RGGB Bayer pattern
-	// COLOR_BayerBG2RGBA = 141 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerRGGB2RGBA instead
+	// COLOR_BayerBG2RGBA = 141,
 	// equivalent to GRBG Bayer pattern
-	// COLOR_BayerGB2RGBA = 142 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGRBG2RGBA instead
+	// COLOR_BayerGB2RGBA = 142,
 	// equivalent to BGGR Bayer pattern
-	// COLOR_BayerRG2RGBA = 139 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerBGGR2RGBA instead
+	// COLOR_BayerRG2RGBA = 139,
 	// equivalent to GBRG Bayer pattern
-	// COLOR_BayerGR2RGBA = 140 as isize, // duplicate discriminant
+	// Duplicate, use COLOR_BayerGBRG2RGBA instead
+	// COLOR_BayerGR2RGBA = 140,
 	COLOR_COLORCVT_MAX = 143,
 }
 
@@ -1335,49 +1444,49 @@ opencv_type_enum! { crate::imgproc::ColorConversionCodes }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ColormapTypes {
-	/// ![autumn](https://docs.opencv.org/4.6.0/colorscale_autumn.jpg)
+	/// ![autumn](https://docs.opencv.org/4.7.0/colorscale_autumn.jpg)
 	COLORMAP_AUTUMN = 0,
-	/// ![bone](https://docs.opencv.org/4.6.0/colorscale_bone.jpg)
+	/// ![bone](https://docs.opencv.org/4.7.0/colorscale_bone.jpg)
 	COLORMAP_BONE = 1,
-	/// ![jet](https://docs.opencv.org/4.6.0/colorscale_jet.jpg)
+	/// ![jet](https://docs.opencv.org/4.7.0/colorscale_jet.jpg)
 	COLORMAP_JET = 2,
-	/// ![winter](https://docs.opencv.org/4.6.0/colorscale_winter.jpg)
+	/// ![winter](https://docs.opencv.org/4.7.0/colorscale_winter.jpg)
 	COLORMAP_WINTER = 3,
-	/// ![rainbow](https://docs.opencv.org/4.6.0/colorscale_rainbow.jpg)
+	/// ![rainbow](https://docs.opencv.org/4.7.0/colorscale_rainbow.jpg)
 	COLORMAP_RAINBOW = 4,
-	/// ![ocean](https://docs.opencv.org/4.6.0/colorscale_ocean.jpg)
+	/// ![ocean](https://docs.opencv.org/4.7.0/colorscale_ocean.jpg)
 	COLORMAP_OCEAN = 5,
-	/// ![summer](https://docs.opencv.org/4.6.0/colorscale_summer.jpg)
+	/// ![summer](https://docs.opencv.org/4.7.0/colorscale_summer.jpg)
 	COLORMAP_SUMMER = 6,
-	/// ![spring](https://docs.opencv.org/4.6.0/colorscale_spring.jpg)
+	/// ![spring](https://docs.opencv.org/4.7.0/colorscale_spring.jpg)
 	COLORMAP_SPRING = 7,
-	/// ![cool](https://docs.opencv.org/4.6.0/colorscale_cool.jpg)
+	/// ![cool](https://docs.opencv.org/4.7.0/colorscale_cool.jpg)
 	COLORMAP_COOL = 8,
-	/// ![HSV](https://docs.opencv.org/4.6.0/colorscale_hsv.jpg)
+	/// ![HSV](https://docs.opencv.org/4.7.0/colorscale_hsv.jpg)
 	COLORMAP_HSV = 9,
-	/// ![pink](https://docs.opencv.org/4.6.0/colorscale_pink.jpg)
+	/// ![pink](https://docs.opencv.org/4.7.0/colorscale_pink.jpg)
 	COLORMAP_PINK = 10,
-	/// ![hot](https://docs.opencv.org/4.6.0/colorscale_hot.jpg)
+	/// ![hot](https://docs.opencv.org/4.7.0/colorscale_hot.jpg)
 	COLORMAP_HOT = 11,
-	/// ![parula](https://docs.opencv.org/4.6.0/colorscale_parula.jpg)
+	/// ![parula](https://docs.opencv.org/4.7.0/colorscale_parula.jpg)
 	COLORMAP_PARULA = 12,
-	/// ![magma](https://docs.opencv.org/4.6.0/colorscale_magma.jpg)
+	/// ![magma](https://docs.opencv.org/4.7.0/colorscale_magma.jpg)
 	COLORMAP_MAGMA = 13,
-	/// ![inferno](https://docs.opencv.org/4.6.0/colorscale_inferno.jpg)
+	/// ![inferno](https://docs.opencv.org/4.7.0/colorscale_inferno.jpg)
 	COLORMAP_INFERNO = 14,
-	/// ![plasma](https://docs.opencv.org/4.6.0/colorscale_plasma.jpg)
+	/// ![plasma](https://docs.opencv.org/4.7.0/colorscale_plasma.jpg)
 	COLORMAP_PLASMA = 15,
-	/// ![viridis](https://docs.opencv.org/4.6.0/colorscale_viridis.jpg)
+	/// ![viridis](https://docs.opencv.org/4.7.0/colorscale_viridis.jpg)
 	COLORMAP_VIRIDIS = 16,
-	/// ![cividis](https://docs.opencv.org/4.6.0/colorscale_cividis.jpg)
+	/// ![cividis](https://docs.opencv.org/4.7.0/colorscale_cividis.jpg)
 	COLORMAP_CIVIDIS = 17,
-	/// ![twilight](https://docs.opencv.org/4.6.0/colorscale_twilight.jpg)
+	/// ![twilight](https://docs.opencv.org/4.7.0/colorscale_twilight.jpg)
 	COLORMAP_TWILIGHT = 18,
-	/// ![twilight shifted](https://docs.opencv.org/4.6.0/colorscale_twilight_shifted.jpg)
+	/// ![twilight shifted](https://docs.opencv.org/4.7.0/colorscale_twilight_shifted.jpg)
 	COLORMAP_TWILIGHT_SHIFTED = 19,
-	/// ![turbo](https://docs.opencv.org/4.6.0/colorscale_turbo.jpg)
+	/// ![turbo](https://docs.opencv.org/4.7.0/colorscale_turbo.jpg)
 	COLORMAP_TURBO = 20,
-	/// ![deepgreen](https://docs.opencv.org/4.6.0/colorscale_deepgreen.jpg)
+	/// ![deepgreen](https://docs.opencv.org/4.7.0/colorscale_deepgreen.jpg)
 	COLORMAP_DEEPGREEN = 21,
 }
 
@@ -1387,13 +1496,13 @@ opencv_type_enum! { crate::imgproc::ColormapTypes }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ConnectedComponentsAlgorithmsTypes {
-	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
 	CCL_DEFAULT = -1,
-	/// SAUF [Wu2009](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+	/// SAUF [Wu2009](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 	CCL_WU = 0,
-	/// BBDT [Grana2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
+	/// BBDT [Grana2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 	CCL_GRANA = 1,
-	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
 	CCL_BOLELLI = 2,
 	/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
 	CCL_SAUF = 3,
@@ -1438,9 +1547,9 @@ pub enum ContourApproximationModes {
 	/// compresses horizontal, vertical, and diagonal segments and leaves only their end points.
 	/// For example, an up-right rectangular contour is encoded with 4 points.
 	CHAIN_APPROX_SIMPLE = 2,
-	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_TehChin89)
+	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_TehChin89)
 	CHAIN_APPROX_TC89_L1 = 3,
-	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_TehChin89)
+	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_TehChin89)
 	CHAIN_APPROX_TC89_KCOS = 4,
 }
 
@@ -1597,10 +1706,11 @@ pub enum HistCompMethods {
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%20%5Csqrt%7B1%20%2D%20%5Cfrac%7B1%7D%7B%5Csqrt%7B%5Cbar%7BH%5F1%7D%20%5Cbar%7BH%5F2%7D%20N%5E2%7D%7D%20%5Csum%5FI%20%5Csqrt%7BH%5F1%28I%29%20%5Ccdot%20H%5F2%28I%29%7D%7D)
 	HISTCMP_BHATTACHARYYA = 3,
 	// Synonym for HISTCMP_BHATTACHARYYA
-	// HISTCMP_HELLINGER = 3 as isize, // duplicate discriminant
+	// Duplicate, use HISTCMP_BHATTACHARYYA instead
+	// HISTCMP_HELLINGER = 3,
 	/// Alternative Chi-Square
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%202%20%2A%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%2BH%5F2%28I%29%7D)
-	/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
+	/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
 	HISTCMP_CHISQR_ALT = 4,
 	/// Kullback-Leibler divergence
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%5Csum%20%5FI%20H%5F1%28I%29%20%5Clog%20%5Cleft%28%5Cfrac%7BH%5F1%28I%29%7D%7BH%5F2%28I%29%7D%5Cright%29)
@@ -1626,7 +1736,7 @@ pub enum HoughModes {
 	/// multi-scale variant of the classical Hough transform. The lines are encoded the same way as
 	/// HOUGH_STANDARD.
 	HOUGH_MULTI_SCALE = 2,
-	/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Yuen90)
+	/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yuen90)
 	HOUGH_GRADIENT = 3,
 	/// variation of HOUGH_GRADIENT to get better accuracy
 	HOUGH_GRADIENT_ALT = 4,
@@ -1877,7 +1987,7 @@ pub enum TemplateMatchModes {
 opencv_type_enum! { crate::imgproc::TemplateMatchModes }
 
 /// type of the threshold operation
-/// ![threshold types](https://docs.opencv.org/4.6.0/threshold.png)
+/// ![threshold types](https://docs.opencv.org/4.7.0/threshold.png)
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ThresholdTypes {
@@ -1943,7 +2053,7 @@ pub fn canny_derivative(dx: &dyn core::ToInputArray, dy: &dyn core::ToInputArray
 	Ok(ret)
 }
 
-/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Canny86) .
+/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Canny86) .
 /// 
 /// The function finds edges in the input image and marks them in the output map edges using the
 /// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -1978,8 +2088,8 @@ pub fn canny(image: &dyn core::ToInputArray, edges: &mut dyn core::ToOutputArray
 /// Computes the "minimal work" distance between two weighted point configurations.
 /// 
 /// The function computes the earth mover distance and/or a lower boundary of the distance between the
-/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
-/// [Rubner2000](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
+/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
+/// [Rubner2000](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
 /// problem that is solved using some modification of a simplex algorithm, thus the complexity is
 /// exponential in the worst case, though, on average it is much faster. In the case of a real metric
 /// the lower boundary can be calculated even faster (using linear-time algorithm) and it can be used
@@ -2126,17 +2236,17 @@ pub fn hough_circles(image: &dyn core::ToInputArray, circles: &mut dyn core::ToO
 /// Finds line segments in a binary image using the probabilistic Hough transform.
 /// 
 /// The function implements the probabilistic Hough transform algorithm for line detection, described
-/// in [Matas00](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Matas00)
+/// in [Matas00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Matas00)
 /// 
 /// See the line detection example below:
 /// @include snippets/imgproc_HoughLinesP.cpp
 /// This is a sample picture the function parameters have been tuned for:
 /// 
-/// ![image](https://docs.opencv.org/4.6.0/building.jpg)
+/// ![image](https://docs.opencv.org/4.7.0/building.jpg)
 /// 
 /// And this is the output of the above program in case of the probabilistic Hough transform:
 /// 
-/// ![image](https://docs.opencv.org/4.6.0/houghp.png)
+/// ![image](https://docs.opencv.org/4.7.0/houghp.png)
 /// 
 /// ## Parameters
 /// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
@@ -2145,7 +2255,7 @@ pub fn hough_circles(image: &dyn core::ToInputArray, circles: &mut dyn core::ToO
 /// line segment.
 /// * rho: Distance resolution of the accumulator in pixels.
 /// * theta: Angle resolution of the accumulator in radians.
-/// * threshold: Accumulator threshold parameter. Only those lines are returned that get enough
+/// * threshold: %Accumulator threshold parameter. Only those lines are returned that get enough
 /// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
 /// * minLineLength: Minimum line length. Line segments shorter than that are rejected.
 /// * maxLineGap: Maximum allowed gap between points on the same line to link them.
@@ -2175,13 +2285,14 @@ pub fn hough_lines_p(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOut
 /// * lines: Output vector of found lines. Each vector is encoded as a vector<Vec3d> ![inline formula](https://latex.codecogs.com/png.latex?%28votes%2C%20rho%2C%20theta%29).
 /// The larger the value of 'votes', the higher the reliability of the Hough line.
 /// * lines_max: Max count of Hough lines.
-/// * threshold: Accumulator threshold parameter. Only those lines are returned that get enough
+/// * threshold: %Accumulator threshold parameter. Only those lines are returned that get enough
 /// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
 /// * min_rho: Minimum value for ![inline formula](https://latex.codecogs.com/png.latex?%5Crho) for the accumulator (Note: ![inline formula](https://latex.codecogs.com/png.latex?%5Crho) can be negative. The absolute value ![inline formula](https://latex.codecogs.com/png.latex?%7C%5Crho%7C) is the distance of a line to the origin.).
 /// * max_rho: Maximum value for ![inline formula](https://latex.codecogs.com/png.latex?%5Crho) for the accumulator.
 /// * rho_step: Distance resolution of the accumulator.
 /// * min_theta: Minimum angle value of the accumulator in radians.
-/// * max_theta: Maximum angle value of the accumulator in radians.
+/// * max_theta: Upper bound for the angle value of the accumulator in radians. The actual maximum
+/// angle may be slightly less than max_theta, depending on the parameters min_theta and theta_step.
 /// * theta_step: Angle resolution of the accumulator in radians.
 #[inline]
 pub fn hough_lines_point_set(point: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray, lines_max: i32, threshold: i32, min_rho: f64, max_rho: f64, rho_step: f64, min_theta: f64, max_theta: f64, theta_step: f64) -> Result<()> {
@@ -2203,23 +2314,24 @@ pub fn hough_lines_point_set(point: &dyn core::ToInputArray, lines: &mut dyn cor
 /// ## Parameters
 /// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
 /// * lines: Output vector of lines. Each line is represented by a 2 or 3 element vector
-/// ![inline formula](https://latex.codecogs.com/png.latex?%28%5Crho%2C%20%5Ctheta%29) or ![inline formula](https://latex.codecogs.com/png.latex?%28%5Crho%2C%20%5Ctheta%2C%20%5Ctextrm%7Bvotes%7D%29) . ![inline formula](https://latex.codecogs.com/png.latex?%5Crho) is the distance from the coordinate origin ![inline formula](https://latex.codecogs.com/png.latex?%280%2C0%29) (top-left corner of
-/// the image). ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta) is the line rotation angle in radians (
-/// ![inline formula](https://latex.codecogs.com/png.latex?0%20%5Csim%20%5Ctextrm%7Bvertical%20line%7D%2C%20%5Cpi%2F2%20%5Csim%20%5Ctextrm%7Bhorizontal%20line%7D) ).
+/// ![inline formula](https://latex.codecogs.com/png.latex?%28%5Crho%2C%20%5Ctheta%29) or ![inline formula](https://latex.codecogs.com/png.latex?%28%5Crho%2C%20%5Ctheta%2C%20%5Ctextrm%7Bvotes%7D%29), where ![inline formula](https://latex.codecogs.com/png.latex?%5Crho) is the distance from
+/// the coordinate origin ![inline formula](https://latex.codecogs.com/png.latex?%280%2C0%29) (top-left corner of the image), ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta) is the line rotation
+/// angle in radians ( ![inline formula](https://latex.codecogs.com/png.latex?0%20%5Csim%20%5Ctextrm%7Bvertical%20line%7D%2C%20%5Cpi%2F2%20%5Csim%20%5Ctextrm%7Bhorizontal%20line%7D) ), and
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctextrm%7Bvotes%7D) is the value of accumulator.
 /// * rho: Distance resolution of the accumulator in pixels.
 /// * theta: Angle resolution of the accumulator in radians.
-/// * threshold: Accumulator threshold parameter. Only those lines are returned that get enough
+/// * threshold: %Accumulator threshold parameter. Only those lines are returned that get enough
 /// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
-/// * srn: For the multi-scale Hough transform, it is a divisor for the distance resolution rho .
+/// * srn: For the multi-scale Hough transform, it is a divisor for the distance resolution rho.
 /// The coarse accumulator distance resolution is rho and the accurate accumulator resolution is
-/// rho/srn . If both srn=0 and stn=0 , the classical Hough transform is used. Otherwise, both these
+/// rho/srn. If both srn=0 and stn=0, the classical Hough transform is used. Otherwise, both these
 /// parameters should be positive.
 /// * stn: For the multi-scale Hough transform, it is a divisor for the distance resolution theta.
 /// * min_theta: For standard and multi-scale Hough transform, minimum angle to check for lines.
 /// Must fall between 0 and max_theta.
-/// * max_theta: For standard and multi-scale Hough transform, maximum angle to check for lines.
-/// Must fall between min_theta and CV_PI.
+/// * max_theta: For standard and multi-scale Hough transform, an upper bound for the angle.
+/// Must fall between min_theta and CV_PI. The actual maximum angle in the accumulator may be slightly
+/// less than max_theta, depending on the parameters min_theta and theta.
 /// 
 /// ## C++ default parameters
 /// * srn: 0
@@ -2239,7 +2351,7 @@ pub fn hough_lines(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOutpu
 
 /// Calculates seven Hu invariants.
 /// 
-/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Hu62); see also
+/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Hu62); see also
 /// <http://en.wikipedia.org/wiki/Image_moment>) defined as:
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
@@ -2270,7 +2382,7 @@ pub fn hu_moments_1(m: core::Moments, hu: &mut dyn core::ToOutputArray) -> Resul
 
 /// Calculates seven Hu invariants.
 /// 
-/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Hu62); see also
+/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Hu62); see also
 /// <http://en.wikipedia.org/wiki/Image_moment>) defined as:
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
@@ -2311,7 +2423,7 @@ pub fn hu_moments(moments: core::Moments, hu: &mut [f64; 7]) -> Result<()> {
 /// ## Parameters
 /// * src: Source image.
 /// * dst: Destination image of the same size and the same number of channels as src .
-/// * ddepth: Desired depth of the destination image.
+/// * ddepth: Desired depth of the destination image, see @ref filter_depths "combinations".
 /// * ksize: Aperture size used to compute the second-derivative filters. See #getDerivKernels for
 /// details. The size must be positive and odd.
 /// * scale: Optional scale factor for the computed Laplacian values. By default, no scaling is
@@ -2994,6 +3106,13 @@ pub fn calc_back_project(images: &dyn core::ToInputArray, channels: &core::Vecto
 /// 
 /// ## Overloaded parameters
 /// 
+/// 
+/// this variant supports only uniform histograms.
+/// 
+/// ranges argument is either empty vector or a flattened vector of histSize.size()*2 elements
+/// (histSize.size() element pairs). The first and second elements of each pair specify the lower and
+/// upper boundaries.
+/// 
 /// ## C++ default parameters
 /// * accumulate: false
 #[inline]
@@ -3159,7 +3278,7 @@ pub fn compare_hist(h1: &dyn core::ToInputArray, h2: &dyn core::ToInputArray, me
 /// represents the background label. ltype specifies the output label image type, an important
 /// consideration based on the total number of labels or alternatively the total number of pixels in
 /// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 /// are supported, see the #ConnectedComponentsAlgorithmsTypes for details. Note that SAUF algorithm forces
 /// a row major ordering of labels while Spaghetti and BBDT do not.
 /// This function uses parallel version of the algorithms (statistics included) if at least one allowed
@@ -3211,7 +3330,7 @@ pub fn connected_components_with_stats(image: &dyn core::ToInputArray, labels: &
 /// represents the background label. ltype specifies the output label image type, an important
 /// consideration based on the total number of labels or alternatively the total number of pixels in
 /// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 /// are supported, see the #ConnectedComponentsAlgorithmsTypes for details. Note that SAUF algorithm forces
 /// a row major ordering of labels while Spaghetti and BBDT do not.
 /// This function uses parallel version of the algorithms (statistics included) if at least one allowed
@@ -3247,7 +3366,7 @@ pub fn connected_components_with_stats_with_algorithm(image: &dyn core::ToInputA
 /// represents the background label. ltype specifies the output label image type, an important
 /// consideration based on the total number of labels or alternatively the total number of pixels in
 /// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 /// are supported, see the #ConnectedComponentsAlgorithmsTypes for details. Note that SAUF algorithm forces
 /// a row major ordering of labels while Spaghetti and BBDT do not.
 /// This function uses parallel version of the algorithms if at least one allowed
@@ -3288,7 +3407,7 @@ pub fn connected_components(image: &dyn core::ToInputArray, labels: &mut dyn cor
 /// represents the background label. ltype specifies the output label image type, an important
 /// consideration based on the total number of labels or alternatively the total number of pixels in
 /// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 /// are supported, see the #ConnectedComponentsAlgorithmsTypes for details. Note that SAUF algorithm forces
 /// a row major ordering of labels while Spaghetti and BBDT do not.
 /// This function uses parallel version of the algorithms if at least one allowed
@@ -3403,7 +3522,7 @@ pub fn convert_maps(map1: &dyn core::ToInputArray, map2: &dyn core::ToInputArray
 
 /// Finds the convex hull of a point set.
 /// 
-/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Sklansky82)
+/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Sklansky82)
 /// that has *O(N logN)* complexity in the current implementation.
 /// 
 /// ## Parameters
@@ -3448,7 +3567,7 @@ pub fn convex_hull(points: &dyn core::ToInputArray, hull: &mut dyn core::ToOutpu
 /// 
 /// The figure below displays convexity defects of a hand contour:
 /// 
-/// ![image](https://docs.opencv.org/4.6.0/defects.png)
+/// ![image](https://docs.opencv.org/4.7.0/defects.png)
 /// 
 /// ## Parameters
 /// * contour: Input contour.
@@ -3577,9 +3696,9 @@ pub fn corner_min_eigen_val(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 /// Refines the corner locations.
 /// 
 /// The function iterates to find the sub-pixel accurate location of corners or radial saddle
-/// points as described in [forstner1987fast](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_forstner1987fast), and as shown on the figure below.
+/// points as described in [forstner1987fast](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_forstner1987fast), and as shown on the figure below.
 /// 
-/// ![image](https://docs.opencv.org/4.6.0/cornersubpix.png)
+/// ![image](https://docs.opencv.org/4.7.0/cornersubpix.png)
 /// 
 /// Sub-pixel accurate corner locator is based on the observation that every vector from the center ![inline formula](https://latex.codecogs.com/png.latex?q)
 /// to a point ![inline formula](https://latex.codecogs.com/png.latex?p) located within a neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?q) is orthogonal to the image gradient at ![inline formula](https://latex.codecogs.com/png.latex?p)
@@ -3870,7 +3989,7 @@ pub fn demosaicing(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 /// * src: input image; the number of channels can be arbitrary, but the depth should be one of
 /// CV_8U, CV_16U, CV_16S, CV_32F or CV_64F.
 /// * dst: output image of the same size and type as src.
-/// * kernel: structuring element used for dilation; if elemenat=Mat(), a 3 x 3 rectangular
+/// * kernel: structuring element used for dilation; if element=Mat(), a 3 x 3 rectangular
 /// structuring element is used. Kernel can be created using #getStructuringElement
 /// * anchor: position of the anchor within the element; default value (-1, -1) means that the
 /// anchor is at the element center.
@@ -3903,9 +4022,9 @@ pub fn dilate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, k
 /// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 /// 
 /// When maskSize == #DIST_MASK_PRECISE and distanceType == #DIST_L2 , the function runs the
-/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 /// 
-/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 /// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 /// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 /// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -3970,9 +4089,9 @@ pub fn distance_transform_with_labels(src: &dyn core::ToInputArray, dst: &mut dy
 /// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 /// 
 /// When maskSize == #DIST_MASK_PRECISE and distanceType == #DIST_L2 , the function runs the
-/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 /// 
-/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 /// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 /// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 /// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -4214,7 +4333,7 @@ pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_sta
 /// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 /// the meaning of the parameters to draw the blue arc.
 /// 
-/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.6.0/ellipse.svg)
+/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.7.0/ellipse.svg)
 /// 
 /// ## Parameters
 /// * img: Image.
@@ -4254,7 +4373,7 @@ pub fn ellipse(img: &mut dyn core::ToInputOutputArray, center: core::Point, axes
 /// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 /// the meaning of the parameters to draw the blue arc.
 /// 
-/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.6.0/ellipse.svg)
+/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.7.0/ellipse.svg)
 /// 
 /// ## Parameters
 /// * img: Image.
@@ -4466,7 +4585,7 @@ pub fn filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 
 /// Finds contours in a binary image.
 /// 
-/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 /// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 /// OpenCV sample directory.
 /// 
@@ -4509,7 +4628,7 @@ pub fn find_contours_with_hierarchy(image: &dyn core::ToInputArray, contours: &m
 
 /// Finds contours in a binary image.
 /// 
-/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 /// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 /// OpenCV sample directory.
 /// 
@@ -4555,7 +4674,7 @@ pub fn find_contours(image: &dyn core::ToInputArray, contours: &mut dyn core::To
 /// 
 /// The function calculates the ellipse that fits a set of 2D points.
 /// It returns the rotated rectangle in which the ellipse is inscribed.
-/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
+/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
 /// 
 /// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 /// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
@@ -4601,7 +4720,7 @@ pub fn fit_ellipse_ams(points: &dyn core::ToInputArray) -> Result<core::RotatedR
 /// 
 /// The function calculates the ellipse that fits a set of 2D points.
 /// It returns the rotated rectangle in which the ellipse is inscribed.
-/// The Direct least square (Direct) method by [Fitzgibbon1999](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Fitzgibbon1999) is used.
+/// The Direct least square (Direct) method by [Fitzgibbon1999](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Fitzgibbon1999) is used.
 /// 
 /// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 /// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
@@ -4653,7 +4772,7 @@ pub fn fit_ellipse_direct(points: &dyn core::ToInputArray) -> Result<core::Rotat
 /// Fits an ellipse around a set of 2D points.
 /// 
 /// The function calculates the ellipse that fits (in a least-squares sense) a set of 2D points best of
-/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
+/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
 /// is used. Developer should keep in mind that it is possible that the returned
 /// ellipse/rotatedRect data contains negative indices, due to the data points being close to the
 /// border of the containing Mat element.
@@ -5318,7 +5437,7 @@ pub fn good_features_to_track_with_quality(image: &dyn core::ToInputArray, corne
 /// Determines strong corners on an image.
 /// 
 /// The function finds the most prominent corners in the image or in the specified image region, as
-/// described in [Shi94](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Shi94)
+/// described in [Shi94](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Shi94)
 /// 
 /// *   Function calculates the corner quality measure at every source image pixel using the
 ///    #cornerMinEigenVal or #cornerHarris .
@@ -5445,10 +5564,10 @@ pub fn grab_cut(img: &dyn core::ToInputArray, mask: &mut dyn core::ToInputOutput
 /// example. In case of multi-channel images, sums for each channel are accumulated independently.
 /// 
 /// As a practical example, the next figure shows the calculation of the integral of a straight
-/// rectangle Rect(3,3,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
+/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 /// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 /// 
-/// ![integral calculation example](https://docs.opencv.org/4.6.0/integral.png)
+/// ![integral calculation example](https://docs.opencv.org/4.7.0/integral.png)
 /// 
 /// ## Parameters
 /// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -5496,10 +5615,10 @@ pub fn integral3(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray
 /// example. In case of multi-channel images, sums for each channel are accumulated independently.
 /// 
 /// As a practical example, the next figure shows the calculation of the integral of a straight
-/// rectangle Rect(3,3,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
+/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 /// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 /// 
-/// ![integral calculation example](https://docs.opencv.org/4.6.0/integral.png)
+/// ![integral calculation example](https://docs.opencv.org/4.7.0/integral.png)
 /// 
 /// ## Parameters
 /// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -5548,10 +5667,10 @@ pub fn integral2(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray
 /// example. In case of multi-channel images, sums for each channel are accumulated independently.
 /// 
 /// As a practical example, the next figure shows the calculation of the integral of a straight
-/// rectangle Rect(3,3,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
+/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 /// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 /// 
-/// ![integral calculation example](https://docs.opencv.org/4.6.0/integral.png)
+/// ![integral calculation example](https://docs.opencv.org/4.7.0/integral.png)
 /// 
 /// ## Parameters
 /// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -5896,10 +6015,10 @@ pub fn min_enclosing_circle(points: &dyn core::ToInputArray, center: &mut core::
 /// area. The output for a given 2D point set is shown in the image below. 2D points are depicted in
 /// *red* and the enclosing triangle in *yellow*.
 /// 
-/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.6.0/minenclosingtriangle.png)
+/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.7.0/minenclosingtriangle.png)
 /// 
-/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
-/// [KleeLaskowski85](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
+/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
+/// [KleeLaskowski85](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
 /// enclosing triangle of a 2D convex polygon with n vertices. Since the #minEnclosingTriangle function
 /// takes a 2D point set as input an additional preprocessing step of computing the convex hull of the
 /// 2D point set is required. The complexity of the #convexHull function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29) which is higher
@@ -6066,7 +6185,7 @@ pub fn phase_correlate(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputAr
 /// 
 /// See below a sample output of the function where each image pixel is tested against the contour:
 /// 
-/// ![sample output](https://docs.opencv.org/4.6.0/pointpolygon.png)
+/// ![sample output](https://docs.opencv.org/4.7.0/pointpolygon.png)
 /// 
 /// ## Parameters
 /// * contour: Input contour.
@@ -6473,7 +6592,7 @@ pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// Below are some examples of intersection configurations. The hatched pattern indicates the
 /// intersecting region and the red vertices are returned by the function.
 /// 
-/// ![intersection examples](https://docs.opencv.org/4.6.0/intersection.png)
+/// ![intersection examples](https://docs.opencv.org/4.7.0/intersection.png)
 /// 
 /// ## Parameters
 /// * rect1: First rectangle
@@ -6598,6 +6717,32 @@ pub fn sqr_box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 	Ok(ret)
 }
 
+/// Blurs an image using the stackBlur.
+/// 
+/// The function applies and stackBlur to an image.
+/// stackBlur can generate similar results as Gaussian blur, and the time consumption does not increase with the increase of kernel size.
+/// It creates a kind of moving stack of colors whilst scanning through the image. Thereby it just has to add one new block of color to the right side
+/// of the stack and remove the leftmost color. The remaining colors on the topmost layer of the stack are either added on or reduced by one,
+/// depending on if they are on the right or on the left side of the stack. The only supported borderType is BORDER_REPLICATE.
+/// Original paper was proposed by Mario Klingemann, which can be found http://underdestruction.com/2004/02/25/stackblur-2004.
+/// 
+/// ## Parameters
+/// * src: input image. The number of channels can be arbitrary, but the depth should be one of
+/// CV_8U, CV_16U, CV_16S or CV_32F.
+/// * dst: output image of the same size and type as src.
+/// * ksize: stack-blurring kernel size. The ksize.width and ksize.height can differ but they both must be
+/// positive and odd.
+#[inline]
+pub fn stack_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: core::Size) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_stackBlur_const__InputArrayR_const__OutputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
 /// Applies a fixed-level threshold to each array element.
 /// 
 /// The function applies fixed-level thresholding to a multiple-channel array. The function is typically
@@ -6717,7 +6862,7 @@ pub fn warp_perspective(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// \brief Remaps an image to polar or semilog-polar coordinates space
 /// 
 /// @anchor polar_remaps_reference_image
-/// ![Polar remaps reference](https://docs.opencv.org/4.6.0/polar_remap_doc.png)
+/// ![Polar remaps reference](https://docs.opencv.org/4.7.0/polar_remap_doc.png)
 /// 
 /// Transform the source image using the following transformation:
 /// ![block formula](https://latex.codecogs.com/png.latex?%0Adst%28%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%0A)
@@ -6792,7 +6937,7 @@ pub fn warp_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArra
 /// Performs a marker-based image segmentation using the watershed algorithm.
 /// 
 /// The function implements one of the variants of watershed, non-parametric marker-based segmentation
-/// algorithm, described in [Meyer92](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Meyer92) .
+/// algorithm, described in [Meyer92](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Meyer92) .
 /// 
 /// Before passing the image to the function, you have to roughly outline the desired regions in the
 /// image markers with positive (\>0) indices. So, every region is represented as one or more connected
@@ -7093,7 +7238,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait + crate::imgproc::GeneralizedHo
 
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
-/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 pub trait GeneralizedHoughBallardConst: crate::imgproc::GeneralizedHoughConst {
 	fn as_raw_GeneralizedHoughBallard(&self) -> *const c_void;
 
@@ -7144,7 +7289,7 @@ pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough + crate::img
 
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
-/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 pub trait GeneralizedHoughGuilConst: crate::imgproc::GeneralizedHoughConst {
 	fn as_raw_GeneralizedHoughGuil(&self) -> *const c_void;
 
@@ -7754,7 +7899,7 @@ impl LineIterator {
 
 /// Line segment detector class
 /// 
-/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Rafael12) .
+/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Rafael12) .
 /// 
 /// 
 /// Note: Implementation has been removed from OpenCV version 3.4.6 to 3.4.15 and version 4.1.0 to 4.5.3 due original code license conflict.
@@ -7771,7 +7916,7 @@ pub trait LineSegmentDetector: core::AlgorithmTrait + crate::imgproc::LineSegmen
 	/// 
 	/// This is the output of the default parameters of the algorithm on the above shown image.
 	/// 
-	/// ![image](https://docs.opencv.org/4.6.0/building_lsd.png)
+	/// ![image](https://docs.opencv.org/4.7.0/building_lsd.png)
 	/// 
 	/// ## Parameters
 	/// * image: A grayscale (CV_8UC1) input image. If only a roi needs to be selected, use:
@@ -7931,7 +8076,7 @@ pub trait Subdiv2DTraitConst {
 	/// *   PREV_AROUND_LEFT previous around the left facet (reversed eOnext )
 	/// *   PREV_AROUND_RIGHT previous around the right facet (reversed eDnext )
 	/// 
-	/// ![sample output](https://docs.opencv.org/4.6.0/quadedge.png)
+	/// ![sample output](https://docs.opencv.org/4.7.0/quadedge.png)
 	/// 
 	/// ## Returns
 	/// edge ID related to the input edge.
@@ -8225,11 +8370,11 @@ impl Subdiv2D {
 /// which can be used for image segmentation.
 /// 
 /// Usage example:
-/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
+/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
 /// 
 /// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
 /// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
-/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
+/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
 pub trait IntelligentScissorsMBTraitConst {
 	fn as_raw_IntelligentScissorsMB(&self) -> *const c_void;
 
@@ -8415,11 +8560,11 @@ pub trait IntelligentScissorsMBTrait: crate::imgproc::IntelligentScissorsMBTrait
 /// which can be used for image segmentation.
 /// 
 /// Usage example:
-/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.6.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
+/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
 /// 
 /// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
 /// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
-/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
+/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
 pub struct IntelligentScissorsMB {
 	ptr: *mut c_void
 }

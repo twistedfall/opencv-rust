@@ -80,7 +80,7 @@ pub enum CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL {
 
 opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL }
 
-/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.6.0/d0/de3/citelist.html#CITEREF_Brox2004)).
+/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Brox2004)).
 pub trait CUDA_BroxOpticalFlowConst: crate::cudaoptflow::CUDA_DenseOpticalFlowConst {
 	fn as_raw_CUDA_BroxOpticalFlow(&self) -> *const c_void;
 

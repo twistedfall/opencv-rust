@@ -11,17 +11,75 @@
 //! # Video Encoding/Decoding
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::EncoderParamsTraitConst, super::EncoderParamsTrait, super::EncoderCallBackConst, super::EncoderCallBack, super::VideoWriterConst, super::VideoWriter, super::VideoReaderConst, super::VideoReader, super::RawVideoSourceConst, super::RawVideoSource };
+	pub use { super::EncoderCallbackConst, super::EncoderCallback, super::VideoWriterConst, super::VideoWriter, super::VideoReaderConst, super::VideoReader, super::RawVideoSourceConst, super::RawVideoSource };
 }
 
 pub const AV1: i32 = 11;
 pub const Adaptive: i32 = 2;
 pub const Bob: i32 = 1;
+/// OpenCV color format, can be used with both VideoReader and VideoWriter.
 pub const ColorFormat_BGR: i32 = 2;
+/// OpenCV color format, can be used with both VideoReader and VideoWriter.
 pub const ColorFormat_BGRA: i32 = 1;
+/// OpenCV color format, can be used with both VideoReader and VideoWriter.
 pub const ColorFormat_GRAY: i32 = 3;
-pub const ColorFormat_PROP_NOT_SUPPORTED: i32 = 5;
-pub const ColorFormat_YUV: i32 = 4;
+/// Nvidia Buffer Format - 8 bit Packed A8Y8U8V8. This is a word-ordered format where a pixel is represented by a 32-bit word with V in the lowest 8 bits, U in the next 8 bits, Y in the 8 bits after that and A in the highest 8 bits, can only be used with VideoWriter.
+pub const ColorFormat_NV_AYUV: i32 = 11;
+/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes], use with VideoReader, can only be used with VideoWriter.
+pub const ColorFormat_NV_IYUV: i32 = 9;
+/// Nvidia color format - equivalent to YUV - Semi-Planar YUV [Y plane followed by interleaved UV plane], can be used with both VideoReader and VideoWriter.
+pub const ColorFormat_NV_NV12: i32 = 4;
+/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes], use with VideoReader, can only be used with VideoWriter.
+pub const ColorFormat_NV_YUV444: i32 = 10;
+/// Nvidia Buffer Format - Planar YUV [Y plane followed by V and U planes], use with VideoReader, can only be used with VideoWriter.
+pub const ColorFormat_NV_YV12: i32 = 8;
+pub const ColorFormat_PROP_NOT_SUPPORTED: i32 = 12;
+/// OpenCV color format, can only be used with VideoWriter.
+pub const ColorFormat_RGB: i32 = 5;
+/// OpenCV color format, can only be used with VideoWriter.
+pub const ColorFormat_RGBA: i32 = 6;
+pub const ColorFormat_UNDEFINED: i32 = 0;
+pub const ENC_CODEC_PROFILE_AUTOSELECT: i32 = 0;
+pub const ENC_H264_PROFILE_BASELINE: i32 = 1;
+pub const ENC_H264_PROFILE_CONSTRAINED_HIGH: i32 = 7;
+pub const ENC_H264_PROFILE_HIGH: i32 = 3;
+pub const ENC_H264_PROFILE_HIGH_444: i32 = 4;
+pub const ENC_H264_PROFILE_MAIN: i32 = 2;
+pub const ENC_H264_PROFILE_PROGRESSIVE_HIGH: i32 = 6;
+pub const ENC_H264_PROFILE_STEREO: i32 = 5;
+pub const ENC_HEVC_PROFILE_FREXT: i32 = 10;
+pub const ENC_HEVC_PROFILE_MAIN: i32 = 8;
+pub const ENC_HEVC_PROFILE_MAIN10: i32 = 9;
+/// Single Pass.
+pub const ENC_MULTI_PASS_DISABLED: i32 = 0;
+/// Constant bitrate mode.
+pub const ENC_PARAMS_RC_CBR: i32 = 2;
+/// Constant QP mode.
+pub const ENC_PARAMS_RC_CONSTQP: i32 = 0;
+/// Variable bitrate mode.
+pub const ENC_PARAMS_RC_VBR: i32 = 1;
+pub const ENC_PRESET_P1: i32 = 1;
+pub const ENC_PRESET_P2: i32 = 2;
+pub const ENC_PRESET_P3: i32 = 3;
+pub const ENC_PRESET_P4: i32 = 4;
+pub const ENC_PRESET_P5: i32 = 5;
+pub const ENC_PRESET_P6: i32 = 6;
+pub const ENC_PRESET_P7: i32 = 7;
+pub const ENC_TUNING_INFO_COUNT: i32 = 5;
+/// Tune presets for latency tolerant encoding.
+pub const ENC_TUNING_INFO_HIGH_QUALITY: i32 = 1;
+/// Tune presets for lossless encoding.
+pub const ENC_TUNING_INFO_LOSSLESS: i32 = 4;
+/// Tune presets for low latency streaming.
+pub const ENC_TUNING_INFO_LOW_LATENCY: i32 = 2;
+/// Tune presets for ultra low latency streaming.
+pub const ENC_TUNING_INFO_ULTRA_LOW_LATENCY: i32 = 3;
+/// Undefined tuningInfo. Invalid value for encoding.
+pub const ENC_TUNING_INFO_UNDEFINED: i32 = 0;
+/// Two Pass encoding is enabled where first Pass is full resolution.
+pub const ENC_TWO_PASS_FULL_RESOLUTION: i32 = 2;
+/// Two Pass encoding is enabled where first Pass is quarter resolution.
+pub const ENC_TWO_PASS_QUARTER_RESOLUTION: i32 = 1;
 pub const H264: i32 = 4;
 pub const H264_MVC: i32 = 7;
 pub const H264_SVC: i32 = 6;
@@ -33,13 +91,6 @@ pub const MPEG4: i32 = 2;
 pub const Monochrome: i32 = 0;
 pub const NumCodecs: i32 = 12;
 pub const NumFormats: i32 = 4;
-pub const SF_BGR: i32 = 5;
-pub const SF_GRAY: i32 = 5;
-pub const SF_IYUV: i32 = 4;
-pub const SF_NV12: i32 = 3;
-pub const SF_UYVY: i32 = 0;
-pub const SF_YUY2: i32 = 1;
-pub const SF_YV12: i32 = 2;
 /// Y,UV  (4:2:0)
 pub const Uncompressed_NV12: i32 = 1314271538;
 /// UYVY (4:2:2)
@@ -89,7 +140,10 @@ pub enum ChromaFormat {
 
 opencv_type_enum! { crate::cudacodec::ChromaFormat }
 
-/// Video codecs supported by cudacodec::VideoReader .
+/// Video codecs supported by cudacodec::VideoReader and cudacodec::VideoWriter.
+/// 
+/// Note:
+///    *   Support will depend on your hardware, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Codec {
@@ -120,15 +174,32 @@ pub enum Codec {
 
 opencv_type_enum! { crate::cudacodec::Codec }
 
-/// ColorFormat for the frame returned by nextFrame()/retrieve().
+/// ColorFormat for the frame returned by VideoReader::nextFrame() and VideoReader::retrieve() or used to initialize a VideoWriter.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ColorFormat {
+	UNDEFINED = 0,
+	/// OpenCV color format, can be used with both VideoReader and VideoWriter.
 	BGRA = 1,
+	/// OpenCV color format, can be used with both VideoReader and VideoWriter.
 	BGR = 2,
+	/// OpenCV color format, can be used with both VideoReader and VideoWriter.
 	GRAY = 3,
-	YUV = 4,
-	PROP_NOT_SUPPORTED = 5,
+	/// Nvidia color format - equivalent to YUV - Semi-Planar YUV [Y plane followed by interleaved UV plane], can be used with both VideoReader and VideoWriter.
+	NV_NV12 = 4,
+	/// OpenCV color format, can only be used with VideoWriter.
+	RGB = 5,
+	/// OpenCV color format, can only be used with VideoWriter.
+	RGBA = 6,
+	/// Nvidia Buffer Format - Planar YUV [Y plane followed by V and U planes], use with VideoReader, can only be used with VideoWriter.
+	NV_YV12 = 8,
+	/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes], use with VideoReader, can only be used with VideoWriter.
+	NV_IYUV = 9,
+	/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes], use with VideoReader, can only be used with VideoWriter.
+	NV_YUV444 = 10,
+	/// Nvidia Buffer Format - 8 bit Packed A8Y8U8V8. This is a word-ordered format where a pixel is represented by a 32-bit word with V in the lowest 8 bits, U in the next 8 bits, Y in the 8 bits after that and A in the highest 8 bits, can only be used with VideoWriter.
+	NV_AYUV = 11,
+	PROP_NOT_SUPPORTED = 12,
 }
 
 opencv_type_enum! { crate::cudacodec::ColorFormat }
@@ -148,30 +219,86 @@ pub enum DeinterlaceMode {
 
 opencv_type_enum! { crate::cudacodec::DeinterlaceMode }
 
+/// Multi Pass Encoding.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-pub enum EncoderCallBack_PicType {
-	IFRAME = 1,
-	PFRAME = 2,
-	BFRAME = 3,
+pub enum EncodeMultiPass {
+	/// Single Pass.
+	ENC_MULTI_PASS_DISABLED = 0,
+	/// Two Pass encoding is enabled where first Pass is quarter resolution.
+	ENC_TWO_PASS_QUARTER_RESOLUTION = 1,
+	/// Two Pass encoding is enabled where first Pass is full resolution.
+	ENC_TWO_PASS_FULL_RESOLUTION = 2,
 }
 
-opencv_type_enum! { crate::cudacodec::EncoderCallBack_PicType }
+opencv_type_enum! { crate::cudacodec::EncodeMultiPass }
 
-/// /////////////////////////////// Video Encoding //////////////////////////////////
+/// Rate Control Modes.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-pub enum SurfaceFormat {
-	SF_UYVY = 0,
-	SF_YUY2 = 1,
-	SF_YV12 = 2,
-	SF_NV12 = 3,
-	SF_IYUV = 4,
-	SF_BGR = 5,
-	// SF_GRAY = 5 as isize, // duplicate discriminant
+pub enum EncodeParamsRcMode {
+	/// Constant QP mode.
+	ENC_PARAMS_RC_CONSTQP = 0,
+	/// Variable bitrate mode.
+	ENC_PARAMS_RC_VBR = 1,
+	/// Constant bitrate mode.
+	ENC_PARAMS_RC_CBR = 2,
 }
 
-opencv_type_enum! { crate::cudacodec::SurfaceFormat }
+opencv_type_enum! { crate::cudacodec::EncodeParamsRcMode }
+
+/// Nvidia Encoding Presets. Performance degrades and quality improves as we move from P1 to P7.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum EncodePreset {
+	ENC_PRESET_P1 = 1,
+	ENC_PRESET_P2 = 2,
+	ENC_PRESET_P3 = 3,
+	ENC_PRESET_P4 = 4,
+	ENC_PRESET_P5 = 5,
+	ENC_PRESET_P6 = 6,
+	ENC_PRESET_P7 = 7,
+}
+
+opencv_type_enum! { crate::cudacodec::EncodePreset }
+
+/// Supported Encoder Profiles.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum EncodeProfile {
+	ENC_CODEC_PROFILE_AUTOSELECT = 0,
+	ENC_H264_PROFILE_BASELINE = 1,
+	ENC_H264_PROFILE_MAIN = 2,
+	ENC_H264_PROFILE_HIGH = 3,
+	ENC_H264_PROFILE_HIGH_444 = 4,
+	ENC_H264_PROFILE_STEREO = 5,
+	ENC_H264_PROFILE_PROGRESSIVE_HIGH = 6,
+	ENC_H264_PROFILE_CONSTRAINED_HIGH = 7,
+	ENC_HEVC_PROFILE_MAIN = 8,
+	ENC_HEVC_PROFILE_MAIN10 = 9,
+	ENC_HEVC_PROFILE_FREXT = 10,
+}
+
+opencv_type_enum! { crate::cudacodec::EncodeProfile }
+
+/// Tuning information.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum EncodeTuningInfo {
+	/// Undefined tuningInfo. Invalid value for encoding.
+	ENC_TUNING_INFO_UNDEFINED = 0,
+	/// Tune presets for latency tolerant encoding.
+	ENC_TUNING_INFO_HIGH_QUALITY = 1,
+	/// Tune presets for low latency streaming.
+	ENC_TUNING_INFO_LOW_LATENCY = 2,
+	/// Tune presets for ultra low latency streaming.
+	ENC_TUNING_INFO_ULTRA_LOW_LATENCY = 3,
+	/// Tune presets for lossless encoding.
+	ENC_TUNING_INFO_LOSSLESS = 4,
+	ENC_TUNING_INFO_COUNT = 5,
+}
+
+opencv_type_enum! { crate::cudacodec::EncodeTuningInfo }
 
 /// cv::cudacodec::VideoReader generic properties identifier.
 #[repr(C)]
@@ -258,94 +385,25 @@ pub fn create_video_reader(filename: &str, source_params: &core::Vector<i32>, pa
 /// Creates video writer.
 /// 
 /// ## Parameters
-/// * fileName: Name of the output video file. Only AVI file format is supported.
+/// * fileName: Name of the output video file. Only raw h264 or hevc files are supported.
 /// * frameSize: Size of the input video frames.
+/// * codec: Codec.
 /// * fps: Framerate of the created video stream.
-/// * format: Surface format of input frames ( SF_UYVY , SF_YUY2 , SF_YV12 , SF_NV12 ,
-/// SF_IYUV , SF_BGR or SF_GRAY). BGR or gray frames will be converted to YV12 format before
-/// encoding, frames with other formats will be used as is.
-/// 
-/// The constructors initialize video writer. FFMPEG is used to write videos. User can implement own
-/// multiplexing with cudacodec::EncoderCallBack .
-/// 
-/// ## Overloaded parameters
-/// 
-/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallBack . Use it if you
-/// want to work with raw video stream.
-/// * frameSize: Size of the input video frames.
-/// * fps: Framerate of the created video stream.
-/// * format: Surface format of input frames ( SF_UYVY , SF_YUY2 , SF_YV12 , SF_NV12 ,
-/// SF_IYUV , SF_BGR or SF_GRAY). BGR or gray frames will be converted to YV12 format before
-/// encoding, frames with other formats will be used as is.
+/// * colorFormat: OpenCv color format of the frames to be encoded.
+/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
+/// * stream: Stream for frame pre-processing.
 /// 
 /// ## C++ default parameters
-/// * format: SF_BGR
+/// * codec: Codec::H264
+/// * fps: 25.0
+/// * color_format: ColorFormat::BGR
+/// * encoder_callback: 0
+/// * stream: Stream::Null()
 #[inline]
-pub fn create_video_writer_2(encoder_callback: &core::Ptr<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
-	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_PtrLEncoderCallBackGR_Size_double_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, format, ocvrs_return.as_mut_ptr()) };
-	return_receive!(unsafe ocvrs_return => ret);
-	let ret = ret.into_result()?;
-	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
-	Ok(ret)
-}
-
-/// Creates video writer.
-/// 
-/// ## Parameters
-/// * fileName: Name of the output video file. Only AVI file format is supported.
-/// * frameSize: Size of the input video frames.
-/// * fps: Framerate of the created video stream.
-/// * format: Surface format of input frames ( SF_UYVY , SF_YUY2 , SF_YV12 , SF_NV12 ,
-/// SF_IYUV , SF_BGR or SF_GRAY). BGR or gray frames will be converted to YV12 format before
-/// encoding, frames with other formats will be used as is.
-/// 
-/// The constructors initialize video writer. FFMPEG is used to write videos. User can implement own
-/// multiplexing with cudacodec::EncoderCallBack .
-/// 
-/// ## Overloaded parameters
-/// 
-/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallBack . Use it if you
-/// want to work with raw video stream.
-/// * frameSize: Size of the input video frames.
-/// * fps: Framerate of the created video stream.
-/// * params: Encoder parameters. See cudacodec::EncoderParams.
-/// * format: Surface format of input frames ( SF_UYVY , SF_YUY2 , SF_YV12 , SF_NV12 ,
-/// SF_IYUV , SF_BGR or SF_GRAY). BGR or gray frames will be converted to YV12 format before
-/// encoding, frames with other formats will be used as is.
-/// 
-/// ## C++ default parameters
-/// * format: SF_BGR
-#[inline]
-pub fn create_video_writer_3(encoder_callback: &core::Ptr<dyn crate::cudacodec::EncoderCallBack>, frame_size: core::Size, fps: f64, params: &crate::cudacodec::EncoderParams, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
-	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_PtrLEncoderCallBackGR_Size_double_const_EncoderParamsR_SurfaceFormat(encoder_callback.as_raw_PtrOfEncoderCallBack(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format, ocvrs_return.as_mut_ptr()) };
-	return_receive!(unsafe ocvrs_return => ret);
-	let ret = ret.into_result()?;
-	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
-	Ok(ret)
-}
-
-/// Creates video writer.
-/// 
-/// ## Parameters
-/// * fileName: Name of the output video file. Only AVI file format is supported.
-/// * frameSize: Size of the input video frames.
-/// * fps: Framerate of the created video stream.
-/// * format: Surface format of input frames ( SF_UYVY , SF_YUY2 , SF_YV12 , SF_NV12 ,
-/// SF_IYUV , SF_BGR or SF_GRAY). BGR or gray frames will be converted to YV12 format before
-/// encoding, frames with other formats will be used as is.
-/// 
-/// The constructors initialize video writer. FFMPEG is used to write videos. User can implement own
-/// multiplexing with cudacodec::EncoderCallBack .
-/// 
-/// ## C++ default parameters
-/// * format: SF_BGR
-#[inline]
-pub fn create_video_writer(file_name: &str, frame_size: core::Size, fps: f64, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
+pub fn create_video_writer(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::Codec, fps: f64, color_format: crate::cudacodec::ColorFormat, mut encoder_callback: core::Ptr<dyn crate::cudacodec::EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
 	extern_container_arg!(file_name);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, format, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), codec, fps, color_format, encoder_callback.as_raw_mut_PtrOfEncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
@@ -355,93 +413,84 @@ pub fn create_video_writer(file_name: &str, frame_size: core::Size, fps: f64, fo
 /// Creates video writer.
 /// 
 /// ## Parameters
-/// * fileName: Name of the output video file. Only AVI file format is supported.
+/// * fileName: Name of the output video file. Only raw h264 or hevc files are supported.
 /// * frameSize: Size of the input video frames.
+/// * codec: Codec.
 /// * fps: Framerate of the created video stream.
-/// * format: Surface format of input frames ( SF_UYVY , SF_YUY2 , SF_YV12 , SF_NV12 ,
-/// SF_IYUV , SF_BGR or SF_GRAY). BGR or gray frames will be converted to YV12 format before
-/// encoding, frames with other formats will be used as is.
-/// 
-/// The constructors initialize video writer. FFMPEG is used to write videos. User can implement own
-/// multiplexing with cudacodec::EncoderCallBack .
-/// 
-/// ## Overloaded parameters
-/// 
-/// * fileName: Name of the output video file. Only AVI file format is supported.
-/// * frameSize: Size of the input video frames.
-/// * fps: Framerate of the created video stream.
-/// * params: Encoder parameters. See cudacodec::EncoderParams .
-/// * format: Surface format of input frames ( SF_UYVY , SF_YUY2 , SF_YV12 , SF_NV12 ,
-/// SF_IYUV , SF_BGR or SF_GRAY). BGR or gray frames will be converted to YV12 format before
-/// encoding, frames with other formats will be used as is.
+/// * colorFormat: OpenCv color format of the frames to be encoded.
+/// * params: Additional encoding parameters.
+/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
+/// * stream: Stream for frame pre-processing.
 /// 
 /// ## C++ default parameters
-/// * format: SF_BGR
+/// * encoder_callback: 0
+/// * stream: Stream::Null()
 #[inline]
-pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, fps: f64, params: &crate::cudacodec::EncoderParams, format: crate::cudacodec::SurfaceFormat) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
+pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::Codec, fps: f64, color_format: crate::cudacodec::ColorFormat, params: crate::cudacodec::EncoderParams, mut encoder_callback: core::Ptr<dyn crate::cudacodec::EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
 	extern_container_arg!(file_name);
 	return_send!(via ocvrs_return);
-	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_Size_double_const_EncoderParamsR_SurfaceFormat(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), fps, params.as_raw_EncoderParams(), format, ocvrs_return.as_mut_ptr()) };
+	unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), codec, fps, color_format, &params, encoder_callback.as_raw_mut_PtrOfEncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
 	Ok(ret)
 }
 
-/// Callbacks for CUDA video encoder.
-pub trait EncoderCallBackConst {
-	fn as_raw_EncoderCallBack(&self) -> *const c_void;
+#[inline]
+pub fn equals_encoderparams_encoderparams(lhs: crate::cudacodec::EncoderParams, rhs: crate::cudacodec::EncoderParams) -> Result<bool> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cudacodec_operatorEQ_const_EncoderParamsR_const_EncoderParamsR(&lhs, &rhs, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Quantization Parameter for each type of frame when using ENC_PARAMS_RC_MODE::ENC_PARAMS_RC_CONSTQP.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct EncodeQp {
+	/// Specifies QP value for P-frame.
+	pub qp_inter_p: u32,
+	/// Specifies QP value for B-frame.
+	pub qp_inter_b: u32,
+	/// Specifies QP value for Intra Frame.
+	pub qp_intra: u32,
+}
+
+opencv_type_simple! { crate::cudacodec::EncodeQp }
+
+impl EncodeQp {
+}
+
+/// Interface for encoder callbacks.
+/// 
+/// User can implement own multiplexing by implementing this interface.
+pub trait EncoderCallbackConst {
+	fn as_raw_EncoderCallback(&self) -> *const c_void;
 
 }
 
-pub trait EncoderCallBack: crate::cudacodec::EncoderCallBackConst {
-	fn as_raw_mut_EncoderCallBack(&mut self) -> *mut c_void;
+pub trait EncoderCallback: crate::cudacodec::EncoderCallbackConst {
+	fn as_raw_mut_EncoderCallback(&mut self) -> *mut c_void;
 
-	/// Callback function to signal the start of bitstream that is to be encoded.
-	/// 
-	/// Callback must allocate buffer for CUDA encoder and return pointer to it and it's size.
-	#[inline]
-	fn acquire_bit_stream(&mut self, buffer_size: &mut i32) -> Result<*mut u8> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_EncoderCallBack_acquireBitStream_intX(self.as_raw_mut_EncoderCallBack(), buffer_size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
-	/// Callback function to signal that the encoded bitstream is ready to be written to file.
-	#[inline]
-	fn release_bit_stream(&mut self, data: &mut u8, size: i32) -> Result<()> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_EncoderCallBack_releaseBitStream_unsigned_charX_int(self.as_raw_mut_EncoderCallBack(), data, size, ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
-	/// Callback function to signal that the encoding operation on the frame has started.
+	/// Callback function to signal that the encoded bitstream for one or more frames is ready.
 	/// 
 	/// ## Parameters
-	/// * frameNumber: 
-	/// * picType: Specify frame type (I-Frame, P-Frame or B-Frame).
+	/// * vPacket: The raw bitstream for one or more frames.
 	#[inline]
-	fn on_begin_frame(&mut self, frame_number: i32, pic_type: crate::cudacodec::EncoderCallBack_PicType) -> Result<()> {
+	fn on_encoded(&mut self, mut v_packet: core::Vector<core::Vector<u8>>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_EncoderCallBack_onBeginFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_EncoderCallback_onEncoded_vectorLvectorLuint8_tGG(self.as_raw_mut_EncoderCallback(), v_packet.as_raw_mut_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
-	/// Callback function signals that the encoding operation on the frame has finished.
-	/// 
-	/// ## Parameters
-	/// * frameNumber: 
-	/// * picType: Specify frame type (I-Frame, P-Frame or B-Frame).
+	/// Callback function to that the encoding has finished.
 	#[inline]
-	fn on_end_frame(&mut self, frame_number: i32, pic_type: crate::cudacodec::EncoderCallBack_PicType) -> Result<()> {
+	fn on_encoding_finished(&mut self) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_EncoderCallBack_onEndFrame_int_PicType(self.as_raw_mut_EncoderCallBack(), frame_number, pic_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_EncoderCallback_onEncodingFinished(self.as_raw_mut_EncoderCallback(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -450,333 +499,26 @@ pub trait EncoderCallBack: crate::cudacodec::EncoderCallBackConst {
 }
 
 /// Different parameters for CUDA video encoder.
-pub trait EncoderParamsTraitConst {
-	fn as_raw_EncoderParams(&self) -> *const c_void;
-
-	/// NVVE_P_INTERVAL,
-	#[inline]
-	fn p_interval(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropP_Interval_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_IDR_PERIOD,
-	#[inline]
-	fn idr_period(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropIDR_Period_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_DYNAMIC_GOP,
-	#[inline]
-	fn dynamic_gop(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDynamicGOP_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_RC_TYPE,
-	#[inline]
-	fn rc_type(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropRCType_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_AVG_BITRATE,
-	#[inline]
-	fn avg_bitrate(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropAvgBitrate_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_PEAK_BITRATE,
-	#[inline]
-	fn peak_bitrate(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropPeakBitrate_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_QP_LEVEL_INTRA,
-	#[inline]
-	fn qp_level_intra(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropQP_Level_Intra_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_QP_LEVEL_INTER_P,
-	#[inline]
-	fn qp_level_inter_p(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropQP_Level_InterP_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_QP_LEVEL_INTER_B,
-	#[inline]
-	fn qp_level_inter_b(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropQP_Level_InterB_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_DEBLOCK_MODE,
-	#[inline]
-	fn deblock_mode(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDeblockMode_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_PROFILE_LEVEL,
-	#[inline]
-	fn profile_level(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropProfileLevel_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_FORCE_INTRA,
-	#[inline]
-	fn force_intra(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropForceIntra_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_FORCE_IDR,
-	#[inline]
-	fn force_idr(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropForceIDR_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_CLEAR_STAT,
-	#[inline]
-	fn clear_stat(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropClearStat_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_SET_DEINTERLACE,
-	#[inline]
-	fn di_mode(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDIMode_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_PRESETS,
-	#[inline]
-	fn presets(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropPresets_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_DISABLE_CABAC,
-	#[inline]
-	fn disable_cabac(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDisableCabac_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_CONFIGURE_NALU_FRAMING_TYPE
-	#[inline]
-	fn nalu_framing_type(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropNaluFramingType_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// NVVE_DISABLE_SPS_PPS
-	#[inline]
-	fn disable_spspps(&self) -> i32 {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_getPropDisableSPSPPS_const(self.as_raw_EncoderParams()) };
-		ret
-	}
-	
-	/// Saves parameters to config file.
-	/// 
-	/// ## Parameters
-	/// * configFile: Config file name.
-	#[inline]
-	fn save(&self, config_file: &str) -> Result<()> {
-		extern_container_arg!(config_file);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_EncoderParams_save_const_const_StringR(self.as_raw_EncoderParams(), config_file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
-}
-
-pub trait EncoderParamsTrait: crate::cudacodec::EncoderParamsTraitConst {
-	fn as_raw_mut_EncoderParams(&mut self) -> *mut c_void;
-
-	/// NVVE_P_INTERVAL,
-	#[inline]
-	fn set_p_interval(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropP_Interval_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_IDR_PERIOD,
-	#[inline]
-	fn set_idr_period(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropIDR_Period_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_DYNAMIC_GOP,
-	#[inline]
-	fn set_dynamic_gop(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDynamicGOP_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_RC_TYPE,
-	#[inline]
-	fn set_rc_type(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropRCType_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_AVG_BITRATE,
-	#[inline]
-	fn set_avg_bitrate(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropAvgBitrate_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_PEAK_BITRATE,
-	#[inline]
-	fn set_peak_bitrate(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropPeakBitrate_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_QP_LEVEL_INTRA,
-	#[inline]
-	fn set_qp_level_intra(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropQP_Level_Intra_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_QP_LEVEL_INTER_P,
-	#[inline]
-	fn set_qp_level_inter_p(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropQP_Level_InterP_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_QP_LEVEL_INTER_B,
-	#[inline]
-	fn set_qp_level_inter_b(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropQP_Level_InterB_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_DEBLOCK_MODE,
-	#[inline]
-	fn set_deblock_mode(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDeblockMode_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_PROFILE_LEVEL,
-	#[inline]
-	fn set_profile_level(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropProfileLevel_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_FORCE_INTRA,
-	#[inline]
-	fn set_force_intra(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropForceIntra_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_FORCE_IDR,
-	#[inline]
-	fn set_force_idr(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropForceIDR_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_CLEAR_STAT,
-	#[inline]
-	fn set_clear_stat(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropClearStat_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_SET_DEINTERLACE,
-	#[inline]
-	fn set_di_mode(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDIMode_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_PRESETS,
-	#[inline]
-	fn set_presets(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropPresets_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_DISABLE_CABAC,
-	#[inline]
-	fn set_disable_cabac(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDisableCabac_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_CONFIGURE_NALU_FRAMING_TYPE
-	#[inline]
-	fn set_nalu_framing_type(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropNaluFramingType_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// NVVE_DISABLE_SPS_PPS
-	#[inline]
-	fn set_disable_spspps(&mut self, val: i32) {
-		let ret = unsafe { sys::cv_cudacodec_EncoderParams_setPropDisableSPSPPS_int(self.as_raw_mut_EncoderParams(), val) };
-		ret
-	}
-	
-	/// Reads parameters from config file.
-	/// 
-	/// ## Parameters
-	/// * configFile: Config file name.
-	#[inline]
-	fn load(&mut self, config_file: &str) -> Result<()> {
-		extern_container_arg!(config_file);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_EncoderParams_load_const_StringR(self.as_raw_mut_EncoderParams(), config_file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
-}
-
-/// Different parameters for CUDA video encoder.
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct EncoderParams {
-	ptr: *mut c_void
+	pub nv_preset: crate::cudacodec::EncodePreset,
+	pub tuning_info: crate::cudacodec::EncodeTuningInfo,
+	pub encoding_profile: crate::cudacodec::EncodeProfile,
+	pub rate_control_mode: crate::cudacodec::EncodeParamsRcMode,
+	pub multi_pass_encoding: crate::cudacodec::EncodeMultiPass,
+	/// QP's for ENC_PARAMS_RC_CONSTQP.
+	pub const_qp: crate::cudacodec::EncodeQp,
+	/// target bitrate for ENC_PARAMS_RC_VBR and ENC_PARAMS_RC_CBR.
+	pub average_bit_rate: i32,
+	/// upper bound on bitrate for ENC_PARAMS_RC_VBR and ENC_PARAMS_RC_CONSTQP.
+	pub max_bit_rate: i32,
+	/// value 0 - 51 where video quality decreases as targetQuality increases, used with ENC_PARAMS_RC_VBR.
+	pub target_quality: u8,
+	pub gop_length: i32,
 }
 
-opencv_type_boxed! { EncoderParams }
-
-impl Drop for EncoderParams {
-	fn drop(&mut self) {
-		extern "C" { fn cv_EncoderParams_delete(instance: *mut c_void); }
-		unsafe { cv_EncoderParams_delete(self.as_raw_mut_EncoderParams()) };
-	}
-}
-
-unsafe impl Send for EncoderParams {}
-
-impl crate::cudacodec::EncoderParamsTraitConst for EncoderParams {
-	#[inline] fn as_raw_EncoderParams(&self) -> *const c_void { self.as_raw() }
-}
-
-impl crate::cudacodec::EncoderParamsTrait for EncoderParams {
-	#[inline] fn as_raw_mut_EncoderParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-}
+opencv_type_simple! { crate::cudacodec::EncoderParams }
 
 impl EncoderParams {
 	#[inline]
@@ -785,24 +527,6 @@ impl EncoderParams {
 		unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(ret) };
-		Ok(ret)
-	}
-	
-	/// Constructors.
-	/// 
-	/// ## Parameters
-	/// * configFile: Config file name.
-	/// 
-	/// Creates default parameters or reads parameters from config file.
-	#[inline]
-	pub fn new(config_file: &str) -> Result<crate::cudacodec::EncoderParams> {
-		extern_container_arg!(config_file);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_EncoderParams_EncoderParams_const_StringR(config_file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		let ret = unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -832,6 +556,12 @@ pub struct FormatInfo {
 	/// Maximum number of internal decode surfaces.
 	pub ul_num_decode_surfaces: i32,
 	pub deinterlace_mode: crate::cudacodec::DeinterlaceMode,
+	/// Post-processed size of the output frame.
+	pub target_sz: core::Size,
+	/// Region of interest decoded from video source.
+	pub src_roi: core::Rect,
+	/// Region of interest in the output frame containing the decoded frame.
+	pub target_roi: core::Rect,
 }
 
 opencv_type_simple! { crate::cudacodec::FormatInfo }
@@ -937,6 +667,10 @@ pub trait RawVideoSource: crate::cudacodec::RawVideoSourceConst {
 }
 
 /// Video reader interface.
+/// 
+/// Available when built with WITH_NVCUVID=ON while Nvidia's Video Codec SDK is installed.
+/// 
+/// Decoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
 /// 
 /// 
 /// Note:
@@ -1149,8 +883,10 @@ pub trait VideoReader: crate::cudacodec::VideoReaderConst {
 	/// 
 	/// ## Parameters
 	/// * colorFormat: Value of the ColorFormat.
+	/// ## Returns
+	/// `true` unless the colorFormat is not supported.
 	#[inline]
-	fn set_1(&mut self, color_format: crate::cudacodec::ColorFormat) -> Result<()> {
+	fn set_1(&mut self, color_format: crate::cudacodec::ColorFormat) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_VideoReader_set_const_ColorFormat(self.as_raw_mut_VideoReader(), color_format, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1171,6 +907,10 @@ pub trait VideoReader: crate::cudacodec::VideoReaderConst {
 /// overall application. The optimal number of decode surfaces (in terms of performance and memory utilization) should be decided by experimentation for each application,
 /// but it cannot go below the number determined by NVDEC.
 /// * rawMode: Allow the raw encoded data which has been read up until the last call to grab() to be retrieved by calling retrieve(rawData,RAW_DATA_IDX).
+/// * targetSz: Post-processed size (width/height should be multiples of 2) of the output frame, defaults to the size of the encoded video source.
+/// * srcRoi: Region of interest (x/width should be multiples of 4 and y/height multiples of 2) decoded from video source, defaults to the full frame.
+/// * targetRoi: Region of interest (x/width should be multiples of 4 and y/height multiples of 2) within the output frame to copy and resize the decoded frame to,
+/// defaults to the full frame.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub struct VideoReaderInitParams {
@@ -1178,6 +918,9 @@ pub struct VideoReaderInitParams {
 	pub allow_frame_drop: bool,
 	pub min_num_decode_surfaces: i32,
 	pub raw_mode: bool,
+	pub target_sz: core::Size,
+	pub src_roi: core::Rect,
+	pub target_roi: core::Rect,
 }
 
 opencv_type_simple! { crate::cudacodec::VideoReaderInitParams }
@@ -1196,10 +939,9 @@ impl VideoReaderInitParams {
 
 /// Video writer interface.
 /// 
-/// The implementation uses H264 video codec.
+/// Available when built with WITH_NVCUVENC=ON while Nvidia's Video Codec SDK is installed.
 /// 
-/// 
-/// Note: Currently only Windows platform is supported.
+/// Encoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
 /// 
 /// 
 /// Note:
@@ -1208,13 +950,13 @@ impl VideoReaderInitParams {
 pub trait VideoWriterConst {
 	fn as_raw_VideoWriter(&self) -> *const c_void;
 
+	/// Retrieve the encoding parameters.
 	#[inline]
 	fn get_encoder_params(&self) -> Result<crate::cudacodec::EncoderParams> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_VideoWriter_getEncoderParams_const(self.as_raw_VideoWriter(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { crate::cudacodec::EncoderParams::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -1226,19 +968,25 @@ pub trait VideoWriter: crate::cudacodec::VideoWriterConst {
 	/// Writes the next video frame.
 	/// 
 	/// ## Parameters
-	/// * frame: The written frame.
-	/// * lastFrame: Indicates that it is end of stream. The parameter can be ignored.
+	/// * frame: The framet to be written.
 	/// 
-	/// The method write the specified image to video file. The image must have the same size and the same
+	/// The method encodes the specified image to a video stream. The image must have the same size and the same
 	/// surface format as has been specified when opening the video writer.
-	/// 
-	/// ## C++ default parameters
-	/// * last_frame: false
 	#[inline]
-	fn write(&mut self, frame: &dyn core::ToInputArray, last_frame: bool) -> Result<()> {
+	fn write(&mut self, frame: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(frame);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR_bool(self.as_raw_mut_VideoWriter(), frame.as_raw__InputArray(), last_frame, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), frame.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Waits until the encoding process has finished before calling EncoderCallback::onEncodingFinished().
+	#[inline]
+	fn release(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_VideoWriter_release(self.as_raw_mut_VideoWriter(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
