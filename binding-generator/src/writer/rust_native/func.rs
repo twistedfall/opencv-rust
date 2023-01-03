@@ -203,7 +203,7 @@ fn rust_return_map(
 			ret_name = ret_name,
 		)
 		.into()
-	} else if return_type.as_pointer().map_or(false, |i| !i.is_void()) && !return_type.is_pass_by_ptr()
+	} else if return_type.as_pointer().map_or(false, |i| !i.is_void()) && !return_type.is_rust_by_ptr()
 		|| return_type.as_fixed_array().is_some()
 	{
 		let ptr_call = if return_type.constness().is_const() {

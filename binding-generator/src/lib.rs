@@ -13,6 +13,7 @@
 
 // copy-pasted form python generator (may be obsolete):
 // fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
+// fixme: https://docs.opencv.org/4.x/d8/d6f/structcv_1_1line__descriptor_1_1DrawLinesMatchesFlags.html is an empty class with an anonymous enum, generate that enum
 
 #![allow(clippy::nonminimal_bool)] // pattern `!type_ref.as_vector().is_some()` used for more clarity
 
@@ -29,7 +30,7 @@ pub use abstract_ref_wrapper::AbstractRefWrapper;
 pub use class::Class;
 pub use constant::Const;
 pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Element, EntityElement};
-pub use entity::EntityExt;
+pub use entity::{EntityExt, WalkAction, WalkResult};
 pub use enumeration::Enum;
 use field::{Field, FieldTypeHint};
 pub use func::{Func, FuncId, FunctionTypeHint};
@@ -40,7 +41,7 @@ pub use generator::{is_ephemeral_header, GeneratedType, Generator, GeneratorVisi
 pub use generator_env::{ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 #[allow(unused)]
-use memoize::{memo, memo_map, Memoize, MemoizeMap};
+use memoize::{MemoizeMap, MemoizeMapExt};
 use name_pool::NamePool;
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};

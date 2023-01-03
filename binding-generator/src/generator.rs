@@ -12,6 +12,7 @@ use dunce::canonicalize;
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 
+use crate::entity::WalkAction;
 use crate::type_ref::{CppNameStyle, FishStyle, Kind as TypeRefKind};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
@@ -132,7 +133,7 @@ impl EntityWalkerVisitor<'_> for &mut EphemeralGenerator<'_> {
 		opencv_module_from_path(path).map_or(false, |m| m == self.module)
 	}
 
-	fn visit_entity(&mut self, entity: Entity<'_>) -> bool {
+	fn visit_entity(&mut self, entity: Entity<'_>) -> WalkAction {
 		match entity.get_kind() {
 			EntityKind::ClassDecl | EntityKind::StructDecl => {
 				entity.visit_children(|c, _| {
@@ -159,7 +160,7 @@ impl EntityWalkerVisitor<'_> for &mut EphemeralGenerator<'_> {
 			}
 			_ => {}
 		}
-		true
+		WalkAction::Continue
 	}
 }
 
@@ -185,7 +186,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 		self.visitor.wants_file(path) || path.ends_with("ocvrs_common.hpp")
 	}
 
-	fn visit_entity(&mut self, entity: Entity<'tu>) -> bool {
+	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
 		match entity.get_kind() {
 			EntityKind::Namespace => {
 				if !self.comment_found {
@@ -261,7 +262,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 				unreachable!("Unsupported entity: {:#?}", entity)
 			}
 		}
-		true
+		WalkAction::Continue
 	}
 }
 
@@ -303,7 +304,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 							}
 						}
 					}
-					true
+					WalkAction::Continue
 				});
 				class_decl.walk_classes_while(|sub_cls| {
 					if !gen_env.get_export_config(sub_cls).is_some() {
@@ -312,14 +313,14 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						gen_env.make_export_config(sub_cls).simple = is_simple;
 					}
 					Self::process_class(visitor, gen_env, sub_cls);
-					true
+					WalkAction::Continue
 				});
 				class_decl.walk_typedefs_while(|tdef| {
 					let typedef = Typedef::new(tdef, gen_env);
 					if !typedef.is_excluded() {
 						visitor.visit_typedef(typedef);
 					}
-					true
+					WalkAction::Continue
 				});
 				let cls = Class::new(class_decl, gen_env);
 				visitor.visit_class(cls)
@@ -390,7 +391,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						let underlying_type = typedef.underlying_type_ref();
 						underlying_type.as_function().is_some()
 							|| !underlying_type.is_excluded()
-							|| underlying_type.as_template().map_or(false, |templ| {
+							|| underlying_type.as_template_specialization().map_or(false, |templ| {
 							let cpp_refname = templ.cpp_name(CppNameStyle::Reference);
 							settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
 								|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_refname.as_ref())

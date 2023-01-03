@@ -118,7 +118,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let inner_cpp_full = element_type.cpp_name(CppNameStyle::Reference);
 		let rust_localalias = self.rust_localalias();
 		let vector_class_desc = ClassDesc {
-			is_by_ptr: true,
+			is_boxed: true,
 			cpp_name_ref: vec_type.cpp_name(CppNameStyle::Reference).into_owned(),
 		};
 		let size_t = self.gen_env.resolve_typeref("size_t");

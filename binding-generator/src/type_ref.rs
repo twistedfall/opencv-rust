@@ -6,6 +6,7 @@ use once_cell::sync::Lazy;
 use once_cell::unsync::Lazy as UnsyncLazy;
 use regex::{Captures, Regex};
 
+use crate::entity::WalkAction;
 use crate::renderer::{CppExternReturnRenderer, CppRenderer};
 use crate::{
 	settings::{self, ArgOverride},
@@ -261,7 +262,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 							}
 							_ => {}
 						}
-						false
+						WalkAction::Interrupt
 					});
 					if let Some(out) = non_typedef {
 						return out;
@@ -376,9 +377,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_template(&self) -> Option<Class<'tu, 'ge>> {
+	pub fn as_template_specialization(&self) -> Option<Class<'tu, 'ge>> {
 		match self.base().kind() {
-			Kind::Class(cls) => cls.as_template(),
+			Kind::Class(cls) => cls.as_template_specialization(),
 			_ => None,
 		}
 	}
@@ -553,10 +554,6 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn is_by_move(&self) -> bool {
-		matches!(self.canonical().kind(), Kind::RValueReference(_))
-	}
-
 	pub fn as_reference(&self) -> Option<TypeRef<'tu, 'ge>> {
 		if let Kind::Reference(out) | Kind::RValueReference(out) = self.canonical().kind() {
 			Some(out)
@@ -565,12 +562,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn as_smart_ptr(&self) -> Option<SmartPtr<'tu, 'ge>> {
-		if let Kind::SmartPtr(out) = self.canonical().kind() {
-			Some(out)
-		} else {
-			None
-		}
+	/// True for types whose values are moved as per C++ function specification
+	pub fn is_by_move(&self) -> bool {
+		matches!(self.canonical().kind(), Kind::RValueReference(_))
 	}
 
 	pub fn is_copy(&self) -> bool {
@@ -603,6 +597,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			self.type_hint,
 			TypeRefTypeHint::ArgOverride(ArgOverride::NullableSlice) | TypeRefTypeHint::ArgOverride(ArgOverride::Nullable)
 		)
+	}
+
+	pub fn as_smart_ptr(&self) -> Option<SmartPtr<'tu, 'ge>> {
+		if let Kind::SmartPtr(out) = self.canonical().kind() {
+			Some(out)
+		} else {
+			None
+		}
 	}
 
 	pub fn as_class(&self) -> Option<Class<'tu, 'ge>> {
@@ -694,9 +696,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	/// True if value of the type that need to be passed by pointer to a heap-allocated object to and from the C++ side
 	pub fn is_extern_by_ptr(&self) -> bool {
 		match self.canonical().kind() {
-			Kind::Class(inner) => inner.is_by_ptr(),
+			Kind::Class(inner) => inner.is_boxed(),
 			Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => inner.is_extern_by_ptr(),
 			Kind::SmartPtr(_) | Kind::StdVector(_) | Kind::StdTuple(_) => true,
 			_ => false,
@@ -707,7 +710,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		settings::DATA_TYPES.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
 	}
 
-	fn can_pass_by_ptr(&self) -> bool {
+	fn can_rust_by_ptr(&self) -> bool {
 		if let Some(inner) = self.as_pointer() {
 			if inner.is_primitive() && !self.as_string().is_some() {
 				return true;
@@ -716,9 +719,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		false
 	}
 
-	/// True for types that get passed by Rust pointer
-	pub fn is_pass_by_ptr(&self) -> bool {
-		self.is_void_ptr() || matches!(self.type_hint, TypeRefTypeHint::PrimitiveRefAsPointer) && self.can_pass_by_ptr()
+	/// True for types that get passed by Rust pointer as opposed to a reference or an owned value
+	pub fn is_rust_by_ptr(&self) -> bool {
+		self.is_void_ptr() || matches!(self.type_hint, TypeRefTypeHint::PrimitiveRefAsPointer) && self.can_rust_by_ptr()
 	}
 
 	pub fn template_specialization_args(&self) -> Vec<TemplateArg<'tu, 'ge>> {
@@ -884,6 +887,9 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		if self.is_template() {
 			props.push("template");
 		}
+		if self.is_generic() {
+			props.push("generic");
+		}
 		if self.is_primitive() {
 			props.push("primitive");
 		}
@@ -917,11 +923,29 @@ impl fmt::Debug for TypeRef<'_, '_> {
 				}
 			}
 		}
+		if self.is_input_array() {
+			props.push("input_array");
+		}
+		if self.is_output_array() {
+			props.push("output_array");
+		}
+		if self.is_input_output_array() {
+			props.push("input_output_array");
+		}
 		if self.is_void() {
 			props.push("void");
 		}
+		if self.is_bool() {
+			props.push("bool");
+		}
+		if self.is_void_ptr() {
+			props.push("void_ptr");
+		}
 		if self.as_pointer().is_some() {
 			props.push("pointer");
+		}
+		if self.is_by_move() {
+			props.push("by_move");
 		}
 		if self.as_reference().is_some() {
 			props.push("reference");
@@ -929,11 +953,11 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		if self.is_copy() {
 			props.push("copy");
 		}
-		if self.is_extern_by_ptr() {
-			props.push("by_ptr");
+		if self.is_clone() {
+			props.push("clone");
 		}
-		if self.is_generic() {
-			props.push("generic");
+		if self.is_extern_by_ptr() {
+			props.push("extern_by_ptr");
 		}
 		let props = props.join(", ");
 		let mut dbg = f.debug_struct("TypeRef");

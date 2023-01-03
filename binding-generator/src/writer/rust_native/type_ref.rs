@@ -123,7 +123,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	}
 
 	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str> {
-		self.render(RustRenderer::new(name_style, lifetime, self.is_pass_by_ptr()))
+		self.render(RustRenderer::new(name_style, lifetime, self.is_rust_by_ptr()))
 	}
 
 	fn rust_self_func_decl(&self, method_constness: Constness) -> String {
@@ -696,8 +696,7 @@ impl fmt::Display for Lifetime {
 		match *self {
 			Self::Elided => Ok(()),
 			Self::Static => {
-				let s = "'static";
-				f.write_str(s)?;
+				f.write_str("'static")?;
 				write_align(f)
 			}
 			Self::Explicit(n) if n >= 25 => {

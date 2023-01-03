@@ -76,7 +76,7 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		let rust_localalias = self.rust_localalias();
 		let elements = self.elements();
 		let tuple_desc = ClassDesc {
-			is_by_ptr: true,
+			is_boxed: true,
 			cpp_name_ref: type_ref.cpp_name(CppNameStyle::Reference).into_owned(),
 		};
 		let void = self.gen_env.resolve_typeref("void");

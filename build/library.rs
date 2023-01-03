@@ -512,7 +512,7 @@ impl Library {
 				.filter(|&name| !disabled_probes.contains(name))
 				.collect::<Vec<_>>()
 				.join(", ");
-			format!("Failed to find OpenCV package using probes: {}", methods).into()
+			format!("Failed to find installed OpenCV package using probes: {}, refer to https://github.com/twistedfall/opencv-rust#getting-opencv for help", methods).into()
 		})
 	}
 

@@ -1,4 +1,5 @@
 use std::collections::{HashMap, HashSet};
+use std::convert::TryFrom;
 use std::fmt;
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
@@ -9,8 +10,8 @@ use clang::{Entity, EntityKind, EntityVisitResult, StorageClass, Type};
 use crate::class::Kind as ClassKind;
 use crate::type_ref::CppNameStyle;
 use crate::{
-	comment, is_ephemeral_header, is_opencv_path, memo_map, opencv_module_from_path, settings, Class, Const, Element,
-	EntityWalker, EntityWalkerVisitor, Func, MemoizeMap, NamePool, TypeRef,
+	comment, is_ephemeral_header, is_opencv_path, opencv_module_from_path, settings, Class, Const, Element, EntityWalker,
+	EntityWalkerVisitor, Func, MemoizeMap, MemoizeMapExt, NamePool, TypeRef, WalkAction,
 };
 
 #[derive(Clone, Debug, Default)]
@@ -96,14 +97,14 @@ impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 			|| opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module)
 	}
 
-	fn visit_resolve_type(&mut self, typ: Type<'tu>) -> bool {
+	fn visit_resolve_type(&mut self, typ: Type<'tu>) -> WalkAction {
 		let type_ref = TypeRef::new(typ, self.gen_env);
 		let name = type_ref.cpp_name(CppNameStyle::Reference).into_owned();
 		self.gen_env.type_resolve_cache.insert(name, typ);
-		true
+		WalkAction::Continue
 	}
 
-	fn visit_entity(&mut self, entity: Entity<'tu>) -> bool {
+	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
 		match entity.get_kind() {
 			EntityKind::ClassDecl | EntityKind::StructDecl => {
 				entity.visit_children(|c, _| {
@@ -142,7 +143,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 			}
 			_ => {}
 		}
-		true
+		WalkAction::Continue
 	}
 }
 
@@ -288,7 +289,7 @@ impl<'tu> GeneratorEnv<'tu> {
 
 	pub fn get_class_kind(&self, entity: Entity<'tu>) -> Option<ClassKind> {
 		let id = entity.usr();
-		memo_map(&self.class_kind_cache, id.as_ref(), || {
+		self.class_kind_cache.memo_get(id.as_ref(), || {
 			if let Some(range) = entity.get_range() {
 				let name_ranges = if let Some(tpl_decl) = entity.get_template() {
 					tpl_decl
@@ -299,9 +300,10 @@ impl<'tu> GeneratorEnv<'tu> {
 				if !name_ranges.is_empty() {
 					let file_location = range.get_start().get_file_location();
 					if let Some(file) = file_location.file {
-						let start = file_location.offset as u64;
-						let end = name_ranges[0].get_start().get_file_location().offset as u64;
-						let mut buf = vec![0; (end - start) as usize];
+						let start = u64::from(file_location.offset);
+						let end = u64::from(name_ranges[0].get_start().get_file_location().offset);
+						let len = usize::try_from(end - start).expect("Buffer length doesn't fit usize");
+						let mut buf = vec![0; len];
 						if let Ok(mut f) = File::open(file.get_path()) {
 							f.seek(SeekFrom::Start(start)).expect("Can't seek");
 							f.read_exact(buf.as_mut_slice()).expect("Can't read");

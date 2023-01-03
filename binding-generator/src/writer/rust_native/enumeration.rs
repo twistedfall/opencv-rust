@@ -1,5 +1,5 @@
 use std::borrow::Cow;
-use std::collections::HashSet;
+use std::collections::HashMap;
 
 use maplit::hashmap;
 use once_cell::sync::Lazy;
@@ -38,27 +38,28 @@ impl RustNativeGeneratedElement for Enum<'_> {
 			Lazy::new(|| include_str!("tpl/enum/const_ignored.tpl.rs").compile_interpolation());
 
 		let consts = self.consts();
-		let mut generated_values = HashSet::with_capacity(consts.len());
+		let mut generated_values = HashMap::with_capacity(consts.len());
 		let consts = consts
 			.into_iter()
 			.map(|c| {
-				let name = c.rust_leafname(FishStyle::No);
+				let name = c.rust_leafname(FishStyle::No).into_owned();
 				let value = c.value().expect("Can't get value of enum variant").to_string();
-				let is_ignored = generated_values.contains(&value);
-				let tpl = if is_ignored {
+				let duplicate_name = generated_values.get(&value).cloned();
+				let tpl = if duplicate_name.is_some() {
 					&CONST_IGNORED_TPL
 				} else {
 					&CONST_TPL
 				};
-				let doc_comment = if is_ignored {
+				let doc_comment = if duplicate_name.is_some() {
 					c.rendered_doc_comment_with_prefix("//", opencv_version)
 				} else {
 					c.rendered_doc_comment(opencv_version)
 				};
-				generated_values.insert(value.clone());
+				generated_values.insert(value.clone(), name.clone());
 				tpl.interpolate(&hashmap! {
 					"doc_comment" => doc_comment,
-					"name" => name.into_owned(),
+					"duplicate_name" => duplicate_name.unwrap_or_default(),
+					"name" => name,
 					"value" => value,
 				})
 			})

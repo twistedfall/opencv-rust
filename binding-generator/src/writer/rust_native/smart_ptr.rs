@@ -165,7 +165,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			methods.push(method_new(&rust_localalias, &type_ref, &pointee_type));
 		};
 		let smartptr_desc = ClassDesc {
-			is_by_ptr: true,
+			is_boxed: true,
 			cpp_name_ref: type_ref.cpp_name(CppNameStyle::Reference).into_owned(),
 		};
 		methods.push(method_delete(

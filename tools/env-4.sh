@@ -1,5 +1,3 @@
-#!/bin/bash
-
 script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 
 . "$script_dir/config.sh"

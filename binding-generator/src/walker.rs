@@ -1,18 +1,19 @@
 use std::path::Path;
 
-use clang::{Entity, EntityKind, EntityVisitResult, Type};
+use clang::{Entity, EntityKind, Type};
 
 use crate::element::main_opencv_module_from_path;
+use crate::entity::WalkAction;
 
 #[allow(unused)]
 pub trait EntityWalkerVisitor<'tu> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		true
 	}
-	fn visit_resolve_type(&mut self, typ: Type<'tu>) -> bool {
-		true
+	fn visit_resolve_type(&mut self, typ: Type<'tu>) -> WalkAction {
+		WalkAction::Continue
 	}
-	fn visit_entity(&mut self, entity: Entity<'tu>) -> bool;
+	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction;
 }
 
 pub struct EntityWalker<'tu> {
@@ -24,28 +25,24 @@ impl<'tu> EntityWalker<'tu> {
 		Self { root_entity }
 	}
 
-	fn visit_resolve_types_namespace(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisitor<'tu>) -> bool {
-		!ns.visit_children(|decl, _| {
+	fn visit_resolve_types_namespace(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisitor<'tu>) -> WalkAction {
+		WalkAction::continue_until(ns.visit_children(|decl, _| {
 			let res = match decl.get_kind() {
 				EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
 					if let Some(typ) = decl.get_typedef_underlying_type() {
 						visitor.visit_resolve_type(typ)
 					} else {
-						true
+						WalkAction::Continue
 					}
 				}
-				_ => true,
+				_ => WalkAction::Continue,
 			};
-			if res {
-				EntityVisitResult::Continue
-			} else {
-				EntityVisitResult::Break
-			}
-		})
+			res.into()
+		}))
 	}
 
-	fn visit_cv_namespace(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisitor<'tu>) -> bool {
-		!ns.visit_children(|decl, _| {
+	fn visit_cv_namespace(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisitor<'tu>) -> WalkAction {
+		WalkAction::continue_until(ns.visit_children(|decl, _| {
 			let res = match decl.get_kind() {
 				EntityKind::Namespace => Self::visit_cv_namespace(decl, visitor),
 				EntityKind::ClassDecl
@@ -67,18 +64,14 @@ impl<'tu> EntityWalker<'tu> {
 				| EntityKind::UsingDirective
 				| EntityKind::TypeAliasTemplateDecl => {
 					/* ignoring */
-					true
+					WalkAction::Continue
 				}
 				_ => {
 					unreachable!("Unsupported decl for OpenCV namespace: {:#?}", decl)
 				}
 			};
-			if res {
-				EntityVisitResult::Continue
-			} else {
-				EntityVisitResult::Break
-			}
-		})
+			res.into()
+		}))
 	}
 
 	pub fn walk_opencv_entities(&self, mut visitor: impl EntityWalkerVisitor<'tu>) {
@@ -100,10 +93,10 @@ impl<'tu> EntityWalker<'tu> {
 										}
 										Self::visit_cv_namespace(root_decl, &mut visitor)
 									} else {
-										true
+										WalkAction::Continue
 									}
 								} else {
-									true
+									WalkAction::Continue
 								}
 							}
 							EntityKind::MacroDefinition
@@ -122,25 +115,21 @@ impl<'tu> EntityWalker<'tu> {
 							| EntityKind::ClassTemplate
 							| EntityKind::ClassDecl
 							| EntityKind::Destructor
-							| EntityKind::VarDecl => true,
+							| EntityKind::VarDecl => WalkAction::Continue,
 							_ => {
 								unreachable!("Unsupported decl for file: {:#?}", root_decl)
 							}
 						}
 					} else {
-						true
+						WalkAction::Continue
 					}
 				} else {
-					true
+					WalkAction::Continue
 				}
 			} else {
-				true
+				WalkAction::Continue
 			};
-			if res {
-				EntityVisitResult::Continue
-			} else {
-				EntityVisitResult::Break
-			}
+			res.into()
 		});
 	}
 }

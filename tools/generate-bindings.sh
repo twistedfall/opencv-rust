@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 
 . "$script_dir/config.sh"
@@ -17,7 +19,6 @@ fi
 
 all_modules="alphamat
 	aruco
-	aruco_detector
 	barcode
 	bgsegm
 	bioinspired
@@ -91,4 +92,8 @@ for module in $modules; do
 done
 
 export OPENCV_BINDING_GENERATOR_EMIT_DEBUG=1
+#for module in $modules; do
+#	echo "$module"
+#	"$script_dir/../target/release/binding-generator" --debug "$OPENCV_4_HEADER_DIR" "$SRC_CPP_DIR" "$OUT_DIR" "$module"
+#done
 parallel --eta "$script_dir/../target/release/binding-generator" --debug "$OPENCV_4_HEADER_DIR" "$SRC_CPP_DIR" "$OUT_DIR" "{}" ::: $modules

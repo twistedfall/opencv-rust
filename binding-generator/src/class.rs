@@ -1,16 +1,17 @@
 use std::borrow::Cow;
 use std::collections::HashSet;
-use std::{cmp, fmt, hash, iter};
+use std::{fmt, hash, iter};
 
 use clang::Entity;
 
+use crate::entity::{WalkAction, WalkResult};
 use crate::type_ref::{Constness, CppNameStyle};
 use crate::{
 	settings, Const, DefaultElement, Element, EntityElement, EntityExt, Field, Func, FunctionTypeHint, GeneratedType,
 	GeneratorEnv, StrExt, TypeRef,
 };
 
-#[derive(Clone, Copy, Debug, PartialOrd, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug)]
 pub enum Kind {
 	Simple,
 	Boxed,
@@ -43,21 +44,21 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn kind(&self) -> Kind {
-		let cpp_refname = self.cpp_name(CppNameStyle::Reference);
-		if settings::ELEMENT_EXCLUDE.contains(cpp_refname.as_ref()) {
+		if settings::ELEMENT_EXCLUDE.contains(self.cpp_name(CppNameStyle::Reference).as_ref()) {
 			return Kind::Excluded;
 		}
 		match self.gen_env.get_export_config(self.entity).map(|c| c.simple) {
 			Some(true) => {
-				let has_non_copy_fields = self.entity.walk_fields_while(|f| {
-					let type_ref = Field::new(f, self.gen_env).type_ref();
-					let non_copy_field = type_ref.as_string().is_some()
-						|| type_ref.as_vector().is_some()
-						|| type_ref.as_class().map_or(false, |c| !c.is_simple())
-						|| self.gen_env.descendants.contains_key(cpp_refname.as_ref());
-					!non_copy_field
-				});
-				if has_non_copy_fields {
+				let cant_be_simple = self
+					.for_each_field(|field| {
+						let type_ref = field.type_ref();
+						let is_non_copy_field = type_ref.as_string().is_some()
+							|| type_ref.as_vector().is_some()
+							|| type_ref.as_class().map_or(false, |c| !c.is_simple());
+						WalkAction::continue_until(is_non_copy_field || self.has_descendants())
+					})
+					.is_interrupted();
+				if cant_be_simple {
 					Kind::Boxed
 				} else {
 					Kind::Simple
@@ -84,22 +85,23 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		!self.has_bases() && self.fields().into_iter().map(|f| f.type_ref()).all(|t| t.is_copy())
 	}
 
-	pub fn as_template(&self) -> Option<Class<'tu, 'ge>> {
+	pub fn as_template_specialization(&self) -> Option<Class<'tu, 'ge>> {
 		self.entity.get_template().map(|t| Class::new(t, self.gen_env))
 	}
 
 	pub fn is_simple(&self) -> bool {
-		self.kind() == Kind::Simple
+		matches!(self.kind(), Kind::Simple)
 	}
 
 	pub fn is_boxed(&self) -> bool {
-		self.kind() == Kind::Boxed
+		matches!(self.kind(), Kind::Boxed)
 	}
 
 	pub fn is_template(&self) -> bool {
 		self.entity.get_template_kind().is_some()
 	}
 
+	/// This class is a specific instance of a template class, e.g. Point_<int>
 	pub fn is_template_specialization(&self) -> bool {
 		self.entity.get_template().is_some()
 	}
@@ -112,7 +114,10 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn is_polymorphic(&self) -> bool {
-		self.entity.walk_methods_while(|f| !f.is_virtual_method())
+		self
+			.entity
+			.walk_methods_while(|f| WalkAction::continue_until(f.is_virtual_method()))
+			.is_interrupted()
 	}
 
 	pub fn is_trait(&self) -> bool {
@@ -120,19 +125,14 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		//		self.is_abstract() || self.has_descendants() || settings::FORCE_CLASS_TRAIT.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
 	}
 
-	pub fn is_by_ptr(&self) -> bool {
-		match self.kind() {
-			Kind::Boxed => true,
-			Kind::Simple | Kind::System | Kind::Excluded => false,
-		}
-	}
-
 	pub fn has_clone(&self) -> bool {
-		self.for_each_method(|m| !m.is_clone())
+		self
+			.for_each_method(|m| WalkAction::continue_until(m.is_clone()))
+			.is_interrupted()
 	}
 
 	pub fn has_bases(&self) -> bool {
-		self.entity.walk_bases_while(|_| false)
+		self.entity.walk_bases_while(|_| WalkAction::Interrupt).is_interrupted()
 	}
 
 	pub fn bases(&self) -> Vec<Class<'tu, 'ge>> {
@@ -147,7 +147,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				child.get_definition().expect("Can't get base class definition"),
 				self.gen_env,
 			));
-			true
+			WalkAction::Continue
 		});
 		out
 	}
@@ -164,6 +164,13 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			.collect()
 	}
 
+	pub fn has_descendants(&self) -> bool {
+		self
+			.gen_env
+			.descendants
+			.contains_key(self.cpp_name(CppNameStyle::Reference).as_ref())
+	}
+
 	pub fn descendants(&self) -> impl Iterator<Item = Class<'tu, 'ge>> {
 		let gen_env = self.gen_env;
 		gen_env
@@ -174,11 +181,11 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn has_methods(&self) -> bool {
-		self.entity.walk_methods_while(|_| false)
+		self.entity.walk_methods_while(|_| WalkAction::Interrupt).is_interrupted()
 	}
 
 	#[inline]
-	pub fn for_each_method(&self, mut predicate: impl FnMut(Func<'tu, 'ge>) -> bool) -> bool {
+	pub fn for_each_method(&self, mut predicate: impl FnMut(Func<'tu, 'ge>) -> WalkAction) -> WalkResult {
 		self.entity.walk_methods_while(|f| predicate(Func::new(f, self.gen_env)))
 	}
 
@@ -196,22 +203,22 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								self.gen_env,
 							));
 						}
-						return true;
+						return WalkAction::Continue;
 					}
 				}
 				out.push(func);
 			}
-			true
+			WalkAction::Continue
 		});
 		out
 	}
 
 	pub fn has_fields(&self) -> bool {
-		self.entity.walk_fields_while(|_| false)
+		self.entity.walk_fields_while(|_| WalkAction::Interrupt).is_interrupted()
 	}
 
 	#[inline]
-	pub fn for_each_field(&self, mut predicate: impl FnMut(Field<'tu, 'ge>) -> bool) -> bool {
+	pub fn for_each_field(&self, mut predicate: impl FnMut(Field<'tu, 'ge>) -> WalkAction) -> WalkResult {
 		self.entity.walk_fields_while(|f| predicate(Field::new(f, self.gen_env)))
 	}
 
@@ -219,7 +226,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		let mut out = Vec::with_capacity(32);
 		self.for_each_field(|f| {
 			out.push(f);
-			true
+			WalkAction::Continue
 		});
 		out
 	}
@@ -228,7 +235,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		let mut out = Vec::with_capacity(8);
 		self.entity.walk_consts_while(|child| {
 			out.push(Const::new(child));
-			true
+			WalkAction::Continue
 		});
 		out
 	}
@@ -357,13 +364,13 @@ impl hash::Hash for Class<'_, '_> {
 	}
 }
 
-impl cmp::PartialEq for Class<'_, '_> {
+impl PartialEq for Class<'_, '_> {
 	fn eq(&self, other: &Self) -> bool {
 		self.entity.eq(&other.entity)
 	}
 }
 
-impl cmp::Eq for Class<'_, '_> {}
+impl Eq for Class<'_, '_> {}
 
 impl fmt::Display for Class<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -374,6 +381,12 @@ impl fmt::Display for Class<'_, '_> {
 impl fmt::Debug for Class<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut props = vec![];
+		if self.is_boxed() {
+			props.push("boxed");
+		}
+		if self.is_simple() {
+			props.push("simple");
+		}
 		if self.is_template() {
 			props.push("template");
 		}
@@ -383,17 +396,20 @@ impl fmt::Debug for Class<'_, '_> {
 		if self.is_abstract() {
 			props.push("abstract");
 		}
-		if self.is_trait() {
-			props.push("trait");
-		}
 		if self.is_polymorphic() {
 			props.push("polymorphic");
 		}
-		if self.is_by_ptr() {
-			props.push("by_ptr");
+		if self.is_trait() {
+			props.push("trait");
 		}
-		if self.is_simple() {
-			props.push("simple");
+		if self.has_clone() {
+			props.push("has_clone");
+		}
+		if self.has_bases() {
+			props.push("has_bases");
+		}
+		if self.has_descendants() {
+			props.push("has_descendants");
 		}
 		if self.has_methods() {
 			props.push("has_methods");
@@ -401,15 +417,12 @@ impl fmt::Debug for Class<'_, '_> {
 		if self.has_fields() {
 			props.push("has_fields");
 		}
-		if self.has_bases() {
-			props.push("has_bases");
-		}
 		let mut debug_struct = f.debug_struct("Class");
 		self.update_debug_struct(&mut debug_struct)
 			.field("export_config", &self.gen_env.get_export_config(self.entity))
 			.field("kind", &self.kind())
 			.field("props", &props.join(", "))
-			.field("as_template", &self.as_template())
+			.field("as_template", &self.as_template_specialization())
 //			.field("type_ref", &self.type_ref())
 //			.field("bases", &self.bases())
 //			.field("methods", &self.methods())

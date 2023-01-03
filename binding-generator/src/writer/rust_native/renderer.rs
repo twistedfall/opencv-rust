@@ -50,15 +50,15 @@ fn render_rust_tpl_decl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeR
 pub struct RustRenderer {
 	pub name_style: NameStyle,
 	pub lifetime: Lifetime,
-	pub pass_by_ptr: bool,
+	pub rust_by_ptr: bool,
 }
 
 impl RustRenderer {
-	pub fn new(name_style: NameStyle, lifetime: Lifetime, pass_by_ptr: bool) -> Self {
+	pub fn new(name_style: NameStyle, lifetime: Lifetime, rust_by_ptr: bool) -> Self {
 		Self {
 			name_style,
 			lifetime,
-			pass_by_ptr,
+			rust_by_ptr,
 		}
 	}
 
@@ -113,7 +113,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				//  because some functions can potentially save the pointer to the value, but it will be destroyed after function call
 				inner.render(self.recurse()).into_owned().into()
 			}
-			Kind::Pointer(inner) if self.pass_by_ptr => {
+			Kind::Pointer(inner) if self.rust_by_ptr => {
 				let typ = if inner.is_void() {
 					"c_void".into()
 				} else {

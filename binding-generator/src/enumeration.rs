@@ -3,6 +3,7 @@ use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
 
+use crate::entity::WalkAction;
 use crate::type_ref::CppNameStyle;
 use crate::{Const, DefaultElement, Element, EntityElement, EntityExt, StrExt};
 
@@ -32,7 +33,7 @@ impl<'tu> Enum<'tu> {
 			let mut child = None;
 			self.entity.walk_children_while(|c| {
 				child = Some(c);
-				false
+				WalkAction::Interrupt
 			});
 			Some(child.expect("Invalid anonymous typedefed enum"))
 		} else {

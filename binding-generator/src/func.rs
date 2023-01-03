@@ -7,6 +7,7 @@ use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 use once_cell::sync::Lazy;
 use regex::Regex;
 
+use crate::entity::WalkAction;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
@@ -192,7 +193,7 @@ impl<'f> FuncId<'f> {
 				if child.get_kind() == EntityKind::ParmDecl {
 					args.push(child.get_name().map(Cow::Owned).unwrap_or_else(|| "unnamed".into()));
 				}
-				true
+				WalkAction::Continue
 			});
 			args
 		} else {
@@ -384,7 +385,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			|| self
 				.arguments()
 				.into_iter()
-				.any(|a| a.type_ref().is_pass_by_ptr() && !a.is_user_data())
+				.any(|a| a.type_ref().is_rust_by_ptr() && !a.is_user_data())
 	}
 
 	pub fn is_default_constructor(&self) -> bool {
@@ -478,7 +479,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					if child.get_kind() == EntityKind::ParmDecl {
 						out.push(child);
 					}
-					true
+					WalkAction::Continue
 				});
 				out
 			}

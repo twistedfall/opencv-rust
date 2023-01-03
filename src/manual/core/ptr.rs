@@ -23,7 +23,7 @@ where
 {
 	pub fn new(val: T) -> Self
 	where
-		T: Sized + for<'a> OpenCVType<'a>,
+		T: for<'a> OpenCVType<'a>,
 		Self: PtrExternCtor<T>,
 	{
 		let val = val.opencv_into_extern_container_nofail();

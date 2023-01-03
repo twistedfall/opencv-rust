@@ -7,7 +7,7 @@ use clang::{Clang, Entity, EntityKind, Type};
 
 use opencv_binding_generator::{
 	opencv_module_from_path, settings, Class, CppNameStyle, Element, EntityExt, EntityWalker, EntityWalkerVisitor, Func, FuncId,
-	Generator, GeneratorEnv,
+	Generator, GeneratorEnv, WalkAction,
 };
 
 struct FunctionFinder<'tu, 'f> {
@@ -43,11 +43,11 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 		opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
 	}
 
-	fn visit_resolve_type(&mut self, _typ: Type<'tu>) -> bool {
-		false
+	fn visit_resolve_type(&mut self, _typ: Type<'tu>) -> WalkAction {
+		WalkAction::Interrupt
 	}
 
-	fn visit_entity(&mut self, entity: Entity<'tu>) -> bool {
+	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
 		match entity.get_kind() {
 			EntityKind::ClassDecl
 			| EntityKind::ClassTemplate
@@ -66,21 +66,21 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 						if func.is_generic() {
 							methods.push(func);
 						}
-						true
+						WalkAction::Continue
 					});
 					for f in methods {
 						self.update_used_func(&f);
 					}
 					entity.walk_classes_while(|child| self.visit_entity(child));
 				}
-				true
+				WalkAction::Continue
 			}
 			EntityKind::FunctionDecl => {
 				let f = Func::new(entity, &self.gen_env);
 				self.update_used_func(&f);
-				true
+				WalkAction::Continue
 			}
-			_ => true,
+			_ => WalkAction::Continue,
 		}
 	}
 }

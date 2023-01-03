@@ -85,13 +85,13 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 				| FuncDescKind::StaticMethod(..)
 				| FuncDescKind::FunctionOperator(..) => name_ref.as_ref().into(),
 				FuncDescKind::FieldAccessor(cls, fld) if self.type_hint == FunctionTypeHint::FieldSetter => {
-					cpp_method_call_name(cls.is_by_ptr, &fld.cpp_name(CppNameStyle::Declaration)).into()
+					cpp_method_call_name(cls.is_boxed, &fld.cpp_name(CppNameStyle::Declaration)).into()
 				}
 				FuncDescKind::InstanceMethod(cls)
 				| FuncDescKind::FieldAccessor(cls, _)
 				| FuncDescKind::GenericInstanceMethod(cls)
 				| FuncDescKind::ConversionMethod(cls)
-				| FuncDescKind::InstanceOperator(cls, ..) => cpp_method_call_name(cls.is_by_ptr, name_decl).into(),
+				| FuncDescKind::InstanceOperator(cls, ..) => cpp_method_call_name(cls.is_boxed, name_decl).into(),
 			},
 			FuncDescCppCall::Manual(_) => "".into(),
 		};
@@ -99,7 +99,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 		inter_vars.insert("name", call_name);
 
 		let tpl = if let Some(cls) = self.kind.as_constructor() {
-			if cls.is_by_ptr {
+			if cls.is_boxed {
 				&BOXED_CONSTRUCTOR_TPL
 			} else if args.is_empty() {
 				&CONSTRUCTOR_NO_ARGS_TPL
@@ -299,15 +299,15 @@ pub enum FuncDescCppCall<'r> {
 
 #[derive(Debug, Clone)]
 pub struct ClassDesc {
-	pub is_by_ptr: bool,
+	pub is_boxed: bool,
 	pub cpp_name_ref: String,
 }
 
 impl From<&Class<'_, '_>> for ClassDesc {
 	fn from(cls: &Class<'_, '_>) -> Self {
-		let is_by_ptr = cls.is_by_ptr();
+		let is_boxed = cls.is_boxed();
 		let cpp_name_ref = cls.cpp_name(CppNameStyle::Reference).into_owned();
-		Self { is_by_ptr, cpp_name_ref }
+		Self { is_boxed, cpp_name_ref }
 	}
 }
 
@@ -318,7 +318,7 @@ impl ClassDesc {
 		} else {
 			""
 		};
-		if self.is_by_ptr {
+		if self.is_boxed {
 			format!("{cnst}{typ}* instance", cnst = cnst, typ = self.cpp_name_ref)
 		} else {
 			format!("{cnst}{typ} instance", cnst = cnst, typ = self.cpp_name_ref)
@@ -326,8 +326,8 @@ impl ClassDesc {
 	}
 }
 
-fn cpp_method_call_name(is_by_ptr: bool, method_name: &str) -> String {
-	if is_by_ptr {
+fn cpp_method_call_name(extern_by_ptr: bool, method_name: &str) -> String {
+	if extern_by_ptr {
 		format!("instance->{name}", name = method_name)
 	} else {
 		format!("instance.{name}", name = method_name)
