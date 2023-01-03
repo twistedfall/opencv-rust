@@ -212,8 +212,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.collect::<Vec<_>>();
 
 		let fields = if is_simple {
-			let mut out: Vec<_> = fields
-				.iter()
+			fields
+				.into_iter()
 				.map(|f| {
 					let type_ref = f.type_ref();
 					let mut typ = type_ref.rust_name(NameStyle::ref_());
@@ -230,16 +230,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 						"type" => typ,
 					})
 				})
-				.collect();
-			if out.is_empty() {
-				out.push(SIMPLE_FIELD_TPL.interpolate(&hashmap! {
-					"doc_comment" => "",
-					"visibility" => "",
-					"name" => "__rust_private",
-					"type" => "[u8; 0]",
-				}))
-			}
-			out
+				.collect()
 		} else {
 			vec![]
 		};

@@ -584,22 +584,12 @@ pub static ELEMENT_IGNORE: Lazy<HashSet<&str>> = Lazy::new(|| {
 #[allow(clippy::type_complexity)]
 pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = Lazy::new(|| {
 	hashmap! {
-		"cv::dnn::ClassificationModel" => ExportConfig::make_boxed as _,
-		"cv::dnn::DetectionModel" => ExportConfig::make_boxed as _,
-		"cv::dnn::KeypointsModel" => ExportConfig::make_boxed as _, // marked as simple from OpenCV 4.5.2
-		"cv::dnn::Model" => ExportConfig::make_boxed as _,
-		"cv::dnn::SegmentationModel" => ExportConfig::make_boxed as _, // marked as simple from OpenCV 4.5.2
-		"cv::dnn::TextDetectionModel" => ExportConfig::make_boxed as _, // inappropriately marked as simple
-		"cv::dnn::TextDetectionModel_DB" => ExportConfig::make_boxed as _, // inappropriately marked as simple
-		"cv::dnn::TextDetectionModel_EAST" => ExportConfig::make_boxed as _, // inappropriately marked as simple
-		"cv::dnn::TextRecognitionModel" => ExportConfig::make_boxed as _, // inappropriately marked as simple
-
+		// missing exports
 		"VADisplay" => ExportConfig::make_export as _,
 		"VASurfaceID" => ExportConfig::make_export as _,
 		"cv::Mat_" => ExportConfig::make_export as _,
 		"cv::CvFeatureParams" => ExportConfig::make_export as _,
 		"cv::CvHaarEvaluator" => ExportConfig::make_export as _,
-		"cv::CvHaarEvaluator::FeatureHaar" => ExportConfig::make_export as _, // no default constructor
 		"cv::DetectionROI" => ExportConfig::make_export as _,
 		"cv::FileNodeIterator::SeqReader" => ExportConfig::make_export as _,
 		"cv::QtFont" => ExportConfig::make_export as _,
@@ -652,6 +642,7 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = La
 		"cv::kinfu::Intr" => ExportConfig::make_simple as _,
 		"cv::videostab::MaskFrameSource" => ExportConfig::make_export as _,
 		"cv::ConfidenceMap" => ExportConfig::make_export as _,
+		"cv::linemod::QuantizedPyramid" => ExportConfig::make_export as _, // missing in 3.2
 
 		// gapi
 		"cv::GCompileArg" => ExportConfig::make_export as _,
@@ -668,9 +659,10 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = La
 		// override boxed
 		"cv::DetectionBasedTracker::ExtObject" => ExportConfig::make_boxed as _,
 		"cv::DetectionBasedTracker::IDetector" => ExportConfig::make_boxed as _,
-		"cv::FileNode" => ExportConfig::make_boxed as _, // return references in methods, generally looks like not simple
+		"cv::KeyPoint" => ExportConfig::make_boxed as _, // has descendants in xfeatures2d
+		"cv::aruco::DetectorParameters" => ExportConfig::make_boxed as _, // used in Ptr
+		"cv::aruco::EstimateParameters" => ExportConfig::make_boxed as _, // used in Ptr
 		"cv::dnn::Net" => ExportConfig::make_boxed as _, // incorrectly marked as simple
-		"cv::linemod::QuantizedPyramid" => ExportConfig::make_boxed as _, // missing export in 3.2
 		"cv::ocl::Device" => ExportConfig::make_boxed as _,
 	}
 });

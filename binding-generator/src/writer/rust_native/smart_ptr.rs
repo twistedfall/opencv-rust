@@ -196,7 +196,11 @@ impl SmartPtrExt for SmartPtr<'_, '_> {
 
 fn method_new(rust_localalias: &str, smartptr_type: &TypeRef, pointee_type: &TypeRef) -> String {
 	let val = if pointee_type.is_copy() {
-		format!("new {typ}(val)", typ = pointee_type.cpp_name(CppNameStyle::Reference)).into()
+		if pointee_type.as_simple_class().is_some() {
+			panic!("Ptr with simple class is not supported");
+		} else {
+			format!("new {typ}(val)", typ = pointee_type.cpp_name(CppNameStyle::Reference)).into()
+		}
 	} else {
 		Cow::Borrowed("val")
 	};

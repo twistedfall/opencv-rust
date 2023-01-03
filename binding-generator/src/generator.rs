@@ -308,9 +308,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 				});
 				class_decl.walk_classes_while(|sub_cls| {
 					if !gen_env.get_export_config(sub_cls).is_some() {
-						let cls = Class::new(sub_cls, gen_env);
-						let is_simple = cls.detect_class_simplicity();
-						gen_env.make_export_config(sub_cls).simple = is_simple;
+						gen_env.make_export_config(sub_cls).simple = Class::new(sub_cls, gen_env).can_be_simple();
 					}
 					Self::process_class(visitor, gen_env, sub_cls);
 					WalkAction::Continue

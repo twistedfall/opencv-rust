@@ -43,25 +43,31 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
+	pub fn can_be_simple(&self) -> bool {
+		let cpp_refname = self.cpp_name(CppNameStyle::Reference);
+		if settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
+			|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_refname.as_ref())
+		{
+			return true;
+		}
+		self.has_fields()
+			&& !self.has_descendants()
+			&& !self.has_bases()
+			&& !self
+				.for_each_field(|field| WalkAction::continue_until(!field.type_ref().is_copy()))
+				.is_interrupted()
+	}
+
 	pub fn kind(&self) -> Kind {
 		if settings::ELEMENT_EXCLUDE.contains(self.cpp_name(CppNameStyle::Reference).as_ref()) {
 			return Kind::Excluded;
 		}
 		match self.gen_env.get_export_config(self.entity).map(|c| c.simple) {
 			Some(true) => {
-				let cant_be_simple = self
-					.for_each_field(|field| {
-						let type_ref = field.type_ref();
-						let is_non_copy_field = type_ref.as_string().is_some()
-							|| type_ref.as_vector().is_some()
-							|| type_ref.as_class().map_or(false, |c| !c.is_simple());
-						WalkAction::continue_until(is_non_copy_field || self.has_descendants())
-					})
-					.is_interrupted();
-				if cant_be_simple {
-					Kind::Boxed
-				} else {
+				if self.can_be_simple() {
 					Kind::Simple
+				} else {
+					Kind::Boxed
 				}
 			}
 			Some(false) => Kind::Boxed,
@@ -69,7 +75,10 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				if self.is_system() {
 					Kind::System
 				} else if let Some(kind) = self.gen_env.get_class_kind(self.entity) {
-					kind
+					match kind {
+						Kind::Simple if !self.can_be_simple() => Kind::Boxed,
+						_ => kind,
+					}
 				} else {
 					Kind::Excluded
 				}
@@ -79,10 +88,6 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		TypeRef::new(self.entity.get_type().expect("Can't get class type"), self.gen_env)
-	}
-
-	pub fn detect_class_simplicity(&self) -> bool {
-		!self.has_bases() && self.fields().into_iter().map(|f| f.type_ref()).all(|t| t.is_copy())
 	}
 
 	pub fn as_template_specialization(&self) -> Option<Class<'tu, 'ge>> {
@@ -143,10 +148,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			self.entity
 		};
 		entity.walk_bases_while(|child| {
-			out.push(Class::new(
-				child.get_definition().expect("Can't get base class definition"),
-				self.gen_env,
-			));
+			out.push(Class::new(Self::definition_entity(child), self.gen_env));
 			WalkAction::Continue
 		});
 		out
@@ -214,7 +216,9 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn has_fields(&self) -> bool {
-		self.entity.walk_fields_while(|_| WalkAction::Interrupt).is_interrupted()
+		Self::definition_entity(self.entity)
+			.walk_fields_while(|_| WalkAction::Interrupt)
+			.is_interrupted()
 	}
 
 	#[inline]
@@ -271,6 +275,12 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			})
 		}));
 		out
+	}
+
+	/// Returns an entity that defines current class, for specialized classes (Point_<int>) it's the template (Point_<T>), for
+	/// not fully defined classes it goes to its definition location.
+	fn definition_entity(entity: Entity<'tu>) -> Entity<'tu> {
+		entity.get_template().unwrap_or(entity).get_definition().unwrap_or(entity)
 	}
 
 	pub fn is_definition(&self) -> bool {

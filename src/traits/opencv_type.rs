@@ -185,7 +185,7 @@ macro_rules! opencv_type_simple {
 			}
 			#[inline]
 			fn opencv_into_extern(self) -> Self::ExternSendMut {
-				&mut *std::mem::ManuallyDrop::new(self) as _
+				unimplemented!("opencv_into_extern can't be used for simple class")
 			}
 		}
 	};

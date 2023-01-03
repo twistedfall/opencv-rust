@@ -312,7 +312,7 @@ impl<'tu> GeneratorEnv<'tu> {
 				}
 			}
 			let cls = Class::new(entity, self);
-			if cls.detect_class_simplicity() {
+			if cls.can_be_simple() {
 				return Some(ClassKind::Simple);
 			}
 			None
