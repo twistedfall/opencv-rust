@@ -55,10 +55,6 @@ impl Element for Function<'_, '_> {
 		"".into()
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, _prefix: &str, _opencv_version: &str) -> String {
-		"".to_string()
-	}
-
 	fn cpp_namespace(&self) -> Cow<str> {
 		"<unset>".into()
 	}

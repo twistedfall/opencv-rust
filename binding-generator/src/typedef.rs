@@ -52,7 +52,8 @@ impl Element for Typedef<'_, '_> {
 			|| settings::PRIMITIVE_TYPEDEFS.contains_key(self.cpp_name(CppNameStyle::Reference).as_ref())
 			|| {
 				let underlying_type = self.underlying_type_ref();
-				// fixes recursive typedefs like Cv16suf
+				// fixes recursive typedefs like Cv16suf or GKernelPackage
+				// fixme: don't rely on rust name to disconnect this generic module from rust_native
 				self.rust_name(NameStyle::ref_()) == underlying_type.rust_name(NameStyle::ref_()) || underlying_type.is_ignored()
 			}
 	}
@@ -71,10 +72,6 @@ impl Element for Typedef<'_, '_> {
 
 	fn usr(&self) -> Cow<str> {
 		DefaultElement::usr(self)
-	}
-
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {

@@ -6,7 +6,7 @@ use std::path::{Component, Path};
 use clang::{Accessibility, Entity, EntityKind};
 
 use crate::type_ref::CppNameStyle;
-use crate::{comment, settings, IteratorExt, StringExt};
+use crate::{settings, IteratorExt, StringExt};
 
 pub struct DefaultElement;
 
@@ -39,14 +39,6 @@ impl DefaultElement {
 
 	pub fn usr<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
 		this.entity().get_usr().expect("Can't get USR").0.into()
-	}
-
-	pub fn rendered_doc_comment_with_prefix<'tu>(this: &impl EntityElement<'tu>, prefix: &str, opencv_version: &str) -> String {
-		comment::render_doc_comment(&this.entity().get_comment().unwrap_or_default(), prefix, opencv_version)
-	}
-
-	pub fn rendered_doc_comment(this: &(impl Element + ?Sized), opencv_version: &str) -> String {
-		this.rendered_doc_comment_with_prefix("///", opencv_version)
 	}
 
 	pub fn cpp_namespace<'tu>(this: &impl EntityElement<'tu>) -> String {
@@ -119,12 +111,6 @@ pub trait Element: fmt::Debug {
 	fn is_public(&self) -> bool;
 
 	fn usr(&self) -> Cow<str>;
-
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String;
-
-	fn rendered_doc_comment(&self, opencv_version: &str) -> String {
-		DefaultElement::rendered_doc_comment(self, opencv_version)
-	}
 
 	fn cpp_namespace(&self) -> Cow<str>;
 

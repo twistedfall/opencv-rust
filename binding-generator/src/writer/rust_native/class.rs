@@ -442,6 +442,10 @@ impl RustElement for Class<'_, '_> {
 			}
 		}
 	}
+
+	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+	}
 }
 
 impl RustNativeGeneratedElement for Class<'_, '_> {

@@ -24,10 +24,6 @@ impl Element for Entity<'_> {
 		DefaultElement::usr(self)
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
-	}
-
 	fn cpp_namespace(&self) -> Cow<str> {
 		DefaultElement::cpp_namespace(self).into()
 	}

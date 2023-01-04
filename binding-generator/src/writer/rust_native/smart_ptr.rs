@@ -34,6 +34,10 @@ impl RustElement for SmartPtr<'_, '_> {
 		)
 		.into()
 	}
+
+	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+	}
 }
 
 impl RustNativeGeneratedElement for SmartPtr<'_, '_> {

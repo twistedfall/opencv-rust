@@ -22,6 +22,10 @@ impl RustElement for Enum<'_> {
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		self.cpp_name(CppNameStyle::Declaration)
 	}
+
+	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+	}
 }
 
 impl RustNativeGeneratedElement for Enum<'_> {

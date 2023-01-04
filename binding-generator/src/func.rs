@@ -4,15 +4,12 @@ use std::fmt;
 use std::fmt::Write;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
-use once_cell::sync::Lazy;
-use regex::Regex;
 
 use crate::entity::WalkAction;
-use crate::type_ref::{Constness, CppNameStyle, FishStyle, TypeRefTypeHint};
-use crate::writer::rust_native::element::RustElement;
+use crate::type_ref::{Constness, CppNameStyle, TypeRefTypeHint};
 use crate::{
-	comment, settings, Class, DefaultElement, Element, EntityElement, EntityExt, Field, FieldTypeHint, GeneratedType,
-	GeneratorEnv, StringExt, TypeRef,
+	settings, Class, DefaultElement, Element, EntityElement, EntityExt, Field, FieldTypeHint, GeneratedType, GeneratorEnv,
+	StringExt, TypeRef,
 };
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -393,8 +390,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn is_clone(&self) -> bool {
-		// fixme, don't rely on the rust name of "clone", so that it doesn't depend on Rust generator specific functionality
-		if self.rust_leafname(FishStyle::No) == "clone" {
+		if self.cpp_name(CppNameStyle::Declaration) == "clone" {
 			if let Some(c) = self.kind().as_instance_method() {
 				!self.has_arguments() && self.return_type().as_class().map_or(false, |r| r == *c)
 			} else {
@@ -646,58 +642,6 @@ impl Element for Func<'_, '_> {
 
 	fn usr(&self) -> Cow<str> {
 		DefaultElement::usr(self)
-	}
-
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		let mut comment = self.entity.get_comment().unwrap_or_default();
-		let line = self.entity.get_location().map(|l| l.get_file_location().line).unwrap_or(0);
-		const OVERLOAD: &str = "@overload";
-		if let Some(idx) = comment.find(OVERLOAD) {
-			let rep = if let Some(copy) = self
-				.gen_env
-				.get_func_comment(line, self.entity.cpp_name(CppNameStyle::Reference).as_ref())
-			{
-				format!("{}\n\n## Overloaded parameters\n", copy)
-			} else {
-				"This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.".to_string()
-			};
-			comment.replace_range(idx..idx + OVERLOAD.len(), &rep);
-		}
-		static COPY_BRIEF: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@copybrief\s+(\w+)"#).unwrap());
-		comment.replace_in_place_regex_cb(&COPY_BRIEF, |comment, caps| {
-			let copy_name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
-			let mut copy_full_name = self.cpp_namespace().into_owned();
-			copy_full_name += "::";
-			copy_full_name += copy_name;
-			if let Some(copy) = self.gen_env.get_func_comment(line, &copy_full_name) {
-				Some(copy.into())
-			} else {
-				Some("".into())
-			}
-		});
-		comment::render_doc_comment_with_processor(&comment, prefix, opencv_version, |out| {
-			let mut default_args_comment = String::with_capacity(1024);
-			for arg in self.arguments() {
-				if let Some(def_val) = arg.default_value() {
-					if default_args_comment.is_empty() {
-						default_args_comment += "## C++ default parameters";
-					}
-					write!(
-						&mut default_args_comment,
-						"\n* {name}: {val}",
-						name = arg.rust_leafname(FishStyle::No),
-						val = def_val
-					)
-					.expect("write! to String shouldn't fail");
-				}
-			}
-			if !default_args_comment.is_empty() {
-				if !out.is_empty() {
-					out.push_str("\n\n");
-				}
-				out.push_str(&default_args_comment);
-			}
-		})
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {

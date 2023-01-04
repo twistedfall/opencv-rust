@@ -15,12 +15,13 @@ use crate::field::Field;
 use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
 use crate::{
-	comment, is_ephemeral_header, opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func,
+	is_ephemeral_header, opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func,
 	GeneratedType, GeneratorVisitor, IteratorExt, StrExt, Typedef,
 };
 
 mod abstract_ref_wrapper;
 mod class;
+mod comment;
 mod constant;
 pub mod element;
 mod enumeration;

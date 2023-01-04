@@ -33,6 +33,10 @@ impl RustElement for Vector<'_, '_> {
 		)
 		.into()
 	}
+
+	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+	}
 }
 
 impl RustNativeGeneratedElement for Vector<'_, '_> {
@@ -81,7 +85,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			} else {
 				inter_vars.insert(
 					"clone",
-					if vec_type.is_clone() {
+					if element_type.is_clone() {
 						"clone "
 					} else {
 						""

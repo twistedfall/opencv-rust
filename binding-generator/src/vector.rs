@@ -62,10 +62,6 @@ impl Element for Vector<'_, '_> {
 		DefaultElement::usr(self)
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
-	}
-
 	fn cpp_namespace(&self) -> Cow<str> {
 		// force this to be std because on some systems the actual namespace for vector is something like "std::__1"
 		"std".into()

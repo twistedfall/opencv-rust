@@ -3,7 +3,7 @@ use std::fmt;
 use std::fmt::Write;
 
 use crate::type_ref::{
-	Constness, ConstnessOverride, CppNameStyle, Dir, ExternDir, FishStyle, Kind, NameStyle, Signedness, StrEnc, StrType, TypeRef,
+	Constness, ConstnessOverride, Dir, ExternDir, FishStyle, Kind, NameStyle, Signedness, StrEnc, StrType, TypeRef,
 };
 use crate::{IteratorExt, StringExt};
 
@@ -39,7 +39,6 @@ pub trait TypeRefExt {
 	fn rust_extern_return_fallible(&self) -> Cow<str>;
 	fn rust_lifetime_count(&self) -> usize;
 
-	fn cpp_self_func_decl(&self, method_constness: Constness) -> String;
 	fn cpp_arg_func_decl(&self, name: &str) -> String;
 	fn cpp_arg_pre_call(&self, name: &str) -> String;
 	fn cpp_arg_func_call<'a>(&self, name: impl Into<Cow<'a, str>>) -> Cow<'a, str>;
@@ -516,27 +515,6 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	// fn rust_lifetimes(&self) -> impl Iterator<Item = Lifetime> {
 	// 	Lifetime::explicit().into_iter().take(self.rust_lifetime_count())
 	// }
-
-	fn cpp_self_func_decl(&self, method_constness: Constness) -> String {
-		let cnst = if method_constness.is_const() {
-			"const "
-		} else {
-			""
-		};
-		if self.is_extern_by_ptr() {
-			format!(
-				"{cnst}{typ}* instance",
-				cnst = cnst,
-				typ = self.cpp_name(CppNameStyle::Reference)
-			)
-		} else {
-			format!(
-				"{cnst}{typ} instance",
-				cnst = cnst,
-				typ = self.cpp_name(CppNameStyle::Reference)
-			)
-		}
-	}
 
 	fn cpp_arg_func_decl(&self, name: &str) -> String {
 		if matches!(self.as_string(), Some(Dir::Out(_))) || self.as_simple_class().is_some() {

@@ -22,4 +22,8 @@ impl RustElement for Field<'_, '_> {
 			DefaultRustNativeElement::rust_leafname(self)
 		}
 	}
+
+	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+	}
 }

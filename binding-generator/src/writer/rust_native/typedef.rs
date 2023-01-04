@@ -4,7 +4,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::type_ref::{FishStyle, Kind, NameStyle};
-use crate::{get_debug, CompiledInterpolation, CppNameStyle, DefaultElement, Element, IteratorExt, StrExt, Typedef};
+use crate::{get_debug, CompiledInterpolation, CppNameStyle, DefaultElement, IteratorExt, StrExt, Typedef};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::{Lifetime, TypeRefExt};
@@ -26,6 +26,10 @@ impl RustElement for Typedef<'_, '_> {
 			}
 			_ => DefaultRustNativeElement::rust_leafname(self),
 		}
+	}
+
+	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
 	}
 }
 

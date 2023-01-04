@@ -8,6 +8,8 @@ use crate::{
 	NameStyle, StrExt, StringExt,
 };
 
+use super::comment;
+
 pub struct DefaultRustNativeElement;
 
 impl DefaultRustNativeElement {
@@ -86,6 +88,14 @@ impl DefaultRustNativeElement {
 			}
 		}
 	}
+
+	pub fn rendered_doc_comment_with_prefix<'tu>(this: &impl EntityElement<'tu>, prefix: &str, opencv_version: &str) -> String {
+		comment::render_doc_comment(&this.entity().get_comment().unwrap_or_default(), prefix, opencv_version)
+	}
+
+	pub fn rendered_doc_comment(this: &(impl RustElement + ?Sized), opencv_version: &str) -> String {
+		this.rendered_doc_comment_with_prefix("///", opencv_version)
+	}
 }
 
 pub trait RustNativeGeneratedElement {
@@ -120,6 +130,12 @@ pub trait RustElement: Element {
 
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		DefaultRustNativeElement::rust_leafname(self)
+	}
+
+	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String;
+
+	fn rendered_doc_comment(&self, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment(self, opencv_version)
 	}
 }
 

@@ -1,8 +1,10 @@
 use std::borrow::Cow;
+use std::fmt::Write;
 use std::iter;
 
 use maplit::hashmap;
 use once_cell::sync::Lazy;
+use regex::Regex;
 
 use crate::func::{Kind, OperatorKind};
 use crate::type_ref::{ConstnessOverride, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType};
@@ -11,6 +13,7 @@ use crate::{
 	TypeRef,
 };
 
+use super::comment;
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::func_desc::{pre_post_arg_handle, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
@@ -419,6 +422,58 @@ impl RustElement for Func<'_, '_> {
 		} else {
 			reserved_rename(rust_name.to_snake_case().into())
 		}
+	}
+
+	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
+		let mut comment = self.entity().get_comment().unwrap_or_default();
+		let line = self.entity().get_location().map(|l| l.get_file_location().line).unwrap_or(0);
+		const OVERLOAD: &str = "@overload";
+		if let Some(idx) = comment.find(OVERLOAD) {
+			let rep = if let Some(copy) = self
+				.gen_env()
+				.get_func_comment(line, self.entity().cpp_name(CppNameStyle::Reference).as_ref())
+			{
+				format!("{}\n\n## Overloaded parameters\n", copy)
+			} else {
+				"This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.".to_string()
+			};
+			comment.replace_range(idx..idx + OVERLOAD.len(), &rep);
+		}
+		static COPY_BRIEF: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@copybrief\s+(\w+)"#).unwrap());
+		comment.replace_in_place_regex_cb(&COPY_BRIEF, |comment, caps| {
+			let copy_name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
+			let mut copy_full_name = self.cpp_namespace().into_owned();
+			copy_full_name += "::";
+			copy_full_name += copy_name;
+			if let Some(copy) = self.gen_env().get_func_comment(line, &copy_full_name) {
+				Some(copy.into())
+			} else {
+				Some("".into())
+			}
+		});
+		comment::render_doc_comment_with_processor(&comment, prefix, opencv_version, |out| {
+			let mut default_args_comment = String::with_capacity(1024);
+			for arg in self.arguments() {
+				if let Some(def_val) = arg.default_value() {
+					if default_args_comment.is_empty() {
+						default_args_comment += "## C++ default parameters";
+					}
+					write!(
+						&mut default_args_comment,
+						"\n* {name}: {val}",
+						name = arg.rust_leafname(FishStyle::No),
+						val = def_val
+					)
+					.expect("write! to String shouldn't fail");
+				}
+			}
+			if !default_args_comment.is_empty() {
+				if !out.is_empty() {
+					out.push_str("\n\n");
+				}
+				out.push_str(&default_args_comment);
+			}
+		})
 	}
 }
 
