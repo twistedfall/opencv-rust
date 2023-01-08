@@ -579,91 +579,8 @@ pub static ELEMENT_IGNORE: Lazy<HashSet<&str>> = Lazy::new(|| {
 	}
 });
 
-/// Manual export config in form of "cpp_name(Reference)" => ExportConfig, will totally override what's
-/// detected from the headers. Use it to add export config where none exists.
-pub static ELEMENT_EXPORT_MANUAL: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| {
-	hashmap! {
-		"VADisplay" => ExportConfig::default(),
-		"VASurfaceID" => ExportConfig::default(),
-		"cv::Mat_" => ExportConfig::default(),
-		"cv::CvFeatureParams" => ExportConfig::default(),
-		"cv::CvHaarEvaluator" => ExportConfig::default(),
-		"cv::CvHaarEvaluator::FeatureHaar" => ExportConfig::default(), // no default constructor
-		"cv::DetectionROI" => ExportConfig::default(),
-		"cv::FileNodeIterator::SeqReader" => ExportConfig::default(),
-		"cv::QtFont" => ExportConfig::default(),
-		"cv::bioinspired::RetinaParameters" => ExportConfig::default(),
-		"cv::bioinspired::SegmentationParameters" => ExportConfig::simple(),
-		"cv::bioinspired::createRetina_OCL" => ExportConfig::default(), // 3.2 not exported
-		"cv::detail::CheckContext" => ExportConfig::default(),
-		"cv::dnn::BackendNode" => ExportConfig::default(),
-		"cv::dnn::BackendWrapper" => ExportConfig::default(),
-		"cv::dnn::DictValue" => ExportConfig::default(), // 3.2 not exported
-		"cv::dnn::MatShape" => ExportConfig::default(),
-		"cv::face::CParams" => ExportConfig::default(),
-		"cv::face::FacemarkAAM::Model::Texture" => ExportConfig::default(),
-		"cv::getElemSize" => ExportConfig::default(),
-		"cv::morphologyDefaultBorderValue" => ExportConfig::default(),
-		"cv::ppf_match_3d::Pose3DPtr" => ExportConfig::default(),
-		"cv::superres::PyrLKOpticalFlow" => ExportConfig::default(),
-		"cv::utils::logging::LogTag" => ExportConfig::default(),
-		"cv::viz::Color" => ExportConfig::default(),
-		"cvv::impl::CallMetaData" => ExportConfig::default(),
-		"cv::dnn::_Range" => ExportConfig::default(), // dnn shape_utils
-		"cv::dnn::slice" => ExportConfig::default(), // dnn shape_utils
-		"cv::dnn::getPlane" => ExportConfig::default(), // dnn shape_utils
-		"cv::dnn::shape" => ExportConfig::default(), // dnn shape_utils
-		"cv::dnn::total" => ExportConfig::default(), // dnn shape_utils
-		"cv::dnn::concat" => ExportConfig::default(), // dnn shape_utils
-		"cv::dnn::toString" => ExportConfig::default(), // dnn shape_utils
-		"cv::dnn::print" => ExportConfig::default(), // dnn shape_utils
-		"cv::dnn::clamp" => ExportConfig::default(), // dnn shape_utils
-		"cv::WarperCreator" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::PlaneWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::AffineWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::CylindricalWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::CylindricalWarperGpu" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::SphericalWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::FisheyeWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::StereographicWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::CompressedRectilinearWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::CompressedRectilinearPortraitWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::PaniniWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::PaniniPortraitWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::PlaneWarperGpu" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::MercatorWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::SphericalWarperGpu" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::TransverseMercatorWarper" => ExportConfig::default(), // 3.2 3.4 stitching warpers
-		"cv::TermCriteria" => ExportConfig::simple(),
-		"cv::optflow::GPCTrainingParams" => ExportConfig::simple(),
-		"cv::optflow::GPCMatchingParams" => ExportConfig::simple(),
-		"cv::cudacodec::FormatInfo" => ExportConfig::simple(),
-		"cv::kinfu::Intr" => ExportConfig::simple(),
-		"cv::videostab::MaskFrameSource" => ExportConfig::default(),
-		"cv::ConfidenceMap" => ExportConfig::default(),
-
-		// gapi
-		"cv::GCompileArg" => ExportConfig::default(),
-		"cv::GCompileArgs" => ExportConfig::default(),
-		"cv::GKinds" => ExportConfig::default(),
-		"cv::GRunArgs" => ExportConfig::default(),
-		"cv::GShapes" => ExportConfig::default(),
-		"cv::RMat::IAdapter" => ExportConfig::default(),
-		"cv::detail::ExtractArgsCallback" => ExportConfig::default(),
-		"cv::detail::ExtractMetaCallback" => ExportConfig::default(),
-		"cv::gapi::GFunctor" => ExportConfig::default(),
-		"cv::util::any" => ExportConfig::default(),
-
-		// override boxed
-		"cv::DetectionBasedTracker::ExtObject" => ExportConfig::default(),
-		"cv::DetectionBasedTracker::IDetector" => ExportConfig::default(),
-		"cv::FileNode" => ExportConfig::default(), // return references in methods, generally looks like not simple
-		"cv::dnn::Net" => ExportConfig::default(), // incorrectly marked as simple
-		"cv::linemod::QuantizedPyramid" => ExportConfig::default(), // missing export in 3.2
-		"cv::ocl::Device" => ExportConfig::default(),
-	}
-});
-
+/// Manual export config adjustments in form of "cpp_name(Reference)" => fn(&mut ExportConfig). If the export config is not
+/// detected from the sources an `ExportConfig::default()` is passed to the function.
 #[allow(clippy::type_complexity)]
 pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = Lazy::new(|| {
 	hashmap! {
@@ -676,6 +593,85 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = La
 		"cv::dnn::TextDetectionModel_DB" => ExportConfig::make_boxed as _, // inappropriately marked as simple
 		"cv::dnn::TextDetectionModel_EAST" => ExportConfig::make_boxed as _, // inappropriately marked as simple
 		"cv::dnn::TextRecognitionModel" => ExportConfig::make_boxed as _, // inappropriately marked as simple
+
+		"VADisplay" => ExportConfig::make_export as _,
+		"VASurfaceID" => ExportConfig::make_export as _,
+		"cv::Mat_" => ExportConfig::make_export as _,
+		"cv::CvFeatureParams" => ExportConfig::make_export as _,
+		"cv::CvHaarEvaluator" => ExportConfig::make_export as _,
+		"cv::CvHaarEvaluator::FeatureHaar" => ExportConfig::make_export as _, // no default constructor
+		"cv::DetectionROI" => ExportConfig::make_export as _,
+		"cv::FileNodeIterator::SeqReader" => ExportConfig::make_export as _,
+		"cv::QtFont" => ExportConfig::make_export as _,
+		"cv::bioinspired::RetinaParameters" => ExportConfig::make_export as _,
+		"cv::bioinspired::SegmentationParameters" => ExportConfig::make_simple as _,
+		"cv::bioinspired::createRetina_OCL" => ExportConfig::make_export as _, // 3.2 not exported
+		"cv::detail::CheckContext" => ExportConfig::make_export as _,
+		"cv::dnn::BackendNode" => ExportConfig::make_export as _,
+		"cv::dnn::BackendWrapper" => ExportConfig::make_export as _,
+		"cv::dnn::DictValue" => ExportConfig::make_export as _, // 3.2 not exported
+		"cv::dnn::MatShape" => ExportConfig::make_export as _,
+		"cv::face::CParams" => ExportConfig::make_export as _,
+		"cv::face::FacemarkAAM::Model::Texture" => ExportConfig::make_export as _,
+		"cv::getElemSize" => ExportConfig::make_export as _,
+		"cv::morphologyDefaultBorderValue" => ExportConfig::make_export as _,
+		"cv::ppf_match_3d::Pose3DPtr" => ExportConfig::make_export as _,
+		"cv::superres::PyrLKOpticalFlow" => ExportConfig::make_export as _,
+		"cv::utils::logging::LogTag" => ExportConfig::make_export as _,
+		"cv::viz::Color" => ExportConfig::make_export as _,
+		"cvv::impl::CallMetaData" => ExportConfig::make_export as _,
+		"cv::dnn::_Range" => ExportConfig::make_export as _, // dnn shape_utils
+		"cv::dnn::slice" => ExportConfig::make_export as _, // dnn shape_utils
+		"cv::dnn::getPlane" => ExportConfig::make_export as _, // dnn shape_utils
+		"cv::dnn::shape" => ExportConfig::make_export as _, // dnn shape_utils
+		"cv::dnn::total" => ExportConfig::make_export as _, // dnn shape_utils
+		"cv::dnn::concat" => ExportConfig::make_export as _, // dnn shape_utils
+		"cv::dnn::toString" => ExportConfig::make_export as _, // dnn shape_utils
+		"cv::dnn::print" => ExportConfig::make_export as _, // dnn shape_utils
+		"cv::dnn::clamp" => ExportConfig::make_export as _, // dnn shape_utils
+		"cv::WarperCreator" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::PlaneWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::AffineWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::CylindricalWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::CylindricalWarperGpu" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::SphericalWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::FisheyeWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::StereographicWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::CompressedRectilinearWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::CompressedRectilinearPortraitWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::PaniniWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::PaniniPortraitWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::PlaneWarperGpu" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::MercatorWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::SphericalWarperGpu" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::TransverseMercatorWarper" => ExportConfig::make_export as _, // 3.2 3.4 stitching warpers
+		"cv::TermCriteria" => ExportConfig::make_simple as _,
+		"cv::optflow::GPCTrainingParams" => ExportConfig::make_simple as _,
+		"cv::optflow::GPCMatchingParams" => ExportConfig::make_simple as _,
+		"cv::cudacodec::FormatInfo" => ExportConfig::make_simple as _,
+		"cv::kinfu::Intr" => ExportConfig::make_simple as _,
+		"cv::videostab::MaskFrameSource" => ExportConfig::make_export as _,
+		"cv::ConfidenceMap" => ExportConfig::make_export as _,
+
+		// gapi
+		"cv::GCompileArg" => ExportConfig::make_export as _,
+		"cv::GCompileArgs" => ExportConfig::make_export as _,
+		"cv::GKinds" => ExportConfig::make_export as _,
+		"cv::GRunArgs" => ExportConfig::make_export as _,
+		"cv::GShapes" => ExportConfig::make_export as _,
+		"cv::RMat::IAdapter" => ExportConfig::make_export as _,
+		"cv::detail::ExtractArgsCallback" => ExportConfig::make_export as _,
+		"cv::detail::ExtractMetaCallback" => ExportConfig::make_export as _,
+		"cv::gapi::GFunctor" => ExportConfig::make_export as _,
+		"cv::util::any" => ExportConfig::make_export as _,
+
+		// override boxed
+		"cv::DetectionBasedTracker::ExtObject" => ExportConfig::make_boxed as _,
+		"cv::DetectionBasedTracker::IDetector" => ExportConfig::make_boxed as _,
+		"cv::FileNode" => ExportConfig::make_boxed as _, // return references in methods, generally looks like not simple
+		"cv::dnn::Net" => ExportConfig::make_boxed as _, // incorrectly marked as simple
+		"cv::linemod::QuantizedPyramid" => ExportConfig::make_boxed as _, // missing export in 3.2
+		"cv::ocl::Device" => ExportConfig::make_boxed as _,
 	}
 });
 

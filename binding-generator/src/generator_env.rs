@@ -30,19 +30,15 @@ pub struct RenameConfig {
 }
 
 impl ExportConfig {
-	pub fn simple() -> Self {
-		ExportConfig {
-			simple: true,
-			..Default::default()
-		}
-	}
-
-	pub fn make_noexcept(src: &mut ExportConfig) {
-		src.no_except = true;
-	}
+	/// Doesn't change export config, but putting it into `ELEMENT_EXPORT_TWEAK` will force the creation of the default `ExportConfig`
+	pub fn make_export(_: &mut ExportConfig) {}
 
 	pub fn make_boxed(src: &mut ExportConfig) {
 		src.simple = false;
+	}
+
+	pub fn make_simple(src: &mut ExportConfig) {
+		src.simple = true;
 	}
 }
 
@@ -230,16 +226,16 @@ impl<'tu> GeneratorEnv<'tu> {
 	}
 
 	#[inline]
-	fn get_with_fuzzy_key<T>(entity: Entity, f: impl Fn(&ExportIdx) -> Option<T>) -> Option<T> {
+	fn get_with_fuzzy_key<T>(entity: Entity, getter: impl Fn(&ExportIdx) -> Option<T>) -> Option<T> {
 		let key = Self::key(entity);
-		f(&key).or_else(|| {
+		getter(&key).or_else(|| {
 			// for cases where CV_EXPORTS is on the separate line but entity.get_range() spans into it
 			let fuzzy_key = (key.0, key.1, 1);
-			f(&fuzzy_key).or_else(|| {
+			getter(&fuzzy_key).or_else(|| {
 				if fuzzy_key.1 >= 1 {
 					// for cases where CV_EXPORTS is on the separate line but entity.get_range() start on the next line
 					let fuzzy_key = (fuzzy_key.0, fuzzy_key.1 - 1, fuzzy_key.2);
-					f(&fuzzy_key)
+					getter(&fuzzy_key)
 				} else {
 					None
 				}
@@ -249,16 +245,14 @@ impl<'tu> GeneratorEnv<'tu> {
 
 	pub fn get_export_config(&self, entity: Entity) -> Option<ExportConfig> {
 		let cpp_refname = entity.cpp_name(CppNameStyle::Reference);
-		settings::ELEMENT_EXPORT_MANUAL
-			.get(cpp_refname.as_ref())
-			.or_else(|| Self::get_with_fuzzy_key(entity, |key| self.export_map.get(key)))
-			.cloned()
-			.map(|mut e| {
-				if let Some(cb) = settings::ELEMENT_EXPORT_TWEAK.get(cpp_refname.as_ref()) {
-					cb(&mut e);
-				}
-				e
-			})
+		let out = Self::get_with_fuzzy_key(entity, |key| self.export_map.get(key)).cloned();
+		if let Some(tweak) = settings::ELEMENT_EXPORT_TWEAK.get(cpp_refname.as_ref()) {
+			let mut out = out.map_or_else(ExportConfig::default, |e| e);
+			tweak(&mut out);
+			Some(out)
+		} else {
+			out
+		}
 	}
 
 	pub fn make_rename_config(&mut self, entity: Entity) -> &mut RenameConfig {
