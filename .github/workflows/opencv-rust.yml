@@ -17,16 +17,16 @@ jobs:
           - ubuntu-20.04
           - macos-11
         version:
-          - opencv: 3.4.17
-          - opencv: 4.6.0
+          - opencv: 3.4.19
+          - opencv: 4.7.0
         exclude:
           - os-image: macos-11
             version:
-              opencv: 3.4.17
+              opencv: 3.4.19
         include:
           - os-image: ubuntu-20.04
             version:
-              opencv: 4.6.0-static
+              opencv: 4.7.0-static
     runs-on: ${{ matrix.os-image }}
     env:
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
@@ -70,7 +70,7 @@ jobs:
           - ubuntu-20.04
           - windows-2022
         version:
-          - vcpkg: 2022.10.19
+          - vcpkg: 2023.01.09
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.version.vcpkg }}
@@ -81,7 +81,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/build
-          key: vcpkg-${{ matrix.version.vcpkg }}-${{ matrix.os-image }}-1
+          key: vcpkg-${{ matrix.version.vcpkg }}-${{ matrix.os-image }}
 
       - name: Install dependencies
         env:

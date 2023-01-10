@@ -4,7 +4,8 @@ set -vex
 
 sudo apt-get update
 sudo apt-get install -y clang libharfbuzz0b git curl zip unzip tar bison gperf libx11-dev libxft-dev libxext-dev \
-	libgles2-mesa-dev autoconf libtool build-essential libxrandr-dev libxi-dev libxcursor-dev libxdamage-dev libxinerama-dev
+	libgles2-mesa-dev autoconf libtool build-essential libxrandr-dev libxi-dev libxcursor-dev libxdamage-dev libxinerama-dev \
+	libdbus-1-dev libxtst-dev
 
 export VCPKG_ROOT="$HOME/build/vcpkg"
 if [[ -e "$VCPKG_ROOT" && ! -e "$VCPKG_ROOT/.git" ]]; then
