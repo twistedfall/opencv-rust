@@ -14,7 +14,7 @@ pub trait PtrExtern {
 }
 
 #[doc(hidden)]
-pub trait PtrExternCtor<T: for<'a> OpenCVType<'a>> {
+pub trait PtrExternCtor<T: for<'a> OpenCVTypeArg<'a>> {
 	#[doc(hidden)]
 	unsafe fn extern_new<'a>(val: extern_container_send!(mut T: 'a)) -> extern_receive!(Self: 'a)
 	where

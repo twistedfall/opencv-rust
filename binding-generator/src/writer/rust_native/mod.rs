@@ -1,3 +1,4 @@
+use std::collections::BTreeMap;
 use std::fmt::Debug;
 use std::fs;
 use std::fs::{File, OpenOptions};
@@ -37,6 +38,7 @@ mod typedef;
 mod vector;
 
 type Entries = Vec<(String, String)>;
+type UniqueEntries = BTreeMap<String, String>;
 
 #[derive(Clone, Debug)]
 pub struct RustNativeBindingWriter<'s> {
@@ -54,7 +56,7 @@ pub struct RustNativeBindingWriter<'s> {
 	consts: Entries,
 	enums: Entries,
 	rust_funcs: Entries,
-	rust_typedefs: Entries,
+	rust_typedefs: Option<UniqueEntries>,
 	rust_classes: Entries,
 	export_funcs: Entries,
 	export_classes: Entries,
@@ -87,7 +89,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 			consts: vec![],
 			enums: vec![],
 			rust_funcs: vec![],
-			rust_typedefs: vec![],
+			rust_typedefs: Some(BTreeMap::new()),
 			rust_classes: vec![],
 			export_funcs: vec![],
 			export_classes: vec![],
@@ -145,10 +147,13 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 
 	fn visit_typedef(&mut self, typedef: Typedef) {
 		self.emit_debug_log(&typedef);
-		self.rust_typedefs.push((
-			typedef.cpp_name(CppNameStyle::Reference).into_owned(),
-			typedef.gen_rust(self.opencv_version),
-		))
+		let opencv_version = self.opencv_version;
+		self.rust_typedefs.as_mut().map(|typedefs| {
+			let cpp_refname = typedef.cpp_name(CppNameStyle::Reference);
+			if !typedefs.contains_key(cpp_refname.as_ref()) {
+				typedefs.insert(cpp_refname.into_owned(), typedef.gen_rust(opencv_version));
+			}
+		});
 	}
 
 	fn visit_class(&mut self, class: Class) {
@@ -250,7 +255,12 @@ impl Drop for RustNativeBindingWriter<'_> {
 
 		let mut rust = join(&mut self.consts);
 		rust += &join(&mut self.enums);
-		rust += &join(&mut self.rust_typedefs);
+		let mut typedefs = self
+			.rust_typedefs
+			.take()
+			.map(|typedefs| typedefs.into_iter().collect())
+			.unwrap_or_default();
+		rust += &join(&mut typedefs);
 		rust += &join(&mut self.rust_funcs);
 		rust += &join(&mut self.rust_classes);
 		let prelude = RUST_PRELUDE.interpolate(&hashmap! {

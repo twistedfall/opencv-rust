@@ -62,24 +62,22 @@ impl<'m> EphemeralGenerator<'m> {
 	}
 
 	fn add_used_in_smart_ptr(&mut self, func: Entity) {
-		for arg in func.get_arguments().into_iter().flatten() {
-			if let Some(arg_type) = arg.get_type() {
-				if arg_type
-					.get_declaration()
-					.map_or(false, |ent| ent.cpp_name(CppNameStyle::Reference).starts_with("cv::Ptr"))
-				{
-					let inner_type_ent = arg_type
-						.get_template_argument_types()
-						.into_iter()
-						.flatten()
-						.flatten()
-						.next()
-						.and_then(|t| t.get_declaration());
-					if let Some(inner_type_ent) = inner_type_ent {
-						self
-							.used_in_smart_ptr
-							.insert(inner_type_ent.cpp_name(CppNameStyle::Reference).into_owned());
-					}
+		for arg_type in func.get_arguments().iter().flatten().map(Entity::get_type).flatten() {
+			if arg_type
+				.get_declaration()
+				.map_or(false, |ent| ent.cpp_name(CppNameStyle::Reference).starts_with("cv::Ptr"))
+			{
+				let inner_type_ent = arg_type
+					.get_template_argument_types()
+					.into_iter()
+					.flatten()
+					.flatten()
+					.next()
+					.and_then(|t| t.get_declaration());
+				if let Some(inner_type_ent) = inner_type_ent {
+					self
+						.used_in_smart_ptr
+						.insert(inner_type_ent.cpp_name(CppNameStyle::Reference).into_owned());
 				}
 			}
 		}
@@ -110,8 +108,25 @@ impl<'m> EphemeralGenerator<'m> {
 		}
 		let mut used_in_smart_ptr = self.used_in_smart_ptr.iter().collect::<Vec<_>>();
 		used_in_smart_ptr.sort_unstable();
+
+		fn all_descendants<'d>(descendants: &'d HashMap<String, HashSet<String>>, class: &str) -> HashSet<&'d String> {
+			descendants
+				.get(class)
+				.map(|d| d.iter().collect::<Vec<_>>())
+				.into_iter()
+				.flatten()
+				.flat_map(|descendant| {
+					let mut out = all_descendants(descendants, descendant);
+					out.insert(descendant);
+					out
+				})
+				.collect()
+		}
+
 		for used_cppfull in used_in_smart_ptr {
-			let mut descendants = self.descendants.get(used_cppfull).into_iter().flatten().collect::<Vec<_>>();
+			let mut descendants = all_descendants(&self.descendants, used_cppfull)
+				.into_iter()
+				.collect::<Vec<_>>();
 			descendants.sort_unstable();
 			for desc_cppfull in descendants {
 				if !self.used_in_smart_ptr.contains(desc_cppfull) {

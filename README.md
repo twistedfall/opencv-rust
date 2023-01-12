@@ -346,12 +346,16 @@ return the value directly instead of `Result`.
 Some C++ operators are supported, they are converted to the corresponding functions on Rust side. Here is the
 list with the corresponding function name:
 * `[]` → `get()` or `get_mut()`
-* `+` → `add()`
-* `-` → `sub()`
-* `*` → `mul()`
-* `/` → `div()`
-* `==` → `equals()`
-* `*` (deref) → `deref()` or `deref_mut()`
+* `+`, `-` → `add()`, `sub()`
+* `*`, `/` → `mul()`, `div()`
+* `()` (function call) → `apply()`
+* `*` (deref) → `try_deref()` or `try_deref_mut()`
+* `==`, `!=` → `equals()`, `not_equals()`
+* `>`, `>=` → `greater_than()`, `greater_than_or_equal()`
+* `<`, `<=` → `less_than()`, `less_than_or_equal()`
+* `++`, `--` → `incr()`, `decr()`
+* `&`, `|`, `^` → `and()`, `or()`, `xor()`
+* `!` → `negate()`
 
 ### Infallible functions
 

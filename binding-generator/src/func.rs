@@ -21,6 +21,7 @@ pub enum OperatorKind {
 	Mul,
 	Div,
 	Deref,
+	Apply,
 	Equals,
 	NotEquals,
 	GreaterThan,
@@ -48,6 +49,7 @@ impl OperatorKind {
 					OperatorKind::Mul
 				}
 			}
+			"()" => OperatorKind::Apply,
 			"/" => OperatorKind::Div,
 			"==" => OperatorKind::Equals,
 			"!=" => OperatorKind::NotEquals,
@@ -67,7 +69,7 @@ impl OperatorKind {
 
 	pub fn add_args_to_name(&self) -> bool {
 		match self {
-			OperatorKind::Index | OperatorKind::BitwiseNot => false,
+			OperatorKind::Index | OperatorKind::BitwiseNot | OperatorKind::Apply => false,
 			OperatorKind::Unsupported
 			| OperatorKind::Add
 			| OperatorKind::Sub

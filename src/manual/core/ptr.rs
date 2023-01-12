@@ -7,6 +7,9 @@ use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer}
 mod ptr_extern;
 mod ptr_f32;
 
+/// This is similar to Rust `Box`, but handled by the C++. Some OpenCV functions insist on accepting `Ptr` instead of a heap
+/// allocated object so we need to satisfy those.
+///
 /// [docs.opencv.org 3.x](https://docs.opencv.org/3.4/d0/de7/structcv_1_1Ptr.html)
 /// [docs.opencv.org 4.x](https://en.cppreference.com/w/cpp/memory/shared_ptr)
 pub struct Ptr<T: ?Sized>
@@ -21,9 +24,10 @@ impl<T: ?Sized> Ptr<T>
 where
 	Self: PtrExtern,
 {
+	/// Create a new `Ptr` from the object
 	pub fn new(val: T) -> Self
 	where
-		T: for<'a> OpenCVType<'a>,
+		T: for<'a> OpenCVTypeArg<'a>,
 		Self: PtrExternCtor<T>,
 	{
 		let val = val.opencv_into_extern_container_nofail();
