@@ -148,12 +148,12 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	fn visit_typedef(&mut self, typedef: Typedef) {
 		self.emit_debug_log(&typedef);
 		let opencv_version = self.opencv_version;
-		self.rust_typedefs.as_mut().map(|typedefs| {
+		if let Some(typedefs) = self.rust_typedefs.as_mut() {
 			let cpp_refname = typedef.cpp_name(CppNameStyle::Reference);
 			if !typedefs.contains_key(cpp_refname.as_ref()) {
 				typedefs.insert(cpp_refname.into_owned(), typedef.gen_rust(opencv_version));
 			}
-		});
+		}
 	}
 
 	fn visit_class(&mut self, class: Class) {

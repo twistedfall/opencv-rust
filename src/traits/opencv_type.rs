@@ -156,37 +156,22 @@ macro_rules! opencv_type_simple {
 			type Arg = Self;
 			type ExternReceive = Self;
 
-			#[inline]
-			unsafe fn opencv_from_extern(s: Self) -> Self {
-				s
-			}
+			#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
 		}
 
 		impl $crate::traits::OpenCVTypeArg<'_> for $type {
 			type ExternContainer = Self;
 
-			#[inline]
-			fn opencv_into_extern_container_nofail(self) -> Self {
-				self
-			}
+			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
 		}
 
 		impl $crate::traits::OpenCVTypeExternContainer<'_> for $type {
 			type ExternSend = *const Self;
 			type ExternSendMut = *mut Self;
 
-			#[inline]
-			fn opencv_as_extern(&self) -> Self::ExternSend {
-				self
-			}
-			#[inline]
-			fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-				self
-			}
-			#[inline]
-			fn opencv_into_extern(self) -> Self::ExternSendMut {
-				unimplemented!("opencv_into_extern can't be used for simple class")
-			}
+			#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
+			#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
+			#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { unimplemented!("This is intentionally left unimplemented as there seems to be no need for it and it's difficult to implement it without leakage") }
 		}
 	};
 }
@@ -213,7 +198,7 @@ macro_rules! opencv_type_simple_generic {
 
 			#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
 			#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
-			#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
+			#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { unimplemented!("This is intentionally left unimplemented as there seems to be no need for it and it's difficult to implement it without leakage") }
 		}
 	};
 }

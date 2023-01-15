@@ -53,7 +53,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 	let validation_needed = Arc::new(AtomicBool::new(true));
 
 	help();
-	let filename = env::args().skip(1).next().unwrap_or("data/right.jpg".into());
+	let filename = env::args().nth(1).unwrap_or_else(|| "data/right.jpg".to_string());
 	opencv::not_opencv_branch_32! {
 		let filename = core::find_file(&filename, true, false)?;
 	}
@@ -96,11 +96,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 					let mut roi_corners = roi_corners.lock().unwrap();
 					// Action when left button is pressed
 					if roi_corners.len() == 4 {
-						for i in 0..4 {
-							if event == highgui::EVENT_LBUTTONDOWN
-								&& (roi_corners.get(i).unwrap().x - x).abs() < 10
-								&& (roi_corners.get(i).unwrap().y - y).abs() < 10
-							{
+						for (i, roi_corner) in roi_corners.iter().enumerate() {
+							if event == highgui::EVENT_LBUTTONDOWN && (roi_corner.x - x).abs() < 10 && (roi_corner.y - y).abs() < 10 {
 								selected_corner_index = i;
 								dragging = true;
 							}
@@ -130,39 +127,23 @@ fn main() -> Result<(), Box<dyn Error>> {
 			image = original_image.clone();
 			{
 				let roi_corners = roi_corners.lock().unwrap();
-				for i in 0..roi_corners_len {
-					imgproc::circle(
-						&mut image,
-						roi_corners.get(i)?,
-						5,
-						Scalar::new(0., 255., 0., 0.),
-						3,
-						LINE_8,
-						0,
-					)?;
+				for (i, roi_corner) in roi_corners.iter().enumerate() {
+					imgproc::circle(&mut image, roi_corner, 5, Scalar::new(0., 255., 0., 0.), 3, LINE_8, 0)?;
 					if i > 0 {
 						imgproc::line(
 							&mut image,
 							roi_corners.get(i - 1)?,
-							roi_corners.get(i)?,
+							roi_corner,
 							Scalar::new(0., 0., 255., 0.),
 							2,
 							LINE_8,
 							0,
 						)?;
-						imgproc::circle(
-							&mut image,
-							roi_corners.get(i)?,
-							5,
-							Scalar::new(0., 255., 0., 0.),
-							3,
-							LINE_8,
-							0,
-						)?;
+						imgproc::circle(&mut image, roi_corner, 5, Scalar::new(0., 255., 0., 0.), 3, LINE_8, 0)?;
 						imgproc::put_text(
 							&mut image,
 							LABELS[i],
-							roi_corners.get(i)?,
+							roi_corner,
 							highgui::QT_FONT_NORMAL,
 							0.8,
 							Scalar::new(255., 0., 0., 0.),
@@ -179,29 +160,21 @@ fn main() -> Result<(), Box<dyn Error>> {
 			image = original_image.clone();
 			{
 				let roi_corners = roi_corners.lock().unwrap();
-				for i in 0..4 {
+				for (i, roi_corner) in roi_corners.iter().enumerate() {
 					imgproc::line(
 						&mut image,
-						roi_corners.get(i)?,
+						roi_corner,
 						roi_corners.get((i + 1) % 4)?,
 						Scalar::new(0., 0., 255., 0.),
 						2,
 						LINE_8,
 						0,
 					)?;
-					imgproc::circle(
-						&mut image,
-						roi_corners.get(i)?,
-						5,
-						Scalar::new(0., 255., 0., 0.),
-						3,
-						LINE_8,
-						0,
-					)?;
+					imgproc::circle(&mut image, roi_corner, 5, Scalar::new(0., 255., 0., 0.), 3, LINE_8, 0)?;
 					imgproc::put_text(
 						&mut image,
 						LABELS[i],
-						roi_corners.get(i)?,
+						roi_corner,
 						highgui::QT_FONT_NORMAL,
 						0.8,
 						Scalar::new(255., 0., 0., 0.),

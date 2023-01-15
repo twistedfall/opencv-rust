@@ -21,10 +21,10 @@ fn field_access_on_ptr() -> Result<()> {
 	use opencv::core::Ptr;
 
 	let mut params = EstimateParameters::default()?;
-	assert_ne!(true, params.use_extrinsic_guess());
+	assert!(!params.use_extrinsic_guess());
 	params.set_use_extrinsic_guess(true);
 	let params_ptr = Ptr::<EstimateParameters>::new(params);
-	assert_eq!(true, params_ptr.use_extrinsic_guess());
+	assert!(params_ptr.use_extrinsic_guess());
 
 	let plain = EstimateParameters::default()?;
 	let mut ptr = Ptr::<EstimateParameters>::new(EstimateParameters::default()?);
@@ -35,7 +35,7 @@ fn field_access_on_ptr() -> Result<()> {
 
 	assert_eq!(plain.use_extrinsic_guess(), ptr.use_extrinsic_guess());
 	ptr.set_use_extrinsic_guess(true);
-	assert_eq!(true, ptr.use_extrinsic_guess());
+	assert!(ptr.use_extrinsic_guess());
 
 	// assert_eq!(plain.solve_pnp_method(), ptr.solve_pnp_method());
 	// ptr.set_solve_pnp_method(SOLVEPNP_MAX_COUNT);

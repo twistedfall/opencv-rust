@@ -62,7 +62,7 @@ impl<'m> EphemeralGenerator<'m> {
 	}
 
 	fn add_used_in_smart_ptr(&mut self, func: Entity) {
-		for arg_type in func.get_arguments().iter().flatten().map(Entity::get_type).flatten() {
+		for arg_type in func.get_arguments().iter().flatten().filter_map(Entity::get_type) {
 			if arg_type
 				.get_declaration()
 				.map_or(false, |ent| ent.cpp_name(CppNameStyle::Reference).starts_with("cv::Ptr"))
