@@ -1,5 +1,4 @@
 use std::fmt;
-use std::mem::ManuallyDrop;
 
 use num_traits::{One, Zero};
 
@@ -194,7 +193,7 @@ impl<T, A: SizedArray<T>> OpenCVTypeArg<'_> for Matx<T, A> {
 	}
 }
 
-impl<T, A: SizedArray<T>> OpenCVTypeExternContainer<'_> for Matx<T, A> {
+impl<T, A: SizedArray<T>> OpenCVTypeExternContainer for Matx<T, A> {
 	type ExternSend = *const Self;
 	type ExternSendMut = *mut Self;
 
@@ -205,10 +204,6 @@ impl<T, A: SizedArray<T>> OpenCVTypeExternContainer<'_> for Matx<T, A> {
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self
-	}
-	#[inline]
-	fn opencv_into_extern(self) -> Self::ExternSendMut {
-		&mut *ManuallyDrop::new(self) as _
 	}
 }
 

@@ -1,6 +1,6 @@
 use crate::core::Vector;
 use crate::platform_types::size_t;
-use crate::traits::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::traits::OpenCVType;
 use crate::{extern_arg_send, extern_container_send, extern_receive, extern_send};
 
 /// This trait is implemented by any type that can be stored inside `Vector`.
@@ -44,7 +44,7 @@ pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
 	#[doc(hidden)]
 	unsafe fn extern_push<'a>(&mut self, val: extern_arg_send!(T: 'a));
 	#[doc(hidden)]
-	unsafe fn extern_push_owned<'a>(&mut self, val: extern_container_send!(T: 'a));
+	unsafe fn extern_push_owned(&mut self, val: extern_container_send!(T));
 	#[doc(hidden)]
 	unsafe fn extern_insert<'a>(&mut self, index: size_t, val: extern_arg_send!(T: 'a));
 	#[doc(hidden)]
@@ -152,7 +152,7 @@ macro_rules! vector_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_push_owned<'a>(&mut self, val: extern_container_send!($type: 'a)) {
+			unsafe fn extern_push_owned(&mut self, val: extern_container_send!($type)) {
 				$extern_push(self.as_raw_mut(), val)
 			}
 

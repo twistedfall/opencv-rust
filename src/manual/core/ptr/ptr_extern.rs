@@ -1,7 +1,7 @@
 use std::ffi::c_void;
 
-use crate::traits::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
-use crate::{extern_container_send, extern_receive, extern_send};
+use crate::traits::{OpenCVType, OpenCVTypeExternContainerMove};
+use crate::{extern_receive, extern_send};
 
 #[doc(hidden)]
 pub trait PtrExtern {
@@ -14,9 +14,9 @@ pub trait PtrExtern {
 }
 
 #[doc(hidden)]
-pub trait PtrExternCtor<T: for<'a> OpenCVTypeArg<'a>> {
+pub trait PtrExternCtor<T: OpenCVTypeExternContainerMove> {
 	#[doc(hidden)]
-	unsafe fn extern_new<'a>(val: extern_container_send!(mut T: 'a)) -> extern_receive!(Self: 'a)
+	unsafe fn extern_new<'a>(val: extern_send!(mut T)) -> extern_receive!(Self: 'a)
 	where
 		Self: OpenCVType<'a>;
 }

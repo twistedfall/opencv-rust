@@ -1,6 +1,7 @@
-use std::{ffi::c_void, marker::PhantomData};
+use std::ffi::c_void;
+use std::marker::PhantomData;
 
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove};
 
 pub struct AbstractRefMut<'r, T: ?Sized> {
 	ptr: *mut c_void,
@@ -48,7 +49,7 @@ impl<'r, T: ?Sized> OpenCVTypeArg<'r> for AbstractRefMut<'r, T> {
 	}
 }
 
-impl<T: ?Sized> OpenCVTypeExternContainer<'_> for AbstractRefMut<'_, T> {
+impl<T: ?Sized> OpenCVTypeExternContainer for AbstractRefMut<'_, T> {
 	type ExternSend = *const c_void;
 	type ExternSendMut = *mut c_void;
 
@@ -61,7 +62,9 @@ impl<T: ?Sized> OpenCVTypeExternContainer<'_> for AbstractRefMut<'_, T> {
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_raw_mut()
 	}
+}
 
+impl<T: ?Sized> OpenCVTypeExternContainerMove for AbstractRefMut<'_, T> {
 	#[inline]
 	fn opencv_into_extern(self) -> Self::ExternSendMut {
 		self.into_raw()

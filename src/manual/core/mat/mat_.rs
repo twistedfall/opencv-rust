@@ -7,7 +7,7 @@ use crate::core::{
 	Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray, ToInputOutputArray, ToOutputArray,
 	_InputArray, _InputOutputArray, _OutputArray,
 };
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove};
 use crate::{Error, Result};
 
 use super::{match_dims, match_format, match_is_continuous, match_total, DataType};
@@ -168,7 +168,7 @@ impl<T> OpenCVTypeArg<'_> for Mat_<T> {
 	}
 }
 
-impl<T> OpenCVTypeExternContainer<'_> for Mat_<T> {
+impl<T> OpenCVTypeExternContainer for Mat_<T> {
 	type ExternSend = *const c_void;
 	type ExternSendMut = *mut c_void;
 
@@ -181,7 +181,9 @@ impl<T> OpenCVTypeExternContainer<'_> for Mat_<T> {
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_raw_mut()
 	}
+}
 
+impl<T> OpenCVTypeExternContainerMove for Mat_<T> {
 	#[inline]
 	fn opencv_into_extern(self) -> Self::ExternSendMut {
 		self.into_raw()

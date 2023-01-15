@@ -30,7 +30,7 @@ pub trait OpenCVTypeArg<'a>: Sized {
 	/// Container to help marshall type over FFI boundary, e.g. CString for String or &str, for most other
 	/// types it's Self
 	#[doc(hidden)]
-	type ExternContainer: OpenCVTypeExternContainer<'a>;
+	type ExternContainer: OpenCVTypeExternContainer;
 
 	/// Convert Self into external container with possible error result, it shouldn't panic
 	#[doc(hidden)]
@@ -45,7 +45,7 @@ pub trait OpenCVTypeArg<'a>: Sized {
 
 /// Common trait for the type that is used to help marshall OpenCV related type over the FFI boundary
 #[doc(hidden)]
-pub trait OpenCVTypeExternContainer<'a> {
+pub trait OpenCVTypeExternContainer {
 	/// Type when constant Self is sent to C++ function, usually it's Self for simple types or *const c_void
 	/// for complex ones
 	#[doc(hidden)]
@@ -59,6 +59,11 @@ pub trait OpenCVTypeExternContainer<'a> {
 	fn opencv_as_extern(&self) -> Self::ExternSend;
 	#[doc(hidden)]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut;
+}
+
+/// Common trait for those `OpenCVTypeExternContainer`s that can be moved. Currently used for moving a boxed class behind a `Ptr`.
+#[doc(hidden)]
+pub trait OpenCVTypeExternContainerMove: OpenCVTypeExternContainer {
 	#[doc(hidden)]
 	fn opencv_into_extern(self) -> Self::ExternSendMut;
 }
@@ -77,17 +82,11 @@ macro_rules! extern_receive {
 /// Extern type to send the OpenCVTypeExternContainer over FFI boundary, used to improve readability
 #[macro_export]
 macro_rules! extern_send {
-	(mut $typ: ty: $lt: lifetime) => {
-		<$typ as OpenCVTypeExternContainer<$lt>>::ExternSendMut
-	};
-	($typ: ty: $lt: lifetime) => {
-		<$typ as OpenCVTypeExternContainer<$lt>>::ExternSend
-	};
 	(mut $typ: ty) => {
-		extern_send!(mut $typ: '_)
+		<$typ as $crate::traits::OpenCVTypeExternContainer>::ExternSendMut
 	};
 	($typ: ty) => {
-		extern_send!($typ: '_)
+		<$typ as $crate::traits::OpenCVTypeExternContainer>::ExternSend
 	};
 }
 
@@ -95,10 +94,16 @@ macro_rules! extern_send {
 #[macro_export]
 macro_rules! extern_container_send {
 	(mut $typ: ty: $lt: lifetime) => {
-		extern_send!(mut <$typ as OpenCVTypeArg<$lt>>::ExternContainer: $lt)
+		extern_send!(mut <$typ as $crate::traits::OpenCVTypeArg<$lt>>::ExternContainer)
 	};
 	($typ: ty: $lt: lifetime) => {
-		extern_send!(<$typ as OpenCVTypeArg<$lt>>::ExternContainer: $lt)
+		extern_send!(<$typ as $crate::traits::OpenCVTypeArg<$lt>>::ExternContainer)
+	};
+	(mut $typ: ty) => {
+		extern_container_send!(mut $typ: '_)
+	};
+	($typ: ty) => {
+		extern_container_send!($typ: '_)
 	};
 }
 
@@ -106,10 +111,10 @@ macro_rules! extern_container_send {
 #[macro_export]
 macro_rules! extern_arg_send {
 	(mut $typ: ty: $lt: lifetime) => {
-		extern_container_send!(mut <$typ as OpenCVType<$lt>>::Arg: $lt)
+		extern_container_send!(mut <$typ as $crate::traits::OpenCVType<$lt>>::Arg: $lt)
 	};
 	($typ: ty: $lt: lifetime) => {
-		extern_container_send!(<$typ as OpenCVType<$lt>>::Arg: $lt)
+		extern_container_send!(<$typ as $crate::traits::OpenCVType<$lt>>::Arg: $lt)
 	};
 }
 
@@ -130,12 +135,15 @@ macro_rules! opencv_type_copy {
 				#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
 			}
 
-			impl $crate::traits::OpenCVTypeExternContainer<'_> for $type {
+			impl $crate::traits::OpenCVTypeExternContainer for $type {
 				type ExternSend = Self;
 				type ExternSendMut = Self;
 
 				#[inline] fn opencv_as_extern(&self) -> Self { *self }
 				#[inline] fn opencv_as_extern_mut(&mut self) -> Self { *self }
+			}
+
+			impl $crate::traits::OpenCVTypeExternContainerMove for $type {
 				#[inline] fn opencv_into_extern(self) -> Self { self }
 			}
 		)+
@@ -156,22 +164,33 @@ macro_rules! opencv_type_simple {
 			type Arg = Self;
 			type ExternReceive = Self;
 
-			#[inline] unsafe fn opencv_from_extern(s: Self) -> Self { s }
+			#[inline]
+			unsafe fn opencv_from_extern(s: Self) -> Self {
+				s
+			}
 		}
 
 		impl $crate::traits::OpenCVTypeArg<'_> for $type {
 			type ExternContainer = Self;
 
-			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
+			#[inline]
+			fn opencv_into_extern_container_nofail(self) -> Self {
+				self
+			}
 		}
 
-		impl $crate::traits::OpenCVTypeExternContainer<'_> for $type {
+		impl $crate::traits::OpenCVTypeExternContainer for $type {
 			type ExternSend = *const Self;
 			type ExternSendMut = *mut Self;
 
-			#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
-			#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
-			#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { unimplemented!("This is intentionally left unimplemented as there seems to be no need for it and it's difficult to implement it without leakage") }
+			#[inline]
+			fn opencv_as_extern(&self) -> Self::ExternSend {
+				self
+			}
+			#[inline]
+			fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
+				self
+			}
 		}
 	};
 }
@@ -192,13 +211,12 @@ macro_rules! opencv_type_simple_generic {
 			#[inline] fn opencv_into_extern_container_nofail(self) -> Self { self }
 		}
 
-		impl<T: $trait$( + $more)*> $crate::traits::OpenCVTypeExternContainer<'_> for $type<T> {
+		impl<T: $trait$( + $more)*> $crate::traits::OpenCVTypeExternContainer for $type<T> {
 			type ExternSend = *const Self;
 			type ExternSendMut = *mut Self;
 
 			#[inline] fn opencv_as_extern(&self) -> Self::ExternSend { self }
 			#[inline] fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
-			#[inline] fn opencv_into_extern(self) -> Self::ExternSendMut { unimplemented!("This is intentionally left unimplemented as there seems to be no need for it and it's difficult to implement it without leakage") }
 		}
 	};
 }
@@ -253,7 +271,7 @@ impl OpenCVTypeArg<'_> for &str {
 	}
 }
 
-impl OpenCVTypeExternContainer<'_> for CString {
+impl OpenCVTypeExternContainer for CString {
 	type ExternSend = *const c_char;
 	type ExternSendMut = *mut c_char;
 
@@ -265,11 +283,6 @@ impl OpenCVTypeExternContainer<'_> for CString {
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_ptr() as _ // fixme: use as_mut_ptr() when it's stabilized or cast_mut() when MSRV is 1.65
-	}
-
-	#[inline]
-	fn opencv_into_extern(self) -> Self::ExternSendMut {
-		unimplemented!("This is intentionally left unimplemented as there seems to be no need for it and it's difficult to implement it without leakage")
 	}
 }
 
@@ -292,7 +305,7 @@ impl OpenCVTypeArg<'_> for Vec<u8> {
 	}
 }
 
-impl OpenCVTypeExternContainer<'_> for Vec<u8> {
+impl OpenCVTypeExternContainer for Vec<u8> {
 	type ExternSend = *const u8;
 	type ExternSendMut = *mut u8;
 
@@ -304,11 +317,6 @@ impl OpenCVTypeExternContainer<'_> for Vec<u8> {
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_mut_ptr()
-	}
-
-	#[inline]
-	fn opencv_into_extern(self) -> Self::ExternSendMut {
-		unimplemented!("This is intentionally left unimplemented as there seems to be no need for it and it's difficult to implement it without leakage")
 	}
 }
 

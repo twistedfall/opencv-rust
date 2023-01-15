@@ -2,7 +2,7 @@ use std::{ffi::c_void, marker::PhantomData, mem::ManuallyDrop};
 
 pub use ptr_extern::{PtrExtern, PtrExternCtor};
 
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove};
 
 mod ptr_extern;
 mod ptr_f32;
@@ -27,10 +27,9 @@ where
 	/// Create a new `Ptr` from the object
 	pub fn new(val: T) -> Self
 	where
-		T: for<'a> OpenCVTypeArg<'a>,
+		T: OpenCVTypeExternContainerMove + Sized,
 		Self: PtrExternCtor<T>,
 	{
-		let val = val.opencv_into_extern_container_nofail();
 		unsafe { Self::from_raw(Self::extern_new(val.opencv_into_extern())) }
 	}
 
@@ -95,7 +94,7 @@ where
 	}
 }
 
-impl<T: ?Sized> OpenCVTypeExternContainer<'_> for Ptr<T>
+impl<T: ?Sized> OpenCVTypeExternContainer for Ptr<T>
 where
 	Self: PtrExtern,
 {
@@ -111,7 +110,13 @@ where
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_raw_mut()
 	}
+}
 
+impl<T: ?Sized> OpenCVTypeExternContainerMove for Ptr<T>
+where
+	Self: PtrExtern,
+{
+	#[inline]
 	fn opencv_into_extern(self) -> Self::ExternSendMut {
 		self.into_raw()
 	}

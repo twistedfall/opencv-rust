@@ -123,7 +123,7 @@ impl<T, const N: usize> OpenCVTypeArg<'_> for VecN<T, N> {
 	}
 }
 
-impl<T, const N: usize> OpenCVTypeExternContainer<'_> for VecN<T, N> {
+impl<T, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
 	type ExternSend = *const Self;
 	type ExternSendMut = *mut Self;
 
@@ -135,11 +135,6 @@ impl<T, const N: usize> OpenCVTypeExternContainer<'_> for VecN<T, N> {
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self
-	}
-
-	#[inline]
-	fn opencv_into_extern(self) -> Self::ExternSendMut {
-		&mut *std::mem::ManuallyDrop::new(self) as _
 	}
 }
 

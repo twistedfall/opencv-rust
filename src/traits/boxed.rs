@@ -69,7 +69,7 @@ macro_rules! opencv_type_boxed {
 			}
 		}
 
-		impl $crate::traits::OpenCVTypeExternContainer<'_> for $type {
+		impl $crate::traits::OpenCVTypeExternContainer for $type {
 			type ExternSend = *const ::std::ffi::c_void;
 			type ExternSendMut = *mut ::std::ffi::c_void;
 
@@ -82,7 +82,9 @@ macro_rules! opencv_type_boxed {
 			fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 				self.as_raw_mut()
 			}
+		}
 
+		impl $crate::traits::OpenCVTypeExternContainerMove for $type {
 			#[inline]
 			fn opencv_into_extern(self) -> Self::ExternSendMut {
 				self.into_raw()

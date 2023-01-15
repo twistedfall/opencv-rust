@@ -1,4 +1,4 @@
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove};
 use std::ffi::c_void;
 use std::marker::PhantomData;
 use std::mem::ManuallyDrop;
@@ -61,7 +61,7 @@ where
 	}
 }
 
-impl<T> OpenCVTypeExternContainer<'_> for Tuple<T>
+impl<T> OpenCVTypeExternContainer for Tuple<T>
 where
 	Tuple<T>: TupleExtern,
 {
@@ -77,7 +77,12 @@ where
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_raw_mut()
 	}
+}
 
+impl<T> OpenCVTypeExternContainerMove for Tuple<T>
+where
+	Tuple<T>: TupleExtern,
+{
 	#[inline]
 	fn opencv_into_extern(self) -> Self::ExternSendMut {
 		self.into_raw()
