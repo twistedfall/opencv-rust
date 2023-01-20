@@ -70,7 +70,7 @@ fn main() -> Result<()> {
 	let mut frame = Mat::default();
 	while highgui::wait_key(1)? < 0 {
 		cap.read(&mut frame)?;
-		if frame.empty()? {
+		if frame.empty() {
 			highgui::wait_key(0)?;
 			break;
 		}
