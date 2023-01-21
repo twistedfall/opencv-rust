@@ -1,0 +1,3 @@
+allow-branch = ["master"]
+tag-name = "v{{version}}"
+verify = false
