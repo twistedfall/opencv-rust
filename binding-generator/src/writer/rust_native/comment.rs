@@ -88,7 +88,7 @@ pub fn render_doc_comment_with_processor(
 
 	// code blocks, don't run them during tests
 	static CODE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@code(?: ?\{.+?})?"#).unwrap());
-	out.replace_in_place_regex(&CODE, "```ignore");
+	out.replace_in_place_regex(&CODE, "```C++");
 	out.replace_in_place("@endcode", "```\n");
 
 	// snippets

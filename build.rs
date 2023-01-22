@@ -63,8 +63,8 @@ fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Re
 	Ok(dir
 		.read_dir()?
 		.flatten()
-		.map(|e| e.path())
-		.filter(move |p| p.is_file() && p.extension().map_or(false, |e| e.eq_ignore_ascii_case(extension.as_ref()))))
+		.filter_map(|e| e.file_type().map_or(false, |typ| typ.is_file()).then(|| e.path()))
+		.filter(move |p| p.extension().map_or(false, |e| e.eq_ignore_ascii_case(extension.as_ref()))))
 }
 
 /// Returns Some(new_file_name) if some parts of the filename were removed, None otherwise
@@ -232,9 +232,7 @@ fn build_job_server() -> Option<jobserver::Client> {
 		.and_then(|c| {
 			let available_jobs = c.available().unwrap_or(0);
 			if available_jobs > 0 {
-				eprintln!(
-					"=== Using environment job server with the the amount of available jobs: {available_jobs}"
-				);
+				eprintln!("=== Using environment job server with the the amount of available jobs: {available_jobs}");
 				Some(c)
 			} else {
 				eprintln!(
@@ -326,7 +324,7 @@ fn main() -> Result<()> {
 	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));
 	eprintln!("=== Environment configuration:");
 	for v in ENV_VARS.iter().copied().chain(iter::once("PATH")) {
-		eprintln!("===   {} = {:?}", v, env::var_os(v));
+		eprintln!("===   {v} = {:?}", env::var_os(v));
 	}
 	eprintln!("=== Enabled features:");
 	let features = env::vars().filter_map(|(mut name, val)| {

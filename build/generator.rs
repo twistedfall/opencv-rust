@@ -1,6 +1,6 @@
 use std::ffi::OsStr;
 use std::fs::{File, OpenOptions};
-use std::io::{BufRead, BufReader, Write};
+use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::{Path, PathBuf};
 use std::process::{Child, Command};
 use std::sync::Arc;
@@ -162,11 +162,11 @@ pub fn gen_wrapper(
 		let _ = fs::remove_file(path);
 	}
 
-	fn write_has_module(write: &mut File, module: &str) -> Result<()> {
+	fn write_has_module(mut write: impl Write, module: &str) -> Result<()> {
 		Ok(writeln!(write, "#[cfg(ocvrs_has_module_{module})]")?)
 	}
 
-	fn write_module_path(write: &mut File, target_module_dir: &Path, module: &str) -> Result<()> {
+	fn write_module_path(mut write: impl Write, target_module_dir: &Path, module: &str) -> Result<()> {
 		Ok(writeln!(
 			write,
 			"#[path = r\"{}\"]",
@@ -177,7 +177,7 @@ pub fn gen_wrapper(
 		)?)
 	}
 
-	let add_manual = |file: &mut File, module: &str| -> Result<bool> {
+	let add_manual = |file: &mut BufWriter<File>, module: &str| -> Result<bool> {
 		if manual_dir.join(format!("{module}.rs")).exists() {
 			writeln!(file, "pub use crate::manual::{module}::*;")?;
 			Ok(true)
@@ -188,12 +188,12 @@ pub fn gen_wrapper(
 
 	// block to close file handles before copying the bindings
 	{
-		let mut hub_rs = File::create(target_hub_dir.join("hub.rs"))?;
+		let mut hub_rs = BufWriter::new(File::create(target_hub_dir.join("hub.rs"))?);
 
-		let mut types_rs = File::create(target_module_dir.join("types.rs"))?;
+		let mut types_rs = BufWriter::new(File::create(target_module_dir.join("types.rs"))?);
 		writeln!(types_rs)?;
 
-		let mut sys_rs = File::create(target_module_dir.join("sys.rs"))?;
+		let mut sys_rs = BufWriter::new(File::create(target_module_dir.join("sys.rs"))?);
 		writeln!(sys_rs, "use crate::{{mod_prelude_sys::*, core}};")?;
 		writeln!(sys_rs)?;
 
@@ -202,17 +202,19 @@ pub fn gen_wrapper(
 			let module_cpp = OUT_DIR.join(format!("{module}.cpp"));
 			if module_cpp.is_file() {
 				let module_types_cpp = OUT_DIR.join(format!("{module}_types.hpp"));
-				let mut module_types_file = OpenOptions::new()
-					.create(true)
-					.truncate(true)
-					.write(true)
-					.open(module_types_cpp)?;
+				let mut module_types_file = BufWriter::new(
+					OpenOptions::new()
+						.create(true)
+						.truncate(true)
+						.write(true)
+						.open(module_types_cpp)?,
+				);
 				let mut type_files = files_with_extension(&OUT_DIR, "cpp")?
 					.filter(|f| is_type_file(f, module))
 					.collect::<Vec<_>>();
 				type_files.sort_unstable();
 				for entry in type_files {
-					io::copy(&mut File::open(&entry)?, &mut module_types_file)?;
+					io::copy(&mut BufReader::new(File::open(&entry)?), &mut module_types_file)?;
 					let _ = fs::remove_file(entry);
 				}
 			}
@@ -223,8 +225,10 @@ pub fn gen_wrapper(
 			writeln!(hub_rs, "pub mod {module};")?;
 			let module_filename = format!("{module}.rs");
 			let target_file = file_move_to_dir(&OUT_DIR.join(module_filename), &target_module_dir)?;
-			let mut f = OpenOptions::new().append(true).open(target_file)?;
-			add_manual(&mut f, module)?;
+			add_manual(
+				&mut BufWriter::new(OpenOptions::new().append(true).open(target_file)?),
+				module,
+			)?;
 
 			// merge multiple *-.type.rs files into a single types.rs
 			let mut header_written = false;

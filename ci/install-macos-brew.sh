@@ -4,7 +4,7 @@ set -vex
 
 brew -v update
 
-# fixes the install at 2023-01-14
+# fixes the install on 2023-01-14
 rm -f /usr/local/bin/2to3-3.11
 rm -f /usr/local/bin/idle3.11
 rm -f /usr/local/bin/pydoc3.11
