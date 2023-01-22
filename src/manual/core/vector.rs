@@ -400,7 +400,7 @@ fn vector_index_check(index: size_t, len: size_t) -> Result<()> {
 	if index >= len {
 		Err(crate::Error::new(
 			crate::core::StsOutOfRange,
-			format!("Index: {} out of bounds: 0..{}", index, len),
+			format!("Index: {index} out of bounds: 0..{len}"),
 		))
 	} else {
 		Ok(())

@@ -80,12 +80,12 @@ pub fn gen_wrapper(
 	eprintln!("=== Building binding-generator binary:");
 	if let Some(child_stderr) = generator_build.stderr.take() {
 		for line in BufReader::new(child_stderr).lines().flatten() {
-			eprintln!("=== {}", line);
+			eprintln!("=== {line}");
 		}
 	}
 	if let Some(child_stdout) = generator_build.stdout.take() {
 		for line in BufReader::new(child_stdout).lines().flatten() {
-			eprintln!("=== {}", line);
+			eprintln!("=== {line}");
 		}
 	}
 	let child_status = generator_build.wait()?;
@@ -115,7 +115,7 @@ pub fn gen_wrapper(
 			let opencv_header_dir = Arc::clone(&opencv_header_dir);
 			move || {
 				let mut bin_generator = match HOST_TRIPLE.as_ref() {
-					Some(host_triple) => Command::new(OUT_DIR.join(format!("{}/release/binding-generator", host_triple))),
+					Some(host_triple) => Command::new(OUT_DIR.join(format!("{host_triple}/release/binding-generator"))),
 					None => Command::new(OUT_DIR.join("release/binding-generator")),
 				};
 				bin_generator
@@ -124,12 +124,12 @@ pub fn gen_wrapper(
 					.arg(&*OUT_DIR)
 					.arg(module)
 					.arg(additional_include_dirs.join(","));
-				eprintln!("=== Running: {:#?}", bin_generator);
+				eprintln!("=== Running: {bin_generator:#?}");
 				let res = bin_generator.status().expect("Can't run bindings generator");
 				if !res.success() {
 					panic!("Failed to run the bindings generator");
 				}
-				eprintln!("=== Generated: {}", module);
+				eprintln!("=== Generated: {module}");
 				drop(token); // needed to move the token to the thread
 			}
 		});
@@ -145,12 +145,12 @@ pub fn gen_wrapper(
 	}
 
 	fn write_has_module(write: &mut File, module: &str) -> Result<()> {
-		Ok(writeln!(write, "#[cfg(ocvrs_has_module_{})]", module)?)
+		Ok(writeln!(write, "#[cfg(ocvrs_has_module_{module})]")?)
 	}
 
 	let add_manual = |file: &mut File, module: &str| -> Result<bool> {
-		if manual_dir.join(format!("{}.rs", module)).exists() {
-			writeln!(file, "pub use crate::manual::{}::*;", module)?;
+		if manual_dir.join(format!("{module}.rs")).exists() {
+			writeln!(file, "pub use crate::manual::{module}::*;")?;
 			Ok(true)
 		} else {
 			Ok(false)
@@ -168,9 +168,9 @@ pub fn gen_wrapper(
 
 	for module in modules {
 		// merge multiple *-type.cpp files into a single module_types.hpp
-		let module_cpp = OUT_DIR.join(format!("{}.cpp", module));
+		let module_cpp = OUT_DIR.join(format!("{module}.cpp"));
 		if module_cpp.is_file() {
-			let module_types_cpp = OUT_DIR.join(format!("{}_types.hpp", module));
+			let module_types_cpp = OUT_DIR.join(format!("{module}_types.hpp"));
 			let mut module_types_file = OpenOptions::new()
 				.create(true)
 				.truncate(true)
@@ -188,8 +188,8 @@ pub fn gen_wrapper(
 
 		// add module entry to hub.rs and move the file into src/opencv/hub
 		write_has_module(&mut hub_rs, module)?;
-		writeln!(hub_rs, "pub mod {};", module)?;
-		let module_filename = format!("{}.rs", module);
+		writeln!(hub_rs, "pub mod {module};")?;
+		let module_filename = format!("{module}.rs");
 		let target_file = file_move_to_dir(&OUT_DIR.join(module_filename), &target_module_dir)?;
 		let mut f = OpenOptions::new().append(true).open(target_file)?;
 		add_manual(&mut f, module)?;
@@ -204,7 +204,7 @@ pub fn gen_wrapper(
 			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
 				if !header_written {
 					write_has_module(&mut types_rs, module)?;
-					writeln!(types_rs, "mod {}_types {{", module)?;
+					writeln!(types_rs, "mod {module}_types {{")?;
 					writeln!(types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
 					writeln!(types_rs)?;
 					header_written = true;
@@ -216,21 +216,21 @@ pub fn gen_wrapper(
 		if header_written {
 			writeln!(types_rs, "}}")?;
 			write_has_module(&mut types_rs, module)?;
-			writeln!(types_rs, "pub use {}_types::*;", module)?;
+			writeln!(types_rs, "pub use {module}_types::*;")?;
 			writeln!(types_rs)?;
 		}
 
 		// merge module-specific *.externs.rs into a single sys.rs
-		let externs_rs = OUT_DIR.join(format!("{}.externs.rs", module));
+		let externs_rs = OUT_DIR.join(format!("{module}.externs.rs"));
 		write_has_module(&mut sys_rs, module)?;
-		writeln!(sys_rs, "mod {}_sys {{", module)?;
+		writeln!(sys_rs, "mod {module}_sys {{")?;
 		writeln!(sys_rs, "\tuse super::*;")?;
 		writeln!(sys_rs)?;
 		copy_indent(BufReader::new(File::open(&externs_rs)?), &mut sys_rs, "\t")?;
 		let _ = fs::remove_file(externs_rs);
 		writeln!(sys_rs, "}}")?;
 		write_has_module(&mut sys_rs, module)?;
-		writeln!(sys_rs, "pub use {}_sys::*;", module)?;
+		writeln!(sys_rs, "pub use {module}_sys::*;")?;
 		writeln!(sys_rs)?;
 	}
 	writeln!(hub_rs, "pub mod types;")?;
@@ -246,7 +246,7 @@ pub fn gen_wrapper(
 	for module in modules {
 		write!(hub_rs, "\t")?;
 		write_has_module(&mut hub_rs, module)?;
-		writeln!(hub_rs, "\tpub use super::{}::prelude::*;", module)?;
+		writeln!(hub_rs, "\tpub use super::{module}::prelude::*;")?;
 	}
 	writeln!(hub_rs, "}}")?;
 

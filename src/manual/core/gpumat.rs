@@ -5,7 +5,7 @@ use crate::{
 
 impl GpuMat {
 	#[inline]
-	pub fn default() -> Result<Self> {
+	fn default() -> Result<Self> {
 		unsafe { Self::new(&mut Self::default_allocator()?) }
 	}
 }

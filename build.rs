@@ -227,14 +227,12 @@ fn build_job_server() -> Option<jobserver::Client> {
 			let available_jobs = c.available().unwrap_or(0);
 			if available_jobs > 0 {
 				eprintln!(
-					"=== Using environment job server with the the amount of available jobs: {}",
-					available_jobs
+					"=== Using environment job server with the the amount of available jobs: {available_jobs}"
 				);
 				Some(c)
 			} else {
 				eprintln!(
-					"=== Available jobs from the environment created jobserver is: {} or there is an error reading that value",
-					available_jobs
+					"=== Available jobs from the environment created jobserver is: {available_jobs} or there is an error reading that value"
 				);
 				None
 			}
@@ -245,7 +243,7 @@ fn build_job_server() -> Option<jobserver::Client> {
 				.and_then(|jobs| jobs.parse().ok())
 				.unwrap_or(2)
 				.max(1);
-			eprintln!("=== Creating a new job server with num_jobs: {}", num_jobs);
+			eprintln!("=== Creating a new job server with num_jobs: {num_jobs}");
 			jobserver::Client::new(num_jobs).ok()
 		})
 }
@@ -276,7 +274,7 @@ fn build_clang_generator() -> io::Result<Child> {
 
 fn setup_rerun() -> Result<()> {
 	for &v in ENV_VARS.iter() {
-		println!("cargo:rerun-if-env-changed={}", v);
+		println!("cargo:rerun-if-env-changed={v}");
 	}
 
 	let include_exts = &[OsStr::new("cpp"), OsStr::new("hpp")];
@@ -284,7 +282,7 @@ fn setup_rerun() -> Result<()> {
 		let path = entry.path();
 		if path.is_file() && path.extension().map_or(false, |e| include_exts.contains(&e)) {
 			if let Some(path) = path.to_str() {
-				println!("cargo:rerun-if-changed={}", path);
+				println!("cargo:rerun-if-changed={path}");
 			}
 		}
 	}
@@ -298,12 +296,12 @@ fn build_wrapper(opencv: &Library) {
 	let modules = MODULES.get().expect("MODULES not initialized");
 	for module in &["sys", "types"] {
 		// special internal modules
-		println!("cargo:rustc-cfg=ocvrs_has_module_{}", module);
+		println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
 	}
 	for module in modules.iter() {
-		println!("cargo:rustc-cfg=ocvrs_has_module_{}", module);
-		cc.file(OUT_DIR.join(format!("{}.cpp", module)));
-		let manual_cpp = SRC_CPP_DIR.join(format!("manual-{}.cpp", module));
+		println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
+		cc.file(OUT_DIR.join(format!("{module}.cpp")));
+		let manual_cpp = SRC_CPP_DIR.join(format!("manual-{module}.cpp"));
 		if manual_cpp.exists() {
 			cc.file(manual_cpp);
 		}
@@ -320,7 +318,7 @@ fn main() -> Result<()> {
 			let path = entry.path();
 			if entry.file_type().map(|f| f.is_file()).unwrap_or(false) && path.extension().map_or(false, |e| e == "rs") {
 				if let Some(module) = path.file_stem().and_then(OsStr::to_str) {
-					println!("cargo:rustc-cfg=ocvrs_has_module_{}", module);
+					println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
 				}
 			}
 		}
@@ -349,11 +347,11 @@ fn main() -> Result<()> {
 		}
 	});
 	for feature in features {
-		eprintln!("===   {}", feature);
+		eprintln!("===   {feature}");
 	}
 
 	let opencv = Library::probe()?;
-	eprintln!("=== OpenCV library configuration: {:#?}", opencv);
+	eprintln!("=== OpenCV library configuration: {opencv:#?}");
 	if OPENCV_BRANCH_4.matches(&opencv.version) {
 		println!("cargo:rustc-cfg=ocvrs_opencv_branch_4");
 	} else if OPENCV_BRANCH_34.matches(&opencv.version) {
