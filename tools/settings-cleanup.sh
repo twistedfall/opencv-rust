@@ -10,4 +10,4 @@ cd "$script_dir/.."
 
 export RUSTFLAGS=-Clink-arg=-fuse-ld=lld
 export RUST_BACKTRACE=full
-cargo run --release -p opencv-binding-generator --bin settings-cleanup -- src_cpp "$OPENCV_32_HEADER_DIR" "$OPENCV_34_HEADER_DIR" "$OPENCV_4_HEADER_DIR"
+cargo run --release -p opencv-binding-generator --bin settings-cleanup -- src_cpp "$OPENCV_34_HEADER_DIR" "$OPENCV_4_HEADER_DIR"
