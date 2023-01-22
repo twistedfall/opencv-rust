@@ -179,9 +179,9 @@ jobs:
         shell: bash
 
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@1.58.0
+        uses: dtolnay/rust-toolchain@1.59.0
 
-      - name: Test project
+      - name: Check project
         env:
           OS_FAMILY: ${{ runner.os }}
         run: ci/msrv.sh

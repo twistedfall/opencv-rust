@@ -10,6 +10,7 @@ echo "=== Current directory: $(pwd)"
 echo "=== Environment variable dump:"
 export
 echo "=== Target settings:"
+rustc --version
 rustc --print=cfg
 
-cargo clippy -vv --all-targets --all-features --workspace --tests
+cargo check -vv --all-targets --all-features --workspace --tests
