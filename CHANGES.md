@@ -1,3 +1,11 @@
+* 0.76.0
+  * Change the way the generated bindings are stored. They are no longer generated under `src/`, but stored in the output directory
+    and included dynamically. Previously it didn't work very well with IDEs which resulted in missing autocomplete and documentation.
+    This looks to be no longer the case at least in `rust-analyzer` and `intellij-rust`.
+  * Bump crate edition to 2021 (from 2018) and require at least Rust 1.59.0 (the MSRV check is now included in CI).
+  * Start phasing out OpenCV 3.2 support. This does not mean immediate breakage, but it's no longer going to be tested and problems
+    in generation for that outdated and unsupported version will no longer be addressed.
+
 * 0.75.0
   * Add support for OpenCV 4.7.0.
   * Add support for C++ function call operator: `operator ()`.
