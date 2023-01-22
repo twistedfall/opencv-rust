@@ -164,3 +164,25 @@ jobs:
       - name: Run a documentation generation test
         run: ci/docs-rs.sh
         shell: bash
+
+  msrv:
+    runs-on: ubuntu-20.04
+    env:
+      OPENCV_VERSION: 4.2.0
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        env:
+          OS_FAMILY: ${{ runner.os }}
+        run: ci/install.sh
+        shell: bash
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@1.58.0
+
+      - name: Test project
+        env:
+          OS_FAMILY: ${{ runner.os }}
+        run: ci/msrv.sh
+        shell: bash

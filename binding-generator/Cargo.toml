@@ -5,7 +5,7 @@ repository = "https://github.com/twistedfall/opencv-rust"
 version = "0.53.0"
 license = "MIT"
 authors = ["Pro <twisted.fall@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 [lib]
 

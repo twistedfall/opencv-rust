@@ -308,9 +308,9 @@ The following OpenCV versions are supported at the moment:
 * 3.4
 * 4.x
 
-### Minimum rustc version
+### Minimum rustc version (MSRV)
 
-Currently, version 1.53.0 is required, but generally you should use the latest stable rustc to compile this crate.
+Currently, version 1.58.0 is required, but generally you should use the latest stable rustc to compile this crate.
 
 ### Platform support
 
