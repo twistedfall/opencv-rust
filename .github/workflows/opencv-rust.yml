@@ -120,10 +120,6 @@ jobs:
             opencv: 4.6.0
             brew: "@4"
         include:
-          - os-image: ubuntu-18.04
-            version:
-              opencv: 3.2.0
-              brew: excluded
           - os-image: ubuntu-20.04
             version:
               opencv: 4.2.0

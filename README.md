@@ -12,7 +12,7 @@ The API is usable, but unstable and not very battle-tested; use at your own risk
 
 ## Quickstart
 
-Make sure the supported OpenCV version (3.2, 3.4 or 4.x) and Clang (part of LLVM, needed for automatic binding
+Make sure the supported OpenCV version (3.4 or 4.x) and Clang (part of LLVM, needed for automatic binding
 generation) are installed in your system.
 
 Update your Cargo.toml
@@ -305,7 +305,6 @@ as well.
 ### OpenCV version support
 
 The following OpenCV versions are supported at the moment:
-* 3.2
 * 3.4
 * 4.x
 
