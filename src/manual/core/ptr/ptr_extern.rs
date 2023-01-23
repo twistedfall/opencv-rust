@@ -21,6 +21,7 @@ pub trait PtrExternCtor<T: OpenCVTypeExternContainerMove> {
 		Self: OpenCVType<'a>;
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! ptr_extern {
 	($type: ty, $extern_delete: ident, $extern_inner_as_ptr: ident, $extern_inner_as_ptr_mut: ident $(,)?) => {
@@ -49,6 +50,7 @@ macro_rules! ptr_extern {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! ptr_extern_ctor {
 	($type: ty, $extern_new: ident) => {
@@ -65,6 +67,7 @@ macro_rules! ptr_extern_ctor {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! ptr_cast_base {
 	($type: ty, $base: ty, $extern_convert: ident) => {

@@ -69,6 +69,7 @@ pub trait OpenCVTypeExternContainerMove: OpenCVTypeExternContainer {
 }
 
 /// Extern type to receive the OpenCVType over FFI boundary, used to improve readability
+#[doc(hidden)]
 #[macro_export]
 macro_rules! extern_receive {
 	($typ: ty) => {
@@ -80,6 +81,7 @@ macro_rules! extern_receive {
 }
 
 /// Extern type to send the OpenCVTypeExternContainer over FFI boundary, used to improve readability
+#[doc(hidden)]
 #[macro_export]
 macro_rules! extern_send {
 	(mut $typ: ty) => {
@@ -91,6 +93,7 @@ macro_rules! extern_send {
 }
 
 /// Extern type to send the owned OpenCVType over FFI boundary, used to improve readability
+#[doc(hidden)]
 #[macro_export]
 macro_rules! extern_container_send {
 	(mut $typ: ty: $lt: lifetime) => {
@@ -108,6 +111,7 @@ macro_rules! extern_container_send {
 }
 
 /// Extern type to send the ::Arg of a OpenCVType over FFI boundary, used to improve readability
+#[doc(hidden)]
 #[macro_export]
 macro_rules! extern_arg_send {
 	(mut $typ: ty: $lt: lifetime) => {
@@ -118,6 +122,7 @@ macro_rules! extern_arg_send {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_type_copy {
 	($($type: ty),+ $(,)?) => {
@@ -150,6 +155,7 @@ macro_rules! opencv_type_copy {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_type_enum {
 	($type: ty) => {
@@ -157,6 +163,7 @@ macro_rules! opencv_type_enum {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_type_simple {
 	($type: ty) => {
@@ -195,6 +202,7 @@ macro_rules! opencv_type_simple {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_type_simple_generic {
 	($type: ident<$trait: ident $( + $more: ident)*>) => {

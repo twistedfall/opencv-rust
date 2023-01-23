@@ -25,6 +25,7 @@ pub trait Boxed: Sized {
 	fn as_raw_mut(&mut self) -> *mut c_void;
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_type_boxed {
 	($type: ty) => {
@@ -93,6 +94,7 @@ macro_rules! opencv_type_boxed {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! boxed_cast_base {
 	($type: ty, $base: ty, $extern_convert: ident $(,)?) => {
@@ -109,6 +111,7 @@ macro_rules! boxed_cast_base {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! boxed_cast_descendant {
 	($type: ty, $descendant: ty, $extern_convert: ident $(,)?) => {

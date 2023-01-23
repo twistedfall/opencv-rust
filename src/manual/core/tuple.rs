@@ -103,6 +103,7 @@ pub trait TupleExtern {
 	unsafe fn extern_delete(&mut self);
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! tuple_extern {
 	(

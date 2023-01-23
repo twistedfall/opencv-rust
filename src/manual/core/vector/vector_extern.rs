@@ -51,6 +51,7 @@ pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
 	unsafe fn extern_set<'a>(&mut self, index: size_t, val: extern_arg_send!(T: 'a));
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! vector_extern {
 	(
@@ -182,6 +183,7 @@ where
 	unsafe fn extern_from_slice<'a>(data: *const T, len: size_t) -> extern_receive!(Vector<T>: 'a);
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! vector_copy_non_bool {
 	(
@@ -252,6 +254,7 @@ macro_rules! vector_copy_non_bool {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! vector_non_copy_or_bool {
 	(clone $type: ty) => {

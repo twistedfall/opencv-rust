@@ -54,9 +54,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 	help();
 	let filename = env::args().nth(1).unwrap_or_else(|| "data/right.jpg".to_string());
-	opencv::not_opencv_branch_32! {
-		let filename = core::find_file(&filename, true, false)?;
-	}
+	let filename = core::find_file(&filename, true, false)?;
 	let original_image = imgcodecs::imread(&filename, imgcodecs::IMREAD_COLOR)?;
 	let mut image;
 	let original_image_cols = original_image.cols() as f32;

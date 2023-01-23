@@ -78,6 +78,7 @@ impl<T: _InputOutputArrayTrait> ToInputOutputArray for T {
 	}
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! input_output_array {
 	($type: ty, $const_cons: ident) => {
@@ -112,6 +113,7 @@ macro_rules! input_output_array {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! input_array_ref_forward {
 	($type: ty) => {
@@ -124,6 +126,7 @@ macro_rules! input_array_ref_forward {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! output_array_ref_forward {
 	($type: ty) => {
@@ -143,6 +146,7 @@ macro_rules! output_array_ref_forward {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! input_output_array_ref_forward {
 	($type: ty) => {
