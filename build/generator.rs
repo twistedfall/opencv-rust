@@ -83,7 +83,7 @@ pub fn gen_wrapper(
 
 	let clang = clang::Clang::new().expect("Cannot initialize clang");
 	eprintln!("=== Clang: {}", clang::get_version());
-	let gen = binding_generator::Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR, clang);
+	let gen = opencv_binding_generator::Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR, clang);
 	eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 
 	eprintln!("=== Building binding-generator binary:");
