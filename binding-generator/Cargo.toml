@@ -6,6 +6,7 @@ version = "0.54.0"
 license = "MIT"
 authors = ["Pro <twisted.fall@gmail.com>"]
 edition = "2021"
+exclude = ["release.toml"]
 
 [lib]
 
