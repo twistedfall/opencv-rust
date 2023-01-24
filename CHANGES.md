@@ -1,3 +1,9 @@
+* 0.76.2
+  * Fix incorrect display of macros in documentation, some internal macros were showing up, but some usable were not. 
+
+* 0.76.1
+  * Fix build failure.
+
 * 0.76.0
   * Change the way the generated bindings are stored. They are no longer generated under `src/`, but stored in the output directory
     and included dynamically. Previously it didn't work very well with IDEs which resulted in missing autocomplete and documentation.
