@@ -14,7 +14,7 @@ pub mod prelude {
 	pub use { super::WBDetectorConst, super::WBDetector };
 }
 
-/// WaldBoost detector
+/// Constant methods for [crate::xobjdetect::WBDetector]
 pub trait WBDetectorConst {
 	fn as_raw_WBDetector(&self) -> *const c_void;
 
@@ -32,6 +32,7 @@ pub trait WBDetectorConst {
 	
 }
 
+/// WaldBoost detector
 pub trait WBDetector: crate::xobjdetect::WBDetectorConst {
 	fn as_raw_mut_WBDetector(&mut self) -> *mut c_void;
 

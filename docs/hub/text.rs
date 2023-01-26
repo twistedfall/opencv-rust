@@ -75,7 +75,7 @@ pub const ERFILTER_NM_RGBLGrad: i32 = 0;
 /// for hierarchical clustering validity assessment.
 /// 
 /// 
-/// Note: This mode is not supported due NFA code removal ( https://github.com/opencv/opencv_contrib/issues/2235 )
+/// Note: This mode is not supported due NFA code removal ( <https://github.com/opencv/opencv_contrib/issues/2235> )
 pub const ERGROUPING_ORIENTATION_ANY: i32 = 1;
 /// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
 /// The algorithm models a verification function for all the possible ER sequences. The
@@ -147,7 +147,7 @@ pub enum erGrouping_Modes {
 	/// for hierarchical clustering validity assessment.
 	/// 
 	/// 
-	/// Note: This mode is not supported due NFA code removal ( https://github.com/opencv/opencv_contrib/issues/2235 )
+	/// Note: This mode is not supported due NFA code removal ( <https://github.com/opencv/opencv_contrib/issues/2235> )
 	ERGROUPING_ORIENTATION_ANY = 1,
 }
 
@@ -202,7 +202,7 @@ opencv_type_enum! { crate::text::page_seg_mode }
 /// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
 #[inline]
 pub fn mse_rs_to_er_stats(image: &dyn core::ToInputArray, contours: &mut core::Vector<core::Vector<core::Point>>, regions: &mut core::Vector<core::Vector<crate::text::ERStat>>) -> Result<()> {
-	input_array_arg!(image);
+	extern_container_arg!(image);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_text_MSERsToERStats_const__InputArrayR_vectorLvectorLPointGGR_vectorLvectorLERStatGGR(image.as_raw__InputArray(), contours.as_raw_mut_VectorOfVectorOfPoint(), regions.as_raw_mut_VectorOfVectorOfERStat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -229,8 +229,8 @@ pub fn mse_rs_to_er_stats(image: &dyn core::ToInputArray, contours: &mut core::V
 /// * _mode: ERFILTER_NM_RGBLGrad
 #[inline]
 pub fn compute_nm_channels(_src: &dyn core::ToInputArray, _channels: &mut dyn core::ToOutputArray, _mode: i32) -> Result<()> {
-	input_array_arg!(_src);
-	output_array_arg!(_channels);
+	extern_container_arg!(_src);
+	extern_container_arg!(_channels);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_text_computeNMChannels_const__InputArrayR_const__OutputArrayR_int(_src.as_raw__InputArray(), _channels.as_raw__OutputArray(), _mode, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -402,7 +402,7 @@ pub fn create_ocrhmm_transitions_table_1(vocabulary: &str, lexicon: &mut core::V
 #[inline]
 pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut core::Vector<String>, transition_probabilities_table: &mut dyn core::ToOutputArray) -> Result<()> {
 	string_arg_output_send!(via vocabulary_via);
-	output_array_arg!(transition_probabilities_table);
+	extern_container_arg!(transition_probabilities_table);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_text_createOCRHMMTransitionsTable_stringR_vectorLstringGR_const__OutputArrayR(&mut vocabulary_via, lexicon.as_raw_mut_VectorOfString(), transition_probabilities_table.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -428,7 +428,7 @@ pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut co
 /// * min_probability: (float)0.5
 #[inline]
 pub fn detect_regions_from_file(image: &dyn core::ToInputArray, er_filter1: &core::Ptr<dyn crate::text::ERFilter>, er_filter2: &core::Ptr<dyn crate::text::ERFilter>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probability: f32) -> Result<()> {
-	input_array_arg!(image);
+	extern_container_arg!(image);
 	extern_container_arg!(filename);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLRectGR_int_const_StringR_float(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probability, ocvrs_return.as_mut_ptr()) };
@@ -439,7 +439,7 @@ pub fn detect_regions_from_file(image: &dyn core::ToInputArray, er_filter1: &cor
 
 #[inline]
 pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &core::Ptr<dyn crate::text::ERFilter>, er_filter2: &core::Ptr<dyn crate::text::ERFilter>, regions: &mut core::Vector<core::Vector<core::Point>>) -> Result<()> {
-	input_array_arg!(image);
+	extern_container_arg!(image);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLvectorLPointGGR(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -460,9 +460,9 @@ pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &core::Ptr<dyn
 /// * chain_b_bs: noArray()
 #[inline]
 pub fn detect_text_swt(input: &dyn core::ToInputArray, result: &mut core::Vector<core::Rect>, dark_on_light: bool, draw: &mut dyn core::ToOutputArray, chain_b_bs: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(input);
-	output_array_arg!(draw);
-	output_array_arg!(chain_b_bs);
+	extern_container_arg!(input);
+	extern_container_arg!(draw);
+	extern_container_arg!(chain_b_bs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_text_detectTextSWT_const__InputArrayR_vectorLRectGR_bool_const__OutputArrayR_const__OutputArrayR(input.as_raw__InputArray(), result.as_raw_mut_VectorOfRect(), dark_on_light, draw.as_raw__OutputArray(), chain_b_bs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -500,8 +500,8 @@ pub fn detect_text_swt(input: &dyn core::ToInputArray, result: &mut core::Vector
 /// * min_probablity: 0.5
 #[inline]
 pub fn er_grouping(img: &dyn core::ToInputArray, channels: &dyn core::ToInputArray, regions: &mut core::Vector<core::Vector<crate::text::ERStat>>, groups: &mut core::Vector<core::Vector<core::Vec2i>>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
-	input_array_arg!(img);
-	input_array_arg!(channels);
+	extern_container_arg!(img);
+	extern_container_arg!(channels);
 	extern_container_arg!(filename);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLERStatGGR_vectorLvectorLVec2iGGR_vectorLRectGR_int_const_stringR_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity, ocvrs_return.as_mut_ptr()) };
@@ -516,8 +516,8 @@ pub fn er_grouping(img: &dyn core::ToInputArray, channels: &dyn core::ToInputArr
 /// * min_probablity: (float)0.5
 #[inline]
 pub fn er_grouping_1(image: &dyn core::ToInputArray, channel: &dyn core::ToInputArray, mut regions: core::Vector<core::Vector<core::Point>>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
-	input_array_arg!(image);
-	input_array_arg!(channel);
+	extern_container_arg!(image);
+	extern_container_arg!(channel);
 	extern_container_arg!(filename);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLPointGG_vectorLRectGR_int_const_StringR_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.opencv_as_extern(), min_probablity, ocvrs_return.as_mut_ptr()) };
@@ -647,6 +647,7 @@ pub fn load_ocrhmm_classifier(filename: &str, classifier: i32) -> Result<core::P
 	Ok(ret)
 }
 
+/// Constant methods for [crate::text::BaseOCR]
 pub trait BaseOCRConst {
 	fn as_raw_BaseOCR(&self) -> *const c_void;
 
@@ -689,9 +690,7 @@ pub trait BaseOCR: crate::text::BaseOCRConst {
 	
 }
 
-/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12). :
-/// 
-/// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given classifier.
+/// Constant methods for [crate::text::ERFilter]
 pub trait ERFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_ERFilter(&self) -> *const c_void;
 
@@ -706,6 +705,9 @@ pub trait ERFilterConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12). :
+/// 
+/// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given classifier.
 pub trait ERFilter: core::AlgorithmTrait + crate::text::ERFilterConst {
 	fn as_raw_mut_ERFilter(&mut self) -> *mut c_void;
 
@@ -724,7 +726,7 @@ pub trait ERFilter: core::AlgorithmTrait + crate::text::ERFilterConst {
 	/// classifier.
 	#[inline]
 	fn run(&mut self, image: &dyn core::ToInputArray, regions: &mut core::Vector<crate::text::ERStat>) -> Result<()> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_ERFilter_run_const__InputArrayR_vectorLERStatGR(self.as_raw_mut_ERFilter(), image.as_raw__InputArray(), regions.as_raw_mut_VectorOfERStat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -798,15 +800,16 @@ pub trait ERFilter: core::AlgorithmTrait + crate::text::ERFilterConst {
 	
 }
 
-/// Callback with the classifier is made a class.
-/// 
-/// By doing it we hide SVM, Boost etc. Developers can provide their own classifiers to the
-/// ERFilter algorithm.
+/// Constant methods for [crate::text::ERFilter_Callback]
 pub trait ERFilter_CallbackConst {
 	fn as_raw_ERFilter_Callback(&self) -> *const c_void;
 
 }
 
+/// Callback with the classifier is made a class.
+/// 
+/// By doing it we hide SVM, Boost etc. Developers can provide their own classifiers to the
+/// ERFilter algorithm.
 pub trait ERFilter_Callback: crate::text::ERFilter_CallbackConst {
 	fn as_raw_mut_ERFilter_Callback(&mut self) -> *mut c_void;
 
@@ -825,11 +828,7 @@ pub trait ERFilter_Callback: crate::text::ERFilter_CallbackConst {
 	
 }
 
-/// The ERStat structure represents a class-specific Extremal Region (ER).
-/// 
-/// An ER is a 4-connected set of pixels with all its grey-level values smaller than the values in its
-/// outer boundary. A class-specific ER is selected (using a classifier) from all the ER's in the
-/// component tree of the image. :
+/// Constant methods for [crate::text::ERStat]
 pub trait ERStatTraitConst {
 	fn as_raw_ERStat(&self) -> *const c_void;
 
@@ -916,6 +915,7 @@ pub trait ERStatTraitConst {
 	
 }
 
+/// Mutable methods for [crate::text::ERStat]
 pub trait ERStatTrait: crate::text::ERStatTraitConst {
 	fn as_raw_mut_ERStat(&mut self) -> *mut c_void;
 
@@ -1144,18 +1144,13 @@ impl ERStat {
 	
 }
 
-/// OCRBeamSearchDecoder class provides an interface for OCR using Beam Search algorithm.
-/// 
-/// 
-/// Note:
-///    *   (C++) An example on using OCRBeamSearchDecoder recognition combined with scene text detection can
-///        be found at the demo sample:
-///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/word_recognition.cpp>
+/// Constant methods for [crate::text::OCRBeamSearchDecoder]
 pub trait OCRBeamSearchDecoderTraitConst: crate::text::BaseOCRConst {
 	fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::text::OCRBeamSearchDecoder]
 pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR + crate::text::OCRBeamSearchDecoderTraitConst {
 	fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void;
 
@@ -1217,7 +1212,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR + crate::text::OCRBeam
 	/// * component_level: 0
 	#[inline]
 	fn run(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1230,8 +1225,8 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR + crate::text::OCRBeam
 	/// * component_level: 0
 	#[inline]
 	fn run_mask(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
-		input_array_arg!(image);
-		input_array_arg!(mask);
+		extern_container_arg!(image);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1306,8 +1301,8 @@ impl OCRBeamSearchDecoder {
 	#[inline]
 	pub fn create(classifier: core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
 		extern_container_arg!(vocabulary);
-		input_array_arg!(transition_probabilities_table);
-		input_array_arg!(emission_probabilities_table);
+		extern_container_arg!(transition_probabilities_table);
+		extern_container_arg!(emission_probabilities_table);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1346,8 +1341,8 @@ impl OCRBeamSearchDecoder {
 	pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
 		extern_container_arg!(filename);
 		extern_container_arg!(vocabulary);
-		input_array_arg!(transition_probabilities_table);
-		input_array_arg!(emission_probabilities_table);
+		extern_container_arg!(transition_probabilities_table);
+		extern_container_arg!(emission_probabilities_table);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1358,19 +1353,13 @@ impl OCRBeamSearchDecoder {
 	
 }
 
-/// Callback with the character classifier is made a class.
-/// 
-/// This way it hides the feature extractor and the classifier itself, so developers can write
-/// their own OCR code.
-/// 
-/// The default character classifier and feature extractor can be loaded using the utility function
-/// loadOCRBeamSearchClassifierCNN with all its parameters provided in
-/// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRBeamSearch_CNN_model_data.xml.gz>.
+/// Constant methods for [crate::text::OCRBeamSearchDecoder_ClassifierCallback]
 pub trait OCRBeamSearchDecoder_ClassifierCallbackTraitConst {
 	fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::text::OCRBeamSearchDecoder_ClassifierCallback]
 pub trait OCRBeamSearchDecoder_ClassifierCallbackTrait: crate::text::OCRBeamSearchDecoder_ClassifierCallbackTraitConst {
 	fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void;
 
@@ -1384,7 +1373,7 @@ pub trait OCRBeamSearchDecoder_ClassifierCallbackTrait: crate::text::OCRBeamSear
 	/// including 0 as start-sequence location.
 	#[inline]
 	fn eval(&mut self, image: &dyn core::ToInputArray, recognition_probabilities: &mut core::Vector<core::Vector<f64>>, oversegmentation: &mut core::Vector<i32>) -> Result<()> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_eval_const__InputArrayR_vectorLvectorLdoubleGGR_vectorLintGR(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), image.as_raw__InputArray(), recognition_probabilities.as_raw_mut_VectorOfVectorOff64(), oversegmentation.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1446,18 +1435,13 @@ impl crate::text::OCRBeamSearchDecoder_ClassifierCallbackTrait for OCRBeamSearch
 impl OCRBeamSearchDecoder_ClassifierCallback {
 }
 
-/// OCRHMMDecoder class provides an interface for OCR using Hidden Markov Models.
-/// 
-/// 
-/// Note:
-///    *   (C++) An example on using OCRHMMDecoder recognition combined with scene text detection can
-///        be found at the webcam_demo sample:
-///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
+/// Constant methods for [crate::text::OCRHMMDecoder]
 pub trait OCRHMMDecoderTraitConst: crate::text::BaseOCRConst {
 	fn as_raw_OCRHMMDecoder(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::text::OCRHMMDecoder]
 pub trait OCRHMMDecoderTrait: crate::text::BaseOCR + crate::text::OCRHMMDecoderTraitConst {
 	fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void;
 
@@ -1543,7 +1527,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR + crate::text::OCRHMMDecoderT
 	/// * component_level: 0
 	#[inline]
 	fn run(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1556,8 +1540,8 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR + crate::text::OCRHMMDecoderT
 	/// * component_level: 0
 	#[inline]
 	fn run_mask(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
-		input_array_arg!(image);
-		input_array_arg!(mask);
+		extern_container_arg!(image);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1629,8 +1613,8 @@ impl OCRHMMDecoder {
 	#[inline]
 	pub fn create(classifier: core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
 		extern_container_arg!(vocabulary);
-		input_array_arg!(transition_probabilities_table);
-		input_array_arg!(emission_probabilities_table);
+		extern_container_arg!(transition_probabilities_table);
+		extern_container_arg!(emission_probabilities_table);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRHMMDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1667,8 +1651,8 @@ impl OCRHMMDecoder {
 	pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: i32, classifier: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
 		extern_container_arg!(filename);
 		extern_container_arg!(vocabulary);
-		input_array_arg!(transition_probabilities_table);
-		input_array_arg!(emission_probabilities_table);
+		extern_container_arg!(transition_probabilities_table);
+		extern_container_arg!(emission_probabilities_table);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, classifier, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1679,19 +1663,13 @@ impl OCRHMMDecoder {
 	
 }
 
-/// Callback with the character classifier is made a class.
-/// 
-/// This way it hides the feature extractor and the classifier itself, so developers can write
-/// their own OCR code.
-/// 
-/// The default character classifier and feature extractor can be loaded using the utility function
-/// loadOCRHMMClassifierNM and KNN model provided in
-/// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRHMM_knn_model_data.xml.gz>.
+/// Constant methods for [crate::text::OCRHMMDecoder_ClassifierCallback]
 pub trait OCRHMMDecoder_ClassifierCallbackTraitConst {
 	fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::text::OCRHMMDecoder_ClassifierCallback]
 pub trait OCRHMMDecoder_ClassifierCallbackTrait: crate::text::OCRHMMDecoder_ClassifierCallbackTraitConst {
 	fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void;
 
@@ -1705,7 +1683,7 @@ pub trait OCRHMMDecoder_ClassifierCallbackTrait: crate::text::OCRHMMDecoder_Clas
 	/// corresponding to each classes in out_class.
 	#[inline]
 	fn eval(&mut self, image: &dyn core::ToInputArray, out_class: &mut core::Vector<i32>, out_confidence: &mut core::Vector<f64>) -> Result<()> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_eval_const__InputArrayR_vectorLintGR_vectorLdoubleGR(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback(), image.as_raw__InputArray(), out_class.as_raw_mut_VectorOfi32(), out_confidence.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1749,18 +1727,19 @@ impl crate::text::OCRHMMDecoder_ClassifierCallbackTrait for OCRHMMDecoder_Classi
 impl OCRHMMDecoder_ClassifierCallback {
 }
 
+/// Constant methods for [crate::text::OCRHolisticWordRecognizer]
+pub trait OCRHolisticWordRecognizerConst: crate::text::BaseOCRConst {
+	fn as_raw_OCRHolisticWordRecognizer(&self) -> *const c_void;
+
+}
+
 /// OCRHolisticWordRecognizer class provides the functionallity of segmented wordspotting.
 /// Given a predefined vocabulary , a DictNet is employed to select the most probable
 /// word given an input image.
 /// 
 /// DictNet is described in detail in:
 /// Max Jaderberg et al.: Reading Text in the Wild with Convolutional Neural Networks, IJCV 2015
-/// http://arxiv.org/abs/1412.1842
-pub trait OCRHolisticWordRecognizerConst: crate::text::BaseOCRConst {
-	fn as_raw_OCRHolisticWordRecognizer(&self) -> *const c_void;
-
-}
-
+/// <http://arxiv.org/abs/1412.1842>
 pub trait OCRHolisticWordRecognizer: crate::text::BaseOCR + crate::text::OCRHolisticWordRecognizerConst {
 	fn as_raw_mut_OCRHolisticWordRecognizer(&mut self) -> *mut c_void;
 
@@ -1838,6 +1817,12 @@ impl dyn OCRHolisticWordRecognizer + '_ {
 	}
 	
 }
+/// Constant methods for [crate::text::OCRTesseract]
+pub trait OCRTesseractConst: crate::text::BaseOCRConst {
+	fn as_raw_OCRTesseract(&self) -> *const c_void;
+
+}
+
 /// OCRTesseract class provides an interface with the tesseract-ocr API (v3.02.02) in C++.
 /// 
 /// Notice that it is compiled only when tesseract-ocr is correctly installed.
@@ -1850,11 +1835,6 @@ impl dyn OCRHolisticWordRecognizer + '_ {
 ///    *   (C++) Another example of OCRTesseract recognition combined with scene text detection can be
 ///        found at the webcam_demo:
 ///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
-pub trait OCRTesseractConst: crate::text::BaseOCRConst {
-	fn as_raw_OCRTesseract(&self) -> *const c_void;
-
-}
-
 pub trait OCRTesseract: crate::text::BaseOCR + crate::text::OCRTesseractConst {
 	fn as_raw_mut_OCRTesseract(&mut self) -> *mut c_void;
 
@@ -1911,7 +1891,7 @@ pub trait OCRTesseract: crate::text::BaseOCR + crate::text::OCRTesseractConst {
 	/// * component_level: 0
 	#[inline]
 	fn run(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1924,8 +1904,8 @@ pub trait OCRTesseract: crate::text::BaseOCR + crate::text::OCRTesseractConst {
 	/// * component_level: 0
 	#[inline]
 	fn run_mask(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
-		input_array_arg!(image);
-		input_array_arg!(mask);
+		extern_container_arg!(image);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1982,12 +1962,13 @@ impl dyn OCRTesseract + '_ {
 	}
 	
 }
-/// An abstract class providing interface for text detection algorithms
+/// Constant methods for [crate::text::TextDetector]
 pub trait TextDetectorConst {
 	fn as_raw_TextDetector(&self) -> *const c_void;
 
 }
 
+/// An abstract class providing interface for text detection algorithms
 pub trait TextDetector: crate::text::TextDetectorConst {
 	fn as_raw_mut_TextDetector(&mut self) -> *mut c_void;
 
@@ -1999,7 +1980,7 @@ pub trait TextDetector: crate::text::TextDetectorConst {
 	/// * confidence: a vector of float that will be updated with the confidence the classifier has for the selected bounding box
 	#[inline]
 	fn detect(&mut self, input_image: &dyn core::ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
-		input_array_arg!(input_image);
+		extern_container_arg!(input_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_TextDetector_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetector(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2009,17 +1990,18 @@ pub trait TextDetector: crate::text::TextDetectorConst {
 	
 }
 
-/// TextDetectorCNN class provides the functionallity of text bounding box detection.
-/// This class is representing to find bounding boxes of text words given an input image.
-/// This class uses OpenCV dnn module to load pre-trained model described in [LiaoSBWL17](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17).
-/// The original repository with the modified SSD Caffe version: https://github.com/MhLiao/TextBoxes.
-/// Model can be downloaded from [DropBox](https://www.dropbox.com/s/g8pjzv2de9gty8g/TextBoxes_icdar13.caffemodel?dl=0).
-/// Modified .prototxt file with the model description can be found in `opencv_contrib/modules/text/samples/textbox.prototxt`.
+/// Constant methods for [crate::text::TextDetectorCNN]
 pub trait TextDetectorCNNConst: crate::text::TextDetectorConst {
 	fn as_raw_TextDetectorCNN(&self) -> *const c_void;
 
 }
 
+/// TextDetectorCNN class provides the functionallity of text bounding box detection.
+/// This class is representing to find bounding boxes of text words given an input image.
+/// This class uses OpenCV dnn module to load pre-trained model described in [LiaoSBWL17](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17).
+/// The original repository with the modified SSD Caffe version: <https://github.com/MhLiao/TextBoxes>.
+/// Model can be downloaded from [DropBox](https://www.dropbox.com/s/g8pjzv2de9gty8g/TextBoxes_icdar13.caffemodel?dl=0).
+/// Modified .prototxt file with the model description can be found in `opencv_contrib/modules/text/samples/textbox.prototxt`.
 pub trait TextDetectorCNN: crate::text::TextDetector + crate::text::TextDetectorCNNConst {
 	fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void;
 
@@ -2031,7 +2013,7 @@ pub trait TextDetectorCNN: crate::text::TextDetector + crate::text::TextDetector
 	/// * confidence: a vector of float that will be updated with the confidence the classifier has for the selected bounding box
 	#[inline]
 	fn detect(&mut self, input_image: &dyn core::ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
-		input_array_arg!(input_image);
+		extern_container_arg!(input_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_TextDetectorCNN_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetectorCNN(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

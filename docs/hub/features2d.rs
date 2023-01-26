@@ -173,7 +173,7 @@ pub type SiftFeatureDetector = dyn crate::features2d::SIFT;
 /// * nonmax_suppression: true
 #[inline]
 pub fn agast(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
-	input_array_arg!(image);
+	extern_container_arg!(image);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -200,7 +200,7 @@ pub fn agast(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::
 /// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 #[inline]
 pub fn agast_with_type(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
-	input_array_arg!(image);
+	extern_container_arg!(image);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -234,7 +234,7 @@ pub fn agast_with_type(image: &dyn core::ToInputArray, keypoints: &mut core::Vec
 /// * nonmax_suppression: true
 #[inline]
 pub fn fast(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
-	input_array_arg!(image);
+	extern_container_arg!(image);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -263,7 +263,7 @@ pub fn fast(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::K
 /// detection, use cv.FAST.detect() method.
 #[inline]
 pub fn fast_with_type(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<()> {
-	input_array_arg!(image);
+	extern_container_arg!(image);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -302,8 +302,8 @@ pub fn compute_recall_precision_curve(matches1to2: &core::Vector<core::Vector<co
 /// * flags: DrawMatchesFlags::DEFAULT
 #[inline]
 pub fn draw_keypoints(image: &dyn core::ToInputArray, keypoints: &core::Vector<core::KeyPoint>, out_image: &mut dyn core::ToInputOutputArray, color: core::Scalar, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
-	input_array_arg!(image);
-	input_output_array_arg!(out_image);
+	extern_container_arg!(image);
+	extern_container_arg!(out_image);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_drawKeypoints_const__InputArrayR_const_vectorLKeyPointGR_const__InputOutputArrayR_const_ScalarR_DrawMatchesFlags(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), out_image.as_raw__InputOutputArray(), &color, flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -341,9 +341,9 @@ pub fn draw_keypoints(image: &dyn core::ToInputArray, keypoints: &core::Vector<c
 /// * flags: DrawMatchesFlags::DEFAULT
 #[inline]
 pub fn draw_matches(img1: &dyn core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &dyn core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut dyn core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
-	input_array_arg!(img1);
-	input_array_arg!(img2);
-	input_output_array_arg!(out_img);
+	extern_container_arg!(img1);
+	extern_container_arg!(img2);
+	extern_container_arg!(out_img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -383,9 +383,9 @@ pub fn draw_matches(img1: &dyn core::ToInputArray, keypoints1: &core::Vector<cor
 /// * flags: DrawMatchesFlags::DEFAULT
 #[inline]
 pub fn draw_matches_1(img1: &dyn core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &dyn core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut dyn core::ToInputOutputArray, matches_thickness: i32, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
-	input_array_arg!(img1);
-	input_array_arg!(img2);
-	input_output_array_arg!(out_img);
+	extern_container_arg!(img1);
+	extern_container_arg!(img2);
+	extern_container_arg!(out_img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), matches_thickness, &match_color, &single_point_color, matches_mask.as_raw_VectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -400,9 +400,9 @@ pub fn draw_matches_1(img1: &dyn core::ToInputArray, keypoints1: &core::Vector<c
 /// * flags: DrawMatchesFlags::DEFAULT
 #[inline]
 pub fn draw_matches_knn(img1: &dyn core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &dyn core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut dyn core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<core::Vector<i8>>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
-	input_array_arg!(img1);
-	input_array_arg!(img2);
-	input_output_array_arg!(out_img);
+	extern_container_arg!(img1);
+	extern_container_arg!(img2);
+	extern_container_arg!(out_img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLvectorLDMatchGGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLvectorLcharGGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfVectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -443,23 +443,7 @@ pub fn get_recall(recall_precision_curve: &core::Vector<core::Point2f>, l_precis
 	Ok(ret)
 }
 
-/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_ANB13).
-/// 
-/// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
-/// 
-/// 
-/// Note: When you need descriptors use Feature2D::detectAndCompute, which
-/// provides better performance. When using Feature2D::detect followed by
-/// Feature2D::compute scale space pyramid is computed twice.
-/// 
-/// 
-/// Note: AKAZE implements T-API. When image is passed as UMat some parts of the algorithm
-/// will use OpenCL.
-/// 
-/// 
-/// Note: [ANB13] Fast Explicit Diffusion for Accelerated Features in Nonlinear
-/// Scale Spaces. Pablo F. Alcantarilla, Jesús Nuevo and Adrien Bartoli. In
-/// British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
+/// Constant methods for [crate::features2d::AKAZE]
 pub trait AKAZEConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_AKAZE(&self) -> *const c_void;
 
@@ -538,6 +522,23 @@ pub trait AKAZEConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_ANB13).
+/// 
+/// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
+/// 
+/// 
+/// Note: When you need descriptors use Feature2D::detectAndCompute, which
+/// provides better performance. When using Feature2D::detect followed by
+/// Feature2D::compute scale space pyramid is computed twice.
+/// 
+/// 
+/// Note: AKAZE implements T-API. When image is passed as UMat some parts of the algorithm
+/// will use OpenCL.
+/// 
+/// 
+/// Note: [ANB13] Fast Explicit Diffusion for Accelerated Features in Nonlinear
+/// Scale Spaces. Pablo F. Alcantarilla, Jesús Nuevo and Adrien Bartoli. In
+/// British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
 pub trait AKAZE: crate::features2d::AKAZEConst + crate::features2d::Feature2DTrait {
 	fn as_raw_mut_AKAZE(&mut self) -> *mut c_void;
 
@@ -639,8 +640,7 @@ impl dyn AKAZE + '_ {
 	}
 	
 }
-/// Class for implementing the wrapper which makes detectors and extractors to be affine invariant,
-/// described as ASIFT in [YM11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_YM11) .
+/// Constant methods for [crate::features2d::AffineFeature]
 pub trait AffineFeatureConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_AffineFeature(&self) -> *const c_void;
 
@@ -665,6 +665,8 @@ pub trait AffineFeatureConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Class for implementing the wrapper which makes detectors and extractors to be affine invariant,
+/// described as ASIFT in [YM11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_YM11) .
 pub trait AffineFeature: crate::features2d::AffineFeatureConst + crate::features2d::Feature2DTrait {
 	fn as_raw_mut_AffineFeature(&mut self) -> *mut c_void;
 
@@ -703,7 +705,7 @@ impl dyn AffineFeature + '_ {
 	}
 	
 }
-/// Wrapping class for feature detection using the AGAST method. :
+/// Constant methods for [crate::features2d::AgastFeatureDetector]
 pub trait AgastFeatureDetectorConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_AgastFeatureDetector(&self) -> *const c_void;
 
@@ -746,6 +748,7 @@ pub trait AgastFeatureDetectorConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Wrapping class for feature detection using the AGAST method. :
 pub trait AgastFeatureDetector: crate::features2d::AgastFeatureDetectorConst + crate::features2d::Feature2DTrait {
 	fn as_raw_mut_AgastFeatureDetector(&mut self) -> *mut c_void;
 
@@ -794,11 +797,7 @@ impl dyn AgastFeatureDetector + '_ {
 	}
 	
 }
-/// Brute-force descriptor matcher.
-/// 
-/// For each descriptor in the first set, this matcher finds the closest descriptor in the second set
-/// by trying each one. This descriptor matcher supports masking permissible matches of descriptor
-/// sets.
+/// Constant methods for [crate::features2d::BFMatcher]
 pub trait BFMatcherTraitConst: crate::features2d::DescriptorMatcherConst {
 	fn as_raw_BFMatcher(&self) -> *const c_void;
 
@@ -826,6 +825,7 @@ pub trait BFMatcherTraitConst: crate::features2d::DescriptorMatcherConst {
 	
 }
 
+/// Mutable methods for [crate::features2d::BFMatcher]
 pub trait BFMatcherTrait: crate::features2d::BFMatcherTraitConst + crate::features2d::DescriptorMatcher {
 	fn as_raw_mut_BFMatcher(&mut self) -> *mut c_void;
 
@@ -921,15 +921,7 @@ impl BFMatcher {
 
 boxed_cast_base! { BFMatcher, core::Algorithm, cv_BFMatcher_to_Algorithm }
 
-/// Class to compute an image descriptor using the *bag of visual words*.
-/// 
-/// Such a computation consists of the following steps:
-/// 
-/// 1.  Compute descriptors for a given image and its keypoints set.
-/// 2.  Find the nearest visual words from the vocabulary for each keypoint descriptor.
-/// 3.  Compute the bag-of-words image descriptor as is a normalized histogram of vocabulary words
-/// encountered in the image. The i-th bin of the histogram is a frequency of i-th word of the
-/// vocabulary in the given image.
+/// Constant methods for [crate::features2d::BOWImgDescriptorExtractor]
 pub trait BOWImgDescriptorExtractorTraitConst {
 	fn as_raw_BOWImgDescriptorExtractor(&self) -> *const c_void;
 
@@ -966,6 +958,7 @@ pub trait BOWImgDescriptorExtractorTraitConst {
 	
 }
 
+/// Mutable methods for [crate::features2d::BOWImgDescriptorExtractor]
 pub trait BOWImgDescriptorExtractorTrait: crate::features2d::BOWImgDescriptorExtractorTraitConst {
 	fn as_raw_mut_BOWImgDescriptorExtractor(&mut self) -> *mut c_void;
 
@@ -999,8 +992,8 @@ pub trait BOWImgDescriptorExtractorTrait: crate::features2d::BOWImgDescriptorExt
 	/// * descriptors: 0
 	#[inline]
 	fn compute_desc(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut dyn core::ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>, descriptors: &mut core::Mat) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(img_descriptor);
+		extern_container_arg!(image);
+		extern_container_arg!(img_descriptor);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_vectorLvectorLintGGX_MatX(self.as_raw_mut_BOWImgDescriptorExtractor(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), img_descriptor.as_raw__OutputArray(), point_idxs_of_clusters.as_raw_mut_VectorOfVectorOfi32(), descriptors.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1031,8 +1024,8 @@ pub trait BOWImgDescriptorExtractorTrait: crate::features2d::BOWImgDescriptorExt
 	/// * point_idxs_of_clusters: 0
 	#[inline]
 	fn compute(&mut self, keypoint_descriptors: &dyn core::ToInputArray, img_descriptor: &mut dyn core::ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>) -> Result<()> {
-		input_array_arg!(keypoint_descriptors);
-		output_array_arg!(img_descriptor);
+		extern_container_arg!(keypoint_descriptors);
+		extern_container_arg!(img_descriptor);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_const__OutputArrayR_vectorLvectorLintGGX(self.as_raw_mut_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw__InputArray(), img_descriptor.as_raw__OutputArray(), point_idxs_of_clusters.as_raw_mut_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1122,7 +1115,7 @@ impl BOWImgDescriptorExtractor {
 	
 }
 
-/// kmeans -based class to train visual vocabulary using the *bag of visual words* approach. :
+/// Constant methods for [crate::features2d::BOWKMeansTrainer]
 pub trait BOWKMeansTrainerTraitConst: crate::features2d::BOWTrainerConst {
 	fn as_raw_BOWKMeansTrainer(&self) -> *const c_void;
 
@@ -1148,6 +1141,7 @@ pub trait BOWKMeansTrainerTraitConst: crate::features2d::BOWTrainerConst {
 	
 }
 
+/// Mutable methods for [crate::features2d::BOWKMeansTrainer]
 pub trait BOWKMeansTrainerTrait: crate::features2d::BOWKMeansTrainerTraitConst + crate::features2d::BOWTrainer {
 	fn as_raw_mut_BOWKMeansTrainer(&mut self) -> *mut c_void;
 
@@ -1206,10 +1200,7 @@ impl BOWKMeansTrainer {
 	
 }
 
-/// Abstract base class for training the *bag of visual words* vocabulary from a set of descriptors.
-/// 
-/// For details, see, for example, *Visual Categorization with Bags of Keypoints* by Gabriella Csurka,
-/// Christopher R. Dance, Lixin Fan, Jutta Willamowski, Cedric Bray, 2004. :
+/// Constant methods for [crate::features2d::BOWTrainer]
 pub trait BOWTrainerConst {
 	fn as_raw_BOWTrainer(&self) -> *const c_void;
 
@@ -1276,6 +1267,10 @@ pub trait BOWTrainerConst {
 	
 }
 
+/// Abstract base class for training the *bag of visual words* vocabulary from a set of descriptors.
+/// 
+/// For details, see, for example, *Visual Categorization with Bags of Keypoints* by Gabriella Csurka,
+/// Christopher R. Dance, Lixin Fan, Jutta Willamowski, Cedric Bray, 2004. :
 pub trait BOWTrainer: crate::features2d::BOWTrainerConst {
 	fn as_raw_mut_BOWTrainer(&mut self) -> *mut c_void;
 
@@ -1306,7 +1301,7 @@ pub trait BOWTrainer: crate::features2d::BOWTrainerConst {
 	
 }
 
-/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LCS11) .
+/// Constant methods for [crate::features2d::BRISK]
 pub trait BRISKConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_BRISK(&self) -> *const c_void;
 
@@ -1349,6 +1344,7 @@ pub trait BRISKConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LCS11) .
 pub trait BRISK: crate::features2d::BRISKConst + crate::features2d::Feature2DTrait {
 	fn as_raw_mut_BRISK(&mut self) -> *mut c_void;
 
@@ -1471,10 +1467,7 @@ impl dyn BRISK + '_ {
 	}
 	
 }
-/// Abstract base class for matching keypoint descriptors.
-/// 
-/// It has two groups of match methods: for matching descriptors of an image with another image or with
-/// an image set.
+/// Constant methods for [crate::features2d::DescriptorMatcher]
 pub trait DescriptorMatcherConst: core::AlgorithmTraitConst {
 	fn as_raw_DescriptorMatcher(&self) -> *const c_void;
 
@@ -1530,9 +1523,9 @@ pub trait DescriptorMatcherConst: core::AlgorithmTraitConst {
 	/// * mask: noArray()
 	#[inline]
 	fn train_match(&self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::DMatch>, mask: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(query_descriptors);
-		input_array_arg!(train_descriptors);
-		input_array_arg!(mask);
+		extern_container_arg!(query_descriptors);
+		extern_container_arg!(train_descriptors);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vectorLDMatchGR_const__InputArrayR(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1564,9 +1557,9 @@ pub trait DescriptorMatcherConst: core::AlgorithmTraitConst {
 	/// * compact_result: false
 	#[inline]
 	fn knn_train_match(&self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-		input_array_arg!(query_descriptors);
-		input_array_arg!(train_descriptors);
-		input_array_arg!(mask);
+		extern_container_arg!(query_descriptors);
+		extern_container_arg!(train_descriptors);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, mask.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1599,9 +1592,9 @@ pub trait DescriptorMatcherConst: core::AlgorithmTraitConst {
 	/// * compact_result: false
 	#[inline]
 	fn radius_train_match(&self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-		input_array_arg!(query_descriptors);
-		input_array_arg!(train_descriptors);
-		input_array_arg!(mask);
+		extern_container_arg!(query_descriptors);
+		extern_container_arg!(train_descriptors);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, mask.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1670,6 +1663,10 @@ pub trait DescriptorMatcherConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Abstract base class for matching keypoint descriptors.
+/// 
+/// It has two groups of match methods: for matching descriptors of an image with another image or with
+/// an image set.
 pub trait DescriptorMatcher: core::AlgorithmTrait + crate::features2d::DescriptorMatcherConst {
 	fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void;
 
@@ -1683,7 +1680,7 @@ pub trait DescriptorMatcher: core::AlgorithmTrait + crate::features2d::Descripto
 	/// train image.
 	#[inline]
 	fn add(&mut self, descriptors: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(descriptors);
+		extern_container_arg!(descriptors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_DescriptorMatcher_add_const__InputArrayR(self.as_raw_mut_DescriptorMatcher(), descriptors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1745,8 +1742,8 @@ pub trait DescriptorMatcher: core::AlgorithmTrait + crate::features2d::Descripto
 	/// * masks: noArray()
 	#[inline]
 	fn match_(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::DMatch>, masks: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(query_descriptors);
-		input_array_arg!(masks);
+		extern_container_arg!(query_descriptors);
+		extern_container_arg!(masks);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR_const__InputArrayR(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1790,8 +1787,8 @@ pub trait DescriptorMatcher: core::AlgorithmTrait + crate::features2d::Descripto
 	/// * compact_result: false
 	#[inline]
 	fn knn_match(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-		input_array_arg!(query_descriptors);
-		input_array_arg!(masks);
+		extern_container_arg!(query_descriptors);
+		extern_container_arg!(masks);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, masks.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1837,8 +1834,8 @@ pub trait DescriptorMatcher: core::AlgorithmTrait + crate::features2d::Descripto
 	/// * compact_result: false
 	#[inline]
 	fn radius_match(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-		input_array_arg!(query_descriptors);
-		input_array_arg!(masks);
+		extern_container_arg!(query_descriptors);
+		extern_container_arg!(masks);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, masks.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1901,7 +1898,7 @@ impl dyn DescriptorMatcher + '_ {
 	}
 	
 }
-/// Wrapping class for feature detection using the FAST method. :
+/// Constant methods for [crate::features2d::FastFeatureDetector]
 pub trait FastFeatureDetectorConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_FastFeatureDetector(&self) -> *const c_void;
 
@@ -1944,6 +1941,7 @@ pub trait FastFeatureDetectorConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Wrapping class for feature detection using the FAST method. :
 pub trait FastFeatureDetector: crate::features2d::FastFeatureDetectorConst + crate::features2d::Feature2DTrait {
 	fn as_raw_mut_FastFeatureDetector(&mut self) -> *mut c_void;
 
@@ -1992,6 +1990,7 @@ impl dyn FastFeatureDetector + '_ {
 	}
 	
 }
+/// Constant methods for [crate::features2d::Feature2D]
 pub trait Feature2DTraitConst: core::AlgorithmTraitConst {
 	fn as_raw_Feature2D(&self) -> *const c_void;
 
@@ -2083,6 +2082,7 @@ pub trait Feature2DTraitConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Mutable methods for [crate::features2d::Feature2D]
 pub trait Feature2DTrait: core::AlgorithmTrait + crate::features2d::Feature2DTraitConst {
 	fn as_raw_mut_Feature2D(&mut self) -> *mut c_void;
 
@@ -2099,8 +2099,8 @@ pub trait Feature2DTrait: core::AlgorithmTrait + crate::features2d::Feature2DTra
 	/// * mask: noArray()
 	#[inline]
 	fn detect(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, mask: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(image);
-		input_array_arg!(mask);
+		extern_container_arg!(image);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLKeyPointGR_const__InputArrayR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2129,8 +2129,8 @@ pub trait Feature2DTrait: core::AlgorithmTrait + crate::features2d::Feature2DTra
 	/// * masks: noArray()
 	#[inline]
 	fn detect_multiple(&mut self, images: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, masks: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(images);
-		input_array_arg!(masks);
+		extern_container_arg!(images);
+		extern_container_arg!(masks);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR_const__InputArrayR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2151,8 +2151,8 @@ pub trait Feature2DTrait: core::AlgorithmTrait + crate::features2d::Feature2DTra
 	/// descriptor for keypoint j-th keypoint.
 	#[inline]
 	fn compute(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(descriptors);
+		extern_container_arg!(image);
+		extern_container_arg!(descriptors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Feature2D_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2184,8 +2184,8 @@ pub trait Feature2DTrait: core::AlgorithmTrait + crate::features2d::Feature2DTra
 	///    descriptor for keypoint j-th keypoint.
 	#[inline]
 	fn compute_multiple(&mut self, images: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(images);
-		output_array_arg!(descriptors);
+		extern_container_arg!(images);
+		extern_container_arg!(descriptors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Feature2D_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2199,9 +2199,9 @@ pub trait Feature2DTrait: core::AlgorithmTrait + crate::features2d::Feature2DTra
 	/// * use_provided_keypoints: false
 	#[inline]
 	fn detect_and_compute(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut dyn core::ToOutputArray, use_provided_keypoints: bool) -> Result<()> {
-		input_array_arg!(image);
-		input_array_arg!(mask);
-		output_array_arg!(descriptors);
+		extern_container_arg!(image);
+		extern_container_arg!(mask);
+		extern_container_arg!(descriptors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Feature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_bool(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2266,12 +2266,7 @@ impl Feature2D {
 
 boxed_cast_base! { Feature2D, core::Algorithm, cv_Feature2D_to_Algorithm }
 
-/// Flann-based descriptor matcher.
-/// 
-/// This matcher trains cv::flann::Index on a train descriptor collection and calls its nearest search
-/// methods to find the best matches. So, this matcher may be faster when matching a large train
-/// collection than the brute force matcher. FlannBasedMatcher does not support masking permissible
-/// matches of descriptor sets because flann::Index does not support this. :
+/// Constant methods for [crate::features2d::FlannBasedMatcher]
 pub trait FlannBasedMatcherTraitConst: crate::features2d::DescriptorMatcherConst {
 	fn as_raw_FlannBasedMatcher(&self) -> *const c_void;
 
@@ -2308,12 +2303,13 @@ pub trait FlannBasedMatcherTraitConst: crate::features2d::DescriptorMatcherConst
 	
 }
 
+/// Mutable methods for [crate::features2d::FlannBasedMatcher]
 pub trait FlannBasedMatcherTrait: crate::features2d::DescriptorMatcher + crate::features2d::FlannBasedMatcherTraitConst {
 	fn as_raw_mut_FlannBasedMatcher(&mut self) -> *mut c_void;
 
 	#[inline]
 	fn add(&mut self, descriptors: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(descriptors);
+		extern_container_arg!(descriptors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_FlannBasedMatcher_add_const__InputArrayR(self.as_raw_mut_FlannBasedMatcher(), descriptors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2423,7 +2419,7 @@ impl FlannBasedMatcher {
 
 boxed_cast_base! { FlannBasedMatcher, core::Algorithm, cv_FlannBasedMatcher_to_Algorithm }
 
-/// Wrapping class for feature detection using the goodFeaturesToTrack function. :
+/// Constant methods for [crate::features2d::GFTTDetector]
 pub trait GFTTDetectorConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_GFTTDetector(&self) -> *const c_void;
 
@@ -2493,6 +2489,7 @@ pub trait GFTTDetectorConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Wrapping class for feature detection using the goodFeaturesToTrack function. :
 pub trait GFTTDetector: crate::features2d::Feature2DTrait + crate::features2d::GFTTDetectorConst {
 	fn as_raw_mut_GFTTDetector(&mut self) -> *mut c_void;
 
@@ -2602,12 +2599,7 @@ impl dyn GFTTDetector + '_ {
 	}
 	
 }
-/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_ABD12) .
-/// 
-/// 
-/// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
-/// F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on Computer Vision
-/// (ECCV), Fiorenze, Italy, October 2012.
+/// Constant methods for [crate::features2d::KAZE]
 pub trait KAZEConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_KAZE(&self) -> *const c_void;
 
@@ -2677,6 +2669,12 @@ pub trait KAZEConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_ABD12) .
+/// 
+/// 
+/// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
+/// F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on Computer Vision
+/// (ECCV), Fiorenze, Italy, October 2012.
 pub trait KAZE: crate::features2d::Feature2DTrait + crate::features2d::KAZEConst {
 	fn as_raw_mut_KAZE(&mut self) -> *mut c_void;
 
@@ -2766,15 +2764,13 @@ impl dyn KAZE + '_ {
 	}
 	
 }
-/// A class filters a vector of keypoints.
-/// 
-/// Because now it is difficult to provide a convenient interface for all usage scenarios of the
-/// keypoints filter class, it has only several needed by now static methods.
+/// Constant methods for [crate::features2d::KeyPointsFilter]
 pub trait KeyPointsFilterTraitConst {
 	fn as_raw_KeyPointsFilter(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::features2d::KeyPointsFilter]
 pub trait KeyPointsFilterTrait: crate::features2d::KeyPointsFilterTraitConst {
 	fn as_raw_mut_KeyPointsFilter(&mut self) -> *mut c_void;
 
@@ -2885,20 +2881,7 @@ impl KeyPointsFilter {
 	
 }
 
-/// Maximally stable extremal region extractor
-/// 
-/// The class encapsulates all the parameters of the %MSER extraction algorithm (see [wiki
-/// article](http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions)).
-/// 
-/// - there are two different implementation of %MSER: one for grey image, one for color image
-/// 
-/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
-/// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
-/// 
-/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
-/// than grey image method ( 3~4 times )
-/// 
-/// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
+/// Constant methods for [crate::features2d::MSER]
 pub trait MSERConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_MSER(&self) -> *const c_void;
 
@@ -3004,6 +2987,20 @@ pub trait MSERConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Maximally stable extremal region extractor
+/// 
+/// The class encapsulates all the parameters of the %MSER extraction algorithm (see [wiki
+/// article](http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions)).
+/// 
+/// - there are two different implementation of %MSER: one for grey image, one for color image
+/// 
+/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
+/// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
+/// 
+/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
+/// than grey image method ( 3~4 times )
+/// 
+/// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
 pub trait MSER: crate::features2d::Feature2DTrait + crate::features2d::MSERConst {
 	fn as_raw_mut_MSER(&mut self) -> *mut c_void;
 
@@ -3015,7 +3012,7 @@ pub trait MSER: crate::features2d::Feature2DTrait + crate::features2d::MSERConst
 	/// * bboxes: resulting bounding boxes
 	#[inline]
 	fn detect_regions(&mut self, image: &dyn core::ToInputArray, msers: &mut core::Vector<core::Vector<core::Point>>, bboxes: &mut core::Vector<core::Rect>) -> Result<()> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_MSER_detectRegions_const__InputArrayR_vectorLvectorLPointGGR_vectorLRectGR(self.as_raw_mut_MSER(), image.as_raw__InputArray(), msers.as_raw_mut_VectorOfVectorOfPoint(), bboxes.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3150,12 +3147,7 @@ impl dyn MSER + '_ {
 	}
 	
 }
-/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
-/// 
-/// described in [RRKB11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
-/// the strongest features using FAST or Harris response, finds their orientation using first-order
-/// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
-/// k-tuples) are rotated according to the measured orientation).
+/// Constant methods for [crate::features2d::ORB]
 pub trait ORBConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_ORB(&self) -> *const c_void;
 
@@ -3252,6 +3244,12 @@ pub trait ORBConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
+/// 
+/// described in [RRKB11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
+/// the strongest features using FAST or Harris response, finds their orientation using first-order
+/// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
+/// k-tuples) are rotated according to the measured orientation).
 pub trait ORB: crate::features2d::Feature2DTrait + crate::features2d::ORBConst {
 	fn as_raw_mut_ORB(&mut self) -> *mut c_void;
 
@@ -3393,8 +3391,7 @@ impl dyn ORB + '_ {
 	}
 	
 }
-/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
-/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lowe04) .
+/// Constant methods for [crate::features2d::SIFT]
 pub trait SIFTConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_SIFT(&self) -> *const c_void;
 
@@ -3455,6 +3452,8 @@ pub trait SIFTConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
+/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lowe04) .
 pub trait SIFT: crate::features2d::Feature2DTrait + crate::features2d::SIFTConst {
 	fn as_raw_mut_SIFT(&mut self) -> *mut c_void;
 
@@ -3579,36 +3578,7 @@ impl dyn SIFT + '_ {
 	}
 	
 }
-/// Class for extracting blobs from an image. :
-/// 
-/// The class implements a simple algorithm for extracting blobs from an image:
-/// 
-/// 1.  Convert the source image to binary images by applying thresholding with several thresholds from
-///    minThreshold (inclusive) to maxThreshold (exclusive) with distance thresholdStep between
-///    neighboring thresholds.
-/// 2.  Extract connected components from every binary image by findContours and calculate their
-///    centers.
-/// 3.  Group centers from several binary images by their coordinates. Close centers form one group that
-///    corresponds to one blob, which is controlled by the minDistBetweenBlobs parameter.
-/// 4.  From the groups, estimate final centers of blobs and their radiuses and return as locations and
-///    sizes of keypoints.
-/// 
-/// This class performs several filtrations of returned blobs. You should set filterBy\* to true/false
-/// to turn on/off corresponding filtration. Available filtrations:
-/// 
-/// *   **By color**. This filter compares the intensity of a binary image at the center of a blob to
-/// blobColor. If they differ, the blob is filtered out. Use blobColor = 0 to extract dark blobs
-/// and blobColor = 255 to extract light blobs.
-/// *   **By area**. Extracted blobs have an area between minArea (inclusive) and maxArea (exclusive).
-/// *   **By circularity**. Extracted blobs have circularity
-/// (![inline formula](https://latex.codecogs.com/png.latex?%5Cfrac%7B4%2A%5Cpi%2AArea%7D%7Bperimeter%20%2A%20perimeter%7D)) between minCircularity (inclusive) and
-/// maxCircularity (exclusive).
-/// *   **By ratio of the minimum inertia to maximum inertia**. Extracted blobs have this ratio
-/// between minInertiaRatio (inclusive) and maxInertiaRatio (exclusive).
-/// *   **By convexity**. Extracted blobs have convexity (area / area of blob convex hull) between
-/// minConvexity (inclusive) and maxConvexity (exclusive).
-/// 
-/// Default values of parameters are tuned to extract dark circular blobs.
+/// Constant methods for [crate::features2d::SimpleBlobDetector]
 pub trait SimpleBlobDetectorConst: crate::features2d::Feature2DTraitConst {
 	fn as_raw_SimpleBlobDetector(&self) -> *const c_void;
 
@@ -3643,6 +3613,36 @@ pub trait SimpleBlobDetectorConst: crate::features2d::Feature2DTraitConst {
 	
 }
 
+/// Class for extracting blobs from an image. :
+/// 
+/// The class implements a simple algorithm for extracting blobs from an image:
+/// 
+/// 1.  Convert the source image to binary images by applying thresholding with several thresholds from
+///    minThreshold (inclusive) to maxThreshold (exclusive) with distance thresholdStep between
+///    neighboring thresholds.
+/// 2.  Extract connected components from every binary image by findContours and calculate their
+///    centers.
+/// 3.  Group centers from several binary images by their coordinates. Close centers form one group that
+///    corresponds to one blob, which is controlled by the minDistBetweenBlobs parameter.
+/// 4.  From the groups, estimate final centers of blobs and their radiuses and return as locations and
+///    sizes of keypoints.
+/// 
+/// This class performs several filtrations of returned blobs. You should set filterBy\* to true/false
+/// to turn on/off corresponding filtration. Available filtrations:
+/// 
+/// *   **By color**. This filter compares the intensity of a binary image at the center of a blob to
+/// blobColor. If they differ, the blob is filtered out. Use blobColor = 0 to extract dark blobs
+/// and blobColor = 255 to extract light blobs.
+/// *   **By area**. Extracted blobs have an area between minArea (inclusive) and maxArea (exclusive).
+/// *   **By circularity**. Extracted blobs have circularity
+/// (![inline formula](https://latex.codecogs.com/png.latex?%5Cfrac%7B4%2A%5Cpi%2AArea%7D%7Bperimeter%20%2A%20perimeter%7D)) between minCircularity (inclusive) and
+/// maxCircularity (exclusive).
+/// *   **By ratio of the minimum inertia to maximum inertia**. Extracted blobs have this ratio
+/// between minInertiaRatio (inclusive) and maxInertiaRatio (exclusive).
+/// *   **By convexity**. Extracted blobs have convexity (area / area of blob convex hull) between
+/// minConvexity (inclusive) and maxConvexity (exclusive).
+/// 
+/// Default values of parameters are tuned to extract dark circular blobs.
 pub trait SimpleBlobDetector: crate::features2d::Feature2DTrait + crate::features2d::SimpleBlobDetectorConst {
 	fn as_raw_mut_SimpleBlobDetector(&mut self) -> *mut c_void;
 

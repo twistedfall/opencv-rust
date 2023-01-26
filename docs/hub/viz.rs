@@ -144,7 +144,7 @@ pub type Viz3d_MouseCallback = Option<Box<dyn FnMut(*const c_void) -> () + Send 
 /// * normals: Normals at very point in the mesh of type CV_64FC3.
 #[inline]
 pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-	output_array_arg!(normals);
+	extern_container_arg!(normals);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_viz_computeNormals_const_MeshR_const__OutputArrayR(mesh.as_raw_Mesh(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -180,7 +180,7 @@ pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
 #[inline]
 pub fn imshow(window_name: &str, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
 	extern_container_arg!(window_name);
-	input_array_arg!(image);
+	extern_container_arg!(image);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_viz_imshow_const_StringR_const__InputArrayR_const_SizeR(window_name.opencv_as_extern(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -246,8 +246,8 @@ pub fn make_transform_to_global(axis_x: core::Vec3d, axis_y: core::Vec3d, axis_z
 #[inline]
 pub fn read_cloud(file: &str, colors: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
 	extern_container_arg!(file);
-	output_array_arg!(colors);
-	output_array_arg!(normals);
+	extern_container_arg!(colors);
+	extern_container_arg!(normals);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_viz_readCloud_const_StringR_const__OutputArrayR_const__OutputArrayR(file.opencv_as_extern(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -306,7 +306,7 @@ pub fn read_pose(file: &str, pose: &mut core::Affine3d, tag: &str) -> Result<boo
 /// * tag: "pose"
 #[inline]
 pub fn read_trajectory(traj: &mut dyn core::ToOutputArray, files_format: &str, start: i32, end: i32, tag: &str) -> Result<()> {
-	output_array_arg!(traj);
+	extern_container_arg!(traj);
 	extern_container_arg!(files_format);
 	extern_container_arg!(tag);
 	return_send!(via ocvrs_return);
@@ -341,9 +341,9 @@ pub fn unregister_all_windows() -> Result<()> {
 #[inline]
 pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, binary: bool) -> Result<()> {
 	extern_container_arg!(file);
-	input_array_arg!(cloud);
-	input_array_arg!(colors);
-	input_array_arg!(normals);
+	extern_container_arg!(cloud);
+	extern_container_arg!(colors);
+	extern_container_arg!(normals);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_viz_writeCloud_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR_bool(file.opencv_as_extern(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -386,7 +386,7 @@ pub fn write_pose(file: &str, pose: core::Affine3d, tag: &str) -> Result<()> {
 /// * tag: "pose"
 #[inline]
 pub fn write_trajectory(traj: &dyn core::ToInputArray, files_format: &str, start: i32, tag: &str) -> Result<()> {
-	input_array_arg!(traj);
+	extern_container_arg!(traj);
 	extern_container_arg!(files_format);
 	extern_container_arg!(tag);
 	return_send!(via ocvrs_return);
@@ -396,10 +396,7 @@ pub fn write_trajectory(traj: &dyn core::ToInputArray, files_format: &str, start
 	Ok(ret)
 }
 
-/// This class wraps intrinsic parameters of a camera.
-/// 
-/// It provides several constructors that can extract the intrinsic parameters from field of
-/// view, intrinsic matrix and projection matrix. :
+/// Constant methods for [crate::viz::Camera]
 pub trait CameraTraitConst {
 	fn as_raw_Camera(&self) -> *const c_void;
 
@@ -465,6 +462,7 @@ pub trait CameraTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::Camera]
 pub trait CameraTrait: crate::viz::CameraTraitConst {
 	fn as_raw_mut_Camera(&mut self) -> *mut c_void;
 
@@ -642,7 +640,7 @@ impl Camera {
 	
 }
 
-/// This class represents color in BGR order.
+/// Constant methods for [crate::viz::Color]
 pub trait ColorTraitConst {
 	fn as_raw_Color(&self) -> *const c_void;
 
@@ -657,6 +655,7 @@ pub trait ColorTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::Color]
 pub trait ColorTrait: crate::viz::ColorTraitConst {
 	fn as_raw_mut_Color(&mut self) -> *mut c_void;
 
@@ -1082,7 +1081,7 @@ impl Color {
 	
 }
 
-/// This class represents a keyboard event.
+/// Constant methods for [crate::viz::KeyboardEvent]
 pub trait KeyboardEventTraitConst {
 	fn as_raw_KeyboardEvent(&self) -> *const c_void;
 
@@ -1115,6 +1114,7 @@ pub trait KeyboardEventTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::KeyboardEvent]
 pub trait KeyboardEventTrait: crate::viz::KeyboardEventTraitConst {
 	fn as_raw_mut_KeyboardEvent(&mut self) -> *mut c_void;
 
@@ -1190,7 +1190,7 @@ impl KeyboardEvent {
 	
 }
 
-/// This class wraps mesh attributes, and it can load a mesh from a ply file. :
+/// Constant methods for [crate::viz::Mesh]
 pub trait MeshTraitConst {
 	fn as_raw_Mesh(&self) -> *const c_void;
 
@@ -1243,6 +1243,7 @@ pub trait MeshTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::Mesh]
 pub trait MeshTrait: crate::viz::MeshTraitConst {
 	fn as_raw_mut_Mesh(&mut self) -> *mut c_void;
 
@@ -1349,7 +1350,7 @@ impl Mesh {
 	
 }
 
-/// This class represents a mouse event.
+/// Constant methods for [crate::viz::MouseEvent]
 pub trait MouseEventTraitConst {
 	fn as_raw_MouseEvent(&self) -> *const c_void;
 
@@ -1385,6 +1386,7 @@ pub trait MouseEventTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::MouseEvent]
 pub trait MouseEventTrait: crate::viz::MouseEventTraitConst {
 	fn as_raw_mut_MouseEvent(&mut self) -> *mut c_void;
 
@@ -1460,7 +1462,7 @@ impl MouseEvent {
 	
 }
 
-/// The Viz3d class represents a 3D visualizer window. This class is implicitly shared.
+/// Constant methods for [crate::viz::Viz3d]
 pub trait Viz3dTraitConst {
 	fn as_raw_Viz3d(&self) -> *const c_void;
 
@@ -1562,6 +1564,7 @@ pub trait Viz3dTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::Viz3d]
 pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	fn as_raw_mut_Viz3d(&mut self) -> *mut c_void;
 
@@ -1617,7 +1620,7 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * window_size: Size(-1,-1)
 	#[inline]
 	fn show_image(&mut self, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<()> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR_const_SizeR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1806,7 +1809,7 @@ pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 	/// * image: noArray()
 	#[inline]
 	fn set_background_texture(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_Viz3d_setBackgroundTexture_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2099,12 +2102,13 @@ impl Viz3d {
 	
 }
 
-/// This 3D Widget defines an arrow.
+/// Constant methods for [crate::viz::WArrow]
 pub trait WArrowTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WArrow(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WArrow]
 pub trait WArrowTrait: crate::viz::WArrowTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WArrow(&mut self) -> *mut c_void;
 
@@ -2181,12 +2185,13 @@ boxed_cast_base! { WArrow, crate::viz::Widget, cv_WArrow_to_Widget }
 
 boxed_cast_base! { WArrow, crate::viz::Widget3D, cv_WArrow_to_Widget3D }
 
-/// This 3D Widget represents camera position in a scene by its axes or viewing frustum. :
+/// Constant methods for [crate::viz::WCameraPosition]
 pub trait WCameraPositionTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WCameraPosition(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WCameraPosition]
 pub trait WCameraPositionTrait: crate::viz::WCameraPositionTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WCameraPosition(&mut self) -> *mut c_void;
 
@@ -2313,7 +2318,7 @@ impl WCameraPosition {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_3(k: core::Matx33d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR_double_const_ColorR(&k, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2340,7 +2345,7 @@ impl WCameraPosition {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_4(fov: core::Vec2d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR_double_const_ColorR(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2355,12 +2360,13 @@ boxed_cast_base! { WCameraPosition, crate::viz::Widget, cv_WCameraPosition_to_Wi
 
 boxed_cast_base! { WCameraPosition, crate::viz::Widget3D, cv_WCameraPosition_to_Widget3D }
 
-/// This 3D Widget defines a circle.
+/// Constant methods for [crate::viz::WCircle]
 pub trait WCircleTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WCircle(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WCircle]
 pub trait WCircleTrait: crate::viz::WCircleTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WCircle(&mut self) -> *mut c_void;
 
@@ -2455,15 +2461,13 @@ boxed_cast_base! { WCircle, crate::viz::Widget, cv_WCircle_to_Widget }
 
 boxed_cast_base! { WCircle, crate::viz::Widget3D, cv_WCircle_to_Widget3D }
 
-/// This 3D Widget defines a point cloud. :
-/// 
-/// 
-/// Note: In case there are four channels in the cloud, fourth channel is ignored.
+/// Constant methods for [crate::viz::WCloud]
 pub trait WCloudTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WCloud(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WCloud]
 pub trait WCloudTrait: crate::viz::WCloudTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WCloud(&mut self) -> *mut c_void;
 
@@ -2522,8 +2526,8 @@ impl WCloud {
 	/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 	#[inline]
 	pub fn new(cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
-		input_array_arg!(cloud);
-		input_array_arg!(colors);
+		extern_container_arg!(cloud);
+		extern_container_arg!(colors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2543,7 +2547,7 @@ impl WCloud {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_1(cloud: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WCloud> {
-		input_array_arg!(cloud);
+		extern_container_arg!(cloud);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR(cloud.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2561,9 +2565,9 @@ impl WCloud {
 	/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 	#[inline]
 	pub fn new_2(cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
-		input_array_arg!(cloud);
-		input_array_arg!(colors);
-		input_array_arg!(normals);
+		extern_container_arg!(cloud);
+		extern_container_arg!(colors);
+		extern_container_arg!(normals);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2582,8 +2586,8 @@ impl WCloud {
 	/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 	#[inline]
 	pub fn new_3(cloud: &dyn core::ToInputArray, color: &crate::viz::Color, normals: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
-		input_array_arg!(cloud);
-		input_array_arg!(normals);
+		extern_container_arg!(cloud);
+		extern_container_arg!(normals);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR_const__InputArrayR(cloud.as_raw__InputArray(), color.as_raw_Color(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2598,14 +2602,13 @@ boxed_cast_base! { WCloud, crate::viz::Widget, cv_WCloud_to_Widget }
 
 boxed_cast_base! { WCloud, crate::viz::Widget3D, cv_WCloud_to_Widget3D }
 
-/// This 3D Widget defines a collection of clouds. :
-/// 
-/// Note: In case there are four channels in the cloud, fourth channel is ignored.
+/// Constant methods for [crate::viz::WCloudCollection]
 pub trait WCloudCollectionTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WCloudCollection(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WCloudCollection]
 pub trait WCloudCollectionTrait: crate::viz::WCloudCollectionTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WCloudCollection(&mut self) -> *mut c_void;
 
@@ -2620,8 +2623,8 @@ pub trait WCloudCollectionTrait: crate::viz::WCloudCollectionTraitConst + crate:
 	/// * pose: Affine3d::Identity()
 	#[inline]
 	fn add_cloud(&mut self, cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, pose: core::Affine3d) -> Result<()> {
-		input_array_arg!(cloud);
-		input_array_arg!(colors);
+		extern_container_arg!(cloud);
+		extern_container_arg!(colors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const__InputArrayR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), &pose, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2641,7 +2644,7 @@ pub trait WCloudCollectionTrait: crate::viz::WCloudCollectionTraitConst + crate:
 	/// * pose: Affine3d::Identity()
 	#[inline]
 	fn add_cloud_1(&mut self, cloud: &dyn core::ToInputArray, color: &crate::viz::Color, pose: core::Affine3d) -> Result<()> {
-		input_array_arg!(cloud);
+		extern_container_arg!(cloud);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const_ColorR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), color.as_raw_Color(), &pose, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2722,12 +2725,13 @@ boxed_cast_base! { WCloudCollection, crate::viz::Widget, cv_WCloudCollection_to_
 
 boxed_cast_base! { WCloudCollection, crate::viz::Widget3D, cv_WCloudCollection_to_Widget3D }
 
-/// This 3D Widget represents normals of a point cloud. :
+/// Constant methods for [crate::viz::WCloudNormals]
 pub trait WCloudNormalsTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WCloudNormals(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WCloudNormals]
 pub trait WCloudNormalsTrait: crate::viz::WCloudNormalsTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WCloudNormals(&mut self) -> *mut c_void;
 
@@ -2792,8 +2796,8 @@ impl WCloudNormals {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(cloud: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, level: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCloudNormals> {
-		input_array_arg!(cloud);
-		input_array_arg!(normals);
+		extern_container_arg!(cloud);
+		extern_container_arg!(normals);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_const__InputArrayR_const__InputArrayR_int_double_const_ColorR(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), level, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2808,12 +2812,13 @@ boxed_cast_base! { WCloudNormals, crate::viz::Widget, cv_WCloudNormals_to_Widget
 
 boxed_cast_base! { WCloudNormals, crate::viz::Widget3D, cv_WCloudNormals_to_Widget3D }
 
-/// This 3D Widget defines a cone. :
+/// Constant methods for [crate::viz::WCone]
 pub trait WConeTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WCone(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WCone]
 pub trait WConeTrait: crate::viz::WConeTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WCone(&mut self) -> *mut c_void;
 
@@ -2909,12 +2914,13 @@ boxed_cast_base! { WCone, crate::viz::Widget, cv_WCone_to_Widget }
 
 boxed_cast_base! { WCone, crate::viz::Widget3D, cv_WCone_to_Widget3D }
 
-/// This 3D Widget represents a coordinate system. :
+/// Constant methods for [crate::viz::WCoordinateSystem]
 pub trait WCoordinateSystemTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WCoordinateSystem(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WCoordinateSystem]
 pub trait WCoordinateSystemTrait: crate::viz::WCoordinateSystemTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WCoordinateSystem(&mut self) -> *mut c_void;
 
@@ -2984,12 +2990,13 @@ boxed_cast_base! { WCoordinateSystem, crate::viz::Widget, cv_WCoordinateSystem_t
 
 boxed_cast_base! { WCoordinateSystem, crate::viz::Widget3D, cv_WCoordinateSystem_to_Widget3D }
 
-/// This 3D Widget defines a cube.
+/// Constant methods for [crate::viz::WCube]
 pub trait WCubeTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WCube(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WCube]
 pub trait WCubeTrait: crate::viz::WCubeTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WCube(&mut self) -> *mut c_void;
 
@@ -3067,12 +3074,13 @@ boxed_cast_base! { WCube, crate::viz::Widget, cv_WCube_to_Widget }
 
 boxed_cast_base! { WCube, crate::viz::Widget3D, cv_WCube_to_Widget3D }
 
-/// This 3D Widget defines a cylinder. :
+/// Constant methods for [crate::viz::WCylinder]
 pub trait WCylinderTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WCylinder(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WCylinder]
 pub trait WCylinderTrait: crate::viz::WCylinderTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WCylinder(&mut self) -> *mut c_void;
 
@@ -3147,12 +3155,13 @@ boxed_cast_base! { WCylinder, crate::viz::Widget, cv_WCylinder_to_Widget }
 
 boxed_cast_base! { WCylinder, crate::viz::Widget3D, cv_WCylinder_to_Widget3D }
 
-/// This 3D Widget defines a grid. :
+/// Constant methods for [crate::viz::WGrid]
 pub trait WGridTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WGrid(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WGrid]
 pub trait WGridTrait: crate::viz::WGridTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WGrid(&mut self) -> *mut c_void;
 
@@ -3242,12 +3251,13 @@ boxed_cast_base! { WGrid, crate::viz::Widget, cv_WGrid_to_Widget }
 
 boxed_cast_base! { WGrid, crate::viz::Widget3D, cv_WGrid_to_Widget3D }
 
-/// This 3D Widget represents an image in 3D space. :
+/// Constant methods for [crate::viz::WImage3D]
 pub trait WImage3DTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WImage3D(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WImage3D]
 pub trait WImage3DTrait: crate::viz::WImage3DTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WImage3D(&mut self) -> *mut c_void;
 
@@ -3257,7 +3267,7 @@ pub trait WImage3DTrait: crate::viz::WImage3DTraitConst + crate::viz::Widget3DTr
 	/// * image: BGR or Gray-Scale image.
 	#[inline]
 	fn set_image(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WImage3D_setImage_const__InputArrayR(self.as_raw_mut_WImage3D(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3328,7 +3338,7 @@ impl WImage3D {
 	/// * size: Size of the image.
 	#[inline]
 	pub fn new(image: &dyn core::ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR(image.as_raw__InputArray(), &size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3347,7 +3357,7 @@ impl WImage3D {
 	/// * up_vector: Determines orientation of the image.
 	#[inline]
 	pub fn new_1(image: &dyn core::ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(image.as_raw__InputArray(), &size, &center, &normal, &up_vector, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3362,12 +3372,13 @@ boxed_cast_base! { WImage3D, crate::viz::Widget, cv_WImage3D_to_Widget }
 
 boxed_cast_base! { WImage3D, crate::viz::Widget3D, cv_WImage3D_to_Widget3D }
 
-/// This 2D Widget represents an image overlay. :
+/// Constant methods for [crate::viz::WImageOverlay]
 pub trait WImageOverlayTraitConst: crate::viz::Widget2DTraitConst {
 	fn as_raw_WImageOverlay(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WImageOverlay]
 pub trait WImageOverlayTrait: crate::viz::WImageOverlayTraitConst + crate::viz::Widget2DTrait {
 	fn as_raw_mut_WImageOverlay(&mut self) -> *mut c_void;
 
@@ -3377,7 +3388,7 @@ pub trait WImageOverlayTrait: crate::viz::WImageOverlayTraitConst + crate::viz::
 	/// * image: BGR or Gray-Scale image.
 	#[inline]
 	fn set_image(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WImageOverlay_setImage_const__InputArrayR(self.as_raw_mut_WImageOverlay(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3435,7 +3446,7 @@ impl WImageOverlay {
 	/// * rect: Image is scaled and positioned based on rect.
 	#[inline]
 	pub fn new(image: &dyn core::ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayR_const_RectR(image.as_raw__InputArray(), &rect, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3450,12 +3461,13 @@ boxed_cast_base! { WImageOverlay, crate::viz::Widget, cv_WImageOverlay_to_Widget
 
 boxed_cast_base! { WImageOverlay, crate::viz::Widget2D, cv_WImageOverlay_to_Widget2D }
 
-/// This 3D Widget defines a finite line.
+/// Constant methods for [crate::viz::WLine]
 pub trait WLineTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WLine(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WLine]
 pub trait WLineTrait: crate::viz::WLineTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WLine(&mut self) -> *mut c_void;
 
@@ -3527,19 +3539,13 @@ boxed_cast_base! { WLine, crate::viz::Widget, cv_WLine_to_Widget }
 
 boxed_cast_base! { WLine, crate::viz::Widget3D, cv_WLine_to_Widget3D }
 
-/// Constructs a WMesh.
-/// 
-/// ## Parameters
-/// * mesh: Mesh object that will be displayed.
-/// * cloud: Points of the mesh object.
-/// * polygons: Points of the mesh object.
-/// * colors: Point colors.
-/// * normals: Point normals.
+/// Constant methods for [crate::viz::WMesh]
 pub trait WMeshTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WMesh(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WMesh]
 pub trait WMeshTrait: crate::viz::WMeshTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WMesh(&mut self) -> *mut c_void;
 
@@ -3608,10 +3614,10 @@ impl WMesh {
 	/// * normals: noArray()
 	#[inline]
 	pub fn new_1(cloud: &dyn core::ToInputArray, polygons: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray) -> Result<crate::viz::WMesh> {
-		input_array_arg!(cloud);
-		input_array_arg!(polygons);
-		input_array_arg!(colors);
-		input_array_arg!(normals);
+		extern_container_arg!(cloud);
+		extern_container_arg!(polygons);
+		extern_container_arg!(colors);
+		extern_container_arg!(normals);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3626,11 +3632,13 @@ boxed_cast_base! { WMesh, crate::viz::Widget, cv_WMesh_to_Widget }
 
 boxed_cast_base! { WMesh, crate::viz::Widget3D, cv_WMesh_to_Widget3D }
 
+/// Constant methods for [crate::viz::WPaintedCloud]
 pub trait WPaintedCloudTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WPaintedCloud(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WPaintedCloud]
 pub trait WPaintedCloudTrait: crate::viz::WPaintedCloudTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WPaintedCloud(&mut self) -> *mut c_void;
 
@@ -3679,7 +3687,7 @@ impl WPaintedCloud {
 	/// Paint cloud with default gradient between cloud bounds points
 	#[inline]
 	pub fn new(cloud: &dyn core::ToInputArray) -> Result<crate::viz::WPaintedCloud> {
-		input_array_arg!(cloud);
+		extern_container_arg!(cloud);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR(cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3691,7 +3699,7 @@ impl WPaintedCloud {
 	/// Paint cloud with default gradient between given points
 	#[inline]
 	pub fn new_1(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d) -> Result<crate::viz::WPaintedCloud> {
-		input_array_arg!(cloud);
+		extern_container_arg!(cloud);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR(cloud.as_raw__InputArray(), &p1, &p2, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3703,7 +3711,7 @@ impl WPaintedCloud {
 	/// Paint cloud with gradient specified by given colors between given points
 	#[inline]
 	pub fn new_2(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d, c1: &crate::viz::Color, c2: crate::viz::Color) -> Result<crate::viz::WPaintedCloud> {
-		input_array_arg!(cloud);
+		extern_container_arg!(cloud);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR_const_ColorR_const_Color(cloud.as_raw__InputArray(), &p1, &p2, c1.as_raw_Color(), c2.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3718,12 +3726,13 @@ boxed_cast_base! { WPaintedCloud, crate::viz::Widget, cv_WPaintedCloud_to_Widget
 
 boxed_cast_base! { WPaintedCloud, crate::viz::Widget3D, cv_WPaintedCloud_to_Widget3D }
 
-/// This 3D Widget defines a finite plane.
+/// Constant methods for [crate::viz::WPlane]
 pub trait WPlaneTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WPlane(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WPlane]
 pub trait WPlaneTrait: crate::viz::WPlaneTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WPlane(&mut self) -> *mut c_void;
 
@@ -3817,12 +3826,13 @@ boxed_cast_base! { WPlane, crate::viz::Widget, cv_WPlane_to_Widget }
 
 boxed_cast_base! { WPlane, crate::viz::Widget3D, cv_WPlane_to_Widget3D }
 
-/// This 3D Widget defines a poly line. :
+/// Constant methods for [crate::viz::WPolyLine]
 pub trait WPolyLineTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WPolyLine(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WPolyLine]
 pub trait WPolyLineTrait: crate::viz::WPolyLineTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WPolyLine(&mut self) -> *mut c_void;
 
@@ -3871,8 +3881,8 @@ impl crate::viz::WPolyLineTrait for WPolyLine {
 impl WPolyLine {
 	#[inline]
 	pub fn new(points: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WPolyLine> {
-		input_array_arg!(points);
-		input_array_arg!(colors);
+		extern_container_arg!(points);
+		extern_container_arg!(colors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const__InputArrayR(points.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3891,7 +3901,7 @@ impl WPolyLine {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_1(points: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WPolyLine> {
-		input_array_arg!(points);
+		extern_container_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const_ColorR(points.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3906,12 +3916,13 @@ boxed_cast_base! { WPolyLine, crate::viz::Widget, cv_WPolyLine_to_Widget }
 
 boxed_cast_base! { WPolyLine, crate::viz::Widget3D, cv_WPolyLine_to_Widget3D }
 
-/// This 3D Widget defines a sphere. :
+/// Constant methods for [crate::viz::WSphere]
 pub trait WSphereTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WSphere(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WSphere]
 pub trait WSphereTrait: crate::viz::WSphereTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WSphere(&mut self) -> *mut c_void;
 
@@ -3985,7 +3996,7 @@ boxed_cast_base! { WSphere, crate::viz::Widget, cv_WSphere_to_Widget }
 
 boxed_cast_base! { WSphere, crate::viz::Widget3D, cv_WSphere_to_Widget3D }
 
-/// This 2D Widget represents text overlay.
+/// Constant methods for [crate::viz::WText]
 pub trait WTextTraitConst: crate::viz::Widget2DTraitConst {
 	fn as_raw_WText(&self) -> *const c_void;
 
@@ -4002,6 +4013,7 @@ pub trait WTextTraitConst: crate::viz::Widget2DTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::WText]
 pub trait WTextTrait: crate::viz::WTextTraitConst + crate::viz::Widget2DTrait {
 	fn as_raw_mut_WText(&mut self) -> *mut c_void;
 
@@ -4090,7 +4102,7 @@ boxed_cast_base! { WText, crate::viz::Widget, cv_WText_to_Widget }
 
 boxed_cast_base! { WText, crate::viz::Widget2D, cv_WText_to_Widget2D }
 
-/// This 3D Widget represents 3D text. The text always faces the camera.
+/// Constant methods for [crate::viz::WText3D]
 pub trait WText3DTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WText3D(&self) -> *const c_void;
 
@@ -4107,6 +4119,7 @@ pub trait WText3DTraitConst: crate::viz::Widget3DTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::WText3D]
 pub trait WText3DTrait: crate::viz::WText3DTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WText3D(&mut self) -> *mut c_void;
 
@@ -4197,12 +4210,13 @@ boxed_cast_base! { WText3D, crate::viz::Widget, cv_WText3D_to_Widget }
 
 boxed_cast_base! { WText3D, crate::viz::Widget3D, cv_WText3D_to_Widget3D }
 
-/// This 3D Widget represents a trajectory. :
+/// Constant methods for [crate::viz::WTrajectory]
 pub trait WTrajectoryTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WTrajectory(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WTrajectory]
 pub trait WTrajectoryTrait: crate::viz::WTrajectoryTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WTrajectory(&mut self) -> *mut c_void;
 
@@ -4269,7 +4283,7 @@ impl WTrajectory {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(path: &dyn core::ToInputArray, display_mode: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectory> {
-		input_array_arg!(path);
+		extern_container_arg!(path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR_int_double_const_ColorR(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4284,12 +4298,13 @@ boxed_cast_base! { WTrajectory, crate::viz::Widget, cv_WTrajectory_to_Widget }
 
 boxed_cast_base! { WTrajectory, crate::viz::Widget3D, cv_WTrajectory_to_Widget3D }
 
-/// This 3D Widget represents a trajectory. :
+/// Constant methods for [crate::viz::WTrajectoryFrustums]
 pub trait WTrajectoryFrustumsTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WTrajectoryFrustums(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WTrajectoryFrustums]
 pub trait WTrajectoryFrustumsTrait: crate::viz::WTrajectoryFrustumsTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WTrajectoryFrustums(&mut self) -> *mut c_void;
 
@@ -4351,7 +4366,7 @@ impl WTrajectoryFrustums {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new(path: &dyn core::ToInputArray, k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
-		input_array_arg!(path);
+		extern_container_arg!(path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR_double_const_ColorR(path.as_raw__InputArray(), &k, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4375,7 +4390,7 @@ impl WTrajectoryFrustums {
 	/// * color: Color::white()
 	#[inline]
 	pub fn new_1(path: &dyn core::ToInputArray, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
-		input_array_arg!(path);
+		extern_container_arg!(path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR_double_const_ColorR(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4390,15 +4405,13 @@ boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget, cv_WTrajectoryFrustu
 
 boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget3D, cv_WTrajectoryFrustums_to_Widget3D }
 
-/// This 3D Widget represents a trajectory using spheres and lines
-/// 
-/// where spheres represent the positions of the camera, and lines represent the direction from
-/// previous position to the current. :
+/// Constant methods for [crate::viz::WTrajectorySpheres]
 pub trait WTrajectorySpheresTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WTrajectorySpheres(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WTrajectorySpheres]
 pub trait WTrajectorySpheresTrait: crate::viz::WTrajectorySpheresTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WTrajectorySpheres(&mut self) -> *mut c_void;
 
@@ -4464,7 +4477,7 @@ impl WTrajectorySpheres {
 	/// * to: Color::white()
 	#[inline]
 	pub fn new(path: &dyn core::ToInputArray, line_length: f64, radius: f64, from: &crate::viz::Color, to: &crate::viz::Color) -> Result<crate::viz::WTrajectorySpheres> {
-		input_array_arg!(path);
+		extern_container_arg!(path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR_double_double_const_ColorR_const_ColorR(path.as_raw__InputArray(), line_length, radius, from.as_raw_Color(), to.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4479,17 +4492,13 @@ boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget, cv_WTrajectorySpheres
 
 boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget3D, cv_WTrajectorySpheres_to_Widget3D }
 
-/// This class allows to merge several widgets to single one.
-/// 
-/// It has quite limited functionality and can't merge widgets with different attributes. For
-/// instance, if widgetA has color array and widgetB has only global color defined, then result
-/// of merge won't have color at all. The class is suitable for merging large amount of similar
-/// widgets. :
+/// Constant methods for [crate::viz::WWidgetMerger]
 pub trait WWidgetMergerTraitConst: crate::viz::Widget3DTraitConst {
 	fn as_raw_WWidgetMerger(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::WWidgetMerger]
 pub trait WWidgetMergerTrait: crate::viz::WWidgetMergerTraitConst + crate::viz::Widget3DTrait {
 	fn as_raw_mut_WWidgetMerger(&mut self) -> *mut c_void;
 
@@ -4580,7 +4589,7 @@ boxed_cast_base! { WWidgetMerger, crate::viz::Widget, cv_WWidgetMerger_to_Widget
 
 boxed_cast_base! { WWidgetMerger, crate::viz::Widget3D, cv_WWidgetMerger_to_Widget3D }
 
-/// Base class of all widgets. Widget is implicitly shared.
+/// Constant methods for [crate::viz::Widget]
 pub trait WidgetTraitConst {
 	fn as_raw_Widget(&self) -> *const c_void;
 
@@ -4620,6 +4629,7 @@ pub trait WidgetTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::Widget]
 pub trait WidgetTrait: crate::viz::WidgetTraitConst {
 	fn as_raw_mut_Widget(&mut self) -> *mut c_void;
 
@@ -4721,12 +4731,13 @@ impl Widget {
 	
 }
 
-/// Base class of all 2D widgets.
+/// Constant methods for [crate::viz::Widget2D]
 pub trait Widget2DTraitConst: crate::viz::WidgetTraitConst {
 	fn as_raw_Widget2D(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::viz::Widget2D]
 pub trait Widget2DTrait: crate::viz::Widget2DTraitConst + crate::viz::WidgetTrait {
 	fn as_raw_mut_Widget2D(&mut self) -> *mut c_void;
 
@@ -4792,7 +4803,7 @@ impl Widget2D {
 
 boxed_cast_base! { Widget2D, crate::viz::Widget, cv_Widget2D_to_Widget }
 
-/// Base class of all 3D widgets.
+/// Constant methods for [crate::viz::Widget3D]
 pub trait Widget3DTraitConst: crate::viz::WidgetTraitConst {
 	fn as_raw_Widget3D(&self) -> *const c_void;
 
@@ -4808,6 +4819,7 @@ pub trait Widget3DTraitConst: crate::viz::WidgetTraitConst {
 	
 }
 
+/// Mutable methods for [crate::viz::Widget3D]
 pub trait Widget3DTrait: crate::viz::Widget3DTraitConst + crate::viz::WidgetTrait {
 	fn as_raw_mut_Widget3D(&mut self) -> *mut c_void;
 

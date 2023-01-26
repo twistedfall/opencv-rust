@@ -39,17 +39,17 @@ pub const COLORCHECKER_DigitalSG: i32 = 2;
 pub const COLORCHECKER_Macbeth: i32 = 0;
 /// DKK ColorChecker
 pub const COLORCHECKER_Vinyl: i32 = 1;
-/// https://en.wikipedia.org/wiki/Adobe_RGB_color_space , RGB color space
+/// <https://en.wikipedia.org/wiki/Adobe_RGB_color_space> , RGB color space
 pub const COLOR_SPACE_AdobeRGB: i32 = 2;
-/// https://en.wikipedia.org/wiki/Adobe_RGB_color_space , linear RGB color space
+/// <https://en.wikipedia.org/wiki/Adobe_RGB_color_space> , linear RGB color space
 pub const COLOR_SPACE_AdobeRGBL: i32 = 3;
-/// https://en.wikipedia.org/wiki/RGB_color_space , RGB color space
+/// <https://en.wikipedia.org/wiki/RGB_color_space> , RGB color space
 pub const COLOR_SPACE_AppleRGB: i32 = 10;
-/// https://en.wikipedia.org/wiki/RGB_color_space , linear RGB color space
+/// <https://en.wikipedia.org/wiki/RGB_color_space> , linear RGB color space
 pub const COLOR_SPACE_AppleRGBL: i32 = 11;
-/// https://en.wikipedia.org/wiki/DCI-P3 , RGB color space
+/// <https://en.wikipedia.org/wiki/DCI-P3> , RGB color space
 pub const COLOR_SPACE_DCI_P3_RGB: i32 = 8;
-/// https://en.wikipedia.org/wiki/DCI-P3 , linear RGB color space
+/// <https://en.wikipedia.org/wiki/DCI-P3> , linear RGB color space
 pub const COLOR_SPACE_DCI_P3_RGBL: i32 = 9;
 /// non-RGB color space
 pub const COLOR_SPACE_Lab_A_10: i32 = 33;
@@ -65,7 +65,7 @@ pub const COLOR_SPACE_Lab_D55_10: i32 = 35;
 pub const COLOR_SPACE_Lab_D55_2: i32 = 34;
 /// non-RGB color space
 pub const COLOR_SPACE_Lab_D65_10: i32 = 29;
-/// https://en.wikipedia.org/wiki/CIELAB_color_space , non-RGB color space
+/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , non-RGB color space
 pub const COLOR_SPACE_Lab_D65_2: i32 = 28;
 /// non-RGB color space
 pub const COLOR_SPACE_Lab_D75_10: i32 = 37;
@@ -75,21 +75,21 @@ pub const COLOR_SPACE_Lab_D75_2: i32 = 36;
 pub const COLOR_SPACE_Lab_E_10: i32 = 39;
 /// non-RGB color space
 pub const COLOR_SPACE_Lab_E_2: i32 = 38;
-/// https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space , RGB color space
+/// <https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space> , RGB color space
 pub const COLOR_SPACE_ProPhotoRGB: i32 = 6;
-/// https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space , linear RGB color space
+/// <https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space> , linear RGB color space
 pub const COLOR_SPACE_ProPhotoRGBL: i32 = 7;
-/// https://en.wikipedia.org/wiki/Rec._2020 , RGB color space
+/// <https://en.wikipedia.org/wiki/Rec._2020> , RGB color space
 pub const COLOR_SPACE_REC_2020_RGB: i32 = 14;
-/// https://en.wikipedia.org/wiki/Rec._2020 , linear RGB color space
+/// <https://en.wikipedia.org/wiki/Rec._2020> , linear RGB color space
 pub const COLOR_SPACE_REC_2020_RGBL: i32 = 15;
-/// https://en.wikipedia.org/wiki/Rec._709 , RGB color space
+/// <https://en.wikipedia.org/wiki/Rec._709> , RGB color space
 pub const COLOR_SPACE_REC_709_RGB: i32 = 12;
-/// https://en.wikipedia.org/wiki/Rec._709 , linear RGB color space
+/// <https://en.wikipedia.org/wiki/Rec._709> , linear RGB color space
 pub const COLOR_SPACE_REC_709_RGBL: i32 = 13;
-/// https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space , RGB color space
+/// <https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space> , RGB color space
 pub const COLOR_SPACE_WideGamutRGB: i32 = 4;
-/// https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space , linear RGB color space
+/// <https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space> , linear RGB color space
 pub const COLOR_SPACE_WideGamutRGBL: i32 = 5;
 /// non-RGB color space
 pub const COLOR_SPACE_XYZ_A_10: i32 = 21;
@@ -105,7 +105,7 @@ pub const COLOR_SPACE_XYZ_D55_10: i32 = 23;
 pub const COLOR_SPACE_XYZ_D55_2: i32 = 22;
 /// non-RGB color space
 pub const COLOR_SPACE_XYZ_D65_10: i32 = 17;
-/// https://en.wikipedia.org/wiki/CIE_1931_color_space , non-RGB color space
+/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , non-RGB color space
 pub const COLOR_SPACE_XYZ_D65_2: i32 = 16;
 /// non-RGB color space
 pub const COLOR_SPACE_XYZ_D75_10: i32 = 25;
@@ -115,9 +115,9 @@ pub const COLOR_SPACE_XYZ_D75_2: i32 = 24;
 pub const COLOR_SPACE_XYZ_E_10: i32 = 27;
 /// non-RGB color space
 pub const COLOR_SPACE_XYZ_E_2: i32 = 26;
-/// https://en.wikipedia.org/wiki/SRGB , RGB color space
+/// <https://en.wikipedia.org/wiki/SRGB> , RGB color space
 pub const COLOR_SPACE_sRGB: i32 = 0;
-/// https://en.wikipedia.org/wiki/SRGB , linear RGB color space
+/// <https://en.wikipedia.org/wiki/SRGB> , linear RGB color space
 pub const COLOR_SPACE_sRGBL: i32 = 1;
 pub const DISTANCE_CIE2000: i32 = 3;
 /// The 1976 formula is the first formula that related a measured color difference to a known set of CIELAB coordinates.
@@ -170,39 +170,39 @@ opencv_type_enum! { crate::mcc::CCM_TYPE }
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum COLOR_SPACE {
-	/// https://en.wikipedia.org/wiki/SRGB , RGB color space
+	/// <https://en.wikipedia.org/wiki/SRGB> , RGB color space
 	COLOR_SPACE_sRGB = 0,
-	/// https://en.wikipedia.org/wiki/SRGB , linear RGB color space
+	/// <https://en.wikipedia.org/wiki/SRGB> , linear RGB color space
 	COLOR_SPACE_sRGBL = 1,
-	/// https://en.wikipedia.org/wiki/Adobe_RGB_color_space , RGB color space
+	/// <https://en.wikipedia.org/wiki/Adobe_RGB_color_space> , RGB color space
 	COLOR_SPACE_AdobeRGB = 2,
-	/// https://en.wikipedia.org/wiki/Adobe_RGB_color_space , linear RGB color space
+	/// <https://en.wikipedia.org/wiki/Adobe_RGB_color_space> , linear RGB color space
 	COLOR_SPACE_AdobeRGBL = 3,
-	/// https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space , RGB color space
+	/// <https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space> , RGB color space
 	COLOR_SPACE_WideGamutRGB = 4,
-	/// https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space , linear RGB color space
+	/// <https://en.wikipedia.org/wiki/Wide-gamut_RGB_color_space> , linear RGB color space
 	COLOR_SPACE_WideGamutRGBL = 5,
-	/// https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space , RGB color space
+	/// <https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space> , RGB color space
 	COLOR_SPACE_ProPhotoRGB = 6,
-	/// https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space , linear RGB color space
+	/// <https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space> , linear RGB color space
 	COLOR_SPACE_ProPhotoRGBL = 7,
-	/// https://en.wikipedia.org/wiki/DCI-P3 , RGB color space
+	/// <https://en.wikipedia.org/wiki/DCI-P3> , RGB color space
 	COLOR_SPACE_DCI_P3_RGB = 8,
-	/// https://en.wikipedia.org/wiki/DCI-P3 , linear RGB color space
+	/// <https://en.wikipedia.org/wiki/DCI-P3> , linear RGB color space
 	COLOR_SPACE_DCI_P3_RGBL = 9,
-	/// https://en.wikipedia.org/wiki/RGB_color_space , RGB color space
+	/// <https://en.wikipedia.org/wiki/RGB_color_space> , RGB color space
 	COLOR_SPACE_AppleRGB = 10,
-	/// https://en.wikipedia.org/wiki/RGB_color_space , linear RGB color space
+	/// <https://en.wikipedia.org/wiki/RGB_color_space> , linear RGB color space
 	COLOR_SPACE_AppleRGBL = 11,
-	/// https://en.wikipedia.org/wiki/Rec._709 , RGB color space
+	/// <https://en.wikipedia.org/wiki/Rec._709> , RGB color space
 	COLOR_SPACE_REC_709_RGB = 12,
-	/// https://en.wikipedia.org/wiki/Rec._709 , linear RGB color space
+	/// <https://en.wikipedia.org/wiki/Rec._709> , linear RGB color space
 	COLOR_SPACE_REC_709_RGBL = 13,
-	/// https://en.wikipedia.org/wiki/Rec._2020 , RGB color space
+	/// <https://en.wikipedia.org/wiki/Rec._2020> , RGB color space
 	COLOR_SPACE_REC_2020_RGB = 14,
-	/// https://en.wikipedia.org/wiki/Rec._2020 , linear RGB color space
+	/// <https://en.wikipedia.org/wiki/Rec._2020> , linear RGB color space
 	COLOR_SPACE_REC_2020_RGBL = 15,
-	/// https://en.wikipedia.org/wiki/CIE_1931_color_space , non-RGB color space
+	/// <https://en.wikipedia.org/wiki/CIE_1931_color_space> , non-RGB color space
 	COLOR_SPACE_XYZ_D65_2 = 16,
 	/// non-RGB color space
 	COLOR_SPACE_XYZ_D65_10 = 17,
@@ -226,7 +226,7 @@ pub enum COLOR_SPACE {
 	COLOR_SPACE_XYZ_E_2 = 26,
 	/// non-RGB color space
 	COLOR_SPACE_XYZ_E_10 = 27,
-	/// https://en.wikipedia.org/wiki/CIELAB_color_space , non-RGB color space
+	/// <https://en.wikipedia.org/wiki/CIELAB_color_space> , non-RGB color space
 	COLOR_SPACE_Lab_D65_2 = 28,
 	/// non-RGB color space
 	COLOR_SPACE_Lab_D65_10 = 29,
@@ -270,7 +270,7 @@ opencv_type_enum! { crate::mcc::CONST_COLOR }
 
 /// Enum of possible functions to calculate the distance between colors.
 /// 
-/// See https://en.wikipedia.org/wiki/Color_difference for details
+/// See <https://en.wikipedia.org/wiki/Color_difference> for details
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum DISTANCE_TYPE {
@@ -463,9 +463,7 @@ pub enum MCC_TYPECHART {
 
 opencv_type_enum! { crate::mcc::MCC_TYPECHART }
 
-/// Core class of ccm model
-/// 
-/// Produce a ColorCorrectionModel instance for inference
+/// Constant methods for [crate::mcc::ColorCorrectionModel]
 pub trait ColorCorrectionModelTraitConst {
 	fn as_raw_ColorCorrectionModel(&self) -> *const c_void;
 
@@ -530,6 +528,7 @@ pub trait ColorCorrectionModelTraitConst {
 	
 }
 
+/// Mutable methods for [crate::mcc::ColorCorrectionModel]
 pub trait ColorCorrectionModelTrait: crate::mcc::ColorCorrectionModelTraitConst {
 	fn as_raw_mut_ColorCorrectionModel(&mut self) -> *mut c_void;
 
@@ -537,18 +536,18 @@ pub trait ColorCorrectionModelTrait: crate::mcc::ColorCorrectionModelTraitConst 
 	/// 
 	/// Note: It should be some RGB color space;
 	/// Supported list of color cards:
-	/// - @ref COLOR_SPACE_sRGB
-	/// - @ref COLOR_SPACE_AdobeRGB
-	/// - @ref COLOR_SPACE_WideGamutRGB
-	/// - @ref COLOR_SPACE_ProPhotoRGB
-	/// - @ref COLOR_SPACE_DCI_P3_RGB
-	/// - @ref COLOR_SPACE_AppleRGB
-	/// - @ref COLOR_SPACE_REC_709_RGB
-	/// - @ref COLOR_SPACE_REC_2020_RGB
+	/// - [COLOR_SPACE_sRGB]
+	/// - [COLOR_SPACE_AdobeRGB]
+	/// - [COLOR_SPACE_WideGamutRGB]
+	/// - [COLOR_SPACE_ProPhotoRGB]
+	/// - [COLOR_SPACE_DCI_P3_RGB]
+	/// - [COLOR_SPACE_AppleRGB]
+	/// - [COLOR_SPACE_REC_709_RGB]
+	/// - [COLOR_SPACE_REC_2020_RGB]
 	/// ## Parameters
 	/// * cs: the absolute color space that detected colors convert to;
 	/// 
-	///           default: @ref COLOR_SPACE_sRGB
+	///           default: [COLOR_SPACE_sRGB]
 	#[inline]
 	fn set_color_space(&mut self, cs: crate::mcc::COLOR_SPACE) -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -562,7 +561,7 @@ pub trait ColorCorrectionModelTrait: crate::mcc::ColorCorrectionModelTraitConst 
 	/// ## Parameters
 	/// * ccm_type: the shape of color correction matrix(CCM);
 	/// 
-	///                default: @ref CCM_3x3
+	///                default: [CCM_3x3]
 	#[inline]
 	fn set_ccm_type(&mut self, ccm_type: crate::mcc::CCM_TYPE) -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -576,7 +575,7 @@ pub trait ColorCorrectionModelTrait: crate::mcc::ColorCorrectionModelTraitConst 
 	/// ## Parameters
 	/// * distance: the type of color distance;
 	/// 
-	///                default: @ref DISTANCE_CIE2000
+	///                default: [DISTANCE_CIE2000]
 	#[inline]
 	fn set_distance(&mut self, distance: crate::mcc::DISTANCE_TYPE) -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -590,7 +589,7 @@ pub trait ColorCorrectionModelTrait: crate::mcc::ColorCorrectionModelTraitConst 
 	/// ## Parameters
 	/// * linear_type: the method of linearization;
 	/// 
-	///                   default: @ref LINEARIZATION_GAMMA
+	///                   default: [LINEARIZATION_GAMMA]
 	#[inline]
 	fn set_linear(&mut self, linear_type: crate::mcc::LINEAR_TYPE) -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -622,10 +621,10 @@ pub trait ColorCorrectionModelTrait: crate::mcc::ColorCorrectionModelTraitConst 
 	/// set degree
 	///     
 	/// Note: only valid when linear is set to
-	///    - @ref LINEARIZATION_COLORPOLYFIT
-	///    - @ref LINEARIZATION_GRAYPOLYFIT
-	///    - @ref LINEARIZATION_COLORLOGPOLYFIT
-	///    - @ref LINEARIZATION_GRAYLOGPOLYFIT
+	///    - [LINEARIZATION_COLORPOLYFIT]
+	///    - [LINEARIZATION_GRAYPOLYFIT]
+	///    - [LINEARIZATION_COLORLOGPOLYFIT]
+	///    - [LINEARIZATION_GRAYLOGPOLYFIT]
 	/// 
 	/// ## Parameters
 	/// * deg: the degree of linearization polynomial;
@@ -794,9 +793,9 @@ impl ColorCorrectionModel {
 	/// Color Correction Model
 	/// 
 	/// Supported list of color cards:
-	/// - @ref COLORCHECKER_Macbeth, the Macbeth ColorChecker
-	/// - @ref COLORCHECKER_Vinyl, the DKK ColorChecker
-	/// - @ref COLORCHECKER_DigitalSG, the DigitalSG ColorChecker with 140 squares
+	/// - [COLORCHECKER_Macbeth], the Macbeth ColorChecker
+	/// - [COLORCHECKER_Vinyl], the DKK ColorChecker
+	/// - [COLORCHECKER_DigitalSG], the DigitalSG ColorChecker with 140 squares
 	/// 
 	/// ## Parameters
 	/// * src: detected colors of ColorChecker patches;
@@ -854,6 +853,12 @@ impl ColorCorrectionModel {
 	
 }
 
+/// Constant methods for [crate::mcc::MCC_CChecker]
+pub trait MCC_CCheckerConst {
+	fn as_raw_MCC_CChecker(&self) -> *const c_void;
+
+}
+
 /// CChecker
 /// 
 /// \brief checker object
@@ -861,11 +866,6 @@ impl ColorCorrectionModel {
 ///    This class contains the information about the detected checkers,i.e, their
 ///    type, the corners of the chart, the color profile, the cost, centers chart,
 ///    etc.
-pub trait MCC_CCheckerConst {
-	fn as_raw_MCC_CChecker(&self) -> *const c_void;
-
-}
-
 pub trait MCC_CChecker: crate::mcc::MCC_CCheckerConst {
 	fn as_raw_mut_MCC_CChecker(&mut self) -> *mut c_void;
 
@@ -996,12 +996,13 @@ impl dyn MCC_CChecker + '_ {
 	}
 	
 }
-/// A class to find the positions of the ColorCharts in the image.
+/// Constant methods for [crate::mcc::MCC_CCheckerDetector]
 pub trait MCC_CCheckerDetectorConst: core::AlgorithmTraitConst {
 	fn as_raw_MCC_CCheckerDetector(&self) -> *const c_void;
 
 }
 
+/// A class to find the positions of the ColorCharts in the image.
 pub trait MCC_CCheckerDetector: core::AlgorithmTrait + crate::mcc::MCC_CCheckerDetectorConst {
 	fn as_raw_mut_MCC_CCheckerDetector(&mut self) -> *mut c_void;
 
@@ -1049,7 +1050,7 @@ pub trait MCC_CCheckerDetector: core::AlgorithmTrait + crate::mcc::MCC_CCheckerD
 	/// * params: DetectorParameters::create()
 	#[inline]
 	fn process_with_roi(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vectorLRectGR_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1083,7 +1084,7 @@ pub trait MCC_CCheckerDetector: core::AlgorithmTrait + crate::mcc::MCC_CCheckerD
 	/// * params: DetectorParameters::create()
 	#[inline]
 	fn process(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1132,6 +1133,12 @@ impl dyn MCC_CCheckerDetector + '_ {
 	}
 	
 }
+/// Constant methods for [crate::mcc::MCC_CCheckerDraw]
+pub trait MCC_CCheckerDrawConst {
+	fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void;
+
+}
+
 /// \brief checker draw
 /// 
 /// This class contains the functions for drawing a detected chart.  This class
@@ -1145,11 +1152,6 @@ impl dyn MCC_CCheckerDetector + '_ {
 /// The reason for this type of design is that in some videos we can assume that
 /// the checker is always in the same position, even if the image changes, so
 /// the drawing will always take place at the same position.
-pub trait MCC_CCheckerDrawConst {
-	fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void;
-
-}
-
 pub trait MCC_CCheckerDraw: crate::mcc::MCC_CCheckerDrawConst {
 	fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void;
 
@@ -1158,7 +1160,7 @@ pub trait MCC_CCheckerDraw: crate::mcc::MCC_CCheckerDrawConst {
 	/// \return void
 	#[inline]
 	fn draw(&mut self, img: &mut dyn core::ToInputOutputArray) -> Result<()> {
-		input_output_array_arg!(img);
+		extern_container_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mcc_CCheckerDraw_draw_const__InputOutputArrayR(self.as_raw_mut_MCC_CCheckerDraw(), img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1191,53 +1193,7 @@ impl dyn MCC_CCheckerDraw + '_ {
 	}
 	
 }
-/// Parameters for the detectMarker process:
-/// - int adaptiveThreshWinSizeMin : minimum window size for adaptive
-///                                  thresholding before finding contours
-///                                  (default 23).
-/// - int adaptiveThreshWinSizeMax : maximum window size for adaptive
-///                                  thresholding before finding contours
-///                                  (default 153).
-/// - int adaptiveThreshWinSizeStep : increments from adaptiveThreshWinSizeMin to
-///                                   adaptiveThreshWinSizeMax during the
-///                                   thresholding (default 16).
-/// - double adaptiveThreshConstant : constant for adaptive thresholding before
-///                                   finding contours (default 7)
-/// - double minContoursAreaRate : determine minimum area for marker contour to
-///                                be detected. This is defined as a rate respect
-///                                to the area of the input image. Used only if
-///                                neural network is used (default 0.003).
-/// - double minContoursArea : determine minimum area for marker contour to be
-///                            detected. This is defined as the actual area. Used
-///                            only if neural network is not used (default 100).
-/// - double confidenceThreshold : minimum confidence for a bounding box detected
-///                                by neural network to classify as
-///                                detection.(default 0.5)
-///                                (0<=confidenceThreshold<=1)
-/// - double minContourSolidity : minimum solidity of a contour for it be
-///                               detected as a square in the chart. (default
-///                               0.9).
-/// - double findCandidatesApproxPolyDPEpsMultiplier : multipler to be used in
-///                                                    cv::ApproxPolyDP function
-///                                                    (default 0.05)
-/// - int borderWidth : width of the padding used to pass the inital neural
-///                    network detection in the succeeding system.(default 0)
-/// - float B0factor : distance between two neighbours squares of the same chart.
-///                    Defined as the ratio between distance and large dimension
-///                    of square (default 1.25)
-/// - float maxError : maximum allowed error in the detection of a chart.
-///                    default(0.1)
-/// - int minContourPointsAllowed : minium points in a detected contour.
-///                                 default(4)
-/// - int minContourLengthAllowed : minimum length of a countour. default(100)
-/// - int minInterContourDistance : minimum distance between two contours.
-///                                 default(100)
-/// - int minInterCheckerDistance : minimum distance between two checkers.
-///                                 default(10000)
-/// - int minImageSize : minimum size of the smaller dimension of the image.
-///                      default(1000)
-/// - unsigned minGroupSize : minimum number of a squared of a chart that must be
-///                           detected. default(4)
+/// Constant methods for [crate::mcc::MCC_DetectorParameters]
 pub trait MCC_DetectorParametersTraitConst {
 	fn as_raw_MCC_DetectorParameters(&self) -> *const c_void;
 
@@ -1351,6 +1307,7 @@ pub trait MCC_DetectorParametersTraitConst {
 	
 }
 
+/// Mutable methods for [crate::mcc::MCC_DetectorParameters]
 pub trait MCC_DetectorParametersTrait: crate::mcc::MCC_DetectorParametersTraitConst {
 	fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void;
 

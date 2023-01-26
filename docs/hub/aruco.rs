@@ -111,16 +111,16 @@ opencv_type_enum! { crate::aruco::PatternPositionType }
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 #[inline]
 pub fn calibrate_camera_aruco_extended(corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, counter: &dyn core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, std_deviations_intrinsics: &mut dyn core::ToOutputArray, std_deviations_extrinsics: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(corners);
-	input_array_arg!(ids);
-	input_array_arg!(counter);
-	input_output_array_arg!(camera_matrix);
-	input_output_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
-	output_array_arg!(std_deviations_intrinsics);
-	output_array_arg!(std_deviations_extrinsics);
-	output_array_arg!(per_view_errors);
+	extern_container_arg!(corners);
+	extern_container_arg!(ids);
+	extern_container_arg!(counter);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
+	extern_container_arg!(std_deviations_intrinsics);
+	extern_container_arg!(std_deviations_extrinsics);
+	extern_container_arg!(per_view_errors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -174,13 +174,13 @@ pub fn calibrate_camera_aruco_extended(corners: &dyn core::ToInputArray, ids: &d
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 #[inline]
 pub fn calibrate_camera_aruco(corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, counter: &dyn core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(corners);
-	input_array_arg!(ids);
-	input_array_arg!(counter);
-	input_output_array_arg!(camera_matrix);
-	input_output_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
+	extern_container_arg!(corners);
+	extern_container_arg!(ids);
+	extern_container_arg!(counter);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -226,15 +226,15 @@ pub fn calibrate_camera_aruco(corners: &dyn core::ToInputArray, ids: &dyn core::
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 #[inline]
 pub fn calibrate_camera_charuco_extended(charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, std_deviations_intrinsics: &mut dyn core::ToOutputArray, std_deviations_extrinsics: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(charuco_corners);
-	input_array_arg!(charuco_ids);
-	input_output_array_arg!(camera_matrix);
-	input_output_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
-	output_array_arg!(std_deviations_intrinsics);
-	output_array_arg!(std_deviations_extrinsics);
-	output_array_arg!(per_view_errors);
+	extern_container_arg!(charuco_corners);
+	extern_container_arg!(charuco_ids);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
+	extern_container_arg!(std_deviations_intrinsics);
+	extern_container_arg!(std_deviations_extrinsics);
+	extern_container_arg!(per_view_errors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -251,12 +251,12 @@ pub fn calibrate_camera_charuco_extended(charuco_corners: &dyn core::ToInputArra
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 #[inline]
 pub fn calibrate_camera_charuco(charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(charuco_corners);
-	input_array_arg!(charuco_ids);
-	input_output_array_arg!(camera_matrix);
-	input_output_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
+	extern_container_arg!(charuco_corners);
+	extern_container_arg!(charuco_ids);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -297,13 +297,13 @@ pub fn calibrate_camera_charuco(charuco_corners: &dyn core::ToInputArray, charuc
 #[deprecated = "Use CharucoDetector::detectDiamonds"]
 #[inline]
 pub fn detect_charuco_diamond(image: &dyn core::ToInputArray, marker_corners: &dyn core::ToInputArray, marker_ids: &dyn core::ToInputArray, square_marker_length_rate: f32, diamond_corners: &mut dyn core::ToOutputArray, diamond_ids: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, mut dictionary: core::Ptr<crate::objdetect::Dictionary>) -> Result<()> {
-	input_array_arg!(image);
-	input_array_arg!(marker_corners);
-	input_array_arg!(marker_ids);
-	output_array_arg!(diamond_corners);
-	output_array_arg!(diamond_ids);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
+	extern_container_arg!(image);
+	extern_container_arg!(marker_corners);
+	extern_container_arg!(marker_ids);
+	extern_container_arg!(diamond_corners);
+	extern_container_arg!(diamond_ids);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_detectCharucoDiamond_const__InputArrayR_const__InputArrayR_const__InputArrayR_float_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_PtrLDictionaryG(image.as_raw__InputArray(), marker_corners.as_raw__InputArray(), marker_ids.as_raw__InputArray(), square_marker_length_rate, diamond_corners.as_raw__OutputArray(), diamond_ids.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), dictionary.as_raw_mut_PtrOfDictionary(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -321,10 +321,10 @@ pub fn detect_charuco_diamond(image: &dyn core::ToInputArray, marker_corners: &d
 #[deprecated = "Use class ArucoDetector::detectMarkers"]
 #[inline]
 pub fn detect_markers(image: &dyn core::ToInputArray, dictionary: &core::Ptr<crate::objdetect::Dictionary>, corners: &mut dyn core::ToOutputArray, ids: &mut dyn core::ToOutputArray, parameters: &core::Ptr<crate::objdetect::DetectorParameters>, rejected_img_points: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(corners);
-	output_array_arg!(ids);
-	output_array_arg!(rejected_img_points);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
+	extern_container_arg!(ids);
+	extern_container_arg!(rejected_img_points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_detectMarkers_const__InputArrayR_const_PtrLDictionaryGR_const__OutputArrayR_const__OutputArrayR_const_PtrLDetectorParametersGR_const__OutputArrayR(image.as_raw__InputArray(), dictionary.as_raw_PtrOfDictionary(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), parameters.as_raw_PtrOfDetectorParameters(), rejected_img_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -351,7 +351,7 @@ pub fn detect_markers(image: &dyn core::ToInputArray, dictionary: &core::Ptr<cra
 /// * border_bits: 1
 #[inline]
 pub fn draw_charuco_diamond(dictionary: &core::Ptr<crate::objdetect::Dictionary>, ids: core::Vec4i, square_length: i32, marker_length: i32, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
-	output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_drawCharucoDiamond_const_PtrLDictionaryGR_Vec4i_int_int_const__OutputArrayR_int_int(dictionary.as_raw_PtrOfDictionary(), ids.opencv_as_extern(), square_length, marker_length, img.as_raw__OutputArray(), margin_size, border_bits, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -365,7 +365,7 @@ pub fn draw_charuco_diamond(dictionary: &core::Ptr<crate::objdetect::Dictionary>
 #[deprecated = "Use Board::generateImage"]
 #[inline]
 pub fn draw_planar_board(board: &core::Ptr<crate::objdetect::Board>, out_size: core::Size, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
-	output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_drawPlanarBoard_const_PtrLBoardGR_Size_const__OutputArrayR_int_int(board.as_raw_PtrOfBoard(), out_size.opencv_as_extern(), img.as_raw__OutputArray(), margin_size, border_bits, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -381,12 +381,12 @@ pub fn draw_planar_board(board: &core::Ptr<crate::objdetect::Board>, out_size: c
 #[deprecated = "Use cv::solvePnP"]
 #[inline]
 pub fn estimate_pose_board(corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool) -> Result<i32> {
-	input_array_arg!(corners);
-	input_array_arg!(ids);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_output_array_arg!(rvec);
-	input_output_array_arg!(tvec);
+	extern_container_arg!(corners);
+	extern_container_arg!(ids);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_estimatePoseBoard_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool(corners.as_raw__InputArray(), ids.as_raw__InputArray(), board.as_raw_PtrOfBoard(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -418,12 +418,12 @@ pub fn estimate_pose_board(corners: &dyn core::ToInputArray, ids: &dyn core::ToI
 /// * use_extrinsic_guess: false
 #[inline]
 pub fn estimate_pose_charuco_board(charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool) -> Result<bool> {
-	input_array_arg!(charuco_corners);
-	input_array_arg!(charuco_ids);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_output_array_arg!(rvec);
-	input_output_array_arg!(tvec);
+	extern_container_arg!(charuco_corners);
+	extern_container_arg!(charuco_ids);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_estimatePoseCharucoBoard_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -440,12 +440,12 @@ pub fn estimate_pose_charuco_board(charuco_corners: &dyn core::ToInputArray, cha
 #[deprecated = "Use cv::solvePnP"]
 #[inline]
 pub fn estimate_pose_single_markers(corners: &dyn core::ToInputArray, marker_length: f32, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, obj_points: &mut dyn core::ToOutputArray, estimate_parameters: &core::Ptr<crate::aruco::EstimateParameters>) -> Result<()> {
-	input_array_arg!(corners);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
-	output_array_arg!(obj_points);
+	extern_container_arg!(corners);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
+	extern_container_arg!(obj_points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_estimatePoseSingleMarkers_const__InputArrayR_float_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const_PtrLEstimateParametersGR(corners.as_raw__InputArray(), marker_length, camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), obj_points.as_raw__OutputArray(), estimate_parameters.as_raw_PtrOfEstimateParameters(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -459,10 +459,10 @@ pub fn estimate_pose_single_markers(corners: &dyn core::ToInputArray, marker_len
 #[deprecated = "Use Board::matchImagePoints"]
 #[inline]
 pub fn get_board_object_and_image_points(board: &core::Ptr<crate::objdetect::Board>, detected_corners: &dyn core::ToInputArray, detected_ids: &dyn core::ToInputArray, obj_points: &mut dyn core::ToOutputArray, img_points: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(detected_corners);
-	input_array_arg!(detected_ids);
-	output_array_arg!(obj_points);
-	output_array_arg!(img_points);
+	extern_container_arg!(detected_corners);
+	extern_container_arg!(detected_ids);
+	extern_container_arg!(obj_points);
+	extern_container_arg!(img_points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_getBoardObjectAndImagePoints_const_PtrLBoardGR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(board.as_raw_PtrOfBoard(), detected_corners.as_raw__InputArray(), detected_ids.as_raw__InputArray(), obj_points.as_raw__OutputArray(), img_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -504,13 +504,13 @@ pub fn get_board_object_and_image_points(board: &core::Ptr<crate::objdetect::Boa
 #[deprecated = "Use CharucoDetector::detectBoard"]
 #[inline]
 pub fn interpolate_corners_charuco(marker_corners: &dyn core::ToInputArray, marker_ids: &dyn core::ToInputArray, image: &dyn core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, charuco_corners: &mut dyn core::ToOutputArray, charuco_ids: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, min_markers: i32) -> Result<i32> {
-	input_array_arg!(marker_corners);
-	input_array_arg!(marker_ids);
-	input_array_arg!(image);
-	output_array_arg!(charuco_corners);
-	output_array_arg!(charuco_ids);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
+	extern_container_arg!(marker_corners);
+	extern_container_arg!(marker_ids);
+	extern_container_arg!(image);
+	extern_container_arg!(charuco_corners);
+	extern_container_arg!(charuco_ids);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_interpolateCornersCharuco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(marker_corners.as_raw__InputArray(), marker_ids.as_raw__InputArray(), image.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), charuco_corners.as_raw__OutputArray(), charuco_ids.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), min_markers, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -533,13 +533,13 @@ pub fn interpolate_corners_charuco(marker_corners: &dyn core::ToInputArray, mark
 #[deprecated = "Use class ArucoDetector::refineDetectedMarkers"]
 #[inline]
 pub fn refine_detected_markers(image: &dyn core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, detected_corners: &mut dyn core::ToInputOutputArray, detected_ids: &mut dyn core::ToInputOutputArray, rejected_corners: &mut dyn core::ToInputOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, min_rep_distance: f32, error_correction_rate: f32, check_all_orders: bool, recovered_idxs: &mut dyn core::ToOutputArray, parameters: &core::Ptr<crate::objdetect::DetectorParameters>) -> Result<()> {
-	input_array_arg!(image);
-	input_output_array_arg!(detected_corners);
-	input_output_array_arg!(detected_ids);
-	input_output_array_arg!(rejected_corners);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	output_array_arg!(recovered_idxs);
+	extern_container_arg!(image);
+	extern_container_arg!(detected_corners);
+	extern_container_arg!(detected_ids);
+	extern_container_arg!(rejected_corners);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(recovered_idxs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_refineDetectedMarkers_const__InputArrayR_const_PtrLBoardGR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_float_float_bool_const__OutputArrayR_const_PtrLDetectorParametersGR(image.as_raw__InputArray(), board.as_raw_PtrOfBoard(), detected_corners.as_raw__InputOutputArray(), detected_ids.as_raw__InputOutputArray(), rejected_corners.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), min_rep_distance, error_correction_rate, check_all_orders, recovered_idxs.as_raw__OutputArray(), parameters.as_raw_PtrOfDetectorParameters(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -552,7 +552,7 @@ pub fn refine_detected_markers(image: &dyn core::ToInputArray, board: &core::Ptr
 #[deprecated = "Use CharucoBoard::checkCharucoCornersCollinear"]
 #[inline]
 pub fn test_charuco_corners_collinear(board: &core::Ptr<crate::objdetect::CharucoBoard>, charuco_ids: &dyn core::ToInputArray) -> Result<bool> {
-	input_array_arg!(charuco_ids);
+	extern_container_arg!(charuco_ids);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_aruco_testCharucoCornersCollinear_const_PtrLCharucoBoardGR_const__InputArrayR(board.as_raw_PtrOfCharucoBoard(), charuco_ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -560,16 +560,7 @@ pub fn test_charuco_corners_collinear(board: &core::Ptr<crate::objdetect::Charuc
 	Ok(ret)
 }
 
-/// Pose estimation parameters
-/// 
-/// ## Parameters
-/// * pattern: Defines center this system and axes direction (default PatternPositionType::ARUCO_CCW_CENTER).
-/// * useExtrinsicGuess: Parameter used for SOLVEPNP_ITERATIVE. If true (1), the function uses the provided
-/// rvec and tvec values as initial approximations of the rotation and translation vectors, respectively, and further
-/// optimizes them (default false).
-/// * solvePnPMethod: Method for solving a PnP problem: see @ref calib3d_solvePnP_flags (default SOLVEPNP_ITERATIVE).
-/// ## See also
-/// PatternPositionType, solvePnP(), check tutorial_aruco_detection in aruco contrib
+/// Constant methods for [crate::aruco::EstimateParameters]
 pub trait EstimateParametersTraitConst {
 	fn as_raw_EstimateParameters(&self) -> *const c_void;
 
@@ -595,6 +586,7 @@ pub trait EstimateParametersTraitConst {
 	
 }
 
+/// Mutable methods for [crate::aruco::EstimateParameters]
 pub trait EstimateParametersTrait: crate::aruco::EstimateParametersTraitConst {
 	fn as_raw_mut_EstimateParameters(&mut self) -> *mut c_void;
 
@@ -625,7 +617,7 @@ pub trait EstimateParametersTrait: crate::aruco::EstimateParametersTraitConst {
 /// * useExtrinsicGuess: Parameter used for SOLVEPNP_ITERATIVE. If true (1), the function uses the provided
 /// rvec and tvec values as initial approximations of the rotation and translation vectors, respectively, and further
 /// optimizes them (default false).
-/// * solvePnPMethod: Method for solving a PnP problem: see @ref calib3d_solvePnP_flags (default SOLVEPNP_ITERATIVE).
+/// * solvePnPMethod: Method for solving a PnP problem: see [calib3d_solvePnP_flags] (default SOLVEPNP_ITERATIVE).
 /// ## See also
 /// PatternPositionType, solvePnP(), check tutorial_aruco_detection in aruco contrib
 pub struct EstimateParameters {

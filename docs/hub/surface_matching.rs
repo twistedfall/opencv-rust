@@ -372,27 +372,13 @@ pub const ICP_ICP_SAMPLING_TYPE_UNIFORM: i32 = 0;
 pub type key_type = u32;
 pub type Pose3DPtr = core::Ptr<crate::surface_matching::Pose3D>;
 pub type PoseCluster3DPtr = core::Ptr<crate::surface_matching::PoseCluster3D>;
-/// This class implements a very efficient and robust variant of the iterative closest point (ICP) algorithm.
-/// The task is to register a 3D model (or point cloud) against a set of noisy target data. The variants are put together
-/// by myself after certain tests. The task is to be able to match partial, noisy point clouds in cluttered scenes, quickly.
-/// You will find that my emphasis is on the performance, while retaining the accuracy.
-/// This implementation is based on Tolga Birdal's MATLAB implementation in here:
-/// http://www.mathworks.com/matlabcentral/fileexchange/47152-icp-registration-using-efficient-variants-and-multi-resolution-scheme
-/// The main contributions come from:
-/// 1. Picky ICP:
-/// http://www5.informatik.uni-erlangen.de/Forschung/Publikationen/2003/Zinsser03-ARI.pdf
-/// 2. Efficient variants of the ICP Algorithm:
-/// http://docs.happycoders.org/orgadoc/graphics/imaging/fasticp_paper.pdf
-/// 3. Geometrically Stable Sampling for the ICP Algorithm: https://graphics.stanford.edu/papers/stabicp/stabicp.pdf
-/// 4. Multi-resolution registration:
-/// http://www.cvl.iis.u-tokyo.ac.jp/~oishi/Papers/Alignment/Jost_MultiResolutionICP_3DIM03.pdf
-/// 5. Linearization of Point-to-Plane metric by Kok Lim Low:
-/// https://www.comp.nus.edu.sg/~lowkl/publications/lowk_point-to-plane_icp_techrep.pdf
+/// Constant methods for [crate::surface_matching::ICP]
 pub trait ICPTraitConst {
 	fn as_raw_ICP(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::surface_matching::ICP]
 pub trait ICPTrait: crate::surface_matching::ICPTraitConst {
 	fn as_raw_mut_ICP(&mut self) -> *mut c_void;
 
@@ -442,17 +428,17 @@ pub trait ICPTrait: crate::surface_matching::ICPTraitConst {
 /// by myself after certain tests. The task is to be able to match partial, noisy point clouds in cluttered scenes, quickly.
 /// You will find that my emphasis is on the performance, while retaining the accuracy.
 /// This implementation is based on Tolga Birdal's MATLAB implementation in here:
-/// http://www.mathworks.com/matlabcentral/fileexchange/47152-icp-registration-using-efficient-variants-and-multi-resolution-scheme
+/// <http://www.mathworks.com/matlabcentral/fileexchange/47152-icp-registration-using-efficient-variants-and-multi-resolution-scheme>
 /// The main contributions come from:
 /// 1. Picky ICP:
-/// http://www5.informatik.uni-erlangen.de/Forschung/Publikationen/2003/Zinsser03-ARI.pdf
+/// <http://www5.informatik.uni-erlangen.de/Forschung/Publikationen/2003/Zinsser03-ARI.pdf>
 /// 2. Efficient variants of the ICP Algorithm:
-/// http://docs.happycoders.org/orgadoc/graphics/imaging/fasticp_paper.pdf
-/// 3. Geometrically Stable Sampling for the ICP Algorithm: https://graphics.stanford.edu/papers/stabicp/stabicp.pdf
+/// <http://docs.happycoders.org/orgadoc/graphics/imaging/fasticp_paper.pdf>
+/// 3. Geometrically Stable Sampling for the ICP Algorithm: <https://graphics.stanford.edu/papers/stabicp/stabicp.pdf>
 /// 4. Multi-resolution registration:
-/// http://www.cvl.iis.u-tokyo.ac.jp/~oishi/Papers/Alignment/Jost_MultiResolutionICP_3DIM03.pdf
+/// <http://www.cvl.iis.u-tokyo.ac.jp/~oishi/Papers/Alignment/Jost_MultiResolutionICP_3DIM03.pdf>
 /// 5. Linearization of Point-to-Plane metric by Kok Lim Low:
-/// https://www.comp.nus.edu.sg/~lowkl/publications/lowk_point-to-plane_icp_techrep.pdf
+/// <https://www.comp.nus.edu.sg/~lowkl/publications/lowk_point-to-plane_icp_techrep.pdf>
 pub struct ICP {
 	ptr: *mut c_void
 }
@@ -520,22 +506,13 @@ impl ICP {
 	
 }
 
-/// Class, allowing the load and matching 3D models.
-/// Typical Use:
-/// ```C++
-/// // Train a model
-/// ppf_match_3d::PPF3DDetector detector(0.05, 0.05);
-/// detector.trainModel(pc);
-/// // Search the model in a given scene
-/// vector<Pose3DPtr> results;
-/// detector.match(pcTest, results, 1.0/5.0,0.05);
-/// ```
-/// 
+/// Constant methods for [crate::surface_matching::PPF3DDetector]
 pub trait PPF3DDetectorTraitConst {
 	fn as_raw_PPF3DDetector(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::surface_matching::PPF3DDetector]
 pub trait PPF3DDetectorTrait: crate::surface_matching::PPF3DDetectorTraitConst {
 	fn as_raw_mut_PPF3DDetector(&mut self) -> *mut c_void;
 
@@ -662,9 +639,7 @@ impl PPF3DDetector {
 	
 }
 
-/// Class, allowing the storage of a pose. The data structure stores both
-/// the quaternions and the matrix forms. It supports IO functionality together with
-/// various helper methods to work with poses
+/// Constant methods for [crate::surface_matching::Pose3D]
 pub trait Pose3DTraitConst {
 	fn as_raw_Pose3D(&self) -> *const c_void;
 
@@ -724,6 +699,7 @@ pub trait Pose3DTraitConst {
 	
 }
 
+/// Mutable methods for [crate::surface_matching::Pose3D]
 pub trait Pose3DTrait: crate::surface_matching::Pose3DTraitConst {
 	fn as_raw_mut_Pose3D(&mut self) -> *mut c_void;
 
@@ -910,9 +886,7 @@ impl Pose3D {
 	
 }
 
-/// When multiple poses (see Pose3D) are grouped together (contribute to the same transformation)
-/// pose clusters occur. This class is a general container for such groups of poses. It is possible to store,
-/// load and perform IO on these poses.
+/// Constant methods for [crate::surface_matching::PoseCluster3D]
 pub trait PoseCluster3DTraitConst {
 	fn as_raw_PoseCluster3D(&self) -> *const c_void;
 
@@ -937,6 +911,7 @@ pub trait PoseCluster3DTraitConst {
 	
 }
 
+/// Mutable methods for [crate::surface_matching::PoseCluster3D]
 pub trait PoseCluster3DTrait: crate::surface_matching::PoseCluster3DTraitConst {
 	fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void;
 

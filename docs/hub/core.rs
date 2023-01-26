@@ -1595,7 +1595,7 @@ pub enum _InputArray_KindFlag {
 	STD_VECTOR = 196608,
 	STD_VECTOR_VECTOR = 262144,
 	STD_VECTOR_MAT = 327680,
-	/// removed: https://github.com/opencv/opencv/pull/17046
+	/// removed: <https://github.com/opencv/opencv/pull/17046>
 	EXPR = 393216,
 	OPENGL_BUFFER = 458752,
 	CUDA_HOST_MEM = 524288,
@@ -1604,7 +1604,7 @@ pub enum _InputArray_KindFlag {
 	STD_VECTOR_UMAT = 720896,
 	STD_BOOL_VECTOR = 786432,
 	STD_VECTOR_CUDA_GPU_MAT = 851968,
-	/// removed: https://github.com/opencv/opencv/issues/18897
+	/// removed: <https://github.com/opencv/opencv/issues/18897>
 	STD_ARRAY = 917504,
 	STD_ARRAY_MAT = 983040,
 }
@@ -1789,9 +1789,9 @@ pub fn cholesky_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size
 /// convertScaleAbs, Mat::convertTo
 #[inline]
 pub fn lut(src: &dyn core::ToInputArray, lut: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	input_array_arg!(lut);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(lut);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_LUT_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lut.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1831,9 +1831,9 @@ pub fn lu_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n:
 /// * icovar: inverse covariance matrix.
 #[inline]
 pub fn mahalanobis(v1: &dyn core::ToInputArray, v2: &dyn core::ToInputArray, icovar: &dyn core::ToInputArray) -> Result<f64> {
-	input_array_arg!(v1);
-	input_array_arg!(v2);
-	input_array_arg!(icovar);
+	extern_container_arg!(v1);
+	extern_container_arg!(v2);
+	extern_container_arg!(icovar);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_Mahalanobis_const__InputArrayR_const__InputArrayR_const__InputArrayR(v1.as_raw__InputArray(), v2.as_raw__InputArray(), icovar.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1844,10 +1844,10 @@ pub fn mahalanobis(v1: &dyn core::ToInputArray, v2: &dyn core::ToInputArray, ico
 /// wrap PCA::backProject
 #[inline]
 pub fn pca_back_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, eigenvectors: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(data);
-	input_array_arg!(mean);
-	input_array_arg!(eigenvectors);
-	output_array_arg!(result);
+	extern_container_arg!(data);
+	extern_container_arg!(mean);
+	extern_container_arg!(eigenvectors);
+	extern_container_arg!(result);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_PCABackProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1858,10 +1858,10 @@ pub fn pca_back_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputA
 /// wrap PCA::operator() and add eigenvalues output parameter
 #[inline]
 pub fn pca_compute2_variance(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, eigenvalues: &mut dyn core::ToOutputArray, retained_variance: f64) -> Result<()> {
-	input_array_arg!(data);
-	input_output_array_arg!(mean);
-	output_array_arg!(eigenvectors);
-	output_array_arg!(eigenvalues);
+	extern_container_arg!(data);
+	extern_container_arg!(mean);
+	extern_container_arg!(eigenvectors);
+	extern_container_arg!(eigenvalues);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), retained_variance, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1875,10 +1875,10 @@ pub fn pca_compute2_variance(data: &dyn core::ToInputArray, mean: &mut dyn core:
 /// * max_components: 0
 #[inline]
 pub fn pca_compute2(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, eigenvalues: &mut dyn core::ToOutputArray, max_components: i32) -> Result<()> {
-	input_array_arg!(data);
-	input_output_array_arg!(mean);
-	output_array_arg!(eigenvectors);
-	output_array_arg!(eigenvalues);
+	extern_container_arg!(data);
+	extern_container_arg!(mean);
+	extern_container_arg!(eigenvectors);
+	extern_container_arg!(eigenvalues);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), max_components, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1889,9 +1889,9 @@ pub fn pca_compute2(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputO
 /// wrap PCA::operator()
 #[inline]
 pub fn pca_compute_variance(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, retained_variance: f64) -> Result<()> {
-	input_array_arg!(data);
-	input_output_array_arg!(mean);
-	output_array_arg!(eigenvectors);
+	extern_container_arg!(data);
+	extern_container_arg!(mean);
+	extern_container_arg!(eigenvectors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), retained_variance, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1905,9 +1905,9 @@ pub fn pca_compute_variance(data: &dyn core::ToInputArray, mean: &mut dyn core::
 /// * max_components: 0
 #[inline]
 pub fn pca_compute(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, max_components: i32) -> Result<()> {
-	input_array_arg!(data);
-	input_output_array_arg!(mean);
-	output_array_arg!(eigenvectors);
+	extern_container_arg!(data);
+	extern_container_arg!(mean);
+	extern_container_arg!(eigenvectors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), max_components, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1918,10 +1918,10 @@ pub fn pca_compute(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOu
 /// wrap PCA::project
 #[inline]
 pub fn pca_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, eigenvectors: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(data);
-	input_array_arg!(mean);
-	input_array_arg!(eigenvectors);
-	output_array_arg!(result);
+	extern_container_arg!(data);
+	extern_container_arg!(mean);
+	extern_container_arg!(eigenvectors);
+	extern_container_arg!(result);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_PCAProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1950,8 +1950,8 @@ pub fn pca_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray,
 /// * r: 255.
 #[inline]
 pub fn psnr(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, r: f64) -> Result<f64> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_PSNR_const__InputArrayR_const__InputArrayR_double(src1.as_raw__InputArray(), src2.as_raw__InputArray(), r, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1962,11 +1962,11 @@ pub fn psnr(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, r: f64
 /// wrap SVD::backSubst
 #[inline]
 pub fn sv_back_subst(w: &dyn core::ToInputArray, u: &dyn core::ToInputArray, vt: &dyn core::ToInputArray, rhs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(w);
-	input_array_arg!(u);
-	input_array_arg!(vt);
-	input_array_arg!(rhs);
-	output_array_arg!(dst);
+	extern_container_arg!(w);
+	extern_container_arg!(u);
+	extern_container_arg!(vt);
+	extern_container_arg!(rhs);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_SVBackSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1980,10 +1980,10 @@ pub fn sv_back_subst(w: &dyn core::ToInputArray, u: &dyn core::ToInputArray, vt:
 /// * flags: 0
 #[inline]
 pub fn sv_decomp(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, u: &mut dyn core::ToOutputArray, vt: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(w);
-	output_array_arg!(u);
-	output_array_arg!(vt);
+	extern_container_arg!(src);
+	extern_container_arg!(w);
+	extern_container_arg!(u);
+	extern_container_arg!(vt);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_SVDecomp_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2004,7 +2004,7 @@ pub fn sv_decomp(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, 
 /// ## Parameters
 /// * m: matrix.
 /// ## See also
-/// @ref MatrixExpressions, absdiff, convertScaleAbs
+/// [MatrixExpressions], absdiff, convertScaleAbs
 /// 
 /// ## Overloaded parameters
 /// 
@@ -2032,7 +2032,7 @@ pub fn abs_matexpr(e: &core::MatExpr) -> Result<core::MatExpr> {
 /// ## Parameters
 /// * m: matrix.
 /// ## See also
-/// @ref MatrixExpressions, absdiff, convertScaleAbs
+/// [MatrixExpressions], absdiff, convertScaleAbs
 #[inline]
 pub fn abs(m: &core::Mat) -> Result<core::MatExpr> {
 	return_send!(via ocvrs_return);
@@ -2070,9 +2070,9 @@ pub fn abs(m: &core::Mat) -> Result<core::MatExpr> {
 /// cv::abs(const Mat&)
 #[inline]
 pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2110,9 +2110,9 @@ pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 /// * dtype: -1
 #[inline]
 pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToInputArray, beta: f64, gamma: f64, dst: &mut dyn core::ToOutputArray, dtype: i32) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2165,10 +2165,10 @@ pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::
 /// * dtype: -1
 #[inline]
 pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2178,7 +2178,7 @@ pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 
 /// naive nearest neighbor finder
 /// 
-/// see http://en.wikipedia.org/wiki/Nearest_neighbor_search
+/// see <http://en.wikipedia.org/wiki/Nearest_neighbor_search>
 /// @todo document
 /// 
 /// ## C++ default parameters
@@ -2189,11 +2189,11 @@ pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &m
 /// * crosscheck: false
 #[inline]
 pub fn batch_distance(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dist: &mut dyn core::ToOutputArray, dtype: i32, nidx: &mut dyn core::ToOutputArray, norm_type: i32, k: i32, mask: &dyn core::ToInputArray, update: i32, crosscheck: bool) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dist);
-	output_array_arg!(nidx);
-	input_array_arg!(mask);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dist);
+	extern_container_arg!(nidx);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_batchDistance_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__OutputArrayR_int_int_const__InputArrayR_int_bool(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dist.as_raw__OutputArray(), dtype, nidx.as_raw__OutputArray(), norm_type, k, mask.as_raw__InputArray(), update, crosscheck, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2231,10 +2231,10 @@ pub fn batch_distance(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArr
 /// * mask: noArray()
 #[inline]
 pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2261,9 +2261,9 @@ pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 /// * mask: noArray()
 #[inline]
 pub fn bitwise_not(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2300,10 +2300,10 @@ pub fn bitwise_not(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 /// * mask: noArray()
 #[inline]
 pub fn bitwise_or(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2341,10 +2341,10 @@ pub fn bitwise_or(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, 
 /// * mask: noArray()
 #[inline]
 pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2412,9 +2412,9 @@ pub fn border_interpolate(p: i32, len: i32, border_type: i32) -> Result<i32> {
 /// * ctype: CV_64F
 #[inline]
 pub fn calc_covar_matrix(samples: &dyn core::ToInputArray, covar: &mut dyn core::ToOutputArray, mean: &mut dyn core::ToInputOutputArray, flags: i32, ctype: i32) -> Result<()> {
-	input_array_arg!(samples);
-	output_array_arg!(covar);
-	input_output_array_arg!(mean);
+	extern_container_arg!(samples);
+	extern_container_arg!(covar);
+	extern_container_arg!(mean);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int(samples.as_raw__InputArray(), covar.as_raw__OutputArray(), mean.as_raw__InputOutputArray(), flags, ctype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2446,10 +2446,10 @@ pub fn calc_covar_matrix(samples: &dyn core::ToInputArray, covar: &mut dyn core:
 /// * angle_in_degrees: false
 #[inline]
 pub fn cart_to_polar(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
-	input_array_arg!(x);
-	input_array_arg!(y);
-	output_array_arg!(magnitude);
-	output_array_arg!(angle);
+	extern_container_arg!(x);
+	extern_container_arg!(y);
+	extern_container_arg!(magnitude);
+	extern_container_arg!(angle);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2497,7 +2497,7 @@ pub fn check_hardware_support(feature: i32) -> Result<bool> {
 /// * max_val: DBL_MAX
 #[inline]
 pub fn check_range(a: &dyn core::ToInputArray, quiet: bool, pos: &mut core::Point, min_val: f64, max_val: f64) -> Result<bool> {
-	input_array_arg!(a);
+	extern_container_arg!(a);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_checkRange_const__InputArrayR_bool_PointX_double_double(a.as_raw__InputArray(), quiet, pos, min_val, max_val, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2535,9 +2535,9 @@ pub fn check_range(a: &dyn core::ToInputArray, quiet: bool, pos: &mut core::Poin
 /// checkRange, min, max, threshold
 #[inline]
 pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, cmpop: i32) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2565,7 +2565,7 @@ pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 /// * lower_to_upper: false
 #[inline]
 pub fn complete_symm(m: &mut dyn core::ToInputOutputArray, lower_to_upper: bool) -> Result<()> {
-	input_output_array_arg!(m);
+	extern_container_arg!(m);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_completeSymm_const__InputOutputArrayR_bool(m.as_raw__InputOutputArray(), lower_to_upper, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2585,8 +2585,8 @@ pub fn complete_symm(m: &mut dyn core::ToInputOutputArray, lower_to_upper: bool)
 /// * dst: output array.
 #[inline]
 pub fn convert_fp16(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_convertFp16_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2627,8 +2627,8 @@ pub fn convert_fp16(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 /// * beta: 0
 #[inline]
 pub fn convert_scale_abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, alpha: f64, beta: f64) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_convertScaleAbs_const__InputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2686,8 +2686,8 @@ pub fn convert_scale_abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOut
 /// * value: Scalar()
 #[inline]
 pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, &value, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2706,9 +2706,9 @@ pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels.
 #[inline]
 pub fn copy_to(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_copyTo_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2726,7 +2726,7 @@ pub fn copy_to(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, 
 /// mean, meanStdDev, norm, minMaxLoc, calcCovarMatrix
 #[inline]
 pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
-	input_array_arg!(src);
+	extern_container_arg!(src);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_countNonZero_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2763,7 +2763,7 @@ pub fn cube_root(val: f32) -> Result<f32> {
 /// end of each row.
 #[inline]
 pub fn create_continuous(rows: i32, cols: i32, typ: i32, arr: &mut dyn core::ToOutputArray) -> Result<()> {
-	output_array_arg!(arr);
+	extern_container_arg!(arr);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cuda_createContinuous_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2792,7 +2792,7 @@ pub fn device_supports(feature_set: core::FeatureSet) -> Result<bool> {
 /// The function does not reallocate memory if the matrix has proper attributes already.
 #[inline]
 pub fn ensure_size_is_enough(rows: i32, cols: i32, typ: i32, arr: &mut dyn core::ToOutputArray) -> Result<()> {
-	output_array_arg!(arr);
+	extern_container_arg!(arr);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cuda_ensureSizeIsEnough_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2980,8 +2980,8 @@ pub fn unregister_page_locked(m: &mut core::Mat) -> Result<()> {
 /// * flags: 0
 #[inline]
 pub fn dct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_dct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3194,10 +3194,10 @@ pub fn check_failed_true(v: bool, ctx: &core::Detail_CheckContext) -> Result<()>
 /// * mtx: input matrix that must have CV_32FC1 or CV_64FC1 type and
 /// square size.
 /// ## See also
-/// trace, invert, solve, eigen, @ref MatrixExpressions
+/// trace, invert, solve, eigen, [MatrixExpressions]
 #[inline]
 pub fn determinant(mtx: &dyn core::ToInputArray) -> Result<f64> {
-	input_array_arg!(mtx);
+	extern_container_arg!(mtx);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_determinant_const__InputArrayR(mtx.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3346,8 +3346,8 @@ pub fn determinant(mtx: &dyn core::ToInputArray) -> Result<f64> {
 /// * nonzero_rows: 0
 #[inline]
 pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_dft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3417,9 +3417,9 @@ pub fn get_type_from_dxgi_format(i_dxgi_format: i32) -> Result<i32> {
 /// * dtype: -1
 #[inline]
 pub fn divide2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3462,8 +3462,8 @@ pub fn divide2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 /// * dtype: -1
 #[inline]
 pub fn divide(scale: f64, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dtype: i32) -> Result<()> {
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_divide_double_const__InputArrayR_const__OutputArrayR_int(scale, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), dtype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3490,9 +3490,9 @@ pub fn divide(scale: f64, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToO
 /// eigen
 #[inline]
 pub fn eigen_non_symmetric(src: &dyn core::ToInputArray, eigenvalues: &mut dyn core::ToOutputArray, eigenvectors: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(eigenvalues);
-	output_array_arg!(eigenvectors);
+	extern_container_arg!(src);
+	extern_container_arg!(eigenvalues);
+	extern_container_arg!(eigenvectors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_eigenNonSymmetric_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3527,9 +3527,9 @@ pub fn eigen_non_symmetric(src: &dyn core::ToInputArray, eigenvalues: &mut dyn c
 /// * eigenvectors: noArray()
 #[inline]
 pub fn eigen(src: &dyn core::ToInputArray, eigenvalues: &mut dyn core::ToOutputArray, eigenvectors: &mut dyn core::ToOutputArray) -> Result<bool> {
-	input_array_arg!(src);
-	output_array_arg!(eigenvalues);
-	output_array_arg!(eigenvectors);
+	extern_container_arg!(src);
+	extern_container_arg!(eigenvalues);
+	extern_container_arg!(eigenvectors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_eigen_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3598,8 +3598,8 @@ pub fn error(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Re
 /// log , cartToPolar , polarToCart , phase , pow , sqrt , magnitude
 #[inline]
 pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_exp_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3616,8 +3616,8 @@ pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> R
 /// mixChannels, split
 #[inline]
 pub fn extract_channel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, coi: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_extractChannel_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), coi, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3671,8 +3671,8 @@ pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
 /// * idx: the output array, type of cv::Mat or std::vector<Point>, corresponding to non-zero indices in the input
 #[inline]
 pub fn find_non_zero(src: &dyn core::ToInputArray, idx: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(idx);
+	extern_container_arg!(src);
+	extern_container_arg!(idx);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findNonZero_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3687,8 +3687,8 @@ pub fn find_non_zero(src: &dyn core::ToInputArray, idx: &mut dyn core::ToOutputA
 /// * axis: axis that performs a flip on. 0 <= axis < src.dims.
 #[inline]
 pub fn flip_nd(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, axis: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_flipND_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3724,8 +3724,8 @@ pub fn flip_nd(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, 
 /// transpose , repeat , completeSymm
 #[inline]
 pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flip_code: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_flip_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3768,10 +3768,10 @@ pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fli
 /// * flags: 0
 #[inline]
 pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha: f64, src3: &dyn core::ToInputArray, beta: f64, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	input_array_arg!(src3);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(src3);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4096,9 +4096,9 @@ pub fn have_openvx() -> Result<bool> {
 /// * dst: output array. It has the same number of rows and depth as the src1 and src2, and the sum of cols of the src1 and src2.
 #[inline]
 pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_hconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4151,8 +4151,8 @@ pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// same depth.
 #[inline]
 pub fn hconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_hconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4174,8 +4174,8 @@ pub fn hconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) 
 /// * flags: 0
 #[inline]
 pub fn idct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_idct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4203,8 +4203,8 @@ pub fn idct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fla
 /// * nonzero_rows: 0
 #[inline]
 pub fn idft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_idft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4233,10 +4233,10 @@ pub fn idft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fla
 /// * dst: output array of the same size as src and CV_8U type.
 #[inline]
 pub fn in_range(src: &dyn core::ToInputArray, lowerb: &dyn core::ToInputArray, upperb: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	input_array_arg!(lowerb);
-	input_array_arg!(upperb);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(lowerb);
+	extern_container_arg!(upperb);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_inRange_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lowerb.as_raw__InputArray(), upperb.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4253,8 +4253,8 @@ pub fn in_range(src: &dyn core::ToInputArray, lowerb: &dyn core::ToInputArray, u
 /// mixChannels, merge
 #[inline]
 pub fn insert_channel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, coi: i32) -> Result<()> {
-	input_array_arg!(src);
-	input_output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_insertChannel_const__InputArrayR_const__InputOutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), coi, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4338,8 +4338,8 @@ pub fn use_instrumentation() -> Result<bool> {
 /// * flags: DECOMP_LU
 #[inline]
 pub fn invert(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<f64> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_invert_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4476,9 +4476,9 @@ pub fn use_ipp_not_exact() -> Result<bool> {
 /// * centers: noArray()
 #[inline]
 pub fn kmeans(data: &dyn core::ToInputArray, k: i32, best_labels: &mut dyn core::ToInputOutputArray, criteria: core::TermCriteria, attempts: i32, flags: i32, centers: &mut dyn core::ToOutputArray) -> Result<f64> {
-	input_array_arg!(data);
-	input_output_array_arg!(best_labels);
-	output_array_arg!(centers);
+	extern_container_arg!(data);
+	extern_container_arg!(best_labels);
+	extern_container_arg!(centers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_kmeans_const__InputArrayR_int_const__InputOutputArrayR_TermCriteria_int_int_const__OutputArrayR(data.as_raw__InputArray(), k, best_labels.as_raw__InputOutputArray(), criteria.opencv_as_extern(), attempts, flags, centers.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4500,8 +4500,8 @@ pub fn kmeans(data: &dyn core::ToInputArray, k: i32, best_labels: &mut dyn core:
 /// exp, cartToPolar, polarToCart, phase, pow, sqrt, magnitude
 #[inline]
 pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_log_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4523,9 +4523,9 @@ pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> R
 /// cartToPolar, polarToCart, phase, sqrt
 #[inline]
 pub fn magnitude(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(x);
-	input_array_arg!(y);
-	output_array_arg!(magnitude);
+	extern_container_arg!(x);
+	extern_container_arg!(y);
+	extern_container_arg!(magnitude);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4554,7 +4554,7 @@ pub fn max_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
 /// * src2: second input array of the same size and type as src1 .
 /// * dst: output array of the same size and type as src1.
 /// ## See also
-/// min, compare, inRange, minMaxLoc, @ref MatrixExpressions
+/// min, compare, inRange, minMaxLoc, [MatrixExpressions]
 /// 
 /// ## Overloaded parameters
 /// 
@@ -4589,7 +4589,7 @@ pub fn max_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
 /// * src2: second input array of the same size and type as src1 .
 /// * dst: output array of the same size and type as src1.
 /// ## See also
-/// min, compare, inRange, minMaxLoc, @ref MatrixExpressions
+/// min, compare, inRange, minMaxLoc, [MatrixExpressions]
 /// 
 /// ## Overloaded parameters
 /// 
@@ -4614,12 +4614,12 @@ pub fn max_umat_to(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -
 /// * src2: second input array of the same size and type as src1 .
 /// * dst: output array of the same size and type as src1.
 /// ## See also
-/// min, compare, inRange, minMaxLoc, @ref MatrixExpressions
+/// min, compare, inRange, minMaxLoc, [MatrixExpressions]
 #[inline]
 pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4664,10 +4664,10 @@ pub fn max_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 /// * mask: noArray()
 #[inline]
 pub fn mean_std_dev(src: &dyn core::ToInputArray, mean: &mut dyn core::ToOutputArray, stddev: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(mean);
-	output_array_arg!(stddev);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(mean);
+	extern_container_arg!(stddev);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_meanStdDev_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), mean.as_raw__OutputArray(), stddev.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4692,8 +4692,8 @@ pub fn mean_std_dev(src: &dyn core::ToInputArray, mean: &mut dyn core::ToOutputA
 /// * mask: noArray()
 #[inline]
 pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
-	input_array_arg!(src);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_mean_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4730,8 +4730,8 @@ pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Resu
 /// be the total number of channels in the matrix array.
 #[inline]
 pub fn merge(mv: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(mv);
-	output_array_arg!(dst);
+	extern_container_arg!(mv);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_merge_const__InputArrayR_const__OutputArrayR(mv.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4771,8 +4771,8 @@ pub fn merge(mv: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> 
 /// * mask: noArray()
 #[inline]
 pub fn min_max_idx(src: &dyn core::ToInputArray, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_idx: Option<&mut i32>, max_idx: Option<&mut i32>, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX_doubleX_intX_intX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4849,8 +4849,8 @@ pub fn min_max_loc_sparse(a: &core::SparseMat, min_val: Option<&mut f64>, max_va
 /// * mask: noArray()
 #[inline]
 pub fn min_max_loc(src: &dyn core::ToInputArray, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_loc: Option<&mut core::Point>, max_loc: Option<&mut core::Point>, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_loc.map_or(::core::ptr::null_mut(), |min_loc| min_loc as *mut _), max_loc.map_or(::core::ptr::null_mut(), |max_loc| max_loc as *mut _), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4942,9 +4942,9 @@ pub fn min_umat_to(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -
 /// max, compare, inRange, minMaxLoc
 #[inline]
 pub fn min(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5023,8 +5023,8 @@ pub fn min_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 /// * npairs: number of index pairs in fromTo.
 #[inline]
 pub fn mix_channels(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, from_to: &[i32]) -> Result<()> {
-	input_array_arg!(src);
-	input_output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_intX_size_t(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_ptr(), (from_to.len() / 2) as _, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5092,8 +5092,8 @@ pub fn mix_channels(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOut
 /// filled with zero .
 #[inline]
 pub fn mix_channels_vec(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, from_to: &core::Vector<i32>) -> Result<()> {
-	input_array_arg!(src);
-	input_output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_vectorLintGR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5123,9 +5123,9 @@ pub fn mix_channels_vec(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInpu
 /// * conj_b: false
 #[inline]
 pub fn mul_spectrums(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, c: &mut dyn core::ToOutputArray, flags: i32, conj_b: bool) -> Result<()> {
-	input_array_arg!(a);
-	input_array_arg!(b);
-	output_array_arg!(c);
+	extern_container_arg!(a);
+	extern_container_arg!(b);
+	extern_container_arg!(c);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5169,9 +5169,9 @@ pub fn mul_spectrums(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, c: 
 /// * dtype: -1
 #[inline]
 pub fn mul_transposed(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, a_ta: bool, delta: &dyn core::ToInputArray, scale: f64, dtype: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(delta);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(delta);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_mulTransposed_const__InputArrayR_const__OutputArrayR_bool_const__InputArrayR_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), a_ta, delta.as_raw__InputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5185,7 +5185,7 @@ pub fn mul_transposed(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
 /// 
-/// There is also a @ref MatrixExpressions -friendly variant of the first function. See Mat::mul .
+/// There is also a [MatrixExpressions] -friendly variant of the first function. See Mat::mul .
 /// 
 /// For a not-per-element matrix product, see gemm .
 /// 
@@ -5208,9 +5208,9 @@ pub fn mul_transposed(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// * dtype: -1
 #[inline]
 pub fn multiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5267,9 +5267,9 @@ pub fn norm_sparse(src: &core::SparseMat, norm_type: i32) -> Result<f64> {
 /// * mask: noArray()
 #[inline]
 pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	input_array_arg!(mask);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_norm_const__InputArrayR_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5319,8 +5319,8 @@ pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_
 /// * mask: noArray()
 #[inline]
 pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
-	input_array_arg!(src1);
-	input_array_arg!(mask);
+	extern_container_arg!(src1);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_norm_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5474,9 +5474,9 @@ pub fn normalize_sparse(src: &core::SparseMat, dst: &mut core::SparseMat, alpha:
 /// * mask: noArray()
 #[inline]
 pub fn normalize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	input_output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_normalize_const__InputArrayR_const__InputOutputArrayR_double_double_int_int_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5509,7 +5509,7 @@ pub unsafe fn attach_context(platform_name: &str, platform_id: *mut c_void, cont
 pub fn build_options_add_matrix_description(build_options: &mut String, name: &str, _m: &dyn core::ToInputArray) -> Result<()> {
 	string_arg_output_send!(via build_options_via);
 	extern_container_arg!(name);
-	input_array_arg!(_m);
+	extern_container_arg!(_m);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ocl_buildOptionsAddMatrixDescription_StringR_const_StringR_const__InputArrayR(&mut build_options_via, name.opencv_as_extern(), _m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5530,15 +5530,15 @@ pub fn build_options_add_matrix_description(build_options: &mut String, name: &s
 /// * strat: OCL_VECTOR_DEFAULT
 #[inline]
 pub fn check_optimal_vector_width(vector_widths: &i32, src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, src3: &dyn core::ToInputArray, src4: &dyn core::ToInputArray, src5: &dyn core::ToInputArray, src6: &dyn core::ToInputArray, src7: &dyn core::ToInputArray, src8: &dyn core::ToInputArray, src9: &dyn core::ToInputArray, strat: core::OclVectorStrategy) -> Result<i32> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	input_array_arg!(src3);
-	input_array_arg!(src4);
-	input_array_arg!(src5);
-	input_array_arg!(src6);
-	input_array_arg!(src7);
-	input_array_arg!(src8);
-	input_array_arg!(src9);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(src3);
+	extern_container_arg!(src4);
+	extern_container_arg!(src5);
+	extern_container_arg!(src6);
+	extern_container_arg!(src7);
+	extern_container_arg!(src8);
+	extern_container_arg!(src9);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ocl_checkOptimalVectorWidth_const_intX_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(vector_widths, src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5666,7 +5666,7 @@ pub fn have_svm() -> Result<bool> {
 /// * name: NULL
 #[inline]
 pub fn kernel_to_str(_kernel: &dyn core::ToInputArray, ddepth: i32, name: &str) -> Result<String> {
-	input_array_arg!(_kernel);
+	extern_container_arg!(_kernel);
 	extern_container_arg!(name);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ocl_kernelToStr_const__InputArrayR_int_const_charX(_kernel.as_raw__InputArray(), ddepth, name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -5697,15 +5697,15 @@ pub fn memop_type_to_str(t: i32) -> Result<String> {
 /// * src9: noArray()
 #[inline]
 pub fn predict_optimal_vector_width_max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, src3: &dyn core::ToInputArray, src4: &dyn core::ToInputArray, src5: &dyn core::ToInputArray, src6: &dyn core::ToInputArray, src7: &dyn core::ToInputArray, src8: &dyn core::ToInputArray, src9: &dyn core::ToInputArray) -> Result<i32> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	input_array_arg!(src3);
-	input_array_arg!(src4);
-	input_array_arg!(src5);
-	input_array_arg!(src6);
-	input_array_arg!(src7);
-	input_array_arg!(src8);
-	input_array_arg!(src9);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(src3);
+	extern_container_arg!(src4);
+	extern_container_arg!(src5);
+	extern_container_arg!(src6);
+	extern_container_arg!(src7);
+	extern_container_arg!(src8);
+	extern_container_arg!(src9);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5725,15 +5725,15 @@ pub fn predict_optimal_vector_width_max(src1: &dyn core::ToInputArray, src2: &dy
 /// * strat: OCL_VECTOR_DEFAULT
 #[inline]
 pub fn predict_optimal_vector_width(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, src3: &dyn core::ToInputArray, src4: &dyn core::ToInputArray, src5: &dyn core::ToInputArray, src6: &dyn core::ToInputArray, src7: &dyn core::ToInputArray, src8: &dyn core::ToInputArray, src9: &dyn core::ToInputArray, strat: core::OclVectorStrategy) -> Result<i32> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	input_array_arg!(src3);
-	input_array_arg!(src4);
-	input_array_arg!(src5);
-	input_array_arg!(src6);
-	input_array_arg!(src7);
-	input_array_arg!(src8);
-	input_array_arg!(src9);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(src3);
+	extern_container_arg!(src4);
+	extern_container_arg!(src5);
+	extern_container_arg!(src6);
+	extern_container_arg!(src7);
+	extern_container_arg!(src8);
+	extern_container_arg!(src9);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ocl_predictOptimalVectorWidth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5785,7 +5785,7 @@ pub fn vecop_type_to_str(t: i32) -> Result<String> {
 /// * dst: - destination OutputArray.
 #[inline]
 pub fn convert_from_gl_texture_2d(texture: &core::Texture2D, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	output_array_arg!(dst);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ogl_convertFromGLTexture2D_const_Texture2DR_const__OutputArrayR(texture.as_raw_Texture2D(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5799,7 +5799,7 @@ pub fn convert_from_gl_texture_2d(texture: &core::Texture2D, dst: &mut dyn core:
 /// * texture: - destination Texture2D object.
 #[inline]
 pub fn convert_to_gl_texture_2d(src: &dyn core::ToInputArray, texture: &mut core::Texture2D) -> Result<()> {
-	input_array_arg!(src);
+	extern_container_arg!(src);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ogl_convertToGLTexture2D_const__InputArrayR_Texture2DR(src.as_raw__InputArray(), texture.as_raw_mut_Texture2D(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5863,7 +5863,7 @@ pub fn initialize_context_from_gl() -> Result<core::Context> {
 /// * color: Scalar::all(255)
 #[inline]
 pub fn render_2(arr: &core::Arrays, indices: &dyn core::ToInputArray, mode: i32, color: core::Scalar) -> Result<()> {
-	input_array_arg!(indices);
+	extern_container_arg!(indices);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR_int_Scalar(arr.as_raw_Arrays(), indices.as_raw__InputArray(), mode, color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6592,7 +6592,7 @@ pub fn parallel_for_(range: &core::Range, body: &dyn core::ParallelLoopBody, nst
 /// * val: 0
 #[inline]
 pub fn patch_na_ns(a: &mut dyn core::ToInputOutputArray, val: f64) -> Result<()> {
-	input_output_array_arg!(a);
+	extern_container_arg!(a);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_patchNaNs_const__InputOutputArrayR_double(a.as_raw__InputOutputArray(), val, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6629,9 +6629,9 @@ pub fn patch_na_ns(a: &mut dyn core::ToInputOutputArray, val: f64) -> Result<()>
 /// transform, warpPerspective, getPerspectiveTransform, findHomography
 #[inline]
 pub fn perspective_transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(m);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(m);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_perspectiveTransform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6660,9 +6660,9 @@ pub fn perspective_transform(src: &dyn core::ToInputArray, dst: &mut dyn core::T
 /// * angle_in_degrees: false
 #[inline]
 pub fn phase(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
-	input_array_arg!(x);
-	input_array_arg!(y);
-	output_array_arg!(angle);
+	extern_container_arg!(x);
+	extern_container_arg!(y);
+	extern_container_arg!(angle);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6696,10 +6696,10 @@ pub fn phase(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, angle: &mut
 /// * angle_in_degrees: false
 #[inline]
 pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInputArray, x: &mut dyn core::ToOutputArray, y: &mut dyn core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
-	input_array_arg!(magnitude);
-	input_array_arg!(angle);
-	output_array_arg!(x);
-	output_array_arg!(y);
+	extern_container_arg!(magnitude);
+	extern_container_arg!(angle);
+	extern_container_arg!(x);
+	extern_container_arg!(y);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6734,8 +6734,8 @@ pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInp
 /// sqrt, exp, log, cartToPolar, polarToCart
 #[inline]
 pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_pow_const__InputArrayR_double_const__OutputArrayR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6761,7 +6761,7 @@ pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutpu
 /// * rng: 0
 #[inline]
 pub fn rand_shuffle(dst: &mut dyn core::ToInputOutputArray, iter_factor: f64, rng: &mut core::RNG) -> Result<()> {
-	input_output_array_arg!(dst);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_randShuffle_const__InputOutputArrayR_double_RNGX(dst.as_raw__InputOutputArray(), iter_factor, rng.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6783,9 +6783,9 @@ pub fn rand_shuffle(dst: &mut dyn core::ToInputOutputArray, iter_factor: f64, rn
 /// RNG, randu
 #[inline]
 pub fn randn(dst: &mut dyn core::ToInputOutputArray, mean: &dyn core::ToInputArray, stddev: &dyn core::ToInputArray) -> Result<()> {
-	input_output_array_arg!(dst);
-	input_array_arg!(mean);
-	input_array_arg!(stddev);
+	extern_container_arg!(dst);
+	extern_container_arg!(mean);
+	extern_container_arg!(stddev);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_randn_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), mean.as_raw__InputArray(), stddev.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6806,9 +6806,9 @@ pub fn randn(dst: &mut dyn core::ToInputOutputArray, mean: &dyn core::ToInputArr
 /// RNG, randn, theRNG
 #[inline]
 pub fn randu(dst: &mut dyn core::ToInputOutputArray, low: &dyn core::ToInputArray, high: &dyn core::ToInputArray) -> Result<()> {
-	input_output_array_arg!(dst);
-	input_array_arg!(low);
-	input_array_arg!(high);
+	extern_container_arg!(dst);
+	extern_container_arg!(low);
+	extern_container_arg!(high);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_randu_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), low.as_raw__InputArray(), high.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6952,8 +6952,8 @@ pub fn rectangle_intersection_area(a: core::Rect2d, b: core::Rect2d) -> Result<f
 /// * last_index: false
 #[inline]
 pub fn reduce_arg_max(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, axis: i32, last_index: bool) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_reduceArgMax_const__InputArrayR_const__OutputArrayR_int_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, last_index, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6982,8 +6982,8 @@ pub fn reduce_arg_max(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// * last_index: false
 #[inline]
 pub fn reduce_arg_min(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, axis: i32, last_index: bool) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_reduceArgMin_const__InputArrayR_const__OutputArrayR_int_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, last_index, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7021,8 +7021,8 @@ pub fn reduce_arg_min(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// * dtype: -1
 #[inline]
 pub fn reduce(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dim: i32, rtype: i32, dtype: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_reduce_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dim, rtype, dtype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7034,7 +7034,7 @@ pub fn reduce(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// 
 /// The function cv::repeat duplicates the input array one or more times along each of the two axes:
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%5F%7Bij%7D%3D%20%5Ctexttt%7Bsrc%7D%20%5F%7Bi%5Cmod%20src%2Erows%2C%20%5C%3B%20j%5Cmod%20src%2Ecols%20%7D)
-/// The second variant of the function is more convenient to use with @ref MatrixExpressions.
+/// The second variant of the function is more convenient to use with [MatrixExpressions].
 /// ## Parameters
 /// * src: input array to replicate.
 /// * ny: Flag to specify how many times the `src` is repeated along the
@@ -7066,7 +7066,7 @@ pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
 /// 
 /// The function cv::repeat duplicates the input array one or more times along each of the two axes:
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%5F%7Bij%7D%3D%20%5Ctexttt%7Bsrc%7D%20%5F%7Bi%5Cmod%20src%2Erows%2C%20%5C%3B%20j%5Cmod%20src%2Ecols%20%7D)
-/// The second variant of the function is more convenient to use with @ref MatrixExpressions.
+/// The second variant of the function is more convenient to use with [MatrixExpressions].
 /// ## Parameters
 /// * src: input array to replicate.
 /// * ny: Flag to specify how many times the `src` is repeated along the
@@ -7078,8 +7078,8 @@ pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
 /// cv::reduce
 #[inline]
 pub fn repeat_to(src: &dyn core::ToInputArray, ny: i32, nx: i32, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_repeat_const__InputArrayR_int_int_const__OutputArrayR(src.as_raw__InputArray(), ny, nx, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7101,8 +7101,8 @@ pub fn repeat_to(src: &dyn core::ToInputArray, ny: i32, nx: i32, dst: &mut dyn c
 /// transpose , repeat , completeSymm, flip, RotateFlags
 #[inline]
 pub fn rotate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, rotate_code: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_rotate_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), rotate_code, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7218,9 +7218,9 @@ pub fn find_file(relative_path: &str, required: bool, silent_mode: bool) -> Resu
 /// add, addWeighted, subtract, Mat::dot, Mat::convertTo
 #[inline]
 pub fn scale_add(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_scaleAdd_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7265,7 +7265,7 @@ pub fn set_break_on_error(flag: bool) -> Result<bool> {
 /// * s: Scalar(1)
 #[inline]
 pub fn set_identity(mtx: &mut dyn core::ToInputOutputArray, s: core::Scalar) -> Result<()> {
-	input_output_array_arg!(mtx);
+	extern_container_arg!(mtx);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_setIdentity_const__InputOutputArrayR_const_ScalarR(mtx.as_raw__InputOutputArray(), &s, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7375,8 +7375,8 @@ pub fn set_use_optimized(onoff: bool) -> Result<()> {
 /// number of real roots. It can be 0, 1 or 2.
 #[inline]
 pub fn solve_cubic(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutputArray) -> Result<i32> {
-	input_array_arg!(coeffs);
-	output_array_arg!(roots);
+	extern_container_arg!(coeffs);
+	extern_container_arg!(roots);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solveCubic_const__InputArrayR_const__OutputArrayR(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7415,9 +7415,9 @@ pub fn solve_cubic(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutp
 /// One of cv::SolveLPResult
 #[inline]
 pub fn solve_lp(func: &dyn core::ToInputArray, constr: &dyn core::ToInputArray, z: &mut dyn core::ToOutputArray) -> Result<i32> {
-	input_array_arg!(func);
-	input_array_arg!(constr);
-	output_array_arg!(z);
+	extern_container_arg!(func);
+	extern_container_arg!(constr);
+	extern_container_arg!(z);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solveLP_const__InputArrayR_const__InputArrayR_const__OutputArrayR(func.as_raw__InputArray(), constr.as_raw__InputArray(), z.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7438,8 +7438,8 @@ pub fn solve_lp(func: &dyn core::ToInputArray, constr: &dyn core::ToInputArray, 
 /// * max_iters: 300
 #[inline]
 pub fn solve_poly(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutputArray, max_iters: i32) -> Result<f64> {
-	input_array_arg!(coeffs);
-	output_array_arg!(roots);
+	extern_container_arg!(coeffs);
+	extern_container_arg!(roots);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solvePoly_const__InputArrayR_const__OutputArrayR_int(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), max_iters, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7476,9 +7476,9 @@ pub fn solve_poly(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutpu
 /// * flags: DECOMP_LU
 #[inline]
 pub fn solve(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solve_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7508,8 +7508,8 @@ pub fn solve(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: 
 /// sort, randShuffle
 #[inline]
 pub fn sort_idx(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_sortIdx_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7533,8 +7533,8 @@ pub fn sort_idx(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray,
 /// sortIdx, randShuffle
 #[inline]
 pub fn sort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_sort_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7590,8 +7590,8 @@ pub fn split_slice(src: &core::Mat, mvbegin: &mut core::Mat) -> Result<()> {
 /// * mv: output vector of arrays; the arrays themselves are reallocated, if needed.
 #[inline]
 pub fn split(m: &dyn core::ToInputArray, mv: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(m);
-	output_array_arg!(mv);
+	extern_container_arg!(m);
+	extern_container_arg!(mv);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_split_const__InputArrayR_const__OutputArrayR(m.as_raw__InputArray(), mv.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7610,8 +7610,8 @@ pub fn split(m: &dyn core::ToInputArray, mv: &mut dyn core::ToOutputArray) -> Re
 /// * dst: output array of the same size and type as src.
 #[inline]
 pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_sqrt_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7665,10 +7665,10 @@ pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> 
 /// * dtype: -1
 #[inline]
 pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7686,7 +7686,7 @@ pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// countNonZero, mean, meanStdDev, norm, minMaxLoc, reduce
 #[inline]
 pub fn sum_elems(src: &dyn core::ToInputArray) -> Result<core::Scalar> {
-	input_array_arg!(src);
+	extern_container_arg!(src);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_sum_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7757,7 +7757,7 @@ pub fn the_rng() -> Result<core::RNG> {
 /// * mtx: input matrix.
 #[inline]
 pub fn trace(mtx: &dyn core::ToInputArray) -> Result<core::Scalar> {
-	input_array_arg!(mtx);
+	extern_container_arg!(mtx);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_trace_const__InputArrayR(mtx.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7792,9 +7792,9 @@ pub fn trace(mtx: &dyn core::ToInputArray) -> Result<core::Scalar> {
 /// perspectiveTransform, getAffineTransform, estimateAffine2D, warpAffine, warpPerspective
 #[inline]
 pub fn transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(m);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(m);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_transform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7813,8 +7813,8 @@ pub fn transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// * dst: output array of the same type as src.
 #[inline]
 pub fn transpose_nd(src: &dyn core::ToInputArray, order: &core::Vector<i32>, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_transposeND_const__InputArrayR_const_vectorLintGR_const__OutputArrayR(src.as_raw__InputArray(), order.as_raw_VectorOfi32(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7834,8 +7834,8 @@ pub fn transpose_nd(src: &dyn core::ToInputArray, order: &core::Vector<i32>, dst
 /// * dst: output array of the same type as src.
 #[inline]
 pub fn transpose(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_transpose_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7919,7 +7919,7 @@ pub fn dump_float(argument: f32) -> Result<String> {
 
 #[inline]
 pub fn dump_input_array_of_arrays(argument: &dyn core::ToInputArray) -> Result<String> {
-	input_array_arg!(argument);
+	extern_container_arg!(argument);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_utils_dumpInputArrayOfArrays_const__InputArrayR(argument.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7930,7 +7930,7 @@ pub fn dump_input_array_of_arrays(argument: &dyn core::ToInputArray) -> Result<S
 
 #[inline]
 pub fn dump_input_array(argument: &dyn core::ToInputArray) -> Result<String> {
-	input_array_arg!(argument);
+	extern_container_arg!(argument);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_utils_dumpInputArray_const__InputArrayR(argument.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7941,7 +7941,7 @@ pub fn dump_input_array(argument: &dyn core::ToInputArray) -> Result<String> {
 
 #[inline]
 pub fn dump_input_output_array_of_arrays(argument: &mut dyn core::ToInputOutputArray) -> Result<String> {
-	input_output_array_arg!(argument);
+	extern_container_arg!(argument);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_utils_dumpInputOutputArrayOfArrays_const__InputOutputArrayR(argument.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -7952,7 +7952,7 @@ pub fn dump_input_output_array_of_arrays(argument: &mut dyn core::ToInputOutputA
 
 #[inline]
 pub fn dump_input_output_array(argument: &mut dyn core::ToInputOutputArray) -> Result<String> {
-	input_output_array_arg!(argument);
+	extern_container_arg!(argument);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_utils_dumpInputOutputArray_const__InputOutputArrayR(argument.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -8228,7 +8228,7 @@ pub fn test_echo_boolean_function(flag: bool) -> Result<bool> {
 
 #[inline]
 pub fn test_async_array(argument: &dyn core::ToInputArray) -> Result<core::AsyncArray> {
-	input_array_arg!(argument);
+	extern_container_arg!(argument);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_utils_testAsyncArray_const__InputArrayR(argument.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -8328,7 +8328,7 @@ pub fn test_rotated_rect(x: f32, y: f32, w: f32, h: f32, angle: f32) -> Result<c
 /// * dst: - destination OutputArray.
 #[inline]
 pub unsafe fn convert_from_va_surface(display: core::va_display, surface: core::va_surface_id, size: core::Size, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	output_array_arg!(dst);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	{ sys::cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display, surface, size.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(ocvrs_return => ret);
@@ -8344,7 +8344,7 @@ pub unsafe fn convert_from_va_surface(display: core::va_display, surface: core::
 /// * size: - size of image represented by VASurfaceID object.
 #[inline]
 pub unsafe fn convert_to_va_surface(display: core::va_display, src: &dyn core::ToInputArray, surface: core::va_surface_id, size: core::Size) -> Result<()> {
-	input_array_arg!(src);
+	extern_container_arg!(src);
 	return_send!(via ocvrs_return);
 	{ sys::cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display, src.as_raw__InputArray(), surface, size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(ocvrs_return => ret);
@@ -8420,9 +8420,9 @@ pub unsafe fn initialize_context_from_va(display: core::va_display, try_interop:
 /// * dst: output array. It has the same number of cols and depth as the src1 and src2, and the sum of rows of the src1 and src2.
 #[inline]
 pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_vconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -8473,8 +8473,8 @@ pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// same depth.
 #[inline]
 pub fn vconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_vconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -8601,16 +8601,7 @@ pub fn write_i32(fs: &mut core::FileStorage, name: &str, value: i32) -> Result<(
 	Ok(ret)
 }
 
-/// This is a base class for all more or less complex algorithms in OpenCV
-/// 
-/// especially for classes of algorithms, for which there can be multiple implementations. The examples
-/// are stereo correspondence (for which there are algorithms like block matching, semi-global block
-/// matching, graph-cut etc.), background subtraction (which can be done using mixture-of-gaussians
-/// models, codebook-based algorithm etc.), optical flow (block matching, Lucas-Kanade, Horn-Schunck
-/// etc.).
-/// 
-/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-/// [Algorithm](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// Constant methods for [core::Algorithm]
 pub trait AlgorithmTraitConst {
 	fn as_raw_Algorithm(&self) -> *const c_void;
 
@@ -8687,6 +8678,7 @@ pub trait AlgorithmTraitConst {
 	
 }
 
+/// Mutable methods for [core::Algorithm]
 pub trait AlgorithmTrait: core::AlgorithmTraitConst {
 	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void;
 
@@ -8758,12 +8750,7 @@ impl Algorithm {
 	
 }
 
-/// Returns result of asynchronous operations
-/// 
-/// Object has attached asynchronous state.
-/// Assignment operator doesn't clone asynchronous state (it is shared between all instances).
-/// 
-/// Result can be fetched via get() method only once.
+/// Constant methods for [core::AsyncArray]
 pub trait AsyncArrayTraitConst {
 	fn as_raw_AsyncArray(&self) -> *const c_void;
 
@@ -8780,7 +8767,7 @@ pub trait AsyncArrayTraitConst {
 	/// Note: Result or stored exception can be fetched only once.
 	#[inline]
 	fn get(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8800,7 +8787,7 @@ pub trait AsyncArrayTraitConst {
 	/// Note: Result or stored exception can be fetched only once.
 	#[inline]
 	fn get_with_timeout(&self, dst: &mut dyn core::ToOutputArray, timeout_ns: i64) -> Result<bool> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_int64_t(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8810,7 +8797,7 @@ pub trait AsyncArrayTraitConst {
 	
 	#[inline]
 	fn get_with_timeout_f64(&self, dst: &mut dyn core::ToOutputArray, timeout_ns: f64) -> Result<bool> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_double(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8844,6 +8831,7 @@ pub trait AsyncArrayTraitConst {
 	
 }
 
+/// Mutable methods for [core::AsyncArray]
 pub trait AsyncArrayTrait: core::AsyncArrayTraitConst {
 	fn as_raw_mut_AsyncArray(&mut self) -> *mut c_void;
 
@@ -8919,7 +8907,7 @@ impl Default for AsyncArray {
 	}
 }
 
-/// Provides result of asynchronous operations
+/// Constant methods for [core::AsyncPromise]
 pub trait AsyncPromiseTraitConst {
 	fn as_raw_AsyncPromise(&self) -> *const c_void;
 
@@ -8931,6 +8919,7 @@ pub trait AsyncPromiseTraitConst {
 	
 }
 
+/// Mutable methods for [core::AsyncPromise]
 pub trait AsyncPromiseTrait: core::AsyncPromiseTraitConst {
 	fn as_raw_mut_AsyncPromise(&mut self) -> *mut c_void;
 
@@ -8958,7 +8947,7 @@ pub trait AsyncPromiseTrait: core::AsyncPromiseTraitConst {
 	/// * value: result
 	#[inline]
 	fn set_value(&mut self, value: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(value);
+		extern_container_arg!(value);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AsyncPromise_setValue_const__InputArrayR(self.as_raw_mut_AsyncPromise(), value.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -9039,85 +9028,7 @@ impl Default for AsyncPromise {
 	}
 }
 
-/// Designed for command line parsing
-/// 
-/// The sample below demonstrates how to use CommandLineParser:
-/// ```C++
-///    CommandLineParser parser(argc, argv, keys);
-///    parser.about("Application name v1.0.0");
-/// 
-///    if (parser.has("help"))
-///    {
-///        parser.printMessage();
-///        return 0;
-///    }
-/// 
-///    int N = parser.get<int>("N");
-///    double fps = parser.get<double>("fps");
-///    String path = parser.get<String>("path");
-/// 
-///    use_time_stamp = parser.has("timestamp");
-/// 
-///    String img1 = parser.get<String>(0);
-///    String img2 = parser.get<String>(1);
-/// 
-///    int repeat = parser.get<int>(2);
-/// 
-///    if (!parser.check())
-///    {
-///        parser.printErrors();
-///        return 0;
-///    }
-/// ```
-/// 
-/// 
-/// ### Keys syntax
-/// 
-/// The keys parameter is a string containing several blocks, each one is enclosed in curly braces and
-/// describes one argument. Each argument contains three parts separated by the `|` symbol:
-/// 
-/// -# argument names is a space-separated list of option synonyms (to mark argument as positional, prefix it with the `@` symbol)
-/// -# default value will be used if the argument was not provided (can be empty)
-/// -# help message (can be empty)
-/// 
-/// For example:
-/// 
-/// ```C++
-///    const String keys =
-///        "{help h usage ? |      | print this message   }"
-///        "{@image1        |      | image1 for compare   }"
-///        "{@image2        |<none>| image2 for compare   }"
-///        "{@repeat        |1     | number               }"
-///        "{path           |.     | path to file         }"
-///        "{fps            | -1.0 | fps for output video }"
-///        "{N count        |100   | count of objects     }"
-///        "{ts timestamp   |      | use time stamp       }"
-///        ;
-/// }
-/// ```
-/// 
-/// 
-/// Note that there are no default values for `help` and `timestamp` so we can check their presence using the `has()` method.
-/// Arguments with default values are considered to be always present. Use the `get()` method in these cases to check their
-/// actual value instead.
-/// 
-/// String keys like `get<String>("@image1")` return the empty string `""` by default - even with an empty default value.
-/// Use the special `<none>` default value to enforce that the returned string must not be empty. (like in `get<String>("@image2")`)
-/// 
-/// ### Usage
-/// 
-/// For the described keys:
-/// 
-/// ```C++
-///    # Good call (3 positional parameters: image1, image2 and repeat; N is 200, ts is true)
-///    $ ./app -N=200 1.png 2.jpg 19 -ts
-/// 
-///    # Bad call
-///    $ ./app -fps=aaa
-///    ERRORS:
-///    Parameter "fps": can not convert: [aaa] to [double]
-/// ```
-/// 
+/// Constant methods for [core::CommandLineParser]
 pub trait CommandLineParserTraitConst {
 	fn as_raw_CommandLineParser(&self) -> *const c_void;
 
@@ -9158,7 +9069,7 @@ pub trait CommandLineParserTraitConst {
 	/// Check for parsing errors
 	/// 
 	/// Returns false if error occurred while accessing the parameters (bad conversion, missing arguments,
-	/// etc.). Call @ref printErrors to print error messages list.
+	/// etc.). Call [printErrors] to print error messages list.
 	#[inline]
 	fn check(&self) -> Result<bool> {
 		return_send!(via ocvrs_return);
@@ -9196,12 +9107,13 @@ pub trait CommandLineParserTraitConst {
 	
 }
 
+/// Mutable methods for [core::CommandLineParser]
 pub trait CommandLineParserTrait: core::CommandLineParserTraitConst {
 	fn as_raw_mut_CommandLineParser(&mut self) -> *mut c_void;
 
 	/// Set the about message
 	/// 
-	/// The about message will be shown when @ref printMessage is called, right before arguments table.
+	/// The about message will be shown when [printMessage] is called, right before arguments table.
 	#[inline]
 	fn about(&mut self, message: &str) -> Result<()> {
 		extern_container_arg!(message);
@@ -9350,6 +9262,12 @@ impl CommandLineParser {
 	
 }
 
+/// Constant methods for [core::ConjGradSolver]
+pub trait ConjGradSolverConst: core::MinProblemSolverConst {
+	fn as_raw_ConjGradSolver(&self) -> *const c_void;
+
+}
+
 /// This class is used to perform the non-linear non-constrained minimization of a function
 /// with known gradient,
 /// 
@@ -9385,11 +9303,6 @@ impl CommandLineParser {
 ///    termcrit.type == TermCriteria::MAX_ITER) && termcrit.maxCount > 0
 /// ```
 /// 
-pub trait ConjGradSolverConst: core::MinProblemSolverConst {
-	fn as_raw_ConjGradSolver(&self) -> *const c_void;
-
-}
-
 pub trait ConjGradSolver: core::ConjGradSolverConst + core::MinProblemSolver {
 	fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void;
 
@@ -9482,6 +9395,29 @@ impl DMatch {
 	
 }
 
+/// Constant methods for [core::DownhillSolver]
+pub trait DownhillSolverConst: core::MinProblemSolverConst {
+	fn as_raw_DownhillSolver(&self) -> *const c_void;
+
+	/// Returns the initial step that will be used in downhill simplex algorithm.
+	/// 
+	/// ## Parameters
+	/// * step: Initial step that will be used in algorithm. Note, that although corresponding setter
+	/// accepts column-vectors as well as row-vectors, this method will return a row-vector.
+	/// ## See also
+	/// DownhillSolver::setInitStep
+	#[inline]
+	fn get_init_step(&self, step: &mut dyn core::ToOutputArray) -> Result<()> {
+		extern_container_arg!(step);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_DownhillSolver_getInitStep_const_const__OutputArrayR(self.as_raw_DownhillSolver(), step.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+}
+
 /// This class is used to perform the non-linear non-constrained minimization of a function,
 /// 
 /// defined on an `n`-dimensional Euclidean space, using the **Nelder-Mead method**, also known as
@@ -9514,28 +9450,6 @@ impl DMatch {
 ///    termcrit.type == (TermCriteria::MAX_ITER + TermCriteria::EPS) && termcrit.epsilon > 0 && termcrit.maxCount > 0
 /// ```
 /// 
-pub trait DownhillSolverConst: core::MinProblemSolverConst {
-	fn as_raw_DownhillSolver(&self) -> *const c_void;
-
-	/// Returns the initial step that will be used in downhill simplex algorithm.
-	/// 
-	/// ## Parameters
-	/// * step: Initial step that will be used in algorithm. Note, that although corresponding setter
-	/// accepts column-vectors as well as row-vectors, this method will return a row-vector.
-	/// ## See also
-	/// DownhillSolver::setInitStep
-	#[inline]
-	fn get_init_step(&self, step: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(step);
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_DownhillSolver_getInitStep_const_const__OutputArrayR(self.as_raw_DownhillSolver(), step.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
-}
-
 pub trait DownhillSolver: core::DownhillSolverConst + core::MinProblemSolver {
 	fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void;
 
@@ -9555,7 +9469,7 @@ pub trait DownhillSolver: core::DownhillSolverConst + core::MinProblemSolver {
 	/// (size in each dimension) of an initial simplex.
 	#[inline]
 	fn set_init_step(&mut self, step: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(step);
+		extern_container_arg!(step);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_DownhillSolver_setInitStep_const__InputArrayR(self.as_raw_mut_DownhillSolver(), step.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -9589,7 +9503,7 @@ impl dyn DownhillSolver + '_ {
 	/// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
 	#[inline]
 	pub fn create(f: &core::Ptr<dyn core::MinProblemSolver_Function>, init_step: &dyn core::ToInputArray, termcrit: core::TermCriteria) -> Result<core::Ptr<dyn core::DownhillSolver>> {
-		input_array_arg!(init_step);
+		extern_container_arg!(init_step);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_DownhillSolver_create_const_PtrLFunctionGR_const__InputArrayR_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), init_step.as_raw__InputArray(), termcrit.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -9599,13 +9513,7 @@ impl dyn DownhillSolver + '_ {
 	}
 	
 }
-/// ! Class passed to an error.
-/// 
-/// This class encapsulates all or almost all necessary
-/// information about the error happened in the program. The exception is
-/// usually constructed and thrown implicitly via CV_Error and CV_Error_ macros.
-/// ## See also
-/// error
+/// Constant methods for [core::Exception]
 pub trait ExceptionTraitConst {
 	fn as_raw_Exception(&self) -> *const c_void;
 
@@ -9669,6 +9577,7 @@ pub trait ExceptionTraitConst {
 	
 }
 
+/// Mutable methods for [core::Exception]
 pub trait ExceptionTrait: core::ExceptionTraitConst {
 	fn as_raw_mut_Exception(&mut self) -> *mut c_void;
 
@@ -9790,17 +9699,7 @@ impl Exception {
 	
 }
 
-/// File Storage Node class.
-/// 
-/// The node is used to store each and every element of the file storage opened for reading. When
-/// XML/YAML file is read, it is first parsed and stored in the memory as a hierarchical collection of
-/// nodes. Each node can be a "leaf" that is contain a single number or a string, or be a collection of
-/// other nodes. There can be named collections (mappings) where each element has a name and it is
-/// accessed by a name, and ordered collections (sequences) where elements do not have names but rather
-/// accessed by index. Type of the file node can be determined using FileNode::type method.
-/// 
-/// Note that file nodes are only used for navigating file storages opened for reading. When a file
-/// storage is opened for writing, no data is stored in memory after it is written.
+/// Constant methods for [core::FileNode]
 pub trait FileNodeTraitConst {
 	fn as_raw_FileNode(&self) -> *const c_void;
 
@@ -10083,7 +9982,7 @@ pub trait FileNodeTraitConst {
 	/// 
 	/// Usually it is more convenient to use operator `>>` instead of this method.
 	/// ## Parameters
-	/// * fmt: Specification of each array element. See @ref format_spec "format specification"
+	/// * fmt: Specification of each array element. See [format_spec] "format specification"
 	/// * vec: Pointer to the destination array.
 	/// * len: Number of bytes to read (buffer size limit). If it is greater than number of
 	///            remaining elements then all of them will be read.
@@ -10131,6 +10030,7 @@ pub trait FileNodeTraitConst {
 	
 }
 
+/// Mutable methods for [core::FileNode]
 pub trait FileNodeTrait: core::FileNodeTraitConst {
 	fn as_raw_mut_FileNode(&mut self) -> *mut c_void;
 
@@ -10309,10 +10209,7 @@ impl FileNode {
 	
 }
 
-/// used to iterate through sequences and mappings.
-/// 
-/// A standard STL notation, with node.begin(), node.end() denoting the beginning and the end of a
-/// sequence, stored in node. See the data reading sample in the beginning of the section.
+/// Constant methods for [core::FileNodeIterator]
 pub trait FileNodeIteratorTraitConst {
 	fn as_raw_FileNodeIterator(&self) -> *const c_void;
 
@@ -10348,6 +10245,7 @@ pub trait FileNodeIteratorTraitConst {
 	
 }
 
+/// Mutable methods for [core::FileNodeIterator]
 pub trait FileNodeIteratorTrait: core::FileNodeIteratorTraitConst {
 	fn as_raw_mut_FileNodeIterator(&mut self) -> *mut c_void;
 
@@ -10366,7 +10264,7 @@ pub trait FileNodeIteratorTrait: core::FileNodeIteratorTraitConst {
 	/// 
 	/// Usually it is more convenient to use operator `>>` instead of this method.
 	/// ## Parameters
-	/// * fmt: Specification of each array element. See @ref format_spec "format specification"
+	/// * fmt: Specification of each array element. See [format_spec] "format specification"
 	/// * vec: Pointer to the destination array.
 	/// * len: Number of bytes to read (buffer size limit). If it is greater than number of
 	///            remaining elements then all of them will be read.
@@ -10473,8 +10371,7 @@ impl FileNodeIterator {
 	
 }
 
-/// XML/YAML/JSON file storage class that encapsulates all the information necessary for writing or
-/// reading data to/from a file.
+/// Constant methods for [core::FileStorage]
 pub trait FileStorageTraitConst {
 	fn as_raw_FileStorage(&self) -> *const c_void;
 
@@ -10585,6 +10482,7 @@ pub trait FileStorageTraitConst {
 	
 }
 
+/// Mutable methods for [core::FileStorage]
 pub trait FileStorageTrait: core::FileStorageTraitConst {
 	fn as_raw_mut_FileStorage(&mut self) -> *mut c_void;
 
@@ -10740,7 +10638,7 @@ pub trait FileStorageTrait: core::FileStorageTraitConst {
 	/// Writes one or more numbers of the specified format to the currently written structure. Usually it is
 	/// more convenient to use operator `<<` instead of this method.
 	/// ## Parameters
-	/// * fmt: Specification of each array element, see @ref format_spec "format specification"
+	/// * fmt: Specification of each array element, see [format_spec] "format specification"
 	/// * vec: Pointer to the written array.
 	/// * len: Number of the uchar elements to write.
 	#[inline]
@@ -10887,12 +10785,13 @@ impl FileStorage {
 	
 }
 
-/// @todo document
+/// Constant methods for [core::Formatted]
 pub trait FormattedConst {
 	fn as_raw_Formatted(&self) -> *const c_void;
 
 }
 
+/// @todo document
 pub trait Formatted: core::FormattedConst {
 	fn as_raw_mut_Formatted(&mut self) -> *mut c_void;
 
@@ -10917,7 +10816,7 @@ pub trait Formatted: core::FormattedConst {
 	
 }
 
-/// @todo document
+/// Constant methods for [core::Formatter]
 pub trait FormatterConst {
 	fn as_raw_Formatter(&self) -> *const c_void;
 
@@ -10933,6 +10832,7 @@ pub trait FormatterConst {
 	
 }
 
+/// @todo document
 pub trait Formatter: core::FormatterConst {
 	fn as_raw_mut_Formatter(&mut self) -> *mut c_void;
 
@@ -10996,6 +10896,7 @@ impl dyn Formatter + '_ {
 	}
 	
 }
+/// Constant methods for [core::Hamming]
 pub trait HammingTraitConst {
 	fn as_raw_Hamming(&self) -> *const c_void;
 
@@ -11011,6 +10912,7 @@ pub trait HammingTraitConst {
 	
 }
 
+/// Mutable methods for [core::Hamming]
 pub trait HammingTrait: core::HammingTraitConst {
 	fn as_raw_mut_Hamming(&mut self) -> *mut c_void;
 
@@ -11043,16 +10945,7 @@ impl Hamming {
 	pub const normType: u32 = 6;
 }
 
-/// Data structure for salient point detectors.
-/// 
-/// The class instance stores a keypoint, i.e. a point feature found by one of many available keypoint
-/// detectors, such as Harris corner detector, #FAST, %StarDetector, %SURF, %SIFT etc.
-/// 
-/// The keypoint is characterized by the 2D position, scale (proportional to the diameter of the
-/// neighborhood that needs to be taken into account), orientation and some other parameters. The
-/// keypoint neighborhood is then analyzed by another algorithm that builds a descriptor (usually
-/// represented as a feature vector). The keypoints representing the same object in different images
-/// can then be matched using %KDTree or another method.
+/// Constant methods for [core::KeyPoint]
 pub trait KeyPointTraitConst {
 	fn as_raw_KeyPoint(&self) -> *const c_void;
 
@@ -11113,6 +11006,7 @@ pub trait KeyPointTraitConst {
 	
 }
 
+/// Mutable methods for [core::KeyPoint]
 pub trait KeyPointTrait: core::KeyPointTraitConst {
 	fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void;
 
@@ -11323,8 +11217,7 @@ impl KeyPoint {
 	
 }
 
-/// Linear Discriminant Analysis
-/// @todo document this class
+/// Constant methods for [core::LDA]
 pub trait LDATraitConst {
 	fn as_raw_LDA(&self) -> *const c_void;
 
@@ -11373,6 +11266,7 @@ pub trait LDATraitConst {
 	
 }
 
+/// Mutable methods for [core::LDA]
 pub trait LDATrait: core::LDATraitConst {
 	fn as_raw_mut_LDA(&mut self) -> *mut c_void;
 
@@ -11400,8 +11294,8 @@ pub trait LDATrait: core::LDATraitConst {
 	/// Compute the discriminants for data in src (row aligned) and labels.
 	#[inline]
 	fn compute(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(src);
-		input_array_arg!(labels);
+		extern_container_arg!(src);
+		extern_container_arg!(labels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LDA_compute_const__InputArrayR_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -11413,7 +11307,7 @@ pub trait LDATrait: core::LDATraitConst {
 	/// src may be one or more row aligned samples.
 	#[inline]
 	fn project(&mut self, src: &dyn core::ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(src);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LDA_project_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -11426,7 +11320,7 @@ pub trait LDATrait: core::LDATraitConst {
 	/// src may be one or more row aligned projections.
 	#[inline]
 	fn reconstruct(&mut self, src: &dyn core::ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(src);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LDA_reconstruct_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -11487,8 +11381,8 @@ impl LDA {
 	/// * num_components: 0
 	#[inline]
 	pub fn new_with_data(src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray, num_components: i32) -> Result<core::LDA> {
-		input_array_arg!(src);
-		input_array_arg!(labels);
+		extern_container_arg!(src);
+		extern_container_arg!(labels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), labels.as_raw__InputArray(), num_components, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -11499,9 +11393,9 @@ impl LDA {
 	
 	#[inline]
 	pub fn subspace_project(w: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, src: &dyn core::ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(w);
-		input_array_arg!(mean);
-		input_array_arg!(src);
+		extern_container_arg!(w);
+		extern_container_arg!(mean);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LDA_subspaceProject_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -11512,9 +11406,9 @@ impl LDA {
 	
 	#[inline]
 	pub fn subspace_reconstruct(w: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, src: &dyn core::ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(w);
-		input_array_arg!(mean);
-		input_array_arg!(src);
+		extern_container_arg!(w);
+		extern_container_arg!(mean);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LDA_subspaceReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -11525,209 +11419,7 @@ impl LDA {
 	
 }
 
-/// n-dimensional dense array class \anchor CVMat_Details
-/// 
-/// The class Mat represents an n-dimensional dense numerical single-channel or multi-channel array. It
-/// can be used to store real or complex-valued vectors and matrices, grayscale or color images, voxel
-/// volumes, vector fields, point clouds, tensors, histograms (though, very high-dimensional histograms
-/// may be better stored in a SparseMat ). The data layout of the array `M` is defined by the array
-/// `M.step[]`, so that the address of element ![inline formula](https://latex.codecogs.com/png.latex?%28i%5F0%2C%2E%2E%2E%2Ci%5F%7BM%2Edims%2D1%7D%29), where ![inline formula](https://latex.codecogs.com/png.latex?0%5Cleq%20i%5Fk%3CM%2Esize%5Bk%5D), is
-/// computed as:
-/// ![block formula](https://latex.codecogs.com/png.latex?addr%28M%5F%7Bi%5F0%2C%2E%2E%2E%2Ci%5F%7BM%2Edims%2D1%7D%7D%29%20%3D%20M%2Edata%20%2B%20M%2Estep%5B0%5D%2Ai%5F0%20%2B%20M%2Estep%5B1%5D%2Ai%5F1%20%2B%20%2E%2E%2E%20%2B%20M%2Estep%5BM%2Edims%2D1%5D%2Ai%5F%7BM%2Edims%2D1%7D)
-/// In case of a 2-dimensional array, the above formula is reduced to:
-/// ![block formula](https://latex.codecogs.com/png.latex?addr%28M%5F%7Bi%2Cj%7D%29%20%3D%20M%2Edata%20%2B%20M%2Estep%5B0%5D%2Ai%20%2B%20M%2Estep%5B1%5D%2Aj)
-/// Note that `M.step[i] >= M.step[i+1]` (in fact, `M.step[i] >= M.step[i+1]*M.size[i+1]` ). This means
-/// that 2-dimensional matrices are stored row-by-row, 3-dimensional matrices are stored plane-by-plane,
-/// and so on. M.step[M.dims-1] is minimal and always equal to the element size M.elemSize() .
-/// 
-/// So, the data layout in Mat is compatible with the majority of dense array types from the standard
-/// toolkits and SDKs, such as Numpy (ndarray), Win32 (independent device bitmaps), and others,
-/// that is, with any array that uses *steps* (or *strides*) to compute the position of a pixel.
-/// Due to this compatibility, it is possible to make a Mat header for user-allocated data and process
-/// it in-place using OpenCV functions.
-/// 
-/// There are many different ways to create a Mat object. The most popular options are listed below:
-/// 
-/// - Use the create(nrows, ncols, type) method or the similar Mat(nrows, ncols, type[, fillValue])
-/// constructor. A new array of the specified size and type is allocated. type has the same meaning as
-/// in the cvCreateMat method. For example, CV_8UC1 means a 8-bit single-channel array, CV_32FC2
-/// means a 2-channel (complex) floating-point array, and so on.
-/// ```C++
-///    // make a 7x7 complex matrix filled with 1+3j.
-///    Mat M(7,7,CV_32FC2,Scalar(1,3));
-///    // and now turn M to a 100x60 15-channel 8-bit matrix.
-///    // The old content will be deallocated
-///    M.create(100,60,CV_8UC(15));
-/// ```
-/// 
-/// As noted in the introduction to this chapter, create() allocates only a new array when the shape
-/// or type of the current array are different from the specified ones.
-/// 
-/// - Create a multi-dimensional array:
-/// ```C++
-///    // create a 100x100x100 8-bit array
-///    int sz[] = {100, 100, 100};
-///    Mat bigCube(3, sz, CV_8U, Scalar::all(0));
-/// ```
-/// 
-/// It passes the number of dimensions =1 to the Mat constructor but the created array will be
-/// 2-dimensional with the number of columns set to 1. So, Mat::dims is always \>= 2 (can also be 0
-/// when the array is empty).
-/// 
-/// - Use a copy constructor or assignment operator where there can be an array or expression on the
-/// right side (see below). As noted in the introduction, the array assignment is an O(1) operation
-/// because it only copies the header and increases the reference counter. The Mat::clone() method can
-/// be used to get a full (deep) copy of the array when you need it.
-/// 
-/// - Construct a header for a part of another array. It can be a single row, single column, several
-/// rows, several columns, rectangular region in the array (called a *minor* in algebra) or a
-/// diagonal. Such operations are also O(1) because the new header references the same data. You can
-/// actually modify a part of the array using this feature, for example:
-/// ```C++
-///    // add the 5-th row, multiplied by 3 to the 3rd row
-///    M.row(3) = M.row(3) + M.row(5)*3;
-///    // now copy the 7-th column to the 1-st column
-///    // M.col(1) = M.col(7); // this will not work
-///    Mat M1 = M.col(1);
-///    M.col(7).copyTo(M1);
-///    // create a new 320x240 image
-///    Mat img(Size(320,240),CV_8UC3);
-///    // select a ROI
-///    Mat roi(img, Rect(10,10,100,100));
-///    // fill the ROI with (0,255,0) (which is green in RGB space);
-///    // the original 320x240 image will be modified
-///    roi = Scalar(0,255,0);
-/// ```
-/// 
-/// Due to the additional datastart and dataend members, it is possible to compute a relative
-/// sub-array position in the main *container* array using locateROI():
-/// ```C++
-///    Mat A = Mat::eye(10, 10, CV_32S);
-///    // extracts A columns, 1 (inclusive) to 3 (exclusive).
-///    Mat B = A(Range::all(), Range(1, 3));
-///    // extracts B rows, 5 (inclusive) to 9 (exclusive).
-///    // that is, C \~ A(Range(5, 9), Range(1, 3))
-///    Mat C = B(Range(5, 9), Range::all());
-///    Size size; Point ofs;
-///    C.locateROI(size, ofs);
-///    // size will be (width=10,height=10) and the ofs will be (x=1, y=5)
-/// ```
-/// 
-/// As in case of whole matrices, if you need a deep copy, use the `clone()` method of the extracted
-/// sub-matrices.
-/// 
-/// - Make a header for user-allocated data. It can be useful to do the following:
-///    -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
-///    a processing module for gstreamer, and so on). For example:
-///    ```C++
-///        Mat process_video_frame(const unsigned char* pixels,
-///                                 int width, int height, int step)
-///        {
-///            // wrap input buffer
-///            Mat img(height, width, CV_8UC3, (unsigned char*)pixels, step);
-/// 
-///            Mat result;
-///            GaussianBlur(img, result, Size(7, 7), 1.5, 1.5);
-/// 
-///            return result;
-///        }
-///    ```
-/// 
-///    -# Quickly initialize small matrices and/or get a super-fast element access.
-///    ```C++
-///        double m[3][3] = {{a, b, c}, {d, e, f}, {g, h, i}};
-///        Mat M = Mat(3, 3, CV_64F, m).inv();
-///    ```
-/// 
-///    .
-/// 
-/// - Use MATLAB-style array initializers, zeros(), ones(), eye(), for example:
-/// ```C++
-///    // create a double-precision identity matrix and add it to M.
-///    M += Mat::eye(M.rows, M.cols, CV_64F);
-/// ```
-/// 
-/// 
-/// - Use a comma-separated initializer:
-/// ```C++
-///    // create a 3x3 double-precision identity matrix
-///    Mat M = (Mat_<double>(3,3) << 1, 0, 0, 0, 1, 0, 0, 0, 1);
-/// ```
-/// 
-/// With this approach, you first call a constructor of the Mat class with the proper parameters, and
-/// then you just put `<< operator` followed by comma-separated values that can be constants,
-/// variables, expressions, and so on. Also, note the extra parentheses required to avoid compilation
-/// errors.
-/// 
-/// Once the array is created, it is automatically managed via a reference-counting mechanism. If the
-/// array header is built on top of user-allocated data, you should handle the data by yourself. The
-/// array data is deallocated when no one points to it. If you want to release the data pointed by a
-/// array header before the array destructor is called, use Mat::release().
-/// 
-/// The next important thing to learn about the array class is element access. This manual already
-/// described how to compute an address of each array element. Normally, you are not required to use the
-/// formula directly in the code. If you know the array element type (which can be retrieved using the
-/// method Mat::type() ), you can access the element ![inline formula](https://latex.codecogs.com/png.latex?M%5F%7Bij%7D) of a 2-dimensional array as:
-/// ```C++
-///    M.at<double>(i,j) += 1.f;
-/// ```
-/// 
-/// assuming that `M` is a double-precision floating-point array. There are several variants of the method
-/// at for a different number of dimensions.
-/// 
-/// If you need to process a whole row of a 2D array, the most efficient way is to get the pointer to
-/// the row first, and then just use the plain C operator [] :
-/// ```C++
-///    // compute sum of positive matrix elements
-///    // (assuming that M is a double-precision matrix)
-///    double sum=0;
-///    for(int i = 0; i < M.rows; i++)
-///    {
-///        const double* Mi = M.ptr<double>(i);
-///        for(int j = 0; j < M.cols; j++)
-///            sum += std::max(Mi[j], 0.);
-///    }
-/// ```
-/// 
-/// Some operations, like the one above, do not actually depend on the array shape. They just process
-/// elements of an array one by one (or elements from multiple arrays that have the same coordinates,
-/// for example, array addition). Such operations are called *element-wise*. It makes sense to check
-/// whether all the input/output arrays are continuous, namely, have no gaps at the end of each row. If
-/// yes, process them as a long single row:
-/// ```C++
-///    // compute the sum of positive matrix elements, optimized variant
-///    double sum=0;
-///    int cols = M.cols, rows = M.rows;
-///    if(M.isContinuous())
-///    {
-///        cols *= rows;
-///        rows = 1;
-///    }
-///    for(int i = 0; i < rows; i++)
-///    {
-///        const double* Mi = M.ptr<double>(i);
-///        for(int j = 0; j < cols; j++)
-///            sum += std::max(Mi[j], 0.);
-///    }
-/// ```
-/// 
-/// In case of the continuous matrix, the outer loop body is executed just once. So, the overhead is
-/// smaller, which is especially noticeable in case of small matrices.
-/// 
-/// Finally, there are STL-style iterators that are smart enough to skip gaps between successive rows:
-/// ```C++
-///    // compute sum of positive matrix elements, iterator-based variant
-///    double sum=0;
-///    MatConstIterator_<double> it = M.begin<double>(), it_end = M.end<double>();
-///    for(; it != it_end; ++it)
-///        sum += std::max(*it, 0.);
-/// ```
-/// 
-/// The matrix iterators are random-access iterators, so they can be passed to any STL algorithm,
-/// including std::sort().
-/// 
-/// 
-/// Note: Matrix Expressions and arithmetic see MatExpr
+/// Constant methods for [core::Mat]
 pub trait MatTraitConst {
 	fn as_raw_Mat(&self) -> *const c_void;
 
@@ -12032,7 +11724,7 @@ pub trait MatTraitConst {
 	/// reallocated.
 	#[inline]
 	fn copy_to(&self, m: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(m);
+		extern_container_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -12065,8 +11757,8 @@ pub trait MatTraitConst {
 	///    elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels.
 	#[inline]
 	fn copy_to_masked(&self, m: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		output_array_arg!(m);
-		input_array_arg!(mask);
+		extern_container_arg!(m);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -12093,7 +11785,7 @@ pub trait MatTraitConst {
 	/// * beta: 0
 	#[inline]
 	fn convert_to(&self, m: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-		output_array_arg!(m);
+		extern_container_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Mat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_Mat(), m.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -12103,7 +11795,7 @@ pub trait MatTraitConst {
 	
 	/// Provides a functional form of convertTo.
 	/// 
-	/// This is an internally used method called by the @ref MatrixExpressions engine.
+	/// This is an internally used method called by the [MatrixExpressions] engine.
 	/// ## Parameters
 	/// * m: Destination array.
 	/// * type: Desired destination array depth (or -1 if it should be the same as the source type).
@@ -12289,7 +11981,7 @@ pub trait MatTraitConst {
 	/// * scale: 1
 	#[inline]
 	fn mul(&self, m: &dyn core::ToInputArray, scale: f64) -> Result<core::MatExpr> {
-		input_array_arg!(m);
+		extern_container_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Mat_mul_const_const__InputArrayR_double(self.as_raw_Mat(), m.as_raw__InputArray(), scale, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -12307,7 +11999,7 @@ pub trait MatTraitConst {
 	/// * m: Another cross-product operand.
 	#[inline]
 	fn cross(&self, m: &dyn core::ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(m);
+		extern_container_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Mat_cross_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -12326,7 +12018,7 @@ pub trait MatTraitConst {
 	/// * m: another dot-product operand.
 	#[inline]
 	fn dot(&self, m: &dyn core::ToInputArray) -> Result<f64> {
-		input_array_arg!(m);
+		extern_container_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Mat_dot_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -12951,6 +12643,7 @@ pub trait MatTraitConst {
 	
 }
 
+/// Mutable methods for [core::Mat]
 pub trait MatTrait: core::MatTraitConst {
 	fn as_raw_mut_Mat(&mut self) -> *mut c_void;
 
@@ -13027,8 +12720,8 @@ pub trait MatTrait: core::MatTraitConst {
 	/// * mask: noArray()
 	#[inline]
 	fn set_to(&mut self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(value);
-		input_array_arg!(mask);
+		extern_container_arg!(value);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Mat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Mat(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -14648,7 +14341,7 @@ impl Default for Mat {
 	}
 }
 
-/// /////////////////////////////// MatConstIterator //////////////////////////////////
+/// Constant methods for [core::MatConstIterator]
 pub trait MatConstIteratorTraitConst {
 	fn as_raw_MatConstIterator(&self) -> *const c_void;
 
@@ -14734,6 +14427,7 @@ pub trait MatConstIteratorTraitConst {
 	
 }
 
+/// Mutable methods for [core::MatConstIterator]
 pub trait MatConstIteratorTrait: core::MatConstIteratorTraitConst {
 	fn as_raw_mut_MatConstIterator(&mut self) -> *mut c_void;
 
@@ -14874,53 +14568,7 @@ impl MatConstIterator {
 	
 }
 
-/// Matrix expression representation
-/// @anchor MatrixExpressions
-/// This is a list of implemented matrix operations that can be combined in arbitrary complex
-/// expressions (here A, B stand for matrices ( Mat ), s for a scalar ( Scalar ), alpha for a
-/// real-valued scalar ( double )):
-/// *   Addition, subtraction, negation: `A+B`, `A-B`, `A+s`, `A-s`, `s+A`, `s-A`, `-A`
-/// *   Scaling: `A*alpha`
-/// *   Per-element multiplication and division: `A.mul(B)`, `A/B`, `alpha/A`
-/// *   Matrix multiplication: `A*B`
-/// *   Transposition: `A.t()` (means A<sup>T</sup>)
-/// *   Matrix inversion and pseudo-inversion, solving linear systems and least-squares problems:
-///    `A.inv([method]) (~ A<sup>-1</sup>)`,   `A.inv([method])*B (~ X: AX=B)`
-/// *   Comparison: `A cmpop B`, `A cmpop alpha`, `alpha cmpop A`, where *cmpop* is one of
-///   `>`, `>=`, `==`, `!=`, `<=`, `<`. The result of comparison is an 8-bit single channel mask whose
-///    elements are set to 255 (if the particular element or pair of elements satisfy the condition) or
-///    0.
-/// *   Bitwise logical operations: `A logicop B`, `A logicop s`, `s logicop A`, `~A`, where *logicop* is one of
-///   `&`, `|`, `^`.
-/// *   Element-wise minimum and maximum: `min(A, B)`, `min(A, alpha)`, `max(A, B)`, `max(A, alpha)`
-/// *   Element-wise absolute value: `abs(A)`
-/// *   Cross-product, dot-product: `A.cross(B)`, `A.dot(B)`
-/// *   Any function of matrix or matrices and scalars that returns a matrix or a scalar, such as norm,
-///    mean, sum, countNonZero, trace, determinant, repeat, and others.
-/// *   Matrix initializers ( Mat::eye(), Mat::zeros(), Mat::ones() ), matrix comma-separated
-///    initializers, matrix constructors and operators that extract sub-matrices (see Mat description).
-/// *   Mat_<destination_type>() constructors to cast the result to the proper type.
-/// 
-/// Note: Comma-separated initializers and probably some other operations may require additional
-/// explicit Mat() or Mat_<T>() constructor calls to resolve a possible ambiguity.
-/// 
-/// Here are examples of matrix expressions:
-/// ```C++
-///    // compute pseudo-inverse of A, equivalent to A.inv(DECOMP_SVD)
-///    SVD svd(A);
-///    Mat pinvA = svd.vt.t()*Mat::diag(1./svd.w)*svd.u.t();
-/// 
-///    // compute the new vector of parameters in the Levenberg-Marquardt algorithm
-///    x -= (A.t()*A + lambda*Mat::eye(A.cols,A.cols,A.type())).inv(DECOMP_CHOLESKY)*(A.t()*err);
-/// 
-///    // sharpen image using "unsharp mask" algorithm
-///    Mat blurred; double sigma = 1, threshold = 5, amount = 1;
-///    GaussianBlur(img, blurred, Size(), sigma, sigma);
-///    Mat lowContrastMask = abs(img - blurred) < threshold;
-///    Mat sharpened = img*(1+amount) + blurred*(-amount);
-///    img.copyTo(sharpened, lowContrastMask);
-/// ```
-/// 
+/// Constant methods for [core::MatExpr]
 pub trait MatExprTraitConst {
 	fn as_raw_MatExpr(&self) -> *const c_void;
 
@@ -15118,6 +14766,7 @@ pub trait MatExprTraitConst {
 	
 }
 
+/// Mutable methods for [core::MatExpr]
 pub trait MatExprTrait: core::MatExprTraitConst {
 	fn as_raw_mut_MatExpr(&mut self) -> *mut c_void;
 
@@ -15284,7 +14933,7 @@ impl MatExpr {
 	
 }
 
-/// ////////////////////////////// Matrix Expressions /////////////////////////////////
+/// Constant methods for [core::MatOp]
 pub trait MatOpConst {
 	fn as_raw_MatOp(&self) -> *const c_void;
 
@@ -15521,11 +15170,13 @@ pub trait MatOpConst {
 	
 }
 
+/// ////////////////////////////// Matrix Expressions /////////////////////////////////
 pub trait MatOp: core::MatOpConst {
 	fn as_raw_mut_MatOp(&mut self) -> *mut c_void;
 
 }
 
+/// Constant methods for [core::MatSize]
 pub trait MatSizeTraitConst {
 	fn as_raw_MatSize(&self) -> *const c_void;
 
@@ -15573,6 +15224,7 @@ pub trait MatSizeTraitConst {
 	
 }
 
+/// Mutable methods for [core::MatSize]
 pub trait MatSizeTrait: core::MatSizeTraitConst {
 	fn as_raw_mut_MatSize(&mut self) -> *mut c_void;
 
@@ -15633,6 +15285,7 @@ impl MatSize {
 	
 }
 
+/// Constant methods for [core::MatStep]
 pub trait MatStepTraitConst {
 	fn as_raw_MatStep(&self) -> *const c_void;
 
@@ -15653,6 +15306,7 @@ pub trait MatStepTraitConst {
 	
 }
 
+/// Mutable methods for [core::MatStep]
 pub trait MatStepTrait: core::MatStepTraitConst {
 	fn as_raw_mut_MatStep(&mut self) -> *mut c_void;
 
@@ -15732,12 +15386,13 @@ impl Default for MatStep {
 	}
 }
 
-/// @cond IGNORED
+/// Constant methods for [core::Matx_AddOp]
 pub trait Matx_AddOpTraitConst {
 	fn as_raw_Matx_AddOp(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::Matx_AddOp]
 pub trait Matx_AddOpTrait: core::Matx_AddOpTraitConst {
 	fn as_raw_mut_Matx_AddOp(&mut self) -> *mut c_void;
 
@@ -15790,11 +15445,13 @@ impl Matx_AddOp {
 	
 }
 
+/// Constant methods for [core::Matx_DivOp]
 pub trait Matx_DivOpTraitConst {
 	fn as_raw_Matx_DivOp(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::Matx_DivOp]
 pub trait Matx_DivOpTrait: core::Matx_DivOpTraitConst {
 	fn as_raw_mut_Matx_DivOp(&mut self) -> *mut c_void;
 
@@ -15846,11 +15503,13 @@ impl Matx_DivOp {
 	
 }
 
+/// Constant methods for [core::Matx_MatMulOp]
 pub trait Matx_MatMulOpTraitConst {
 	fn as_raw_Matx_MatMulOp(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::Matx_MatMulOp]
 pub trait Matx_MatMulOpTrait: core::Matx_MatMulOpTraitConst {
 	fn as_raw_mut_Matx_MatMulOp(&mut self) -> *mut c_void;
 
@@ -15902,11 +15561,13 @@ impl Matx_MatMulOp {
 	
 }
 
+/// Constant methods for [core::Matx_MulOp]
 pub trait Matx_MulOpTraitConst {
 	fn as_raw_Matx_MulOp(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::Matx_MulOp]
 pub trait Matx_MulOpTrait: core::Matx_MulOpTraitConst {
 	fn as_raw_mut_Matx_MulOp(&mut self) -> *mut c_void;
 
@@ -15958,11 +15619,13 @@ impl Matx_MulOp {
 	
 }
 
+/// Constant methods for [core::Matx_ScaleOp]
 pub trait Matx_ScaleOpTraitConst {
 	fn as_raw_Matx_ScaleOp(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::Matx_ScaleOp]
 pub trait Matx_ScaleOpTrait: core::Matx_ScaleOpTraitConst {
 	fn as_raw_mut_Matx_ScaleOp(&mut self) -> *mut c_void;
 
@@ -16014,11 +15677,13 @@ impl Matx_ScaleOp {
 	
 }
 
+/// Constant methods for [core::Matx_SubOp]
 pub trait Matx_SubOpTraitConst {
 	fn as_raw_Matx_SubOp(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::Matx_SubOp]
 pub trait Matx_SubOpTrait: core::Matx_SubOpTraitConst {
 	fn as_raw_mut_Matx_SubOp(&mut self) -> *mut c_void;
 
@@ -16070,11 +15735,13 @@ impl Matx_SubOp {
 	
 }
 
+/// Constant methods for [core::Matx_TOp]
 pub trait Matx_TOpTraitConst {
 	fn as_raw_Matx_TOp(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::Matx_TOp]
 pub trait Matx_TOpTrait: core::Matx_TOpTraitConst {
 	fn as_raw_mut_Matx_TOp(&mut self) -> *mut c_void;
 
@@ -16126,7 +15793,7 @@ impl Matx_TOp {
 	
 }
 
-/// Basic interface for all solvers
+/// Constant methods for [core::MinProblemSolver]
 pub trait MinProblemSolverConst: core::AlgorithmTraitConst {
 	fn as_raw_MinProblemSolver(&self) -> *const c_void;
 
@@ -16163,6 +15830,7 @@ pub trait MinProblemSolverConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Basic interface for all solvers
 pub trait MinProblemSolver: core::AlgorithmTrait + core::MinProblemSolverConst {
 	fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void;
 
@@ -16216,7 +15884,7 @@ pub trait MinProblemSolver: core::AlgorithmTrait + core::MinProblemSolverConst {
 	/// The value of a function at the point found.
 	#[inline]
 	fn minimize(&mut self, x: &mut dyn core::ToInputOutputArray) -> Result<f64> {
-		input_output_array_arg!(x);
+		extern_container_arg!(x);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_MinProblemSolver_minimize_const__InputOutputArrayR(self.as_raw_mut_MinProblemSolver(), x.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -16226,7 +15894,7 @@ pub trait MinProblemSolver: core::AlgorithmTrait + core::MinProblemSolverConst {
 	
 }
 
-/// Represents function being optimized
+/// Constant methods for [core::MinProblemSolver_Function]
 pub trait MinProblemSolver_FunctionConst {
 	fn as_raw_MinProblemSolver_Function(&self) -> *const c_void;
 
@@ -16259,6 +15927,7 @@ pub trait MinProblemSolver_FunctionConst {
 	
 }
 
+/// Represents function being optimized
 pub trait MinProblemSolver_Function: core::MinProblemSolver_FunctionConst {
 	fn as_raw_mut_MinProblemSolver_Function(&mut self) -> *mut c_void;
 
@@ -16384,71 +16053,7 @@ impl Moments {
 	
 }
 
-/// Principal Component Analysis
-/// 
-/// The class is used to calculate a special basis for a set of vectors. The
-/// basis will consist of eigenvectors of the covariance matrix calculated
-/// from the input set of vectors. The class %PCA can also transform
-/// vectors to/from the new coordinate space defined by the basis. Usually,
-/// in this new coordinate system, each vector from the original set (and
-/// any linear combination of such vectors) can be quite accurately
-/// approximated by taking its first few components, corresponding to the
-/// eigenvectors of the largest eigenvalues of the covariance matrix.
-/// Geometrically it means that you calculate a projection of the vector to
-/// a subspace formed by a few eigenvectors corresponding to the dominant
-/// eigenvalues of the covariance matrix. And usually such a projection is
-/// very close to the original vector. So, you can represent the original
-/// vector from a high-dimensional space with a much shorter vector
-/// consisting of the projected vector's coordinates in the subspace. Such a
-/// transformation is also known as Karhunen-Loeve Transform, or KLT.
-/// See http://en.wikipedia.org/wiki/Principal_component_analysis
-/// 
-/// The sample below is the function that takes two matrices. The first
-/// function stores a set of vectors (a row per vector) that is used to
-/// calculate PCA. The second function stores another "test" set of vectors
-/// (a row per vector). First, these vectors are compressed with PCA, then
-/// reconstructed back, and then the reconstruction error norm is computed
-/// and printed for each vector. :
-/// 
-/// ```C++
-/// using namespace cv;
-/// 
-/// PCA compressPCA(const Mat& pcaset, int maxComponents,
-///                const Mat& testset, Mat& compressed)
-/// {
-///    PCA pca(pcaset, // pass the data
-///            Mat(), // we do not have a pre-computed mean vector,
-///                    // so let the PCA engine to compute it
-///            PCA::DATA_AS_ROW, // indicate that the vectors
-///                                 // are stored as matrix rows
-///                                 // (use PCA::DATA_AS_COL if the vectors are
-///                                 // the matrix columns)
-///            maxComponents // specify, how many principal components to retain
-///            );
-///    // if there is no test data, just return the computed basis, ready-to-use
-///    if( !testset.data )
-///        return pca;
-///    CV_Assert( testset.cols == pcaset.cols );
-/// 
-///    compressed.create(testset.rows, maxComponents, testset.type());
-/// 
-///    Mat reconstructed;
-///    for( int i = 0; i < testset.rows; i++ )
-///    {
-///        Mat vec = testset.row(i), coeffs = compressed.row(i), reconstructed;
-///        // compress the vector, the result will be stored
-///        // in the i-th row of the output matrix
-///        pca.project(vec, coeffs);
-///        // and then reconstruct it
-///        pca.backProject(coeffs, reconstructed);
-///        // and measure the error
-///        printf("%d. diff = %g\n", i, norm(vec, reconstructed, NORM_L2));
-///    }
-///    return pca;
-/// }
-/// ```
-/// ## See also
-/// calcCovarMatrix, mulTransposed, SVD, dft, dct
+/// Constant methods for [core::PCA]
 pub trait PCATraitConst {
 	fn as_raw_PCA(&self) -> *const c_void;
 
@@ -16492,7 +16097,7 @@ pub trait PCATraitConst {
 	/// project, and the same is true for the PCA::DATA_AS_COL case.
 	#[inline]
 	fn project(&self, vec: &dyn core::ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(vec);
+		extern_container_arg!(vec);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCA_project_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -16530,8 +16135,8 @@ pub trait PCATraitConst {
 	///    passed to the constructor).
 	#[inline]
 	fn project_to(&self, vec: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(vec);
-		output_array_arg!(result);
+		extern_container_arg!(vec);
+		extern_container_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCA_project_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -16554,7 +16159,7 @@ pub trait PCATraitConst {
 	/// vectors.
 	#[inline]
 	fn back_project(&self, vec: &dyn core::ToInputArray) -> Result<core::Mat> {
-		input_array_arg!(vec);
+		extern_container_arg!(vec);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCA_backProject_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -16586,8 +16191,8 @@ pub trait PCATraitConst {
 	///    of PCA::project input vectors.
 	#[inline]
 	fn back_project_to(&self, vec: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(vec);
-		output_array_arg!(result);
+		extern_container_arg!(vec);
+		extern_container_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCA_backProject_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -16597,7 +16202,7 @@ pub trait PCATraitConst {
 	
 	/// write PCA objects
 	/// 
-	/// Writes @ref eigenvalues @ref eigenvectors and @ref mean to specified FileStorage
+	/// Writes [eigenvalues] [eigenvectors] and [mean] to specified FileStorage
 	#[inline]
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -16609,6 +16214,7 @@ pub trait PCATraitConst {
 	
 }
 
+/// Mutable methods for [core::PCA]
 pub trait PCATrait: core::PCATraitConst {
 	fn as_raw_mut_PCA(&mut self) -> *mut c_void;
 
@@ -16638,11 +16244,10 @@ pub trait PCATrait: core::PCATraitConst {
 	/// The operator performs %PCA of the supplied dataset. It is safe to reuse
 	/// the same PCA structure for multiple datasets. That is, if the structure
 	/// has been previously used with another dataset, the existing internal
-	/// data is reclaimed and the new @ref eigenvalues, @ref eigenvectors and @ref
-	/// mean are allocated and computed.
+	/// data is reclaimed and the new [eigenvalues], [eigenvectors] and [mean] are allocated and computed.
 	/// 
-	/// The computed @ref eigenvalues are sorted from the largest to the smallest and
-	/// the corresponding @ref eigenvectors are stored as eigenvectors rows.
+	/// The computed [eigenvalues] are sorted from the largest to the smallest and
+	/// the corresponding [eigenvectors] are stored as eigenvectors rows.
 	/// 
 	/// ## Parameters
 	/// * data: input samples stored as the matrix rows or as the matrix
@@ -16658,8 +16263,8 @@ pub trait PCATrait: core::PCATraitConst {
 	/// * max_components: 0
 	#[inline]
 	fn apply(&mut self, data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
-		input_array_arg!(data);
-		input_array_arg!(mean);
+		extern_container_arg!(data);
+		extern_container_arg!(mean);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -16673,11 +16278,10 @@ pub trait PCATrait: core::PCATraitConst {
 	/// The operator performs %PCA of the supplied dataset. It is safe to reuse
 	/// the same PCA structure for multiple datasets. That is, if the structure
 	/// has been previously used with another dataset, the existing internal
-	/// data is reclaimed and the new @ref eigenvalues, @ref eigenvectors and @ref
-	/// mean are allocated and computed.
+	/// data is reclaimed and the new [eigenvalues], [eigenvectors] and [mean] are allocated and computed.
 	/// 
-	/// The computed @ref eigenvalues are sorted from the largest to the smallest and
-	/// the corresponding @ref eigenvectors are stored as eigenvectors rows.
+	/// The computed [eigenvalues] are sorted from the largest to the smallest and
+	/// the corresponding [eigenvectors] are stored as eigenvectors rows.
 	/// 
 	/// ## Parameters
 	/// * data: input samples stored as the matrix rows or as the matrix
@@ -16702,8 +16306,8 @@ pub trait PCATrait: core::PCATraitConst {
 	///    retain but it will always keep at least 2.
 	#[inline]
 	fn apply_1(&mut self, data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
-		input_array_arg!(data);
-		input_array_arg!(mean);
+		extern_container_arg!(data);
+		extern_container_arg!(mean);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int_double(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -16714,7 +16318,7 @@ pub trait PCATrait: core::PCATraitConst {
 	
 	/// load PCA objects
 	/// 
-	/// Loads @ref eigenvalues @ref eigenvectors and @ref mean from specified FileNode
+	/// Loads [eigenvalues] [eigenvectors] and [mean] from specified FileNode
 	#[inline]
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -16743,7 +16347,7 @@ pub trait PCATrait: core::PCATraitConst {
 /// vector from a high-dimensional space with a much shorter vector
 /// consisting of the projected vector's coordinates in the subspace. Such a
 /// transformation is also known as Karhunen-Loeve Transform, or KLT.
-/// See http://en.wikipedia.org/wiki/Principal_component_analysis
+/// See <http://en.wikipedia.org/wiki/Principal_component_analysis>
 /// 
 /// The sample below is the function that takes two matrices. The first
 /// function stores a set of vectors (a row per vector) that is used to
@@ -16849,8 +16453,8 @@ impl PCA {
 	/// * max_components: 0
 	#[inline]
 	pub fn new(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
-		input_array_arg!(data);
-		input_array_arg!(mean);
+		extern_container_arg!(data);
+		extern_container_arg!(mean);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -16877,8 +16481,8 @@ impl PCA {
 	///    retain but it will always keep at least 2.
 	#[inline]
 	pub fn new_with_variance(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
-		input_array_arg!(data);
-		input_array_arg!(mean);
+		extern_container_arg!(data);
+		extern_container_arg!(mean);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_double(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -16889,9 +16493,7 @@ impl PCA {
 	
 }
 
-/// Base class for parallel data processors
-/// 
-/// @ingroup core_parallel
+/// Constant methods for [core::ParallelLoopBody]
 pub trait ParallelLoopBodyConst {
 	fn as_raw_ParallelLoopBody(&self) -> *const c_void;
 
@@ -16906,22 +16508,15 @@ pub trait ParallelLoopBodyConst {
 	
 }
 
+/// Base class for parallel data processors
+/// 
+/// @ingroup core_parallel
 pub trait ParallelLoopBody: core::ParallelLoopBodyConst {
 	fn as_raw_mut_ParallelLoopBody(&mut self) -> *mut c_void;
 
 }
 
-/// Random Number Generator
-/// 
-/// Random number generator. It encapsulates the state (currently, a 64-bit
-/// integer) and has methods to return scalar random values and to fill
-/// arrays with random values. Currently it supports uniform and Gaussian
-/// (normal) distributions. The generator uses Multiply-With-Carry
-/// algorithm, introduced by G. Marsaglia (
-/// <http://en.wikipedia.org/wiki/Multiply-with-carry> ).
-/// Gaussian-distribution random numbers are generated using the Ziggurat
-/// algorithm ( <http://en.wikipedia.org/wiki/Ziggurat_algorithm> ),
-/// introduced by G. Marsaglia and W. W. Tsang.
+/// Constant methods for [core::RNG]
 pub trait RNGTraitConst {
 	fn as_raw_RNG(&self) -> *const c_void;
 
@@ -16942,6 +16537,7 @@ pub trait RNGTraitConst {
 	
 }
 
+/// Mutable methods for [core::RNG]
 pub trait RNGTrait: core::RNGTraitConst {
 	fn as_raw_mut_RNG(&mut self) -> *mut c_void;
 
@@ -17262,9 +16858,9 @@ pub trait RNGTrait: core::RNGTraitConst {
 	/// * saturate_range: false
 	#[inline]
 	fn fill(&mut self, mat: &mut dyn core::ToInputOutputArray, dist_type: i32, a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, saturate_range: bool) -> Result<()> {
-		input_output_array_arg!(mat);
-		input_array_arg!(a);
-		input_array_arg!(b);
+		extern_container_arg!(mat);
+		extern_container_arg!(a);
+		extern_container_arg!(b);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_RNG_fill_const__InputOutputArrayR_int_const__InputArrayR_const__InputArrayR_bool(self.as_raw_mut_RNG(), mat.as_raw__InputOutputArray(), dist_type, a.as_raw__InputArray(), b.as_raw__InputArray(), saturate_range, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -17367,15 +16963,13 @@ impl RNG {
 	
 }
 
-/// Mersenne Twister random number generator
-/// 
-/// Inspired by http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/MT2002/CODES/mt19937ar.c
-/// @todo document
+/// Constant methods for [core::RNG_MT19937]
 pub trait RNG_MT19937TraitConst {
 	fn as_raw_RNG_MT19937(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::RNG_MT19937]
 pub trait RNG_MT19937Trait: core::RNG_MT19937TraitConst {
 	fn as_raw_mut_RNG_MT19937(&mut self) -> *mut c_void;
 
@@ -17485,7 +17079,7 @@ pub trait RNG_MT19937Trait: core::RNG_MT19937TraitConst {
 
 /// Mersenne Twister random number generator
 /// 
-/// Inspired by http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/MT2002/CODES/mt19937ar.c
+/// Inspired by <http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/MT2002/CODES/mt19937ar.c>
 /// @todo document
 pub struct RNG_MT19937 {
 	ptr: *mut c_void
@@ -17533,29 +17127,7 @@ impl RNG_MT19937 {
 	
 }
 
-/// Template class specifying a continuous subsequence (slice) of a sequence.
-/// 
-/// The class is used to specify a row or a column span in a matrix ( Mat ) and for many other purposes.
-/// Range(a,b) is basically the same as a:b in Matlab or a..b in Python. As in Python, start is an
-/// inclusive left boundary of the range and end is an exclusive right boundary of the range. Such a
-/// half-opened interval is usually denoted as ![inline formula](https://latex.codecogs.com/png.latex?%5Bstart%2Cend%29) .
-/// 
-/// The static method Range::all() returns a special variable that means "the whole sequence" or "the
-/// whole range", just like " : " in Matlab or " ... " in Python. All the methods and functions in
-/// OpenCV that take Range support this special Range::all() value. But, of course, in case of your own
-/// custom processing, you will probably have to check and handle it explicitly:
-/// ```C++
-///    void my_function(..., const Range& r, ....)
-///    {
-///        if(r == Range::all()) {
-///            // process all the data
-///        }
-///        else {
-///            // process [r.start, r.end)
-///        }
-///    }
-/// ```
-/// 
+/// Constant methods for [core::Range]
 pub trait RangeTraitConst {
 	fn as_raw_Range(&self) -> *const c_void;
 
@@ -17591,6 +17163,7 @@ pub trait RangeTraitConst {
 	
 }
 
+/// Mutable methods for [core::Range]
 pub trait RangeTrait: core::RangeTraitConst {
 	fn as_raw_mut_Range(&mut self) -> *mut c_void;
 
@@ -17688,16 +17261,7 @@ impl Range {
 	
 }
 
-/// The class represents rotated (i.e. not up-right) rectangles on a plane.
-/// 
-/// Each rectangle is specified by the center point (mass center), length of each side (represented by
-/// #Size2f structure) and the rotation angle in degrees.
-/// 
-/// The sample below demonstrates how to use RotatedRect:
-/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ![image](https://docs.opencv.org/4.7.0/rotatedrect.png)
-/// ## See also
-/// CamShift, fitEllipse, minAreaRect, CvBox2D
+/// Constant methods for [core::RotatedRect]
 pub trait RotatedRectTraitConst {
 	fn as_raw_RotatedRect(&self) -> *const c_void;
 
@@ -17760,6 +17324,7 @@ pub trait RotatedRectTraitConst {
 	
 }
 
+/// Mutable methods for [core::RotatedRect]
 pub trait RotatedRectTrait: core::RotatedRectTraitConst {
 	fn as_raw_mut_RotatedRect(&mut self) -> *mut c_void;
 
@@ -17861,19 +17426,7 @@ impl RotatedRect {
 	
 }
 
-/// Singular Value Decomposition
-/// 
-/// Class for computing Singular Value Decomposition of a floating-point
-/// matrix. The Singular Value Decomposition is used to solve least-square
-/// problems, under-determined linear systems, invert matrices, compute
-/// condition numbers, and so on.
-/// 
-/// If you want to compute a condition number of a matrix or an absolute value of
-/// its determinant, you do not need `u` and `vt`. You can pass
-/// flags=SVD::NO_UV|... . Another flag SVD::FULL_UV indicates that full-size u
-/// and vt must be computed, which is not necessary most of the time.
-/// ## See also
-/// invert, solve, eigen, determinant
+/// Constant methods for [core::SVD]
 pub trait SVDTraitConst {
 	fn as_raw_SVD(&self) -> *const c_void;
 
@@ -17923,8 +17476,8 @@ pub trait SVDTraitConst {
 	/// add pass #DECOMP_SVD there. It does absolutely the same thing.
 	#[inline]
 	fn back_subst(&self, rhs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(rhs);
-		output_array_arg!(dst);
+		extern_container_arg!(rhs);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVD_backSubst_const_const__InputArrayR_const__OutputArrayR(self.as_raw_SVD(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -17934,6 +17487,7 @@ pub trait SVDTraitConst {
 	
 }
 
+/// Mutable methods for [core::SVD]
 pub trait SVDTrait: core::SVDTraitConst {
 	fn as_raw_mut_SVD(&mut self) -> *mut c_void;
 
@@ -17971,7 +17525,7 @@ pub trait SVDTrait: core::SVDTraitConst {
 	/// * flags: 0
 	#[inline]
 	fn apply(&mut self, src: &dyn core::ToInputArray, flags: i32) -> Result<core::SVD> {
-		input_array_arg!(src);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVD_operator___const__InputArrayR_int(self.as_raw_mut_SVD(), src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -18047,7 +17601,7 @@ impl SVD {
 	/// * flags: 0
 	#[inline]
 	pub fn new(src: &dyn core::ToInputArray, flags: i32) -> Result<core::SVD> {
-		input_array_arg!(src);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVD_SVD_const__InputArrayR_int(src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -18079,10 +17633,10 @@ impl SVD {
 	/// * flags: 0
 	#[inline]
 	pub fn compute_ext(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, u: &mut dyn core::ToOutputArray, vt: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		input_array_arg!(src);
-		output_array_arg!(w);
-		output_array_arg!(u);
-		output_array_arg!(vt);
+		extern_container_arg!(src);
+		extern_container_arg!(w);
+		extern_container_arg!(u);
+		extern_container_arg!(vt);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -18120,8 +17674,8 @@ impl SVD {
 	/// * flags: 0
 	#[inline]
 	pub fn compute(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		input_array_arg!(src);
-		output_array_arg!(w);
+		extern_container_arg!(src);
+		extern_container_arg!(w);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -18132,11 +17686,11 @@ impl SVD {
 	/// performs back substitution
 	#[inline]
 	pub fn back_subst_multi(w: &dyn core::ToInputArray, u: &dyn core::ToInputArray, vt: &dyn core::ToInputArray, rhs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(w);
-		input_array_arg!(u);
-		input_array_arg!(vt);
-		input_array_arg!(rhs);
-		output_array_arg!(dst);
+		extern_container_arg!(w);
+		extern_container_arg!(u);
+		extern_container_arg!(vt);
+		extern_container_arg!(rhs);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVD_backSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -18156,8 +17710,8 @@ impl SVD {
 	/// * dst: found solution.
 	#[inline]
 	pub fn solve_z(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(src);
-		output_array_arg!(dst);
+		extern_container_arg!(src);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVD_solveZ_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -18167,87 +17721,7 @@ impl SVD {
 	
 }
 
-/// The class SparseMat represents multi-dimensional sparse numerical arrays.
-/// 
-/// Such a sparse array can store elements of any type that Mat can store. *Sparse* means that only
-/// non-zero elements are stored (though, as a result of operations on a sparse matrix, some of its
-/// stored elements can actually become 0. It is up to you to detect such elements and delete them
-/// using SparseMat::erase ). The non-zero elements are stored in a hash table that grows when it is
-/// filled so that the search time is O(1) in average (regardless of whether element is there or not).
-/// Elements can be accessed using the following methods:
-/// *   Query operations (SparseMat::ptr and the higher-level SparseMat::ref, SparseMat::value and
-///    SparseMat::find), for example:
-///    ```C++
-///        const int dims = 5;
-///        int size[5] = {10, 10, 10, 10, 10};
-///        SparseMat sparse_mat(dims, size, CV_32F);
-///        for(int i = 0; i < 1000; i++)
-///        {
-///            int idx[dims];
-///            for(int k = 0; k < dims; k++)
-///                idx[k] = rand() % size[k];
-///            sparse_mat.ref<float>(idx) += 1.f;
-///        }
-///        cout << "nnz = " << sparse_mat.nzcount() << endl;
-///    ```
-/// 
-/// *   Sparse matrix iterators. They are similar to MatIterator but different from NAryMatIterator.
-///    That is, the iteration loop is familiar to STL users:
-///    ```C++
-///        // prints elements of a sparse floating-point matrix
-///        // and the sum of elements.
-///        SparseMatConstIterator_<float>
-///            it = sparse_mat.begin<float>(),
-///            it_end = sparse_mat.end<float>();
-///        double s = 0;
-///        int dims = sparse_mat.dims();
-///        for(; it != it_end; ++it)
-///        {
-///            // print element indices and the element value
-///            const SparseMat::Node* n = it.node();
-///            printf("(");
-///            for(int i = 0; i < dims; i++)
-///                printf("%d%s", n->idx[i], i < dims-1 ? ", " : ")");
-///            printf(": %g\n", it.value<float>());
-///            s += *it;
-///        }
-///        printf("Element sum is %g\n", s);
-///    ```
-/// 
-///    If you run this loop, you will notice that elements are not enumerated in a logical order
-///    (lexicographical, and so on). They come in the same order as they are stored in the hash table
-///    (semi-randomly). You may collect pointers to the nodes and sort them to get the proper ordering.
-///    Note, however, that pointers to the nodes may become invalid when you add more elements to the
-///    matrix. This may happen due to possible buffer reallocation.
-/// *   Combination of the above 2 methods when you need to process 2 or more sparse matrices
-///    simultaneously. For example, this is how you can compute unnormalized cross-correlation of the 2
-///    floating-point sparse matrices:
-///    ```C++
-///        double cross_corr(const SparseMat& a, const SparseMat& b)
-///        {
-///            const SparseMat *_a = &a, *_b = &b;
-///            // if b contains less elements than a,
-///            // it is faster to iterate through b
-///            if(_a->nzcount() > _b->nzcount())
-///                std::swap(_a, _b);
-///            SparseMatConstIterator_<float> it = _a->begin<float>(),
-///                                            it_end = _a->end<float>();
-///            double ccorr = 0;
-///            for(; it != it_end; ++it)
-///            {
-///                // take the next element from the first matrix
-///                float avalue = *it;
-///                const Node* anode = it.node();
-///                // and try to find an element with the same index in the second matrix.
-///                // since the hash value depends only on the element index,
-///                // reuse the hash value stored in the node
-///                float bvalue = _b->value<float>(anode->idx,&anode->hashval);
-///                ccorr += avalue*bvalue;
-///            }
-///            return ccorr;
-///        }
-///    ```
-/// 
+/// Constant methods for [core::SparseMat]
 pub trait SparseMatTraitConst {
 	fn as_raw_SparseMat(&self) -> *const c_void;
 
@@ -18485,6 +17959,7 @@ pub trait SparseMatTraitConst {
 	
 }
 
+/// Mutable methods for [core::SparseMat]
 pub trait SparseMatTrait: core::SparseMatTraitConst {
 	fn as_raw_mut_SparseMat(&mut self) -> *mut c_void;
 
@@ -18894,7 +18369,7 @@ impl Clone for SparseMat {
 	}
 }
 
-/// the sparse matrix header
+/// Constant methods for [core::SparseMat_Hdr]
 pub trait SparseMat_HdrTraitConst {
 	fn as_raw_SparseMat_Hdr(&self) -> *const c_void;
 
@@ -18950,6 +18425,7 @@ pub trait SparseMat_HdrTraitConst {
 	
 }
 
+/// Mutable methods for [core::SparseMat_Hdr]
 pub trait SparseMat_HdrTrait: core::SparseMat_HdrTraitConst {
 	fn as_raw_mut_SparseMat_Hdr(&mut self) -> *mut c_void;
 
@@ -19056,7 +18532,7 @@ impl SparseMat_Hdr {
 	
 }
 
-/// sparse matrix node - element of a hash table
+/// Constant methods for [core::SparseMat_Node]
 pub trait SparseMat_NodeTraitConst {
 	fn as_raw_SparseMat_Node(&self) -> *const c_void;
 
@@ -19076,6 +18552,7 @@ pub trait SparseMat_NodeTraitConst {
 	
 }
 
+/// Mutable methods for [core::SparseMat_Node]
 pub trait SparseMat_NodeTrait: core::SparseMat_NodeTraitConst {
 	fn as_raw_mut_SparseMat_Node(&mut self) -> *mut c_void;
 
@@ -19130,17 +18607,7 @@ impl core::SparseMat_NodeTrait for SparseMat_Node {
 impl SparseMat_Node {
 }
 
-/// Read-Only Sparse Matrix Iterator.
-/// 
-/// Here is how to use the iterator to compute the sum of floating-point sparse matrix elements:
-/// 
-/// \code
-/// SparseMatConstIterator it = m.begin(), it_end = m.end();
-/// double s = 0;
-/// CV_Assert( m.type() == CV_32F );
-/// for( ; it != it_end; ++it )
-///    s += it.value<float>();
-/// \endcode
+/// Constant methods for [core::SparseMatConstIterator]
 pub trait SparseMatConstIteratorTraitConst {
 	fn as_raw_SparseMatConstIterator(&self) -> *const c_void;
 
@@ -19170,6 +18637,7 @@ pub trait SparseMatConstIteratorTraitConst {
 	
 }
 
+/// Mutable methods for [core::SparseMatConstIterator]
 pub trait SparseMatConstIteratorTrait: core::SparseMatConstIteratorTraitConst {
 	fn as_raw_mut_SparseMatConstIterator(&mut self) -> *mut c_void;
 
@@ -19296,10 +18764,7 @@ impl SparseMatConstIterator {
 	
 }
 
-/// Read-write Sparse Matrix Iterator
-/// 
-/// The class is similar to cv::SparseMatConstIterator,
-/// but can be used for in-place modification of the matrix elements.
+/// Constant methods for [core::SparseMatIterator]
 pub trait SparseMatIteratorTraitConst: core::SparseMatConstIteratorTraitConst {
 	fn as_raw_SparseMatIterator(&self) -> *const c_void;
 
@@ -19316,6 +18781,7 @@ pub trait SparseMatIteratorTraitConst: core::SparseMatConstIteratorTraitConst {
 	
 }
 
+/// Mutable methods for [core::SparseMatIterator]
 pub trait SparseMatIteratorTrait: core::SparseMatConstIteratorTrait + core::SparseMatIteratorTraitConst {
 	fn as_raw_mut_SparseMatIterator(&mut self) -> *mut c_void;
 
@@ -19405,16 +18871,17 @@ impl SparseMatIterator {
 
 boxed_cast_base! { SparseMatIterator, core::SparseMatConstIterator, cv_SparseMatIterator_to_SparseMatConstIterator }
 
-/// TLS container base implementation
-/// 
-/// Don't use directly.
-/// ## See also
-/// TLSData, TLSDataAccumulator templates
+/// Constant methods for [core::TLSDataContainer]
 pub trait TLSDataContainerConst {
 	fn as_raw_TLSDataContainer(&self) -> *const c_void;
 
 }
 
+/// TLS container base implementation
+/// 
+/// Don't use directly.
+/// ## See also
+/// TLSData, TLSDataAccumulator templates
 pub trait TLSDataContainer: core::TLSDataContainerConst {
 	fn as_raw_mut_TLSDataContainer(&mut self) -> *mut c_void;
 
@@ -19481,16 +18948,7 @@ impl TermCriteria {
 	
 }
 
-/// a Class to measure passing time.
-/// 
-/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
-/// execution time in seconds:
-/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// 
-/// It is also possible to compute the average time over multiple runs:
-/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ## See also
-/// getTickCount, getTickFrequency
+/// Constant methods for [core::TickMeter]
 pub trait TickMeterTraitConst {
 	fn as_raw_TickMeter(&self) -> *const c_void;
 
@@ -19576,6 +19034,7 @@ pub trait TickMeterTraitConst {
 	
 }
 
+/// Mutable methods for [core::TickMeter]
 pub trait TickMeterTrait: core::TickMeterTraitConst {
 	fn as_raw_mut_TickMeter(&mut self) -> *mut c_void;
 
@@ -19658,7 +19117,7 @@ impl TickMeter {
 	
 }
 
-/// @todo document
+/// Constant methods for [core::UMat]
 pub trait UMatTraitConst {
 	fn as_raw_UMat(&self) -> *const c_void;
 
@@ -19832,7 +19291,7 @@ pub trait UMatTraitConst {
 	/// copies the matrix content to "m".
 	#[inline]
 	fn copy_to(&self, m: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(m);
+		extern_container_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -19843,8 +19302,8 @@ pub trait UMatTraitConst {
 	/// copies those matrix elements to "m" that are marked with non-zero mask elements.
 	#[inline]
 	fn copy_to_masked(&self, m: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		output_array_arg!(m);
-		input_array_arg!(mask);
+		extern_container_arg!(m);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -19859,7 +19318,7 @@ pub trait UMatTraitConst {
 	/// * beta: 0
 	#[inline]
 	fn convert_to(&self, m: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-		output_array_arg!(m);
+		extern_container_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_UMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_UMat(), m.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -19933,7 +19392,7 @@ pub trait UMatTraitConst {
 	/// * scale: 1
 	#[inline]
 	fn mul(&self, m: &dyn core::ToInputArray, scale: f64) -> Result<core::UMat> {
-		input_array_arg!(m);
+		extern_container_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_UMat_mul_const_const__InputArrayR_double(self.as_raw_UMat(), m.as_raw__InputArray(), scale, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -19945,7 +19404,7 @@ pub trait UMatTraitConst {
 	/// computes dot-product
 	#[inline]
 	fn dot(&self, m: &dyn core::ToInputArray) -> Result<f64> {
-		input_array_arg!(m);
+		extern_container_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_UMat_dot_const_const__InputArrayR(self.as_raw_UMat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -20120,6 +19579,7 @@ pub trait UMatTraitConst {
 	
 }
 
+/// Mutable methods for [core::UMat]
 pub trait UMatTrait: core::UMatTraitConst {
 	fn as_raw_mut_UMat(&mut self) -> *mut c_void;
 
@@ -20190,8 +19650,8 @@ pub trait UMatTrait: core::UMatTraitConst {
 	/// * mask: noArray()
 	#[inline]
 	fn set_to(&mut self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::UMat> {
-		input_array_arg!(value);
-		input_array_arg!(mask);
+		extern_container_arg!(value);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_UMat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_UMat(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -20678,6 +20138,7 @@ impl Clone for UMat {
 	}
 }
 
+/// Constant methods for [core::UMatData]
 pub trait UMatDataTraitConst {
 	fn as_raw_UMatData(&self) -> *const c_void;
 
@@ -20775,6 +20236,7 @@ pub trait UMatDataTraitConst {
 	
 }
 
+/// Mutable methods for [core::UMatData]
 pub trait UMatDataTrait: core::UMatDataTraitConst {
 	fn as_raw_mut_UMatData(&mut self) -> *mut c_void;
 
@@ -20948,92 +20410,7 @@ impl core::UMatDataTrait for UMatData {
 impl UMatData {
 }
 
-/// This is the proxy class for passing read-only input arrays into OpenCV functions.
-/// 
-/// It is defined as:
-/// ```C++
-///    typedef const _InputArray& InputArray;
-/// ```
-/// 
-/// where _InputArray is a class that can be constructed from `Mat`, `Mat_<T>`, `Matx<T, m, n>`,
-/// `std::vector<T>`, `std::vector<std::vector<T> >`, `std::vector<Mat>`, `std::vector<Mat_<T> >`,
-/// `UMat`, `std::vector<UMat>` or `double`. It can also be constructed from a matrix expression.
-/// 
-/// Since this is mostly implementation-level class, and its interface may change in future versions, we
-/// do not describe it in details. There are a few key things, though, that should be kept in mind:
-/// 
-/// *   When you see in the reference manual or in OpenCV source code a function that takes
-///    InputArray, it means that you can actually pass `Mat`, `Matx`, `vector<T>` etc. (see above the
-///    complete list).
-/// *   Optional input arguments: If some of the input arrays may be empty, pass cv::noArray() (or
-///    simply cv::Mat() as you probably did before).
-/// *   The class is designed solely for passing parameters. That is, normally you *should not*
-///    declare class members, local and global variables of this type.
-/// *   If you want to design your own function or a class method that can operate of arrays of
-///    multiple types, you can use InputArray (or OutputArray) for the respective parameters. Inside
-///    a function you should use _InputArray::getMat() method to construct a matrix header for the
-///    array (without copying data). _InputArray::kind() can be used to distinguish Mat from
-///    `vector<>` etc., but normally it is not needed.
-/// 
-/// Here is how you can use a function that takes InputArray :
-/// ```C++
-///    std::vector<Point2f> vec;
-///    // points or a circle
-///    for( int i = 0; i < 30; i++ )
-///        vec.push_back(Point2f((float)(100 + 30*cos(i*CV_PI*2/5)),
-///                               (float)(100 - 30*sin(i*CV_PI*2/5))));
-///    cv::transform(vec, vec, cv::Matx23f(0.707, -0.707, 10, 0.707, 0.707, 20));
-/// ```
-/// 
-/// That is, we form an STL vector containing points, and apply in-place affine transformation to the
-/// vector using the 2x3 matrix created inline as `Matx<float, 2, 3>` instance.
-/// 
-/// Here is how such a function can be implemented (for simplicity, we implement a very specific case of
-/// it, according to the assertion statement inside) :
-/// ```C++
-///    void myAffineTransform(InputArray _src, OutputArray _dst, InputArray _m)
-///    {
-///        // get Mat headers for input arrays. This is O(1) operation,
-///        // unless _src and/or _m are matrix expressions.
-///        Mat src = _src.getMat(), m = _m.getMat();
-///        CV_Assert( src.type() == CV_32FC2 && m.type() == CV_32F && m.size() == Size(3, 2) );
-/// 
-///        // [re]create the output array so that it has the proper size and type.
-///        // In case of Mat it calls Mat::create, in case of STL vector it calls vector::resize.
-///        _dst.create(src.size(), src.type());
-///        Mat dst = _dst.getMat();
-/// 
-///        for( int i = 0; i < src.rows; i++ )
-///            for( int j = 0; j < src.cols; j++ )
-///            {
-///                Point2f pt = src.at<Point2f>(i, j);
-///                dst.at<Point2f>(i, j) = Point2f(m.at<float>(0, 0)*pt.x +
-///                                                 m.at<float>(0, 1)*pt.y +
-///                                                 m.at<float>(0, 2),
-///                                                 m.at<float>(1, 0)*pt.x +
-///                                                 m.at<float>(1, 1)*pt.y +
-///                                                 m.at<float>(1, 2));
-///            }
-///    }
-/// ```
-/// 
-/// There is another related type, InputArrayOfArrays, which is currently defined as a synonym for
-/// InputArray:
-/// ```C++
-///    typedef InputArray InputArrayOfArrays;
-/// ```
-/// 
-/// It denotes function arguments that are either vectors of vectors or vectors of matrices. A separate
-/// synonym is needed to generate Python/Java etc. wrappers properly. At the function implementation
-/// level their use is similar, but _InputArray::getMat(idx) should be used to get header for the
-/// idx-th component of the outer vector and _InputArray::size().area() should be used to find the
-/// number of components (vectors/matrices) of the outer vector.
-/// 
-/// In general, type support is limited to cv::Mat types. Other types are forbidden.
-/// But in some cases we need to support passing of custom non-general Mat types, like arrays of cv::KeyPoint, cv::DMatch, etc.
-/// This data is not intended to be interpreted as an image data, or processed somehow like regular cv::Mat.
-/// To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
-/// Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
+/// Constant methods for [core::_InputArray]
 pub trait _InputArrayTraitConst {
 	fn as_raw__InputArray(&self) -> *const c_void;
 
@@ -21213,7 +20590,7 @@ pub trait _InputArrayTraitConst {
 	
 	#[inline]
 	fn same_size(&self, arr: &dyn core::ToInputArray) -> Result<bool> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv__InputArray_sameSize_const_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -21298,7 +20675,7 @@ pub trait _InputArrayTraitConst {
 	
 	#[inline]
 	fn copy_to(&self, arr: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -21308,8 +20685,8 @@ pub trait _InputArrayTraitConst {
 	
 	#[inline]
 	fn copy_to_masked(&self, arr: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		output_array_arg!(arr);
-		input_array_arg!(mask);
+		extern_container_arg!(arr);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -21413,6 +20790,7 @@ pub trait _InputArrayTraitConst {
 	
 }
 
+/// Mutable methods for [core::_InputArray]
 pub trait _InputArrayTrait: core::_InputArrayTraitConst {
 	fn as_raw_mut__InputArray(&mut self) -> *mut c_void;
 
@@ -21660,11 +21038,13 @@ impl _InputArray {
 	
 }
 
+/// Constant methods for [core::_InputOutputArray]
 pub trait _InputOutputArrayTraitConst: core::_OutputArrayTraitConst {
 	fn as_raw__InputOutputArray(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::_InputOutputArray]
 pub trait _InputOutputArrayTrait: core::_InputOutputArrayTraitConst + core::_OutputArrayTrait {
 	fn as_raw_mut__InputOutputArray(&mut self) -> *mut c_void;
 
@@ -21887,31 +21267,7 @@ boxed_cast_base! { _InputOutputArray, core::_InputArray, cv__InputOutputArray_to
 
 boxed_cast_base! { _InputOutputArray, core::_OutputArray, cv__InputOutputArray_to__OutputArray }
 
-/// This type is very similar to InputArray except that it is used for input/output and output function
-/// parameters.
-/// 
-/// Just like with InputArray, OpenCV users should not care about OutputArray, they just pass `Mat`,
-/// `vector<T>` etc. to the functions. The same limitation as for `InputArray`: *Do not explicitly
-/// create OutputArray instances* applies here too.
-/// 
-/// If you want to make your function polymorphic (i.e. accept different arrays as output parameters),
-/// it is also not very difficult. Take the sample above as the reference. Note that
-/// _OutputArray::create() needs to be called before _OutputArray::getMat(). This way you guarantee
-/// that the output array is properly allocated.
-/// 
-/// Optional output parameters. If you do not need certain output array to be computed and returned to
-/// you, pass cv::noArray(), just like you would in the case of optional input array. At the
-/// implementation level, use _OutputArray::needed() to check if certain output array needs to be
-/// computed or not.
-/// 
-/// There are several synonyms for OutputArray that are used to assist automatic Python/Java/... wrapper
-/// generators:
-/// ```C++
-///    typedef OutputArray OutputArrayOfArrays;
-///    typedef OutputArray InputOutputArray;
-///    typedef OutputArray InputOutputArrayOfArrays;
-/// ```
-/// 
+/// Constant methods for [core::_OutputArray]
 pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
 	fn as_raw__OutputArray(&self) -> *const c_void;
 
@@ -22047,7 +21403,7 @@ pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
 	
 	#[inline]
 	unsafe fn create_same_size(&self, arr: &dyn core::ToInputArray, mtype: i32) -> Result<()> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		{ sys::cv__OutputArray_createSameSize_const_const__InputArrayR_int(self.as_raw__OutputArray(), arr.as_raw__InputArray(), mtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
@@ -22077,8 +21433,8 @@ pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
 	/// * mask: _InputArray()
 	#[inline]
 	fn set_to(&self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(value);
-		input_array_arg!(mask);
+		extern_container_arg!(value);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv__OutputArray_setTo_const_const__InputArrayR_const__InputArrayR(self.as_raw__OutputArray(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -22142,6 +21498,7 @@ pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
 	
 }
 
+/// Mutable methods for [core::_OutputArray]
 pub trait _OutputArrayTrait: core::_InputArrayTrait + core::_OutputArrayTraitConst {
 	fn as_raw_mut__OutputArray(&mut self) -> *mut c_void;
 
@@ -22390,129 +21747,7 @@ impl _OutputArray {
 
 boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArray }
 
-/// BufferPool for use with CUDA streams
-/// 
-/// BufferPool utilizes Stream's allocator to create new buffers for GpuMat's. It is
-/// only useful when enabled with #setBufferPoolUsage.
-/// 
-/// ```C++
-///    setBufferPoolUsage(true);
-/// ```
-/// 
-/// 
-/// 
-/// Note: #setBufferPoolUsage must be called \em before any Stream declaration.
-/// 
-/// Users may specify custom allocator for Stream and may implement their own stream based
-/// functions utilizing the same underlying GPU memory management.
-/// 
-/// If custom allocator is not specified, BufferPool utilizes StackAllocator by
-/// default. StackAllocator allocates a chunk of GPU device memory beforehand,
-/// and when GpuMat is declared later on, it is given the pre-allocated memory.
-/// This kind of strategy reduces the number of calls for memory allocating APIs
-/// such as cudaMalloc or cudaMallocPitch.
-/// 
-/// Below is an example that utilizes BufferPool with StackAllocator:
-/// 
-/// ```C++
-///    #include <opencv2/opencv.hpp>
-/// 
-///    using namespace cv;
-///    using namespace cv::cuda
-/// 
-///    int main()
-///    {
-///        setBufferPoolUsage(true);                               // Tell OpenCV that we are going to utilize BufferPool
-///        setBufferPoolConfig(getDevice(), 1024 * 1024 * 64, 2);  // Allocate 64 MB, 2 stacks (default is 10 MB, 5 stacks)
-/// 
-///        Stream stream1, stream2;                                // Each stream uses 1 stack
-///        BufferPool pool1(stream1), pool2(stream2);
-/// 
-///        GpuMat d_src1 = pool1.getBuffer(4096, 4096, CV_8UC1);   // 16MB
-///        GpuMat d_dst1 = pool1.getBuffer(4096, 4096, CV_8UC3);   // 48MB, pool1 is now full
-/// 
-///        GpuMat d_src2 = pool2.getBuffer(1024, 1024, CV_8UC1);   // 1MB
-///        GpuMat d_dst2 = pool2.getBuffer(1024, 1024, CV_8UC3);   // 3MB
-/// 
-///        cvtColor(d_src1, d_dst1, CV_GRAY2BGR, 0, stream1);
-///        cvtColor(d_src2, d_dst2, CV_GRAY2BGR, 0, stream2);
-///    }
-/// ```
-/// 
-/// 
-/// If we allocate another GpuMat on pool1 in the above example, it will be carried out by
-/// the DefaultAllocator since the stack for pool1 is full.
-/// 
-/// ```C++
-///    GpuMat d_add1 = pool1.getBuffer(1024, 1024, CV_8UC1);   // Stack for pool1 is full, memory is allocated with DefaultAllocator
-/// ```
-/// 
-/// 
-/// If a third stream is declared in the above example, allocating with #getBuffer
-/// within that stream will also be carried out by the DefaultAllocator because we've run out of
-/// stacks.
-/// 
-/// ```C++
-///    Stream stream3;                                         // Only 2 stacks were allocated, we've run out of stacks
-///    BufferPool pool3(stream3);
-///    GpuMat d_src3 = pool3.getBuffer(1024, 1024, CV_8UC1);   // Memory is allocated with DefaultAllocator
-/// ```
-/// 
-/// 
-/// @warning When utilizing StackAllocator, deallocation order is important.
-/// 
-/// Just like a stack, deallocation must be done in LIFO order. Below is an example of
-/// erroneous usage that violates LIFO rule. If OpenCV is compiled in Debug mode, this
-/// sample code will emit CV_Assert error.
-/// 
-/// ```C++
-///    int main()
-///    {
-///        setBufferPoolUsage(true);                               // Tell OpenCV that we are going to utilize BufferPool
-///        Stream stream;                                          // A default size (10 MB) stack is allocated to this stream
-///        BufferPool pool(stream);
-/// 
-///        GpuMat mat1 = pool.getBuffer(1024, 1024, CV_8UC1);      // Allocate mat1 (1MB)
-///        GpuMat mat2 = pool.getBuffer(1024, 1024, CV_8UC1);      // Allocate mat2 (1MB)
-/// 
-///        mat1.release();                                         // erroneous usage : mat2 must be deallocated before mat1
-///    }
-/// ```
-/// 
-/// 
-/// Since C++ local variables are destroyed in the reverse order of construction,
-/// the code sample below satisfies the LIFO rule. Local GpuMat's are deallocated
-/// and the corresponding memory is automatically returned to the pool for later usage.
-/// 
-/// ```C++
-///    int main()
-///    {
-///        setBufferPoolUsage(true);                               // Tell OpenCV that we are going to utilize BufferPool
-///        setBufferPoolConfig(getDevice(), 1024 * 1024 * 64, 2);  // Allocate 64 MB, 2 stacks (default is 10 MB, 5 stacks)
-/// 
-///        Stream stream1, stream2;                                // Each stream uses 1 stack
-///        BufferPool pool1(stream1), pool2(stream2);
-/// 
-///        for (int i = 0; i < 10; i++)
-///        {
-///            GpuMat d_src1 = pool1.getBuffer(4096, 4096, CV_8UC1);   // 16MB
-///            GpuMat d_dst1 = pool1.getBuffer(4096, 4096, CV_8UC3);   // 48MB, pool1 is now full
-/// 
-///            GpuMat d_src2 = pool2.getBuffer(1024, 1024, CV_8UC1);   // 1MB
-///            GpuMat d_dst2 = pool2.getBuffer(1024, 1024, CV_8UC3);   // 3MB
-/// 
-///            d_src1.setTo(Scalar(i), stream1);
-///            d_src2.setTo(Scalar(i), stream2);
-/// 
-///            cvtColor(d_src1, d_dst1, CV_GRAY2BGR, 0, stream1);
-///            cvtColor(d_src2, d_dst2, CV_GRAY2BGR, 0, stream2);
-///                                                                     // The order of destruction of the local variables is:
-///                                                                     //   d_dst2 => d_src2 => d_dst1 => d_src1
-///                                                                     // LIFO rule is satisfied, this code runs without error
-///        }
-///    }
-/// ```
-/// 
+/// Constant methods for [core::BufferPool]
 pub trait BufferPoolTraitConst {
 	fn as_raw_BufferPool(&self) -> *const c_void;
 
@@ -22529,6 +21764,7 @@ pub trait BufferPoolTraitConst {
 	
 }
 
+/// Mutable methods for [core::BufferPool]
 pub trait BufferPoolTrait: core::BufferPoolTraitConst {
 	fn as_raw_mut_BufferPool(&mut self) -> *mut c_void;
 
@@ -22716,7 +21952,7 @@ impl BufferPool {
 	
 }
 
-/// Class providing functionality for querying the specified GPU properties.
+/// Constant methods for [core::DeviceInfo]
 pub trait DeviceInfoTraitConst {
 	fn as_raw_DeviceInfo(&self) -> *const c_void;
 
@@ -23309,6 +22545,7 @@ pub trait DeviceInfoTraitConst {
 	
 }
 
+/// Mutable methods for [core::DeviceInfo]
 pub trait DeviceInfoTrait: core::DeviceInfoTraitConst {
 	fn as_raw_mut_DeviceInfo(&mut self) -> *mut c_void;
 
@@ -23369,6 +22606,7 @@ impl DeviceInfo {
 	
 }
 
+/// Constant methods for [core::Event]
 pub trait EventTraitConst {
 	fn as_raw_Event(&self) -> *const c_void;
 
@@ -23384,6 +22622,7 @@ pub trait EventTraitConst {
 	
 }
 
+/// Mutable methods for [core::Event]
 pub trait EventTrait: core::EventTraitConst {
 	fn as_raw_mut_Event(&mut self) -> *mut c_void;
 
@@ -23460,6 +22699,7 @@ impl Event {
 	
 }
 
+/// Constant methods for [core::GpuData]
 pub trait GpuDataTraitConst {
 	fn as_raw_GpuData(&self) -> *const c_void;
 
@@ -23471,6 +22711,7 @@ pub trait GpuDataTraitConst {
 	
 }
 
+/// Mutable methods for [core::GpuData]
 pub trait GpuDataTrait: core::GpuDataTraitConst {
 	fn as_raw_mut_GpuData(&mut self) -> *mut c_void;
 
@@ -23530,38 +22771,7 @@ impl GpuData {
 	
 }
 
-/// Base storage class for GPU memory with reference counting.
-/// 
-/// Its interface matches the Mat interface with the following limitations:
-/// 
-/// *   no arbitrary dimensions support (only 2D)
-/// *   no functions that return references to their data (because references on GPU are not valid for
-///    CPU)
-/// *   no expression templates technique support
-/// 
-/// Beware that the latter limitation may lead to overloaded matrix operators that cause memory
-/// allocations. The GpuMat class is convertible to cuda::PtrStepSz and cuda::PtrStep so it can be
-/// passed directly to the kernel.
-/// 
-/// 
-/// Note: In contrast with Mat, in most cases GpuMat::isContinuous() == false . This means that rows are
-/// aligned to a size depending on the hardware. Single-row GpuMat is always a continuous matrix.
-/// 
-/// 
-/// Note: You are not recommended to leave static or global GpuMat variables allocated, that is, to rely
-/// on its destructor. The destruction order of such variables and CUDA context is undefined. GPU memory
-/// release function returns error if the CUDA context has been destroyed before.
-/// 
-/// Some member functions are described as a "Blocking Call" while some are described as a
-/// "Non-Blocking Call". Blocking functions are synchronous to host. It is guaranteed that the GPU
-/// operation is finished when the function returns. However, non-blocking functions are asynchronous to
-/// host. Those functions may return even if the GPU operation is not finished.
-/// 
-/// Compared to their blocking counterpart, non-blocking functions accept Stream as an additional
-/// argument. If a non-default stream is passed, the GPU operation may overlap with operations in other
-/// streams.
-/// ## See also
-/// Mat
+/// Constant methods for [core::GpuMat]
 pub trait GpuMatTraitConst {
 	fn as_raw_GpuMat(&self) -> *const c_void;
 
@@ -23609,7 +22819,7 @@ pub trait GpuMatTraitConst {
 	/// guaranteed that the copy operation is finished when this function returns.
 	#[inline]
 	fn download(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23626,7 +22836,7 @@ pub trait GpuMatTraitConst {
 	/// not the default stream and \p dst is HostMem allocated with HostMem::PAGE_LOCKED option.
 	#[inline]
 	fn download_async(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23648,7 +22858,7 @@ pub trait GpuMatTraitConst {
 	/// copies the GpuMat content to device memory (Blocking call)
 	#[inline]
 	fn copy_to(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23659,7 +22869,7 @@ pub trait GpuMatTraitConst {
 	/// copies the GpuMat content to device memory (Non-Blocking call)
 	#[inline]
 	fn copy_to_1(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23670,8 +22880,8 @@ pub trait GpuMatTraitConst {
 	/// copies those GpuMat elements to "m" that are marked with non-zero mask elements (Blocking call)
 	#[inline]
 	fn copy_to_2(&self, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		output_array_arg!(dst);
-		input_array_arg!(mask);
+		extern_container_arg!(dst);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23682,8 +22892,8 @@ pub trait GpuMatTraitConst {
 	/// copies those GpuMat elements to "m" that are marked with non-zero mask elements (Non-Blocking call)
 	#[inline]
 	fn copy_to_3(&self, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(dst);
-		input_array_arg!(mask);
+		extern_container_arg!(dst);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23694,7 +22904,7 @@ pub trait GpuMatTraitConst {
 	/// converts GpuMat to another datatype (Blocking call)
 	#[inline]
 	fn convert_to(&self, dst: &mut dyn core::ToOutputArray, rtype: i32) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23705,7 +22915,7 @@ pub trait GpuMatTraitConst {
 	/// converts GpuMat to another datatype (Non-Blocking call)
 	#[inline]
 	fn convert_to_1(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23719,7 +22929,7 @@ pub trait GpuMatTraitConst {
 	/// * beta: 0.0
 	#[inline]
 	fn convert_to_2(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23730,7 +22940,7 @@ pub trait GpuMatTraitConst {
 	/// converts GpuMat to another datatype with scaling (Non-Blocking call)
 	#[inline]
 	fn convert_to_3(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23741,7 +22951,7 @@ pub trait GpuMatTraitConst {
 	/// converts GpuMat to another datatype with scaling (Non-Blocking call)
 	#[inline]
 	fn convert_to_4(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -23983,6 +23193,7 @@ pub trait GpuMatTraitConst {
 	
 }
 
+/// Mutable methods for [core::GpuMat]
 pub trait GpuMatTrait: core::GpuMatTraitConst {
 	fn as_raw_mut_GpuMat(&mut self) -> *mut c_void;
 
@@ -24122,7 +23333,7 @@ pub trait GpuMatTrait: core::GpuMatTraitConst {
 	/// guaranteed that the copy operation is finished when this function returns.
 	#[inline]
 	fn upload(&mut self, arr: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -24139,7 +23350,7 @@ pub trait GpuMatTrait: core::GpuMatTraitConst {
 	/// not the default stream and \p dst is HostMem allocated with HostMem::PAGE_LOCKED option.
 	#[inline]
 	fn upload_async(&mut self, arr: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -24172,7 +23383,7 @@ pub trait GpuMatTrait: core::GpuMatTraitConst {
 	/// sets some of the GpuMat elements to s, according to the mask (Blocking call)
 	#[inline]
 	fn set_to_2(&mut self, s: core::Scalar, mask: &dyn core::ToInputArray) -> Result<core::GpuMat> {
-		input_array_arg!(mask);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -24184,7 +23395,7 @@ pub trait GpuMatTrait: core::GpuMatTraitConst {
 	/// sets some of the GpuMat elements to s, according to the mask (Non-Blocking call)
 	#[inline]
 	fn set_to_3(&mut self, s: core::Scalar, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<core::GpuMat> {
-		input_array_arg!(mask);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -24435,7 +23646,7 @@ impl GpuMat {
 	/// * allocator: GpuMat::defaultAllocator()
 	#[inline]
 	pub unsafe fn from_hostmem(arr: &dyn core::ToInputArray, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		{ sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
@@ -24454,6 +23665,7 @@ impl Clone for GpuMat {
 	}
 }
 
+/// Constant methods for [core::GpuMat_Allocator]
 pub trait GpuMat_AllocatorConst {
 	fn as_raw_GpuMat_Allocator(&self) -> *const c_void;
 
@@ -24482,6 +23694,7 @@ pub trait GpuMat_Allocator: core::GpuMat_AllocatorConst {
 	
 }
 
+/// Constant methods for [core::GpuMatND]
 pub trait GpuMatNDTraitConst {
 	fn as_raw_GpuMatND(&self) -> *const c_void;
 
@@ -24639,7 +23852,7 @@ pub trait GpuMatNDTraitConst {
 	
 	#[inline]
 	fn download(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -24649,7 +23862,7 @@ pub trait GpuMatNDTraitConst {
 	
 	#[inline]
 	fn download_1(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(dst);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -24760,6 +23973,7 @@ pub trait GpuMatNDTraitConst {
 	
 }
 
+/// Mutable methods for [core::GpuMatND]
 pub trait GpuMatNDTrait: core::GpuMatNDTraitConst {
 	fn as_raw_mut_GpuMatND(&mut self) -> *mut c_void;
 
@@ -24828,7 +24042,7 @@ pub trait GpuMatNDTrait: core::GpuMatNDTraitConst {
 	
 	#[inline]
 	fn upload(&mut self, src: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(src);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -24838,7 +24052,7 @@ pub trait GpuMatNDTrait: core::GpuMatNDTraitConst {
 	
 	#[inline]
 	fn upload_1(&mut self, src: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(src);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -24953,21 +24167,7 @@ impl Clone for GpuMatND {
 	}
 }
 
-/// Class with reference counting wrapping special memory type allocation functions from CUDA.
-/// 
-/// Its interface is also Mat-like but with additional memory type parameters.
-/// 
-/// *   **PAGE_LOCKED** sets a page locked memory type used commonly for fast and asynchronous
-///    uploading/downloading data from/to GPU.
-/// *   **SHARED** specifies a zero copy memory allocation that enables mapping the host memory to GPU
-///    address space, if supported.
-/// *   **WRITE_COMBINED** sets the write combined buffer that is not cached by CPU. Such buffers are
-///    used to supply GPU with data when GPU only reads it. The advantage is a better CPU cache
-///    utilization.
-/// 
-/// 
-/// Note: Allocation size of such memory types is usually limited. For more details, see *CUDA 2.2
-/// Pinned Memory APIs* document or *CUDA C Programming Guide*.
+/// Constant methods for [core::HostMem]
 pub trait HostMemTraitConst {
 	fn as_raw_HostMem(&self) -> *const c_void;
 
@@ -25145,6 +24345,7 @@ pub trait HostMemTraitConst {
 	
 }
 
+/// Mutable methods for [core::HostMem]
 pub trait HostMemTrait: core::HostMemTraitConst {
 	fn as_raw_mut_HostMem(&mut self) -> *mut c_void;
 
@@ -25346,7 +24547,7 @@ impl HostMem {
 	/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
 	#[inline]
 	pub fn new_3(arr: &dyn core::ToInputArray, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR_AllocType(arr.as_raw__InputArray(), alloc_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -25365,36 +24566,7 @@ impl Clone for HostMem {
 	}
 }
 
-/// This class encapsulates a queue of asynchronous calls.
-/// 
-/// 
-/// Note: Currently, you may face problems if an operation is enqueued twice with different data. Some
-/// functions use the constant GPU memory, and next call may update the memory before the previous one
-/// has been finished. But calling different operations asynchronously is safe because each operation
-/// has its own constant buffer. Memory copy/upload/download/set operations to the buffers you hold are
-/// also safe.
-/// 
-/// 
-/// Note: The Stream class is not thread-safe. Please use different Stream objects for different CPU threads.
-/// 
-/// ```C++
-/// void thread1()
-/// {
-///    cv::cuda::Stream stream1;
-///    cv::cuda::func1(..., stream1);
-/// }
-/// 
-/// void thread2()
-/// {
-///    cv::cuda::Stream stream2;
-///    cv::cuda::func2(..., stream2);
-/// }
-/// ```
-/// 
-/// 
-/// 
-/// Note: By default all CUDA routines are launched in Stream::Null() object, if the stream is not specified by user.
-/// In multi-threading environment the stream objects must be passed explicitly (see previous note).
+/// Constant methods for [core::Stream]
 pub trait StreamTraitConst {
 	fn as_raw_Stream(&self) -> *const c_void;
 
@@ -25420,6 +24592,7 @@ pub trait StreamTraitConst {
 	
 }
 
+/// Mutable methods for [core::Stream]
 pub trait StreamTrait: core::StreamTraitConst {
 	fn as_raw_mut_Stream(&mut self) -> *mut c_void;
 
@@ -25574,16 +24747,13 @@ impl Stream {
 	
 }
 
-/// Class providing a set of static methods to check what NVIDIA\* card architecture the CUDA module was
-/// built for.
-/// 
-/// According to the CUDA C Programming Guide Version 3.2: "PTX code produced for some specific compute
-/// capability can always be compiled to binary code of greater or equal compute capability".
+/// Constant methods for [core::TargetArchs]
 pub trait TargetArchsTraitConst {
 	fn as_raw_TargetArchs(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::TargetArchs]
 pub trait TargetArchsTrait: core::TargetArchsTraitConst {
 	fn as_raw_mut_TargetArchs(&mut self) -> *mut c_void;
 
@@ -25702,6 +24872,7 @@ impl TargetArchs {
 	
 }
 
+/// Constant methods for [core::Detail_CheckContext]
 pub trait Detail_CheckContextTraitConst {
 	fn as_raw_Detail_CheckContext(&self) -> *const c_void;
 
@@ -25756,6 +24927,7 @@ pub trait Detail_CheckContextTraitConst {
 	
 }
 
+/// Mutable methods for [core::Detail_CheckContext]
 pub trait Detail_CheckContextTrait: core::Detail_CheckContextTraitConst {
 	fn as_raw_mut_Detail_CheckContext(&mut self) -> *mut c_void;
 
@@ -25799,6 +24971,7 @@ impl core::Detail_CheckContextTrait for Detail_CheckContext {
 impl Detail_CheckContext {
 }
 
+/// Constant methods for [core::NodeData]
 pub trait NodeDataTraitConst {
 	fn as_raw_NodeData(&self) -> *const c_void;
 
@@ -25888,6 +25061,7 @@ pub trait NodeDataTraitConst {
 	
 }
 
+/// Mutable methods for [core::NodeData]
 pub trait NodeDataTrait: core::NodeDataTraitConst {
 	fn as_raw_mut_NodeData(&mut self) -> *mut c_void;
 
@@ -26016,11 +25190,13 @@ impl NodeData {
 	
 }
 
+/// Constant methods for [core::WriteStructContext]
 pub trait WriteStructContextTraitConst {
 	fn as_raw_WriteStructContext(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::WriteStructContext]
 pub trait WriteStructContextTrait: core::WriteStructContextTraitConst {
 	fn as_raw_mut_WriteStructContext(&mut self) -> *mut c_void;
 
@@ -26066,6 +25242,7 @@ impl WriteStructContext {
 	
 }
 
+/// Constant methods for [core::Context]
 pub trait ContextTraitConst {
 	fn as_raw_Context(&self) -> *const c_void;
 
@@ -26133,6 +25310,7 @@ pub trait ContextTraitConst {
 	
 }
 
+/// Mutable methods for [core::Context]
 pub trait ContextTrait: core::ContextTraitConst {
 	fn as_raw_mut_Context(&mut self) -> *mut c_void;
 
@@ -26311,11 +25489,13 @@ impl Default for Context {
 	}
 }
 
+/// Constant methods for [core::Context_UserContext]
 pub trait Context_UserContextTraitConst {
 	fn as_raw_Context_UserContext(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [core::Context_UserContext]
 pub trait Context_UserContextTrait: core::Context_UserContextTraitConst {
 	fn as_raw_mut_Context_UserContext(&mut self) -> *mut c_void;
 
@@ -26347,6 +25527,7 @@ impl core::Context_UserContextTrait for Context_UserContext {
 impl Context_UserContext {
 }
 
+/// Constant methods for [core::Device]
 pub trait DeviceTraitConst {
 	fn as_raw_Device(&self) -> *const c_void;
 
@@ -27036,6 +26217,7 @@ pub trait DeviceTraitConst {
 	
 }
 
+/// Mutable methods for [core::Device]
 pub trait DeviceTrait: core::DeviceTraitConst {
 	fn as_raw_mut_Device(&mut self) -> *mut c_void;
 
@@ -27145,6 +26327,7 @@ impl Default for Device {
 	}
 }
 
+/// Constant methods for [core::Image2D]
 pub trait Image2DTraitConst {
 	fn as_raw_Image2D(&self) -> *const c_void;
 
@@ -27159,6 +26342,7 @@ pub trait Image2DTraitConst {
 	
 }
 
+/// Mutable methods for [core::Image2D]
 pub trait Image2DTrait: core::Image2DTraitConst {
 	fn as_raw_mut_Image2D(&mut self) -> *mut c_void;
 
@@ -27262,6 +26446,7 @@ impl Default for Image2D {
 	}
 }
 
+/// Constant methods for [core::Kernel]
 pub trait KernelTraitConst {
 	fn as_raw_Kernel(&self) -> *const c_void;
 
@@ -27321,6 +26506,7 @@ pub trait KernelTraitConst {
 	
 }
 
+/// Mutable methods for [core::Kernel]
 pub trait KernelTrait: core::KernelTraitConst {
 	fn as_raw_mut_Kernel(&mut self) -> *mut c_void;
 
@@ -27547,6 +26733,7 @@ impl Default for Kernel {
 	}
 }
 
+/// Constant methods for [core::KernelArg]
 pub trait KernelArgTraitConst {
 	fn as_raw_KernelArg(&self) -> *const c_void;
 
@@ -27582,6 +26769,7 @@ pub trait KernelArgTraitConst {
 	
 }
 
+/// Mutable methods for [core::KernelArg]
 pub trait KernelArgTrait: core::KernelArgTraitConst {
 	fn as_raw_mut_KernelArg(&mut self) -> *mut c_void;
 
@@ -27808,6 +26996,7 @@ impl Default for KernelArg {
 	}
 }
 
+/// Constant methods for [core::OpenCLExecutionContext]
 pub trait OpenCLExecutionContextTraitConst {
 	fn as_raw_OpenCLExecutionContext(&self) -> *const c_void;
 
@@ -27910,6 +27099,7 @@ pub trait OpenCLExecutionContextTraitConst {
 	
 }
 
+/// Mutable methods for [core::OpenCLExecutionContext]
 pub trait OpenCLExecutionContextTrait: core::OpenCLExecutionContextTraitConst {
 	fn as_raw_mut_OpenCLExecutionContext(&mut self) -> *mut c_void;
 
@@ -28074,7 +27264,7 @@ impl Default for OpenCLExecutionContext {
 	}
 }
 
-/// @deprecated
+/// Constant methods for [core::Platform]
 pub trait PlatformTraitConst {
 	fn as_raw_Platform(&self) -> *const c_void;
 
@@ -28098,6 +27288,7 @@ pub trait PlatformTraitConst {
 	
 }
 
+/// Mutable methods for [core::Platform]
 pub trait PlatformTrait: core::PlatformTraitConst {
 	fn as_raw_mut_Platform(&mut self) -> *mut c_void;
 
@@ -28173,6 +27364,7 @@ impl Default for Platform {
 	}
 }
 
+/// Constant methods for [core::PlatformInfo]
 pub trait PlatformInfoTraitConst {
 	fn as_raw_PlatformInfo(&self) -> *const c_void;
 
@@ -28254,6 +27446,7 @@ pub trait PlatformInfoTraitConst {
 	
 }
 
+/// Mutable methods for [core::PlatformInfo]
 pub trait PlatformInfoTrait: core::PlatformInfoTraitConst {
 	fn as_raw_mut_PlatformInfo(&mut self) -> *mut c_void;
 
@@ -28329,6 +27522,7 @@ impl Default for PlatformInfo {
 	}
 }
 
+/// Constant methods for [core::Program]
 pub trait ProgramTraitConst {
 	fn as_raw_Program(&self) -> *const c_void;
 
@@ -28400,6 +27594,7 @@ pub trait ProgramTraitConst {
 	
 }
 
+/// Mutable methods for [core::Program]
 pub trait ProgramTrait: core::ProgramTraitConst {
 	fn as_raw_mut_Program(&mut self) -> *mut c_void;
 
@@ -28510,6 +27705,7 @@ impl Default for Program {
 	}
 }
 
+/// Constant methods for [core::ProgramSource]
 pub trait ProgramSourceTraitConst {
 	fn as_raw_ProgramSource(&self) -> *const c_void;
 
@@ -28543,6 +27739,7 @@ pub trait ProgramSourceTraitConst {
 	
 }
 
+/// Mutable methods for [core::ProgramSource]
 pub trait ProgramSourceTrait: core::ProgramSourceTraitConst {
 	fn as_raw_mut_ProgramSource(&mut self) -> *mut c_void;
 
@@ -28660,7 +27857,7 @@ impl ProgramSource {
 	/// Caller should guarantee binary buffer lifetime greater than ProgramSource object (and any of its copies).
 	/// 
 	/// Programs in this format are portable between OpenCL implementations with 'khr_spir' extension:
-	/// https://www.khronos.org/registry/OpenCL/sdk/2.0/docs/man/xhtml/cl_khr_spir.html
+	/// <https://www.khronos.org/registry/OpenCL/sdk/2.0/docs/man/xhtml/cl_khr_spir.html>
 	/// (but they are not portable between different platforms: 32-bit / 64-bit)
 	/// 
 	/// Note: these programs can't support vendor specific extensions, like 'cl_intel_subgroups'.
@@ -28700,6 +27897,7 @@ impl Default for ProgramSource {
 	}
 }
 
+/// Constant methods for [core::Queue]
 pub trait QueueTraitConst {
 	fn as_raw_Queue(&self) -> *const c_void;
 
@@ -28734,6 +27932,7 @@ pub trait QueueTraitConst {
 	
 }
 
+/// Mutable methods for [core::Queue]
 pub trait QueueTrait: core::QueueTraitConst {
 	fn as_raw_mut_Queue(&mut self) -> *mut c_void;
 
@@ -28840,6 +28039,7 @@ impl Default for Queue {
 	}
 }
 
+/// Constant methods for [core::Timer]
 pub trait TimerTraitConst {
 	fn as_raw_Timer(&self) -> *const c_void;
 
@@ -28854,6 +28054,7 @@ pub trait TimerTraitConst {
 	
 }
 
+/// Mutable methods for [core::Timer]
 pub trait TimerTrait: core::TimerTraitConst {
 	fn as_raw_mut_Timer(&mut self) -> *mut c_void;
 
@@ -28913,9 +28114,7 @@ impl Timer {
 	
 }
 
-/// Wrapper for OpenGL Client-Side Vertex arrays.
-/// 
-/// ogl::Arrays stores vertex data in ogl::Buffer objects.
+/// Constant methods for [core::Arrays]
 pub trait ArraysTraitConst {
 	fn as_raw_Arrays(&self) -> *const c_void;
 
@@ -28950,6 +28149,7 @@ pub trait ArraysTraitConst {
 	
 }
 
+/// Mutable methods for [core::Arrays]
 pub trait ArraysTrait: core::ArraysTraitConst {
 	fn as_raw_mut_Arrays(&mut self) -> *mut c_void;
 
@@ -28958,7 +28158,7 @@ pub trait ArraysTrait: core::ArraysTraitConst {
 	/// * vertex: array with vertex coordinates, can be both host and device memory.
 	#[inline]
 	fn set_vertex_array(&mut self, vertex: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(vertex);
+		extern_container_arg!(vertex);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Arrays_setVertexArray_const__InputArrayR(self.as_raw_mut_Arrays(), vertex.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -28981,7 +28181,7 @@ pub trait ArraysTrait: core::ArraysTraitConst {
 	/// * color: array with vertex colors, can be both host and device memory.
 	#[inline]
 	fn set_color_array(&mut self, color: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(color);
+		extern_container_arg!(color);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Arrays_setColorArray_const__InputArrayR(self.as_raw_mut_Arrays(), color.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -29004,7 +28204,7 @@ pub trait ArraysTrait: core::ArraysTraitConst {
 	/// * normal: array with vertex normals, can be both host and device memory.
 	#[inline]
 	fn set_normal_array(&mut self, normal: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(normal);
+		extern_container_arg!(normal);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Arrays_setNormalArray_const__InputArrayR(self.as_raw_mut_Arrays(), normal.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -29027,7 +28227,7 @@ pub trait ArraysTrait: core::ArraysTraitConst {
 	/// * texCoord: array with vertex texture coordinates, can be both host and device memory.
 	#[inline]
 	fn set_tex_coord_array(&mut self, tex_coord: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(tex_coord);
+		extern_container_arg!(tex_coord);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Arrays_setTexCoordArray_const__InputArrayR(self.as_raw_mut_Arrays(), tex_coord.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -29109,15 +28309,7 @@ impl Arrays {
 	
 }
 
-/// Smart pointer for OpenGL buffer object with reference counting.
-/// 
-/// Buffer Objects are OpenGL objects that store an array of unformatted memory allocated by the OpenGL
-/// context. These can be used to store vertex data, pixel data retrieved from images or the
-/// framebuffer, and a variety of other things.
-/// 
-/// ogl::Buffer has interface similar with Mat interface and represents 2D array memory.
-/// 
-/// ogl::Buffer supports memory transfers between host and device and also can be mapped to CUDA memory.
+/// Constant methods for [core::Buffer]
 pub trait BufferTraitConst {
 	fn as_raw_Buffer(&self) -> *const c_void;
 
@@ -29128,7 +28320,7 @@ pub trait BufferTraitConst {
 	/// ogl::Buffer ).
 	#[inline]
 	fn copy_to(&self, arr: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -29145,7 +28337,7 @@ pub trait BufferTraitConst {
 	/// ## Overloaded parameters
 	#[inline]
 	fn copy_to_1(&self, arr: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -29278,6 +28470,7 @@ pub trait BufferTraitConst {
 	
 }
 
+/// Mutable methods for [core::Buffer]
 pub trait BufferTrait: core::BufferTraitConst {
 	fn as_raw_mut_Buffer(&mut self) -> *mut c_void;
 
@@ -29371,7 +28564,7 @@ pub trait BufferTrait: core::BufferTraitConst {
 	/// * auto_release: false
 	#[inline]
 	fn copy_from(&mut self, arr: &dyn core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -29392,7 +28585,7 @@ pub trait BufferTrait: core::BufferTraitConst {
 	/// * auto_release: false
 	#[inline]
 	fn copy_from_1(&mut self, arr: &dyn core::ToInputArray, stream: &mut core::Stream, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -29650,7 +28843,7 @@ impl Buffer {
 	/// * auto_release: false
 	#[inline]
 	pub fn new_4(arr: &dyn core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -29674,7 +28867,7 @@ impl Buffer {
 	
 }
 
-/// Smart pointer for OpenGL 2D texture memory with reference counting.
+/// Constant methods for [core::Texture2D]
 pub trait Texture2DTraitConst {
 	fn as_raw_Texture2D(&self) -> *const c_void;
 
@@ -29691,7 +28884,7 @@ pub trait Texture2DTraitConst {
 	/// * auto_release: false
 	#[inline]
 	fn copy_to(&self, arr: &mut dyn core::ToOutputArray, ddepth: i32, auto_release: bool) -> Result<()> {
-		output_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ddepth, auto_release, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -29766,6 +28959,7 @@ pub trait Texture2DTraitConst {
 	
 }
 
+/// Mutable methods for [core::Texture2D]
 pub trait Texture2DTrait: core::Texture2DTraitConst {
 	fn as_raw_mut_Texture2D(&mut self) -> *mut c_void;
 
@@ -29854,7 +29048,7 @@ pub trait Texture2DTrait: core::Texture2DTraitConst {
 	/// * auto_release: false
 	#[inline]
 	fn copy_from(&mut self, arr: &dyn core::ToInputArray, auto_release: bool) -> Result<()> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -30005,7 +29199,7 @@ impl Texture2D {
 	/// * auto_release: false
 	#[inline]
 	pub fn new_4(arr: &dyn core::ToInputArray, auto_release: bool) -> Result<core::Texture2D> {
-		input_array_arg!(arr);
+		extern_container_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -30040,6 +29234,7 @@ impl ClassWithKeywordProperties {
 	
 }
 
+/// Constant methods for [core::LogTag]
 pub trait LogTagTraitConst {
 	fn as_raw_LogTag(&self) -> *const c_void;
 
@@ -30060,6 +29255,7 @@ pub trait LogTagTraitConst {
 	
 }
 
+/// Mutable methods for [core::LogTag]
 pub trait LogTagTrait: core::LogTagTraitConst {
 	fn as_raw_mut_LogTag(&mut self) -> *mut c_void;
 
@@ -30108,6 +29304,7 @@ impl LogTag {
 	
 }
 
+/// Constant methods for [core::OriginalClassName]
 pub trait OriginalClassNameTraitConst {
 	fn as_raw_OriginalClassName(&self) -> *const c_void;
 
@@ -30131,6 +29328,7 @@ pub trait OriginalClassNameTraitConst {
 	
 }
 
+/// Mutable methods for [core::OriginalClassName]
 pub trait OriginalClassNameTrait: core::OriginalClassNameTraitConst {
 	fn as_raw_mut_OriginalClassName(&mut self) -> *mut c_void;
 

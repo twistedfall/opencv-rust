@@ -177,6 +177,20 @@ opencv_type_simple! { crate::stereo::PropagationParameters }
 impl PropagationParameters {
 }
 
+/// Constant methods for [crate::stereo::QuasiDenseStereo]
+pub trait QuasiDenseStereoConst {
+	fn as_raw_QuasiDenseStereo(&self) -> *const c_void;
+
+	#[inline]
+	fn param(&self) -> crate::stereo::PropagationParameters {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_stereo_QuasiDenseStereo_getPropParam_const(self.as_raw_QuasiDenseStereo(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+	
+}
+
 /// Class containing the methods needed for Quasi Dense Stereo computation.
 /// 
 /// This module contains the code to perform quasi dense stereo matching.
@@ -198,19 +212,6 @@ impl PropagationParameters {
 /// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
 /// 
 /// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lhuillier2000)
-pub trait QuasiDenseStereoConst {
-	fn as_raw_QuasiDenseStereo(&self) -> *const c_void;
-
-	#[inline]
-	fn param(&self) -> crate::stereo::PropagationParameters {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereo_QuasiDenseStereo_getPropParam_const(self.as_raw_QuasiDenseStereo(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		ret
-	}
-	
-}
-
 pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
 	fn as_raw_mut_QuasiDenseStereo(&mut self) -> *mut c_void;
 

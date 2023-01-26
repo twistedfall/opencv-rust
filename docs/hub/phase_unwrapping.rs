@@ -28,6 +28,12 @@ pub mod prelude {
 	pub use { super::PhaseUnwrappingConst, super::PhaseUnwrapping, super::HistogramPhaseUnwrappingConst, super::HistogramPhaseUnwrapping };
 }
 
+/// Constant methods for [crate::phase_unwrapping::HistogramPhaseUnwrapping]
+pub trait HistogramPhaseUnwrappingConst: crate::phase_unwrapping::PhaseUnwrappingConst {
+	fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void;
+
+}
+
 /// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
 /// This algorithm belongs to the quality-guided phase unwrapping methods.
 /// First, it computes a reliability map from second differences between a pixel and its eight neighbours.
@@ -38,11 +44,6 @@ pub mod prelude {
 /// This histogram is then used to unwrap pixels, starting from the highest quality pixel.
 /// 
 /// The wrapped phase map and the unwrapped result are stored in CV_32FC1 Mat.
-pub trait HistogramPhaseUnwrappingConst: crate::phase_unwrapping::PhaseUnwrappingConst {
-	fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void;
-
-}
-
 pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::HistogramPhaseUnwrappingConst + crate::phase_unwrapping::PhaseUnwrapping {
 	fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void;
 
@@ -52,7 +53,7 @@ pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::HistogramPhaseUnwra
 	/// * reliabilityMap: Image where the reliability map is stored.
 	#[inline]
 	fn get_inverse_reliability_map(&mut self, reliability_map: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(reliability_map);
+		extern_container_arg!(reliability_map);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayR(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -113,12 +114,13 @@ impl HistogramPhaseUnwrapping_Params {
 	
 }
 
-/// Abstract base class for phase unwrapping.
+/// Constant methods for [crate::phase_unwrapping::PhaseUnwrapping]
 pub trait PhaseUnwrappingConst: core::AlgorithmTraitConst {
 	fn as_raw_PhaseUnwrapping(&self) -> *const c_void;
 
 }
 
+/// Abstract base class for phase unwrapping.
 pub trait PhaseUnwrapping: core::AlgorithmTrait + crate::phase_unwrapping::PhaseUnwrappingConst {
 	fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void;
 
@@ -133,9 +135,9 @@ pub trait PhaseUnwrapping: core::AlgorithmTrait + crate::phase_unwrapping::Phase
 	/// * shadow_mask: noArray()
 	#[inline]
 	fn unwrap_phase_map(&mut self, wrapped_phase_map: &dyn core::ToInputArray, unwrapped_phase_map: &mut dyn core::ToOutputArray, shadow_mask: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(wrapped_phase_map);
-		output_array_arg!(unwrapped_phase_map);
-		input_array_arg!(shadow_mask);
+		extern_container_arg!(wrapped_phase_map);
+		extern_container_arg!(unwrapped_phase_map);
+		extern_container_arg!(shadow_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -390,7 +390,7 @@ pub fn imcount(filename: &str, flags: i32) -> Result<size_t> {
 /// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 #[inline]
 pub fn imdecode(buf: &dyn core::ToInputArray, flags: i32) -> Result<core::Mat> {
-	input_array_arg!(buf);
+	extern_container_arg!(buf);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_imdecode_const__InputArrayR_int(buf.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -420,7 +420,7 @@ pub fn imdecode(buf: &dyn core::ToInputArray, flags: i32) -> Result<core::Mat> {
 /// reallocations when the function is called repeatedly for images of the same size.
 #[inline]
 pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
-	input_array_arg!(buf);
+	extern_container_arg!(buf);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_imdecode_const__InputArrayR_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -444,7 +444,7 @@ pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat
 /// * mats: A vector of Mat objects holding each page, if more than one.
 #[inline]
 pub fn imdecodemulti(buf: &dyn core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
-	input_array_arg!(buf);
+	extern_container_arg!(buf);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -468,7 +468,7 @@ pub fn imdecodemulti(buf: &dyn core::ToInputArray, flags: i32, mats: &mut core::
 #[inline]
 pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
 	extern_container_arg!(ext);
-	input_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -514,13 +514,13 @@ pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector<
 ///    codecs supplied with an OS image. Install the relevant packages (do not forget the development
 ///    files, for example, "libjpeg-dev", in Debian\* and Ubuntu\*) to get the codec support or turn
 ///    on the OPENCV_BUILD_3RDPARTY_LIBS flag in CMake.
-/// *   In the case you set *WITH_GDAL* flag to true in CMake and @ref IMREAD_LOAD_GDAL to load the image,
+/// *   In the case you set *WITH_GDAL* flag to true in CMake and [IMREAD_LOAD_GDAL] to load the image,
 ///    then the [GDAL](http://www.gdal.org) driver will be used in order to decode the image, supporting
 ///    the following formats: [Raster](http://www.gdal.org/formats_list.html),
 ///    [Vector](http://www.gdal.org/ogr_formats.html).
 /// *   If EXIF information is embedded in the image file, the EXIF orientation will be taken into account
-///    and thus the image will be rotated accordingly except if the flags @ref IMREAD_IGNORE_ORIENTATION
-///    or @ref IMREAD_UNCHANGED are passed.
+///    and thus the image will be rotated accordingly except if the flags [IMREAD_IGNORE_ORIENTATION]
+///    or [IMREAD_UNCHANGED] are passed.
 /// *   Use the IMREAD_UNCHANGED flag to keep the floating point values from PFM image.
 /// *   By default number of pixels must be less than 2^30. Limit can be set using system
 ///    variable OPENCV_IO_MAX_IMAGE_PIXELS
@@ -623,7 +623,7 @@ pub fn imreadmulti_range(filename: &str, mats: &mut core::Vector<core::Mat>, sta
 #[inline]
 pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 	extern_container_arg!(filename);
-	input_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vectorLintGR(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -638,7 +638,7 @@ pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vect
 #[inline]
 pub fn imwritemulti(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 	extern_container_arg!(filename);
-	input_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_imwritemulti_const_StringR_const__InputArrayR_const_vectorLintGR(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -646,18 +646,7 @@ pub fn imwritemulti(filename: &str, img: &dyn core::ToInputArray, params: &core:
 	Ok(ret)
 }
 
-/// To read Multi Page images on demand
-/// 
-/// The ImageCollection class provides iterator API to read multi page images on demand. Create iterator
-/// to the collection of the images and iterate over the collection. Decode the necessary page with operator*.
-/// 
-/// The performance of page decoding is O(1) if collection is increment sequentially. If the user wants to access random page,
-/// then the time Complexity is O(n) because the collection has to be reinitialized every time in order to go to the correct page.
-/// However, the intermediate pages are not decoded during the process, so typically it's quite fast.
-/// This is required because multipage codecs does not support going backwards.
-/// After decoding the one page, it is stored inside the collection cache. Hence, trying to get Mat object from already decoded page is O(1).
-/// If you need memory, you can use .releaseCache() method to release cached index.
-/// The space complexity is O(n) if all pages are decoded into memory. The user is able to decode and release images on demand.
+/// Constant methods for [crate::imgcodecs::ImageCollection]
 pub trait ImageCollectionTraitConst {
 	fn as_raw_ImageCollection(&self) -> *const c_void;
 
@@ -672,6 +661,7 @@ pub trait ImageCollectionTraitConst {
 	
 }
 
+/// Mutable methods for [crate::imgcodecs::ImageCollection]
 pub trait ImageCollectionTrait: crate::imgcodecs::ImageCollectionTraitConst {
 	fn as_raw_mut_ImageCollection(&mut self) -> *mut c_void;
 
@@ -795,11 +785,13 @@ impl ImageCollection {
 	
 }
 
+/// Constant methods for [crate::imgcodecs::ImageCollection_iterator]
 pub trait ImageCollection_iteratorTraitConst {
 	fn as_raw_ImageCollection_iterator(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::imgcodecs::ImageCollection_iterator]
 pub trait ImageCollection_iteratorTrait: crate::imgcodecs::ImageCollection_iteratorTraitConst {
 	fn as_raw_mut_ImageCollection_iterator(&mut self) -> *mut c_void;
 

@@ -22,18 +22,13 @@ pub mod prelude {
 	pub use { super::DnnSuperResImplTraitConst, super::DnnSuperResImplTrait };
 }
 
-/// A class to upscale images via convolutional neural networks.
-/// The following four models are implemented:
-/// 
-/// - edsr
-/// - espcn
-/// - fsrcnn
-/// - lapsrn
+/// Constant methods for [crate::dnn_superres::DnnSuperResImpl]
 pub trait DnnSuperResImplTraitConst {
 	fn as_raw_DnnSuperResImpl(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::dnn_superres::DnnSuperResImpl]
 pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void;
 
@@ -109,8 +104,8 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	/// * result: Destination upscaled image
 	#[inline]
 	fn upsample(&mut self, img: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(img);
-		output_array_arg!(result);
+		extern_container_arg!(img);
+		extern_container_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsample_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -126,7 +121,7 @@ pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 	/// * node_names: Names of the output nodes in the neural network
 	#[inline]
 	fn upsample_multioutput(&mut self, img: &dyn core::ToInputArray, imgs_new: &mut core::Vector<core::Mat>, scale_factors: &core::Vector<i32>, node_names: &core::Vector<String>) -> Result<()> {
-		input_array_arg!(img);
+		extern_container_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayR_vectorLMatGR_const_vectorLintGR_const_vectorLStringGR(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), imgs_new.as_raw_mut_VectorOfMat(), scale_factors.as_raw_VectorOfi32(), node_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -462,14 +462,15 @@ opencv_type_simple! { crate::cudacodec::EncodeQp }
 impl EncodeQp {
 }
 
-/// Interface for encoder callbacks.
-/// 
-/// User can implement own multiplexing by implementing this interface.
+/// Constant methods for [crate::cudacodec::EncoderCallback]
 pub trait EncoderCallbackConst {
 	fn as_raw_EncoderCallback(&self) -> *const c_void;
 
 }
 
+/// Interface for encoder callbacks.
+/// 
+/// User can implement own multiplexing by implementing this interface.
 pub trait EncoderCallback: crate::cudacodec::EncoderCallbackConst {
 	fn as_raw_mut_EncoderCallback(&mut self) -> *mut c_void;
 
@@ -578,9 +579,7 @@ impl FormatInfo {
 	
 }
 
-/// Interface for video demultiplexing. :
-/// 
-/// User can implement own demultiplexing by implementing this interface.
+/// Constant methods for [crate::cudacodec::RawVideoSource]
 pub trait RawVideoSourceConst {
 	fn as_raw_RawVideoSource(&self) -> *const c_void;
 
@@ -621,7 +620,7 @@ pub trait RawVideoSourceConst {
 	/// 
 	/// ## Parameters
 	/// * propertyId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
-	/// or one from @ref videoio_flags_others.
+	/// or one from [videoio_flags_others].
 	/// * propertyVal: Value for the specified property.
 	/// 
 	/// ## Returns
@@ -637,6 +636,9 @@ pub trait RawVideoSourceConst {
 	
 }
 
+/// Interface for video demultiplexing. :
+/// 
+/// User can implement own demultiplexing by implementing this interface.
 pub trait RawVideoSource: crate::cudacodec::RawVideoSourceConst {
 	fn as_raw_mut_RawVideoSource(&mut self) -> *mut c_void;
 
@@ -666,16 +668,7 @@ pub trait RawVideoSource: crate::cudacodec::RawVideoSourceConst {
 	
 }
 
-/// Video reader interface.
-/// 
-/// Available when built with WITH_NVCUVID=ON while Nvidia's Video Codec SDK is installed.
-/// 
-/// Decoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
-/// 
-/// 
-/// Note:
-///    *   An example on how to use the videoReader class can be found at
-///        opencv_source_code/samples/gpu/video_reader.cpp
+/// Constant methods for [crate::cudacodec::VideoReader]
 pub trait VideoReaderConst {
 	fn as_raw_VideoReader(&self) -> *const c_void;
 
@@ -707,7 +700,7 @@ pub trait VideoReaderConst {
 	/// * idx: static_cast<size_t>(VideoReaderProps::PROP_DECODED_FRAME_IDX)
 	#[inline]
 	fn retrieve(&self, frame: &mut dyn core::ToOutputArray, idx: size_t) -> Result<bool> {
-		output_array_arg!(frame);
+		extern_container_arg!(frame);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_const__OutputArrayR_const_size_t(self.as_raw_VideoReader(), frame.as_raw__OutputArray(), idx, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -788,7 +781,7 @@ pub trait VideoReaderConst {
 	/// 
 	/// ## Parameters
 	/// * propertyId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
-	/// or one from @ref videoio_flags_others.
+	/// or one from [videoio_flags_others].
 	/// * propertyVal: Value for the specified property.
 	/// 
 	/// ## Returns
@@ -804,6 +797,16 @@ pub trait VideoReaderConst {
 	
 }
 
+/// Video reader interface.
+/// 
+/// Available when built with WITH_NVCUVID=ON while Nvidia's Video Codec SDK is installed.
+/// 
+/// Decoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
+/// 
+/// 
+/// Note:
+///    *   An example on how to use the videoReader class can be found at
+///        opencv_source_code/samples/gpu/video_reader.cpp
 pub trait VideoReader: crate::cudacodec::VideoReaderConst {
 	fn as_raw_mut_VideoReader(&mut self) -> *mut c_void;
 
@@ -937,16 +940,7 @@ impl VideoReaderInitParams {
 	
 }
 
-/// Video writer interface.
-/// 
-/// Available when built with WITH_NVCUVENC=ON while Nvidia's Video Codec SDK is installed.
-/// 
-/// Encoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
-/// 
-/// 
-/// Note:
-///    *   An example on how to use the videoWriter class can be found at
-///        opencv_source_code/samples/gpu/video_writer.cpp
+/// Constant methods for [crate::cudacodec::VideoWriter]
 pub trait VideoWriterConst {
 	fn as_raw_VideoWriter(&self) -> *const c_void;
 
@@ -962,6 +956,16 @@ pub trait VideoWriterConst {
 	
 }
 
+/// Video writer interface.
+/// 
+/// Available when built with WITH_NVCUVENC=ON while Nvidia's Video Codec SDK is installed.
+/// 
+/// Encoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
+/// 
+/// 
+/// Note:
+///    *   An example on how to use the videoWriter class can be found at
+///        opencv_source_code/samples/gpu/video_writer.cpp
 pub trait VideoWriter: crate::cudacodec::VideoWriterConst {
 	fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void;
 
@@ -974,7 +978,7 @@ pub trait VideoWriter: crate::cudacodec::VideoWriterConst {
 	/// surface format as has been specified when opening the video writer.
 	#[inline]
 	fn write(&mut self, frame: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(frame);
+		extern_container_arg!(frame);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), frame.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -781,7 +781,7 @@ pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
 #[inline]
 pub fn imshow(winname: &str, mat: &dyn core::ToInputArray) -> Result<()> {
 	extern_container_arg!(winname);
-	input_array_arg!(mat);
+	extern_container_arg!(mat);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_imshow_const_StringR_const__InputArrayR(winname.opencv_as_extern(), mat.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -974,7 +974,7 @@ pub fn save_window_parameters(window_name: &str) -> Result<()> {
 #[inline]
 pub fn select_roi_for_window(window_name: &str, img: &dyn core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
 	extern_container_arg!(window_name);
-	input_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_selectROI_const_StringR_const__InputArrayR_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1007,7 +1007,7 @@ pub fn select_roi_for_window(window_name: &str, img: &dyn core::ToInputArray, sh
 /// * from_center: false
 #[inline]
 pub fn select_roi(img: &dyn core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
-	input_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_selectROI_const__InputArrayR_bool_bool(img.as_raw__InputArray(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1039,7 +1039,7 @@ pub fn select_roi(img: &dyn core::ToInputArray, show_crosshair: bool, from_cente
 #[inline]
 pub fn select_rois(window_name: &str, img: &dyn core::ToInputArray, bounding_boxes: &mut core::Vector<core::Rect>, show_crosshair: bool, from_center: bool) -> Result<()> {
 	extern_container_arg!(window_name);
-	input_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_selectROIs_const_StringR_const__InputArrayR_vectorLRectGR_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), bounding_boxes.as_raw_mut_VectorOfRect(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1341,7 +1341,7 @@ pub fn wait_key(delay: i32) -> Result<i32> {
 	Ok(ret)
 }
 
-/// QtFont available only for Qt. See cv::fontQt
+/// Constant methods for [crate::highgui::QtFont]
 pub trait QtFontTraitConst {
 	fn as_raw_QtFont(&self) -> *const c_void;
 
@@ -1430,6 +1430,7 @@ pub trait QtFontTraitConst {
 	
 }
 
+/// Mutable methods for [crate::highgui::QtFont]
 pub trait QtFontTrait: crate::highgui::QtFontTraitConst {
 	fn as_raw_mut_QtFont(&mut self) -> *mut c_void;
 

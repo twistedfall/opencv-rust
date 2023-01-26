@@ -117,8 +117,8 @@ opencv_type_enum! { crate::xphoto::TransformTypes }
 /// * gainR: gain for the R channel
 #[inline]
 pub fn apply_channel_gains(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, gain_b: f32, gain_g: f32, gain_r: f32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_xphoto_applyChannelGains_const__InputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), gain_b, gain_g, gain_r, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -177,9 +177,9 @@ pub fn apply_channel_gains(src: &dyn core::ToInputArray, dst: &mut dyn core::ToO
 /// * transform_type: cv::xphoto::HAAR
 #[inline]
 pub fn bm3d_denoising(src: &dyn core::ToInputArray, dst_step1: &mut dyn core::ToInputOutputArray, dst_step2: &mut dyn core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	input_output_array_arg!(dst_step1);
-	output_array_arg!(dst_step2);
+	extern_container_arg!(src);
+	extern_container_arg!(dst_step1);
+	extern_container_arg!(dst_step2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst_step1.as_raw__InputOutputArray(), dst_step2.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -238,8 +238,8 @@ pub fn bm3d_denoising(src: &dyn core::ToInputArray, dst_step1: &mut dyn core::To
 /// * transform_type: cv::xphoto::HAAR
 #[inline]
 pub fn bm3d_denoising_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -370,8 +370,8 @@ pub fn inpaint(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, algorithm
 /// * dynRatio: image is divided by dynRatio before histogram processing
 #[inline]
 pub fn oil_painting_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, size: i32, dyn_ratio: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_xphoto_oilPainting_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), size, dyn_ratio, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -389,13 +389,32 @@ pub fn oil_painting_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// * code: 	color space conversion code(see ColorConversionCodes). Histogram will used only first plane
 #[inline]
 pub fn oil_painting(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, size: i32, dyn_ratio: i32, code: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_xphoto_oilPainting_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), size, dyn_ratio, code, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
 	let ret = ret.into_result()?;
 	Ok(ret)
+}
+
+/// Constant methods for [crate::xphoto::GrayworldWB]
+pub trait GrayworldWBConst: crate::xphoto::WhiteBalancerConst {
+	fn as_raw_GrayworldWB(&self) -> *const c_void;
+
+	/// Maximum saturation for a pixel to be included in the
+	///    gray-world assumption
+	/// ## See also
+	/// setSaturationThreshold
+	#[inline]
+	fn get_saturation_threshold(&self) -> Result<f32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xphoto_GrayworldWB_getSaturationThreshold_const(self.as_raw_GrayworldWB(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 }
 
 /// Gray-world white balance algorithm
@@ -417,25 +436,7 @@ pub fn oil_painting(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 /// threshold of 0 means no pixels are used. Lower thresholds are useful in
 /// white-balancing saturated images.
 /// 
-/// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
-pub trait GrayworldWBConst: crate::xphoto::WhiteBalancerConst {
-	fn as_raw_GrayworldWB(&self) -> *const c_void;
-
-	/// Maximum saturation for a pixel to be included in the
-	///    gray-world assumption
-	/// ## See also
-	/// setSaturationThreshold
-	#[inline]
-	fn get_saturation_threshold(&self) -> Result<f32> {
-		return_send!(via ocvrs_return);
-		unsafe { sys::cv_xphoto_GrayworldWB_getSaturationThreshold_const(self.as_raw_GrayworldWB(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		let ret = ret.into_result()?;
-		Ok(ret)
-	}
-	
-}
-
+/// Currently supports images of type [CV_8UC3] and [CV_16UC3].
 pub trait GrayworldWB: crate::xphoto::GrayworldWBConst + crate::xphoto::WhiteBalancer {
 	fn as_raw_mut_GrayworldWB(&mut self) -> *mut c_void;
 
@@ -454,19 +455,7 @@ pub trait GrayworldWB: crate::xphoto::GrayworldWBConst + crate::xphoto::WhiteBal
 	
 }
 
-/// More sophisticated learning-based automatic white balance algorithm.
-/// 
-/// As @ref GrayworldWB, this algorithm works by applying different gains to the input
-/// image channels, but their computation is a bit more involved compared to the
-/// simple gray-world assumption. More details about the algorithm can be found in
-/// [Cheng2015](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Cheng2015) .
-/// 
-/// To mask out saturated pixels this function uses only pixels that satisfy the
-/// following condition:
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%20%5Cfrac%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%7D%7B%5Ctexttt%7Brange%5Fmax%5Fval%7D%7D%20%3C%20%5Ctexttt%7Bsaturation%5Fthresh%7D%20)
-/// 
-/// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
+/// Constant methods for [crate::xphoto::LearningBasedWB]
 pub trait LearningBasedWBConst: crate::xphoto::WhiteBalancerConst {
 	fn as_raw_LearningBasedWB(&self) -> *const c_void;
 
@@ -512,6 +501,19 @@ pub trait LearningBasedWBConst: crate::xphoto::WhiteBalancerConst {
 	
 }
 
+/// More sophisticated learning-based automatic white balance algorithm.
+/// 
+/// As [GrayworldWB], this algorithm works by applying different gains to the input
+/// image channels, but their computation is a bit more involved compared to the
+/// simple gray-world assumption. More details about the algorithm can be found in
+/// [Cheng2015](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Cheng2015) .
+/// 
+/// To mask out saturated pixels this function uses only pixels that satisfy the
+/// following condition:
+/// 
+/// ![block formula](https://latex.codecogs.com/png.latex?%20%5Cfrac%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%7D%7B%5Ctexttt%7Brange%5Fmax%5Fval%7D%7D%20%3C%20%5Ctexttt%7Bsaturation%5Fthresh%7D%20)
+/// 
+/// Currently supports images of type [CV_8UC3] and [CV_16UC3].
 pub trait LearningBasedWB: crate::xphoto::LearningBasedWBConst + crate::xphoto::WhiteBalancer {
 	fn as_raw_mut_LearningBasedWB(&mut self) -> *mut c_void;
 
@@ -531,8 +533,8 @@ pub trait LearningBasedWB: crate::xphoto::LearningBasedWBConst + crate::xphoto::
 	/// * dst: An array of four (r,g) chromaticity tuples corresponding to the features listed above.
 	#[inline]
 	fn extract_simple_features(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(src);
-		output_array_arg!(dst);
+		extern_container_arg!(src);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_LearningBasedWB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -582,9 +584,7 @@ pub trait LearningBasedWB: crate::xphoto::LearningBasedWBConst + crate::xphoto::
 	
 }
 
-/// A simple white balance algorithm that works by independently stretching
-/// each of the input image channels to the specified range. For increased robustness
-/// it ignores the top and bottom ![inline formula](https://latex.codecogs.com/png.latex?p%5C%25) of pixel values.
+/// Constant methods for [crate::xphoto::SimpleWB]
 pub trait SimpleWBConst: crate::xphoto::WhiteBalancerConst {
 	fn as_raw_SimpleWB(&self) -> *const c_void;
 
@@ -650,6 +650,9 @@ pub trait SimpleWBConst: crate::xphoto::WhiteBalancerConst {
 	
 }
 
+/// A simple white balance algorithm that works by independently stretching
+/// each of the input image channels to the specified range. For increased robustness
+/// it ignores the top and bottom ![inline formula](https://latex.codecogs.com/png.latex?p%5C%25) of pixel values.
 pub trait SimpleWB: crate::xphoto::SimpleWBConst + crate::xphoto::WhiteBalancer {
 	fn as_raw_mut_SimpleWB(&mut self) -> *mut c_void;
 
@@ -715,14 +718,7 @@ pub trait SimpleWB: crate::xphoto::SimpleWBConst + crate::xphoto::WhiteBalancer 
 	
 }
 
-/// This algorithm decomposes image into two layers: base layer and detail layer using bilateral filter
-/// and compresses contrast of the base layer thus preserving all the details.
-/// 
-/// This implementation uses regular bilateral filter from OpenCV.
-/// 
-/// Saturation enhancement is possible as in cv::TonemapDrago.
-/// 
-/// For more information see [DD02](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_DD02) .
+/// Constant methods for [crate::xphoto::TonemapDurand]
 pub trait TonemapDurandConst: crate::photo::TonemapConst {
 	fn as_raw_TonemapDurand(&self) -> *const c_void;
 
@@ -764,6 +760,14 @@ pub trait TonemapDurandConst: crate::photo::TonemapConst {
 	
 }
 
+/// This algorithm decomposes image into two layers: base layer and detail layer using bilateral filter
+/// and compresses contrast of the base layer thus preserving all the details.
+/// 
+/// This implementation uses regular bilateral filter from OpenCV.
+/// 
+/// Saturation enhancement is possible as in cv::TonemapDrago.
+/// 
+/// For more information see [DD02](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_DD02) .
 pub trait TonemapDurand: crate::photo::Tonemap + crate::xphoto::TonemapDurandConst {
 	fn as_raw_mut_TonemapDurand(&mut self) -> *mut c_void;
 
@@ -805,12 +809,13 @@ pub trait TonemapDurand: crate::photo::Tonemap + crate::xphoto::TonemapDurandCon
 	
 }
 
-/// The base class for auto white balance algorithms.
+/// Constant methods for [crate::xphoto::WhiteBalancer]
 pub trait WhiteBalancerConst: core::AlgorithmTraitConst {
 	fn as_raw_WhiteBalancer(&self) -> *const c_void;
 
 }
 
+/// The base class for auto white balance algorithms.
 pub trait WhiteBalancer: core::AlgorithmTrait + crate::xphoto::WhiteBalancerConst {
 	fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void;
 
@@ -823,8 +828,8 @@ pub trait WhiteBalancer: core::AlgorithmTrait + crate::xphoto::WhiteBalancerCons
 	/// cvtColor, equalizeHist
 	#[inline]
 	fn balance_white(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(src);
-		output_array_arg!(dst);
+		extern_container_arg!(src);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WhiteBalancer(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

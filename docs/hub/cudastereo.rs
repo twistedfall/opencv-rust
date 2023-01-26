@@ -156,8 +156,8 @@ pub fn create_stereo_sgm(min_disparity: i32, num_disparities: i32, p1: i32, p2: 
 /// * stream: Stream::Null()
 #[inline]
 pub fn draw_color_disp(src_disp: &dyn core::ToInputArray, dst_disp: &mut dyn core::ToOutputArray, ndisp: i32, stream: &mut core::Stream) -> Result<()> {
-	input_array_arg!(src_disp);
-	output_array_arg!(dst_disp);
+	extern_container_arg!(src_disp);
+	extern_container_arg!(dst_disp);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cuda_drawColorDisp_const__InputArrayR_const__OutputArrayR_int_StreamR(src_disp.as_raw__InputArray(), dst_disp.as_raw__OutputArray(), ndisp, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -197,9 +197,9 @@ pub fn reproject_image_to_3d_1(mut disp: core::GpuMat, xyzw: &mut core::GpuMat, 
 /// * stream: Stream::Null()
 #[inline]
 pub fn reproject_image_to_3d(disp: &dyn core::ToInputArray, xyzw: &mut dyn core::ToOutputArray, q: &dyn core::ToInputArray, dst_cn: i32, stream: &mut core::Stream) -> Result<()> {
-	input_array_arg!(disp);
-	output_array_arg!(xyzw);
-	input_array_arg!(q);
+	extern_container_arg!(disp);
+	extern_container_arg!(xyzw);
+	extern_container_arg!(q);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cuda_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(disp.as_raw__InputArray(), xyzw.as_raw__OutputArray(), q.as_raw__InputArray(), dst_cn, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -207,9 +207,7 @@ pub fn reproject_image_to_3d(disp: &dyn core::ToInputArray, xyzw: &mut dyn core:
 	Ok(ret)
 }
 
-/// Class refining a disparity map using joint bilateral filtering. :
-/// 
-/// The class implements [Yang2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
+/// Constant methods for [crate::cudastereo::CUDA_DisparityBilateralFilter]
 pub trait CUDA_DisparityBilateralFilterConst: core::AlgorithmTraitConst {
 	fn as_raw_CUDA_DisparityBilateralFilter(&self) -> *const c_void;
 
@@ -272,6 +270,9 @@ pub trait CUDA_DisparityBilateralFilterConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Class refining a disparity map using joint bilateral filtering. :
+/// 
+/// The class implements [Yang2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
 pub trait CUDA_DisparityBilateralFilter: core::AlgorithmTrait + crate::cudastereo::CUDA_DisparityBilateralFilterConst {
 	fn as_raw_mut_CUDA_DisparityBilateralFilter(&mut self) -> *mut c_void;
 
@@ -287,9 +288,9 @@ pub trait CUDA_DisparityBilateralFilter: core::AlgorithmTrait + crate::cudastere
 	/// * stream: Stream::Null()
 	#[inline]
 	fn apply(&mut self, disparity: &dyn core::ToInputArray, image: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(disparity);
-		input_array_arg!(image);
-		output_array_arg!(dst);
+		extern_container_arg!(disparity);
+		extern_container_arg!(image);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_DisparityBilateralFilter_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_DisparityBilateralFilter(), disparity.as_raw__InputArray(), image.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -353,22 +354,23 @@ pub trait CUDA_DisparityBilateralFilter: core::AlgorithmTrait + crate::cudastere
 	
 }
 
-/// Class computing stereo correspondence (disparity map) using the block matching algorithm. :
-/// ## See also
-/// StereoBM
+/// Constant methods for [crate::cudastereo::CUDA_StereoBM]
 pub trait CUDA_StereoBMConst: crate::calib3d::StereoBMConst {
 	fn as_raw_CUDA_StereoBM(&self) -> *const c_void;
 
 }
 
+/// Class computing stereo correspondence (disparity map) using the block matching algorithm. :
+/// ## See also
+/// StereoBM
 pub trait CUDA_StereoBM: crate::calib3d::StereoBM + crate::cudastereo::CUDA_StereoBMConst {
 	fn as_raw_mut_CUDA_StereoBM(&mut self) -> *mut c_void;
 
 	#[inline]
 	fn compute(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(left);
-		input_array_arg!(right);
-		output_array_arg!(disparity);
+		extern_container_arg!(left);
+		extern_container_arg!(right);
+		extern_container_arg!(disparity);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_StereoBM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -378,39 +380,7 @@ pub trait CUDA_StereoBM: crate::calib3d::StereoBM + crate::cudastereo::CUDA_Ster
 	
 }
 
-/// Class computing stereo correspondence using the belief propagation algorithm. :
-/// 
-/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
-/// (using a truncated linear model) or use a user-provided data cost.
-/// 
-/// 
-/// Note:
-///    StereoBeliefPropagation requires a lot of memory for message storage:
-/// 
-///    ![block formula](https://latex.codecogs.com/png.latex?width%20%5C%5F%20step%20%20%5Ccdot%20height%20%20%5Ccdot%20ndisp%20%20%5Ccdot%204%20%20%5Ccdot%20%281%20%2B%200%2E25%29)
-/// 
-///    and for data cost storage:
-/// 
-///    ![block formula](https://latex.codecogs.com/png.latex?width%5C%5Fstep%20%5Ccdot%20height%20%5Ccdot%20ndisp%20%5Ccdot%20%281%20%2B%200%2E25%20%2B%200%2E0625%20%2B%20%20%5Cdotsm%20%2B%20%5Cfrac%7B1%7D%7B4%5E%7Blevels%7D%7D%29)
-/// 
-///    width_step is the number of bytes in a line including padding.
-/// 
-/// StereoBeliefPropagation uses a truncated linear model for the data cost and discontinuity terms:
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?DataCost%20%3D%20data%20%5C%5F%20weight%20%20%5Ccdot%20%5Cmin%20%28%20%5Clvert%20Img%5FLeft%28x%2Cy%29%2DImg%5FRight%28x%2Dd%2Cy%29%20%20%5Crvert%20%2C%20max%20%5C%5F%20data%20%5C%5F%20term%29)
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
-/// 
-/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
-/// 
-/// By default, StereoBeliefPropagation uses floating-point arithmetics and the CV_32FC1 type for
-/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
-/// performance. To avoid an overflow in this case, the parameters must satisfy the following
-/// requirement:
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?10%20%20%5Ccdot%202%5E%7Blevels%2D1%7D%20%20%5Ccdot%20max%20%5C%5F%20data%20%5C%5F%20term%20%3C%20SHRT%20%5C%5F%20MAX)
-/// ## See also
-/// StereoMatcher
+/// Constant methods for [crate::cudastereo::CUDA_StereoBeliefPropagation]
 pub trait CUDA_StereoBeliefPropagationConst: crate::calib3d::StereoMatcherConst {
 	fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void;
 
@@ -486,6 +456,39 @@ pub trait CUDA_StereoBeliefPropagationConst: crate::calib3d::StereoMatcherConst 
 	
 }
 
+/// Class computing stereo correspondence using the belief propagation algorithm. :
+/// 
+/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
+/// (using a truncated linear model) or use a user-provided data cost.
+/// 
+/// 
+/// Note:
+///    StereoBeliefPropagation requires a lot of memory for message storage:
+/// 
+///    ![block formula](https://latex.codecogs.com/png.latex?width%20%5C%5F%20step%20%20%5Ccdot%20height%20%20%5Ccdot%20ndisp%20%20%5Ccdot%204%20%20%5Ccdot%20%281%20%2B%200%2E25%29)
+/// 
+///    and for data cost storage:
+/// 
+///    ![block formula](https://latex.codecogs.com/png.latex?width%5C%5Fstep%20%5Ccdot%20height%20%5Ccdot%20ndisp%20%5Ccdot%20%281%20%2B%200%2E25%20%2B%200%2E0625%20%2B%20%20%5Cdotsm%20%2B%20%5Cfrac%7B1%7D%7B4%5E%7Blevels%7D%7D%29)
+/// 
+///    width_step is the number of bytes in a line including padding.
+/// 
+/// StereoBeliefPropagation uses a truncated linear model for the data cost and discontinuity terms:
+/// 
+/// ![block formula](https://latex.codecogs.com/png.latex?DataCost%20%3D%20data%20%5C%5F%20weight%20%20%5Ccdot%20%5Cmin%20%28%20%5Clvert%20Img%5FLeft%28x%2Cy%29%2DImg%5FRight%28x%2Dd%2Cy%29%20%20%5Crvert%20%2C%20max%20%5C%5F%20data%20%5C%5F%20term%29)
+/// 
+/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
+/// 
+/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
+/// 
+/// By default, StereoBeliefPropagation uses floating-point arithmetics and the CV_32FC1 type for
+/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
+/// performance. To avoid an overflow in this case, the parameters must satisfy the following
+/// requirement:
+/// 
+/// ![block formula](https://latex.codecogs.com/png.latex?10%20%20%5Ccdot%202%5E%7Blevels%2D1%7D%20%20%5Ccdot%20max%20%5C%5F%20data%20%5C%5F%20term%20%3C%20SHRT%20%5C%5F%20MAX)
+/// ## See also
+/// StereoMatcher
 pub trait CUDA_StereoBeliefPropagation: crate::calib3d::StereoMatcher + crate::cudastereo::CUDA_StereoBeliefPropagationConst {
 	fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void;
 
@@ -502,9 +505,9 @@ pub trait CUDA_StereoBeliefPropagation: crate::calib3d::StereoMatcher + crate::c
 	/// ## Overloaded parameters
 	#[inline]
 	fn compute(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(left);
-		input_array_arg!(right);
-		output_array_arg!(disparity);
+		extern_container_arg!(left);
+		extern_container_arg!(right);
+		extern_container_arg!(disparity);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -526,8 +529,8 @@ pub trait CUDA_StereoBeliefPropagation: crate::calib3d::StereoMatcher + crate::c
 	/// * stream: Stream::Null()
 	#[inline]
 	fn compute_1(&mut self, data: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(data);
-		output_array_arg!(disparity);
+		extern_container_arg!(data);
+		extern_container_arg!(disparity);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -613,27 +616,7 @@ impl dyn CUDA_StereoBeliefPropagation + '_ {
 	}
 	
 }
-/// Class computing stereo correspondence using the constant space belief propagation algorithm. :
-/// 
-/// The class implements algorithm described in [Yang2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yang2010) . StereoConstantSpaceBP supports both local
-/// minimum and global minimum data cost initialization algorithms. For more details, see the paper
-/// mentioned above. By default, a local algorithm is used. To enable a global algorithm, set
-/// use_local_init_data_cost to false .
-/// 
-/// StereoConstantSpaceBP uses a truncated linear model for the data cost and discontinuity terms:
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?DataCost%20%3D%20data%20%5C%5F%20weight%20%20%5Ccdot%20%5Cmin%20%28%20%5Clvert%20I%5F2%2DI%5F1%20%20%5Crvert%20%2C%20max%20%5C%5F%20data%20%5C%5F%20term%29)
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
-/// 
-/// For more details, see [Yang2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yang2010) .
-/// 
-/// By default, StereoConstantSpaceBP uses floating-point arithmetics and the CV_32FC1 type for
-/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
-/// performance. To avoid an overflow in this case, the parameters must satisfy the following
-/// requirement:
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?10%20%20%5Ccdot%202%5E%7Blevels%2D1%7D%20%20%5Ccdot%20max%20%5C%5F%20data%20%5C%5F%20term%20%3C%20SHRT%20%5C%5F%20MAX)
+/// Constant methods for [crate::cudastereo::CUDA_StereoConstantSpaceBP]
 pub trait CUDA_StereoConstantSpaceBPConst: crate::cudastereo::CUDA_StereoBeliefPropagationConst {
 	fn as_raw_CUDA_StereoConstantSpaceBP(&self) -> *const c_void;
 
@@ -658,6 +641,27 @@ pub trait CUDA_StereoConstantSpaceBPConst: crate::cudastereo::CUDA_StereoBeliefP
 	
 }
 
+/// Class computing stereo correspondence using the constant space belief propagation algorithm. :
+/// 
+/// The class implements algorithm described in [Yang2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yang2010) . StereoConstantSpaceBP supports both local
+/// minimum and global minimum data cost initialization algorithms. For more details, see the paper
+/// mentioned above. By default, a local algorithm is used. To enable a global algorithm, set
+/// use_local_init_data_cost to false .
+/// 
+/// StereoConstantSpaceBP uses a truncated linear model for the data cost and discontinuity terms:
+/// 
+/// ![block formula](https://latex.codecogs.com/png.latex?DataCost%20%3D%20data%20%5C%5F%20weight%20%20%5Ccdot%20%5Cmin%20%28%20%5Clvert%20I%5F2%2DI%5F1%20%20%5Crvert%20%2C%20max%20%5C%5F%20data%20%5C%5F%20term%29)
+/// 
+/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
+/// 
+/// For more details, see [Yang2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yang2010) .
+/// 
+/// By default, StereoConstantSpaceBP uses floating-point arithmetics and the CV_32FC1 type for
+/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
+/// performance. To avoid an overflow in this case, the parameters must satisfy the following
+/// requirement:
+/// 
+/// ![block formula](https://latex.codecogs.com/png.latex?10%20%20%5Ccdot%202%5E%7Blevels%2D1%7D%20%20%5Ccdot%20max%20%5C%5F%20data%20%5C%5F%20term%20%3C%20SHRT%20%5C%5F%20MAX)
 pub trait CUDA_StereoConstantSpaceBP: crate::cudastereo::CUDA_StereoBeliefPropagation + crate::cudastereo::CUDA_StereoConstantSpaceBPConst {
 	fn as_raw_mut_CUDA_StereoConstantSpaceBP(&mut self) -> *mut c_void;
 
@@ -694,6 +698,12 @@ impl dyn CUDA_StereoConstantSpaceBP + '_ {
 	}
 	
 }
+/// Constant methods for [crate::cudastereo::CUDA_StereoSGM]
+pub trait CUDA_StereoSGMConst: crate::calib3d::StereoSGBMConst {
+	fn as_raw_CUDA_StereoSGM(&self) -> *const c_void;
+
+}
+
 /// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HH08).
 /// Limitation and difference are as follows:
 /// 
@@ -704,11 +714,6 @@ impl dyn CUDA_StereoConstantSpaceBP + '_ {
 /// is used for robustness.
 /// ## See also
 /// cv::StereoSGBM
-pub trait CUDA_StereoSGMConst: crate::calib3d::StereoSGBMConst {
-	fn as_raw_CUDA_StereoSGM(&self) -> *const c_void;
-
-}
-
 pub trait CUDA_StereoSGM: crate::calib3d::StereoSGBM + crate::cudastereo::CUDA_StereoSGMConst {
 	fn as_raw_mut_CUDA_StereoSGM(&mut self) -> *mut c_void;
 
@@ -721,9 +726,9 @@ pub trait CUDA_StereoSGM: crate::calib3d::StereoSGBM + crate::cudastereo::CUDA_S
 	/// StereoSGM computes 16-bit fixed-point disparity map (where each disparity value has 4 fractional bits).
 	#[inline]
 	fn compute(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(left);
-		input_array_arg!(right);
-		output_array_arg!(disparity);
+		extern_container_arg!(left);
+		extern_container_arg!(right);
+		extern_container_arg!(disparity);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -736,9 +741,9 @@ pub trait CUDA_StereoSGM: crate::calib3d::StereoSGBM + crate::cudastereo::CUDA_S
 	/// compute
 	#[inline]
 	fn compute_with_stream(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(left);
-		input_array_arg!(right);
-		output_array_arg!(disparity);
+		extern_container_arg!(left);
+		extern_container_arg!(right);
+		extern_container_arg!(disparity);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -33,6 +33,7 @@ pub enum BarcodeType {
 
 opencv_type_enum! { crate::barcode::BarcodeType }
 
+/// Constant methods for [crate::barcode::BarcodeDetector]
 pub trait BarcodeDetectorTraitConst {
 	fn as_raw_BarcodeDetector(&self) -> *const c_void;
 
@@ -45,8 +46,8 @@ pub trait BarcodeDetectorTraitConst {
 	/// Order of four points in vector< Point2f> is bottomLeft, topLeft, topRight, bottomRight.
 	#[inline]
 	fn detect(&self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<bool> {
-		input_array_arg!(img);
-		output_array_arg!(points);
+		extern_container_arg!(img);
+		extern_container_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_barcode_BarcodeDetector_detect_const_const__InputArrayR_const__OutputArrayR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -65,8 +66,8 @@ pub trait BarcodeDetectorTraitConst {
 	/// * decoded_type: vector of BarcodeType, specifies the type of these barcodes
 	#[inline]
 	fn decode(&self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<crate::barcode::BarcodeType>) -> Result<bool> {
-		input_array_arg!(img);
-		input_array_arg!(points);
+		extern_container_arg!(img);
+		extern_container_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_barcode_BarcodeDetector_decode_const_const__InputArrayR_const__InputArrayR_vectorLstringGR_vectorLBarcodeTypeGR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfBarcodeType(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -86,8 +87,8 @@ pub trait BarcodeDetectorTraitConst {
 	/// * points: noArray()
 	#[inline]
 	fn detect_and_decode(&self, img: &dyn core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<crate::barcode::BarcodeType>, points: &mut dyn core::ToOutputArray) -> Result<bool> {
-		input_array_arg!(img);
-		output_array_arg!(points);
+		extern_container_arg!(img);
+		extern_container_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_barcode_BarcodeDetector_detectAndDecode_const_const__InputArrayR_vectorLstringGR_vectorLBarcodeTypeGR_const__OutputArrayR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfBarcodeType(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -97,6 +98,7 @@ pub trait BarcodeDetectorTraitConst {
 	
 }
 
+/// Mutable methods for [crate::barcode::BarcodeDetector]
 pub trait BarcodeDetectorTrait: crate::barcode::BarcodeDetectorTraitConst {
 	fn as_raw_mut_BarcodeDetector(&mut self) -> *mut c_void;
 

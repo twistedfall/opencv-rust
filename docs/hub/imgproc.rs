@@ -46,7 +46,7 @@
 //! 
 //! 
 //! Note: if you need double floating-point accuracy and using single floating-point input data
-//! (CV_32F input and CV_64F output depth combination), you can use @ref Mat.convertTo to convert
+//! (CV_32F input and CV_64F output depth combination), you can use [Mat].convertTo to convert
 //! the input data to the desired precision.
 //! 
 //!    # Geometric Image Transformations
@@ -257,26 +257,26 @@ pub const COLOR_BGR2BGR555: i32 = 22;
 pub const COLOR_BGR2BGR565: i32 = 12;
 /// add alpha channel to RGB or BGR image
 pub const COLOR_BGR2BGRA: i32 = 0;
-/// convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
+/// convert between RGB/BGR and grayscale, [color_convert_rgb_gray] "color conversions"
 pub const COLOR_BGR2GRAY: i32 = 6;
-/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
+/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, [color_convert_rgb_hls] "color conversions"
 pub const COLOR_BGR2HLS: i32 = 52;
-/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
+/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, [color_convert_rgb_hls] "color conversions"
 pub const COLOR_BGR2HLS_FULL: i32 = 68;
-/// convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
+/// convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, [color_convert_rgb_hsv] "color conversions"
 pub const COLOR_BGR2HSV: i32 = 40;
-/// convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
+/// convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, [color_convert_rgb_hsv] "color conversions"
 pub const COLOR_BGR2HSV_FULL: i32 = 66;
-/// convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
+/// convert RGB/BGR to CIE Lab, [color_convert_rgb_lab] "color conversions"
 pub const COLOR_BGR2Lab: i32 = 44;
-/// convert RGB/BGR to CIE Luv, @ref color_convert_rgb_luv "color conversions"
+/// convert RGB/BGR to CIE Luv, [color_convert_rgb_luv] "color conversions"
 pub const COLOR_BGR2Luv: i32 = 50;
 pub const COLOR_BGR2RGB: i32 = 4;
 /// convert between RGB and BGR color spaces (with or without alpha channel)
 pub const COLOR_BGR2RGBA: i32 = 2;
-/// convert RGB/BGR to CIE XYZ, @ref color_convert_rgb_xyz "color conversions"
+/// convert RGB/BGR to CIE XYZ, [color_convert_rgb_xyz] "color conversions"
 pub const COLOR_BGR2XYZ: i32 = 32;
-/// convert RGB/BGR to luma-chroma (aka YCC), @ref color_convert_rgb_ycrcb "color conversions"
+/// convert RGB/BGR to luma-chroma (aka YCC), [color_convert_rgb_ycrcb] "color conversions"
 pub const COLOR_BGR2YCrCb: i32 = 36;
 /// convert between RGB/BGR and YUV
 pub const COLOR_BGR2YUV: i32 = 82;
@@ -943,7 +943,7 @@ opencv_type_enum! { crate::imgproc::AdaptiveThresholdTypes }
 
 /// the color conversion codes
 /// ## See also
-/// @ref imgproc_color_conversions
+/// [imgproc_color_conversions]
 /// @ingroup imgproc_color_conversions
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -969,7 +969,7 @@ pub enum ColorConversionCodes {
 	COLOR_BGRA2RGBA = 5,
 	// Duplicate, use COLOR_BGRA2RGBA instead
 	// COLOR_RGBA2BGRA = 5,
-	/// convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
+	/// convert between RGB/BGR and grayscale, [color_convert_rgb_gray] "color conversions"
 	COLOR_BGR2GRAY = 6,
 	COLOR_RGB2GRAY = 7,
 	COLOR_GRAY2BGR = 8,
@@ -1004,26 +1004,26 @@ pub enum ColorConversionCodes {
 	/// convert between grayscale and BGR555 (16-bit images)
 	COLOR_GRAY2BGR555 = 30,
 	COLOR_BGR5552GRAY = 31,
-	/// convert RGB/BGR to CIE XYZ, @ref color_convert_rgb_xyz "color conversions"
+	/// convert RGB/BGR to CIE XYZ, [color_convert_rgb_xyz] "color conversions"
 	COLOR_BGR2XYZ = 32,
 	COLOR_RGB2XYZ = 33,
 	COLOR_XYZ2BGR = 34,
 	COLOR_XYZ2RGB = 35,
-	/// convert RGB/BGR to luma-chroma (aka YCC), @ref color_convert_rgb_ycrcb "color conversions"
+	/// convert RGB/BGR to luma-chroma (aka YCC), [color_convert_rgb_ycrcb] "color conversions"
 	COLOR_BGR2YCrCb = 36,
 	COLOR_RGB2YCrCb = 37,
 	COLOR_YCrCb2BGR = 38,
 	COLOR_YCrCb2RGB = 39,
-	/// convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
+	/// convert RGB/BGR to HSV (hue saturation value) with H range 0..180 if 8 bit image, [color_convert_rgb_hsv] "color conversions"
 	COLOR_BGR2HSV = 40,
 	COLOR_RGB2HSV = 41,
-	/// convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
+	/// convert RGB/BGR to CIE Lab, [color_convert_rgb_lab] "color conversions"
 	COLOR_BGR2Lab = 44,
 	COLOR_RGB2Lab = 45,
-	/// convert RGB/BGR to CIE Luv, @ref color_convert_rgb_luv "color conversions"
+	/// convert RGB/BGR to CIE Luv, [color_convert_rgb_luv] "color conversions"
 	COLOR_BGR2Luv = 50,
 	COLOR_RGB2Luv = 51,
-	/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
+	/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..180 if 8 bit image, [color_convert_rgb_hls] "color conversions"
 	COLOR_BGR2HLS = 52,
 	COLOR_RGB2HLS = 53,
 	/// backward conversions HSV to RGB/BGR with H range 0..180 if 8 bit image
@@ -1036,10 +1036,10 @@ pub enum ColorConversionCodes {
 	/// backward conversions HLS to RGB/BGR with H range 0..180 if 8 bit image
 	COLOR_HLS2BGR = 60,
 	COLOR_HLS2RGB = 61,
-	/// convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hsv "color conversions"
+	/// convert RGB/BGR to HSV (hue saturation value) with H range 0..255 if 8 bit image, [color_convert_rgb_hsv] "color conversions"
 	COLOR_BGR2HSV_FULL = 66,
 	COLOR_RGB2HSV_FULL = 67,
-	/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, @ref color_convert_rgb_hls "color conversions"
+	/// convert RGB/BGR to HLS (hue lightness saturation) with H range 0..255 if 8 bit image, [color_convert_rgb_hls] "color conversions"
 	COLOR_BGR2HLS_FULL = 68,
 	COLOR_RGB2HLS_FULL = 69,
 	/// backward conversions HSV to RGB/BGR with H range 0..255 if 8 bit image
@@ -2043,9 +2043,9 @@ opencv_type_enum! { crate::imgproc::WarpPolarMode }
 /// * l2gradient: false
 #[inline]
 pub fn canny_derivative(dx: &dyn core::ToInputArray, dy: &dyn core::ToInputArray, edges: &mut dyn core::ToOutputArray, threshold1: f64, threshold2: f64, l2gradient: bool) -> Result<()> {
-	input_array_arg!(dx);
-	input_array_arg!(dy);
-	output_array_arg!(edges);
+	extern_container_arg!(dx);
+	extern_container_arg!(dy);
+	extern_container_arg!(edges);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_Canny_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double_bool(dx.as_raw__InputArray(), dy.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, l2gradient, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2076,8 +2076,8 @@ pub fn canny_derivative(dx: &dyn core::ToInputArray, dy: &dyn core::ToInputArray
 /// * l2gradient: false
 #[inline]
 pub fn canny(image: &dyn core::ToInputArray, edges: &mut dyn core::ToOutputArray, threshold1: f64, threshold2: f64, aperture_size: i32, l2gradient: bool) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(edges);
+	extern_container_arg!(image);
+	extern_container_arg!(edges);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_Canny_const__InputArrayR_const__OutputArrayR_double_double_int_bool(image.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, aperture_size, l2gradient, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2126,10 +2126,10 @@ pub fn canny(image: &dyn core::ToInputArray, edges: &mut dyn core::ToOutputArray
 /// * flow: noArray()
 #[inline]
 pub fn emd(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputArray, dist_type: i32, cost: &dyn core::ToInputArray, lower_bound: Option<&mut f32>, flow: &mut dyn core::ToOutputArray) -> Result<f32> {
-	input_array_arg!(signature1);
-	input_array_arg!(signature2);
-	input_array_arg!(cost);
-	output_array_arg!(flow);
+	extern_container_arg!(signature1);
+	extern_container_arg!(signature2);
+	extern_container_arg!(cost);
+	extern_container_arg!(flow);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_EMD_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_floatX_const__OutputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound.map_or(::core::ptr::null_mut(), |lower_bound| lower_bound as *mut _), flow.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2163,8 +2163,8 @@ pub fn emd(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputAr
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn gaussian_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: core::Size, sigma_x: f64, sigma_y: f64, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_as_extern(), sigma_x, sigma_y, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2224,8 +2224,8 @@ pub fn gaussian_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// * max_radius: 0
 #[inline]
 pub fn hough_circles(image: &dyn core::ToInputArray, circles: &mut dyn core::ToOutputArray, method: i32, dp: f64, min_dist: f64, param1: f64, param2: f64, min_radius: i32, max_radius: i32) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(circles);
+	extern_container_arg!(image);
+	extern_container_arg!(circles);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_HoughCircles_const__InputArrayR_const__OutputArrayR_int_double_double_double_double_int_int(image.as_raw__InputArray(), circles.as_raw__OutputArray(), method, dp, min_dist, param1, param2, min_radius, max_radius, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2267,8 +2267,8 @@ pub fn hough_circles(image: &dyn core::ToInputArray, circles: &mut dyn core::ToO
 /// * max_line_gap: 0
 #[inline]
 pub fn hough_lines_p(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray, rho: f64, theta: f64, threshold: i32, min_line_length: f64, max_line_gap: f64) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(lines);
+	extern_container_arg!(image);
+	extern_container_arg!(lines);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_HoughLinesP_const__InputArrayR_const__OutputArrayR_double_double_int_double_double(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, min_line_length, max_line_gap, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2296,8 +2296,8 @@ pub fn hough_lines_p(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOut
 /// * theta_step: Angle resolution of the accumulator in radians.
 #[inline]
 pub fn hough_lines_point_set(point: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray, lines_max: i32, threshold: i32, min_rho: f64, max_rho: f64, rho_step: f64, min_theta: f64, max_theta: f64, theta_step: f64) -> Result<()> {
-	input_array_arg!(point);
-	output_array_arg!(lines);
+	extern_container_arg!(point);
+	extern_container_arg!(lines);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_HoughLinesPointSet_const__InputArrayR_const__OutputArrayR_int_int_double_double_double_double_double_double(point.as_raw__InputArray(), lines.as_raw__OutputArray(), lines_max, threshold, min_rho, max_rho, rho_step, min_theta, max_theta, theta_step, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2340,8 +2340,8 @@ pub fn hough_lines_point_set(point: &dyn core::ToInputArray, lines: &mut dyn cor
 /// * max_theta: CV_PI
 #[inline]
 pub fn hough_lines(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray, rho: f64, theta: f64, threshold: i32, srn: f64, stn: f64, min_theta: f64, max_theta: f64) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(lines);
+	extern_container_arg!(image);
+	extern_container_arg!(lines);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int_double_double_double_double(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, srn, stn, min_theta, max_theta, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2372,7 +2372,7 @@ pub fn hough_lines(image: &dyn core::ToInputArray, lines: &mut dyn core::ToOutpu
 /// ## Overloaded parameters
 #[inline]
 pub fn hu_moments_1(m: core::Moments, hu: &mut dyn core::ToOutputArray) -> Result<()> {
-	output_array_arg!(hu);
+	extern_container_arg!(hu);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_HuMoments_const_MomentsR_const__OutputArrayR(&m, hu.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2423,7 +2423,7 @@ pub fn hu_moments(moments: core::Moments, hu: &mut [f64; 7]) -> Result<()> {
 /// ## Parameters
 /// * src: Source image.
 /// * dst: Destination image of the same size and the same number of channels as src .
-/// * ddepth: Desired depth of the destination image, see @ref filter_depths "combinations".
+/// * ddepth: Desired depth of the destination image, see [filter_depths] "combinations".
 /// * ksize: Aperture size used to compute the second-derivative filters. See #getDerivKernels for
 /// details. The size must be positive and odd.
 /// * scale: Optional scale factor for the computed Laplacian values. By default, no scaling is
@@ -2440,8 +2440,8 @@ pub fn hu_moments(moments: core::Moments, hu: &mut [f64; 7]) -> Result<()> {
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn laplacian(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, ksize: i32, scale: f64, delta: f64, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_Laplacian_const__InputArrayR_const__OutputArrayR_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize, scale, delta, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2463,7 +2463,7 @@ pub fn laplacian(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// ## Parameters
 /// * src: input image.
 /// * dst: output image of the same size and the same number of channels as src.
-/// * ddepth: output image depth, see @ref filter_depths "combinations"
+/// * ddepth: output image depth, see [filter_depths] "combinations"
 /// * dx: order of the derivative x.
 /// * dy: order of the derivative y.
 /// * scale: optional scale factor for the computed derivative values; by default, no scaling is
@@ -2479,8 +2479,8 @@ pub fn laplacian(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn scharr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, dx: i32, dy: i32, scale: f64, delta: f64, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_Scharr_const__InputArrayR_const__OutputArrayR_int_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, scale, delta, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2520,7 +2520,7 @@ pub fn scharr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// ## Parameters
 /// * src: input image.
 /// * dst: output image of the same size and the same number of channels as src .
-/// * ddepth: output image depth, see @ref filter_depths "combinations"; in the case of
+/// * ddepth: output image depth, see [filter_depths] "combinations"; in the case of
 ///    8-bit input images it will result in truncated derivatives.
 /// * dx: order of the derivative x.
 /// * dy: order of the derivative y.
@@ -2539,8 +2539,8 @@ pub fn scharr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn sobel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, dx: i32, dy: i32, ksize: i32, scale: f64, delta: f64, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_Sobel_const__InputArrayR_const__OutputArrayR_int_int_int_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, dx, dy, ksize, scale, delta, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2569,10 +2569,10 @@ pub fn sobel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dd
 /// * mask: noArray()
 #[inline]
 pub fn accumulate_product(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	input_output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_accumulateProduct_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2601,9 +2601,9 @@ pub fn accumulate_product(src1: &dyn core::ToInputArray, src2: &dyn core::ToInpu
 /// * mask: noArray()
 #[inline]
 pub fn accumulate_square(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	input_output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_accumulateSquare_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2634,9 +2634,9 @@ pub fn accumulate_square(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInp
 /// * mask: noArray()
 #[inline]
 pub fn accumulate_weighted(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, alpha: f64, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	input_output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_accumulateWeighted_const__InputArrayR_const__InputOutputArrayR_double_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2666,9 +2666,9 @@ pub fn accumulate_weighted(src: &dyn core::ToInputArray, dst: &mut dyn core::ToI
 /// * mask: noArray()
 #[inline]
 pub fn accumulate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	input_output_array_arg!(dst);
-	input_array_arg!(mask);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_accumulate_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2703,8 +2703,8 @@ pub fn accumulate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutpu
 /// threshold, blur, GaussianBlur
 #[inline]
 pub fn adaptive_threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, max_value: f64, adaptive_method: i32, threshold_type: i32, block_size: i32, c: f64) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_adaptiveThreshold_const__InputArrayR_const__OutputArrayR_double_int_int_int_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), max_value, adaptive_method, threshold_type, block_size, c, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2720,9 +2720,9 @@ pub fn adaptive_threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOu
 /// * userColor: The colormap to apply of type CV_8UC1 or CV_8UC3 and size 256
 #[inline]
 pub fn apply_color_map_user(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, user_color: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(user_color);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(user_color);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_applyColorMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), user_color.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2738,8 +2738,8 @@ pub fn apply_color_map_user(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 /// * colormap: The colormap to apply, see #ColormapTypes
 #[inline]
 pub fn apply_color_map(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, colormap: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_applyColorMap_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), colormap, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2762,8 +2762,8 @@ pub fn apply_color_map(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutpu
 /// connected). Otherwise, it is not closed.
 #[inline]
 pub fn approx_poly_dp(curve: &dyn core::ToInputArray, approx_curve: &mut dyn core::ToOutputArray, epsilon: f64, closed: bool) -> Result<()> {
-	input_array_arg!(curve);
-	output_array_arg!(approx_curve);
+	extern_container_arg!(curve);
+	extern_container_arg!(approx_curve);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_approxPolyDP_const__InputArrayR_const__OutputArrayR_double_bool(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), epsilon, closed, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2780,7 +2780,7 @@ pub fn approx_poly_dp(curve: &dyn core::ToInputArray, approx_curve: &mut dyn cor
 /// * closed: Flag indicating whether the curve is closed or not.
 #[inline]
 pub fn arc_length(curve: &dyn core::ToInputArray, closed: bool) -> Result<f64> {
-	input_array_arg!(curve);
+	extern_container_arg!(curve);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_arcLength_const__InputArrayR_bool(curve.as_raw__InputArray(), closed, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2809,7 +2809,7 @@ pub fn arc_length(curve: &dyn core::ToInputArray, closed: bool) -> Result<f64> {
 /// * tip_length: 0.1
 #[inline]
 pub fn arrowed_line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core::Point, color: core::Scalar, thickness: i32, line_type: i32, shift: i32, tip_length: f64) -> Result<()> {
-	input_output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_arrowedLine_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int_double(img.as_raw__InputOutputArray(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), &color, thickness, line_type, shift, tip_length, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2820,7 +2820,7 @@ pub fn arrowed_line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt
 /// Applies the bilateral filter to an image.
 /// 
 /// The function applies bilateral filtering to the input image, as described in
-/// http://www.dai.ed.ac.uk/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html
+/// <http://www.dai.ed.ac.uk/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html>
 /// bilateralFilter can reduce unwanted noise very well while keeping edges fairly sharp. However, it is
 /// very slow compared to most filters.
 /// 
@@ -2850,8 +2850,8 @@ pub fn arrowed_line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn bilateral_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d: i32, sigma_color: f64, sigma_space: f64, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_bilateralFilter_const__InputArrayR_const__OutputArrayR_int_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2869,11 +2869,11 @@ pub fn bilateral_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// * dst: It is created if it does not have the same size and type with src1.
 #[inline]
 pub fn blend_linear(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, weights1: &dyn core::ToInputArray, weights2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	input_array_arg!(weights1);
-	input_array_arg!(weights2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(weights1);
+	extern_container_arg!(weights2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_blendLinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), weights1.as_raw__InputArray(), weights2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2906,8 +2906,8 @@ pub fn blend_linear(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: core::Size, anchor: core::Point, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_blur_const__InputArrayR_const__OutputArrayR_Size_Point_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_as_extern(), anchor.opencv_as_extern(), border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2924,7 +2924,7 @@ pub fn blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksi
 /// * array: Input gray-scale image or 2D point set, stored in std::vector or Mat.
 #[inline]
 pub fn bounding_rect(array: &dyn core::ToInputArray) -> Result<core::Rect> {
-	input_array_arg!(array);
+	extern_container_arg!(array);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_boundingRect_const__InputArrayR(array.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2964,8 +2964,8 @@ pub fn bounding_rect(array: &dyn core::ToInputArray) -> Result<core::Rect> {
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, ksize: core::Size, anchor: core::Point, normalize: bool, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_boxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize.opencv_as_extern(), anchor.opencv_as_extern(), normalize, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2977,14 +2977,14 @@ pub fn box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArra
 /// 
 /// The function finds the four vertices of a rotated rectangle. This function is useful to draw the
 /// rectangle. In C++, instead of using this function, you can directly use RotatedRect::points method. Please
-/// visit the @ref tutorial_bounding_rotated_ellipses "tutorial on Creating Bounding rotated boxes and ellipses for contours" for more information.
+/// visit the [tutorial_bounding_rotated_ellipses] "tutorial on Creating Bounding rotated boxes and ellipses for contours" for more information.
 /// 
 /// ## Parameters
 /// * box: The input rotated rectangle. It may be the output of
 /// * points: The output array of four vertices of rectangles.
 #[inline]
 pub fn box_points(mut box_: core::RotatedRect, points: &mut dyn core::ToOutputArray) -> Result<()> {
-	output_array_arg!(points);
+	extern_container_arg!(points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_boxPoints_RotatedRect_const__OutputArrayR(box_.as_raw_mut_RotatedRect(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3008,8 +3008,8 @@ pub fn box_points(mut box_: core::RotatedRect, points: &mut dyn core::ToOutputAr
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn build_pyramid(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, maxlevel: i32, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_buildPyramid_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), maxlevel, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3060,9 +3060,9 @@ pub fn build_pyramid(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// ## Overloaded parameters
 #[inline]
 pub fn calc_back_project(images: &dyn core::ToInputArray, channels: &core::Vector<i32>, hist: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ranges: &core::Vector<f32>, scale: f64) -> Result<()> {
-	input_array_arg!(images);
-	input_array_arg!(hist);
-	output_array_arg!(dst);
+	extern_container_arg!(images);
+	extern_container_arg!(hist);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calcBackProject_const__InputArrayR_const_vectorLintGR_const__InputArrayR_const__OutputArrayR_const_vectorLfloatGR_double(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), hist.as_raw__InputArray(), dst.as_raw__OutputArray(), ranges.as_raw_VectorOff32(), scale, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3117,9 +3117,9 @@ pub fn calc_back_project(images: &dyn core::ToInputArray, channels: &core::Vecto
 /// * accumulate: false
 #[inline]
 pub fn calc_hist(images: &dyn core::ToInputArray, channels: &core::Vector<i32>, mask: &dyn core::ToInputArray, hist: &mut dyn core::ToOutputArray, hist_size: &core::Vector<i32>, ranges: &core::Vector<f32>, accumulate: bool) -> Result<()> {
-	input_array_arg!(images);
-	input_array_arg!(mask);
-	output_array_arg!(hist);
+	extern_container_arg!(images);
+	extern_container_arg!(mask);
+	extern_container_arg!(hist);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calcHist_const__InputArrayR_const_vectorLintGR_const__InputArrayR_const__OutputArrayR_const_vectorLintGR_const_vectorLfloatGR_bool(images.as_raw__InputArray(), channels.as_raw_VectorOfi32(), mask.as_raw__InputArray(), hist.as_raw__OutputArray(), hist_size.as_raw_VectorOfi32(), ranges.as_raw_VectorOff32(), accumulate, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3146,7 +3146,7 @@ pub fn calc_hist(images: &dyn core::ToInputArray, channels: &core::Vector<i32>, 
 /// * shift: 0
 #[inline]
 pub fn circle(img: &mut dyn core::ToInputOutputArray, center: core::Point, radius: i32, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
-	input_output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_circle_const__InputOutputArrayR_Point_int_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), center.opencv_as_extern(), radius, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3263,8 +3263,8 @@ pub fn compare_hist_1(h1: &core::SparseMat, h2: &core::SparseMat, method: i32) -
 /// * method: Comparison method, see #HistCompMethods
 #[inline]
 pub fn compare_hist(h1: &dyn core::ToInputArray, h2: &dyn core::ToInputArray, method: i32) -> Result<f64> {
-	input_array_arg!(h1);
-	input_array_arg!(h2);
+	extern_container_arg!(h1);
+	extern_container_arg!(h2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_compareHist_const__InputArrayR_const__InputArrayR_int(h1.as_raw__InputArray(), h2.as_raw__InputArray(), method, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3313,10 +3313,10 @@ pub fn compare_hist(h1: &dyn core::ToInputArray, h2: &dyn core::ToInputArray, me
 /// * ltype: CV_32S
 #[inline]
 pub fn connected_components_with_stats(image: &dyn core::ToInputArray, labels: &mut dyn core::ToOutputArray, stats: &mut dyn core::ToOutputArray, centroids: &mut dyn core::ToOutputArray, connectivity: i32, ltype: i32) -> Result<i32> {
-	input_array_arg!(image);
-	output_array_arg!(labels);
-	output_array_arg!(stats);
-	output_array_arg!(centroids);
+	extern_container_arg!(image);
+	extern_container_arg!(labels);
+	extern_container_arg!(stats);
+	extern_container_arg!(centroids);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_connectedComponentsWithStats_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), stats.as_raw__OutputArray(), centroids.as_raw__OutputArray(), connectivity, ltype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3349,10 +3349,10 @@ pub fn connected_components_with_stats(image: &dyn core::ToInputArray, labels: &
 /// * ccltype: connected components algorithm type (see #ConnectedComponentsAlgorithmsTypes).
 #[inline]
 pub fn connected_components_with_stats_with_algorithm(image: &dyn core::ToInputArray, labels: &mut dyn core::ToOutputArray, stats: &mut dyn core::ToOutputArray, centroids: &mut dyn core::ToOutputArray, connectivity: i32, ltype: i32, ccltype: i32) -> Result<i32> {
-	input_array_arg!(image);
-	output_array_arg!(labels);
-	output_array_arg!(stats);
-	output_array_arg!(centroids);
+	extern_container_arg!(image);
+	extern_container_arg!(labels);
+	extern_container_arg!(stats);
+	extern_container_arg!(centroids);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_connectedComponentsWithStats_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), stats.as_raw__OutputArray(), centroids.as_raw__OutputArray(), connectivity, ltype, ccltype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3392,8 +3392,8 @@ pub fn connected_components_with_stats_with_algorithm(image: &dyn core::ToInputA
 /// * ltype: CV_32S
 #[inline]
 pub fn connected_components(image: &dyn core::ToInputArray, labels: &mut dyn core::ToOutputArray, connectivity: i32, ltype: i32) -> Result<i32> {
-	input_array_arg!(image);
-	output_array_arg!(labels);
+	extern_container_arg!(image);
+	extern_container_arg!(labels);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_connectedComponents_const__InputArrayR_const__OutputArrayR_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), connectivity, ltype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3421,8 +3421,8 @@ pub fn connected_components(image: &dyn core::ToInputArray, labels: &mut dyn cor
 /// * ccltype: connected components algorithm type (see the #ConnectedComponentsAlgorithmsTypes).
 #[inline]
 pub fn connected_components_with_algorithm(image: &dyn core::ToInputArray, labels: &mut dyn core::ToOutputArray, connectivity: i32, ltype: i32, ccltype: i32) -> Result<i32> {
-	input_array_arg!(image);
-	output_array_arg!(labels);
+	extern_container_arg!(image);
+	extern_container_arg!(labels);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_connectedComponents_const__InputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), labels.as_raw__OutputArray(), connectivity, ltype, ccltype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3466,7 +3466,7 @@ pub fn connected_components_with_algorithm(image: &dyn core::ToInputArray, label
 /// * oriented: false
 #[inline]
 pub fn contour_area(contour: &dyn core::ToInputArray, oriented: bool) -> Result<f64> {
-	input_array_arg!(contour);
+	extern_container_arg!(contour);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_contourArea_const__InputArrayR_bool(contour.as_raw__InputArray(), oriented, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3509,10 +3509,10 @@ pub fn contour_area(contour: &dyn core::ToInputArray, oriented: bool) -> Result<
 /// * nninterpolation: false
 #[inline]
 pub fn convert_maps(map1: &dyn core::ToInputArray, map2: &dyn core::ToInputArray, dstmap1: &mut dyn core::ToOutputArray, dstmap2: &mut dyn core::ToOutputArray, dstmap1type: i32, nninterpolation: bool) -> Result<()> {
-	input_array_arg!(map1);
-	input_array_arg!(map2);
-	output_array_arg!(dstmap1);
-	output_array_arg!(dstmap2);
+	extern_container_arg!(map1);
+	extern_container_arg!(map2);
+	extern_container_arg!(dstmap1);
+	extern_container_arg!(dstmap2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_convertMaps_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_bool(map1.as_raw__InputArray(), map2.as_raw__InputArray(), dstmap1.as_raw__OutputArray(), dstmap2.as_raw__OutputArray(), dstmap1type, nninterpolation, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3543,19 +3543,19 @@ pub fn convert_maps(map1: &dyn core::ToInputArray, map2: &dyn core::ToInputArray
 /// 
 /// Note: `points` and `hull` should be different arrays, inplace processing isn't supported.
 /// 
-/// Check @ref tutorial_hull "the corresponding tutorial" for more details.
+/// Check [tutorial_hull] "the corresponding tutorial" for more details.
 /// 
 /// useful links:
 /// 
-/// https://www.learnopencv.com/convex-hull-using-opencv-in-python-and-c/
+/// <https://www.learnopencv.com/convex-hull-using-opencv-in-python-and-c/>
 /// 
 /// ## C++ default parameters
 /// * clockwise: false
 /// * return_points: true
 #[inline]
 pub fn convex_hull(points: &dyn core::ToInputArray, hull: &mut dyn core::ToOutputArray, clockwise: bool, return_points: bool) -> Result<()> {
-	input_array_arg!(points);
-	output_array_arg!(hull);
+	extern_container_arg!(points);
+	extern_container_arg!(hull);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_convexHull_const__InputArrayR_const__OutputArrayR_bool_bool(points.as_raw__InputArray(), hull.as_raw__OutputArray(), clockwise, return_points, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3582,9 +3582,9 @@ pub fn convex_hull(points: &dyn core::ToInputArray, hull: &mut dyn core::ToOutpu
 /// fixpt_depth/256.0.
 #[inline]
 pub fn convexity_defects(contour: &dyn core::ToInputArray, convexhull: &dyn core::ToInputArray, convexity_defects: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(contour);
-	input_array_arg!(convexhull);
-	output_array_arg!(convexity_defects);
+	extern_container_arg!(contour);
+	extern_container_arg!(convexhull);
+	extern_container_arg!(convexity_defects);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_convexityDefects_const__InputArrayR_const__InputArrayR_const__OutputArrayR(contour.as_raw__InputArray(), convexhull.as_raw__InputArray(), convexity_defects.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3623,8 +3623,8 @@ pub fn convexity_defects(contour: &dyn core::ToInputArray, convexhull: &dyn core
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn corner_eigen_vals_and_vecs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, block_size: i32, ksize: i32, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cornerEigenValsAndVecs_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3656,8 +3656,8 @@ pub fn corner_eigen_vals_and_vecs(src: &dyn core::ToInputArray, dst: &mut dyn co
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn corner_harris(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, block_size: i32, ksize: i32, k: f64, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cornerHarris_const__InputArrayR_const__OutputArrayR_int_int_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, k, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3684,8 +3684,8 @@ pub fn corner_harris(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn corner_min_eigen_val(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, block_size: i32, ksize: i32, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cornerMinEigenVal_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), block_size, ksize, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3735,8 +3735,8 @@ pub fn corner_min_eigen_val(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 /// the corner position moves by less than criteria.epsilon on some iteration.
 #[inline]
 pub fn corner_sub_pix(image: &dyn core::ToInputArray, corners: &mut dyn core::ToInputOutputArray, win_size: core::Size, zero_zone: core::Size, criteria: core::TermCriteria) -> Result<()> {
-	input_array_arg!(image);
-	input_output_array_arg!(corners);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cornerSubPix_const__InputArrayR_const__InputOutputArrayR_Size_Size_TermCriteria(image.as_raw__InputArray(), corners.as_raw__InputOutputArray(), win_size.opencv_as_extern(), zero_zone.opencv_as_extern(), criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3788,7 +3788,7 @@ pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::G
 
 /// This function computes a Hanning window coefficients in two dimensions.
 /// 
-/// See (http://en.wikipedia.org/wiki/Hann_function) and (http://en.wikipedia.org/wiki/Window_function)
+/// See (<http://en.wikipedia.org/wiki/Hann_function>) and (<http://en.wikipedia.org/wiki/Window_function>)
 /// for more information.
 /// 
 /// An example is shown below:
@@ -3804,7 +3804,7 @@ pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::G
 /// * type: Created array type
 #[inline]
 pub fn create_hanning_window(dst: &mut dyn core::ToOutputArray, win_size: core::Size, typ: i32) -> Result<()> {
-	output_array_arg!(dst);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_createHanningWindow_const__OutputArrayR_Size_int(dst.as_raw__OutputArray(), win_size.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3866,9 +3866,9 @@ pub fn create_line_segment_detector(refine: i32, scale: f64, sigma_scale: f64, q
 /// - #COLOR_YUV2RGBA_NV21
 #[inline]
 pub fn cvt_color_two_plane(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, code: i32) -> Result<()> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	output_array_arg!(dst);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cvtColorTwoPlane_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), code, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3917,14 +3917,14 @@ pub fn cvt_color_two_plane(src1: &dyn core::ToInputArray, src2: &dyn core::ToInp
 /// * dstCn: number of channels in the destination image; if the parameter is 0, the number of the
 /// channels is derived automatically from src and code.
 /// ## See also
-/// @ref imgproc_color_conversions
+/// [imgproc_color_conversions]
 /// 
 /// ## C++ default parameters
 /// * dst_cn: 0
 #[inline]
 pub fn cvt_color(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, code: i32, dst_cn: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_cvtColor_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3967,8 +3967,8 @@ pub fn cvt_color(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// * dst_cn: 0
 #[inline]
 pub fn demosaicing(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, code: i32, dst_cn: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_demosaicing_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4006,9 +4006,9 @@ pub fn demosaicing(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 /// * border_value: morphologyDefaultBorderValue()
 #[inline]
 pub fn dilate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, kernel: &dyn core::ToInputArray, anchor: core::Point, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(kernel);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(kernel);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_as_extern(), iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4073,9 +4073,9 @@ pub fn dilate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, k
 /// * label_type: DIST_LABEL_CCOMP
 #[inline]
 pub fn distance_transform_with_labels(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, distance_type: i32, mask_size: i32, label_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	output_array_arg!(labels);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(labels);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_distanceTransform_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), labels.as_raw__OutputArray(), distance_type, mask_size, label_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4152,8 +4152,8 @@ pub fn distance_transform_with_labels(src: &dyn core::ToInputArray, dst: &mut dy
 /// * dst_type: CV_32F
 #[inline]
 pub fn distance_transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, distance_type: i32, mask_size: i32, dst_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_distanceTransform_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), distance_type, mask_size, dst_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4179,9 +4179,9 @@ pub fn distance_transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOu
 /// * conj_b: false
 #[inline]
 pub fn div_spectrums(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, c: &mut dyn core::ToOutputArray, flags: i32, conj_b: bool) -> Result<()> {
-	input_array_arg!(a);
-	input_array_arg!(b);
-	output_array_arg!(c);
+	extern_container_arg!(a);
+	extern_container_arg!(b);
+	extern_container_arg!(c);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_divSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4227,9 +4227,9 @@ pub fn div_spectrums(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, c: 
 /// * offset: Point()
 #[inline]
 pub fn draw_contours(image: &mut dyn core::ToInputOutputArray, contours: &dyn core::ToInputArray, contour_idx: i32, color: core::Scalar, thickness: i32, line_type: i32, hierarchy: &dyn core::ToInputArray, max_level: i32, offset: core::Point) -> Result<()> {
-	input_output_array_arg!(image);
-	input_array_arg!(contours);
-	input_array_arg!(hierarchy);
+	extern_container_arg!(image);
+	extern_container_arg!(contours);
+	extern_container_arg!(hierarchy);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_drawContours_const__InputOutputArrayR_const__InputArrayR_int_const_ScalarR_int_int_const__InputArrayR_int_Point(image.as_raw__InputOutputArray(), contours.as_raw__InputArray(), contour_idx, &color, thickness, line_type, hierarchy.as_raw__InputArray(), max_level, offset.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4258,7 +4258,7 @@ pub fn draw_contours(image: &mut dyn core::ToInputOutputArray, contours: &dyn co
 /// * line_type: 8
 #[inline]
 pub fn draw_marker(img: &mut dyn core::ToInputOutputArray, position: core::Point, color: core::Scalar, marker_type: i32, marker_size: i32, thickness: i32, line_type: i32) -> Result<()> {
-	input_output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_drawMarker_const__InputOutputArrayR_Point_const_ScalarR_int_int_int_int(img.as_raw__InputOutputArray(), position.opencv_as_extern(), &color, marker_type, marker_size, thickness, line_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4354,7 +4354,7 @@ pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_sta
 /// * shift: 0
 #[inline]
 pub fn ellipse(img: &mut dyn core::ToInputOutputArray, center: core::Point, axes: core::Size, angle: f64, start_angle: f64, end_angle: f64, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
-	input_output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ellipse_const__InputOutputArrayR_Point_Size_double_double_double_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), center.opencv_as_extern(), axes.opencv_as_extern(), angle, start_angle, end_angle, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4403,7 +4403,7 @@ pub fn ellipse(img: &mut dyn core::ToInputOutputArray, center: core::Point, axes
 /// * line_type: LINE_8
 #[inline]
 pub fn ellipse_rotated_rect(img: &mut dyn core::ToInputOutputArray, box_: &core::RotatedRect, color: core::Scalar, thickness: i32, line_type: i32) -> Result<()> {
-	input_output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ellipse_const__InputOutputArrayR_const_RotatedRectR_const_ScalarR_int_int(img.as_raw__InputOutputArray(), box_.as_raw_RotatedRect(), &color, thickness, line_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4428,8 +4428,8 @@ pub fn ellipse_rotated_rect(img: &mut dyn core::ToInputOutputArray, box_: &core:
 /// * dst: Destination image of the same size and type as src .
 #[inline]
 pub fn equalize_hist(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_equalizeHist_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4468,9 +4468,9 @@ pub fn equalize_hist(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// * border_value: morphologyDefaultBorderValue()
 #[inline]
 pub fn erode(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, kernel: &dyn core::ToInputArray, anchor: core::Point, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(kernel);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(kernel);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), kernel.as_raw__InputArray(), anchor.opencv_as_extern(), iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4497,8 +4497,8 @@ pub fn erode(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ke
 /// * shift: 0
 #[inline]
 pub fn fill_convex_poly(img: &mut dyn core::ToInputOutputArray, points: &dyn core::ToInputArray, color: core::Scalar, line_type: i32, shift: i32) -> Result<()> {
-	input_output_array_arg!(img);
-	input_array_arg!(points);
+	extern_container_arg!(img);
+	extern_container_arg!(points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fillConvexPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR_int_int(img.as_raw__InputOutputArray(), points.as_raw__InputArray(), &color, line_type, shift, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4526,8 +4526,8 @@ pub fn fill_convex_poly(img: &mut dyn core::ToInputOutputArray, points: &dyn cor
 /// * offset: Point()
 #[inline]
 pub fn fill_poly(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInputArray, color: core::Scalar, line_type: i32, shift: i32, offset: core::Point) -> Result<()> {
-	input_output_array_arg!(img);
-	input_array_arg!(pts);
+	extern_container_arg!(img);
+	extern_container_arg!(pts);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fillPoly_const__InputOutputArrayR_const__InputArrayR_const_ScalarR_int_int_Point(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), &color, line_type, shift, offset.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4555,7 +4555,7 @@ pub fn fill_poly(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInput
 /// ## Parameters
 /// * src: input image.
 /// * dst: output image of the same size and the same number of channels as src.
-/// * ddepth: desired depth of the destination image, see @ref filter_depths "combinations"
+/// * ddepth: desired depth of the destination image, see [filter_depths] "combinations"
 /// * kernel: convolution kernel (or rather a correlation kernel), a single-channel floating point
 /// matrix; if you want to apply different kernels to different channels, split the image into
 /// separate color planes using split and process them individually.
@@ -4573,9 +4573,9 @@ pub fn fill_poly(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInput
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, kernel: &dyn core::ToInputArray, anchor: core::Point, delta: f64, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(kernel);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(kernel);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_filter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), delta, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4616,9 +4616,9 @@ pub fn filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// * offset: Point()
 #[inline]
 pub fn find_contours_with_hierarchy(image: &dyn core::ToInputArray, contours: &mut dyn core::ToOutputArray, hierarchy: &mut dyn core::ToOutputArray, mode: i32, method: i32, offset: core::Point) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(contours);
-	output_array_arg!(hierarchy);
+	extern_container_arg!(image);
+	extern_container_arg!(contours);
+	extern_container_arg!(hierarchy);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findContours_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputArray(), contours.as_raw__OutputArray(), hierarchy.as_raw__OutputArray(), mode, method, offset.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4661,8 +4661,8 @@ pub fn find_contours_with_hierarchy(image: &dyn core::ToInputArray, contours: &m
 /// * offset: Point()
 #[inline]
 pub fn find_contours(image: &dyn core::ToInputArray, contours: &mut dyn core::ToOutputArray, mode: i32, method: i32, offset: core::Point) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(contours);
+	extern_container_arg!(image);
+	extern_container_arg!(contours);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findContours_const__InputArrayR_const__OutputArrayR_int_int_Point(image.as_raw__InputArray(), contours.as_raw__OutputArray(), mode, method, offset.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4707,7 +4707,7 @@ pub fn find_contours(image: &dyn core::ToInputArray, contours: &mut dyn core::To
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
 #[inline]
 pub fn fit_ellipse_ams(points: &dyn core::ToInputArray) -> Result<core::RotatedRect> {
-	input_array_arg!(points);
+	extern_container_arg!(points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fitEllipseAMS_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4760,7 +4760,7 @@ pub fn fit_ellipse_ams(points: &dyn core::ToInputArray) -> Result<core::RotatedR
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
 #[inline]
 pub fn fit_ellipse_direct(points: &dyn core::ToInputArray) -> Result<core::RotatedRect> {
-	input_array_arg!(points);
+	extern_container_arg!(points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fitEllipseDirect_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4781,7 +4781,7 @@ pub fn fit_ellipse_direct(points: &dyn core::ToInputArray) -> Result<core::Rotat
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
 #[inline]
 pub fn fit_ellipse(points: &dyn core::ToInputArray) -> Result<core::RotatedRect> {
-	input_array_arg!(points);
+	extern_container_arg!(points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fitEllipse_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4826,8 +4826,8 @@ pub fn fit_ellipse(points: &dyn core::ToInputArray) -> Result<core::RotatedRect>
 /// * aeps: Sufficient accuracy for the angle. 0.01 would be a good default value for reps and aeps.
 #[inline]
 pub fn fit_line(points: &dyn core::ToInputArray, line: &mut dyn core::ToOutputArray, dist_type: i32, param: f64, reps: f64, aeps: f64) -> Result<()> {
-	input_array_arg!(points);
-	output_array_arg!(line);
+	extern_container_arg!(points);
+	extern_container_arg!(line);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fitLine_const__InputArrayR_const__OutputArrayR_int_double_double_double(points.as_raw__InputArray(), line.as_raw__OutputArray(), dist_type, param, reps, aeps, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4921,7 +4921,7 @@ pub fn fit_line(points: &dyn core::ToInputArray, line: &mut dyn core::ToOutputAr
 /// * flags: 4
 #[inline]
 pub fn flood_fill(image: &mut dyn core::ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: &mut core::Rect, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
-	input_output_array_arg!(image);
+	extern_container_arg!(image);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_floodFill_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), seed_point.opencv_as_extern(), new_val.opencv_as_extern(), rect, lo_diff.opencv_as_extern(), up_diff.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5010,8 +5010,8 @@ pub fn flood_fill(image: &mut dyn core::ToInputOutputArray, seed_point: core::Po
 /// * flags: 4
 #[inline]
 pub fn flood_fill_mask(image: &mut dyn core::ToInputOutputArray, mask: &mut dyn core::ToInputOutputArray, seed_point: core::Point, new_val: core::Scalar, rect: &mut core::Rect, lo_diff: core::Scalar, up_diff: core::Scalar, flags: i32) -> Result<i32> {
-	input_output_array_arg!(image);
-	input_output_array_arg!(mask);
+	extern_container_arg!(image);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int(image.as_raw__InputOutputArray(), mask.as_raw__InputOutputArray(), seed_point.opencv_as_extern(), new_val.opencv_as_extern(), rect, lo_diff.opencv_as_extern(), up_diff.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5046,8 +5046,8 @@ pub fn get_affine_transform_slice(src: &[core::Point2f], dst: &[core::Point2f]) 
 
 #[inline]
 pub fn get_affine_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray) -> Result<core::Mat> {
-	input_array_arg!(src);
-	input_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_getAffineTransform_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5080,8 +5080,8 @@ pub fn get_affine_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInpu
 /// * ktype: CV_32F
 #[inline]
 pub fn get_deriv_kernels(kx: &mut dyn core::ToOutputArray, ky: &mut dyn core::ToOutputArray, dx: i32, dy: i32, ksize: i32, normalize: bool, ktype: i32) -> Result<()> {
-	output_array_arg!(kx);
-	output_array_arg!(ky);
+	extern_container_arg!(kx);
+	extern_container_arg!(ky);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_getDerivKernels_const__OutputArrayR_const__OutputArrayR_int_int_int_bool_int(kx.as_raw__OutputArray(), ky.as_raw__OutputArray(), dx, dy, ksize, normalize, ktype, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5222,8 +5222,8 @@ pub fn get_perspective_transform_slice(src: &[core::Point2f], dst: &[core::Point
 /// * solve_method: DECOMP_LU
 #[inline]
 pub fn get_perspective_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, solve_method: i32) -> Result<core::Mat> {
-	input_array_arg!(src);
-	input_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_getPerspectiveTransform_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), solve_method, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5257,8 +5257,8 @@ pub fn get_perspective_transform(src: &dyn core::ToInputArray, dst: &dyn core::T
 /// * patch_type: -1
 #[inline]
 pub fn get_rect_sub_pix(image: &dyn core::ToInputArray, patch_size: core::Size, center: core::Point2f, patch: &mut dyn core::ToOutputArray, patch_type: i32) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(patch);
+	extern_container_arg!(image);
+	extern_container_arg!(patch);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_getRectSubPix_const__InputArrayR_Size_Point2f_const__OutputArrayR_int(image.as_raw__InputArray(), patch_size.opencv_as_extern(), center.opencv_as_extern(), patch.as_raw__OutputArray(), patch_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5423,10 +5423,10 @@ pub fn get_text_size(text: &str, font_face: i32, font_scale: f64, thickness: i32
 /// * k: 0.04
 #[inline]
 pub fn good_features_to_track_with_quality(image: &dyn core::ToInputArray, corners: &mut dyn core::ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64, mask: &dyn core::ToInputArray, corners_quality: &mut dyn core::ToOutputArray, block_size: i32, gradient_size: i32, use_harris_detector: bool, k: f64) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(corners);
-	input_array_arg!(mask);
-	output_array_arg!(corners_quality);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
+	extern_container_arg!(mask);
+	extern_container_arg!(corners_quality);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_const__OutputArrayR_int_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), corners_quality.as_raw__OutputArray(), block_size, gradient_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5486,9 +5486,9 @@ pub fn good_features_to_track_with_quality(image: &dyn core::ToInputArray, corne
 /// * k: 0.04
 #[inline]
 pub fn good_features_to_track(image: &dyn core::ToInputArray, corners: &mut dyn core::ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64, mask: &dyn core::ToInputArray, block_size: i32, use_harris_detector: bool, k: f64) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(corners);
-	input_array_arg!(mask);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5501,9 +5501,9 @@ pub fn good_features_to_track(image: &dyn core::ToInputArray, corners: &mut dyn 
 /// * k: 0.04
 #[inline]
 pub fn good_features_to_track_with_gradient(image: &dyn core::ToInputArray, corners: &mut dyn core::ToOutputArray, max_corners: i32, quality_level: f64, min_distance: f64, mask: &dyn core::ToInputArray, block_size: i32, gradient_size: i32, use_harris_detector: bool, k: f64) -> Result<()> {
-	input_array_arg!(image);
-	output_array_arg!(corners);
-	input_array_arg!(mask);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int_bool_double(image.as_raw__InputArray(), corners.as_raw__OutputArray(), max_corners, quality_level, min_distance, mask.as_raw__InputArray(), block_size, gradient_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5534,10 +5534,10 @@ pub fn good_features_to_track_with_gradient(image: &dyn core::ToInputArray, corn
 /// * mode: GC_EVAL
 #[inline]
 pub fn grab_cut(img: &dyn core::ToInputArray, mask: &mut dyn core::ToInputOutputArray, rect: core::Rect, bgd_model: &mut dyn core::ToInputOutputArray, fgd_model: &mut dyn core::ToInputOutputArray, iter_count: i32, mode: i32) -> Result<()> {
-	input_array_arg!(img);
-	input_output_array_arg!(mask);
-	input_output_array_arg!(bgd_model);
-	input_output_array_arg!(fgd_model);
+	extern_container_arg!(img);
+	extern_container_arg!(mask);
+	extern_container_arg!(bgd_model);
+	extern_container_arg!(fgd_model);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_grabCut_const__InputArrayR_const__InputOutputArrayR_Rect_const__InputOutputArrayR_const__InputOutputArrayR_int_int(img.as_raw__InputArray(), mask.as_raw__InputOutputArray(), rect.opencv_as_extern(), bgd_model.as_raw__InputOutputArray(), fgd_model.as_raw__InputOutputArray(), iter_count, mode, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5585,10 +5585,10 @@ pub fn grab_cut(img: &dyn core::ToInputArray, mask: &mut dyn core::ToInputOutput
 /// * sqdepth: -1
 #[inline]
 pub fn integral3(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray, sqsum: &mut dyn core::ToOutputArray, tilted: &mut dyn core::ToOutputArray, sdepth: i32, sqdepth: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(sum);
-	output_array_arg!(sqsum);
-	output_array_arg!(tilted);
+	extern_container_arg!(src);
+	extern_container_arg!(sum);
+	extern_container_arg!(sqsum);
+	extern_container_arg!(tilted);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), tilted.as_raw__OutputArray(), sdepth, sqdepth, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5638,9 +5638,9 @@ pub fn integral3(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray
 /// * sqdepth: -1
 #[inline]
 pub fn integral2(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray, sqsum: &mut dyn core::ToOutputArray, sdepth: i32, sqdepth: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(sum);
-	output_array_arg!(sqsum);
+	extern_container_arg!(src);
+	extern_container_arg!(sum);
+	extern_container_arg!(sqsum);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sqsum.as_raw__OutputArray(), sdepth, sqdepth, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5689,8 +5689,8 @@ pub fn integral2(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray
 /// * sdepth: -1
 #[inline]
 pub fn integral(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray, sdepth: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(sum);
+	extern_container_arg!(src);
+	extern_container_arg!(sum);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_integral_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), sum.as_raw__OutputArray(), sdepth, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5718,9 +5718,9 @@ pub fn integral(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray,
 /// * handle_nested: true
 #[inline]
 pub fn intersect_convex_convex(p1: &dyn core::ToInputArray, p2: &dyn core::ToInputArray, p12: &mut dyn core::ToOutputArray, handle_nested: bool) -> Result<f32> {
-	input_array_arg!(p1);
-	input_array_arg!(p2);
-	output_array_arg!(p12);
+	extern_container_arg!(p1);
+	extern_container_arg!(p2);
+	extern_container_arg!(p12);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_intersectConvexConvex_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(p1.as_raw__InputArray(), p2.as_raw__InputArray(), p12.as_raw__OutputArray(), handle_nested, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5741,8 +5741,8 @@ pub fn intersect_convex_convex(p1: &dyn core::ToInputArray, p2: &dyn core::ToInp
 /// * iM: Output reverse affine transformation.
 #[inline]
 pub fn invert_affine_transform(m: &dyn core::ToInputArray, i_m: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(m);
-	output_array_arg!(i_m);
+	extern_container_arg!(m);
+	extern_container_arg!(i_m);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_invertAffineTransform_const__InputArrayR_const__OutputArrayR(m.as_raw__InputArray(), i_m.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5759,7 +5759,7 @@ pub fn invert_affine_transform(m: &dyn core::ToInputArray, i_m: &mut dyn core::T
 /// * contour: Input vector of 2D points, stored in std::vector\<\> or Mat
 #[inline]
 pub fn is_contour_convex(contour: &dyn core::ToInputArray) -> Result<bool> {
-	input_array_arg!(contour);
+	extern_container_arg!(contour);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_isContourConvex_const__InputArrayR(contour.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5789,7 +5789,7 @@ pub fn is_contour_convex(contour: &dyn core::ToInputArray) -> Result<bool> {
 /// * shift: 0
 #[inline]
 pub fn line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core::Point, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
-	input_output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_line_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5803,7 +5803,7 @@ pub fn line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core:
 /// **Deprecated**: This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags)
 /// 
 /// @internal
-/// Transform the source image using the following transformation (See @ref polar_remaps_reference_image "Polar remaps reference image c)"):
+/// Transform the source image using the following transformation (See [polar_remaps_reference_image] "Polar remaps reference image c)"):
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%20%5C%5C%0A%20%20dst%2Esize%28%29%20%5Cleftarrow%20src%2Esize%28%29%0A%5Cend%7Barray%7D)
 /// 
 /// where
@@ -5830,8 +5830,8 @@ pub fn line(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core:
 #[deprecated = "This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags)"]
 #[inline]
 pub fn linear_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, center: core::Point2f, max_radius: f64, flags: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_linearPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_as_extern(), max_radius, flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5845,7 +5845,7 @@ pub fn linear_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 /// **Deprecated**: This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags+WARP_POLAR_LOG);
 /// 
 /// @internal
-/// Transform the source image using the following transformation (See @ref polar_remaps_reference_image "Polar remaps reference image d)"):
+/// Transform the source image using the following transformation (See [polar_remaps_reference_image] "Polar remaps reference image d)"):
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0A%20%20dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%20%5C%5C%0A%20%20dst%2Esize%28%29%20%5Cleftarrow%20src%2Esize%28%29%0A%5Cend%7Barray%7D)
 /// 
 /// where
@@ -5873,8 +5873,8 @@ pub fn linear_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 #[deprecated = "This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags+WARP_POLAR_LOG);"]
 #[inline]
 pub fn log_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, center: core::Point2f, m: f64, flags: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_logPolar_const__InputArrayR_const__OutputArrayR_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), center.opencv_as_extern(), m, flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5893,8 +5893,8 @@ pub fn log_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// * parameter: Method-specific parameter (not supported now).
 #[inline]
 pub fn match_shapes(contour1: &dyn core::ToInputArray, contour2: &dyn core::ToInputArray, method: i32, parameter: f64) -> Result<f64> {
-	input_array_arg!(contour1);
-	input_array_arg!(contour2);
+	extern_container_arg!(contour1);
+	extern_container_arg!(contour2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_matchShapes_const__InputArrayR_const__InputArrayR_int_double(contour1.as_raw__InputArray(), contour2.as_raw__InputArray(), method, parameter, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5935,10 +5935,10 @@ pub fn match_shapes(contour1: &dyn core::ToInputArray, contour2: &dyn core::ToIn
 /// * mask: noArray()
 #[inline]
 pub fn match_template(image: &dyn core::ToInputArray, templ: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray, method: i32, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(image);
-	input_array_arg!(templ);
-	output_array_arg!(result);
-	input_array_arg!(mask);
+	extern_container_arg!(image);
+	extern_container_arg!(templ);
+	extern_container_arg!(result);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_matchTemplate_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR(image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), method, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5963,8 +5963,8 @@ pub fn match_template(image: &dyn core::ToInputArray, templ: &dyn core::ToInputA
 /// bilateralFilter, blur, boxFilter, GaussianBlur
 #[inline]
 pub fn median_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_medianBlur_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5982,7 +5982,7 @@ pub fn median_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 /// * points: Input vector of 2D points, stored in std::vector\<\> or Mat
 #[inline]
 pub fn min_area_rect(points: &dyn core::ToInputArray) -> Result<core::RotatedRect> {
-	input_array_arg!(points);
+	extern_container_arg!(points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_minAreaRect_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6001,7 +6001,7 @@ pub fn min_area_rect(points: &dyn core::ToInputArray) -> Result<core::RotatedRec
 /// * radius: Output radius of the circle.
 #[inline]
 pub fn min_enclosing_circle(points: &dyn core::ToInputArray, center: &mut core::Point2f, radius: &mut f32) -> Result<()> {
-	input_array_arg!(points);
+	extern_container_arg!(points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_minEnclosingCircle_const__InputArrayR_Point2fR_floatR(points.as_raw__InputArray(), center, radius, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6030,8 +6030,8 @@ pub fn min_enclosing_circle(points: &dyn core::ToInputArray, center: &mut core::
 /// of the OutputArray must be CV_32F.
 #[inline]
 pub fn min_enclosing_triangle(points: &dyn core::ToInputArray, triangle: &mut dyn core::ToOutputArray) -> Result<f64> {
-	input_array_arg!(points);
-	output_array_arg!(triangle);
+	extern_container_arg!(points);
+	extern_container_arg!(triangle);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_minEnclosingTriangle_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), triangle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6062,7 +6062,7 @@ pub fn min_enclosing_triangle(points: &dyn core::ToInputArray, triangle: &mut dy
 /// * binary_image: false
 #[inline]
 pub fn moments(array: &dyn core::ToInputArray, binary_image: bool) -> Result<core::Moments> {
-	input_array_arg!(array);
+	extern_container_arg!(array);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_moments_const__InputArrayR_bool(array.as_raw__InputArray(), binary_image, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6114,9 +6114,9 @@ pub fn morphology_default_border_value() -> Result<core::Scalar> {
 /// * border_value: morphologyDefaultBorderValue()
 #[inline]
 pub fn morphology_ex(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, op: i32, kernel: &dyn core::ToInputArray, anchor: core::Point, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(kernel);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(kernel);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_Point_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), op, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6166,9 +6166,9 @@ pub fn morphology_ex(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// * response: 0
 #[inline]
 pub fn phase_correlate(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, window: &dyn core::ToInputArray, response: &mut f64) -> Result<core::Point2d> {
-	input_array_arg!(src1);
-	input_array_arg!(src2);
-	input_array_arg!(window);
+	extern_container_arg!(src1);
+	extern_container_arg!(src2);
+	extern_container_arg!(window);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_phaseCorrelate_const__InputArrayR_const__InputArrayR_const__InputArrayR_doubleX(src1.as_raw__InputArray(), src2.as_raw__InputArray(), window.as_raw__InputArray(), response, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6194,7 +6194,7 @@ pub fn phase_correlate(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputAr
 /// nearest contour edge. Otherwise, the function only checks if the point is inside a contour or not.
 #[inline]
 pub fn point_polygon_test(contour: &dyn core::ToInputArray, pt: core::Point2f, measure_dist: bool) -> Result<f64> {
-	input_array_arg!(contour);
+	extern_container_arg!(contour);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_pointPolygonTest_const__InputArrayR_Point2f_bool(contour.as_raw__InputArray(), pt.opencv_as_extern(), measure_dist, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6222,8 +6222,8 @@ pub fn point_polygon_test(contour: &dyn core::ToInputArray, pt: core::Point2f, m
 /// * shift: 0
 #[inline]
 pub fn polylines(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInputArray, is_closed: bool, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
-	input_output_array_arg!(img);
-	input_array_arg!(pts);
+	extern_container_arg!(img);
+	extern_container_arg!(pts);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_polylines_const__InputOutputArrayR_const__InputArrayR_bool_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pts.as_raw__InputArray(), is_closed, &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6260,8 +6260,8 @@ pub fn polylines(img: &mut dyn core::ToInputOutputArray, pts: &dyn core::ToInput
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn pre_corner_detect(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: i32, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_preCornerDetect_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6293,7 +6293,7 @@ pub fn pre_corner_detect(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOut
 /// * bottom_left_origin: false
 #[inline]
 pub fn put_text(img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_face: i32, font_scale: f64, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
-	input_output_array_arg!(img);
+	extern_container_arg!(img);
 	extern_container_arg!(text);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_putText_const__InputOutputArrayR_const_StringR_Point_int_double_Scalar_int_int_bool(img.as_raw__InputOutputArray(), text.opencv_as_extern(), org.opencv_as_extern(), font_face, font_scale, color.opencv_as_extern(), thickness, line_type, bottom_left_origin, ocvrs_return.as_mut_ptr()) };
@@ -6327,8 +6327,8 @@ pub fn put_text(img: &mut dyn core::ToInputOutputArray, text: &str, org: core::P
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn pyr_down(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dstsize: core::Size, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_pyrDown_const__InputArrayR_const__OutputArrayR_const_SizeR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dstsize, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6378,8 +6378,8 @@ pub fn pyr_down(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray,
 /// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 #[inline]
 pub fn pyr_mean_shift_filtering(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sp: f64, sr: f64, max_level: i32, termcrit: core::TermCriteria) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_pyrMeanShiftFiltering_const__InputArrayR_const__OutputArrayR_double_double_int_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, max_level, termcrit.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6410,8 +6410,8 @@ pub fn pyr_mean_shift_filtering(src: &dyn core::ToInputArray, dst: &mut dyn core
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn pyr_up(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dstsize: core::Size, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_pyrUp_const__InputArrayR_const__OutputArrayR_const_SizeR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dstsize, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6440,7 +6440,7 @@ pub fn pyr_up(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// * shift: 0
 #[inline]
 pub fn rectangle_points(img: &mut dyn core::ToInputOutputArray, pt1: core::Point, pt2: core::Point, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
-	input_output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_rectangle_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), pt1.opencv_as_extern(), pt2.opencv_as_extern(), &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6475,7 +6475,7 @@ pub fn rectangle_points(img: &mut dyn core::ToInputOutputArray, pt1: core::Point
 /// * shift: 0
 #[inline]
 pub fn rectangle(img: &mut dyn core::ToInputOutputArray, rec: core::Rect, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
-	input_output_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_rectangle_const__InputOutputArrayR_Rect_const_ScalarR_int_int_int(img.as_raw__InputOutputArray(), rec.opencv_as_extern(), &color, thickness, line_type, shift, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6522,10 +6522,10 @@ pub fn rectangle(img: &mut dyn core::ToInputOutputArray, rec: core::Rect, color:
 /// * border_value: Scalar()
 #[inline]
 pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, map1: &dyn core::ToInputArray, map2: &dyn core::ToInputArray, interpolation: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(map1);
-	input_array_arg!(map2);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(map1);
+	extern_container_arg!(map2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_remap_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), map1.as_raw__InputArray(), map2.as_raw__InputArray(), interpolation, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6576,8 +6576,8 @@ pub fn remap(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ma
 /// * interpolation: INTER_LINEAR
 #[inline]
 pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dsize: core::Size, fx: f64, fy: f64, interpolation: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_resize_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_as_extern(), fx, fy, interpolation, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6603,7 +6603,7 @@ pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// One of #RectanglesIntersectTypes
 #[inline]
 pub fn rotated_rectangle_intersection(rect1: &core::RotatedRect, rect2: &core::RotatedRect, intersecting_region: &mut dyn core::ToOutputArray) -> Result<i32> {
-	output_array_arg!(intersecting_region);
+	extern_container_arg!(intersecting_region);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_rotatedRectangleIntersection_const_RotatedRectR_const_RotatedRectR_const__OutputArrayR(rect1.as_raw_RotatedRect(), rect2.as_raw_RotatedRect(), intersecting_region.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6620,7 +6620,7 @@ pub fn rotated_rectangle_intersection(rect1: &core::RotatedRect, rect2: &core::R
 /// ## Parameters
 /// * src: Source image.
 /// * dst: Destination image of the same size and the same number of channels as src .
-/// * ddepth: Destination image depth, see @ref filter_depths "combinations"
+/// * ddepth: Destination image depth, see [filter_depths] "combinations"
 /// * kernelX: Coefficients for filtering each row.
 /// * kernelY: Coefficients for filtering each column.
 /// * anchor: Anchor position within the kernel. The default value ![inline formula](https://latex.codecogs.com/png.latex?%28%2D1%2C%2D1%29) means that the anchor
@@ -6636,10 +6636,10 @@ pub fn rotated_rectangle_intersection(rect1: &core::RotatedRect, rect2: &core::R
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn sep_filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, kernel_x: &dyn core::ToInputArray, kernel_y: &dyn core::ToInputArray, anchor: core::Point, delta: f64, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(kernel_x);
-	input_array_arg!(kernel_y);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(kernel_x);
+	extern_container_arg!(kernel_y);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_sepFilter2D_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_const__InputArrayR_Point_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, kernel_x.as_raw__InputArray(), kernel_y.as_raw__InputArray(), anchor.opencv_as_extern(), delta, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6672,9 +6672,9 @@ pub fn sep_filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputA
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn spatial_gradient(src: &dyn core::ToInputArray, dx: &mut dyn core::ToOutputArray, dy: &mut dyn core::ToOutputArray, ksize: i32, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dx);
-	output_array_arg!(dy);
+	extern_container_arg!(src);
+	extern_container_arg!(dx);
+	extern_container_arg!(dy);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_spatialGradient_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dx.as_raw__OutputArray(), dy.as_raw__OutputArray(), ksize, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6708,8 +6708,8 @@ pub fn spatial_gradient(src: &dyn core::ToInputArray, dx: &mut dyn core::ToOutpu
 /// * border_type: BORDER_DEFAULT
 #[inline]
 pub fn sqr_box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ddepth: i32, ksize: core::Size, anchor: core::Point, normalize: bool, border_type: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_sqrBoxFilter_const__InputArrayR_const__OutputArrayR_int_Size_Point_bool_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ddepth, ksize.opencv_as_extern(), anchor.opencv_as_extern(), normalize, border_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6724,7 +6724,7 @@ pub fn sqr_box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// It creates a kind of moving stack of colors whilst scanning through the image. Thereby it just has to add one new block of color to the right side
 /// of the stack and remove the leftmost color. The remaining colors on the topmost layer of the stack are either added on or reduced by one,
 /// depending on if they are on the right or on the left side of the stack. The only supported borderType is BORDER_REPLICATE.
-/// Original paper was proposed by Mario Klingemann, which can be found http://underdestruction.com/2004/02/25/stackblur-2004.
+/// Original paper was proposed by Mario Klingemann, which can be found <http://underdestruction.com/2004/02/25/stackblur-2004>.
 /// 
 /// ## Parameters
 /// * src: input image. The number of channels can be arbitrary, but the depth should be one of
@@ -6734,8 +6734,8 @@ pub fn sqr_box_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 /// positive and odd.
 #[inline]
 pub fn stack_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, ksize: core::Size) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_stackBlur_const__InputArrayR_const__OutputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ksize.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6771,8 +6771,8 @@ pub fn stack_blur(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArra
 /// adaptiveThreshold, findContours, compare, min, max
 #[inline]
 pub fn threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, thresh: f64, maxval: f64, typ: i32) -> Result<f64> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_threshold_const__InputArrayR_const__OutputArrayR_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thresh, maxval, typ, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6811,9 +6811,9 @@ pub fn threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// * border_value: Scalar()
 #[inline]
 pub fn warp_affine(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(m);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(m);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_warpAffine_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_as_extern(), flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6849,9 +6849,9 @@ pub fn warp_affine(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArr
 /// * border_value: Scalar()
 #[inline]
 pub fn warp_perspective(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(m);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(m);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_warpPerspective_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Size_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), dsize.opencv_as_extern(), flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6925,8 +6925,8 @@ pub fn warp_perspective(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// cv::remap
 #[inline]
 pub fn warp_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dsize: core::Size, center: core::Point2f, max_radius: f64, flags: i32) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_warpPolar_const__InputArrayR_const__OutputArrayR_Size_Point2f_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dsize.opencv_as_extern(), center.opencv_as_extern(), max_radius, flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6961,8 +6961,8 @@ pub fn warp_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArra
 /// findContours
 #[inline]
 pub fn watershed(image: &dyn core::ToInputArray, markers: &mut dyn core::ToInputOutputArray) -> Result<()> {
-	input_array_arg!(image);
-	input_output_array_arg!(markers);
+	extern_container_arg!(image);
+	extern_container_arg!(markers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_watershed_const__InputArrayR_const__InputOutputArrayR(image.as_raw__InputArray(), markers.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6976,10 +6976,10 @@ pub fn watershed(image: &dyn core::ToInputArray, markers: &mut dyn core::ToInput
 /// * flow: noArray()
 #[inline]
 pub fn emd_1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputArray, dist_type: i32, cost: &dyn core::ToInputArray, mut lower_bound: core::Ptr<f32>, flow: &mut dyn core::ToOutputArray) -> Result<f32> {
-	input_array_arg!(signature1);
-	input_array_arg!(signature2);
-	input_array_arg!(cost);
-	output_array_arg!(flow);
+	extern_container_arg!(signature1);
+	extern_container_arg!(signature2);
+	extern_container_arg!(cost);
+	extern_container_arg!(flow);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_wrapperEMD_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_PtrLfloatG_const__OutputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound.as_raw_mut_PtrOff32(), flow.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -6987,7 +6987,7 @@ pub fn emd_1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInput
 	Ok(ret)
 }
 
-/// Base class for Contrast Limited Adaptive Histogram Equalization.
+/// Constant methods for [crate::imgproc::CLAHE]
 pub trait CLAHEConst: core::AlgorithmTraitConst {
 	fn as_raw_CLAHE(&self) -> *const c_void;
 
@@ -7013,6 +7013,7 @@ pub trait CLAHEConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Base class for Contrast Limited Adaptive Histogram Equalization.
 pub trait CLAHE: core::AlgorithmTrait + crate::imgproc::CLAHEConst {
 	fn as_raw_mut_CLAHE(&mut self) -> *mut c_void;
 
@@ -7023,8 +7024,8 @@ pub trait CLAHE: core::AlgorithmTrait + crate::imgproc::CLAHEConst {
 	/// * dst: Destination image.
 	#[inline]
 	fn apply(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(src);
-		output_array_arg!(dst);
+		extern_container_arg!(src);
+		extern_container_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_CLAHE_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CLAHE(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7070,7 +7071,7 @@ pub trait CLAHE: core::AlgorithmTrait + crate::imgproc::CLAHEConst {
 	
 }
 
-/// finds arbitrary template in the grayscale image using Generalized Hough Transform
+/// Constant methods for [crate::imgproc::GeneralizedHough]
 pub trait GeneralizedHoughConst: core::AlgorithmTraitConst {
 	fn as_raw_GeneralizedHough(&self) -> *const c_void;
 
@@ -7121,6 +7122,7 @@ pub trait GeneralizedHoughConst: core::AlgorithmTraitConst {
 	
 }
 
+/// finds arbitrary template in the grayscale image using Generalized Hough Transform
 pub trait GeneralizedHough: core::AlgorithmTrait + crate::imgproc::GeneralizedHoughConst {
 	fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void;
 
@@ -7130,7 +7132,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait + crate::imgproc::GeneralizedHo
 	/// * templ_center: Point(-1,-1)
 	#[inline]
 	fn set_template(&mut self, templ: &dyn core::ToInputArray, templ_center: core::Point) -> Result<()> {
-		input_array_arg!(templ);
+		extern_container_arg!(templ);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), templ.as_raw__InputArray(), templ_center.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7142,9 +7144,9 @@ pub trait GeneralizedHough: core::AlgorithmTrait + crate::imgproc::GeneralizedHo
 	/// * templ_center: Point(-1,-1)
 	#[inline]
 	fn set_template_1(&mut self, edges: &dyn core::ToInputArray, dx: &dyn core::ToInputArray, dy: &dyn core::ToInputArray, templ_center: core::Point) -> Result<()> {
-		input_array_arg!(edges);
-		input_array_arg!(dx);
-		input_array_arg!(dy);
+		extern_container_arg!(edges);
+		extern_container_arg!(dx);
+		extern_container_arg!(dy);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_GeneralizedHough_setTemplate_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), templ_center.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7158,9 +7160,9 @@ pub trait GeneralizedHough: core::AlgorithmTrait + crate::imgproc::GeneralizedHo
 	/// * votes: noArray()
 	#[inline]
 	fn detect(&mut self, image: &dyn core::ToInputArray, positions: &mut dyn core::ToOutputArray, votes: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(positions);
-		output_array_arg!(votes);
+		extern_container_arg!(image);
+		extern_container_arg!(positions);
+		extern_container_arg!(votes);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_GeneralizedHough(), image.as_raw__InputArray(), positions.as_raw__OutputArray(), votes.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7172,11 +7174,11 @@ pub trait GeneralizedHough: core::AlgorithmTrait + crate::imgproc::GeneralizedHo
 	/// * votes: noArray()
 	#[inline]
 	fn detect_with_edges(&mut self, edges: &dyn core::ToInputArray, dx: &dyn core::ToInputArray, dy: &dyn core::ToInputArray, positions: &mut dyn core::ToOutputArray, votes: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(edges);
-		input_array_arg!(dx);
-		input_array_arg!(dy);
-		output_array_arg!(positions);
-		output_array_arg!(votes);
+		extern_container_arg!(edges);
+		extern_container_arg!(dx);
+		extern_container_arg!(dy);
+		extern_container_arg!(positions);
+		extern_container_arg!(votes);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_GeneralizedHough_detect_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_GeneralizedHough(), edges.as_raw__InputArray(), dx.as_raw__InputArray(), dy.as_raw__InputArray(), positions.as_raw__OutputArray(), votes.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7236,9 +7238,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait + crate::imgproc::GeneralizedHo
 	
 }
 
-/// finds arbitrary template in the grayscale image using Generalized Hough Transform
-/// 
-/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+/// Constant methods for [crate::imgproc::GeneralizedHoughBallard]
 pub trait GeneralizedHoughBallardConst: crate::imgproc::GeneralizedHoughConst {
 	fn as_raw_GeneralizedHoughBallard(&self) -> *const c_void;
 
@@ -7262,6 +7262,9 @@ pub trait GeneralizedHoughBallardConst: crate::imgproc::GeneralizedHoughConst {
 	
 }
 
+/// finds arbitrary template in the grayscale image using Generalized Hough Transform
+/// 
+/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough + crate::imgproc::GeneralizedHoughBallardConst {
 	fn as_raw_mut_GeneralizedHoughBallard(&mut self) -> *mut c_void;
 
@@ -7287,9 +7290,7 @@ pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough + crate::img
 	
 }
 
-/// finds arbitrary template in the grayscale image using Generalized Hough Transform
-/// 
-/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+/// Constant methods for [crate::imgproc::GeneralizedHoughGuil]
 pub trait GeneralizedHoughGuilConst: crate::imgproc::GeneralizedHoughConst {
 	fn as_raw_GeneralizedHoughGuil(&self) -> *const c_void;
 
@@ -7403,6 +7404,9 @@ pub trait GeneralizedHoughGuilConst: crate::imgproc::GeneralizedHoughConst {
 	
 }
 
+/// finds arbitrary template in the grayscale image using Generalized Hough Transform
+/// 
+/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough + crate::imgproc::GeneralizedHoughGuilConst {
 	fn as_raw_mut_GeneralizedHoughGuil(&mut self) -> *mut c_void;
 
@@ -7528,36 +7532,7 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough + crate::imgpro
 	
 }
 
-/// Class for iterating over all pixels on a raster line segment.
-/// 
-/// The class LineIterator is used to get each pixel of a raster line connecting
-/// two specified points.
-/// It can be treated as a versatile implementation of the Bresenham algorithm
-/// where you can stop at each pixel and do some extra processing, for
-/// example, grab pixel values along the line or draw a line with an effect
-/// (for example, with XOR operation).
-/// 
-/// The number of pixels along the line is stored in LineIterator::count.
-/// The method LineIterator::pos returns the current position in the image:
-/// 
-/// ```C++
-/// // grabs pixels along the line (pt1, pt2)
-/// // from 8-bit 3-channel image to the buffer
-/// LineIterator it(img, pt1, pt2, 8);
-/// LineIterator it2 = it;
-/// vector<Vec3b> buf(it.count);
-/// 
-/// for(int i = 0; i < it.count; i++, ++it)
-///    buf[i] = *(const Vec3b*)*it;
-/// 
-/// // alternative way of iterating through the line
-/// for(int i = 0; i < it2.count; i++, ++it2)
-/// {
-///    Vec3b val = img.at<Vec3b>(it2.pos());
-///    CV_Assert(buf[i] == val);
-/// }
-/// ```
-/// 
+/// Constant methods for [crate::imgproc::LineIterator]
 pub trait LineIteratorTraitConst {
 	fn as_raw_LineIterator(&self) -> *const c_void;
 
@@ -7653,6 +7628,7 @@ pub trait LineIteratorTraitConst {
 	
 }
 
+/// Mutable methods for [crate::imgproc::LineIterator]
 pub trait LineIteratorTrait: crate::imgproc::LineIteratorTraitConst {
 	fn as_raw_mut_LineIterator(&mut self) -> *mut c_void;
 
@@ -7897,6 +7873,12 @@ impl LineIterator {
 	
 }
 
+/// Constant methods for [crate::imgproc::LineSegmentDetector]
+pub trait LineSegmentDetectorConst: core::AlgorithmTraitConst {
+	fn as_raw_LineSegmentDetector(&self) -> *const c_void;
+
+}
+
 /// Line segment detector class
 /// 
 /// following the algorithm described at [Rafael12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Rafael12) .
@@ -7904,11 +7886,6 @@ impl LineIterator {
 /// 
 /// Note: Implementation has been removed from OpenCV version 3.4.6 to 3.4.15 and version 4.1.0 to 4.5.3 due original code license conflict.
 /// restored again after [Computation of a NFA](https://github.com/rafael-grompone-von-gioi/binomial_nfa) code published under the MIT license.
-pub trait LineSegmentDetectorConst: core::AlgorithmTraitConst {
-	fn as_raw_LineSegmentDetector(&self) -> *const c_void;
-
-}
-
 pub trait LineSegmentDetector: core::AlgorithmTrait + crate::imgproc::LineSegmentDetectorConst {
 	fn as_raw_mut_LineSegmentDetector(&mut self) -> *mut c_void;
 
@@ -7939,11 +7916,11 @@ pub trait LineSegmentDetector: core::AlgorithmTrait + crate::imgproc::LineSegmen
 	/// * nfa: noArray()
 	#[inline]
 	fn detect(&mut self, image: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray, width: &mut dyn core::ToOutputArray, prec: &mut dyn core::ToOutputArray, nfa: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(lines);
-		output_array_arg!(width);
-		output_array_arg!(prec);
-		output_array_arg!(nfa);
+		extern_container_arg!(image);
+		extern_container_arg!(lines);
+		extern_container_arg!(width);
+		extern_container_arg!(prec);
+		extern_container_arg!(nfa);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LineSegmentDetector_detect_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_LineSegmentDetector(), image.as_raw__InputArray(), lines.as_raw__OutputArray(), width.as_raw__OutputArray(), prec.as_raw__OutputArray(), nfa.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7958,8 +7935,8 @@ pub trait LineSegmentDetector: core::AlgorithmTrait + crate::imgproc::LineSegmen
 	/// * lines: A vector of the lines that needed to be drawn.
 	#[inline]
 	fn draw_segments(&mut self, image: &mut dyn core::ToInputOutputArray, lines: &dyn core::ToInputArray) -> Result<()> {
-		input_output_array_arg!(image);
-		input_array_arg!(lines);
+		extern_container_arg!(image);
+		extern_container_arg!(lines);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LineSegmentDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_LineSegmentDetector(), image.as_raw__InputOutputArray(), lines.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7980,9 +7957,9 @@ pub trait LineSegmentDetector: core::AlgorithmTrait + crate::imgproc::LineSegmen
 	/// * image: noArray()
 	#[inline]
 	fn compare_segments(&mut self, size: core::Size, lines1: &dyn core::ToInputArray, lines2: &dyn core::ToInputArray, image: &mut dyn core::ToInputOutputArray) -> Result<i32> {
-		input_array_arg!(lines1);
-		input_array_arg!(lines2);
-		input_output_array_arg!(image);
+		extern_container_arg!(lines1);
+		extern_container_arg!(lines2);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LineSegmentDetector_compareSegments_const_SizeR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_LineSegmentDetector(), &size, lines1.as_raw__InputArray(), lines2.as_raw__InputArray(), image.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7992,6 +7969,7 @@ pub trait LineSegmentDetector: core::AlgorithmTrait + crate::imgproc::LineSegmen
 	
 }
 
+/// Constant methods for [crate::imgproc::Subdiv2D]
 pub trait Subdiv2DTraitConst {
 	fn as_raw_Subdiv2D(&self) -> *const c_void;
 
@@ -8179,6 +8157,7 @@ pub trait Subdiv2DTraitConst {
 	
 }
 
+/// Mutable methods for [crate::imgproc::Subdiv2D]
 pub trait Subdiv2DTrait: crate::imgproc::Subdiv2DTraitConst {
 	fn as_raw_mut_Subdiv2D(&mut self) -> *mut c_void;
 
@@ -8364,17 +8343,7 @@ impl Subdiv2D {
 	
 }
 
-/// Intelligent Scissors image segmentation
-/// 
-/// This class is used to find the path (contour) between two points
-/// which can be used for image segmentation.
-/// 
-/// Usage example:
-/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
-/// 
-/// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
-/// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
-/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
+/// Constant methods for [crate::imgproc::IntelligentScissorsMB]
 pub trait IntelligentScissorsMBTraitConst {
 	fn as_raw_IntelligentScissorsMB(&self) -> *const c_void;
 
@@ -8392,7 +8361,7 @@ pub trait IntelligentScissorsMBTraitConst {
 	/// * backward: false
 	#[inline]
 	fn get_contour(&self, target_pt: core::Point, contour: &mut dyn core::ToOutputArray, backward: bool) -> Result<()> {
-		output_array_arg!(contour);
+		extern_container_arg!(contour);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_segmentation_IntelligentScissorsMB_getContour_const_const_PointR_const__OutputArrayR_bool(self.as_raw_IntelligentScissorsMB(), &target_pt, contour.as_raw__OutputArray(), backward, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8402,6 +8371,7 @@ pub trait IntelligentScissorsMBTraitConst {
 	
 }
 
+/// Mutable methods for [crate::imgproc::IntelligentScissorsMB]
 pub trait IntelligentScissorsMBTrait: crate::imgproc::IntelligentScissorsMBTraitConst {
 	fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void;
 
@@ -8501,7 +8471,7 @@ pub trait IntelligentScissorsMBTrait: crate::imgproc::IntelligentScissorsMBTrait
 	/// * image: input image. Type is #CV_8UC1 / #CV_8UC3
 	#[inline]
 	fn apply_image(&mut self, image: &dyn core::ToInputArray) -> Result<crate::imgproc::IntelligentScissorsMB> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImage_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8524,10 +8494,10 @@ pub trait IntelligentScissorsMBTrait: crate::imgproc::IntelligentScissorsMBTrait
 	/// * image: noArray()
 	#[inline]
 	fn apply_image_features(&mut self, non_edge: &dyn core::ToInputArray, gradient_direction: &dyn core::ToInputArray, gradient_magnitude: &dyn core::ToInputArray, image: &dyn core::ToInputArray) -> Result<crate::imgproc::IntelligentScissorsMB> {
-		input_array_arg!(non_edge);
-		input_array_arg!(gradient_direction);
-		input_array_arg!(gradient_magnitude);
-		input_array_arg!(image);
+		extern_container_arg!(non_edge);
+		extern_container_arg!(gradient_direction);
+		extern_container_arg!(gradient_magnitude);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_segmentation_IntelligentScissorsMB_applyImageFeatures_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_IntelligentScissorsMB(), non_edge.as_raw__InputArray(), gradient_direction.as_raw__InputArray(), gradient_magnitude.as_raw__InputArray(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -62,24 +62,13 @@ pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background
 	Ok(ret)
 }
 
-/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
-/// 
-/// The class discriminates between foreground and background pixels by building and maintaining a model
-/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MOG2001) .
-/// ## See also
-/// BackgroundSubtractorMOG
-/// 
-/// 
-/// Note:
-///    *   An example on gaussian mixture based background/foreground segmantation can be found at
-///        opencv_source_code/samples/gpu/bgfg_segm.cpp
+/// Constant methods for [crate::cudabgsegm::CUDA_BackgroundSubtractorMOG]
 pub trait CUDA_BackgroundSubtractorMOGConst: crate::video::BackgroundSubtractorConst {
 	fn as_raw_CUDA_BackgroundSubtractorMOG(&self) -> *const c_void;
 
 	#[inline]
 	fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(background_image);
+		extern_container_arg!(background_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_BackgroundSubtractorMOG_getBackgroundImage_const_const__OutputArrayR_StreamR(self.as_raw_CUDA_BackgroundSubtractorMOG(), background_image.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -125,13 +114,25 @@ pub trait CUDA_BackgroundSubtractorMOGConst: crate::video::BackgroundSubtractorC
 	
 }
 
+/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
+/// 
+/// The class discriminates between foreground and background pixels by building and maintaining a model
+/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
+/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MOG2001) .
+/// ## See also
+/// BackgroundSubtractorMOG
+/// 
+/// 
+/// Note:
+///    *   An example on gaussian mixture based background/foreground segmantation can be found at
+///        opencv_source_code/samples/gpu/bgfg_segm.cpp
 pub trait CUDA_BackgroundSubtractorMOG: crate::cudabgsegm::CUDA_BackgroundSubtractorMOGConst + crate::video::BackgroundSubtractor {
 	fn as_raw_mut_CUDA_BackgroundSubtractorMOG(&mut self) -> *mut c_void;
 
 	#[inline]
 	fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(fgmask);
+		extern_container_arg!(image);
+		extern_container_arg!(fgmask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_BackgroundSubtractorMOG_apply_const__InputArrayR_const__OutputArrayR_double_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorMOG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -186,19 +187,13 @@ pub trait CUDA_BackgroundSubtractorMOG: crate::cudabgsegm::CUDA_BackgroundSubtra
 	
 }
 
-/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
-/// 
-/// The class discriminates between foreground and background pixels by building and maintaining a model
-/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
-/// ## See also
-/// BackgroundSubtractorMOG2
+/// Constant methods for [crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2]
 pub trait CUDA_BackgroundSubtractorMOG2Const: crate::video::BackgroundSubtractorMOG2Const {
 	fn as_raw_CUDA_BackgroundSubtractorMOG2(&self) -> *const c_void;
 
 	#[inline]
 	fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		output_array_arg!(background_image);
+		extern_container_arg!(background_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_getBackgroundImage_const_const__OutputArrayR_StreamR(self.as_raw_CUDA_BackgroundSubtractorMOG2(), background_image.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -208,13 +203,20 @@ pub trait CUDA_BackgroundSubtractorMOG2Const: crate::video::BackgroundSubtractor
 	
 }
 
+/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
+/// 
+/// The class discriminates between foreground and background pixels by building and maintaining a model
+/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
+/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
+/// ## See also
+/// BackgroundSubtractorMOG2
 pub trait CUDA_BackgroundSubtractorMOG2: crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2Const + crate::video::BackgroundSubtractorMOG2 {
 	fn as_raw_mut_CUDA_BackgroundSubtractorMOG2(&mut self) -> *mut c_void;
 
 	#[inline]
 	fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(fgmask);
+		extern_container_arg!(image);
+		extern_container_arg!(fgmask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__OutputArrayR_double_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -13,7 +13,7 @@
 //! The module provides biological visual systems models (human visual system and others). It also
 //! provides derivated objects that take advantage of those bio-inspired models.
 //! 
-//! @ref bioinspired_retina
+//! [bioinspired_retina]
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::RetinaParametersTraitConst, super::RetinaParametersTrait, super::RetinaConst, super::Retina, super::RetinaFastToneMappingConst, super::RetinaFastToneMapping, super::TransientAreasSegmentationModuleConst, super::TransientAreasSegmentationModule };
@@ -25,28 +25,7 @@ pub const RETINA_COLOR_BAYER: i32 = 2;
 pub const RETINA_COLOR_DIAGONAL: i32 = 1;
 /// each pixel position is either R, G or B in a random choice
 pub const RETINA_COLOR_RANDOM: i32 = 0;
-/// class which allows the Gipsa/Listic Labs model to be used with OpenCV.
-/// 
-/// This retina model allows spatio-temporal image processing (applied on still images, video sequences).
-/// As a summary, these are the retina model properties:
-/// - It applies a spectral whithening (mid-frequency details enhancement)
-/// - high frequency spatio-temporal noise reduction
-/// - low frequency luminance to be reduced (luminance range compression)
-/// - local logarithmic luminance compression allows details to be enhanced in low light conditions
-/// 
-/// USE : this model can be used basically for spatio-temporal video effects but also for :
-///      _using the getParvo method output matrix : texture analysiswith enhanced signal to noise ratio and enhanced details robust against input images luminance ranges
-///      _using the getMagno method output matrix : motion analysis also with the previously cited properties
-/// 
-/// for more information, reer to the following papers :
-/// Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: http://dx.doi.org/10.1016/j.cviu.2010.01.011
-/// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
-/// 
-/// The retina filter includes the research contributions of phd/research collegues from which code has been redrawn by the author :
-/// take a look at the retinacolor.hpp module to discover Brice Chaix de Lavarene color mosaicing/demosaicing and the reference paper:
-/// B. Chaix de Lavarene, D. Alleysson, B. Durette, J. Herault (2007). "Efficient demosaicing through recursive filtering", IEEE International Conference on Image Processing ICIP 2007
-/// take a look at imagelogpolprojection.hpp to discover retina spatial log sampling which originates from Barthelemy Durette phd with Jeanny Herault. A Retina / V1 cortex projection is also proposed and originates from Jeanny's discussions.
-/// more informations in the above cited Jeanny Heraults's book.
+/// Constant methods for [crate::bioinspired::Retina]
 pub trait RetinaConst: core::AlgorithmTraitConst {
 	fn as_raw_Retina(&self) -> *const c_void;
 
@@ -111,6 +90,28 @@ pub trait RetinaConst: core::AlgorithmTraitConst {
 	
 }
 
+/// class which allows the Gipsa/Listic Labs model to be used with OpenCV.
+/// 
+/// This retina model allows spatio-temporal image processing (applied on still images, video sequences).
+/// As a summary, these are the retina model properties:
+/// - It applies a spectral whithening (mid-frequency details enhancement)
+/// - high frequency spatio-temporal noise reduction
+/// - low frequency luminance to be reduced (luminance range compression)
+/// - local logarithmic luminance compression allows details to be enhanced in low light conditions
+/// 
+/// USE : this model can be used basically for spatio-temporal video effects but also for :
+///      _using the getParvo method output matrix : texture analysiswith enhanced signal to noise ratio and enhanced details robust against input images luminance ranges
+///      _using the getMagno method output matrix : motion analysis also with the previously cited properties
+/// 
+/// for more information, reer to the following papers :
+/// Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
+/// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
+/// 
+/// The retina filter includes the research contributions of phd/research collegues from which code has been redrawn by the author :
+/// take a look at the retinacolor.hpp module to discover Brice Chaix de Lavarene color mosaicing/demosaicing and the reference paper:
+/// B. Chaix de Lavarene, D. Alleysson, B. Durette, J. Herault (2007). "Efficient demosaicing through recursive filtering", IEEE International Conference on Image Processing ICIP 2007
+/// take a look at imagelogpolprojection.hpp to discover retina spatial log sampling which originates from Barthelemy Durette phd with Jeanny Herault. A Retina / V1 cortex projection is also proposed and originates from Jeanny's discussions.
+/// more informations in the above cited Jeanny Heraults's book.
 pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
 	fn as_raw_mut_Retina(&mut self) -> *mut c_void;
 
@@ -245,7 +246,7 @@ pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
 	/// (low frequency energy) IPL parvo is the OPL next processing stage, it refers to a part of the
 	/// Inner Plexiform layer of the retina, it allows high contours sensitivity in foveal vision. See
 	/// reference papers for more informations.
-	/// for more informations, please have a look at the paper Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: http://dx.doi.org/10.1016/j.cviu.2010.01.011
+	/// for more informations, please have a look at the paper Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
 	/// ## Parameters
 	/// * colorMode: specifies if (true) color is processed of not (false) to then processing gray
 	/// level image
@@ -345,7 +346,7 @@ pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
 	/// format (from 8bit to 16bits)
 	#[inline]
 	fn run(&mut self, input_image: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(input_image);
+		extern_container_arg!(input_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bioinspired_Retina_run_const__InputArrayR(self.as_raw_mut_Retina(), input_image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -371,8 +372,8 @@ pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
 	/// * outputToneMappedImage: the output 8bit/channel tone mapped image (CV_8U or CV_8UC3 format).
 	#[inline]
 	fn apply_fast_tone_mapping(&mut self, input_image: &dyn core::ToInputArray, output_tone_mapped_image: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(input_image);
-		output_array_arg!(output_tone_mapped_image);
+		extern_container_arg!(input_image);
+		extern_container_arg!(output_tone_mapped_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bioinspired_Retina_applyFastToneMapping_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Retina(), input_image.as_raw__InputArray(), output_tone_mapped_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -395,7 +396,7 @@ pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
 	/// getParvoRAW
 	#[inline]
 	fn get_parvo(&mut self, retina_output_parvo: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(retina_output_parvo);
+		extern_container_arg!(retina_output_parvo);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bioinspired_Retina_getParvo_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_parvo.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -408,7 +409,7 @@ pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
 	/// getParvo
 	#[inline]
 	fn get_parvo_raw_to(&mut self, retina_output_parvo: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(retina_output_parvo);
+		extern_container_arg!(retina_output_parvo);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bioinspired_Retina_getParvoRAW_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_parvo.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -429,7 +430,7 @@ pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
 	/// getMagnoRAW
 	#[inline]
 	fn get_magno(&mut self, retina_output_magno: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(retina_output_magno);
+		extern_container_arg!(retina_output_magno);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bioinspired_Retina_getMagno_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_magno.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -442,7 +443,7 @@ pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
 	/// getMagno
 	#[inline]
 	fn get_magno_raw_to(&mut self, retina_output_magno: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(retina_output_magno);
+		extern_container_arg!(retina_output_magno);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_magno.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -575,6 +576,12 @@ impl dyn Retina + '_ {
 	}
 	
 }
+/// Constant methods for [crate::bioinspired::RetinaFastToneMapping]
+pub trait RetinaFastToneMappingConst: core::AlgorithmTraitConst {
+	fn as_raw_RetinaFastToneMapping(&self) -> *const c_void;
+
+}
+
 /// a wrapper class which allows the tone mapping algorithm of Meylan&al(2007) to be used with OpenCV.
 /// 
 /// This algorithm is already implemented in thre Retina class (retina::applyFastToneMapping) but used it does not require all the retina model to be allocated. This allows a light memory use for low memory devices (smartphones, etc.
@@ -586,14 +593,9 @@ impl dyn Retina + '_ {
 ///   this can help noise robustness and temporal stability for video sequence use cases.
 /// 
 /// for more information, read to the following papers :
-/// Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: http://dx.doi.org/10.1016/j.cviu.2010.01.011
+/// Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
 /// regarding spatio-temporal filter and the bigger retina model :
 /// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
-pub trait RetinaFastToneMappingConst: core::AlgorithmTraitConst {
-	fn as_raw_RetinaFastToneMapping(&self) -> *const c_void;
-
-}
-
 pub trait RetinaFastToneMapping: core::AlgorithmTrait + crate::bioinspired::RetinaFastToneMappingConst {
 	fn as_raw_mut_RetinaFastToneMapping(&mut self) -> *mut c_void;
 
@@ -615,8 +617,8 @@ pub trait RetinaFastToneMapping: core::AlgorithmTrait + crate::bioinspired::Reti
 	/// * outputToneMappedImage: the output tone mapped image
 	#[inline]
 	fn apply_fast_tone_mapping(&mut self, input_image: &dyn core::ToInputArray, output_tone_mapped_image: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(input_image);
-		output_array_arg!(output_tone_mapped_image);
+		extern_container_arg!(input_image);
+		extern_container_arg!(output_tone_mapped_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_RetinaFastToneMapping(), input_image.as_raw__InputArray(), output_tone_mapped_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -659,66 +661,7 @@ impl dyn RetinaFastToneMapping + '_ {
 	}
 	
 }
-/// retina model parameters structure
-/// 
-/// For better clarity, check explenations on the comments of methods : setupOPLandIPLParvoChannel and setupIPLMagnoChannel
-/// 
-/// Here is the default configuration file of the retina module. It gives results such as the first
-/// retina output shown on the top of this page.
-/// 
-/// ```C++
-/// <?xml version="1.0"?>
-/// <opencv_storage>
-/// <OPLandIPLparvo>
-///    <colorMode>1</colorMode>
-///    <normaliseOutput>1</normaliseOutput>
-///    <photoreceptorsLocalAdaptationSensitivity>7.5e-01</photoreceptorsLocalAdaptationSensitivity>
-///    <photoreceptorsTemporalConstant>9.0e-01</photoreceptorsTemporalConstant>
-///    <photoreceptorsSpatialConstant>5.3e-01</photoreceptorsSpatialConstant>
-///    <horizontalCellsGain>0.01</horizontalCellsGain>
-///    <hcellsTemporalConstant>0.5</hcellsTemporalConstant>
-///    <hcellsSpatialConstant>7.</hcellsSpatialConstant>
-///    <ganglionCellsSensitivity>7.5e-01</ganglionCellsSensitivity></OPLandIPLparvo>
-/// <IPLmagno>
-///    <normaliseOutput>1</normaliseOutput>
-///    <parasolCells_beta>0.</parasolCells_beta>
-///    <parasolCells_tau>0.</parasolCells_tau>
-///    <parasolCells_k>7.</parasolCells_k>
-///    <amacrinCellsTemporalCutFrequency>2.0e+00</amacrinCellsTemporalCutFrequency>
-///    <V0CompressionParameter>9.5e-01</V0CompressionParameter>
-///    <localAdaptintegration_tau>0.</localAdaptintegration_tau>
-///    <localAdaptintegration_k>7.</localAdaptintegration_k></IPLmagno>
-/// </opencv_storage>
-/// ```
-/// 
-/// 
-/// Here is the 'realistic" setup used to obtain the second retina output shown on the top of this page.
-/// 
-/// ```C++
-/// <?xml version="1.0"?>
-/// <opencv_storage>
-/// <OPLandIPLparvo>
-///   <colorMode>1</colorMode>
-///   <normaliseOutput>1</normaliseOutput>
-///   <photoreceptorsLocalAdaptationSensitivity>8.9e-01</photoreceptorsLocalAdaptationSensitivity>
-///   <photoreceptorsTemporalConstant>9.0e-01</photoreceptorsTemporalConstant>
-///   <photoreceptorsSpatialConstant>5.3e-01</photoreceptorsSpatialConstant>
-///   <horizontalCellsGain>0.3</horizontalCellsGain>
-///   <hcellsTemporalConstant>0.5</hcellsTemporalConstant>
-///   <hcellsSpatialConstant>7.</hcellsSpatialConstant>
-///   <ganglionCellsSensitivity>8.9e-01</ganglionCellsSensitivity></OPLandIPLparvo>
-/// <IPLmagno>
-///   <normaliseOutput>1</normaliseOutput>
-///   <parasolCells_beta>0.</parasolCells_beta>
-///   <parasolCells_tau>0.</parasolCells_tau>
-///   <parasolCells_k>7.</parasolCells_k>
-///   <amacrinCellsTemporalCutFrequency>2.0e+00</amacrinCellsTemporalCutFrequency>
-///   <V0CompressionParameter>9.5e-01</V0CompressionParameter>
-///   <localAdaptintegration_tau>0.</localAdaptintegration_tau>
-///   <localAdaptintegration_k>7.</localAdaptintegration_k></IPLmagno>
-/// </opencv_storage>
-/// ```
-/// 
+/// Constant methods for [crate::bioinspired::RetinaParameters]
 pub trait RetinaParametersTraitConst {
 	fn as_raw_RetinaParameters(&self) -> *const c_void;
 
@@ -740,6 +683,7 @@ pub trait RetinaParametersTraitConst {
 	
 }
 
+/// Mutable methods for [crate::bioinspired::RetinaParameters]
 pub trait RetinaParametersTrait: crate::bioinspired::RetinaParametersTraitConst {
 	fn as_raw_mut_RetinaParameters(&mut self) -> *mut c_void;
 
@@ -932,18 +876,7 @@ impl SegmentationParameters {
 	
 }
 
-/// class which provides a transient/moving areas segmentation module
-/// 
-/// perform a locally adapted segmentation by using the retina magno input data Based on Alexandre
-/// BENOIT thesis: "Le système visuel humain au secours de la vision par ordinateur"
-/// 
-/// 3 spatio temporal filters are used:
-/// - a first one which filters the noise and local variations of the input motion energy
-/// - a second (more powerfull low pass spatial filter) which gives the neighborhood motion energy the
-/// segmentation consists in the comparison of these both outputs, if the local motion energy is higher
-/// to the neighborhood otion energy, then the area is considered as moving and is segmented
-/// - a stronger third low pass filter helps decision by providing a smooth information about the
-/// "motion context" in a wider area
+/// Constant methods for [crate::bioinspired::TransientAreasSegmentationModule]
 pub trait TransientAreasSegmentationModuleConst: core::AlgorithmTraitConst {
 	fn as_raw_TransientAreasSegmentationModule(&self) -> *const c_void;
 
@@ -974,6 +907,18 @@ pub trait TransientAreasSegmentationModuleConst: core::AlgorithmTraitConst {
 	
 }
 
+/// class which provides a transient/moving areas segmentation module
+/// 
+/// perform a locally adapted segmentation by using the retina magno input data Based on Alexandre
+/// BENOIT thesis: "Le système visuel humain au secours de la vision par ordinateur"
+/// 
+/// 3 spatio temporal filters are used:
+/// - a first one which filters the noise and local variations of the input motion energy
+/// - a second (more powerfull low pass spatial filter) which gives the neighborhood motion energy the
+/// segmentation consists in the comparison of these both outputs, if the local motion energy is higher
+/// to the neighborhood otion energy, then the area is considered as moving and is segmented
+/// - a stronger third low pass filter helps decision by providing a smooth information about the
+/// "motion context" in a wider area
 pub trait TransientAreasSegmentationModule: core::AlgorithmTrait + crate::bioinspired::TransientAreasSegmentationModuleConst {
 	fn as_raw_mut_TransientAreasSegmentationModule(&mut self) -> *mut c_void;
 
@@ -1074,7 +1019,7 @@ pub trait TransientAreasSegmentationModule: core::AlgorithmTrait + crate::bioins
 	/// * channel_index: 0
 	#[inline]
 	fn run(&mut self, input_to_segment: &dyn core::ToInputArray, channel_index: i32) -> Result<()> {
-		input_array_arg!(input_to_segment);
+		extern_container_arg!(input_to_segment);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_run_const__InputArrayR_const_int(self.as_raw_mut_TransientAreasSegmentationModule(), input_to_segment.as_raw__InputArray(), channel_index, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1086,7 +1031,7 @@ pub trait TransientAreasSegmentationModule: core::AlgorithmTrait + crate::bioins
 	/// return the last segmentation result: a boolean picture which is resampled between 0 and 255 for a display purpose
 	#[inline]
 	fn get_segmentation_picture(&mut self, transient_areas: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(transient_areas);
+		extern_container_arg!(transient_areas);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_const__OutputArrayR(self.as_raw_mut_TransientAreasSegmentationModule(), transient_areas.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

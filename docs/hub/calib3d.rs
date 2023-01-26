@@ -576,12 +576,12 @@ pub type CirclesGridFinderParameters2 = crate::calib3d::CirclesGridFinderParamet
 /// * qz: noArray()
 #[inline]
 pub fn rq_decomp3x3(src: &dyn core::ToInputArray, mtx_r: &mut dyn core::ToOutputArray, mtx_q: &mut dyn core::ToOutputArray, qx: &mut dyn core::ToOutputArray, qy: &mut dyn core::ToOutputArray, qz: &mut dyn core::ToOutputArray) -> Result<core::Vec3d> {
-	input_array_arg!(src);
-	output_array_arg!(mtx_r);
-	output_array_arg!(mtx_q);
-	output_array_arg!(qx);
-	output_array_arg!(qy);
-	output_array_arg!(qz);
+	extern_container_arg!(src);
+	extern_container_arg!(mtx_r);
+	extern_container_arg!(mtx_q);
+	extern_container_arg!(qx);
+	extern_container_arg!(qy);
+	extern_container_arg!(qz);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_RQDecomp3x3_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mtx_r.as_raw__OutputArray(), mtx_q.as_raw__OutputArray(), qx.as_raw__OutputArray(), qy.as_raw__OutputArray(), qz.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -605,7 +605,7 @@ pub fn rq_decomp3x3(src: &dyn core::ToInputArray, mtx_r: &mut dyn core::ToOutput
 /// 
 /// A rotation vector is a convenient and most compact representation of a rotation matrix (since any
 /// rotation matrix has just 3 degrees of freedom). The representation is used in the global 3D geometry
-/// optimization procedures like @ref calibrateCamera, @ref stereoCalibrate, or @ref solvePnP .
+/// optimization procedures like [calibrateCamera], [stereoCalibrate], or [solvePnP] .
 /// 
 /// 
 /// Note: More information about the computation of the derivative of a 3D rotation matrix with respect to its exponential coordinate
@@ -622,9 +622,9 @@ pub fn rq_decomp3x3(src: &dyn core::ToInputArray, mtx_r: &mut dyn core::ToOutput
 /// * jacobian: noArray()
 #[inline]
 pub fn rodrigues(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	output_array_arg!(jacobian);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(jacobian);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_Rodrigues_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -696,17 +696,17 @@ pub fn rodrigues(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 #[inline]
 pub fn calibrate_camera_ro_extended(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, new_obj_points: &mut dyn core::ToOutputArray, std_deviations_intrinsics: &mut dyn core::ToOutputArray, std_deviations_extrinsics: &mut dyn core::ToOutputArray, std_deviations_obj_points: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_output_array_arg!(camera_matrix);
-	input_output_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
-	output_array_arg!(new_obj_points);
-	output_array_arg!(std_deviations_intrinsics);
-	output_array_arg!(std_deviations_extrinsics);
-	output_array_arg!(std_deviations_obj_points);
-	output_array_arg!(per_view_errors);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
+	extern_container_arg!(new_obj_points);
+	extern_container_arg!(std_deviations_intrinsics);
+	extern_container_arg!(std_deviations_extrinsics);
+	extern_container_arg!(std_deviations_obj_points);
+	extern_container_arg!(per_view_errors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), std_deviations_obj_points.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -780,13 +780,13 @@ pub fn calibrate_camera_ro_extended(object_points: &dyn core::ToInputArray, imag
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 #[inline]
 pub fn calibrate_camera_ro(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, new_obj_points: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_output_array_arg!(camera_matrix);
-	input_output_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
-	output_array_arg!(new_obj_points);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
+	extern_container_arg!(new_obj_points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -814,12 +814,12 @@ pub fn calibrate_camera_ro(object_points: &dyn core::ToInputArray, image_points:
 /// concatenated together.
 /// * imageSize: Size of the image used only to initialize the camera intrinsic matrix.
 /// * cameraMatrix: Input/output 3x3 floating-point camera intrinsic matrix
-/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If @ref CALIB_USE_INTRINSIC_GUESS
-/// and/or @ref CALIB_FIX_ASPECT_RATIO, @ref CALIB_FIX_PRINCIPAL_POINT or @ref CALIB_FIX_FOCAL_LENGTH
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If [CALIB_USE_INTRINSIC_GUESS]
+/// and/or [CALIB_FIX_ASPECT_RATIO], [CALIB_FIX_PRINCIPAL_POINT] or [CALIB_FIX_FOCAL_LENGTH]
 /// are specified, some or all of fx, fy, cx, cy must be initialized before calling the function.
 /// * distCoeffs: Input/output vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs).
-/// * rvecs: Output vector of rotation vectors (@ref Rodrigues ) estimated for each pattern view
+/// * rvecs: Output vector of rotation vectors ([Rodrigues] ) estimated for each pattern view
 /// (e.g. std::vector<cv::Mat>>). That is, each i-th rotation vector together with the corresponding
 /// i-th translation vector (see the next output parameter description) brings the calibration pattern
 /// from the object coordinate space (in which object points are specified) to the camera coordinate
@@ -837,39 +837,39 @@ pub fn calibrate_camera_ro(object_points: &dyn core::ToInputArray, image_points:
 /// the number of pattern views. ![inline formula](https://latex.codecogs.com/png.latex?R%5Fi%2C%20T%5Fi) are concatenated 1x3 vectors.
 /// * perViewErrors: Output vector of the RMS re-projection error estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   @ref CALIB_USE_INTRINSIC_GUESS cameraMatrix contains valid initial values of
+/// *   [CALIB_USE_INTRINSIC_GUESS] cameraMatrix contains valid initial values of
 /// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
 /// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
 /// Note, that if intrinsic parameters are known, there is no need to use this function just to
-/// estimate extrinsic parameters. Use @ref solvePnP instead.
-/// *   @ref CALIB_FIX_PRINCIPAL_POINT The principal point is not changed during the global
+/// estimate extrinsic parameters. Use [solvePnP] instead.
+/// *   [CALIB_FIX_PRINCIPAL_POINT] The principal point is not changed during the global
 /// optimization. It stays at the center or at a different location specified when
-///  @ref CALIB_USE_INTRINSIC_GUESS is set too.
-/// *   @ref CALIB_FIX_ASPECT_RATIO The functions consider only fy as a free parameter. The
+///  [CALIB_USE_INTRINSIC_GUESS] is set too.
+/// *   [CALIB_FIX_ASPECT_RATIO] The functions consider only fy as a free parameter. The
 /// ratio fx/fy stays the same as in the input cameraMatrix . When
-///  @ref CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are
+///  [CALIB_USE_INTRINSIC_GUESS] is not set, the actual input values of fx and fy are
 /// ignored, only their ratio is computed and used further.
-/// *   @ref CALIB_ZERO_TANGENT_DIST Tangential distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28p%5F1%2C%20p%5F2%29) are set
+/// *   [CALIB_ZERO_TANGENT_DIST] Tangential distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28p%5F1%2C%20p%5F2%29) are set
 /// to zeros and stay zero.
-/// *   @ref CALIB_FIX_FOCAL_LENGTH The focal length is not changed during the global optimization if
-///  @ref CALIB_USE_INTRINSIC_GUESS is set.
-/// *   @ref CALIB_FIX_K1,..., @ref CALIB_FIX_K6 The corresponding radial distortion
-/// coefficient is not changed during the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is
+/// *   [CALIB_FIX_FOCAL_LENGTH] The focal length is not changed during the global optimization if
+///  [CALIB_USE_INTRINSIC_GUESS] is set.
+/// *   [CALIB_FIX_K1],..., [CALIB_FIX_K6] The corresponding radial distortion
+/// coefficient is not changed during the optimization. If [CALIB_USE_INTRINSIC_GUESS] is
 /// set, the coefficient from the supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_RATIONAL_MODEL Coefficients k4, k5, and k6 are enabled. To provide the
+/// *   [CALIB_RATIONAL_MODEL] Coefficients k4, k5, and k6 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the rational model and return 8 coefficients or more.
-/// *   @ref CALIB_THIN_PRISM_MODEL Coefficients s1, s2, s3 and s4 are enabled. To provide the
+/// *   [CALIB_THIN_PRISM_MODEL] Coefficients s1, s2, s3 and s4 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the thin prism model and return 12 coefficients or more.
-/// *   @ref CALIB_FIX_S1_S2_S3_S4 The thin prism distortion coefficients are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_S1_S2_S3_S4] The thin prism distortion coefficients are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_TILTED_MODEL Coefficients tauX and tauY are enabled. To provide the
+/// *   [CALIB_TILTED_MODEL] Coefficients tauX and tauY are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the tilted sensor model and return 14 coefficients.
-/// *   @ref CALIB_FIX_TAUX_TAUY The coefficients of the tilted sensor model are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_TAUX_TAUY] The coefficients of the tilted sensor model are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -881,8 +881,8 @@ pub fn calibrate_camera_ro(object_points: &dyn core::ToInputArray, image_points:
 /// points and their corresponding 2D projections in each view must be specified. That may be achieved
 /// by using an object with known geometry and easily detectable feature points. Such an object is
 /// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
-/// a calibration rig (see @ref findChessboardCorners). Currently, initialization of intrinsic
-/// parameters (when @ref CALIB_USE_INTRINSIC_GUESS is not set) is only implemented for planar calibration
+/// a calibration rig (see [findChessboardCorners]). Currently, initialization of intrinsic
+/// parameters (when [CALIB_USE_INTRINSIC_GUESS] is not set) is only implemented for planar calibration
 /// patterns (where Z-coordinates of the object points must be all zeros). 3D calibration rigs can also
 /// be used as long as initial cameraMatrix is provided.
 /// 
@@ -893,20 +893,20 @@ pub fn calibrate_camera_ro(object_points: &dyn core::ToInputArray, image_points:
 ///    zeros initially unless some of CALIB_FIX_K? are specified.
 /// 
 /// *   Estimate the initial camera pose as if the intrinsic parameters have been already known. This is
-///    done using @ref solvePnP .
+///    done using [solvePnP] .
 /// 
 /// *   Run the global Levenberg-Marquardt optimization algorithm to minimize the reprojection error,
 ///    that is, the total sum of squared distances between the observed feature points imagePoints and
 ///    the projected (using the current estimates for camera parameters and the poses) object points
-///    objectPoints. See @ref projectPoints for details.
+///    objectPoints. See [projectPoints] for details.
 /// 
 /// 
 /// Note:
-///    If you use a non-square (i.e. non-N-by-N) grid and @ref findChessboardCorners for calibration,
-///    and @ref calibrateCamera returns bad values (zero distortion coefficients, ![inline formula](https://latex.codecogs.com/png.latex?c%5Fx) and
+///    If you use a non-square (i.e. non-N-by-N) grid and [findChessboardCorners] for calibration,
+///    and [calibrateCamera] returns bad values (zero distortion coefficients, ![inline formula](https://latex.codecogs.com/png.latex?c%5Fx) and
 ///    ![inline formula](https://latex.codecogs.com/png.latex?c%5Fy) very far from the image center, and/or large differences between ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and
 ///    ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) (ratios of 10:1 or more)), then you are probably using patternSize=cvSize(rows,cols)
-///    instead of using patternSize=cvSize(cols,rows) in @ref findChessboardCorners.
+///    instead of using patternSize=cvSize(cols,rows) in [findChessboardCorners].
 /// ## See also
 /// calibrateCameraRO, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate,
 ///    undistort
@@ -916,15 +916,15 @@ pub fn calibrate_camera_ro(object_points: &dyn core::ToInputArray, image_points:
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 #[inline]
 pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, std_deviations_intrinsics: &mut dyn core::ToOutputArray, std_deviations_extrinsics: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_output_array_arg!(camera_matrix);
-	input_output_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
-	output_array_arg!(std_deviations_intrinsics);
-	output_array_arg!(std_deviations_extrinsics);
-	output_array_arg!(per_view_errors);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
+	extern_container_arg!(std_deviations_intrinsics);
+	extern_container_arg!(std_deviations_extrinsics);
+	extern_container_arg!(per_view_errors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -952,12 +952,12 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 /// concatenated together.
 /// * imageSize: Size of the image used only to initialize the camera intrinsic matrix.
 /// * cameraMatrix: Input/output 3x3 floating-point camera intrinsic matrix
-/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If @ref CALIB_USE_INTRINSIC_GUESS
-/// and/or @ref CALIB_FIX_ASPECT_RATIO, @ref CALIB_FIX_PRINCIPAL_POINT or @ref CALIB_FIX_FOCAL_LENGTH
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If [CALIB_USE_INTRINSIC_GUESS]
+/// and/or [CALIB_FIX_ASPECT_RATIO], [CALIB_FIX_PRINCIPAL_POINT] or [CALIB_FIX_FOCAL_LENGTH]
 /// are specified, some or all of fx, fy, cx, cy must be initialized before calling the function.
 /// * distCoeffs: Input/output vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs).
-/// * rvecs: Output vector of rotation vectors (@ref Rodrigues ) estimated for each pattern view
+/// * rvecs: Output vector of rotation vectors ([Rodrigues] ) estimated for each pattern view
 /// (e.g. std::vector<cv::Mat>>). That is, each i-th rotation vector together with the corresponding
 /// i-th translation vector (see the next output parameter description) brings the calibration pattern
 /// from the object coordinate space (in which object points are specified) to the camera coordinate
@@ -975,39 +975,39 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 /// the number of pattern views. ![inline formula](https://latex.codecogs.com/png.latex?R%5Fi%2C%20T%5Fi) are concatenated 1x3 vectors.
 /// * perViewErrors: Output vector of the RMS re-projection error estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   @ref CALIB_USE_INTRINSIC_GUESS cameraMatrix contains valid initial values of
+/// *   [CALIB_USE_INTRINSIC_GUESS] cameraMatrix contains valid initial values of
 /// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
 /// center ( imageSize is used), and focal distances are computed in a least-squares fashion.
 /// Note, that if intrinsic parameters are known, there is no need to use this function just to
-/// estimate extrinsic parameters. Use @ref solvePnP instead.
-/// *   @ref CALIB_FIX_PRINCIPAL_POINT The principal point is not changed during the global
+/// estimate extrinsic parameters. Use [solvePnP] instead.
+/// *   [CALIB_FIX_PRINCIPAL_POINT] The principal point is not changed during the global
 /// optimization. It stays at the center or at a different location specified when
-///  @ref CALIB_USE_INTRINSIC_GUESS is set too.
-/// *   @ref CALIB_FIX_ASPECT_RATIO The functions consider only fy as a free parameter. The
+///  [CALIB_USE_INTRINSIC_GUESS] is set too.
+/// *   [CALIB_FIX_ASPECT_RATIO] The functions consider only fy as a free parameter. The
 /// ratio fx/fy stays the same as in the input cameraMatrix . When
-///  @ref CALIB_USE_INTRINSIC_GUESS is not set, the actual input values of fx and fy are
+///  [CALIB_USE_INTRINSIC_GUESS] is not set, the actual input values of fx and fy are
 /// ignored, only their ratio is computed and used further.
-/// *   @ref CALIB_ZERO_TANGENT_DIST Tangential distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28p%5F1%2C%20p%5F2%29) are set
+/// *   [CALIB_ZERO_TANGENT_DIST] Tangential distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28p%5F1%2C%20p%5F2%29) are set
 /// to zeros and stay zero.
-/// *   @ref CALIB_FIX_FOCAL_LENGTH The focal length is not changed during the global optimization if
-///  @ref CALIB_USE_INTRINSIC_GUESS is set.
-/// *   @ref CALIB_FIX_K1,..., @ref CALIB_FIX_K6 The corresponding radial distortion
-/// coefficient is not changed during the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is
+/// *   [CALIB_FIX_FOCAL_LENGTH] The focal length is not changed during the global optimization if
+///  [CALIB_USE_INTRINSIC_GUESS] is set.
+/// *   [CALIB_FIX_K1],..., [CALIB_FIX_K6] The corresponding radial distortion
+/// coefficient is not changed during the optimization. If [CALIB_USE_INTRINSIC_GUESS] is
 /// set, the coefficient from the supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_RATIONAL_MODEL Coefficients k4, k5, and k6 are enabled. To provide the
+/// *   [CALIB_RATIONAL_MODEL] Coefficients k4, k5, and k6 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the rational model and return 8 coefficients or more.
-/// *   @ref CALIB_THIN_PRISM_MODEL Coefficients s1, s2, s3 and s4 are enabled. To provide the
+/// *   [CALIB_THIN_PRISM_MODEL] Coefficients s1, s2, s3 and s4 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the thin prism model and return 12 coefficients or more.
-/// *   @ref CALIB_FIX_S1_S2_S3_S4 The thin prism distortion coefficients are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_S1_S2_S3_S4] The thin prism distortion coefficients are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_TILTED_MODEL Coefficients tauX and tauY are enabled. To provide the
+/// *   [CALIB_TILTED_MODEL] Coefficients tauX and tauY are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the tilted sensor model and return 14 coefficients.
-/// *   @ref CALIB_FIX_TAUX_TAUY The coefficients of the tilted sensor model are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_TAUX_TAUY] The coefficients of the tilted sensor model are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -1019,8 +1019,8 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 /// points and their corresponding 2D projections in each view must be specified. That may be achieved
 /// by using an object with known geometry and easily detectable feature points. Such an object is
 /// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
-/// a calibration rig (see @ref findChessboardCorners). Currently, initialization of intrinsic
-/// parameters (when @ref CALIB_USE_INTRINSIC_GUESS is not set) is only implemented for planar calibration
+/// a calibration rig (see [findChessboardCorners]). Currently, initialization of intrinsic
+/// parameters (when [CALIB_USE_INTRINSIC_GUESS] is not set) is only implemented for planar calibration
 /// patterns (where Z-coordinates of the object points must be all zeros). 3D calibration rigs can also
 /// be used as long as initial cameraMatrix is provided.
 /// 
@@ -1031,20 +1031,20 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 ///    zeros initially unless some of CALIB_FIX_K? are specified.
 /// 
 /// *   Estimate the initial camera pose as if the intrinsic parameters have been already known. This is
-///    done using @ref solvePnP .
+///    done using [solvePnP] .
 /// 
 /// *   Run the global Levenberg-Marquardt optimization algorithm to minimize the reprojection error,
 ///    that is, the total sum of squared distances between the observed feature points imagePoints and
 ///    the projected (using the current estimates for camera parameters and the poses) object points
-///    objectPoints. See @ref projectPoints for details.
+///    objectPoints. See [projectPoints] for details.
 /// 
 /// 
 /// Note:
-///    If you use a non-square (i.e. non-N-by-N) grid and @ref findChessboardCorners for calibration,
-///    and @ref calibrateCamera returns bad values (zero distortion coefficients, ![inline formula](https://latex.codecogs.com/png.latex?c%5Fx) and
+///    If you use a non-square (i.e. non-N-by-N) grid and [findChessboardCorners] for calibration,
+///    and [calibrateCamera] returns bad values (zero distortion coefficients, ![inline formula](https://latex.codecogs.com/png.latex?c%5Fx) and
 ///    ![inline formula](https://latex.codecogs.com/png.latex?c%5Fy) very far from the image center, and/or large differences between ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx) and
 ///    ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) (ratios of 10:1 or more)), then you are probably using patternSize=cvSize(rows,cols)
-///    instead of using patternSize=cvSize(cols,rows) in @ref findChessboardCorners.
+///    instead of using patternSize=cvSize(cols,rows) in [findChessboardCorners].
 /// ## See also
 /// calibrateCameraRO, findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate,
 ///    undistort
@@ -1056,12 +1056,12 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 #[inline]
 pub fn calibrate_camera(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_output_array_arg!(camera_matrix);
-	input_output_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1145,12 +1145,12 @@ pub fn calibrate_camera(object_points: &dyn core::ToInputArray, image_points: &d
 /// * method: CALIB_HAND_EYE_TSAI
 #[inline]
 pub fn calibrate_hand_eye(r_gripper2base: &dyn core::ToInputArray, t_gripper2base: &dyn core::ToInputArray, r_target2cam: &dyn core::ToInputArray, t_target2cam: &dyn core::ToInputArray, r_cam2gripper: &mut dyn core::ToOutputArray, t_cam2gripper: &mut dyn core::ToOutputArray, method: crate::calib3d::HandEyeCalibrationMethod) -> Result<()> {
-	input_array_arg!(r_gripper2base);
-	input_array_arg!(t_gripper2base);
-	input_array_arg!(r_target2cam);
-	input_array_arg!(t_target2cam);
-	output_array_arg!(r_cam2gripper);
-	output_array_arg!(t_cam2gripper);
+	extern_container_arg!(r_gripper2base);
+	extern_container_arg!(t_gripper2base);
+	extern_container_arg!(r_target2cam);
+	extern_container_arg!(t_target2cam);
+	extern_container_arg!(r_cam2gripper);
+	extern_container_arg!(t_cam2gripper);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calibrateHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_HandEyeCalibrationMethod(r_gripper2base.as_raw__InputArray(), t_gripper2base.as_raw__InputArray(), r_target2cam.as_raw__InputArray(), t_target2cam.as_raw__InputArray(), r_cam2gripper.as_raw__OutputArray(), t_cam2gripper.as_raw__OutputArray(), method, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1228,14 +1228,14 @@ pub fn calibrate_hand_eye(r_gripper2base: &dyn core::ToInputArray, t_gripper2bas
 /// * method: CALIB_ROBOT_WORLD_HAND_EYE_SHAH
 #[inline]
 pub fn calibrate_robot_world_hand_eye(r_world2cam: &dyn core::ToInputArray, t_world2cam: &dyn core::ToInputArray, r_base2gripper: &dyn core::ToInputArray, t_base2gripper: &dyn core::ToInputArray, r_base2world: &mut dyn core::ToOutputArray, t_base2world: &mut dyn core::ToOutputArray, r_gripper2cam: &mut dyn core::ToOutputArray, t_gripper2cam: &mut dyn core::ToOutputArray, method: crate::calib3d::RobotWorldHandEyeCalibrationMethod) -> Result<()> {
-	input_array_arg!(r_world2cam);
-	input_array_arg!(t_world2cam);
-	input_array_arg!(r_base2gripper);
-	input_array_arg!(t_base2gripper);
-	output_array_arg!(r_base2world);
-	output_array_arg!(t_base2world);
-	output_array_arg!(r_gripper2cam);
-	output_array_arg!(t_gripper2cam);
+	extern_container_arg!(r_world2cam);
+	extern_container_arg!(t_world2cam);
+	extern_container_arg!(r_base2gripper);
+	extern_container_arg!(t_base2gripper);
+	extern_container_arg!(r_base2world);
+	extern_container_arg!(t_base2world);
+	extern_container_arg!(r_gripper2cam);
+	extern_container_arg!(t_gripper2cam);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calibrateRobotWorldHandEye_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_RobotWorldHandEyeCalibrationMethod(r_world2cam.as_raw__InputArray(), t_world2cam.as_raw__InputArray(), r_base2gripper.as_raw__InputArray(), t_base2gripper.as_raw__InputArray(), r_base2world.as_raw__OutputArray(), t_base2world.as_raw__OutputArray(), r_gripper2cam.as_raw__OutputArray(), t_gripper2cam.as_raw__OutputArray(), method, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1266,7 +1266,7 @@ pub fn calibrate_robot_world_hand_eye(r_world2cam: &dyn core::ToInputArray, t_wo
 ///    the chessboard pitch (it can thus be any value).
 #[inline]
 pub fn calibration_matrix_values(camera_matrix: &dyn core::ToInputArray, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: &mut f64, fovy: &mut f64, focal_length: &mut f64, principal_point: &mut core::Point2d, aspect_ratio: &mut f64) -> Result<()> {
-	input_array_arg!(camera_matrix);
+	extern_container_arg!(camera_matrix);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_calibrationMatrixValues_const__InputArrayR_Size_double_double_doubleR_doubleR_doubleR_Point2dR_doubleR(camera_matrix.as_raw__InputArray(), image_size.opencv_as_extern(), aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1276,7 +1276,7 @@ pub fn calibration_matrix_values(camera_matrix: &dyn core::ToInputArray, image_s
 
 #[inline]
 pub fn check_chessboard(img: &dyn core::ToInputArray, size: core::Size) -> Result<bool> {
-	input_array_arg!(img);
+	extern_container_arg!(img);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_checkChessboard_const__InputArrayR_Size(img.as_raw__InputArray(), size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1325,20 +1325,20 @@ pub fn check_chessboard(img: &dyn core::ToInputArray, size: core::Size) -> Resul
 /// * dt3dt2: noArray()
 #[inline]
 pub fn compose_rt(rvec1: &dyn core::ToInputArray, tvec1: &dyn core::ToInputArray, rvec2: &dyn core::ToInputArray, tvec2: &dyn core::ToInputArray, rvec3: &mut dyn core::ToOutputArray, tvec3: &mut dyn core::ToOutputArray, dr3dr1: &mut dyn core::ToOutputArray, dr3dt1: &mut dyn core::ToOutputArray, dr3dr2: &mut dyn core::ToOutputArray, dr3dt2: &mut dyn core::ToOutputArray, dt3dr1: &mut dyn core::ToOutputArray, dt3dt1: &mut dyn core::ToOutputArray, dt3dr2: &mut dyn core::ToOutputArray, dt3dt2: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(rvec1);
-	input_array_arg!(tvec1);
-	input_array_arg!(rvec2);
-	input_array_arg!(tvec2);
-	output_array_arg!(rvec3);
-	output_array_arg!(tvec3);
-	output_array_arg!(dr3dr1);
-	output_array_arg!(dr3dt1);
-	output_array_arg!(dr3dr2);
-	output_array_arg!(dr3dt2);
-	output_array_arg!(dt3dr1);
-	output_array_arg!(dt3dt1);
-	output_array_arg!(dt3dr2);
-	output_array_arg!(dt3dt2);
+	extern_container_arg!(rvec1);
+	extern_container_arg!(tvec1);
+	extern_container_arg!(rvec2);
+	extern_container_arg!(tvec2);
+	extern_container_arg!(rvec3);
+	extern_container_arg!(tvec3);
+	extern_container_arg!(dr3dr1);
+	extern_container_arg!(dr3dt1);
+	extern_container_arg!(dr3dr2);
+	extern_container_arg!(dr3dt2);
+	extern_container_arg!(dt3dr1);
+	extern_container_arg!(dt3dt1);
+	extern_container_arg!(dt3dr2);
+	extern_container_arg!(dt3dt2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_composeRT_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(rvec1.as_raw__InputArray(), tvec1.as_raw__InputArray(), rvec2.as_raw__InputArray(), tvec2.as_raw__InputArray(), rvec3.as_raw__OutputArray(), tvec3.as_raw__OutputArray(), dr3dr1.as_raw__OutputArray(), dr3dt1.as_raw__OutputArray(), dr3dr2.as_raw__OutputArray(), dr3dt2.as_raw__OutputArray(), dt3dr1.as_raw__OutputArray(), dt3dt1.as_raw__OutputArray(), dt3dr2.as_raw__OutputArray(), dt3dt2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1371,9 +1371,9 @@ pub fn compose_rt(rvec1: &dyn core::ToInputArray, tvec1: &dyn core::ToInputArray
 /// Line coefficients are defined up to a scale. They are normalized so that ![inline formula](https://latex.codecogs.com/png.latex?a%5Fi%5E2%2Bb%5Fi%5E2%3D1) .
 #[inline]
 pub fn compute_correspond_epilines(points: &dyn core::ToInputArray, which_image: i32, f: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(points);
-	input_array_arg!(f);
-	output_array_arg!(lines);
+	extern_container_arg!(points);
+	extern_container_arg!(f);
+	extern_container_arg!(lines);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_computeCorrespondEpilines_const__InputArrayR_int_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), which_image, f.as_raw__InputArray(), lines.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1392,8 +1392,8 @@ pub fn compute_correspond_epilines(points: &dyn core::ToInputArray, which_image:
 /// output point coordinates will be (0,0,0,...).
 #[inline]
 pub fn convert_points_from_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_convertPointsFromHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1414,8 +1414,8 @@ pub fn convert_points_from_homogeneous(src: &dyn core::ToInputArray, dst: &mut d
 /// Note: The function is obsolete. Use one of the previous two functions instead.
 #[inline]
 pub fn convert_points_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_convertPointsHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1433,8 +1433,8 @@ pub fn convert_points_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn co
 /// point coordinates. That is, each point (x1, x2, ..., xn) is converted to (x1, x2, ..., xn, 1).
 #[inline]
 pub fn convert_points_to_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_convertPointsToHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1459,11 +1459,11 @@ pub fn convert_points_to_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn
 /// ![inline formula](https://latex.codecogs.com/png.latex?newPoints2%5ET%20%5Ccdot%20F%20%5Ccdot%20newPoints1%20%3D%200) .
 #[inline]
 pub fn correct_matches(f: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, new_points1: &mut dyn core::ToOutputArray, new_points2: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(f);
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	output_array_arg!(new_points1);
-	output_array_arg!(new_points2);
+	extern_container_arg!(f);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(new_points1);
+	extern_container_arg!(new_points2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_correctMatches_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(f.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), new_points1.as_raw__OutputArray(), new_points2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1491,10 +1491,10 @@ pub fn correct_matches(f: &dyn core::ToInputArray, points1: &dyn core::ToInputAr
 /// unit length.
 #[inline]
 pub fn decompose_essential_mat(e: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(e);
-	output_array_arg!(r1);
-	output_array_arg!(r2);
-	output_array_arg!(t);
+	extern_container_arg!(e);
+	extern_container_arg!(r1);
+	extern_container_arg!(r2);
+	extern_container_arg!(t);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_decomposeEssentialMat_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(e.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1526,11 +1526,11 @@ pub fn decompose_essential_mat(e: &dyn core::ToInputArray, r1: &mut dyn core::To
 /// applying positive depth constraint, i.e. all points must be in front of the camera.
 #[inline]
 pub fn decompose_homography_mat(h: &dyn core::ToInputArray, k: &dyn core::ToInputArray, rotations: &mut dyn core::ToOutputArray, translations: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<i32> {
-	input_array_arg!(h);
-	input_array_arg!(k);
-	output_array_arg!(rotations);
-	output_array_arg!(translations);
-	output_array_arg!(normals);
+	extern_container_arg!(h);
+	extern_container_arg!(k);
+	extern_container_arg!(rotations);
+	extern_container_arg!(translations);
+	extern_container_arg!(normals);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_decomposeHomographyMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(h.as_raw__InputArray(), k.as_raw__InputArray(), rotations.as_raw__OutputArray(), translations.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1568,14 +1568,14 @@ pub fn decompose_homography_mat(h: &dyn core::ToInputArray, k: &dyn core::ToInpu
 /// * euler_angles: noArray()
 #[inline]
 pub fn decompose_projection_matrix(proj_matrix: &dyn core::ToInputArray, camera_matrix: &mut dyn core::ToOutputArray, rot_matrix: &mut dyn core::ToOutputArray, trans_vect: &mut dyn core::ToOutputArray, rot_matrix_x: &mut dyn core::ToOutputArray, rot_matrix_y: &mut dyn core::ToOutputArray, rot_matrix_z: &mut dyn core::ToOutputArray, euler_angles: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(proj_matrix);
-	output_array_arg!(camera_matrix);
-	output_array_arg!(rot_matrix);
-	output_array_arg!(trans_vect);
-	output_array_arg!(rot_matrix_x);
-	output_array_arg!(rot_matrix_y);
-	output_array_arg!(rot_matrix_z);
-	output_array_arg!(euler_angles);
+	extern_container_arg!(proj_matrix);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(rot_matrix);
+	extern_container_arg!(trans_vect);
+	extern_container_arg!(rot_matrix_x);
+	extern_container_arg!(rot_matrix_y);
+	extern_container_arg!(rot_matrix_z);
+	extern_container_arg!(euler_angles);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_decomposeProjectionMatrix_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(proj_matrix.as_raw__InputArray(), camera_matrix.as_raw__OutputArray(), rot_matrix.as_raw__OutputArray(), trans_vect.as_raw__OutputArray(), rot_matrix_x.as_raw__OutputArray(), rot_matrix_y.as_raw__OutputArray(), rot_matrix_z.as_raw__OutputArray(), euler_angles.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1597,8 +1597,8 @@ pub fn decompose_projection_matrix(proj_matrix: &dyn core::ToInputArray, camera_
 /// found, or as colored corners connected with lines if the board was found.
 #[inline]
 pub fn draw_chessboard_corners(image: &mut dyn core::ToInputOutputArray, pattern_size: core::Size, corners: &dyn core::ToInputArray, pattern_was_found: bool) -> Result<()> {
-	input_output_array_arg!(image);
-	input_array_arg!(corners);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_drawChessboardCorners_const__InputOutputArrayR_Size_const__InputArrayR_bool(image.as_raw__InputOutputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), pattern_was_found, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1614,7 +1614,7 @@ pub fn draw_chessboard_corners(image: &mut dyn core::ToInputOutputArray, pattern
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D)
 /// * distCoeffs: Input vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is empty, the zero distortion coefficients are assumed.
-/// * rvec: Rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
+/// * rvec: Rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system.
 /// * tvec: Translation vector.
 /// * length: Length of the painted axes in the same unit than tvec (usually in meters).
@@ -1627,11 +1627,11 @@ pub fn draw_chessboard_corners(image: &mut dyn core::ToInputOutputArray, pattern
 /// * thickness: 3
 #[inline]
 pub fn draw_frame_axes(image: &mut dyn core::ToInputOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, length: f32, thickness: i32) -> Result<()> {
-	input_output_array_arg!(image);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_array_arg!(rvec);
-	input_array_arg!(tvec);
+	extern_container_arg!(image);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_drawFrameAxes_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_float_int(image.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), length, thickness, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1641,9 +1641,9 @@ pub fn draw_frame_axes(image: &mut dyn core::ToInputOutputArray, camera_matrix: 
 
 #[inline]
 pub fn estimate_affine_2d_1(pts1: &dyn core::ToInputArray, pts2: &dyn core::ToInputArray, inliers: &mut dyn core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
-	input_array_arg!(pts1);
-	input_array_arg!(pts2);
-	output_array_arg!(inliers);
+	extern_container_arg!(pts1);
+	extern_container_arg!(pts2);
+	extern_container_arg!(inliers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(pts1.as_raw__InputArray(), pts2.as_raw__InputArray(), inliers.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1662,8 +1662,8 @@ pub fn estimate_affine_2d_1(pts1: &dyn core::ToInputArray, pts2: &dyn core::ToIn
 /// * to: Second input 2D point set containing ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29).
 /// * inliers: Output vector indicating which points are inliers (1-inlier, 0-outlier).
 /// * method: Robust method used to compute transformation. The following methods are possible:
-/// *   @ref RANSAC - RANSAC-based robust method
-/// *   @ref LMEDS - Least-Median robust method
+/// *   [RANSAC] - RANSAC-based robust method
+/// *   [LMEDS] - Least-Median robust method
 /// RANSAC is the default method.
 /// * ransacReprojThreshold: Maximum reprojection error in the RANSAC algorithm to consider
 /// a point as an inlier. Applies only to RANSAC.
@@ -1702,9 +1702,9 @@ pub fn estimate_affine_2d_1(pts1: &dyn core::ToInputArray, pts2: &dyn core::ToIn
 /// * refine_iters: 10
 #[inline]
 pub fn estimate_affine_2d(from: &dyn core::ToInputArray, to: &dyn core::ToInputArray, inliers: &mut dyn core::ToOutputArray, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
-	input_array_arg!(from);
-	input_array_arg!(to);
-	output_array_arg!(inliers);
+	extern_container_arg!(from);
+	extern_container_arg!(to);
+	extern_container_arg!(inliers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_estimateAffine2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1738,10 +1738,10 @@ pub fn estimate_affine_2d(from: &dyn core::ToInputArray, to: &dyn core::ToInputA
 /// * confidence: 0.99
 #[inline]
 pub fn estimate_affine_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, out: &mut dyn core::ToOutputArray, inliers: &mut dyn core::ToOutputArray, ransac_threshold: f64, confidence: f64) -> Result<i32> {
-	input_array_arg!(src);
-	input_array_arg!(dst);
-	output_array_arg!(out);
-	output_array_arg!(inliers);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(out);
+	extern_container_arg!(inliers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__InputArray(), out.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ransac_threshold, confidence, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1775,8 +1775,8 @@ pub fn estimate_affine_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToInputA
 /// * force_rotation: true
 #[inline]
 pub fn estimate_affine_3d_1(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, scale: &mut f64, force_rotation: bool) -> Result<core::Mat> {
-	input_array_arg!(src);
-	input_array_arg!(dst);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_estimateAffine3D_const__InputArrayR_const__InputArrayR_doubleX_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), scale, force_rotation, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1793,8 +1793,8 @@ pub fn estimate_affine_3d_1(src: &dyn core::ToInputArray, dst: &dyn core::ToInpu
 /// * to: Second input 2D point set.
 /// * inliers: Output vector indicating which points are inliers.
 /// * method: Robust method used to compute transformation. The following methods are possible:
-/// *   @ref RANSAC - RANSAC-based robust method
-/// *   @ref LMEDS - Least-Median robust method
+/// *   [RANSAC] - RANSAC-based robust method
+/// *   [LMEDS] - Least-Median robust method
 /// RANSAC is the default method.
 /// * ransacReprojThreshold: Maximum reprojection error in the RANSAC algorithm to consider
 /// a point as an inlier. Applies only to RANSAC.
@@ -1838,9 +1838,9 @@ pub fn estimate_affine_3d_1(src: &dyn core::ToInputArray, dst: &dyn core::ToInpu
 /// * refine_iters: 10
 #[inline]
 pub fn estimate_affine_partial_2d(from: &dyn core::ToInputArray, to: &dyn core::ToInputArray, inliers: &mut dyn core::ToOutputArray, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
-	input_array_arg!(from);
-	input_array_arg!(to);
-	output_array_arg!(inliers);
+	extern_container_arg!(from);
+	extern_container_arg!(to);
+	extern_container_arg!(inliers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_estimateAffinePartial2D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1884,9 +1884,9 @@ pub fn estimate_affine_partial_2d(from: &dyn core::ToInputArray, to: &dyn core::
 /// * sharpness: noArray()
 #[inline]
 pub fn estimate_chessboard_sharpness(image: &dyn core::ToInputArray, pattern_size: core::Size, corners: &dyn core::ToInputArray, rise_distance: f32, vertical: bool, sharpness: &mut dyn core::ToOutputArray) -> Result<core::Scalar> {
-	input_array_arg!(image);
-	input_array_arg!(corners);
-	output_array_arg!(sharpness);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
+	extern_container_arg!(sharpness);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR_float_bool_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), rise_distance, vertical, sharpness.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1919,10 +1919,10 @@ pub fn estimate_chessboard_sharpness(image: &dyn core::ToInputArray, pattern_siz
 /// * confidence: 0.99
 #[inline]
 pub fn estimate_translation_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, out: &mut dyn core::ToOutputArray, inliers: &mut dyn core::ToOutputArray, ransac_threshold: f64, confidence: f64) -> Result<i32> {
-	input_array_arg!(src);
-	input_array_arg!(dst);
-	output_array_arg!(out);
-	output_array_arg!(inliers);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(out);
+	extern_container_arg!(inliers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_estimateTranslation3D_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__InputArray(), out.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ransac_threshold, confidence, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1952,12 +1952,12 @@ pub fn estimate_translation_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToI
 /// * points_mask: noArray()
 #[inline]
 pub fn filter_homography_decomp_by_visible_refpoints(rotations: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, before_points: &dyn core::ToInputArray, after_points: &dyn core::ToInputArray, possible_solutions: &mut dyn core::ToOutputArray, points_mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(rotations);
-	input_array_arg!(normals);
-	input_array_arg!(before_points);
-	input_array_arg!(after_points);
-	output_array_arg!(possible_solutions);
-	input_array_arg!(points_mask);
+	extern_container_arg!(rotations);
+	extern_container_arg!(normals);
+	extern_container_arg!(before_points);
+	extern_container_arg!(after_points);
+	extern_container_arg!(possible_solutions);
+	extern_container_arg!(points_mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_filterHomographyDecompByVisibleRefpoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(rotations.as_raw__InputArray(), normals.as_raw__InputArray(), before_points.as_raw__InputArray(), after_points.as_raw__InputArray(), possible_solutions.as_raw__OutputArray(), points_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1982,8 +1982,8 @@ pub fn filter_homography_decomp_by_visible_refpoints(rotations: &dyn core::ToInp
 /// * buf: noArray()
 #[inline]
 pub fn filter_speckles(img: &mut dyn core::ToInputOutputArray, new_val: f64, max_speckle_size: i32, max_diff: f64, buf: &mut dyn core::ToInputOutputArray) -> Result<()> {
-	input_output_array_arg!(img);
-	input_output_array_arg!(buf);
+	extern_container_arg!(img);
+	extern_container_arg!(buf);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_filterSpeckles_const__InputOutputArrayR_double_int_double_const__InputOutputArrayR(img.as_raw__InputOutputArray(), new_val, max_speckle_size, max_diff, buf.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -1994,8 +1994,8 @@ pub fn filter_speckles(img: &mut dyn core::ToInputOutputArray, new_val: f64, max
 /// finds subpixel-accurate positions of the chessboard corners
 #[inline]
 pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn core::ToInputOutputArray, region_size: core::Size) -> Result<bool> {
-	input_array_arg!(img);
-	input_output_array_arg!(corners);
+	extern_container_arg!(img);
+	extern_container_arg!(corners);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_find4QuadCornerSubpix_const__InputArrayR_const__InputOutputArrayR_Size(img.as_raw__InputArray(), corners.as_raw__InputOutputArray(), region_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2011,11 +2011,11 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 /// ( patternSize = cv::Size(points_per_row,points_per_colum) = cv::Size(columns,rows) ).
 /// * corners: Output array of detected corners.
 /// * flags: Various operation flags that can be zero or a combination of the following values:
-/// *   @ref CALIB_CB_NORMALIZE_IMAGE Normalize the image gamma with equalizeHist before detection.
-/// *   @ref CALIB_CB_EXHAUSTIVE Run an exhaustive search to improve detection rate.
-/// *   @ref CALIB_CB_ACCURACY Up sample input image to improve sub-pixel accuracy due to aliasing effects.
-/// *   @ref CALIB_CB_LARGER The detected pattern is allowed to be larger than patternSize (see description).
-/// *   @ref CALIB_CB_MARKER The detected pattern must have a marker (see description).
+/// *   [CALIB_CB_NORMALIZE_IMAGE] Normalize the image gamma with equalizeHist before detection.
+/// *   [CALIB_CB_EXHAUSTIVE] Run an exhaustive search to improve detection rate.
+/// *   [CALIB_CB_ACCURACY] Up sample input image to improve sub-pixel accuracy due to aliasing effects.
+/// *   [CALIB_CB_LARGER] The detected pattern is allowed to be larger than patternSize (see description).
+/// *   [CALIB_CB_MARKER] The detected pattern must have a marker (see description).
 /// This should be used if an accurate camera calibration is required.
 /// * meta: Optional output arrray of detected corners (CV_8UC1 and size = cv::Size(columns,rows)).
 /// Each entry stands for one corner of the pattern and can have one of the following values:
@@ -2034,7 +2034,7 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 /// accurate than the one returned by cornerSubPix allowing a precise camera
 /// calibration for demanding applications.
 /// 
-/// In the case, the flags @ref CALIB_CB_LARGER or @ref CALIB_CB_MARKER are given,
+/// In the case, the flags [CALIB_CB_LARGER] or [CALIB_CB_MARKER] are given,
 /// the result can be recovered from the optional meta array. Both flags are
 /// helpful to use calibration patterns exceeding the field of view of the camera.
 /// These oversized patterns allow more accurate calibrations as corners can be
@@ -2052,7 +2052,7 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 /// a sample checkerboard optimized for the detection. However, any other checkerboard
 /// can be used as well.
 /// 
-/// Use gen_pattern.py (@ref tutorial_camera_calibration_pattern) to create checkerboard.
+/// Use gen_pattern.py ([tutorial_camera_calibration_pattern]) to create checkerboard.
 /// ![Checkerboard](https://docs.opencv.org/4.7.0/checkerboard_radon.png)
 /// 
 /// ## Overloaded parameters
@@ -2061,8 +2061,8 @@ pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn 
 /// * flags: 0
 #[inline]
 pub fn find_chessboard_corners_sb(image: &dyn core::ToInputArray, pattern_size: core::Size, corners: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
-	input_array_arg!(image);
-	output_array_arg!(corners);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2078,11 +2078,11 @@ pub fn find_chessboard_corners_sb(image: &dyn core::ToInputArray, pattern_size: 
 /// ( patternSize = cv::Size(points_per_row,points_per_colum) = cv::Size(columns,rows) ).
 /// * corners: Output array of detected corners.
 /// * flags: Various operation flags that can be zero or a combination of the following values:
-/// *   @ref CALIB_CB_NORMALIZE_IMAGE Normalize the image gamma with equalizeHist before detection.
-/// *   @ref CALIB_CB_EXHAUSTIVE Run an exhaustive search to improve detection rate.
-/// *   @ref CALIB_CB_ACCURACY Up sample input image to improve sub-pixel accuracy due to aliasing effects.
-/// *   @ref CALIB_CB_LARGER The detected pattern is allowed to be larger than patternSize (see description).
-/// *   @ref CALIB_CB_MARKER The detected pattern must have a marker (see description).
+/// *   [CALIB_CB_NORMALIZE_IMAGE] Normalize the image gamma with equalizeHist before detection.
+/// *   [CALIB_CB_EXHAUSTIVE] Run an exhaustive search to improve detection rate.
+/// *   [CALIB_CB_ACCURACY] Up sample input image to improve sub-pixel accuracy due to aliasing effects.
+/// *   [CALIB_CB_LARGER] The detected pattern is allowed to be larger than patternSize (see description).
+/// *   [CALIB_CB_MARKER] The detected pattern must have a marker (see description).
 /// This should be used if an accurate camera calibration is required.
 /// * meta: Optional output arrray of detected corners (CV_8UC1 and size = cv::Size(columns,rows)).
 /// Each entry stands for one corner of the pattern and can have one of the following values:
@@ -2101,7 +2101,7 @@ pub fn find_chessboard_corners_sb(image: &dyn core::ToInputArray, pattern_size: 
 /// accurate than the one returned by cornerSubPix allowing a precise camera
 /// calibration for demanding applications.
 /// 
-/// In the case, the flags @ref CALIB_CB_LARGER or @ref CALIB_CB_MARKER are given,
+/// In the case, the flags [CALIB_CB_LARGER] or [CALIB_CB_MARKER] are given,
 /// the result can be recovered from the optional meta array. Both flags are
 /// helpful to use calibration patterns exceeding the field of view of the camera.
 /// These oversized patterns allow more accurate calibrations as corners can be
@@ -2119,13 +2119,13 @@ pub fn find_chessboard_corners_sb(image: &dyn core::ToInputArray, pattern_size: 
 /// a sample checkerboard optimized for the detection. However, any other checkerboard
 /// can be used as well.
 /// 
-/// Use gen_pattern.py (@ref tutorial_camera_calibration_pattern) to create checkerboard.
+/// Use gen_pattern.py ([tutorial_camera_calibration_pattern]) to create checkerboard.
 /// ![Checkerboard](https://docs.opencv.org/4.7.0/checkerboard_radon.png)
 #[inline]
 pub fn find_chessboard_corners_sb_with_meta(image: &dyn core::ToInputArray, pattern_size: core::Size, corners: &mut dyn core::ToOutputArray, flags: i32, meta: &mut dyn core::ToOutputArray) -> Result<bool> {
-	input_array_arg!(image);
-	output_array_arg!(corners);
-	output_array_arg!(meta);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
+	extern_container_arg!(meta);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, meta.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2141,13 +2141,13 @@ pub fn find_chessboard_corners_sb_with_meta(image: &dyn core::ToInputArray, patt
 /// ( patternSize = cv::Size(points_per_row,points_per_colum) = cv::Size(columns,rows) ).
 /// * corners: Output array of detected corners.
 /// * flags: Various operation flags that can be zero or a combination of the following values:
-/// *   @ref CALIB_CB_ADAPTIVE_THRESH Use adaptive thresholding to convert the image to black
+/// *   [CALIB_CB_ADAPTIVE_THRESH] Use adaptive thresholding to convert the image to black
 /// and white, rather than a fixed threshold level (computed from the average image brightness).
-/// *   @ref CALIB_CB_NORMALIZE_IMAGE Normalize the image gamma with #equalizeHist before
+/// *   [CALIB_CB_NORMALIZE_IMAGE] Normalize the image gamma with #equalizeHist before
 /// applying fixed or adaptive thresholding.
-/// *   @ref CALIB_CB_FILTER_QUADS Use additional criteria (like contour area, perimeter,
+/// *   [CALIB_CB_FILTER_QUADS] Use additional criteria (like contour area, perimeter,
 /// square-like shape) to filter out false quads extracted at the contour retrieval stage.
-/// *   @ref CALIB_CB_FAST_CHECK Run a fast check on the image that looks for chessboard corners,
+/// *   [CALIB_CB_FAST_CHECK] Run a fast check on the image that looks for chessboard corners,
 /// and shortcut the call if none is found. This can drastically speed up the call in the
 /// degenerate condition when no chessboard is observed.
 /// 
@@ -2185,14 +2185,14 @@ pub fn find_chessboard_corners_sb_with_meta(image: &dyn core::ToInputArray, patt
 /// border and the background is dark, the outer black squares cannot be segmented properly and so the
 /// square grouping and ordering algorithm fails.
 /// 
-/// Use gen_pattern.py (@ref tutorial_camera_calibration_pattern) to create checkerboard.
+/// Use gen_pattern.py ([tutorial_camera_calibration_pattern]) to create checkerboard.
 /// 
 /// ## C++ default parameters
 /// * flags: CALIB_CB_ADAPTIVE_THRESH+CALIB_CB_NORMALIZE_IMAGE
 #[inline]
 pub fn find_chessboard_corners(image: &dyn core::ToInputArray, pattern_size: core::Size, corners: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
-	input_array_arg!(image);
-	output_array_arg!(corners);
+	extern_container_arg!(image);
+	extern_container_arg!(corners);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2208,9 +2208,9 @@ pub fn find_chessboard_corners(image: &dyn core::ToInputArray, pattern_size: cor
 /// ( patternSize = Size(points_per_row, points_per_colum) ).
 /// * centers: output array of detected centers.
 /// * flags: various operation flags that can be one of the following values:
-/// *   @ref CALIB_CB_SYMMETRIC_GRID uses symmetric pattern of circles.
-/// *   @ref CALIB_CB_ASYMMETRIC_GRID uses asymmetric pattern of circles.
-/// *   @ref CALIB_CB_CLUSTERING uses a special algorithm for grid detection. It is more robust to
+/// *   [CALIB_CB_SYMMETRIC_GRID] uses symmetric pattern of circles.
+/// *   [CALIB_CB_ASYMMETRIC_GRID] uses asymmetric pattern of circles.
+/// *   [CALIB_CB_CLUSTERING] uses a special algorithm for grid detection. It is more robust to
 /// perspective distortions but much more sensitive to background clutter.
 /// * blobDetector: feature detector that finds blobs like dark circles on light background.
 ///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
@@ -2243,8 +2243,8 @@ pub fn find_chessboard_corners(image: &dyn core::ToInputArray, pattern_size: cor
 /// * blob_detector: SimpleBlobDetector::create()
 #[inline]
 pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
-	input_array_arg!(image);
-	output_array_arg!(centers);
+	extern_container_arg!(image);
+	extern_container_arg!(centers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2260,9 +2260,9 @@ pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::S
 /// ( patternSize = Size(points_per_row, points_per_colum) ).
 /// * centers: output array of detected centers.
 /// * flags: various operation flags that can be one of the following values:
-/// *   @ref CALIB_CB_SYMMETRIC_GRID uses symmetric pattern of circles.
-/// *   @ref CALIB_CB_ASYMMETRIC_GRID uses asymmetric pattern of circles.
-/// *   @ref CALIB_CB_CLUSTERING uses a special algorithm for grid detection. It is more robust to
+/// *   [CALIB_CB_SYMMETRIC_GRID] uses symmetric pattern of circles.
+/// *   [CALIB_CB_ASYMMETRIC_GRID] uses asymmetric pattern of circles.
+/// *   [CALIB_CB_CLUSTERING] uses a special algorithm for grid detection. It is more robust to
 /// perspective distortions but much more sensitive to background clutter.
 /// * blobDetector: feature detector that finds blobs like dark circles on light background.
 ///                    If `blobDetector` is NULL then `image` represents Point2f array of candidates.
@@ -2289,8 +2289,8 @@ pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::S
 /// the board to make the detection more robust in various environments.
 #[inline]
 pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
-	input_array_arg!(image);
-	output_array_arg!(centers);
+	extern_container_arg!(image);
+	extern_container_arg!(centers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2300,13 +2300,13 @@ pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Siz
 
 #[inline]
 pub fn find_essential_mat_4(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix1: &dyn core::ToInputArray, camera_matrix2: &dyn core::ToInputArray, dist_coeff1: &dyn core::ToInputArray, dist_coeff2: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	input_array_arg!(camera_matrix1);
-	input_array_arg!(camera_matrix2);
-	input_array_arg!(dist_coeff1);
-	input_array_arg!(dist_coeff2);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(camera_matrix1);
+	extern_container_arg!(camera_matrix2);
+	extern_container_arg!(dist_coeff1);
+	extern_container_arg!(dist_coeff2);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeff1.as_raw__InputArray(), dist_coeff2.as_raw__InputArray(), mask.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2340,8 +2340,8 @@ pub fn find_essential_mat_4(points1: &dyn core::ToInputArray, points2: &dyn core
 /// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5B%2C%20s%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5B%2C%20%5Ctau%5Fx%2C%20%5Ctau%5Fy%5D%5D%5D%5D%29)
 /// of 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are assumed.
 /// * method: Method for computing an essential matrix.
-/// *   @ref RANSAC for the RANSAC algorithm.
-/// *   @ref LMEDS for the LMedS algorithm.
+/// *   [RANSAC] for the RANSAC algorithm.
+/// *   [LMEDS] for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -2367,13 +2367,13 @@ pub fn find_essential_mat_4(points1: &dyn core::ToInputArray, points2: &dyn core
 /// * mask: noArray()
 #[inline]
 pub fn find_essential_mat_3(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix1: &dyn core::ToInputArray, dist_coeffs1: &dyn core::ToInputArray, camera_matrix2: &dyn core::ToInputArray, dist_coeffs2: &dyn core::ToInputArray, method: i32, prob: f64, threshold: f64, mask: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	input_array_arg!(camera_matrix1);
-	input_array_arg!(dist_coeffs1);
-	input_array_arg!(camera_matrix2);
-	input_array_arg!(dist_coeffs2);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(camera_matrix1);
+	extern_container_arg!(dist_coeffs1);
+	extern_container_arg!(camera_matrix2);
+	extern_container_arg!(dist_coeffs2);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), method, prob, threshold, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2395,8 +2395,8 @@ pub fn find_essential_mat_3(points1: &dyn core::ToInputArray, points2: &dyn core
 /// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
-/// *   @ref RANSAC for the RANSAC algorithm.
-/// *   @ref LMEDS for the LMedS algorithm.
+/// *   [RANSAC] for the RANSAC algorithm.
+/// *   [LMEDS] for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -2419,10 +2419,10 @@ pub fn find_essential_mat_3(points1: &dyn core::ToInputArray, points2: &dyn core
 /// ## Overloaded parameters
 #[inline]
 pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, method: i32, prob: f64, threshold: f64, mask: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	input_array_arg!(camera_matrix);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), method, prob, threshold, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2444,8 +2444,8 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
-/// *   @ref RANSAC for the RANSAC algorithm.
-/// *   @ref LMEDS for the LMedS algorithm.
+/// *   [RANSAC] for the RANSAC algorithm.
+/// *   [LMEDS] for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -2473,10 +2473,10 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 /// * mask: noArray()
 #[inline]
 pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, method: i32, prob: f64, threshold: f64, max_iters: i32, mask: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	input_array_arg!(camera_matrix);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), method, prob, threshold, max_iters, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2498,8 +2498,8 @@ pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::
 /// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
-/// *   @ref RANSAC for the RANSAC algorithm.
-/// *   @ref LMEDS for the LMedS algorithm.
+/// *   [RANSAC] for the RANSAC algorithm.
+/// *   [LMEDS] for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -2522,9 +2522,9 @@ pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::
 /// ## Overloaded parameters
 #[inline]
 pub fn find_essential_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, mask: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, pp.opencv_as_extern(), method, prob, threshold, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2546,8 +2546,8 @@ pub fn find_essential_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core
 /// to normalized image coordinates, which are valid for the identity camera intrinsic matrix. When
 /// passing these coordinates, pass the identity matrix for this parameter.
 /// * method: Method for computing an essential matrix.
-/// *   @ref RANSAC for the RANSAC algorithm.
-/// *   @ref LMEDS for the LMedS algorithm.
+/// *   [RANSAC] for the RANSAC algorithm.
+/// *   [LMEDS] for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -2576,8 +2576,8 @@ pub fn find_essential_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core
 /// are feature points from cameras with same focal length and principal point.
 /// * pp: principal point of the camera.
 /// * method: Method for computing a fundamental matrix.
-/// *   @ref RANSAC for the RANSAC algorithm.
-/// *   @ref LMEDS for the LMedS algorithm.
+/// *   [RANSAC] for the RANSAC algorithm.
+/// *   [LMEDS] for the LMedS algorithm.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
 /// line in pixels, beyond which the point is considered an outlier and is not used for computing the
 /// final fundamental matrix. It can be set to something like 1-3, depending on the accuracy of the
@@ -2603,9 +2603,9 @@ pub fn find_essential_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core
 /// * mask: noArray()
 #[inline]
 pub fn find_essential_mat_1(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, max_iters: i32, mask: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, pp.opencv_as_extern(), method, prob, threshold, max_iters, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2616,9 +2616,9 @@ pub fn find_essential_mat_1(points1: &dyn core::ToInputArray, points2: &dyn core
 
 #[inline]
 pub fn find_fundamental_mat_2(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), mask.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2634,10 +2634,10 @@ pub fn find_fundamental_mat_2(points1: &dyn core::ToInputArray, points2: &dyn co
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * method: Method for computing a fundamental matrix.
-/// *   @ref FM_7POINT for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
-/// *   @ref FM_8POINT for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   @ref FM_RANSAC for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   @ref FM_LMEDS for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   [FM_7POINT] for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
+/// *   [FM_8POINT] for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   [FM_RANSAC] for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   [FM_LMEDS] for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
 /// * ransacReprojThreshold: Parameter used only for RANSAC. It is the maximum distance from a point to an epipolar
 /// line in pixels, beyond which the point is considered an outlier and is not used for computing the
 /// final fundamental matrix. It can be set to something like 1-3, depending on the accuracy of the
@@ -2688,9 +2688,9 @@ pub fn find_fundamental_mat_2(points1: &dyn core::ToInputArray, points2: &dyn co
 /// * confidence: 0.99
 #[inline]
 pub fn find_fundamental_mat_mask(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold, confidence, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2706,10 +2706,10 @@ pub fn find_fundamental_mat_mask(points1: &dyn core::ToInputArray, points2: &dyn
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * method: Method for computing a fundamental matrix.
-/// *   @ref FM_7POINT for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
-/// *   @ref FM_8POINT for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   @ref FM_RANSAC for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   @ref FM_LMEDS for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   [FM_7POINT] for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
+/// *   [FM_8POINT] for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   [FM_RANSAC] for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   [FM_LMEDS] for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
 /// * ransacReprojThreshold: Parameter used only for RANSAC. It is the maximum distance from a point to an epipolar
 /// line in pixels, beyond which the point is considered an outlier and is not used for computing the
 /// final fundamental matrix. It can be set to something like 1-3, depending on the accuracy of the
@@ -2761,9 +2761,9 @@ pub fn find_fundamental_mat_mask(points1: &dyn core::ToInputArray, points2: &dyn
 /// * mask: noArray()
 #[inline]
 pub fn find_fundamental_mat_1(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2779,10 +2779,10 @@ pub fn find_fundamental_mat_1(points1: &dyn core::ToInputArray, points2: &dyn co
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * method: Method for computing a fundamental matrix.
-/// *   @ref FM_7POINT for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
-/// *   @ref FM_8POINT for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   @ref FM_RANSAC for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
-/// *   @ref FM_LMEDS for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   [FM_7POINT] for a 7-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%3D%207)
+/// *   [FM_8POINT] for an 8-point algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   [FM_RANSAC] for the RANSAC algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
+/// *   [FM_LMEDS] for the LMedS algorithm. ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Cge%208)
 /// * ransacReprojThreshold: Parameter used only for RANSAC. It is the maximum distance from a point to an epipolar
 /// line in pixels, beyond which the point is considered an outlier and is not used for computing the
 /// final fundamental matrix. It can be set to something like 1-3, depending on the accuracy of the
@@ -2829,9 +2829,9 @@ pub fn find_fundamental_mat_1(points1: &dyn core::ToInputArray, points2: &dyn co
 /// * mask: noArray()
 #[inline]
 pub fn find_fundamental_mat(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64, max_iters: i32, mask: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findFundamentalMat_const__InputArrayR_const__InputArrayR_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, max_iters, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2842,9 +2842,9 @@ pub fn find_fundamental_mat(points1: &dyn core::ToInputArray, points2: &dyn core
 
 #[inline]
 pub fn find_homography_1(src_points: &dyn core::ToInputArray, dst_points: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
-	input_array_arg!(src_points);
-	input_array_arg!(dst_points);
-	output_array_arg!(mask);
+	extern_container_arg!(src_points);
+	extern_container_arg!(dst_points);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findHomography_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_UsacParamsR(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), mask.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2862,9 +2862,9 @@ pub fn find_homography_1(src_points: &dyn core::ToInputArray, dst_points: &dyn c
 /// a vector\<Point2f\> .
 /// * method: Method used to compute a homography matrix. The following methods are possible:
 /// *   **0** - a regular method using all the points, i.e., the least squares method
-/// *   @ref RANSAC - RANSAC-based robust method
-/// *   @ref LMEDS - Least-Median robust method
-/// *   @ref RHO - PROSAC-based robust method
+/// *   [RANSAC] - RANSAC-based robust method
+/// *   [LMEDS] - Least-Median robust method
+/// *   [RHO] - PROSAC-based robust method
 /// * ransacReprojThreshold: Maximum allowed reprojection error to treat a point pair as an inlier
 /// (used in the RANSAC and RHO methods only). That is, if
 /// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7BdstPoints%7D%20%5Fi%20%2D%20%20%5Ctexttt%7BconvertPointsHomogeneous%7D%20%28%20%5Ctexttt%7BH%7D%20%5Ccdot%20%5Ctexttt%7BsrcPoints%7D%20%5Fi%29%20%5C%7C%5F2%20%20%3E%20%20%5Ctexttt%7BransacReprojThreshold%7D)
@@ -2919,9 +2919,9 @@ pub fn find_homography_1(src_points: &dyn core::ToInputArray, dst_points: &dyn c
 /// * ransac_reproj_threshold: 3
 #[inline]
 pub fn find_homography(src_points: &dyn core::ToInputArray, dst_points: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, method: i32, ransac_reproj_threshold: f64) -> Result<core::Mat> {
-	input_array_arg!(src_points);
-	input_array_arg!(dst_points);
-	output_array_arg!(mask);
+	extern_container_arg!(src_points);
+	extern_container_arg!(dst_points);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findHomography_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -2939,9 +2939,9 @@ pub fn find_homography(src_points: &dyn core::ToInputArray, dst_points: &dyn cor
 /// a vector\<Point2f\> .
 /// * method: Method used to compute a homography matrix. The following methods are possible:
 /// *   **0** - a regular method using all the points, i.e., the least squares method
-/// *   @ref RANSAC - RANSAC-based robust method
-/// *   @ref LMEDS - Least-Median robust method
-/// *   @ref RHO - PROSAC-based robust method
+/// *   [RANSAC] - RANSAC-based robust method
+/// *   [LMEDS] - Least-Median robust method
+/// *   [RHO] - PROSAC-based robust method
 /// * ransacReprojThreshold: Maximum allowed reprojection error to treat a point pair as an inlier
 /// (used in the RANSAC and RHO methods only). That is, if
 /// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7BdstPoints%7D%20%5Fi%20%2D%20%20%5Ctexttt%7BconvertPointsHomogeneous%7D%20%28%20%5Ctexttt%7BH%7D%20%5Ccdot%20%5Ctexttt%7BsrcPoints%7D%20%5Fi%29%20%5C%7C%5F2%20%20%3E%20%20%5Ctexttt%7BransacReprojThreshold%7D)
@@ -2997,9 +2997,9 @@ pub fn find_homography(src_points: &dyn core::ToInputArray, dst_points: &dyn cor
 /// * confidence: 0.995
 #[inline]
 pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn core::ToInputArray, method: i32, ransac_reproj_threshold: f64, mask: &mut dyn core::ToOutputArray, max_iters: i32, confidence: f64) -> Result<core::Mat> {
-	input_array_arg!(src_points);
-	input_array_arg!(dst_points);
-	output_array_arg!(mask);
+	extern_container_arg!(src_points);
+	extern_container_arg!(dst_points);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_findHomography_const__InputArrayR_const__InputArrayR_int_double_const__OutputArrayR_const_int_const_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), method, ransac_reproj_threshold, mask.as_raw__OutputArray(), max_iters, confidence, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3019,7 +3019,7 @@ pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn
 /// * image_size: Size of the image used only to initialize the camera intrinsic matrix.
 /// * K: Output 3x3 floating-point camera intrinsic matrix
 ///    ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) . If
-///    @ref fisheye::CALIB_USE_INTRINSIC_GUESS is specified, some or all of fx, fy, cx, cy must be
+///    [fisheye::CALIB_USE_INTRINSIC_GUESS] is specified, some or all of fx, fy, cx, cy must be
 ///    initialized before calling the function.
 /// * D: Output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye).
 /// * rvecs: Output vector of rotation vectors (see Rodrigues ) estimated for each pattern view.
@@ -3029,19 +3029,19 @@ pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn
 ///    position of the calibration pattern in the k-th pattern view (k=0.. *M* -1).
 /// * tvecs: Output vector of translation vectors estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-///    *    @ref fisheye::CALIB_USE_INTRINSIC_GUESS  cameraMatrix contains valid initial values of
+///    *    [fisheye::CALIB_USE_INTRINSIC_GUESS]  cameraMatrix contains valid initial values of
 ///    fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
 ///    center ( imageSize is used), and focal distances are computed in a least-squares fashion.
-///    *    @ref fisheye::CALIB_RECOMPUTE_EXTRINSIC  Extrinsic will be recomputed after each iteration
+///    *    [fisheye::CALIB_RECOMPUTE_EXTRINSIC]  Extrinsic will be recomputed after each iteration
 ///    of intrinsic optimization.
-///    *    @ref fisheye::CALIB_CHECK_COND  The functions will check validity of condition number.
-///    *    @ref fisheye::CALIB_FIX_SKEW  Skew coefficient (alpha) is set to zero and stay zero.
-///    *    @ref fisheye::CALIB_FIX_K1,..., @ref fisheye::CALIB_FIX_K4 Selected distortion coefficients
+///    *    [fisheye::CALIB_CHECK_COND]  The functions will check validity of condition number.
+///    *    [fisheye::CALIB_FIX_SKEW]  Skew coefficient (alpha) is set to zero and stay zero.
+///    *    [fisheye::CALIB_FIX_K1],..., [fisheye::CALIB_FIX_K4] Selected distortion coefficients
 ///    are set to zeros and stay zero.
-///    *    @ref fisheye::CALIB_FIX_PRINCIPAL_POINT  The principal point is not changed during the global
-/// optimization. It stays at the center or at a different location specified when @ref fisheye::CALIB_USE_INTRINSIC_GUESS is set too.
-///    *    @ref fisheye::CALIB_FIX_FOCAL_LENGTH The focal length is not changed during the global
-/// optimization. It is the ![inline formula](https://latex.codecogs.com/png.latex?max%28width%2Cheight%29%2F%5Cpi) or the provided ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx), ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) when @ref fisheye::CALIB_USE_INTRINSIC_GUESS is set too.
+///    *    [fisheye::CALIB_FIX_PRINCIPAL_POINT]  The principal point is not changed during the global
+/// optimization. It stays at the center or at a different location specified when [fisheye::CALIB_USE_INTRINSIC_GUESS] is set too.
+///    *    [fisheye::CALIB_FIX_FOCAL_LENGTH] The focal length is not changed during the global
+/// optimization. It is the ![inline formula](https://latex.codecogs.com/png.latex?max%28width%2Cheight%29%2F%5Cpi) or the provided ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx), ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy) when [fisheye::CALIB_USE_INTRINSIC_GUESS] is set too.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
 /// ## C++ default parameters
@@ -3049,12 +3049,12 @@ pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,DBL_EPSILON)
 #[inline]
 pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, k: &mut dyn core::ToInputOutputArray, d: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_output_array_arg!(k);
-	input_output_array_arg!(d);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_calibrate_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, k.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3079,10 +3079,10 @@ pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// * alpha: 0
 #[inline]
 pub fn fisheye_distort_points(undistorted: &dyn core::ToInputArray, distorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64) -> Result<()> {
-	input_array_arg!(undistorted);
-	output_array_arg!(distorted);
-	input_array_arg!(k);
-	input_array_arg!(d);
+	extern_container_arg!(undistorted);
+	extern_container_arg!(distorted);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_double(undistorted.as_raw__InputArray(), distorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3110,10 +3110,10 @@ pub fn fisheye_distort_points(undistorted: &dyn core::ToInputArray, distorted: &
 /// * fov_scale: 1.0
 #[inline]
 pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, image_size: core::Size, r: &dyn core::ToInputArray, p: &mut dyn core::ToOutputArray, balance: f64, new_size: core::Size, fov_scale: f64) -> Result<()> {
-	input_array_arg!(k);
-	input_array_arg!(d);
-	input_array_arg!(r);
-	output_array_arg!(p);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(r);
+	extern_container_arg!(p);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_estimateNewCameraMatrixForUndistortRectify_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR_double_const_SizeR_double(k.as_raw__InputArray(), d.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), p.as_raw__OutputArray(), balance, &new_size, fov_scale, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3137,12 +3137,12 @@ pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &dyn core::ToInputArr
 /// * map2: The second output map.
 #[inline]
 pub fn fisheye_init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray, size: core::Size, m1type: i32, map1: &mut dyn core::ToOutputArray, map2: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(k);
-	input_array_arg!(d);
-	input_array_arg!(r);
-	input_array_arg!(p);
-	output_array_arg!(map1);
-	output_array_arg!(map2);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(r);
+	extern_container_arg!(p);
+	extern_container_arg!(map1);
+	extern_container_arg!(map2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR(k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3176,11 +3176,11 @@ pub fn fisheye_init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn co
 /// * jacobian: noArray()
 #[inline]
 pub fn fisheye_project_points(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, affine: core::Affine3d, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(object_points);
-	output_array_arg!(image_points);
-	input_array_arg!(k);
-	input_array_arg!(d);
-	output_array_arg!(jacobian);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(jacobian);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3216,13 +3216,13 @@ pub fn fisheye_project_points(object_points: &dyn core::ToInputArray, image_poin
 /// * jacobian: noArray()
 #[inline]
 pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(object_points);
-	output_array_arg!(image_points);
-	input_array_arg!(rvec);
-	input_array_arg!(tvec);
-	input_array_arg!(k);
-	input_array_arg!(d);
-	output_array_arg!(jacobian);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(jacobian);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3240,7 +3240,7 @@ pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_
 /// observed by the second camera.
 /// * K1: Input/output first camera intrinsic matrix:
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cvecthreethree%7Bf%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bc%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bf%5Fy%5E%7B%28j%29%7D%7D%7Bc%5Fy%5E%7B%28j%29%7D%7D%7B0%7D%7B0%7D%7B1%7D) , ![inline formula](https://latex.codecogs.com/png.latex?j%20%3D%200%2C%5C%2C%201) . If
-/// any of @ref fisheye::CALIB_USE_INTRINSIC_GUESS , @ref fisheye::CALIB_FIX_INTRINSIC are specified,
+/// any of [fisheye::CALIB_USE_INTRINSIC_GUESS] , [fisheye::CALIB_FIX_INTRINSIC] are specified,
 /// some or all of the matrix components must be initialized.
 /// * D1: Input/output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye) of 4 elements.
 /// * K2: Input/output second camera intrinsic matrix. The parameter is similar to K1 .
@@ -3249,7 +3249,7 @@ pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_
 /// * imageSize: Size of the image used only to initialize camera intrinsic matrix.
 /// * R: Output rotation matrix between the 1st and the 2nd camera coordinate systems.
 /// * T: Output translation vector between the coordinate systems of the cameras.
-/// * rvecs: Output vector of rotation vectors ( @ref Rodrigues ) estimated for each pattern view in the
+/// * rvecs: Output vector of rotation vectors ( [Rodrigues] ) estimated for each pattern view in the
 /// coordinate system of the first camera of the stereo pair (e.g. std::vector<cv::Mat>). More in detail, each
 /// i-th rotation vector together with the corresponding i-th translation vector (see the next output parameter
 /// description) brings the calibration pattern from the object coordinate space (in which object points are
@@ -3259,16 +3259,16 @@ pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_
 /// * tvecs: Output vector of translation vectors estimated for each pattern view, see parameter description
 /// of previous output parameter ( rvecs ).
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *    @ref fisheye::CALIB_FIX_INTRINSIC  Fix K1, K2? and D1, D2? so that only R, T matrices
+/// *    [fisheye::CALIB_FIX_INTRINSIC]  Fix K1, K2? and D1, D2? so that only R, T matrices
 /// are estimated.
-/// *    @ref fisheye::CALIB_USE_INTRINSIC_GUESS  K1, K2 contains valid initial values of
+/// *    [fisheye::CALIB_USE_INTRINSIC_GUESS]  K1, K2 contains valid initial values of
 /// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
 /// center (imageSize is used), and focal distances are computed in a least-squares fashion.
-/// *    @ref fisheye::CALIB_RECOMPUTE_EXTRINSIC  Extrinsic will be recomputed after each iteration
+/// *    [fisheye::CALIB_RECOMPUTE_EXTRINSIC]  Extrinsic will be recomputed after each iteration
 /// of intrinsic optimization.
-/// *    @ref fisheye::CALIB_CHECK_COND  The functions will check validity of condition number.
-/// *    @ref fisheye::CALIB_FIX_SKEW  Skew coefficient (alpha) is set to zero and stay zero.
-/// *   @ref fisheye::CALIB_FIX_K1,..., @ref fisheye::CALIB_FIX_K4 Selected distortion coefficients are set to zeros and stay
+/// *    [fisheye::CALIB_CHECK_COND]  The functions will check validity of condition number.
+/// *    [fisheye::CALIB_FIX_SKEW]  Skew coefficient (alpha) is set to zero and stay zero.
+/// *   [fisheye::CALIB_FIX_K1],..., [fisheye::CALIB_FIX_K4] Selected distortion coefficients are set to zeros and stay
 /// zero.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -3277,17 +3277,17 @@ pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,DBL_EPSILON)
 #[inline]
 pub fn stereo_calibrate_2(object_points: &dyn core::ToInputArray, image_points1: &dyn core::ToInputArray, image_points2: &dyn core::ToInputArray, k1: &mut dyn core::ToInputOutputArray, d1: &mut dyn core::ToInputOutputArray, k2: &mut dyn core::ToInputOutputArray, d2: &mut dyn core::ToInputOutputArray, image_size: core::Size, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points1);
-	input_array_arg!(image_points2);
-	input_output_array_arg!(k1);
-	input_output_array_arg!(d1);
-	input_output_array_arg!(k2);
-	input_output_array_arg!(d2);
-	output_array_arg!(r);
-	output_array_arg!(t);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points1);
+	extern_container_arg!(image_points2);
+	extern_container_arg!(k1);
+	extern_container_arg!(d1);
+	extern_container_arg!(k2);
+	extern_container_arg!(d2);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3305,7 +3305,7 @@ pub fn stereo_calibrate_2(object_points: &dyn core::ToInputArray, image_points1:
 /// observed by the second camera.
 /// * K1: Input/output first camera intrinsic matrix:
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cvecthreethree%7Bf%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bc%5Fx%5E%7B%28j%29%7D%7D%7B0%7D%7Bf%5Fy%5E%7B%28j%29%7D%7D%7Bc%5Fy%5E%7B%28j%29%7D%7D%7B0%7D%7B0%7D%7B1%7D) , ![inline formula](https://latex.codecogs.com/png.latex?j%20%3D%200%2C%5C%2C%201) . If
-/// any of @ref fisheye::CALIB_USE_INTRINSIC_GUESS , @ref fisheye::CALIB_FIX_INTRINSIC are specified,
+/// any of [fisheye::CALIB_USE_INTRINSIC_GUESS] , [fisheye::CALIB_FIX_INTRINSIC] are specified,
 /// some or all of the matrix components must be initialized.
 /// * D1: Input/output vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffsfisheye) of 4 elements.
 /// * K2: Input/output second camera intrinsic matrix. The parameter is similar to K1 .
@@ -3314,7 +3314,7 @@ pub fn stereo_calibrate_2(object_points: &dyn core::ToInputArray, image_points1:
 /// * imageSize: Size of the image used only to initialize camera intrinsic matrix.
 /// * R: Output rotation matrix between the 1st and the 2nd camera coordinate systems.
 /// * T: Output translation vector between the coordinate systems of the cameras.
-/// * rvecs: Output vector of rotation vectors ( @ref Rodrigues ) estimated for each pattern view in the
+/// * rvecs: Output vector of rotation vectors ( [Rodrigues] ) estimated for each pattern view in the
 /// coordinate system of the first camera of the stereo pair (e.g. std::vector<cv::Mat>). More in detail, each
 /// i-th rotation vector together with the corresponding i-th translation vector (see the next output parameter
 /// description) brings the calibration pattern from the object coordinate space (in which object points are
@@ -3324,16 +3324,16 @@ pub fn stereo_calibrate_2(object_points: &dyn core::ToInputArray, image_points1:
 /// * tvecs: Output vector of translation vectors estimated for each pattern view, see parameter description
 /// of previous output parameter ( rvecs ).
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *    @ref fisheye::CALIB_FIX_INTRINSIC  Fix K1, K2? and D1, D2? so that only R, T matrices
+/// *    [fisheye::CALIB_FIX_INTRINSIC]  Fix K1, K2? and D1, D2? so that only R, T matrices
 /// are estimated.
-/// *    @ref fisheye::CALIB_USE_INTRINSIC_GUESS  K1, K2 contains valid initial values of
+/// *    [fisheye::CALIB_USE_INTRINSIC_GUESS]  K1, K2 contains valid initial values of
 /// fx, fy, cx, cy that are optimized further. Otherwise, (cx, cy) is initially set to the image
 /// center (imageSize is used), and focal distances are computed in a least-squares fashion.
-/// *    @ref fisheye::CALIB_RECOMPUTE_EXTRINSIC  Extrinsic will be recomputed after each iteration
+/// *    [fisheye::CALIB_RECOMPUTE_EXTRINSIC]  Extrinsic will be recomputed after each iteration
 /// of intrinsic optimization.
-/// *    @ref fisheye::CALIB_CHECK_COND  The functions will check validity of condition number.
-/// *    @ref fisheye::CALIB_FIX_SKEW  Skew coefficient (alpha) is set to zero and stay zero.
-/// *   @ref fisheye::CALIB_FIX_K1,..., @ref fisheye::CALIB_FIX_K4 Selected distortion coefficients are set to zeros and stay
+/// *    [fisheye::CALIB_CHECK_COND]  The functions will check validity of condition number.
+/// *    [fisheye::CALIB_FIX_SKEW]  Skew coefficient (alpha) is set to zero and stay zero.
+/// *   [fisheye::CALIB_FIX_K1],..., [fisheye::CALIB_FIX_K4] Selected distortion coefficients are set to zeros and stay
 /// zero.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -3344,15 +3344,15 @@ pub fn stereo_calibrate_2(object_points: &dyn core::ToInputArray, image_points1:
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,DBL_EPSILON)
 #[inline]
 pub fn fisheye_stereo_calibrate(object_points: &dyn core::ToInputArray, image_points1: &dyn core::ToInputArray, image_points2: &dyn core::ToInputArray, k1: &mut dyn core::ToInputOutputArray, d1: &mut dyn core::ToInputOutputArray, k2: &mut dyn core::ToInputOutputArray, d2: &mut dyn core::ToInputOutputArray, image_size: core::Size, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points1);
-	input_array_arg!(image_points2);
-	input_output_array_arg!(k1);
-	input_output_array_arg!(d1);
-	input_output_array_arg!(k2);
-	input_output_array_arg!(d2);
-	output_array_arg!(r);
-	output_array_arg!(t);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points1);
+	extern_container_arg!(image_points2);
+	extern_container_arg!(k1);
+	extern_container_arg!(d1);
+	extern_container_arg!(k2);
+	extern_container_arg!(d2);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3378,7 +3378,7 @@ pub fn fisheye_stereo_calibrate(object_points: &dyn core::ToInputArray, image_po
 /// * P2: Output 3x4 projection matrix in the new (rectified) coordinate systems for the second
 /// camera.
 /// * Q: Output ![inline formula](https://latex.codecogs.com/png.latex?4%20%5Ctimes%204) disparity-to-depth mapping matrix (see #reprojectImageTo3D ).
-/// * flags: Operation flags that may be zero or @ref fisheye::CALIB_ZERO_DISPARITY . If the flag is set,
+/// * flags: Operation flags that may be zero or [fisheye::CALIB_ZERO_DISPARITY] . If the flag is set,
 /// the function makes the principal points of each camera have the same pixel coordinates in the
 /// rectified views. And if the flag is not set, the function may still shift the images in the
 /// horizontal or vertical direction (depending on the orientation of epipolar lines) to maximize the
@@ -3397,17 +3397,17 @@ pub fn fisheye_stereo_calibrate(object_points: &dyn core::ToInputArray, image_po
 /// * fov_scale: 1.0
 #[inline]
 pub fn fisheye_stereo_rectify(k1: &dyn core::ToInputArray, d1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, d2: &dyn core::ToInputArray, image_size: core::Size, r: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray, p1: &mut dyn core::ToOutputArray, p2: &mut dyn core::ToOutputArray, q: &mut dyn core::ToOutputArray, flags: i32, new_image_size: core::Size, balance: f64, fov_scale: f64) -> Result<()> {
-	input_array_arg!(k1);
-	input_array_arg!(d1);
-	input_array_arg!(k2);
-	input_array_arg!(d2);
-	input_array_arg!(r);
-	input_array_arg!(tvec);
-	output_array_arg!(r1);
-	output_array_arg!(r2);
-	output_array_arg!(p1);
-	output_array_arg!(p2);
-	output_array_arg!(q);
+	extern_container_arg!(k1);
+	extern_container_arg!(d1);
+	extern_container_arg!(k2);
+	extern_container_arg!(d2);
+	extern_container_arg!(r);
+	extern_container_arg!(tvec);
+	extern_container_arg!(r1);
+	extern_container_arg!(r2);
+	extern_container_arg!(p1);
+	extern_container_arg!(p2);
+	extern_container_arg!(q);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SizeR_double_double(k1.as_raw__InputArray(), d1.as_raw__InputArray(), k2.as_raw__InputArray(), d2.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), tvec.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, &new_image_size, balance, fov_scale, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3449,11 +3449,11 @@ pub fn fisheye_stereo_rectify(k1: &dyn core::ToInputArray, d1: &dyn core::ToInpu
 /// * new_size: Size()
 #[inline]
 pub fn fisheye_undistort_image(distorted: &dyn core::ToInputArray, undistorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, knew: &dyn core::ToInputArray, new_size: core::Size) -> Result<()> {
-	input_array_arg!(distorted);
-	output_array_arg!(undistorted);
-	input_array_arg!(k);
-	input_array_arg!(d);
-	input_array_arg!(knew);
+	extern_container_arg!(distorted);
+	extern_container_arg!(undistorted);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(knew);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), knew.as_raw__InputArray(), &new_size, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3480,12 +3480,12 @@ pub fn fisheye_undistort_image(distorted: &dyn core::ToInputArray, undistorted: 
 /// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,10,1e-8)
 #[inline]
 pub fn fisheye_undistort_points(distorted: &dyn core::ToInputArray, undistorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray, criteria: core::TermCriteria) -> Result<()> {
-	input_array_arg!(distorted);
-	output_array_arg!(undistorted);
-	input_array_arg!(k);
-	input_array_arg!(d);
-	input_array_arg!(r);
-	input_array_arg!(p);
+	extern_container_arg!(distorted);
+	extern_container_arg!(undistorted);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(r);
+	extern_container_arg!(p);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3521,7 +3521,7 @@ pub fn fisheye_undistort_points(distorted: &dyn core::ToInputArray, undistorted:
 /// * center_principal_point: false
 #[inline]
 pub fn get_default_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, imgsize: core::Size, center_principal_point: bool) -> Result<core::Mat> {
-	input_array_arg!(camera_matrix);
+	extern_container_arg!(camera_matrix);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayR_Size_bool(camera_matrix.as_raw__InputArray(), imgsize.opencv_as_extern(), center_principal_point, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3564,8 +3564,8 @@ pub fn get_default_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, img
 /// * center_principal_point: false
 #[inline]
 pub fn get_optimal_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: Option<&mut core::Rect>, center_principal_point: bool) -> Result<core::Mat> {
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double_Size_RectX_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), alpha, new_img_size.opencv_as_extern(), valid_pix_roi.map_or(::core::ptr::null_mut(), |valid_pix_roi| valid_pix_roi as *mut _), center_principal_point, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3604,8 +3604,8 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 /// * aspect_ratio: 1.0
 #[inline]
 pub fn init_camera_matrix_2d(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_initCameraMatrix2D_const__InputArrayR_const__InputArrayR_Size_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), aspect_ratio, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3660,12 +3660,12 @@ pub fn init_camera_matrix_2d(object_points: &dyn core::ToInputArray, image_point
 /// * map2: The second output map for #remap.
 #[inline]
 pub fn init_inverse_rectification_map(camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, r: &dyn core::ToInputArray, new_camera_matrix: &dyn core::ToInputArray, size: core::Size, m1type: i32, map1: &mut dyn core::ToOutputArray, map2: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_array_arg!(r);
-	input_array_arg!(new_camera_matrix);
-	output_array_arg!(map1);
-	output_array_arg!(map2);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(r);
+	extern_container_arg!(new_camera_matrix);
+	extern_container_arg!(map1);
+	extern_container_arg!(map2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_initInverseRectificationMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3718,12 +3718,12 @@ pub fn init_inverse_rectification_map(camera_matrix: &dyn core::ToInputArray, di
 /// * map2: The second output map.
 #[inline]
 pub fn init_undistort_rectify_map(camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, r: &dyn core::ToInputArray, new_camera_matrix: &dyn core::ToInputArray, size: core::Size, m1type: i32, map1: &mut dyn core::ToOutputArray, map2: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_array_arg!(r);
-	input_array_arg!(new_camera_matrix);
-	output_array_arg!(map1);
-	output_array_arg!(map2);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(r);
+	extern_container_arg!(new_camera_matrix);
+	extern_container_arg!(map1);
+	extern_container_arg!(map2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), size.opencv_as_extern(), m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3738,10 +3738,10 @@ pub fn init_undistort_rectify_map(camera_matrix: &dyn core::ToInputArray, dist_c
 /// * alpha: 0
 #[inline]
 pub fn init_wide_angle_proj_map(camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, image_size: core::Size, dest_image_width: i32, m1type: i32, map1: &mut dyn core::ToOutputArray, map2: &mut dyn core::ToOutputArray, proj_type: crate::calib3d::UndistortTypes, alpha: f64) -> Result<f32> {
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	output_array_arg!(map1);
-	output_array_arg!(map2);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(map1);
+	extern_container_arg!(map2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_UndistortTypes_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3764,10 +3764,10 @@ pub fn init_wide_angle_proj_map(camera_matrix: &dyn core::ToInputArray, dist_coe
 /// matrices in #stereoCalibrate but can also be used in any other similar optimization function.
 #[inline]
 pub fn mat_mul_deriv(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, d_a_bd_a: &mut dyn core::ToOutputArray, d_a_bd_b: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(a);
-	input_array_arg!(b);
-	output_array_arg!(d_a_bd_a);
-	output_array_arg!(d_a_bd_b);
+	extern_container_arg!(a);
+	extern_container_arg!(b);
+	extern_container_arg!(d_a_bd_a);
+	extern_container_arg!(d_a_bd_b);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_matMulDeriv_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(a.as_raw__InputArray(), b.as_raw__InputArray(), d_a_bd_a.as_raw__OutputArray(), d_a_bd_b.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3780,8 +3780,8 @@ pub fn mat_mul_deriv(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, d_a
 /// ## Parameters
 /// * objectPoints: Array of object points expressed wrt. the world coordinate frame. A 3xN/Nx3
 /// 1-channel or 1xN/Nx1 3-channel (or vector\<Point3f\> ), where N is the number of points in the view.
-/// * rvec: The rotation vector (@ref Rodrigues) that, together with tvec, performs a change of
-/// basis from world to camera coordinate system, see @ref calibrateCamera for details.
+/// * rvec: The rotation vector ([Rodrigues]) that, together with tvec, performs a change of
+/// basis from world to camera coordinate system, see [calibrateCamera] for details.
 /// * tvec: The translation vector, see parameter description above.
 /// * cameraMatrix: Camera intrinsic matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Ccameramatrix%7BA%7D) .
 /// * distCoeffs: Input vector of distortion coefficients
@@ -3800,7 +3800,7 @@ pub fn mat_mul_deriv(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, d_a
 /// extrinsic camera parameters. Optionally, the function computes Jacobians -matrices of partial
 /// derivatives of image points coordinates (as functions of all the input parameters) with respect to
 /// the particular parameters, intrinsic and/or extrinsic. The Jacobians are used during the global
-/// optimization in @ref calibrateCamera, @ref solvePnP, and @ref stereoCalibrate. The function itself
+/// optimization in [calibrateCamera], [solvePnP], and [stereoCalibrate]. The function itself
 /// can also be used to compute a re-projection error, given the current intrinsic and extrinsic
 /// parameters.
 /// 
@@ -3815,13 +3815,13 @@ pub fn mat_mul_deriv(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, d_a
 /// * aspect_ratio: 0
 #[inline]
 pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, jacobian: &mut dyn core::ToOutputArray, aspect_ratio: f64) -> Result<()> {
-	input_array_arg!(object_points);
-	input_array_arg!(rvec);
-	input_array_arg!(tvec);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	output_array_arg!(image_points);
-	output_array_arg!(jacobian);
+	extern_container_arg!(object_points);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(image_points);
+	extern_container_arg!(jacobian);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_projectPoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double(object_points.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_points.as_raw__OutputArray(), jacobian.as_raw__OutputArray(), aspect_ratio, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3837,24 +3837,24 @@ pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::T
 /// floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
 /// * cameraMatrix1: Input/output camera matrix for the first camera, the same as in
-/// @ref calibrateCamera. Furthermore, for the stereo case, additional flags may be used, see below.
+/// [calibrateCamera]. Furthermore, for the stereo case, additional flags may be used, see below.
 /// * distCoeffs1: Input/output vector of distortion coefficients, the same as in
-/// @ref calibrateCamera.
+/// [calibrateCamera].
 /// * cameraMatrix2: Input/output camera matrix for the first camera, the same as in
-/// @ref calibrateCamera. Furthermore, for the stereo case, additional flags may be used, see below.
+/// [calibrateCamera]. Furthermore, for the stereo case, additional flags may be used, see below.
 /// * distCoeffs2: Input/output vector of distortion coefficients, the same as in
-/// @ref calibrateCamera.
+/// [calibrateCamera].
 /// * E: The output essential matrix.
 /// * R: Output rotation matrix. Together with the translation vector, this matrix makes up a tuple
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
 /// described below.
-/// * t: Output translation vector. This vector is obtained by @ref decomposeEssentialMat and
+/// * t: Output translation vector. This vector is obtained by [decomposeEssentialMat] and
 /// therefore is only known up to scale, i.e. t is the direction of the translation vector and has unit
 /// length.
 /// * method: Method for computing an essential matrix.
-/// *   @ref RANSAC for the RANSAC algorithm.
-/// *   @ref LMEDS for the LMedS algorithm.
+/// *   [RANSAC] for the RANSAC algorithm.
+/// *   [LMEDS] for the LMedS algorithm.
 /// * prob: Parameter used for the RANSAC or LMedS methods only. It specifies a desirable level of
 /// confidence (probability) that the estimated matrix is correct.
 /// * threshold: Parameter used for RANSAC. It is the maximum distance from a point to an epipolar
@@ -3865,11 +3865,11 @@ pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::T
 /// inliers in points1 and points2 for then given essential matrix E. Only these inliers will be used to
 /// recover pose. In the output mask only inliers which pass the cheirality check.
 /// 
-/// This function decomposes an essential matrix using @ref decomposeEssentialMat and then verifies
+/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 /// possible pose hypotheses by doing cheirality check. The cheirality check means that the
 /// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Nister03).
 /// 
-/// This function can be used to process the output E and mask from @ref findEssentialMat. In this
+/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 /// scenario, points1 and points2 are the same input for findEssentialMat.:
 /// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
@@ -3901,16 +3901,16 @@ pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::T
 /// * mask: noArray()
 #[inline]
 pub fn recover_pose_2_cameras(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix1: &dyn core::ToInputArray, dist_coeffs1: &dyn core::ToInputArray, camera_matrix2: &dyn core::ToInputArray, dist_coeffs2: &dyn core::ToInputArray, e: &mut dyn core::ToOutputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, method: i32, prob: f64, threshold: f64, mask: &mut dyn core::ToInputOutputArray) -> Result<i32> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	input_array_arg!(camera_matrix1);
-	input_array_arg!(dist_coeffs1);
-	input_array_arg!(camera_matrix2);
-	input_array_arg!(dist_coeffs2);
-	output_array_arg!(e);
-	output_array_arg!(r);
-	output_array_arg!(t);
-	input_output_array_arg!(mask);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(camera_matrix1);
+	extern_container_arg!(dist_coeffs1);
+	extern_container_arg!(camera_matrix2);
+	extern_container_arg!(dist_coeffs2);
+	extern_container_arg!(e);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_double_const__InputOutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), e.as_raw__OutputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), method, prob, threshold, mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -3934,18 +3934,18 @@ pub fn recover_pose_2_cameras(points1: &dyn core::ToInputArray, points2: &dyn co
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
 /// described below.
-/// * t: Output translation vector. This vector is obtained by @ref decomposeEssentialMat and
+/// * t: Output translation vector. This vector is obtained by [decomposeEssentialMat] and
 /// therefore is only known up to scale, i.e. t is the direction of the translation vector and has unit
 /// length.
 /// * mask: Input/output mask for inliers in points1 and points2. If it is not empty, then it marks
 /// inliers in points1 and points2 for the given essential matrix E. Only these inliers will be used to
 /// recover pose. In the output mask only inliers which pass the chirality check.
 /// 
-/// This function decomposes an essential matrix using @ref decomposeEssentialMat and then verifies
+/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 /// possible pose hypotheses by doing chirality check. The chirality check means that the
 /// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Nister03).
 /// 
-/// This function can be used to process the output E and mask from @ref findEssentialMat. In this
+/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 /// scenario, points1 and points2 are the same input for #findEssentialMat :
 /// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
@@ -3974,13 +3974,13 @@ pub fn recover_pose_2_cameras(points1: &dyn core::ToInputArray, points2: &dyn co
 /// * mask: noArray()
 #[inline]
 pub fn recover_pose_estimated(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, mask: &mut dyn core::ToInputOutputArray) -> Result<i32> {
-	input_array_arg!(e);
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	input_array_arg!(camera_matrix);
-	output_array_arg!(r);
-	output_array_arg!(t);
-	input_output_array_arg!(mask);
+	extern_container_arg!(e);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4004,18 +4004,18 @@ pub fn recover_pose_estimated(e: &dyn core::ToInputArray, points1: &dyn core::To
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
 /// described below.
-/// * t: Output translation vector. This vector is obtained by @ref decomposeEssentialMat and
+/// * t: Output translation vector. This vector is obtained by [decomposeEssentialMat] and
 /// therefore is only known up to scale, i.e. t is the direction of the translation vector and has unit
 /// length.
 /// * mask: Input/output mask for inliers in points1 and points2. If it is not empty, then it marks
 /// inliers in points1 and points2 for the given essential matrix E. Only these inliers will be used to
 /// recover pose. In the output mask only inliers which pass the chirality check.
 /// 
-/// This function decomposes an essential matrix using @ref decomposeEssentialMat and then verifies
+/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 /// possible pose hypotheses by doing chirality check. The chirality check means that the
 /// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Nister03).
 /// 
-/// This function can be used to process the output E and mask from @ref findEssentialMat. In this
+/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 /// scenario, points1 and points2 are the same input for #findEssentialMat :
 /// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
@@ -4053,7 +4053,7 @@ pub fn recover_pose_estimated(e: &dyn core::ToInputArray, points1: &dyn core::To
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
 /// description below.
-/// * t: Output translation vector. This vector is obtained by @ref decomposeEssentialMat and
+/// * t: Output translation vector. This vector is obtained by [decomposeEssentialMat] and
 /// therefore is only known up to scale, i.e. t is the direction of the translation vector and has unit
 /// length.
 /// * distanceThresh: threshold distance which is used to filter out far away points (i.e. infinite
@@ -4071,14 +4071,14 @@ pub fn recover_pose_estimated(e: &dyn core::ToInputArray, points1: &dyn core::To
 /// * triangulated_points: noArray()
 #[inline]
 pub fn recover_pose_triangulated(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, distance_thresh: f64, mask: &mut dyn core::ToInputOutputArray, triangulated_points: &mut dyn core::ToOutputArray) -> Result<i32> {
-	input_array_arg!(e);
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	input_array_arg!(camera_matrix);
-	output_array_arg!(r);
-	output_array_arg!(t);
-	input_output_array_arg!(mask);
-	output_array_arg!(triangulated_points);
+	extern_container_arg!(e);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(mask);
+	extern_container_arg!(triangulated_points);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_const__InputOutputArrayR_const__OutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), distance_thresh, mask.as_raw__InputOutputArray(), triangulated_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4102,18 +4102,18 @@ pub fn recover_pose_triangulated(e: &dyn core::ToInputArray, points1: &dyn core:
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
 /// described below.
-/// * t: Output translation vector. This vector is obtained by @ref decomposeEssentialMat and
+/// * t: Output translation vector. This vector is obtained by [decomposeEssentialMat] and
 /// therefore is only known up to scale, i.e. t is the direction of the translation vector and has unit
 /// length.
 /// * mask: Input/output mask for inliers in points1 and points2. If it is not empty, then it marks
 /// inliers in points1 and points2 for the given essential matrix E. Only these inliers will be used to
 /// recover pose. In the output mask only inliers which pass the chirality check.
 /// 
-/// This function decomposes an essential matrix using @ref decomposeEssentialMat and then verifies
+/// This function decomposes an essential matrix using [decomposeEssentialMat] and then verifies
 /// possible pose hypotheses by doing chirality check. The chirality check means that the
 /// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Nister03).
 /// 
-/// This function can be used to process the output E and mask from @ref findEssentialMat. In this
+/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 /// scenario, points1 and points2 are the same input for #findEssentialMat :
 /// ```C++
 ///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
@@ -4148,7 +4148,7 @@ pub fn recover_pose_triangulated(e: &dyn core::ToInputArray, points1: &dyn core:
 /// that performs a change of basis from the first camera's coordinate system to the second camera's
 /// coordinate system. Note that, in general, t can not be used for this tuple, see the parameter
 /// description below.
-/// * t: Output translation vector. This vector is obtained by @ref decomposeEssentialMat and
+/// * t: Output translation vector. This vector is obtained by [decomposeEssentialMat] and
 /// therefore is only known up to scale, i.e. t is the direction of the translation vector and has unit
 /// length.
 /// * focal: Focal length of the camera. Note that this function assumes that points1 and points2
@@ -4169,12 +4169,12 @@ pub fn recover_pose_triangulated(e: &dyn core::ToInputArray, points1: &dyn core:
 /// * mask: noArray()
 #[inline]
 pub fn recover_pose(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, focal: f64, pp: core::Point2d, mask: &mut dyn core::ToInputOutputArray) -> Result<i32> {
-	input_array_arg!(e);
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	output_array_arg!(r);
-	output_array_arg!(t);
-	input_output_array_arg!(mask);
+	extern_container_arg!(e);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_Point2d_const__InputOutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), focal, pp.opencv_as_extern(), mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4185,25 +4185,25 @@ pub fn recover_pose(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray
 /// computes the rectification transformations for 3-head camera, where all the heads are on the same line.
 #[inline]
 pub fn rectify3_collinear(camera_matrix1: &dyn core::ToInputArray, dist_coeffs1: &dyn core::ToInputArray, camera_matrix2: &dyn core::ToInputArray, dist_coeffs2: &dyn core::ToInputArray, camera_matrix3: &dyn core::ToInputArray, dist_coeffs3: &dyn core::ToInputArray, imgpt1: &dyn core::ToInputArray, imgpt3: &dyn core::ToInputArray, image_size: core::Size, r12: &dyn core::ToInputArray, t12: &dyn core::ToInputArray, r13: &dyn core::ToInputArray, t13: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray, r3: &mut dyn core::ToOutputArray, p1: &mut dyn core::ToOutputArray, p2: &mut dyn core::ToOutputArray, p3: &mut dyn core::ToOutputArray, q: &mut dyn core::ToOutputArray, alpha: f64, new_img_size: core::Size, roi1: &mut core::Rect, roi2: &mut core::Rect, flags: i32) -> Result<f32> {
-	input_array_arg!(camera_matrix1);
-	input_array_arg!(dist_coeffs1);
-	input_array_arg!(camera_matrix2);
-	input_array_arg!(dist_coeffs2);
-	input_array_arg!(camera_matrix3);
-	input_array_arg!(dist_coeffs3);
-	input_array_arg!(imgpt1);
-	input_array_arg!(imgpt3);
-	input_array_arg!(r12);
-	input_array_arg!(t12);
-	input_array_arg!(r13);
-	input_array_arg!(t13);
-	output_array_arg!(r1);
-	output_array_arg!(r2);
-	output_array_arg!(r3);
-	output_array_arg!(p1);
-	output_array_arg!(p2);
-	output_array_arg!(p3);
-	output_array_arg!(q);
+	extern_container_arg!(camera_matrix1);
+	extern_container_arg!(dist_coeffs1);
+	extern_container_arg!(camera_matrix2);
+	extern_container_arg!(dist_coeffs2);
+	extern_container_arg!(camera_matrix3);
+	extern_container_arg!(dist_coeffs3);
+	extern_container_arg!(imgpt1);
+	extern_container_arg!(imgpt3);
+	extern_container_arg!(r12);
+	extern_container_arg!(t12);
+	extern_container_arg!(r13);
+	extern_container_arg!(t13);
+	extern_container_arg!(r1);
+	extern_container_arg!(r2);
+	extern_container_arg!(r3);
+	extern_container_arg!(p1);
+	extern_container_arg!(p2);
+	extern_container_arg!(p3);
+	extern_container_arg!(q);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_rectify3Collinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_double_Size_RectX_RectX_int(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), camera_matrix3.as_raw__InputArray(), dist_coeffs3.as_raw__InputArray(), imgpt1.as_raw__InputArray(), imgpt3.as_raw__InputArray(), image_size.opencv_as_extern(), r12.as_raw__InputArray(), t12.as_raw__InputArray(), r13.as_raw__InputArray(), t13.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), r3.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), p3.as_raw__OutputArray(), q.as_raw__OutputArray(), alpha, new_img_size.opencv_as_extern(), roi1, roi2, flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4216,15 +4216,15 @@ pub fn rectify3_collinear(camera_matrix1: &dyn core::ToInputArray, dist_coeffs1:
 /// ## Parameters
 /// * disparity: Input single-channel 8-bit unsigned, 16-bit signed, 32-bit signed or 32-bit
 /// floating-point disparity image. The values of 8-bit / 16-bit signed formats are assumed to have no
-/// fractional bits. If the disparity is 16-bit signed format, as computed by @ref StereoBM or
-/// @ref StereoSGBM and maybe other algorithms, it should be divided by 16 (and scaled to float) before
+/// fractional bits. If the disparity is 16-bit signed format, as computed by [StereoBM] or
+/// [StereoSGBM] and maybe other algorithms, it should be divided by 16 (and scaled to float) before
 /// being used here.
 /// * _3dImage: Output 3-channel floating-point image of the same size as disparity. Each element of
 /// _3dImage(x,y) contains 3D coordinates of the point (x,y) computed from the disparity map. If one
-/// uses Q obtained by @ref stereoRectify, then the returned points are represented in the first
+/// uses Q obtained by [stereoRectify], then the returned points are represented in the first
 /// camera's rectified coordinate system.
 /// * Q: ![inline formula](https://latex.codecogs.com/png.latex?4%20%5Ctimes%204) perspective transformation matrix that can be obtained with
-/// @ref stereoRectify.
+/// [stereoRectify].
 /// * handleMissingValues: Indicates, whether the function should handle missing values (i.e.
 /// points where the disparity was not computed). If handleMissingValues=true, then pixels with the
 /// minimal disparity that corresponds to the outliers (see StereoMatcher::compute ) are transformed
@@ -4245,9 +4245,9 @@ pub fn rectify3_collinear(camera_matrix1: &dyn core::ToInputArray, dist_coeffs1:
 /// * ddepth: -1
 #[inline]
 pub fn reproject_image_to_3d(disparity: &dyn core::ToInputArray, _3d_image: &mut dyn core::ToOutputArray, q: &dyn core::ToInputArray, handle_missing_values: bool, ddepth: i32) -> Result<()> {
-	input_array_arg!(disparity);
-	output_array_arg!(_3d_image);
-	input_array_arg!(q);
+	extern_container_arg!(disparity);
+	extern_container_arg!(_3d_image);
+	extern_container_arg!(q);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR_bool_int(disparity.as_raw__InputArray(), _3d_image.as_raw__OutputArray(), q.as_raw__InputArray(), handle_missing_values, ddepth, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4268,9 +4268,9 @@ pub fn reproject_image_to_3d(disparity: &dyn core::ToInputArray, _3d_image: &mut
 /// The computed Sampson distance.
 #[inline]
 pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArray, f: &dyn core::ToInputArray) -> Result<f64> {
-	input_array_arg!(pt1);
-	input_array_arg!(pt2);
-	input_array_arg!(f);
+	extern_container_arg!(pt1);
+	extern_container_arg!(pt2);
+	extern_container_arg!(f);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_sampsonDistance_const__InputArrayR_const__InputArrayR_const__InputArrayR(pt1.as_raw__InputArray(), pt2.as_raw__InputArray(), f.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4280,7 +4280,7 @@ pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArr
 
 /// Finds an object pose from 3 3D-2D point correspondences.
 /// ## See also
-/// @ref calib3d_solvePnP
+/// [calib3d_solvePnP]
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, 3x3 1-channel or
@@ -4291,13 +4291,13 @@ pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArr
 /// * distCoeffs: Input vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
-/// * rvecs: Output rotation vectors (see @ref Rodrigues ) that, together with tvecs, brings points from
+/// * rvecs: Output rotation vectors (see [Rodrigues] ) that, together with tvecs, brings points from
 /// the model coordinate system to the camera coordinate system. A P3P problem has up to 4 solutions.
 /// * tvecs: Output translation vectors.
 /// * flags: Method for solving a P3P problem:
-/// *   @ref SOLVEPNP_P3P Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
+/// *   [SOLVEPNP_P3P] Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
 /// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_gao2003complete)).
-/// *   @ref SOLVEPNP_AP3P Method is based on the paper of T. Ke and S. Roumeliotis.
+/// *   [SOLVEPNP_AP3P] Method is based on the paper of T. Ke and S. Roumeliotis.
 /// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ke17)).
 /// 
 /// The function estimates the object pose given 3 object points, their corresponding image
@@ -4308,12 +4308,12 @@ pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArr
 /// The solutions are sorted by reprojection errors (lowest to highest).
 #[inline]
 pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32) -> Result<i32> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solveP3P_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4323,13 +4323,13 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 
 /// Finds an object pose from 3D-2D point correspondences.
 /// ## See also
-/// @ref calib3d_solvePnP
+/// [calib3d_solvePnP]
 /// 
 /// This function returns a list of all the possible solutions (a solution is a <rotation vector, translation vector>
 /// couple), depending on the number of input points and the chosen method:
-/// - P3P methods (@ref SOLVEPNP_P3P, @ref SOLVEPNP_AP3P): 3 or 4 input points. Number of returned solutions can be between 0 and 4 with 3 input points.
-/// - @ref SOLVEPNP_IPPE Input points must be >= 4 and object points must be coplanar. Returns 2 solutions.
-/// - @ref SOLVEPNP_IPPE_SQUARE Special case suitable for marker pose estimation.
+/// - P3P methods ([SOLVEPNP_P3P], [SOLVEPNP_AP3P]): 3 or 4 input points. Number of returned solutions can be between 0 and 4 with 3 input points.
+/// - [SOLVEPNP_IPPE] Input points must be >= 4 and object points must be coplanar. Returns 2 solutions.
+/// - [SOLVEPNP_IPPE_SQUARE] Special case suitable for marker pose estimation.
 /// Number of input points must be 4 and 2 solutions are returned. Object points must be defined in the following order:
 ///   - point 0: [-squareLength / 2,  squareLength / 2, 0]
 ///   - point 1: [ squareLength / 2,  squareLength / 2, 0]
@@ -4347,22 +4347,22 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// * distCoeffs: Input vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
-/// * rvecs: Vector of output rotation vectors (see @ref Rodrigues ) that, together with tvecs, brings points from
+/// * rvecs: Vector of output rotation vectors (see [Rodrigues] ) that, together with tvecs, brings points from
 /// the model coordinate system to the camera coordinate system.
 /// * tvecs: Vector of output translation vectors.
 /// * useExtrinsicGuess: Parameter used for #SOLVEPNP_ITERATIVE. If true (1), the function uses
 /// the provided rvec and tvec values as initial approximations of the rotation and translation
 /// vectors, respectively, and further optimizes them.
-/// * flags: Method for solving a PnP problem: see @ref calib3d_solvePnP_flags
-/// * rvec: Rotation vector used to initialize an iterative PnP refinement algorithm, when flag is @ref SOLVEPNP_ITERATIVE
+/// * flags: Method for solving a PnP problem: see [calib3d_solvePnP_flags]
+/// * rvec: Rotation vector used to initialize an iterative PnP refinement algorithm, when flag is [SOLVEPNP_ITERATIVE]
 /// and useExtrinsicGuess is set to true.
-/// * tvec: Translation vector used to initialize an iterative PnP refinement algorithm, when flag is @ref SOLVEPNP_ITERATIVE
+/// * tvec: Translation vector used to initialize an iterative PnP refinement algorithm, when flag is [SOLVEPNP_ITERATIVE]
 /// and useExtrinsicGuess is set to true.
 /// * reprojectionError: Optional vector of reprojection error, that is the RMS error
 /// (![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctext%7BRMSE%7D%20%3D%20%5Csqrt%7B%5Cfrac%7B%5Csum%5F%7Bi%7D%5E%7BN%7D%20%5Cleft%20%28%20%5Chat%7By%5Fi%7D%20%2D%20y%5Fi%20%5Cright%20%29%5E2%7D%7BN%7D%7D%20)) between the input image points
 /// and the 3D object points projected with the estimated pose.
 /// 
-/// More information is described in @ref calib3d_solvePnP
+/// More information is described in [calib3d_solvePnP]
 /// 
 /// 
 /// Note:
@@ -4378,17 +4378,17 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 ///        - Thus, given some data D = np.array(...) where D.shape = (N,M), in order to use a subset of
 ///        it as, e.g., imagePoints, one must effectively copy it into a new array: imagePoints =
 ///        np.ascontiguousarray(D[:,:2]).reshape((N,1,2))
-///    *   The methods @ref SOLVEPNP_DLS and @ref SOLVEPNP_UPNP cannot be used as the current implementations are
+///    *   The methods [SOLVEPNP_DLS] and [SOLVEPNP_UPNP] cannot be used as the current implementations are
 ///        unstable and sometimes give completely wrong results. If you pass one of these two
-///        flags, @ref SOLVEPNP_EPNP method will be used instead.
-///    *   The minimum number of points is 4 in the general case. In the case of @ref SOLVEPNP_P3P and @ref SOLVEPNP_AP3P
+///        flags, [SOLVEPNP_EPNP] method will be used instead.
+///    *   The minimum number of points is 4 in the general case. In the case of [SOLVEPNP_P3P] and [SOLVEPNP_AP3P]
 ///        methods, it is required to use exactly 4 points (the first 3 points are used to estimate all the solutions
 ///        of the P3P problem, the last one is used to retain the best solution that minimizes the reprojection error).
-///    *   With @ref SOLVEPNP_ITERATIVE method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
+///    *   With [SOLVEPNP_ITERATIVE] method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
 ///        are sufficient to compute a pose but there are up to 4 solutions). The initial solution should be close to the
 ///        global solution to converge.
-///    *   With @ref SOLVEPNP_IPPE input points must be >= 4 and object points must be coplanar.
-///    *   With @ref SOLVEPNP_IPPE_SQUARE this is a special case suitable for marker pose estimation.
+///    *   With [SOLVEPNP_IPPE] input points must be >= 4 and object points must be coplanar.
+///    *   With [SOLVEPNP_IPPE_SQUARE] this is a special case suitable for marker pose estimation.
 ///        Number of input points must be 4. Object points must be defined in the following order:
 ///          - point 0: [-squareLength / 2,  squareLength / 2, 0]
 ///          - point 1: [ squareLength / 2,  squareLength / 2, 0]
@@ -4403,15 +4403,15 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// * reprojection_error: noArray()
 #[inline]
 pub fn solve_pnp_generic(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, flags: crate::calib3d::SolvePnPMethod, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, reprojection_error: &mut dyn core::ToOutputArray) -> Result<i32> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
-	input_array_arg!(rvec);
-	input_array_arg!(tvec);
-	output_array_arg!(reprojection_error);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
+	extern_container_arg!(reprojection_error);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solvePnPGeneric_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_SolvePnPMethod_const__InputArrayR_const__InputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), use_extrinsic_guess, flags, rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), reprojection_error.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4421,7 +4421,7 @@ pub fn solve_pnp_generic(object_points: &dyn core::ToInputArray, image_points: &
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
 /// ## See also
-/// @ref calib3d_solvePnP
+/// [calib3d_solvePnP]
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
@@ -4432,10 +4432,10 @@ pub fn solve_pnp_generic(object_points: &dyn core::ToInputArray, image_points: &
 /// * distCoeffs: Input vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
-/// * rvec: Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
+/// * rvec: Output rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system.
 /// * tvec: Output translation vector.
-/// * useExtrinsicGuess: Parameter used for @ref SOLVEPNP_ITERATIVE. If true (1), the function uses
+/// * useExtrinsicGuess: Parameter used for [SOLVEPNP_ITERATIVE]. If true (1), the function uses
 /// the provided rvec and tvec values as initial approximations of the rotation and translation
 /// vectors, respectively, and further optimizes them.
 /// * iterationsCount: Number of iterations.
@@ -4444,12 +4444,12 @@ pub fn solve_pnp_generic(object_points: &dyn core::ToInputArray, image_points: &
 /// an inlier.
 /// * confidence: The probability that the algorithm produces a useful result.
 /// * inliers: Output vector that contains indices of inliers in objectPoints and imagePoints .
-/// * flags: Method for solving a PnP problem (see @ref solvePnP ).
+/// * flags: Method for solving a PnP problem (see [solvePnP] ).
 /// 
 /// The function estimates an object pose given a set of object points, their corresponding image
 /// projections, as well as the camera intrinsic matrix and the distortion coefficients. This function finds such
 /// a pose that minimizes reprojection error, that is, the sum of squared distances between the observed
-/// projections imagePoints and the projected (using @ref projectPoints ) objectPoints. The use of RANSAC
+/// projections imagePoints and the projected (using [projectPoints] ) objectPoints. The use of RANSAC
 /// makes the function resistant to outliers.
 /// 
 /// 
@@ -4473,13 +4473,13 @@ pub fn solve_pnp_generic(object_points: &dyn core::ToInputArray, image_points: &
 /// * flags: SOLVEPNP_ITERATIVE
 #[inline]
 pub fn solve_pnp_ransac(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	output_array_arg!(rvec);
-	output_array_arg!(tvec);
-	output_array_arg!(inliers);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
+	extern_container_arg!(inliers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int_float_double_const__OutputArrayR_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4491,13 +4491,13 @@ pub fn solve_pnp_ransac(object_points: &dyn core::ToInputArray, image_points: &d
 /// * params: UsacParams()
 #[inline]
 pub fn solve_pnp_ransac_1(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, inliers: &mut dyn core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<bool> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_output_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	output_array_arg!(rvec);
-	output_array_arg!(tvec);
-	output_array_arg!(inliers);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
+	extern_container_arg!(inliers);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solvePnPRansac_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const_UsacParamsR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), inliers.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4508,7 +4508,7 @@ pub fn solve_pnp_ransac_1(object_points: &dyn core::ToInputArray, image_points: 
 /// Refine a pose (the translation and the rotation that transform a 3D point expressed in the object coordinate frame
 /// to the camera coordinate frame) from a 3D-2D point correspondences and starting from an initial solution.
 /// ## See also
-/// @ref calib3d_solvePnP
+/// [calib3d_solvePnP]
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or 1xN/Nx1 3-channel,
@@ -4519,7 +4519,7 @@ pub fn solve_pnp_ransac_1(object_points: &dyn core::ToInputArray, image_points: 
 /// * distCoeffs: Input vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
-/// * rvec: Input/Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
+/// * rvec: Input/Output rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system. Input values are used as an initial solution.
 /// * tvec: Input/Output translation vector. Input values are used as an initial solution.
 /// * criteria: Criteria when to stop the Levenberg-Marquard iterative algorithm.
@@ -4534,12 +4534,12 @@ pub fn solve_pnp_ransac_1(object_points: &dyn core::ToInputArray, image_points: 
 /// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
 #[inline]
 pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, criteria: core::TermCriteria) -> Result<()> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_output_array_arg!(rvec);
-	input_output_array_arg!(tvec);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solvePnPRefineLM_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4550,7 +4550,7 @@ pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points:
 /// Refine a pose (the translation and the rotation that transform a 3D point expressed in the object coordinate frame
 /// to the camera coordinate frame) from a 3D-2D point correspondences and starting from an initial solution.
 /// ## See also
-/// @ref calib3d_solvePnP
+/// [calib3d_solvePnP]
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or 1xN/Nx1 3-channel,
@@ -4561,7 +4561,7 @@ pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points:
 /// * distCoeffs: Input vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
-/// * rvec: Input/Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
+/// * rvec: Input/Output rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system. Input values are used as an initial solution.
 /// * tvec: Input/Output translation vector. Input values are used as an initial solution.
 /// * criteria: Criteria when to stop the Levenberg-Marquard iterative algorithm.
@@ -4579,12 +4579,12 @@ pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points:
 /// * vv_slambda: 1
 #[inline]
 pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, criteria: core::TermCriteria, vv_slambda: f64) -> Result<()> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_output_array_arg!(rvec);
-	input_output_array_arg!(tvec);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solvePnPRefineVVS_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.opencv_as_extern(), vv_slambda, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4594,13 +4594,13 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 
 /// Finds an object pose from 3D-2D point correspondences.
 /// ## See also
-/// @ref calib3d_solvePnP
+/// [calib3d_solvePnP]
 /// 
 /// This function returns the rotation and the translation vectors that transform a 3D point expressed in the object
 /// coordinate frame to the camera coordinate frame, using different methods:
-/// - P3P methods (@ref SOLVEPNP_P3P, @ref SOLVEPNP_AP3P): need 4 input points to return a unique solution.
-/// - @ref SOLVEPNP_IPPE Input points must be >= 4 and object points must be coplanar.
-/// - @ref SOLVEPNP_IPPE_SQUARE Special case suitable for marker pose estimation.
+/// - P3P methods ([SOLVEPNP_P3P], [SOLVEPNP_AP3P]): need 4 input points to return a unique solution.
+/// - [SOLVEPNP_IPPE] Input points must be >= 4 and object points must be coplanar.
+/// - [SOLVEPNP_IPPE_SQUARE] Special case suitable for marker pose estimation.
 /// Number of input points must be 4. Object points must be defined in the following order:
 ///   - point 0: [-squareLength / 2,  squareLength / 2, 0]
 ///   - point 1: [ squareLength / 2,  squareLength / 2, 0]
@@ -4617,15 +4617,15 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 /// * distCoeffs: Input vector of distortion coefficients
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cdistcoeffs). If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
-/// * rvec: Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
+/// * rvec: Output rotation vector (see [Rodrigues] ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system.
 /// * tvec: Output translation vector.
 /// * useExtrinsicGuess: Parameter used for #SOLVEPNP_ITERATIVE. If true (1), the function uses
 /// the provided rvec and tvec values as initial approximations of the rotation and translation
 /// vectors, respectively, and further optimizes them.
-/// * flags: Method for solving a PnP problem: see @ref calib3d_solvePnP_flags
+/// * flags: Method for solving a PnP problem: see [calib3d_solvePnP_flags]
 /// 
-/// More information about Perspective-n-Points is described in @ref calib3d_solvePnP
+/// More information about Perspective-n-Points is described in [calib3d_solvePnP]
 /// 
 /// 
 /// Note:
@@ -4641,35 +4641,35 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 ///        - Thus, given some data D = np.array(...) where D.shape = (N,M), in order to use a subset of
 ///        it as, e.g., imagePoints, one must effectively copy it into a new array: imagePoints =
 ///        np.ascontiguousarray(D[:,:2]).reshape((N,1,2))
-///    *   The methods @ref SOLVEPNP_DLS and @ref SOLVEPNP_UPNP cannot be used as the current implementations are
+///    *   The methods [SOLVEPNP_DLS] and [SOLVEPNP_UPNP] cannot be used as the current implementations are
 ///        unstable and sometimes give completely wrong results. If you pass one of these two
-///        flags, @ref SOLVEPNP_EPNP method will be used instead.
-///    *   The minimum number of points is 4 in the general case. In the case of @ref SOLVEPNP_P3P and @ref SOLVEPNP_AP3P
+///        flags, [SOLVEPNP_EPNP] method will be used instead.
+///    *   The minimum number of points is 4 in the general case. In the case of [SOLVEPNP_P3P] and [SOLVEPNP_AP3P]
 ///        methods, it is required to use exactly 4 points (the first 3 points are used to estimate all the solutions
 ///        of the P3P problem, the last one is used to retain the best solution that minimizes the reprojection error).
-///    *   With @ref SOLVEPNP_ITERATIVE method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
+///    *   With [SOLVEPNP_ITERATIVE] method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
 ///        are sufficient to compute a pose but there are up to 4 solutions). The initial solution should be close to the
 ///        global solution to converge.
-///    *   With @ref SOLVEPNP_IPPE input points must be >= 4 and object points must be coplanar.
-///    *   With @ref SOLVEPNP_IPPE_SQUARE this is a special case suitable for marker pose estimation.
+///    *   With [SOLVEPNP_IPPE] input points must be >= 4 and object points must be coplanar.
+///    *   With [SOLVEPNP_IPPE_SQUARE] this is a special case suitable for marker pose estimation.
 ///        Number of input points must be 4. Object points must be defined in the following order:
 ///          - point 0: [-squareLength / 2,  squareLength / 2, 0]
 ///          - point 1: [ squareLength / 2,  squareLength / 2, 0]
 ///          - point 2: [ squareLength / 2, -squareLength / 2, 0]
 ///          - point 3: [-squareLength / 2, -squareLength / 2, 0]
-///    *  With @ref SOLVEPNP_SQPNP input points must be >= 3
+///    *  With [SOLVEPNP_SQPNP] input points must be >= 3
 /// 
 /// ## C++ default parameters
 /// * use_extrinsic_guess: false
 /// * flags: SOLVEPNP_ITERATIVE
 #[inline]
 pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	output_array_arg!(rvec);
-	output_array_arg!(tvec);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_solvePnP_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4682,18 +4682,18 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// 
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points. The same structure as
-/// in @ref calibrateCamera. For each pattern view, both cameras need to see the same object
+/// in [calibrateCamera]. For each pattern view, both cameras need to see the same object
 /// points. Therefore, objectPoints.size(), imagePoints1.size(), and imagePoints2.size() need to be
 /// equal as well as objectPoints[i].size(), imagePoints1[i].size(), and imagePoints2[i].size() need to
 /// be equal for each i.
 /// * imagePoints1: Vector of vectors of the projections of the calibration pattern points,
-/// observed by the first camera. The same structure as in @ref calibrateCamera.
+/// observed by the first camera. The same structure as in [calibrateCamera].
 /// * imagePoints2: Vector of vectors of the projections of the calibration pattern points,
-/// observed by the second camera. The same structure as in @ref calibrateCamera.
+/// observed by the second camera. The same structure as in [calibrateCamera].
 /// * cameraMatrix1: Input/output camera intrinsic matrix for the first camera, the same as in
-/// @ref calibrateCamera. Furthermore, for the stereo case, additional flags may be used, see below.
+/// [calibrateCamera]. Furthermore, for the stereo case, additional flags may be used, see below.
 /// * distCoeffs1: Input/output vector of distortion coefficients, the same as in
-/// @ref calibrateCamera.
+/// [calibrateCamera].
 /// * cameraMatrix2: Input/output second camera intrinsic matrix for the second camera. See description for
 /// cameraMatrix1.
 /// * distCoeffs2: Input/output lens distortion coefficients for the second camera. See
@@ -4708,7 +4708,7 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// * T: Output translation vector, see description above.
 /// * E: Output essential matrix.
 /// * F: Output fundamental matrix.
-/// * rvecs: Output vector of rotation vectors ( @ref Rodrigues ) estimated for each pattern view in the
+/// * rvecs: Output vector of rotation vectors ( [Rodrigues] ) estimated for each pattern view in the
 /// coordinate system of the first camera of the stereo pair (e.g. std::vector<cv::Mat>). More in detail, each
 /// i-th rotation vector together with the corresponding i-th translation vector (see the next output parameter
 /// description) brings the calibration pattern from the object coordinate space (in which object points are
@@ -4719,39 +4719,39 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// of previous output parameter ( rvecs ).
 /// * perViewErrors: Output vector of the RMS re-projection error estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   @ref CALIB_FIX_INTRINSIC Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
+/// *   [CALIB_FIX_INTRINSIC] Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
 /// matrices are estimated.
-/// *   @ref CALIB_USE_INTRINSIC_GUESS Optimize some or all of the intrinsic parameters
+/// *   [CALIB_USE_INTRINSIC_GUESS] Optimize some or all of the intrinsic parameters
 /// according to the specified flags. Initial values are provided by the user.
-/// *   @ref CALIB_USE_EXTRINSIC_GUESS R and T contain valid initial values that are optimized further.
+/// *   [CALIB_USE_EXTRINSIC_GUESS] R and T contain valid initial values that are optimized further.
 /// Otherwise R and T are initialized to the median value of the pattern views (each dimension separately).
-/// *   @ref CALIB_FIX_PRINCIPAL_POINT Fix the principal points during the optimization.
-/// *   @ref CALIB_FIX_FOCAL_LENGTH Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
-/// *   @ref CALIB_FIX_ASPECT_RATIO Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
+/// *   [CALIB_FIX_PRINCIPAL_POINT] Fix the principal points during the optimization.
+/// *   [CALIB_FIX_FOCAL_LENGTH] Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
+/// *   [CALIB_FIX_ASPECT_RATIO] Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
 /// .
-/// *   @ref CALIB_SAME_FOCAL_LENGTH Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
-/// *   @ref CALIB_ZERO_TANGENT_DIST Set tangential distortion coefficients for each camera to
+/// *   [CALIB_SAME_FOCAL_LENGTH] Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
+/// *   [CALIB_ZERO_TANGENT_DIST] Set tangential distortion coefficients for each camera to
 /// zeros and fix there.
-/// *   @ref CALIB_FIX_K1,..., @ref CALIB_FIX_K6 Do not change the corresponding radial
-/// distortion coefficient during the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set,
+/// *   [CALIB_FIX_K1],..., [CALIB_FIX_K6] Do not change the corresponding radial
+/// distortion coefficient during the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set,
 /// the coefficient from the supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_RATIONAL_MODEL Enable coefficients k4, k5, and k6. To provide the backward
+/// *   [CALIB_RATIONAL_MODEL] Enable coefficients k4, k5, and k6. To provide the backward
 /// compatibility, this extra flag should be explicitly specified to make the calibration
 /// function use the rational model and return 8 coefficients. If the flag is not set, the
 /// function computes and returns only 5 distortion coefficients.
-/// *   @ref CALIB_THIN_PRISM_MODEL Coefficients s1, s2, s3 and s4 are enabled. To provide the
+/// *   [CALIB_THIN_PRISM_MODEL] Coefficients s1, s2, s3 and s4 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the thin prism model and return 12 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   @ref CALIB_FIX_S1_S2_S3_S4 The thin prism distortion coefficients are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_S1_S2_S3_S4] The thin prism distortion coefficients are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_TILTED_MODEL Coefficients tauX and tauY are enabled. To provide the
+/// *   [CALIB_TILTED_MODEL] Coefficients tauX and tauY are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the tilted sensor model and return 14 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   @ref CALIB_FIX_TAUX_TAUY The coefficients of the tilted sensor model are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_TAUX_TAUY] The coefficients of the tilted sensor model are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -4786,10 +4786,10 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// the two cameras. However, due to the high dimensionality of the parameter space and noise in the
 /// input data, the function can diverge from the correct solution. If the intrinsic parameters can be
 /// estimated with high accuracy for each of the cameras individually (for example, using
-/// #calibrateCamera ), you are recommended to do so and then pass @ref CALIB_FIX_INTRINSIC flag to the
+/// #calibrateCamera ), you are recommended to do so and then pass [CALIB_FIX_INTRINSIC] flag to the
 /// function along with the computed intrinsic parameters. Otherwise, if all the parameters are
 /// estimated at once, it makes sense to restrict some parameters, for example, pass
-///  @ref CALIB_SAME_FOCAL_LENGTH and @ref CALIB_ZERO_TANGENT_DIST flags, which is usually a
+///  [CALIB_SAME_FOCAL_LENGTH] and [CALIB_ZERO_TANGENT_DIST] flags, which is usually a
 /// reasonable assumption.
 /// 
 /// Similarly to #calibrateCamera, the function minimizes the total re-projection error for all the
@@ -4801,20 +4801,20 @@ pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,1e-6)
 #[inline]
 pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_points1: &dyn core::ToInputArray, image_points2: &dyn core::ToInputArray, camera_matrix1: &mut dyn core::ToInputOutputArray, dist_coeffs1: &mut dyn core::ToInputOutputArray, camera_matrix2: &mut dyn core::ToInputOutputArray, dist_coeffs2: &mut dyn core::ToInputOutputArray, image_size: core::Size, r: &mut dyn core::ToInputOutputArray, t: &mut dyn core::ToInputOutputArray, e: &mut dyn core::ToOutputArray, f: &mut dyn core::ToOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points1);
-	input_array_arg!(image_points2);
-	input_output_array_arg!(camera_matrix1);
-	input_output_array_arg!(dist_coeffs1);
-	input_output_array_arg!(camera_matrix2);
-	input_output_array_arg!(dist_coeffs2);
-	input_output_array_arg!(r);
-	input_output_array_arg!(t);
-	output_array_arg!(e);
-	output_array_arg!(f);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
-	output_array_arg!(per_view_errors);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points1);
+	extern_container_arg!(image_points2);
+	extern_container_arg!(camera_matrix1);
+	extern_container_arg!(dist_coeffs1);
+	extern_container_arg!(camera_matrix2);
+	extern_container_arg!(dist_coeffs2);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(e);
+	extern_container_arg!(f);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
+	extern_container_arg!(per_view_errors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4827,18 +4827,18 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// 
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points. The same structure as
-/// in @ref calibrateCamera. For each pattern view, both cameras need to see the same object
+/// in [calibrateCamera]. For each pattern view, both cameras need to see the same object
 /// points. Therefore, objectPoints.size(), imagePoints1.size(), and imagePoints2.size() need to be
 /// equal as well as objectPoints[i].size(), imagePoints1[i].size(), and imagePoints2[i].size() need to
 /// be equal for each i.
 /// * imagePoints1: Vector of vectors of the projections of the calibration pattern points,
-/// observed by the first camera. The same structure as in @ref calibrateCamera.
+/// observed by the first camera. The same structure as in [calibrateCamera].
 /// * imagePoints2: Vector of vectors of the projections of the calibration pattern points,
-/// observed by the second camera. The same structure as in @ref calibrateCamera.
+/// observed by the second camera. The same structure as in [calibrateCamera].
 /// * cameraMatrix1: Input/output camera intrinsic matrix for the first camera, the same as in
-/// @ref calibrateCamera. Furthermore, for the stereo case, additional flags may be used, see below.
+/// [calibrateCamera]. Furthermore, for the stereo case, additional flags may be used, see below.
 /// * distCoeffs1: Input/output vector of distortion coefficients, the same as in
-/// @ref calibrateCamera.
+/// [calibrateCamera].
 /// * cameraMatrix2: Input/output second camera intrinsic matrix for the second camera. See description for
 /// cameraMatrix1.
 /// * distCoeffs2: Input/output lens distortion coefficients for the second camera. See
@@ -4853,7 +4853,7 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// * T: Output translation vector, see description above.
 /// * E: Output essential matrix.
 /// * F: Output fundamental matrix.
-/// * rvecs: Output vector of rotation vectors ( @ref Rodrigues ) estimated for each pattern view in the
+/// * rvecs: Output vector of rotation vectors ( [Rodrigues] ) estimated for each pattern view in the
 /// coordinate system of the first camera of the stereo pair (e.g. std::vector<cv::Mat>). More in detail, each
 /// i-th rotation vector together with the corresponding i-th translation vector (see the next output parameter
 /// description) brings the calibration pattern from the object coordinate space (in which object points are
@@ -4864,39 +4864,39 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// of previous output parameter ( rvecs ).
 /// * perViewErrors: Output vector of the RMS re-projection error estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   @ref CALIB_FIX_INTRINSIC Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
+/// *   [CALIB_FIX_INTRINSIC] Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
 /// matrices are estimated.
-/// *   @ref CALIB_USE_INTRINSIC_GUESS Optimize some or all of the intrinsic parameters
+/// *   [CALIB_USE_INTRINSIC_GUESS] Optimize some or all of the intrinsic parameters
 /// according to the specified flags. Initial values are provided by the user.
-/// *   @ref CALIB_USE_EXTRINSIC_GUESS R and T contain valid initial values that are optimized further.
+/// *   [CALIB_USE_EXTRINSIC_GUESS] R and T contain valid initial values that are optimized further.
 /// Otherwise R and T are initialized to the median value of the pattern views (each dimension separately).
-/// *   @ref CALIB_FIX_PRINCIPAL_POINT Fix the principal points during the optimization.
-/// *   @ref CALIB_FIX_FOCAL_LENGTH Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
-/// *   @ref CALIB_FIX_ASPECT_RATIO Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
+/// *   [CALIB_FIX_PRINCIPAL_POINT] Fix the principal points during the optimization.
+/// *   [CALIB_FIX_FOCAL_LENGTH] Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
+/// *   [CALIB_FIX_ASPECT_RATIO] Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
 /// .
-/// *   @ref CALIB_SAME_FOCAL_LENGTH Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
-/// *   @ref CALIB_ZERO_TANGENT_DIST Set tangential distortion coefficients for each camera to
+/// *   [CALIB_SAME_FOCAL_LENGTH] Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
+/// *   [CALIB_ZERO_TANGENT_DIST] Set tangential distortion coefficients for each camera to
 /// zeros and fix there.
-/// *   @ref CALIB_FIX_K1,..., @ref CALIB_FIX_K6 Do not change the corresponding radial
-/// distortion coefficient during the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set,
+/// *   [CALIB_FIX_K1],..., [CALIB_FIX_K6] Do not change the corresponding radial
+/// distortion coefficient during the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set,
 /// the coefficient from the supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_RATIONAL_MODEL Enable coefficients k4, k5, and k6. To provide the backward
+/// *   [CALIB_RATIONAL_MODEL] Enable coefficients k4, k5, and k6. To provide the backward
 /// compatibility, this extra flag should be explicitly specified to make the calibration
 /// function use the rational model and return 8 coefficients. If the flag is not set, the
 /// function computes and returns only 5 distortion coefficients.
-/// *   @ref CALIB_THIN_PRISM_MODEL Coefficients s1, s2, s3 and s4 are enabled. To provide the
+/// *   [CALIB_THIN_PRISM_MODEL] Coefficients s1, s2, s3 and s4 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the thin prism model and return 12 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   @ref CALIB_FIX_S1_S2_S3_S4 The thin prism distortion coefficients are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_S1_S2_S3_S4] The thin prism distortion coefficients are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_TILTED_MODEL Coefficients tauX and tauY are enabled. To provide the
+/// *   [CALIB_TILTED_MODEL] Coefficients tauX and tauY are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the tilted sensor model and return 14 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   @ref CALIB_FIX_TAUX_TAUY The coefficients of the tilted sensor model are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_TAUX_TAUY] The coefficients of the tilted sensor model are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -4931,10 +4931,10 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// the two cameras. However, due to the high dimensionality of the parameter space and noise in the
 /// input data, the function can diverge from the correct solution. If the intrinsic parameters can be
 /// estimated with high accuracy for each of the cameras individually (for example, using
-/// #calibrateCamera ), you are recommended to do so and then pass @ref CALIB_FIX_INTRINSIC flag to the
+/// #calibrateCamera ), you are recommended to do so and then pass [CALIB_FIX_INTRINSIC] flag to the
 /// function along with the computed intrinsic parameters. Otherwise, if all the parameters are
 /// estimated at once, it makes sense to restrict some parameters, for example, pass
-///  @ref CALIB_SAME_FOCAL_LENGTH and @ref CALIB_ZERO_TANGENT_DIST flags, which is usually a
+///  [CALIB_SAME_FOCAL_LENGTH] and [CALIB_ZERO_TANGENT_DIST] flags, which is usually a
 /// reasonable assumption.
 /// 
 /// Similarly to #calibrateCamera, the function minimizes the total re-projection error for all the
@@ -4948,18 +4948,18 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,1e-6)
 #[inline]
 pub fn stereo_calibrate_1(object_points: &dyn core::ToInputArray, image_points1: &dyn core::ToInputArray, image_points2: &dyn core::ToInputArray, camera_matrix1: &mut dyn core::ToInputOutputArray, dist_coeffs1: &mut dyn core::ToInputOutputArray, camera_matrix2: &mut dyn core::ToInputOutputArray, dist_coeffs2: &mut dyn core::ToInputOutputArray, image_size: core::Size, r: &mut dyn core::ToInputOutputArray, t: &mut dyn core::ToInputOutputArray, e: &mut dyn core::ToOutputArray, f: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points1);
-	input_array_arg!(image_points2);
-	input_output_array_arg!(camera_matrix1);
-	input_output_array_arg!(dist_coeffs1);
-	input_output_array_arg!(camera_matrix2);
-	input_output_array_arg!(dist_coeffs2);
-	input_output_array_arg!(r);
-	input_output_array_arg!(t);
-	output_array_arg!(e);
-	output_array_arg!(f);
-	output_array_arg!(per_view_errors);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points1);
+	extern_container_arg!(image_points2);
+	extern_container_arg!(camera_matrix1);
+	extern_container_arg!(dist_coeffs1);
+	extern_container_arg!(camera_matrix2);
+	extern_container_arg!(dist_coeffs2);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(e);
+	extern_container_arg!(f);
+	extern_container_arg!(per_view_errors);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -4972,18 +4972,18 @@ pub fn stereo_calibrate_1(object_points: &dyn core::ToInputArray, image_points1:
 /// 
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points. The same structure as
-/// in @ref calibrateCamera. For each pattern view, both cameras need to see the same object
+/// in [calibrateCamera]. For each pattern view, both cameras need to see the same object
 /// points. Therefore, objectPoints.size(), imagePoints1.size(), and imagePoints2.size() need to be
 /// equal as well as objectPoints[i].size(), imagePoints1[i].size(), and imagePoints2[i].size() need to
 /// be equal for each i.
 /// * imagePoints1: Vector of vectors of the projections of the calibration pattern points,
-/// observed by the first camera. The same structure as in @ref calibrateCamera.
+/// observed by the first camera. The same structure as in [calibrateCamera].
 /// * imagePoints2: Vector of vectors of the projections of the calibration pattern points,
-/// observed by the second camera. The same structure as in @ref calibrateCamera.
+/// observed by the second camera. The same structure as in [calibrateCamera].
 /// * cameraMatrix1: Input/output camera intrinsic matrix for the first camera, the same as in
-/// @ref calibrateCamera. Furthermore, for the stereo case, additional flags may be used, see below.
+/// [calibrateCamera]. Furthermore, for the stereo case, additional flags may be used, see below.
 /// * distCoeffs1: Input/output vector of distortion coefficients, the same as in
-/// @ref calibrateCamera.
+/// [calibrateCamera].
 /// * cameraMatrix2: Input/output second camera intrinsic matrix for the second camera. See description for
 /// cameraMatrix1.
 /// * distCoeffs2: Input/output lens distortion coefficients for the second camera. See
@@ -4998,7 +4998,7 @@ pub fn stereo_calibrate_1(object_points: &dyn core::ToInputArray, image_points1:
 /// * T: Output translation vector, see description above.
 /// * E: Output essential matrix.
 /// * F: Output fundamental matrix.
-/// * rvecs: Output vector of rotation vectors ( @ref Rodrigues ) estimated for each pattern view in the
+/// * rvecs: Output vector of rotation vectors ( [Rodrigues] ) estimated for each pattern view in the
 /// coordinate system of the first camera of the stereo pair (e.g. std::vector<cv::Mat>). More in detail, each
 /// i-th rotation vector together with the corresponding i-th translation vector (see the next output parameter
 /// description) brings the calibration pattern from the object coordinate space (in which object points are
@@ -5009,39 +5009,39 @@ pub fn stereo_calibrate_1(object_points: &dyn core::ToInputArray, image_points1:
 /// of previous output parameter ( rvecs ).
 /// * perViewErrors: Output vector of the RMS re-projection error estimated for each pattern view.
 /// * flags: Different flags that may be zero or a combination of the following values:
-/// *   @ref CALIB_FIX_INTRINSIC Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
+/// *   [CALIB_FIX_INTRINSIC] Fix cameraMatrix? and distCoeffs? so that only R, T, E, and F
 /// matrices are estimated.
-/// *   @ref CALIB_USE_INTRINSIC_GUESS Optimize some or all of the intrinsic parameters
+/// *   [CALIB_USE_INTRINSIC_GUESS] Optimize some or all of the intrinsic parameters
 /// according to the specified flags. Initial values are provided by the user.
-/// *   @ref CALIB_USE_EXTRINSIC_GUESS R and T contain valid initial values that are optimized further.
+/// *   [CALIB_USE_EXTRINSIC_GUESS] R and T contain valid initial values that are optimized further.
 /// Otherwise R and T are initialized to the median value of the pattern views (each dimension separately).
-/// *   @ref CALIB_FIX_PRINCIPAL_POINT Fix the principal points during the optimization.
-/// *   @ref CALIB_FIX_FOCAL_LENGTH Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
-/// *   @ref CALIB_FIX_ASPECT_RATIO Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
+/// *   [CALIB_FIX_PRINCIPAL_POINT] Fix the principal points during the optimization.
+/// *   [CALIB_FIX_FOCAL_LENGTH] Fix ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) .
+/// *   [CALIB_FIX_ASPECT_RATIO] Optimize ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fy) . Fix the ratio ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%28j%29%7D%5Fx%2Ff%5E%7B%28j%29%7D%5Fy)
 /// .
-/// *   @ref CALIB_SAME_FOCAL_LENGTH Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
-/// *   @ref CALIB_ZERO_TANGENT_DIST Set tangential distortion coefficients for each camera to
+/// *   [CALIB_SAME_FOCAL_LENGTH] Enforce ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fx%3Df%5E%7B%281%29%7D%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?f%5E%7B%280%29%7D%5Fy%3Df%5E%7B%281%29%7D%5Fy) .
+/// *   [CALIB_ZERO_TANGENT_DIST] Set tangential distortion coefficients for each camera to
 /// zeros and fix there.
-/// *   @ref CALIB_FIX_K1,..., @ref CALIB_FIX_K6 Do not change the corresponding radial
-/// distortion coefficient during the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set,
+/// *   [CALIB_FIX_K1],..., [CALIB_FIX_K6] Do not change the corresponding radial
+/// distortion coefficient during the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set,
 /// the coefficient from the supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_RATIONAL_MODEL Enable coefficients k4, k5, and k6. To provide the backward
+/// *   [CALIB_RATIONAL_MODEL] Enable coefficients k4, k5, and k6. To provide the backward
 /// compatibility, this extra flag should be explicitly specified to make the calibration
 /// function use the rational model and return 8 coefficients. If the flag is not set, the
 /// function computes and returns only 5 distortion coefficients.
-/// *   @ref CALIB_THIN_PRISM_MODEL Coefficients s1, s2, s3 and s4 are enabled. To provide the
+/// *   [CALIB_THIN_PRISM_MODEL] Coefficients s1, s2, s3 and s4 are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the thin prism model and return 12 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   @ref CALIB_FIX_S1_S2_S3_S4 The thin prism distortion coefficients are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_S1_S2_S3_S4] The thin prism distortion coefficients are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
-/// *   @ref CALIB_TILTED_MODEL Coefficients tauX and tauY are enabled. To provide the
+/// *   [CALIB_TILTED_MODEL] Coefficients tauX and tauY are enabled. To provide the
 /// backward compatibility, this extra flag should be explicitly specified to make the
 /// calibration function use the tilted sensor model and return 14 coefficients. If the flag is not
 /// set, the function computes and returns only 5 distortion coefficients.
-/// *   @ref CALIB_FIX_TAUX_TAUY The coefficients of the tilted sensor model are not changed during
-/// the optimization. If @ref CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
+/// *   [CALIB_FIX_TAUX_TAUY] The coefficients of the tilted sensor model are not changed during
+/// the optimization. If [CALIB_USE_INTRINSIC_GUESS] is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
 /// 
@@ -5076,10 +5076,10 @@ pub fn stereo_calibrate_1(object_points: &dyn core::ToInputArray, image_points1:
 /// the two cameras. However, due to the high dimensionality of the parameter space and noise in the
 /// input data, the function can diverge from the correct solution. If the intrinsic parameters can be
 /// estimated with high accuracy for each of the cameras individually (for example, using
-/// #calibrateCamera ), you are recommended to do so and then pass @ref CALIB_FIX_INTRINSIC flag to the
+/// #calibrateCamera ), you are recommended to do so and then pass [CALIB_FIX_INTRINSIC] flag to the
 /// function along with the computed intrinsic parameters. Otherwise, if all the parameters are
 /// estimated at once, it makes sense to restrict some parameters, for example, pass
-///  @ref CALIB_SAME_FOCAL_LENGTH and @ref CALIB_ZERO_TANGENT_DIST flags, which is usually a
+///  [CALIB_SAME_FOCAL_LENGTH] and [CALIB_ZERO_TANGENT_DIST] flags, which is usually a
 /// reasonable assumption.
 /// 
 /// Similarly to #calibrateCamera, the function minimizes the total re-projection error for all the
@@ -5093,17 +5093,17 @@ pub fn stereo_calibrate_1(object_points: &dyn core::ToInputArray, image_points1:
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,1e-6)
 #[inline]
 pub fn stereo_calibrate(object_points: &dyn core::ToInputArray, image_points1: &dyn core::ToInputArray, image_points2: &dyn core::ToInputArray, camera_matrix1: &mut dyn core::ToInputOutputArray, dist_coeffs1: &mut dyn core::ToInputOutputArray, camera_matrix2: &mut dyn core::ToInputOutputArray, dist_coeffs2: &mut dyn core::ToInputOutputArray, image_size: core::Size, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, e: &mut dyn core::ToOutputArray, f: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points1);
-	input_array_arg!(image_points2);
-	input_output_array_arg!(camera_matrix1);
-	input_output_array_arg!(dist_coeffs1);
-	input_output_array_arg!(camera_matrix2);
-	input_output_array_arg!(dist_coeffs2);
-	output_array_arg!(r);
-	output_array_arg!(t);
-	output_array_arg!(e);
-	output_array_arg!(f);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points1);
+	extern_container_arg!(image_points2);
+	extern_container_arg!(camera_matrix1);
+	extern_container_arg!(dist_coeffs1);
+	extern_container_arg!(camera_matrix2);
+	extern_container_arg!(dist_coeffs2);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(e);
+	extern_container_arg!(f);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5146,11 +5146,11 @@ pub fn stereo_calibrate(object_points: &dyn core::ToInputArray, image_points1: &
 /// * threshold: 5
 #[inline]
 pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, f: &dyn core::ToInputArray, img_size: core::Size, h1: &mut dyn core::ToOutputArray, h2: &mut dyn core::ToOutputArray, threshold: f64) -> Result<bool> {
-	input_array_arg!(points1);
-	input_array_arg!(points2);
-	input_array_arg!(f);
-	output_array_arg!(h1);
-	output_array_arg!(h2);
+	extern_container_arg!(points1);
+	extern_container_arg!(points2);
+	extern_container_arg!(f);
+	extern_container_arg!(h1);
+	extern_container_arg!(h2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_stereoRectifyUncalibrated_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__OutputArrayR_const__OutputArrayR_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), f.as_raw__InputArray(), img_size.opencv_as_extern(), h1.as_raw__OutputArray(), h2.as_raw__OutputArray(), threshold, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5167,9 +5167,9 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 /// * distCoeffs2: Second camera distortion parameters.
 /// * imageSize: Size of the image used for stereo calibration.
 /// * R: Rotation matrix from the coordinate system of the first camera to the second camera,
-/// see @ref stereoCalibrate.
+/// see [stereoCalibrate].
 /// * T: Translation vector from the coordinate system of the first camera to the second camera,
-/// see @ref stereoCalibrate.
+/// see [stereoCalibrate].
 /// * R1: Output 3x3 rectification transform (rotation matrix) for the first camera. This matrix
 /// brings points given in the unrectified first camera's coordinate system to points in the rectified
 /// first camera's coordinate system. In more technical terms, it performs a change of basis from the
@@ -5184,8 +5184,8 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 /// * P2: Output 3x4 projection matrix in the new (rectified) coordinate systems for the second
 /// camera, i.e. it projects points given in the rectified first camera coordinate system into the
 /// rectified second camera's image.
-/// * Q: Output ![inline formula](https://latex.codecogs.com/png.latex?4%20%5Ctimes%204) disparity-to-depth mapping matrix (see @ref reprojectImageTo3D).
-/// * flags: Operation flags that may be zero or @ref CALIB_ZERO_DISPARITY . If the flag is set,
+/// * Q: Output ![inline formula](https://latex.codecogs.com/png.latex?4%20%5Ctimes%204) disparity-to-depth mapping matrix (see [reprojectImageTo3D]).
+/// * flags: Operation flags that may be zero or [CALIB_ZERO_DISPARITY] . If the flag is set,
 /// the function makes the principal points of each camera have the same pixel coordinates in the
 /// rectified views. And if the flag is not set, the function may still shift the images in the
 /// horizontal or vertical direction (depending on the orientation of epipolar lines) to maximize the
@@ -5226,7 +5226,7 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BQ%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%201%20%26%200%20%26%200%20%26%20%2Dcx%5F1%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%201%20%26%200%20%26%20%2Dcy%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%200%20%26%200%20%26%20f%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%200%20%26%20%2D%5Cfrac%7B1%7D%7BT%5Fx%7D%20%26%20%5Cfrac%7Bcx%5F1%20%2D%20cx%5F2%7D%7BT%5Fx%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cend%7Bbmatrix%7D%20)
 /// 
 ///    where ![inline formula](https://latex.codecogs.com/png.latex?T%5Fx) is a horizontal shift between the cameras and ![inline formula](https://latex.codecogs.com/png.latex?cx%5F1%3Dcx%5F2) if
-///    @ref CALIB_ZERO_DISPARITY is set.
+///    [CALIB_ZERO_DISPARITY] is set.
 /// 
 /// *   **Vertical stereo**: the first and the second camera views are shifted relative to each other
 ///    mainly in the vertical direction (and probably a bit in the horizontal direction too). The epipolar
@@ -5239,7 +5239,7 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BQ%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%201%20%26%200%20%26%200%20%26%20%2Dcx%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%201%20%26%200%20%26%20%2Dcy%5F1%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%200%20%26%200%20%26%20f%20%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%200%20%26%20%2D%5Cfrac%7B1%7D%7BT%5Fy%7D%20%26%20%5Cfrac%7Bcy%5F1%20%2D%20cy%5F2%7D%7BT%5Fy%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cend%7Bbmatrix%7D%20)
 /// 
 ///    where ![inline formula](https://latex.codecogs.com/png.latex?T%5Fy) is a vertical shift between the cameras and ![inline formula](https://latex.codecogs.com/png.latex?cy%5F1%3Dcy%5F2) if
-///    @ref CALIB_ZERO_DISPARITY is set.
+///    [CALIB_ZERO_DISPARITY] is set.
 /// 
 /// As you can see, the first three columns of P1 and P2 will effectively be the new "rectified" camera
 /// matrices. The matrices, together with R1 and R2 , can then be passed to #initUndistortRectifyMap to
@@ -5260,17 +5260,17 @@ pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &d
 /// * valid_pix_roi2: 0
 #[inline]
 pub fn stereo_rectify(camera_matrix1: &dyn core::ToInputArray, dist_coeffs1: &dyn core::ToInputArray, camera_matrix2: &dyn core::ToInputArray, dist_coeffs2: &dyn core::ToInputArray, image_size: core::Size, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray, p1: &mut dyn core::ToOutputArray, p2: &mut dyn core::ToOutputArray, q: &mut dyn core::ToOutputArray, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: &mut core::Rect, valid_pix_roi2: &mut core::Rect) -> Result<()> {
-	input_array_arg!(camera_matrix1);
-	input_array_arg!(dist_coeffs1);
-	input_array_arg!(camera_matrix2);
-	input_array_arg!(dist_coeffs2);
-	input_array_arg!(r);
-	input_array_arg!(t);
-	output_array_arg!(r1);
-	output_array_arg!(r2);
-	output_array_arg!(p1);
-	output_array_arg!(p2);
-	output_array_arg!(q);
+	extern_container_arg!(camera_matrix1);
+	extern_container_arg!(dist_coeffs1);
+	extern_container_arg!(camera_matrix2);
+	extern_container_arg!(dist_coeffs2);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(r1);
+	extern_container_arg!(r2);
+	extern_container_arg!(p1);
+	extern_container_arg!(p2);
+	extern_container_arg!(q);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_Size_RectX_RectX(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), image_size.opencv_as_extern(), r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, alpha, new_image_size.opencv_as_extern(), valid_pix_roi1, valid_pix_roi2, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5299,17 +5299,17 @@ pub fn stereo_rectify(camera_matrix1: &dyn core::ToInputArray, dist_coeffs1: &dy
 /// 
 /// 
 /// Note:
-///    If the projection matrices from @ref stereoRectify are used, then the returned points are
+///    If the projection matrices from [stereoRectify] are used, then the returned points are
 ///    represented in the first camera's rectified coordinate system.
 /// ## See also
 /// reprojectImageTo3D
 #[inline]
 pub fn triangulate_points(proj_matr1: &dyn core::ToInputArray, proj_matr2: &dyn core::ToInputArray, proj_points1: &dyn core::ToInputArray, proj_points2: &dyn core::ToInputArray, points4_d: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(proj_matr1);
-	input_array_arg!(proj_matr2);
-	input_array_arg!(proj_points1);
-	input_array_arg!(proj_points2);
-	output_array_arg!(points4_d);
+	extern_container_arg!(proj_matr1);
+	extern_container_arg!(proj_matr2);
+	extern_container_arg!(proj_points1);
+	extern_container_arg!(proj_points2);
+	extern_container_arg!(points4_d);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_triangulatePoints_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(proj_matr1.as_raw__InputArray(), proj_matr2.as_raw__InputArray(), proj_points1.as_raw__InputArray(), proj_points2.as_raw__InputArray(), points4_d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5330,10 +5330,10 @@ pub fn triangulate_points(proj_matr1: &dyn core::ToInputArray, proj_matr2: &dyn 
 /// * unnamed: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,0.01)
 #[inline]
 pub fn undistort_image_points(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, unnamed: core::TermCriteria) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_undistortImagePoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), unnamed.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5375,12 +5375,12 @@ pub fn undistort_image_points(src: &dyn core::ToInputArray, dst: &mut dyn core::
 /// * p: noArray()
 #[inline]
 pub fn undistort_points(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_array_arg!(r);
-	input_array_arg!(p);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(r);
+	extern_container_arg!(p);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5423,12 +5423,12 @@ pub fn undistort_points(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// Note: Default version of #undistortPoints does 5 iterations to compute undistorted points.
 #[inline]
 pub fn undistort_points_iter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray, criteria: core::TermCriteria) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_array_arg!(r);
-	input_array_arg!(p);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(r);
+	extern_container_arg!(p);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5469,11 +5469,11 @@ pub fn undistort_points_iter(src: &dyn core::ToInputArray, dst: &mut dyn core::T
 /// * new_camera_matrix: noArray()
 #[inline]
 pub fn undistort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, new_camera_matrix: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(src);
-	output_array_arg!(dst);
-	input_array_arg!(camera_matrix);
-	input_array_arg!(dist_coeffs);
-	input_array_arg!(new_camera_matrix);
+	extern_container_arg!(src);
+	extern_container_arg!(dst);
+	extern_container_arg!(camera_matrix);
+	extern_container_arg!(dist_coeffs);
+	extern_container_arg!(new_camera_matrix);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_undistort_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5487,8 +5487,8 @@ pub fn undistort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 /// * disp12_max_disp: 1
 #[inline]
 pub fn validate_disparity(disparity: &mut dyn core::ToInputOutputArray, cost: &dyn core::ToInputArray, min_disparity: i32, number_of_disparities: i32, disp12_max_disp: i32) -> Result<()> {
-	input_output_array_arg!(disparity);
-	input_array_arg!(cost);
+	extern_container_arg!(disparity);
+	extern_container_arg!(cost);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_validateDisparity_const__InputOutputArrayR_const__InputArrayR_int_int_int(disparity.as_raw__InputOutputArray(), cost.as_raw__InputArray(), min_disparity, number_of_disparities, disp12_max_disp, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -5533,11 +5533,7 @@ impl CirclesGridFinderParameters {
 	
 }
 
-/// Levenberg-Marquardt solver. Starting with the specified vector of parameters it
-/// optimizes the target vector criteria "err"
-/// (finds local minima of each target vector component absolute value).
-/// 
-/// When needed, it calls user-provided callback.
+/// Constant methods for [crate::calib3d::LMSolver]
 pub trait LMSolverConst: core::AlgorithmTraitConst {
 	fn as_raw_LMSolver(&self) -> *const c_void;
 
@@ -5554,7 +5550,7 @@ pub trait LMSolverConst: core::AlgorithmTraitConst {
 	/// computed by the callback.
 	#[inline]
 	fn run(&self, param: &mut dyn core::ToInputOutputArray) -> Result<i32> {
-		input_output_array_arg!(param);
+		extern_container_arg!(param);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LMSolver_run_const_const__InputOutputArrayR(self.as_raw_LMSolver(), param.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5574,6 +5570,11 @@ pub trait LMSolverConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Levenberg-Marquardt solver. Starting with the specified vector of parameters it
+/// optimizes the target vector criteria "err"
+/// (finds local minima of each target vector component absolute value).
+/// 
+/// When needed, it calls user-provided callback.
 pub trait LMSolver: core::AlgorithmTrait + crate::calib3d::LMSolverConst {
 	fn as_raw_mut_LMSolver(&mut self) -> *mut c_void;
 
@@ -5619,6 +5620,7 @@ impl dyn LMSolver + '_ {
 	}
 	
 }
+/// Constant methods for [crate::calib3d::LMSolver_Callback]
 pub trait LMSolver_CallbackConst {
 	fn as_raw_LMSolver_Callback(&self) -> *const c_void;
 
@@ -5635,9 +5637,9 @@ pub trait LMSolver_CallbackConst {
 	/// (unless it's noArray()).
 	#[inline]
 	fn compute(&self, param: &dyn core::ToInputArray, err: &mut dyn core::ToOutputArray, j: &mut dyn core::ToOutputArray) -> Result<bool> {
-		input_array_arg!(param);
-		output_array_arg!(err);
-		output_array_arg!(j);
+		extern_container_arg!(param);
+		extern_container_arg!(err);
+		extern_container_arg!(j);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LMSolver_Callback_compute_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_LMSolver_Callback(), param.as_raw__InputArray(), err.as_raw__OutputArray(), j.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5652,8 +5654,7 @@ pub trait LMSolver_Callback: crate::calib3d::LMSolver_CallbackConst {
 
 }
 
-/// Class for computing stereo correspondence using the block matching algorithm, introduced and
-/// contributed to OpenCV by K. Konolige.
+/// Constant methods for [crate::calib3d::StereoBM]
 pub trait StereoBMConst: crate::calib3d::StereoMatcherConst {
 	fn as_raw_StereoBM(&self) -> *const c_void;
 
@@ -5731,6 +5732,8 @@ pub trait StereoBMConst: crate::calib3d::StereoMatcherConst {
 	
 }
 
+/// Class for computing stereo correspondence using the block matching algorithm, introduced and
+/// contributed to OpenCV by K. Konolige.
 pub trait StereoBM: crate::calib3d::StereoBMConst + crate::calib3d::StereoMatcher {
 	fn as_raw_mut_StereoBM(&mut self) -> *mut c_void;
 
@@ -5837,7 +5840,7 @@ impl dyn StereoBM + '_ {
 	}
 	
 }
-/// The base class for stereo correspondence algorithms.
+/// Constant methods for [crate::calib3d::StereoMatcher]
 pub trait StereoMatcherConst: core::AlgorithmTraitConst {
 	fn as_raw_StereoMatcher(&self) -> *const c_void;
 
@@ -5897,6 +5900,7 @@ pub trait StereoMatcherConst: core::AlgorithmTraitConst {
 	
 }
 
+/// The base class for stereo correspondence algorithms.
 pub trait StereoMatcher: core::AlgorithmTrait + crate::calib3d::StereoMatcherConst {
 	fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void;
 
@@ -5910,9 +5914,9 @@ pub trait StereoMatcher: core::AlgorithmTrait + crate::calib3d::StereoMatcherCon
 	/// has 4 fractional bits), whereas other algorithms output 32-bit floating-point disparity map.
 	#[inline]
 	fn compute(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(left);
-		input_array_arg!(right);
-		output_array_arg!(disparity);
+		extern_container_arg!(left);
+		extern_container_arg!(right);
+		extern_container_arg!(disparity);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_StereoMatcher_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StereoMatcher(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5976,24 +5980,7 @@ pub trait StereoMatcher: core::AlgorithmTrait + crate::calib3d::StereoMatcherCon
 	
 }
 
-/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
-/// one as follows:
-/// 
-/// *   By default, the algorithm is single-pass, which means that you consider only 5 directions
-/// instead of 8. Set mode=StereoSGBM::MODE_HH in createStereoSGBM to run the full variant of the
-/// algorithm but beware that it may consume a lot of memory.
-/// *   The algorithm matches blocks, not individual pixels. Though, setting blockSize=1 reduces the
-/// blocks to single pixels.
-/// *   Mutual information cost function is not implemented. Instead, a simpler Birchfield-Tomasi
-/// sub-pixel metric from [BT98](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
-/// *   Some pre- and post- processing steps from K. Konolige algorithm StereoBM are included, for
-/// example: pre-filtering (StereoBM::PREFILTER_XSOBEL type) and post-filtering (uniqueness
-/// check, quadratic interpolation and speckle filtering).
-/// 
-/// 
-/// Note:
-///    *   (Python) An example illustrating the use of the StereoSGBM matching algorithm can be found
-///        at opencv_source_code/samples/python/stereo_match.py
+/// Constant methods for [crate::calib3d::StereoSGBM]
 pub trait StereoSGBMConst: crate::calib3d::StereoMatcherConst {
 	fn as_raw_StereoSGBM(&self) -> *const c_void;
 
@@ -6044,6 +6031,24 @@ pub trait StereoSGBMConst: crate::calib3d::StereoMatcherConst {
 	
 }
 
+/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
+/// one as follows:
+/// 
+/// *   By default, the algorithm is single-pass, which means that you consider only 5 directions
+/// instead of 8. Set mode=StereoSGBM::MODE_HH in createStereoSGBM to run the full variant of the
+/// algorithm but beware that it may consume a lot of memory.
+/// *   The algorithm matches blocks, not individual pixels. Though, setting blockSize=1 reduces the
+/// blocks to single pixels.
+/// *   Mutual information cost function is not implemented. Instead, a simpler Birchfield-Tomasi
+/// sub-pixel metric from [BT98](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
+/// *   Some pre- and post- processing steps from K. Konolige algorithm StereoBM are included, for
+/// example: pre-filtering (StereoBM::PREFILTER_XSOBEL type) and post-filtering (uniqueness
+/// check, quadratic interpolation and speckle filtering).
+/// 
+/// 
+/// Note:
+///    *   (Python) An example illustrating the use of the StereoSGBM matching algorithm can be found
+///        at opencv_source_code/samples/python/stereo_match.py
 pub trait StereoSGBM: crate::calib3d::StereoMatcher + crate::calib3d::StereoSGBMConst {
 	fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void;
 

@@ -24,7 +24,7 @@
 //! 
 //! In this module a time-multiplexing coding strategy based on Gray encoding is implemented following the
 //! (stereo) approach described in 3DUNDERWORLD algorithm [UNDERWORLD](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_UNDERWORLD) .
-//! For more details, see @ref tutorial_structured_light.
+//! For more details, see [tutorial_structured_light].
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::StructuredLightPatternConst, super::StructuredLightPattern, super::GrayCodePattern_ParamsTraitConst, super::GrayCodePattern_ParamsTrait, super::GrayCodePatternConst, super::GrayCodePattern, super::SinusoidalPattern_ParamsTraitConst, super::SinusoidalPattern_ParamsTrait, super::SinusoidalPatternConst, super::SinusoidalPattern };
@@ -35,19 +35,7 @@ pub const DECODE_3D_UNDERWORLD: i32 = 0;
 pub const FAPS: i32 = 2;
 pub const FTP: i32 = 0;
 pub const PSP: i32 = 1;
-/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_UNDERWORLD).
-/// 
-/// The generation of the pattern images is performed with Gray encoding using the traditional white and black colors.
-/// 
-/// The information about the two image axes x, y is encoded separately into two different pattern sequences.
-/// A projector P with resolution (P_res_x, P_res_y) will result in Ncols = log 2 (P_res_x) encoded pattern images representing the columns, and
-/// in Nrows = log 2 (P_res_y) encoded pattern images representing the rows.
-/// For example a projector with resolution 1024x768 will result in Ncols = 10 and Nrows = 10.
-/// 
-/// However, the generated pattern sequence consists of both regular color and color-inverted images: inverted pattern images are images
-/// with the same structure as the original but with inverted colors.
-/// This provides an effective method for easily determining the intensity value of each pixel when it is lit (highest value) and
-/// when it is not lit (lowest value). So for a a projector with resolution 1024x768, the number of pattern images will be Ncols * 2 + Nrows * 2 = 40.
+/// Constant methods for [crate::structured_light::GrayCodePattern]
 pub trait GrayCodePatternConst: crate::structured_light::StructuredLightPatternConst {
 	fn as_raw_GrayCodePattern(&self) -> *const c_void;
 
@@ -75,8 +63,8 @@ pub trait GrayCodePatternConst: crate::structured_light::StructuredLightPatternC
 	/// * whiteImage: The generated all-white CV_8U image, at projector's resolution.
 	#[inline]
 	fn get_images_for_shadow_masks(&self, black_image: &mut dyn core::ToInputOutputArray, white_image: &mut dyn core::ToInputOutputArray) -> Result<()> {
-		input_output_array_arg!(black_image);
-		input_output_array_arg!(white_image);
+		extern_container_arg!(black_image);
+		extern_container_arg!(white_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_structured_light_GrayCodePattern_getImagesForShadowMasks_const_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_GrayCodePattern(), black_image.as_raw__InputOutputArray(), white_image.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -96,7 +84,7 @@ pub trait GrayCodePatternConst: crate::structured_light::StructuredLightPatternC
 	/// * projPix: Projector's pixel corresponding to the camera's pixel: projPix.x and projPix.y are the image coordinates of the projector's pixel corresponding to the pixel being decoded in a camera.
 	#[inline]
 	fn get_proj_pixel(&self, pattern_images: &dyn core::ToInputArray, x: i32, y: i32, proj_pix: &mut core::Point) -> Result<bool> {
-		input_array_arg!(pattern_images);
+		extern_container_arg!(pattern_images);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_structured_light_GrayCodePattern_getProjPixel_const_const__InputArrayR_int_int_PointR(self.as_raw_GrayCodePattern(), pattern_images.as_raw__InputArray(), x, y, proj_pix, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -106,6 +94,19 @@ pub trait GrayCodePatternConst: crate::structured_light::StructuredLightPatternC
 	
 }
 
+/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_UNDERWORLD).
+/// 
+/// The generation of the pattern images is performed with Gray encoding using the traditional white and black colors.
+/// 
+/// The information about the two image axes x, y is encoded separately into two different pattern sequences.
+/// A projector P with resolution (P_res_x, P_res_y) will result in Ncols = log 2 (P_res_x) encoded pattern images representing the columns, and
+/// in Nrows = log 2 (P_res_y) encoded pattern images representing the rows.
+/// For example a projector with resolution 1024x768 will result in Ncols = 10 and Nrows = 10.
+/// 
+/// However, the generated pattern sequence consists of both regular color and color-inverted images: inverted pattern images are images
+/// with the same structure as the original but with inverted colors.
+/// This provides an effective method for easily determining the intensity value of each pixel when it is lit (highest value) and
+/// when it is not lit (lowest value). So for a a projector with resolution 1024x768, the number of pattern images will be Ncols * 2 + Nrows * 2 = 40.
 pub trait GrayCodePattern: crate::structured_light::GrayCodePatternConst + crate::structured_light::StructuredLightPattern {
 	fn as_raw_mut_GrayCodePattern(&mut self) -> *mut c_void;
 
@@ -169,10 +170,7 @@ impl dyn GrayCodePattern + '_ {
 	}
 	
 }
-/// Parameters of StructuredLightPattern constructor.
-/// ## Parameters
-/// * width: Projector's width. Default value is 1024.
-/// * height: Projector's height. Default value is 768.
+/// Constant methods for [crate::structured_light::GrayCodePattern_Params]
 pub trait GrayCodePattern_ParamsTraitConst {
 	fn as_raw_GrayCodePattern_Params(&self) -> *const c_void;
 
@@ -190,6 +188,7 @@ pub trait GrayCodePattern_ParamsTraitConst {
 	
 }
 
+/// Mutable methods for [crate::structured_light::GrayCodePattern_Params]
 pub trait GrayCodePattern_ParamsTrait: crate::structured_light::GrayCodePattern_ParamsTraitConst {
 	fn as_raw_mut_GrayCodePattern_Params(&mut self) -> *mut c_void;
 
@@ -247,15 +246,16 @@ impl GrayCodePattern_Params {
 	
 }
 
-/// Class implementing Fourier transform profilometry (FTP) , phase-shifting profilometry (PSP)
-/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_faps).
-/// 
-/// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
+/// Constant methods for [crate::structured_light::SinusoidalPattern]
 pub trait SinusoidalPatternConst: crate::structured_light::StructuredLightPatternConst {
 	fn as_raw_SinusoidalPattern(&self) -> *const c_void;
 
 }
 
+/// Class implementing Fourier transform profilometry (FTP) , phase-shifting profilometry (PSP)
+/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_faps).
+/// 
+/// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
 pub trait SinusoidalPattern: crate::structured_light::SinusoidalPatternConst + crate::structured_light::StructuredLightPattern {
 	fn as_raw_mut_SinusoidalPattern(&mut self) -> *mut c_void;
 
@@ -271,10 +271,10 @@ pub trait SinusoidalPattern: crate::structured_light::SinusoidalPatternConst + c
 	/// * fundamental: noArray()
 	#[inline]
 	fn compute_phase_map(&mut self, pattern_images: &dyn core::ToInputArray, wrapped_phase_map: &mut dyn core::ToOutputArray, shadow_mask: &mut dyn core::ToOutputArray, fundamental: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(pattern_images);
-		output_array_arg!(wrapped_phase_map);
-		output_array_arg!(shadow_mask);
-		input_array_arg!(fundamental);
+		extern_container_arg!(pattern_images);
+		extern_container_arg!(wrapped_phase_map);
+		extern_container_arg!(shadow_mask);
+		extern_container_arg!(fundamental);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_structured_light_SinusoidalPattern_computePhaseMap_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_SinusoidalPattern(), pattern_images.as_raw__InputArray(), wrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__OutputArray(), fundamental.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -293,9 +293,9 @@ pub trait SinusoidalPattern: crate::structured_light::SinusoidalPatternConst + c
 	/// * shadow_mask: noArray()
 	#[inline]
 	fn unwrap_phase_map(&mut self, wrapped_phase_map: &dyn core::ToInputArray, unwrapped_phase_map: &mut dyn core::ToOutputArray, cam_size: core::Size, shadow_mask: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(wrapped_phase_map);
-		output_array_arg!(unwrapped_phase_map);
-		input_array_arg!(shadow_mask);
+		extern_container_arg!(wrapped_phase_map);
+		extern_container_arg!(unwrapped_phase_map);
+		extern_container_arg!(shadow_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_Size_const__InputArrayR(self.as_raw_mut_SinusoidalPattern(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), cam_size.opencv_as_extern(), shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -310,9 +310,9 @@ pub trait SinusoidalPattern: crate::structured_light::SinusoidalPatternConst + c
 	/// * matches: Images used to display correspondences map.
 	#[inline]
 	fn find_pro_cam_matches(&mut self, proj_unwrapped_phase_map: &dyn core::ToInputArray, cam_unwrapped_phase_map: &dyn core::ToInputArray, matches: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(proj_unwrapped_phase_map);
-		input_array_arg!(cam_unwrapped_phase_map);
-		output_array_arg!(matches);
+		extern_container_arg!(proj_unwrapped_phase_map);
+		extern_container_arg!(cam_unwrapped_phase_map);
+		extern_container_arg!(matches);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_structured_light_SinusoidalPattern_findProCamMatches_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_SinusoidalPattern(), proj_unwrapped_phase_map.as_raw__InputArray(), cam_unwrapped_phase_map.as_raw__InputArray(), matches.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -327,9 +327,9 @@ pub trait SinusoidalPattern: crate::structured_light::SinusoidalPatternConst + c
 	/// * shadowMask: Mask used to discard shadow regions.
 	#[inline]
 	fn compute_data_modulation_term(&mut self, pattern_images: &dyn core::ToInputArray, data_modulation_term: &mut dyn core::ToOutputArray, shadow_mask: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(pattern_images);
-		output_array_arg!(data_modulation_term);
-		input_array_arg!(shadow_mask);
+		extern_container_arg!(pattern_images);
+		extern_container_arg!(data_modulation_term);
+		extern_container_arg!(shadow_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_structured_light_SinusoidalPattern_computeDataModulationTerm_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_SinusoidalPattern(), pattern_images.as_raw__InputArray(), data_modulation_term.as_raw__OutputArray(), shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -357,16 +357,7 @@ impl dyn SinusoidalPattern + '_ {
 	}
 	
 }
-/// Parameters of SinusoidalPattern constructor
-/// ## Parameters
-/// * width: Projector's width.
-/// * height: Projector's height.
-/// * nbrOfPeriods: Number of period along the patterns direction.
-/// * shiftValue: Phase shift between two consecutive patterns.
-/// * methodId: Allow to choose between FTP, PSP and FAPS.
-/// * nbrOfPixelsBetweenMarkers: Number of pixels between two consecutive markers on the same row.
-/// * setMarkers: Allow to set markers on the patterns.
-/// * markersLocation: vector used to store markers location on the patterns.
+/// Constant methods for [crate::structured_light::SinusoidalPattern_Params]
 pub trait SinusoidalPattern_ParamsTraitConst {
 	fn as_raw_SinusoidalPattern_Params(&self) -> *const c_void;
 
@@ -427,6 +418,7 @@ pub trait SinusoidalPattern_ParamsTraitConst {
 	
 }
 
+/// Mutable methods for [crate::structured_light::SinusoidalPattern_Params]
 pub trait SinusoidalPattern_ParamsTrait: crate::structured_light::SinusoidalPattern_ParamsTraitConst {
 	fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void;
 
@@ -532,7 +524,7 @@ impl SinusoidalPattern_Params {
 	
 }
 
-/// Abstract base class for generating and decoding structured light patterns.
+/// Constant methods for [crate::structured_light::StructuredLightPattern]
 pub trait StructuredLightPatternConst: core::AlgorithmTraitConst {
 	fn as_raw_StructuredLightPattern(&self) -> *const c_void;
 
@@ -553,9 +545,9 @@ pub trait StructuredLightPatternConst: core::AlgorithmTraitConst {
 	/// * flags: DECODE_3D_UNDERWORLD
 	#[inline]
 	fn decode(&self, pattern_images: &core::Vector<core::Vector<core::Mat>>, disparity_map: &mut dyn core::ToOutputArray, black_images: &dyn core::ToInputArray, white_images: &dyn core::ToInputArray, flags: i32) -> Result<bool> {
-		output_array_arg!(disparity_map);
-		input_array_arg!(black_images);
-		input_array_arg!(white_images);
+		extern_container_arg!(disparity_map);
+		extern_container_arg!(black_images);
+		extern_container_arg!(white_images);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_structured_light_StructuredLightPattern_decode_const_const_vectorLvectorLMatGGR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfVectorOfMat(), disparity_map.as_raw__OutputArray(), black_images.as_raw__InputArray(), white_images.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -565,6 +557,7 @@ pub trait StructuredLightPatternConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Abstract base class for generating and decoding structured light patterns.
 pub trait StructuredLightPattern: core::AlgorithmTrait + crate::structured_light::StructuredLightPatternConst {
 	fn as_raw_mut_StructuredLightPattern(&mut self) -> *mut c_void;
 
@@ -574,7 +567,7 @@ pub trait StructuredLightPattern: core::AlgorithmTrait + crate::structured_light
 	/// * patternImages: The generated pattern: a vector<Mat>, in which each image is a CV_8U Mat at projector's resolution.
 	#[inline]
 	fn generate(&mut self, pattern_images: &mut dyn core::ToOutputArray) -> Result<bool> {
-		output_array_arg!(pattern_images);
+		extern_container_arg!(pattern_images);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_structured_light_StructuredLightPattern_generate_const__OutputArrayR(self.as_raw_mut_StructuredLightPattern(), pattern_images.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

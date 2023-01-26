@@ -153,12 +153,7 @@ pub fn draw_line_matches(img1: &core::Mat, keylines1: &core::Vector<crate::line_
 	Ok(ret)
 }
 
-/// Class implements both functionalities for detection of lines and computation of their
-/// binary descriptor.
-/// 
-/// Class' interface is mainly based on the ones of classical detectors and extractors, such as
-/// Feature2d's @ref features2d_main and @ref features2d_match. Retrieved information about lines is
-/// stored in line_descriptor::KeyLine objects.
+/// Constant methods for [crate::line_descriptor::BinaryDescriptor]
 pub trait BinaryDescriptorTraitConst: core::AlgorithmTraitConst {
 	fn as_raw_BinaryDescriptor(&self) -> *const c_void;
 
@@ -294,9 +289,9 @@ pub trait BinaryDescriptorTraitConst: core::AlgorithmTraitConst {
 	/// * return_float_descr: false
 	#[inline]
 	fn apply(&self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut dyn core::ToOutputArray, use_provided_key_lines: bool, return_float_descr: bool) -> Result<()> {
-		input_array_arg!(image);
-		input_array_arg!(mask);
-		output_array_arg!(descriptors);
+		extern_container_arg!(image);
+		extern_container_arg!(mask);
+		extern_container_arg!(descriptors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_line_descriptor_BinaryDescriptor_operator___const_const__InputArrayR_const__InputArrayR_vectorLKeyLineGR_const__OutputArrayR_bool_bool(self.as_raw_BinaryDescriptor(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keylines.as_raw_mut_VectorOfKeyLine(), descriptors.as_raw__OutputArray(), use_provided_key_lines, return_float_descr, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -306,6 +301,7 @@ pub trait BinaryDescriptorTraitConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Mutable methods for [crate::line_descriptor::BinaryDescriptor]
 pub trait BinaryDescriptorTrait: core::AlgorithmTrait + crate::line_descriptor::BinaryDescriptorTraitConst {
 	fn as_raw_mut_BinaryDescriptor(&mut self) -> *mut c_void;
 
@@ -412,7 +408,7 @@ pub trait BinaryDescriptorTrait: core::AlgorithmTrait + crate::line_descriptor::
 /// binary descriptor.
 /// 
 /// Class' interface is mainly based on the ones of classical detectors and extractors, such as
-/// Feature2d's @ref features2d_main and @ref features2d_match. Retrieved information about lines is
+/// Feature2d's [features2d_main] and [features2d_match]. Retrieved information about lines is
 /// stored in line_descriptor::KeyLine objects.
 pub struct BinaryDescriptor {
 	ptr: *mut c_void
@@ -492,7 +488,7 @@ impl BinaryDescriptor {
 
 boxed_cast_base! { BinaryDescriptor, core::Algorithm, cv_BinaryDescriptor_to_Algorithm }
 
-/// List of BinaryDescriptor parameters:
+/// Constant methods for [crate::line_descriptor::BinaryDescriptor_Params]
 pub trait BinaryDescriptor_ParamsTraitConst {
 	fn as_raw_BinaryDescriptor_Params(&self) -> *const c_void;
 
@@ -535,6 +531,7 @@ pub trait BinaryDescriptor_ParamsTraitConst {
 	
 }
 
+/// Mutable methods for [crate::line_descriptor::BinaryDescriptor_Params]
 pub trait BinaryDescriptor_ParamsTrait: crate::line_descriptor::BinaryDescriptor_ParamsTraitConst {
 	fn as_raw_mut_BinaryDescriptor_Params(&mut self) -> *mut c_void;
 
@@ -614,43 +611,7 @@ impl BinaryDescriptor_Params {
 	
 }
 
-/// furnishes all functionalities for querying a dataset provided by user or internal to
-/// class (that user must, anyway, populate) on the model of @ref features2d_match
-/// 
-/// 
-/// Once descriptors have been extracted from an image (both they represent lines and points), it
-/// becomes interesting to be able to match a descriptor with another one extracted from a different
-/// image and representing the same line or point, seen from a differente perspective or on a different
-/// scale. In reaching such goal, the main headache is designing an efficient search algorithm to
-/// associate a query descriptor to one extracted from a dataset. In the following, a matching modality
-/// based on *Multi-Index Hashing (MiHashing)* will be described.
-/// 
-/// Multi-Index Hashing
-/// -------------------
-/// 
-/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
-/// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
-/// has been divided into. Thus, given a query code, all the entries close to it at least in one
-/// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
-/// validity by verifying that their full codes are not distant (in Hamming space) more than *r* bits
-/// from query code. In details, each binary code **h** composed of *b* bits is divided into *m*
-/// disjoint substrings ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathbf%7Bh%7D%5E%7B%281%29%7D%2C%20%2E%2E%2E%2C%20%5Cmathbf%7Bh%7D%5E%7B%28m%29%7D), each with length
-/// ![inline formula](https://latex.codecogs.com/png.latex?%5Clfloor%20b%2Fm%20%5Crfloor) or ![inline formula](https://latex.codecogs.com/png.latex?%5Clceil%20b%2Fm%20%5Crceil) bits. Formally, when two codes **h** and **g** differ
-/// by at the most *r* bits, in at the least one of their *m* substrings they differ by at the most
-/// ![inline formula](https://latex.codecogs.com/png.latex?%5Clfloor%20r%2Fm%20%5Crfloor) bits. In particular, when ![inline formula](https://latex.codecogs.com/png.latex?%7C%7C%5Cmathbf%7Bh%7D%2D%5Cmathbf%7Bg%7D%7C%7C%5FH%20%5Cle%20r) (where ![inline formula](https://latex.codecogs.com/png.latex?%7C%7C%2E%7C%7C%5FH)
-/// is the Hamming norm), there must exist a substring *k* (with ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Cle%20k%20%5Cle%20m)) such that
-/// 
-/// ![block formula](https://latex.codecogs.com/png.latex?%7C%7C%5Cmathbf%7Bh%7D%5E%7B%28k%29%7D%20%2D%20%5Cmathbf%7Bg%7D%5E%7B%28k%29%7D%7C%7C%5FH%20%5Cle%20%5Cleft%5Clfloor%20%5Cfrac%7Br%7D%7Bm%7D%20%5Cright%5Crfloor%20%2E)
-/// 
-/// That means that if Hamming distance between each of the *m* substring is strictly greater than
-/// ![inline formula](https://latex.codecogs.com/png.latex?%5Clfloor%20r%2Fm%20%5Crfloor), then ![inline formula](https://latex.codecogs.com/png.latex?%7C%7C%5Cmathbf%7Bh%7D%2D%5Cmathbf%7Bg%7D%7C%7C%5FH) must be larger that *r* and that is a
-/// contradiction. If the codes in dataset are divided into *m* substrings, then *m* tables will be
-/// built. Given a query **q** with substrings ![inline formula](https://latex.codecogs.com/png.latex?%5C%7B%5Cmathbf%7Bq%7D%5E%7B%28i%29%7D%5C%7D%5Em%5F%7Bi%3D1%7D), *i*-th hash table is
-/// searched for entries distant at the most ![inline formula](https://latex.codecogs.com/png.latex?%5Clfloor%20r%2Fm%20%5Crfloor) from ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathbf%7Bq%7D%5E%7B%28i%29%7D) and a set of
-/// candidates ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathcal%7BN%7D%5Fi%28%5Cmathbf%7Bq%7D%29) is obtained. The union of sets
-/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathcal%7BN%7D%28%5Cmathbf%7Bq%7D%29%20%3D%20%5Cbigcup%5Fi%20%5Cmathcal%7BN%7D%5Fi%28%5Cmathbf%7Bq%7D%29) is a superset of the *r*-neighbors
-/// of **q**. Then, last step of algorithm is computing the Hamming distance between **q** and each
-/// element in ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathcal%7BN%7D%28%5Cmathbf%7Bq%7D%29), deleting the codes that are distant more that *r* from **q**.
+/// Constant methods for [crate::line_descriptor::BinaryDescriptorMatcher]
 pub trait BinaryDescriptorMatcherTraitConst: core::AlgorithmTraitConst {
 	fn as_raw_BinaryDescriptorMatcher(&self) -> *const c_void;
 
@@ -724,6 +685,7 @@ pub trait BinaryDescriptorMatcherTraitConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Mutable methods for [crate::line_descriptor::BinaryDescriptorMatcher]
 pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait + crate::line_descriptor::BinaryDescriptorMatcherTraitConst {
 	fn as_raw_mut_BinaryDescriptorMatcher(&mut self) -> *mut c_void;
 
@@ -869,7 +831,7 @@ pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait + crate::line_descr
 }
 
 /// furnishes all functionalities for querying a dataset provided by user or internal to
-/// class (that user must, anyway, populate) on the model of @ref features2d_match
+/// class (that user must, anyway, populate) on the model of [features2d_match]
 /// 
 /// 
 /// Once descriptors have been extracted from an image (both they represent lines and points), it
@@ -965,12 +927,13 @@ impl BinaryDescriptorMatcher {
 
 boxed_cast_base! { BinaryDescriptorMatcher, core::Algorithm, cv_BinaryDescriptorMatcher_to_Algorithm }
 
-/// struct for drawing options
+/// Constant methods for [crate::line_descriptor::DrawLinesMatchesFlags]
 pub trait DrawLinesMatchesFlagsTraitConst {
 	fn as_raw_DrawLinesMatchesFlags(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::line_descriptor::DrawLinesMatchesFlags]
 pub trait DrawLinesMatchesFlagsTrait: crate::line_descriptor::DrawLinesMatchesFlagsTraitConst {
 	fn as_raw_mut_DrawLinesMatchesFlags(&mut self) -> *mut c_void;
 
@@ -1112,6 +1075,7 @@ impl KeyLine {
 	
 }
 
+/// Constant methods for [crate::line_descriptor::LSDDetector]
 pub trait LSDDetectorTraitConst: core::AlgorithmTraitConst {
 	fn as_raw_LSDDetector(&self) -> *const c_void;
 
@@ -1145,6 +1109,7 @@ pub trait LSDDetectorTraitConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Mutable methods for [crate::line_descriptor::LSDDetector]
 pub trait LSDDetectorTrait: core::AlgorithmTrait + crate::line_descriptor::LSDDetectorTraitConst {
 	fn as_raw_mut_LSDDetector(&mut self) -> *mut c_void;
 

@@ -55,14 +55,14 @@ pub const XYZRGB: i32 = 1;
 /// * idx: noArray()
 #[inline]
 pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, size: core::Size, k: &mut dyn core::ToInputOutputArray, xi: &mut dyn core::ToInputOutputArray, d: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria, idx: &mut dyn core::ToOutputArray) -> Result<f64> {
-	input_array_arg!(object_points);
-	input_array_arg!(image_points);
-	input_output_array_arg!(k);
-	input_output_array_arg!(xi);
-	input_output_array_arg!(d);
-	output_array_arg!(rvecs);
-	output_array_arg!(tvecs);
-	output_array_arg!(idx);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(k);
+	extern_container_arg!(xi);
+	extern_container_arg!(d);
+	extern_container_arg!(rvecs);
+	extern_container_arg!(tvecs);
+	extern_container_arg!(idx);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_omnidir_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), size.opencv_as_extern(), k.as_raw__InputOutputArray(), xi.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -89,13 +89,13 @@ pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// are supported.
 #[inline]
 pub fn init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, xi: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray, size: core::Size, m1type: i32, map1: &mut dyn core::ToOutputArray, map2: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-	input_array_arg!(k);
-	input_array_arg!(d);
-	input_array_arg!(xi);
-	input_array_arg!(r);
-	input_array_arg!(p);
-	output_array_arg!(map1);
-	output_array_arg!(map2);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(xi);
+	extern_container_arg!(r);
+	extern_container_arg!(p);
+	extern_container_arg!(map1);
+	extern_container_arg!(map2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_omnidir_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_int_const__OutputArrayR_const__OutputArrayR_int(k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -129,11 +129,11 @@ pub fn init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn core::ToIn
 /// * jacobian: noArray()
 #[inline]
 pub fn project_points_1(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, affine: core::Affine3d, k: &dyn core::ToInputArray, xi: f64, d: &dyn core::ToInputArray, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(object_points);
-	output_array_arg!(image_points);
-	input_array_arg!(k);
-	input_array_arg!(d);
-	output_array_arg!(jacobian);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(jacobian);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), xi, d.as_raw__InputArray(), jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -165,13 +165,13 @@ pub fn project_points_1(object_points: &dyn core::ToInputArray, image_points: &m
 /// * jacobian: noArray()
 #[inline]
 pub fn project_points(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, k: &dyn core::ToInputArray, xi: f64, d: &dyn core::ToInputArray, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(object_points);
-	output_array_arg!(image_points);
-	input_array_arg!(rvec);
-	input_array_arg!(tvec);
-	input_array_arg!(k);
-	input_array_arg!(d);
-	output_array_arg!(jacobian);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(jacobian);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), xi, d.as_raw__InputArray(), jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -211,20 +211,20 @@ pub fn project_points(object_points: &dyn core::ToInputArray, image_points: &mut
 /// * idx: noArray()
 #[inline]
 pub fn stereo_calibrate(object_points: &mut dyn core::ToInputOutputArray, image_points1: &mut dyn core::ToInputOutputArray, image_points2: &mut dyn core::ToInputOutputArray, image_size1: core::Size, image_size2: core::Size, k1: &mut dyn core::ToInputOutputArray, xi1: &mut dyn core::ToInputOutputArray, d1: &mut dyn core::ToInputOutputArray, k2: &mut dyn core::ToInputOutputArray, xi2: &mut dyn core::ToInputOutputArray, d2: &mut dyn core::ToInputOutputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, rvecs_l: &mut dyn core::ToOutputArray, tvecs_l: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria, idx: &mut dyn core::ToOutputArray) -> Result<f64> {
-	input_output_array_arg!(object_points);
-	input_output_array_arg!(image_points1);
-	input_output_array_arg!(image_points2);
-	input_output_array_arg!(k1);
-	input_output_array_arg!(xi1);
-	input_output_array_arg!(d1);
-	input_output_array_arg!(k2);
-	input_output_array_arg!(xi2);
-	input_output_array_arg!(d2);
-	output_array_arg!(rvec);
-	output_array_arg!(tvec);
-	output_array_arg!(rvecs_l);
-	output_array_arg!(tvecs_l);
-	output_array_arg!(idx);
+	extern_container_arg!(object_points);
+	extern_container_arg!(image_points1);
+	extern_container_arg!(image_points2);
+	extern_container_arg!(k1);
+	extern_container_arg!(xi1);
+	extern_container_arg!(d1);
+	extern_container_arg!(k2);
+	extern_container_arg!(xi2);
+	extern_container_arg!(d2);
+	extern_container_arg!(rvec);
+	extern_container_arg!(tvec);
+	extern_container_arg!(rvecs_l);
+	extern_container_arg!(tvecs_l);
+	extern_container_arg!(idx);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(object_points.as_raw__InputOutputArray(), image_points1.as_raw__InputOutputArray(), image_points2.as_raw__InputOutputArray(), &image_size1, &image_size2, k1.as_raw__InputOutputArray(), xi1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), xi2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), rvecs_l.as_raw__OutputArray(), tvecs_l.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -263,21 +263,21 @@ pub fn stereo_calibrate(object_points: &mut dyn core::ToInputOutputArray, image_
 /// * point_type: XYZRGB
 #[inline]
 pub fn stereo_reconstruct(image1: &dyn core::ToInputArray, image2: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, d1: &dyn core::ToInputArray, xi1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, d2: &dyn core::ToInputArray, xi2: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, flag: i32, num_disparities: i32, sad_window_size: i32, disparity: &mut dyn core::ToOutputArray, image1_rec: &mut dyn core::ToOutputArray, image2_rec: &mut dyn core::ToOutputArray, new_size: core::Size, knew: &dyn core::ToInputArray, point_cloud: &mut dyn core::ToOutputArray, point_type: i32) -> Result<()> {
-	input_array_arg!(image1);
-	input_array_arg!(image2);
-	input_array_arg!(k1);
-	input_array_arg!(d1);
-	input_array_arg!(xi1);
-	input_array_arg!(k2);
-	input_array_arg!(d2);
-	input_array_arg!(xi2);
-	input_array_arg!(r);
-	input_array_arg!(t);
-	output_array_arg!(disparity);
-	output_array_arg!(image1_rec);
-	output_array_arg!(image2_rec);
-	input_array_arg!(knew);
-	output_array_arg!(point_cloud);
+	extern_container_arg!(image1);
+	extern_container_arg!(image2);
+	extern_container_arg!(k1);
+	extern_container_arg!(d1);
+	extern_container_arg!(xi1);
+	extern_container_arg!(k2);
+	extern_container_arg!(d2);
+	extern_container_arg!(xi2);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(disparity);
+	extern_container_arg!(image1_rec);
+	extern_container_arg!(image2_rec);
+	extern_container_arg!(knew);
+	extern_container_arg!(point_cloud);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_omnidir_stereoReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR_int(image1.as_raw__InputArray(), image2.as_raw__InputArray(), k1.as_raw__InputArray(), d1.as_raw__InputArray(), xi1.as_raw__InputArray(), k2.as_raw__InputArray(), d2.as_raw__InputArray(), xi2.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), flag, num_disparities, sad_window_size, disparity.as_raw__OutputArray(), image1_rec.as_raw__OutputArray(), image2_rec.as_raw__OutputArray(), &new_size, knew.as_raw__InputArray(), point_cloud.as_raw__OutputArray(), point_type, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -294,10 +294,10 @@ pub fn stereo_reconstruct(image1: &dyn core::ToInputArray, image2: &dyn core::To
 /// * R2: Output 3x3 rotation matrix for the second camera
 #[inline]
 pub fn stereo_rectify(r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(r);
-	input_array_arg!(t);
-	output_array_arg!(r1);
-	output_array_arg!(r2);
+	extern_container_arg!(r);
+	extern_container_arg!(t);
+	extern_container_arg!(r1);
+	extern_container_arg!(r2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_omnidir_stereoRectify_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -324,13 +324,13 @@ pub fn stereo_rectify(r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, r1
 /// * r: Mat::eye(3,3,CV_64F)
 #[inline]
 pub fn undistort_image(distorted: &dyn core::ToInputArray, undistorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, xi: &dyn core::ToInputArray, flags: i32, knew: &dyn core::ToInputArray, new_size: core::Size, r: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(distorted);
-	output_array_arg!(undistorted);
-	input_array_arg!(k);
-	input_array_arg!(d);
-	input_array_arg!(xi);
-	input_array_arg!(knew);
-	input_array_arg!(r);
+	extern_container_arg!(distorted);
+	extern_container_arg!(undistorted);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(xi);
+	extern_container_arg!(knew);
+	extern_container_arg!(r);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_omnidir_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_const_SizeR_const__InputArrayR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), flags, knew.as_raw__InputArray(), &new_size, r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -352,12 +352,12 @@ pub fn undistort_image(distorted: &dyn core::ToInputArray, undistorted: &mut dyn
 /// depth of distorted points.
 #[inline]
 pub fn undistort_points(distorted: &dyn core::ToInputArray, undistorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, xi: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(distorted);
-	output_array_arg!(undistorted);
-	input_array_arg!(k);
-	input_array_arg!(d);
-	input_array_arg!(xi);
-	input_array_arg!(r);
+	extern_container_arg!(distorted);
+	extern_container_arg!(undistorted);
+	extern_container_arg!(k);
+	extern_container_arg!(d);
+	extern_container_arg!(xi);
+	extern_container_arg!(r);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_omnidir_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -365,11 +365,13 @@ pub fn undistort_points(distorted: &dyn core::ToInputArray, undistorted: &mut dy
 	Ok(ret)
 }
 
+/// Constant methods for [crate::ccalib::CustomPattern]
 pub trait CustomPatternTraitConst: core::AlgorithmTraitConst {
 	fn as_raw_CustomPattern(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::ccalib::CustomPattern]
 pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatternTraitConst {
 	fn as_raw_mut_CustomPattern(&mut self) -> *mut c_void;
 
@@ -377,8 +379,8 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * output: noArray()
 	#[inline]
 	fn create(&mut self, pattern: &dyn core::ToInputArray, board_size: core::Size2f, output: &mut dyn core::ToOutputArray) -> Result<bool> {
-		input_array_arg!(pattern);
-		output_array_arg!(output);
+		extern_container_arg!(pattern);
+		extern_container_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ccalib_CustomPattern_create_const__InputArrayR_const_Size2f_const__OutputArrayR(self.as_raw_mut_CustomPattern(), pattern.as_raw__InputArray(), board_size.opencv_as_extern(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -395,12 +397,12 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * pattern_corners: noArray()
 	#[inline]
 	fn find_pattern(&mut self, image: &dyn core::ToInputArray, matched_features: &mut dyn core::ToOutputArray, pattern_points: &mut dyn core::ToOutputArray, ratio: f64, proj_error: f64, refine_position: bool, out: &mut dyn core::ToOutputArray, h: &mut dyn core::ToOutputArray, pattern_corners: &mut dyn core::ToOutputArray) -> Result<bool> {
-		input_array_arg!(image);
-		output_array_arg!(matched_features);
-		output_array_arg!(pattern_points);
-		output_array_arg!(out);
-		output_array_arg!(h);
-		output_array_arg!(pattern_corners);
+		extern_container_arg!(image);
+		extern_container_arg!(matched_features);
+		extern_container_arg!(pattern_points);
+		extern_container_arg!(out);
+		extern_container_arg!(h);
+		extern_container_arg!(pattern_corners);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ccalib_CustomPattern_findPattern_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const_double_const_double_const_bool_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), matched_features.as_raw__OutputArray(), pattern_points.as_raw__OutputArray(), ratio, proj_error, refine_position, out.as_raw__OutputArray(), h.as_raw__OutputArray(), pattern_corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -497,12 +499,12 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
 	fn calibrate(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
-		input_array_arg!(object_points);
-		input_array_arg!(image_points);
-		input_output_array_arg!(camera_matrix);
-		input_output_array_arg!(dist_coeffs);
-		output_array_arg!(rvecs);
-		output_array_arg!(tvecs);
+		extern_container_arg!(object_points);
+		extern_container_arg!(image_points);
+		extern_container_arg!(camera_matrix);
+		extern_container_arg!(dist_coeffs);
+		extern_container_arg!(rvecs);
+		extern_container_arg!(tvecs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ccalib_CustomPattern_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -515,12 +517,12 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * flags: SOLVEPNP_ITERATIVE
 	#[inline]
 	fn find_rt(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
-		input_array_arg!(object_points);
-		input_array_arg!(image_points);
-		input_array_arg!(camera_matrix);
-		input_array_arg!(dist_coeffs);
-		input_output_array_arg!(rvec);
-		input_output_array_arg!(tvec);
+		extern_container_arg!(object_points);
+		extern_container_arg!(image_points);
+		extern_container_arg!(camera_matrix);
+		extern_container_arg!(dist_coeffs);
+		extern_container_arg!(rvec);
+		extern_container_arg!(tvec);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool_int(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -533,11 +535,11 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * flags: SOLVEPNP_ITERATIVE
 	#[inline]
 	fn find_rt_1(&mut self, image: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
-		input_array_arg!(image);
-		input_array_arg!(camera_matrix);
-		input_array_arg!(dist_coeffs);
-		input_output_array_arg!(rvec);
-		input_output_array_arg!(tvec);
+		extern_container_arg!(image);
+		extern_container_arg!(camera_matrix);
+		extern_container_arg!(dist_coeffs);
+		extern_container_arg!(rvec);
+		extern_container_arg!(tvec);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool_int(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -554,13 +556,13 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * flags: SOLVEPNP_ITERATIVE
 	#[inline]
 	fn find_rt_ransac(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
-		input_array_arg!(object_points);
-		input_array_arg!(image_points);
-		input_array_arg!(camera_matrix);
-		input_array_arg!(dist_coeffs);
-		input_output_array_arg!(rvec);
-		input_output_array_arg!(tvec);
-		output_array_arg!(inliers);
+		extern_container_arg!(object_points);
+		extern_container_arg!(image_points);
+		extern_container_arg!(camera_matrix);
+		extern_container_arg!(dist_coeffs);
+		extern_container_arg!(rvec);
+		extern_container_arg!(tvec);
+		extern_container_arg!(inliers);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool_int_float_int_const__OutputArrayR_int(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, min_inliers_count, inliers.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -577,12 +579,12 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * flags: SOLVEPNP_ITERATIVE
 	#[inline]
 	fn find_rt_ransac_1(&mut self, image: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
-		input_array_arg!(image);
-		input_array_arg!(camera_matrix);
-		input_array_arg!(dist_coeffs);
-		input_output_array_arg!(rvec);
-		input_output_array_arg!(tvec);
-		output_array_arg!(inliers);
+		extern_container_arg!(image);
+		extern_container_arg!(camera_matrix);
+		extern_container_arg!(dist_coeffs);
+		extern_container_arg!(rvec);
+		extern_container_arg!(tvec);
+		extern_container_arg!(inliers);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool_int_float_int_const__OutputArrayR_int(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, min_inliers_count, inliers.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -595,11 +597,11 @@ pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatter
 	/// * axis_width: 2
 	#[inline]
 	fn draw_orientation(&mut self, image: &mut dyn core::ToInputOutputArray, tvec: &dyn core::ToInputArray, rvec: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, axis_length: f64, axis_width: i32) -> Result<()> {
-		input_output_array_arg!(image);
-		input_array_arg!(tvec);
-		input_array_arg!(rvec);
-		input_array_arg!(camera_matrix);
-		input_array_arg!(dist_coeffs);
+		extern_container_arg!(image);
+		extern_container_arg!(tvec);
+		extern_container_arg!(rvec);
+		extern_container_arg!(camera_matrix);
+		extern_container_arg!(dist_coeffs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ccalib_CustomPattern_drawOrientation_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_int(self.as_raw_mut_CustomPattern(), image.as_raw__InputOutputArray(), tvec.as_raw__InputArray(), rvec.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), axis_length, axis_width, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -655,23 +657,13 @@ impl CustomPattern {
 
 boxed_cast_base! { CustomPattern, core::Algorithm, cv_CustomPattern_to_Algorithm }
 
-/// Class for multiple camera calibration that supports pinhole camera and omnidirection camera.
-/// For omnidirectional camera model, please refer to omnidir.hpp in ccalib module.
-/// It first calibrate each camera individually, then a bundle adjustment like optimization is applied to
-/// refine extrinsic parameters. So far, it only support "random" pattern for calibration,
-/// see randomPattern.hpp in ccalib module for details.
-/// Images that are used should be named by "cameraIdx-timestamp.*", several images with the same timestamp
-/// means that they are the same pattern that are photographed. cameraIdx should start from 0.
-/// 
-/// For more details, please refer to paper
-///    B. Li, L. Heng, K. Kevin  and M. Pollefeys, "A Multiple-Camera System
-///    Calibration Toolbox Using A Feature Descriptor-Based Calibration
-///    Pattern", in IROS 2013.
+/// Constant methods for [crate::ccalib::MultiCameraCalibration]
 pub trait MultiCameraCalibrationTraitConst {
 	fn as_raw_MultiCameraCalibration(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::ccalib::MultiCameraCalibration]
 pub trait MultiCameraCalibrationTrait: crate::ccalib::MultiCameraCalibrationTraitConst {
 	fn as_raw_mut_MultiCameraCalibration(&mut self) -> *mut c_void;
 
@@ -781,6 +773,7 @@ impl MultiCameraCalibration {
 	
 }
 
+/// Constant methods for [crate::ccalib::MultiCameraCalibration_edge]
 pub trait MultiCameraCalibration_edgeTraitConst {
 	fn as_raw_MultiCameraCalibration_edge(&self) -> *const c_void;
 
@@ -811,6 +804,7 @@ pub trait MultiCameraCalibration_edgeTraitConst {
 	
 }
 
+/// Mutable methods for [crate::ccalib::MultiCameraCalibration_edge]
 pub trait MultiCameraCalibration_edgeTrait: crate::ccalib::MultiCameraCalibration_edgeTraitConst {
 	fn as_raw_mut_MultiCameraCalibration_edge(&mut self) -> *mut c_void;
 
@@ -876,6 +870,7 @@ impl MultiCameraCalibration_edge {
 	
 }
 
+/// Constant methods for [crate::ccalib::MultiCameraCalibration_vertex]
 pub trait MultiCameraCalibration_vertexTraitConst {
 	fn as_raw_MultiCameraCalibration_vertex(&self) -> *const c_void;
 
@@ -894,6 +889,7 @@ pub trait MultiCameraCalibration_vertexTraitConst {
 	
 }
 
+/// Mutable methods for [crate::ccalib::MultiCameraCalibration_vertex]
 pub trait MultiCameraCalibration_vertexTrait: crate::ccalib::MultiCameraCalibration_vertexTraitConst {
 	fn as_raw_mut_MultiCameraCalibration_vertex(&mut self) -> *mut c_void;
 
@@ -957,20 +953,13 @@ impl MultiCameraCalibration_vertex {
 	
 }
 
-/// Class for finding features points and corresponding 3D in world coordinate of
-/// a "random" pattern, which can be to be used in calibration. It is useful when pattern is
-/// partly occluded or only a part of pattern can be observed in multiple cameras calibration.
-/// The pattern can be generated by RandomPatternGenerator class described in this file.
-/// 
-/// Please refer to paper
-///    B. Li, L. Heng, K. Kevin  and M. Pollefeys, "A Multiple-Camera System
-///    Calibration Toolbox Using A Feature Descriptor-Based Calibration
-///    Pattern", in IROS 2013.
+/// Constant methods for [crate::ccalib::RandomPatternCornerFinder]
 pub trait RandomPatternCornerFinderTraitConst {
 	fn as_raw_RandomPatternCornerFinder(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::ccalib::RandomPatternCornerFinder]
 pub trait RandomPatternCornerFinderTrait: crate::ccalib::RandomPatternCornerFinderTraitConst {
 	fn as_raw_mut_RandomPatternCornerFinder(&mut self) -> *mut c_void;
 
@@ -1086,11 +1075,13 @@ impl RandomPatternCornerFinder {
 	
 }
 
+/// Constant methods for [crate::ccalib::RandomPatternGenerator]
 pub trait RandomPatternGeneratorTraitConst {
 	fn as_raw_RandomPatternGenerator(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::ccalib::RandomPatternGenerator]
 pub trait RandomPatternGeneratorTrait: crate::ccalib::RandomPatternGeneratorTraitConst {
 	fn as_raw_mut_RandomPatternGenerator(&mut self) -> *mut c_void;
 

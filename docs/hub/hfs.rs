@@ -13,7 +13,7 @@
 //! The opencv hfs module contains an efficient algorithm to segment an image.
 //! This module is implemented based on the paper Hierarchical Feature Selection for Efficient
 //! Image Segmentation, ECCV 2016. The original project was developed by
-//! Yun Liu(https://github.com/yun-liu/hfs).
+//! Yun Liu(<https://github.com/yun-liu/hfs>).
 //! 
 //! 
 //! Introduction to Hierarchical Feature Selection
@@ -44,6 +44,7 @@ pub mod prelude {
 	pub use { super::HfsSegmentConst, super::HfsSegment };
 }
 
+/// Constant methods for [crate::hfs::HfsSegment]
 pub trait HfsSegmentConst: core::AlgorithmTraitConst {
 	fn as_raw_HfsSegment(&self) -> *const c_void;
 
@@ -226,7 +227,7 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	/// * if_draw: true
 	#[inline]
 	fn perform_segment_gpu(&mut self, src: &dyn core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
-		input_array_arg!(src);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -243,7 +244,7 @@ pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
 	/// * if_draw: true
 	#[inline]
 	fn perform_segment_cpu(&mut self, src: &dyn core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
-		input_array_arg!(src);
+		extern_container_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

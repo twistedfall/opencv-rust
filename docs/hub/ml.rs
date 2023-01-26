@@ -18,7 +18,7 @@
 //! categorical input variables), there is a little common ground between the classes. This common
 //! ground is defined by the class cv::ml::StatModel that all the other ML classes are derived from.
 //! 
-//! See detailed overview here: @ref ml_intro.
+//! See detailed overview here: [ml_intro].
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use { super::ParamGridTraitConst, super::ParamGridTrait, super::TrainDataConst, super::TrainData, super::StatModelConst, super::StatModel, super::NormalBayesClassifierConst, super::NormalBayesClassifier, super::KNearestConst, super::KNearest, super::SVM_KernelConst, super::SVM_Kernel, super::SVMConst, super::SVM, super::EMConst, super::EM, super::DTrees_NodeTraitConst, super::DTrees_NodeTrait, super::DTrees_SplitTraitConst, super::DTrees_SplitTrait, super::DTreesConst, super::DTrees, super::RTreesConst, super::RTrees, super::BoostConst, super::Boost, super::ANN_MLPConst, super::ANN_MLP, super::LogisticRegressionConst, super::LogisticRegression, super::SVMSGDConst, super::SVMSGD };
@@ -347,8 +347,8 @@ pub type ANN_MLP_ANNEAL = dyn crate::ml::ANN_MLP;
 /// Creates test set
 #[inline]
 pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasses: i32, samples: &mut dyn core::ToOutputArray, responses: &mut dyn core::ToOutputArray) -> Result<()> {
-	output_array_arg!(samples);
-	output_array_arg!(responses);
+	extern_container_arg!(samples);
+	extern_container_arg!(responses);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ml_createConcentricSpheresTestSet_int_int_int_const__OutputArrayR_const__OutputArrayR(nsamples, nfeatures, nclasses, samples.as_raw__OutputArray(), responses.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -365,9 +365,9 @@ pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasse
 /// * samples: returned samples array
 #[inline]
 pub fn rand_mv_normal(mean: &dyn core::ToInputArray, cov: &dyn core::ToInputArray, nsamples: i32, samples: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(mean);
-	input_array_arg!(cov);
-	output_array_arg!(samples);
+	extern_container_arg!(mean);
+	extern_container_arg!(cov);
+	extern_container_arg!(samples);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ml_randMVNormal_const__InputArrayR_const__InputArrayR_int_const__OutputArrayR(mean.as_raw__InputArray(), cov.as_raw__InputArray(), nsamples, samples.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -375,17 +375,7 @@ pub fn rand_mv_normal(mean: &dyn core::ToInputArray, cov: &dyn core::ToInputArra
 	Ok(ret)
 }
 
-/// Artificial Neural Networks - Multi-Layer Perceptrons.
-/// 
-/// Unlike many other models in ML that are constructed and trained at once, in the MLP model these
-/// steps are separated. First, a network with the specified topology is created using the non-default
-/// constructor or the method ANN_MLP::create. All the weights are set to zeros. Then, the network is
-/// trained using a set of input and output vectors. The training procedure can be repeated more than
-/// once, that is, the weights can be adjusted based on the new training data.
-/// 
-/// Additional flags for StatModel::train are available: ANN_MLP::TrainFlags.
-/// ## See also
-/// @ref ml_intro_ann
+/// Constant methods for [crate::ml::ANN_MLP]
 pub trait ANN_MLPConst: crate::ml::StatModelConst {
 	fn as_raw_ANN_MLP(&self) -> *const c_void;
 
@@ -586,6 +576,17 @@ pub trait ANN_MLPConst: crate::ml::StatModelConst {
 	
 }
 
+/// Artificial Neural Networks - Multi-Layer Perceptrons.
+/// 
+/// Unlike many other models in ML that are constructed and trained at once, in the MLP model these
+/// steps are separated. First, a network with the specified topology is created using the non-default
+/// constructor or the method ANN_MLP::create. All the weights are set to zeros. Then, the network is
+/// trained using a set of input and output vectors. The training procedure can be repeated more than
+/// once, that is, the weights can be adjusted based on the new training data.
+/// 
+/// Additional flags for StatModel::train are available: ANN_MLP::TrainFlags.
+/// ## See also
+/// [ml_intro_ann]
 pub trait ANN_MLP: crate::ml::ANN_MLPConst + crate::ml::StatModel {
 	fn as_raw_mut_ANN_MLP(&mut self) -> *mut c_void;
 
@@ -633,7 +634,7 @@ pub trait ANN_MLP: crate::ml::ANN_MLPConst + crate::ml::StatModel {
 	/// getLayerSizes
 	#[inline]
 	fn set_layer_sizes(&mut self, _layer_sizes: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(_layer_sizes);
+		extern_container_arg!(_layer_sizes);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_ANN_MLP_setLayerSizes_const__InputArrayR(self.as_raw_mut_ANN_MLP(), _layer_sizes.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -847,9 +848,7 @@ impl dyn ANN_MLP + '_ {
 	}
 	
 }
-/// Boosted tree classifier derived from DTrees
-/// ## See also
-/// @ref ml_intro_boost
+/// Constant methods for [crate::ml::Boost]
 pub trait BoostConst: crate::ml::DTreesConst {
 	fn as_raw_Boost(&self) -> *const c_void;
 
@@ -895,6 +894,9 @@ pub trait BoostConst: crate::ml::DTreesConst {
 	
 }
 
+/// Boosted tree classifier derived from DTrees
+/// ## See also
+/// [ml_intro_boost]
 pub trait Boost: crate::ml::BoostConst + crate::ml::DTrees {
 	fn as_raw_mut_Boost(&mut self) -> *mut c_void;
 
@@ -978,14 +980,7 @@ impl dyn Boost + '_ {
 	}
 	
 }
-/// The class represents a single decision tree or a collection of decision trees.
-/// 
-/// The current public interface of the class allows user to train only a single decision tree, however
-/// the class is capable of storing multiple decision trees and using them for prediction (by summing
-/// responses or using a voting schemes), and the derived from DTrees classes (such as RTrees and Boost)
-/// use this capability to implement decision tree ensembles.
-/// ## See also
-/// @ref ml_intro_trees
+/// Constant methods for [crate::ml::DTrees]
 pub trait DTreesConst: crate::ml::StatModelConst {
 	fn as_raw_DTrees(&self) -> *const c_void;
 
@@ -1014,7 +1009,7 @@ pub trait DTreesConst: crate::ml::StatModelConst {
 	/// The maximum possible depth of the tree.
 	///    That is the training algorithms attempts to split a node while its depth is less than maxDepth.
 	///    The root node has zero depth. The actual depth may be smaller if the other termination criteria
-	///    are met (see the outline of the training procedure @ref ml_intro_trees "here"), and/or if the
+	///    are met (see the outline of the training procedure [ml_intro_trees] "here"), and/or if the
 	///    tree is pruned. Default value is INT_MAX.
 	/// ## See also
 	/// setMaxDepth
@@ -1193,6 +1188,14 @@ pub trait DTreesConst: crate::ml::StatModelConst {
 	
 }
 
+/// The class represents a single decision tree or a collection of decision trees.
+/// 
+/// The current public interface of the class allows user to train only a single decision tree, however
+/// the class is capable of storing multiple decision trees and using them for prediction (by summing
+/// responses or using a voting schemes), and the derived from DTrees classes (such as RTrees and Boost)
+/// use this capability to implement decision tree ensembles.
+/// ## See also
+/// [ml_intro_trees]
 pub trait DTrees: crate::ml::DTreesConst + crate::ml::StatModel {
 	fn as_raw_mut_DTrees(&mut self) -> *mut c_void;
 
@@ -1221,7 +1224,7 @@ pub trait DTrees: crate::ml::DTreesConst + crate::ml::StatModel {
 	/// The maximum possible depth of the tree.
 	///    That is the training algorithms attempts to split a node while its depth is less than maxDepth.
 	///    The root node has zero depth. The actual depth may be smaller if the other termination criteria
-	///    are met (see the outline of the training procedure @ref ml_intro_trees "here"), and/or if the
+	///    are met (see the outline of the training procedure [ml_intro_trees] "here"), and/or if the
 	///    tree is pruned. Default value is INT_MAX.
 	/// ## See also
 	/// setMaxDepth getMaxDepth
@@ -1390,7 +1393,7 @@ impl dyn DTrees + '_ {
 	}
 	
 }
-/// The class represents a decision tree node.
+/// Constant methods for [crate::ml::DTrees_Node]
 pub trait DTrees_NodeTraitConst {
 	fn as_raw_DTrees_Node(&self) -> *const c_void;
 
@@ -1448,6 +1451,7 @@ pub trait DTrees_NodeTraitConst {
 	
 }
 
+/// Mutable methods for [crate::ml::DTrees_Node]
 pub trait DTrees_NodeTrait: crate::ml::DTrees_NodeTraitConst {
 	fn as_raw_mut_DTrees_Node(&mut self) -> *mut c_void;
 
@@ -1542,7 +1546,7 @@ impl DTrees_Node {
 	
 }
 
-/// The class represents split in a decision tree.
+/// Constant methods for [crate::ml::DTrees_Split]
 pub trait DTrees_SplitTraitConst {
 	fn as_raw_DTrees_Split(&self) -> *const c_void;
 
@@ -1605,6 +1609,7 @@ pub trait DTrees_SplitTraitConst {
 	
 }
 
+/// Mutable methods for [crate::ml::DTrees_Split]
 pub trait DTrees_SplitTrait: crate::ml::DTrees_SplitTraitConst {
 	fn as_raw_mut_DTrees_Split(&mut self) -> *mut c_void;
 
@@ -1704,9 +1709,7 @@ impl DTrees_Split {
 	
 }
 
-/// The class implements the Expectation Maximization algorithm.
-/// ## See also
-/// @ref ml_intro_em
+/// Constant methods for [crate::ml::EM]
 pub trait EMConst: crate::ml::StatModelConst {
 	fn as_raw_EM(&self) -> *const c_void;
 
@@ -1806,8 +1809,8 @@ pub trait EMConst: crate::ml::StatModelConst {
 	/// * flags: 0
 	#[inline]
 	fn predict(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
-		input_array_arg!(samples);
-		output_array_arg!(results);
+		extern_container_arg!(samples);
+		extern_container_arg!(results);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_EM_predict_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_EM(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1829,8 +1832,8 @@ pub trait EMConst: crate::ml::StatModelConst {
 	/// sample.
 	#[inline]
 	fn predict2(&self, sample: &dyn core::ToInputArray, probs: &mut dyn core::ToOutputArray) -> Result<core::Vec2d> {
-		input_array_arg!(sample);
-		output_array_arg!(probs);
+		extern_container_arg!(sample);
+		extern_container_arg!(probs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_EM_predict2_const_const__InputArrayR_const__OutputArrayR(self.as_raw_EM(), sample.as_raw__InputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1840,6 +1843,9 @@ pub trait EMConst: crate::ml::StatModelConst {
 	
 }
 
+/// The class implements the Expectation Maximization algorithm.
+/// ## See also
+/// [ml_intro_em]
 pub trait EM: crate::ml::EMConst + crate::ml::StatModel {
 	fn as_raw_mut_EM(&mut self) -> *mut c_void;
 
@@ -1921,10 +1927,10 @@ pub trait EM: crate::ml::EMConst + crate::ml::StatModel {
 	/// * probs: noArray()
 	#[inline]
 	fn train_em(&mut self, samples: &dyn core::ToInputArray, log_likelihoods: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, probs: &mut dyn core::ToOutputArray) -> Result<bool> {
-		input_array_arg!(samples);
-		output_array_arg!(log_likelihoods);
-		output_array_arg!(labels);
-		output_array_arg!(probs);
+		extern_container_arg!(samples);
+		extern_container_arg!(log_likelihoods);
+		extern_container_arg!(labels);
+		extern_container_arg!(probs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_EM_trainEM_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1968,13 +1974,13 @@ pub trait EM: crate::ml::EMConst + crate::ml::StatModel {
 	/// * probs: noArray()
 	#[inline]
 	fn train_e(&mut self, samples: &dyn core::ToInputArray, means0: &dyn core::ToInputArray, covs0: &dyn core::ToInputArray, weights0: &dyn core::ToInputArray, log_likelihoods: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, probs: &mut dyn core::ToOutputArray) -> Result<bool> {
-		input_array_arg!(samples);
-		input_array_arg!(means0);
-		input_array_arg!(covs0);
-		input_array_arg!(weights0);
-		output_array_arg!(log_likelihoods);
-		output_array_arg!(labels);
-		output_array_arg!(probs);
+		extern_container_arg!(samples);
+		extern_container_arg!(means0);
+		extern_container_arg!(covs0);
+		extern_container_arg!(weights0);
+		extern_container_arg!(log_likelihoods);
+		extern_container_arg!(labels);
+		extern_container_arg!(probs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_EM_trainE_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), means0.as_raw__InputArray(), covs0.as_raw__InputArray(), weights0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2007,11 +2013,11 @@ pub trait EM: crate::ml::EMConst + crate::ml::StatModel {
 	/// * probs: noArray()
 	#[inline]
 	fn train_m(&mut self, samples: &dyn core::ToInputArray, probs0: &dyn core::ToInputArray, log_likelihoods: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, probs: &mut dyn core::ToOutputArray) -> Result<bool> {
-		input_array_arg!(samples);
-		input_array_arg!(probs0);
-		output_array_arg!(log_likelihoods);
-		output_array_arg!(labels);
-		output_array_arg!(probs);
+		extern_container_arg!(samples);
+		extern_container_arg!(probs0);
+		extern_container_arg!(log_likelihoods);
+		extern_container_arg!(labels);
+		extern_container_arg!(probs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_EM_trainM_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), probs0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2060,9 +2066,7 @@ impl dyn EM + '_ {
 	}
 	
 }
-/// The class implements K-Nearest Neighbors model
-/// ## See also
-/// @ref ml_intro_knn
+/// Constant methods for [crate::ml::KNearest]
 pub trait KNearestConst: crate::ml::StatModelConst {
 	fn as_raw_KNearest(&self) -> *const c_void;
 
@@ -2146,10 +2150,10 @@ pub trait KNearestConst: crate::ml::StatModelConst {
 	/// * dist: noArray()
 	#[inline]
 	fn find_nearest(&self, samples: &dyn core::ToInputArray, k: i32, results: &mut dyn core::ToOutputArray, neighbor_responses: &mut dyn core::ToOutputArray, dist: &mut dyn core::ToOutputArray) -> Result<f32> {
-		input_array_arg!(samples);
-		output_array_arg!(results);
-		output_array_arg!(neighbor_responses);
-		output_array_arg!(dist);
+		extern_container_arg!(samples);
+		extern_container_arg!(results);
+		extern_container_arg!(neighbor_responses);
+		extern_container_arg!(dist);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_KNearest_findNearest_const_const__InputArrayR_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_KNearest(), samples.as_raw__InputArray(), k, results.as_raw__OutputArray(), neighbor_responses.as_raw__OutputArray(), dist.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2159,6 +2163,9 @@ pub trait KNearestConst: crate::ml::StatModelConst {
 	
 }
 
+/// The class implements K-Nearest Neighbors model
+/// ## See also
+/// [ml_intro_knn]
 pub trait KNearest: crate::ml::KNearestConst + crate::ml::StatModel {
 	fn as_raw_mut_KNearest(&mut self) -> *mut c_void;
 
@@ -2245,9 +2252,7 @@ impl dyn KNearest + '_ {
 	}
 	
 }
-/// Implements Logistic Regression classifier.
-/// ## See also
-/// @ref ml_intro_lr
+/// Constant methods for [crate::ml::LogisticRegression]
 pub trait LogisticRegressionConst: crate::ml::StatModelConst {
 	fn as_raw_LogisticRegression(&self) -> *const c_void;
 
@@ -2338,8 +2343,8 @@ pub trait LogisticRegressionConst: crate::ml::StatModelConst {
 	/// * flags: 0
 	#[inline]
 	fn predict(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
-		input_array_arg!(samples);
-		output_array_arg!(results);
+		extern_container_arg!(samples);
+		extern_container_arg!(results);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_LogisticRegression_predict_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_LogisticRegression(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2363,6 +2368,9 @@ pub trait LogisticRegressionConst: crate::ml::StatModelConst {
 	
 }
 
+/// Implements Logistic Regression classifier.
+/// ## See also
+/// [ml_intro_lr]
 pub trait LogisticRegression: crate::ml::LogisticRegressionConst + crate::ml::StatModel {
 	fn as_raw_mut_LogisticRegression(&mut self) -> *mut c_void;
 
@@ -2481,9 +2489,7 @@ impl dyn LogisticRegression + '_ {
 	}
 	
 }
-/// Bayes classifier for normally distributed data.
-/// ## See also
-/// @ref ml_intro_bayes
+/// Constant methods for [crate::ml::NormalBayesClassifier]
 pub trait NormalBayesClassifierConst: crate::ml::StatModelConst {
 	fn as_raw_NormalBayesClassifier(&self) -> *const c_void;
 
@@ -2499,9 +2505,9 @@ pub trait NormalBayesClassifierConst: crate::ml::StatModelConst {
 	/// * flags: 0
 	#[inline]
 	fn predict_prob(&self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray, output_probs: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
-		input_array_arg!(inputs);
-		output_array_arg!(outputs);
-		output_array_arg!(output_probs);
+		extern_container_arg!(inputs);
+		extern_container_arg!(outputs);
+		extern_container_arg!(output_probs);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_NormalBayesClassifier_predictProb_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(self.as_raw_NormalBayesClassifier(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), output_probs.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2511,6 +2517,9 @@ pub trait NormalBayesClassifierConst: crate::ml::StatModelConst {
 	
 }
 
+/// Bayes classifier for normally distributed data.
+/// ## See also
+/// [ml_intro_bayes]
 pub trait NormalBayesClassifier: crate::ml::NormalBayesClassifierConst + crate::ml::StatModel {
 	fn as_raw_mut_NormalBayesClassifier(&mut self) -> *mut c_void;
 
@@ -2554,10 +2563,7 @@ impl dyn NormalBayesClassifier + '_ {
 	}
 	
 }
-/// The structure represents the logarithmic grid range of statmodel parameters.
-/// 
-/// It is used for optimizing statmodel accuracy by varying model parameters, the accuracy estimate
-/// being computed by cross-validation.
+/// Constant methods for [crate::ml::ParamGrid]
 pub trait ParamGridTraitConst {
 	fn as_raw_ParamGrid(&self) -> *const c_void;
 
@@ -2590,6 +2596,7 @@ pub trait ParamGridTraitConst {
 	
 }
 
+/// Mutable methods for [crate::ml::ParamGrid]
 pub trait ParamGridTrait: crate::ml::ParamGridTraitConst {
 	fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void;
 
@@ -2695,9 +2702,7 @@ impl ParamGrid {
 	
 }
 
-/// The class implements the random forest predictor.
-/// ## See also
-/// @ref ml_intro_rtrees
+/// Constant methods for [crate::ml::RTrees]
 pub trait RTreesConst: crate::ml::DTreesConst {
 	fn as_raw_RTrees(&self) -> *const c_void;
 
@@ -2772,8 +2777,8 @@ pub trait RTreesConst: crate::ml::DTreesConst {
 	/// * flags: Flags for defining the type of RTrees.
 	#[inline]
 	fn get_votes(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		input_array_arg!(samples);
-		output_array_arg!(results);
+		extern_container_arg!(samples);
+		extern_container_arg!(results);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_RTrees_getVotes_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_RTrees(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2792,6 +2797,9 @@ pub trait RTreesConst: crate::ml::DTreesConst {
 	
 }
 
+/// The class implements the random forest predictor.
+/// ## See also
+/// [ml_intro_rtrees]
 pub trait RTrees: crate::ml::DTrees + crate::ml::RTreesConst {
 	fn as_raw_mut_RTrees(&mut self) -> *mut c_void;
 
@@ -2882,9 +2890,7 @@ impl dyn RTrees + '_ {
 	}
 	
 }
-/// Support Vector Machines.
-/// ## See also
-/// @ref ml_intro_svm
+/// Constant methods for [crate::ml::SVM]
 pub trait SVMConst: crate::ml::StatModelConst {
 	fn as_raw_SVM(&self) -> *const c_void;
 
@@ -3068,8 +3074,8 @@ pub trait SVMConst: crate::ml::StatModelConst {
 	/// sum of kernel responses.
 	#[inline]
 	fn get_decision_function(&self, i: i32, alpha: &mut dyn core::ToOutputArray, svidx: &mut dyn core::ToOutputArray) -> Result<f64> {
-		output_array_arg!(alpha);
-		output_array_arg!(svidx);
+		extern_container_arg!(alpha);
+		extern_container_arg!(svidx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_SVM_getDecisionFunction_const_int_const__OutputArrayR_const__OutputArrayR(self.as_raw_SVM(), i, alpha.as_raw__OutputArray(), svidx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3079,6 +3085,9 @@ pub trait SVMConst: crate::ml::StatModelConst {
 	
 }
 
+/// Support Vector Machines.
+/// ## See also
+/// [ml_intro_svm]
 pub trait SVM: crate::ml::SVMConst + crate::ml::StatModel {
 	fn as_raw_mut_SVM(&mut self) -> *mut c_void;
 
@@ -3319,8 +3328,8 @@ pub trait SVM: crate::ml::SVMConst + crate::ml::StatModel {
 	/// * balanced: false
 	#[inline]
 	fn train_auto_with_data(&mut self, samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, k_fold: i32, mut cgrid: core::Ptr<crate::ml::ParamGrid>, mut gamma_grid: core::Ptr<crate::ml::ParamGrid>, mut p_grid: core::Ptr<crate::ml::ParamGrid>, mut nu_grid: core::Ptr<crate::ml::ParamGrid>, mut coeff_grid: core::Ptr<crate::ml::ParamGrid>, mut degree_grid: core::Ptr<crate::ml::ParamGrid>, balanced: bool) -> Result<bool> {
-		input_array_arg!(samples);
-		input_array_arg!(responses);
+		extern_container_arg!(samples);
+		extern_container_arg!(responses);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_bool(self.as_raw_mut_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), k_fold, cgrid.as_raw_mut_PtrOfParamGrid(), gamma_grid.as_raw_mut_PtrOfParamGrid(), p_grid.as_raw_mut_PtrOfParamGrid(), nu_grid.as_raw_mut_PtrOfParamGrid(), coeff_grid.as_raw_mut_PtrOfParamGrid(), degree_grid.as_raw_mut_PtrOfParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3399,6 +3408,7 @@ impl dyn SVM + '_ {
 	}
 	
 }
+/// Constant methods for [crate::ml::SVM_Kernel]
 pub trait SVM_KernelConst: core::AlgorithmTraitConst {
 	fn as_raw_SVM_Kernel(&self) -> *const c_void;
 
@@ -3427,77 +3437,7 @@ pub trait SVM_Kernel: core::AlgorithmTrait + crate::ml::SVM_KernelConst {
 	
 }
 
-/// !
-/// Stochastic Gradient Descent SVM classifier
-/// 
-/// SVMSGD provides a fast and easy-to-use implementation of the SVM classifier using the Stochastic Gradient Descent approach,
-/// as presented in [bottou2010large](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_bottou2010large).
-/// 
-/// The classifier has following parameters:
-/// - model type,
-/// - margin type,
-/// - margin regularization (![inline formula](https://latex.codecogs.com/png.latex?%5Clambda)),
-/// - initial step size (![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%5F0)),
-/// - step decreasing power (![inline formula](https://latex.codecogs.com/png.latex?c)),
-/// - and termination criteria.
-/// 
-/// The model type may have one of the following values: \ref SGD and \ref ASGD.
-/// 
-/// - \ref SGD is the classic version of SVMSGD classifier: every next step is calculated by the formula
-///   ![block formula](https://latex.codecogs.com/png.latex?w%5F%7Bt%2B1%7D%20%3D%20w%5Ft%20%2D%20%5Cgamma%28t%29%20%5Cfrac%7BdQ%5Fi%7D%7Bdw%7D%20%7C%5F%7Bw%20%3D%20w%5Ft%7D)
-///   where
-///   - ![inline formula](https://latex.codecogs.com/png.latex?w%5Ft) is the weights vector for decision function at step ![inline formula](https://latex.codecogs.com/png.latex?t),
-///   - ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29) is the step size of model parameters at the iteration ![inline formula](https://latex.codecogs.com/png.latex?t), it is decreased on each step by the formula
-///    ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29%20%3D%20%5Cgamma%5F0%20%20%281%20%2B%20%5Clambda%20%20%5Cgamma%5F0%20t%29%20%5E%20%7B%2Dc%7D)
-///   - ![inline formula](https://latex.codecogs.com/png.latex?Q%5Fi) is the target functional from SVM task for sample with number ![inline formula](https://latex.codecogs.com/png.latex?i), this sample is chosen stochastically on each step of the algorithm.
-/// 
-/// - \ref ASGD is Average Stochastic Gradient Descent SVM Classifier. ASGD classifier averages weights vector on each step of algorithm by the formula
-/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cwidehat%7Bw%7D%5F%7Bt%2B1%7D%20%3D%20%5Cfrac%7Bt%7D%7B1%2Bt%7D%5Cwidehat%7Bw%7D%5F%7Bt%7D%20%2B%20%5Cfrac%7B1%7D%7B1%2Bt%7Dw%5F%7Bt%2B1%7D)
-/// 
-/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_bottou2010large)).
-/// 
-/// The margin type may have one of the following values: \ref SOFT_MARGIN or \ref HARD_MARGIN.
-/// 
-/// - You should use \ref HARD_MARGIN type, if you have linearly separable sets.
-/// - You should use \ref SOFT_MARGIN type, if you have non-linearly separable sets or sets with outliers.
-/// - In the general case (if you know nothing about linear separability of your sets), use SOFT_MARGIN.
-/// 
-/// The other parameters may be described as follows:
-/// - Margin regularization parameter is responsible for weights decreasing at each step and for the strength of restrictions on outliers
-///   (the less the parameter, the less probability that an outlier will be ignored).
-///   Recommended value for SGD model is 0.0001, for ASGD model is 0.00001.
-/// 
-/// - Initial step size parameter is the initial value for the step size ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29).
-///   You will have to find the best initial step for your problem.
-/// 
-/// - Step decreasing power is the power parameter for ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29) decreasing by the formula, mentioned above.
-///   Recommended value for SGD model is 1, for ASGD model is 0.75.
-/// 
-/// - Termination criteria can be TermCriteria::COUNT, TermCriteria::EPS or TermCriteria::COUNT + TermCriteria::EPS.
-///   You will have to find the best termination criteria for your problem.
-/// 
-/// Note that the parameters margin regularization, initial step size, and step decreasing power should be positive.
-/// 
-/// To use SVMSGD algorithm do as follows:
-/// 
-/// - first, create the SVMSGD object. The algorithm will set optimal parameters by default, but you can set your own parameters via functions setSvmsgdType(),
-///   setMarginType(), setMarginRegularization(), setInitialStepSize(), and setStepDecreasingPower().
-/// 
-/// - then the SVM model can be trained using the train features and the correspondent labels by the method train().
-/// 
-/// - after that, the label of a new feature vector can be predicted using the method predict().
-/// 
-/// ```C++
-/// // Create empty object
-/// cv::Ptr<SVMSGD> svmsgd = SVMSGD::create();
-/// 
-/// // Train the Stochastic Gradient Descent SVM
-/// svmsgd->train(trainData);
-/// 
-/// // Predict labels for the new samples
-/// svmsgd->predict(samples, responses);
-/// ```
-/// 
+/// Constant methods for [crate::ml::SVMSGD]
 pub trait SVMSGDConst: crate::ml::StatModelConst {
 	fn as_raw_SVMSGD(&self) -> *const c_void;
 
@@ -3577,6 +3517,77 @@ pub trait SVMSGDConst: crate::ml::StatModelConst {
 	
 }
 
+/// !
+/// Stochastic Gradient Descent SVM classifier
+/// 
+/// SVMSGD provides a fast and easy-to-use implementation of the SVM classifier using the Stochastic Gradient Descent approach,
+/// as presented in [bottou2010large](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_bottou2010large).
+/// 
+/// The classifier has following parameters:
+/// - model type,
+/// - margin type,
+/// - margin regularization (![inline formula](https://latex.codecogs.com/png.latex?%5Clambda)),
+/// - initial step size (![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%5F0)),
+/// - step decreasing power (![inline formula](https://latex.codecogs.com/png.latex?c)),
+/// - and termination criteria.
+/// 
+/// The model type may have one of the following values: \ref SGD and \ref ASGD.
+/// 
+/// - \ref SGD is the classic version of SVMSGD classifier: every next step is calculated by the formula
+///   ![block formula](https://latex.codecogs.com/png.latex?w%5F%7Bt%2B1%7D%20%3D%20w%5Ft%20%2D%20%5Cgamma%28t%29%20%5Cfrac%7BdQ%5Fi%7D%7Bdw%7D%20%7C%5F%7Bw%20%3D%20w%5Ft%7D)
+///   where
+///   - ![inline formula](https://latex.codecogs.com/png.latex?w%5Ft) is the weights vector for decision function at step ![inline formula](https://latex.codecogs.com/png.latex?t),
+///   - ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29) is the step size of model parameters at the iteration ![inline formula](https://latex.codecogs.com/png.latex?t), it is decreased on each step by the formula
+///    ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29%20%3D%20%5Cgamma%5F0%20%20%281%20%2B%20%5Clambda%20%20%5Cgamma%5F0%20t%29%20%5E%20%7B%2Dc%7D)
+///   - ![inline formula](https://latex.codecogs.com/png.latex?Q%5Fi) is the target functional from SVM task for sample with number ![inline formula](https://latex.codecogs.com/png.latex?i), this sample is chosen stochastically on each step of the algorithm.
+/// 
+/// - \ref ASGD is Average Stochastic Gradient Descent SVM Classifier. ASGD classifier averages weights vector on each step of algorithm by the formula
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cwidehat%7Bw%7D%5F%7Bt%2B1%7D%20%3D%20%5Cfrac%7Bt%7D%7B1%2Bt%7D%5Cwidehat%7Bw%7D%5F%7Bt%7D%20%2B%20%5Cfrac%7B1%7D%7B1%2Bt%7Dw%5F%7Bt%2B1%7D)
+/// 
+/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_bottou2010large)).
+/// 
+/// The margin type may have one of the following values: \ref SOFT_MARGIN or \ref HARD_MARGIN.
+/// 
+/// - You should use \ref HARD_MARGIN type, if you have linearly separable sets.
+/// - You should use \ref SOFT_MARGIN type, if you have non-linearly separable sets or sets with outliers.
+/// - In the general case (if you know nothing about linear separability of your sets), use SOFT_MARGIN.
+/// 
+/// The other parameters may be described as follows:
+/// - Margin regularization parameter is responsible for weights decreasing at each step and for the strength of restrictions on outliers
+///   (the less the parameter, the less probability that an outlier will be ignored).
+///   Recommended value for SGD model is 0.0001, for ASGD model is 0.00001.
+/// 
+/// - Initial step size parameter is the initial value for the step size ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29).
+///   You will have to find the best initial step for your problem.
+/// 
+/// - Step decreasing power is the power parameter for ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29) decreasing by the formula, mentioned above.
+///   Recommended value for SGD model is 1, for ASGD model is 0.75.
+/// 
+/// - Termination criteria can be TermCriteria::COUNT, TermCriteria::EPS or TermCriteria::COUNT + TermCriteria::EPS.
+///   You will have to find the best termination criteria for your problem.
+/// 
+/// Note that the parameters margin regularization, initial step size, and step decreasing power should be positive.
+/// 
+/// To use SVMSGD algorithm do as follows:
+/// 
+/// - first, create the SVMSGD object. The algorithm will set optimal parameters by default, but you can set your own parameters via functions setSvmsgdType(),
+///   setMarginType(), setMarginRegularization(), setInitialStepSize(), and setStepDecreasingPower().
+/// 
+/// - then the SVM model can be trained using the train features and the correspondent labels by the method train().
+/// 
+/// - after that, the label of a new feature vector can be predicted using the method predict().
+/// 
+/// ```C++
+/// // Create empty object
+/// cv::Ptr<SVMSGD> svmsgd = SVMSGD::create();
+/// 
+/// // Train the Stochastic Gradient Descent SVM
+/// svmsgd->train(trainData);
+/// 
+/// // Predict labels for the new samples
+/// svmsgd->predict(samples, responses);
+/// ```
+/// 
 pub trait SVMSGD: crate::ml::SVMSGDConst + crate::ml::StatModel {
 	fn as_raw_mut_SVMSGD(&mut self) -> *mut c_void;
 
@@ -3735,7 +3746,7 @@ impl dyn SVMSGD + '_ {
 	}
 	
 }
-/// Base class for statistical models in OpenCV ML.
+/// Constant methods for [crate::ml::StatModel]
 pub trait StatModelConst: core::AlgorithmTraitConst {
 	fn as_raw_StatModel(&self) -> *const c_void;
 
@@ -3793,7 +3804,7 @@ pub trait StatModelConst: core::AlgorithmTraitConst {
 	/// computed as RMS, for classifiers - as a percent of missclassified samples (0%-100%).
 	#[inline]
 	fn calc_error(&self, data: &core::Ptr<dyn crate::ml::TrainData>, test: bool, resp: &mut dyn core::ToOutputArray) -> Result<f32> {
-		output_array_arg!(resp);
+		extern_container_arg!(resp);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_StatModel_calcError_const_const_PtrLTrainDataGR_bool_const__OutputArrayR(self.as_raw_StatModel(), data.as_raw_PtrOfTrainData(), test, resp.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3813,8 +3824,8 @@ pub trait StatModelConst: core::AlgorithmTraitConst {
 	/// * flags: 0
 	#[inline]
 	fn predict(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
-		input_array_arg!(samples);
-		output_array_arg!(results);
+		extern_container_arg!(samples);
+		extern_container_arg!(results);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_StatModel_predict_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_StatModel(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3824,6 +3835,7 @@ pub trait StatModelConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Base class for statistical models in OpenCV ML.
 pub trait StatModel: core::AlgorithmTrait + crate::ml::StatModelConst {
 	fn as_raw_mut_StatModel(&mut self) -> *mut c_void;
 
@@ -3854,8 +3866,8 @@ pub trait StatModel: core::AlgorithmTrait + crate::ml::StatModelConst {
 	/// * responses: vector of responses associated with the training samples.
 	#[inline]
 	fn train(&mut self, samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray) -> Result<bool> {
-		input_array_arg!(samples);
-		input_array_arg!(responses);
+		extern_container_arg!(samples);
+		extern_container_arg!(responses);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_StatModel_train_const__InputArrayR_int_const__InputArrayR(self.as_raw_mut_StatModel(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3865,14 +3877,7 @@ pub trait StatModel: core::AlgorithmTrait + crate::ml::StatModelConst {
 	
 }
 
-/// Class encapsulating training data.
-/// 
-/// Please note that the class only specifies the interface of training data, but not implementation.
-/// All the statistical model classes in _ml_ module accepts Ptr\<TrainData\> as parameter. In other
-/// words, you can create your own class derived from TrainData and pass smart pointer to the instance
-/// of this class into StatModel::train.
-/// ## See also
-/// @ref ml_intro_data
+/// Constant methods for [crate::ml::TrainData]
 pub trait TrainDataConst {
 	fn as_raw_TrainData(&self) -> *const c_void;
 
@@ -3932,7 +3937,7 @@ pub trait TrainDataConst {
 	
 	#[inline]
 	fn get_sample(&self, var_idx: &dyn core::ToInputArray, sidx: i32, buf: &mut f32) -> Result<()> {
-		input_array_arg!(var_idx);
+		extern_container_arg!(var_idx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_TrainData_getSample_const_const__InputArrayR_int_floatX(self.as_raw_TrainData(), var_idx.as_raw__InputArray(), sidx, buf, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4147,7 +4152,7 @@ pub trait TrainDataConst {
 	
 	#[inline]
 	fn get_values(&self, vi: i32, sidx: &dyn core::ToInputArray, values: &mut f32) -> Result<()> {
-		input_array_arg!(sidx);
+		extern_container_arg!(sidx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_TrainData_getValues_const_int_const__InputArrayR_floatX(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4157,7 +4162,7 @@ pub trait TrainDataConst {
 	
 	#[inline]
 	fn get_norm_cat_values(&self, vi: i32, sidx: &dyn core::ToInputArray, values: &mut i32) -> Result<()> {
-		input_array_arg!(sidx);
+		extern_container_arg!(sidx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_TrainData_getNormCatValues_const_int_const__InputArrayR_intX(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4240,6 +4245,14 @@ pub trait TrainDataConst {
 	
 }
 
+/// Class encapsulating training data.
+/// 
+/// Please note that the class only specifies the interface of training data, but not implementation.
+/// All the statistical model classes in _ml_ module accepts Ptr\<TrainData\> as parameter. In other
+/// words, you can create your own class derived from TrainData and pass smart pointer to the instance
+/// of this class into StatModel::train.
+/// ## See also
+/// [ml_intro_data]
 pub trait TrainData: crate::ml::TrainDataConst {
 	fn as_raw_mut_TrainData(&mut self) -> *mut c_void;
 
@@ -4404,12 +4417,12 @@ impl dyn TrainData + '_ {
 	/// * var_type: noArray()
 	#[inline]
 	pub fn create(samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, var_idx: &dyn core::ToInputArray, sample_idx: &dyn core::ToInputArray, sample_weights: &dyn core::ToInputArray, var_type: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::ml::TrainData>> {
-		input_array_arg!(samples);
-		input_array_arg!(responses);
-		input_array_arg!(var_idx);
-		input_array_arg!(sample_idx);
-		input_array_arg!(sample_weights);
-		input_array_arg!(var_type);
+		extern_container_arg!(samples);
+		extern_container_arg!(responses);
+		extern_container_arg!(var_idx);
+		extern_container_arg!(sample_idx);
+		extern_container_arg!(sample_weights);
+		extern_container_arg!(var_type);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_TrainData_create_const__InputArrayR_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), var_idx.as_raw__InputArray(), sample_idx.as_raw__InputArray(), sample_weights.as_raw__InputArray(), var_type.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -38,6 +38,7 @@ pub fn create_free_type2() -> Result<core::Ptr<dyn crate::freetype::FreeType2>> 
 	Ok(ret)
 }
 
+/// Constant methods for [crate::freetype::FreeType2]
 pub trait FreeType2Const: core::AlgorithmTraitConst {
 	fn as_raw_FreeType2(&self) -> *const c_void;
 
@@ -95,7 +96,7 @@ pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
 	/// * bottomLeftOrigin: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner.
 	#[inline]
 	fn put_text(&mut self, img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
-		input_output_array_arg!(img);
+		extern_container_arg!(img);
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_as_extern(), org.opencv_as_extern(), font_height, color.opencv_as_extern(), thickness, line_type, bottom_left_origin, ocvrs_return.as_mut_ptr()) };

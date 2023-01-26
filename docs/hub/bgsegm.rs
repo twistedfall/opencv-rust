@@ -190,8 +190,8 @@ pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background
 /// * objspeed: 6.0
 #[inline]
 pub fn create_synthetic_sequence_generator(background: &dyn core::ToInputArray, object: &dyn core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>> {
-	input_array_arg!(background);
-	input_array_arg!(object);
+	extern_container_arg!(background);
+	extern_container_arg!(object);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -200,18 +200,13 @@ pub fn create_synthetic_sequence_generator(background: &dyn core::ToInputArray, 
 	Ok(ret)
 }
 
-/// Background subtraction based on counting.
-/// 
-/// About as fast as MOG2 on a high end system.
-/// More than twice faster than MOG2 on cheap hardware (benchmarked on Raspberry Pi3).
-/// 
-/// %Algorithm by Sagi Zeevi ( https://github.com/sagi-z/BackgroundSubtractorCNT )
+/// Constant methods for [crate::bgsegm::BackgroundSubtractorCNT]
 pub trait BackgroundSubtractorCNTConst: crate::video::BackgroundSubtractorConst {
 	fn as_raw_BackgroundSubtractorCNT(&self) -> *const c_void;
 
 	#[inline]
 	fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(background_image);
+		extern_container_arg!(background_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorCNT(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -261,6 +256,12 @@ pub trait BackgroundSubtractorCNTConst: crate::video::BackgroundSubtractorConst 
 	
 }
 
+/// Background subtraction based on counting.
+/// 
+/// About as fast as MOG2 on a high end system.
+/// More than twice faster than MOG2 on cheap hardware (benchmarked on Raspberry Pi3).
+/// 
+/// %Algorithm by Sagi Zeevi ( <https://github.com/sagi-z/BackgroundSubtractorCNT> )
 pub trait BackgroundSubtractorCNT: crate::bgsegm::BackgroundSubtractorCNTConst + crate::video::BackgroundSubtractor {
 	fn as_raw_mut_BackgroundSubtractorCNT(&mut self) -> *mut c_void;
 
@@ -268,8 +269,8 @@ pub trait BackgroundSubtractorCNT: crate::bgsegm::BackgroundSubtractorCNTConst +
 	/// * learning_rate: -1
 	#[inline]
 	fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(fgmask);
+		extern_container_arg!(image);
+		extern_container_arg!(fgmask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -319,13 +320,7 @@ pub trait BackgroundSubtractorCNT: crate::bgsegm::BackgroundSubtractorCNTConst +
 	
 }
 
-/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gold2012) .
-/// 
-/// Takes a series of images and returns a sequence of mask (8UC1)
-/// images of the same size, where 255 indicates Foreground and 0 represents Background.
-/// This class implements an algorithm described in "Visual Tracking of Human Visitors under
-/// Variable-Lighting Conditions for a Responsive Audio Art Installation," A. Godbehere,
-/// A. Matsukawa, K. Goldberg, American Control Conference, Montreal, June 2012.
+/// Constant methods for [crate::bgsegm::BackgroundSubtractorGMG]
 pub trait BackgroundSubtractorGMGConst: crate::video::BackgroundSubtractorConst {
 	fn as_raw_BackgroundSubtractorGMG(&self) -> *const c_void;
 
@@ -438,6 +433,13 @@ pub trait BackgroundSubtractorGMGConst: crate::video::BackgroundSubtractorConst 
 	
 }
 
+/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gold2012) .
+/// 
+/// Takes a series of images and returns a sequence of mask (8UC1)
+/// images of the same size, where 255 indicates Foreground and 0 represents Background.
+/// This class implements an algorithm described in "Visual Tracking of Human Visitors under
+/// Variable-Lighting Conditions for a Responsive Audio Art Installation," A. Godbehere,
+/// A. Matsukawa, K. Goldberg, American Control Conference, Montreal, June 2012.
 pub trait BackgroundSubtractorGMG: crate::bgsegm::BackgroundSubtractorGMGConst + crate::video::BackgroundSubtractor {
 	fn as_raw_mut_BackgroundSubtractorGMG(&mut self) -> *mut c_void;
 
@@ -543,15 +545,13 @@ pub trait BackgroundSubtractorGMG: crate::bgsegm::BackgroundSubtractorGMGConst +
 	
 }
 
-/// Implementation of the different yet better algorithm which is called GSOC, as it was implemented during GSOC and was not originated from any paper.
-/// 
-/// This algorithm demonstrates better performance on CDNET 2014 dataset compared to other algorithms in OpenCV.
+/// Constant methods for [crate::bgsegm::BackgroundSubtractorGSOC]
 pub trait BackgroundSubtractorGSOCConst: crate::video::BackgroundSubtractorConst {
 	fn as_raw_BackgroundSubtractorGSOC(&self) -> *const c_void;
 
 	#[inline]
 	fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(background_image);
+		extern_container_arg!(background_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorGSOC(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -561,6 +561,9 @@ pub trait BackgroundSubtractorGSOCConst: crate::video::BackgroundSubtractorConst
 	
 }
 
+/// Implementation of the different yet better algorithm which is called GSOC, as it was implemented during GSOC and was not originated from any paper.
+/// 
+/// This algorithm demonstrates better performance on CDNET 2014 dataset compared to other algorithms in OpenCV.
 pub trait BackgroundSubtractorGSOC: crate::bgsegm::BackgroundSubtractorGSOCConst + crate::video::BackgroundSubtractor {
 	fn as_raw_mut_BackgroundSubtractorGSOC(&mut self) -> *mut c_void;
 
@@ -568,8 +571,8 @@ pub trait BackgroundSubtractorGSOC: crate::bgsegm::BackgroundSubtractorGSOCConst
 	/// * learning_rate: -1
 	#[inline]
 	fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(fgmask);
+		extern_container_arg!(image);
+		extern_container_arg!(fgmask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -579,13 +582,13 @@ pub trait BackgroundSubtractorGSOC: crate::bgsegm::BackgroundSubtractorGSOCConst
 	
 }
 
-/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+/// Constant methods for [crate::bgsegm::BackgroundSubtractorLSBP]
 pub trait BackgroundSubtractorLSBPConst: crate::video::BackgroundSubtractorConst {
 	fn as_raw_BackgroundSubtractorLSBP(&self) -> *const c_void;
 
 	#[inline]
 	fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(background_image);
+		extern_container_arg!(background_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorLSBP(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -595,6 +598,7 @@ pub trait BackgroundSubtractorLSBPConst: crate::video::BackgroundSubtractorConst
 	
 }
 
+/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 pub trait BackgroundSubtractorLSBP: crate::bgsegm::BackgroundSubtractorLSBPConst + crate::video::BackgroundSubtractor {
 	fn as_raw_mut_BackgroundSubtractorLSBP(&mut self) -> *mut c_void;
 
@@ -602,8 +606,8 @@ pub trait BackgroundSubtractorLSBP: crate::bgsegm::BackgroundSubtractorLSBPConst
 	/// * learning_rate: -1
 	#[inline]
 	fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(fgmask);
+		extern_container_arg!(image);
+		extern_container_arg!(fgmask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -613,12 +617,13 @@ pub trait BackgroundSubtractorLSBP: crate::bgsegm::BackgroundSubtractorLSBPConst
 	
 }
 
-/// This is for calculation of the LSBP descriptors.
+/// Constant methods for [crate::bgsegm::BackgroundSubtractorLSBPDesc]
 pub trait BackgroundSubtractorLSBPDescTraitConst {
 	fn as_raw_BackgroundSubtractorLSBPDesc(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::bgsegm::BackgroundSubtractorLSBPDesc]
 pub trait BackgroundSubtractorLSBPDescTrait: crate::bgsegm::BackgroundSubtractorLSBPDescTraitConst {
 	fn as_raw_mut_BackgroundSubtractorLSBPDesc(&mut self) -> *mut c_void;
 
@@ -651,7 +656,7 @@ impl crate::bgsegm::BackgroundSubtractorLSBPDescTrait for BackgroundSubtractorLS
 impl BackgroundSubtractorLSBPDesc {
 	#[inline]
 	pub fn calc_local_svd_values(local_svd_values: &mut dyn core::ToOutputArray, frame: &core::Mat) -> Result<()> {
-		output_array_arg!(local_svd_values);
+		extern_container_arg!(local_svd_values);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_calcLocalSVDValues_const__OutputArrayR_const_MatR(local_svd_values.as_raw__OutputArray(), frame.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -661,7 +666,7 @@ impl BackgroundSubtractorLSBPDesc {
 	
 	#[inline]
 	pub fn compute_from_local_svd_values(desc: &mut dyn core::ToOutputArray, local_svd_values: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
-		output_array_arg!(desc);
+		extern_container_arg!(desc);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_computeFromLocalSVDValues_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), local_svd_values.as_raw_Mat(), lsbp_sample_points, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -671,7 +676,7 @@ impl BackgroundSubtractorLSBPDesc {
 	
 	#[inline]
 	pub fn compute(desc: &mut dyn core::ToOutputArray, frame: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
-		output_array_arg!(desc);
+		extern_container_arg!(desc);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_compute_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), frame.as_raw_Mat(), lsbp_sample_points, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -681,9 +686,7 @@ impl BackgroundSubtractorLSBPDesc {
 	
 }
 
-/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
-/// 
-/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_KB2001) .
+/// Constant methods for [crate::bgsegm::BackgroundSubtractorMOG]
 pub trait BackgroundSubtractorMOGConst: crate::video::BackgroundSubtractorConst {
 	fn as_raw_BackgroundSubtractorMOG(&self) -> *const c_void;
 
@@ -725,6 +728,9 @@ pub trait BackgroundSubtractorMOGConst: crate::video::BackgroundSubtractorConst 
 	
 }
 
+/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
+/// 
+/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_KB2001) .
 pub trait BackgroundSubtractorMOG: crate::bgsegm::BackgroundSubtractorMOGConst + crate::video::BackgroundSubtractor {
 	fn as_raw_mut_BackgroundSubtractorMOG(&mut self) -> *mut c_void;
 
@@ -766,15 +772,13 @@ pub trait BackgroundSubtractorMOG: crate::bgsegm::BackgroundSubtractorMOGConst +
 	
 }
 
-/// Synthetic frame sequence generator for testing background subtraction algorithms.
-/// 
-/// It will generate the moving object on top of the background.
-/// It will apply some distortion to the background to make the test more complex.
+/// Constant methods for [crate::bgsegm::SyntheticSequenceGenerator]
 pub trait SyntheticSequenceGeneratorTraitConst: core::AlgorithmTraitConst {
 	fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::bgsegm::SyntheticSequenceGenerator]
 pub trait SyntheticSequenceGeneratorTrait: core::AlgorithmTrait + crate::bgsegm::SyntheticSequenceGeneratorTraitConst {
 	fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void;
 
@@ -785,8 +789,8 @@ pub trait SyntheticSequenceGeneratorTrait: core::AlgorithmTrait + crate::bgsegm:
 	/// * gtMask: Output ground-truth (reference) segmentation mask object/background.
 	#[inline]
 	fn get_next_frame(&mut self, frame: &mut dyn core::ToOutputArray, gt_mask: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(frame);
-		output_array_arg!(gt_mask);
+		extern_container_arg!(frame);
+		extern_container_arg!(gt_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_getNextFrame_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SyntheticSequenceGenerator(), frame.as_raw__OutputArray(), gt_mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -843,8 +847,8 @@ impl SyntheticSequenceGenerator {
 	/// * objspeed: How fast object will fly over background.
 	#[inline]
 	pub fn new(background: &dyn core::ToInputArray, object: &dyn core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<crate::bgsegm::SyntheticSequenceGenerator> {
-		input_array_arg!(background);
-		input_array_arg!(object);
+		extern_container_arg!(background);
+		extern_container_arg!(object);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

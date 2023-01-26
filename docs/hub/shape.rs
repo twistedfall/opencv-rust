@@ -25,8 +25,8 @@ pub mod prelude {
 /// * signature2: Second signature of the same format and size as signature1.
 #[inline]
 pub fn emdl1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputArray) -> Result<f32> {
-	input_array_arg!(signature1);
-	input_array_arg!(signature2);
+	extern_container_arg!(signature1);
+	extern_container_arg!(signature2);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_EMDL1_const__InputArrayR_const__InputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -144,7 +144,7 @@ pub fn create_thin_plate_spline_shape_transformer(regularization_parameter: f64)
 	Ok(ret)
 }
 
-/// Wrapper class for the OpenCV Affine Transformation algorithm. :
+/// Constant methods for [crate::shape::AffineTransformer]
 pub trait AffineTransformerConst: crate::shape::ShapeTransformerConst {
 	fn as_raw_AffineTransformer(&self) -> *const c_void;
 
@@ -159,6 +159,7 @@ pub trait AffineTransformerConst: crate::shape::ShapeTransformerConst {
 	
 }
 
+/// Wrapper class for the OpenCV Affine Transformation algorithm. :
 pub trait AffineTransformer: crate::shape::AffineTransformerConst + crate::shape::ShapeTransformer {
 	fn as_raw_mut_AffineTransformer(&mut self) -> *mut c_void;
 
@@ -173,18 +174,19 @@ pub trait AffineTransformer: crate::shape::AffineTransformerConst + crate::shape
 	
 }
 
-/// An Chi based cost extraction. :
+/// Constant methods for [crate::shape::ChiHistogramCostExtractor]
 pub trait ChiHistogramCostExtractorConst: crate::shape::HistogramCostExtractorConst {
 	fn as_raw_ChiHistogramCostExtractor(&self) -> *const c_void;
 
 }
 
+/// An Chi based cost extraction. :
 pub trait ChiHistogramCostExtractor: crate::shape::ChiHistogramCostExtractorConst + crate::shape::HistogramCostExtractor {
 	fn as_raw_mut_ChiHistogramCostExtractor(&mut self) -> *mut c_void;
 
 }
 
-/// An EMD based cost extraction. :
+/// Constant methods for [crate::shape::EMDHistogramCostExtractor]
 pub trait EMDHistogramCostExtractorConst: crate::shape::HistogramCostExtractorConst {
 	fn as_raw_EMDHistogramCostExtractor(&self) -> *const c_void;
 
@@ -199,6 +201,7 @@ pub trait EMDHistogramCostExtractorConst: crate::shape::HistogramCostExtractorCo
 	
 }
 
+/// An EMD based cost extraction. :
 pub trait EMDHistogramCostExtractor: crate::shape::EMDHistogramCostExtractorConst + crate::shape::HistogramCostExtractor {
 	fn as_raw_mut_EMDHistogramCostExtractor(&mut self) -> *mut c_void;
 
@@ -213,24 +216,19 @@ pub trait EMDHistogramCostExtractor: crate::shape::EMDHistogramCostExtractorCons
 	
 }
 
-/// An EMD-L1 based cost extraction. :
+/// Constant methods for [crate::shape::EMDL1HistogramCostExtractor]
 pub trait EMDL1HistogramCostExtractorConst: crate::shape::HistogramCostExtractorConst {
 	fn as_raw_EMDL1HistogramCostExtractor(&self) -> *const c_void;
 
 }
 
+/// An EMD-L1 based cost extraction. :
 pub trait EMDL1HistogramCostExtractor: crate::shape::EMDL1HistogramCostExtractorConst + crate::shape::HistogramCostExtractor {
 	fn as_raw_mut_EMDL1HistogramCostExtractor(&mut self) -> *mut c_void;
 
 }
 
-/// ********************************************************************************
-/// /
-/// /
-/// A simple Hausdorff distance measure between shapes defined by contours
-/// 
-/// according to the paper "Comparing Images using the Hausdorff distance." by D.P. Huttenlocher, G.A.
-/// Klanderman, and W.J. Rucklidge. (PAMI 1993). :
+/// Constant methods for [crate::shape::HausdorffDistanceExtractor]
 pub trait HausdorffDistanceExtractorConst: crate::shape::ShapeDistanceExtractorConst {
 	fn as_raw_HausdorffDistanceExtractor(&self) -> *const c_void;
 
@@ -254,6 +252,13 @@ pub trait HausdorffDistanceExtractorConst: crate::shape::ShapeDistanceExtractorC
 	
 }
 
+/// ********************************************************************************
+/// /
+/// /
+/// A simple Hausdorff distance measure between shapes defined by contours
+/// 
+/// according to the paper "Comparing Images using the Hausdorff distance." by D.P. Huttenlocher, G.A.
+/// Klanderman, and W.J. Rucklidge. (PAMI 1993). :
 pub trait HausdorffDistanceExtractor: crate::shape::HausdorffDistanceExtractorConst + crate::shape::ShapeDistanceExtractor {
 	fn as_raw_mut_HausdorffDistanceExtractor(&mut self) -> *mut c_void;
 
@@ -288,7 +293,7 @@ pub trait HausdorffDistanceExtractor: crate::shape::HausdorffDistanceExtractorCo
 	
 }
 
-/// Abstract base class for histogram cost algorithms.
+/// Constant methods for [crate::shape::HistogramCostExtractor]
 pub trait HistogramCostExtractorConst: core::AlgorithmTraitConst {
 	fn as_raw_HistogramCostExtractor(&self) -> *const c_void;
 
@@ -312,14 +317,15 @@ pub trait HistogramCostExtractorConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Abstract base class for histogram cost algorithms.
 pub trait HistogramCostExtractor: core::AlgorithmTrait + crate::shape::HistogramCostExtractorConst {
 	fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void;
 
 	#[inline]
 	fn build_cost_matrix(&mut self, descriptors1: &dyn core::ToInputArray, descriptors2: &dyn core::ToInputArray, cost_matrix: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(descriptors1);
-		input_array_arg!(descriptors2);
-		output_array_arg!(cost_matrix);
+		extern_container_arg!(descriptors1);
+		extern_container_arg!(descriptors2);
+		extern_container_arg!(cost_matrix);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_HistogramCostExtractor_buildCostMatrix_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_HistogramCostExtractor(), descriptors1.as_raw__InputArray(), descriptors2.as_raw__InputArray(), cost_matrix.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -347,7 +353,7 @@ pub trait HistogramCostExtractor: core::AlgorithmTrait + crate::shape::Histogram
 	
 }
 
-/// A norm based cost extraction. :
+/// Constant methods for [crate::shape::NormHistogramCostExtractor]
 pub trait NormHistogramCostExtractorConst: crate::shape::HistogramCostExtractorConst {
 	fn as_raw_NormHistogramCostExtractor(&self) -> *const c_void;
 
@@ -362,6 +368,7 @@ pub trait NormHistogramCostExtractorConst: crate::shape::HistogramCostExtractorC
 	
 }
 
+/// A norm based cost extraction. :
 pub trait NormHistogramCostExtractor: crate::shape::HistogramCostExtractor + crate::shape::NormHistogramCostExtractorConst {
 	fn as_raw_mut_NormHistogramCostExtractor(&mut self) -> *mut c_void;
 
@@ -376,14 +383,7 @@ pub trait NormHistogramCostExtractor: crate::shape::HistogramCostExtractor + cra
 	
 }
 
-/// ********************************************************************************
-/// /
-/// /
-/// Implementation of the Shape Context descriptor and matching algorithm
-/// 
-/// proposed by Belongie et al. in "Shape Matching and Object Recognition Using Shape Contexts" (PAMI
-/// 2002). This implementation is packaged in a generic scheme, in order to allow you the
-/// implementation of the common variations of the original pipeline.
+/// Constant methods for [crate::shape::ShapeContextDistanceExtractor]
 pub trait ShapeContextDistanceExtractorConst: crate::shape::ShapeDistanceExtractorConst {
 	fn as_raw_ShapeContextDistanceExtractor(&self) -> *const c_void;
 
@@ -461,8 +461,8 @@ pub trait ShapeContextDistanceExtractorConst: crate::shape::ShapeDistanceExtract
 	
 	#[inline]
 	fn get_images(&self, image1: &mut dyn core::ToOutputArray, image2: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(image1);
-		output_array_arg!(image2);
+		extern_container_arg!(image1);
+		extern_container_arg!(image2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ShapeContextDistanceExtractor_getImages_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_ShapeContextDistanceExtractor(), image1.as_raw__OutputArray(), image2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -510,6 +510,14 @@ pub trait ShapeContextDistanceExtractorConst: crate::shape::ShapeDistanceExtract
 	
 }
 
+/// ********************************************************************************
+/// /
+/// /
+/// Implementation of the Shape Context descriptor and matching algorithm
+/// 
+/// proposed by Belongie et al. in "Shape Matching and Object Recognition Using Shape Contexts" (PAMI
+/// 2002). This implementation is packaged in a generic scheme, in order to allow you the
+/// implementation of the common variations of the original pipeline.
 pub trait ShapeContextDistanceExtractor: crate::shape::ShapeContextDistanceExtractorConst + crate::shape::ShapeDistanceExtractor {
 	fn as_raw_mut_ShapeContextDistanceExtractor(&mut self) -> *mut c_void;
 
@@ -634,8 +642,8 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeContextDistanceExtra
 	/// * image2: Image corresponding to the shape defined by contours2.
 	#[inline]
 	fn set_images(&mut self, image1: &dyn core::ToInputArray, image2: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(image1);
-		input_array_arg!(image2);
+		extern_container_arg!(image1);
+		extern_container_arg!(image2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ShapeContextDistanceExtractor_setImages_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ShapeContextDistanceExtractor(), image1.as_raw__InputArray(), image2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -695,15 +703,16 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeContextDistanceExtra
 	
 }
 
-/// @example modules/shape/samples/shape_example.cpp
-/// An example using shape distance algorithm
-/// 
-/// Abstract base class for shape distance algorithms.
+/// Constant methods for [crate::shape::ShapeDistanceExtractor]
 pub trait ShapeDistanceExtractorConst: core::AlgorithmTraitConst {
 	fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void;
 
 }
 
+/// @example modules/shape/samples/shape_example.cpp
+/// An example using shape distance algorithm
+/// 
+/// Abstract base class for shape distance algorithms.
 pub trait ShapeDistanceExtractor: core::AlgorithmTrait + crate::shape::ShapeDistanceExtractorConst {
 	fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void;
 
@@ -714,8 +723,8 @@ pub trait ShapeDistanceExtractor: core::AlgorithmTrait + crate::shape::ShapeDist
 	/// * contour2: Contour defining second shape.
 	#[inline]
 	fn compute_distance(&mut self, contour1: &dyn core::ToInputArray, contour2: &dyn core::ToInputArray) -> Result<f32> {
-		input_array_arg!(contour1);
-		input_array_arg!(contour2);
+		extern_container_arg!(contour1);
+		extern_container_arg!(contour2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ShapeDistanceExtractor_computeDistance_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ShapeDistanceExtractor(), contour1.as_raw__InputArray(), contour2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -725,7 +734,7 @@ pub trait ShapeDistanceExtractor: core::AlgorithmTrait + crate::shape::ShapeDist
 	
 }
 
-/// Abstract base class for shape transformation algorithms.
+/// Constant methods for [crate::shape::ShapeTransformer]
 pub trait ShapeTransformerConst: core::AlgorithmTraitConst {
 	fn as_raw_ShapeTransformer(&self) -> *const c_void;
 
@@ -744,8 +753,8 @@ pub trait ShapeTransformerConst: core::AlgorithmTraitConst {
 	/// * border_value: Scalar()
 	#[inline]
 	fn warp_image(&self, transforming_image: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
-		input_array_arg!(transforming_image);
-		output_array_arg!(output);
+		extern_container_arg!(transforming_image);
+		extern_container_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ShapeTransformer_warpImage_const_const__InputArrayR_const__OutputArrayR_int_int_const_ScalarR(self.as_raw_ShapeTransformer(), transforming_image.as_raw__InputArray(), output.as_raw__OutputArray(), flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -755,6 +764,7 @@ pub trait ShapeTransformerConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Abstract base class for shape transformation algorithms.
 pub trait ShapeTransformer: core::AlgorithmTrait + crate::shape::ShapeTransformerConst {
 	fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void;
 
@@ -766,8 +776,8 @@ pub trait ShapeTransformer: core::AlgorithmTrait + crate::shape::ShapeTransforme
 	/// * matches: Standard vector of Matches between points.
 	#[inline]
 	fn estimate_transformation(&mut self, transforming_shape: &dyn core::ToInputArray, target_shape: &dyn core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
-		input_array_arg!(transforming_shape);
-		input_array_arg!(target_shape);
+		extern_container_arg!(transforming_shape);
+		extern_container_arg!(target_shape);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ShapeTransformer_estimateTransformation_const__InputArrayR_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_ShapeTransformer(), transforming_shape.as_raw__InputArray(), target_shape.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -785,8 +795,8 @@ pub trait ShapeTransformer: core::AlgorithmTrait + crate::shape::ShapeTransforme
 	/// * output: noArray()
 	#[inline]
 	fn apply_transformation(&mut self, input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray) -> Result<f32> {
-		input_array_arg!(input);
-		output_array_arg!(output);
+		extern_container_arg!(input);
+		extern_container_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ShapeTransformer_applyTransformation_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ShapeTransformer(), input.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -796,10 +806,7 @@ pub trait ShapeTransformer: core::AlgorithmTrait + crate::shape::ShapeTransforme
 	
 }
 
-/// Definition of the transformation
-/// 
-/// occupied in the paper "Principal Warps: Thin-Plate Splines and Decomposition of Deformations", by
-/// F.L. Bookstein (PAMI 1989). :
+/// Constant methods for [crate::shape::ThinPlateSplineShapeTransformer]
 pub trait ThinPlateSplineShapeTransformerConst: crate::shape::ShapeTransformerConst {
 	fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *const c_void;
 
@@ -814,6 +821,10 @@ pub trait ThinPlateSplineShapeTransformerConst: crate::shape::ShapeTransformerCo
 	
 }
 
+/// Definition of the transformation
+/// 
+/// occupied in the paper "Principal Warps: Thin-Plate Splines and Decomposition of Deformations", by
+/// F.L. Bookstein (PAMI 1989). :
 pub trait ThinPlateSplineShapeTransformer: crate::shape::ShapeTransformer + crate::shape::ThinPlateSplineShapeTransformerConst {
 	fn as_raw_mut_ThinPlateSplineShapeTransformer(&mut self) -> *mut c_void;
 

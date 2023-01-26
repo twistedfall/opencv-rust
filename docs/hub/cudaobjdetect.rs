@@ -14,14 +14,7 @@ pub mod prelude {
 	pub use { super::HOGConst, super::HOG, super::CascadeClassifierConst, super::CascadeClassifier };
 }
 
-/// Cascade classifier class used for object detection. Supports HAAR and LBP cascades. :
-/// 
-/// 
-/// Note:
-///    *   A cascade classifier example can be found at
-///        opencv_source_code/samples/gpu/cascadeclassifier.cpp
-///    *   A Nvidea API specific cascade classifier example can be found at
-///        opencv_source_code/samples/gpu/cascadeclassifier_nvidia_api.cpp
+/// Constant methods for [crate::cudaobjdetect::CascadeClassifier]
 pub trait CascadeClassifierConst: core::AlgorithmTraitConst {
 	fn as_raw_CascadeClassifier(&self) -> *const c_void;
 
@@ -81,6 +74,14 @@ pub trait CascadeClassifierConst: core::AlgorithmTraitConst {
 	
 }
 
+/// Cascade classifier class used for object detection. Supports HAAR and LBP cascades. :
+/// 
+/// 
+/// Note:
+///    *   A cascade classifier example can be found at
+///        opencv_source_code/samples/gpu/cascadeclassifier.cpp
+///    *   A Nvidea API specific cascade classifier example can be found at
+///        opencv_source_code/samples/gpu/cascadeclassifier_nvidia_api.cpp
 pub trait CascadeClassifier: core::AlgorithmTrait + crate::cudaobjdetect::CascadeClassifierConst {
 	fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void;
 
@@ -186,8 +187,8 @@ pub trait CascadeClassifier: core::AlgorithmTrait + crate::cudaobjdetect::Cascad
 	/// * stream: Stream::Null()
 	#[inline]
 	fn detect_multi_scale(&mut self, image: &dyn core::ToInputArray, objects: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(image);
-		output_array_arg!(objects);
+		extern_container_arg!(image);
+		extern_container_arg!(objects);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_CascadeClassifier_detectMultiScale_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -202,7 +203,7 @@ pub trait CascadeClassifier: core::AlgorithmTrait + crate::cudaobjdetect::Cascad
 	/// * objects: Resulting array.
 	#[inline]
 	fn convert(&mut self, gpu_objects: &mut dyn core::ToOutputArray, objects: &mut core::Vector<core::Rect>) -> Result<()> {
-		output_array_arg!(gpu_objects);
+		extern_container_arg!(gpu_objects);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_CascadeClassifier_convert_const__OutputArrayR_vectorLRectGR(self.as_raw_mut_CascadeClassifier(), gpu_objects.as_raw__OutputArray(), objects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -249,16 +250,7 @@ impl dyn CascadeClassifier + '_ {
 	}
 	
 }
-/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
-/// 
-/// 
-/// Note:
-///    *   An example applying the HOG descriptor for people detection can be found at
-///        opencv_source_code/samples/cpp/peopledetect.cpp
-///    *   A CUDA example applying the HOG descriptor for people detection can be found at
-///        opencv_source_code/samples/gpu/hog.cpp
-///    *   (Python) An example applying the HOG descriptor for people detection can be found at
-///        opencv_source_code/samples/python/peopledetect.py
+/// Constant methods for [crate::cudaobjdetect::HOG]
 pub trait HOGConst: core::AlgorithmTraitConst {
 	fn as_raw_HOG(&self) -> *const c_void;
 
@@ -376,6 +368,16 @@ pub trait HOGConst: core::AlgorithmTraitConst {
 	
 }
 
+/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
+/// 
+/// 
+/// Note:
+///    *   An example applying the HOG descriptor for people detection can be found at
+///        opencv_source_code/samples/cpp/peopledetect.cpp
+///    *   A CUDA example applying the HOG descriptor for people detection can be found at
+///        opencv_source_code/samples/gpu/hog.cpp
+///    *   (Python) An example applying the HOG descriptor for people detection can be found at
+///        opencv_source_code/samples/python/peopledetect.py
 pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	fn as_raw_mut_HOG(&mut self) -> *mut c_void;
 
@@ -479,7 +481,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	/// Sets coefficients for the linear SVM classifier.
 	#[inline]
 	fn set_svm_detector(&mut self, detector: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(detector);
+		extern_container_arg!(detector);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_HOG_setSVMDetector_const__InputArrayR(self.as_raw_mut_HOG(), detector.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -498,7 +500,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	/// * confidences: NULL
 	#[inline]
 	fn detect(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
-		input_array_arg!(img);
+		extern_container_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGX(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -508,7 +510,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	
 	#[inline]
 	fn detect_1(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
-		input_array_arg!(img);
+		extern_container_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -523,7 +525,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	/// * found_locations: Left-top corner points of detected objects boundaries.
 	#[inline]
 	fn detect_without_conf(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>) -> Result<()> {
-		input_array_arg!(img);
+		extern_container_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_HOG_detectWithoutConf_const__InputArrayR_vectorLPointGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -542,7 +544,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	/// * confidences: NULL
 	#[inline]
 	fn detect_multi_scale(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
-		input_array_arg!(img);
+		extern_container_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGX(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -552,7 +554,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	
 	#[inline]
 	fn detect_multi_scale_1(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
-		input_array_arg!(img);
+		extern_container_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -567,7 +569,7 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	/// * found_locations: Detected objects boundaries.
 	#[inline]
 	fn detect_multi_scale_without_conf(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>) -> Result<()> {
-		input_array_arg!(img);
+		extern_container_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_HOG_detectMultiScaleWithoutConf_const__InputArrayR_vectorLRectGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -586,8 +588,8 @@ pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
 	/// * stream: Stream::Null()
 	#[inline]
 	fn compute(&mut self, img: &dyn core::ToInputArray, descriptors: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		input_array_arg!(img);
-		output_array_arg!(descriptors);
+		extern_container_arg!(img);
+		extern_container_arg!(descriptors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_HOG_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), descriptors.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

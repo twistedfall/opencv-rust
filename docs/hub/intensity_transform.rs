@@ -21,8 +21,8 @@
 //! 
 //! References from following book and websites:
 //! - Digital Image Processing 4th Edition Chapter 3 [Rafael C. Gonzalez, Richard E. Woods] [Gonzalez2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gonzalez2018)
-//! - http://www.cs.uregina.ca/Links/class-info/425/Lab3/ [lcs435lab](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_lcs435lab)
-//! - https://theailearner.com/2019/01/30/contrast-stretching/ [theailearner](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_theailearner)
+//! - <http://www.cs.uregina.ca/Links/class-info/425/Lab3/> [lcs435lab](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_lcs435lab)
+//! - <https://theailearner.com/2019/01/30/contrast-stretching/> [theailearner](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_theailearner)
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
 	pub use {  };
@@ -47,8 +47,8 @@ pub mod prelude {
 /// * b: 1.1258f
 #[inline]
 pub fn bimef(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mu: f32, a: f32, b: f32) -> Result<()> {
-	input_array_arg!(input);
-	output_array_arg!(output);
+	extern_container_arg!(input);
+	extern_container_arg!(output);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), mu, a, b, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -73,8 +73,8 @@ pub fn bimef(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArra
 /// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
 #[inline]
 pub fn bimef2(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, k: f32, mu: f32, a: f32, b: f32) -> Result<()> {
-	input_array_arg!(input);
-	output_array_arg!(output);
+	extern_container_arg!(input);
+	extern_container_arg!(output);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), k, mu, a, b, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);

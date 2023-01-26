@@ -14,6 +14,7 @@ pub mod prelude {
 	pub use { super::Plot2dConst, super::Plot2d };
 }
 
+/// Constant methods for [crate::plot::Plot2d]
 pub trait Plot2dConst: core::AlgorithmTraitConst {
 	fn as_raw_Plot2d(&self) -> *const c_void;
 
@@ -186,7 +187,7 @@ pub trait Plot2d: core::AlgorithmTrait + crate::plot::Plot2dConst {
 	
 	#[inline]
 	fn render(&mut self, _plot_result: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(_plot_result);
+		extern_container_arg!(_plot_result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_plot_Plot2d_render_const__OutputArrayR(self.as_raw_mut_Plot2d(), _plot_result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -204,7 +205,7 @@ impl dyn Plot2d + '_ {
 	/// will be equal to indexes of correspondind elements in data matrix.
 	#[inline]
 	pub fn create(data: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::plot::Plot2d>> {
-		input_array_arg!(data);
+		extern_container_arg!(data);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR(data.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -220,8 +221,8 @@ impl dyn Plot2d + '_ {
 	/// * dataY: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot.
 	#[inline]
 	pub fn create_1(data_x: &dyn core::ToInputArray, data_y: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::plot::Plot2d>> {
-		input_array_arg!(data_x);
-		input_array_arg!(data_y);
+		extern_container_arg!(data_x);
+		extern_container_arg!(data_y);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR_const__InputArrayR(data_x.as_raw__InputArray(), data_y.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

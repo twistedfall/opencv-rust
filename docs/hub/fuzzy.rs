@@ -46,8 +46,8 @@ pub const SINUS: i32 = 2;
 /// This function computes F-transfrom and inverse F-transfotm using linear basic function in one step. It is ~10 times faster than `ft::FT02D_process` method.
 #[inline]
 pub fn ft02_d_fl_process(matrix: &dyn core::ToInputArray, radius: i32, output: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(matrix);
-	output_array_arg!(output);
+	extern_container_arg!(matrix);
+	extern_container_arg!(output);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT02D_FL_process_const__InputArrayR_const_int_const__OutputArrayR(matrix.as_raw__InputArray(), radius, output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -64,8 +64,8 @@ pub fn ft02_d_fl_process(matrix: &dyn core::ToInputArray, radius: i32, output: &
 /// This function computes F-transfrom and inverse F-transfotm using linear basic function in one step. It is ~9 times faster then `ft::FT02D_process` method and more accurate than `ft::FT02D_FL_process` method.
 #[inline]
 pub fn ft02_d_fl_process_float(matrix: &dyn core::ToInputArray, radius: i32, output: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(matrix);
-	output_array_arg!(output);
+	extern_container_arg!(matrix);
+	extern_container_arg!(output);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT02D_FL_process_float_const__InputArrayR_const_int_const__OutputArrayR(matrix.as_raw__InputArray(), radius, output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -86,10 +86,10 @@ pub fn ft02_d_fl_process_float(matrix: &dyn core::ToInputArray, radius: i32, out
 /// * mask: noArray()
 #[inline]
 pub fn ft02_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, components: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(matrix);
-	input_array_arg!(kernel);
-	output_array_arg!(components);
-	input_array_arg!(mask);
+	extern_container_arg!(matrix);
+	extern_container_arg!(kernel);
+	extern_container_arg!(components);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT02D_components_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -108,9 +108,9 @@ pub fn ft02_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 /// Computation of inverse F-transform.
 #[inline]
 pub fn ft02_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, width: i32, height: i32) -> Result<()> {
-	input_array_arg!(components);
-	input_array_arg!(kernel);
-	output_array_arg!(output);
+	extern_container_arg!(components);
+	extern_container_arg!(kernel);
+	extern_container_arg!(output);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT02D_inverseFT_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int(components.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), width, height, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -130,11 +130,11 @@ pub fn ft02_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core:
 /// This function computes iteration of F-transfrom and inverse F-transfotm and handle image and mask change. The function is used in `ft::inpaint` function.
 #[inline]
 pub fn ft02_d_iteration(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, mask_output: &mut dyn core::ToOutputArray, first_stop: bool) -> Result<i32> {
-	input_array_arg!(matrix);
-	input_array_arg!(kernel);
-	output_array_arg!(output);
-	input_array_arg!(mask);
-	output_array_arg!(mask_output);
+	extern_container_arg!(matrix);
+	extern_container_arg!(kernel);
+	extern_container_arg!(output);
+	extern_container_arg!(mask);
+	extern_container_arg!(mask_output);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT02D_iteration_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__OutputArrayR_bool(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray(), mask_output.as_raw__OutputArray(), first_stop, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -155,10 +155,10 @@ pub fn ft02_d_iteration(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToIn
 /// * mask: noArray()
 #[inline]
 pub fn ft02_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(matrix);
-	input_array_arg!(kernel);
-	output_array_arg!(output);
-	input_array_arg!(mask);
+	extern_container_arg!(matrix);
+	extern_container_arg!(kernel);
+	extern_container_arg!(output);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT02D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -175,9 +175,9 @@ pub fn ft02_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInpu
 /// The function computes linear components using predefined kernel.
 #[inline]
 pub fn ft12_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, components: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(matrix);
-	input_array_arg!(kernel);
-	output_array_arg!(components);
+	extern_container_arg!(matrix);
+	extern_container_arg!(kernel);
+	extern_container_arg!(components);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT12D_components_const__InputArrayR_const__InputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -194,7 +194,7 @@ pub fn ft12_d_components(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 /// The function creates helper horizontal matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
 #[inline]
 pub fn ft12_d_create_polynom_matrix_horizontal(radius: i32, matrix: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
-	output_array_arg!(matrix);
+	extern_container_arg!(matrix);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayR_const_int(radius, matrix.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -211,7 +211,7 @@ pub fn ft12_d_create_polynom_matrix_horizontal(radius: i32, matrix: &mut dyn cor
 /// The function creates helper vertical matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
 #[inline]
 pub fn ft12_d_create_polynom_matrix_vertical(radius: i32, matrix: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
-	output_array_arg!(matrix);
+	extern_container_arg!(matrix);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayR_const_int(radius, matrix.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -230,9 +230,9 @@ pub fn ft12_d_create_polynom_matrix_vertical(radius: i32, matrix: &mut dyn core:
 /// Computation of inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform.
 #[inline]
 pub fn ft12_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, width: i32, height: i32) -> Result<()> {
-	input_array_arg!(components);
-	input_array_arg!(kernel);
-	output_array_arg!(output);
+	extern_container_arg!(components);
+	extern_container_arg!(kernel);
+	extern_container_arg!(output);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT12D_inverseFT_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int(components.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), width, height, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -256,13 +256,13 @@ pub fn ft12_d_inverse_ft(components: &dyn core::ToInputArray, kernel: &dyn core:
 /// * mask: noArray()
 #[inline]
 pub fn ft12_d_polynomial(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, c00: &mut dyn core::ToOutputArray, c10: &mut dyn core::ToOutputArray, c01: &mut dyn core::ToOutputArray, components: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(matrix);
-	input_array_arg!(kernel);
-	output_array_arg!(c00);
-	output_array_arg!(c10);
-	output_array_arg!(c01);
-	output_array_arg!(components);
-	input_array_arg!(mask);
+	extern_container_arg!(matrix);
+	extern_container_arg!(kernel);
+	extern_container_arg!(c00);
+	extern_container_arg!(c10);
+	extern_container_arg!(c01);
+	extern_container_arg!(components);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT12D_polynomial_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), c00.as_raw__OutputArray(), c10.as_raw__OutputArray(), c01.as_raw__OutputArray(), components.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -287,10 +287,10 @@ pub fn ft12_d_polynomial(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 /// * mask: noArray()
 #[inline]
 pub fn ft12_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-	input_array_arg!(matrix);
-	input_array_arg!(kernel);
-	output_array_arg!(output);
-	input_array_arg!(mask);
+	extern_container_arg!(matrix);
+	extern_container_arg!(kernel);
+	extern_container_arg!(output);
+	extern_container_arg!(mask);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_FT12D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -308,9 +308,9 @@ pub fn ft12_d_process(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToInpu
 /// The function creates kernel usable for latter fuzzy image processing.
 #[inline]
 pub fn create_kernel1(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, kernel: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
-	input_array_arg!(a);
-	input_array_arg!(b);
-	output_array_arg!(kernel);
+	extern_container_arg!(a);
+	extern_container_arg!(b);
+	extern_container_arg!(kernel);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_createKernel_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_int(a.as_raw__InputArray(), b.as_raw__InputArray(), kernel.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -329,7 +329,7 @@ pub fn create_kernel1(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, ke
 /// The function creates kernel from predefined functions.
 #[inline]
 pub fn create_kernel(function: i32, radius: i32, kernel: &mut dyn core::ToOutputArray, chn: i32) -> Result<()> {
-	output_array_arg!(kernel);
+	extern_container_arg!(kernel);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_createKernel_int_int_const__OutputArrayR_const_int(function, radius, kernel.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -346,9 +346,9 @@ pub fn create_kernel(function: i32, radius: i32, kernel: &mut dyn core::ToOutput
 /// Filtering of the input image by means of F-transform.
 #[inline]
 pub fn filter(image: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray) -> Result<()> {
-	input_array_arg!(image);
-	input_array_arg!(kernel);
-	output_array_arg!(output);
+	extern_container_arg!(image);
+	extern_container_arg!(kernel);
+	extern_container_arg!(output);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);
@@ -376,9 +376,9 @@ pub fn filter(image: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, o
 ///    The algorithms are described in paper [Perf:rec](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Perf:rec).
 #[inline]
 pub fn inpaint(image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, radius: i32, function: i32, algorithm: i32) -> Result<()> {
-	input_array_arg!(image);
-	input_array_arg!(mask);
-	output_array_arg!(output);
+	extern_container_arg!(image);
+	extern_container_arg!(mask);
+	extern_container_arg!(output);
 	return_send!(via ocvrs_return);
 	unsafe { sys::cv_ft_inpaint_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int(image.as_raw__InputArray(), mask.as_raw__InputArray(), output.as_raw__OutputArray(), radius, function, algorithm, ocvrs_return.as_mut_ptr()) };
 	return_receive!(unsafe ocvrs_return => ret);

@@ -13,8 +13,8 @@
 //! Read and write video or images sequence with OpenCV
 //! 
 //! ### See also:
-//! - @ref videoio_overview
-//! - Tutorials: @ref tutorial_table_of_content_app
+//! - [videoio_overview]
+//! - Tutorials: [tutorial_table_of_content_app]
 //!   # Flags for video I/O
 //!   # Additional flags for video I/O API backends
 //!   # Hardware-accelerated video decoding and encoding
@@ -284,7 +284,7 @@ pub const CAP_PROP_OPENNI_REGISTRATION: i32 = 104;
 pub const CAP_PROP_OPENNI_REGISTRATION_ON: i32 = 104;
 /// (**open-only**) timeout in milliseconds for opening a video capture (applicable for FFmpeg and GStreamer back-ends only)
 pub const CAP_PROP_OPEN_TIMEOUT_MSEC: i32 = 53;
-/// if true - rotates output frames of CvCapture considering video file's metadata  (applicable for FFmpeg and AVFoundation back-ends only) (https://github.com/opencv/opencv/issues/15499)
+/// if true - rotates output frames of CvCapture considering video file's metadata  (applicable for FFmpeg and AVFoundation back-ends only) (<https://github.com/opencv/opencv/issues/15499>)
 pub const CAP_PROP_ORIENTATION_AUTO: i32 = 49;
 /// (read-only) Frame rotation defined by stream meta (applicable for FFmpeg and AVFoundation back-ends only)
 pub const CAP_PROP_ORIENTATION_META: i32 = 48;
@@ -737,7 +737,7 @@ pub const VIDEO_ACCELERATION_VAAPI: i32 = 3;
 /// Used as value in #CAP_PROP_HW_ACCELERATION and #VIDEOWRITER_PROP_HW_ACCELERATION
 /// 
 /// 
-/// Note: In case of FFmpeg backend, it translated to enum AVHWDeviceType (https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/hwcontext.h)
+/// Note: In case of FFmpeg backend, it translated to enum AVHWDeviceType (<https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/hwcontext.h>)
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum VideoAccelerationType {
@@ -767,7 +767,7 @@ opencv_type_enum! { crate::videoio::VideoAccelerationType }
 /// 
 /// 
 /// Note: Backends are available only if they have been built with your OpenCV binaries.
-/// See @ref videoio_overview for more information.
+/// See [videoio_overview] for more information.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum VideoCaptureAPIs {
@@ -983,7 +983,7 @@ pub enum VideoCaptureProperties {
 	CAP_PROP_BITRATE = 47,
 	/// (read-only) Frame rotation defined by stream meta (applicable for FFmpeg and AVFoundation back-ends only)
 	CAP_PROP_ORIENTATION_META = 48,
-	/// if true - rotates output frames of CvCapture considering video file's metadata  (applicable for FFmpeg and AVFoundation back-ends only) (https://github.com/opencv/opencv/issues/15499)
+	/// if true - rotates output frames of CvCapture considering video file's metadata  (applicable for FFmpeg and AVFoundation back-ends only) (<https://github.com/opencv/opencv/issues/15499>)
 	CAP_PROP_ORIENTATION_AUTO = 49,
 	/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in cv::VideoCapture constructor / .open() method. Default value is backend-specific.
 	CAP_PROP_HW_ACCELERATION = 50,
@@ -1169,25 +1169,7 @@ pub fn is_backend_built_in(api: crate::videoio::VideoCaptureAPIs) -> Result<bool
 	Ok(ret)
 }
 
-/// Class for video capturing from video files, image sequences or cameras.
-/// 
-/// The class provides C++ API for capturing video from cameras or for reading video files and image sequences.
-/// 
-/// Here is how the class can be used:
-/// @include samples/cpp/videocapture_basic.cpp
-/// 
-/// 
-/// Note: In @ref videoio_c "C API" the black-box structure `CvCapture` is used instead of %VideoCapture.
-/// 
-/// Note:
-/// *   (C++) A basic sample on using the %VideoCapture interface can be found at
-///    `OPENCV_SOURCE_CODE/samples/cpp/videocapture_starter.cpp`
-/// *   (Python) A basic sample on using the %VideoCapture interface can be found at
-///    `OPENCV_SOURCE_CODE/samples/python/video.py`
-/// *   (Python) A multi threaded video processing sample can be found at
-///    `OPENCV_SOURCE_CODE/samples/python/video_threaded.py`
-/// *   (Python) %VideoCapture sample showcasing some features of the Video4Linux2 backend
-///    `OPENCV_SOURCE_CODE/samples/python/video_v4l2.py`
+/// Constant methods for [crate::videoio::VideoCapture]
 pub trait VideoCaptureTraitConst {
 	fn as_raw_VideoCapture(&self) -> *const c_void;
 
@@ -1208,7 +1190,7 @@ pub trait VideoCaptureTraitConst {
 	/// 
 	/// ## Parameters
 	/// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
-	/// or one from @ref videoio_flags_others
+	/// or one from [videoio_flags_others]
 	/// ## Returns
 	/// Value for the specified property. Value 0 is returned when querying a property that is
 	/// not supported by the backend used by the VideoCapture instance.
@@ -1248,6 +1230,7 @@ pub trait VideoCaptureTraitConst {
 	
 }
 
+/// Mutable methods for [crate::videoio::VideoCapture]
 pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	fn as_raw_mut_VideoCapture(&mut self) -> *mut c_void;
 
@@ -1368,7 +1351,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// correct way of retrieving data from it is to call VideoCapture::grab() first and then call
 	/// VideoCapture::retrieve() one or more times with different values of the channel parameter.
 	/// 
-	/// @ref tutorial_kinect_openni
+	/// [tutorial_kinect_openni]
 	#[inline]
 	fn grab(&mut self) -> Result<bool> {
 		return_send!(via ocvrs_return);
@@ -1393,7 +1376,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// read()
 	/// 
 	/// 
-	/// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
+	/// Note: In [videoio_c] "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
 	/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
 	/// cvCloneImage and then do whatever you want with the copy.
 	/// 
@@ -1401,7 +1384,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// * flag: 0
 	#[inline]
 	fn retrieve(&mut self, image: &mut dyn core::ToOutputArray, flag: i32) -> Result<bool> {
-		output_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayR_int(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), flag, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1422,12 +1405,12 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// frames in video file), the method returns false and the function returns empty image (with %cv::Mat, test it with Mat::empty()).
 	/// 
 	/// 
-	/// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
+	/// Note: In [videoio_c] "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
 	/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
 	/// cvCloneImage and then do whatever you want with the copy.
 	#[inline]
 	fn read(&mut self, image: &mut dyn core::ToOutputArray) -> Result<bool> {
-		output_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_VideoCapture_read_const__OutputArrayR(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1439,7 +1422,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 	/// 
 	/// ## Parameters
 	/// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
-	/// or one from @ref videoio_flags_others
+	/// or one from [videoio_flags_others]
 	/// * value: Value of the property.
 	/// ## Returns
 	/// `true` if the property is supported by backend used by the VideoCapture instance.
@@ -1487,7 +1470,7 @@ pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 /// @include samples/cpp/videocapture_basic.cpp
 /// 
 /// 
-/// Note: In @ref videoio_c "C API" the black-box structure `CvCapture` is used instead of %VideoCapture.
+/// Note: In [videoio_c] "C API" the black-box structure `CvCapture` is used instead of %VideoCapture.
 /// 
 /// Note:
 /// *   (C++) A basic sample on using the %VideoCapture interface can be found at
@@ -1524,7 +1507,7 @@ impl crate::videoio::VideoCaptureTrait for VideoCapture {
 impl VideoCapture {
 	/// Default constructor
 	/// 
-	/// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
+	/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 	/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 	/// destructor.
 	#[inline]
@@ -1539,7 +1522,7 @@ impl VideoCapture {
 	
 	/// Default constructor
 	/// 
-	/// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
+	/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 	/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 	/// destructor.
 	/// 
@@ -1575,7 +1558,7 @@ impl VideoCapture {
 	
 	/// Default constructor
 	/// 
-	/// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
+	/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 	/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 	/// destructor.
 	/// 
@@ -1598,7 +1581,7 @@ impl VideoCapture {
 	
 	/// Default constructor
 	/// 
-	/// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
+	/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 	/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 	/// destructor.
 	/// 
@@ -1628,7 +1611,7 @@ impl VideoCapture {
 	
 	/// Default constructor
 	/// 
-	/// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
+	/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 	/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 	/// destructor.
 	/// 
@@ -1677,9 +1660,7 @@ impl VideoCapture {
 	
 }
 
-/// Video writer class.
-/// 
-/// The class provides C++ API for writing video files or image sequences.
+/// Constant methods for [crate::videoio::VideoWriter]
 pub trait VideoWriterTraitConst {
 	fn as_raw_VideoWriter(&self) -> *const c_void;
 
@@ -1697,7 +1678,7 @@ pub trait VideoWriterTraitConst {
 	/// 
 	/// ## Parameters
 	/// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
-	/// or one of @ref videoio_flags_others
+	/// or one of [videoio_flags_others]
 	/// 
 	/// ## Returns
 	/// Value for the specified property. Value 0 is returned when querying a property that is
@@ -1727,6 +1708,7 @@ pub trait VideoWriterTraitConst {
 	
 }
 
+/// Mutable methods for [crate::videoio::VideoWriter]
 pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void;
 
@@ -1836,7 +1818,7 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	/// been specified when opening the video writer.
 	#[inline]
 	fn write(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(image);
+		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1848,7 +1830,7 @@ pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 	/// 
 	/// ## Parameters
 	/// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
-	/// or one of @ref videoio_flags_others
+	/// or one of [videoio_flags_others]
 	/// 
 	/// * value: Value of the property.
 	/// ## Returns

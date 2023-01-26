@@ -26,8 +26,8 @@ pub mod prelude {
 
 #[inline]
 pub fn debug_d_match(img1: &dyn core::ToInputArray, mut keypoints1: core::Vector<core::KeyPoint>, img2: &dyn core::ToInputArray, mut keypoints2: core::Vector<core::KeyPoint>, mut matches: core::Vector<core::DMatch>, data: &crate::cvv::CallMetaData, description: &str, view: &str, use_train_descriptor: bool) -> Result<()> {
-	input_array_arg!(img1);
-	input_array_arg!(img2);
+	extern_container_arg!(img1);
+	extern_container_arg!(img2);
 	extern_container_arg!(description);
 	extern_container_arg!(view);
 	return_send!(via ocvrs_return);
@@ -39,8 +39,8 @@ pub fn debug_d_match(img1: &dyn core::ToInputArray, mut keypoints1: core::Vector
 
 #[inline]
 pub fn debug_filter(original: &dyn core::ToInputArray, result: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
-	input_array_arg!(original);
-	input_array_arg!(result);
+	extern_container_arg!(original);
+	extern_container_arg!(result);
 	extern_container_arg!(description);
 	extern_container_arg!(view);
 	return_send!(via ocvrs_return);
@@ -61,7 +61,7 @@ pub fn final_show() -> Result<()> {
 
 #[inline]
 pub fn show_image(img: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
-	input_array_arg!(img);
+	extern_container_arg!(img);
 	extern_container_arg!(description);
 	extern_container_arg!(view);
 	return_send!(via ocvrs_return);
@@ -71,7 +71,7 @@ pub fn show_image(img: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData,
 	Ok(ret)
 }
 
-/// Optional information about a location in Code.
+/// Constant methods for [crate::cvv::CallMetaData]
 pub trait CallMetaDataTraitConst {
 	fn as_raw_CallMetaData(&self) -> *const c_void;
 
@@ -104,6 +104,7 @@ pub trait CallMetaDataTraitConst {
 	
 }
 
+/// Mutable methods for [crate::cvv::CallMetaData]
 pub trait CallMetaDataTrait: crate::cvv::CallMetaDataTraitConst {
 	fn as_raw_mut_CallMetaData(&mut self) -> *mut c_void;
 

@@ -14,16 +14,13 @@ pub mod prelude {
 	pub use { super::WeChatQRCodeTraitConst, super::WeChatQRCodeTrait };
 }
 
-/// * WeChat QRCode includes two CNN-based models:
-/// * A object detection model and a super resolution model.
-/// * Object detection model is applied to detect QRCode with the bounding box.
-/// * super resolution model is applied to zoom in QRCode when it is small.
-/// *
+/// Constant methods for [crate::wechat_qrcode::WeChatQRCode]
 pub trait WeChatQRCodeTraitConst {
 	fn as_raw_WeChatQRCode(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::wechat_qrcode::WeChatQRCode]
 pub trait WeChatQRCodeTrait: crate::wechat_qrcode::WeChatQRCodeTraitConst {
 	fn as_raw_mut_WeChatQRCode(&mut self) -> *mut c_void;
 
@@ -41,8 +38,8 @@ pub trait WeChatQRCodeTrait: crate::wechat_qrcode::WeChatQRCodeTraitConst {
 	/// * points: noArray()
 	#[inline]
 	fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<core::Vector<String>> {
-		input_array_arg!(img);
-		output_array_arg!(points);
+		extern_container_arg!(img);
+		extern_container_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_wechat_qrcode_WeChatQRCode_detectAndDecode_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WeChatQRCode(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -160,6 +160,7 @@ pub fn create_super_resolution_btvl1_cuda() -> Result<core::Ptr<dyn crate::super
 	Ok(ret)
 }
 
+/// Constant methods for [crate::superres::Superres_BroxOpticalFlow]
 pub trait Superres_BroxOpticalFlowConst: crate::superres::Superres_DenseOpticalFlowExtConst {
 	fn as_raw_Superres_BroxOpticalFlow(&self) -> *const c_void;
 
@@ -314,6 +315,7 @@ pub trait Superres_BroxOpticalFlow: crate::superres::Superres_BroxOpticalFlowCon
 	
 }
 
+/// Constant methods for [crate::superres::Superres_DenseOpticalFlowExt]
 pub trait Superres_DenseOpticalFlowExtConst: core::AlgorithmTraitConst {
 	fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void;
 
@@ -326,10 +328,10 @@ pub trait Superres_DenseOpticalFlowExt: core::AlgorithmTrait + crate::superres::
 	/// * flow2: noArray()
 	#[inline]
 	fn calc(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, flow1: &mut dyn core::ToOutputArray, flow2: &mut dyn core::ToOutputArray) -> Result<()> {
-		input_array_arg!(frame0);
-		input_array_arg!(frame1);
-		output_array_arg!(flow1);
-		output_array_arg!(flow2);
+		extern_container_arg!(frame0);
+		extern_container_arg!(frame1);
+		extern_container_arg!(flow1);
+		extern_container_arg!(flow2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Superres_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), flow2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -348,6 +350,7 @@ pub trait Superres_DenseOpticalFlowExt: core::AlgorithmTrait + crate::superres::
 	
 }
 
+/// Constant methods for [crate::superres::Superres_DualTVL1OpticalFlow]
 pub trait Superres_DualTVL1OpticalFlowConst: crate::superres::Superres_DenseOpticalFlowExtConst {
 	fn as_raw_Superres_DualTVL1OpticalFlow(&self) -> *const c_void;
 
@@ -534,6 +537,7 @@ pub trait Superres_DualTVL1OpticalFlow: crate::superres::Superres_DenseOpticalFl
 	
 }
 
+/// Constant methods for [crate::superres::Superres_FarnebackOpticalFlow]
 pub trait Superres_FarnebackOpticalFlowConst: crate::superres::Superres_DenseOpticalFlowExtConst {
 	fn as_raw_Superres_FarnebackOpticalFlow(&self) -> *const c_void;
 
@@ -698,6 +702,7 @@ pub trait Superres_FarnebackOpticalFlow: crate::superres::Superres_DenseOpticalF
 	
 }
 
+/// Constant methods for [crate::superres::Superres_FrameSource]
 pub trait Superres_FrameSourceConst {
 	fn as_raw_Superres_FrameSource(&self) -> *const c_void;
 
@@ -708,7 +713,7 @@ pub trait Superres_FrameSource: crate::superres::Superres_FrameSourceConst {
 
 	#[inline]
 	fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(frame);
+		extern_container_arg!(frame);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_FrameSource_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_FrameSource(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -727,6 +732,7 @@ pub trait Superres_FrameSource: crate::superres::Superres_FrameSourceConst {
 	
 }
 
+/// Constant methods for [crate::superres::Superres_PyrLKOpticalFlow]
 pub trait Superres_PyrLKOpticalFlowConst: crate::superres::Superres_DenseOpticalFlowExtConst {
 	fn as_raw_Superres_PyrLKOpticalFlow(&self) -> *const c_void;
 
@@ -803,10 +809,7 @@ pub trait Superres_PyrLKOpticalFlow: crate::superres::Superres_DenseOpticalFlowE
 	
 }
 
-/// Base class for Super Resolution algorithms.
-/// 
-/// The class is only used to define the common interface for the whole family of Super Resolution
-/// algorithms.
+/// Constant methods for [crate::superres::Superres_SuperResolution]
 pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::superres::Superres_FrameSourceConst {
 	fn as_raw_Superres_SuperResolution(&self) -> *const c_void;
 
@@ -933,6 +936,10 @@ pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::supe
 	
 }
 
+/// Base class for Super Resolution algorithms.
+/// 
+/// The class is only used to define the common interface for the whole family of Super Resolution
+/// algorithms.
 pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Superres_FrameSource + crate::superres::Superres_SuperResolutionConst {
 	fn as_raw_mut_Superres_SuperResolution(&mut self) -> *mut c_void;
 
@@ -955,7 +962,7 @@ pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Supe
 	/// * frame: Output result
 	#[inline]
 	fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
-		output_array_arg!(frame);
+		extern_container_arg!(frame);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_SuperResolution_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_SuperResolution(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -31,20 +31,21 @@ pub enum TrackerKCF_MODE {
 opencv_type_enum! { crate::tracking::TrackerKCF_MODE }
 
 pub type TrackerKCF_FeatureExtractorCallbackFN = Option<unsafe extern "C" fn(*const c_void, core::Rect, *mut c_void) -> ()>;
-/// the CSRT tracker
-/// 
-/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
+/// Constant methods for [crate::tracking::TrackerCSRT]
 pub trait TrackerCSRTConst: crate::video::TrackerConst {
 	fn as_raw_TrackerCSRT(&self) -> *const c_void;
 
 }
 
+/// the CSRT tracker
+/// 
+/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
 pub trait TrackerCSRT: crate::tracking::TrackerCSRTConst + crate::video::Tracker {
 	fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void;
 
 	#[inline]
 	fn set_initial_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
-		input_array_arg!(mask);
+		extern_container_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_tracking_TrackerCSRT_setInitialMask_const__InputArrayR(self.as_raw_mut_TrackerCSRT(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -72,6 +73,7 @@ impl dyn TrackerCSRT + '_ {
 	}
 	
 }
+/// Constant methods for [crate::tracking::TrackerCSRT_Params]
 pub trait TrackerCSRT_ParamsTraitConst {
 	fn as_raw_TrackerCSRT_Params(&self) -> *const c_void;
 
@@ -242,6 +244,7 @@ pub trait TrackerCSRT_ParamsTraitConst {
 	
 }
 
+/// Mutable methods for [crate::tracking::TrackerCSRT_Params]
 pub trait TrackerCSRT_ParamsTrait: crate::tracking::TrackerCSRT_ParamsTraitConst {
 	fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void;
 
@@ -448,6 +451,12 @@ impl TrackerCSRT_Params {
 	
 }
 
+/// Constant methods for [crate::tracking::TrackerKCF]
+pub trait TrackerKCFConst: crate::video::TrackerConst {
+	fn as_raw_TrackerKCF(&self) -> *const c_void;
+
+}
+
 /// the KCF (Kernelized Correlation Filter) tracker
 /// 
 /// * KCF is a novel tracking framework that utilizes properties of circulant matrix to enhance the processing speed.
@@ -455,11 +464,6 @@ impl TrackerCSRT_Params {
 /// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 /// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 /// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.
-pub trait TrackerKCFConst: crate::video::TrackerConst {
-	fn as_raw_TrackerKCF(&self) -> *const c_void;
-
-}
-
 pub trait TrackerKCF: crate::tracking::TrackerKCFConst + crate::video::Tracker {
 	fn as_raw_mut_TrackerKCF(&mut self) -> *mut c_void;
 

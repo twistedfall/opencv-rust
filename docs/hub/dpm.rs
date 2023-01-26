@@ -44,7 +44,7 @@ pub mod prelude {
 	pub use { super::DPMDetector_ObjectDetectionTraitConst, super::DPMDetector_ObjectDetectionTrait, super::DPMDetectorConst, super::DPMDetector };
 }
 
-/// This is a C++ abstract class, it provides external user API to work with DPM.
+/// Constant methods for [crate::dpm::DPMDetector]
 pub trait DPMDetectorConst {
 	fn as_raw_DPMDetector(&self) -> *const c_void;
 
@@ -81,6 +81,7 @@ pub trait DPMDetectorConst {
 	
 }
 
+/// This is a C++ abstract class, it provides external user API to work with DPM.
 pub trait DPMDetector: crate::dpm::DPMDetectorConst {
 	fn as_raw_mut_DPMDetector(&mut self) -> *mut c_void;
 
@@ -122,6 +123,7 @@ impl dyn DPMDetector + '_ {
 	}
 	
 }
+/// Constant methods for [crate::dpm::DPMDetector_ObjectDetection]
 pub trait DPMDetector_ObjectDetectionTraitConst {
 	fn as_raw_DPMDetector_ObjectDetection(&self) -> *const c_void;
 
@@ -147,6 +149,7 @@ pub trait DPMDetector_ObjectDetectionTraitConst {
 	
 }
 
+/// Mutable methods for [crate::dpm::DPMDetector_ObjectDetection]
 pub trait DPMDetector_ObjectDetectionTrait: crate::dpm::DPMDetector_ObjectDetectionTraitConst {
 	fn as_raw_mut_DPMDetector_ObjectDetection(&mut self) -> *mut c_void;
 

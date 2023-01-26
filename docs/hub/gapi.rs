@@ -243,7 +243,7 @@ pub fn empty_scalar_desc() -> Result<crate::gapi::GScalarDesc> {
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.bgr2gray"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC1.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC1].
 /// ## See also
 /// BGR2LUV
 #[inline]
@@ -261,7 +261,7 @@ pub fn bgr2_gray(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from BGR color space to I420.
 /// The conventional ranges for R, G, and B channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 1-channel image. @ref CV_8UC1.
+/// Output image must be 8-bit unsigned 1-channel image. [CV_8UC1].
 /// Width of I420 output image must be the same as width of input image.
 /// Height of I420 output image must be equal 3/2 from height of input image.
 /// 
@@ -269,7 +269,7 @@ pub fn bgr2_gray(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.bgr2i420"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// I4202BGR
 #[inline]
@@ -287,13 +287,13 @@ pub fn bgr2_i420(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from BGR color space to LUV.
 /// The conventional ranges for B, G, and R channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.bgr2luv"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// RGB2Lab, RGB2LUV
 #[inline]
@@ -311,13 +311,13 @@ pub fn bgr2_luv(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from BGR color space to RGB.
 /// The conventional ranges for B, G, and R channel values are 0 to 255.
 /// 
-/// Output image is 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image is 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.bgr2rgb"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// RGB2BGR
 #[inline]
@@ -335,13 +335,13 @@ pub fn bgr2_rgb(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from BGR color space to YUV.
 /// The conventional ranges for B, G, and R channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.bgr2yuv"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// YUV2BGR
 #[inline]
@@ -358,13 +358,13 @@ pub fn bgr2_yuv(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from BayerGR color space to RGB.
 /// The conventional ranges for G, R, and B channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.bayergr2rgb"
 /// 
 /// ## Parameters
-/// * src_gr: input image: 8-bit unsigned 1-channel image @ref CV_8UC1.
+/// * src_gr: input image: 8-bit unsigned 1-channel image [CV_8UC1].
 /// ## See also
 /// YUV2BGR, NV12toRGB
 #[inline]
@@ -415,7 +415,7 @@ pub fn canny(image: &crate::gapi::GMat, threshold1: f64, threshold2: f64, apertu
 /// The function converts an input image from I420 color space to BGR.
 /// The conventional ranges for B, G, and R channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image. @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image. [CV_8UC3].
 /// Width of BGR output image must be the same as width of input image.
 /// Height of BGR output image must be equal 2/3 from height of input image.
 /// 
@@ -423,7 +423,7 @@ pub fn canny(image: &crate::gapi::GMat, threshold1: f64, threshold2: f64, apertu
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.i4202bgr"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 1-channel image @ref CV_8UC1.
+/// * src: input image: 8-bit unsigned 1-channel image [CV_8UC1].
 /// ## See also
 /// BGR2I420
 #[inline]
@@ -441,7 +441,7 @@ pub fn i4202_bgr(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from I420 color space to BGR.
 /// The conventional ranges for B, G, and R channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image. @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image. [CV_8UC3].
 /// Width of RGB output image must be the same as width of input image.
 /// Height of RGB output image must be equal 2/3 from height of input image.
 /// 
@@ -449,7 +449,7 @@ pub fn i4202_bgr(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.i4202rgb"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 1-channel image @ref CV_8UC1.
+/// * src: input image: 8-bit unsigned 1-channel image [CV_8UC1].
 /// ## See also
 /// RGB2I420
 #[inline]
@@ -468,7 +468,7 @@ pub fn i4202_rgb(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// are taken from the input matrix. That is, the function processes each element of src as follows:
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%20%5Cleftarrow%20%5Ctexttt%7Blut%28src%28I%29%29%7D)
 /// 
-/// Supported matrix data types are @ref CV_8UC1.
+/// Supported matrix data types are [CV_8UC1].
 /// Output is a matrix of the same size and number of channels as src, and the same depth as lut.
 /// 
 /// 
@@ -494,13 +494,13 @@ pub fn lut(src: &crate::gapi::GMat, lut: &core::Mat) -> Result<crate::gapi::GMat
 /// The function converts an input image from LUV color space to BGR.
 /// The conventional ranges for B, G, and R channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.luv2bgr"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// BGR2LUV
 #[inline]
@@ -561,14 +561,14 @@ pub fn laplacian(src: &crate::gapi::GMat, ddepth: i32, ksize: i32, scale: f64, d
 /// The function converts an input image from NV12 color space to RGB.
 /// The conventional ranges for Y, U, and V channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.nv12tobgr"
 /// 
 /// ## Parameters
-/// * src_y: input image: 8-bit unsigned 1-channel image @ref CV_8UC1.
-/// * src_uv: input image: 8-bit unsigned 2-channel image @ref CV_8UC2.
+/// * src_y: input image: 8-bit unsigned 1-channel image [CV_8UC1].
+/// * src_uv: input image: 8-bit unsigned 2-channel image [CV_8UC2].
 /// ## See also
 /// YUV2BGR, NV12toRGB
 #[inline]
@@ -585,17 +585,17 @@ pub fn nv12to_bgr(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Resu
 /// The function converts an input image from NV12 color space to BGR.
 /// The conventional ranges for Y, U, and V channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned planar 3-channel image @ref CV_8UC1.
+/// Output image must be 8-bit unsigned planar 3-channel image [CV_8UC1].
 /// Planar image memory layout is three planes laying in the memory contiguously,
 /// so the image height should be plane_height*plane_number,
-/// image type is @ref CV_8UC1.
+/// image type is [CV_8UC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.nv12torgbp"
 /// 
 /// ## Parameters
-/// * src_y: input image: 8-bit unsigned 1-channel image @ref CV_8UC1.
-/// * src_uv: input image: 8-bit unsigned 2-channel image @ref CV_8UC2.
+/// * src_y: input image: 8-bit unsigned 1-channel image [CV_8UC1].
+/// * src_uv: input image: 8-bit unsigned 2-channel image [CV_8UC2].
 /// ## See also
 /// YUV2RGB, NV12toRGBp, NV12toBGR
 #[inline]
@@ -612,14 +612,14 @@ pub fn nv12to_bg_rp(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Re
 /// The function converts an input image from NV12 color space to gray-scaled.
 /// The conventional ranges for Y, U, and V channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 1-channel image @ref CV_8UC1.
+/// Output image must be 8-bit unsigned 1-channel image [CV_8UC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.nv12togray"
 /// 
 /// ## Parameters
-/// * src_y: input image: 8-bit unsigned 1-channel image @ref CV_8UC1.
-/// * src_uv: input image: 8-bit unsigned 2-channel image @ref CV_8UC2.
+/// * src_y: input image: 8-bit unsigned 1-channel image [CV_8UC1].
+/// * src_uv: input image: 8-bit unsigned 2-channel image [CV_8UC2].
 /// ## See also
 /// YUV2RGB, NV12toBGR
 #[inline]
@@ -636,14 +636,14 @@ pub fn nv12to_gray(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Res
 /// The function converts an input image from NV12 color space to RGB.
 /// The conventional ranges for Y, U, and V channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.nv12torgb"
 /// 
 /// ## Parameters
-/// * src_y: input image: 8-bit unsigned 1-channel image @ref CV_8UC1.
-/// * src_uv: input image: 8-bit unsigned 2-channel image @ref CV_8UC2.
+/// * src_y: input image: 8-bit unsigned 1-channel image [CV_8UC1].
+/// * src_uv: input image: 8-bit unsigned 2-channel image [CV_8UC2].
 /// ## See also
 /// YUV2RGB, NV12toBGR
 #[inline]
@@ -660,17 +660,17 @@ pub fn nv12to_rgb(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Resu
 /// The function converts an input image from NV12 color space to RGB.
 /// The conventional ranges for Y, U, and V channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned planar 3-channel image @ref CV_8UC1.
+/// Output image must be 8-bit unsigned planar 3-channel image [CV_8UC1].
 /// Planar image memory layout is three planes laying in the memory contiguously,
 /// so the image height should be plane_height*plane_number,
-/// image type is @ref CV_8UC1.
+/// image type is [CV_8UC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.nv12torgbp"
 /// 
 /// ## Parameters
-/// * src_y: input image: 8-bit unsigned 1-channel image @ref CV_8UC1.
-/// * src_uv: input image: 8-bit unsigned 2-channel image @ref CV_8UC2.
+/// * src_y: input image: 8-bit unsigned 1-channel image [CV_8UC1].
+/// * src_uv: input image: 8-bit unsigned 2-channel image [CV_8UC2].
 /// ## See also
 /// YUV2RGB, NV12toBGRp, NV12toRGB
 #[inline]
@@ -693,7 +693,7 @@ pub fn nv12to_rg_bp(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Re
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.rgb2gray"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC1.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC1].
 /// ## See also
 /// RGB2YUV
 #[inline]
@@ -716,7 +716,7 @@ pub fn rgb2_gray(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.rgb2gray"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC1.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC1].
 /// ## See also
 /// RGB2YUV
 /// 
@@ -728,7 +728,7 @@ pub fn rgb2_gray(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.rgb2graycustom"
 /// 
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC1.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC1].
 /// * rY: float multiplier for R channel.
 /// * gY: float multiplier for G channel.
 /// * bY: float multiplier for B channel.
@@ -747,13 +747,13 @@ pub fn rgb2_gray_1(src: &crate::gapi::GMat, r_y: f32, g_y: f32, b_y: f32) -> Res
 /// The function converts an input image from RGB color space to HSV.
 /// The conventional ranges for R, G, and B channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.rgb2hsv"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// YUV2BGR, NV12toRGB
 #[inline]
@@ -771,7 +771,7 @@ pub fn rgb2_hsv(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from RGB color space to I420.
 /// The conventional ranges for R, G, and B channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 1-channel image. @ref CV_8UC1.
+/// Output image must be 8-bit unsigned 1-channel image. [CV_8UC1].
 /// Width of I420 output image must be the same as width of input image.
 /// Height of I420 output image must be equal 3/2 from height of input image.
 /// 
@@ -779,7 +779,7 @@ pub fn rgb2_hsv(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.rgb2i420"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// I4202RGB
 #[inline]
@@ -797,13 +797,13 @@ pub fn rgb2_i420(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from BGR color space to Lab.
 /// The conventional ranges for R, G, and B channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC1.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.rgb2lab"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC1.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC1].
 /// ## See also
 /// RGB2YUV, RGB2LUV
 #[inline]
@@ -820,13 +820,13 @@ pub fn rgb2_lab(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from RGB color space to YUV422.
 /// The conventional ranges for R, G, and B channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 2-channel image @ref CV_8UC2.
+/// Output image must be 8-bit unsigned 2-channel image [CV_8UC2].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.rgb2yuv422"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// YUV2BGR, NV12toRGB
 #[inline]
@@ -847,13 +847,13 @@ pub fn rgb2_yuv422(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// In case of linear transformations, the range does not matter. But in case of a non-linear
 /// transformation, an input RGB image should be normalized to the proper value range to get the correct
 /// results, like here, at RGB ![inline formula](https://latex.codecogs.com/png.latex?%5Crightarrow) Y\*u\*v\* transformation.
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.rgb2yuv"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// YUV2RGB, RGB2Lab
 #[inline]
@@ -903,7 +903,7 @@ pub fn rgb2_yuv(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// 
 /// ## Parameters
 /// * src: input image.
-/// * ddepth: output image depth, see @ref filter_depths "combinations"; in the case of
+/// * ddepth: output image depth, see [filter_depths] "combinations"; in the case of
 ///    8-bit input images it will result in truncated derivatives.
 /// * order: order of the derivatives.
 /// * ksize: size of the extended Sobel kernel; it must be odd.
@@ -967,7 +967,7 @@ pub fn sobel_xy(src: &crate::gapi::GMat, ddepth: i32, order: i32, ksize: i32, sc
 /// 
 /// ## Parameters
 /// * src: input image.
-/// * ddepth: output image depth, see @ref filter_depths "combinations"; in the case of
+/// * ddepth: output image depth, see [filter_depths] "combinations"; in the case of
 ///    8-bit input images it will result in truncated derivatives.
 /// * dx: order of the derivative x.
 /// * dy: order of the derivative y.
@@ -1001,13 +1001,13 @@ pub fn sobel(src: &crate::gapi::GMat, ddepth: i32, dx: i32, dy: i32, ksize: i32,
 /// The function converts an input image from YUV color space to BGR.
 /// The conventional ranges for B, G, and R channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.yuv2bgr"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// BGR2YUV
 #[inline]
@@ -1024,13 +1024,13 @@ pub fn yuv2_bgr(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// The function converts an input image from YUV color space to RGB.
 /// The conventional ranges for Y, U, and V channel values are 0 to 255.
 /// 
-/// Output image must be 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// Output image must be 8-bit unsigned 3-channel image [CV_8UC3].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.colorconvert.yuv2rgb"
 /// 
 /// ## Parameters
-/// * src: input image: 8-bit unsigned 3-channel image @ref CV_8UC3.
+/// * src: input image: 8-bit unsigned 3-channel image [CV_8UC3].
 /// ## See also
 /// RGB2Lab, RGB2YUV
 #[inline]
@@ -1051,7 +1051,7 @@ pub fn yuv2_rgb(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// 
 /// Output matrix must be of the same size and depth as src.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.matrixop.absdiffC"
@@ -1078,7 +1078,7 @@ pub fn abs_diff_c(src: &crate::gapi::GMat, c: &crate::gapi::GScalar) -> Result<c
 ///    multi-channel matrices, each channel is processed independently.
 /// Output matrix must have the same size and depth as input matrices.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.matrixop.absdiff"
@@ -1108,7 +1108,7 @@ pub fn abs_diff(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<cr
 /// If ddepth is set to default -1, the depth of output matrix will be the same as the depth of input matrix.
 /// The matrices can be single or multi channel. Output matrix must have the same size and number of channels as the input matrix.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.addC"
@@ -1142,7 +1142,7 @@ pub fn add_c(src1: &crate::gapi::GMat, c: &crate::gapi::GScalar, ddepth: i32) ->
 /// If ddepth is set to default -1, the depth of output matrix will be the same as the depth of input matrix.
 /// The matrices can be single or multi channel. Output matrix must have the same size and number of channels as the input matrix.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.addC"
@@ -1177,7 +1177,7 @@ pub fn add_c_1(c: &crate::gapi::GScalar, src1: &crate::gapi::GMat, ddepth: i32) 
 /// The function can be replaced with a matrix expression:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Balpha%7D%20%2A%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2D%20%5Ctexttt%7Bbeta%7D%20%2A%20%5Ctexttt%7Bsrc2%7D%28I%29%20%2B%20%5Ctexttt%7Bgamma%7D%20)
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.matrixop.addweighted"
@@ -1217,7 +1217,7 @@ pub fn add_weighted(src1: &crate::gapi::GMat, alpha: f64, src2: &crate::gapi::GM
 /// If src1.depth() == src2.depth(), ddepth can be set to the default -1. In this case, the output matrix will have
 /// the same depth as the input matrices.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.add"
@@ -1243,7 +1243,7 @@ pub fn add(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, ddepth: i32) -> R
 /// Applies the bilateral filter to an image.
 /// 
 /// The function applies bilateral filtering to the input image, as described in
-/// http://www.dai.ed.ac.uk/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html
+/// <http://www.dai.ed.ac.uk/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html>
 /// bilateralFilter can reduce unwanted noise very well while keeping edges fairly sharp. However, it is
 /// very slow compared to most filters.
 /// 
@@ -1295,7 +1295,7 @@ pub fn bilateral_filter(src: &crate::gapi::GMat, d: i32, sigma_color: f64, sigma
 /// independently. Output matrix must have the same size and depth as the input
 /// matrices.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.bitwise_and"
@@ -1322,7 +1322,7 @@ pub fn bitwise_and(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result
 /// independently. Output matrix must have the same size and depth as the input
 /// matrices.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.bitwise_and"
@@ -1359,7 +1359,7 @@ pub fn bitwise_and_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> R
 /// independently. Output matrix must have the same size and depth as the input
 /// matrix.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.bitwise_not"
@@ -1385,7 +1385,7 @@ pub fn bitwise_not(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// independently. Output matrix must have the same size and depth as the input
 /// matrices.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.bitwise_or"
@@ -1412,7 +1412,7 @@ pub fn bitwise_or(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<
 /// independently. Output matrix must have the same size and depth as the input
 /// matrices.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.bitwise_or"
@@ -1446,7 +1446,7 @@ pub fn bitwise_or_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Re
 /// independently. Output matrix must have the same size and depth as the input
 /// matrices.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.bitwise_xor"
@@ -1473,7 +1473,7 @@ pub fn bitwise_xor(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result
 /// independently. Output matrix must have the same size and depth as the input
 /// matrices.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.bitwise_xor"
@@ -1507,7 +1507,7 @@ pub fn bitwise_xor_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> R
 /// The call `blur(src, ksize, anchor, borderType)` is equivalent to `boxFilter(src, src.type(), ksize, anchor,
 /// true, borderType)`.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// Output image must have the same type, size, and number of channels as the input image.
 /// 
 /// Note:
@@ -1552,7 +1552,7 @@ pub fn blur(src: &crate::gapi::GMat, ksize: core::Size, anchor: core::Point, bor
 /// neighborhood, such as covariance matrices of image derivatives (used in dense optical flow
 /// algorithms, and so on). If you need to compute pixel sums over variable-size windows, use cv::integral.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// Output image must have the same type, size, and number of channels as the input image.
 /// 
 /// Note:
@@ -1603,8 +1603,8 @@ pub fn box_filter(src: &crate::gapi::GMat, dtype: i32, ksize: core::Size, anchor
 /// Note: Function textual ID is "org.opencv.core.math.cartToPolar"
 /// 
 /// ## Parameters
-/// * x: matrix of @ref CV_32FC1 x-coordinates.
-/// * y: array of @ref CV_32FC1 y-coordinates.
+/// * x: matrix of [CV_32FC1] x-coordinates.
+/// * y: array of [CV_32FC1] y-coordinates.
 /// * angleInDegrees: a flag, indicating whether the angles are measured
 /// in radians (which is by default), or in degrees.
 /// ## See also
@@ -1632,10 +1632,10 @@ pub fn cart_to_polar(x: &crate::gapi::GMat, y: &crate::gapi::GMat, angle_in_degr
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3D%3D%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpEQ"
@@ -1664,10 +1664,10 @@ pub fn cmp_eq(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crat
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3D%3D%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpEQ"
@@ -1701,10 +1701,10 @@ pub fn cmp_eq_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3E%3D%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpGE"
@@ -1733,10 +1733,10 @@ pub fn cmp_ge(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crat
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3E%3D%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpGE"
@@ -1770,10 +1770,10 @@ pub fn cmp_ge_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result
 /// equivalent matrix expressions:
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3E%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices/matrix.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpGT"
@@ -1802,10 +1802,10 @@ pub fn cmp_gt(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crat
 /// equivalent matrix expressions:
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3E%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices/matrix.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpGT"
@@ -1839,10 +1839,10 @@ pub fn cmp_gt_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3C%3D%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpLE"
@@ -1871,10 +1871,10 @@ pub fn cmp_le(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crat
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3C%3D%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpLE"
@@ -1908,10 +1908,10 @@ pub fn cmp_le_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3C%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices/matrix.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpLT"
@@ -1940,10 +1940,10 @@ pub fn cmp_lt(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crat
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%3C%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices/matrix.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpLT"
@@ -1977,10 +1977,10 @@ pub fn cmp_lt_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%21%3D%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpNE"
@@ -2009,10 +2009,10 @@ pub fn cmp_ne(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crat
 /// equivalent matrix expressions:
 ///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%21%3D%20%5Ctexttt%7Bsrc2%7D)
 /// 
-/// Output matrix of depth @ref CV_8U must have the same size and the same number of channels as
+/// Output matrix of depth [CV_8U] must have the same size and the same number of channels as
 ///    the input matrices.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpNE"
@@ -2072,7 +2072,7 @@ pub fn combine(lhs: &crate::gapi::GKernelPackage, rhs: &crate::gapi::GKernelPack
 /// ```
 /// 
 /// Output matrix must the same number of rows and depth as the src1 and src2, and the sum of cols of the src1 and src2.
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.transform.concatHor"
@@ -2111,7 +2111,7 @@ pub fn concat_hor(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<
 /// ```
 /// 
 /// Output matrix must the same number of rows and depth as the src1 and src2, and the sum of cols of the src1 and src2.
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.transform.concatHor"
@@ -2161,7 +2161,7 @@ pub fn concat_hor_1(v: &core::Vector<crate::gapi::GMat>) -> Result<crate::gapi::
 /// 
 /// 
 /// Output matrix must the same number of cols and depth as the src1 and src2, and the sum of rows of the src1 and src2.
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.transform.concatVert"
@@ -2204,7 +2204,7 @@ pub fn concat_vert(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result
 /// 
 /// 
 /// Output matrix must the same number of cols and depth as the src1 and src2, and the sum of rows of the src1 and src2.
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.imgproc.transform.concatVert"
@@ -2334,7 +2334,7 @@ pub fn crop(src: &crate::gapi::GMat, rect: core::Rect) -> Result<crate::gapi::GM
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmax%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
 /// 
 /// Dilation can be applied several (iterations) times. In case of multi-channel images, each channel is processed independently.
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, and @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], and [CV_32FC1].
 /// Output image must have the same type, size, and number of channels as the input image.
 /// 
 /// Note:
@@ -2370,7 +2370,7 @@ pub fn dilate3x3(src: &crate::gapi::GMat, iterations: i32, border_type: i32, bor
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmax%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
 /// 
 /// Dilation can be applied several (iterations) times. In case of multi-channel images, each channel is processed independently.
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, and @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], and [CV_32FC1].
 /// Output image must have the same type, size, and number of channels as the input image.
 /// 
 /// Note:
@@ -2414,7 +2414,7 @@ pub fn dilate(src: &crate::gapi::GMat, kernel: &core::Mat, anchor: core::Point, 
 /// multi-channel matrices are processed independently.
 /// The matrices can be single or multi channel. Output matrix must have the same size and depth as src.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.divC"
@@ -2448,7 +2448,7 @@ pub fn div_c(src: &crate::gapi::GMat, divisor: &crate::gapi::GScalar, scale: f64
 /// multi-channel matrices are processed independently.
 /// The matrices can be single or multi channel. Output matrix must have the same size and depth as src.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.divRC"
@@ -2484,7 +2484,7 @@ pub fn div_rc(divident: &crate::gapi::GScalar, src: &crate::gapi::GMat, scale: f
 /// multi-channel matrices are processed independently.
 /// The matrices can be single or multi channel. Output matrix must have the same size and depth as src.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.div"
@@ -2542,7 +2542,7 @@ pub fn equalize_hist(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 /// 
 /// The function erodes the source image using the rectangular structuring element with rectangle center as an anchor.
 /// Erosion can be applied several (iterations) times. In case of multi-channel images, each channel is processed independently.
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, and @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], and [CV_32FC1].
 /// Output image must have the same type, size, and number of channels as the input image.
 /// 
 /// Note:
@@ -2579,7 +2579,7 @@ pub fn erode3x3(src: &crate::gapi::GMat, iterations: i32, border_type: i32, bord
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmin%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
 /// 
 /// Erosion can be applied several (iterations) times. In case of multi-channel images, each channel is processed independently.
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, and @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], and [CV_32FC1].
 /// Output image must have the same type, size, and number of channels as the input image.
 /// 
 /// Note:
@@ -2627,7 +2627,7 @@ pub fn erode(src: &crate::gapi::GMat, kernel: &core::Mat, anchor: core::Point, i
 /// the kernel using flip and set the new anchor to `(kernel.cols - anchor.x - 1, kernel.rows -
 /// anchor.y - 1)`.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// Output image must have the same size and number of channels an input image.
 /// 
 /// Note:
@@ -2709,7 +2709,7 @@ pub fn flip(src: &crate::gapi::GMat, flip_code: i32) -> Result<crate::gapi::GMat
 /// The function filter2Ds the source image with the specified Gaussian kernel.
 /// Output image must have the same type and number of channels an input image.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// Output image must have the same type, size, and number of channels as the input image.
 /// 
 /// Note:
@@ -2809,7 +2809,7 @@ pub fn integral(src: &crate::gapi::GMat, sdepth: i32, sqdepth: i32) -> Result<co
 /// The function mask set value from given matrix if the corresponding pixel value in mask matrix set to true,
 /// and set the matrix value to 0 otherwise.
 /// 
-/// Supported src matrix data types are @ref CV_8UC1, @ref CV_16SC1, @ref CV_16UC1. Supported mask data type is @ref CV_8UC1.
+/// Supported src matrix data types are [CV_8UC1], [CV_16SC1], [CV_16UC1]. Supported mask data type is [CV_8UC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.mask"
@@ -2834,7 +2834,7 @@ pub fn mask(src: &crate::gapi::GMat, mask: &crate::gapi::GMat) -> Result<crate::
 ///    multi-channel matrices, each channel is processed independently.
 /// Output matrix must be of the same size and depth as src1.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.matrixop.max"
@@ -2858,7 +2858,7 @@ pub fn max(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::
 /// The function mean calculates the mean value M of matrix elements,
 /// independently for each channel, and return it.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.mean"
@@ -2906,7 +2906,7 @@ pub fn median_blur(src: &crate::gapi::GMat, ksize: i32) -> Result<crate::gapi::G
 /// The function merges several matrices to make a single multi-channel matrix. That is, each
 /// element of the output matrix will be a concatenation of the elements of the input matrices, where
 /// elements of i-th input matrix are treated as mv[i].channels()-element vectors.
-/// Output matrix must be of @ref CV_8UC3 type.
+/// Output matrix must be of [CV_8UC3] type.
 /// 
 /// The function split3 does the reverse operation.
 /// 
@@ -2915,9 +2915,9 @@ pub fn median_blur(src: &crate::gapi::GMat, ksize: i32) -> Result<crate::gapi::G
 ///  - Function textual ID is "org.opencv.core.transform.merge3"
 /// 
 /// ## Parameters
-/// * src1: first input @ref CV_8UC1 matrix to be merged.
-/// * src2: second input @ref CV_8UC1 matrix to be merged.
-/// * src3: third input @ref CV_8UC1 matrix to be merged.
+/// * src1: first input [CV_8UC1] matrix to be merged.
+/// * src2: second input [CV_8UC1] matrix to be merged.
+/// * src3: third input [CV_8UC1] matrix to be merged.
 /// ## See also
 /// merge4, split4, split3
 #[inline]
@@ -2935,7 +2935,7 @@ pub fn merge3(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, src3: &crate::
 /// The function merges several matrices to make a single multi-channel matrix. That is, each
 /// element of the output matrix will be a concatenation of the elements of the input matrices, where
 /// elements of i-th input matrix are treated as mv[i].channels()-element vectors.
-/// Output matrix must be of @ref CV_8UC4 type.
+/// Output matrix must be of [CV_8UC4] type.
 /// 
 /// The function split4 does the reverse operation.
 /// 
@@ -2944,10 +2944,10 @@ pub fn merge3(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, src3: &crate::
 ///  - Function textual ID is "org.opencv.core.transform.merge4"
 /// 
 /// ## Parameters
-/// * src1: first input @ref CV_8UC1 matrix to be merged.
-/// * src2: second input @ref CV_8UC1 matrix to be merged.
-/// * src3: third input @ref CV_8UC1 matrix to be merged.
-/// * src4: fourth input @ref CV_8UC1 matrix to be merged.
+/// * src1: first input [CV_8UC1] matrix to be merged.
+/// * src2: second input [CV_8UC1] matrix to be merged.
+/// * src3: third input [CV_8UC1] matrix to be merged.
+/// * src4: fourth input [CV_8UC1] matrix to be merged.
 /// ## See also
 /// merge3, split4, split3
 #[inline]
@@ -2968,7 +2968,7 @@ pub fn merge4(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, src3: &crate::
 ///    multi-channel matrices, each channel is processed independently.
 /// Output matrix must be of the same size and depth as src1.
 /// 
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.matrixop.min"
@@ -3039,7 +3039,7 @@ pub fn morphology_ex(src: &crate::gapi::GMat, op: crate::imgproc::MorphTypes, ke
 /// 
 /// The matrices can be single or multi channel. Output matrix must have the same size as src.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.mulC"
@@ -3072,7 +3072,7 @@ pub fn mul_c_1(src: &crate::gapi::GMat, multiplier: &crate::gapi::GScalar, ddept
 /// 
 /// The matrices can be single or multi channel. Output matrix must have the same size as src.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.mulC"
@@ -3103,7 +3103,7 @@ pub fn mul_c(src: &crate::gapi::GMat, multiplier: f64, ddepth: i32) -> Result<cr
 /// 
 /// The matrices can be single or multi channel. Output matrix must have the same size as src.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.mulC"
@@ -3138,7 +3138,7 @@ pub fn mul_c_2(multiplier: &crate::gapi::GScalar, src: &crate::gapi::GMat, ddept
 /// the same depth as the input matrices. The matrices can be single or multi channel.
 /// Output matrix must have the same size as input matrices.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.mul"
@@ -3178,7 +3178,7 @@ pub fn mul(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, scale: f64, ddept
 ///    \| r(0.5) \|_{L_\infty} &= \max(|0.5|,|0.5|) = 0.5.
 /// \f}
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.matrixop.norminf"
@@ -3211,7 +3211,7 @@ pub fn norm_inf(src: &crate::gapi::GMat) -> Result<crate::gapi::GScalar> {
 ///    \| r(0.5) \|_{L_1} &= |0.5| + |0.5| = 1 \\
 /// \f}
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.matrixop.norml1"
@@ -3244,7 +3244,7 @@ pub fn norm_l1(src: &crate::gapi::GMat) -> Result<crate::gapi::GScalar> {
 ///    \| r(0.5) \|_{L_2} &= \sqrt{(0.5)^{2} + (0.5)^{2}} = \sqrt{0.5} \\
 /// \f}
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// Note: Function textual ID is "org.opencv.core.matrixop.norml2"
 /// ## Parameters
@@ -3341,8 +3341,8 @@ pub fn phase(x: &crate::gapi::GMat, y: &crate::gapi::GMat, angle_in_degrees: boo
 /// Note: Function textual ID is "org.opencv.core.math.polarToCart"
 /// 
 /// ## Parameters
-/// * magnitude: input floating-point @ref CV_32FC1 matrix (1xN) of magnitudes of 2D vectors;
-/// * angle: input floating-point @ref CV_32FC1 matrix (1xN) of angles of 2D vectors.
+/// * magnitude: input floating-point [CV_32FC1] matrix (1xN) of magnitudes of 2D vectors;
+/// * angle: input floating-point [CV_32FC1] matrix (1xN) of angles of 2D vectors.
 /// * angleInDegrees: when true, the input angles are measured in
 /// degrees, otherwise, they are measured in radians.
 /// ## See also
@@ -3410,7 +3410,7 @@ pub fn remap(src: &crate::gapi::GMat, map1: &core::Mat, map2: &core::Mat, interp
 /// 
 /// The function resizes the image src down to or up to the specified size.
 /// Planar image memory layout is three planes laying in the memory contiguously,
-/// so the image height should be plane_height*plane_number, image type is @ref CV_8UC1.
+/// so the image height should be plane_height*plane_number, image type is [CV_8UC1].
 /// 
 /// Output image size will have the size dsize, the depth of output is the same as of src.
 /// 
@@ -3418,7 +3418,7 @@ pub fn remap(src: &crate::gapi::GMat, map1: &core::Mat, map2: &core::Mat, interp
 /// Note: Function textual ID is "org.opencv.imgproc.transform.resizeP"
 /// 
 /// ## Parameters
-/// * src: input image, must be of @ref CV_8UC1 type;
+/// * src: input image, must be of [CV_8UC1] type;
 /// * dsize: output image size;
 /// * interpolation: interpolation method, only cv::INTER_LINEAR is supported at the moment
 /// ## See also
@@ -3495,9 +3495,9 @@ pub fn resize(src: &crate::gapi::GMat, dsize: core::Size, fx: f64, fy: f64, inte
 /// The function set to the output matrix either the value from the first input matrix if corresponding value of mask matrix is 255,
 ///  or value from the second input matrix (if value of mask matrix set to 0).
 /// 
-/// Input mask matrix must be of @ref CV_8UC1 type, two other inout matrices and output matrix should be of the same type. The size should
+/// Input mask matrix must be of [CV_8UC1] type, two other inout matrices and output matrix should be of the same type. The size should
 /// be the same for all input and output matrices.
-/// Supported input matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.pixelwise.select"
@@ -3522,7 +3522,7 @@ pub fn select(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, mask: &crate::
 /// filtered with the 1D kernel kernelX. Then, every column of the result is filtered with the 1D
 /// kernel kernelY. The final result is returned.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// Output image must have the same type, size, and number of channels as the input image.
 /// 
 /// Note:
@@ -3567,7 +3567,7 @@ pub fn sep_filter(src: &crate::gapi::GMat, ddepth: i32, kernel_x: &core::Mat, ke
 /// The function splits a 3-channel matrix into 3 single-channel matrices:
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bmv%7D%20%5Bc%5D%28I%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28I%29%5Fc)
 /// 
-/// All output matrices must be of @ref CV_8UC1 type.
+/// All output matrices must be of [CV_8UC1] type.
 /// 
 /// The function merge3 does the reverse operation.
 /// 
@@ -3576,7 +3576,7 @@ pub fn sep_filter(src: &crate::gapi::GMat, ddepth: i32, kernel_x: &core::Mat, ke
 ///  - Function textual ID is "org.opencv.core.transform.split3"
 /// 
 /// ## Parameters
-/// * src: input @ref CV_8UC3 matrix.
+/// * src: input [CV_8UC3] matrix.
 /// ## See also
 /// split4, merge3, merge4
 #[inline]
@@ -3594,7 +3594,7 @@ pub fn split3(src: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat,
 /// The function splits a 4-channel matrix into 4 single-channel matrices:
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bmv%7D%20%5Bc%5D%28I%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28I%29%5Fc)
 /// 
-/// All output matrices must be of @ref CV_8UC1 type.
+/// All output matrices must be of [CV_8UC1] type.
 /// 
 /// The function merge4 does the reverse operation.
 /// 
@@ -3603,7 +3603,7 @@ pub fn split3(src: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat,
 ///  - Function textual ID is "org.opencv.core.transform.split4"
 /// 
 /// ## Parameters
-/// * src: input @ref CV_8UC4 matrix.
+/// * src: input [CV_8UC4] matrix.
 /// ## See also
 /// split3, merge3, merge4
 #[inline]
@@ -3657,7 +3657,7 @@ pub fn bgr(in_: &crate::gapi::GFrame) -> Result<crate::gapi::GMat> {
 
 /// Extracts UV plane from media frame.
 /// 
-/// Output image is 8-bit 2-channel image of @ref CV_8UC2.
+/// Output image is 8-bit 2-channel image of [CV_8UC2].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.streaming.UV"
@@ -3676,7 +3676,7 @@ pub fn uv(frame: &crate::gapi::GFrame) -> Result<crate::gapi::GMat> {
 
 /// Extracts Y plane from media frame.
 /// 
-/// Output image is 8-bit 1-channel image of @ref CV_8UC1.
+/// Output image is 8-bit 1-channel image of [CV_8UC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.streaming.Y"
@@ -3753,7 +3753,7 @@ pub fn kernels() -> Result<crate::gapi::GKernelPackage> {
 /// If ddepth is set to default -1, the depth of output matrix will be the same as the depth of input matrix.
 /// The matrices can be single or multi channel. Output matrix must have the same size as src.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.subC"
@@ -3785,7 +3785,7 @@ pub fn sub_c(src: &crate::gapi::GMat, c: &crate::gapi::GScalar, ddepth: i32) -> 
 /// If ddepth is set to default -1, the depth of output matrix will be the same as the depth of input matrix.
 /// The matrices can be single or multi channel. Output matrix must have the same size as src.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.subRC"
@@ -3823,7 +3823,7 @@ pub fn sub_rc(c: &crate::gapi::GScalar, src: &crate::gapi::GMat, ddepth: i32) ->
 /// If src1.depth() == src2.depth(), ddepth can be set to the default -1. In this case, the output matrix will have
 /// the same depth as the input matrices. The matrices can be single or multi channel.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.math.sub"
@@ -3850,7 +3850,7 @@ pub fn sub(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, ddepth: i32) -> R
 /// 
 /// The function sum calculates sum of all matrix elements, independently for each channel.
 /// 
-/// Supported matrix data types are @ref CV_8UC1, @ref CV_8UC3, @ref CV_16UC1, @ref CV_16SC1, @ref CV_32FC1.
+/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
 /// 
 /// 
 /// Note: Function textual ID is "org.opencv.core.matrixop.sum"
@@ -3889,7 +3889,7 @@ pub fn sum(src: &crate::gapi::GMat) -> Result<crate::gapi::GScalar> {
 /// Note: Function textual ID is "org.opencv.core.matrixop.threshold"
 /// 
 /// ## Parameters
-/// * src: input matrix (@ref CV_8UC1, @ref CV_8UC3, or @ref CV_32FC1).
+/// * src: input matrix ([CV_8UC1], [CV_8UC3], or [CV_32FC1]).
 /// * thresh: threshold value.
 /// * maxval: maximum value to use with the cv::THRESH_BINARY and cv::THRESH_BINARY_INV thresholding
 /// types.
@@ -3927,7 +3927,7 @@ pub fn threshold(src: &crate::gapi::GMat, thresh: &crate::gapi::GScalar, maxval:
 /// Note: Function textual ID is "org.opencv.core.matrixop.threshold"
 /// 
 /// ## Parameters
-/// * src: input matrix (@ref CV_8UC1, @ref CV_8UC3, or @ref CV_32FC1).
+/// * src: input matrix ([CV_8UC1], [CV_8UC3], or [CV_32FC1]).
 /// * thresh: threshold value.
 /// * maxval: maximum value to use with the cv::THRESH_BINARY and cv::THRESH_BINARY_INV thresholding
 /// types.
@@ -4472,6 +4472,7 @@ pub fn validate_input_args(args: &crate::gapi::GRunArgs) -> Result<()> {
 	Ok(ret)
 }
 
+/// Constant methods for [crate::gapi::GArg]
 pub trait GArgTraitConst {
 	fn as_raw_GArg(&self) -> *const c_void;
 
@@ -4493,6 +4494,7 @@ pub trait GArgTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GArg]
 pub trait GArgTrait: crate::gapi::GArgTraitConst {
 	fn as_raw_mut_GArg(&mut self) -> *mut c_void;
 
@@ -4550,7 +4552,7 @@ impl GArg {
 	
 }
 
-/// \addtogroup gapi_meta_args
+/// Constant methods for [crate::gapi::GArrayDesc]
 pub trait GArrayDescTraitConst {
 	fn as_raw_GArrayDesc(&self) -> *const c_void;
 
@@ -4565,6 +4567,7 @@ pub trait GArrayDescTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GArrayDesc]
 pub trait GArrayDescTrait: crate::gapi::GArrayDescTraitConst {
 	fn as_raw_mut_GArrayDesc(&mut self) -> *mut c_void;
 
@@ -4597,11 +4600,13 @@ impl crate::gapi::GArrayDescTrait for GArrayDesc {
 impl GArrayDesc {
 }
 
+/// Constant methods for [crate::gapi::GCall]
 pub trait GCallTraitConst {
 	fn as_raw_GCall(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::GCall]
 pub trait GCallTrait: crate::gapi::GCallTraitConst {
 	fn as_raw_mut_GCall(&mut self) -> *mut c_void;
 
@@ -4720,15 +4725,7 @@ impl GCall {
 	
 }
 
-/// Represents an arbitrary compilation argument.
-/// 
-/// Any value can be wrapped into cv::GCompileArg, but only known ones
-/// (to G-API or its backends) can be interpreted correctly.
-/// 
-/// Normally objects of this class shouldn't be created manually, use
-/// cv::compile_args() function which automatically wraps everything
-/// passed in (a variadic template parameter pack) into a vector of
-/// cv::GCompileArg objects.
+/// Constant methods for [crate::gapi::GCompileArg]
 pub trait GCompileArgTraitConst {
 	fn as_raw_GCompileArg(&self) -> *const c_void;
 
@@ -4741,6 +4738,7 @@ pub trait GCompileArgTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GCompileArg]
 pub trait GCompileArgTrait: crate::gapi::GCompileArgTraitConst {
 	fn as_raw_mut_GCompileArg(&mut self) -> *mut c_void;
 
@@ -4803,39 +4801,7 @@ impl Default for GCompileArg {
 	}
 }
 
-/// \addtogroup gapi_main_classes
-/// /
-/// 
-///  Represents a compiled computation (graph). Can only be used
-///  with image / data formats & resolutions it was compiled for, with
-///  some exceptions.
-/// 
-///  This class represents a product of graph compilation (calling
-///  cv::GComputation::compile()). Objects of this class actually do
-///  data processing, and graph execution is incapsulated into objects
-///  of this class. Execution model itself depends on kernels and
-///  backends which were using during the compilation, see @ref
-///  gapi_compile_args for details.
-/// 
-///  In a general case, GCompiled objects can be applied to data only in
-///  that formats/resolutions they were compiled for (see @ref
-///  gapi_meta_args). However, if the underlying backends allow, a
-///  compiled object can be _reshaped_ to handle data (images) of
-///  different resolution, though formats and types must remain the same.
-/// 
-///  GCompiled is very similar to `std::function<>` in its semantics --
-///  running it looks like a function call in the user code.
-/// 
-///  At the moment, GCompiled objects are not reentrant -- generally,
-///  the objects are stateful since graph execution itself is a stateful
-///  process and this state is now maintained in GCompiled's own memory
-///  (not on the process stack).
-/// 
-///  At the same time, two different GCompiled objects produced from the
-///  single cv::GComputation are completely independent and can be used
-///  concurrently.
-/// ## See also
-/// GStreamingCompiled
+/// Constant methods for [crate::gapi::GCompiled]
 pub trait GCompiledTraitConst {
 	fn as_raw_GCompiled(&self) -> *const c_void;
 
@@ -4867,6 +4833,7 @@ pub trait GCompiledTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GCompiled]
 pub trait GCompiledTrait: crate::gapi::GCompiledTraitConst {
 	fn as_raw_mut_GCompiled(&mut self) -> *mut c_void;
 
@@ -5088,12 +5055,10 @@ pub trait GCompiledTrait: crate::gapi::GCompiledTraitConst {
 ///  cv::GComputation::compile()). Objects of this class actually do
 ///  data processing, and graph execution is incapsulated into objects
 ///  of this class. Execution model itself depends on kernels and
-///  backends which were using during the compilation, see @ref
-///  gapi_compile_args for details.
+///  backends which were using during the compilation, see [gapi_compile_args] for details.
 /// 
 ///  In a general case, GCompiled objects can be applied to data only in
-///  that formats/resolutions they were compiled for (see @ref
-///  gapi_meta_args). However, if the underlying backends allow, a
+///  that formats/resolutions they were compiled for (see [gapi_meta_args]). However, if the underlying backends allow, a
 ///  compiled object can be _reshaped_ to handle data (images) of
 ///  different resolution, though formats and types must remain the same.
 /// 
@@ -5147,80 +5112,13 @@ impl GCompiled {
 	
 }
 
-/// \addtogroup gapi_main_classes
-/// 
-///  G-API classes for constructed and compiled graphs.
-/// /
-/// 
-///  GComputation class represents a captured computation
-///  graph. GComputation objects form boundaries for expression code
-///  user writes with G-API, allowing to compile and execute it.
-/// 
-///  G-API computations are defined with input/output data
-///  objects. G-API will track automatically which operations connect
-///  specified outputs to the inputs, forming up a call graph to be
-///  executed. The below example expresses calculation of Sobel operator
-///  for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
-/// 
-///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
-/// 
-///  Full pipeline can be now captured with this object declaration:
-/// 
-///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
-/// 
-///  Input/output data objects on which a call graph should be
-///  reconstructed are passed using special wrappers cv::GIn and
-///  cv::GOut. G-API will track automatically which operations form a
-///  path from inputs to outputs and build the execution graph appropriately.
-/// 
-///  Note that cv::GComputation doesn't take ownership on data objects
-///  it is defined. Moreover, multiple GComputation objects may be
-///  defined on the same expressions, e.g. a smaller pipeline which
-///  expects that image gradients are already pre-calculated may be
-///  defined like this:
-/// 
-///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
-/// 
-///  The resulting graph would expect two inputs and produce one
-///  output. In this case, it doesn't matter if gx/gy data objects are
-///  results of cv::gapi::Sobel operators -- G-API will stop unrolling
-///  expressions and building the underlying graph one reaching this
-///  data objects.
-/// 
-///  The way how GComputation is defined is important as its definition
-///  specifies graph _protocol_ -- the way how the graph should be
-///  used. Protocol is defined by number of inputs, number of outputs,
-///  and shapes of inputs and outputs.
-/// 
-///  In the above example, sobelEdge expects one Mat on input and
-///  produces one Mat; while sobelEdgeSub expects two Mats on input and
-///  produces one Mat. GComputation's protocol defines how other
-///  computation methods should be used -- cv::GComputation::compile() and
-///  cv::GComputation::apply(). For example, if a graph is defined on
-///  two GMat inputs, two cv::Mat objects have to be passed to apply()
-///  for execution. GComputation checks protocol correctness in runtime
-///  so passing a different number of objects in apply() or passing
-///  cv::Scalar instead of cv::Mat there would compile well as a C++
-///  source but raise an exception in run-time. G-API also comes with a
-///  typed wrapper cv::GComputationT<> which introduces this type-checking in
-///  compile-time.
-/// 
-///  cv::GComputation itself is a thin object which just captures what
-///  the graph is. The compiled graph (which actually process data) is
-///  represented by class GCompiled. Use compile() method to generate a
-///  compiled graph with given compile options. cv::GComputation can
-///  also be used to process data with implicit graph compilation
-///  on-the-fly, see apply() for details.
-/// 
-///  GComputation is a reference-counted object -- once defined, all its
-///  copies will refer to the same instance.
-/// ## See also
-/// GCompiled
+/// Constant methods for [crate::gapi::GComputation]
 pub trait GComputationTraitConst {
 	fn as_raw_GComputation(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::GComputation]
 pub trait GComputationTrait: crate::gapi::GComputationTraitConst {
 	fn as_raw_mut_GComputation(&mut self) -> *mut c_void;
 
@@ -5392,7 +5290,7 @@ pub trait GComputationTrait: crate::gapi::GComputationTraitConst {
 	/// GStreamingCompiled, a streaming-oriented executable
 	/// computation compiled for any input image format.
 	/// ## See also
-	/// @ref gapi_compile_args
+	/// [gapi_compile_args]
 	/// 
 	/// ## C++ default parameters
 	/// * args: {}
@@ -5532,7 +5430,7 @@ impl GComputation {
 	/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
 	/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
 	/// ## See also
-	/// @ref gapi_data_objects
+	/// [gapi_data_objects]
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -5565,7 +5463,7 @@ impl GComputation {
 	/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
 	/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
 	/// ## See also
-	/// @ref gapi_data_objects
+	/// [gapi_data_objects]
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -5598,7 +5496,7 @@ impl GComputation {
 	/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
 	/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
 	/// ## See also
-	/// @ref gapi_data_objects
+	/// [gapi_data_objects]
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -5632,7 +5530,7 @@ impl GComputation {
 	/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
 	/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
 	/// ## See also
-	/// @ref gapi_data_objects
+	/// [gapi_data_objects]
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -5666,7 +5564,7 @@ impl GComputation {
 	/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
 	/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
 	/// ## See also
-	/// @ref gapi_data_objects
+	/// [gapi_data_objects]
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -5689,41 +5587,13 @@ impl GComputation {
 	
 }
 
-/// \addtogroup gapi_data_objects
-/// /
-/// 
-///  GFrame class represents an image or media frame in the graph.
-/// 
-///  GFrame doesn't store any data itself, instead it describes a
-///  functional relationship between operations consuming and producing
-///  GFrame objects.
-/// 
-///  GFrame is introduced to handle various media formats (e.g., NV12 or
-///  I420) under the same type. Various image formats may differ in the
-///  number of planes (e.g. two for NV12, three for I420) and the pixel
-///  layout inside. GFrame type allows to handle these media formats in
-///  the graph uniformly -- the graph structure will not change if the
-///  media format changes, e.g. a different camera or decoder is used
-///  with the same graph. G-API provides a number of operations which
-///  operate directly on GFrame, like `infer<>()` or
-///  renderFrame(); these operations are expected to handle different
-///  media formats inside. There is also a number of accessor
-///  operations like BGR(), Y(), UV() -- these operations provide
-///  access to frame's data in the familiar cv::GMat form, which can be
-///  used with the majority of the existing G-API operations. These
-///  accessor functions may perform color space conversion on the fly if
-///  the image format of the GFrame they are applied to differs from the
-///  operation's semantic (e.g. the BGR() accessor is called on an NV12
-///  image frame).
-/// 
-///  GFrame is a virtual counterpart of cv::MediaFrame.
-/// ## See also
-/// cv::MediaFrame, cv::GFrameDesc, BGR(), Y(), UV(), infer<>().
+/// Constant methods for [crate::gapi::GFrame]
 pub trait GFrameTraitConst {
 	fn as_raw_GFrame(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::GFrame]
 pub trait GFrameTrait: crate::gapi::GFrameTraitConst {
 	fn as_raw_mut_GFrame(&mut self) -> *mut c_void;
 
@@ -5801,7 +5671,7 @@ impl GFrame {
 	
 }
 
-/// \addtogroup gapi_meta_args
+/// Constant methods for [crate::gapi::GFrameDesc]
 pub trait GFrameDescTraitConst {
 	fn as_raw_GFrameDesc(&self) -> *const c_void;
 
@@ -5832,6 +5702,7 @@ pub trait GFrameDescTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GFrameDesc]
 pub trait GFrameDescTrait: crate::gapi::GFrameDescTraitConst {
 	fn as_raw_mut_GFrameDesc(&mut self) -> *mut c_void;
 
@@ -5876,6 +5747,7 @@ impl crate::gapi::GFrameDescTrait for GFrameDesc {
 impl GFrameDesc {
 }
 
+/// Constant methods for [crate::gapi::GKernel]
 pub trait GKernelTraitConst {
 	fn as_raw_GKernel(&self) -> *const c_void;
 
@@ -5909,6 +5781,7 @@ pub trait GKernelTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GKernel]
 pub trait GKernelTrait: crate::gapi::GKernelTraitConst {
 	fn as_raw_mut_GKernel(&mut self) -> *mut c_void;
 
@@ -5966,6 +5839,7 @@ impl crate::gapi::GKernelTrait for GKernel {
 impl GKernel {
 }
 
+/// Constant methods for [crate::gapi::GKernelImpl]
 pub trait GKernelImplTraitConst {
 	fn as_raw_GKernelImpl(&self) -> *const c_void;
 
@@ -5978,6 +5852,7 @@ pub trait GKernelImplTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GKernelImpl]
 pub trait GKernelImplTrait: crate::gapi::GKernelImplTraitConst {
 	fn as_raw_mut_GKernelImpl(&mut self) -> *mut c_void;
 
@@ -6015,30 +5890,7 @@ impl crate::gapi::GKernelImplTrait for GKernelImpl {
 impl GKernelImpl {
 }
 
-/// A container class for heterogeneous kernel
-/// implementation collections and graph transformations.
-/// 
-/// GKernelPackage is a special container class which stores kernel
-/// _implementations_ and graph _transformations_. Objects of this class
-/// are created and passed to cv::GComputation::compile() to specify
-/// which kernels to use and which transformations to apply in the
-/// compiled graph. GKernelPackage may contain kernels of
-/// different backends, e.g. be heterogeneous.
-/// 
-/// The most easy way to create a kernel package is to use function
-/// cv::gapi::kernels(). This template functions takes kernel
-/// implementations in form of type list (variadic template) and
-/// generates a kernel package atop of that.
-/// 
-/// Kernel packages can be also generated programmatically, starting
-/// with an empty package (created with the default constructor)
-/// and then by populating it with kernels via call to
-/// GKernelPackage::include(). Note this method is also a template
-/// one since G-API kernel and transformation implementations are _types_,
-/// not objects.
-/// 
-/// Finally, two kernel packages can be combined into a new one
-/// with function cv::gapi::combine().
+/// Constant methods for [crate::gapi::GKernelPackage]
 pub trait GKernelPackageTraitConst {
 	fn as_raw_GKernelPackage(&self) -> *const c_void;
 
@@ -6109,6 +5961,7 @@ pub trait GKernelPackageTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GKernelPackage]
 pub trait GKernelPackageTrait: crate::gapi::GKernelPackageTraitConst {
 	fn as_raw_mut_GKernelPackage(&mut self) -> *mut c_void;
 
@@ -6204,48 +6057,13 @@ impl crate::gapi::GKernelPackageTrait for GKernelPackage {
 impl GKernelPackage {
 }
 
-/// \addtogroup gapi_data_objects
-/// 
-///  G-API data objects used to build G-API expressions.
-/// 
-///  These objects do not own any particular data (except compile-time
-///  associated values like with cv::GScalar or `cv::GArray<T>`) and are
-///  used only to construct graphs.
-/// 
-///  Every graph in G-API starts and ends with data objects.
-/// 
-///  Once constructed and compiled, G-API operates with regular host-side
-///  data instead. Refer to the below table to find the mapping between
-///  G-API and regular data types when passing input and output data
-///  structures to G-API:
-/// 
-///    G-API data type    | I/O data type
-///    ------------------ | -------------
-///    cv::GMat           | cv::Mat, cv::UMat, cv::RMat
-///    cv::GScalar        | cv::Scalar
-///    `cv::GArray<T>`    | std::vector<T>
-///    `cv::GOpaque<T>`   | T
-///    cv::GFrame         | cv::MediaFrame
-/// /
-/// 
-///  GMat class represents image or tensor data in the
-///  graph.
-/// 
-///  GMat doesn't store any data itself, instead it describes a
-///  functional relationship between operations consuming and producing
-///  GMat objects.
-/// 
-///  GMat is a virtual counterpart of Mat and UMat, but it
-///  doesn't mean G-API use Mat or UMat objects internally to represent
-///  GMat objects -- the internal data representation may be
-///  backend-specific or optimized out at all.
-/// ## See also
-/// Mat, GMatDesc
+/// Constant methods for [crate::gapi::GMat]
 pub trait GMatTraitConst {
 	fn as_raw_GMat(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::GMat]
 pub trait GMatTrait: crate::gapi::GMatTraitConst {
 	fn as_raw_mut_GMat(&mut self) -> *mut c_void;
 
@@ -6330,7 +6148,7 @@ impl GMat {
 	
 }
 
-/// \addtogroup gapi_meta_args
+/// Constant methods for [crate::gapi::GMatDesc]
 pub trait GMatDescTraitConst {
 	fn as_raw_GMatDesc(&self) -> *const c_void;
 
@@ -6494,6 +6312,7 @@ pub trait GMatDescTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GMatDesc]
 pub trait GMatDescTrait: crate::gapi::GMatDescTraitConst {
 	fn as_raw_mut_GMatDesc(&mut self) -> *mut c_void;
 
@@ -6598,11 +6417,13 @@ impl GMatDesc {
 	
 }
 
+/// Constant methods for [crate::gapi::GMatP]
 pub trait GMatPTraitConst: crate::gapi::GMatTraitConst {
 	fn as_raw_GMatP(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::GMatP]
 pub trait GMatPTrait: crate::gapi::GMatPTraitConst + crate::gapi::GMatTrait {
 	fn as_raw_mut_GMatP(&mut self) -> *mut c_void;
 
@@ -6644,7 +6465,7 @@ impl GMatP {
 
 boxed_cast_base! { GMatP, crate::gapi::GMat, cv_GMatP_to_GMat }
 
-/// \addtogroup gapi_meta_args
+/// Constant methods for [crate::gapi::GOpaqueDesc]
 pub trait GOpaqueDescTraitConst {
 	fn as_raw_GOpaqueDesc(&self) -> *const c_void;
 
@@ -6659,6 +6480,7 @@ pub trait GOpaqueDescTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GOpaqueDesc]
 pub trait GOpaqueDescTrait: crate::gapi::GOpaqueDescTraitConst {
 	fn as_raw_mut_GOpaqueDesc(&mut self) -> *mut c_void;
 
@@ -6691,11 +6513,13 @@ impl crate::gapi::GOpaqueDescTrait for GOpaqueDesc {
 impl GOpaqueDesc {
 }
 
+/// Constant methods for [crate::gapi::GRunArg]
 pub trait GRunArgTraitConst {
 	fn as_raw_GRunArg(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::GRunArg]
 pub trait GRunArgTrait: crate::gapi::GRunArgTraitConst {
 	fn as_raw_mut_GRunArg(&mut self) -> *mut c_void;
 
@@ -6757,25 +6581,13 @@ impl GRunArg {
 	
 }
 
-/// \addtogroup gapi_data_objects
-/// /
-/// 
-///  GScalar class represents cv::Scalar data in the graph.
-/// 
-///  GScalar may be associated with a cv::Scalar value, which becomes
-///  its constant value bound in graph compile time. cv::GScalar describes a
-///  functional relationship between operations consuming and producing
-///  GScalar objects.
-/// 
-///  GScalar is a virtual counterpart of cv::Scalar, which is usually used
-///  to represent the GScalar data in G-API during the execution.
-/// ## See also
-/// Scalar
+/// Constant methods for [crate::gapi::GScalar]
 pub trait GScalarTraitConst {
 	fn as_raw_GScalar(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::GScalar]
 pub trait GScalarTrait: crate::gapi::GScalarTraitConst {
 	fn as_raw_mut_GScalar(&mut self) -> *mut c_void;
 
@@ -6939,7 +6751,7 @@ impl GScalar {
 	
 }
 
-/// \addtogroup gapi_meta_args
+/// Constant methods for [crate::gapi::GScalarDesc]
 pub trait GScalarDescTraitConst {
 	fn as_raw_GScalarDesc(&self) -> *const c_void;
 
@@ -6963,6 +6775,7 @@ pub trait GScalarDescTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GScalarDesc]
 pub trait GScalarDescTrait: crate::gapi::GScalarDescTraitConst {
 	fn as_raw_mut_GScalarDesc(&mut self) -> *mut c_void;
 
@@ -6995,35 +6808,7 @@ impl crate::gapi::GScalarDescTrait for GScalarDesc {
 impl GScalarDesc {
 }
 
-/// \addtogroup gapi_main_classes
-/// /
-/// 
-///  Represents a computation (graph) compiled for streaming.
-/// 
-///  This class represents a product of graph compilation (calling
-///  cv::GComputation::compileStreaming()). Objects of this class
-///  actually do stream processing, and the whole pipeline execution
-///  complexity is incapsulated into objects of this class. Execution
-///  model has two levels: at the very top, the execution of a
-///  heterogeneous graph is aggressively pipelined; at the very bottom
-///  the execution of every internal block is determined by its
-///  associated backend. Backends are selected based on kernel packages
-///  passed via compilation arguments ( see @ref gapi_compile_args,
-///  GNetworkPackage, GKernelPackage for details).
-/// 
-///  GStreamingCompiled objects have a "player" semantics -- there are
-///  methods like start() and stop(). GStreamingCompiled has a full
-///  control over a videostream and so is stateful. You need to specify the
-///  input stream data using setSource() and then call start() to
-///  actually start processing. After that, use pull() or try_pull() to
-///  obtain next processed data frame from the graph in a blocking or
-///  non-blocking way, respectively.
-/// 
-///  Currently a single GStreamingCompiled can process only one video
-///  streat at time. Produce multiple GStreamingCompiled objects to run the
-///  same graph on multiple video streams.
-/// ## See also
-/// GCompiled
+/// Constant methods for [crate::gapi::GStreamingCompiled]
 pub trait GStreamingCompiledTraitConst {
 	fn as_raw_GStreamingCompiled(&self) -> *const c_void;
 
@@ -7061,6 +6846,7 @@ pub trait GStreamingCompiledTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GStreamingCompiled]
 pub trait GStreamingCompiledTrait: crate::gapi::GStreamingCompiledTraitConst {
 	fn as_raw_mut_GStreamingCompiled(&mut self) -> *mut c_void;
 
@@ -7177,7 +6963,7 @@ pub trait GStreamingCompiledTrait: crate::gapi::GStreamingCompiledTraitConst {
 ///  heterogeneous graph is aggressively pipelined; at the very bottom
 ///  the execution of every internal block is determined by its
 ///  associated backend. Backends are selected based on kernel packages
-///  passed via compilation arguments ( see @ref gapi_compile_args,
+///  passed via compilation arguments ( see [gapi_compile_args],
 ///  GNetworkPackage, GKernelPackage for details).
 /// 
 ///  GStreamingCompiled objects have a "player" semantics -- there are
@@ -7229,6 +7015,7 @@ impl GStreamingCompiled {
 	
 }
 
+/// Constant methods for [crate::gapi::GTransform]
 pub trait GTransformTraitConst {
 	fn as_raw_GTransform(&self) -> *const c_void;
 
@@ -7241,6 +7028,7 @@ pub trait GTransformTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GTransform]
 pub trait GTransformTrait: crate::gapi::GTransformTraitConst {
 	fn as_raw_mut_GTransform(&mut self) -> *mut c_void;
 
@@ -7279,6 +7067,7 @@ impl crate::gapi::GTransformTrait for GTransform {
 impl GTransform {
 }
 
+/// Constant methods for [crate::gapi::GTypeInfo]
 pub trait GTypeInfoTraitConst {
 	fn as_raw_GTypeInfo(&self) -> *const c_void;
 
@@ -7300,6 +7089,7 @@ pub trait GTypeInfoTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GTypeInfo]
 pub trait GTypeInfoTrait: crate::gapi::GTypeInfoTraitConst {
 	fn as_raw_mut_GTypeInfo(&mut self) -> *mut c_void;
 
@@ -7343,26 +7133,7 @@ impl crate::gapi::GTypeInfoTrait for GTypeInfo {
 impl GTypeInfo {
 }
 
-/// \addtogroup gapi_data_structures
-/// 
-///  Extra G-API data structures used to pass input/output data
-///  to the graph for processing.
-/// /
-/// 
-///  cv::MediaFrame class represents an image/media frame
-///  obtained from an external source.
-/// 
-///  cv::MediaFrame represents image data as specified in
-///  cv::MediaFormat. cv::MediaFrame is designed to be a thin wrapper over some
-///  external memory of buffer; the class itself provides an uniform
-///  interface over such types of memory. cv::MediaFrame wraps data from
-///  a camera driver or from a media codec and provides an abstraction
-///  layer over this memory to G-API. MediaFrame defines a compact interface
-///  to access and manage the underlying data; the implementation is
-///  fully defined by the associated Adapter (which is usually
-///  user-defined).
-/// ## See also
-/// cv::RMat
+/// Constant methods for [crate::gapi::MediaFrame]
 pub trait MediaFrameTraitConst {
 	fn as_raw_MediaFrame(&self) -> *const c_void;
 
@@ -7393,6 +7164,7 @@ pub trait MediaFrameTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::MediaFrame]
 pub trait MediaFrameTrait: crate::gapi::MediaFrameTraitConst {
 	fn as_raw_mut_MediaFrame(&mut self) -> *mut c_void;
 
@@ -7457,15 +7229,7 @@ impl MediaFrame {
 	
 }
 
-/// An interface class for MediaFrame data adapters.
-/// 
-/// Implement this interface to wrap media data in the MediaFrame. It
-/// makes sense to implement this class if there is a custom
-/// cv::gapi::wip::IStreamSource defined -- in this case, a stream
-/// source can produce MediaFrame objects with this adapter and the
-/// media data may be passed to graph without any copy. For example, a
-/// GStreamer-based stream source can implement an adapter over
-/// `GstBuffer` and G-API will transparently use it in the graph.
+/// Constant methods for [crate::gapi::MediaFrame_IAdapter]
 pub trait MediaFrame_IAdapterConst {
 	fn as_raw_MediaFrame_IAdapter(&self) -> *const c_void;
 
@@ -7491,51 +7255,27 @@ pub trait MediaFrame_IAdapterConst {
 	
 }
 
+/// An interface class for MediaFrame data adapters.
+/// 
+/// Implement this interface to wrap media data in the MediaFrame. It
+/// makes sense to implement this class if there is a custom
+/// cv::gapi::wip::IStreamSource defined -- in this case, a stream
+/// source can produce MediaFrame objects with this adapter and the
+/// media data may be passed to graph without any copy. For example, a
+/// GStreamer-based stream source can implement an adapter over
+/// `GstBuffer` and G-API will transparently use it in the graph.
 pub trait MediaFrame_IAdapter: crate::gapi::MediaFrame_IAdapterConst {
 	fn as_raw_mut_MediaFrame_IAdapter(&mut self) -> *mut c_void;
 
 }
 
-/// Provides access to the MediaFrame's underlying data.
-/// 
-/// This object contains the necessary information to access the pixel
-/// data of the associated MediaFrame: arrays of pointers and strides
-/// (distance between every plane row, in bytes) for every image
-/// plane, as defined in cv::MediaFormat.
-/// There may be up to four image planes in MediaFrame.
-/// 
-/// Depending on the MediaFrame::Access flag passed in
-/// MediaFrame::access(), a MediaFrame::View may be read- or
-/// write-only.
-/// 
-/// Depending on the MediaFrame::IAdapter implementation associated
-/// with the parent MediaFrame, writing to memory with
-/// MediaFrame::Access::R flag may have no effect or lead to
-/// undefined behavior. Same applies to reading the memory with
-/// MediaFrame::Access::W flag -- again, depending on the IAdapter
-/// implementation, the host-side buffer the view provides access to
-/// may have no current data stored in (so in-place editing of the
-/// buffer contents may not be possible).
-/// 
-/// MediaFrame::View objects must be handled carefully, as an external
-/// resource associated with MediaFrame may be locked for the time the
-/// MediaFrame::View object exists. Obtaining MediaFrame::View should
-/// be seen as "map" and destroying it as "unmap" in the "map/unmap"
-/// idiom (applicable to OpenCL, device memory, remote
-/// memory).
-/// 
-/// When a MediaFrame buffer is accessed for writing, and the memory
-/// under MediaFrame::View::Ptrs is altered, the data synchronization
-/// of a host-side and device/remote buffer is not guaranteed until the
-/// MediaFrame::View is destroyed. In other words, the real data on the
-/// device or in a remote target may be updated at the MediaFrame::View
-/// destruction only -- but it depends on the associated
-/// MediaFrame::IAdapter implementation.
+/// Constant methods for [crate::gapi::MediaFrame_View]
 pub trait MediaFrame_ViewTraitConst {
 	fn as_raw_MediaFrame_View(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::MediaFrame_View]
 pub trait MediaFrame_ViewTrait: crate::gapi::MediaFrame_ViewTraitConst {
 	fn as_raw_mut_MediaFrame_View(&mut self) -> *mut c_void;
 
@@ -7611,7 +7351,7 @@ impl MediaFrame_View {
 	
 }
 
-/// \addtogroup gapi_data_structures
+/// Constant methods for [crate::gapi::RMat]
 pub trait RMatTraitConst {
 	fn as_raw_RMat(&self) -> *const c_void;
 
@@ -7627,6 +7367,7 @@ pub trait RMatTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::RMat]
 pub trait RMatTrait: crate::gapi::RMatTraitConst {
 	fn as_raw_mut_RMat(&mut self) -> *mut c_void;
 
@@ -7674,6 +7415,7 @@ impl Default for RMat {
 	}
 }
 
+/// Constant methods for [crate::gapi::RMat_IAdapter]
 pub trait RMat_IAdapterConst {
 	fn as_raw_RMat_IAdapter(&self) -> *const c_void;
 
@@ -7694,6 +7436,7 @@ pub trait RMat_IAdapter: crate::gapi::RMat_IAdapterConst {
 
 }
 
+/// Constant methods for [crate::gapi::RMat_View]
 pub trait RMat_ViewTraitConst {
 	fn as_raw_RMat_View(&self) -> *const c_void;
 
@@ -7793,6 +7536,7 @@ pub trait RMat_ViewTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::RMat_View]
 pub trait RMat_ViewTrait: crate::gapi::RMat_ViewTraitConst {
 	fn as_raw_mut_RMat_View(&mut self) -> *mut c_void;
 
@@ -7846,6 +7590,7 @@ impl Default for RMat_View {
 	}
 }
 
+/// Constant methods for [crate::gapi::ExtractArgsCallback]
 pub trait ExtractArgsCallbackTraitConst {
 	fn as_raw_ExtractArgsCallback(&self) -> *const c_void;
 
@@ -7861,6 +7606,7 @@ pub trait ExtractArgsCallbackTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::ExtractArgsCallback]
 pub trait ExtractArgsCallbackTrait: crate::gapi::ExtractArgsCallbackTraitConst {
 	fn as_raw_mut_ExtractArgsCallback(&mut self) -> *mut c_void;
 
@@ -7892,11 +7638,13 @@ impl crate::gapi::ExtractArgsCallbackTrait for ExtractArgsCallback {
 impl ExtractArgsCallback {
 }
 
+/// Constant methods for [crate::gapi::ExtractMetaCallback]
 pub trait ExtractMetaCallbackTraitConst {
 	fn as_raw_ExtractMetaCallback(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::ExtractMetaCallback]
 pub trait ExtractMetaCallbackTrait: crate::gapi::ExtractMetaCallbackTraitConst {
 	fn as_raw_mut_ExtractMetaCallback(&mut self) -> *mut c_void;
 
@@ -7928,11 +7676,13 @@ impl crate::gapi::ExtractMetaCallbackTrait for ExtractMetaCallback {
 impl ExtractMetaCallback {
 }
 
+/// Constant methods for [crate::gapi::GArrayU]
 pub trait GArrayUTraitConst {
 	fn as_raw_GArrayU(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::GArrayU]
 pub trait GArrayUTrait: crate::gapi::GArrayUTraitConst {
 	fn as_raw_mut_GArrayU(&mut self) -> *mut c_void;
 
@@ -7964,11 +7714,13 @@ impl crate::gapi::GArrayUTrait for GArrayU {
 impl GArrayU {
 }
 
+/// Constant methods for [crate::gapi::GOpaqueU]
 pub trait GOpaqueUTraitConst {
 	fn as_raw_GOpaqueU(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::GOpaqueU]
 pub trait GOpaqueUTrait: crate::gapi::GOpaqueUTraitConst {
 	fn as_raw_mut_GOpaqueU(&mut self) -> *mut c_void;
 
@@ -8000,7 +7752,7 @@ impl crate::gapi::GOpaqueUTrait for GOpaqueU {
 impl GOpaqueU {
 }
 
-/// @private
+/// Constant methods for [crate::gapi::GBackend]
 pub trait GBackendTraitConst {
 	fn as_raw_GBackend(&self) -> *const c_void;
 
@@ -8015,6 +7767,7 @@ pub trait GBackendTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::GBackend]
 pub trait GBackendTrait: crate::gapi::GBackendTraitConst {
 	fn as_raw_mut_GBackend(&mut self) -> *mut c_void;
 
@@ -8057,7 +7810,7 @@ impl GBackend {
 	
 }
 
-/// @private
+/// Constant methods for [crate::gapi::GFunctor]
 pub trait GFunctorConst {
 	fn as_raw_GFunctor(&self) -> *const c_void;
 
@@ -8093,11 +7846,13 @@ pub trait GFunctorConst {
 	
 }
 
+/// @private
 pub trait GFunctor: crate::gapi::GFunctorConst {
 	fn as_raw_mut_GFunctor(&mut self) -> *mut c_void;
 
 }
 
+/// Constant methods for [crate::gapi::Scalar]
 pub trait ScalarTraitConst {
 	fn as_raw_Scalar(&self) -> *const c_void;
 
@@ -8112,6 +7867,7 @@ pub trait ScalarTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::Scalar]
 pub trait ScalarTrait: crate::gapi::ScalarTraitConst {
 	fn as_raw_mut_Scalar(&mut self) -> *mut c_void;
 
@@ -8233,12 +7989,7 @@ impl queue_capacity {
 	
 }
 
-/// \addtogroup gapi_compile_args
-/// /
-/// 
-///  cv::gapi::use_only() is a special combinator which hints G-API to use only
-///  kernels specified in cv::GComputation::compile() (and not to extend kernels available by
-///  default with that package).
+/// Constant methods for [crate::gapi::use_only]
 pub trait use_onlyTraitConst {
 	fn as_raw_use_only(&self) -> *const c_void;
 
@@ -8251,6 +8002,7 @@ pub trait use_onlyTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::use_only]
 pub trait use_onlyTrait: crate::gapi::use_onlyTraitConst {
 	fn as_raw_mut_use_only(&mut self) -> *mut c_void;
 
@@ -8294,16 +8046,13 @@ impl crate::gapi::use_onlyTrait for use_only {
 impl use_only {
 }
 
-/// This aggregate type represents all types which G-API can
-/// handle (via variant).
-/// 
-/// It only exists to overcome C++ language limitations (where a
-/// `using`-defined class can't be forward-declared).
+/// Constant methods for [crate::gapi::Data]
 pub trait DataTraitConst: crate::gapi::GRunArgTraitConst {
 	fn as_raw_Data(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::Data]
 pub trait DataTrait: crate::gapi::DataTraitConst + crate::gapi::GRunArgTrait {
 	fn as_raw_mut_Data(&mut self) -> *mut c_void;
 
@@ -8414,9 +8163,7 @@ impl Default for Circle {
 	}
 }
 
-/// This structure represents an image to draw.
-/// 
-/// Image is blended on a frame using the specified mask.
+/// Constant methods for [crate::gapi::Image]
 pub trait ImageTraitConst {
 	fn as_raw_Image(&self) -> *const c_void;
 
@@ -8447,6 +8194,7 @@ pub trait ImageTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::Image]
 pub trait ImageTrait: crate::gapi::ImageTraitConst {
 	fn as_raw_mut_Image(&mut self) -> *mut c_void;
 
@@ -8640,7 +8388,7 @@ impl Mosaic {
 	
 }
 
-/// This structure represents a polygon to draw.
+/// Constant methods for [crate::gapi::Poly]
 pub trait PolyTraitConst {
 	fn as_raw_Poly(&self) -> *const c_void;
 
@@ -8684,6 +8432,7 @@ pub trait PolyTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::Poly]
 pub trait PolyTrait: crate::gapi::PolyTraitConst {
 	fn as_raw_mut_Poly(&mut self) -> *mut c_void;
 
@@ -8850,9 +8599,7 @@ impl Default for Rect {
 	}
 }
 
-/// * This structure represents a text string to draw.
-/// *
-/// * Parameters match cv::putText().
+/// Constant methods for [crate::gapi::Text]
 pub trait TextTraitConst {
 	fn as_raw_Text(&self) -> *const c_void;
 
@@ -8919,6 +8666,7 @@ pub trait TextTraitConst {
 	
 }
 
+/// Mutable methods for [crate::gapi::Text]
 pub trait TextTrait: crate::gapi::TextTraitConst {
 	fn as_raw_mut_Text(&mut self) -> *mut c_void;
 
@@ -9052,11 +8800,13 @@ impl Default for Text {
 	}
 }
 
+/// Constant methods for [crate::gapi::any]
 pub trait anyTraitConst {
 	fn as_raw_any(&self) -> *const c_void;
 
 }
 
+/// Mutable methods for [crate::gapi::any]
 pub trait anyTrait: crate::gapi::anyTraitConst {
 	fn as_raw_mut_any(&mut self) -> *mut c_void;
 

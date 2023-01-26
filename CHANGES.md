@@ -1,3 +1,7 @@
+* 0.76.3
+  * Introduce `Mat::from_slice_rows_cols()` function to simplify creation of 2d matrices from byte buffers.
+  * Improve documentation.
+
 * 0.76.2
   * Fix incorrect display of macros in documentation, some internal macros were showing up, but some usable were not. 
 
