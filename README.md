@@ -402,11 +402,17 @@ values, but they are reported in the API documentation.
 
 Overloaded methods have been mostly manually given different names or automatically renamed to *_1, *_2, etc.
 
-## OpenCV 2 support
+## Older OpenCV branches support
+### OpenCV 2
 
 If you can't use OpenCV 3.x or higher, the (no longer maintained) `0.2.4` version of this crate is known to
 work with OpenCV `2.4.7.13` (and probably other 2.4 versions). Please refer to the README.md file for that
 version because the crate has gone through the considerable rewrite since.
+
+### OpenCV 3.2
+
+The last version with confirmed OpenCV 3.2 support is 0.75.0, after that this branch of OpenCV is no longer
+tested and supported. It may still work though.
 
 ## Contributor's Guide
 

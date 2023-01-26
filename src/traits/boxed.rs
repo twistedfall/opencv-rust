@@ -1,5 +1,7 @@
 use std::ffi::c_void;
 
+/// Trait for structures that are created on the C++ side, usually only the raw void pointer is stored to point to the allocated
+/// data on the heap.
 pub trait Boxed: Sized {
 	/// Wrap the specified raw pointer
 	/// # Safety

@@ -134,11 +134,13 @@ impl Mat {
 		Ok(out)
 	}
 
+	/// Create a new `Mat` by copying the data from a single-dimensional slice
 	#[inline]
 	pub fn from_slice<T: DataType>(s: &[T]) -> Result<Self> {
 		Self::from_slice_2d(&[s])
 	}
 
+	/// Create a new `Mat` by copying the data from a 2-dimensional slice (slice of slices)
 	pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Self> {
 		let row_count = row_count_i32(s.len())?;
 		let col_count = if let Some(first_row) = s.first() {

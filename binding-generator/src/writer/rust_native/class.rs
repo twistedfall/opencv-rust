@@ -48,6 +48,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	let is_trait = c.is_trait();
 	let is_abstract = c.is_abstract();
 	let is_simple = c.is_simple();
+	let doc_comment = c.rendered_doc_comment(opencv_version);
 
 	let mut out = String::new();
 
@@ -122,8 +123,24 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		} else {
 			String::new()
 		};
+
+		let (const_trait_comment, mut_trait_comment) = if is_abstract {
+			let rust_trait_local_mut = c.rust_trait_name(NameStyle::ref_(), Constness::Mut);
+			(
+				Cow::Owned(format!("/// Constant methods for [{rust_trait_local_mut}]")),
+				Cow::Borrowed(doc_comment.as_str()),
+			)
+		} else {
+			let rust_local = type_ref.rust_name(NameStyle::ref_());
+			(
+				format!("/// Constant methods for [{rust_local}]").into(),
+				format!("/// Mutable methods for [{rust_local}]").into(),
+			)
+		};
+
 		out = TRAIT_TPL.interpolate(&hashmap! {
-			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
+			"const_trait_comment" => const_trait_comment,
+			"mut_trait_comment" => mut_trait_comment,
 			"debug" => get_debug(c).into(),
 			"rust_trait_local" => c.rust_trait_name(NameStyle::decl(), Constness::Mut),
 			"rust_trait_local_const" => c.rust_trait_name(NameStyle::decl(), Constness::Const),
@@ -281,7 +298,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
 
 		out += &tpl.interpolate(&hashmap! {
-			"doc_comment" => Cow::Owned(c.rendered_doc_comment(opencv_version)),
+			"doc_comment" => Cow::Owned(doc_comment),
 			"debug" => get_debug(c).into(),
 			"rust_local" => rust_local.clone(),
 			"rust_full" => c.rust_name(NameStyle::ref_()),

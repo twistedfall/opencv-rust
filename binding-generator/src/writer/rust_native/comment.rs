@@ -143,6 +143,10 @@ pub fn render_doc_comment_with_processor(
 		),
 	);
 
+	// references
+	static REF: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@ref\s+([\w:]+)"#).unwrap());
+	out.replace_in_place_regex(&REF, "[$1]");
+
 	// images
 	static IMAGE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"!\[(.*?)]\((?:.*/)?(.+)?\)"#).unwrap());
 	out.replace_in_place_regex(&IMAGE, &format!("![$1](https://docs.opencv.org/{opencv_version}/$2)"));
@@ -156,6 +160,7 @@ pub fn render_doc_comment_with_processor(
 	static PARAM: Lazy<Regex> = Lazy::new(|| Regex::new(r#".*?@param\s*(?:\[in]|(\[out]))?\s+(\w+) *(.*)"#).unwrap());
 	out.replacen_in_place_regex(&PARAM_HEADER, 1, "## Parameters\n$1");
 	out.replace_in_place_regex(&PARAM, "* $2:$1 $3");
+
 	// deprecated
 	static DEPRECATED: Lazy<Regex> = Lazy::new(|| Regex::new(r#".*?@deprecated\s+(.+)"#).unwrap());
 	let mut deprecated = None;
@@ -186,6 +191,12 @@ pub fn render_doc_comment_with_processor(
 		let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
 		Some(format!("![inline formula](https://latex.codecogs.com/png.latex?{encoded})").into())
 	});
+
+	// separate urls
+	static URL: Lazy<Regex> = Lazy::new(|| {
+		Regex::new(r#"([^<"/(]|[^]]\(|^)(https?://[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*[-a-zA-Z0-9@:%_+~#?&/=])?)"#).unwrap()
+	});
+	out.replace_in_place_regex(&URL, "$1<$2>");
 
 	// escapes
 	static ESCAPE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)\\n$"#).unwrap());

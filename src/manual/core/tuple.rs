@@ -3,6 +3,8 @@ use std::ffi::c_void;
 use std::marker::PhantomData;
 use std::mem::ManuallyDrop;
 
+/// Wrapper for C++ [std::tupe](https://en.cppreference.com/w/cpp/utility/tuple) and
+/// [std::pair](https://en.cppreference.com/w/cpp/utility/pair)
 pub struct Tuple<T>
 where
 	Self: TupleExtern,

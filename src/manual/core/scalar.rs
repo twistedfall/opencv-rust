@@ -2,6 +2,7 @@ use num_traits::Zero;
 
 use super::VecN;
 
+/// [docs.opencv.org](https://docs.opencv.org/4.x/d1/da0/classcv_1_1Scalar__.html)
 pub type Scalar_<T> = VecN<T, 4>;
 
 impl<T> Scalar_<T> {
