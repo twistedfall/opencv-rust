@@ -833,7 +833,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		let space_name = if name.is_empty() {
 			"".to_string()
 		} else {
-			format!(" {}", name)
+			format!(" {name}")
 		};
 		if let Some(dir) = self.as_string() {
 			match dir {

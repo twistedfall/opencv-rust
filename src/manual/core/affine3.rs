@@ -1,9 +1,7 @@
 use num_traits::{One, Zero};
 
-use crate::{
-	core::{Matx44, MatxTrait},
-	opencv_type_simple_generic,
-};
+use crate::core::{Matx44, MatxTrait};
+use crate::opencv_type_simple_generic;
 
 /// [docs.opencv.org](https://docs.opencv.org/master/dd/d99/classcv_1_1Affine3.html)
 #[repr(C)]

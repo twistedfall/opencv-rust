@@ -171,7 +171,7 @@ pub fn gen_wrapper(
 			write,
 			"#[path = r\"{}\"]",
 			target_module_dir
-				.join(format!("{}.rs", module))
+				.join(format!("{module}.rs"))
 				.to_str()
 				.expect("Can't convert path to str")
 		)?)

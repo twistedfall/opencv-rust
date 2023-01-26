@@ -200,7 +200,7 @@ impl VectorExt for Vector<'_, '_> {
 
 fn method_new(rust_localalias: &str, vector_class_desc: &ClassDesc, vec_type: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_new", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_new").into(),
 		constness: Constness::Const,
 		is_infallible: true,
 		is_naked_return: true,
@@ -219,7 +219,7 @@ fn method_new(rust_localalias: &str, vector_class_desc: &ClassDesc, vec_type: &T
 
 fn method_delete(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_delete", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_delete").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -235,7 +235,7 @@ fn method_delete(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &Ty
 
 fn method_len(rust_localalias: &str, vector_class_desc: &ClassDesc, size_t: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_len", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_len").into(),
 		constness: Constness::Const,
 		is_infallible: true,
 		is_naked_return: true,
@@ -251,7 +251,7 @@ fn method_len(rust_localalias: &str, vector_class_desc: &ClassDesc, size_t: &Typ
 
 fn method_is_empty(rust_localalias: &str, vector_class_desc: &ClassDesc, boolean: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_is_empty", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_is_empty").into(),
 		constness: Constness::Const,
 		is_infallible: true,
 		is_naked_return: true,
@@ -267,7 +267,7 @@ fn method_is_empty(rust_localalias: &str, vector_class_desc: &ClassDesc, boolean
 
 fn method_capacity(rust_localalias: &str, vector_class_desc: &ClassDesc, size_t: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_capacity", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_capacity").into(),
 		constness: Constness::Const,
 		is_infallible: true,
 		is_naked_return: true,
@@ -283,7 +283,7 @@ fn method_capacity(rust_localalias: &str, vector_class_desc: &ClassDesc, size_t:
 
 fn method_shrink_to_fit(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_shrink_to_fit", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_shrink_to_fit").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -299,7 +299,7 @@ fn method_shrink_to_fit(rust_localalias: &str, vector_class_desc: &ClassDesc, vo
 
 fn method_reserve(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef, size_t: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_reserve", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_reserve").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -315,7 +315,7 @@ fn method_reserve(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &T
 
 fn method_remove(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef, size_t: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_remove", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_remove").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -343,7 +343,7 @@ fn method_swap(
 		"std::swap"
 	};
 	CppFuncDesc {
-		extern_name: format!("cv_{}_swap", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_swap").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -351,7 +351,7 @@ fn method_swap(
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
 		call: FuncDescCppCall::Manual(
-			format!("{swap_func}((*instance)[index1], (*instance)[index2])", swap_func = swap_func).compile_interpolation(),
+			format!("{swap_func}((*instance)[index1], (*instance)[index2])").compile_interpolation(),
 		),
 		debug: "".to_string(),
 		arguments: vec![("index1".to_string(), size_t.clone()), ("index2".to_string(), size_t.clone())],
@@ -361,7 +361,7 @@ fn method_swap(
 
 fn method_clear(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_clear", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_clear").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -377,7 +377,7 @@ fn method_clear(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &Typ
 
 fn method_push(rust_localalias: &str, vector_class_desc: &ClassDesc, element_type: &TypeRef, void: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_push", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_push").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -399,7 +399,7 @@ fn method_insert(
 	size_t: &TypeRef,
 ) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_insert", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_insert").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -418,7 +418,7 @@ fn method_insert(
 
 fn method_get(rust_localalias: &str, vector_class_desc: &ClassDesc, element_type: &TypeRef, size_t: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_get", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_get").into(),
 		constness: Constness::Const,
 		is_infallible: true,
 		is_naked_return: false,
@@ -440,7 +440,7 @@ fn method_set(
 	size_t: &TypeRef,
 ) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_set", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_set").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -461,7 +461,7 @@ fn method_set(
 
 fn method_clone(rust_localalias: &str, vector_class_desc: &ClassDesc, vec_type: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_clone", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_clone").into(),
 		constness: Constness::Const,
 		is_infallible: true,
 		is_naked_return: true,
@@ -477,7 +477,7 @@ fn method_clone(rust_localalias: &str, vector_class_desc: &ClassDesc, vec_type: 
 
 fn method_input_array(rust_localalias: &str, vector_class_desc: &ClassDesc, input_array: TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_input_array", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_input_array").into(),
 		constness: Constness::Mut,
 		is_infallible: false,
 		is_naked_return: false,
@@ -493,7 +493,7 @@ fn method_input_array(rust_localalias: &str, vector_class_desc: &ClassDesc, inpu
 
 fn method_output_array(rust_localalias: &str, vector_class_desc: &ClassDesc, output_array: TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_output_array", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_output_array").into(),
 		constness: Constness::Mut,
 		is_infallible: false,
 		is_naked_return: false,
@@ -509,7 +509,7 @@ fn method_output_array(rust_localalias: &str, vector_class_desc: &ClassDesc, out
 
 fn method_input_output_array(rust_localalias: &str, vector_class_desc: &ClassDesc, input_output_array: TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_input_output_array", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_input_output_array").into(),
 		constness: Constness::Mut,
 		is_infallible: false,
 		is_naked_return: false,

@@ -90,7 +90,7 @@ fn show<S: fmt::Display>(c: impl IntoIterator<Item = S>) {
 	let mut sorted = v.iter().map(|s| s.to_string()).collect::<Vec<_>>();
 	sorted.sort_unstable();
 	for f in sorted {
-		println!("{}", f);
+		println!("{f}");
 	}
 }
 
@@ -123,7 +123,7 @@ fn main() {
 		let clang = Clang::new().expect("Cannot initialize clang");
 		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir, clang);
 		for module in modules {
-			println!("  {}", module);
+			println!("  {module}");
 			gen.process_module(&module, false, |root_tu, _hdr| {
 				let root_entity = root_tu.get_entity();
 				let gen_env = GeneratorEnv::new(root_entity, &module);

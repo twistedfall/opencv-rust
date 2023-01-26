@@ -216,7 +216,7 @@ fn replace_in_place_regex_cb() {
 		assert!(s.replacen_in_place_regex_cb(&Regex::new("A(.)").unwrap(), 3, |s, caps| {
 			let (cap_start, cap_end) = caps.get(1).unwrap();
 			let r = &s[cap_start..cap_end];
-			Some(format!("!{}", r).into())
+			Some(format!("!{r}").into())
 		}));
 		assert_eq!(s, "!BC!BC!BCABAC");
 	}

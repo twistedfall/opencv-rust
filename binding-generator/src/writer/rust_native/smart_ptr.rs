@@ -205,14 +205,14 @@ fn method_new(rust_localalias: &str, smartptr_type: &TypeRef, pointee_type: &Typ
 		Cow::Borrowed("val")
 	};
 	CppFuncDesc {
-		extern_name: format!("cv_{}_new", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_new").into(),
 		constness: Constness::Const,
 		is_infallible: true,
 		is_naked_return: true,
 		return_type: smartptr_type.clone(),
 		kind: FuncDescKind::Function,
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual(format!("{{{{ret_type}}}}({val})", val = val).compile_interpolation()),
+		call: FuncDescCppCall::Manual(format!("{{{{ret_type}}}}({val})").compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![("val".to_string(), pointee_type.clone())],
 	}
@@ -221,7 +221,7 @@ fn method_new(rust_localalias: &str, smartptr_type: &TypeRef, pointee_type: &Typ
 
 fn method_delete(rust_localalias: &str, smartptr_desc: &ClassDesc, void: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_delete", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_delete").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,

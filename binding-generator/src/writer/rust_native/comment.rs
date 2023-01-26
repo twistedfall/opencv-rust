@@ -36,11 +36,11 @@ fn preprocess_formula(formula: &str) -> String {
 			"\\begin{bmatrix} $1 & $2 & $3\\\\ $4 & $5 & $6\\\\ $7 & $8 & $9 \\end{bmatrix}",
 		),
 		(
-			Regex::new(&format!("\\\\hdotsfor{}", ARG_REGEX)).unwrap(),
+			Regex::new(&format!("\\\\hdotsfor{ARG_REGEX}")).unwrap(),
 			"\\dots",
 		),
 		(
-			Regex::new(&format!("\\\\mathbbm{}", ARG_REGEX)).unwrap(),
+			Regex::new(&format!("\\\\mathbbm{ARG_REGEX}")).unwrap(),
 			"\\mathbb{$1}",
 		),
 		(
@@ -139,14 +139,13 @@ pub fn render_doc_comment_with_processor(
 	out.replace_in_place_regex(
 		&CITE,
 		&format!(
-			"[$1](https://docs.opencv.org/{}/d0/de3/citelist.html#CITEREF_$1)",
-			opencv_version
+			"[$1](https://docs.opencv.org/{opencv_version}/d0/de3/citelist.html#CITEREF_$1)"
 		),
 	);
 
 	// images
 	static IMAGE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"!\[(.*?)]\((?:.*/)?(.+)?\)"#).unwrap());
-	out.replace_in_place_regex(&IMAGE, &format!("![$1](https://docs.opencv.org/{}/$2)", opencv_version));
+	out.replace_in_place_regex(&IMAGE, &format!("![$1](https://docs.opencv.org/{opencv_version}/$2)"));
 
 	// returns
 	static RETURNS: Lazy<Regex> = Lazy::new(|| Regex::new(r#".*?@returns?\s*"#).unwrap());
@@ -163,7 +162,7 @@ pub fn render_doc_comment_with_processor(
 	out.replace_in_place_regex_cb(&DEPRECATED, |out, caps| {
 		let (cap_start, cap_end) = caps.get(1).expect("Impossible");
 		let deprecated_msg = out[cap_start..cap_end].to_string();
-		let out = format!("\n**Deprecated**: {}", deprecated_msg);
+		let out = format!("\n**Deprecated**: {deprecated_msg}");
 		deprecated = Some(deprecated_msg);
 		Some(out.into())
 	});
@@ -179,13 +178,13 @@ pub fn render_doc_comment_with_processor(
 		let (cap_start, cap_end) = caps.get(1).expect("Impossible");
 		let formula = preprocess_formula(&out[cap_start..cap_end]);
 		let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
-		Some(format!("![block formula](https://latex.codecogs.com/png.latex?{})", encoded).into())
+		Some(format!("![block formula](https://latex.codecogs.com/png.latex?{encoded})").into())
 	});
 	out.replace_in_place_regex_cb(&INLINE_FORMULA, |out, caps| {
 		let (cap_start, cap_end) = caps.get(1).expect("Impossible");
 		let formula = preprocess_formula(&out[cap_start..cap_end]);
 		let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
-		Some(format!("![inline formula](https://latex.codecogs.com/png.latex?{})", encoded).into())
+		Some(format!("![inline formula](https://latex.codecogs.com/png.latex?{encoded})").into())
 	});
 
 	// escapes
@@ -211,7 +210,7 @@ pub fn render_doc_comment_with_processor(
 		)
 	};
 	if let Some(deprecated) = deprecated {
-		write!(out, "\n#[deprecated = \"{}\"]", deprecated).expect("write! to String shouldn't fail");
+		write!(out, "\n#[deprecated = \"{deprecated}\"]").expect("write! to String shouldn't fail");
 	}
 	out
 }

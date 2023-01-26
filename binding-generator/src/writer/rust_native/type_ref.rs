@@ -49,10 +49,9 @@ pub trait TypeRefExt {
 impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	fn format_as_array(&self, elem_type: &str, size: Option<usize>) -> String {
 		format!(
-			"&{cnst}[{typ}{size}]",
+			"&{cnst}[{elem_type}{size}]",
 			cnst = self.constness().rust_qual(false),
-			typ = elem_type,
-			size = size.map_or_else(|| "".to_string(), |s| format!("; {}", s))
+			size = size.map_or_else(|| "".to_string(), |s| format!("; {s}"))
 		)
 	}
 
@@ -169,7 +168,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 					&& !self.as_pointer().is_some()
 					&& !self.as_reference().is_some(),
 		);
-		format!("{cnst}{name}: {typ}", cnst = cnst.rust_qual(false), name = name, typ = typ)
+		format!("{cnst}{name}: {typ}", cnst = cnst.rust_qual(false))
 	}
 
 	fn rust_extern_self_func_decl(&self, method_constness: Constness) -> String {
@@ -177,11 +176,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	}
 
 	fn rust_extern_arg_func_decl(&self, name: &str, constness: ConstnessOverride) -> String {
-		format!(
-			"{name}: {typ}",
-			name = name,
-			typ = self.rust_extern(ExternDir::ToCpp(constness))
-		)
+		format!("{name}: {typ}", typ = self.rust_extern(ExternDir::ToCpp(constness)))
 	}
 
 	fn rust_arg_pre_call(&self, name: &str, is_function_infallible: bool) -> String {
@@ -199,23 +194,23 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 					if !flags.is_empty() {
 						flags.push(' ');
 					}
-					format!("extern_container_arg!({flags}{name})", flags = flags, name = name)
+					format!("extern_container_arg!({flags}{name})")
 				}
 				Dir::Out(_) => {
-					format!("string_arg_output_send!(via {name}_via)", name = name)
+					format!("string_arg_output_send!(via {name}_via)")
 				}
 			};
 		} else if self.is_input_array() {
-			return format!("input_array_arg!({name})", name = name);
+			return format!("input_array_arg!({name})");
 		} else if self.is_output_array() {
-			return format!("output_array_arg!({name})", name = name);
+			return format!("output_array_arg!({name})");
 		} else if self.is_input_output_array() {
-			return format!("input_output_array_arg!({name})", name = name);
+			return format!("input_output_array_arg!({name})");
 		} else if self.as_string_array().is_some() {
 			return if self.constness().is_const() {
-				format!("string_array_arg!({name})", name = name)
+				format!("string_array_arg!({name})")
 			} else {
-				format!("string_array_arg_mut!({name})", name = name)
+				format!("string_array_arg_mut!({name})")
 			};
 		} else if let Some(func) = self.as_function() {
 			let args = rust_disambiguate_names(func.arguments()).collect::<Vec<_>>();
@@ -229,12 +224,8 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name, ConstnessOverride::No))
 					.join(", ");
 				return format!(
-					"callback_arg!({name}_trampoline({tramp_args}) -> {tramp_ret} => {tramp_userdata_arg} in callbacks => {name}({fw_args}) -> {fw_ret})",
-					name=name,
-					tramp_args=tramp_args,
+					"callback_arg!({name}_trampoline({tramp_args}) -> {tramp_ret} => {userdata_name} in callbacks => {name}({fw_args}) -> {fw_ret})",
 					tramp_ret=ret.rust_extern(ExternDir::FromCpp),
-					tramp_userdata_arg=userdata_name,
-					fw_args=fw_args,
 					fw_ret=ret.rust_extern(ExternDir::FromCpp),
 				);
 			}
@@ -243,11 +234,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	}
 
 	fn rust_userdata_pre_call(&self, name: &str, callback_name: &str) -> String {
-		format!(
-			"userdata_arg!({userdata_name} in callbacks => {callback_name})",
-			userdata_name = name,
-			callback_name = callback_name,
-		)
+		format!("userdata_arg!({name} in callbacks => {callback_name})")
 	}
 
 	fn rust_self_func_call(&self, method_constness: Constness) -> String {
@@ -266,12 +253,12 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 			return match dir {
 				Dir::In(_) => {
 					if constness.with(self.constness()).is_const() {
-						format!("{name}.opencv_as_extern()", name = name)
+						format!("{name}.opencv_as_extern()")
 					} else {
-						format!("{name}.opencv_as_extern_mut()", name = name)
+						format!("{name}.opencv_as_extern_mut()")
 					}
 				}
-				Dir::Out(_) => format!("&mut {name}_via", name = name),
+				Dir::Out(_) => format!("&mut {name}_via"),
 			};
 		}
 		if self.as_reference().map_or(false, |inner| {
@@ -279,32 +266,22 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 				&& (constness.with(inner.constness()).is_const() || self.is_by_move())
 		}) {
 			let cnst = constness.with(self.constness());
-			return format!("&{cnst}{name}", cnst = cnst.rust_qual(false), name = name);
+			return format!("&{cnst}{name}", cnst = cnst.rust_qual(false));
 		}
 		if self.as_simple_class().is_some() {
-			return format!("{name}.opencv_as_extern()", name = name);
+			return format!("{name}.opencv_as_extern()");
 		}
 		if self.is_extern_by_ptr() {
 			let typ = self.source();
 			let by_ptr = if constness.with(self.constness()).is_const() {
-				format!(
-					"{name}.as_raw_{rust_safe_id}()",
-					name = name,
-					rust_safe_id = typ.rust_safe_id(false)
-				)
+				format!("{name}.as_raw_{rust_safe_id}()", rust_safe_id = typ.rust_safe_id(false))
 			} else {
-				format!(
-					"{name}.as_raw_mut_{rust_safe_id}()",
-					name = name,
-					rust_safe_id = typ.rust_safe_id(false)
-				)
+				format!("{name}.as_raw_mut_{rust_safe_id}()", rust_safe_id = typ.rust_safe_id(false))
 			};
 			return if self.is_nullable() {
 				format!(
 					"{name}.map_or({null_ptr}, |{name}| {by_ptr})",
-					name = name,
-					null_ptr = constness.with(self.constness()).rust_null_ptr(),
-					by_ptr = by_ptr
+					null_ptr = constness.with(self.constness()).rust_null_ptr()
 				)
 			} else {
 				by_ptr
@@ -312,16 +289,14 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		}
 		if self.as_variable_array().is_some() {
 			let arr = if constness.with(self.constness()).is_const() {
-				format!("{name}.as_ptr()", name = name)
+				format!("{name}.as_ptr()")
 			} else {
-				format!("{name}.as_mut_ptr()", name = name)
+				format!("{name}.as_mut_ptr()")
 			};
 			return if self.is_nullable() {
 				format!(
 					"{name}.map_or({null_ptr}, |{name}| {arr})",
-					name = name,
-					null_ptr = constness.with(self.constness()).rust_null_ptr(),
-					arr = arr
+					null_ptr = constness.with(self.constness()).rust_null_ptr()
 				)
 			} else {
 				arr
@@ -329,7 +304,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		}
 		if let Some(func) = self.as_function() {
 			if func.arguments().into_iter().any(|a| a.is_user_data()) {
-				return format!("{name}_trampoline", name = name);
+				return format!("{name}_trampoline");
 			}
 		}
 		if let Some(inner) = self.as_pointer() {
@@ -337,7 +312,6 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 				// some special care for double pointers
 				return format!(
 					"{name} as *{cnst} _ as *{cnst} *{const_inner} _",
-					name = name,
 					cnst = self.clang_constness().rust_qual(true),
 					const_inner = inner.clang_constness().rust_qual(true)
 				);
@@ -345,23 +319,21 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		}
 		if self.is_nullable() && (self.as_reference().is_some() || self.as_pointer().is_some()) {
 			let arg = if constness.with(self.constness()).is_const() {
-				format!("{name} as *const _", name = name)
+				format!("{name} as *const _")
 			} else {
-				format!("{name} as *mut _", name = name)
+				format!("{name} as *mut _")
 			};
 			return format!(
 				"{name}.map_or({null_ptr}, |{name}| {arg})",
-				name = name,
 				null_ptr = constness.with(self.constness()).rust_null_ptr(),
-				arg = arg,
 			);
 		}
 		match self.as_char8() {
 			Some(Signedness::Unsigned) => {
-				return format!("u8::try_from({name})?", name = name);
+				return format!("u8::try_from({name})?");
 			}
 			Some(Signedness::Signed) => {
-				return format!("u8::try_from({name})? as i8", name = name);
+				return format!("u8::try_from({name})? as i8");
 			}
 			None => {}
 		}
@@ -375,10 +347,10 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String {
 		match self.as_string() {
 			Some(Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr)) => {
-				format!("string_arg_output_receive!({name}_via => {name})", name = name)
+				format!("string_arg_output_receive!({name}_via => {name})")
 			}
 			Some(Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary))) => {
-				format!("byte_string_arg_output_receive!({name}_via => {name})", name = name)
+				format!("byte_string_arg_output_receive!({name}_via => {name})")
 			}
 			_ => "".to_string(),
 		}
@@ -426,7 +398,6 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 					"*{cnst}[{typ}; {len}]",
 					cnst = self.constness().rust_qual(true),
 					typ = elem.rust_extern(ExternDir::Pure),
-					len = len,
 				)
 				.into();
 			}
@@ -438,7 +409,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 				} else {
 					elem.rust_extern(ExternDir::Pure)
 				};
-				break 'typ format!("*{cnst}{typ}", cnst = self.constness().rust_qual(true), typ = typ).into();
+				break 'typ format!("*{cnst}{typ}", cnst = self.constness().rust_qual(true)).into();
 			}
 			if let Some(func) = self.as_function() {
 				break 'typ func.rust_extern().into_owned().into();
@@ -518,7 +489,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 
 	fn cpp_arg_func_decl(&self, name: &str) -> String {
 		if matches!(self.as_string(), Some(Dir::Out(_))) || self.as_simple_class().is_some() {
-			return format!("{typ}* {name}", typ = self.cpp_extern(), name = name);
+			return format!("{typ}* {name}", typ = self.cpp_extern());
 		}
 		self.cpp_extern_with_name(name).into_owned()
 	}
@@ -526,13 +497,13 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	fn cpp_arg_pre_call(&self, name: &str) -> String {
 		match self.as_string() {
 			Some(Dir::Out(StrType::StdString(_))) => {
-				format!("std::string {name}_out", name = name)
+				format!("std::string {name}_out")
 			}
 			Some(Dir::Out(StrType::CvString(_))) => {
-				format!("cv::String {name}_out", name = name)
+				format!("cv::String {name}_out")
 			}
 			Some(Dir::Out(StrType::CharPtr)) => {
-				format!("char* {name}_out = new char[1024]()", name = name)
+				format!("char* {name}_out = new char[1024]()")
 			}
 			Some(Dir::In(_)) | None => "".to_string(),
 		}
@@ -548,28 +519,28 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 				} else {
 					""
 				};
-				return format!("{ptr}{name}_out", ptr = ptr, name = name).into();
+				return format!("{ptr}{name}_out").into();
 			}
 			Some(Dir::In(StrType::StdString(_))) => {
-				return format!("std::string({name})", name = name).into();
+				return format!("std::string({name})").into();
 			}
 			Some(Dir::In(StrType::CvString(_))) => {
-				return format!("cv::String({name})", name = name).into();
+				return format!("cv::String({name})").into();
 			}
 			Some(Dir::In(StrType::CharPtr)) | None => {}
 		}
 		if self.is_by_move() {
-			return format!("std::move(*{name})", name = name).into();
+			return format!("std::move(*{name})").into();
 		}
 		if self.is_extern_by_ptr() {
 			return if self.as_pointer().is_some() {
 				name
 			} else {
-				format!("*{name}", name = name).into()
+				format!("*{name}").into()
 			};
 		}
 		if self.as_reference().is_some() || self.as_fixed_array().is_some() || self.as_simple_class().is_some() {
-			return format!("*{name}", name = name).into();
+			return format!("*{name}").into();
 		}
 		name
 	}
@@ -577,22 +548,16 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	fn cpp_arg_post_call(&self, name: &str) -> String {
 		match self.as_string() {
 			Some(Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text))) => {
-				format!("*{name} = ocvrs_create_string({name}_out.c_str())", name = name)
+				format!("*{name} = ocvrs_create_string({name}_out.c_str())")
 			}
 			Some(Dir::Out(StrType::CharPtr)) => {
-				format!("*{name} = ocvrs_create_string({name}_out)", name = name)
+				format!("*{name} = ocvrs_create_string({name}_out)")
 			}
 			Some(Dir::Out(StrType::StdString(StrEnc::Binary))) => {
-				format!(
-					"*{name} = ocvrs_create_byte_string({name}_out.data(), {name}_out.size())",
-					name = name
-				)
+				format!("*{name} = ocvrs_create_byte_string({name}_out.data(), {name}_out.size())")
 			}
 			Some(Dir::Out(StrType::CvString(StrEnc::Binary))) => {
-				format!(
-					"*{name} = ocvrs_create_byte_string({name}_out.begin(), {name}_out.size())",
-					name = name
-				)
+				format!("*{name} = ocvrs_create_byte_string({name}_out.begin(), {name}_out.size())")
 			}
 			Some(Dir::In(_)) | None => "".to_string(),
 		}
@@ -603,7 +568,7 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	// to string (in return statement) it will result in UB
 	fn cpp_arg_cleanup(&self, name: &str) -> String {
 		if let Some(Dir::Out(StrType::CharPtr)) = self.as_string() {
-			return format!("delete[] {name}_out", name = name);
+			return format!("delete[] {name}_out");
 		}
 		"".to_string()
 	}

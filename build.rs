@@ -298,10 +298,6 @@ fn build_wrapper(opencv: &Library) {
 	let mut cc = build_compiler(opencv);
 	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
 	let modules = MODULES.get().expect("MODULES not initialized");
-	for module in &["sys", "types"] {
-		// special internal modules
-		println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
-	}
 	for module in modules.iter() {
 		println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
 		cc.file(OUT_DIR.join(format!("{module}.cpp")));
@@ -373,16 +369,14 @@ fn main() -> Result<()> {
 	if let Some(header_version) = get_version_from_headers(opencv_header_dir) {
 		if header_version != opencv.version {
 			panic!(
-				"Version from the headers: {} (at {}) doesn't match version of the OpenCV library: {} (include paths: {:?})",
-				header_version,
+				"Version from the headers: {header_version} (at {}) doesn't match version of the OpenCV library: {} (include paths: {:?})",
 				opencv_header_dir.display(),
 				opencv.version,
 				opencv.include_paths,
 			);
 		}
 		eprintln!(
-			"=== Found OpenCV version: {} in headers located at: {}",
-			header_version,
+			"=== Found OpenCV version: {header_version} in headers located at: {}",
 			opencv_header_dir.display()
 		);
 	} else {

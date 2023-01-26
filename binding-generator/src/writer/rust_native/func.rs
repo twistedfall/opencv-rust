@@ -31,7 +31,7 @@ pub fn disambiguate_single_name(name: &str) -> impl Iterator<Item = String> + '_
 pub fn disambiguate_num(counter: usize) -> String {
 	match counter {
 		0 => "".to_string(),
-		n => format!("_{}", n),
+		n => format!("_{n}"),
 	}
 }
 
@@ -75,12 +75,10 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		if let Some((slice_arg, len_div)) = arg.as_slice_len() {
 			let slice_call = if len_div > 1 {
 				format!(
-					"({slice_arg}.len() / {len_div}) as _",
-					slice_arg = slice_arg,
-					len_div = len_div
+					"({slice_arg}.len() / {len_div}) as _"
 				)
 			} else {
-				format!("{slice_arg}.len() as _", slice_arg = slice_arg)
+				format!("{slice_arg}.len() as _")
 			};
 			call_args.push(slice_call);
 		} else {
@@ -118,7 +116,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	let return_type_func_decl = if return_type_func_decl == "()" {
 		Cow::Borrowed("")
 	} else {
-		format!(" -> {}", return_type_func_decl).into()
+		format!(" -> {return_type_func_decl}").into()
 	};
 	if is_infallible {
 		post_call_args.push("ret".to_string());
@@ -144,11 +142,11 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	}
 	let ret_map = rust_return_map(&return_type, "ret", is_safe, is_static_func, is_infallible);
 	if !ret_map.is_empty() {
-		ret_convert.push(format!("let ret = {};", ret_map).into());
+		ret_convert.push(format!("let ret = {ret_map};").into());
 	}
 	let mut attributes = String::new();
 	if let Some((rust_attr, _)) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
-		attributes = format!("#[cfg({})]", rust_attr);
+		attributes = format!("#[cfg({rust_attr})]");
 	}
 	if f.is_no_discard() {
 		attributes.push_str("#[must_use]");
@@ -221,10 +219,6 @@ fn rust_return_map(
 		};
 		format!(
 			"{unsafety_call}{{ {ret_name}.{ptr_call}() }}{error_handling}",
-			unsafety_call = unsafety_call,
-			ret_name = ret_name,
-			ptr_call = ptr_call,
-			error_handling = error_handling,
 		)
 		.into()
 	} else {
@@ -251,14 +245,14 @@ pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: 
 	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
 		let str_mk = match string_type {
 			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => {
-				format!("ocvrs_create_string({name}.c_str())", name = name).into()
+				format!("ocvrs_create_string({name}.c_str())").into()
 			}
-			StrType::CharPtr => format!("ocvrs_create_string({name})", name = name).into(),
+			StrType::CharPtr => format!("ocvrs_create_string({name})").into(),
 			StrType::StdString(StrEnc::Binary) => {
-				format!("ocvrs_create_byte_string({name}.data(), {name}.size())", name = name).into()
+				format!("ocvrs_create_byte_string({name}.data(), {name}.size())").into()
 			}
 			StrType::CvString(StrEnc::Binary) => {
-				format!("ocvrs_create_byte_string({name}.begin(), {name}.size())", name = name).into()
+				format!("ocvrs_create_byte_string({name}.begin(), {name}.size())").into()
 			}
 		};
 		(str_mk, false)
@@ -283,23 +277,23 @@ pub fn cpp_return_handle(
 			} else {
 				"".to_string()
 			};
-			format!("return {cast}{ret};", cast = cast, ret = ret).into()
+			format!("return {cast}{ret};").into()
 		}
 	} else if is_infallible {
 		if ret.is_empty() {
 			"".into()
 		} else {
-			format!("*{name} = {typ};", name = ocv_ret_name, typ = ret).into()
+			format!("*{ocv_ret_name} = {ret};").into()
 		}
 	} else if ret.is_empty() {
-		format!("Ok({name});", name = ocv_ret_name).into()
+		format!("Ok({ocv_ret_name});").into()
 	} else {
 		let cast = if let Some(ret_type) = ret_cast {
 			format!("<{typ}>", typ = ret_type.as_ref())
 		} else {
 			"".to_string()
 		};
-		format!("Ok{cast}({ret}, {name});", cast = cast, ret = ret, name = ocv_ret_name).into()
+		format!("Ok{cast}({ret}, {ocv_ret_name});").into()
 	}
 }
 
@@ -351,7 +345,7 @@ impl RustElement for Func<'_, '_> {
 		} else if let Some(..) = kind.as_conversion_method() {
 			let mut name: String = self.return_type().rust_name(NameStyle::decl()).into_owned();
 			name.cleanup_name();
-			format!("to_{}", name).into()
+			format!("to_{name}").into()
 		} else if let Some((cls, kind)) = kind.as_operator() {
 			if cpp_name.starts_with("operator") {
 				let name = match kind {
@@ -403,7 +397,7 @@ impl RustElement for Func<'_, '_> {
 						name.into()
 					} else {
 						let args = args.into_iter().map(|arg| arg.type_ref().rust_simple_name()).join("_");
-						format!("{}_{}", name, args).into()
+						format!("{name}_{args}").into()
 					}
 				} else {
 					name.into()
@@ -434,7 +428,7 @@ impl RustElement for Func<'_, '_> {
 				.gen_env()
 				.get_func_comment(line, self.entity().cpp_name(CppNameStyle::Reference).as_ref())
 			{
-				format!("{}\n\n## Overloaded parameters\n", copy)
+				format!("{copy}\n\n## Overloaded parameters\n")
 			} else {
 				"This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.".to_string()
 			};
@@ -505,7 +499,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 
 		let mut attributes = String::new();
 		if let Some((rust_attr, _)) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
-			attributes = format!("#[cfg({})]", rust_attr);
+			attributes = format!("#[cfg({rust_attr})]");
 		}
 		let mut args = vec![];
 		if let Some(cls) = self.kind().as_instance_method() {
@@ -525,12 +519,12 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		};
 		if !naked_return {
 			let ret_name = "ocvrs_return";
-			args.push(format!("{name}: *mut {typ}", name = ret_name, typ = return_wrapper_type));
+			args.push(format!("{ret_name}: *mut {return_wrapper_type}"));
 		}
 		let return_wrapper_type = if return_type.is_void() || !naked_return {
 			"".into()
 		} else {
-			format!(" -> {}", return_wrapper_type).into()
+			format!(" -> {return_wrapper_type}").into()
 		};
 		TPL.interpolate(&hashmap! {
 			"attributes" => attributes.into(),

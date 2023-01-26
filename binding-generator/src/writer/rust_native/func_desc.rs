@@ -140,7 +140,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 		let mut attributes_begin = String::new();
 		let mut attributes_end = String::new();
 		if let Some((_, cpp_attr)) = settings::FUNC_CFG_ATTR.get(self.extern_name.as_ref()) {
-			attributes_begin = format!("#if {}", cpp_attr);
+			attributes_begin = format!("#if {cpp_attr}");
 			attributes_end = "#endif".to_string();
 		}
 
@@ -174,7 +174,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 			self.return_type.cpp_extern_return_fallible(ConstnessOverride::Mut)
 		};
 		if !self.is_naked_return {
-			decl_args.push(format!("{typ}* {name}", name = ocv_ret_name, typ = mut_ret_wrapper_full));
+			decl_args.push(format!("{mut_ret_wrapper_full}* {ocv_ret_name}"));
 		}
 		let return_spec = if self.is_naked_return {
 			Cow::Borrowed(ret_full.as_ref())
@@ -189,7 +189,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 		} else {
 			let ret_name = rets.next().expect("Endless iterator returned nothing");
 			pre_post_arg_handle(
-				format!("{typ} {ret} = {expr}", typ = cpp_extern_return, ret = ret_name, expr = ret),
+				format!("{cpp_extern_return} {ret_name} = {ret}"),
 				&mut post_call_args,
 			);
 			ret_name.into()
@@ -212,11 +212,11 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 			"".into()
 		} else {
 			let typ = if mut_ret_wrapper_full.contains(',') {
-				format!("OCVRS_TYPE({})", mut_ret_wrapper_full).into()
+				format!("OCVRS_TYPE({mut_ret_wrapper_full})").into()
 			} else {
 				mut_ret_wrapper_full
 			};
-			format!("}} OCVRS_CATCH({typ}, {name});", typ = typ, name = ocv_ret_name).into()
+			format!("}} OCVRS_CATCH({typ}, {ocv_ret_name});").into()
 		};
 
 		TPL.interpolate(&hashmap! {
@@ -328,9 +328,9 @@ impl ClassDesc {
 
 fn cpp_method_call_name(extern_by_ptr: bool, method_name: &str) -> String {
 	if extern_by_ptr {
-		format!("instance->{name}", name = method_name)
+		format!("instance->{method_name}")
 	} else {
-		format!("instance.{name}", name = method_name)
+		format!("instance.{method_name}")
 	}
 }
 

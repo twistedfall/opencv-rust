@@ -1,15 +1,16 @@
-use crate::core::{self, Point3_, Point_, Rect_, Size_, VecN};
+use crate::core;
+use crate::core::{Point3_, Point_, Rect_, Size_, VecN};
 
 #[inline]
 pub const fn CV_MAT_DEPTH(flags: i32) -> i32 {
 	#![allow(non_snake_case)]
-	flags & crate::core::Mat_DEPTH_MASK
+	flags & core::Mat_DEPTH_MASK
 }
 
 #[inline]
 pub const fn CV_MAKETYPE(depth: i32, cn: i32) -> i32 {
 	#![allow(non_snake_case)]
-	CV_MAT_DEPTH(depth) + ((cn - 1) << crate::core::CV_CN_SHIFT)
+	CV_MAT_DEPTH(depth) + ((cn - 1) << core::CV_CN_SHIFT)
 }
 
 /// This sealed trait is implemented for types that are valid to use as Mat elements

@@ -1,6 +1,5 @@
 // todo change dyn InputArray to impl InputArray and friends
 // todo support converting pointer + size to slice of Mat and other similar objects
-// todo add support for more operators
 // todo add support for arrays in dnn::DictValue
 // todo allow ergonomically combining of enum variants with |
 // todo cv_utils_logging_internal_getGlobalLogTag() returns LogTag**, but Rust interprets it as LogTag*, check why it doesn't crash and fix if needed
@@ -9,7 +8,6 @@
 // fixme vector<Mat*> get's interpreted as Vector<Mat> which should be wrong (e.g. Layer::forward and Layer::apply_halide_scheduler)
 // fixme MatConstIterator::m return Mat**, is it handled correctly?
 // fixme VectorOfMat::get allows mutation
-// fixme TextDetectionModel_EAST (and all others inheriting from Model) seems to have no fields, but it fails when generated as simple, probably makes sense to have a special case for that
 
 // copy-pasted form python generator (may be obsolete):
 // fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour

@@ -144,7 +144,7 @@ impl TupleExt for Tuple<'_, '_> {
 			if elem_modules.is_empty() {
 				module.into()
 			} else {
-				panic!("Too many element modules: {:?} + {:?}", module, elem_modules)
+				panic!("Too many element modules: {module:?} + {elem_modules:?}")
 			}
 		} else {
 			self.rust_module()
@@ -158,7 +158,7 @@ fn method_new(rust_localalias: &str, tuple_typeref: &TypeRef, tuple_type: &str, 
 		.map(|(arg_name, type_ref)| (arg_name, type_ref.clone()))
 		.collect();
 	CppFuncDesc {
-		extern_name: format!("cv_{}_new", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_new").into(),
 		constness: Constness::Const,
 		is_infallible: true,
 		is_naked_return: true,
@@ -166,7 +166,7 @@ fn method_new(rust_localalias: &str, tuple_typeref: &TypeRef, tuple_type: &str, 
 		kind: FuncDescKind::Function,
 		type_hint: FunctionTypeHint::None,
 		call: FuncDescCppCall::Manual(
-			format!("std::make_{tuple_type}({{{{args}}}})", tuple_type = tuple_type).compile_interpolation(),
+			format!("std::make_{tuple_type}({{{{args}}}})").compile_interpolation(),
 		),
 		debug: "".to_string(),
 		arguments,
@@ -176,7 +176,7 @@ fn method_new(rust_localalias: &str, tuple_typeref: &TypeRef, tuple_type: &str, 
 
 fn method_delete(rust_localalias: &str, tuple_desc: &ClassDesc, void: &TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_delete", rust_localalias).into(),
+		extern_name: format!("cv_{rust_localalias}_delete").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,
@@ -192,14 +192,14 @@ fn method_delete(rust_localalias: &str, tuple_desc: &ClassDesc, void: &TypeRef) 
 
 fn method_get(rust_localalias: &str, tuple_desc: &ClassDesc, element_type: &TypeRef, num: usize) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{alias}_get_{num}", alias = rust_localalias, num = num).into(),
+		extern_name: format!("cv_{rust_localalias}_get_{num}").into(),
 		constness: Constness::Const,
 		is_infallible: true,
 		is_naked_return: false,
 		return_type: element_type.clone(),
 		kind: FuncDescKind::InstanceMethod(tuple_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual(format!("std::get<{num}>(*instance)", num = num).compile_interpolation()),
+		call: FuncDescCppCall::Manual(format!("std::get<{num}>(*instance)").compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}

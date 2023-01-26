@@ -142,7 +142,7 @@ impl<'tu> EntityExt<'tu> for Entity<'tu> {
 						WalkAction::Continue
 					}
 				} else {
-					panic!("Non-static constant: {:#?}", child)
+					panic!("Non-static constant: {child:#?}")
 				}
 			}
 			_ => WalkAction::Continue,

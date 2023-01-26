@@ -49,7 +49,7 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 		let generic_args = if lifetimes.is_empty() {
 			"".to_string()
 		} else {
-			format!("<{}>", lifetimes)
+			format!("<{lifetimes}>")
 		};
 
 		TPL.interpolate(&hashmap! {

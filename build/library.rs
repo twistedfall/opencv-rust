@@ -484,7 +484,7 @@ impl Library {
 				match probe() {
 					Ok(lib) => {
 						out = Some(lib);
-						eprintln!("=== Successfully probed using: {}", name);
+						eprintln!("=== Successfully probed using: {name}");
 						break;
 					}
 					Err(e) => {

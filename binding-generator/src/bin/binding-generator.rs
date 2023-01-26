@@ -56,7 +56,7 @@ fn get_version_from_headers(header_dir: &Path) -> Option<String> {
 		line.clear();
 	}
 	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
-		Some(format!("{}.{}.{}", major, minor, revision))
+		Some(format!("{major}.{minor}.{revision}"))
 	} else {
 		None
 	}

@@ -14,7 +14,7 @@ impl NamePool {
 		}
 	}
 
-	pub fn make_unique_name<'a>(&mut self, name: &mut Cow<'a, str>) {
+	pub fn make_unique_name(&mut self, name: &mut Cow<str>) {
 		while self.names.contains(name.as_ref()) {
 			name.to_mut().bump_counter();
 		}

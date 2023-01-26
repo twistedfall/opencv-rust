@@ -96,10 +96,10 @@ impl<'m> EphemeralGenerator<'m> {
 		let module_tweaks = settings::GENERATOR_MODULE_TWEAKS.get(self.module);
 		for tweak in global_tweaks.iter().chain(module_tweaks.iter()) {
 			for &include in &tweak.includes {
-				writeln!(includes, "#include <opencv2/{}>", include).expect("Can't fail");
+				writeln!(includes, "#include <opencv2/{include}>").expect("Can't fail");
 			}
 			for &res_type in &tweak.resolve_types {
-				writeln!(resolve_types, "typedef {} ephem{};", res_type, resolve_types_idx).expect("Can't fail");
+				writeln!(resolve_types, "typedef {res_type} ephem{resolve_types_idx};").expect("Can't fail");
 				resolve_types_idx += 1;
 			}
 			for &gen_type in &tweak.generate_types {
@@ -130,7 +130,7 @@ impl<'m> EphemeralGenerator<'m> {
 			descendants.sort_unstable();
 			for desc_cppfull in descendants {
 				if !self.used_in_smart_ptr.contains(desc_cppfull) {
-					generate_types.push(format!("cv::Ptr<{}>", desc_cppfull).into());
+					generate_types.push(format!("cv::Ptr<{desc_cppfull}>").into());
 				}
 			}
 		}
@@ -238,7 +238,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 						self.gen_env.make_export_config(entity).simple = true;
 					} else if let Some(rename_macro) = RENAME.iter().find(|&r| r == &name) {
 						if let Some(new_name) = get_definition_text(entity)
-							.strip_prefix(&format!("{}(", rename_macro))
+							.strip_prefix(&format!("{rename_macro}("))
 							.and_then(|d| d.strip_suffix(')'))
 						{
 							self.gen_env.make_export_config(entity);
@@ -506,7 +506,7 @@ impl Generator {
 				if !has_error && matches!(diag.get_severity(), Severity::Error | Severity::Fatal) {
 					has_error = true;
 				}
-				eprintln!("===    {}", diag);
+				eprintln!("===    {diag}");
 			}
 			if has_error && panic_on_error {
 				panic!("=== Errors during header parsing");
@@ -521,7 +521,7 @@ impl Generator {
 			.map(|d| format!("-isystem{}", d.to_str().expect("Incorrect system include path")).into())
 			.chain([&self.opencv_include_dir, &self.src_cpp_dir].iter().flat_map(|d| {
 				let include_path = d.to_str().expect("Incorrect include path");
-				[format!("-I{}", include_path).into(), format!("-F{}", include_path).into()]
+				[format!("-I{include_path}").into(), format!("-F{include_path}").into()]
 			}))
 			.collect::<Vec<_>>();
 		args.push("-DOCVRS_PARSING_HEADERS".into());
@@ -533,9 +533,9 @@ impl Generator {
 
 	pub fn process_module(&self, module: &str, panic_on_error: bool, entity_processor: impl FnOnce(TranslationUnit, &str)) {
 		let index = Index::new(&self.clang, true, false);
-		let mut module_file = self.src_cpp_dir.join(format!("{}.hpp", module));
+		let mut module_file = self.src_cpp_dir.join(format!("{module}.hpp"));
 		if !module_file.exists() {
-			module_file = self.opencv_module_header_dir.join(format!("{}.hpp", module));
+			module_file = self.opencv_module_header_dir.join(format!("{module}.hpp"));
 		}
 		let mut root_tu: TranslationUnit = index
 			.parser(module_file)
@@ -544,7 +544,7 @@ impl Generator {
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
 			.parse()
-			.unwrap_or_else(|_| panic!("Cannot parse module: {}", module));
+			.unwrap_or_else(|_| panic!("Cannot parse module: {module}"));
 		let mut ephem_gen = EphemeralGenerator::new(module);
 		let walker = EntityWalker::new(root_tu.get_entity());
 		walker.walk_opencv_entities(&mut ephem_gen);

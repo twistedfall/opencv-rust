@@ -1,14 +1,15 @@
-use std::{convert::TryInto, ffi::c_void, fmt, marker::PhantomData, ops::Deref, slice};
+use std::convert::TryInto;
+use std::ffi::c_void;
+use std::marker::PhantomData;
+use std::ops::Deref;
+use std::{fmt, slice};
 
 pub use mat_::*;
 
-use crate::{
-	core::{self, MatConstIterator, MatExpr, MatSize, MatStep, Point, Scalar, UMat},
-	input_output_array,
-	platform_types::size_t,
-	prelude::*,
-	sys, Error, Result,
-};
+use crate::core::{MatConstIterator, MatExpr, MatSize, MatStep, Point, Scalar, UMat};
+use crate::platform_types::size_t;
+use crate::prelude::*;
+use crate::{core, input_output_array, sys, Error, Result};
 
 mod mat_;
 
@@ -111,12 +112,24 @@ fn idx_to_row_col(mat: &(impl MatTraitConst + ?Sized), i0: i32) -> Result<(i32, 
 	})
 }
 
+#[inline]
+fn row_count_i32(row_count: usize) -> Result<i32> {
+	i32::try_from(row_count).map_err(|_| Error::new(core::StsBadArg, format!("Row count: {row_count} is too high")))
+}
+
+#[inline]
+fn col_count_i32(col_count: usize) -> Result<i32> {
+	i32::try_from(col_count).map_err(|_| Error::new(core::StsBadArg, format!("Column count: {col_count} is too high")))
+}
+
 impl Mat {
 	/// Create new `Mat` from the iterator of known size
 	pub fn from_exact_iter<T: DataType>(s: impl ExactSizeIterator<Item = T>) -> Result<Self> {
-		let mut out = unsafe { Self::new_rows_cols(s.len() as _, 1, T::typ()) }?;
+		let mut out = unsafe { Self::new_rows_cols(row_count_i32(s.len())?, 1, T::typ()) }?;
 		for (i, x) in s.enumerate() {
-			unsafe { ({ out.at_unchecked_mut::<T>(i as _) }? as *mut T).write(x) };
+			// safe because `row_count_i32` ensures that len of `s` fits `i32`
+			let i = i as i32;
+			unsafe { ({ out.at_unchecked_mut::<T>(i) }? as *mut T).write(x) };
 		}
 		Ok(out)
 	}
@@ -127,23 +140,24 @@ impl Mat {
 	}
 
 	pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Self> {
-		let row_count: i32 = s.len() as _;
-		let col_count: i32 = if row_count > 0 {
-			s[0].as_ref().len() as _
+		let row_count = row_count_i32(s.len())?;
+		let col_count = if let Some(first_row) = s.first() {
+			col_count_i32(first_row.as_ref().len())?
 		} else {
 			0
 		};
-		let mut out = unsafe { Self::new_rows_cols(row_count, col_count, T::typ()) }?;
+		let mut out = Self::new_rows_cols_with_default(row_count, col_count, T::typ(), Scalar::all(0.))?;
 		for (row_n, row) in s.iter().enumerate() {
-			let trg = out.at_row_mut(row_n as _)?;
+			// safe because `row_count_i32` ensures that len of `s` fits `i32`
+			let row_n = row_n as i32;
+			let trg = out.at_row_mut(row_n)?;
 			let src = row.as_ref();
 			if trg.len() != src.len() {
 				return Err(Error::new(
 					core::StsUnmatchedSizes,
 					format!(
-						"Unexpected number of items: {} in a row index: {}, expected: {}",
+						"Unexpected number of items: {} in a row index: {row_n}, expected: {}",
 						trg.len(),
-						row_n,
 						src.len()
 					),
 				));
@@ -248,14 +262,14 @@ pub(crate) mod mat_forward {
 	}
 
 	#[inline]
-	pub fn at_nd<'s, T: core::DataType>(mat: &'s (impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<&'s T> {
+	pub fn at_nd<'s, T: DataType>(mat: &'s (impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<&'s T> {
 		match_format::<T>(mat.typ())
 			.and_then(|_| match_indices(mat, idx))
 			.and_then(|_| unsafe { mat.at_nd_unchecked(idx) })
 	}
 
 	#[inline]
-	pub fn at_nd_mut<'s, T: core::DataType>(mat: &'s mut (impl MatTrait + ?Sized), idx: &[i32]) -> Result<&'s mut T> {
+	pub fn at_nd_mut<'s, T: DataType>(mat: &'s mut (impl MatTrait + ?Sized), idx: &[i32]) -> Result<&'s mut T> {
 		match_format::<T>(mat.typ()).and_then(|_| match_indices(mat, idx))?;
 		unsafe { mat.at_nd_unchecked_mut(idx) }
 	}
@@ -308,7 +322,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
-	unsafe fn at_nd_unchecked<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> {
+	unsafe fn at_nd_unchecked<T: DataType>(&self, idx: &[i32]) -> Result<&T> {
 		self.ptr_nd(idx).map(|ptr| convert_ptr(ptr))
 	}
 
@@ -453,7 +467,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// # Safety
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
-	unsafe fn at_nd_unchecked_mut<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
+	unsafe fn at_nd_unchecked_mut<T: DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
 		self.ptr_nd_mut(idx).map(|ptr| convert_ptr_mut(ptr))
 	}
 
@@ -508,7 +522,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	#[inline]
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total();
-		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut u8 as *mut T, total))
+		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut T, total))
 	}
 }
 

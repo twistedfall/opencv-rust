@@ -238,7 +238,6 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let mut inherent_const_methods = String::with_capacity(512 * const_methods.len());
 		let mut inherent_mut_methods = String::with_capacity(512 * mut_methods.len());
 		let mut inherent_methods_pool = NamePool::with_capacity(method_count);
-		let is_trait = c.is_trait();
 
 		if let Some(def_cons) = mut_methods.iter().find(|m| m.is_default_constructor() && !m.is_excluded()) {
 			if def_cons.is_infallible() {
@@ -485,7 +484,7 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 fn method_delete(rust_local: &str, class_desc: ClassDesc, void: TypeRef) -> String {
 	CppFuncDesc {
-		extern_name: format!("cv_{}_delete", rust_local).into(),
+		extern_name: format!("cv_{rust_local}_delete").into(),
 		constness: Constness::Mut,
 		is_infallible: true,
 		is_naked_return: true,

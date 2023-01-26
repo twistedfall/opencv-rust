@@ -97,7 +97,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		match parent_entity.get_kind() {
 			EntityKind::ClassDecl | EntityKind::StructDecl | EntityKind::ClassTemplate => Class::new(parent_entity, self.gen_env),
 			_ => {
-				panic!("Unexpected field parent entity: {:#?}", parent_entity);
+				panic!("Unexpected field parent entity: {parent_entity:#?}");
 			}
 		}
 	}

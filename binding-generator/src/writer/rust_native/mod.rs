@@ -67,7 +67,7 @@ pub struct RustNativeBindingWriter<'s> {
 impl<'s> RustNativeBindingWriter<'s> {
 	pub fn new(src_cpp_dir: &Path, out_dir: impl Into<PathBuf>, module: &'s str, opencv_version: &'s str, debug: bool) -> Self {
 		let out_dir = out_dir.into();
-		let debug_path = out_dir.join(format!("{}.log", module));
+		let debug_path = out_dir.join(format!("{module}.log"));
 		#[allow(clippy::collapsible_if)]
 		if false {
 			if debug {
@@ -80,9 +80,9 @@ impl<'s> RustNativeBindingWriter<'s> {
 			module,
 			opencv_version,
 			debug_path,
-			rust_path: out_dir.join(format!("{}.rs", module)),
-			exports_path: out_dir.join(format!("{}.externs.rs", module)),
-			cpp_path: out_dir.join(format!("{}.cpp", module)),
+			rust_path: out_dir.join(format!("{module}.rs")),
+			exports_path: out_dir.join(format!("{module}.externs.rs")),
+			cpp_path: out_dir.join(format!("{module}.cpp")),
 			types_dir: out_dir,
 			comment: String::new(),
 			found_traits: vec![],
@@ -106,7 +106,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 					.append(true)
 					.open(&self.debug_path)
 					.expect("Can't open debug file");
-				writeln!(f, "{:#?}", obj).expect("Can't write debug info");
+				writeln!(f, "{obj:#?}").expect("Can't write debug info");
 			}
 		}
 	}
@@ -180,7 +180,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		let safe_id = typ.element_safe_id();
 
 		let suffix = ".type.rs";
-		let mut file_name = format!("{:03}-{}", prio, safe_id);
+		let mut file_name = format!("{prio:03}-{safe_id}");
 		ensure_filename_length(&mut file_name, suffix.len());
 		file_name.push_str(suffix);
 		let path = self.types_dir.join(file_name);
@@ -198,12 +198,12 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 			Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ }
 			Err(e) if e.kind() == ErrorKind::PermissionDenied => { /* happens sporadically on Windows */ }
 			Err(e) => {
-				panic!("Error while creating file for rust generated type: {}", e)
+				panic!("Error while creating file for rust generated type: {e}")
 			}
 		}
 
 		let suffix = ".type.cpp";
-		let mut filename = format!("{:03}-{}", prio, safe_id);
+		let mut filename = format!("{prio:03}-{safe_id}");
 		ensure_filename_length(&mut filename, suffix.len());
 		filename.push_str(suffix);
 
@@ -222,7 +222,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 			Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ }
 			Err(e) if e.kind() == ErrorKind::PermissionDenied => { /* happens sporadically on Windows */ }
 			Err(e) => {
-				panic!("Error while creating file for cpp generated type: {}", e)
+				panic!("Error while creating file for cpp generated type: {e}")
 			}
 		}
 	}

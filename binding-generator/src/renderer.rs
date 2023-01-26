@@ -35,7 +35,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 		};
 		match type_ref.kind() {
 			Kind::Primitive(_, cpp) => {
-				format!("{cnst}{typ}{name}", cnst = cnst, typ = cpp, name = space_name)
+				format!("{cnst}{cpp}{space_name}")
 			}
 			Kind::Array(inner, size) => {
 				if let Some(size) = size {
@@ -92,7 +92,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					// fixme prevents emission of std::string<char>
 					out += &render_cpp_tpl_decl(self, type_ref);
 				}
-				format!("{cnst}{typ}{name}", cnst = cnst, typ = out, name = space_name)
+				format!("{cnst}{out}{space_name}")
 			}
 			Kind::Enum(enm) => {
 				format!(
@@ -110,10 +110,10 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 				} else {
 					tdef.cpp_name(self.name_style).into_owned().into()
 				};
-				format!("{cnst}{typ}{name}", cnst = cnst, typ = typ, name = space_name)
+				format!("{cnst}{typ}{space_name}")
 			}
 			Kind::Generic(generic_name) => {
-				format!("{cnst}{typ}{name}", cnst = cnst, typ = generic_name, name = space_name)
+				format!("{cnst}{generic_name}{space_name}")
 			}
 			Kind::Function(func) => {
 				let mut typ = func.cpp_name(self.name_style);
@@ -124,11 +124,11 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 					}
 					typ.into_owned()
 				} else {
-					format!("{typ}{name}", typ = typ, name = space_name)
+					format!("{typ}{space_name}")
 				}
 			}
 			Kind::Ignored => {
-				format!("<ignored>{name}", name = space_name)
+				format!("<ignored>{space_name}")
 			}
 		}
 		.into()

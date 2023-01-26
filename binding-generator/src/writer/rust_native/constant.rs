@@ -18,10 +18,9 @@ impl RustElement for Const<'_> {
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
 		let mut out = DefaultRustNativeElement::rust_name(self, style);
-		const SUFFIX: &str = "_OCVRS_OVERRIDE";
-		if out.ends_with(SUFFIX) {
-			let suffix_start = out.len() - SUFFIX.len();
-			out.to_mut().drain(suffix_start..);
+		if let Some(without_suffix) = out.strip_suffix("_OCVRS_OVERRIDE") {
+			let new_len = without_suffix.len();
+			out.to_mut().truncate(new_len);
 		}
 		out
 	}
