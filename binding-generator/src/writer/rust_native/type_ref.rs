@@ -200,12 +200,8 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 					format!("string_arg_output_send!(via {name}_via)")
 				}
 			};
-		} else if self.is_input_array() {
-			return format!("input_array_arg!({name})");
-		} else if self.is_output_array() {
-			return format!("output_array_arg!({name})");
-		} else if self.is_input_output_array() {
-			return format!("input_output_array_arg!({name})");
+		} else if self.is_input_array() || self.is_output_array() || self.is_input_output_array() {
+			return format!("extern_container_arg!({name})");
 		} else if self.as_string_array().is_some() {
 			return if self.constness().is_const() {
 				format!("string_array_arg!({name})")

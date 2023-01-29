@@ -1,7 +1,7 @@
 use std::os::raw::c_void;
 
 use crate::core::{_InputArray, _InputArrayTrait, _InputOutputArray, _InputOutputArrayTrait, _OutputArray, _OutputArrayTrait};
-use crate::traits::Boxed;
+use crate::traits::{Boxed, OpenCVTypeArg};
 use crate::{input_output_array, sys, Result};
 
 /// Trait to serve as a replacement for `InputArray` in C++ OpenCV
@@ -49,6 +49,20 @@ impl<T: _InputArrayTrait> ToInputArray for T {
 	}
 }
 
+impl OpenCVTypeArg<'_> for &dyn ToInputArray {
+	type ExternContainer = _InputArray;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		self.input_array()
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self.opencv_into_extern_container().expect("Can't convert to InputArray")
+	}
+}
+
 impl<T: _OutputArrayTrait> ToOutputArray for T {
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
@@ -62,6 +76,20 @@ impl<T: _OutputArrayTrait> ToOutputArray for T {
 	}
 }
 
+impl OpenCVTypeArg<'_> for &mut dyn ToOutputArray {
+	type ExternContainer = _OutputArray;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		self.output_array()
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self.opencv_into_extern_container().expect("Can't convert to OutputArray")
+	}
+}
+
 impl<T: _InputOutputArrayTrait> ToInputOutputArray for T {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
@@ -72,6 +100,22 @@ impl<T: _InputOutputArrayTrait> ToInputOutputArray for T {
 		unsafe { cv_InputOutputArray_input_output_array(self.as_raw_mut__InputOutputArray(), ocvrs_return.as_mut_ptr()) }
 		return_receive!(unsafe ocvrs_return => ret);
 		ret.into_result().map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) })
+	}
+}
+
+impl OpenCVTypeArg<'_> for &mut dyn ToInputOutputArray {
+	type ExternContainer = _InputOutputArray;
+
+	#[inline]
+	fn opencv_into_extern_container(self) -> Result<Self::ExternContainer> {
+		self.input_output_array()
+	}
+
+	#[inline]
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self
+			.opencv_into_extern_container()
+			.expect("Can't convert to InputOutputArray")
 	}
 }
 
