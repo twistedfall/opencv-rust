@@ -2,12 +2,10 @@ use std::ffi::c_void;
 
 use matches::assert_matches;
 
-use opencv::{
-	core::{self, MatConstIterator, Point, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f, Vec4w},
-	prelude::*,
-	types::{VectorOfMat, VectorOfi32},
-	Error, Result,
-};
+use opencv::core::{MatConstIterator, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f, Vec4w};
+use opencv::prelude::*;
+use opencv::types::{VectorOfMat, VectorOfi32};
+use opencv::{core, Error, Result};
 
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
@@ -830,5 +828,51 @@ fn mat_rgb() -> Result<()> {
 			..
 		})
 	);
+	Ok(())
+}
+
+#[test]
+fn mat_from_slice() -> Result<()> {
+	let src_u8 = [0u8, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+	let src_point = [
+		Point2d::new(10.1, 20.2),
+		Point2d::new(30.3, 40.4),
+		Point2d::new(50.5, 60.6),
+		Point2d::new(70.7, 80.8),
+	];
+
+	{
+		let mat = Mat::from_slice(&src_u8)?;
+		assert_eq!(10, mat.total());
+		assert_eq!(5u8, *mat.at(5)?);
+
+		let mat = Mat::from_slice(&src_point)?;
+		assert_eq!(4, mat.total());
+		assert_eq!(Point2d::new(30.3, 40.4), *mat.at(1)?);
+	}
+
+	{
+		let mat = Mat::from_slice_rows_cols(&src_u8, 2, 5)?;
+		assert_eq!(10, mat.total());
+		assert_eq!(2, mat.rows());
+		assert_eq!(5, mat.cols());
+		assert_eq!(6u8, *mat.at_2d(1, 1)?);
+
+		let mat_res = Mat::from_slice_rows_cols(&src_u8, 3, 3);
+		assert_matches!(
+			mat_res,
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
+
+		let mat = Mat::from_slice_rows_cols(&src_point, 2, 2)?;
+		assert_eq!(4, mat.total());
+		assert_eq!(2, mat.rows());
+		assert_eq!(2, mat.cols());
+		assert_eq!(Point2d::new(50.5, 60.6), *mat.at_2d(1, 0)?);
+	}
+
 	Ok(())
 }

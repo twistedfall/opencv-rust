@@ -169,6 +169,30 @@ impl Mat {
 		Ok(out)
 	}
 
+	/// Create a new `Mat` by copying the data from a single-dimensional slice with custom shape
+	#[inline]
+	pub fn from_slice_rows_cols<T: DataType>(s: &[T], row_count: usize, col_count: usize) -> Result<Self> {
+		if row_count * col_count != s.len() {
+			return Err(Error::new(
+				core::StsUnmatchedSizes,
+				format!(
+					"The length of the slice: {} must match the passed row count: {row_count} and column count: {col_count} exactly",
+					s.len()
+				),
+			));
+		}
+		unsafe {
+			Self::new_rows_cols_with_data(
+				row_count_i32(row_count)?,
+				col_count_i32(col_count)?,
+				T::typ(),
+				s.as_ptr() as *mut c_void,
+				core::Mat_AUTO_STEP,
+			)
+		}?
+		.try_clone()
+	}
+
 	#[inline]
 	pub fn try_into_typed<T: DataType>(self) -> Result<Mat_<T>>
 	where
