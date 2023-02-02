@@ -59,12 +59,21 @@ static ENV_VARS: [&str; 16] = [
 	"DOCS_RS",
 ];
 
-fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Result<impl Iterator<Item = PathBuf> + 'e> {
+fn files_with_predicate<'p>(
+	dir: &Path,
+	mut predicate: impl FnMut(&Path) -> bool + 'p,
+) -> Result<impl Iterator<Item = PathBuf> + 'p> {
 	Ok(dir
 		.read_dir()?
 		.flatten()
 		.filter_map(|e| e.file_type().map_or(false, |typ| typ.is_file()).then(|| e.path()))
-		.filter(move |p| p.extension().map_or(false, |e| e.eq_ignore_ascii_case(extension.as_ref()))))
+		.filter(move |p| predicate(p)))
+}
+
+fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Result<impl Iterator<Item = PathBuf> + 'e> {
+	files_with_predicate(dir, move |p| {
+		p.extension().map_or(false, |e| e.eq_ignore_ascii_case(extension.as_ref()))
+	})
 }
 
 /// Returns Some(new_file_name) if some parts of the filename were removed, None otherwise
@@ -282,12 +291,11 @@ fn setup_rerun() -> Result<()> {
 	}
 
 	let include_exts = &[OsStr::new("cpp"), OsStr::new("hpp")];
-	for entry in SRC_CPP_DIR.read_dir()?.map(|e| e.unwrap()) {
-		let path = entry.path();
-		if path.is_file() && path.extension().map_or(false, |e| include_exts.contains(&e)) {
-			if let Some(path) = path.to_str() {
-				println!("cargo:rerun-if-changed={path}");
-			}
+	let files_with_include_exts =
+		files_with_predicate(&SRC_CPP_DIR, |p| p.extension().map_or(false, |e| include_exts.contains(&e)))?;
+	for path in files_with_include_exts {
+		if let Some(path) = path.to_str() {
+			println!("cargo:rerun-if-changed={path}");
 		}
 	}
 	println!("cargo:rerun-if-changed=Cargo.toml");

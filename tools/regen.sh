@@ -29,8 +29,7 @@ mv -v target/debug/build/opencv-*/out/*.{cpp,hpp} -t "$bindings_cpp_dir"
 
 bindings_rust_dir="$bindings_dir/rust"
 mkdir -p "$bindings_rust_dir"
-mv -v docs/hub -t "$bindings_rust_dir"
-mv -v docs/hub.rs -t "$bindings_rust_dir"
+mv -v docs/*.rs -t "$bindings_rust_dir"
 
 popd
 

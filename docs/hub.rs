@@ -1,206 +1,142 @@
 #[cfg(ocvrs_has_module_alphamat)]
-#[path = r"$[OUT_DIR]/opencv/hub/alphamat.rs"]
-pub mod alphamat;
+include!(concat!(env!("OUT_DIR"), "/opencv/alphamat.rs"));
 #[cfg(ocvrs_has_module_aruco)]
-#[path = r"$[OUT_DIR]/opencv/hub/aruco.rs"]
-pub mod aruco;
+include!(concat!(env!("OUT_DIR"), "/opencv/aruco.rs"));
 #[cfg(ocvrs_has_module_barcode)]
-#[path = r"$[OUT_DIR]/opencv/hub/barcode.rs"]
-pub mod barcode;
+include!(concat!(env!("OUT_DIR"), "/opencv/barcode.rs"));
 #[cfg(ocvrs_has_module_bgsegm)]
-#[path = r"$[OUT_DIR]/opencv/hub/bgsegm.rs"]
-pub mod bgsegm;
+include!(concat!(env!("OUT_DIR"), "/opencv/bgsegm.rs"));
 #[cfg(ocvrs_has_module_bioinspired)]
-#[path = r"$[OUT_DIR]/opencv/hub/bioinspired.rs"]
-pub mod bioinspired;
+include!(concat!(env!("OUT_DIR"), "/opencv/bioinspired.rs"));
 #[cfg(ocvrs_has_module_calib3d)]
-#[path = r"$[OUT_DIR]/opencv/hub/calib3d.rs"]
-pub mod calib3d;
+include!(concat!(env!("OUT_DIR"), "/opencv/calib3d.rs"));
 #[cfg(ocvrs_has_module_ccalib)]
-#[path = r"$[OUT_DIR]/opencv/hub/ccalib.rs"]
-pub mod ccalib;
+include!(concat!(env!("OUT_DIR"), "/opencv/ccalib.rs"));
 #[cfg(ocvrs_has_module_core)]
-#[path = r"$[OUT_DIR]/opencv/hub/core.rs"]
-pub mod core;
+include!(concat!(env!("OUT_DIR"), "/opencv/core.rs"));
 #[cfg(ocvrs_has_module_cudaarithm)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudaarithm.rs"]
-pub mod cudaarithm;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudaarithm.rs"));
 #[cfg(ocvrs_has_module_cudabgsegm)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudabgsegm.rs"]
-pub mod cudabgsegm;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudabgsegm.rs"));
 #[cfg(ocvrs_has_module_cudacodec)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudacodec.rs"]
-pub mod cudacodec;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudacodec.rs"));
 #[cfg(ocvrs_has_module_cudafeatures2d)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudafeatures2d.rs"]
-pub mod cudafeatures2d;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudafeatures2d.rs"));
 #[cfg(ocvrs_has_module_cudafilters)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudafilters.rs"]
-pub mod cudafilters;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudafilters.rs"));
 #[cfg(ocvrs_has_module_cudaimgproc)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudaimgproc.rs"]
-pub mod cudaimgproc;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudaimgproc.rs"));
 #[cfg(ocvrs_has_module_cudaobjdetect)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudaobjdetect.rs"]
-pub mod cudaobjdetect;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudaobjdetect.rs"));
 #[cfg(ocvrs_has_module_cudaoptflow)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudaoptflow.rs"]
-pub mod cudaoptflow;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudaoptflow.rs"));
 #[cfg(ocvrs_has_module_cudastereo)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudastereo.rs"]
-pub mod cudastereo;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudastereo.rs"));
 #[cfg(ocvrs_has_module_cudawarping)]
-#[path = r"$[OUT_DIR]/opencv/hub/cudawarping.rs"]
-pub mod cudawarping;
+include!(concat!(env!("OUT_DIR"), "/opencv/cudawarping.rs"));
 #[cfg(ocvrs_has_module_cvv)]
-#[path = r"$[OUT_DIR]/opencv/hub/cvv.rs"]
-pub mod cvv;
+include!(concat!(env!("OUT_DIR"), "/opencv/cvv.rs"));
 #[cfg(ocvrs_has_module_dnn)]
-#[path = r"$[OUT_DIR]/opencv/hub/dnn.rs"]
-pub mod dnn;
+include!(concat!(env!("OUT_DIR"), "/opencv/dnn.rs"));
 #[cfg(ocvrs_has_module_dnn_superres)]
-#[path = r"$[OUT_DIR]/opencv/hub/dnn_superres.rs"]
-pub mod dnn_superres;
+include!(concat!(env!("OUT_DIR"), "/opencv/dnn_superres.rs"));
 #[cfg(ocvrs_has_module_dpm)]
-#[path = r"$[OUT_DIR]/opencv/hub/dpm.rs"]
-pub mod dpm;
+include!(concat!(env!("OUT_DIR"), "/opencv/dpm.rs"));
 #[cfg(ocvrs_has_module_face)]
-#[path = r"$[OUT_DIR]/opencv/hub/face.rs"]
-pub mod face;
+include!(concat!(env!("OUT_DIR"), "/opencv/face.rs"));
 #[cfg(ocvrs_has_module_features2d)]
-#[path = r"$[OUT_DIR]/opencv/hub/features2d.rs"]
-pub mod features2d;
+include!(concat!(env!("OUT_DIR"), "/opencv/features2d.rs"));
 #[cfg(ocvrs_has_module_flann)]
-#[path = r"$[OUT_DIR]/opencv/hub/flann.rs"]
-pub mod flann;
+include!(concat!(env!("OUT_DIR"), "/opencv/flann.rs"));
 #[cfg(ocvrs_has_module_freetype)]
-#[path = r"$[OUT_DIR]/opencv/hub/freetype.rs"]
-pub mod freetype;
+include!(concat!(env!("OUT_DIR"), "/opencv/freetype.rs"));
 #[cfg(ocvrs_has_module_fuzzy)]
-#[path = r"$[OUT_DIR]/opencv/hub/fuzzy.rs"]
-pub mod fuzzy;
+include!(concat!(env!("OUT_DIR"), "/opencv/fuzzy.rs"));
 #[cfg(ocvrs_has_module_gapi)]
-#[path = r"$[OUT_DIR]/opencv/hub/gapi.rs"]
-pub mod gapi;
+include!(concat!(env!("OUT_DIR"), "/opencv/gapi.rs"));
 #[cfg(ocvrs_has_module_hdf)]
-#[path = r"$[OUT_DIR]/opencv/hub/hdf.rs"]
-pub mod hdf;
+include!(concat!(env!("OUT_DIR"), "/opencv/hdf.rs"));
 #[cfg(ocvrs_has_module_hfs)]
-#[path = r"$[OUT_DIR]/opencv/hub/hfs.rs"]
-pub mod hfs;
+include!(concat!(env!("OUT_DIR"), "/opencv/hfs.rs"));
 #[cfg(ocvrs_has_module_highgui)]
-#[path = r"$[OUT_DIR]/opencv/hub/highgui.rs"]
-pub mod highgui;
+include!(concat!(env!("OUT_DIR"), "/opencv/highgui.rs"));
 #[cfg(ocvrs_has_module_img_hash)]
-#[path = r"$[OUT_DIR]/opencv/hub/img_hash.rs"]
-pub mod img_hash;
+include!(concat!(env!("OUT_DIR"), "/opencv/img_hash.rs"));
 #[cfg(ocvrs_has_module_imgcodecs)]
-#[path = r"$[OUT_DIR]/opencv/hub/imgcodecs.rs"]
-pub mod imgcodecs;
+include!(concat!(env!("OUT_DIR"), "/opencv/imgcodecs.rs"));
 #[cfg(ocvrs_has_module_imgproc)]
-#[path = r"$[OUT_DIR]/opencv/hub/imgproc.rs"]
-pub mod imgproc;
+include!(concat!(env!("OUT_DIR"), "/opencv/imgproc.rs"));
 #[cfg(ocvrs_has_module_intensity_transform)]
-#[path = r"$[OUT_DIR]/opencv/hub/intensity_transform.rs"]
-pub mod intensity_transform;
+include!(concat!(env!("OUT_DIR"), "/opencv/intensity_transform.rs"));
 #[cfg(ocvrs_has_module_line_descriptor)]
-#[path = r"$[OUT_DIR]/opencv/hub/line_descriptor.rs"]
-pub mod line_descriptor;
+include!(concat!(env!("OUT_DIR"), "/opencv/line_descriptor.rs"));
 #[cfg(ocvrs_has_module_mcc)]
-#[path = r"$[OUT_DIR]/opencv/hub/mcc.rs"]
-pub mod mcc;
+include!(concat!(env!("OUT_DIR"), "/opencv/mcc.rs"));
 #[cfg(ocvrs_has_module_ml)]
-#[path = r"$[OUT_DIR]/opencv/hub/ml.rs"]
-pub mod ml;
+include!(concat!(env!("OUT_DIR"), "/opencv/ml.rs"));
 #[cfg(ocvrs_has_module_objdetect)]
-#[path = r"$[OUT_DIR]/opencv/hub/objdetect.rs"]
-pub mod objdetect;
+include!(concat!(env!("OUT_DIR"), "/opencv/objdetect.rs"));
 #[cfg(ocvrs_has_module_optflow)]
-#[path = r"$[OUT_DIR]/opencv/hub/optflow.rs"]
-pub mod optflow;
+include!(concat!(env!("OUT_DIR"), "/opencv/optflow.rs"));
 #[cfg(ocvrs_has_module_ovis)]
-#[path = r"$[OUT_DIR]/opencv/hub/ovis.rs"]
-pub mod ovis;
+include!(concat!(env!("OUT_DIR"), "/opencv/ovis.rs"));
 #[cfg(ocvrs_has_module_phase_unwrapping)]
-#[path = r"$[OUT_DIR]/opencv/hub/phase_unwrapping.rs"]
-pub mod phase_unwrapping;
+include!(concat!(env!("OUT_DIR"), "/opencv/phase_unwrapping.rs"));
 #[cfg(ocvrs_has_module_photo)]
-#[path = r"$[OUT_DIR]/opencv/hub/photo.rs"]
-pub mod photo;
+include!(concat!(env!("OUT_DIR"), "/opencv/photo.rs"));
 #[cfg(ocvrs_has_module_plot)]
-#[path = r"$[OUT_DIR]/opencv/hub/plot.rs"]
-pub mod plot;
+include!(concat!(env!("OUT_DIR"), "/opencv/plot.rs"));
 #[cfg(ocvrs_has_module_quality)]
-#[path = r"$[OUT_DIR]/opencv/hub/quality.rs"]
-pub mod quality;
+include!(concat!(env!("OUT_DIR"), "/opencv/quality.rs"));
 #[cfg(ocvrs_has_module_rapid)]
-#[path = r"$[OUT_DIR]/opencv/hub/rapid.rs"]
-pub mod rapid;
+include!(concat!(env!("OUT_DIR"), "/opencv/rapid.rs"));
 #[cfg(ocvrs_has_module_rgbd)]
-#[path = r"$[OUT_DIR]/opencv/hub/rgbd.rs"]
-pub mod rgbd;
+include!(concat!(env!("OUT_DIR"), "/opencv/rgbd.rs"));
 #[cfg(ocvrs_has_module_saliency)]
-#[path = r"$[OUT_DIR]/opencv/hub/saliency.rs"]
-pub mod saliency;
+include!(concat!(env!("OUT_DIR"), "/opencv/saliency.rs"));
 #[cfg(ocvrs_has_module_sfm)]
-#[path = r"$[OUT_DIR]/opencv/hub/sfm.rs"]
-pub mod sfm;
+include!(concat!(env!("OUT_DIR"), "/opencv/sfm.rs"));
 #[cfg(ocvrs_has_module_shape)]
-#[path = r"$[OUT_DIR]/opencv/hub/shape.rs"]
-pub mod shape;
+include!(concat!(env!("OUT_DIR"), "/opencv/shape.rs"));
 #[cfg(ocvrs_has_module_stereo)]
-#[path = r"$[OUT_DIR]/opencv/hub/stereo.rs"]
-pub mod stereo;
+include!(concat!(env!("OUT_DIR"), "/opencv/stereo.rs"));
 #[cfg(ocvrs_has_module_stitching)]
-#[path = r"$[OUT_DIR]/opencv/hub/stitching.rs"]
-pub mod stitching;
+include!(concat!(env!("OUT_DIR"), "/opencv/stitching.rs"));
 #[cfg(ocvrs_has_module_structured_light)]
-#[path = r"$[OUT_DIR]/opencv/hub/structured_light.rs"]
-pub mod structured_light;
+include!(concat!(env!("OUT_DIR"), "/opencv/structured_light.rs"));
 #[cfg(ocvrs_has_module_superres)]
-#[path = r"$[OUT_DIR]/opencv/hub/superres.rs"]
-pub mod superres;
+include!(concat!(env!("OUT_DIR"), "/opencv/superres.rs"));
 #[cfg(ocvrs_has_module_surface_matching)]
-#[path = r"$[OUT_DIR]/opencv/hub/surface_matching.rs"]
-pub mod surface_matching;
+include!(concat!(env!("OUT_DIR"), "/opencv/surface_matching.rs"));
 #[cfg(ocvrs_has_module_text)]
-#[path = r"$[OUT_DIR]/opencv/hub/text.rs"]
-pub mod text;
+include!(concat!(env!("OUT_DIR"), "/opencv/text.rs"));
 #[cfg(ocvrs_has_module_tracking)]
-#[path = r"$[OUT_DIR]/opencv/hub/tracking.rs"]
-pub mod tracking;
+include!(concat!(env!("OUT_DIR"), "/opencv/tracking.rs"));
 #[cfg(ocvrs_has_module_video)]
-#[path = r"$[OUT_DIR]/opencv/hub/video.rs"]
-pub mod video;
+include!(concat!(env!("OUT_DIR"), "/opencv/video.rs"));
 #[cfg(ocvrs_has_module_videoio)]
-#[path = r"$[OUT_DIR]/opencv/hub/videoio.rs"]
-pub mod videoio;
+include!(concat!(env!("OUT_DIR"), "/opencv/videoio.rs"));
 #[cfg(ocvrs_has_module_videostab)]
-#[path = r"$[OUT_DIR]/opencv/hub/videostab.rs"]
-pub mod videostab;
+include!(concat!(env!("OUT_DIR"), "/opencv/videostab.rs"));
 #[cfg(ocvrs_has_module_viz)]
-#[path = r"$[OUT_DIR]/opencv/hub/viz.rs"]
-pub mod viz;
+include!(concat!(env!("OUT_DIR"), "/opencv/viz.rs"));
 #[cfg(ocvrs_has_module_wechat_qrcode)]
-#[path = r"$[OUT_DIR]/opencv/hub/wechat_qrcode.rs"]
-pub mod wechat_qrcode;
+include!(concat!(env!("OUT_DIR"), "/opencv/wechat_qrcode.rs"));
 #[cfg(ocvrs_has_module_xfeatures2d)]
-#[path = r"$[OUT_DIR]/opencv/hub/xfeatures2d.rs"]
-pub mod xfeatures2d;
+include!(concat!(env!("OUT_DIR"), "/opencv/xfeatures2d.rs"));
 #[cfg(ocvrs_has_module_ximgproc)]
-#[path = r"$[OUT_DIR]/opencv/hub/ximgproc.rs"]
-pub mod ximgproc;
+include!(concat!(env!("OUT_DIR"), "/opencv/ximgproc.rs"));
 #[cfg(ocvrs_has_module_xobjdetect)]
-#[path = r"$[OUT_DIR]/opencv/hub/xobjdetect.rs"]
-pub mod xobjdetect;
+include!(concat!(env!("OUT_DIR"), "/opencv/xobjdetect.rs"));
 #[cfg(ocvrs_has_module_xphoto)]
-#[path = r"$[OUT_DIR]/opencv/hub/xphoto.rs"]
-pub mod xphoto;
-#[path = r"$[OUT_DIR]/opencv/hub/types.rs"]
-pub mod types;
-#[path = r"$[OUT_DIR]/opencv/hub/sys.rs"]
+include!(concat!(env!("OUT_DIR"), "/opencv/xphoto.rs"));
+pub mod types {
+include!(concat!(env!("OUT_DIR"), "/opencv/types.rs"));
+}
 #[doc(hidden)]
-pub mod sys;
+pub mod sys {
+include!(concat!(env!("OUT_DIR"), "/opencv/sys.rs"));
+}
 pub mod hub_prelude {
 	#[cfg(ocvrs_has_module_alphamat)]
 	pub use super::alphamat::prelude::*;
