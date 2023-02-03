@@ -1,3 +1,6 @@
+* 0.76.4
+  * Fix autocomplete and documentation for rust-analyzer based IDEs.
+
 * 0.76.3
   * Introduce `Mat::from_slice_rows_cols()` function to simplify creation of 2d matrices from byte buffers.
   * Improve documentation.
