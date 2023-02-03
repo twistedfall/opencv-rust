@@ -4,6 +4,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
+use std::time::Instant;
 use std::{env, io, iter};
 
 use once_cell::sync::{Lazy, OnceCell};
@@ -314,7 +315,9 @@ fn build_wrapper(opencv: &Library) {
 			cc.file(manual_cpp);
 		}
 	}
+	let start = Instant::now();
 	cc.compile("ocvrs");
+	eprintln!("=== Total cpp build time: {:?}", start.elapsed());
 }
 
 fn main() -> Result<()> {

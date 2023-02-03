@@ -46,7 +46,7 @@ fn main() -> Result<()> {
 		)?;
 		println!("faces: {}", faces.len());
 		for face in faces {
-			println!("face {:?}", face);
+			println!("face {face:?}");
 			let scaled_face = core::Rect {
 				x: face.x * 4,
 				y: face.y * 4,

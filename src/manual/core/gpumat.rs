@@ -5,6 +5,7 @@ use crate::{
 
 impl GpuMat {
 	#[inline]
+	#[allow(clippy::should_implement_trait)]
 	pub fn default() -> Result<Self> {
 		unsafe { Self::new(&mut Self::default_allocator()?) }
 	}

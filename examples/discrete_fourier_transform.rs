@@ -13,7 +13,7 @@ fn main() -> opencv::Result<()> {
 	let filename = env::args().nth(1).expect("Must supply image filename");
 	let I = imgcodecs::imread(&filename, imgcodecs::IMREAD_GRAYSCALE)?;
 	if I.empty() {
-		panic!("Error opening image: {}", filename);
+		panic!("Error opening image: {filename}");
 	}
 	let mut padded = Mat::default();
 	let m = core::get_optimal_dft_size(I.rows())?;

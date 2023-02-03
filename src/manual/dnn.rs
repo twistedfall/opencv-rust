@@ -24,6 +24,7 @@ impl fmt::Debug for DictValue {
 }
 
 impl LayerParams {
+	#[allow(clippy::should_implement_trait)]
 	pub fn default() -> Result<Self> {
 		extern "C" {
 			fn cv_dnn_LayerParams_LayerParams(ocvrs_return: *mut sys::Result<*mut c_void>);

@@ -3,6 +3,7 @@ use std::ffi::c_void;
 use crate::{features2d::ORB, sys, traits::Boxed, types, Result};
 
 impl dyn ORB + '_ {
+	#[allow(clippy::should_implement_trait)]
 	pub fn default() -> Result<types::PtrOfORB> {
 		extern "C" {
 			fn cv_ORB_create(ocvrs_return: *mut sys::Result<*mut c_void>);
