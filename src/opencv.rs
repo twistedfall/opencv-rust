@@ -6,7 +6,7 @@
 	non_upper_case_globals,
 	overflowing_literals,
 	unused_imports,
-	unused_parens,
+	unused_parens
 )]
 #[allow(
 	clippy::double_must_use,
@@ -18,9 +18,8 @@
 	clippy::tabs_in_doc_comments,
 	clippy::too_many_arguments,
 	clippy::unnecessary_operation,
-	clippy::unused_unit,
+	clippy::unused_unit
 )]
-#[rustfmt::skip]
 pub mod hub {
 	include!(concat!(env!("OUT_DIR"), "/opencv/hub.rs"));
 }

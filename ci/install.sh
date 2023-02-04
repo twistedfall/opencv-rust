@@ -7,8 +7,6 @@ ci_dir="$(dirname "$0")"
 if [[ "$OS_FAMILY" == "Linux" ]]; then
 	if [[ "$VCPKG_VERSION" != "" ]]; then # vcpkg build
 		"$ci_dir/install-focal-vcpkg.sh"
-	elif [[ "$OPENCV_VERSION" == "3.2.0" ]]; then
-		"$ci_dir/install-bionic.sh"
 	else
 		"$ci_dir/install-focal.sh"
 	fi

@@ -309,7 +309,7 @@ The following OpenCV versions are supported at the moment:
 
 ### Minimum rustc version (MSRV)
 
-Currently, version 1.59.0 is required.
+Currently, version 1.59.0 or later is required.
 
 ### Platform support
 
@@ -317,7 +317,7 @@ Currently, the main development and testing of the crate is performed on Linux, 
 also supported: macOS and Windows.
 
 For some more details please refer to the CI build scripts:
-[Linux OpenCV install](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-bionic.sh),
+[Linux OpenCV install](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-focal.sh),
 [macOS OpenCV install as framework](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-macos-framework.sh),
 [macOS OpenCV install via brew](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-macos-brew.sh),
 [Windows OpenCV install via Chocolatey](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-windows-chocolatey.sh),
@@ -335,10 +335,14 @@ that.
 Most functions return a `Result` to expose a potential C++ exception. Although some methods like property reads
 or functions that are marked CV_NOEXCEPT in the OpenCV headers are infallible and return a naked value.
 
-### Properties
+### CV_MAKETYPE
 
-Properties of OpenCV classes are accessible through setters and getters. Those functions are infallible, they
-return the value directly instead of `Result`.
+`CV_MAKETYPE` and related `CV_MAT_DEPTH` constant functions are available to replace the corresponding OpenCV macros.
+Yet it's usually easier to call `::opencv_type()` function on the corresponding Rust type. E.g.:
+```rust
+let t = u16::opencv_type(); // equivalent to CV_MAKETYPE(CV_16U, 1)
+let t = Vec2f::opencv_type(); // equivalent to CV_MAKETYPE(CV_32F, 2)
+```
 
 ### C++ operators
 Some C++ operators are supported, they are converted to the corresponding functions on Rust side. Here is the
@@ -355,11 +359,16 @@ list with the corresponding function name:
 * `&`, `|`, `^` → `and()`, `or()`, `xor()`
 * `!` → `negate()`
 
+### Class fields
+
+Fields of OpenCV classes are accessible through setters and getters. Those functions are infallible, they
+return the value directly instead of `Result`.
+
 ### Infallible functions
 
 For infallible functions (like setters) that accept `&str` values the following logic applies: if a Rust
 string passed as argument contains null byte then this string will be truncated up to that null byte. So if
-for example you pass "123\0456" to the setter, the property will be set to "123". 
+for example you pass "123\0456" to the setter, the property will be set to "123".
 
 ### Callbacks
 
@@ -367,7 +376,7 @@ Some API functions accept callbacks, e.g. `set_mouse_callback`. While currently 
 use those functions there are some limitations to keep in mind. Current implementation of callback handling
 leaks the passed callback argument. That means that the closure used as a callback will never be freed during
 the lifetime of a program and moreover Drop will not be called for it. There is a plan to implement possibility
-to be able to free at least some of the closures.
+to be able to free at least some closures.
 
 ### Unsafety
 

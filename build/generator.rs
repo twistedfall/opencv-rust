@@ -128,6 +128,9 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 	}
 
 	fn write_module_include(write: &mut BufWriter<File>, module: &str) -> Result<()> {
+		// Use include instead of #[path] attribute because rust-analyzer doesn't handle #[path] inside other include! too well:
+		// https://github.com/twistedfall/opencv-rust/issues/418
+		// https://github.com/rust-lang/rust-analyzer/issues/11682
 		Ok(writeln!(
 			write,
 			r#"include!(concat!(env!("OUT_DIR"), "/opencv/{module}.rs"));"#
@@ -181,6 +184,9 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 		let module_filename = format!("{module}.rs");
 		let module_src_file = OUT_DIR.join(&module_filename);
 		let mut module_rs = BufWriter::new(File::create(&target_module_dir.join(&module_filename))?);
+		// Need to wrap modules inside `mod { }` because they have top-level comments (//!) and those don't play well when
+		// module file is include!d (as opposed to connecting the module with `mod` from the parent module).
+		// The same doesn't apply to `sys` and `types` below because they don't contain top-level comments.
 		writeln!(module_rs, "pub mod {module} {{")?;
 		copy_indent(BufReader::new(File::open(&module_src_file)?), &mut module_rs, "\t")?;
 		add_manual(&mut module_rs, module)?;
