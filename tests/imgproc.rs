@@ -10,7 +10,7 @@ use opencv::{
 
 #[test]
 fn min_enclosing() -> Result<()> {
-	let mut pts = Mat::new_rows_cols_with_default(1, 2, Vec2f::typ(), Scalar::default())?;
+	let mut pts = Mat::new_rows_cols_with_default(1, 2, Vec2f::opencv_type(), Scalar::default())?;
 	let points = pts.at_row_mut::<Vec2f>(0)?;
 	points[0].copy_from_slice(&[10., 10.]);
 	points[1].copy_from_slice(&[20., 10.]);
@@ -45,7 +45,7 @@ fn get_rotation_matrix_2d() -> Result<()> {
 #[test]
 fn line_iterator() -> Result<()> {
 	let mut data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12u8];
-	let mat = unsafe { Mat::new_rows_cols_with_data(4, 3, u8::typ(), data.as_mut_ptr() as *mut _, Mat_AUTO_STEP) }?;
+	let mat = unsafe { Mat::new_rows_cols_with_data(4, 3, u8::opencv_type(), data.as_mut_ptr() as *mut _, Mat_AUTO_STEP) }?;
 	let mut line_iter = imgproc::LineIterator::new(&mat, Point::new(0, 0), Point::new(2, 2), 8, false)?;
 	assert_eq!(3, line_iter.count());
 	assert_eq!(Point::new(0, 0), line_iter.pos()?);

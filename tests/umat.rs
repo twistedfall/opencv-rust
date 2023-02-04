@@ -12,9 +12,9 @@ use opencv::{
 #[test]
 fn umat_default() -> Result<()> {
 	let mat = UMat::new(UMatUsageFlags::USAGE_DEFAULT);
-	assert_eq!(u8::typ(), mat.typ());
-	assert_eq!(u8::depth(), mat.depth());
-	assert_eq!(u8::channels(), mat.channels());
+	assert_eq!(u8::opencv_type(), mat.typ());
+	assert_eq!(u8::opencv_depth(), mat.depth());
+	assert_eq!(u8::opencv_channels(), mat.channels());
 	assert_eq!(Size::new(0, 0), mat.size()?);
 	assert_eq!(0, mat.dims());
 	Ok(())
@@ -23,7 +23,7 @@ fn umat_default() -> Result<()> {
 #[test]
 fn umat_create() -> Result<()> {
 	let mut mat = UMat::new(UMatUsageFlags::USAGE_DEFAULT);
-	unsafe { mat.create_rows_cols(10, 10, u16::typ(), UMatUsageFlags::USAGE_DEFAULT)? };
+	unsafe { mat.create_rows_cols(10, 10, u16::opencv_type(), UMatUsageFlags::USAGE_DEFAULT)? };
 	assert_eq!(Size::new(10, 10), mat.size()?);
 	assert_eq!(2, mat.dims());
 	Ok(())
@@ -40,7 +40,7 @@ fn umat_to_mat() -> Result<()> {
 		let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 		assert_eq!(3, umat.rows());
 		assert_eq!(1, umat.cols());
-		assert_eq!(i32::typ(), umat.typ());
+		assert_eq!(i32::opencv_type(), umat.typ());
 		let mat = umat.get_mat(ACCESS_READ)?;
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
 		assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
@@ -53,7 +53,7 @@ fn umat_to_mat() -> Result<()> {
 		let umat = mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
 		assert_eq!(3, umat.rows());
 		assert_eq!(1, umat.cols());
-		assert_eq!(i32::typ(), umat.typ());
+		assert_eq!(i32::opencv_type(), umat.typ());
 		let mat = umat.get_mat(ACCESS_READ)?;
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
 		assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
@@ -64,10 +64,10 @@ fn umat_to_mat() -> Result<()> {
 
 #[test]
 fn umat_for_rows_and_cols() -> Result<()> {
-	let mat = unsafe { UMat::new_rows_cols(400, 300, Vec3d::typ(), UMatUsageFlags::USAGE_DEFAULT) }?;
-	assert_eq!(Vec3d::typ(), mat.typ());
-	assert_eq!(Vec3d::depth(), mat.depth());
-	assert_eq!(Vec3d::channels(), mat.channels());
+	let mat = unsafe { UMat::new_rows_cols(400, 300, Vec3d::opencv_type(), UMatUsageFlags::USAGE_DEFAULT) }?;
+	assert_eq!(Vec3d::opencv_type(), mat.typ());
+	assert_eq!(Vec3d::opencv_depth(), mat.depth());
+	assert_eq!(Vec3d::opencv_channels(), mat.channels());
 	assert!(mat.is_continuous());
 	assert!(!mat.is_submatrix());
 	assert_eq!(Size::new(300, 400), mat.size()?);

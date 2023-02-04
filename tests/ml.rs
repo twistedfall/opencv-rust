@@ -11,8 +11,8 @@ use opencv::{
 fn knn() -> Result<()> {
 	let mut knn = <dyn KNearest>::create()?;
 	assert!(StatModelConst::empty(&knn)?);
-	let samp = Mat::new_rows_cols_with_default(1, 1, f32::typ(), Scalar::all(1.))?;
-	let resp = Mat::new_rows_cols_with_default(1, 1, f32::typ(), Scalar::all(2.))?;
+	let samp = Mat::new_rows_cols_with_default(1, 1, f32::opencv_type(), Scalar::all(1.))?;
+	let resp = Mat::new_rows_cols_with_default(1, 1, f32::opencv_type(), Scalar::all(2.))?;
 	knn.train(&samp, ml::ROW_SAMPLE, &resp)?;
 	let mut resp = Mat::default();
 	let mut neigh = Mat::default();

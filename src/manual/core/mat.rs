@@ -25,7 +25,7 @@ unsafe fn convert_ptr_mut<'r, T>(r: *mut u8) -> &'r mut T {
 
 #[inline]
 fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
-	let out_type = T::typ();
+	let out_type = T::opencv_type();
 	if mat_type == out_type {
 		Ok(())
 	} else {
@@ -125,7 +125,7 @@ fn col_count_i32(col_count: usize) -> Result<i32> {
 impl Mat {
 	/// Create new `Mat` from the iterator of known size
 	pub fn from_exact_iter<T: DataType>(s: impl ExactSizeIterator<Item = T>) -> Result<Self> {
-		let mut out = unsafe { Self::new_rows_cols(row_count_i32(s.len())?, 1, T::typ()) }?;
+		let mut out = unsafe { Self::new_rows_cols(row_count_i32(s.len())?, 1, T::opencv_type()) }?;
 		for (i, x) in s.enumerate() {
 			// safe because `row_count_i32` ensures that len of `s` fits `i32`
 			let i = i as i32;
@@ -148,7 +148,7 @@ impl Mat {
 		} else {
 			0
 		};
-		let mut out = Self::new_rows_cols_with_default(row_count, col_count, T::typ(), Scalar::all(0.))?;
+		let mut out = Self::new_rows_cols_with_default(row_count, col_count, T::opencv_type(), Scalar::all(0.))?;
 		for (row_n, row) in s.iter().enumerate() {
 			// safe because `row_count_i32` ensures that len of `s` fits `i32`
 			let row_n = row_n as i32;
@@ -185,7 +185,7 @@ impl Mat {
 			Self::new_rows_cols_with_data(
 				row_count_i32(row_count)?,
 				col_count_i32(col_count)?,
-				T::typ(),
+				T::opencv_type(),
 				s.as_ptr() as *mut c_void,
 				core::Mat_AUTO_STEP,
 			)

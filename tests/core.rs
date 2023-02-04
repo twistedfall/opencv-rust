@@ -90,7 +90,7 @@ fn file_storage() -> Result<()> {
 /// Make sure that arguments to min_max_loc are nullable
 #[test]
 fn min_max_loc() -> Result<()> {
-	let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::typ(), Scalar::all(5.))?;
+	let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::opencv_type(), Scalar::all(5.))?;
 	let (mut min_val, mut max_val) = (90., 90.);
 	*m.at_2d_mut(5, 5)? = Vec3b::from([10, 20, 30]);
 	core::min_max_loc(&m, Some(&mut min_val), Some(&mut max_val), None, None, &core::no_array())?;

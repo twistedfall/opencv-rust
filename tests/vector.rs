@@ -14,26 +14,26 @@ use opencv::{
 fn boxed() -> Result<()> {
 	{
 		let mut vec = VectorOfMat::new();
-		vec.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(1.))?);
-		vec.push(Mat::new_rows_cols_with_default(1, 3, u16::typ(), Scalar::all(2.))?);
-		vec.push(Mat::new_rows_cols_with_default(1, 3, i32::typ(), Scalar::all(3.))?);
+		vec.push(Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), Scalar::all(1.))?);
+		vec.push(Mat::new_rows_cols_with_default(1, 3, u16::opencv_type(), Scalar::all(2.))?);
+		vec.push(Mat::new_rows_cols_with_default(1, 3, i32::opencv_type(), Scalar::all(3.))?);
 		assert_eq!(3, vec.len());
-		assert_eq!(u8::typ(), vec.get(0)?.typ());
+		assert_eq!(u8::opencv_type(), vec.get(0)?.typ());
 		assert_eq!(1, *vec.get(0)?.at_2d::<u8>(0, 1)?);
-		assert_eq!(u16::typ(), vec.get(1)?.typ());
+		assert_eq!(u16::opencv_type(), vec.get(1)?.typ());
 		assert_eq!(2, *vec.get(1)?.at_2d::<u16>(0, 1)?);
-		assert_eq!(i32::typ(), vec.get(2)?.typ());
+		assert_eq!(i32::opencv_type(), vec.get(2)?.typ());
 		assert_eq!(3, *vec.get(2)?.at_2d::<i32>(0, 1)?);
-		vec.set(0, Mat::new_rows_cols_with_default(1, 3, f32::typ(), Scalar::all(3.))?)?;
+		vec.set(0, Mat::new_rows_cols_with_default(1, 3, f32::opencv_type(), Scalar::all(3.))?)?;
 		unsafe {
-			vec.set_unchecked(1, Mat::new_rows_cols_with_default(1, 3, f64::typ(), Scalar::all(4.))?);
+			vec.set_unchecked(1, Mat::new_rows_cols_with_default(1, 3, f64::opencv_type(), Scalar::all(4.))?);
 		}
-		vec.set(2, Mat::new_rows_cols_with_default(1, 3, i16::typ(), Scalar::all(5.))?)?;
-		assert_eq!(f32::typ(), unsafe { vec.get_unchecked(0) }.typ());
+		vec.set(2, Mat::new_rows_cols_with_default(1, 3, i16::opencv_type(), Scalar::all(5.))?)?;
+		assert_eq!(f32::opencv_type(), unsafe { vec.get_unchecked(0) }.typ());
 		assert_eq!(3., *unsafe { vec.get_unchecked(0) }.at_2d::<f32>(0, 1)?);
-		assert_eq!(f64::typ(), unsafe { vec.get_unchecked(1) }.typ());
+		assert_eq!(f64::opencv_type(), unsafe { vec.get_unchecked(1) }.typ());
 		assert_eq!(4., *unsafe { vec.get_unchecked(1) }.at_2d::<f64>(0, 1)?);
-		assert_eq!(i16::typ(), unsafe { vec.get_unchecked(2) }.typ());
+		assert_eq!(i16::opencv_type(), unsafe { vec.get_unchecked(2) }.typ());
 		assert_eq!(5, *unsafe { vec.get_unchecked(2) }.at_2d::<i16>(0, 1)?);
 	}
 
@@ -44,10 +44,10 @@ fn boxed() -> Result<()> {
 			imgproc,
 		};
 
-		let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::typ(), Scalar::default())?;
+		let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::opencv_type(), Scalar::default())?;
 		let mut ps = VectorOfMat::new();
 		assert_eq!(ps.len(), 0);
-		let mut p1 = unsafe { Mat::new_rows_cols(3, 2, i32::typ()) }?;
+		let mut p1 = unsafe { Mat::new_rows_cols(3, 2, i32::opencv_type()) }?;
 		p1.at_row_mut::<i32>(0)?.copy_from_slice(&[0, 0]);
 		p1.at_row_mut::<i32>(1)?.copy_from_slice(&[0, 9]);
 		p1.at_row_mut::<i32>(2)?.copy_from_slice(&[9, 9]);
@@ -616,8 +616,8 @@ fn to_vec() -> Result<()> {
 	}
 	{
 		let mut vec = VectorOfMat::new();
-		vec.push(Mat::new_rows_cols_with_default(5, 8, u16::typ(), Scalar::all(8.))?);
-		vec.push(Mat::new_rows_cols_with_default(3, 3, u8::typ(), Scalar::all(19.))?);
+		vec.push(Mat::new_rows_cols_with_default(5, 8, u16::opencv_type(), Scalar::all(8.))?);
+		vec.push(Mat::new_rows_cols_with_default(3, 3, u8::opencv_type(), Scalar::all(19.))?);
 		let mat_vec = vec.to_vec();
 		assert_eq!(vec.get(0)?.total(), mat_vec[0].total());
 		assert_eq!(vec.get(0)?.typ(), mat_vec[0].typ());
@@ -632,7 +632,7 @@ fn to_vec() -> Result<()> {
 
 #[test]
 fn property() -> Result<()> {
-	let mut hdr = SparseMat_Hdr::new(&[4, 2], i32::typ())?;
+	let mut hdr = SparseMat_Hdr::new(&[4, 2], i32::opencv_type())?;
 	#[inline(never)]
 	fn f(hdr: &mut SparseMat_Hdr, pool: VectorOfu8) {
 		hdr.set_pool(pool);
@@ -681,8 +681,8 @@ fn clone() -> Result<()> {
 	}
 	{
 		let mut src = vec![
-			Mat::new_rows_cols_with_default(10, 20, f64::typ(), Scalar::from(10.))?,
-			Mat::new_rows_cols_with_default(5, 8, i32::typ(), Scalar::from(20.))?,
+			Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::from(10.))?,
+			Mat::new_rows_cols_with_default(5, 8, i32::opencv_type(), Scalar::from(20.))?,
 		];
 		let src_clone = src.clone();
 		assert_eq!(20, *src[1].at_2d::<i32>(2, 2)?);
@@ -699,7 +699,10 @@ fn clone() -> Result<()> {
 		assert_eq!(20, *boxed_clone.get(1)?.at_2d::<i32>(2, 2)?);
 		boxed.remove(1)?;
 		assert_eq!(boxed.len() + 1, boxed_clone.len());
-		boxed.set(0, Mat::new_rows_cols_with_default(40, 50, f64::typ(), Scalar::from(40.))?)?;
+		boxed.set(
+			0,
+			Mat::new_rows_cols_with_default(40, 50, f64::opencv_type(), Scalar::from(40.))?,
+		)?;
 		assert_eq!(40., *boxed.get(0)?.at_2d::<f64>(2, 2)?);
 		assert_eq!(10., *boxed_clone.get(0)?.at_2d::<f64>(2, 2)?);
 		drop(boxed);

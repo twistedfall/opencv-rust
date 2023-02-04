@@ -27,7 +27,7 @@ fn decode() -> Result<()> {
 			Mat::new_rows_cols_with_data(
 				1,
 				PIXEL.len() as _,
-				u8::typ(),
+				u8::opencv_type(),
 				bytes.as_mut_ptr() as *mut c_void,
 				core::Mat_AUTO_STEP,
 			)

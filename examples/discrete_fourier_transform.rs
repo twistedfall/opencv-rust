@@ -31,9 +31,9 @@ fn main() -> opencv::Result<()> {
 	let plane_size = padded.size()?;
 	let mut planes = core::Vector::<Mat>::new();
 	let mut padded_f32 = Mat::default();
-	padded.convert_to(&mut padded_f32, f32::typ(), 1., 0.)?;
+	padded.convert_to(&mut padded_f32, f32::opencv_type(), 1., 0.)?;
 	planes.push(padded_f32);
-	planes.push(Mat::zeros_size(plane_size, f32::typ())?.to_mat()?);
+	planes.push(Mat::zeros_size(plane_size, f32::opencv_type())?.to_mat()?);
 	let mut complexI = Mat::default();
 	core::merge(&planes, &mut complexI)?;
 	let mut complexI_tmp = Mat::default();

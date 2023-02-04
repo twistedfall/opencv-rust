@@ -22,7 +22,7 @@ fn simple_struct_arg() -> Result<()> {
 
 #[test]
 fn scalar_arg() -> Result<()> {
-	let mut m = Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::new(2., 0., 0., 0.))?;
+	let mut m = Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), Scalar::new(2., 0., 0., 0.))?;
 	let sum = core::sum_elems(&m)?;
 	assert_eq!(sum[0], 6.);
 	let s = m.at_row_mut::<u8>(0)?;
@@ -113,7 +113,7 @@ fn callback() -> Result<()> {
 fn fixed_array_return() -> Result<()> {
 	// mutable fixed array return and modification
 	{
-		let m = Mat::new_rows_cols_with_default(5, 3, i32::typ(), Scalar::all(1.))?;
+		let m = Mat::new_rows_cols_with_default(5, 3, i32::opencv_type(), Scalar::all(1.))?;
 		let mut mat_step = m.mat_step();
 		assert_eq!([12, 4], *mat_step.buf());
 		mat_step.buf()[0] = 16;
@@ -231,7 +231,7 @@ fn tuple() -> Result<()> {
 		use opencv::core::{AccessFlag, UMatUsageFlags};
 		use opencv::types::TupleOfUMat_u8;
 
-		let mat = Mat::new_rows_cols_with_default(10, 20, f64::typ(), Scalar::all(76.))?;
+		let mat = Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::all(76.))?;
 		let src_tuple = (mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?, 8);
 		let tuple = TupleOfUMat_u8::new(src_tuple);
 		assert_eq!(10, tuple.get_0().rows());
@@ -255,7 +255,7 @@ fn tuple() -> Result<()> {
 // 	use opencv::{tracking::TrackerSamplerPF_Params};
 // 	let mut params = TrackerSamplerPF_Params::default()?;
 // 	assert_eq!(&[15., 15., 15., 15.], params.std().data_typed()?);
-// 	let mat = Mat::new_rows_cols_with_default(1, 4, f64::typ(), Scalar::all(8.))?.try_into_typed::<f64>()?;
+// 	let mat = Mat::new_rows_cols_with_default(1, 4, f64::opencv_type(), Scalar::all(8.))?.try_into_typed::<f64>()?;
 // 	let mat_src = mat.try_clone()?.try_into_typed::<f64>()?;
 // 	params.set_std(mat);
 // 	let mat = params.std();
