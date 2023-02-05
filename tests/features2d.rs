@@ -12,11 +12,7 @@ fn orb() -> Result<()> {
 	let mut kp = VectorOfKeyPoint::new();
 	let mut des = Mat::default();
 	orb.detect_and_compute(&img, &Mat::default(), &mut kp, &mut des, false)?;
-	let size = if cfg!(ocvrs_opencv_branch_32) {
-		296
-	} else {
-		290
-	};
+	let size = 290;
 	assert_eq!(size, kp.len());
 	assert_eq!(Size::new(32, size as i32), des.size()?);
 	Ok(())

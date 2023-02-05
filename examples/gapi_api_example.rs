@@ -31,7 +31,7 @@ fn main() -> Result<()> {
 		let mut input_frame = Mat::default();
 		assert!(cap.read(&mut input_frame)?);
 		ac.apply_2(input_frame, &mut output_frame, Vector::new())?;
-		highgui::imshow("output", &mut output_frame)?;
+		highgui::imshow("output", &output_frame)?;
 		if highgui::wait_key(30)? >= 0 {
 			break;
 		}

@@ -73,7 +73,7 @@ impl DefaultRustNativeElement {
 				| EntityKind::Method
 				| EntityKind::NotImplemented => {}
 				_ => {
-					unreachable!("Can't get kind of parent: {:#?} for element: {:#?}", parent, e)
+					unreachable!("Can't get kind of parent: {parent:#?} for element: {e:#?}")
 				}
 			}
 			e = parent;

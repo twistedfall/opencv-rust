@@ -52,7 +52,7 @@ pub struct RustNativeBindingWriter<'s> {
 	exports_path: PathBuf,
 	cpp_path: PathBuf,
 	comment: String,
-	found_traits: Vec<String>,
+	prelude_traits: Vec<String>,
 	consts: Entries,
 	enums: Entries,
 	rust_funcs: Entries,
@@ -85,7 +85,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 			cpp_path: out_dir.join(format!("{module}.cpp")),
 			types_dir: out_dir,
 			comment: String::new(),
-			found_traits: vec![],
+			prelude_traits: vec![],
 			consts: vec![],
 			enums: vec![],
 			rust_funcs: vec![],
@@ -159,16 +159,16 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	fn visit_class(&mut self, class: Class) {
 		self.emit_debug_log(&class);
 		if class.is_trait() {
-			self.found_traits.push(format!(
+			self.prelude_traits.push(format!(
 				"super::{}",
 				class.rust_trait_name(NameStyle::decl(), Constness::Const).into_owned()
 			));
-			self.found_traits.push(format!(
+			self.prelude_traits.push(format!(
 				"super::{}",
 				class.rust_trait_name(NameStyle::decl(), Constness::Mut).into_owned()
 			));
 		}
-		let name: String = class.cpp_name(CppNameStyle::Reference).into_owned();
+		let name = class.cpp_name(CppNameStyle::Reference).into_owned();
 		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));
 		self.export_classes.push((name.clone(), class.gen_rust_exports()));
 		self.cpp_classes.push((name, class.gen_cpp()));
@@ -264,7 +264,7 @@ impl Drop for RustNativeBindingWriter<'_> {
 		rust += &join(&mut self.rust_funcs);
 		rust += &join(&mut self.rust_classes);
 		let prelude = RUST_PRELUDE.interpolate(&hashmap! {
-			"traits" => self.found_traits.join(", "),
+			"traits" => self.prelude_traits.join(", "),
 		});
 		File::create(&self.rust_path)
 			.expect("Can't create rust file")

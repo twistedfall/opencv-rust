@@ -180,28 +180,30 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 	}
 
 	fn rust_arg_pre_call(&self, name: &str, is_function_infallible: bool) -> String {
+		let extern_container_arg = || {
+			let mut flags = vec![];
+			if is_function_infallible {
+				flags.push("nofail")
+			}
+			if self.constness().is_mut() {
+				flags.push("mut")
+			}
+			let mut flags = flags.join(" ");
+			if !flags.is_empty() {
+				flags.push(' ');
+			}
+			format!("extern_container_arg!({flags}{name})")
+		};
+
 		if let Some(dir) = self.as_string() {
 			return match dir {
-				Dir::In(_) => {
-					let mut flags = vec![];
-					if is_function_infallible {
-						flags.push("nofail")
-					}
-					if self.constness().is_mut() {
-						flags.push("mut")
-					}
-					let mut flags = flags.join(" ");
-					if !flags.is_empty() {
-						flags.push(' ');
-					}
-					format!("extern_container_arg!({flags}{name})")
-				}
+				Dir::In(_) => extern_container_arg(),
 				Dir::Out(_) => {
 					format!("string_arg_output_send!(via {name}_via)")
 				}
 			};
 		} else if self.is_input_array() || self.is_output_array() || self.is_input_output_array() {
-			return format!("extern_container_arg!({name})");
+			return extern_container_arg();
 		} else if self.as_string_array().is_some() {
 			return if self.constness().is_const() {
 				format!("string_array_arg!({name})")
