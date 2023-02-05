@@ -91,18 +91,10 @@ fn smart_ptr_cast_base() -> Result<()> {
 
 	let d = <dyn AKAZE>::create(DESCRIPTOR_MLDB, 0, 3, 0.001, 4, 4, DIFF_PM_G2)?;
 	assert!(Feature2DTraitConst::empty(&d)?);
-	if !cfg!(ocvrs_opencv_branch_32) {
-		assert_eq!("Feature2D.AKAZE", Feature2DTraitConst::get_default_name(&d)?);
-	} else {
-		assert_eq!("my_object", Feature2DTraitConst::get_default_name(&d)?);
-	}
+	assert_eq!("Feature2D.AKAZE", Feature2DTraitConst::get_default_name(&d)?);
 	let a = PtrOfFeature2D::from(d);
 	assert!(Feature2DTraitConst::empty(&a)?);
-	if !cfg!(ocvrs_opencv_branch_32) {
-		assert_eq!("Feature2D.AKAZE", Feature2DTraitConst::get_default_name(&a)?);
-	} else {
-		assert_eq!("my_object", Feature2DTraitConst::get_default_name(&a)?);
-	}
+	assert_eq!("Feature2D.AKAZE", Feature2DTraitConst::get_default_name(&a)?);
 	Ok(())
 }
 

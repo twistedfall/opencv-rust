@@ -2,22 +2,15 @@
 //! Check the source cpp file for where to get the NN files.
 //! This example requires at least OpenCV 4.5.1.
 
-use std::{
-	error::Error,
-	fs::File,
-	io::{BufRead, BufReader},
-	path::PathBuf,
-};
+use std::error::Error;
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+use std::path::PathBuf;
 
-use opencv::{
-	core::{self, Point2f, Scalar, Size},
-	dnn,
-	highgui,
-	imgproc,
-	prelude::*,
-	types::{VectorOfPoint2f, VectorOfString, VectorOfVectorOfPoint},
-	videoio,
-};
+use opencv::core::{Point2f, Scalar, Size};
+use opencv::prelude::*;
+use opencv::types::{VectorOfPoint2f, VectorOfString, VectorOfVectorOfPoint};
+use opencv::{core, dnn, highgui, imgproc, videoio};
 
 type Result<T, E = Box<dyn Error>> = std::result::Result<T, E>;
 
@@ -34,7 +27,8 @@ fn main() -> Result<()> {
 
 	// Load networks.
 	let mut detector = dnn::TextDetectionModel_EAST::from_file(det_model_path.to_str().unwrap(), "")?;
-	detector.set_confidence_threshold(conf_threshold)?
+	detector
+		.set_confidence_threshold(conf_threshold)?
 		.set_nms_threshold(nms_threshold)?;
 	let mut recognizer = dnn::TextRecognitionModel::from_file(rec_model_path.to_str().unwrap(), "")?;
 
@@ -44,8 +38,7 @@ fn main() -> Result<()> {
 	for voc_line in voc_file.lines() {
 		vocabulary.push(&voc_line?);
 	}
-	recognizer.set_vocabulary(&vocabulary)?
-		.set_decode_type("CTC-greedy")?;
+	recognizer.set_vocabulary(&vocabulary)?.set_decode_type("CTC-greedy")?;
 
 	// Parameters for Recognition
 	let rec_scale = 1. / 127.5;
@@ -96,15 +89,33 @@ fn main() -> Result<()> {
 				}
 				let cropped = four_points_transform(rec_input.as_ref().unwrap_or(&frame), quadrangle_2f.as_slice())?;
 				let recognition_result = recognizer.recognize(&cropped)?;
-				println!("Recognition result: {}", recognition_result);
-				imgproc::put_text(&mut frame, &recognition_result, quadrangle.get(3)?, imgproc::FONT_HERSHEY_SIMPLEX, 1.5, Scalar::from((0., 0., 255.)), 2, imgproc::LINE_8, false)?;
+				println!("Recognition result: {recognition_result}");
+				imgproc::put_text(
+					&mut frame,
+					&recognition_result,
+					quadrangle.get(3)?,
+					imgproc::FONT_HERSHEY_SIMPLEX,
+					1.5,
+					Scalar::from((0., 0., 255.)),
+					2,
+					imgproc::LINE_8,
+					false,
+				)?;
 				contours.push(quadrangle);
 			}
-			imgproc::polylines(&mut frame, &contours, true, Scalar::from((0., 255., 0.)), 2, imgproc::LINE_8, 0)?;
+			imgproc::polylines(
+				&mut frame,
+				&contours,
+				true,
+				Scalar::from((0., 255., 0.)),
+				2,
+				imgproc::LINE_8,
+				0,
+			)?;
 		}
 		let mut big_frame = Mat::default();
 		imgproc::resize(&frame, &mut big_frame, Size::default(), 3., 3., imgproc::INTER_NEAREST)?;
-		highgui::imshow(win_name, &mut big_frame)?;
+		highgui::imshow(win_name, &big_frame)?;
 	}
 	Ok(())
 }
@@ -117,8 +128,16 @@ fn four_points_transform(frame: &Mat, vertices: &[Point2f]) -> Result<Mat> {
 		Point2f::new((output_size.width - 1) as f32, 0.),
 		Point2f::new((output_size.width - 1) as f32, (output_size.height - 1) as f32),
 	];
-	let rotation_matrix = imgproc::get_perspective_transform_slice(&vertices, &target_vertices, core::DECOMP_LU)?;
+	let rotation_matrix = imgproc::get_perspective_transform_slice(vertices, &target_vertices, core::DECOMP_LU)?;
 	let mut out = Mat::default();
-	imgproc::warp_perspective(frame, &mut out, &rotation_matrix, output_size, imgproc::INTER_LINEAR, core::BORDER_CONSTANT, Scalar::default())?;
+	imgproc::warp_perspective(
+		frame,
+		&mut out,
+		&rotation_matrix,
+		output_size,
+		imgproc::INTER_LINEAR,
+		core::BORDER_CONSTANT,
+		Scalar::default(),
+	)?;
 	Ok(out)
 }

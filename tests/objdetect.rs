@@ -1,4 +1,4 @@
-#![cfg(all(ocvrs_has_module_objdetect, not(ocvrs_opencv_branch_32)))]
+#![cfg(ocvrs_has_module_objdetect)]
 
 use std::path::Path;
 

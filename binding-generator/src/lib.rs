@@ -38,7 +38,6 @@ use generator::{dbg_clang_entity, dbg_clang_type};
 pub use generator::{is_ephemeral_header, GeneratedType, Generator, GeneratorVisitor};
 pub use generator_env::{ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
-#[allow(unused)]
 use memoize::{MemoizeMap, MemoizeMapExt};
 use name_pool::NamePool;
 use smart_ptr::SmartPtr;

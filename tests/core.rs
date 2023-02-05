@@ -22,7 +22,6 @@ fn moments() -> Result<()> {
 }
 
 #[test]
-#[cfg(not(ocvrs_opencv_branch_32))]
 fn cpu_features_line() -> Result<()> {
 	let cpu_feats = core::get_cpu_features_line()?;
 	assert!(cpu_feats.is_ascii());
