@@ -11,7 +11,6 @@
 
 // copy-pasted form python generator (may be obsolete):
 // fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
-// fixme: https://docs.opencv.org/4.x/d8/d6f/structcv_1_1line__descriptor_1_1DrawLinesMatchesFlags.html is an empty class with an anonymous enum, generate that enum
 
 #![allow(clippy::nonminimal_bool)] // pattern `!type_ref.as_vector().is_some()` used for more clarity
 

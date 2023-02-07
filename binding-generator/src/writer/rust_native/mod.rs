@@ -158,20 +158,27 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 
 	fn visit_class(&mut self, class: Class) {
 		self.emit_debug_log(&class);
-		if class.is_trait() {
-			self.prelude_traits.push(format!(
-				"super::{}",
-				class.rust_trait_name(NameStyle::decl(), Constness::Const).into_owned()
+		if let Some(enm) = class.as_enum() {
+			self.enums.push((
+				enm.rust_name(NameStyle::decl()).into_owned(),
+				enm.gen_rust(self.opencv_version),
 			));
-			self.prelude_traits.push(format!(
-				"super::{}",
-				class.rust_trait_name(NameStyle::decl(), Constness::Mut).into_owned()
-			));
+		} else {
+			if class.is_trait() {
+				self.prelude_traits.push(format!(
+					"super::{}",
+					class.rust_trait_name(NameStyle::decl(), Constness::Const).into_owned()
+				));
+				self.prelude_traits.push(format!(
+					"super::{}",
+					class.rust_trait_name(NameStyle::decl(), Constness::Mut).into_owned()
+				));
+			}
+			let name = class.cpp_name(CppNameStyle::Reference).into_owned();
+			self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));
+			self.export_classes.push((name.clone(), class.gen_rust_exports()));
+			self.cpp_classes.push((name, class.gen_cpp()));
 		}
-		let name = class.cpp_name(CppNameStyle::Reference).into_owned();
-		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));
-		self.export_classes.push((name.clone(), class.gen_rust_exports()));
-		self.cpp_classes.push((name, class.gen_cpp()));
 	}
 
 	fn visit_generated_type(&mut self, typ: GeneratedType) {

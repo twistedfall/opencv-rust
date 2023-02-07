@@ -46,7 +46,10 @@ impl DefaultRustNativeElement {
 		while let Some(parent) = e.get_semantic_parent() {
 			match parent.get_kind() {
 				EntityKind::ClassDecl | EntityKind::StructDecl => {
-					parts.push(parent.get_name().expect("Can't get parent name"));
+					let parent_name = parent.get_name().expect("Can't get parent name");
+					if parts.last().map_or(true, |last| last != &parent_name) {
+						parts.push(parent_name);
+					}
 				}
 				EntityKind::EnumDecl => {
 					if parent.is_scoped() {
