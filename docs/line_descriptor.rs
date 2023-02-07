@@ -71,7 +71,7 @@ pub mod line_descriptor {
 	//! representation of a single LBD.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::BinaryDescriptor_ParamsTraitConst, super::BinaryDescriptor_ParamsTrait, super::BinaryDescriptorTraitConst, super::BinaryDescriptorTrait, super::LSDDetectorTraitConst, super::LSDDetectorTrait, super::BinaryDescriptorMatcherTraitConst, super::BinaryDescriptorMatcherTrait, super::DrawLinesMatchesFlagsTraitConst, super::DrawLinesMatchesFlagsTrait };
+		pub use { super::BinaryDescriptor_ParamsTraitConst, super::BinaryDescriptor_ParamsTrait, super::BinaryDescriptorTraitConst, super::BinaryDescriptorTrait, super::LSDDetectorTraitConst, super::LSDDetectorTrait, super::BinaryDescriptorMatcherTraitConst, super::BinaryDescriptorMatcherTrait };
 	}
 	
 	/// Output image matrix will be created (Mat::create),
@@ -87,6 +87,24 @@ pub mod line_descriptor {
 	pub const DrawLinesMatchesFlags_NOT_DRAW_SINGLE_LINES: i32 = 2;
 	pub const MLN10: f64 = 2.30258509299404568402;
 	pub const RELATIVE_ERROR_FACTOR: f64 = 100.0;
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum DrawLinesMatchesFlags {
+		/// Output image matrix will be created (Mat::create),
+		/// i.e. existing memory of output image may be reused.
+		/// Two source images, matches, and single keylines
+		/// will be drawn.
+		DEFAULT = 0,
+		/// Output image matrix will not be
+		/// created (using Mat::create). Matches will be drawn
+		/// on existing content of output image.
+		DRAW_OVER_OUTIMG = 1,
+		/// Single keylines will not be drawn.
+		NOT_DRAW_SINGLE_LINES = 2,
+	}
+	
+	opencv_type_enum! { crate::line_descriptor::DrawLinesMatchesFlags }
+	
 	pub type uint16 = u16;
 	pub type uint32 = u32;
 	pub type uint64 = u64;
@@ -917,45 +935,6 @@ pub mod line_descriptor {
 	}
 	
 	boxed_cast_base! { BinaryDescriptorMatcher, core::Algorithm, cv_BinaryDescriptorMatcher_to_Algorithm }
-	
-	/// Constant methods for [crate::line_descriptor::DrawLinesMatchesFlags]
-	pub trait DrawLinesMatchesFlagsTraitConst {
-		fn as_raw_DrawLinesMatchesFlags(&self) -> *const c_void;
-	
-	}
-	
-	/// Mutable methods for [crate::line_descriptor::DrawLinesMatchesFlags]
-	pub trait DrawLinesMatchesFlagsTrait: crate::line_descriptor::DrawLinesMatchesFlagsTraitConst {
-		fn as_raw_mut_DrawLinesMatchesFlags(&mut self) -> *mut c_void;
-	
-	}
-	
-	/// struct for drawing options
-	pub struct DrawLinesMatchesFlags {
-		ptr: *mut c_void
-	}
-	
-	opencv_type_boxed! { DrawLinesMatchesFlags }
-	
-	impl Drop for DrawLinesMatchesFlags {
-		fn drop(&mut self) {
-			extern "C" { fn cv_DrawLinesMatchesFlags_delete(instance: *mut c_void); }
-			unsafe { cv_DrawLinesMatchesFlags_delete(self.as_raw_mut_DrawLinesMatchesFlags()) };
-		}
-	}
-	
-	unsafe impl Send for DrawLinesMatchesFlags {}
-	
-	impl crate::line_descriptor::DrawLinesMatchesFlagsTraitConst for DrawLinesMatchesFlags {
-		#[inline] fn as_raw_DrawLinesMatchesFlags(&self) -> *const c_void { self.as_raw() }
-	}
-	
-	impl crate::line_descriptor::DrawLinesMatchesFlagsTrait for DrawLinesMatchesFlags {
-		#[inline] fn as_raw_mut_DrawLinesMatchesFlags(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl DrawLinesMatchesFlags {
-	}
 	
 	/// A class to represent a line
 	/// 

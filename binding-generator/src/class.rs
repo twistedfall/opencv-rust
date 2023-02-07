@@ -2,12 +2,12 @@ use std::borrow::Cow;
 use std::collections::HashSet;
 use std::{fmt, hash, iter};
 
-use clang::Entity;
+use clang::{Entity, EntityKind};
 
 use crate::entity::{WalkAction, WalkResult};
 use crate::type_ref::{Constness, CppNameStyle};
 use crate::{
-	settings, Const, DefaultElement, Element, EntityElement, EntityExt, Field, Func, FunctionTypeHint, GeneratedType,
+	settings, Const, DefaultElement, Element, EntityElement, EntityExt, Enum, Field, Func, FunctionTypeHint, GeneratedType,
 	GeneratorEnv, StrExt, TypeRef,
 };
 
@@ -128,6 +128,24 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn is_trait(&self) -> bool {
 		self.is_boxed()
 		//		self.is_abstract() || self.has_descendants() || settings::FORCE_CLASS_TRAIT.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
+	}
+
+	/// Special case of an empty class with only an anonymous enum inside (e.g. DrawLinesMatchesFlags)
+	pub fn as_enum(&self) -> Option<Enum<'tu>> {
+		if !self.has_methods() && !self.has_fields() && !self.has_descendants() && !self.has_bases() {
+			let children = self.entity.get_children();
+			if let [single] = children.as_slice() {
+				if matches!(single.get_kind(), EntityKind::EnumDecl) {
+					Some(Enum::new_ext(*single, self.cpp_name(CppNameStyle::Declaration).into_owned()))
+				} else {
+					None
+				}
+			} else {
+				None
+			}
+		} else {
+			None
+		}
 	}
 
 	pub fn has_clone(&self) -> bool {
