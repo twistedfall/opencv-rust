@@ -1130,6 +1130,8 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 				"std::vector<std::vector<cv::Vec3f>>",
 				// for solve_pnp tvec and rvec parameters
 				"std::vector<std::vector<double>>",
+				// for solve_pnp_ransac imagePoints parameter
+				"std::vector<cv::Point2d>",
 			],
 			..Default::default()
 		},
