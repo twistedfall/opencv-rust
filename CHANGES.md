@@ -53,7 +53,7 @@
 
 * 0.71.0
   * Multiple improvements to the `Vector` type:
-    * `VectorRefIterator` is not cloneable.
+    * `VectorRefIterator` is now cloneable.
     * Better performance and correctness for `Vector` iterators.
     * Implement `Vector::from_elem()`.
     * Make sure that `Vector<T: Send + Sync>` is also `Send + Sync`.

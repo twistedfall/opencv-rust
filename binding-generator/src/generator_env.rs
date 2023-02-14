@@ -42,7 +42,12 @@ impl ExportConfig {
 	}
 }
 
-type ExportIdx = (PathBuf, u32, u32);
+#[derive(Eq, PartialEq, Hash)]
+struct ExportIdx {
+	path: PathBuf,
+	line: u32,
+	line_offset: usize,
+}
 
 struct DbPopulator<'tu, 'ge> {
 	gen_env: &'ge mut GeneratorEnv<'tu>,
@@ -180,7 +185,7 @@ impl<'tu> GeneratorEnv<'tu> {
 	}
 
 	fn key(entity: Entity) -> ExportIdx {
-		let (loc, offset) = if entity.get_kind() == EntityKind::MacroExpansion {
+		let (loc, line_offset) = if entity.get_kind() == EntityKind::MacroExpansion {
 			// sometimes CV_EXPORT macros are located on a separate line so for those we compensate the offset
 			let l = entity
 				.get_range()
@@ -191,8 +196,8 @@ impl<'tu> GeneratorEnv<'tu> {
 			if is_ephemeral_header(&path) {
 				(l, 0)
 			} else {
-				let mut f = File::open(path).expect("Can't open export macro file");
-				f.seek(SeekFrom::Start(l.offset as u64))
+				let mut f = File::open(&path).expect("Can't open export macro file");
+				f.seek(SeekFrom::Start(u64::from(l.offset)))
 					.expect("Can't seek export macro file");
 				let mut buf = [0; 8];
 				let read = f.read(&mut buf).expect("Can't read file");
@@ -202,7 +207,7 @@ impl<'tu> GeneratorEnv<'tu> {
 						"Line offset more than 1 is not supported, modify fuzzy_key in get_export_config() to support higher values"
 					);
 				}
-				(l, line_offset as u32)
+				(l, line_offset)
 			}
 		} else {
 			let loc = if let Some(range) = entity.get_range() {
@@ -217,7 +222,11 @@ impl<'tu> GeneratorEnv<'tu> {
 			};
 			(loc, 0)
 		};
-		(loc.file.expect("Can't get exported entry file").get_path(), loc.line, offset)
+		ExportIdx {
+			path: loc.file.expect("Can't get exported entry file").get_path(),
+			line: loc.line,
+			line_offset,
+		}
 	}
 
 	pub fn make_export_config(&mut self, entity: Entity) -> &mut ExportConfig {
@@ -230,11 +239,14 @@ impl<'tu> GeneratorEnv<'tu> {
 		let key = Self::key(entity);
 		getter(&key).or_else(|| {
 			// for cases where CV_EXPORTS is on the separate line but entity.get_range() spans into it
-			let fuzzy_key = (key.0, key.1, 1);
+			let fuzzy_key = ExportIdx { line_offset: 1, ..key };
 			getter(&fuzzy_key).or_else(|| {
-				if fuzzy_key.1 >= 1 {
-					// for cases where CV_EXPORTS is on the separate line but entity.get_range() start on the next line
-					let fuzzy_key = (fuzzy_key.0, fuzzy_key.1 - 1, fuzzy_key.2);
+				if fuzzy_key.line >= 1 {
+					// for cases where CV_EXPORTS is on the separate line but entity.get_range() starts on the next line
+					let fuzzy_key = ExportIdx {
+						line: fuzzy_key.line - 1,
+						..fuzzy_key
+					};
 					getter(&fuzzy_key)
 				} else {
 					None

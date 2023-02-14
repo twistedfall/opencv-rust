@@ -93,7 +93,7 @@ fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
 			let orig_len = file.len();
 
 			// strip "lib" prefix from the filename
-			if env::var("CARGO_CFG_TARGET_ENV").unwrap() != "msvc" {
+			if !cfg!(target_env = "msvc") {
 				file = file.strip_prefix("lib").unwrap_or(file);
 			}
 

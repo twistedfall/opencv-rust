@@ -109,10 +109,6 @@ you can get some information on how to perform the build in CI scripts:
 [install-focal.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-focal.sh) and
 [script.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh), search for `non_static_version` variable.
 
-On MSVC targets, you may need to enable `crt-static` feature to match OpenCV's
-CRT. This is because OpenCV uses static CRT by default on MSVC. If you want to
-use dynamic CRT, set `BUILD_WITH_STATIC_CRT=OFF` when building OpenCV.
-
 ## Troubleshooting
 
 1. One of the common problems is link errors in the end of the build.
