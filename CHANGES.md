@@ -1,3 +1,9 @@
+* 0.77.0
+  * Rename `typ()`, `channels()`, `depth()` to `opencv_type()`, `opencv_channels()`, `opencv_depth()`. The old functions are
+    scheduled for removal mid-2023.
+  * Generate `DrawLinesMatchesFlags` enum correctly.
+  * Make sure to generate `Vector<Point2d>` for `calib3d` module (fixes https://github.com/twistedfall/opencv-rust/issues/422).
+
 * 0.76.4
   * Fix autocomplete and documentation for rust-analyzer based IDEs.
 
