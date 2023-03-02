@@ -229,10 +229,13 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		out.flag("-std:c++latest")
 			.flag("-EHsc")
 			.flag("-bigobj")
+			.flag("-utf-8")
 			.flag("-wd4996")
 			.flag("-wd5054") // deprecated between enumerations of different types
 			.flag("-wd4190") // has C-linkage specified, but returns UDT 'Result<cv::Rect_<int>>' which is incompatible with C
 			.flag("-wd4702") // core.cpp(386) : unreachable code
+			.flag("-wd4100") // unreferenced formal parameter
+			.flag("-wd4127") // conditional expression is constant
 			.pic(false);
 	} else {
 		out.flag("-std=c++11").flag_if_supported("-Wa,-mbig-obj");
