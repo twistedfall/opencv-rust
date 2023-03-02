@@ -91,8 +91,11 @@ fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
 		}
 		if let Some(mut file) = new_filename.to_str() {
 			let orig_len = file.len();
+
 			// strip "lib" prefix from the filename
-			file = file.strip_prefix("lib").unwrap_or(file);
+			if env::var("CARGO_CFG_TARGET_ENV").unwrap() != "msvc" {
+				file = file.strip_prefix("lib").unwrap_or(file);
+			}
 
 			// strip lib extension + suffix (e.g. .so.4.6.0) from the filename
 			LIB_EXTS.iter().for_each(|&inner_ext| {
