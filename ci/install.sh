@@ -17,7 +17,7 @@ elif [[ "$OS_FAMILY" == "macOS" ]]; then
 		"$ci_dir/install-macos-framework.sh"
 	fi
 elif [[ "$OS_FAMILY" == "Windows" ]]; then
-	export CHOCO_LLVM_VERSION=15.0.5
+	export CHOCO_LLVM_VERSION=15.0.7
 	if [[ "$VCPKG_VERSION" != "" ]]; then # vcpkg build
 		"$ci_dir/install-windows-vcpkg.sh"
 	else # chocolatey build
