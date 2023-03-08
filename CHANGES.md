@@ -1,3 +1,8 @@
+* 0.78.0
+  * Don't strip "lib" prefix from linked libraries when building with MSVC (kudos to icedrocket)
+  * Fix newline handling on Windows (kudos to grindvoll)
+  * Fix for the build failure against the upcoming OpenCV version.
+
 * 0.77.0
   * Rename `typ()`, `channels()`, `depth()` to `opencv_type()`, `opencv_channels()`, `opencv_depth()`. The old functions are
     scheduled for removal mid-2023.
