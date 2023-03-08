@@ -2,7 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::convert::TryFrom;
 use std::fmt;
 use std::fs::File;
-use std::io::{Read, Seek, SeekFrom};
+use std::io::{BufRead, BufReader, Read, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
 
 use clang::{Entity, EntityKind, EntityVisitResult, StorageClass, Type};
@@ -196,12 +196,18 @@ impl<'tu> GeneratorEnv<'tu> {
 			if is_ephemeral_header(&path) {
 				(l, 0)
 			} else {
-				let mut f = File::open(&path).expect("Can't open export macro file");
+				let mut f = BufReader::new(File::open(&path).expect("Can't open export macro file"));
 				f.seek(SeekFrom::Start(u64::from(l.offset)))
 					.expect("Can't seek export macro file");
-				let mut buf = [0; 8];
-				let read = f.read(&mut buf).expect("Can't read file");
-				let line_offset = buf[0..read].iter().take_while(|&&c| c == b'\n').count();
+				let mut line_offset = 0;
+				let mut line = String::with_capacity(8);
+				while f.read_line(&mut line).is_ok() {
+					if line.trim().is_empty() {
+						line_offset += 1;
+					} else {
+						break;
+					}
+				}
 				if line_offset > 1 {
 					panic!(
 						"Line offset more than 1 is not supported, modify fuzzy_key in get_export_config() to support higher values"
