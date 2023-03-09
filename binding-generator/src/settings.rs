@@ -608,6 +608,7 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = La
 		"cv::ppf_match_3d::Pose3DPtr" => ExportConfig::make_export as _,
 		"cv::superres::PyrLKOpticalFlow" => ExportConfig::make_export as _,
 		"cv::utils::logging::LogTag" => ExportConfig::make_export as _,
+		"cv::utils::FunctionParams" => ExportConfig::make_export as _, // missing in 4.8
 		"cv::viz::Color" => ExportConfig::make_export as _,
 		"cvv::impl::CallMetaData" => ExportConfig::make_export as _,
 		"cv::dnn::_Range" => ExportConfig::make_export as _, // dnn shape_utils
