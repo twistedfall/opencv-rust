@@ -7,8 +7,8 @@ use once_cell::sync::Lazy;
 use crate::type_ref::{Constness, FishStyle};
 use crate::{CompiledInterpolation, CppNameStyle, FunctionTypeHint, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 
+use super::disambiguate_single_name;
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::func::disambiguate_single_name;
 use super::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
@@ -165,9 +165,7 @@ fn method_new(rust_localalias: &str, tuple_typeref: &TypeRef, tuple_type: &str, 
 		return_type: tuple_typeref.clone(),
 		kind: FuncDescKind::Function,
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual(
-			format!("std::make_{tuple_type}({{{{args}}}})").compile_interpolation(),
-		),
+		call: FuncDescCppCall::ManualCall(format!("std::make_{tuple_type}({{{{args}}}})").compile_interpolation()),
 		debug: "".to_string(),
 		arguments,
 	}
@@ -183,7 +181,7 @@ fn method_delete(rust_localalias: &str, tuple_desc: &ClassDesc, void: &TypeRef) 
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(tuple_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("delete instance".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -199,7 +197,7 @@ fn method_get(rust_localalias: &str, tuple_desc: &ClassDesc, element_type: &Type
 		return_type: element_type.clone(),
 		kind: FuncDescKind::InstanceMethod(tuple_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual(format!("std::get<{num}>(*instance)").compile_interpolation()),
+		call: FuncDescCppCall::ManualCall(format!("std::get<{num}>(*instance)").compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}

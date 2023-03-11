@@ -1,13 +1,12 @@
 use std::borrow::Cow;
 use std::fmt::Write;
-use std::iter;
 
 use maplit::hashmap;
 use once_cell::sync::Lazy;
 use regex::Regex;
 
 use crate::func::{Kind, OperatorKind};
-use crate::type_ref::{ConstnessOverride, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType};
+use crate::type_ref::{ConstnessOverride, CppNameStyle, ExternDir, FishStyle, NameStyle};
 use crate::{
 	get_debug, reserved_rename, settings, CompiledInterpolation, Element, EntityElement, Func, IteratorExt, StrExt, StringExt,
 	TypeRef,
@@ -18,22 +17,6 @@ use super::element::{DefaultRustNativeElement, RustElement};
 use super::func_desc::{pre_post_arg_handle, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
 use super::{rust_disambiguate_names, RustNativeGeneratedElement};
-
-pub fn disambiguate_single_name(name: &str) -> impl Iterator<Item = String> + '_ {
-	let mut i = 0;
-	iter::from_fn(move || {
-		let out = format!("{}{}", name, disambiguate_num(i));
-		i += 1;
-		Some(out)
-	})
-}
-
-pub fn disambiguate_num(counter: usize) -> String {
-	match counter {
-		0 => "".to_string(),
-		n => format!("_{n}"),
-	}
-}
 
 fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
@@ -74,9 +57,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 		}
 		if let Some((slice_arg, len_div)) = arg.as_slice_len() {
 			let slice_call = if len_div > 1 {
-				format!(
-					"({slice_arg}.len() / {len_div}) as _"
-				)
+				format!("({slice_arg}.len() / {len_div}) as _")
 			} else {
 				format!("{slice_arg}.len() as _")
 			};
@@ -217,83 +198,9 @@ fn rust_return_map(
 		} else {
 			".ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned null pointer\"))?"
 		};
-		format!(
-			"{unsafety_call}{{ {ret_name}.{ptr_call}() }}{error_handling}",
-		)
-		.into()
+		format!("{unsafety_call}{{ {ret_name}.{ptr_call}() }}{error_handling}").into()
 	} else {
 		"".into()
-	}
-}
-
-pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: bool) -> (Cow<'f, str>, bool) {
-	if return_type.is_void() {
-		("".into(), false)
-	} else if return_type.is_extern_by_ptr() && !is_constructor {
-		let out = return_type.source().as_class().filter(|cls| cls.is_abstract()).map_or_else(
-			|| {
-				format!(
-					"new {typ}({name})",
-					typ = return_type.cpp_name(CppNameStyle::Reference),
-					name = name
-				)
-				.into()
-			},
-			|_| name.into(),
-		);
-		(out, false)
-	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
-		let str_mk = match string_type {
-			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => {
-				format!("ocvrs_create_string({name}.c_str())").into()
-			}
-			StrType::CharPtr => format!("ocvrs_create_string({name})").into(),
-			StrType::StdString(StrEnc::Binary) => {
-				format!("ocvrs_create_byte_string({name}.data(), {name}.size())").into()
-			}
-			StrType::CvString(StrEnc::Binary) => {
-				format!("ocvrs_create_byte_string({name}.begin(), {name}.size())").into()
-			}
-		};
-		(str_mk, false)
-	} else {
-		(name.into(), return_type.as_fixed_array().is_some())
-	}
-}
-
-pub fn cpp_return_handle(
-	ret: &str,
-	ret_cast: Option<Cow<str>>,
-	ocv_ret_name: &str,
-	is_naked_return: bool,
-	is_infallible: bool,
-) -> Cow<'static, str> {
-	if is_naked_return {
-		if ret.is_empty() {
-			"".into()
-		} else {
-			let cast = if let Some(ret_type) = ret_cast {
-				format!("({typ})", typ = ret_type.as_ref())
-			} else {
-				"".to_string()
-			};
-			format!("return {cast}{ret};").into()
-		}
-	} else if is_infallible {
-		if ret.is_empty() {
-			"".into()
-		} else {
-			format!("*{ocv_ret_name} = {ret};").into()
-		}
-	} else if ret.is_empty() {
-		format!("Ok({ocv_ret_name});").into()
-	} else {
-		let cast = if let Some(ret_type) = ret_cast {
-			format!("<{typ}>", typ = ret_type.as_ref())
-		} else {
-			"".to_string()
-		};
-		format!("Ok{cast}({ret}, {ocv_ret_name});").into()
 	}
 }
 

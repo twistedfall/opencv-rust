@@ -212,7 +212,7 @@ fn method_new(rust_localalias: &str, smartptr_type: &TypeRef, pointee_type: &Typ
 		return_type: smartptr_type.clone(),
 		kind: FuncDescKind::Function,
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual(format!("{{{{ret_type}}}}({val})").compile_interpolation()),
+		call: FuncDescCppCall::ManualCall(format!("{{{{ret_type}}}}({val})").compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![("val".to_string(), pointee_type.clone())],
 	}
@@ -228,7 +228,7 @@ fn method_delete(rust_localalias: &str, smartptr_desc: &ClassDesc, void: &TypeRe
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(smartptr_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("delete instance".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}

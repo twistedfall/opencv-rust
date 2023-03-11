@@ -19,12 +19,6 @@ pub enum FieldTypeHint<'tu> {
 	Specialized(Type<'tu>),
 }
 
-impl Default for FieldTypeHint<'_> {
-	fn default() -> Self {
-		FieldTypeHint::None
-	}
-}
-
 #[derive(Clone)]
 pub struct Field<'tu, 'ge> {
 	entity: Entity<'tu>,
@@ -34,7 +28,7 @@ pub struct Field<'tu, 'ge> {
 
 impl<'tu, 'ge> Field<'tu, 'ge> {
 	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self::new_ext(entity, Default::default(), gen_env)
+		Self::new_ext(entity, FieldTypeHint::None, gen_env)
 	}
 
 	pub fn new_ext(entity: Entity<'tu>, type_hint: FieldTypeHint<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {

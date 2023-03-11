@@ -97,7 +97,7 @@ fn run_binding_generator(
 					.arg(&*OUT_DIR)
 					.arg(module)
 					.arg(additional_include_dirs.join(","));
-				eprintln!("=== Running: {bin_generator:#?}");
+				eprintln!("=== Running: {bin_generator:?}");
 				let res = bin_generator.status().expect("Can't run bindings generator");
 				if !res.success() {
 					panic!("Failed to run the bindings generator");

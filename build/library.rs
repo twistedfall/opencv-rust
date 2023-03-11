@@ -7,7 +7,10 @@ use std::{env, fmt, iter};
 use dunce::canonicalize;
 use semver::Version;
 
-use super::{cleanup_lib_filename, cmake_probe::CmakeProbe, get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR};
+use super::cmake_probe::CmakeProbe;
+use super::{
+	cleanup_lib_filename, get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_OS_WINDOWS, TARGET_VENDOR_APPLE,
+};
 
 struct PackageName;
 
@@ -156,13 +159,11 @@ impl Library {
 		sys_link_paths: Vec<PathBuf>,
 		typ: Option<&'a str>,
 	) -> impl Iterator<Item = String> + 'a {
-		let apple_vendor = env::var("CARGO_CFG_TARGET_VENDOR").unwrap() == "apple";
-
 		Self::process_env_var_list(link_paths, sys_link_paths)
 			.into_iter()
 			.flat_map(move |path| {
 				iter::once(Self::emit_link_search(&path, typ))
-					.chain(apple_vendor.then(|| Self::emit_link_search(&path, Some("framework"))))
+					.chain(TARGET_VENDOR_APPLE.then(|| Self::emit_link_search(&path, Some("framework"))))
 			})
 	}
 
@@ -417,7 +418,7 @@ impl Library {
 			|| env::var_os("OPENCV_CMAKE_NAME").is_some()
 			|| env::var_os("CMAKE_PREFIX_PATH").is_some()
 			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
-		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some() || cfg!(target_os = "windows");
+		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some() || *TARGET_OS_WINDOWS;
 		eprintln!(
 			"=== Detected probe priority based on environment vars: pkg_config: {explicit_pkg_config}, cmake: {explicit_cmake}, vcpkg: {explicit_vcpkg}"
 		);

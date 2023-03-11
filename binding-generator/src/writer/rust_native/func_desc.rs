@@ -5,13 +5,13 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::func::{Kind, OperatorKind};
-use crate::type_ref::{Constness, ConstnessOverride};
+use crate::type_ref::{Constness, ConstnessOverride, Dir, StrEnc, StrType};
 use crate::{
 	settings, Class, CompiledInterpolation, CppNameStyle, Element, Field, FunctionTypeHint, IteratorExt, NamePool, StrExt,
 	StringExt, TypeRef,
 };
 
-use super::func::{cpp_return_handle, cpp_return_map, disambiguate_single_name};
+use super::disambiguate_single_name;
 use super::type_ref::TypeRefExt;
 
 /// Allows generation of functions without tying them to the real C++ items
@@ -93,7 +93,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 				| FuncDescKind::ConversionMethod(cls)
 				| FuncDescKind::InstanceOperator(cls, ..) => cpp_method_call_name(cls.is_boxed, name_decl).into(),
 			},
-			FuncDescCppCall::Manual(_) => "".into(),
+			FuncDescCppCall::ManualCall(_) | FuncDescCppCall::ManualBody(_) => "".into(),
 		};
 
 		inter_vars.insert("name", call_name);
@@ -113,16 +113,23 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 				&FIELD_READ_TPL
 			}
 		} else {
-			let call = match &self.call {
-				FuncDescCppCall::Auto { .. } => &*CALL_TPL,
-				FuncDescCppCall::Manual(call) => call,
-			}
-			.interpolate(&inter_vars);
-			inter_vars.insert("call", call.into());
-			if self.return_type.is_void() {
-				&VOID_TPL
-			} else {
-				&RETURN_TPL
+			let (call_tpl, full_tpl) = match &self.call {
+				FuncDescCppCall::Auto { .. } => (Some(&*CALL_TPL), None),
+				FuncDescCppCall::ManualCall(call) => (Some(call), None),
+				FuncDescCppCall::ManualBody(full_tpl) => (None, Some(full_tpl)),
+			};
+			match (call_tpl, full_tpl) {
+				(_, Some(full_tpl)) => full_tpl,
+				(Some(call_tpl), _) => {
+					let call = call_tpl.interpolate(&inter_vars);
+					inter_vars.insert("call", call.into());
+					if self.return_type.is_void() {
+						&VOID_TPL
+					} else {
+						&RETURN_TPL
+					}
+				}
+				(None, None) => panic!("Impossible"),
 			}
 		};
 
@@ -188,10 +195,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 			ret
 		} else {
 			let ret_name = rets.next().expect("Endless iterator returned nothing");
-			pre_post_arg_handle(
-				format!("{cpp_extern_return} {ret_name} = {ret}"),
-				&mut post_call_args,
-			);
+			pre_post_arg_handle(format!("{cpp_extern_return} {ret_name} = {ret}"), &mut post_call_args);
 			ret_name.into()
 		};
 		let ret = cpp_return_handle(
@@ -290,11 +294,82 @@ impl<'tu, 'ge> FuncDescKind<'tu, 'ge> {
 }
 
 pub enum FuncDescCppCall<'r> {
+	/// Handle the call automatically based on the function context, usually just forwards to the corresponding OpenCV function
 	Auto {
 		name_decl: Cow<'r, str>,
 		name_ref: Cow<'r, str>,
 	},
-	Manual(CompiledInterpolation<'r>),
+	/// Specify manual call, use the automatic return handling (e.g. `Mat ret = <manual_call>`)
+	ManualCall(CompiledInterpolation<'r>),
+	/// Specify full manual handling, if the function is expected to return something this expression must produce `ret` variable
+	ManualBody(CompiledInterpolation<'r>),
+}
+
+pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: bool) -> (Cow<'f, str>, bool) {
+	if return_type.is_void() {
+		("".into(), false)
+	} else if return_type.is_extern_by_ptr() && !is_constructor {
+		let out = return_type.source().as_class().filter(|cls| cls.is_abstract()).map_or_else(
+			|| {
+				format!(
+					"new {typ}({name})",
+					typ = return_type.cpp_name(CppNameStyle::Reference),
+					name = name
+				)
+				.into()
+			},
+			|_| name.into(),
+		);
+		(out, false)
+	} else if let Some(Dir::In(string_type)) | Some(Dir::Out(string_type)) = return_type.as_string() {
+		let str_mk = match string_type {
+			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => {
+				format!("ocvrs_create_string({name}.c_str())").into()
+			}
+			StrType::CharPtr => format!("ocvrs_create_string({name})").into(),
+			StrType::StdString(StrEnc::Binary) => format!("ocvrs_create_byte_string({name}.data(), {name}.size())").into(),
+			StrType::CvString(StrEnc::Binary) => format!("ocvrs_create_byte_string({name}.begin(), {name}.size())").into(),
+		};
+		(str_mk, false)
+	} else {
+		(name.into(), return_type.as_fixed_array().is_some())
+	}
+}
+
+pub fn cpp_return_handle(
+	ret: &str,
+	ret_cast: Option<Cow<str>>,
+	ocv_ret_name: &str,
+	is_naked_return: bool,
+	is_infallible: bool,
+) -> Cow<'static, str> {
+	if is_naked_return {
+		if ret.is_empty() {
+			"".into()
+		} else {
+			let cast = if let Some(ret_type) = ret_cast {
+				format!("({typ})", typ = ret_type.as_ref())
+			} else {
+				"".to_string()
+			};
+			format!("return {cast}{ret};").into()
+		}
+	} else if is_infallible {
+		if ret.is_empty() {
+			"".into()
+		} else {
+			format!("*{ocv_ret_name} = {ret};").into()
+		}
+	} else if ret.is_empty() {
+		format!("Ok({ocv_ret_name});").into()
+	} else {
+		let cast = if let Some(ret_type) = ret_cast {
+			format!("<{typ}>", typ = ret_type.as_ref())
+		} else {
+			"".to_string()
+		};
+		format!("Ok{cast}({ret}, {ocv_ret_name});").into()
+	}
 }
 
 #[derive(Debug, Clone)]

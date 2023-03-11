@@ -529,7 +529,7 @@ fn iter() -> Result<()> {
 
 	// clone works for iterators for &Vectors of non-Clone elements
 	{
-		let _ = VectorOfRange::new().iter().clone();
+		let _v = VectorOfRange::new().iter().clone();
 	}
 
 	Ok(())

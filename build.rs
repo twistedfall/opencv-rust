@@ -33,6 +33,12 @@ static MANIFEST_DIR: Lazy<PathBuf> =
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
 static HOST_TRIPLE: Lazy<Option<String>> = Lazy::new(|| env::var("HOST_TRIPLE").ok());
+static TARGET_ENV_MSVC: Lazy<bool> =
+	Lazy::new(|| env::var("CARGO_CFG_TARGET_ENV").map_or(false, |target_env| target_env == "msvc"));
+static TARGET_VENDOR_APPLE: Lazy<bool> =
+	Lazy::new(|| env::var("CARGO_CFG_TARGET_VENDOR").map_or(false, |target_vendor| target_vendor == "apple"));
+static TARGET_OS_WINDOWS: Lazy<bool> =
+	Lazy::new(|| env::var("CARGO_CFG_TARGET_OS").map_or(false, |target_os| target_os == "windows"));
 
 static OPENCV_BRANCH_32: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~3.2").expect("Can't parse OpenCV 3.2 version requirement"));
@@ -92,8 +98,8 @@ fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
 		if let Some(mut file) = new_filename.to_str() {
 			let orig_len = file.len();
 
-			// strip "lib" prefix from the filename
-			if env::var("CARGO_CFG_TARGET_ENV").unwrap() != "msvc" {
+			// strip "lib" prefix from the filename unless targeting MSVC
+			if !*TARGET_ENV_MSVC {
 				file = file.strip_prefix("lib").unwrap_or(file);
 			}
 
@@ -217,15 +223,14 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		.flag_if_supported("-Wno-return-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
 	;
 
-	let apple_vendor = env::var("CARGO_CFG_TARGET_VENDOR").unwrap() == "apple";
 	opencv.include_paths.iter().for_each(|p| {
 		out.include(p);
-		if apple_vendor {
+		if *TARGET_VENDOR_APPLE {
 			out.flag_if_supported(&format!("-F{}", p.to_str().expect("Can't convert path to str")));
 		}
 	});
 
-	if env::var("CARGO_CFG_TARGET_ENV").unwrap() == "msvc" {
+	if *TARGET_ENV_MSVC {
 		out.flag_if_supported("-std=c++14"); // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
 	}
 	if out.get_compiler().is_like_msvc() {
@@ -289,7 +294,7 @@ fn build_clang_generator() -> io::Result<Child> {
 	if let Some(host_triple) = HOST_TRIPLE.as_ref() {
 		cargo.args(["--target", host_triple]);
 	}
-	println!("=== Running: {:?}", &cargo);
+	println!("=== Running: {cargo:?}");
 	cargo.stdout(Stdio::piped());
 	cargo.stderr(Stdio::piped());
 	cargo.spawn()

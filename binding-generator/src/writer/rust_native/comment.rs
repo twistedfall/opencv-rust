@@ -138,9 +138,7 @@ pub fn render_doc_comment_with_processor(
 	static CITE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@cite\s+([\w:]+)"#).unwrap());
 	out.replace_in_place_regex(
 		&CITE,
-		&format!(
-			"[$1](https://docs.opencv.org/{opencv_version}/d0/de3/citelist.html#CITEREF_$1)"
-		),
+		&format!("[$1](https://docs.opencv.org/{opencv_version}/d0/de3/citelist.html#CITEREF_$1)"),
 	);
 
 	// references

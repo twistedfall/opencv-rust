@@ -90,8 +90,13 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		TypeRef::new(self.entity.get_type().expect("Can't get class type"), self.gen_env)
 	}
 
+	/// Return template (`Point_<T>`) if a class is a specific instance (`Point_<int>`) of the template
 	pub fn as_template_specialization(&self) -> Option<Class<'tu, 'ge>> {
 		self.entity.get_template().map(|t| Class::new(t, self.gen_env))
+	}
+
+	pub fn is_template(&self) -> bool {
+		self.entity.get_template_kind().is_some()
 	}
 
 	pub fn is_simple(&self) -> bool {
@@ -102,22 +107,11 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		matches!(self.kind(), Kind::Boxed)
 	}
 
-	pub fn is_template(&self) -> bool {
-		self.entity.get_template_kind().is_some()
-	}
-
-	/// This class is a specific instance of a template class, e.g. Point_<int>
-	pub fn is_template_specialization(&self) -> bool {
-		self.entity.get_template().is_some()
-	}
-
 	pub fn is_abstract(&self) -> bool {
 		self.entity.is_abstract_record()
-		// fixme, or maybe we want?
-		// is_abstract_record() also check parent classes for presence of pure virtual methods, we don't want that
-		//		self.entity.walk_methods_while(|child| !Func::new(child, self.gen_env).is_abstract())
 	}
 
+	/// True if class has virtual methods
 	pub fn is_polymorphic(&self) -> bool {
 		self
 			.entity
@@ -160,11 +154,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn bases(&self) -> Vec<Class<'tu, 'ge>> {
 		let mut out = vec![];
-		let entity = if let Some(entity) = self.entity.get_template() {
-			entity
-		} else {
-			self.entity
-		};
+		let entity = self.entity.get_template().unwrap_or(self.entity);
 		entity.walk_bases_while(|child| {
 			out.push(Class::new(Self::definition_entity(child), self.gen_env));
 			WalkAction::Continue
@@ -343,11 +333,11 @@ impl Element for Class<'_, '_> {
 	fn is_ignored(&self) -> bool {
 		DefaultElement::is_ignored(self)
 			|| self.is_template()
-			|| self.is_template_specialization() && {
+			|| self.as_template_specialization().is_some() && {
 				let cpp_refname = self.cpp_name(CppNameStyle::Reference);
 				!settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
 					&& !settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_refname.as_ref())
-			} || !self.is_template_specialization() && !self.is_definition()
+			} || !self.as_template_specialization().is_some() && !self.is_definition()
 	}
 
 	fn is_system(&self) -> bool {
@@ -414,7 +404,7 @@ impl fmt::Debug for Class<'_, '_> {
 		if self.is_template() {
 			props.push("template");
 		}
-		if self.is_template_specialization() {
+		if self.as_template_specialization().is_some() {
 			props.push("template_specialization");
 		}
 		if self.is_abstract() {

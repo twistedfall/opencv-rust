@@ -508,7 +508,7 @@ fn method_delete(rust_local: &str, class_desc: ClassDesc, void: TypeRef) -> Stri
 		return_type: void,
 		kind: FuncDescKind::InstanceMethod(class_desc),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("delete instance".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}

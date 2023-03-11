@@ -226,7 +226,7 @@ fn method_delete(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &Ty
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("delete instance".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -242,7 +242,7 @@ fn method_len(rust_localalias: &str, vector_class_desc: &ClassDesc, size_t: &Typ
 		return_type: size_t.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("instance->size()".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("instance->size()".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -258,7 +258,7 @@ fn method_is_empty(rust_localalias: &str, vector_class_desc: &ClassDesc, boolean
 		return_type: boolean.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("instance->empty()".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("instance->empty()".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -274,7 +274,7 @@ fn method_capacity(rust_localalias: &str, vector_class_desc: &ClassDesc, size_t:
 		return_type: size_t.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("instance->capacity()".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("instance->capacity()".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -290,7 +290,7 @@ fn method_shrink_to_fit(rust_localalias: &str, vector_class_desc: &ClassDesc, vo
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("instance->shrink_to_fit()".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("instance->shrink_to_fit()".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -306,7 +306,7 @@ fn method_reserve(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &T
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("instance->reserve(instance->size() + {{args}})".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("instance->reserve(instance->size() + {{args}})".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![("additional".to_string(), size_t.clone())],
 	}
@@ -322,7 +322,7 @@ fn method_remove(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &Ty
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("instance->erase(instance->begin() + {{args}})".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("instance->erase(instance->begin() + {{args}})".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![("index".to_string(), size_t.clone())],
 	}
@@ -350,9 +350,7 @@ fn method_swap(
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual(
-			format!("{swap_func}((*instance)[index1], (*instance)[index2])").compile_interpolation(),
-		),
+		call: FuncDescCppCall::ManualCall(format!("{swap_func}((*instance)[index1], (*instance)[index2])").compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![("index1".to_string(), size_t.clone()), ("index2".to_string(), size_t.clone())],
 	}
@@ -368,7 +366,7 @@ fn method_clear(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &Typ
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("instance->clear()".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("instance->clear()".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -384,7 +382,7 @@ fn method_push(rust_localalias: &str, vector_class_desc: &ClassDesc, element_typ
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("instance->push_back({{args}})".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("instance->push_back({{args}})".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![("val".to_string(), element_type.clone())],
 	}
@@ -406,7 +404,7 @@ fn method_insert(
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("instance->insert(instance->begin() + {{args}})".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("instance->insert(instance->begin() + {{args}})".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![
 			("index".to_string(), size_t.clone()),
@@ -425,7 +423,7 @@ fn method_get(rust_localalias: &str, vector_class_desc: &ClassDesc, element_type
 		return_type: element_type.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("(*instance)[{{args}}]".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("(*instance)[{{args}}]".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![("index".to_string(), size_t.clone())],
 	}
@@ -447,7 +445,7 @@ fn method_set(
 		return_type: void.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual(
+		call: FuncDescCppCall::ManualCall(
 			format!("(*instance)[index] = {}", element_type.cpp_arg_func_call("val")).compile_interpolation(),
 		),
 		debug: "".to_string(),
@@ -468,7 +466,7 @@ fn method_clone(rust_localalias: &str, vector_class_desc: &ClassDesc, vec_type: 
 		return_type: vec_type.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("{{ret_type}}(*instance)".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("{{ret_type}}(*instance)".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -484,7 +482,7 @@ fn method_input_array(rust_localalias: &str, vector_class_desc: &ClassDesc, inpu
 		return_type: input_array,
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("cv::_InputArray(*instance)".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("cv::_InputArray(*instance)".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -500,7 +498,7 @@ fn method_output_array(rust_localalias: &str, vector_class_desc: &ClassDesc, out
 		return_type: output_array.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("cv::_OutputArray(*instance)".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("cv::_OutputArray(*instance)".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -516,7 +514,7 @@ fn method_input_output_array(rust_localalias: &str, vector_class_desc: &ClassDes
 		return_type: input_output_array.clone(),
 		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
 		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Manual("cv::_InputOutputArray(*instance)".compile_interpolation()),
+		call: FuncDescCppCall::ManualCall("cv::_InputOutputArray(*instance)".compile_interpolation()),
 		debug: "".to_string(),
 		arguments: vec![],
 	}

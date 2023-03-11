@@ -1,9 +1,9 @@
 use std::collections::BTreeMap;
 use std::fmt::Debug;
-use std::fs;
 use std::fs::{File, OpenOptions};
 use std::io::{ErrorKind, Write};
 use std::path::{Path, PathBuf};
+use std::{fs, iter};
 
 use dunce::canonicalize;
 use maplit::hashmap;
@@ -342,4 +342,20 @@ where
 {
 	let args = args.into_iter();
 	NamePool::with_capacity(args.size_hint().1.unwrap_or_default()).into_disambiguator(args, |f| f.rust_leafname(FishStyle::No))
+}
+
+pub fn disambiguate_single_name(name: &str) -> impl Iterator<Item = String> + '_ {
+	let mut i = 0;
+	iter::from_fn(move || {
+		let out = format!("{}{}", name, disambiguate_num(i));
+		i += 1;
+		Some(out)
+	})
+}
+
+fn disambiguate_num(counter: usize) -> String {
+	match counter {
+		0 => "".to_string(),
+		n => format!("_{n}"),
+	}
 }

@@ -358,10 +358,11 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		self.is_template()
 			|| self.is_generic()
 			|| match self.kind() {
-				Kind::Array(inner, ..) => inner.is_ignored(),
 				Kind::StdVector(vec) => vec.is_ignored(),
 				Kind::StdTuple(tuple) => tuple.is_ignored(),
-				Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => inner.is_ignored(),
+				Kind::Array(inner, ..) | Kind::Pointer(inner) | Kind::Reference(inner) | Kind::RValueReference(inner) => {
+					inner.is_ignored()
+				}
 				Kind::SmartPtr(ptr) => ptr.is_ignored(),
 				Kind::Class(cls) => cls.is_ignored(),
 				Kind::Typedef(tdef) => tdef.is_ignored(),

@@ -97,7 +97,7 @@ fn show<S: fmt::Display>(c: impl IntoIterator<Item = S>) {
 fn main() {
 	let mut args = env::args_os().skip(1);
 	let src_cpp_dir = PathBuf::from(args.next().expect("2nd argument must be dir with custom cpp"));
-	let opencv_header_dirs = args.into_iter().map(PathBuf::from);
+	let opencv_header_dirs = args.map(PathBuf::from);
 	let mut func_rename_unused = settings::FUNC_RENAME.keys().copied().collect::<HashSet<_>>();
 	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
