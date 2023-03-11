@@ -5,6 +5,7 @@ use once_cell::sync::Lazy;
 
 use crate::class::Kind;
 use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, ExternDir, FishStyle, NameStyle};
+use crate::writer::rust_native::func_desc::{cpp_return_map, FuncDescReturn};
 use crate::{get_debug, Class, CompiledInterpolation, Element, Func, FunctionTypeHint, IteratorExt, NamePool, StrExt, TypeRef};
 
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -17,8 +18,11 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 	static IMPL_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/impl.tpl.rs").compile_interpolation());
 
-	static IMPL_CLONE_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| include_str!("tpl/class/impl_clone.tpl.rs").compile_interpolation());
+	static IMPL_EXPLICIT_CLONE_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/impl_explicit_clone.tpl.rs").compile_interpolation());
+
+	static IMPL_IMPLICIT_CLONE_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/impl_implicit_clone.tpl.rs").compile_interpolation());
 
 	static IMPL_DEFAULT_TPL: Lazy<CompiledInterpolation> =
 		Lazy::new(|| include_str!("tpl/class/impl_default.tpl.rs").compile_interpolation());
@@ -157,8 +161,12 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 	if !is_abstract {
 		let rust_local = c.rust_name(NameStyle::decl());
-		let mut impls = if const_methods.iter().any(|m| m.is_clone()) {
-			IMPL_CLONE_TPL.interpolate(&hashmap! {
+		let mut impls = if c.has_explicit_clone() {
+			IMPL_EXPLICIT_CLONE_TPL.interpolate(&hashmap! {
+				"rust_local" => rust_local.as_ref(),
+			})
+		} else if c.has_implicit_clone() {
+			IMPL_IMPLICIT_CLONE_TPL.interpolate(&hashmap! {
 				"rust_local" => rust_local.as_ref(),
 			})
 		} else {
@@ -488,12 +496,36 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 			Kind::Simple | Kind::System | Kind::Excluded => "".to_string(),
 		};
 
-		let methods: Vec<_> = self
+		let mut methods: Vec<_> = self
 			.methods(None)
 			.into_iter()
 			.filter(|m| !m.is_excluded())
 			.map(|m| m.gen_cpp())
 			.collect();
+
+		if self.has_implicit_clone() {
+			let rust_local = self.rust_name(NameStyle::decl());
+			let type_ref = self.type_ref();
+
+			methods.push(
+				CppFuncDesc {
+					extern_name: format!("cv_{rust_local}_implicit_clone").into(),
+					constness: Constness::Const,
+					is_infallible: true,
+					is_naked_return: true,
+					return_type: type_ref.clone(),
+					kind: FuncDescKind::Function,
+					type_hint: FunctionTypeHint::None,
+					call: FuncDescCppCall::ManualFullCall("".compile_interpolation()),
+					ret: FuncDescReturn::Manual(
+						format!("return {};", cpp_return_map(&type_ref, "*val", false).0).compile_interpolation(),
+					),
+					debug: "".to_string(),
+					arguments: vec![("val".to_string(), type_ref)],
+				}
+				.gen_cpp(),
+			);
+		}
 
 		out + &methods.join("")
 	}
@@ -509,6 +541,7 @@ fn method_delete(rust_local: &str, class_desc: ClassDesc, void: TypeRef) -> Stri
 		kind: FuncDescKind::InstanceMethod(class_desc),
 		type_hint: FunctionTypeHint::None,
 		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
+		ret: FuncDescReturn::Auto,
 		debug: "".to_string(),
 		arguments: vec![],
 	}

@@ -5,6 +5,7 @@ use once_cell::sync::Lazy;
 
 use crate::renderer::CppRenderer;
 use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, FishStyle, NameStyle};
+use crate::writer::rust_native::func_desc::FuncDescReturn;
 use crate::{CompiledInterpolation, Element, EntityElement, FunctionTypeHint, SmartPtr, StrExt, TypeRef};
 
 use super::class::ClassExt;
@@ -213,6 +214,7 @@ fn method_new(rust_localalias: &str, smartptr_type: &TypeRef, pointee_type: &Typ
 		kind: FuncDescKind::Function,
 		type_hint: FunctionTypeHint::None,
 		call: FuncDescCppCall::ManualCall(format!("{{{{ret_type}}}}({val})").compile_interpolation()),
+		ret: FuncDescReturn::Auto,
 		debug: "".to_string(),
 		arguments: vec![("val".to_string(), pointee_type.clone())],
 	}
@@ -229,6 +231,7 @@ fn method_delete(rust_localalias: &str, smartptr_desc: &ClassDesc, void: &TypeRe
 		kind: FuncDescKind::InstanceMethod(smartptr_desc.clone()),
 		type_hint: FunctionTypeHint::None,
 		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
+		ret: FuncDescReturn::Auto,
 		debug: "".to_string(),
 		arguments: vec![],
 	}

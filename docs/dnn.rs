@@ -2176,6 +2176,16 @@ pub mod dnn {
 	impl BackendNode {
 	}
 	
+	impl Clone for BackendNode {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_BackendNode_implicit_clone(val: extern_send!(BackendNode)) -> extern_receive!(BackendNode: 'static);
+			}
+			unsafe { Self::from_raw(cv_BackendNode_implicit_clone(self.as_raw_BackendNode())) }
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::BackendWrapper]
 	pub trait BackendWrapperConst {
 		fn as_raw_BackendWrapper(&self) -> *const c_void;
@@ -3202,6 +3212,16 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl Clone for ClassificationModel {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_ClassificationModel_implicit_clone(val: extern_send!(ClassificationModel)) -> extern_receive!(ClassificationModel: 'static);
+			}
+			unsafe { Self::from_raw(cv_ClassificationModel_implicit_clone(self.as_raw_ClassificationModel())) }
+		}
 	}
 	
 	boxed_cast_base! { ClassificationModel, crate::dnn::Model, cv_ClassificationModel_to_Model }
@@ -4574,6 +4594,16 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl Clone for DetectionModel {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_DetectionModel_implicit_clone(val: extern_send!(DetectionModel)) -> extern_receive!(DetectionModel: 'static);
+			}
+			unsafe { Self::from_raw(cv_DetectionModel_implicit_clone(self.as_raw_DetectionModel())) }
+		}
 	}
 	
 	boxed_cast_base! { DetectionModel, crate::dnn::Model, cv_DetectionModel_to_Model }
@@ -6401,6 +6431,16 @@ pub mod dnn {
 		
 	}
 	
+	impl Clone for KeypointsModel {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_KeypointsModel_implicit_clone(val: extern_send!(KeypointsModel)) -> extern_receive!(KeypointsModel: 'static);
+			}
+			unsafe { Self::from_raw(cv_KeypointsModel_implicit_clone(self.as_raw_KeypointsModel())) }
+		}
+	}
+	
 	boxed_cast_base! { KeypointsModel, crate::dnn::Model, cv_KeypointsModel_to_Model }
 	
 	/// Constant methods for [crate::dnn::LRNLayer]
@@ -8182,6 +8222,16 @@ pub mod dnn {
 		
 	}
 	
+	impl Clone for Model {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Model_implicit_clone(val: extern_send!(Model)) -> extern_receive!(Model: 'static);
+			}
+			unsafe { Self::from_raw(cv_Model_implicit_clone(self.as_raw_Model())) }
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::NaryEltwiseLayer]
 	pub trait NaryEltwiseLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_NaryEltwiseLayer(&self) -> *const c_void;
@@ -9252,6 +9302,16 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl Clone for Net {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Net_implicit_clone(val: extern_send!(Net)) -> extern_receive!(Net: 'static);
+			}
+			unsafe { Self::from_raw(cv_Net_implicit_clone(self.as_raw_Net())) }
+		}
 	}
 	
 	/// Constant methods for [crate::dnn::NormalizeBBoxLayer]
@@ -11786,6 +11846,16 @@ pub mod dnn {
 		
 	}
 	
+	impl Clone for SegmentationModel {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_SegmentationModel_implicit_clone(val: extern_send!(SegmentationModel)) -> extern_receive!(SegmentationModel: 'static);
+			}
+			unsafe { Self::from_raw(cv_SegmentationModel_implicit_clone(self.as_raw_SegmentationModel())) }
+		}
+	}
+	
 	boxed_cast_base! { SegmentationModel, crate::dnn::Model, cv_SegmentationModel_to_Model }
 	
 	/// Constant methods for [crate::dnn::SeluLayer]
@@ -13564,6 +13634,16 @@ pub mod dnn {
 	impl TextDetectionModel {
 	}
 	
+	impl Clone for TextDetectionModel {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_TextDetectionModel_implicit_clone(val: extern_send!(TextDetectionModel)) -> extern_receive!(TextDetectionModel: 'static);
+			}
+			unsafe { Self::from_raw(cv_TextDetectionModel_implicit_clone(self.as_raw_TextDetectionModel())) }
+		}
+	}
+	
 	boxed_cast_base! { TextDetectionModel, crate::dnn::Model, cv_TextDetectionModel_to_Model }
 	
 	/// Constant methods for [crate::dnn::TextDetectionModel_DB]
@@ -13750,6 +13830,16 @@ pub mod dnn {
 		
 	}
 	
+	impl Clone for TextDetectionModel_DB {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_TextDetectionModel_DB_implicit_clone(val: extern_send!(TextDetectionModel_DB)) -> extern_receive!(TextDetectionModel_DB: 'static);
+			}
+			unsafe { Self::from_raw(cv_TextDetectionModel_DB_implicit_clone(self.as_raw_TextDetectionModel_DB())) }
+		}
+	}
+	
 	boxed_cast_base! { TextDetectionModel_DB, crate::dnn::Model, cv_TextDetectionModel_DB_to_Model }
 	
 	boxed_cast_base! { TextDetectionModel_DB, crate::dnn::TextDetectionModel, cv_TextDetectionModel_DB_to_TextDetectionModel }
@@ -13900,6 +13990,16 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl Clone for TextDetectionModel_EAST {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_TextDetectionModel_EAST_implicit_clone(val: extern_send!(TextDetectionModel_EAST)) -> extern_receive!(TextDetectionModel_EAST: 'static);
+			}
+			unsafe { Self::from_raw(cv_TextDetectionModel_EAST_implicit_clone(self.as_raw_TextDetectionModel_EAST())) }
+		}
 	}
 	
 	boxed_cast_base! { TextDetectionModel_EAST, crate::dnn::Model, cv_TextDetectionModel_EAST_to_Model }
@@ -14105,6 +14205,16 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl Clone for TextRecognitionModel {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_TextRecognitionModel_implicit_clone(val: extern_send!(TextRecognitionModel)) -> extern_receive!(TextRecognitionModel: 'static);
+			}
+			unsafe { Self::from_raw(cv_TextRecognitionModel_implicit_clone(self.as_raw_TextRecognitionModel())) }
+		}
 	}
 	
 	boxed_cast_base! { TextRecognitionModel, crate::dnn::Model, cv_TextRecognitionModel_to_Model }

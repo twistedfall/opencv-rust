@@ -3555,6 +3555,16 @@ pub mod stitching {
 		
 	}
 	
+	impl Clone for Detail_CameraParams {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Detail_CameraParams_implicit_clone(val: extern_send!(Detail_CameraParams)) -> extern_receive!(Detail_CameraParams: 'static);
+			}
+			unsafe { Self::from_raw(cv_Detail_CameraParams_implicit_clone(self.as_raw_Detail_CameraParams())) }
+		}
+	}
+	
 	/// Constant methods for [crate::stitching::Detail_ChannelsCompensator]
 	pub trait Detail_ChannelsCompensatorTraitConst: crate::stitching::Detail_ExposureCompensatorConst {
 		fn as_raw_Detail_ChannelsCompensator(&self) -> *const c_void;
@@ -5802,6 +5812,16 @@ pub mod stitching {
 	impl Detail_ImageFeatures {
 	}
 	
+	impl Clone for Detail_ImageFeatures {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Detail_ImageFeatures_implicit_clone(val: extern_send!(Detail_ImageFeatures)) -> extern_receive!(Detail_ImageFeatures: 'static);
+			}
+			unsafe { Self::from_raw(cv_Detail_ImageFeatures_implicit_clone(self.as_raw_Detail_ImageFeatures())) }
+		}
+	}
+	
 	/// Constant methods for [crate::stitching::Detail_MatchesInfo]
 	pub trait Detail_MatchesInfoTraitConst {
 		fn as_raw_Detail_MatchesInfo(&self) -> *const c_void;
@@ -5981,6 +6001,16 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl Clone for Detail_MatchesInfo {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Detail_MatchesInfo_implicit_clone(val: extern_send!(Detail_MatchesInfo)) -> extern_receive!(Detail_MatchesInfo: 'static);
+			}
+			unsafe { Self::from_raw(cv_Detail_MatchesInfo_implicit_clone(self.as_raw_Detail_MatchesInfo())) }
+		}
 	}
 	
 	/// Constant methods for [crate::stitching::Detail_MercatorProjector]
@@ -7391,6 +7421,16 @@ pub mod stitching {
 	impl Detail_ProjectorBase {
 	}
 	
+	impl Clone for Detail_ProjectorBase {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Detail_ProjectorBase_implicit_clone(val: extern_send!(Detail_ProjectorBase)) -> extern_receive!(Detail_ProjectorBase: 'static);
+			}
+			unsafe { Self::from_raw(cv_Detail_ProjectorBase_implicit_clone(self.as_raw_Detail_ProjectorBase())) }
+		}
+	}
+	
 	/// Constant methods for [crate::stitching::Detail_RotationWarper]
 	pub trait Detail_RotationWarperConst {
 		fn as_raw_Detail_RotationWarper(&self) -> *const c_void;
@@ -7761,6 +7801,16 @@ pub mod stitching {
 	}
 	
 	impl Detail_SphericalProjector {
+	}
+	
+	impl Clone for Detail_SphericalProjector {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Detail_SphericalProjector_implicit_clone(val: extern_send!(Detail_SphericalProjector)) -> extern_receive!(Detail_SphericalProjector: 'static);
+			}
+			unsafe { Self::from_raw(cv_Detail_SphericalProjector_implicit_clone(self.as_raw_Detail_SphericalProjector())) }
+		}
 	}
 	
 	boxed_cast_base! { Detail_SphericalProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_SphericalProjector_to_Detail_ProjectorBase }

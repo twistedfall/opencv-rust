@@ -1,14 +1,13 @@
 use matches::assert_matches;
 
-use opencv::{
-	core::{self, DMatch, Point2d, Point2f, Scalar, SparseMat_Hdr, Vec4i},
-	prelude::*,
-	types::{
-		VectorOfDMatch, VectorOfMat, VectorOfPoint2d, VectorOfPoint2f, VectorOfRange, VectorOfString, VectorOfVec4i,
-		VectorOfVectorOfPoint2f, VectorOfbool, VectorOff64, VectorOfi32, VectorOfi8, VectorOfu8,
-	},
-	Error, Result,
+use opencv::core::{DMatch, Point2d, Point2f, Scalar, SparseMat_Hdr, Vec4i};
+use opencv::prelude::*;
+use opencv::types::VectorOfKeyPoint;
+use opencv::types::{
+	VectorOfDMatch, VectorOfMat, VectorOfPoint2d, VectorOfPoint2f, VectorOfRange, VectorOfString, VectorOfVec4i,
+	VectorOfVectorOfPoint2f, VectorOfbool, VectorOff64, VectorOfi32, VectorOfi8, VectorOfu8,
 };
+use opencv::{core, Error, Result};
 
 #[test]
 fn boxed() -> Result<()> {
@@ -764,8 +763,16 @@ fn from_slice() -> Result<()> {
 }
 
 #[test]
+fn must_be_clone() {
+	fn must_be_clone(_: impl Clone) {}
+
+	must_be_clone(VectorOfi32::new());
+	must_be_clone(VectorOfKeyPoint::new());
+}
+
+#[test]
 fn send() {
-	fn must_be_send<T: Send>(_: T) {}
+	fn must_be_send(_: impl Send) {}
 
 	must_be_send(VectorOfi32::new());
 	must_be_send(VectorOfMat::new());
@@ -775,7 +782,7 @@ fn send() {
 
 #[test]
 fn sync() {
-	fn must_be_sync<T: Sync>(_: T) {}
+	fn must_be_sync(_: impl Sync) {}
 
 	must_be_sync(VectorOfi32::new());
 	must_be_sync(VectorOfString::new());

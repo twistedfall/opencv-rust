@@ -24,6 +24,7 @@ pub struct CppFuncDesc<'tu, 'ge, 'r> {
 	pub kind: FuncDescKind<'tu, 'ge>,
 	pub type_hint: FunctionTypeHint,
 	pub call: FuncDescCppCall<'r>,
+	pub ret: FuncDescReturn<'r>,
 	pub debug: String,
 	pub arguments: Vec<(String, TypeRef<'tu, 'ge>)>,
 }
@@ -93,7 +94,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 				| FuncDescKind::ConversionMethod(cls)
 				| FuncDescKind::InstanceOperator(cls, ..) => cpp_method_call_name(cls.is_boxed, name_decl).into(),
 			},
-			FuncDescCppCall::ManualCall(_) | FuncDescCppCall::ManualBody(_) => "".into(),
+			FuncDescCppCall::ManualCall(_) | FuncDescCppCall::ManualFullCall(_) => "".into(),
 		};
 
 		inter_vars.insert("name", call_name);
@@ -116,7 +117,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 			let (call_tpl, full_tpl) = match &self.call {
 				FuncDescCppCall::Auto { .. } => (Some(&*CALL_TPL), None),
 				FuncDescCppCall::ManualCall(call) => (Some(call), None),
-				FuncDescCppCall::ManualBody(full_tpl) => (None, Some(full_tpl)),
+				FuncDescCppCall::ManualFullCall(full_tpl) => (None, Some(full_tpl)),
 			};
 			match (call_tpl, full_tpl) {
 				(_, Some(full_tpl)) => full_tpl,
@@ -134,6 +135,45 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 		};
 
 		tpl.interpolate(&inter_vars)
+	}
+
+	pub fn cpp_return(&self, ret: &str, ret_cast: Option<Cow<str>>, ocv_ret_name: &str) -> Cow<'static, str> {
+		match &self.ret {
+			FuncDescReturn::Auto => {
+				if self.is_naked_return {
+					if ret.is_empty() {
+						"".into()
+					} else {
+						let cast = if let Some(ret_type) = ret_cast {
+							format!("({typ})", typ = ret_type.as_ref())
+						} else {
+							"".to_string()
+						};
+						format!("return {cast}{ret};").into()
+					}
+				} else if self.is_infallible {
+					if ret.is_empty() {
+						"".into()
+					} else {
+						format!("*{ocv_ret_name} = {ret};").into()
+					}
+				} else if ret.is_empty() {
+					format!("Ok({ocv_ret_name});").into()
+				} else {
+					let cast = if let Some(ret_type) = ret_cast {
+						format!("<{typ}>", typ = ret_type.as_ref())
+					} else {
+						"".to_string()
+					};
+					format!("Ok{cast}({ret}, {ocv_ret_name});").into()
+				}
+			}
+			FuncDescReturn::Manual(ret_expr) => ret_expr
+				.interpolate(&hashmap! {
+					"ret_name" => ocv_ret_name,
+				})
+				.into(),
+		}
 	}
 
 	pub fn gen_cpp(&self) -> String {
@@ -198,13 +238,6 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 			pre_post_arg_handle(format!("{cpp_extern_return} {ret_name} = {ret}"), &mut post_call_args);
 			ret_name.into()
 		};
-		let ret = cpp_return_handle(
-			&ret,
-			ret_cast.then(|| ret_full.as_ref().into()),
-			ocv_ret_name,
-			self.is_naked_return,
-			self.is_infallible,
-		);
 
 		// exception handling
 		let func_try = if self.is_infallible {
@@ -234,7 +267,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 			"call" => self.cpp_call_invoke().into(),
 			"post_call_args" => post_call_args.join("\n").into(),
 			"cleanup_args" => cleanup_args.join("\n").into(),
-			"return" => ret,
+			"return" => self.cpp_return(&ret, ret_cast.then(|| ret_full.as_ref().into()), ocv_ret_name),
 			"catch" => catch,
 			"attributes_end" => attributes_end.into(),
 		})
@@ -301,8 +334,13 @@ pub enum FuncDescCppCall<'r> {
 	},
 	/// Specify manual call, use the automatic return handling (e.g. `Mat ret = <manual_call>`)
 	ManualCall(CompiledInterpolation<'r>),
-	/// Specify full manual handling, if the function is expected to return something this expression must produce `ret` variable
-	ManualBody(CompiledInterpolation<'r>),
+	/// Specify full manual call, if the function is expected to return something this expression must produce `ret` variable
+	ManualFullCall(CompiledInterpolation<'r>),
+}
+
+pub enum FuncDescReturn<'r> {
+	Auto,
+	Manual(CompiledInterpolation<'r>),
 }
 
 pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: bool) -> (Cow<'f, str>, bool) {
@@ -333,42 +371,6 @@ pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: 
 		(str_mk, false)
 	} else {
 		(name.into(), return_type.as_fixed_array().is_some())
-	}
-}
-
-pub fn cpp_return_handle(
-	ret: &str,
-	ret_cast: Option<Cow<str>>,
-	ocv_ret_name: &str,
-	is_naked_return: bool,
-	is_infallible: bool,
-) -> Cow<'static, str> {
-	if is_naked_return {
-		if ret.is_empty() {
-			"".into()
-		} else {
-			let cast = if let Some(ret_type) = ret_cast {
-				format!("({typ})", typ = ret_type.as_ref())
-			} else {
-				"".to_string()
-			};
-			format!("return {cast}{ret};").into()
-		}
-	} else if is_infallible {
-		if ret.is_empty() {
-			"".into()
-		} else {
-			format!("*{ocv_ret_name} = {ret};").into()
-		}
-	} else if ret.is_empty() {
-		format!("Ok({ocv_ret_name});").into()
-	} else {
-		let cast = if let Some(ret_type) = ret_cast {
-			format!("<{typ}>", typ = ret_type.as_ref())
-		} else {
-			"".to_string()
-		};
-		format!("Ok{cast}({ret}, {ocv_ret_name});").into()
 	}
 }
 

@@ -7,6 +7,7 @@ use regex::Regex;
 
 use crate::func::{Kind, OperatorKind};
 use crate::type_ref::{ConstnessOverride, CppNameStyle, ExternDir, FishStyle, NameStyle};
+use crate::writer::rust_native::func_desc::FuncDescReturn;
 use crate::{
 	get_debug, reserved_rename, settings, CompiledInterpolation, Element, EntityElement, Func, IteratorExt, StrExt, StringExt,
 	TypeRef,
@@ -474,6 +475,7 @@ impl<'tu, 'ge, 'r> From<&'r Func<'tu, 'ge>> for CppFuncDesc<'tu, 'ge, 'r> {
 			kind,
 			type_hint,
 			call: FuncDescCppCall::Auto { name_decl, name_ref },
+			ret: FuncDescReturn::Auto,
 			debug,
 			arguments,
 		}

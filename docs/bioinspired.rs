@@ -778,6 +778,16 @@ pub mod bioinspired {
 	impl RetinaParameters {
 	}
 	
+	impl Clone for RetinaParameters {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_RetinaParameters_implicit_clone(val: extern_send!(RetinaParameters)) -> extern_receive!(RetinaParameters: 'static);
+			}
+			unsafe { Self::from_raw(cv_RetinaParameters_implicit_clone(self.as_raw_RetinaParameters())) }
+		}
+	}
+	
 	/// Inner Plexiform Layer Magnocellular channel (IplMagno)
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]

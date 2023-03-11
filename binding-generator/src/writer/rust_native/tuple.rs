@@ -5,6 +5,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::type_ref::{Constness, FishStyle};
+use crate::writer::rust_native::func_desc::FuncDescReturn;
 use crate::{CompiledInterpolation, CppNameStyle, FunctionTypeHint, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 
 use super::disambiguate_single_name;
@@ -166,6 +167,7 @@ fn method_new(rust_localalias: &str, tuple_typeref: &TypeRef, tuple_type: &str, 
 		kind: FuncDescKind::Function,
 		type_hint: FunctionTypeHint::None,
 		call: FuncDescCppCall::ManualCall(format!("std::make_{tuple_type}({{{{args}}}})").compile_interpolation()),
+		ret: FuncDescReturn::Auto,
 		debug: "".to_string(),
 		arguments,
 	}
@@ -182,6 +184,7 @@ fn method_delete(rust_localalias: &str, tuple_desc: &ClassDesc, void: &TypeRef) 
 		kind: FuncDescKind::InstanceMethod(tuple_desc.clone()),
 		type_hint: FunctionTypeHint::None,
 		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
+		ret: FuncDescReturn::Auto,
 		debug: "".to_string(),
 		arguments: vec![],
 	}
@@ -198,6 +201,7 @@ fn method_get(rust_localalias: &str, tuple_desc: &ClassDesc, element_type: &Type
 		kind: FuncDescKind::InstanceMethod(tuple_desc.clone()),
 		type_hint: FunctionTypeHint::None,
 		call: FuncDescCppCall::ManualCall(format!("std::get<{num}>(*instance)").compile_interpolation()),
+		ret: FuncDescReturn::Auto,
 		debug: "".to_string(),
 		arguments: vec![],
 	}

@@ -115,7 +115,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn is_polymorphic(&self) -> bool {
 		self
 			.entity
-			.walk_methods_while(|f| WalkAction::continue_until(f.is_virtual_method()))
+			.walk_methods_while(|f| WalkAction::continue_until(f.is_virtual_method() || f.is_pure_virtual_method()))
 			.is_interrupted()
 	}
 
@@ -142,9 +142,32 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
-	pub fn has_clone(&self) -> bool {
+	/// Class has an explicit method named `clone()`
+	pub fn has_explicit_clone(&self) -> bool {
 		self
 			.for_each_method(|m| WalkAction::continue_until(m.is_clone()))
+			.is_interrupted()
+	}
+
+	/// Class is simple (i.e. constructor-copiable in C++), but can't be simple in Rust
+	pub fn has_implicit_clone(&self) -> bool {
+		!self.is_abstract()
+			&& matches!(self.gen_env.get_class_kind(self.entity), Some(Kind::Simple))
+			&& !matches!(self.kind(), Kind::Simple)
+			&& !self.has_virtual_destructor()
+	}
+
+	pub fn has_virtual_destructor(&self) -> bool {
+		self
+			.entity()
+			.walk_children_while(|f| {
+				if f.get_kind() == EntityKind::Destructor {
+					if f.is_virtual_method() {
+						return WalkAction::Interrupt;
+					}
+				}
+				WalkAction::Continue
+			})
 			.is_interrupted()
 	}
 
@@ -416,7 +439,7 @@ impl fmt::Debug for Class<'_, '_> {
 		if self.is_trait() {
 			props.push("trait");
 		}
-		if self.has_clone() {
+		if self.has_explicit_clone() {
 			props.push("has_clone");
 		}
 		if self.has_bases() {

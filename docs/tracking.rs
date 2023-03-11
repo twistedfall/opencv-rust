@@ -442,6 +442,16 @@ pub mod tracking {
 		
 	}
 	
+	impl Clone for TrackerCSRT_Params {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_TrackerCSRT_Params_implicit_clone(val: extern_send!(TrackerCSRT_Params)) -> extern_receive!(TrackerCSRT_Params: 'static);
+			}
+			unsafe { Self::from_raw(cv_TrackerCSRT_Params_implicit_clone(self.as_raw_TrackerCSRT_Params())) }
+		}
+	}
+	
 	/// Constant methods for [crate::tracking::TrackerKCF]
 	pub trait TrackerKCFConst: crate::video::TrackerConst {
 		fn as_raw_TrackerKCF(&self) -> *const c_void;

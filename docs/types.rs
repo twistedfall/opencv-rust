@@ -850,7 +850,7 @@ mod core_types {
 		cv_VectorOfKeyPoint_get, cv_VectorOfKeyPoint_set,
 		cv_VectorOfKeyPoint_push, cv_VectorOfKeyPoint_insert,
 	}
-	vector_non_copy_or_bool! { core::KeyPoint }
+	vector_non_copy_or_bool! { clone core::KeyPoint }
 	
 	pub type VectorOfMat = core::Vector<core::Mat>;
 	
@@ -2226,7 +2226,7 @@ mod core_types {
 		cv_VectorOfVectorOfKeyPoint_get, cv_VectorOfVectorOfKeyPoint_set,
 		cv_VectorOfVectorOfKeyPoint_push, cv_VectorOfVectorOfKeyPoint_insert,
 	}
-	vector_non_copy_or_bool! { core::Vector<core::KeyPoint> }
+	vector_non_copy_or_bool! { clone core::Vector<core::KeyPoint> }
 	
 	pub type VectorOfVectorOfMat = core::Vector<core::Vector<core::Mat>>;
 	
@@ -9771,7 +9771,7 @@ mod gapi_types {
 		cv_VectorOfGTypeInfo_get, cv_VectorOfGTypeInfo_set,
 		cv_VectorOfGTypeInfo_push, cv_VectorOfGTypeInfo_insert,
 	}
-	vector_non_copy_or_bool! { crate::gapi::GTypeInfo }
+	vector_non_copy_or_bool! { clone crate::gapi::GTypeInfo }
 	
 	pub type VectorOfOpaqueKind = core::Vector<crate::gapi::OpaqueKind>;
 	
@@ -11179,7 +11179,7 @@ mod objdetect_types {
 		cv_VectorOfDetectionBasedTracker_ExtObject_get, cv_VectorOfDetectionBasedTracker_ExtObject_set,
 		cv_VectorOfDetectionBasedTracker_ExtObject_push, cv_VectorOfDetectionBasedTracker_ExtObject_insert,
 	}
-	vector_non_copy_or_bool! { crate::objdetect::DetectionBasedTracker_ExtObject }
+	vector_non_copy_or_bool! { clone crate::objdetect::DetectionBasedTracker_ExtObject }
 	
 	pub type VectorOfDetectionBasedTracker_Object = core::Vector<crate::objdetect::DetectionBasedTracker_Object>;
 	
@@ -12838,7 +12838,7 @@ mod rgbd_types {
 		cv_VectorOfLinemod_Match_get, cv_VectorOfLinemod_Match_set,
 		cv_VectorOfLinemod_Match_push, cv_VectorOfLinemod_Match_insert,
 	}
-	vector_non_copy_or_bool! { crate::rgbd::Linemod_Match }
+	vector_non_copy_or_bool! { clone crate::rgbd::Linemod_Match }
 	
 	pub type VectorOfLinemod_Template = core::Vector<crate::rgbd::Linemod_Template>;
 	
@@ -12856,7 +12856,7 @@ mod rgbd_types {
 		cv_VectorOfLinemod_Template_get, cv_VectorOfLinemod_Template_set,
 		cv_VectorOfLinemod_Template_push, cv_VectorOfLinemod_Template_insert,
 	}
-	vector_non_copy_or_bool! { crate::rgbd::Linemod_Template }
+	vector_non_copy_or_bool! { clone crate::rgbd::Linemod_Template }
 	
 	pub type VectorOfPtrOfLinemod_Modality = core::Vector<core::Ptr<dyn crate::rgbd::Linemod_Modality>>;
 	
@@ -15041,7 +15041,7 @@ mod stitching_types {
 		cv_VectorOfDetail_CameraParams_get, cv_VectorOfDetail_CameraParams_set,
 		cv_VectorOfDetail_CameraParams_push, cv_VectorOfDetail_CameraParams_insert,
 	}
-	vector_non_copy_or_bool! { crate::stitching::Detail_CameraParams }
+	vector_non_copy_or_bool! { clone crate::stitching::Detail_CameraParams }
 	
 	pub type VectorOfDetail_ImageFeatures = core::Vector<crate::stitching::Detail_ImageFeatures>;
 	
@@ -15059,7 +15059,7 @@ mod stitching_types {
 		cv_VectorOfDetail_ImageFeatures_get, cv_VectorOfDetail_ImageFeatures_set,
 		cv_VectorOfDetail_ImageFeatures_push, cv_VectorOfDetail_ImageFeatures_insert,
 	}
-	vector_non_copy_or_bool! { crate::stitching::Detail_ImageFeatures }
+	vector_non_copy_or_bool! { clone crate::stitching::Detail_ImageFeatures }
 	
 	pub type VectorOfDetail_MatchesInfo = core::Vector<crate::stitching::Detail_MatchesInfo>;
 	
@@ -15077,7 +15077,7 @@ mod stitching_types {
 		cv_VectorOfDetail_MatchesInfo_get, cv_VectorOfDetail_MatchesInfo_set,
 		cv_VectorOfDetail_MatchesInfo_push, cv_VectorOfDetail_MatchesInfo_insert,
 	}
-	vector_non_copy_or_bool! { crate::stitching::Detail_MatchesInfo }
+	vector_non_copy_or_bool! { clone crate::stitching::Detail_MatchesInfo }
 	
 }
 #[cfg(ocvrs_has_module_stitching)]

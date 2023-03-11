@@ -3739,6 +3739,16 @@ pub mod rgbd {
 		
 	}
 	
+	impl Clone for Linemod_Match {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Linemod_Match_implicit_clone(val: extern_send!(Linemod_Match)) -> extern_receive!(Linemod_Match: 'static);
+			}
+			unsafe { Self::from_raw(cv_Linemod_Match_implicit_clone(self.as_raw_Linemod_Match())) }
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::Linemod_Modality]
 	pub trait Linemod_ModalityConst {
 		fn as_raw_Linemod_Modality(&self) -> *const c_void;
@@ -3980,6 +3990,16 @@ pub mod rgbd {
 	}
 	
 	impl Linemod_Template {
+	}
+	
+	impl Clone for Linemod_Template {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Linemod_Template_implicit_clone(val: extern_send!(Linemod_Template)) -> extern_receive!(Linemod_Template: 'static);
+			}
+			unsafe { Self::from_raw(cv_Linemod_Template_implicit_clone(self.as_raw_Linemod_Template())) }
+		}
 	}
 	
 	/// Constant methods for [crate::rgbd::DepthCleaner]

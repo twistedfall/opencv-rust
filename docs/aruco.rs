@@ -646,4 +646,14 @@ pub mod aruco {
 		}
 		
 	}
+	
+	impl Clone for EstimateParameters {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_EstimateParameters_implicit_clone(val: extern_send!(EstimateParameters)) -> extern_receive!(EstimateParameters: 'static);
+			}
+			unsafe { Self::from_raw(cv_EstimateParameters_implicit_clone(self.as_raw_EstimateParameters())) }
+		}
+	}
 }

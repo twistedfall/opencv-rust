@@ -10200,6 +10200,16 @@ pub mod core {
 		
 	}
 	
+	impl Clone for FileNode {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_FileNode_implicit_clone(val: extern_send!(FileNode)) -> extern_receive!(FileNode: 'static);
+			}
+			unsafe { Self::from_raw(cv_FileNode_implicit_clone(self.as_raw_FileNode())) }
+		}
+	}
+	
 	/// Constant methods for [core::FileNodeIterator]
 	pub trait FileNodeIteratorTraitConst {
 		fn as_raw_FileNodeIterator(&self) -> *const c_void;
@@ -11206,6 +11216,16 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl Clone for KeyPoint {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_KeyPoint_implicit_clone(val: extern_send!(KeyPoint)) -> extern_receive!(KeyPoint: 'static);
+			}
+			unsafe { Self::from_raw(cv_KeyPoint_implicit_clone(self.as_raw_KeyPoint())) }
+		}
 	}
 	
 	/// Constant methods for [core::LDA]
@@ -24962,6 +24982,16 @@ pub mod core {
 	impl Detail_CheckContext {
 	}
 	
+	impl Clone for Detail_CheckContext {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Detail_CheckContext_implicit_clone(val: extern_send!(Detail_CheckContext)) -> extern_receive!(Detail_CheckContext: 'static);
+			}
+			unsafe { Self::from_raw(cv_Detail_CheckContext_implicit_clone(self.as_raw_Detail_CheckContext())) }
+		}
+	}
+	
 	/// Constant methods for [core::NodeData]
 	pub trait NodeDataTraitConst {
 		fn as_raw_NodeData(&self) -> *const c_void;
@@ -26308,6 +26338,16 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl Clone for Device {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_Device_implicit_clone(val: extern_send!(Device)) -> extern_receive!(Device: 'static);
+			}
+			unsafe { Self::from_raw(cv_Device_implicit_clone(self.as_raw_Device())) }
+		}
 	}
 	
 	impl Default for Device {

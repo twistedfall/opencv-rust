@@ -7124,6 +7124,16 @@ pub mod gapi {
 	impl GTypeInfo {
 	}
 	
+	impl Clone for GTypeInfo {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" {
+				fn cv_GTypeInfo_implicit_clone(val: extern_send!(GTypeInfo)) -> extern_receive!(GTypeInfo: 'static);
+			}
+			unsafe { Self::from_raw(cv_GTypeInfo_implicit_clone(self.as_raw_GTypeInfo())) }
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::MediaFrame]
 	pub trait MediaFrameTraitConst {
 		fn as_raw_MediaFrame(&self) -> *const c_void;

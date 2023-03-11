@@ -1,11 +1,10 @@
-use std::{ffi::c_void, mem::transmute};
+use std::ffi::c_void;
+use std::mem::transmute;
 
-use opencv::{
-	core::{Algorithm, Scalar, Vec4f},
-	prelude::*,
-	types::{PtrOfFeature2D, VectorOfVec4f},
-	Result,
-};
+use opencv::core::{Algorithm, KeyPoint, Scalar, Vec4f};
+use opencv::prelude::*;
+use opencv::types::{PtrOfFeature2D, VectorOfVec4f};
+use opencv::Result;
 
 #[test]
 fn layout() -> Result<()> {
@@ -161,5 +160,22 @@ fn cast_descendant_fail() -> Result<()> {
 	) {
 		panic!("It shouldn't be possible to downcast to the incorrect descendant class");
 	}
+	Ok(())
+}
+
+#[test]
+fn implicit_clone() -> Result<()> {
+	let key_point = KeyPoint::new_coords(1., 2., 3., 4., 5., 6, 7)?;
+	assert_eq!(4., key_point.angle());
+	let mut key_point_clone = key_point.clone();
+	assert_eq!(key_point.pt(), key_point_clone.pt());
+	assert_eq!(key_point.size(), key_point_clone.size());
+	assert_eq!(key_point.response(), key_point_clone.response());
+	assert_eq!(key_point.octave(), key_point_clone.octave());
+	assert_eq!(key_point.class_id(), key_point_clone.class_id());
+
+	key_point_clone.set_octave(10);
+	assert_eq!(6, key_point.octave());
+	assert_eq!(10, key_point_clone.octave());
 	Ok(())
 }

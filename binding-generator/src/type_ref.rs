@@ -576,7 +576,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		self.is_copy()
 			|| match self.kind() {
 				Kind::StdVector(vec) => vec.element_type().is_clone(),
-				Kind::Class(cls) => cls.has_clone(),
+				Kind::Class(cls) => cls.has_explicit_clone() || cls.has_implicit_clone(),
 				_ => false,
 			}
 	}
