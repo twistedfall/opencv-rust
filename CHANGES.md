@@ -1,3 +1,7 @@
+* 0.78.1
+  * Automatically implement `Clone` for those classes that are constructor-copiable in C++, e.g. `KeyPoint`.
+  * Fixes for crosscompiling (kudos to icedrocket).
+
 * 0.78.0
   * Don't strip "lib" prefix from linked libraries when building with MSVC (kudos to icedrocket)
   * Fix newline handling on Windows (kudos to grindvoll)
