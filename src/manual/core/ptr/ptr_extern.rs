@@ -60,7 +60,7 @@ macro_rules! ptr_extern_ctor {
 
 		impl $crate::core::PtrExternCtor<$type> for $crate::core::Ptr<$type> {
 			#[inline]
-			unsafe fn extern_new<'a>(val: extern_container_send!(mut $type: 'a)) -> extern_receive!(Self: 'a) {
+			unsafe fn extern_new(val: extern_container_send!(mut $type)) -> extern_receive!(Self) {
 				$extern_new(val)
 			}
 		}
