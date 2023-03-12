@@ -93,7 +93,7 @@ fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
 			let orig_len = file.len();
 
 			// strip "lib" prefix from the filename
-			if !cfg!(target_env = "msvc") {
+			if env::var("CARGO_CFG_TARGET_ENV").unwrap() != "msvc" {
 				file = file.strip_prefix("lib").unwrap_or(file);
 			}
 
@@ -216,13 +216,16 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		.flag_if_supported("-Wno-ignored-qualifiers") // type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
 		.flag_if_supported("-Wno-return-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
 	;
+
+	let apple_vendor = env::var("CARGO_CFG_TARGET_VENDOR").unwrap() == "apple";
 	opencv.include_paths.iter().for_each(|p| {
 		out.include(p);
-		if cfg!(target_vendor = "apple") {
+		if apple_vendor {
 			out.flag_if_supported(&format!("-F{}", p.to_str().expect("Can't convert path to str")));
 		}
 	});
-	if cfg!(target_env = "msvc") {
+
+	if env::var("CARGO_CFG_TARGET_ENV").unwrap() == "msvc" {
 		out.flag_if_supported("-std=c++14"); // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
 	}
 	if out.get_compiler().is_like_msvc() {

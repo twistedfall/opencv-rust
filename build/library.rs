@@ -156,18 +156,13 @@ impl Library {
 		sys_link_paths: Vec<PathBuf>,
 		typ: Option<&'a str>,
 	) -> impl Iterator<Item = String> + 'a {
+		let apple_vendor = env::var("CARGO_CFG_TARGET_VENDOR").unwrap() == "apple";
+
 		Self::process_env_var_list(link_paths, sys_link_paths)
 			.into_iter()
 			.flat_map(move |path| {
-				let out = iter::once(Self::emit_link_search(&path, typ));
-				#[cfg(target_vendor = "apple")]
-				{
-					out.chain(iter::once(Self::emit_link_search(&path, Some("framework"))))
-				}
-				#[cfg(not(target_vendor = "apple"))]
-				{
-					out
-				}
+				iter::once(Self::emit_link_search(&path, typ))
+					.chain(apple_vendor.then(|| Self::emit_link_search(&path, Some("framework"))))
 			})
 	}
 
