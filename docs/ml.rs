@@ -15,15 +15,150 @@ pub mod ml {
 		pub use { super::ParamGridTraitConst, super::ParamGridTrait, super::TrainDataConst, super::TrainData, super::StatModelConst, super::StatModel, super::NormalBayesClassifierConst, super::NormalBayesClassifier, super::KNearestConst, super::KNearest, super::SVM_KernelConst, super::SVM_Kernel, super::SVMConst, super::SVM, super::EMConst, super::EM, super::DTrees_NodeTraitConst, super::DTrees_NodeTrait, super::DTrees_SplitTraitConst, super::DTrees_SplitTrait, super::DTreesConst, super::DTrees, super::RTreesConst, super::RTrees, super::BoostConst, super::Boost, super::ANN_MLPConst, super::ANN_MLP, super::LogisticRegressionConst, super::LogisticRegression, super::SVMSGDConst, super::SVMSGD };
 	}
 	
+	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+	pub const ANN_MLP_ANNEAL: i32 = 2;
+	/// The back-propagation algorithm.
+	pub const ANN_MLP_BACKPROP: i32 = 0;
+	/// Gaussian function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Cbeta%20e%5E%7B%2D%5Calpha%20x%2Ax%7D)
+	pub const ANN_MLP_GAUSSIAN: i32 = 2;
+	/// Identity function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dx)
+	pub const ANN_MLP_IDENTITY: i32 = 0;
+	/// Leaky ReLU function: for x>0 ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dx%20) and x<=0 ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Calpha%20x%20)
+	pub const ANN_MLP_LEAKYRELU: i32 = 4;
+	/// Do not normalize the input vectors. If this flag is not set, the training algorithm
+	/// normalizes each input feature independently, shifting its mean value to 0 and making the
+	/// standard deviation equal to 1. If the network is assumed to be updated frequently, the new
+	/// training data could be much different from original one. In this case, you should take care
+	/// of proper normalization.
+	pub const ANN_MLP_NO_INPUT_SCALE: i32 = 2;
+	/// Do not normalize the output vectors. If the flag is not set, the training algorithm
+	/// normalizes each output feature independently, by transforming it to the certain range
+	/// depending on the used activation function.
+	pub const ANN_MLP_NO_OUTPUT_SCALE: i32 = 4;
+	/// ReLU function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dmax%280%2Cx%29)
+	pub const ANN_MLP_RELU: i32 = 3;
+	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+	pub const ANN_MLP_RPROP: i32 = 1;
+	/// Symmetrical sigmoid: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Cbeta%2A%281%2De%5E%7B%2D%5Calpha%20x%7D%29%2F%281%2Be%5E%7B%2D%5Calpha%20x%7D%29)
+	/// 
+	/// Note:
+	/// If you are using the default sigmoid activation function with the default parameter values
+	/// fparam1=0 and fparam2=0 then the function used is y = 1.7159\*tanh(2/3 \* x), so the output
+	/// will range from [-1.7159, 1.7159], instead of [0,1].
+	pub const ANN_MLP_SIGMOID_SYM: i32 = 1;
+	/// Update the network weights, rather than compute them from scratch. In the latter case
+	/// the weights are initialized using the Nguyen-Widrow algorithm.
+	pub const ANN_MLP_UPDATE_WEIGHTS: i32 = 1;
+	/// Discrete AdaBoost.
+	pub const Boost_DISCRETE: i32 = 0;
+	/// Gentle AdaBoost. It puts less weight on outlier data points and for that
+	/// reason is often good with regression data.
+	pub const Boost_GENTLE: i32 = 3;
+	/// LogitBoost. It can produce good regression fits.
+	pub const Boost_LOGIT: i32 = 2;
+	/// Real AdaBoost. It is a technique that utilizes confidence-rated predictions
+	/// and works well with categorical data.
+	pub const Boost_REAL: i32 = 1;
 	/// each training sample occupies a column of samples
 	pub const COL_SAMPLE: i32 = 1;
+	pub const DTrees_PREDICT_AUTO: i32 = 0;
+	pub const DTrees_PREDICT_MASK: i32 = 768;
+	pub const DTrees_PREDICT_MAX_VOTE: i32 = 512;
+	pub const DTrees_PREDICT_SUM: i32 = 256;
+	/// A symmetric positively defined matrix. The number of free
+	/// parameters in each matrix is about ![inline formula](https://latex.codecogs.com/png.latex?d%5E2%2F2). It is not recommended to use this option, unless
+	/// there is pretty accurate initial estimation of the parameters and/or a huge number of
+	/// training samples.
+	pub const EM_COV_MAT_DEFAULT: i32 = 1;
+	/// A diagonal matrix with positive diagonal elements. The number of
+	/// free parameters is d for each matrix. This is most commonly used option yielding good
+	/// estimation results.
+	pub const EM_COV_MAT_DIAGONAL: i32 = 1;
+	/// A symmetric positively defined matrix. The number of free
+	/// parameters in each matrix is about ![inline formula](https://latex.codecogs.com/png.latex?d%5E2%2F2). It is not recommended to use this option, unless
+	/// there is pretty accurate initial estimation of the parameters and/or a huge number of
+	/// training samples.
+	pub const EM_COV_MAT_GENERIC: i32 = 2;
+	/// A scaled identity matrix ![inline formula](https://latex.codecogs.com/png.latex?%5Cmu%5Fk%20%2A%20I). There is the only
+	/// parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cmu%5Fk) to be estimated for each matrix. The option may be used in special cases,
+	/// when the constraint is relevant, or as a first step in the optimization (for example in case
+	/// when the data is preprocessed with PCA). The results of such preliminary estimation may be
+	/// passed again to the optimization procedure, this time with
+	/// covMatType=EM::COV_MAT_DIAGONAL.
+	pub const EM_COV_MAT_SPHERICAL: i32 = 0;
 	pub const EM_DEFAULT_MAX_ITERS: i32 = 100;
 	pub const EM_DEFAULT_NCLUSTERS: i32 = 5;
 	pub const EM_START_AUTO_STEP: i32 = 0;
 	pub const EM_START_E_STEP: i32 = 1;
 	pub const EM_START_M_STEP: i32 = 2;
+	pub const KNearest_BRUTE_FORCE: i32 = 1;
+	pub const KNearest_KDTREE: i32 = 2;
+	pub const LogisticRegression_BATCH: i32 = 0;
+	/// Set MiniBatchSize to a positive integer when using this method.
+	pub const LogisticRegression_MINI_BATCH: i32 = 1;
+	/// Regularization disabled
+	pub const LogisticRegression_REG_DISABLE: i32 = -1;
+	/// %L1 norm
+	pub const LogisticRegression_REG_L1: i32 = 0;
+	/// %L2 norm
+	pub const LogisticRegression_REG_L2: i32 = 1;
 	/// each training sample is a row of samples
 	pub const ROW_SAMPLE: i32 = 0;
+	/// Average Stochastic Gradient Descent
+	pub const SVMSGD_ASGD: i32 = 1;
+	/// More accurate for the case of linearly separable sets.
+	pub const SVMSGD_HARD_MARGIN: i32 = 1;
+	/// Stochastic Gradient Descent
+	pub const SVMSGD_SGD: i32 = 0;
+	/// General case, suits to the case of non-linearly separable sets, allows outliers.
+	pub const SVMSGD_SOFT_MARGIN: i32 = 0;
+	pub const SVM_C: i32 = 0;
+	/// Exponential Chi2 kernel, similar to the RBF kernel:
+	/// ![inline formula](https://latex.codecogs.com/png.latex?K%28x%5Fi%2C%20x%5Fj%29%20%3D%20e%5E%7B%2D%5Cgamma%20%5Cchi%5E2%28x%5Fi%2Cx%5Fj%29%7D%2C%20%5Cchi%5E2%28x%5Fi%2Cx%5Fj%29%20%3D%20%28x%5Fi%2Dx%5Fj%29%5E2%2F%28x%5Fi%2Bx%5Fj%29%2C%20%5Cgamma%20%3E%200).
+	pub const SVM_CHI2: i32 = 4;
+	pub const SVM_COEF: i32 = 4;
+	/// Returned by SVM::getKernelType in case when custom kernel has been set
+	pub const SVM_CUSTOM: i32 = -1;
+	/// C-Support Vector Classification. n-class classification (n ![inline formula](https://latex.codecogs.com/png.latex?%5Cgeq) 2), allows
+	/// imperfect separation of classes with penalty multiplier C for outliers.
+	pub const SVM_C_SVC: i32 = 100;
+	pub const SVM_DEGREE: i32 = 5;
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cepsilon)-Support Vector Regression. The distance between feature vectors
+	/// from the training set and the fitting hyper-plane must be less than p. For outliers the
+	/// penalty multiplier C is used.
+	pub const SVM_EPS_SVR: i32 = 103;
+	pub const SVM_GAMMA: i32 = 1;
+	/// Histogram intersection kernel. A fast kernel. ![inline formula](https://latex.codecogs.com/png.latex?K%28x%5Fi%2C%20x%5Fj%29%20%3D%20min%28x%5Fi%2Cx%5Fj%29).
+	pub const SVM_INTER: i32 = 5;
+	/// Linear kernel. No mapping is done, linear discrimination (or regression) is
+	/// done in the original feature space. It is the fastest option. ![inline formula](https://latex.codecogs.com/png.latex?K%28x%5Fi%2C%20x%5Fj%29%20%3D%20x%5Fi%5ET%20x%5Fj).
+	pub const SVM_LINEAR: i32 = 0;
+	pub const SVM_NU: i32 = 3;
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Classification. n-class classification with possible
+	/// imperfect separation. Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) (in the range 0..1, the larger the value, the smoother
+	/// the decision boundary) is used instead of C.
+	pub const SVM_NU_SVC: i32 = 101;
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
+	/// See [LibSVM](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+	pub const SVM_NU_SVR: i32 = 104;
+	/// Distribution Estimation (One-class %SVM). All the training data are from
+	/// the same class, %SVM builds a boundary that separates the class from the rest of the feature
+	/// space.
+	pub const SVM_ONE_CLASS: i32 = 102;
+	pub const SVM_P: i32 = 2;
+	/// Polynomial kernel:
+	/// ![inline formula](https://latex.codecogs.com/png.latex?K%28x%5Fi%2C%20x%5Fj%29%20%3D%20%28%5Cgamma%20x%5Fi%5ET%20x%5Fj%20%2B%20coef0%29%5E%7Bdegree%7D%2C%20%5Cgamma%20%3E%200).
+	pub const SVM_POLY: i32 = 1;
+	/// Radial basis function (RBF), a good choice in most cases.
+	/// ![inline formula](https://latex.codecogs.com/png.latex?K%28x%5Fi%2C%20x%5Fj%29%20%3D%20e%5E%7B%2D%5Cgamma%20%7C%7Cx%5Fi%20%2D%20x%5Fj%7C%7C%5E2%7D%2C%20%5Cgamma%20%3E%200).
+	pub const SVM_RBF: i32 = 2;
+	/// Sigmoid kernel: ![inline formula](https://latex.codecogs.com/png.latex?K%28x%5Fi%2C%20x%5Fj%29%20%3D%20%5Ctanh%28%5Cgamma%20x%5Fi%5ET%20x%5Fj%20%2B%20coef0%29).
+	pub const SVM_SIGMOID: i32 = 3;
+	pub const StatModel_COMPRESSED_INPUT: i32 = 2;
+	pub const StatModel_PREPROCESSED_INPUT: i32 = 4;
+	/// makes the method return the raw results (the sum), not the class label
+	pub const StatModel_RAW_OUTPUT: i32 = 1;
+	pub const StatModel_UPDATE_MODEL: i32 = 1;
 	pub const TEST_ERROR: i32 = 0;
 	pub const TRAIN_ERROR: i32 = 1;
 	/// categorical variables

@@ -7,6 +7,9 @@ pub mod tracking {
 		pub use { super::TrackerCSRT_ParamsTraitConst, super::TrackerCSRT_ParamsTrait, super::TrackerCSRTConst, super::TrackerCSRT, super::TrackerKCFConst, super::TrackerKCF };
 	}
 	
+	pub const TrackerKCF_CN: i32 = 2;
+	pub const TrackerKCF_CUSTOM: i32 = 4;
+	pub const TrackerKCF_GRAY: i32 = 1;
 	/// \brief Feature type to be used in the tracking grayscale, colornames, compressed color-names
 	/// The modes available now:
 	///  *   "GRAY" -- Use grayscale values as the feature

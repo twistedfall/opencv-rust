@@ -7,6 +7,7 @@ pub mod rgbd {
 		pub use { super::Linemod_TemplateTraitConst, super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramidConst, super::Linemod_QuantizedPyramid, super::Linemod_ModalityConst, super::Linemod_Modality, super::Linemod_ColorGradientTraitConst, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTraitConst, super::Linemod_DepthNormalTrait, super::Linemod_MatchTraitConst, super::Linemod_MatchTrait, super::Linemod_DetectorTraitConst, super::Linemod_DetectorTrait, super::RgbdNormalsTraitConst, super::RgbdNormalsTrait, super::DepthCleanerTraitConst, super::DepthCleanerTrait, super::RgbdPlaneTraitConst, super::RgbdPlaneTrait, super::RgbdFrameTraitConst, super::RgbdFrameTrait, super::OdometryFrameTraitConst, super::OdometryFrameTrait, super::OdometryConst, super::Odometry, super::RgbdOdometryTraitConst, super::RgbdOdometryTrait, super::ICPOdometryTraitConst, super::ICPOdometryTrait, super::RgbdICPOdometryTraitConst, super::RgbdICPOdometryTrait, super::FastICPOdometryTraitConst, super::FastICPOdometryTrait, super::Kinfu_VolumeConst, super::Kinfu_Volume, super::Kinfu_VolumeParamsTraitConst, super::Kinfu_VolumeParamsTrait, super::Kinfu_ParamsTraitConst, super::Kinfu_ParamsTrait, super::Kinfu_KinFuConst, super::Kinfu_KinFu, super::Dynafu_DynaFuConst, super::Dynafu_DynaFu, super::ParamsTraitConst, super::ParamsTrait, super::LargeKinfuConst, super::LargeKinfu, super::Kinfu_Detail_PoseGraphConst, super::Kinfu_Detail_PoseGraph, super::ColoredKinfu_ParamsTraitConst, super::ColoredKinfu_ParamsTrait, super::ColoredKinfu_ColoredKinFuConst, super::ColoredKinfu_ColoredKinFu };
 	}
 	
+	pub const DepthCleaner_DEPTH_CLEANER_NIL: i32 = 0;
 	pub const Kinfu_VolumeType_COLOREDTSDF: i32 = 2;
 	pub const Kinfu_VolumeType_HASHTSDF: i32 = 1;
 	pub const Kinfu_VolumeType_TSDF: i32 = 0;
@@ -16,6 +17,10 @@ pub mod rgbd {
 	pub const Odometry_RIGID_BODY_MOTION: i32 = 4;
 	pub const Odometry_ROTATION: i32 = 1;
 	pub const Odometry_TRANSLATION: i32 = 2;
+	pub const RgbdNormals_RGBD_NORMALS_METHOD_FALS: i32 = 0;
+	pub const RgbdNormals_RGBD_NORMALS_METHOD_LINEMOD: i32 = 1;
+	pub const RgbdNormals_RGBD_NORMALS_METHOD_SRI: i32 = 2;
+	pub const RgbdPlane_RGBD_PLANE_METHOD_DEFAULT: i32 = 0;
 	/// NIL method is from
 	/// ``Modeling Kinect Sensor Noise for Improved 3d Reconstruction and Tracking``
 	/// by C. Nguyen, S. Izadi, D. Lovel

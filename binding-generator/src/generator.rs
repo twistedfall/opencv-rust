@@ -307,18 +307,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 					visitor.visit_generated_type(dep);
 				});
 				class_decl.walk_enums_while(|enm| {
-					let enm = Enum::new(enm);
-					if enm.cpp_name(CppNameStyle::Declaration) != "unnamed" {
-						if !enm.is_excluded() {
-							visitor.visit_enum(enm);
-						}
-					} else {
-						for cnst in enm.consts() {
-							if !cnst.is_excluded() {
-								visitor.visit_const(cnst);
-							}
-						}
-					}
+					Self::process_enum(visitor, enm);
 					WalkAction::Continue
 				});
 				class_decl.walk_classes_while(|sub_cls| {
@@ -344,14 +333,12 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 	fn process_enum(visitor: &mut V, enum_decl: Entity) {
 		let enm = Enum::new(enum_decl);
 		if !enm.is_excluded() {
-			if !enm.as_typedefed().is_some() {
-				for cnst in enm.consts() {
-					if !cnst.is_excluded() {
-						visitor.visit_const(cnst);
-					}
+			for cnst in enm.consts() {
+				if !cnst.is_excluded() {
+					visitor.visit_const(cnst);
 				}
 			}
-			if enm.rust_leafname(FishStyle::No) != "unnamed" {
+			if !enm.is_anonymous() {
 				visitor.visit_enum(enm);
 			}
 		}

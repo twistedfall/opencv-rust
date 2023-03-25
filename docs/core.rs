@@ -83,6 +83,17 @@ pub mod core {
 	/// image step is wrong, this may happen for a non-continuous matrix.
 	pub const BadStep: i32 = -13;
 	pub const BadTileSize: i32 = -23;
+	/// The buffer will be used as a source for vertex data
+	pub const Buffer_ARRAY_BUFFER: i32 = 34962;
+	/// The buffer will be used for indices (in glDrawElements, for example)
+	pub const Buffer_ELEMENT_ARRAY_BUFFER: i32 = 34963;
+	/// The buffer will be used for reading from OpenGL textures
+	pub const Buffer_PIXEL_PACK_BUFFER: i32 = 35051;
+	/// The buffer will be used for writing to OpenGL textures
+	pub const Buffer_PIXEL_UNPACK_BUFFER: i32 = 35052;
+	pub const Buffer_READ_ONLY: i32 = 35000;
+	pub const Buffer_READ_WRITE: i32 = 35002;
+	pub const Buffer_WRITE_ONLY: i32 = 35001;
 	/// src1 is equal to src2.
 	pub const CMP_EQ: i32 = 0;
 	/// src1 is greater than or equal to src2.
@@ -443,6 +454,14 @@ pub mod core {
 	pub const Detail_TEST_LE: i32 = 3;
 	pub const Detail_TEST_LT: i32 = 4;
 	pub const Detail_TEST_NE: i32 = 2;
+	/// < default compute mode (Multiple threads can use cudaSetDevice with this device)
+	pub const DeviceInfo_ComputeModeDefault: i32 = 0;
+	/// < compute-exclusive-thread mode (Only one thread in one process will be able to use cudaSetDevice with this device)
+	pub const DeviceInfo_ComputeModeExclusive: i32 = 1;
+	/// < compute-exclusive-process mode (Many threads in one process will be able to use cudaSetDevice with this device)
+	pub const DeviceInfo_ComputeModeExclusiveProcess: i32 = 3;
+	/// < compute-prohibited mode (No threads can use cudaSetDevice with this device)
+	pub const DeviceInfo_ComputeModeProhibited: i32 = 2;
 	pub const Device_EXEC_KERNEL: i32 = 1;
 	pub const Device_EXEC_NATIVE_KERNEL: i32 = 2;
 	pub const Device_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT: i32 = 128;
@@ -471,6 +490,14 @@ pub mod core {
 	pub const Device_VENDOR_INTEL: i32 = 2;
 	pub const Device_VENDOR_NVIDIA: i32 = 3;
 	pub const ENUM_LOG_LEVEL_FORCE_INT: i32 = 2147483647;
+	/// < Event uses blocking synchronization
+	pub const Event_BLOCKING_SYNC: i32 = 1;
+	/// < Default event flag
+	pub const Event_DEFAULT: i32 = 0;
+	/// < Event will not record timing data
+	pub const Event_DISABLE_TIMING: i32 = 2;
+	/// < Event is suitable for interprocess use. DisableTiming must be set
+	pub const Event_INTERPROCESS: i32 = 4;
 	pub const FEATURE_SET_COMPUTE_10: i32 = 10;
 	pub const FEATURE_SET_COMPUTE_11: i32 = 11;
 	pub const FEATURE_SET_COMPUTE_12: i32 = 12;
@@ -510,6 +537,39 @@ pub mod core {
 	/// if set, means that all the collection elements are numbers of the same type (real's or int's).
 	/// UNIFORM is used only when reading FileStorage; FLOW is used only when writing. So they share the same bit
 	pub const FileNode_UNIFORM: i32 = 8;
+	/// value, open the file for appending
+	pub const FileStorage_APPEND: i32 = 2;
+	/// flag, write rawdata in Base64 by default. (consider using WRITE_BASE64)
+	pub const FileStorage_BASE64: i32 = 64;
+	/// flag, auto format
+	pub const FileStorage_FORMAT_AUTO: i32 = 0;
+	/// flag, JSON format
+	pub const FileStorage_FORMAT_JSON: i32 = 24;
+	/// mask for format flags
+	pub const FileStorage_FORMAT_MASK: i32 = 56;
+	/// flag, XML format
+	pub const FileStorage_FORMAT_XML: i32 = 8;
+	/// flag, YAML format
+	pub const FileStorage_FORMAT_YAML: i32 = 16;
+	pub const FileStorage_INSIDE_MAP: i32 = 4;
+	/// < flag, read data from source or write data to the internal buffer (which is
+	/// returned by FileStorage::release)
+	pub const FileStorage_MEMORY: i32 = 4;
+	pub const FileStorage_NAME_EXPECTED: i32 = 2;
+	/// value, open the file for reading
+	pub const FileStorage_READ: i32 = 0;
+	pub const FileStorage_UNDEFINED: i32 = 0;
+	pub const FileStorage_VALUE_EXPECTED: i32 = 1;
+	/// value, open the file for writing
+	pub const FileStorage_WRITE: i32 = 1;
+	/// flag, enable both WRITE and BASE64
+	pub const FileStorage_WRITE_BASE64: i32 = 65;
+	pub const Formatter_FMT_C: i32 = 5;
+	pub const Formatter_FMT_CSV: i32 = 2;
+	pub const Formatter_FMT_DEFAULT: i32 = 0;
+	pub const Formatter_FMT_MATLAB: i32 = 1;
+	pub const Formatter_FMT_NUMPY: i32 = 4;
+	pub const Formatter_FMT_PYTHON: i32 = 3;
 	/// transposes src1
 	pub const GEMM_1_T: i32 = 1;
 	/// transposes src2
@@ -523,6 +583,9 @@ pub mod core {
 	pub const GpuNotSupported: i32 = -216;
 	/// image header is NULL
 	pub const HeaderIsNull: i32 = -9;
+	pub const HostMem_PAGE_LOCKED: i32 = 1;
+	pub const HostMem_SHARED: i32 = 2;
+	pub const HostMem_WRITE_COMBINED: i32 = 4;
 	pub const IMPL_IPP: i32 = 1;
 	pub const IMPL_OPENCL: i32 = 2;
 	pub const IMPL_PLAIN: i32 = 0;
@@ -603,6 +666,11 @@ pub mod core {
 	pub const OpenGlApiCallError: i32 = -219;
 	/// no OpenGL support
 	pub const OpenGlNotSupported: i32 = -218;
+	/// indicates that the input samples are stored as matrix columns
+	pub const PCA_DATA_AS_COL: i32 = 1;
+	/// indicates that the input samples are stored as matrix rows
+	pub const PCA_DATA_AS_ROW: i32 = 0;
+	pub const PCA_USE_AVG: i32 = 2;
 	pub const POINTS: i32 = 0;
 	pub const POLYGON: i32 = 9;
 	pub const Param_ALGORITHM: i32 = 6;
@@ -657,6 +725,16 @@ pub mod core {
 	pub const SORT_EVERY_COLUMN: i32 = 1;
 	/// each matrix row is sorted independently
 	pub const SORT_EVERY_ROW: i32 = 0;
+	/// when the matrix is not square, by default the algorithm produces u and vt matrices of
+	/// sufficiently large size for the further A reconstruction; if, however, FULL_UV flag is
+	/// specified, u and vt will be full-size square orthogonal matrices.
+	pub const SVD_FULL_UV: i32 = 4;
+	/// allow the algorithm to modify the decomposed matrix; it can save space and speed up
+	/// processing. currently ignored.
+	pub const SVD_MODIFY_A: i32 = 1;
+	/// indicates that only a vector of singular values `w` is to be processed, while u and vt
+	/// will be set to empty matrices
+	pub const SVD_NO_UV: i32 = 2;
 	pub const SparseMat_HASH_BIT: i32 = -2147483648;
 	pub const SparseMat_HASH_SCALE: i32 = 1540483477;
 	pub const SparseMat_MAGIC_VAL: i32 = 1123876864;
@@ -726,6 +804,27 @@ pub mod core {
 	pub const TYPE_GENERAL: i32 = 0;
 	pub const TYPE_MARKER: i32 = 1;
 	pub const TYPE_WRAPPER: i32 = 2;
+	/// the maximum number of iterations or elements to compute
+	pub const TermCriteria_COUNT: i32 = 1;
+	/// the desired accuracy or change in parameters at which the iterative algorithm stops
+	pub const TermCriteria_EPS: i32 = 2;
+	/// ditto
+	pub const TermCriteria_MAX_ITER: i32 = 1;
+	/// Depth
+	pub const Texture2D_DEPTH_COMPONENT: i32 = 6402;
+	pub const Texture2D_NONE: i32 = 0;
+	/// Red, Green, Blue
+	pub const Texture2D_RGB: i32 = 6407;
+	/// Red, Green, Blue, Alpha
+	pub const Texture2D_RGBA: i32 = 6408;
+	pub const UMatData_ASYNC_CLEANUP: i32 = 128;
+	pub const UMatData_COPY_ON_MAP: i32 = 1;
+	pub const UMatData_DEVICE_COPY_OBSOLETE: i32 = 4;
+	pub const UMatData_DEVICE_MEM_MAPPED: i32 = 64;
+	pub const UMatData_HOST_COPY_OBSOLETE: i32 = 2;
+	pub const UMatData_TEMP_COPIED_UMAT: i32 = 24;
+	pub const UMatData_TEMP_UMAT: i32 = 8;
+	pub const UMatData_USER_ALLOCATED: i32 = 32;
 	pub const UMat_AUTO_STEP: i32 = 0;
 	pub const UMat_CONTINUOUS_FLAG: i32 = 16384;
 	pub const UMat_DEPTH_MASK: i32 = 7;
@@ -738,6 +837,40 @@ pub mod core {
 	pub const USAGE_ALLOCATE_SHARED_MEMORY: i32 = 4;
 	pub const USAGE_DEFAULT: i32 = 0;
 	pub const WARP_SHUFFLE_FUNCTIONS: i32 = 30;
+	pub const _InputArray_CUDA_GPU_MAT: i32 = 589824;
+	pub const _InputArray_CUDA_HOST_MEM: i32 = 524288;
+	/// removed: <https://github.com/opencv/opencv/pull/17046>
+	pub const _InputArray_EXPR: i32 = 393216;
+	pub const _InputArray_FIXED_SIZE: i32 = 1073741824;
+	pub const _InputArray_FIXED_TYPE: i32 = -2147483648;
+	pub const _InputArray_KIND_MASK: i32 = 2031616;
+	pub const _InputArray_KIND_SHIFT: i32 = 16;
+	pub const _InputArray_MAT: i32 = 65536;
+	pub const _InputArray_MATX: i32 = 131072;
+	pub const _InputArray_NONE: i32 = 0;
+	pub const _InputArray_OPENGL_BUFFER: i32 = 458752;
+	/// removed: <https://github.com/opencv/opencv/issues/18897>
+	pub const _InputArray_STD_ARRAY: i32 = 917504;
+	pub const _InputArray_STD_ARRAY_MAT: i32 = 983040;
+	pub const _InputArray_STD_BOOL_VECTOR: i32 = 786432;
+	pub const _InputArray_STD_VECTOR: i32 = 196608;
+	pub const _InputArray_STD_VECTOR_CUDA_GPU_MAT: i32 = 851968;
+	pub const _InputArray_STD_VECTOR_MAT: i32 = 327680;
+	pub const _InputArray_STD_VECTOR_UMAT: i32 = 720896;
+	pub const _InputArray_STD_VECTOR_VECTOR: i32 = 262144;
+	pub const _InputArray_UMAT: i32 = 655360;
+	pub const _OutputArray_DEPTH_MASK_16F: i32 = 128;
+	pub const _OutputArray_DEPTH_MASK_16S: i32 = 8;
+	pub const _OutputArray_DEPTH_MASK_16U: i32 = 4;
+	pub const _OutputArray_DEPTH_MASK_32F: i32 = 32;
+	pub const _OutputArray_DEPTH_MASK_32S: i32 = 16;
+	pub const _OutputArray_DEPTH_MASK_64F: i32 = 64;
+	pub const _OutputArray_DEPTH_MASK_8S: i32 = 2;
+	pub const _OutputArray_DEPTH_MASK_8U: i32 = 1;
+	pub const _OutputArray_DEPTH_MASK_ALL: i32 = 127;
+	pub const _OutputArray_DEPTH_MASK_ALL_16F: i32 = 255;
+	pub const _OutputArray_DEPTH_MASK_ALL_BUT_8S: i32 = 125;
+	pub const _OutputArray_DEPTH_MASK_FLT: i32 = 96;
 	pub const __UMAT_USAGE_FLAGS_32BIT: i32 = 2147483647;
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]

@@ -28,6 +28,10 @@ impl<'tu> Enum<'tu> {
 		}
 	}
 
+	pub fn is_anonymous(&self) -> bool {
+		self.entity.is_anonymous()
+	}
+
 	pub fn as_typedefed(&self) -> Option<Entity> {
 		if matches!(self.entity.get_kind(), EntityKind::TypedefDecl | EntityKind::TypeAliasDecl) {
 			let mut child = None;
@@ -60,6 +64,10 @@ impl<'tu> EntityElement<'tu> for Enum<'tu> {
 }
 
 impl Element for Enum<'_> {
+	fn is_excluded(&self) -> bool {
+		DefaultElement::is_excluded(self) || self.as_typedefed().is_some()
+	}
+
 	fn is_system(&self) -> bool {
 		DefaultElement::is_system(self)
 	}

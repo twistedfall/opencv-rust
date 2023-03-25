@@ -28,6 +28,10 @@ pub mod gapi {
 	pub const MediaFormat_BGR: i32 = 0;
 	pub const MediaFormat_GRAY: i32 = 2;
 	pub const MediaFormat_NV12: i32 = 1;
+	/// Access data for reading
+	pub const MediaFrame_Access_R: i32 = 0;
+	/// Access data for writing
+	pub const MediaFrame_Access_W: i32 = 1;
 	pub const OpaqueKind_CV_BOOL: i32 = 1;
 	pub const OpaqueKind_CV_DOUBLE: i32 = 4;
 	pub const OpaqueKind_CV_DRAW_PRIM: i32 = 15;
@@ -44,6 +48,8 @@ pub mod gapi {
 	pub const OpaqueKind_CV_STRING: i32 = 7;
 	pub const OpaqueKind_CV_UINT64: i32 = 6;
 	pub const OpaqueKind_CV_UNKNOWN: i32 = 0;
+	pub const RMat_Access_R: i32 = 0;
+	pub const RMat_Access_W: i32 = 1;
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ArgKind {

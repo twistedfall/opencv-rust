@@ -74,6 +74,10 @@ pub mod ximgproc {
 	pub const DTF_IC: i32 = 1;
 	pub const DTF_NC: i32 = 0;
 	pub const DTF_RF: i32 = 2;
+	pub const EdgeDrawing_LSD: i32 = 3;
+	pub const EdgeDrawing_PREWITT: i32 = 0;
+	pub const EdgeDrawing_SCHARR: i32 = 2;
+	pub const EdgeDrawing_SOBEL: i32 = 1;
 	pub const FHT_ADD: i32 = 2;
 	pub const FHT_AVE: i32 = 3;
 	pub const FHT_MAX: i32 = 1;
@@ -249,6 +253,10 @@ pub mod ximgproc {
 	
 	opencv_type_enum! { crate::ximgproc::WMFWeightType }
 	
+	/// Specifies the degree of rules validation.
+	/// @details The enum specifies the degree of rules validation. This can be used,
+	///          for example, to choose a proper way of input arguments validation.
+	pub type rules_option = crate::ximgproc::RulesOption;
 	/// ## C++ default parameters
 	/// * contrast: 1
 	/// * shortrange: 3

@@ -5,6 +5,40 @@ pub mod cudaoptflow {
 		pub use { super::CUDA_DenseOpticalFlowConst, super::CUDA_DenseOpticalFlow, super::CUDA_SparseOpticalFlowConst, super::CUDA_SparseOpticalFlow, super::CUDA_NvidiaHWOpticalFlowConst, super::CUDA_NvidiaHWOpticalFlow, super::CUDA_BroxOpticalFlowConst, super::CUDA_BroxOpticalFlow, super::CUDA_SparsePyrLKOpticalFlowConst, super::CUDA_SparsePyrLKOpticalFlow, super::CUDA_DensePyrLKOpticalFlowConst, super::CUDA_DensePyrLKOpticalFlow, super::CUDA_FarnebackOpticalFlowConst, super::CUDA_FarnebackOpticalFlow, super::CUDA_OpticalFlowDual_TVL1Const, super::CUDA_OpticalFlowDual_TVL1, super::CUDA_NvidiaOpticalFlow_1_0Const, super::CUDA_NvidiaOpticalFlow_1_0, super::CUDA_NvidiaOpticalFlow_2_0Const, super::CUDA_NvidiaOpticalFlow_2_0 };
 	}
 	
+	/// < Fast perf level results in high performance and low quality
+	pub const CUDA_NvidiaOpticalFlow_1_0_NV_OF_PERF_LEVEL_FAST: i32 = 20;
+	pub const CUDA_NvidiaOpticalFlow_1_0_NV_OF_PERF_LEVEL_MAX: i32 = 21;
+	/// < Medium perf level results in low performance and medium quality
+	pub const CUDA_NvidiaOpticalFlow_1_0_NV_OF_PERF_LEVEL_MEDIUM: i32 = 10;
+	/// < Slow perf level results in lowest performance and best quality
+	pub const CUDA_NvidiaOpticalFlow_1_0_NV_OF_PERF_LEVEL_SLOW: i32 = 5;
+	pub const CUDA_NvidiaOpticalFlow_1_0_NV_OF_PERF_LEVEL_UNDEFINED: i32 = 0;
+	/// < Hint buffer grid size is 1x1.
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_HINT_VECTOR_GRID_SIZE_1: i32 = 1;
+	/// < Hint buffer grid size is 2x2.
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_HINT_VECTOR_GRID_SIZE_2: i32 = 2;
+	/// < Hint buffer grid size is 4x4.
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_HINT_VECTOR_GRID_SIZE_4: i32 = 4;
+	/// < Hint buffer grid size is 8x8.
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_HINT_VECTOR_GRID_SIZE_8: i32 = 8;
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_HINT_VECTOR_GRID_SIZE_MAX: i32 = 9;
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_HINT_VECTOR_GRID_SIZE_UNDEFINED: i32 = 0;
+	/// < Output buffer grid size is 1x1
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_OUTPUT_VECTOR_GRID_SIZE_1: i32 = 1;
+	/// < Output buffer grid size is 2x2
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_OUTPUT_VECTOR_GRID_SIZE_2: i32 = 2;
+	/// < Output buffer grid size is 4x4
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_OUTPUT_VECTOR_GRID_SIZE_4: i32 = 4;
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_OUTPUT_VECTOR_GRID_SIZE_MAX: i32 = 5;
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_OUTPUT_VECTOR_GRID_SIZE_UNDEFINED: i32 = 0;
+	/// < Fast perf level results in high performance and low quality
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_PERF_LEVEL_FAST: i32 = 20;
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_PERF_LEVEL_MAX: i32 = 21;
+	/// < Medium perf level results in low performance and medium quality
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_PERF_LEVEL_MEDIUM: i32 = 10;
+	/// < Slow perf level results in lowest performance and best quality
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_PERF_LEVEL_SLOW: i32 = 5;
+	pub const CUDA_NvidiaOpticalFlow_2_0_NV_OF_PERF_LEVEL_UNDEFINED: i32 = 0;
 	/// Supported optical flow performance levels.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]

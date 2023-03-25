@@ -20,8 +20,24 @@ pub mod features2d {
 		pub use { super::KeyPointsFilterTraitConst, super::KeyPointsFilterTrait, super::Feature2DTraitConst, super::Feature2DTrait, super::AffineFeatureConst, super::AffineFeature, super::SIFTConst, super::SIFT, super::BRISKConst, super::BRISK, super::ORBConst, super::ORB, super::MSERConst, super::MSER, super::FastFeatureDetectorConst, super::FastFeatureDetector, super::AgastFeatureDetectorConst, super::AgastFeatureDetector, super::GFTTDetectorConst, super::GFTTDetector, super::SimpleBlobDetectorConst, super::SimpleBlobDetector, super::KAZEConst, super::KAZE, super::AKAZEConst, super::AKAZE, super::DescriptorMatcherConst, super::DescriptorMatcher, super::BFMatcherTraitConst, super::BFMatcherTrait, super::FlannBasedMatcherTraitConst, super::FlannBasedMatcherTrait, super::BOWTrainerConst, super::BOWTrainer, super::BOWKMeansTrainerTraitConst, super::BOWKMeansTrainerTrait, super::BOWImgDescriptorExtractorTraitConst, super::BOWImgDescriptorExtractorTrait };
 	}
 	
+	pub const AKAZE_DESCRIPTOR_KAZE: i32 = 3;
+	/// Upright descriptors, not invariant to rotation
+	pub const AKAZE_DESCRIPTOR_KAZE_UPRIGHT: i32 = 2;
+	pub const AKAZE_DESCRIPTOR_MLDB: i32 = 5;
+	/// Upright descriptors, not invariant to rotation
+	pub const AKAZE_DESCRIPTOR_MLDB_UPRIGHT: i32 = 4;
+	pub const AgastFeatureDetector_AGAST_5_8: i32 = 0;
+	pub const AgastFeatureDetector_AGAST_7_12d: i32 = 1;
+	pub const AgastFeatureDetector_AGAST_7_12s: i32 = 2;
 	pub const AgastFeatureDetector_NONMAX_SUPPRESSION: i32 = 10001;
+	pub const AgastFeatureDetector_OAST_9_16: i32 = 3;
 	pub const AgastFeatureDetector_THRESHOLD: i32 = 10000;
+	pub const DescriptorMatcher_BRUTEFORCE: i32 = 2;
+	pub const DescriptorMatcher_BRUTEFORCE_HAMMING: i32 = 4;
+	pub const DescriptorMatcher_BRUTEFORCE_HAMMINGLUT: i32 = 5;
+	pub const DescriptorMatcher_BRUTEFORCE_L1: i32 = 3;
+	pub const DescriptorMatcher_BRUTEFORCE_SL2: i32 = 6;
+	pub const DescriptorMatcher_FLANNBASED: i32 = 1;
 	/// Output image matrix will be created (Mat::create),
 	/// i.e. existing memory of output image may be reused.
 	/// Two source image, matches and single keypoints will be drawn.
@@ -39,6 +55,15 @@ pub mod features2d {
 	pub const FastFeatureDetector_FAST_N: i32 = 10002;
 	pub const FastFeatureDetector_NONMAX_SUPPRESSION: i32 = 10001;
 	pub const FastFeatureDetector_THRESHOLD: i32 = 10000;
+	pub const FastFeatureDetector_TYPE_5_8: i32 = 0;
+	pub const FastFeatureDetector_TYPE_7_12: i32 = 1;
+	pub const FastFeatureDetector_TYPE_9_16: i32 = 2;
+	pub const KAZE_DIFF_CHARBONNIER: i32 = 3;
+	pub const KAZE_DIFF_PM_G1: i32 = 0;
+	pub const KAZE_DIFF_PM_G2: i32 = 1;
+	pub const KAZE_DIFF_WEICKERT: i32 = 2;
+	pub const ORB_FAST_SCORE: i32 = 1;
+	pub const ORB_HARRIS_SCORE: i32 = 0;
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum AKAZE_DescriptorType {

@@ -300,6 +300,8 @@ pub mod calib3d {
 	pub const CALIB_USE_QR: i32 = 1048576;
 	pub const CALIB_ZERO_DISPARITY: i32 = 1024;
 	pub const CALIB_ZERO_TANGENT_DIST: i32 = 8;
+	pub const CirclesGridFinderParameters_ASYMMETRIC_GRID: i32 = 1;
+	pub const CirclesGridFinderParameters_SYMMETRIC_GRID: i32 = 0;
 	/// 7-point algorithm
 	pub const FM_7POINT: i32 = 1;
 	/// 8-point algorithm

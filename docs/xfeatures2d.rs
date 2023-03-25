@@ -19,6 +19,8 @@ pub mod xfeatures2d {
 		pub use { super::SURFConst, super::SURF, super::FREAKConst, super::FREAK, super::StarDetectorConst, super::StarDetector, super::BriefDescriptorExtractorConst, super::BriefDescriptorExtractor, super::LUCIDConst, super::LUCID, super::LATCHConst, super::LATCH, super::BEBLIDConst, super::BEBLID, super::TEBLIDTraitConst, super::TEBLIDTrait, super::DAISYConst, super::DAISY, super::MSDDetectorConst, super::MSDDetector, super::VGGConst, super::VGG, super::BoostDescConst, super::BoostDesc, super::PCTSignaturesConst, super::PCTSignatures, super::PCTSignaturesSQFDConst, super::PCTSignaturesSQFD, super::Elliptic_KeyPointTraitConst, super::Elliptic_KeyPointTrait, super::HarrisLaplaceFeatureDetectorConst, super::HarrisLaplaceFeatureDetector, super::AffineFeature2DConst, super::AffineFeature2D, super::TBMRConst, super::TBMR, super::SURF_CUDATraitConst, super::SURF_CUDATrait };
 	}
 	
+	pub const BEBLID_SIZE_256_BITS: i32 = 101;
+	pub const BEBLID_SIZE_512_BITS: i32 = 100;
 	pub const BoostDesc_BGM: i32 = 100;
 	pub const BoostDesc_BGM_BILINEAR: i32 = 102;
 	pub const BoostDesc_BGM_HARD: i32 = 101;
@@ -26,6 +28,39 @@ pub mod xfeatures2d {
 	pub const BoostDesc_BINBOOST_256: i32 = 302;
 	pub const BoostDesc_BINBOOST_64: i32 = 300;
 	pub const BoostDesc_LBGM: i32 = 200;
+	pub const DAISY_NRM_FULL: i32 = 102;
+	pub const DAISY_NRM_NONE: i32 = 100;
+	pub const DAISY_NRM_PARTIAL: i32 = 101;
+	pub const DAISY_NRM_SIFT: i32 = 103;
+	/// ![block formula](https://latex.codecogs.com/png.latex?%20e%5E%7B%20%2D%5Calpha%20%2A%20d%5E2%28c%5Fi%2C%20c%5Fj%29%7D%20)
+	pub const PCTSignatures_GAUSSIAN: i32 = 1;
+	/// ![block formula](https://latex.codecogs.com/png.latex?%20%5Cfrac%7B1%7D%7B%5Calpha%20%2B%20d%28c%5Fi%2C%20c%5Fj%29%7D%20)
+	pub const PCTSignatures_HEURISTIC: i32 = 2;
+	pub const PCTSignatures_L0_25: i32 = 0;
+	pub const PCTSignatures_L0_5: i32 = 1;
+	pub const PCTSignatures_L1: i32 = 2;
+	pub const PCTSignatures_L2: i32 = 3;
+	pub const PCTSignatures_L2SQUARED: i32 = 4;
+	pub const PCTSignatures_L5: i32 = 5;
+	pub const PCTSignatures_L_INFINITY: i32 = 6;
+	/// ![block formula](https://latex.codecogs.com/png.latex?%20%2Dd%28c%5Fi%2C%20c%5Fj%29%20)
+	pub const PCTSignatures_MINUS: i32 = 0;
+	/// Generate points with normal (gaussian) distribution.
+	pub const PCTSignatures_NORMAL: i32 = 2;
+	/// Generate points in a regular grid.
+	pub const PCTSignatures_REGULAR: i32 = 1;
+	/// Generate numbers uniformly.
+	pub const PCTSignatures_UNIFORM: i32 = 0;
+	pub const SURF_CUDA_ANGLE_ROW: i32 = 5;
+	pub const SURF_CUDA_HESSIAN_ROW: i32 = 6;
+	pub const SURF_CUDA_LAPLACIAN_ROW: i32 = 2;
+	pub const SURF_CUDA_OCTAVE_ROW: i32 = 3;
+	pub const SURF_CUDA_ROWS_COUNT: i32 = 7;
+	pub const SURF_CUDA_SIZE_ROW: i32 = 4;
+	pub const SURF_CUDA_X_ROW: i32 = 0;
+	pub const SURF_CUDA_Y_ROW: i32 = 1;
+	pub const TEBLID_SIZE_256_BITS: i32 = 102;
+	pub const TEBLID_SIZE_512_BITS: i32 = 103;
 	pub const VGG_VGG_120: i32 = 100;
 	pub const VGG_VGG_48: i32 = 103;
 	pub const VGG_VGG_64: i32 = 102;

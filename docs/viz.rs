@@ -33,6 +33,8 @@ pub mod viz {
 	pub const IMMEDIATE_RENDERING: i32 = 5;
 	pub const KeyboardEvent_ALT: i32 = 1;
 	pub const KeyboardEvent_CTRL: i32 = 2;
+	pub const KeyboardEvent_KEY_DOWN: i32 = 1;
+	pub const KeyboardEvent_KEY_UP: i32 = 0;
 	pub const KeyboardEvent_NONE: i32 = 0;
 	pub const KeyboardEvent_SHIFT: i32 = 4;
 	pub const LIGHTING: i32 = 8;
@@ -40,6 +42,17 @@ pub mod viz {
 	pub const Mesh_LOAD_AUTO: i32 = 0;
 	pub const Mesh_LOAD_OBJ: i32 = 2;
 	pub const Mesh_LOAD_PLY: i32 = 1;
+	pub const MouseEvent_LeftButton: i32 = 1;
+	pub const MouseEvent_MiddleButton: i32 = 2;
+	pub const MouseEvent_MouseButtonPress: i32 = 2;
+	pub const MouseEvent_MouseButtonRelease: i32 = 3;
+	pub const MouseEvent_MouseDblClick: i32 = 6;
+	pub const MouseEvent_MouseMove: i32 = 1;
+	pub const MouseEvent_MouseScrollDown: i32 = 4;
+	pub const MouseEvent_MouseScrollUp: i32 = 5;
+	pub const MouseEvent_NoButton: i32 = 0;
+	pub const MouseEvent_RightButton: i32 = 3;
+	pub const MouseEvent_VScroll: i32 = 4;
 	pub const OPACITY: i32 = 1;
 	pub const POINT_SIZE: i32 = 0;
 	pub const REPRESENTATION: i32 = 4;

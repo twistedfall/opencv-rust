@@ -132,8 +132,30 @@ pub mod objdetect {
 	pub const DICT_APRILTAG_36h11: i32 = 20;
 	/// 6x6 bits, minimum hamming distance between any two codes = 3, 1024 codes
 	pub const DICT_ARUCO_ORIGINAL: i32 = 16;
+	pub const DetectionBasedTracker_DETECTED: i32 = 1;
+	pub const DetectionBasedTracker_DETECTED_NOT_SHOWN_YET: i32 = 0;
+	pub const DetectionBasedTracker_DETECTED_TEMPORARY_LOST: i32 = 2;
+	pub const DetectionBasedTracker_WRONG_OBJECT: i32 = 3;
+	pub const FaceRecognizerSF_FR_COSINE: i32 = 0;
+	pub const FaceRecognizerSF_FR_NORM_L2: i32 = 1;
 	/// Default nlevels value.
 	pub const HOGDescriptor_DEFAULT_NLEVELS: i32 = 64;
+	pub const HOGDescriptor_DESCR_FORMAT_COL_BY_COL: i32 = 0;
+	pub const HOGDescriptor_DESCR_FORMAT_ROW_BY_ROW: i32 = 1;
+	/// Default histogramNormType
+	pub const HOGDescriptor_L2Hys: i32 = 0;
+	pub const QRCodeEncoder_CORRECT_LEVEL_H: i32 = 3;
+	pub const QRCodeEncoder_CORRECT_LEVEL_L: i32 = 0;
+	pub const QRCodeEncoder_CORRECT_LEVEL_M: i32 = 1;
+	pub const QRCodeEncoder_CORRECT_LEVEL_Q: i32 = 2;
+	pub const QRCodeEncoder_ECI_UTF8: i32 = 26;
+	pub const QRCodeEncoder_MODE_ALPHANUMERIC: i32 = 2;
+	pub const QRCodeEncoder_MODE_AUTO: i32 = -1;
+	pub const QRCodeEncoder_MODE_BYTE: i32 = 4;
+	pub const QRCodeEncoder_MODE_ECI: i32 = 7;
+	pub const QRCodeEncoder_MODE_KANJI: i32 = 8;
+	pub const QRCodeEncoder_MODE_NUMERIC: i32 = 1;
+	pub const QRCodeEncoder_MODE_STRUCTURED_APPEND: i32 = 3;
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CornerRefineMethod {

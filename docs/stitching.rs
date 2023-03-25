@@ -47,17 +47,35 @@ pub mod stitching {
 	pub const Detail_Blender_FEATHER: i32 = 1;
 	pub const Detail_Blender_MULTI_BAND: i32 = 2;
 	pub const Detail_Blender_NO: i32 = 0;
+	pub const Detail_DpSeamFinder_COLOR: i32 = 0;
+	pub const Detail_DpSeamFinder_COLOR_GRAD: i32 = 1;
 	pub const Detail_ExposureCompensator_CHANNELS: i32 = 3;
 	pub const Detail_ExposureCompensator_CHANNELS_BLOCKS: i32 = 4;
 	pub const Detail_ExposureCompensator_GAIN: i32 = 1;
 	pub const Detail_ExposureCompensator_GAIN_BLOCKS: i32 = 2;
 	pub const Detail_ExposureCompensator_NO: i32 = 0;
+	pub const Detail_GraphCutSeamFinderBase_COST_COLOR: i32 = 0;
+	pub const Detail_GraphCutSeamFinderBase_COST_COLOR_GRAD: i32 = 1;
 	pub const Detail_SeamFinder_DP_SEAM: i32 = 2;
 	pub const Detail_SeamFinder_NO: i32 = 0;
 	pub const Detail_SeamFinder_VORONOI_SEAM: i32 = 1;
 	pub const Detail_WAVE_CORRECT_AUTO: i32 = 2;
 	pub const Detail_WAVE_CORRECT_HORIZ: i32 = 0;
 	pub const Detail_WAVE_CORRECT_VERT: i32 = 1;
+	pub const Stitcher_ERR_CAMERA_PARAMS_ADJUST_FAIL: i32 = 3;
+	pub const Stitcher_ERR_HOMOGRAPHY_EST_FAIL: i32 = 2;
+	pub const Stitcher_ERR_NEED_MORE_IMGS: i32 = 1;
+	pub const Stitcher_OK: i32 = 0;
+	/// Mode for creating photo panoramas. Expects images under perspective
+	/// transformation and projects resulting pano to sphere.
+	/// ## See also
+	/// detail::BestOf2NearestMatcher SphericalWarper
+	pub const Stitcher_PANORAMA: i32 = 0;
+	/// Mode for composing scans. Expects images under affine transformation does
+	/// not compensate exposure by default.
+	/// ## See also
+	/// detail::AffineBestOf2NearestMatcher AffineWarper
+	pub const Stitcher_SCANS: i32 = 1;
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum Detail_DpSeamFinder_CostFunction {
