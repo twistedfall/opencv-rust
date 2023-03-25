@@ -1,3 +1,6 @@
+* 0.78.2
+  * Fix compilation with clang 16
+
 * 0.78.1
   * Automatically implement `Clone` for those classes that are constructor-copiable in C++, e.g. `KeyPoint`.
   * Fixes for crosscompiling (kudos to icedrocket).
