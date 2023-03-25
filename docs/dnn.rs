@@ -2176,16 +2176,6 @@ pub mod dnn {
 	impl BackendNode {
 	}
 	
-	impl Clone for BackendNode {
-		#[inline]
-		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_BackendNode_implicit_clone(val: extern_send!(BackendNode)) -> extern_receive!(BackendNode: 'static);
-			}
-			unsafe { Self::from_raw(cv_BackendNode_implicit_clone(self.as_raw_BackendNode())) }
-		}
-	}
-	
 	/// Constant methods for [crate::dnn::BackendWrapper]
 	pub trait BackendWrapperConst {
 		fn as_raw_BackendWrapper(&self) -> *const c_void;
