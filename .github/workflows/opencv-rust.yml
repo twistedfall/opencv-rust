@@ -157,8 +157,14 @@ jobs:
         run: ci/install.sh
         shell: bash
 
+      - name: Get MSRV package metadata
+        id: metadata
+        run: cargo metadata --no-deps --format-version 1 | jq -r '"msrv="+(.packages[]|select(.name=="opencv").rust_version)' >> $GITHUB_OUTPUT
+
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@1.59.0
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ steps.metadata.outputs.msrv }}
 
       - name: Check project
         env:
