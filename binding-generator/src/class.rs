@@ -161,10 +161,8 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		self
 			.entity()
 			.walk_children_while(|f| {
-				if f.get_kind() == EntityKind::Destructor {
-					if f.is_virtual_method() {
-						return WalkAction::Interrupt;
-					}
+				if f.get_kind() == EntityKind::Destructor && f.is_virtual_method() {
+					return WalkAction::Interrupt;
 				}
 				WalkAction::Continue
 			})

@@ -442,7 +442,7 @@ fn mat_vec() -> Result<()> {
 		let s: Vec<Vec<f32>> = vec![vec![1., 2., 3.], vec![4., 5., 6.], vec![7., 8., 9.]];
 
 		let mat = Mat::from_slice_2d(&s)?;
-		assert_eq!(mat.size()?, core::Size { width: 3, height: 3 });
+		assert_eq!(mat.size()?, Size { width: 3, height: 3 });
 		assert_eq!(*mat.at_2d::<f32>(1, 1)?, 5.);
 
 		let v = mat.to_vec_2d::<f32>()?;
@@ -543,7 +543,7 @@ fn mat_continuous() -> Result<()> {
 }
 
 #[test]
-fn mat_operations() -> Result<()> {
+fn mat_merge_split() -> Result<()> {
 	let mut src = VectorOfMat::new();
 	src.push(Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), Scalar::from(1.))?);
 	src.push(Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), Scalar::from(2.))?);
