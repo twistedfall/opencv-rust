@@ -1,3 +1,10 @@
+* 0.79.0
+  * `DataType` can now be implemented by downstream types that will allow storage of the some custom types inside `Mat`.
+    Previously this trait was sealed, now it's an unsafe trait because types must guarantee the memory layout.0
+  * Calling `.iter()` on an empty `Mat` no longer returns an error, but an empty iterator.
+  * Some functions like `Point_::new()` or `Size_::new()` are now `const`.
+  * Minor documentation updates.
+
 * 0.78.2
   * Fix compilation with clang 16
 
@@ -24,7 +31,7 @@
   * Improve documentation.
 
 * 0.76.2
-  * Fix incorrect display of macros in documentation, some internal macros were showing up, but some usable were not. 
+  * Fix incorrect display of macros in documentation, some internal macros were showing up, but some usable were not.
 
 * 0.76.1
   * Fix build failure.
@@ -103,7 +110,7 @@
   * Disable generation of `merge_slice` function because it's not usable from Rust.
 
 * 0.63.2
-  * Introduce macros that allow external crates to conditionally include code based on the OpenCV branch (3.2, 3.4 or 4). 
+  * Introduce macros that allow external crates to conditionally include code based on the OpenCV branch (3.2, 3.4 or 4).
 
 * 0.63.1
   * Provide `From` implementations from tuples and similar C++ conversions for `Point`, `Size`, `Rect` and `Point3`.
@@ -136,10 +143,10 @@
     element.
 
 * 0.60.0
-  * The features for OpenCV module selections now have inter-dependencies so that you can't exclude a module that's needed for 
+  * The features for OpenCV module selections now have inter-dependencies so that you can't exclude a module that's needed for
     some other one.
   * Infallible functions returning references should be faster now due to the streamlined error handling.
-  * More simple functions are marked as infallible (e.g. `Mat::total()`, `Mat::depth()`). 
+  * More simple functions are marked as infallible (e.g. `Mat::total()`, `Mat::depth()`).
   * Functions that returned references to some internal data (e.g. `Mat::ptr()`, `Mat::data_mut()`) now return raw pointers, it
     makes more sense and allows checking for null pointer outside of call. The corresponding property setters also accept pointers.
   * Functions that accept raw pointers are now marked as unsafe.
@@ -202,7 +209,7 @@
     * Support for `OPENCV_CLANG_STDLIB_PATH` environment variable is removed. If you were using it, then you
       can add that directory as part of `OPENCV_INCLUDE_PATHS`. E.g.:
       ```
-      OPENCV_INCLUDE_PATHS="<path_to_clang_stdlib_path>,+" 
+      OPENCV_INCLUDE_PATHS="<path_to_clang_stdlib_path>,+"
       ```
     * Support for `OPENCV_HEADER_DIR` is also removed. It was meant to be development-only environment variable,
       and it's no longer needed in the development process.
@@ -262,7 +269,7 @@
 
 * 0.45.1
   * Internal improvements in const handling
-  * Fix warnings in beta 
+  * Fix warnings in beta
   * Misc CI improvements
 
 * 0.45.0
@@ -355,7 +362,7 @@
     accessor methods, APIs involving this class have also been updated.
   * C++ operators * (multiplication, dereferencing), / (division), + (addition) and - (subtraction) are now
     also exposed to Rust under function names `mul_*`/`try_deref`, `div_*`, `add_*` and `sub_*`.
-  
+
 
 * 0.35.0
   * Add beta-level support for doing OpenCV library discovery using cmake, which is now a recommended method
@@ -462,7 +469,7 @@
 
   * with `buildtime-bidngen` feature enabled the crate no longer uses bundled source files for code
     generation by default, but the ones installed with OpenCV library detected by `pkg_config`, `vcpkg` or
-    environment; set `OPENCV_HEADER_DIR` environment variable to override this behavior  
+    environment; set `OPENCV_HEADER_DIR` environment variable to override this behavior
 
 * 0.26.6
   * ...
