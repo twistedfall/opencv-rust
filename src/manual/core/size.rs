@@ -14,7 +14,7 @@ pub struct Size_<T> {
 
 impl<T> Size_<T> {
 	#[inline]
-	pub fn new(width: T, height: T) -> Self {
+	pub const fn new(width: T, height: T) -> Self {
 		Self { width, height }
 	}
 

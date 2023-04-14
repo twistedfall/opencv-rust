@@ -40,7 +40,7 @@ pub struct Rect_<T> {
 
 impl<T> Rect_<T> {
 	#[inline]
-	pub fn new(x: T, y: T, width: T, height: T) -> Self {
+	pub const fn new(x: T, y: T, width: T, height: T) -> Self {
 		Self { x, y, width, height }
 	}
 

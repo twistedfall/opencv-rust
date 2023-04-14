@@ -18,7 +18,7 @@ pub struct Point3_<T> {
 
 impl<T> Point3_<T> {
 	#[inline]
-	pub fn new(x: T, y: T, z: T) -> Self {
+	pub const fn new(x: T, y: T, z: T) -> Self {
 		Self { x, y, z }
 	}
 
@@ -91,7 +91,7 @@ impl<T> Point3_<T> {
 
 	#[inline]
 	pub fn to_vec3(self) -> VecN<T, 3> {
-		VecN::<_, 3>::from([self.x, self.y, self.z])
+		VecN::<_, 3>::from_array([self.x, self.y, self.z])
 	}
 }
 

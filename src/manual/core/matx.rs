@@ -109,7 +109,7 @@ pub struct Matx<T, A: SizedArray<T>> {
 
 impl<T, A: SizedArray<T>> Matx<T, A> {
 	#[inline]
-	pub fn from(s: A::Storage) -> Self {
+	pub fn from_array(s: A::Storage) -> Self {
 		Self { val: s }
 	}
 }

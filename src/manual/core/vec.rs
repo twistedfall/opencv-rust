@@ -25,10 +25,18 @@ where
 	}
 }
 
-impl<T: Copy, const N: usize> VecN<T, N> {
+impl<T, const N: usize> VecN<T, N> {
 	#[inline]
-	pub fn all(v0: T) -> Self {
-		Self::from([v0; N])
+	pub const fn from_array(val: [T; N]) -> Self {
+		Self(val)
+	}
+
+	#[inline]
+	pub fn all(v0: T) -> Self
+	where
+		T: Copy,
+	{
+		Self::from_array([v0; N])
 	}
 
 	/// per-element multiplication
@@ -36,6 +44,7 @@ impl<T: Copy, const N: usize> VecN<T, N> {
 	pub fn mul(&self, v: Self) -> Self
 	where
 		T: MulAssign,
+		Self: Copy,
 	{
 		let mut out = *self;
 		out.iter_mut().zip(v.into_iter()).for_each(|(dest, m)| *dest *= m);
@@ -46,7 +55,7 @@ impl<T: Copy, const N: usize> VecN<T, N> {
 impl<T, const N: usize> From<[T; N]> for VecN<T, N> {
 	#[inline]
 	fn from(s: [T; N]) -> Self {
-		Self(s)
+		Self::from_array(s)
 	}
 }
 
