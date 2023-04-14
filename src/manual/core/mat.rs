@@ -142,29 +142,35 @@ impl Mat {
 
 	/// Create a new `Mat` by copying the data from a 2-dimensional slice (slice of slices)
 	pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Self> {
-		let row_count = row_count_i32(s.len())?;
 		let col_count = if let Some(first_row) = s.first() {
 			col_count_i32(first_row.as_ref().len())?
 		} else {
 			0
 		};
+		let row_count = if col_count > 0 {
+			row_count_i32(s.len())?
+		} else {
+			0
+		};
 		let mut out = Self::new_rows_cols_with_default(row_count, col_count, T::opencv_type(), Scalar::all(0.))?;
-		for (row_n, row) in s.iter().enumerate() {
-			// safe because `row_count_i32` ensures that len of `s` fits `i32`
-			let row_n = row_n as i32;
-			let trg = out.at_row_mut(row_n)?;
-			let src = row.as_ref();
-			if trg.len() != src.len() {
-				return Err(Error::new(
-					core::StsUnmatchedSizes,
-					format!(
-						"Unexpected number of items: {} in a row index: {row_n}, expected: {}",
-						trg.len(),
-						src.len()
-					),
-				));
+		if row_count > 0 && col_count > 0 {
+			for (row_n, row) in s.iter().enumerate() {
+				// safe because `row_count_i32` ensures that len of `s` fits `i32`
+				let row_n = row_n as i32;
+				let trg = out.at_row_mut(row_n)?;
+				let src = row.as_ref();
+				if trg.len() != src.len() {
+					return Err(Error::new(
+						core::StsUnmatchedSizes,
+						format!(
+							"Unexpected number of items: {} in a row index: {row_n}, expected: {}",
+							trg.len(),
+							src.len()
+						),
+					));
+				}
+				trg.copy_from_slice(src);
 			}
-			trg.copy_from_slice(src);
 		}
 		Ok(out)
 	}
@@ -205,15 +211,22 @@ impl Mat {
 	#[inline]
 	pub fn iter<T: DataType>(&self) -> Result<MatIter<T>> {
 		match_format::<T>(self.typ())?;
-		Ok(MatIter {
-			iter: MatConstIterator::over(self)?,
-			_d: PhantomData,
+		Ok(if self.empty() {
+			MatIter {
+				iter: None,
+				_d: PhantomData,
+			}
+		} else {
+			MatIter {
+				iter: Some(MatConstIterator::over(self)?),
+				_d: PhantomData,
+			}
 		})
 	}
 }
 
 pub struct MatIter<'m, T> {
-	iter: MatConstIterator,
+	iter: Option<MatConstIterator>,
 	_d: PhantomData<&'m T>,
 }
 
@@ -221,14 +234,16 @@ impl<T: DataType> Iterator for MatIter<'_, T> {
 	type Item = (Point, T);
 
 	fn next(&mut self) -> Option<Self::Item> {
-		if self.iter.has_elements() {
-			let cur = self.iter.current().ok()?;
-			let out = (self.iter.pos().ok()?, *cur);
-			self.iter.seek(1, true).ok()?;
-			Some(out)
-		} else {
-			None
-		}
+		self.iter.as_mut().and_then(|iter| {
+			if iter.has_elements() {
+				let cur = iter.current().ok()?;
+				let out = (iter.pos().ok()?, *cur);
+				iter.seek(1, true).ok()?;
+				Some(out)
+			} else {
+				None
+			}
+		})
 	}
 }
 
