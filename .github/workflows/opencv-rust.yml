@@ -63,7 +63,7 @@ jobs:
           - ubuntu-20.04
           - windows-2022
         version:
-          - vcpkg: 2023.01.09
+          - vcpkg: 2023.02.24
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.version.vcpkg }}
