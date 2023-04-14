@@ -2,7 +2,7 @@ use std::ffi::c_void;
 
 use matches::assert_matches;
 
-use opencv::core::{MatConstIterator, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f, Vec4w};
+use opencv::core::{MatConstIterator, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w};
 use opencv::prelude::*;
 use opencv::types::{VectorOfMat, VectorOfi32};
 use opencv::{core, Error, Result};
@@ -874,5 +874,31 @@ fn mat_from_slice() -> Result<()> {
 		assert_eq!(Point2d::new(50.5, 60.6), *mat.at_2d(1, 0)?);
 	}
 
+	Ok(())
+}
+
+#[test]
+fn mat_custom_data_type() -> Result<()> {
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug)]
+	struct A {
+		a: i16,
+		b: i16,
+	}
+
+	unsafe impl DataType for A {
+		fn opencv_depth() -> i32 {
+			core::CV_16S
+		}
+
+		fn opencv_channels() -> i32 {
+			2
+		}
+	}
+
+	let m = Mat::new_rows_cols_with_default(10, 10, Vec2s::opencv_type(), Scalar::new(-10., 20., 0., 0.))?;
+	let data = m.data_typed::<A>()?;
+	assert!(!data.is_empty());
+	assert!(data.iter().all(|el| el.a == -10 && el.b == 20));
 	Ok(())
 }

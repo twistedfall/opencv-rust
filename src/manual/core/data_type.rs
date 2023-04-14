@@ -13,11 +13,22 @@ pub const fn CV_MAKETYPE(depth: i32, cn: i32) -> i32 {
 	CV_MAT_DEPTH(depth) + ((cn - 1) << core::CV_CN_SHIFT)
 }
 
-/// This sealed trait is implemented for types that are valid to use as Mat elements
-pub trait DataType: Copy + private::Sealed {
+/// Implement this trait types that are valid to use as Mat elements.
+///
+/// # Safety
+/// Types implementing this trait must adhere to the memory layout compatible declared by the values
+/// returned by `opencv_depth()` and `opencv_channels()` functions.
+pub unsafe trait DataType: Copy {
+	/// The shape of bytes occupied by the single layer/channel of the element. E.g. for an 8-bit BGR
+	/// image it's `CV_8U` because a single channel for a pixel is unsigned 8 bits. You should use one
+	/// of the depth constants for this like `CV_8U`, `CV_8S`, `CV_32F`, etc.
 	fn opencv_depth() -> i32;
+
+	/// Amount of layers/channels per element. E.g. for an 8-bit BGR image it's 3 because one pixel
+	/// consists of 3 channels: B, G and R.
 	fn opencv_channels() -> i32;
 
+	/// OpenCV value for this type as produced by `CV_MAKETYPE()` function
 	#[inline]
 	fn opencv_type() -> i32 {
 		CV_MAKETYPE(Self::opencv_depth(), Self::opencv_channels())
@@ -44,7 +55,7 @@ pub trait DataType: Copy + private::Sealed {
 
 macro_rules! data_type {
 	($rust_type: ty, $mat_depth: expr, $channels: expr) => {
-		impl $crate::core::DataType for $rust_type {
+		unsafe impl $crate::core::DataType for $rust_type {
 			#[inline]
 			fn opencv_depth() -> i32 {
 				$mat_depth
@@ -55,8 +66,6 @@ macro_rules! data_type {
 				$channels
 			}
 		}
-
-		impl private::Sealed for $rust_type {}
 	};
 }
 
@@ -88,7 +97,7 @@ data_type!(rgb::alt::BGRA8, core::CV_8U, 4);
 #[cfg(feature = "rgb")]
 data_type!(rgb::alt::ABGR8, core::CV_8U, 4);
 
-impl<T: DataType, const N: usize> DataType for VecN<T, N> {
+unsafe impl<T: DataType, const N: usize> DataType for VecN<T, N> {
 	#[inline]
 	fn opencv_depth() -> i32 {
 		T::opencv_depth()
@@ -100,7 +109,7 @@ impl<T: DataType, const N: usize> DataType for VecN<T, N> {
 	}
 }
 
-impl<T: DataType> DataType for Point_<T> {
+unsafe impl<T: DataType> DataType for Point_<T> {
 	#[inline]
 	fn opencv_depth() -> i32 {
 		T::opencv_depth()
@@ -112,7 +121,7 @@ impl<T: DataType> DataType for Point_<T> {
 	}
 }
 
-impl<T: DataType> DataType for Point3_<T> {
+unsafe impl<T: DataType> DataType for Point3_<T> {
 	#[inline]
 	fn opencv_depth() -> i32 {
 		T::opencv_depth()
@@ -124,7 +133,7 @@ impl<T: DataType> DataType for Point3_<T> {
 	}
 }
 
-impl<T: DataType> DataType for Size_<T> {
+unsafe impl<T: DataType> DataType for Size_<T> {
 	#[inline]
 	fn opencv_depth() -> i32 {
 		T::opencv_depth()
@@ -136,7 +145,7 @@ impl<T: DataType> DataType for Size_<T> {
 	}
 }
 
-impl<T: DataType> DataType for Rect_<T> {
+unsafe impl<T: DataType> DataType for Rect_<T> {
 	#[inline]
 	fn opencv_depth() -> i32 {
 		T::opencv_depth()
@@ -147,17 +156,3 @@ impl<T: DataType> DataType for Rect_<T> {
 		4
 	}
 }
-
-mod private {
-	pub trait Sealed {}
-}
-
-impl<T: DataType, const N: usize> private::Sealed for VecN<T, N> {}
-
-impl<T: DataType> private::Sealed for Point_<T> {}
-
-impl<T: DataType> private::Sealed for Point3_<T> {}
-
-impl<T: DataType> private::Sealed for Size_<T> {}
-
-impl<T: DataType> private::Sealed for Rect_<T> {}
