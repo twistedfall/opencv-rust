@@ -91,6 +91,9 @@ pub fn render_doc_comment_with_processor(
 	out.replace_in_place_regex(&CODE, "```C++");
 	out.replace_in_place("@endcode", "```\n");
 
+	// name block
+	out.replace_in_place("@name ", "");
+
 	// snippets
 	static SNIPPET: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@snippet\s+([\w/.]+)\s+([\w-]+)"#).unwrap());
 	out.replace_in_place_regex_cb(&SNIPPET, |s, caps| {

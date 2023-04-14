@@ -845,7 +845,7 @@ pub mod videoio {
 	
 	opencv_type_enum! { crate::videoio::VideoCaptureAPIs }
 	
-	/// @name OBSENSOR (for Orbbec 3D-Sensor device/module )
+	/// OBSENSOR (for Orbbec 3D-Sensor device/module )
 	/// 
 	/// //! OBSENSOR data given from image generator
 	#[repr(C)]

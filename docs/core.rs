@@ -1848,7 +1848,7 @@ pub mod core {
 	pub type Size2l = core::Size_<i64>;
 	pub type SparseMat_const_iterator = core::SparseMatConstIterator;
 	pub type SparseMat_iterator = core::SparseMatIterator;
-	/// @name Shorter aliases for the most popular specializations of Vec<T,n>
+	/// Shorter aliases for the most popular specializations of Vec<T,n>
 	pub type Vec2b = core::VecN<u8, 2>;
 	pub type Vec2d = core::VecN<f64, 2>;
 	pub type Vec2f = core::VecN<f32, 2>;
@@ -16122,53 +16122,53 @@ pub mod core {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct Moments {
-		/// @name spatial moments
+		/// spatial moments
 		pub m00: f64,
-		/// @name spatial moments
+		/// spatial moments
 		pub m10: f64,
-		/// @name spatial moments
+		/// spatial moments
 		pub m01: f64,
-		/// @name spatial moments
+		/// spatial moments
 		pub m20: f64,
-		/// @name spatial moments
+		/// spatial moments
 		pub m11: f64,
-		/// @name spatial moments
+		/// spatial moments
 		pub m02: f64,
-		/// @name spatial moments
+		/// spatial moments
 		pub m30: f64,
-		/// @name spatial moments
+		/// spatial moments
 		pub m21: f64,
-		/// @name spatial moments
+		/// spatial moments
 		pub m12: f64,
-		/// @name spatial moments
+		/// spatial moments
 		pub m03: f64,
-		/// @name central moments
+		/// central moments
 		pub mu20: f64,
-		/// @name central moments
+		/// central moments
 		pub mu11: f64,
-		/// @name central moments
+		/// central moments
 		pub mu02: f64,
-		/// @name central moments
+		/// central moments
 		pub mu30: f64,
-		/// @name central moments
+		/// central moments
 		pub mu21: f64,
-		/// @name central moments
+		/// central moments
 		pub mu12: f64,
-		/// @name central moments
+		/// central moments
 		pub mu03: f64,
-		/// @name central normalized moments
+		/// central normalized moments
 		pub nu20: f64,
-		/// @name central normalized moments
+		/// central normalized moments
 		pub nu11: f64,
-		/// @name central normalized moments
+		/// central normalized moments
 		pub nu02: f64,
-		/// @name central normalized moments
+		/// central normalized moments
 		pub nu30: f64,
-		/// @name central normalized moments
+		/// central normalized moments
 		pub nu21: f64,
-		/// @name central normalized moments
+		/// central normalized moments
 		pub nu12: f64,
-		/// @name central normalized moments
+		/// central normalized moments
 		pub nu03: f64,
 	}
 	
