@@ -16,7 +16,8 @@ pub enum Kind {
 	Simple,
 	Boxed,
 	System,
-	Excluded,
+	/// Class is something else, generally ignored
+	Other,
 }
 
 #[derive(Clone)]
@@ -60,7 +61,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn kind(&self) -> Kind {
 		if settings::ELEMENT_EXCLUDE.contains(self.cpp_name(CppNameStyle::Reference).as_ref()) {
-			return Kind::Excluded;
+			return Kind::Other;
 		}
 		match self.gen_env.get_export_config(self.entity).map(|c| c.simple) {
 			Some(true) => {
@@ -80,7 +81,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						_ => kind,
 					}
 				} else {
-					Kind::Excluded
+					Kind::Other
 				}
 			}
 		}
@@ -347,8 +348,8 @@ impl<'tu> EntityElement<'tu> for Class<'tu, '_> {
 
 impl Element for Class<'_, '_> {
 	fn is_excluded(&self) -> bool {
-		DefaultElement::is_excluded(self) || matches!(self.kind(), Kind::Excluded) || self.cpp_namespace() == ""
 		// we don't process out of namespace (legacy C) items, so mark them as excluded
+		DefaultElement::is_excluded(self) || matches!(self.kind(), Kind::Other) || self.cpp_namespace() == ""
 	}
 
 	fn is_ignored(&self) -> bool {
