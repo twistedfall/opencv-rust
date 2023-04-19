@@ -1,3 +1,6 @@
+* 0.80.0
+  * Generate default constructors for some classes that were missing any form of construction.
+
 * 0.79.0
   * `DataType` can now be implemented by downstream types that will allow storage of the some custom types inside `Mat`.
     Previously this trait was sealed, now it's an unsafe trait because types must guarantee the memory layout.0
