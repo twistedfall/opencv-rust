@@ -27,6 +27,9 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	static IMPL_DEFAULT_TPL: Lazy<CompiledInterpolation> =
 		Lazy::new(|| include_str!("tpl/class/impl_default.tpl.rs").compile_interpolation());
 
+	static DEFAULT_CTOR: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/default_ctor.tpl.rs").compile_interpolation());
+
 	static SIMPLE_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/simple.tpl.rs").compile_interpolation());
 
 	static SIMPLE_FIELD_TPL: Lazy<CompiledInterpolation> =
@@ -51,14 +54,14 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	let type_ref = c.type_ref();
 	let is_trait = c.is_trait();
 	let is_abstract = c.is_abstract();
-	let is_simple = c.is_simple();
+	let class_kind = c.kind();
 	let doc_comment = c.rendered_doc_comment(opencv_version);
 
 	let mut out = String::new();
 
 	let consts = c.consts();
 	let fields = c.fields();
-	let (mut const_methods, mut mut_methods) = if is_simple {
+	let (mut const_methods, mut mut_methods) = if class_kind.is_simple() {
 		(vec![], vec![])
 	} else {
 		(
@@ -177,7 +180,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			a.cpp_name(CppNameStyle::Declaration)
 				.cmp(&b.cpp_name(CppNameStyle::Declaration))
 		});
-		if !is_simple {
+		if !class_kind.is_simple() {
 			if c.is_polymorphic() {
 				let mut descendants = c
 					.descendants()
@@ -217,7 +220,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.into_iter()
 			.map(|base| {
 				let base_type_ref = base.type_ref();
-				let tpl = if is_simple {
+				let tpl = if class_kind.is_simple() {
 					&SIMPLE_BASE_TPL
 				} else {
 					&BASE_TPL
@@ -233,7 +236,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			})
 			.collect::<Vec<_>>();
 
-		let fields = if is_simple {
+		let fields = if class_kind.is_simple() {
 			fields
 				.into_iter()
 				.map(|f| {
@@ -260,12 +263,25 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let mut inherent_methods = String::with_capacity(512 * (const_methods.len() + mut_methods.len()));
 		let mut inherent_methods_pool = NamePool::with_capacity(method_count);
 
+		let mut needs_default_impl = false;
 		if let Some(def_cons) = mut_methods.iter().find(|m| m.is_default_constructor() && !m.is_excluded()) {
 			if def_cons.is_infallible() {
-				impls += &IMPL_DEFAULT_TPL.interpolate(&hashmap! {
-					"rust_local" => rust_local.as_ref(),
-				});
+				needs_default_impl = true;
 			}
+		}
+		let needs_default_ctor = needs_default_ctor(class_kind, c, const_methods.iter().chain(mut_methods.iter()));
+		if needs_default_ctor {
+			inherent_methods.push_str(&DEFAULT_CTOR.interpolate(&hashmap! {
+				"rust_local" => rust_local.as_ref(),
+			}));
+			inherent_methods_pool.add_name("default");
+			needs_default_impl = true;
+		}
+
+		if needs_default_impl {
+			impls += &IMPL_DEFAULT_TPL.interpolate(&hashmap! {
+				"rust_local" => rust_local.as_ref(),
+			});
 		}
 
 		inherent_methods.push_str(&if is_trait {
@@ -285,7 +301,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			)
 		});
 
-		let tpl = if is_simple {
+		let tpl = if class_kind.is_simple() {
 			&SIMPLE_TPL
 		} else {
 			&BOXED_TPL
@@ -483,39 +499,71 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 			Kind::Simple | Kind::System | Kind::Other => "".to_string(),
 		};
 
-		let mut methods: Vec<_> = self
-			.methods(None)
+		let methods = self.methods(None);
+
+		let needs_default_ctor = needs_default_ctor(self.kind(), self, methods.iter());
+
+		let mut cpp_methods: Vec<_> = methods
 			.into_iter()
 			.filter(|m| !m.is_excluded())
 			.map(|m| m.gen_cpp())
 			.collect();
 
-		if self.has_implicit_clone() {
+		let has_implicit_clone = self.has_implicit_clone();
+
+		if has_implicit_clone || needs_default_ctor {
 			let rust_local = self.rust_name(NameStyle::decl());
 			let type_ref = self.type_ref();
-
-			methods.push(
-				CppFuncDesc {
-					extern_name: format!("cv_{rust_local}_implicit_clone").into(),
-					constness: Constness::Const,
-					is_infallible: true,
-					is_naked_return: true,
-					return_type: type_ref.clone(),
-					kind: FuncDescKind::Function,
-					type_hint: FunctionTypeHint::None,
-					call: FuncDescCppCall::ManualFullCall("".compile_interpolation()),
-					ret: FuncDescReturn::Manual(
-						format!("return {};", cpp_return_map(&type_ref, "*val", false).0).compile_interpolation(),
-					),
-					debug: "".to_string(),
-					arguments: vec![("val".to_string(), type_ref)],
-				}
-				.gen_cpp(),
-			);
+			if has_implicit_clone {
+				cpp_methods.push(method_implicit_clone(&rust_local, type_ref.clone()));
+			}
+			if needs_default_ctor {
+				cpp_methods.push(method_default_new(&rust_local, type_ref));
+			}
 		}
 
-		out + &methods.join("")
+		out + &cpp_methods.join("")
 	}
+}
+
+fn needs_default_ctor<'r>(kind: Kind, c: &Class, mut methods: impl Iterator<Item = &'r Func<'r, 'r>>) -> bool {
+	matches!(kind, Kind::BoxedForced)
+		&& !c.is_abstract()
+		&& methods.all(|m| !m.kind().as_constructor().is_some() || m.is_excluded())
+}
+
+fn method_default_new(rust_local: &str, type_ref: TypeRef) -> String {
+	CppFuncDesc {
+		extern_name: format!("cv_{rust_local}_default_new").into(),
+		constness: Constness::Const,
+		is_infallible: true,
+		is_naked_return: true,
+		return_type: type_ref,
+		kind: FuncDescKind::Function,
+		type_hint: FunctionTypeHint::None,
+		call: FuncDescCppCall::ManualFullCall("return new {{ret_type}}();".compile_interpolation()),
+		ret: FuncDescReturn::Manual("".compile_interpolation()),
+		debug: "".to_string(),
+		arguments: vec![],
+	}
+	.gen_cpp()
+}
+
+fn method_implicit_clone(rust_local: &str, type_ref: TypeRef) -> String {
+	CppFuncDesc {
+		extern_name: format!("cv_{rust_local}_implicit_clone").into(),
+		constness: Constness::Const,
+		is_infallible: true,
+		is_naked_return: true,
+		return_type: type_ref.clone(),
+		kind: FuncDescKind::Function,
+		type_hint: FunctionTypeHint::None,
+		call: FuncDescCppCall::ManualFullCall("".compile_interpolation()),
+		ret: FuncDescReturn::Manual(format!("return {};", cpp_return_map(&type_ref, "*val", false).0).compile_interpolation()),
+		debug: "".to_string(),
+		arguments: vec![("val".to_string(), type_ref)],
+	}
+	.gen_cpp()
 }
 
 fn method_delete(rust_local: &str, class_desc: ClassDesc, void: TypeRef) -> String {

@@ -47,13 +47,17 @@ impl Default for ExportConfig {
 
 impl ExportConfig {
 	/// Doesn't change export config, but putting it into `ELEMENT_EXPORT_TWEAK` will force the creation of the default `ExportConfig`
-	pub fn make_export(_: &mut ExportConfig) {}
+	pub fn export(_: &mut ExportConfig) {}
 
-	pub fn make_boxed(src: &mut ExportConfig) {
+	pub fn override_boxed(src: &mut ExportConfig) {
+		src.simplicity = ClassSimplicity::Boxed
+	}
+
+	pub fn force_boxed(src: &mut ExportConfig) {
 		src.simplicity = ClassSimplicity::BoxedForced
 	}
 
-	pub fn make_simple(src: &mut ExportConfig) {
+	pub fn simple(src: &mut ExportConfig) {
 		src.simplicity = ClassSimplicity::Simple;
 	}
 }
