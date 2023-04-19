@@ -1357,9 +1357,7 @@ pub mod viz {
 	impl Clone for Mesh {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Mesh_implicit_clone(val: extern_send!(Mesh)) -> extern_receive!(Mesh: 'static);
-			}
+			extern "C" { fn cv_Mesh_implicit_clone(val: extern_send!(Mesh)) -> extern_receive!(Mesh: 'static); }
 			unsafe { Self::from_raw(cv_Mesh_implicit_clone(self.as_raw_Mesh())) }
 		}
 	}

@@ -3576,9 +3576,7 @@ pub mod stitching {
 	impl Clone for Detail_CameraParams {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Detail_CameraParams_implicit_clone(val: extern_send!(Detail_CameraParams)) -> extern_receive!(Detail_CameraParams: 'static);
-			}
+			extern "C" { fn cv_Detail_CameraParams_implicit_clone(val: extern_send!(Detail_CameraParams)) -> extern_receive!(Detail_CameraParams: 'static); }
 			unsafe { Self::from_raw(cv_Detail_CameraParams_implicit_clone(self.as_raw_Detail_CameraParams())) }
 		}
 	}
@@ -5828,15 +5826,26 @@ pub mod stitching {
 	}
 	
 	impl Detail_ImageFeatures {
+		fn default() -> Self {
+			extern "C" { fn cv_Detail_ImageFeatures_default_new() -> extern_receive!(Detail_ImageFeatures: 'static); }
+			unsafe { Self::from_raw(cv_Detail_ImageFeatures_default_new()) }
+		}
+		
 	}
 	
 	impl Clone for Detail_ImageFeatures {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Detail_ImageFeatures_implicit_clone(val: extern_send!(Detail_ImageFeatures)) -> extern_receive!(Detail_ImageFeatures: 'static);
-			}
+			extern "C" { fn cv_Detail_ImageFeatures_implicit_clone(val: extern_send!(Detail_ImageFeatures)) -> extern_receive!(Detail_ImageFeatures: 'static); }
 			unsafe { Self::from_raw(cv_Detail_ImageFeatures_implicit_clone(self.as_raw_Detail_ImageFeatures())) }
+		}
+	}
+	
+	impl Default for Detail_ImageFeatures {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -6024,9 +6033,7 @@ pub mod stitching {
 	impl Clone for Detail_MatchesInfo {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Detail_MatchesInfo_implicit_clone(val: extern_send!(Detail_MatchesInfo)) -> extern_receive!(Detail_MatchesInfo: 'static);
-			}
+			extern "C" { fn cv_Detail_MatchesInfo_implicit_clone(val: extern_send!(Detail_MatchesInfo)) -> extern_receive!(Detail_MatchesInfo: 'static); }
 			unsafe { Self::from_raw(cv_Detail_MatchesInfo_implicit_clone(self.as_raw_Detail_MatchesInfo())) }
 		}
 	}
@@ -7437,15 +7444,26 @@ pub mod stitching {
 	}
 	
 	impl Detail_ProjectorBase {
+		fn default() -> Self {
+			extern "C" { fn cv_Detail_ProjectorBase_default_new() -> extern_receive!(Detail_ProjectorBase: 'static); }
+			unsafe { Self::from_raw(cv_Detail_ProjectorBase_default_new()) }
+		}
+		
 	}
 	
 	impl Clone for Detail_ProjectorBase {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Detail_ProjectorBase_implicit_clone(val: extern_send!(Detail_ProjectorBase)) -> extern_receive!(Detail_ProjectorBase: 'static);
-			}
+			extern "C" { fn cv_Detail_ProjectorBase_implicit_clone(val: extern_send!(Detail_ProjectorBase)) -> extern_receive!(Detail_ProjectorBase: 'static); }
 			unsafe { Self::from_raw(cv_Detail_ProjectorBase_implicit_clone(self.as_raw_Detail_ProjectorBase())) }
+		}
+	}
+	
+	impl Default for Detail_ProjectorBase {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7819,19 +7837,30 @@ pub mod stitching {
 	}
 	
 	impl Detail_SphericalProjector {
+		fn default() -> Self {
+			extern "C" { fn cv_Detail_SphericalProjector_default_new() -> extern_receive!(Detail_SphericalProjector: 'static); }
+			unsafe { Self::from_raw(cv_Detail_SphericalProjector_default_new()) }
+		}
+		
 	}
 	
 	impl Clone for Detail_SphericalProjector {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Detail_SphericalProjector_implicit_clone(val: extern_send!(Detail_SphericalProjector)) -> extern_receive!(Detail_SphericalProjector: 'static);
-			}
+			extern "C" { fn cv_Detail_SphericalProjector_implicit_clone(val: extern_send!(Detail_SphericalProjector)) -> extern_receive!(Detail_SphericalProjector: 'static); }
 			unsafe { Self::from_raw(cv_Detail_SphericalProjector_implicit_clone(self.as_raw_Detail_SphericalProjector())) }
 		}
 	}
 	
 	boxed_cast_base! { Detail_SphericalProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_SphericalProjector_to_Detail_ProjectorBase }
+	
+	impl Default for Detail_SphericalProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
 	
 	/// Constant methods for [crate::stitching::Detail_SphericalWarper]
 	pub trait Detail_SphericalWarperTraitConst {

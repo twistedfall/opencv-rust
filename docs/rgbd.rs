@@ -3747,9 +3747,7 @@ pub mod rgbd {
 	impl Clone for Linemod_Match {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Linemod_Match_implicit_clone(val: extern_send!(Linemod_Match)) -> extern_receive!(Linemod_Match: 'static);
-			}
+			extern "C" { fn cv_Linemod_Match_implicit_clone(val: extern_send!(Linemod_Match)) -> extern_receive!(Linemod_Match: 'static); }
 			unsafe { Self::from_raw(cv_Linemod_Match_implicit_clone(self.as_raw_Linemod_Match())) }
 		}
 	}
@@ -3995,15 +3993,26 @@ pub mod rgbd {
 	}
 	
 	impl Linemod_Template {
+		fn default() -> Self {
+			extern "C" { fn cv_Linemod_Template_default_new() -> extern_receive!(Linemod_Template: 'static); }
+			unsafe { Self::from_raw(cv_Linemod_Template_default_new()) }
+		}
+		
 	}
 	
 	impl Clone for Linemod_Template {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Linemod_Template_implicit_clone(val: extern_send!(Linemod_Template)) -> extern_receive!(Linemod_Template: 'static);
-			}
+			extern "C" { fn cv_Linemod_Template_implicit_clone(val: extern_send!(Linemod_Template)) -> extern_receive!(Linemod_Template: 'static); }
 			unsafe { Self::from_raw(cv_Linemod_Template_implicit_clone(self.as_raw_Linemod_Template())) }
+		}
+	}
+	
+	impl Default for Linemod_Template {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	

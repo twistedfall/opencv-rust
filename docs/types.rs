@@ -9696,7 +9696,7 @@ mod gapi_types {
 		cv_VectorOfGMat_get, cv_VectorOfGMat_set,
 		cv_VectorOfGMat_push, cv_VectorOfGMat_insert,
 	}
-	vector_non_copy_or_bool! { crate::gapi::GMat }
+	vector_non_copy_or_bool! { clone crate::gapi::GMat }
 	
 	pub type VectorOfGRunArg = core::Vector<crate::gapi::GRunArg>;
 	

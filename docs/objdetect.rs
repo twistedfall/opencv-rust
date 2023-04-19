@@ -1284,9 +1284,7 @@ pub mod objdetect {
 	impl Clone for DetectionBasedTracker_ExtObject {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_DetectionBasedTracker_ExtObject_implicit_clone(val: extern_send!(DetectionBasedTracker_ExtObject)) -> extern_receive!(DetectionBasedTracker_ExtObject: 'static);
-			}
+			extern "C" { fn cv_DetectionBasedTracker_ExtObject_implicit_clone(val: extern_send!(DetectionBasedTracker_ExtObject)) -> extern_receive!(DetectionBasedTracker_ExtObject: 'static); }
 			unsafe { Self::from_raw(cv_DetectionBasedTracker_ExtObject_implicit_clone(self.as_raw_DetectionBasedTracker_ExtObject())) }
 		}
 	}
@@ -3323,9 +3321,7 @@ pub mod objdetect {
 	impl Clone for Board {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Board_implicit_clone(val: extern_send!(Board)) -> extern_receive!(Board: 'static);
-			}
+			extern "C" { fn cv_Board_implicit_clone(val: extern_send!(Board)) -> extern_receive!(Board: 'static); }
 			unsafe { Self::from_raw(cv_Board_implicit_clone(self.as_raw_Board())) }
 		}
 	}
@@ -3498,9 +3494,7 @@ pub mod objdetect {
 	impl Clone for CharucoBoard {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_CharucoBoard_implicit_clone(val: extern_send!(CharucoBoard)) -> extern_receive!(CharucoBoard: 'static);
-			}
+			extern "C" { fn cv_CharucoBoard_implicit_clone(val: extern_send!(CharucoBoard)) -> extern_receive!(CharucoBoard: 'static); }
 			unsafe { Self::from_raw(cv_CharucoBoard_implicit_clone(self.as_raw_CharucoBoard())) }
 		}
 	}
@@ -3838,9 +3832,7 @@ pub mod objdetect {
 	impl Clone for CharucoParameters {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_CharucoParameters_implicit_clone(val: extern_send!(CharucoParameters)) -> extern_receive!(CharucoParameters: 'static);
-			}
+			extern "C" { fn cv_CharucoParameters_implicit_clone(val: extern_send!(CharucoParameters)) -> extern_receive!(CharucoParameters: 'static); }
 			unsafe { Self::from_raw(cv_CharucoParameters_implicit_clone(self.as_raw_CharucoParameters())) }
 		}
 	}
@@ -4421,9 +4413,7 @@ pub mod objdetect {
 	impl Clone for DetectorParameters {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_DetectorParameters_implicit_clone(val: extern_send!(DetectorParameters)) -> extern_receive!(DetectorParameters: 'static);
-			}
+			extern "C" { fn cv_DetectorParameters_implicit_clone(val: extern_send!(DetectorParameters)) -> extern_receive!(DetectorParameters: 'static); }
 			unsafe { Self::from_raw(cv_DetectorParameters_implicit_clone(self.as_raw_DetectorParameters())) }
 		}
 	}
@@ -4638,9 +4628,7 @@ pub mod objdetect {
 	impl Clone for Dictionary {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Dictionary_implicit_clone(val: extern_send!(Dictionary)) -> extern_receive!(Dictionary: 'static);
-			}
+			extern "C" { fn cv_Dictionary_implicit_clone(val: extern_send!(Dictionary)) -> extern_receive!(Dictionary: 'static); }
 			unsafe { Self::from_raw(cv_Dictionary_implicit_clone(self.as_raw_Dictionary())) }
 		}
 	}
@@ -4757,9 +4745,7 @@ pub mod objdetect {
 	impl Clone for GridBoard {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_GridBoard_implicit_clone(val: extern_send!(GridBoard)) -> extern_receive!(GridBoard: 'static);
-			}
+			extern "C" { fn cv_GridBoard_implicit_clone(val: extern_send!(GridBoard)) -> extern_receive!(GridBoard: 'static); }
 			unsafe { Self::from_raw(cv_GridBoard_implicit_clone(self.as_raw_GridBoard())) }
 		}
 	}

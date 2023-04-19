@@ -8565,9 +8565,7 @@ pub mod imgproc {
 	impl Clone for IntelligentScissorsMB {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_IntelligentScissorsMB_implicit_clone(val: extern_send!(IntelligentScissorsMB)) -> extern_receive!(IntelligentScissorsMB: 'static);
-			}
+			extern "C" { fn cv_IntelligentScissorsMB_implicit_clone(val: extern_send!(IntelligentScissorsMB)) -> extern_receive!(IntelligentScissorsMB: 'static); }
 			unsafe { Self::from_raw(cv_IntelligentScissorsMB_implicit_clone(self.as_raw_IntelligentScissorsMB())) }
 		}
 	}

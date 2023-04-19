@@ -448,9 +448,7 @@ pub mod tracking {
 	impl Clone for TrackerCSRT_Params {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_TrackerCSRT_Params_implicit_clone(val: extern_send!(TrackerCSRT_Params)) -> extern_receive!(TrackerCSRT_Params: 'static);
-			}
+			extern "C" { fn cv_TrackerCSRT_Params_implicit_clone(val: extern_send!(TrackerCSRT_Params)) -> extern_receive!(TrackerCSRT_Params: 'static); }
 			unsafe { Self::from_raw(cv_TrackerCSRT_Params_implicit_clone(self.as_raw_TrackerCSRT_Params())) }
 		}
 	}

@@ -166,9 +166,7 @@ pub mod cvv {
 	impl Clone for CallMetaData {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_CallMetaData_implicit_clone(val: extern_send!(CallMetaData)) -> extern_receive!(CallMetaData: 'static);
-			}
+			extern "C" { fn cv_CallMetaData_implicit_clone(val: extern_send!(CallMetaData)) -> extern_receive!(CallMetaData: 'static); }
 			unsafe { Self::from_raw(cv_CallMetaData_implicit_clone(self.as_raw_CallMetaData())) }
 		}
 	}

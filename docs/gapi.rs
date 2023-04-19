@@ -4595,6 +4595,27 @@ pub mod gapi {
 	}
 	
 	impl GArrayDesc {
+		fn default() -> Self {
+			extern "C" { fn cv_GArrayDesc_default_new() -> extern_receive!(GArrayDesc: 'static); }
+			unsafe { Self::from_raw(cv_GArrayDesc_default_new()) }
+		}
+		
+	}
+	
+	impl Clone for GArrayDesc {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GArrayDesc_implicit_clone(val: extern_send!(GArrayDesc)) -> extern_receive!(GArrayDesc: 'static); }
+			unsafe { Self::from_raw(cv_GArrayDesc_implicit_clone(self.as_raw_GArrayDesc())) }
+		}
+	}
+	
+	impl Default for GArrayDesc {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GCall]
@@ -5668,6 +5689,14 @@ pub mod gapi {
 		
 	}
 	
+	impl Clone for GFrame {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GFrame_implicit_clone(val: extern_send!(GFrame)) -> extern_receive!(GFrame: 'static); }
+			unsafe { Self::from_raw(cv_GFrame_implicit_clone(self.as_raw_GFrame())) }
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GFrameDesc]
 	pub trait GFrameDescTraitConst {
 		fn as_raw_GFrameDesc(&self) -> *const c_void;
@@ -6052,6 +6081,27 @@ pub mod gapi {
 	}
 	
 	impl GKernelPackage {
+		fn default() -> Self {
+			extern "C" { fn cv_GKernelPackage_default_new() -> extern_receive!(GKernelPackage: 'static); }
+			unsafe { Self::from_raw(cv_GKernelPackage_default_new()) }
+		}
+		
+	}
+	
+	impl Clone for GKernelPackage {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GKernelPackage_implicit_clone(val: extern_send!(GKernelPackage)) -> extern_receive!(GKernelPackage: 'static); }
+			unsafe { Self::from_raw(cv_GKernelPackage_implicit_clone(self.as_raw_GKernelPackage())) }
+		}
+	}
+	
+	impl Default for GKernelPackage {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GMat]
@@ -6143,6 +6193,14 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl Clone for GMat {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GMat_implicit_clone(val: extern_send!(GMat)) -> extern_receive!(GMat: 'static); }
+			unsafe { Self::from_raw(cv_GMat_implicit_clone(self.as_raw_GMat())) }
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GMatDesc]
@@ -6414,6 +6472,14 @@ pub mod gapi {
 		
 	}
 	
+	impl Clone for GMatDesc {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GMatDesc_implicit_clone(val: extern_send!(GMatDesc)) -> extern_receive!(GMatDesc: 'static); }
+			unsafe { Self::from_raw(cv_GMatDesc_implicit_clone(self.as_raw_GMatDesc())) }
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GMatP]
 	pub trait GMatPTraitConst: crate::gapi::GMatTraitConst {
 		fn as_raw_GMatP(&self) -> *const c_void;
@@ -6508,6 +6574,27 @@ pub mod gapi {
 	}
 	
 	impl GOpaqueDesc {
+		fn default() -> Self {
+			extern "C" { fn cv_GOpaqueDesc_default_new() -> extern_receive!(GOpaqueDesc: 'static); }
+			unsafe { Self::from_raw(cv_GOpaqueDesc_default_new()) }
+		}
+		
+	}
+	
+	impl Clone for GOpaqueDesc {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GOpaqueDesc_implicit_clone(val: extern_send!(GOpaqueDesc)) -> extern_receive!(GOpaqueDesc: 'static); }
+			unsafe { Self::from_raw(cv_GOpaqueDesc_implicit_clone(self.as_raw_GOpaqueDesc())) }
+		}
+	}
+	
+	impl Default for GOpaqueDesc {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GRunArg]
@@ -6748,6 +6835,14 @@ pub mod gapi {
 		
 	}
 	
+	impl Clone for GScalar {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GScalar_implicit_clone(val: extern_send!(GScalar)) -> extern_receive!(GScalar: 'static); }
+			unsafe { Self::from_raw(cv_GScalar_implicit_clone(self.as_raw_GScalar())) }
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GScalarDesc]
 	pub trait GScalarDescTraitConst {
 		fn as_raw_GScalarDesc(&self) -> *const c_void;
@@ -6803,6 +6898,27 @@ pub mod gapi {
 	}
 	
 	impl GScalarDesc {
+		fn default() -> Self {
+			extern "C" { fn cv_GScalarDesc_default_new() -> extern_receive!(GScalarDesc: 'static); }
+			unsafe { Self::from_raw(cv_GScalarDesc_default_new()) }
+		}
+		
+	}
+	
+	impl Clone for GScalarDesc {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GScalarDesc_implicit_clone(val: extern_send!(GScalarDesc)) -> extern_receive!(GScalarDesc: 'static); }
+			unsafe { Self::from_raw(cv_GScalarDesc_implicit_clone(self.as_raw_GScalarDesc())) }
+		}
+	}
+	
+	impl Default for GScalarDesc {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GStreamingCompiled]
@@ -7012,6 +7128,14 @@ pub mod gapi {
 		
 	}
 	
+	impl Clone for GStreamingCompiled {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GStreamingCompiled_implicit_clone(val: extern_send!(GStreamingCompiled)) -> extern_receive!(GStreamingCompiled: 'static); }
+			unsafe { Self::from_raw(cv_GStreamingCompiled_implicit_clone(self.as_raw_GStreamingCompiled())) }
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GTransform]
 	pub trait GTransformTraitConst {
 		fn as_raw_GTransform(&self) -> *const c_void;
@@ -7128,15 +7252,26 @@ pub mod gapi {
 	}
 	
 	impl GTypeInfo {
+		fn default() -> Self {
+			extern "C" { fn cv_GTypeInfo_default_new() -> extern_receive!(GTypeInfo: 'static); }
+			unsafe { Self::from_raw(cv_GTypeInfo_default_new()) }
+		}
+		
 	}
 	
 	impl Clone for GTypeInfo {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_GTypeInfo_implicit_clone(val: extern_send!(GTypeInfo)) -> extern_receive!(GTypeInfo: 'static);
-			}
+			extern "C" { fn cv_GTypeInfo_implicit_clone(val: extern_send!(GTypeInfo)) -> extern_receive!(GTypeInfo: 'static); }
 			unsafe { Self::from_raw(cv_GTypeInfo_implicit_clone(self.as_raw_GTypeInfo())) }
+		}
+	}
+	
+	impl Default for GTypeInfo {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8280,6 +8415,14 @@ pub mod gapi {
 		
 	}
 	
+	impl Clone for Image {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_Image_implicit_clone(val: extern_send!(Image)) -> extern_receive!(Image: 'static); }
+			unsafe { Self::from_raw(cv_Image_implicit_clone(self.as_raw_Image())) }
+		}
+	}
+	
 	impl Default for Image {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -8535,6 +8678,14 @@ pub mod gapi {
 			ret
 		}
 		
+	}
+	
+	impl Clone for Poly {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_Poly_implicit_clone(val: extern_send!(Poly)) -> extern_receive!(Poly: 'static); }
+			unsafe { Self::from_raw(cv_Poly_implicit_clone(self.as_raw_Poly())) }
+		}
 	}
 	
 	impl Default for Poly {
@@ -8797,6 +8948,14 @@ pub mod gapi {
 			ret
 		}
 		
+	}
+	
+	impl Clone for Text {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_Text_implicit_clone(val: extern_send!(Text)) -> extern_receive!(Text: 'static); }
+			unsafe { Self::from_raw(cv_Text_implicit_clone(self.as_raw_Text())) }
+		}
 	}
 	
 	impl Default for Text {

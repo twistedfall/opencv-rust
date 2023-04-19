@@ -10336,9 +10336,7 @@ pub mod core {
 	impl Clone for FileNode {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_FileNode_implicit_clone(val: extern_send!(FileNode)) -> extern_receive!(FileNode: 'static);
-			}
+			extern "C" { fn cv_FileNode_implicit_clone(val: extern_send!(FileNode)) -> extern_receive!(FileNode: 'static); }
 			unsafe { Self::from_raw(cv_FileNode_implicit_clone(self.as_raw_FileNode())) }
 		}
 	}
@@ -11354,9 +11352,7 @@ pub mod core {
 	impl Clone for KeyPoint {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_KeyPoint_implicit_clone(val: extern_send!(KeyPoint)) -> extern_receive!(KeyPoint: 'static);
-			}
+			extern "C" { fn cv_KeyPoint_implicit_clone(val: extern_send!(KeyPoint)) -> extern_receive!(KeyPoint: 'static); }
 			unsafe { Self::from_raw(cv_KeyPoint_implicit_clone(self.as_raw_KeyPoint())) }
 		}
 	}
@@ -25113,15 +25109,26 @@ pub mod core {
 	}
 	
 	impl Detail_CheckContext {
+		fn default() -> Self {
+			extern "C" { fn cv_Detail_CheckContext_default_new() -> extern_receive!(Detail_CheckContext: 'static); }
+			unsafe { Self::from_raw(cv_Detail_CheckContext_default_new()) }
+		}
+		
 	}
 	
 	impl Clone for Detail_CheckContext {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Detail_CheckContext_implicit_clone(val: extern_send!(Detail_CheckContext)) -> extern_receive!(Detail_CheckContext: 'static);
-			}
+			extern "C" { fn cv_Detail_CheckContext_implicit_clone(val: extern_send!(Detail_CheckContext)) -> extern_receive!(Detail_CheckContext: 'static); }
 			unsafe { Self::from_raw(cv_Detail_CheckContext_implicit_clone(self.as_raw_Detail_CheckContext())) }
+		}
+	}
+	
+	impl Default for Detail_CheckContext {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -26476,9 +26483,7 @@ pub mod core {
 	impl Clone for Device {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_Device_implicit_clone(val: extern_send!(Device)) -> extern_receive!(Device: 'static);
-			}
+			extern "C" { fn cv_Device_implicit_clone(val: extern_send!(Device)) -> extern_receive!(Device: 'static); }
 			unsafe { Self::from_raw(cv_Device_implicit_clone(self.as_raw_Device())) }
 		}
 	}

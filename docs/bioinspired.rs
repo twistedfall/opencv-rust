@@ -776,15 +776,26 @@ pub mod bioinspired {
 	}
 	
 	impl RetinaParameters {
+		fn default() -> Self {
+			extern "C" { fn cv_RetinaParameters_default_new() -> extern_receive!(RetinaParameters: 'static); }
+			unsafe { Self::from_raw(cv_RetinaParameters_default_new()) }
+		}
+		
 	}
 	
 	impl Clone for RetinaParameters {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_RetinaParameters_implicit_clone(val: extern_send!(RetinaParameters)) -> extern_receive!(RetinaParameters: 'static);
-			}
+			extern "C" { fn cv_RetinaParameters_implicit_clone(val: extern_send!(RetinaParameters)) -> extern_receive!(RetinaParameters: 'static); }
 			unsafe { Self::from_raw(cv_RetinaParameters_implicit_clone(self.as_raw_RetinaParameters())) }
+		}
+	}
+	
+	impl Default for RetinaParameters {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	

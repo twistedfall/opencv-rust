@@ -2280,9 +2280,7 @@ pub mod video {
 	impl Clone for TrackerDaSiamRPN_Params {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_TrackerDaSiamRPN_Params_implicit_clone(val: extern_send!(TrackerDaSiamRPN_Params)) -> extern_receive!(TrackerDaSiamRPN_Params: 'static);
-			}
+			extern "C" { fn cv_TrackerDaSiamRPN_Params_implicit_clone(val: extern_send!(TrackerDaSiamRPN_Params)) -> extern_receive!(TrackerDaSiamRPN_Params: 'static); }
 			unsafe { Self::from_raw(cv_TrackerDaSiamRPN_Params_implicit_clone(self.as_raw_TrackerDaSiamRPN_Params())) }
 		}
 	}
@@ -2409,9 +2407,7 @@ pub mod video {
 	impl Clone for TrackerGOTURN_Params {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_TrackerGOTURN_Params_implicit_clone(val: extern_send!(TrackerGOTURN_Params)) -> extern_receive!(TrackerGOTURN_Params: 'static);
-			}
+			extern "C" { fn cv_TrackerGOTURN_Params_implicit_clone(val: extern_send!(TrackerGOTURN_Params)) -> extern_receive!(TrackerGOTURN_Params: 'static); }
 			unsafe { Self::from_raw(cv_TrackerGOTURN_Params_implicit_clone(self.as_raw_TrackerGOTURN_Params())) }
 		}
 	}
@@ -2634,9 +2630,7 @@ pub mod video {
 	impl Clone for TrackerNano_Params {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" {
-				fn cv_TrackerNano_Params_implicit_clone(val: extern_send!(TrackerNano_Params)) -> extern_receive!(TrackerNano_Params: 'static);
-			}
+			extern "C" { fn cv_TrackerNano_Params_implicit_clone(val: extern_send!(TrackerNano_Params)) -> extern_receive!(TrackerNano_Params: 'static); }
 			unsafe { Self::from_raw(cv_TrackerNano_Params_implicit_clone(self.as_raw_TrackerNano_Params())) }
 		}
 	}
