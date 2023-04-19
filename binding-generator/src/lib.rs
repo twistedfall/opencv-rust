@@ -35,7 +35,7 @@ use function::Function;
 #[allow(unused)]
 use generator::{dbg_clang_entity, dbg_clang_type};
 pub use generator::{is_ephemeral_header, GeneratedType, Generator, GeneratorVisitor};
-pub use generator_env::{ExportConfig, GeneratorEnv};
+pub use generator_env::{ClassSimplicity, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 use memoize::{MemoizeMap, MemoizeMapExt};
 use name_pool::NamePool;

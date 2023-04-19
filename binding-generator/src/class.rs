@@ -7,17 +7,32 @@ use clang::{Entity, EntityKind};
 use crate::entity::{WalkAction, WalkResult};
 use crate::type_ref::{Constness, CppNameStyle};
 use crate::{
-	settings, Const, DefaultElement, Element, EntityElement, EntityExt, Enum, Field, Func, FunctionTypeHint, GeneratedType,
-	GeneratorEnv, StrExt, TypeRef,
+	settings, ClassSimplicity, Const, DefaultElement, Element, EntityElement, EntityExt, Enum, Field, Func, FunctionTypeHint,
+	GeneratedType, GeneratorEnv, StrExt, TypeRef,
 };
 
 #[derive(Clone, Copy, Debug)]
 pub enum Kind {
+	/// Simple class, check [`Class::can_be_simple`] for more details
 	Simple,
+	/// Opaque class where all access to its fields is happening by C++ side using a pointer
 	Boxed,
+	/// Marked simple but forced to be boxed by presence of non-simple fields or descendants
+	BoxedForced,
+	/// System class like `std::string`
 	System,
 	/// Class is something else, generally ignored
 	Other,
+}
+
+impl Kind {
+	pub fn is_simple(self) -> bool {
+		matches!(self, Kind::Simple)
+	}
+
+	pub fn is_boxed(self) -> bool {
+		matches!(self, Kind::Boxed | Kind::BoxedForced)
+	}
 }
 
 #[derive(Clone)]
@@ -44,6 +59,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
+	/// Checks whether a class can be simple on Rust side, i.e. represented by plain struct with public fields
 	pub fn can_be_simple(&self) -> bool {
 		let cpp_refname = self.cpp_name(CppNameStyle::Reference);
 		if settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
@@ -63,21 +79,22 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		if settings::ELEMENT_EXCLUDE.contains(self.cpp_name(CppNameStyle::Reference).as_ref()) {
 			return Kind::Other;
 		}
-		match self.gen_env.get_export_config(self.entity).map(|c| c.simple) {
-			Some(true) => {
+		match self.gen_env.get_export_config(self.entity).map(|c| c.simplicity) {
+			Some(ClassSimplicity::Simple) => {
 				if self.can_be_simple() {
 					Kind::Simple
 				} else {
-					Kind::Boxed
+					Kind::BoxedForced
 				}
 			}
-			Some(false) => Kind::Boxed,
+			Some(ClassSimplicity::Boxed) => Kind::Boxed,
+			Some(ClassSimplicity::BoxedForced) => Kind::BoxedForced,
 			None => {
 				if self.is_system() {
 					Kind::System
 				} else if let Some(kind) = self.gen_env.get_class_kind(self.entity) {
 					match kind {
-						Kind::Simple if !self.can_be_simple() => Kind::Boxed,
+						Kind::Simple if !self.can_be_simple() => Kind::BoxedForced,
 						_ => kind,
 					}
 				} else {
@@ -101,11 +118,11 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn is_simple(&self) -> bool {
-		matches!(self.kind(), Kind::Simple)
+		self.kind().is_simple()
 	}
 
 	pub fn is_boxed(&self) -> bool {
-		matches!(self.kind(), Kind::Boxed)
+		self.kind().is_boxed()
 	}
 
 	pub fn is_abstract(&self) -> bool {
@@ -152,10 +169,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	/// Class is simple (i.e. constructor-copiable in C++), but can't be simple in Rust
 	pub fn has_implicit_clone(&self) -> bool {
-		!self.is_abstract()
-			&& matches!(self.gen_env.get_class_kind(self.entity), Some(Kind::Simple))
-			&& !matches!(self.kind(), Kind::Simple)
-			&& !self.has_virtual_destructor()
+		!self.is_abstract() && matches!(self.kind(), Kind::BoxedForced) && !self.has_virtual_destructor()
 	}
 
 	pub fn has_virtual_destructor(&self) -> bool {

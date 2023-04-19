@@ -14,9 +14,16 @@ use crate::{
 	EntityWalkerVisitor, Func, MemoizeMap, MemoizeMapExt, NamePool, TypeRef, WalkAction,
 };
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
+pub enum ClassSimplicity {
+	Boxed,
+	Simple,
+	BoxedForced,
+}
+
+#[derive(Clone, Debug)]
 pub struct ExportConfig {
-	pub simple: bool,
+	pub simplicity: ClassSimplicity,
 	pub deprecated: bool,
 	pub no_return: bool,
 	pub no_except: bool,
@@ -25,8 +32,17 @@ pub struct ExportConfig {
 	pub only_generated_types: bool,
 }
 
-pub struct RenameConfig {
-	pub rename: String,
+impl Default for ExportConfig {
+	fn default() -> Self {
+		Self {
+			simplicity: ClassSimplicity::Boxed,
+			deprecated: false,
+			no_return: false,
+			no_except: false,
+			no_discard: false,
+			only_generated_types: false,
+		}
+	}
 }
 
 impl ExportConfig {
@@ -34,12 +50,16 @@ impl ExportConfig {
 	pub fn make_export(_: &mut ExportConfig) {}
 
 	pub fn make_boxed(src: &mut ExportConfig) {
-		src.simple = false;
+		src.simplicity = ClassSimplicity::BoxedForced
 	}
 
 	pub fn make_simple(src: &mut ExportConfig) {
-		src.simple = true;
+		src.simplicity = ClassSimplicity::Simple;
 	}
+}
+
+pub struct RenameConfig {
+	pub rename: String,
 }
 
 #[derive(Eq, PartialEq, Hash)]

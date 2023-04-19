@@ -16,9 +16,9 @@ use crate::entity::WalkAction;
 use crate::type_ref::{CppNameStyle, FishStyle, Kind as TypeRefKind};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	get_definition_text, line_reader, opencv_module_from_path, settings, AbstractRefWrapper, Class, CompiledInterpolation, Const,
-	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint, GeneratorEnv, SmartPtr, StrExt, Tuple,
-	Typedef, Vector,
+	get_definition_text, line_reader, opencv_module_from_path, settings, AbstractRefWrapper, Class, ClassSimplicity,
+	CompiledInterpolation, Const, Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint,
+	GeneratorEnv, SmartPtr, StrExt, Tuple, Typedef, Vector,
 };
 
 #[derive(Debug)]
@@ -235,7 +235,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 					if BOXED.contains(&name.as_str()) {
 						self.gen_env.make_export_config(entity);
 					} else if SIMPLE.contains(&name.as_str()) {
-						self.gen_env.make_export_config(entity).simple = true;
+						self.gen_env.make_export_config(entity).simplicity = ClassSimplicity::Simple;
 					} else if let Some(rename_macro) = RENAME.iter().find(|&r| r == &name) {
 						if let Some(new_name) = get_definition_text(entity)
 							.strip_prefix(&format!("{rename_macro}("))
@@ -312,7 +312,11 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 				});
 				class_decl.walk_classes_while(|sub_cls| {
 					if !gen_env.get_export_config(sub_cls).is_some() {
-						gen_env.make_export_config(sub_cls).simple = Class::new(sub_cls, gen_env).can_be_simple();
+						gen_env.make_export_config(sub_cls).simplicity = if Class::new(sub_cls, gen_env).can_be_simple() {
+							ClassSimplicity::Simple
+						} else {
+							ClassSimplicity::Boxed
+						};
 					}
 					Self::process_class(visitor, gen_env, sub_cls);
 					WalkAction::Continue

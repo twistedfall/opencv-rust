@@ -470,14 +470,14 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
 		match self.kind() {
-			Kind::Simple | Kind::Boxed => gen_rust_class(self, opencv_version),
+			Kind::Simple | Kind::Boxed | Kind::BoxedForced => gen_rust_class(self, opencv_version),
 			Kind::System | Kind::Other => "".to_string(),
 		}
 	}
 
 	fn gen_rust_exports(&self) -> String {
 		let out = match self.kind() {
-			Kind::Boxed => gen_rust_exports_boxed(self),
+			Kind::Boxed | Kind::BoxedForced => gen_rust_exports_boxed(self),
 			Kind::Simple | Kind::System | Kind::Other => "".to_string(),
 		};
 
@@ -492,7 +492,7 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 	fn gen_cpp(&self) -> String {
 		let out = match self.kind() {
-			Kind::Boxed => gen_cpp_boxed(self),
+			Kind::Boxed | Kind::BoxedForced => gen_cpp_boxed(self),
 			Kind::Simple | Kind::System | Kind::Other => "".to_string(),
 		};
 
