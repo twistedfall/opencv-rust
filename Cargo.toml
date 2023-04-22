@@ -35,6 +35,9 @@ name = "discrete_fourier_transform"
 #name = "gapi_api_example"
 
 [[example]]
+name = "hough_lines"
+
+[[example]]
 name = "opencl"
 
 # requires OpenCV 4.5.1+
