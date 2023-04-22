@@ -1,4 +1,4 @@
-//! Port of https://github.com/opencv/opencv/blob/master/modules/gapi/samples/api_example.cpp
+//! Port of https://github.com/opencv/opencv/blob/4.7.0/modules/gapi/samples/api_example.cpp
 
 use std::env;
 
