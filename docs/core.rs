@@ -16809,7 +16809,7 @@ pub mod core {
 		/// ## Parameters
 		/// * N: upper non-inclusive boundary of the returned random number.
 		#[inline]
-		fn apply_1(&mut self, n: u32) -> Result<u32> {
+		fn apply_range(&mut self, n: u32) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_operator___unsigned_int(self.as_raw_mut_RNG(), n, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16903,7 +16903,7 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn uniform_1(&mut self, a: f32, b: f32) -> Result<f32> {
+		fn uniform_f32(&mut self, a: f32, b: f32) -> Result<f32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_uniform_float_float(self.as_raw_mut_RNG(), a, b, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16951,7 +16951,7 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn uniform_2(&mut self, a: f64, b: f64) -> Result<f64> {
+		fn uniform_f64(&mut self, a: f64, b: f64) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_uniform_double_double(self.as_raw_mut_RNG(), a, b, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
