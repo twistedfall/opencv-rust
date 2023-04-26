@@ -10,6 +10,15 @@ impl<T> Scalar_<T> {
 	pub const fn new(v0: T, v1: T, v2: T, v3: T) -> Self {
 		Self::from_array([v0, v1, v2, v3])
 	}
+
+	/// returns true iff v1 == v2 == v3 == 0
+	#[inline]
+	pub fn is_real(&self) -> bool
+	where
+		T: Zero + PartialEq,
+	{
+		self[1] == T::zero() && self[2] == T::zero() && self[3] == T::zero()
+	}
 }
 
 impl From<i32> for Scalar_<f64> {
