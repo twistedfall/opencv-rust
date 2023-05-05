@@ -1,3 +1,9 @@
+* 0.81.0
+  * Fix compilation when using clang-6.
+  * Add hough_lines example.
+  * Add `Scalar::is_real()`.
+  * Apply proper naming to some methods from RNG.
+
 * 0.80.0
   * Generate default constructors for some classes that were missing any form of construction.
 
