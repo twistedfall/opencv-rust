@@ -5,6 +5,7 @@ use std::fmt::Write;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 
+use crate::element::UNNAMED;
 use crate::entity::WalkAction;
 use crate::type_ref::{Constness, CppNameStyle, TypeRefTypeHint};
 use crate::{
@@ -190,7 +191,7 @@ impl<'f> FuncId<'f> {
 			let mut args = vec![];
 			entity.walk_children_while(|child| {
 				if child.get_kind() == EntityKind::ParmDecl {
-					args.push(child.get_name().map(Cow::Owned).unwrap_or_else(|| "unnamed".into()));
+					args.push(child.get_name().map(Cow::Owned).unwrap_or_else(|| UNNAMED.into()));
 				}
 				WalkAction::Continue
 			});
@@ -200,7 +201,7 @@ impl<'f> FuncId<'f> {
 				.get_arguments()
 				.into_iter()
 				.flatten()
-				.map(|a| a.get_name().map(Cow::Owned).unwrap_or_else(|| "unnamed".into()))
+				.map(|a| a.get_name().map(Cow::Owned).unwrap_or_else(|| UNNAMED.into()))
 				.collect()
 		};
 		Self { name, args }

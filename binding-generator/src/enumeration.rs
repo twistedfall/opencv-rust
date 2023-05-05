@@ -3,6 +3,7 @@ use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
 
+use crate::element::UNNAMED;
 use crate::entity::WalkAction;
 use crate::type_ref::CppNameStyle;
 use crate::{Const, DefaultElement, Element, EntityElement, EntityExt, StrExt};
@@ -29,7 +30,7 @@ impl<'tu> Enum<'tu> {
 	}
 
 	pub fn is_anonymous(&self) -> bool {
-		self.entity.is_anonymous()
+		self.entity.is_anonymous() || /* for clang-6 quirk */ self.cpp_name(CppNameStyle::Declaration) == UNNAMED
 	}
 
 	pub fn as_typedefed(&self) -> Option<Entity> {
@@ -102,11 +103,7 @@ impl Element for Enum<'_> {
 
 impl fmt::Display for Enum<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		write!(
-			f,
-			"{}",
-			self.entity.get_display_name().unwrap_or_else(|| "unnamed".to_string())
-		)
+		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
 	}
 }
 

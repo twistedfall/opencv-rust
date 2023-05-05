@@ -7,6 +7,7 @@ use std::fmt;
 use clang::token::TokenKind;
 use clang::{Entity, EntityKind, EntityVisitResult, Type};
 
+use crate::element::UNNAMED;
 use crate::settings::ArgOverride;
 use crate::type_ref::{CppNameStyle, TypeRefTypeHint};
 use crate::{constant, Class, DefaultElement, Element, EntityElement, GeneratorEnv, TypeRef};
@@ -103,8 +104,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		}
 		let type_ref = self.type_ref();
 		let leafname = self.cpp_name(CppNameStyle::Declaration);
-		(leafname == "userdata" || leafname == "userData" || leafname == "cookie" || leafname == "unnamed")
-			&& type_ref.is_void_ptr()
+		(leafname == "userdata" || leafname == "userData" || leafname == "cookie" || leafname == UNNAMED) && type_ref.is_void_ptr()
 	}
 
 	pub fn as_slice_len(&self) -> Option<(&'static str, usize)> {

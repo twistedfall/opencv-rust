@@ -8,6 +8,8 @@ use clang::{Accessibility, Entity, EntityKind};
 use crate::type_ref::CppNameStyle;
 use crate::{settings, IteratorExt, StringExt};
 
+pub const UNNAMED: &str = "unnamed";
+
 pub struct DefaultElement;
 
 impl DefaultElement {
@@ -75,7 +77,7 @@ impl DefaultElement {
 	}
 
 	pub fn cpp_name<'tu>(this: &(impl EntityElement<'tu> + Element + ?Sized), style: CppNameStyle) -> Cow<str> {
-		let decl_name = this.entity().get_name().unwrap_or_else(|| "unnamed".to_string());
+		let decl_name = this.entity().get_name().unwrap_or_else(|| UNNAMED.to_string());
 		match style {
 			CppNameStyle::Declaration => decl_name.into(),
 			CppNameStyle::Reference => DefaultElement::cpp_decl_name_with_namespace(this, &decl_name),
