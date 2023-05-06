@@ -1,3 +1,6 @@
+* 0.81.1
+  * Fix building on macOS (fixes https://github.com/twistedfall/opencv-rust/issues/460)
+
 * 0.81.0
   * Fix compilation when using clang-6.
   * Add hough_lines example.
