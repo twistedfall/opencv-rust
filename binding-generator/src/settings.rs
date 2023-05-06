@@ -373,6 +373,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		// ### gapi ###
 		"cv_MediaFrame_IAdapter_access_Access" => "-", // use of deleted function ‘cv::MediaFrame::View::View(const cv::MediaFrame::View&)’
 		"cv_MediaFrame_access_const_Access" => "-", // use of deleted function ‘cv::MediaFrame::View::View(const cv::MediaFrame::View&)’
+		"cv_RMat_Adapter_access_Access" => "-", // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
 		"cv_RMat_IAdapter_access_Access" => "-", // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
 		"cv_RMat_access_const_Access" => "-", // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
 
