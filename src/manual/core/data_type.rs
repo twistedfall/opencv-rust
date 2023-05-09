@@ -16,8 +16,9 @@ pub const fn CV_MAKETYPE(depth: i32, cn: i32) -> i32 {
 /// Implement this trait types that are valid to use as Mat elements.
 ///
 /// # Safety
-/// Types implementing this trait must adhere to the memory layout compatible declared by the values
-/// returned by `opencv_depth()` and `opencv_channels()` functions.
+/// Types implementing this trait must adhere to the memory layout declared by the values returned
+/// by `opencv_depth()` and `opencv_channels()` functions. In most cases that means that the type
+/// must also be `#[repr(C)]`.
 pub unsafe trait DataType: Copy {
 	/// The shape of bytes occupied by the single layer/channel of the element. E.g. for an 8-bit BGR
 	/// image it's `CV_8U` because a single channel for a pixel is unsigned 8 bits. You should use one
