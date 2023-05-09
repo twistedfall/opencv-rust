@@ -69,7 +69,7 @@ Installing OpenCV is easy through the following sources:
   ```
   also set `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` environment variables (see below
   for details).
-  
+
   Also, check the user guides [here](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278)
   and [here](https://github.com/twistedfall/opencv-rust/issues/113#issue-596076777).
 
@@ -98,7 +98,7 @@ Get OpenCV from homebrew:
 You can of course always compile OpenCV of the version you prefer manually. This is also supported, but it
 requires some additional configuration.
 
-You need to set up the following environment variables to point to the installed files of your OpenCV build: 
+You need to set up the following environment variables to point to the installed files of your OpenCV build:
 `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` (see below for details).
 
 ### Static build
@@ -108,6 +108,23 @@ please check this [comment](https://github.com/twistedfall/opencv-rust/issues/36
 you can get some information on how to perform the build in CI scripts:
 [install-focal.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-focal.sh) and
 [script.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh), search for `non_static_version` variable.
+
+### Crosscompilation
+
+Cross-compilation is supported to at least some extend. The ability to crosscompile projects using `opencv` from x86-64
+Linux host machine to Raspberry Pi is tested regularly. Cross-compilation is notoriously difficult to set up, so you can
+use this example [rpi-xcompile.Dockerfile](https://github.com/twistedfall/opencv-rust/blob/master/tools/rpi-xcompile.Dockerfile).
+
+```shell
+docker build -t rpi-xcompile -f tools/rpi-xcompile.Dockerfile tools
+```
+
+Building this image requries `qemu-arm` to be present on the host system and the corresponding `binfmt-misc` set up (see
+e.g. https://wiki.debian.org/QemuUserEmulation, only `Installing packages` should be enough).
+
+After the successful build you will have an image configured for cross-compilation to Raspberry Pi. It will contain the
+sample build script `/usr/local/bin/cargo-xbuild` that you can check for the correct environment setup and the specific
+command line arguments to use when crosscompiling the project inside the container created from that image.
 
 ## Troubleshooting
 
@@ -143,7 +160,7 @@ you can get some information on how to perform the build in CI scripts:
 
 5. On Windows with VCPKG you're getting a lot of linking errors in multiple files like in
    [this issue](https://github.com/twistedfall/opencv-rust/issues/161).
-   
+
    Unless you're doing a very specific build, you want to have environment variable `VCPKGRS_DYNAMIC` set to
    "1".
 
@@ -155,13 +172,13 @@ you can get some information on how to perform the build in CI scripts:
 
 7. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
 
-   OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up 
+   OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up
    the `DYLD_FALLBACK_LIBRARY_PATH` environment variable to point to the path where libclang.dylib can be
    found, e.g. for Command Line Tools:
    ```
    export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/usr/lib/"
    ```
-   
+
    or XCode:
    ```
    export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
@@ -203,7 +220,7 @@ When reporting an issue please state:
 3. OpenCV version
 4. Attach the full output of the following command from your project directory:
    ```shell script
-   RUST_BACKTRACE=full cargo build -vv 
+   RUST_BACKTRACE=full cargo build -vv
    ```
 
 ## Environment variables
@@ -216,7 +233,7 @@ on any platform, the specified values will override those automatically discover
   specify the ".framework" extension then build script will link a macOS framework instead of plain shared
   library.
   E.g. "opencv_world411".
-  
+
   If this list starts with '+' (plus sign) then the specified items will be appended to whatever the system
   probe returned. E.g. a value of "+dc1394" will do a system discovery of the OpenCV library and its linked
   libraries and then will additionally link `dc1394` library at the end. Can be useful if the system probe
@@ -439,7 +456,7 @@ tested and supported. It may still work though.
 
 The binding generator code lives in a separate crate under [binding-generator](binding-generator). During the
 build phase it creates bindings from the header files and puts them into [bindings](bindings) directory. Those
-are then transferred to [src](src) for the consumption by the crate users. 
+are then transferred to [src](src) for the consumption by the crate users.
 
 The crate itself, as imported by users, consists of generated rust code in [src](src) committed to the repo.
 This way, users don't have to handle the code generation overhead in their builds. When developing this crate,
