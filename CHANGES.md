@@ -1,3 +1,6 @@
+* 0.81.2
+  * Fix building when crosscompiling with target-specific RUSTFLAGS
+
 * 0.81.1
   * Fix building on macOS (fixes https://github.com/twistedfall/opencv-rust/issues/460)
 

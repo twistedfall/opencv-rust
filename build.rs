@@ -290,7 +290,8 @@ fn build_clang_generator() -> io::Result<Child> {
 			"--bin",
 			"binding-generator",
 		])
-		.env("CARGO_TARGET_DIR", &*OUT_DIR);
+		.env("CARGO_TARGET_DIR", &*OUT_DIR)
+		.env_remove("CARGO_ENCODED_RUSTFLAGS"); // RUSTFLAGS are meant to affect final build artifacts only
 	if let Some(host_triple) = HOST_TRIPLE.as_ref() {
 		cargo.args(["--target", host_triple]);
 	}
