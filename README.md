@@ -187,17 +187,7 @@ command line arguments to use when crosscompiling the project inside the contain
    You might be running into the issue on the recent macOS versions where this environment variable remains empty after setting,
    please check [this issue](https://github.com/twistedfall/opencv-rust/issues/343) for some workarounds.
 
-8. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
-
-   Enable the `clang-runtime` feature or use crate version `0.66` and newer. The reason for the issue is that some crates
-   (like `bindgen`) depend on `clang-sys` with hard-enabled `runtime` feature and because of that cargo makes this feature also
-   enabled for every other crate that depends on `clang-sys` (`opencv` in this case). During binding generation phase
-   `opencv` crate tries to use multiple threads and `clang-sys` with `runtime` feature enabled doesn't like
-   that (hence the panic). Enabling `clang-runtime` feature switches to using multiple processes instead of
-   multiple threads. This makes the build a bit longer because of the need to build the helper binary, but the
-   end result is the same. Additionally since crate version `0.66` this behavior is now the default.
-
-9. You're getting `'limits' file not found` error during crate build.
+8. You're getting `'limits' file not found` error during crate build.
 
    This error is caused by the missing/invalid installation of C++ standard library (e.g. libstdc++ for GCC). To fix this make
    sure that the toolchain you're using has the corresponding C++ standard library. The toolchain is used through `libclang`, so
