@@ -1,17 +1,18 @@
 ARG DEBIAN_FRONTEND=noninteractive
 
+
 # Download and extract rpi root filesystem
-FROM ubuntu:22.04
+FROM alpine:3.18
 
 RUN set -xeu && \
-    apt-get update && \
-    apt-get install -y tar xz-utils
+    apk add xz
 
 ADD https://downloads.raspberrypi.org/raspios_lite_armhf/root.tar.xz /
 
 RUN set -xeu && \
     mkdir "/rpi-root" && \
-    tar xaf /root.tar.xz -C /rpi-root
+    tar xpaf /root.tar.xz -C /rpi-root
+
 
 # Prepare the root of the rpi filesystem, it's going to be used later for crosscompilation
 # This step requries qemu-arm to be present on the host system and the corresponding binfmt-misc set up
@@ -25,15 +26,19 @@ RUN set -xeu && \
     apt-get autoremove -y --purge && \
     apt-get -y autoclean
 
-# specify dependencies that you need to have on rpi
 RUN set -xeu && \
-    apt-get install -y libudev-dev libsqlite3-dev libopencv-dev clang libclang-dev libstrophe-dev libcamera-dev symlinks pkg-config cmake
+    apt-get install -y symlinks
 
 # error: undefined symbol: _dl_pagesize (and __pointer_chk_guard_local)
 # solution: fix the rpi-root symlink /usr/lib/arm-linux-gnueabihf/libpthread.so to be relative and point to ../../../lib/arm-linux-gnueabihf/libpthread.so.0
 # source: https://github.com/Azure/azure-iot-sdk-c/issues/1093
 RUN set -xeu && \
     symlinks -cr /
+
+# specify dependencies that you need to have on rpi
+RUN set -xeu && \
+    apt-get install -y libudev-dev libsqlite3-dev libopencv-dev libstrophe-dev libcamera-dev pkg-config
+
 
 # Create image that will be used for crosscompilation
 FROM ubuntu:22.04

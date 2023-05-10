@@ -47,7 +47,7 @@ static OPENCV_BRANCH_34: Lazy<VersionReq> =
 static OPENCV_BRANCH_4: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
 
-static ENV_VARS: [&str; 16] = [
+static ENV_VARS: [&str; 17] = [
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
 	"OPENCV_CMAKE_NAME",
@@ -64,6 +64,7 @@ static ENV_VARS: [&str; 16] = [
 	"VCPKGRS_DYNAMIC",
 	"OCVRS_DOCS_GENERATE_DIR",
 	"DOCS_RS",
+	"HOST_TRIPLE",
 ];
 
 fn files_with_predicate<'p>(
