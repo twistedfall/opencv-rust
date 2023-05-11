@@ -5,6 +5,11 @@ set -vex
 ci_dir="$(dirname "$0")"
 
 if [[ "$OS_FAMILY" == "Linux" ]]; then
+	# free up disk space in Github Actions image: https://github.com/actions/runner-images/issues/2840
+	sudo rm -rf /usr/share/dotnet
+	sudo rm -rf /opt/ghc
+	sudo rm -rf "/usr/local/share/boost"
+	sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 	if [[ "$VCPKG_VERSION" != "" ]]; then # vcpkg build
 		"$ci_dir/install-focal-vcpkg.sh"
 	else
