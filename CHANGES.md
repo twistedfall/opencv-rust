@@ -1,3 +1,6 @@
+* 0.81.3
+  * Don't require `runtime` feature of `clang`.
+
 * 0.81.2
   * Fix building when crosscompiling with target-specific RUSTFLAGS
 
