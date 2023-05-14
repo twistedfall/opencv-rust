@@ -6,7 +6,7 @@ pub mod cudaarithm {
 	//!       # Arithm Operations on Matrices
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::LookUpTableConst, super::LookUpTable, super::DFTConst, super::DFT, super::ConvolutionConst, super::Convolution };
+		pub use { super::LookUpTableTraitConst, super::LookUpTableTrait, super::DFTTraitConst, super::DFTTrait, super::ConvolutionTraitConst, super::ConvolutionTrait };
 	}
 	
 	/// Returns the sum of absolute values for matrix elements.
@@ -470,12 +470,12 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * user_block_size: Size()
 	#[inline]
-	pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr<dyn crate::cudaarithm::Convolution>> {
+	pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr<crate::cudaarithm::Convolution>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createConvolution_Size(user_block_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaarithm::Convolution>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaarithm::Convolution>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -493,12 +493,12 @@ pub mod cudaarithm {
 	/// *   **DFT_REAL_OUTPUT** specifies the output as real. The source matrix is the result of
 	/// real-complex transform, so the destination matrix must be real.
 	#[inline]
-	pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr<dyn crate::cudaarithm::DFT>> {
+	pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr<crate::cudaarithm::DFT>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createDFT_Size_int(dft_size.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaarithm::DFT>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaarithm::DFT>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -507,13 +507,13 @@ pub mod cudaarithm {
 	/// ## Parameters
 	/// * lut: Look-up table of 256 elements. It is a continuous CV_8U matrix.
 	#[inline]
-	pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::cudaarithm::LookUpTable>> {
+	pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr<crate::cudaarithm::LookUpTable>> {
 		extern_container_arg!(lut);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createLookUpTable_const__InputArrayR(lut.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaarithm::LookUpTable>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaarithm::LookUpTable>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -1766,13 +1766,13 @@ pub mod cudaarithm {
 	}
 	
 	/// Constant methods for [crate::cudaarithm::Convolution]
-	pub trait ConvolutionConst: core::AlgorithmTraitConst {
+	pub trait ConvolutionTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Convolution(&self) -> *const c_void;
 	
 	}
 	
-	/// Base class for convolution (or cross-correlation) operator. :
-	pub trait Convolution: core::AlgorithmTrait + crate::cudaarithm::ConvolutionConst {
+	/// Mutable methods for [crate::cudaarithm::Convolution]
+	pub trait ConvolutionTrait: core::AlgorithmTrait + crate::cudaarithm::ConvolutionTraitConst {
 		fn as_raw_mut_Convolution(&mut self) -> *mut c_void;
 	
 		/// Computes a convolution (or cross-correlation) of two images.
@@ -1803,14 +1803,52 @@ pub mod cudaarithm {
 		
 	}
 	
+	/// Base class for convolution (or cross-correlation) operator. :
+	pub struct Convolution {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Convolution }
+	
+	impl Drop for Convolution {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Convolution_delete(instance: *mut c_void); }
+			unsafe { cv_Convolution_delete(self.as_raw_mut_Convolution()) };
+		}
+	}
+	
+	unsafe impl Send for Convolution {}
+	
+	impl core::AlgorithmTraitConst for Convolution {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Convolution {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaarithm::ConvolutionTraitConst for Convolution {
+		#[inline] fn as_raw_Convolution(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaarithm::ConvolutionTrait for Convolution {
+		#[inline] fn as_raw_mut_Convolution(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Convolution {
+	}
+	
+	boxed_cast_base! { Convolution, core::Algorithm, cv_Convolution_to_Algorithm }
+	
 	/// Constant methods for [crate::cudaarithm::DFT]
-	pub trait DFTConst: core::AlgorithmTraitConst {
+	pub trait DFTTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_DFT(&self) -> *const c_void;
 	
 	}
 	
-	/// Base class for DFT operator as a cv::Algorithm. :
-	pub trait DFT: core::AlgorithmTrait + crate::cudaarithm::DFTConst {
+	/// Mutable methods for [crate::cudaarithm::DFT]
+	pub trait DFTTrait: core::AlgorithmTrait + crate::cudaarithm::DFTTraitConst {
 		fn as_raw_mut_DFT(&mut self) -> *mut c_void;
 	
 		/// Computes an FFT of a given image.
@@ -1835,14 +1873,52 @@ pub mod cudaarithm {
 		
 	}
 	
+	/// Base class for DFT operator as a cv::Algorithm. :
+	pub struct DFT {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { DFT }
+	
+	impl Drop for DFT {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_DFT_delete(instance: *mut c_void); }
+			unsafe { cv_DFT_delete(self.as_raw_mut_DFT()) };
+		}
+	}
+	
+	unsafe impl Send for DFT {}
+	
+	impl core::AlgorithmTraitConst for DFT {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for DFT {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaarithm::DFTTraitConst for DFT {
+		#[inline] fn as_raw_DFT(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaarithm::DFTTrait for DFT {
+		#[inline] fn as_raw_mut_DFT(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl DFT {
+	}
+	
+	boxed_cast_base! { DFT, core::Algorithm, cv_DFT_to_Algorithm }
+	
 	/// Constant methods for [crate::cudaarithm::LookUpTable]
-	pub trait LookUpTableConst: core::AlgorithmTraitConst {
+	pub trait LookUpTableTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_LookUpTable(&self) -> *const c_void;
 	
 	}
 	
-	/// Base class for transform using lookup table.
-	pub trait LookUpTable: core::AlgorithmTrait + crate::cudaarithm::LookUpTableConst {
+	/// Mutable methods for [crate::cudaarithm::LookUpTable]
+	pub trait LookUpTableTrait: core::AlgorithmTrait + crate::cudaarithm::LookUpTableTraitConst {
 		fn as_raw_mut_LookUpTable(&mut self) -> *mut c_void;
 	
 		/// Transforms the source matrix into the destination matrix using the given look-up table:
@@ -1867,4 +1943,42 @@ pub mod cudaarithm {
 		}
 		
 	}
+	
+	/// Base class for transform using lookup table.
+	pub struct LookUpTable {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { LookUpTable }
+	
+	impl Drop for LookUpTable {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_LookUpTable_delete(instance: *mut c_void); }
+			unsafe { cv_LookUpTable_delete(self.as_raw_mut_LookUpTable()) };
+		}
+	}
+	
+	unsafe impl Send for LookUpTable {}
+	
+	impl core::AlgorithmTraitConst for LookUpTable {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for LookUpTable {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaarithm::LookUpTableTraitConst for LookUpTable {
+		#[inline] fn as_raw_LookUpTable(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaarithm::LookUpTableTrait for LookUpTable {
+		#[inline] fn as_raw_mut_LookUpTable(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl LookUpTable {
+	}
+	
+	boxed_cast_base! { LookUpTable, core::Algorithm, cv_LookUpTable_to_Algorithm }
 }

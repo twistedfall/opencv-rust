@@ -1,17 +1,17 @@
 pub mod quality {
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::QualityBaseConst, super::QualityBase, super::QualityMSETraitConst, super::QualityMSETrait, super::QualityPSNRTraitConst, super::QualityPSNRTrait, super::QualitySSIMTraitConst, super::QualitySSIMTrait, super::QualityGMSDTraitConst, super::QualityGMSDTrait, super::QualityBRISQUETraitConst, super::QualityBRISQUETrait };
+		pub use { super::QualityBaseTraitConst, super::QualityBaseTrait, super::QualityMSETraitConst, super::QualityMSETrait, super::QualityPSNRTraitConst, super::QualityPSNRTrait, super::QualitySSIMTraitConst, super::QualitySSIMTrait, super::QualityGMSDTraitConst, super::QualityGMSDTrait, super::QualityBRISQUETraitConst, super::QualityBRISQUETrait };
 	}
 	
 	/// Constant methods for [crate::quality::QualityBRISQUE]
-	pub trait QualityBRISQUETraitConst: crate::quality::QualityBaseConst {
+	pub trait QualityBRISQUETraitConst: crate::quality::QualityBaseTraitConst {
 		fn as_raw_QualityBRISQUE(&self) -> *const c_void;
 	
 	}
 	
 	/// Mutable methods for [crate::quality::QualityBRISQUE]
-	pub trait QualityBRISQUETrait: crate::quality::QualityBRISQUETraitConst + crate::quality::QualityBase {
+	pub trait QualityBRISQUETrait: crate::quality::QualityBRISQUETraitConst + crate::quality::QualityBaseTrait {
 		fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void;
 	
 		/// Computes BRISQUE quality score for input image
@@ -63,11 +63,11 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::quality::QualityBaseConst for QualityBRISQUE {
+	impl crate::quality::QualityBaseTraitConst for QualityBRISQUE {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::quality::QualityBase for QualityBRISQUE {
+	impl crate::quality::QualityBaseTrait for QualityBRISQUE {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -101,7 +101,7 @@ pub mod quality {
 		/// * model: cv::Ptr<cv::ml::SVM> which contains a loaded BRISQUE model
 		/// * range: cv::Mat which contains BRISQUE range data
 		#[inline]
-		pub fn create_1(model: &core::Ptr<dyn crate::ml::SVM>, range: &core::Mat) -> Result<core::Ptr<crate::quality::QualityBRISQUE>> {
+		pub fn create_1(model: &core::Ptr<crate::ml::SVM>, range: &core::Mat) -> Result<core::Ptr<crate::quality::QualityBRISQUE>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityBRISQUE_create_const_PtrLSVMGR_const_MatR(model.as_raw_PtrOfSVM(), range.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -149,7 +149,7 @@ pub mod quality {
 	boxed_cast_base! { QualityBRISQUE, core::Algorithm, cv_QualityBRISQUE_to_Algorithm }
 	
 	/// Constant methods for [crate::quality::QualityBase]
-	pub trait QualityBaseConst: core::AlgorithmTraitConst {
+	pub trait QualityBaseTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_QualityBase(&self) -> *const c_void;
 	
 		/// Returns output quality map that was generated during computation, if supported by the algorithm
@@ -175,8 +175,8 @@ pub mod quality {
 		
 	}
 	
-	/// ********************************* Quality Base Class ***********************************
-	pub trait QualityBase: core::AlgorithmTrait + crate::quality::QualityBaseConst {
+	/// Mutable methods for [crate::quality::QualityBase]
+	pub trait QualityBaseTrait: core::AlgorithmTrait + crate::quality::QualityBaseTraitConst {
 		fn as_raw_mut_QualityBase(&mut self) -> *mut c_void;
 	
 		/// Compute quality score per channel with the per-channel score in each element of the resulting cv::Scalar.  See specific algorithm for interpreting result scores
@@ -204,8 +204,56 @@ pub mod quality {
 		
 	}
 	
+	/// ********************************* Quality Base Class ***********************************
+	pub struct QualityBase {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { QualityBase }
+	
+	impl Drop for QualityBase {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_QualityBase_delete(instance: *mut c_void); }
+			unsafe { cv_QualityBase_delete(self.as_raw_mut_QualityBase()) };
+		}
+	}
+	
+	unsafe impl Send for QualityBase {}
+	
+	impl core::AlgorithmTraitConst for QualityBase {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for QualityBase {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::quality::QualityBaseTraitConst for QualityBase {
+		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::quality::QualityBaseTrait for QualityBase {
+		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl QualityBase {
+	}
+	
+	boxed_cast_descendant! { QualityBase, crate::quality::QualityBRISQUE, cv_QualityBase_to_QualityBRISQUE }
+	
+	boxed_cast_descendant! { QualityBase, crate::quality::QualityGMSD, cv_QualityBase_to_QualityGMSD }
+	
+	boxed_cast_descendant! { QualityBase, crate::quality::QualityMSE, cv_QualityBase_to_QualityMSE }
+	
+	boxed_cast_descendant! { QualityBase, crate::quality::QualityPSNR, cv_QualityBase_to_QualityPSNR }
+	
+	boxed_cast_descendant! { QualityBase, crate::quality::QualitySSIM, cv_QualityBase_to_QualitySSIM }
+	
+	boxed_cast_base! { QualityBase, core::Algorithm, cv_QualityBase_to_Algorithm }
+	
 	/// Constant methods for [crate::quality::QualityGMSD]
-	pub trait QualityGMSDTraitConst: crate::quality::QualityBaseConst {
+	pub trait QualityGMSDTraitConst: crate::quality::QualityBaseTraitConst {
 		fn as_raw_QualityGMSD(&self) -> *const c_void;
 	
 		/// Implements Algorithm::empty()
@@ -221,7 +269,7 @@ pub mod quality {
 	}
 	
 	/// Mutable methods for [crate::quality::QualityGMSD]
-	pub trait QualityGMSDTrait: crate::quality::QualityBase + crate::quality::QualityGMSDTraitConst {
+	pub trait QualityGMSDTrait: crate::quality::QualityBaseTrait + crate::quality::QualityGMSDTraitConst {
 		fn as_raw_mut_QualityGMSD(&mut self) -> *mut c_void;
 	
 		/// Compute GMSD
@@ -277,11 +325,11 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::quality::QualityBaseConst for QualityGMSD {
+	impl crate::quality::QualityBaseTraitConst for QualityGMSD {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::quality::QualityBase for QualityGMSD {
+	impl crate::quality::QualityBaseTrait for QualityGMSD {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -332,7 +380,7 @@ pub mod quality {
 	boxed_cast_base! { QualityGMSD, core::Algorithm, cv_QualityGMSD_to_Algorithm }
 	
 	/// Constant methods for [crate::quality::QualityMSE]
-	pub trait QualityMSETraitConst: crate::quality::QualityBaseConst {
+	pub trait QualityMSETraitConst: crate::quality::QualityBaseTraitConst {
 		fn as_raw_QualityMSE(&self) -> *const c_void;
 	
 		/// Implements Algorithm::empty()
@@ -348,7 +396,7 @@ pub mod quality {
 	}
 	
 	/// Mutable methods for [crate::quality::QualityMSE]
-	pub trait QualityMSETrait: crate::quality::QualityBase + crate::quality::QualityMSETraitConst {
+	pub trait QualityMSETrait: crate::quality::QualityBaseTrait + crate::quality::QualityMSETraitConst {
 		fn as_raw_mut_QualityMSE(&mut self) -> *mut c_void;
 	
 		/// Computes MSE for reference images supplied in class constructor and provided comparison images
@@ -403,11 +451,11 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::quality::QualityBaseConst for QualityMSE {
+	impl crate::quality::QualityBaseTraitConst for QualityMSE {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::quality::QualityBase for QualityMSE {
+	impl crate::quality::QualityBaseTrait for QualityMSE {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -458,7 +506,7 @@ pub mod quality {
 	boxed_cast_base! { QualityMSE, core::Algorithm, cv_QualityMSE_to_Algorithm }
 	
 	/// Constant methods for [crate::quality::QualityPSNR]
-	pub trait QualityPSNRTraitConst: crate::quality::QualityBaseConst {
+	pub trait QualityPSNRTraitConst: crate::quality::QualityBaseTraitConst {
 		fn as_raw_QualityPSNR(&self) -> *const c_void;
 	
 		/// Implements Algorithm::empty()
@@ -484,7 +532,7 @@ pub mod quality {
 	}
 	
 	/// Mutable methods for [crate::quality::QualityPSNR]
-	pub trait QualityPSNRTrait: crate::quality::QualityBase + crate::quality::QualityPSNRTraitConst {
+	pub trait QualityPSNRTrait: crate::quality::QualityBaseTrait + crate::quality::QualityPSNRTraitConst {
 		fn as_raw_mut_QualityPSNR(&mut self) -> *mut c_void;
 	
 		/// Compute the PSNR
@@ -551,11 +599,11 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::quality::QualityBaseConst for QualityPSNR {
+	impl crate::quality::QualityBaseTraitConst for QualityPSNR {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::quality::QualityBase for QualityPSNR {
+	impl crate::quality::QualityBaseTrait for QualityPSNR {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -615,7 +663,7 @@ pub mod quality {
 	boxed_cast_base! { QualityPSNR, core::Algorithm, cv_QualityPSNR_to_Algorithm }
 	
 	/// Constant methods for [crate::quality::QualitySSIM]
-	pub trait QualitySSIMTraitConst: crate::quality::QualityBaseConst {
+	pub trait QualitySSIMTraitConst: crate::quality::QualityBaseTraitConst {
 		fn as_raw_QualitySSIM(&self) -> *const c_void;
 	
 		/// Implements Algorithm::empty()
@@ -631,7 +679,7 @@ pub mod quality {
 	}
 	
 	/// Mutable methods for [crate::quality::QualitySSIM]
-	pub trait QualitySSIMTrait: crate::quality::QualityBase + crate::quality::QualitySSIMTraitConst {
+	pub trait QualitySSIMTrait: crate::quality::QualityBaseTrait + crate::quality::QualitySSIMTraitConst {
 		fn as_raw_mut_QualitySSIM(&mut self) -> *mut c_void;
 	
 		/// Computes SSIM
@@ -686,11 +734,11 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::quality::QualityBaseConst for QualitySSIM {
+	impl crate::quality::QualityBaseTraitConst for QualitySSIM {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::quality::QualityBase for QualitySSIM {
+	impl crate::quality::QualityBaseTrait for QualitySSIM {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	

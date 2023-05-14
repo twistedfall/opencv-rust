@@ -1,4 +1,5 @@
-use opencv::{core, features2d, highgui, imgproc, prelude::*, videoio, Result};
+use opencv::prelude::*;
+use opencv::{core, features2d, highgui, imgproc, videoio, Result};
 
 fn main() -> Result<()> {
 	let window = "video capture";
@@ -8,7 +9,7 @@ fn main() -> Result<()> {
 	if !opened {
 		panic!("Unable to open default camera!");
 	}
-	let mut orb = <dyn features2d::ORB>::default()?;
+	let mut orb = features2d::ORB::default()?;
 	loop {
 		let mut frame = Mat::default();
 		cam.read(&mut frame)?;

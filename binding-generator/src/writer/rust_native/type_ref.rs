@@ -35,7 +35,7 @@ pub trait TypeRefExt {
 	fn rust_arg_forward(&self, name: &str) -> String;
 	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String;
 	fn rust_extern(&self, dir: ExternDir) -> Cow<str>;
-	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str>;
+	fn rust_return(&self, turbo_fish_style: FishStyle) -> Cow<str>;
 	fn rust_extern_return_fallible(&self) -> Cow<str>;
 	fn rust_lifetime_count(&self) -> usize;
 
@@ -419,25 +419,8 @@ impl<'tu, 'ge> TypeRefExt for TypeRef<'tu, 'ge> {
 		}
 	}
 
-	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str> {
-		if self.as_abstract_class_ptr().is_some() {
-			format!(
-				"types::AbstractRef{mut_suf}{fish}<{lt}{typ}>",
-				mut_suf = if self.constness().is_const() {
-					""
-				} else {
-					"Mut"
-				},
-				fish = turbo_fish_style.rust_qual(),
-				lt = if is_static_func {
-					"'static, "
-				} else {
-					""
-				},
-				typ = self.source().rust_name(NameStyle::Reference(turbo_fish_style)),
-			)
-			.into()
-		} else if self.is_extern_by_ptr() {
+	fn rust_return(&self, turbo_fish_style: FishStyle) -> Cow<str> {
+		if self.is_extern_by_ptr() {
 			self
 				.source()
 				.rust_name(NameStyle::Reference(turbo_fish_style))

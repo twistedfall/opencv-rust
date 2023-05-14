@@ -4,7 +4,7 @@ pub mod rapid {
 	//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_drummond2002real)
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::TrackerConst, super::Tracker, super::RapidConst, super::Rapid, super::OLSTrackerConst, super::OLSTracker, super::GOSTrackerConst, super::GOSTracker };
+		pub use { super::TrackerTraitConst, super::TrackerTrait, super::RapidTraitConst, super::RapidTrait, super::OLSTrackerTraitConst, super::OLSTrackerTrait, super::GOSTrackerTraitConst, super::GOSTrackerTrait };
 	}
 	
 	/// Collect corresponding 2d and 3d points based on correspondencies and mask
@@ -203,98 +203,230 @@ pub mod rapid {
 	}
 	
 	/// Constant methods for [crate::rapid::GOSTracker]
-	pub trait GOSTrackerConst: crate::rapid::TrackerConst {
+	pub trait GOSTrackerTraitConst: crate::rapid::TrackerTraitConst {
 		fn as_raw_GOSTracker(&self) -> *const c_void;
 	
 	}
 	
-	/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_wang2015global)
-	pub trait GOSTracker: crate::rapid::GOSTrackerConst + crate::rapid::Tracker {
+	/// Mutable methods for [crate::rapid::GOSTracker]
+	pub trait GOSTrackerTrait: crate::rapid::GOSTrackerTraitConst + crate::rapid::TrackerTrait {
 		fn as_raw_mut_GOSTracker(&mut self) -> *mut c_void;
 	
 	}
 	
-	impl dyn GOSTracker + '_ {
+	/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_wang2015global)
+	pub struct GOSTracker {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GOSTracker }
+	
+	impl Drop for GOSTracker {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_GOSTracker_delete(instance: *mut c_void); }
+			unsafe { cv_GOSTracker_delete(self.as_raw_mut_GOSTracker()) };
+		}
+	}
+	
+	unsafe impl Send for GOSTracker {}
+	
+	impl core::AlgorithmTraitConst for GOSTracker {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for GOSTracker {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rapid::TrackerTraitConst for GOSTracker {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rapid::TrackerTrait for GOSTracker {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rapid::GOSTrackerTraitConst for GOSTracker {
+		#[inline] fn as_raw_GOSTracker(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rapid::GOSTrackerTrait for GOSTracker {
+		#[inline] fn as_raw_mut_GOSTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl GOSTracker {
 		/// ## C++ default parameters
 		/// * hist_bins: 4
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<dyn crate::rapid::OLSTracker>> {
+		pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::OLSTracker>> {
 			extern_container_arg!(pts3d);
 			extern_container_arg!(tris);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_GOSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), hist_bins, sobel_thesh, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rapid::OLSTracker>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rapid::OLSTracker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { GOSTracker, core::Algorithm, cv_GOSTracker_to_Algorithm }
+	
 	/// Constant methods for [crate::rapid::OLSTracker]
-	pub trait OLSTrackerConst: crate::rapid::TrackerConst {
+	pub trait OLSTrackerTraitConst: crate::rapid::TrackerTraitConst {
 		fn as_raw_OLSTracker(&self) -> *const c_void;
+	
+	}
+	
+	/// Mutable methods for [crate::rapid::OLSTracker]
+	pub trait OLSTrackerTrait: crate::rapid::OLSTrackerTraitConst + crate::rapid::TrackerTrait {
+		fn as_raw_mut_OLSTracker(&mut self) -> *mut c_void;
 	
 	}
 	
 	/// implements "Optimal local searching for fast and robust textureless 3D object tracking in highly
 	/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_seo2013optimal)
-	pub trait OLSTracker: crate::rapid::OLSTrackerConst + crate::rapid::Tracker {
-		fn as_raw_mut_OLSTracker(&mut self) -> *mut c_void;
-	
+	pub struct OLSTracker {
+		ptr: *mut c_void
 	}
 	
-	impl dyn OLSTracker + '_ {
+	opencv_type_boxed! { OLSTracker }
+	
+	impl Drop for OLSTracker {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_OLSTracker_delete(instance: *mut c_void); }
+			unsafe { cv_OLSTracker_delete(self.as_raw_mut_OLSTracker()) };
+		}
+	}
+	
+	unsafe impl Send for OLSTracker {}
+	
+	impl core::AlgorithmTraitConst for OLSTracker {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for OLSTracker {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rapid::TrackerTraitConst for OLSTracker {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rapid::TrackerTrait for OLSTracker {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rapid::OLSTrackerTraitConst for OLSTracker {
+		#[inline] fn as_raw_OLSTracker(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rapid::OLSTrackerTrait for OLSTracker {
+		#[inline] fn as_raw_mut_OLSTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl OLSTracker {
 		/// ## C++ default parameters
 		/// * hist_bins: 8
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<dyn crate::rapid::OLSTracker>> {
+		pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::OLSTracker>> {
 			extern_container_arg!(pts3d);
 			extern_container_arg!(tris);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_OLSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), hist_bins, sobel_thesh, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rapid::OLSTracker>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rapid::OLSTracker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { OLSTracker, core::Algorithm, cv_OLSTracker_to_Algorithm }
+	
 	/// Constant methods for [crate::rapid::Rapid]
-	pub trait RapidConst: crate::rapid::TrackerConst {
+	pub trait RapidTraitConst: crate::rapid::TrackerTraitConst {
 		fn as_raw_Rapid(&self) -> *const c_void;
 	
 	}
 	
-	/// wrapper around [rapid] function for uniform access
-	pub trait Rapid: crate::rapid::RapidConst + crate::rapid::Tracker {
+	/// Mutable methods for [crate::rapid::Rapid]
+	pub trait RapidTrait: crate::rapid::RapidTraitConst + crate::rapid::TrackerTrait {
 		fn as_raw_mut_Rapid(&mut self) -> *mut c_void;
 	
 	}
 	
-	impl dyn Rapid + '_ {
+	/// wrapper around [rapid] function for uniform access
+	pub struct Rapid {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Rapid }
+	
+	impl Drop for Rapid {
 		#[inline]
-		pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::rapid::Rapid>> {
+		fn drop(&mut self) {
+			extern "C" { fn cv_Rapid_delete(instance: *mut c_void); }
+			unsafe { cv_Rapid_delete(self.as_raw_mut_Rapid()) };
+		}
+	}
+	
+	unsafe impl Send for Rapid {}
+	
+	impl core::AlgorithmTraitConst for Rapid {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Rapid {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rapid::TrackerTraitConst for Rapid {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rapid::TrackerTrait for Rapid {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rapid::RapidTraitConst for Rapid {
+		#[inline] fn as_raw_Rapid(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rapid::RapidTrait for Rapid {
+		#[inline] fn as_raw_mut_Rapid(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Rapid {
+		#[inline]
+		pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid>> {
 			extern_container_arg!(pts3d);
 			extern_container_arg!(tris);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_Rapid_create_const__InputArrayR_const__InputArrayR(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rapid::Rapid>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rapid::Rapid>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { Rapid, core::Algorithm, cv_Rapid_to_Algorithm }
+	
 	/// Constant methods for [crate::rapid::Tracker]
-	pub trait TrackerConst: core::AlgorithmTraitConst {
+	pub trait TrackerTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Tracker(&self) -> *const c_void;
 	
 	}
 	
-	/// Abstract base class for stateful silhouette trackers
-	pub trait Tracker: core::AlgorithmTrait + crate::rapid::TrackerConst {
+	/// Mutable methods for [crate::rapid::Tracker]
+	pub trait TrackerTrait: core::AlgorithmTrait + crate::rapid::TrackerTraitConst {
 		fn as_raw_mut_Tracker(&mut self) -> *mut c_void;
 	
 		/// ## C++ default parameters
@@ -322,4 +454,42 @@ pub mod rapid {
 		}
 		
 	}
+	
+	/// Abstract base class for stateful silhouette trackers
+	pub struct Tracker {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Tracker }
+	
+	impl Drop for Tracker {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Tracker_delete(instance: *mut c_void); }
+			unsafe { cv_Tracker_delete(self.as_raw_mut_Tracker()) };
+		}
+	}
+	
+	unsafe impl Send for Tracker {}
+	
+	impl core::AlgorithmTraitConst for Tracker {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Tracker {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rapid::TrackerTraitConst for Tracker {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rapid::TrackerTrait for Tracker {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Tracker {
+	}
+	
+	boxed_cast_base! { Tracker, core::Algorithm, cv_Tracker_to_Algorithm }
 }

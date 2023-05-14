@@ -16,26 +16,17 @@ pub mod phase_unwrapping {
 	//! In this module, a quality-guided phase unwrapping is implemented following the approach described in [histogramUnwrapping](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping) .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::PhaseUnwrappingConst, super::PhaseUnwrapping, super::HistogramPhaseUnwrappingConst, super::HistogramPhaseUnwrapping };
+		pub use { super::PhaseUnwrappingTraitConst, super::PhaseUnwrappingTrait, super::HistogramPhaseUnwrappingTraitConst, super::HistogramPhaseUnwrappingTrait };
 	}
 	
 	/// Constant methods for [crate::phase_unwrapping::HistogramPhaseUnwrapping]
-	pub trait HistogramPhaseUnwrappingConst: crate::phase_unwrapping::PhaseUnwrappingConst {
+	pub trait HistogramPhaseUnwrappingTraitConst: crate::phase_unwrapping::PhaseUnwrappingTraitConst {
 		fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void;
 	
 	}
 	
-	/// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
-	/// This algorithm belongs to the quality-guided phase unwrapping methods.
-	/// First, it computes a reliability map from second differences between a pixel and its eight neighbours.
-	/// Reliability values lie between 0 and 16*pi*pi. Then, this reliability map is used to compute
-	/// the reliabilities of "edges". An edge is an entity defined by two pixels that are connected
-	/// horizontally or vertically. Its reliability is found by adding the the reliabilities of the
-	/// two pixels connected through it. Edges are sorted in a histogram based on their reliability values.
-	/// This histogram is then used to unwrap pixels, starting from the highest quality pixel.
-	/// 
-	/// The wrapped phase map and the unwrapped result are stored in CV_32FC1 Mat.
-	pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::HistogramPhaseUnwrappingConst + crate::phase_unwrapping::PhaseUnwrapping {
+	/// Mutable methods for [crate::phase_unwrapping::HistogramPhaseUnwrapping]
+	pub trait HistogramPhaseUnwrappingTrait: crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst + crate::phase_unwrapping::PhaseUnwrappingTrait {
 		fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void;
 	
 		/// Get the reliability map computed from the wrapped phase map.
@@ -54,7 +45,57 @@ pub mod phase_unwrapping {
 		
 	}
 	
-	impl dyn HistogramPhaseUnwrapping + '_ {
+	/// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
+	/// This algorithm belongs to the quality-guided phase unwrapping methods.
+	/// First, it computes a reliability map from second differences between a pixel and its eight neighbours.
+	/// Reliability values lie between 0 and 16*pi*pi. Then, this reliability map is used to compute
+	/// the reliabilities of "edges". An edge is an entity defined by two pixels that are connected
+	/// horizontally or vertically. Its reliability is found by adding the the reliabilities of the
+	/// two pixels connected through it. Edges are sorted in a histogram based on their reliability values.
+	/// This histogram is then used to unwrap pixels, starting from the highest quality pixel.
+	/// 
+	/// The wrapped phase map and the unwrapped result are stored in CV_32FC1 Mat.
+	pub struct HistogramPhaseUnwrapping {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { HistogramPhaseUnwrapping }
+	
+	impl Drop for HistogramPhaseUnwrapping {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_HistogramPhaseUnwrapping_delete(instance: *mut c_void); }
+			unsafe { cv_HistogramPhaseUnwrapping_delete(self.as_raw_mut_HistogramPhaseUnwrapping()) };
+		}
+	}
+	
+	unsafe impl Send for HistogramPhaseUnwrapping {}
+	
+	impl core::AlgorithmTraitConst for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::phase_unwrapping::PhaseUnwrappingTraitConst for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_PhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::phase_unwrapping::PhaseUnwrappingTrait for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::phase_unwrapping::HistogramPhaseUnwrappingTrait for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl HistogramPhaseUnwrapping {
 		/// Constructor
 		/// 
 		/// ## Parameters
@@ -63,16 +104,19 @@ pub mod phase_unwrapping {
 		/// ## C++ default parameters
 		/// * parameters: HistogramPhaseUnwrapping::Params()
 		#[inline]
-		pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
+		pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { HistogramPhaseUnwrapping, core::Algorithm, cv_HistogramPhaseUnwrapping_to_Algorithm }
+	
 	/// Parameters of phaseUnwrapping constructor.
 	/// 
 	/// ## Parameters
@@ -106,13 +150,13 @@ pub mod phase_unwrapping {
 	}
 	
 	/// Constant methods for [crate::phase_unwrapping::PhaseUnwrapping]
-	pub trait PhaseUnwrappingConst: core::AlgorithmTraitConst {
+	pub trait PhaseUnwrappingTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_PhaseUnwrapping(&self) -> *const c_void;
 	
 	}
 	
-	/// Abstract base class for phase unwrapping.
-	pub trait PhaseUnwrapping: core::AlgorithmTrait + crate::phase_unwrapping::PhaseUnwrappingConst {
+	/// Mutable methods for [crate::phase_unwrapping::PhaseUnwrapping]
+	pub trait PhaseUnwrappingTrait: core::AlgorithmTrait + crate::phase_unwrapping::PhaseUnwrappingTraitConst {
 		fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void;
 	
 		/// Unwraps a 2D phase map.
@@ -137,4 +181,42 @@ pub mod phase_unwrapping {
 		}
 		
 	}
+	
+	/// Abstract base class for phase unwrapping.
+	pub struct PhaseUnwrapping {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { PhaseUnwrapping }
+	
+	impl Drop for PhaseUnwrapping {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_PhaseUnwrapping_delete(instance: *mut c_void); }
+			unsafe { cv_PhaseUnwrapping_delete(self.as_raw_mut_PhaseUnwrapping()) };
+		}
+	}
+	
+	unsafe impl Send for PhaseUnwrapping {}
+	
+	impl core::AlgorithmTraitConst for PhaseUnwrapping {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for PhaseUnwrapping {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::phase_unwrapping::PhaseUnwrappingTraitConst for PhaseUnwrapping {
+		#[inline] fn as_raw_PhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::phase_unwrapping::PhaseUnwrappingTrait for PhaseUnwrapping {
+		#[inline] fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl PhaseUnwrapping {
+	}
+	
+	boxed_cast_base! { PhaseUnwrapping, core::Algorithm, cv_PhaseUnwrapping_to_Algorithm }
 }

@@ -2,7 +2,7 @@ pub mod cudacodec {
 	//! # Video Encoding/Decoding
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::EncoderCallbackConst, super::EncoderCallback, super::VideoWriterConst, super::VideoWriter, super::VideoReaderConst, super::VideoReader, super::RawVideoSourceConst, super::RawVideoSource };
+		pub use { super::EncoderCallbackTraitConst, super::EncoderCallbackTrait, super::VideoWriterTraitConst, super::VideoWriterTrait, super::VideoReaderTraitConst, super::VideoReaderTrait, super::RawVideoSourceTraitConst, super::RawVideoSourceTrait };
 	}
 	
 	pub const AV1: i32 = 11;
@@ -338,12 +338,12 @@ pub mod cudacodec {
 	/// ## C++ default parameters
 	/// * params: VideoReaderInitParams()
 	#[inline]
-	pub fn create_video_reader_1(source: &core::Ptr<dyn crate::cudacodec::RawVideoSource>, params: crate::cudacodec::VideoReaderInitParams) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
+	pub fn create_video_reader_1(source: &core::Ptr<crate::cudacodec::RawVideoSource>, params: crate::cudacodec::VideoReaderInitParams) -> Result<core::Ptr<crate::cudacodec::VideoReader>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR_const_VideoReaderInitParams(source.as_raw_PtrOfRawVideoSource(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -363,13 +363,13 @@ pub mod cudacodec {
 	/// * source_params: {}
 	/// * params: VideoReaderInitParams()
 	#[inline]
-	pub fn create_video_reader(filename: &str, source_params: &core::Vector<i32>, params: crate::cudacodec::VideoReaderInitParams) -> Result<core::Ptr<dyn crate::cudacodec::VideoReader>> {
+	pub fn create_video_reader(filename: &str, source_params: &core::Vector<i32>, params: crate::cudacodec::VideoReaderInitParams) -> Result<core::Ptr<crate::cudacodec::VideoReader>> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoReader_const_StringR_const_vectorLintGR_const_VideoReaderInitParams(filename.opencv_as_extern(), source_params.as_raw_VectorOfi32(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudacodec::VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -391,13 +391,13 @@ pub mod cudacodec {
 	/// * encoder_callback: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn create_video_writer(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::Codec, fps: f64, color_format: crate::cudacodec::ColorFormat, mut encoder_callback: core::Ptr<dyn crate::cudacodec::EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
+	pub fn create_video_writer(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::Codec, fps: f64, color_format: crate::cudacodec::ColorFormat, mut encoder_callback: core::Ptr<crate::cudacodec::EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<crate::cudacodec::VideoWriter>> {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), codec, fps, color_format, encoder_callback.as_raw_mut_PtrOfEncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -417,13 +417,13 @@ pub mod cudacodec {
 	/// * encoder_callback: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::Codec, fps: f64, color_format: crate::cudacodec::ColorFormat, params: crate::cudacodec::EncoderParams, mut encoder_callback: core::Ptr<dyn crate::cudacodec::EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<dyn crate::cudacodec::VideoWriter>> {
+	pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::Codec, fps: f64, color_format: crate::cudacodec::ColorFormat, params: crate::cudacodec::EncoderParams, mut encoder_callback: core::Ptr<crate::cudacodec::EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<crate::cudacodec::VideoWriter>> {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), codec, fps, color_format, &params, encoder_callback.as_raw_mut_PtrOfEncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudacodec::VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -454,15 +454,13 @@ pub mod cudacodec {
 	}
 	
 	/// Constant methods for [crate::cudacodec::EncoderCallback]
-	pub trait EncoderCallbackConst {
+	pub trait EncoderCallbackTraitConst {
 		fn as_raw_EncoderCallback(&self) -> *const c_void;
 	
 	}
 	
-	/// Interface for encoder callbacks.
-	/// 
-	/// User can implement own multiplexing by implementing this interface.
-	pub trait EncoderCallback: crate::cudacodec::EncoderCallbackConst {
+	/// Mutable methods for [crate::cudacodec::EncoderCallback]
+	pub trait EncoderCallbackTrait: crate::cudacodec::EncoderCallbackTraitConst {
 		fn as_raw_mut_EncoderCallback(&mut self) -> *mut c_void;
 	
 		/// Callback function to signal that the encoded bitstream for one or more frames is ready.
@@ -488,6 +486,36 @@ pub mod cudacodec {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// Interface for encoder callbacks.
+	/// 
+	/// User can implement own multiplexing by implementing this interface.
+	pub struct EncoderCallback {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { EncoderCallback }
+	
+	impl Drop for EncoderCallback {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_EncoderCallback_delete(instance: *mut c_void); }
+			unsafe { cv_EncoderCallback_delete(self.as_raw_mut_EncoderCallback()) };
+		}
+	}
+	
+	unsafe impl Send for EncoderCallback {}
+	
+	impl crate::cudacodec::EncoderCallbackTraitConst for EncoderCallback {
+		#[inline] fn as_raw_EncoderCallback(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudacodec::EncoderCallbackTrait for EncoderCallback {
+		#[inline] fn as_raw_mut_EncoderCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl EncoderCallback {
 	}
 	
 	/// Different parameters for CUDA video encoder.
@@ -571,7 +599,7 @@ pub mod cudacodec {
 	}
 	
 	/// Constant methods for [crate::cudacodec::RawVideoSource]
-	pub trait RawVideoSourceConst {
+	pub trait RawVideoSourceTraitConst {
 		fn as_raw_RawVideoSource(&self) -> *const c_void;
 	
 		/// Returns true if the last packet contained a key frame.
@@ -627,10 +655,8 @@ pub mod cudacodec {
 		
 	}
 	
-	/// Interface for video demultiplexing. :
-	/// 
-	/// User can implement own demultiplexing by implementing this interface.
-	pub trait RawVideoSource: crate::cudacodec::RawVideoSourceConst {
+	/// Mutable methods for [crate::cudacodec::RawVideoSource]
+	pub trait RawVideoSourceTrait: crate::cudacodec::RawVideoSourceTraitConst {
 		fn as_raw_mut_RawVideoSource(&mut self) -> *mut c_void;
 	
 		/// Returns next packet with RAW video frame.
@@ -659,8 +685,38 @@ pub mod cudacodec {
 		
 	}
 	
+	/// Interface for video demultiplexing. :
+	/// 
+	/// User can implement own demultiplexing by implementing this interface.
+	pub struct RawVideoSource {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { RawVideoSource }
+	
+	impl Drop for RawVideoSource {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_RawVideoSource_delete(instance: *mut c_void); }
+			unsafe { cv_RawVideoSource_delete(self.as_raw_mut_RawVideoSource()) };
+		}
+	}
+	
+	unsafe impl Send for RawVideoSource {}
+	
+	impl crate::cudacodec::RawVideoSourceTraitConst for RawVideoSource {
+		#[inline] fn as_raw_RawVideoSource(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudacodec::RawVideoSourceTrait for RawVideoSource {
+		#[inline] fn as_raw_mut_RawVideoSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl RawVideoSource {
+	}
+	
 	/// Constant methods for [crate::cudacodec::VideoReader]
-	pub trait VideoReaderConst {
+	pub trait VideoReaderTraitConst {
 		fn as_raw_VideoReader(&self) -> *const c_void;
 	
 		/// Returns information about video file format.
@@ -788,17 +844,8 @@ pub mod cudacodec {
 		
 	}
 	
-	/// Video reader interface.
-	/// 
-	/// Available when built with WITH_NVCUVID=ON while Nvidia's Video Codec SDK is installed.
-	/// 
-	/// Decoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
-	/// 
-	/// 
-	/// Note:
-	///    *   An example on how to use the videoReader class can be found at
-	///        opencv_source_code/samples/gpu/video_reader.cpp
-	pub trait VideoReader: crate::cudacodec::VideoReaderConst {
+	/// Mutable methods for [crate::cudacodec::VideoReader]
+	pub trait VideoReaderTrait: crate::cudacodec::VideoReaderTraitConst {
 		fn as_raw_mut_VideoReader(&mut self) -> *mut c_void;
 	
 		/// Grabs, decodes and returns the next video frame.
@@ -890,6 +937,43 @@ pub mod cudacodec {
 		
 	}
 	
+	/// Video reader interface.
+	/// 
+	/// Available when built with WITH_NVCUVID=ON while Nvidia's Video Codec SDK is installed.
+	/// 
+	/// Decoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
+	/// 
+	/// 
+	/// Note:
+	///    *   An example on how to use the videoReader class can be found at
+	///        opencv_source_code/samples/gpu/video_reader.cpp
+	pub struct VideoReader {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { VideoReader }
+	
+	impl Drop for VideoReader {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_VideoReader_delete(instance: *mut c_void); }
+			unsafe { cv_VideoReader_delete(self.as_raw_mut_VideoReader()) };
+		}
+	}
+	
+	unsafe impl Send for VideoReader {}
+	
+	impl crate::cudacodec::VideoReaderTraitConst for VideoReader {
+		#[inline] fn as_raw_VideoReader(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudacodec::VideoReaderTrait for VideoReader {
+		#[inline] fn as_raw_mut_VideoReader(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl VideoReader {
+	}
+	
 	/// VideoReader initialization parameters
 	/// ## Parameters
 	/// * udpSource: Remove validation which can cause VideoReader() to throw exceptions when reading from a UDP source.
@@ -932,7 +1016,7 @@ pub mod cudacodec {
 	}
 	
 	/// Constant methods for [crate::cudacodec::VideoWriter]
-	pub trait VideoWriterConst {
+	pub trait VideoWriterTraitConst {
 		fn as_raw_VideoWriter(&self) -> *const c_void;
 	
 		/// Retrieve the encoding parameters.
@@ -947,17 +1031,8 @@ pub mod cudacodec {
 		
 	}
 	
-	/// Video writer interface.
-	/// 
-	/// Available when built with WITH_NVCUVENC=ON while Nvidia's Video Codec SDK is installed.
-	/// 
-	/// Encoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
-	/// 
-	/// 
-	/// Note:
-	///    *   An example on how to use the videoWriter class can be found at
-	///        opencv_source_code/samples/gpu/video_writer.cpp
-	pub trait VideoWriter: crate::cudacodec::VideoWriterConst {
+	/// Mutable methods for [crate::cudacodec::VideoWriter]
+	pub trait VideoWriterTrait: crate::cudacodec::VideoWriterTraitConst {
 		fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void;
 	
 		/// Writes the next video frame.
@@ -987,5 +1062,42 @@ pub mod cudacodec {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// Video writer interface.
+	/// 
+	/// Available when built with WITH_NVCUVENC=ON while Nvidia's Video Codec SDK is installed.
+	/// 
+	/// Encoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
+	/// 
+	/// 
+	/// Note:
+	///    *   An example on how to use the videoWriter class can be found at
+	///        opencv_source_code/samples/gpu/video_writer.cpp
+	pub struct VideoWriter {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { VideoWriter }
+	
+	impl Drop for VideoWriter {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_VideoWriter_delete(instance: *mut c_void); }
+			unsafe { cv_VideoWriter_delete(self.as_raw_mut_VideoWriter()) };
+		}
+	}
+	
+	unsafe impl Send for VideoWriter {}
+	
+	impl crate::cudacodec::VideoWriterTraitConst for VideoWriter {
+		#[inline] fn as_raw_VideoWriter(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudacodec::VideoWriterTrait for VideoWriter {
+		#[inline] fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl VideoWriter {
 	}
 }

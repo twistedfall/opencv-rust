@@ -1063,6 +1063,9 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 		"cudaimgproc" => hashmap! {
 			"cuda" => "CUDA",
 		},
+		"cudaobjdetect" => hashmap! {
+			"cuda" => "CUDA",
+		},
 		"cudaoptflow" => hashmap! {
 			"cuda" => "CUDA",
 		},

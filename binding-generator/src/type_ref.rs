@@ -10,8 +10,7 @@ use crate::entity::WalkAction;
 use crate::renderer::{CppExternReturnRenderer, CppRenderer};
 use crate::{
 	settings::{self, ArgOverride},
-	AbstractRefWrapper, Class, Element, EntityExt, Enum, Function, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Tuple,
-	Typedef, Vector,
+	Class, Element, EntityExt, Enum, Function, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Tuple, Typedef, Vector,
 };
 
 pub trait TypeRefRenderer<'a> {
@@ -798,11 +797,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			}
 			Kind::Typedef(typedef) => typedef.generated_types(),
 			_ => {
-				let mut out = vec![];
-				if self.as_abstract_class_ptr().is_some() {
-					out.push(GeneratedType::AbstractRefWrapper(AbstractRefWrapper::new(self.clone())))
-				}
-				out
+				vec![]
 			}
 		}
 	}

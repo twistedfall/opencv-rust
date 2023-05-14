@@ -2,7 +2,7 @@ pub mod cudastereo {
 	//! # Stereo Correspondence
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::CUDA_StereoBMConst, super::CUDA_StereoBM, super::CUDA_StereoBeliefPropagationConst, super::CUDA_StereoBeliefPropagation, super::CUDA_StereoConstantSpaceBPConst, super::CUDA_StereoConstantSpaceBP, super::CUDA_StereoSGMConst, super::CUDA_StereoSGM, super::CUDA_DisparityBilateralFilterConst, super::CUDA_DisparityBilateralFilter };
+		pub use { super::CUDA_StereoBMTraitConst, super::CUDA_StereoBMTrait, super::CUDA_StereoBeliefPropagationTraitConst, super::CUDA_StereoBeliefPropagationTrait, super::CUDA_StereoConstantSpaceBPTraitConst, super::CUDA_StereoConstantSpaceBPTrait, super::CUDA_StereoSGMTraitConst, super::CUDA_StereoSGMTrait, super::CUDA_DisparityBilateralFilterTraitConst, super::CUDA_DisparityBilateralFilterTrait };
 	}
 	
 	/// Creates DisparityBilateralFilter object.
@@ -17,12 +17,12 @@ pub mod cudastereo {
 	/// * radius: 3
 	/// * iters: 1
 	#[inline]
-	pub fn create_disparity_bilateral_filter(ndisp: i32, radius: i32, iters: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_DisparityBilateralFilter>> {
+	pub fn create_disparity_bilateral_filter(ndisp: i32, radius: i32, iters: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createDisparityBilateralFilter_int_int_int(ndisp, radius, iters, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_DisparityBilateralFilter>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_DisparityBilateralFilter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -41,12 +41,12 @@ pub mod cudastereo {
 	/// * num_disparities: 64
 	/// * block_size: 19
 	#[inline]
-	pub fn create_stereo_bm(num_disparities: i32, block_size: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_StereoBM>> {
+	pub fn create_stereo_bm(num_disparities: i32, block_size: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_StereoBM>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoBM_int_int(num_disparities, block_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoBM>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoBM>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -64,12 +64,12 @@ pub mod cudastereo {
 	/// * levels: 5
 	/// * msg_type: CV_32F
 	#[inline]
-	pub fn create_stereo_belief_propagation(ndisp: i32, iters: i32, levels: i32, msg_type: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_StereoBeliefPropagation>> {
+	pub fn create_stereo_belief_propagation(ndisp: i32, iters: i32, levels: i32, msg_type: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoBeliefPropagation_int_int_int_int(ndisp, iters, levels, msg_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoBeliefPropagation>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoBeliefPropagation>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -89,12 +89,12 @@ pub mod cudastereo {
 	/// * nr_plane: 4
 	/// * msg_type: CV_32F
 	#[inline]
-	pub fn create_stereo_constant_space_bp(ndisp: i32, iters: i32, levels: i32, nr_plane: i32, msg_type: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_StereoConstantSpaceBP>> {
+	pub fn create_stereo_constant_space_bp(ndisp: i32, iters: i32, levels: i32, nr_plane: i32, msg_type: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoConstantSpaceBP_int_int_int_int_int(ndisp, iters, levels, nr_plane, msg_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoConstantSpaceBP>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoConstantSpaceBP>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -119,12 +119,12 @@ pub mod cudastereo {
 	/// * uniqueness_ratio: 5
 	/// * mode: cv::cuda::StereoSGM::MODE_HH4
 	#[inline]
-	pub fn create_stereo_sgm(min_disparity: i32, num_disparities: i32, p1: i32, p2: i32, uniqueness_ratio: i32, mode: i32) -> Result<core::Ptr<dyn crate::cudastereo::CUDA_StereoSGM>> {
+	pub fn create_stereo_sgm(min_disparity: i32, num_disparities: i32, p1: i32, p2: i32, uniqueness_ratio: i32, mode: i32) -> Result<core::Ptr<crate::cudastereo::CUDA_StereoSGM>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createStereoSGM_int_int_int_int_int_int(min_disparity, num_disparities, p1, p2, uniqueness_ratio, mode, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudastereo::CUDA_StereoSGM>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoSGM>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -199,7 +199,7 @@ pub mod cudastereo {
 	}
 	
 	/// Constant methods for [crate::cudastereo::CUDA_DisparityBilateralFilter]
-	pub trait CUDA_DisparityBilateralFilterConst: core::AlgorithmTraitConst {
+	pub trait CUDA_DisparityBilateralFilterTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_DisparityBilateralFilter(&self) -> *const c_void;
 	
 		#[inline]
@@ -261,10 +261,8 @@ pub mod cudastereo {
 		
 	}
 	
-	/// Class refining a disparity map using joint bilateral filtering. :
-	/// 
-	/// The class implements [Yang2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
-	pub trait CUDA_DisparityBilateralFilter: core::AlgorithmTrait + crate::cudastereo::CUDA_DisparityBilateralFilterConst {
+	/// Mutable methods for [crate::cudastereo::CUDA_DisparityBilateralFilter]
+	pub trait CUDA_DisparityBilateralFilterTrait: core::AlgorithmTrait + crate::cudastereo::CUDA_DisparityBilateralFilterTraitConst {
 		fn as_raw_mut_CUDA_DisparityBilateralFilter(&mut self) -> *mut c_void;
 	
 		/// Refines a disparity map using joint bilateral filtering.
@@ -345,16 +343,54 @@ pub mod cudastereo {
 		
 	}
 	
+	/// Class refining a disparity map using joint bilateral filtering. :
+	/// 
+	/// The class implements [Yang2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
+	pub struct CUDA_DisparityBilateralFilter {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_DisparityBilateralFilter }
+	
+	impl Drop for CUDA_DisparityBilateralFilter {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_DisparityBilateralFilter_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_DisparityBilateralFilter_delete(self.as_raw_mut_CUDA_DisparityBilateralFilter()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_DisparityBilateralFilter {}
+	
+	impl core::AlgorithmTraitConst for CUDA_DisparityBilateralFilter {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_DisparityBilateralFilter {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_DisparityBilateralFilterTraitConst for CUDA_DisparityBilateralFilter {
+		#[inline] fn as_raw_CUDA_DisparityBilateralFilter(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudastereo::CUDA_DisparityBilateralFilterTrait for CUDA_DisparityBilateralFilter {
+		#[inline] fn as_raw_mut_CUDA_DisparityBilateralFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_DisparityBilateralFilter {
+	}
+	
+	boxed_cast_base! { CUDA_DisparityBilateralFilter, core::Algorithm, cv_CUDA_DisparityBilateralFilter_to_Algorithm }
+	
 	/// Constant methods for [crate::cudastereo::CUDA_StereoBM]
-	pub trait CUDA_StereoBMConst: crate::calib3d::StereoBMConst {
+	pub trait CUDA_StereoBMTraitConst: crate::calib3d::StereoBMTraitConst {
 		fn as_raw_CUDA_StereoBM(&self) -> *const c_void;
 	
 	}
 	
-	/// Class computing stereo correspondence (disparity map) using the block matching algorithm. :
-	/// ## See also
-	/// StereoBM
-	pub trait CUDA_StereoBM: crate::calib3d::StereoBM + crate::cudastereo::CUDA_StereoBMConst {
+	/// Mutable methods for [crate::cudastereo::CUDA_StereoBM]
+	pub trait CUDA_StereoBMTrait: crate::calib3d::StereoBMTrait + crate::cudastereo::CUDA_StereoBMTraitConst {
 		fn as_raw_mut_CUDA_StereoBM(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -371,8 +407,64 @@ pub mod cudastereo {
 		
 	}
 	
+	/// Class computing stereo correspondence (disparity map) using the block matching algorithm. :
+	/// ## See also
+	/// StereoBM
+	pub struct CUDA_StereoBM {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_StereoBM }
+	
+	impl Drop for CUDA_StereoBM {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_StereoBM_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_StereoBM_delete(self.as_raw_mut_CUDA_StereoBM()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_StereoBM {}
+	
+	impl core::AlgorithmTraitConst for CUDA_StereoBM {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_StereoBM {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoBMTraitConst for CUDA_StereoBM {
+		#[inline] fn as_raw_StereoBM(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::calib3d::StereoBMTrait for CUDA_StereoBM {
+		#[inline] fn as_raw_mut_StereoBM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoBM {
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::calib3d::StereoMatcherTrait for CUDA_StereoBM {
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoBMTraitConst for CUDA_StereoBM {
+		#[inline] fn as_raw_CUDA_StereoBM(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoBMTrait for CUDA_StereoBM {
+		#[inline] fn as_raw_mut_CUDA_StereoBM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_StereoBM {
+	}
+	
+	boxed_cast_base! { CUDA_StereoBM, core::Algorithm, cv_CUDA_StereoBM_to_Algorithm }
+	
 	/// Constant methods for [crate::cudastereo::CUDA_StereoBeliefPropagation]
-	pub trait CUDA_StereoBeliefPropagationConst: crate::calib3d::StereoMatcherConst {
+	pub trait CUDA_StereoBeliefPropagationTraitConst: crate::calib3d::StereoMatcherTraitConst {
 		fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void;
 	
 		/// number of BP iterations on each level
@@ -447,40 +539,8 @@ pub mod cudastereo {
 		
 	}
 	
-	/// Class computing stereo correspondence using the belief propagation algorithm. :
-	/// 
-	/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
-	/// (using a truncated linear model) or use a user-provided data cost.
-	/// 
-	/// 
-	/// Note:
-	///    StereoBeliefPropagation requires a lot of memory for message storage:
-	/// 
-	///    ![block formula](https://latex.codecogs.com/png.latex?width%20%5C%5F%20step%20%20%5Ccdot%20height%20%20%5Ccdot%20ndisp%20%20%5Ccdot%204%20%20%5Ccdot%20%281%20%2B%200%2E25%29)
-	/// 
-	///    and for data cost storage:
-	/// 
-	///    ![block formula](https://latex.codecogs.com/png.latex?width%5C%5Fstep%20%5Ccdot%20height%20%5Ccdot%20ndisp%20%5Ccdot%20%281%20%2B%200%2E25%20%2B%200%2E0625%20%2B%20%20%5Cdotsm%20%2B%20%5Cfrac%7B1%7D%7B4%5E%7Blevels%7D%7D%29)
-	/// 
-	///    width_step is the number of bytes in a line including padding.
-	/// 
-	/// StereoBeliefPropagation uses a truncated linear model for the data cost and discontinuity terms:
-	/// 
-	/// ![block formula](https://latex.codecogs.com/png.latex?DataCost%20%3D%20data%20%5C%5F%20weight%20%20%5Ccdot%20%5Cmin%20%28%20%5Clvert%20Img%5FLeft%28x%2Cy%29%2DImg%5FRight%28x%2Dd%2Cy%29%20%20%5Crvert%20%2C%20max%20%5C%5F%20data%20%5C%5F%20term%29)
-	/// 
-	/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
-	/// 
-	/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
-	/// 
-	/// By default, StereoBeliefPropagation uses floating-point arithmetics and the CV_32FC1 type for
-	/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
-	/// performance. To avoid an overflow in this case, the parameters must satisfy the following
-	/// requirement:
-	/// 
-	/// ![block formula](https://latex.codecogs.com/png.latex?10%20%20%5Ccdot%202%5E%7Blevels%2D1%7D%20%20%5Ccdot%20max%20%5C%5F%20data%20%5C%5F%20term%20%3C%20SHRT%20%5C%5F%20MAX)
-	/// ## See also
-	/// StereoMatcher
-	pub trait CUDA_StereoBeliefPropagation: crate::calib3d::StereoMatcher + crate::cudastereo::CUDA_StereoBeliefPropagationConst {
+	/// Mutable methods for [crate::cudastereo::CUDA_StereoBeliefPropagation]
+	pub trait CUDA_StereoBeliefPropagationTrait: crate::calib3d::StereoMatcherTrait + crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst {
 		fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void;
 	
 		/// Enables the stereo correspondence operator that finds the disparity for the specified data cost.
@@ -594,7 +654,80 @@ pub mod cudastereo {
 		
 	}
 	
-	impl dyn CUDA_StereoBeliefPropagation + '_ {
+	/// Class computing stereo correspondence using the belief propagation algorithm. :
+	/// 
+	/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
+	/// (using a truncated linear model) or use a user-provided data cost.
+	/// 
+	/// 
+	/// Note:
+	///    StereoBeliefPropagation requires a lot of memory for message storage:
+	/// 
+	///    ![block formula](https://latex.codecogs.com/png.latex?width%20%5C%5F%20step%20%20%5Ccdot%20height%20%20%5Ccdot%20ndisp%20%20%5Ccdot%204%20%20%5Ccdot%20%281%20%2B%200%2E25%29)
+	/// 
+	///    and for data cost storage:
+	/// 
+	///    ![block formula](https://latex.codecogs.com/png.latex?width%5C%5Fstep%20%5Ccdot%20height%20%5Ccdot%20ndisp%20%5Ccdot%20%281%20%2B%200%2E25%20%2B%200%2E0625%20%2B%20%20%5Cdotsm%20%2B%20%5Cfrac%7B1%7D%7B4%5E%7Blevels%7D%7D%29)
+	/// 
+	///    width_step is the number of bytes in a line including padding.
+	/// 
+	/// StereoBeliefPropagation uses a truncated linear model for the data cost and discontinuity terms:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?DataCost%20%3D%20data%20%5C%5F%20weight%20%20%5Ccdot%20%5Cmin%20%28%20%5Clvert%20Img%5FLeft%28x%2Cy%29%2DImg%5FRight%28x%2Dd%2Cy%29%20%20%5Crvert%20%2C%20max%20%5C%5F%20data%20%5C%5F%20term%29)
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
+	/// 
+	/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
+	/// 
+	/// By default, StereoBeliefPropagation uses floating-point arithmetics and the CV_32FC1 type for
+	/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
+	/// performance. To avoid an overflow in this case, the parameters must satisfy the following
+	/// requirement:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?10%20%20%5Ccdot%202%5E%7Blevels%2D1%7D%20%20%5Ccdot%20max%20%5C%5F%20data%20%5C%5F%20term%20%3C%20SHRT%20%5C%5F%20MAX)
+	/// ## See also
+	/// StereoMatcher
+	pub struct CUDA_StereoBeliefPropagation {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_StereoBeliefPropagation }
+	
+	impl Drop for CUDA_StereoBeliefPropagation {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_StereoBeliefPropagation_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_StereoBeliefPropagation_delete(self.as_raw_mut_CUDA_StereoBeliefPropagation()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_StereoBeliefPropagation {}
+	
+	impl core::AlgorithmTraitConst for CUDA_StereoBeliefPropagation {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_StereoBeliefPropagation {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoBeliefPropagation {
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::calib3d::StereoMatcherTrait for CUDA_StereoBeliefPropagation {
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst for CUDA_StereoBeliefPropagation {
+		#[inline] fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoBeliefPropagationTrait for CUDA_StereoBeliefPropagation {
+		#[inline] fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_StereoBeliefPropagation {
 		/// Uses a heuristic method to compute the recommended parameters ( ndisp, iters and levels ) for the
 		/// specified image size ( width and height ).
 		#[inline]
@@ -607,8 +740,11 @@ pub mod cudastereo {
 		}
 		
 	}
+	
+	boxed_cast_base! { CUDA_StereoBeliefPropagation, core::Algorithm, cv_CUDA_StereoBeliefPropagation_to_Algorithm }
+	
 	/// Constant methods for [crate::cudastereo::CUDA_StereoConstantSpaceBP]
-	pub trait CUDA_StereoConstantSpaceBPConst: crate::cudastereo::CUDA_StereoBeliefPropagationConst {
+	pub trait CUDA_StereoConstantSpaceBPTraitConst: crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst {
 		fn as_raw_CUDA_StereoConstantSpaceBP(&self) -> *const c_void;
 	
 		/// number of active disparity on the first level
@@ -625,6 +761,30 @@ pub mod cudastereo {
 		fn get_use_local_init_data_cost(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoConstantSpaceBP_getUseLocalInitDataCost_const(self.as_raw_CUDA_StereoConstantSpaceBP(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+	}
+	
+	/// Mutable methods for [crate::cudastereo::CUDA_StereoConstantSpaceBP]
+	pub trait CUDA_StereoConstantSpaceBPTrait: crate::cudastereo::CUDA_StereoBeliefPropagationTrait + crate::cudastereo::CUDA_StereoConstantSpaceBPTraitConst {
+		fn as_raw_mut_CUDA_StereoConstantSpaceBP(&mut self) -> *mut c_void;
+	
+		#[inline]
+		fn set_nr_plane(&mut self, nr_plane: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_StereoConstantSpaceBP_setNrPlane_int(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), nr_plane, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_use_local_init_data_cost(&mut self, use_local_init_data_cost: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_StereoConstantSpaceBP_setUseLocalInitDataCost_bool(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), use_local_init_data_cost, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -653,30 +813,55 @@ pub mod cudastereo {
 	/// requirement:
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?10%20%20%5Ccdot%202%5E%7Blevels%2D1%7D%20%20%5Ccdot%20max%20%5C%5F%20data%20%5C%5F%20term%20%3C%20SHRT%20%5C%5F%20MAX)
-	pub trait CUDA_StereoConstantSpaceBP: crate::cudastereo::CUDA_StereoBeliefPropagation + crate::cudastereo::CUDA_StereoConstantSpaceBPConst {
-		fn as_raw_mut_CUDA_StereoConstantSpaceBP(&mut self) -> *mut c_void;
-	
-		#[inline]
-		fn set_nr_plane(&mut self, nr_plane: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_StereoConstantSpaceBP_setNrPlane_int(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), nr_plane, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		#[inline]
-		fn set_use_local_init_data_cost(&mut self, use_local_init_data_cost: bool) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_StereoConstantSpaceBP_setUseLocalInitDataCost_bool(self.as_raw_mut_CUDA_StereoConstantSpaceBP(), use_local_init_data_cost, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
+	pub struct CUDA_StereoConstantSpaceBP {
+		ptr: *mut c_void
 	}
 	
-	impl dyn CUDA_StereoConstantSpaceBP + '_ {
+	opencv_type_boxed! { CUDA_StereoConstantSpaceBP }
+	
+	impl Drop for CUDA_StereoConstantSpaceBP {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_StereoConstantSpaceBP_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_StereoConstantSpaceBP_delete(self.as_raw_mut_CUDA_StereoConstantSpaceBP()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_StereoConstantSpaceBP {}
+	
+	impl core::AlgorithmTraitConst for CUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst for CUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoBeliefPropagationTrait for CUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::calib3d::StereoMatcherTrait for CUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoConstantSpaceBPTraitConst for CUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_CUDA_StereoConstantSpaceBP(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoConstantSpaceBPTrait for CUDA_StereoConstantSpaceBP {
+		#[inline] fn as_raw_mut_CUDA_StereoConstantSpaceBP(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_StereoConstantSpaceBP {
 		/// Uses a heuristic method to compute parameters (ndisp, iters, levelsand nrplane) for the specified
 		/// image size (widthand height).
 		#[inline]
@@ -689,23 +874,17 @@ pub mod cudastereo {
 		}
 		
 	}
+	
+	boxed_cast_base! { CUDA_StereoConstantSpaceBP, core::Algorithm, cv_CUDA_StereoConstantSpaceBP_to_Algorithm }
+	
 	/// Constant methods for [crate::cudastereo::CUDA_StereoSGM]
-	pub trait CUDA_StereoSGMConst: crate::calib3d::StereoSGBMConst {
+	pub trait CUDA_StereoSGMTraitConst: crate::calib3d::StereoSGBMTraitConst {
 		fn as_raw_CUDA_StereoSGM(&self) -> *const c_void;
 	
 	}
 	
-	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HH08).
-	/// Limitation and difference are as follows:
-	/// 
-	/// *   By default, the algorithm uses only 4 directions which are horizontal and vertical path instead of 8.
-	/// Set mode=StereoSGM::MODE_HH in createStereoSGM to run the full variant of the algorithm.
-	/// *   Mutual Information cost function is not implemented.
-	/// Instead, Center-Symmetric Census Transform with ![inline formula](https://latex.codecogs.com/png.latex?9%20%5Ctimes%207) window size from [Spangenberg2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Spangenberg2013)
-	/// is used for robustness.
-	/// ## See also
-	/// cv::StereoSGBM
-	pub trait CUDA_StereoSGM: crate::calib3d::StereoSGBM + crate::cudastereo::CUDA_StereoSGMConst {
+	/// Mutable methods for [crate::cudastereo::CUDA_StereoSGM]
+	pub trait CUDA_StereoSGMTrait: crate::calib3d::StereoSGBMTrait + crate::cudastereo::CUDA_StereoSGMTraitConst {
 		fn as_raw_mut_CUDA_StereoSGM(&mut self) -> *mut c_void;
 	
 		/// Computes disparity map for the specified stereo pair
@@ -743,4 +922,67 @@ pub mod cudastereo {
 		}
 		
 	}
+	
+	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HH08).
+	/// Limitation and difference are as follows:
+	/// 
+	/// *   By default, the algorithm uses only 4 directions which are horizontal and vertical path instead of 8.
+	/// Set mode=StereoSGM::MODE_HH in createStereoSGM to run the full variant of the algorithm.
+	/// *   Mutual Information cost function is not implemented.
+	/// Instead, Center-Symmetric Census Transform with ![inline formula](https://latex.codecogs.com/png.latex?9%20%5Ctimes%207) window size from [Spangenberg2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Spangenberg2013)
+	/// is used for robustness.
+	/// ## See also
+	/// cv::StereoSGBM
+	pub struct CUDA_StereoSGM {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_StereoSGM }
+	
+	impl Drop for CUDA_StereoSGM {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_StereoSGM_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_StereoSGM_delete(self.as_raw_mut_CUDA_StereoSGM()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_StereoSGM {}
+	
+	impl core::AlgorithmTraitConst for CUDA_StereoSGM {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_StereoSGM {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoSGM {
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::calib3d::StereoMatcherTrait for CUDA_StereoSGM {
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::calib3d::StereoSGBMTraitConst for CUDA_StereoSGM {
+		#[inline] fn as_raw_StereoSGBM(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::calib3d::StereoSGBMTrait for CUDA_StereoSGM {
+		#[inline] fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoSGMTraitConst for CUDA_StereoSGM {
+		#[inline] fn as_raw_CUDA_StereoSGM(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudastereo::CUDA_StereoSGMTrait for CUDA_StereoSGM {
+		#[inline] fn as_raw_mut_CUDA_StereoSGM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_StereoSGM {
+	}
+	
+	boxed_cast_base! { CUDA_StereoSGM, core::Algorithm, cv_CUDA_StereoSGM_to_Algorithm }
 }

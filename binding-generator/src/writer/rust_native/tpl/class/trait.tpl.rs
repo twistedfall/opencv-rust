@@ -13,5 +13,4 @@ pub trait {{rust_trait_local}}{{trait_bases_mut}} {
 	{{trait_mut_methods}}
 }
 
-{{dyn_impl}}
 

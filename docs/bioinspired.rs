@@ -7,7 +7,7 @@ pub mod bioinspired {
 	//! [bioinspired_retina]
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::RetinaParametersTraitConst, super::RetinaParametersTrait, super::RetinaConst, super::Retina, super::RetinaFastToneMappingConst, super::RetinaFastToneMapping, super::TransientAreasSegmentationModuleConst, super::TransientAreasSegmentationModule };
+		pub use { super::RetinaParametersTraitConst, super::RetinaParametersTrait, super::RetinaTraitConst, super::RetinaTrait, super::RetinaFastToneMappingTraitConst, super::RetinaFastToneMappingTrait, super::TransientAreasSegmentationModuleTraitConst, super::TransientAreasSegmentationModuleTrait };
 	}
 	
 	/// standard bayer sampling
@@ -17,7 +17,7 @@ pub mod bioinspired {
 	/// each pixel position is either R, G or B in a random choice
 	pub const RETINA_COLOR_RANDOM: i32 = 0;
 	/// Constant methods for [crate::bioinspired::Retina]
-	pub trait RetinaConst: core::AlgorithmTraitConst {
+	pub trait RetinaTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Retina(&self) -> *const c_void;
 	
 		/// Write xml/yml formated parameters information
@@ -81,29 +81,8 @@ pub mod bioinspired {
 		
 	}
 	
-	/// class which allows the Gipsa/Listic Labs model to be used with OpenCV.
-	/// 
-	/// This retina model allows spatio-temporal image processing (applied on still images, video sequences).
-	/// As a summary, these are the retina model properties:
-	/// - It applies a spectral whithening (mid-frequency details enhancement)
-	/// - high frequency spatio-temporal noise reduction
-	/// - low frequency luminance to be reduced (luminance range compression)
-	/// - local logarithmic luminance compression allows details to be enhanced in low light conditions
-	/// 
-	/// USE : this model can be used basically for spatio-temporal video effects but also for :
-	///      _using the getParvo method output matrix : texture analysiswith enhanced signal to noise ratio and enhanced details robust against input images luminance ranges
-	///      _using the getMagno method output matrix : motion analysis also with the previously cited properties
-	/// 
-	/// for more information, reer to the following papers :
-	/// Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
-	/// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
-	/// 
-	/// The retina filter includes the research contributions of phd/research collegues from which code has been redrawn by the author :
-	/// take a look at the retinacolor.hpp module to discover Brice Chaix de Lavarene color mosaicing/demosaicing and the reference paper:
-	/// B. Chaix de Lavarene, D. Alleysson, B. Durette, J. Herault (2007). "Efficient demosaicing through recursive filtering", IEEE International Conference on Image Processing ICIP 2007
-	/// take a look at imagelogpolprojection.hpp to discover retina spatial log sampling which originates from Barthelemy Durette phd with Jeanny Herault. A Retina / V1 cortex projection is also proposed and originates from Jeanny's discussions.
-	/// more informations in the above cited Jeanny Heraults's book.
-	pub trait Retina: core::AlgorithmTrait + crate::bioinspired::RetinaConst {
+	/// Mutable methods for [crate::bioinspired::Retina]
+	pub trait RetinaTrait: core::AlgorithmTrait + crate::bioinspired::RetinaTraitConst {
 		fn as_raw_mut_Retina(&mut self) -> *mut c_void;
 	
 		/// Retreive retina input buffer size
@@ -505,7 +484,61 @@ pub mod bioinspired {
 		
 	}
 	
-	impl dyn Retina + '_ {
+	/// class which allows the Gipsa/Listic Labs model to be used with OpenCV.
+	/// 
+	/// This retina model allows spatio-temporal image processing (applied on still images, video sequences).
+	/// As a summary, these are the retina model properties:
+	/// - It applies a spectral whithening (mid-frequency details enhancement)
+	/// - high frequency spatio-temporal noise reduction
+	/// - low frequency luminance to be reduced (luminance range compression)
+	/// - local logarithmic luminance compression allows details to be enhanced in low light conditions
+	/// 
+	/// USE : this model can be used basically for spatio-temporal video effects but also for :
+	///      _using the getParvo method output matrix : texture analysiswith enhanced signal to noise ratio and enhanced details robust against input images luminance ranges
+	///      _using the getMagno method output matrix : motion analysis also with the previously cited properties
+	/// 
+	/// for more information, reer to the following papers :
+	/// Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
+	/// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
+	/// 
+	/// The retina filter includes the research contributions of phd/research collegues from which code has been redrawn by the author :
+	/// take a look at the retinacolor.hpp module to discover Brice Chaix de Lavarene color mosaicing/demosaicing and the reference paper:
+	/// B. Chaix de Lavarene, D. Alleysson, B. Durette, J. Herault (2007). "Efficient demosaicing through recursive filtering", IEEE International Conference on Image Processing ICIP 2007
+	/// take a look at imagelogpolprojection.hpp to discover retina spatial log sampling which originates from Barthelemy Durette phd with Jeanny Herault. A Retina / V1 cortex projection is also proposed and originates from Jeanny's discussions.
+	/// more informations in the above cited Jeanny Heraults's book.
+	pub struct Retina {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Retina }
+	
+	impl Drop for Retina {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Retina_delete(instance: *mut c_void); }
+			unsafe { cv_Retina_delete(self.as_raw_mut_Retina()) };
+		}
+	}
+	
+	unsafe impl Send for Retina {}
+	
+	impl core::AlgorithmTraitConst for Retina {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Retina {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::bioinspired::RetinaTraitConst for Retina {
+		#[inline] fn as_raw_Retina(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::bioinspired::RetinaTrait for Retina {
+		#[inline] fn as_raw_mut_Retina(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Retina {
 		/// Constructors from standardized interfaces : retreive a smart pointer to a Retina instance
 		/// 
 		/// ## Parameters
@@ -525,12 +558,12 @@ pub mod bioinspired {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		pub fn create(input_size: core::Size) -> Result<core::Ptr<dyn crate::bioinspired::Retina>> {
+		pub fn create(input_size: core::Size) -> Result<core::Ptr<crate::bioinspired::Retina>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_create_Size(input_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::bioinspired::Retina>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::bioinspired::Retina>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -557,37 +590,27 @@ pub mod bioinspired {
 		/// * reduction_factor: 1.0f
 		/// * sampling_strength: 10.0f
 		#[inline]
-		pub fn create_ext(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strength: f32) -> Result<core::Ptr<dyn crate::bioinspired::Retina>> {
+		pub fn create_ext(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strength: f32) -> Result<core::Ptr<crate::bioinspired::Retina>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_create_Size_const_bool_int_const_bool_const_float_const_float(input_size.opencv_as_extern(), color_mode, color_sampling_method, use_retina_log_sampling, reduction_factor, sampling_strength, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::bioinspired::Retina>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::bioinspired::Retina>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { Retina, core::Algorithm, cv_Retina_to_Algorithm }
+	
 	/// Constant methods for [crate::bioinspired::RetinaFastToneMapping]
-	pub trait RetinaFastToneMappingConst: core::AlgorithmTraitConst {
+	pub trait RetinaFastToneMappingTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_RetinaFastToneMapping(&self) -> *const c_void;
 	
 	}
 	
-	/// a wrapper class which allows the tone mapping algorithm of Meylan&al(2007) to be used with OpenCV.
-	/// 
-	/// This algorithm is already implemented in thre Retina class (retina::applyFastToneMapping) but used it does not require all the retina model to be allocated. This allows a light memory use for low memory devices (smartphones, etc.
-	/// As a summary, these are the model properties:
-	/// - 2 stages of local luminance adaptation with a different local neighborhood for each.
-	/// - first stage models the retina photorecetors local luminance adaptation
-	/// - second stage models th ganglion cells local information adaptation
-	/// - compared to the initial publication, this class uses spatio-temporal low pass filters instead of spatial only filters.
-	///   this can help noise robustness and temporal stability for video sequence use cases.
-	/// 
-	/// for more information, read to the following papers :
-	/// Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
-	/// regarding spatio-temporal filter and the bigger retina model :
-	/// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
-	pub trait RetinaFastToneMapping: core::AlgorithmTrait + crate::bioinspired::RetinaFastToneMappingConst {
+	/// Mutable methods for [crate::bioinspired::RetinaFastToneMapping]
+	pub trait RetinaFastToneMappingTrait: core::AlgorithmTrait + crate::bioinspired::RetinaFastToneMappingTraitConst {
 		fn as_raw_mut_RetinaFastToneMapping(&mut self) -> *mut c_void;
 	
 		/// applies a luminance correction (initially High Dynamic Range (HDR) tone mapping)
@@ -640,18 +663,67 @@ pub mod bioinspired {
 		
 	}
 	
-	impl dyn RetinaFastToneMapping + '_ {
+	/// a wrapper class which allows the tone mapping algorithm of Meylan&al(2007) to be used with OpenCV.
+	/// 
+	/// This algorithm is already implemented in thre Retina class (retina::applyFastToneMapping) but used it does not require all the retina model to be allocated. This allows a light memory use for low memory devices (smartphones, etc.
+	/// As a summary, these are the model properties:
+	/// - 2 stages of local luminance adaptation with a different local neighborhood for each.
+	/// - first stage models the retina photorecetors local luminance adaptation
+	/// - second stage models th ganglion cells local information adaptation
+	/// - compared to the initial publication, this class uses spatio-temporal low pass filters instead of spatial only filters.
+	///   this can help noise robustness and temporal stability for video sequence use cases.
+	/// 
+	/// for more information, read to the following papers :
+	/// Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
+	/// regarding spatio-temporal filter and the bigger retina model :
+	/// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
+	pub struct RetinaFastToneMapping {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { RetinaFastToneMapping }
+	
+	impl Drop for RetinaFastToneMapping {
 		#[inline]
-		pub fn create(input_size: core::Size) -> Result<core::Ptr<dyn crate::bioinspired::RetinaFastToneMapping>> {
+		fn drop(&mut self) {
+			extern "C" { fn cv_RetinaFastToneMapping_delete(instance: *mut c_void); }
+			unsafe { cv_RetinaFastToneMapping_delete(self.as_raw_mut_RetinaFastToneMapping()) };
+		}
+	}
+	
+	unsafe impl Send for RetinaFastToneMapping {}
+	
+	impl core::AlgorithmTraitConst for RetinaFastToneMapping {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for RetinaFastToneMapping {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::bioinspired::RetinaFastToneMappingTraitConst for RetinaFastToneMapping {
+		#[inline] fn as_raw_RetinaFastToneMapping(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::bioinspired::RetinaFastToneMappingTrait for RetinaFastToneMapping {
+		#[inline] fn as_raw_mut_RetinaFastToneMapping(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl RetinaFastToneMapping {
+		#[inline]
+		pub fn create(input_size: core::Size) -> Result<core::Ptr<crate::bioinspired::RetinaFastToneMapping>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_RetinaFastToneMapping_create_Size(input_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::bioinspired::RetinaFastToneMapping>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::bioinspired::RetinaFastToneMapping>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { RetinaFastToneMapping, core::Algorithm, cv_RetinaFastToneMapping_to_Algorithm }
+	
 	/// Constant methods for [crate::bioinspired::RetinaParameters]
 	pub trait RetinaParametersTraitConst {
 		fn as_raw_RetinaParameters(&self) -> *const c_void;
@@ -890,7 +962,7 @@ pub mod bioinspired {
 	}
 	
 	/// Constant methods for [crate::bioinspired::TransientAreasSegmentationModule]
-	pub trait TransientAreasSegmentationModuleConst: core::AlgorithmTraitConst {
+	pub trait TransientAreasSegmentationModuleTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_TransientAreasSegmentationModule(&self) -> *const c_void;
 	
 		/// write xml/yml formated parameters information
@@ -920,19 +992,8 @@ pub mod bioinspired {
 		
 	}
 	
-	/// class which provides a transient/moving areas segmentation module
-	/// 
-	/// perform a locally adapted segmentation by using the retina magno input data Based on Alexandre
-	/// BENOIT thesis: "Le système visuel humain au secours de la vision par ordinateur"
-	/// 
-	/// 3 spatio temporal filters are used:
-	/// - a first one which filters the noise and local variations of the input motion energy
-	/// - a second (more powerfull low pass spatial filter) which gives the neighborhood motion energy the
-	/// segmentation consists in the comparison of these both outputs, if the local motion energy is higher
-	/// to the neighborhood otion energy, then the area is considered as moving and is segmented
-	/// - a stronger third low pass filter helps decision by providing a smooth information about the
-	/// "motion context" in a wider area
-	pub trait TransientAreasSegmentationModule: core::AlgorithmTrait + crate::bioinspired::TransientAreasSegmentationModuleConst {
+	/// Mutable methods for [crate::bioinspired::TransientAreasSegmentationModule]
+	pub trait TransientAreasSegmentationModuleTrait: core::AlgorithmTrait + crate::bioinspired::TransientAreasSegmentationModuleTraitConst {
 		fn as_raw_mut_TransientAreasSegmentationModule(&mut self) -> *mut c_void;
 	
 		/// return the sze of the manage input and output images
@@ -1064,18 +1125,65 @@ pub mod bioinspired {
 		
 	}
 	
-	impl dyn TransientAreasSegmentationModule + '_ {
+	/// class which provides a transient/moving areas segmentation module
+	/// 
+	/// perform a locally adapted segmentation by using the retina magno input data Based on Alexandre
+	/// BENOIT thesis: "Le système visuel humain au secours de la vision par ordinateur"
+	/// 
+	/// 3 spatio temporal filters are used:
+	/// - a first one which filters the noise and local variations of the input motion energy
+	/// - a second (more powerfull low pass spatial filter) which gives the neighborhood motion energy the
+	/// segmentation consists in the comparison of these both outputs, if the local motion energy is higher
+	/// to the neighborhood otion energy, then the area is considered as moving and is segmented
+	/// - a stronger third low pass filter helps decision by providing a smooth information about the
+	/// "motion context" in a wider area
+	pub struct TransientAreasSegmentationModule {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { TransientAreasSegmentationModule }
+	
+	impl Drop for TransientAreasSegmentationModule {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_TransientAreasSegmentationModule_delete(instance: *mut c_void); }
+			unsafe { cv_TransientAreasSegmentationModule_delete(self.as_raw_mut_TransientAreasSegmentationModule()) };
+		}
+	}
+	
+	unsafe impl Send for TransientAreasSegmentationModule {}
+	
+	impl core::AlgorithmTraitConst for TransientAreasSegmentationModule {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for TransientAreasSegmentationModule {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::bioinspired::TransientAreasSegmentationModuleTraitConst for TransientAreasSegmentationModule {
+		#[inline] fn as_raw_TransientAreasSegmentationModule(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::bioinspired::TransientAreasSegmentationModuleTrait for TransientAreasSegmentationModule {
+		#[inline] fn as_raw_mut_TransientAreasSegmentationModule(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl TransientAreasSegmentationModule {
 		/// allocator
 		/// ## Parameters
 		/// * inputSize: : size of the images input to segment (output will be the same size)
 		#[inline]
-		pub fn create(input_size: core::Size) -> Result<core::Ptr<dyn crate::bioinspired::TransientAreasSegmentationModule>> {
+		pub fn create(input_size: core::Size) -> Result<core::Ptr<crate::bioinspired::TransientAreasSegmentationModule>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_create_Size(input_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::bioinspired::TransientAreasSegmentationModule>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::bioinspired::TransientAreasSegmentationModule>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
-	}}
+	}
+	
+	boxed_cast_base! { TransientAreasSegmentationModule, core::Algorithm, cv_TransientAreasSegmentationModule_to_Algorithm }
+}

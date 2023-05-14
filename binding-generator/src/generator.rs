@@ -16,14 +16,13 @@ use crate::entity::WalkAction;
 use crate::type_ref::{CppNameStyle, FishStyle, Kind as TypeRefKind};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	get_definition_text, line_reader, opencv_module_from_path, settings, AbstractRefWrapper, Class, ClassSimplicity,
-	CompiledInterpolation, Const, Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint,
-	GeneratorEnv, SmartPtr, StrExt, Tuple, Typedef, Vector,
+	get_definition_text, line_reader, opencv_module_from_path, settings, Class, ClassSimplicity, CompiledInterpolation, Const,
+	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint, GeneratorEnv, SmartPtr, StrExt, Tuple,
+	Typedef, Vector,
 };
 
 #[derive(Debug)]
 pub enum GeneratedType<'tu, 'ge> {
-	AbstractRefWrapper(AbstractRefWrapper<'tu, 'ge>),
 	Vector(Vector<'tu, 'ge>),
 	SmartPtr(SmartPtr<'tu, 'ge>),
 	Tuple(Tuple<'tu, 'ge>),

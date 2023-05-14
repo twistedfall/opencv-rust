@@ -4,7 +4,7 @@ pub mod rgbd {
 	//! [kinfu_icp]
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::Linemod_TemplateTraitConst, super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramidConst, super::Linemod_QuantizedPyramid, super::Linemod_ModalityConst, super::Linemod_Modality, super::Linemod_ColorGradientTraitConst, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTraitConst, super::Linemod_DepthNormalTrait, super::Linemod_MatchTraitConst, super::Linemod_MatchTrait, super::Linemod_DetectorTraitConst, super::Linemod_DetectorTrait, super::RgbdNormalsTraitConst, super::RgbdNormalsTrait, super::DepthCleanerTraitConst, super::DepthCleanerTrait, super::RgbdPlaneTraitConst, super::RgbdPlaneTrait, super::RgbdFrameTraitConst, super::RgbdFrameTrait, super::OdometryFrameTraitConst, super::OdometryFrameTrait, super::OdometryConst, super::Odometry, super::RgbdOdometryTraitConst, super::RgbdOdometryTrait, super::ICPOdometryTraitConst, super::ICPOdometryTrait, super::RgbdICPOdometryTraitConst, super::RgbdICPOdometryTrait, super::FastICPOdometryTraitConst, super::FastICPOdometryTrait, super::Kinfu_VolumeConst, super::Kinfu_Volume, super::Kinfu_VolumeParamsTraitConst, super::Kinfu_VolumeParamsTrait, super::Kinfu_ParamsTraitConst, super::Kinfu_ParamsTrait, super::Kinfu_KinFuConst, super::Kinfu_KinFu, super::Dynafu_DynaFuConst, super::Dynafu_DynaFu, super::ParamsTraitConst, super::ParamsTrait, super::LargeKinfuConst, super::LargeKinfu, super::Kinfu_Detail_PoseGraphConst, super::Kinfu_Detail_PoseGraph, super::ColoredKinfu_ParamsTraitConst, super::ColoredKinfu_ParamsTrait, super::ColoredKinfu_ColoredKinFuConst, super::ColoredKinfu_ColoredKinFu };
+		pub use { super::Linemod_TemplateTraitConst, super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramidTraitConst, super::Linemod_QuantizedPyramidTrait, super::Linemod_ModalityTraitConst, super::Linemod_ModalityTrait, super::Linemod_ColorGradientTraitConst, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTraitConst, super::Linemod_DepthNormalTrait, super::Linemod_MatchTraitConst, super::Linemod_MatchTrait, super::Linemod_DetectorTraitConst, super::Linemod_DetectorTrait, super::RgbdNormalsTraitConst, super::RgbdNormalsTrait, super::DepthCleanerTraitConst, super::DepthCleanerTrait, super::RgbdPlaneTraitConst, super::RgbdPlaneTrait, super::RgbdFrameTraitConst, super::RgbdFrameTrait, super::OdometryFrameTraitConst, super::OdometryFrameTrait, super::OdometryTraitConst, super::OdometryTrait, super::RgbdOdometryTraitConst, super::RgbdOdometryTrait, super::ICPOdometryTraitConst, super::ICPOdometryTrait, super::RgbdICPOdometryTraitConst, super::RgbdICPOdometryTrait, super::FastICPOdometryTraitConst, super::FastICPOdometryTrait, super::Kinfu_VolumeTraitConst, super::Kinfu_VolumeTrait, super::Kinfu_VolumeParamsTraitConst, super::Kinfu_VolumeParamsTrait, super::Kinfu_ParamsTraitConst, super::Kinfu_ParamsTrait, super::Kinfu_KinFuTraitConst, super::Kinfu_KinFuTrait, super::Dynafu_DynaFuTraitConst, super::Dynafu_DynaFuTrait, super::ParamsTraitConst, super::ParamsTrait, super::LargeKinfuTraitConst, super::LargeKinfuTrait, super::Kinfu_Detail_PoseGraphTraitConst, super::Kinfu_Detail_PoseGraphTrait, super::ColoredKinfu_ParamsTraitConst, super::ColoredKinfu_ParamsTrait, super::ColoredKinfu_ColoredKinFuTraitConst, super::ColoredKinfu_ColoredKinFuTrait };
 	}
 	
 	pub const DepthCleaner_DEPTH_CLEANER_NIL: i32 = 0;
@@ -63,12 +63,12 @@ pub mod rgbd {
 	/// Backwards compatibility for old versions
 	pub type Dynafu_Params = crate::rgbd::Kinfu_Params;
 	#[inline]
-	pub fn make_volume(_volume_type: crate::rgbd::Kinfu_VolumeType, _voxel_size: f32, _pose: core::Matx44f, _raycast_step_factor: f32, _trunc_dist: f32, _max_weight: i32, _truncate_threshold: f32, _resolution: core::Vec3i) -> Result<core::Ptr<dyn crate::rgbd::Kinfu_Volume>> {
+	pub fn make_volume(_volume_type: crate::rgbd::Kinfu_VolumeType, _voxel_size: f32, _pose: core::Matx44f, _raycast_step_factor: f32, _trunc_dist: f32, _max_weight: i32, _truncate_threshold: f32, _resolution: core::Vec3i) -> Result<core::Ptr<crate::rgbd::Kinfu_Volume>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_kinfu_makeVolume_VolumeType_float_Matx44f_float_float_int_float_Vec3i(_volume_type, _voxel_size, _pose.opencv_as_extern(), _raycast_step_factor, _trunc_dist, _max_weight, _truncate_threshold, _resolution.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::rgbd::Kinfu_Volume>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_Volume>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -318,7 +318,7 @@ pub mod rgbd {
 	}
 	
 	/// Constant methods for [crate::rgbd::ColoredKinfu_ColoredKinFu]
-	pub trait ColoredKinfu_ColoredKinFuConst {
+	pub trait ColoredKinfu_ColoredKinFuTraitConst {
 		fn as_raw_ColoredKinfu_ColoredKinFu(&self) -> *const c_void;
 	
 		/// Get current parameters
@@ -435,30 +435,8 @@ pub mod rgbd {
 		
 	}
 	
-	/// KinectFusion implementation
-	/// 
-	/// This class implements a 3d reconstruction algorithm described in
-	/// [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
-	/// 
-	/// It takes a sequence of depth images taken from depth sensor
-	/// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
-	/// The output can be obtained as a vector of points and their normals
-	/// or can be Phong-rendered from given camera pose.
-	/// 
-	/// An internal representation of a model is a voxel cuboid that keeps TSDF values
-	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
-	/// There is no interface to that representation yet.
-	/// 
-	/// KinFu uses OpenCL acceleration automatically if available.
-	/// To enable or disable it explicitly use cv::setUseOptimized() or cv::ocl::setUseOpenCL().
-	/// 
-	/// This implementation is based on [kinfu-remake](https://github.com/Nerei/kinfu_remake).
-	/// 
-	/// Note that the KinectFusion algorithm was patented and its use may be restricted by
-	/// the list of patents mentioned in README.md file in this module directory.
-	/// 
-	/// That's why you need to set the OPENCV_ENABLE_NONFREE option in CMake to use KinectFusion.
-	pub trait ColoredKinfu_ColoredKinFu: crate::rgbd::ColoredKinfu_ColoredKinFuConst {
+	/// Mutable methods for [crate::rgbd::ColoredKinfu_ColoredKinFu]
+	pub trait ColoredKinfu_ColoredKinFuTrait: crate::rgbd::ColoredKinfu_ColoredKinFuTraitConst {
 		fn as_raw_mut_ColoredKinfu_ColoredKinFu(&mut self) -> *mut c_void;
 	
 		/// Resets the algorithm
@@ -493,18 +471,66 @@ pub mod rgbd {
 		
 	}
 	
-	impl dyn ColoredKinfu_ColoredKinFu + '_ {
+	/// KinectFusion implementation
+	/// 
+	/// This class implements a 3d reconstruction algorithm described in
+	/// [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+	/// 
+	/// It takes a sequence of depth images taken from depth sensor
+	/// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
+	/// The output can be obtained as a vector of points and their normals
+	/// or can be Phong-rendered from given camera pose.
+	/// 
+	/// An internal representation of a model is a voxel cuboid that keeps TSDF values
+	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+	/// There is no interface to that representation yet.
+	/// 
+	/// KinFu uses OpenCL acceleration automatically if available.
+	/// To enable or disable it explicitly use cv::setUseOptimized() or cv::ocl::setUseOpenCL().
+	/// 
+	/// This implementation is based on [kinfu-remake](https://github.com/Nerei/kinfu_remake).
+	/// 
+	/// Note that the KinectFusion algorithm was patented and its use may be restricted by
+	/// the list of patents mentioned in README.md file in this module directory.
+	/// 
+	/// That's why you need to set the OPENCV_ENABLE_NONFREE option in CMake to use KinectFusion.
+	pub struct ColoredKinfu_ColoredKinFu {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { ColoredKinfu_ColoredKinFu }
+	
+	impl Drop for ColoredKinfu_ColoredKinFu {
 		#[inline]
-		pub fn create(_params: &core::Ptr<crate::rgbd::ColoredKinfu_Params>) -> Result<core::Ptr<dyn crate::rgbd::ColoredKinfu_ColoredKinFu>> {
+		fn drop(&mut self) {
+			extern "C" { fn cv_ColoredKinfu_ColoredKinFu_delete(instance: *mut c_void); }
+			unsafe { cv_ColoredKinfu_ColoredKinFu_delete(self.as_raw_mut_ColoredKinfu_ColoredKinFu()) };
+		}
+	}
+	
+	unsafe impl Send for ColoredKinfu_ColoredKinFu {}
+	
+	impl crate::rgbd::ColoredKinfu_ColoredKinFuTraitConst for ColoredKinfu_ColoredKinFu {
+		#[inline] fn as_raw_ColoredKinfu_ColoredKinFu(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rgbd::ColoredKinfu_ColoredKinFuTrait for ColoredKinfu_ColoredKinFu {
+		#[inline] fn as_raw_mut_ColoredKinfu_ColoredKinFu(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl ColoredKinfu_ColoredKinFu {
+		#[inline]
+		pub fn create(_params: &core::Ptr<crate::rgbd::ColoredKinfu_Params>) -> Result<core::Ptr<crate::rgbd::ColoredKinfu_ColoredKinFu>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_create_const_PtrLParamsGR(_params.as_raw_PtrOfColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rgbd::ColoredKinfu_ColoredKinFu>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::ColoredKinfu_ColoredKinFu>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::rgbd::ColoredKinfu_Params]
 	pub trait ColoredKinfu_ParamsTraitConst {
 		fn as_raw_ColoredKinfu_Params(&self) -> *const c_void;
@@ -1017,7 +1043,7 @@ pub mod rgbd {
 	}
 	
 	/// Constant methods for [crate::rgbd::Dynafu_DynaFu]
-	pub trait Dynafu_DynaFuConst {
+	pub trait Dynafu_DynaFuTraitConst {
 		fn as_raw_Dynafu_DynaFu(&self) -> *const c_void;
 	
 		/// Get current parameters
@@ -1136,7 +1162,8 @@ pub mod rgbd {
 		
 	}
 	
-	pub trait Dynafu_DynaFu: crate::rgbd::Dynafu_DynaFuConst {
+	/// Mutable methods for [crate::rgbd::Dynafu_DynaFu]
+	pub trait Dynafu_DynaFuTrait: crate::rgbd::Dynafu_DynaFuTraitConst {
 		fn as_raw_mut_Dynafu_DynaFu(&mut self) -> *mut c_void;
 	
 		/// Resets the algorithm
@@ -1186,18 +1213,43 @@ pub mod rgbd {
 		
 	}
 	
-	impl dyn Dynafu_DynaFu + '_ {
+	pub struct Dynafu_DynaFu {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Dynafu_DynaFu }
+	
+	impl Drop for Dynafu_DynaFu {
 		#[inline]
-		pub fn create(_params: &core::Ptr<crate::rgbd::Kinfu_Params>) -> Result<core::Ptr<dyn crate::rgbd::Dynafu_DynaFu>> {
+		fn drop(&mut self) {
+			extern "C" { fn cv_Dynafu_DynaFu_delete(instance: *mut c_void); }
+			unsafe { cv_Dynafu_DynaFu_delete(self.as_raw_mut_Dynafu_DynaFu()) };
+		}
+	}
+	
+	unsafe impl Send for Dynafu_DynaFu {}
+	
+	impl crate::rgbd::Dynafu_DynaFuTraitConst for Dynafu_DynaFu {
+		#[inline] fn as_raw_Dynafu_DynaFu(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rgbd::Dynafu_DynaFuTrait for Dynafu_DynaFu {
+		#[inline] fn as_raw_mut_Dynafu_DynaFu(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Dynafu_DynaFu {
+		#[inline]
+		pub fn create(_params: &core::Ptr<crate::rgbd::Kinfu_Params>) -> Result<core::Ptr<crate::rgbd::Dynafu_DynaFu>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_create_const_PtrLParamsGR(_params.as_raw_PtrOfKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rgbd::Dynafu_DynaFu>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::Dynafu_DynaFu>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct Kinfu_Intr {
@@ -1334,7 +1386,7 @@ pub mod rgbd {
 	}
 	
 	/// Constant methods for [crate::rgbd::Kinfu_KinFu]
-	pub trait Kinfu_KinFuConst {
+	pub trait Kinfu_KinFuTraitConst {
 		fn as_raw_Kinfu_KinFu(&self) -> *const c_void;
 	
 		/// Get current parameters
@@ -1446,30 +1498,8 @@ pub mod rgbd {
 		
 	}
 	
-	/// KinectFusion implementation
-	/// 
-	/// This class implements a 3d reconstruction algorithm described in
-	/// [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
-	/// 
-	/// It takes a sequence of depth images taken from depth sensor
-	/// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
-	/// The output can be obtained as a vector of points and their normals
-	/// or can be Phong-rendered from given camera pose.
-	/// 
-	/// An internal representation of a model is a voxel cuboid that keeps TSDF values
-	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
-	/// There is no interface to that representation yet.
-	/// 
-	/// KinFu uses OpenCL acceleration automatically if available.
-	/// To enable or disable it explicitly use cv::setUseOptimized() or cv::ocl::setUseOpenCL().
-	/// 
-	/// This implementation is based on [kinfu-remake](https://github.com/Nerei/kinfu_remake).
-	/// 
-	/// Note that the KinectFusion algorithm was patented and its use may be restricted by
-	/// the list of patents mentioned in README.md file in this module directory.
-	/// 
-	/// That's why you need to set the OPENCV_ENABLE_NONFREE option in CMake to use KinectFusion.
-	pub trait Kinfu_KinFu: crate::rgbd::Kinfu_KinFuConst {
+	/// Mutable methods for [crate::rgbd::Kinfu_KinFu]
+	pub trait Kinfu_KinFuTrait: crate::rgbd::Kinfu_KinFuTraitConst {
 		fn as_raw_mut_Kinfu_KinFu(&mut self) -> *mut c_void;
 	
 		/// Resets the algorithm
@@ -1505,18 +1535,66 @@ pub mod rgbd {
 		
 	}
 	
-	impl dyn Kinfu_KinFu + '_ {
+	/// KinectFusion implementation
+	/// 
+	/// This class implements a 3d reconstruction algorithm described in
+	/// [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+	/// 
+	/// It takes a sequence of depth images taken from depth sensor
+	/// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
+	/// The output can be obtained as a vector of points and their normals
+	/// or can be Phong-rendered from given camera pose.
+	/// 
+	/// An internal representation of a model is a voxel cuboid that keeps TSDF values
+	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+	/// There is no interface to that representation yet.
+	/// 
+	/// KinFu uses OpenCL acceleration automatically if available.
+	/// To enable or disable it explicitly use cv::setUseOptimized() or cv::ocl::setUseOpenCL().
+	/// 
+	/// This implementation is based on [kinfu-remake](https://github.com/Nerei/kinfu_remake).
+	/// 
+	/// Note that the KinectFusion algorithm was patented and its use may be restricted by
+	/// the list of patents mentioned in README.md file in this module directory.
+	/// 
+	/// That's why you need to set the OPENCV_ENABLE_NONFREE option in CMake to use KinectFusion.
+	pub struct Kinfu_KinFu {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Kinfu_KinFu }
+	
+	impl Drop for Kinfu_KinFu {
 		#[inline]
-		pub fn create(_params: &core::Ptr<crate::rgbd::Kinfu_Params>) -> Result<core::Ptr<dyn crate::rgbd::Kinfu_KinFu>> {
+		fn drop(&mut self) {
+			extern "C" { fn cv_Kinfu_KinFu_delete(instance: *mut c_void); }
+			unsafe { cv_Kinfu_KinFu_delete(self.as_raw_mut_Kinfu_KinFu()) };
+		}
+	}
+	
+	unsafe impl Send for Kinfu_KinFu {}
+	
+	impl crate::rgbd::Kinfu_KinFuTraitConst for Kinfu_KinFu {
+		#[inline] fn as_raw_Kinfu_KinFu(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rgbd::Kinfu_KinFuTrait for Kinfu_KinFu {
+		#[inline] fn as_raw_mut_Kinfu_KinFu(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Kinfu_KinFu {
+		#[inline]
+		pub fn create(_params: &core::Ptr<crate::rgbd::Kinfu_Params>) -> Result<core::Ptr<crate::rgbd::Kinfu_KinFu>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_create_const_PtrLParamsGR(_params.as_raw_PtrOfKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rgbd::Kinfu_KinFu>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_KinFu>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::rgbd::Kinfu_Params]
 	pub trait Kinfu_ParamsTraitConst {
 		fn as_raw_Kinfu_Params(&self) -> *const c_void;
@@ -2015,7 +2093,7 @@ pub mod rgbd {
 	}
 	
 	/// Constant methods for [crate::rgbd::Kinfu_Volume]
-	pub trait Kinfu_VolumeConst {
+	pub trait Kinfu_VolumeTraitConst {
 		fn as_raw_Kinfu_Volume(&self) -> *const c_void;
 	
 		#[inline]
@@ -2103,7 +2181,8 @@ pub mod rgbd {
 		
 	}
 	
-	pub trait Kinfu_Volume: crate::rgbd::Kinfu_VolumeConst {
+	/// Mutable methods for [crate::rgbd::Kinfu_Volume]
+	pub trait Kinfu_VolumeTrait: crate::rgbd::Kinfu_VolumeTraitConst {
 		fn as_raw_mut_Kinfu_Volume(&mut self) -> *mut c_void;
 	
 		/// ## C++ default parameters
@@ -2140,6 +2219,33 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+	}
+	
+	pub struct Kinfu_Volume {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Kinfu_Volume }
+	
+	impl Drop for Kinfu_Volume {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Kinfu_Volume_delete(instance: *mut c_void); }
+			unsafe { cv_Kinfu_Volume_delete(self.as_raw_mut_Kinfu_Volume()) };
+		}
+	}
+	
+	unsafe impl Send for Kinfu_Volume {}
+	
+	impl crate::rgbd::Kinfu_VolumeTraitConst for Kinfu_Volume {
+		#[inline] fn as_raw_Kinfu_Volume(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rgbd::Kinfu_VolumeTrait for Kinfu_Volume {
+		#[inline] fn as_raw_mut_Kinfu_Volume(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Kinfu_Volume {
 	}
 	
 	/// Constant methods for [crate::rgbd::Kinfu_VolumeParams]
@@ -2363,7 +2469,7 @@ pub mod rgbd {
 	}
 	
 	/// Constant methods for [crate::rgbd::Kinfu_Detail_PoseGraph]
-	pub trait Kinfu_Detail_PoseGraphConst {
+	pub trait Kinfu_Detail_PoseGraphTraitConst {
 		fn as_raw_Kinfu_Detail_PoseGraph(&self) -> *const c_void;
 	
 		#[inline]
@@ -2459,7 +2565,8 @@ pub mod rgbd {
 		
 	}
 	
-	pub trait Kinfu_Detail_PoseGraph: crate::rgbd::Kinfu_Detail_PoseGraphConst {
+	/// Mutable methods for [crate::rgbd::Kinfu_Detail_PoseGraph]
+	pub trait Kinfu_Detail_PoseGraphTrait: crate::rgbd::Kinfu_Detail_PoseGraphTraitConst {
 		fn as_raw_mut_Kinfu_Detail_PoseGraph(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -2504,20 +2611,45 @@ pub mod rgbd {
 		
 	}
 	
-	impl dyn Kinfu_Detail_PoseGraph + '_ {
+	pub struct Kinfu_Detail_PoseGraph {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Kinfu_Detail_PoseGraph }
+	
+	impl Drop for Kinfu_Detail_PoseGraph {
 		#[inline]
-		pub fn create() -> Result<core::Ptr<dyn crate::rgbd::Kinfu_Detail_PoseGraph>> {
+		fn drop(&mut self) {
+			extern "C" { fn cv_Kinfu_Detail_PoseGraph_delete(instance: *mut c_void); }
+			unsafe { cv_Kinfu_Detail_PoseGraph_delete(self.as_raw_mut_Kinfu_Detail_PoseGraph()) };
+		}
+	}
+	
+	unsafe impl Send for Kinfu_Detail_PoseGraph {}
+	
+	impl crate::rgbd::Kinfu_Detail_PoseGraphTraitConst for Kinfu_Detail_PoseGraph {
+		#[inline] fn as_raw_Kinfu_Detail_PoseGraph(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rgbd::Kinfu_Detail_PoseGraphTrait for Kinfu_Detail_PoseGraph {
+		#[inline] fn as_raw_mut_Kinfu_Detail_PoseGraph(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Kinfu_Detail_PoseGraph {
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::rgbd::Kinfu_Detail_PoseGraph>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rgbd::Kinfu_Detail_PoseGraph>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::Kinfu_Detail_PoseGraph>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::rgbd::LargeKinfu]
-	pub trait LargeKinfuConst {
+	pub trait LargeKinfuTraitConst {
 		fn as_raw_LargeKinfu(&self) -> *const c_void;
 	
 		#[inline]
@@ -2593,6 +2725,31 @@ pub mod rgbd {
 		
 	}
 	
+	/// Mutable methods for [crate::rgbd::LargeKinfu]
+	pub trait LargeKinfuTrait: crate::rgbd::LargeKinfuTraitConst {
+		fn as_raw_mut_LargeKinfu(&mut self) -> *mut c_void;
+	
+		#[inline]
+		fn reset(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_large_kinfu_LargeKinfu_reset(self.as_raw_mut_LargeKinfu(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn update(&mut self, depth: &dyn core::ToInputArray) -> Result<bool> {
+			extern_container_arg!(depth);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_large_kinfu_LargeKinfu_update_const__InputArrayR(self.as_raw_mut_LargeKinfu(), depth.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+	}
+	
 	/// Large Scale Dense Depth Fusion implementation
 	/// 
 	/// This class implements a 3d reconstruction algorithm for larger environments using
@@ -2622,42 +2779,43 @@ pub mod rgbd {
 	/// This implementation is inspired from Kintinuous, InfiniTAM and other SOTA algorithms
 	/// 
 	/// You need to set the OPENCV_ENABLE_NONFREE option in CMake to use KinectFusion.
-	pub trait LargeKinfu: crate::rgbd::LargeKinfuConst {
-		fn as_raw_mut_LargeKinfu(&mut self) -> *mut c_void;
-	
-		#[inline]
-		fn reset(&mut self) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_large_kinfu_LargeKinfu_reset(self.as_raw_mut_LargeKinfu(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		#[inline]
-		fn update(&mut self, depth: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(depth);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_large_kinfu_LargeKinfu_update_const__InputArrayR(self.as_raw_mut_LargeKinfu(), depth.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
+	pub struct LargeKinfu {
+		ptr: *mut c_void
 	}
 	
-	impl dyn LargeKinfu + '_ {
+	opencv_type_boxed! { LargeKinfu }
+	
+	impl Drop for LargeKinfu {
 		#[inline]
-		pub fn create(_params: &core::Ptr<crate::rgbd::Params>) -> Result<core::Ptr<dyn crate::rgbd::LargeKinfu>> {
+		fn drop(&mut self) {
+			extern "C" { fn cv_LargeKinfu_delete(instance: *mut c_void); }
+			unsafe { cv_LargeKinfu_delete(self.as_raw_mut_LargeKinfu()) };
+		}
+	}
+	
+	unsafe impl Send for LargeKinfu {}
+	
+	impl crate::rgbd::LargeKinfuTraitConst for LargeKinfu {
+		#[inline] fn as_raw_LargeKinfu(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rgbd::LargeKinfuTrait for LargeKinfu {
+		#[inline] fn as_raw_mut_LargeKinfu(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl LargeKinfu {
+		#[inline]
+		pub fn create(_params: &core::Ptr<crate::rgbd::Params>) -> Result<core::Ptr<crate::rgbd::LargeKinfu>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_create_const_PtrLParamsGR(_params.as_raw_PtrOfParams(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rgbd::LargeKinfu>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::LargeKinfu>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::rgbd::Params]
 	pub trait ParamsTraitConst {
 		fn as_raw_Params(&self) -> *const c_void;
@@ -2967,7 +3125,7 @@ pub mod rgbd {
 	}
 	
 	/// Constant methods for [crate::rgbd::Linemod_ColorGradient]
-	pub trait Linemod_ColorGradientTraitConst: crate::rgbd::Linemod_ModalityConst {
+	pub trait Linemod_ColorGradientTraitConst: crate::rgbd::Linemod_ModalityTraitConst {
 		fn as_raw_Linemod_ColorGradient(&self) -> *const c_void;
 	
 		#[inline]
@@ -3010,7 +3168,7 @@ pub mod rgbd {
 	}
 	
 	/// Mutable methods for [crate::rgbd::Linemod_ColorGradient]
-	pub trait Linemod_ColorGradientTrait: crate::rgbd::Linemod_ColorGradientTraitConst + crate::rgbd::Linemod_Modality {
+	pub trait Linemod_ColorGradientTrait: crate::rgbd::Linemod_ColorGradientTraitConst + crate::rgbd::Linemod_ModalityTrait {
 		fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -3059,11 +3217,11 @@ pub mod rgbd {
 	
 	unsafe impl Send for Linemod_ColorGradient {}
 	
-	impl crate::rgbd::Linemod_ModalityConst for Linemod_ColorGradient {
+	impl crate::rgbd::Linemod_ModalityTraitConst for Linemod_ColorGradient {
 		#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_Modality for Linemod_ColorGradient {
+	impl crate::rgbd::Linemod_ModalityTrait for Linemod_ColorGradient {
 		#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -3116,7 +3274,7 @@ pub mod rgbd {
 	}
 	
 	/// Constant methods for [crate::rgbd::Linemod_DepthNormal]
-	pub trait Linemod_DepthNormalTraitConst: crate::rgbd::Linemod_ModalityConst {
+	pub trait Linemod_DepthNormalTraitConst: crate::rgbd::Linemod_ModalityTraitConst {
 		fn as_raw_Linemod_DepthNormal(&self) -> *const c_void;
 	
 		#[inline]
@@ -3165,7 +3323,7 @@ pub mod rgbd {
 	}
 	
 	/// Mutable methods for [crate::rgbd::Linemod_DepthNormal]
-	pub trait Linemod_DepthNormalTrait: crate::rgbd::Linemod_DepthNormalTraitConst + crate::rgbd::Linemod_Modality {
+	pub trait Linemod_DepthNormalTrait: crate::rgbd::Linemod_DepthNormalTraitConst + crate::rgbd::Linemod_ModalityTrait {
 		fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -3220,11 +3378,11 @@ pub mod rgbd {
 	
 	unsafe impl Send for Linemod_DepthNormal {}
 	
-	impl crate::rgbd::Linemod_ModalityConst for Linemod_DepthNormal {
+	impl crate::rgbd::Linemod_ModalityTraitConst for Linemod_DepthNormal {
 		#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_Modality for Linemod_DepthNormal {
+	impl crate::rgbd::Linemod_ModalityTrait for Linemod_DepthNormal {
 		#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -3315,12 +3473,12 @@ pub mod rgbd {
 		/// You are not permitted to add/remove modalities, but you may dynamic_cast them to
 		/// tweak parameters.
 		#[inline]
-		fn get_modalities(&self) -> Result<core::Vector<core::Ptr<dyn crate::rgbd::Linemod_Modality>>> {
+		fn get_modalities(&self) -> Result<core::Vector<core::Ptr<crate::rgbd::Linemod_Modality>>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_getModalities_const(self.as_raw_Linemod_Detector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<core::Ptr<dyn crate::rgbd::Linemod_Modality>>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Vector::<core::Ptr<crate::rgbd::Linemod_Modality>>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -3546,7 +3704,7 @@ pub mod rgbd {
 		/// \param T_pyramid        Value of the sampling step T at each pyramid level. The
 		///                         number of pyramid levels is T_pyramid.size().
 		#[inline]
-		pub fn new(modalities: &core::Vector<core::Ptr<dyn crate::rgbd::Linemod_Modality>>, t_pyramid: &core::Vector<i32>) -> Result<crate::rgbd::Linemod_Detector> {
+		pub fn new(modalities: &core::Vector<core::Ptr<crate::rgbd::Linemod_Modality>>, t_pyramid: &core::Vector<i32>) -> Result<crate::rgbd::Linemod_Detector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_Detector_const_vectorLPtrLModalityGGR_const_vectorLintGR(modalities.as_raw_VectorOfPtrOfLinemod_Modality(), t_pyramid.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3761,7 +3919,7 @@ pub mod rgbd {
 	}
 	
 	/// Constant methods for [crate::rgbd::Linemod_Modality]
-	pub trait Linemod_ModalityConst {
+	pub trait Linemod_ModalityTraitConst {
 		fn as_raw_Linemod_Modality(&self) -> *const c_void;
 	
 		/// \brief Form a quantized image pyramid from a source image.
@@ -3773,12 +3931,12 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * mask: Mat()
 		#[inline]
-		fn process(&self, src: &core::Mat, mask: &core::Mat) -> Result<core::Ptr<dyn crate::rgbd::Linemod_QuantizedPyramid>> {
+		fn process(&self, src: &core::Mat, mask: &core::Mat) -> Result<core::Ptr<crate::rgbd::Linemod_QuantizedPyramid>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_process_const_const_MatR_const_MatR(self.as_raw_Linemod_Modality(), src.as_raw_Mat(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rgbd::Linemod_QuantizedPyramid>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_QuantizedPyramid>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -3803,10 +3961,8 @@ pub mod rgbd {
 		
 	}
 	
-	/// \brief Interface for modalities that plug into the LINE template matching representation.
-	/// 
-	/// \todo Max response, to allow optimization of summing (255/MAX) features as uint8
-	pub trait Linemod_Modality: crate::rgbd::Linemod_ModalityConst {
+	/// Mutable methods for [crate::rgbd::Linemod_Modality]
+	pub trait Linemod_ModalityTrait: crate::rgbd::Linemod_ModalityTraitConst {
 		fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -3820,37 +3976,69 @@ pub mod rgbd {
 		
 	}
 	
-	impl dyn Linemod_Modality + '_ {
+	/// \brief Interface for modalities that plug into the LINE template matching representation.
+	/// 
+	/// \todo Max response, to allow optimization of summing (255/MAX) features as uint8
+	pub struct Linemod_Modality {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Linemod_Modality }
+	
+	impl Drop for Linemod_Modality {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Linemod_Modality_delete(instance: *mut c_void); }
+			unsafe { cv_Linemod_Modality_delete(self.as_raw_mut_Linemod_Modality()) };
+		}
+	}
+	
+	unsafe impl Send for Linemod_Modality {}
+	
+	impl crate::rgbd::Linemod_ModalityTraitConst for Linemod_Modality {
+		#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rgbd::Linemod_ModalityTrait for Linemod_Modality {
+		#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Linemod_Modality {
 		/// \brief Create modality by name.
 		/// 
 		/// The following modality types are supported:
 		/// - "ColorGradient"
 		/// - "DepthNormal"
 		#[inline]
-		pub fn create(modality_type: &str) -> Result<core::Ptr<dyn crate::rgbd::Linemod_Modality>> {
+		pub fn create(modality_type: &str) -> Result<core::Ptr<crate::rgbd::Linemod_Modality>> {
 			extern_container_arg!(modality_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_create_const_StringR(modality_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rgbd::Linemod_Modality>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_Modality>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		/// \brief Load a modality from file.
 		#[inline]
-		pub fn create_1(fn_: &core::FileNode) -> Result<core::Ptr<dyn crate::rgbd::Linemod_Modality>> {
+		pub fn create_1(fn_: &core::FileNode) -> Result<core::Ptr<crate::rgbd::Linemod_Modality>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_create_const_FileNodeR(fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rgbd::Linemod_Modality>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_Modality>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_descendant! { Linemod_Modality, crate::rgbd::Linemod_ColorGradient, cv_Linemod_Modality_to_Linemod_ColorGradient }
+	
+	boxed_cast_descendant! { Linemod_Modality, crate::rgbd::Linemod_DepthNormal, cv_Linemod_Modality_to_Linemod_DepthNormal }
+	
 	/// Constant methods for [crate::rgbd::Linemod_QuantizedPyramid]
-	pub trait Linemod_QuantizedPyramidConst {
+	pub trait Linemod_QuantizedPyramidTraitConst {
 		fn as_raw_Linemod_QuantizedPyramid(&self) -> *const c_void;
 	
 		/// \brief Compute quantized image at current pyramid level for online detection.
@@ -3880,8 +4068,8 @@ pub mod rgbd {
 		
 	}
 	
-	/// \brief Represents a modality operating over an image pyramid.
-	pub trait Linemod_QuantizedPyramid: crate::rgbd::Linemod_QuantizedPyramidConst {
+	/// Mutable methods for [crate::rgbd::Linemod_QuantizedPyramid]
+	pub trait Linemod_QuantizedPyramidTrait: crate::rgbd::Linemod_QuantizedPyramidTraitConst {
 		fn as_raw_mut_Linemod_QuantizedPyramid(&mut self) -> *mut c_void;
 	
 		/// \brief Go to the next pyramid level.
@@ -3896,6 +4084,34 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// \brief Represents a modality operating over an image pyramid.
+	pub struct Linemod_QuantizedPyramid {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Linemod_QuantizedPyramid }
+	
+	impl Drop for Linemod_QuantizedPyramid {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Linemod_QuantizedPyramid_delete(instance: *mut c_void); }
+			unsafe { cv_Linemod_QuantizedPyramid_delete(self.as_raw_mut_Linemod_QuantizedPyramid()) };
+		}
+	}
+	
+	unsafe impl Send for Linemod_QuantizedPyramid {}
+	
+	impl crate::rgbd::Linemod_QuantizedPyramidTraitConst for Linemod_QuantizedPyramid {
+		#[inline] fn as_raw_Linemod_QuantizedPyramid(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rgbd::Linemod_QuantizedPyramidTrait for Linemod_QuantizedPyramid {
+		#[inline] fn as_raw_mut_Linemod_QuantizedPyramid(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Linemod_QuantizedPyramid {
 	}
 	
 	/// Constant methods for [crate::rgbd::Linemod_Template]
@@ -4198,7 +4414,7 @@ pub mod rgbd {
 	boxed_cast_base! { DepthCleaner, core::Algorithm, cv_DepthCleaner_to_Algorithm }
 	
 	/// Constant methods for [crate::rgbd::FastICPOdometry]
-	pub trait FastICPOdometryTraitConst: crate::rgbd::OdometryConst {
+	pub trait FastICPOdometryTraitConst: crate::rgbd::OdometryTraitConst {
 		fn as_raw_FastICPOdometry(&self) -> *const c_void;
 	
 		#[inline]
@@ -4287,7 +4503,7 @@ pub mod rgbd {
 	}
 	
 	/// Mutable methods for [crate::rgbd::FastICPOdometry]
-	pub trait FastICPOdometryTrait: crate::rgbd::FastICPOdometryTraitConst + crate::rgbd::Odometry {
+	pub trait FastICPOdometryTrait: crate::rgbd::FastICPOdometryTraitConst + crate::rgbd::OdometryTrait {
 		fn as_raw_mut_FastICPOdometry(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -4398,11 +4614,11 @@ pub mod rgbd {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::rgbd::OdometryConst for FastICPOdometry {
+	impl crate::rgbd::OdometryTraitConst for FastICPOdometry {
 		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Odometry for FastICPOdometry {
+	impl crate::rgbd::OdometryTrait for FastICPOdometry {
 		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -4476,7 +4692,7 @@ pub mod rgbd {
 	boxed_cast_base! { FastICPOdometry, core::Algorithm, cv_FastICPOdometry_to_Algorithm }
 	
 	/// Constant methods for [crate::rgbd::ICPOdometry]
-	pub trait ICPOdometryTraitConst: crate::rgbd::OdometryConst {
+	pub trait ICPOdometryTraitConst: crate::rgbd::OdometryTraitConst {
 		fn as_raw_ICPOdometry(&self) -> *const c_void;
 	
 		#[inline]
@@ -4584,7 +4800,7 @@ pub mod rgbd {
 	}
 	
 	/// Mutable methods for [crate::rgbd::ICPOdometry]
-	pub trait ICPOdometryTrait: crate::rgbd::ICPOdometryTraitConst + crate::rgbd::Odometry {
+	pub trait ICPOdometryTrait: crate::rgbd::ICPOdometryTraitConst + crate::rgbd::OdometryTrait {
 		fn as_raw_mut_ICPOdometry(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -4696,11 +4912,11 @@ pub mod rgbd {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::rgbd::OdometryConst for ICPOdometry {
+	impl crate::rgbd::OdometryTraitConst for ICPOdometry {
 		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Odometry for ICPOdometry {
+	impl crate::rgbd::OdometryTrait for ICPOdometry {
 		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -4774,7 +4990,7 @@ pub mod rgbd {
 	boxed_cast_base! { ICPOdometry, core::Algorithm, cv_ICPOdometry_to_Algorithm }
 	
 	/// Constant methods for [crate::rgbd::Odometry]
-	pub trait OdometryConst: core::AlgorithmTraitConst {
+	pub trait OdometryTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Odometry(&self) -> *const c_void;
 	
 		/// Method to compute a transformation from the source frame to the destination one.
@@ -4863,8 +5079,8 @@ pub mod rgbd {
 		
 	}
 	
-	/// Base class for computation of odometry.
-	pub trait Odometry: core::AlgorithmTrait + crate::rgbd::OdometryConst {
+	/// Mutable methods for [crate::rgbd::Odometry]
+	pub trait OdometryTrait: core::AlgorithmTrait + crate::rgbd::OdometryTraitConst {
 		fn as_raw_mut_Odometry(&mut self) -> *mut c_void;
 	
 		/// ## See also
@@ -4891,7 +5107,40 @@ pub mod rgbd {
 		
 	}
 	
-	impl dyn Odometry + '_ {
+	/// Base class for computation of odometry.
+	pub struct Odometry {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Odometry }
+	
+	impl Drop for Odometry {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Odometry_delete(instance: *mut c_void); }
+			unsafe { cv_Odometry_delete(self.as_raw_mut_Odometry()) };
+		}
+	}
+	
+	unsafe impl Send for Odometry {}
+	
+	impl core::AlgorithmTraitConst for Odometry {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Odometry {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::rgbd::OdometryTraitConst for Odometry {
+		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::rgbd::OdometryTrait for Odometry {
+		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Odometry {
 		#[inline]
 		pub fn default_min_depth() -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -4947,17 +5196,28 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		pub fn create(odometry_type: &str) -> Result<core::Ptr<dyn crate::rgbd::Odometry>> {
+		pub fn create(odometry_type: &str) -> Result<core::Ptr<crate::rgbd::Odometry>> {
 			extern_container_arg!(odometry_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_create_const_StringR(odometry_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::rgbd::Odometry>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::Odometry>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_descendant! { Odometry, crate::rgbd::FastICPOdometry, cv_Odometry_to_FastICPOdometry }
+	
+	boxed_cast_descendant! { Odometry, crate::rgbd::ICPOdometry, cv_Odometry_to_ICPOdometry }
+	
+	boxed_cast_descendant! { Odometry, crate::rgbd::RgbdICPOdometry, cv_Odometry_to_RgbdICPOdometry }
+	
+	boxed_cast_descendant! { Odometry, crate::rgbd::RgbdOdometry, cv_Odometry_to_RgbdOdometry }
+	
+	boxed_cast_base! { Odometry, core::Algorithm, cv_Odometry_to_Algorithm }
+	
 	/// Constant methods for [crate::rgbd::OdometryFrame]
 	pub trait OdometryFrameTraitConst: crate::rgbd::RgbdFrameTraitConst {
 		fn as_raw_OdometryFrame(&self) -> *const c_void;
@@ -5341,7 +5601,7 @@ pub mod rgbd {
 	boxed_cast_descendant! { RgbdFrame, crate::rgbd::OdometryFrame, cv_RgbdFrame_to_OdometryFrame }
 	
 	/// Constant methods for [crate::rgbd::RgbdICPOdometry]
-	pub trait RgbdICPOdometryTraitConst: crate::rgbd::OdometryConst {
+	pub trait RgbdICPOdometryTraitConst: crate::rgbd::OdometryTraitConst {
 		fn as_raw_RgbdICPOdometry(&self) -> *const c_void;
 	
 		#[inline]
@@ -5459,7 +5719,7 @@ pub mod rgbd {
 	}
 	
 	/// Mutable methods for [crate::rgbd::RgbdICPOdometry]
-	pub trait RgbdICPOdometryTrait: crate::rgbd::Odometry + crate::rgbd::RgbdICPOdometryTraitConst {
+	pub trait RgbdICPOdometryTrait: crate::rgbd::OdometryTrait + crate::rgbd::RgbdICPOdometryTraitConst {
 		fn as_raw_mut_RgbdICPOdometry(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -5579,11 +5839,11 @@ pub mod rgbd {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::rgbd::OdometryConst for RgbdICPOdometry {
+	impl crate::rgbd::OdometryTraitConst for RgbdICPOdometry {
 		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Odometry for RgbdICPOdometry {
+	impl crate::rgbd::OdometryTrait for RgbdICPOdometry {
 		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -5901,7 +6161,7 @@ pub mod rgbd {
 	boxed_cast_base! { RgbdNormals, core::Algorithm, cv_RgbdNormals_to_Algorithm }
 	
 	/// Constant methods for [crate::rgbd::RgbdOdometry]
-	pub trait RgbdOdometryTraitConst: crate::rgbd::OdometryConst {
+	pub trait RgbdOdometryTraitConst: crate::rgbd::OdometryTraitConst {
 		fn as_raw_RgbdOdometry(&self) -> *const c_void;
 	
 		#[inline]
@@ -6009,7 +6269,7 @@ pub mod rgbd {
 	}
 	
 	/// Mutable methods for [crate::rgbd::RgbdOdometry]
-	pub trait RgbdOdometryTrait: crate::rgbd::Odometry + crate::rgbd::RgbdOdometryTraitConst {
+	pub trait RgbdOdometryTrait: crate::rgbd::OdometryTrait + crate::rgbd::RgbdOdometryTraitConst {
 		fn as_raw_mut_RgbdOdometry(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -6130,11 +6390,11 @@ pub mod rgbd {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::rgbd::OdometryConst for RgbdOdometry {
+	impl crate::rgbd::OdometryTraitConst for RgbdOdometry {
 		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Odometry for RgbdOdometry {
+	impl crate::rgbd::OdometryTrait for RgbdOdometry {
 		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	

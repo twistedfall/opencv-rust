@@ -145,7 +145,6 @@ pub trait RustElement: Element {
 impl<'ne, 'tu: 'ne, 'ge: 'ne> AsRef<dyn RustNativeGeneratedElement + 'ne> for GeneratedType<'tu, 'ge> {
 	fn as_ref(&self) -> &(dyn RustNativeGeneratedElement + 'ne) {
 		match self {
-			GeneratedType::AbstractRefWrapper(r) => r,
 			GeneratedType::Vector(vec) => vec,
 			GeneratedType::SmartPtr(ptr) => ptr,
 			GeneratedType::Tuple(tuple) => tuple,

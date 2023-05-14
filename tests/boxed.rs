@@ -71,9 +71,9 @@ fn smart_ptr_crate_and_cast_to_base_class() -> Result<()> {
 	let est_ptr = Ptr::new(est);
 	let mut estimator = KeypointBasedMotionEstimator::new(est_ptr.into()).unwrap();
 	#[cfg(ocvrs_opencv_branch_4)]
-	let detector_ptr = <dyn FastFeatureDetector>::create(10, true, FastFeatureDetector_DetectorType::TYPE_9_16).unwrap();
+	let detector_ptr = FastFeatureDetector::create(10, true, FastFeatureDetector_DetectorType::TYPE_9_16).unwrap();
 	#[cfg(not(ocvrs_opencv_branch_4))]
-	let detector_ptr = <dyn FastFeatureDetector>::create(10, true, 2).unwrap();
+	let detector_ptr = FastFeatureDetector::create(10, true, 2).unwrap();
 	let base_detector_ptr: Ptr<Feature2D> = detector_ptr.into();
 	estimator.set_detector(base_detector_ptr).unwrap();
 
@@ -84,11 +84,11 @@ fn smart_ptr_crate_and_cast_to_base_class() -> Result<()> {
 fn smart_ptr_cast_base() -> Result<()> {
 	#![cfg(ocvrs_has_module_features2d)]
 	#[cfg(ocvrs_opencv_branch_4)]
-	use opencv::features2d::{AKAZE_DescriptorType::DESCRIPTOR_MLDB, KAZE_DiffusivityType::DIFF_PM_G2};
+	use opencv::features2d::{AKAZE_DescriptorType::DESCRIPTOR_MLDB, KAZE_DiffusivityType::DIFF_PM_G2, AKAZE};
 	#[cfg(not(ocvrs_opencv_branch_4))]
-	use opencv::features2d::{AKAZE_DESCRIPTOR_MLDB as DESCRIPTOR_MLDB, KAZE_DIFF_PM_G2 as DIFF_PM_G2};
+	use opencv::features2d::{AKAZE, AKAZE_DESCRIPTOR_MLDB as DESCRIPTOR_MLDB, KAZE_DIFF_PM_G2 as DIFF_PM_G2};
 
-	let d = <dyn AKAZE>::create(DESCRIPTOR_MLDB, 0, 3, 0.001, 4, 4, DIFF_PM_G2)?;
+	let d = AKAZE::create(DESCRIPTOR_MLDB, 0, 3, 0.001, 4, 4, DIFF_PM_G2)?;
 	assert!(Feature2DTraitConst::empty(&d)?);
 	assert_eq!("Feature2D.AKAZE", Feature2DTraitConst::get_default_name(&d)?);
 	let a = PtrOfFeature2D::from(d);

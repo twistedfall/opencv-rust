@@ -17,7 +17,7 @@ pub mod mcc {
 	//! image.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::MCC_CCheckerConst, super::MCC_CChecker, super::MCC_CCheckerDrawConst, super::MCC_CCheckerDraw, super::MCC_DetectorParametersTraitConst, super::MCC_DetectorParametersTrait, super::MCC_CCheckerDetectorConst, super::MCC_CCheckerDetector, super::ColorCorrectionModelTraitConst, super::ColorCorrectionModelTrait };
+		pub use { super::MCC_CCheckerTraitConst, super::MCC_CCheckerTrait, super::MCC_CCheckerDrawTraitConst, super::MCC_CCheckerDrawTrait, super::MCC_DetectorParametersTraitConst, super::MCC_DetectorParametersTrait, super::MCC_CCheckerDetectorTraitConst, super::MCC_CCheckerDetectorTrait, super::ColorCorrectionModelTraitConst, super::ColorCorrectionModelTrait };
 	}
 	
 	/// The CCM with the shape ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) performs linear transformation on color values.
@@ -846,19 +846,13 @@ pub mod mcc {
 	}
 	
 	/// Constant methods for [crate::mcc::MCC_CChecker]
-	pub trait MCC_CCheckerConst {
+	pub trait MCC_CCheckerTraitConst {
 		fn as_raw_MCC_CChecker(&self) -> *const c_void;
 	
 	}
 	
-	/// CChecker
-	/// 
-	/// \brief checker object
-	/// 
-	///    This class contains the information about the detected checkers,i.e, their
-	///    type, the corners of the chart, the color profile, the cost, centers chart,
-	///    etc.
-	pub trait MCC_CChecker: crate::mcc::MCC_CCheckerConst {
+	/// Mutable methods for [crate::mcc::MCC_CChecker]
+	pub trait MCC_CCheckerTrait: crate::mcc::MCC_CCheckerTraitConst {
 		fn as_raw_mut_MCC_CChecker(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -974,28 +968,60 @@ pub mod mcc {
 		
 	}
 	
-	impl dyn MCC_CChecker + '_ {
+	/// CChecker
+	/// 
+	/// \brief checker object
+	/// 
+	///    This class contains the information about the detected checkers,i.e, their
+	///    type, the corners of the chart, the color profile, the cost, centers chart,
+	///    etc.
+	pub struct MCC_CChecker {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { MCC_CChecker }
+	
+	impl Drop for MCC_CChecker {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_MCC_CChecker_delete(instance: *mut c_void); }
+			unsafe { cv_MCC_CChecker_delete(self.as_raw_mut_MCC_CChecker()) };
+		}
+	}
+	
+	unsafe impl Send for MCC_CChecker {}
+	
+	impl crate::mcc::MCC_CCheckerTraitConst for MCC_CChecker {
+		#[inline] fn as_raw_MCC_CChecker(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::mcc::MCC_CCheckerTrait for MCC_CChecker {
+		#[inline] fn as_raw_mut_MCC_CChecker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl MCC_CChecker {
 		/// \brief Create a new CChecker object.
 		/// \return A pointer to the implementation of the CChecker
 		#[inline]
-		pub fn create() -> Result<core::Ptr<dyn crate::mcc::MCC_CChecker>> {
+		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_CChecker>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::mcc::MCC_CCheckerDetector]
-	pub trait MCC_CCheckerDetectorConst: core::AlgorithmTraitConst {
+	pub trait MCC_CCheckerDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_MCC_CCheckerDetector(&self) -> *const c_void;
 	
 	}
 	
-	/// A class to find the positions of the ColorCharts in the image.
-	pub trait MCC_CCheckerDetector: core::AlgorithmTrait + crate::mcc::MCC_CCheckerDetectorConst {
+	/// Mutable methods for [crate::mcc::MCC_CCheckerDetector]
+	pub trait MCC_CCheckerDetectorTrait: core::AlgorithmTrait + crate::mcc::MCC_CCheckerDetectorTraitConst {
 		fn as_raw_mut_MCC_CCheckerDetector(&mut self) -> *mut c_void;
 	
 		/// \brief Set the net which will be used to find the approximate
@@ -1089,62 +1115,86 @@ pub mod mcc {
 		/// \return checker A single colorchecker, if atleast one colorchecker
 		///                was detected, 'nullptr' otherwise.
 		#[inline]
-		fn get_best_color_checker(&mut self) -> Result<core::Ptr<dyn crate::mcc::MCC_CChecker>> {
+		fn get_best_color_checker(&mut self) -> Result<core::Ptr<crate::mcc::MCC_CChecker>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_getBestColorChecker(self.as_raw_mut_MCC_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		/// \brief Get the list of all detected colorcheckers
 		/// \return checkers vector of colorcheckers
 		#[inline]
-		fn get_list_color_checker(&mut self) -> Result<core::Vector<core::Ptr<dyn crate::mcc::MCC_CChecker>>> {
+		fn get_list_color_checker(&mut self) -> Result<core::Vector<core::Ptr<crate::mcc::MCC_CChecker>>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_getListColorChecker(self.as_raw_mut_MCC_CCheckerDetector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<core::Ptr<dyn crate::mcc::MCC_CChecker>>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Vector::<core::Ptr<crate::mcc::MCC_CChecker>>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl dyn MCC_CCheckerDetector + '_ {
+	/// A class to find the positions of the ColorCharts in the image.
+	pub struct MCC_CCheckerDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { MCC_CCheckerDetector }
+	
+	impl Drop for MCC_CCheckerDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_MCC_CCheckerDetector_delete(instance: *mut c_void); }
+			unsafe { cv_MCC_CCheckerDetector_delete(self.as_raw_mut_MCC_CCheckerDetector()) };
+		}
+	}
+	
+	unsafe impl Send for MCC_CCheckerDetector {}
+	
+	impl core::AlgorithmTraitConst for MCC_CCheckerDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for MCC_CCheckerDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::mcc::MCC_CCheckerDetectorTraitConst for MCC_CCheckerDetector {
+		#[inline] fn as_raw_MCC_CCheckerDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::mcc::MCC_CCheckerDetectorTrait for MCC_CCheckerDetector {
+		#[inline] fn as_raw_mut_MCC_CCheckerDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl MCC_CCheckerDetector {
 		/// \brief Returns the implementation of the CCheckerDetector.
 		#[inline]
-		pub fn create() -> Result<core::Ptr<dyn crate::mcc::MCC_CCheckerDetector>> {
+		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_CCheckerDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::mcc::MCC_CCheckerDetector>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { MCC_CCheckerDetector, core::Algorithm, cv_MCC_CCheckerDetector_to_Algorithm }
+	
 	/// Constant methods for [crate::mcc::MCC_CCheckerDraw]
-	pub trait MCC_CCheckerDrawConst {
+	pub trait MCC_CCheckerDrawTraitConst {
 		fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void;
 	
 	}
 	
-	/// \brief checker draw
-	/// 
-	/// This class contains the functions for drawing a detected chart.  This class
-	/// expects a pointer to the checker which will be drawn by this object in the
-	/// constructor and then later on whenever the draw function is called the
-	/// checker will be drawn. Remember that it is not possible to change the
-	/// checkers which will be draw by a given object, as it is decided in the
-	/// constructor itself. If you want to draw some other object you can create a
-	/// new CCheckerDraw instance.
-	/// 
-	/// The reason for this type of design is that in some videos we can assume that
-	/// the checker is always in the same position, even if the image changes, so
-	/// the drawing will always take place at the same position.
-	pub trait MCC_CCheckerDraw: crate::mcc::MCC_CCheckerDrawConst {
+	/// Mutable methods for [crate::mcc::MCC_CCheckerDraw]
+	pub trait MCC_CCheckerDrawTrait: crate::mcc::MCC_CCheckerDrawTraitConst {
 		fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void;
 	
 		/// \brief Draws the checker to the given image.
@@ -1162,7 +1212,44 @@ pub mod mcc {
 		
 	}
 	
-	impl dyn MCC_CCheckerDraw + '_ {
+	/// \brief checker draw
+	/// 
+	/// This class contains the functions for drawing a detected chart.  This class
+	/// expects a pointer to the checker which will be drawn by this object in the
+	/// constructor and then later on whenever the draw function is called the
+	/// checker will be drawn. Remember that it is not possible to change the
+	/// checkers which will be draw by a given object, as it is decided in the
+	/// constructor itself. If you want to draw some other object you can create a
+	/// new CCheckerDraw instance.
+	/// 
+	/// The reason for this type of design is that in some videos we can assume that
+	/// the checker is always in the same position, even if the image changes, so
+	/// the drawing will always take place at the same position.
+	pub struct MCC_CCheckerDraw {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { MCC_CCheckerDraw }
+	
+	impl Drop for MCC_CCheckerDraw {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_MCC_CCheckerDraw_delete(instance: *mut c_void); }
+			unsafe { cv_MCC_CCheckerDraw_delete(self.as_raw_mut_MCC_CCheckerDraw()) };
+		}
+	}
+	
+	unsafe impl Send for MCC_CCheckerDraw {}
+	
+	impl crate::mcc::MCC_CCheckerDrawTraitConst for MCC_CCheckerDraw {
+		#[inline] fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::mcc::MCC_CCheckerDrawTrait for MCC_CCheckerDraw {
+		#[inline] fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl MCC_CCheckerDraw {
 		/// \brief Create a new CCheckerDraw object.
 		/// \param pChecker The checker which will be drawn by this object.
 		/// \param color The color by with which the squares of the checker
@@ -1175,16 +1262,17 @@ pub mod mcc {
 		/// * color: CV_RGB(0,250,0)
 		/// * thickness: 2
 		#[inline]
-		pub fn create(mut p_checker: core::Ptr<dyn crate::mcc::MCC_CChecker>, color: core::Scalar, thickness: i32) -> Result<core::Ptr<dyn crate::mcc::MCC_CCheckerDraw>> {
+		pub fn create(mut p_checker: core::Ptr<crate::mcc::MCC_CChecker>, color: core::Scalar, thickness: i32) -> Result<core::Ptr<crate::mcc::MCC_CCheckerDraw>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDraw_create_PtrLCCheckerG_Scalar_int(p_checker.as_raw_mut_PtrOfMCC_CChecker(), color.opencv_as_extern(), thickness, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::mcc::MCC_DetectorParameters]
 	pub trait MCC_DetectorParametersTraitConst {
 		fn as_raw_MCC_DetectorParameters(&self) -> *const c_void;

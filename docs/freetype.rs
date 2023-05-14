@@ -13,29 +13,30 @@ pub mod freetype {
 	//! - If line_type parameter is 16(or CV_AA), drawing glyph is smooth.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::FreeType2Const, super::FreeType2 };
+		pub use { super::FreeType2TraitConst, super::FreeType2Trait };
 	}
 	
 	/// Create FreeType2 Instance
 	/// 
 	/// The function createFreeType2 create instance to draw UTF-8 strings.
 	#[inline]
-	pub fn create_free_type2() -> Result<core::Ptr<dyn crate::freetype::FreeType2>> {
+	pub fn create_free_type2() -> Result<core::Ptr<crate::freetype::FreeType2>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_freetype_createFreeType2(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::freetype::FreeType2>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::freetype::FreeType2>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Constant methods for [crate::freetype::FreeType2]
-	pub trait FreeType2Const: core::AlgorithmTraitConst {
+	pub trait FreeType2TraitConst: core::AlgorithmTraitConst {
 		fn as_raw_FreeType2(&self) -> *const c_void;
 	
 	}
 	
-	pub trait FreeType2: core::AlgorithmTrait + crate::freetype::FreeType2Const {
+	/// Mutable methods for [crate::freetype::FreeType2]
+	pub trait FreeType2Trait: core::AlgorithmTrait + crate::freetype::FreeType2TraitConst {
 		fn as_raw_mut_FreeType2(&mut self) -> *mut c_void;
 	
 		/// Load font data.
@@ -164,4 +165,41 @@ pub mod freetype {
 		}
 		
 	}
+	
+	pub struct FreeType2 {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { FreeType2 }
+	
+	impl Drop for FreeType2 {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_FreeType2_delete(instance: *mut c_void); }
+			unsafe { cv_FreeType2_delete(self.as_raw_mut_FreeType2()) };
+		}
+	}
+	
+	unsafe impl Send for FreeType2 {}
+	
+	impl core::AlgorithmTraitConst for FreeType2 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for FreeType2 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::freetype::FreeType2TraitConst for FreeType2 {
+		#[inline] fn as_raw_FreeType2(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::freetype::FreeType2Trait for FreeType2 {
+		#[inline] fn as_raw_mut_FreeType2(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl FreeType2 {
+	}
+	
+	boxed_cast_base! { FreeType2, core::Algorithm, cv_FreeType2_to_Algorithm }
 }

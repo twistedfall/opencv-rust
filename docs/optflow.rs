@@ -20,7 +20,7 @@ pub mod optflow {
 	//! - cv::optflow::writeOpticalFlow
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::PCAPriorTraitConst, super::PCAPriorTrait, super::OpticalFlowPCAFlowTraitConst, super::OpticalFlowPCAFlowTrait, super::GPCPatchDescriptorTraitConst, super::GPCPatchDescriptorTrait, super::GPCPatchSampleTraitConst, super::GPCPatchSampleTrait, super::GPCTrainingSamplesTraitConst, super::GPCTrainingSamplesTrait, super::GPCTreeTraitConst, super::GPCTreeTrait, super::GPCDetailsTraitConst, super::GPCDetailsTrait, super::RLOFOpticalFlowParameterTraitConst, super::RLOFOpticalFlowParameterTrait, super::DenseRLOFOpticalFlowConst, super::DenseRLOFOpticalFlow, super::SparseRLOFOpticalFlowConst, super::SparseRLOFOpticalFlow, super::DualTVL1OpticalFlowConst, super::DualTVL1OpticalFlow };
+		pub use { super::PCAPriorTraitConst, super::PCAPriorTrait, super::OpticalFlowPCAFlowTraitConst, super::OpticalFlowPCAFlowTrait, super::GPCPatchDescriptorTraitConst, super::GPCPatchDescriptorTrait, super::GPCPatchSampleTraitConst, super::GPCPatchSampleTrait, super::GPCTrainingSamplesTraitConst, super::GPCTrainingSamplesTrait, super::GPCTreeTraitConst, super::GPCTreeTrait, super::GPCDetailsTraitConst, super::GPCDetailsTrait, super::RLOFOpticalFlowParameterTraitConst, super::RLOFOpticalFlowParameterTrait, super::DenseRLOFOpticalFlowTraitConst, super::DenseRLOFOpticalFlowTrait, super::SparseRLOFOpticalFlowTraitConst, super::SparseRLOFOpticalFlowTrait, super::DualTVL1OpticalFlowTraitConst, super::DualTVL1OpticalFlowTrait };
 	}
 	
 	/// Better quality but slow
@@ -492,89 +492,89 @@ pub mod optflow {
 	/// *   member float omega
 	/// Relaxation factor in SOR
 	#[inline]
-	pub fn create_opt_flow_deep_flow() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
+	pub fn create_opt_flow_deep_flow() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_DeepFlow(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Additional interface to the Dense RLOF algorithm - optflow::calcOpticalFlowDenseRLOF()
 	#[inline]
-	pub fn create_opt_flow_dense_rlof() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
+	pub fn create_opt_flow_dense_rlof() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_DenseRLOF(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Creates instance of cv::DenseOpticalFlow
 	#[inline]
-	pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr<dyn crate::optflow::DualTVL1OpticalFlow>> {
+	pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr<crate::optflow::DualTVL1OpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_DualTVL1(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Additional interface to the Farneback's algorithm - calcOpticalFlowFarneback()
 	#[inline]
-	pub fn create_opt_flow_farneback() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
+	pub fn create_opt_flow_farneback() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_Farneback(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Creates an instance of PCAFlow
 	#[inline]
-	pub fn create_opt_flow_pca_flow() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
+	pub fn create_opt_flow_pca_flow() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_PCAFlow(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Additional interface to the SimpleFlow algorithm - calcOpticalFlowSF()
 	#[inline]
-	pub fn create_opt_flow_simple_flow() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
+	pub fn create_opt_flow_simple_flow() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_SimpleFlow(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Additional interface to the Sparse RLOF algorithm - optflow::calcOpticalFlowSparseRLOF()
 	#[inline]
-	pub fn create_opt_flow_sparse_rlof() -> Result<core::Ptr<dyn crate::video::SparseOpticalFlow>> {
+	pub fn create_opt_flow_sparse_rlof() -> Result<core::Ptr<crate::video::SparseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_SparseRLOF(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::video::SparseOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::video::SparseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Additional interface to the SparseToDenseFlow algorithm - calcOpticalFlowSparseToDense()
 	#[inline]
-	pub fn create_opt_flow_sparse_to_dense() -> Result<core::Ptr<dyn crate::video::DenseOpticalFlow>> {
+	pub fn create_opt_flow_sparse_to_dense() -> Result<core::Ptr<crate::video::DenseOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_createOptFlow_SparseToDense(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::video::DenseOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -598,7 +598,7 @@ pub mod optflow {
 	}
 	
 	/// Constant methods for [crate::optflow::DenseRLOFOpticalFlow]
-	pub trait DenseRLOFOpticalFlowConst: crate::video::DenseOpticalFlowConst {
+	pub trait DenseRLOFOpticalFlowTraitConst: crate::video::DenseOpticalFlowTraitConst {
 		fn as_raw_DenseRLOFOpticalFlow(&self) -> *const c_void;
 	
 		/// Configuration of the RLOF alogrithm.
@@ -782,34 +782,8 @@ pub mod optflow {
 		
 	}
 	
-	/// Fast dense optical flow computation based on robust local optical flow (RLOF) algorithms and sparse-to-dense interpolation
-	/// scheme.
-	/// 
-	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2014)
-	/// and [Senst2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-	/// proposed by [Bouguet00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2019).
-	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
-	/// 
-	/// The sparse-to-dense interpolation scheme allows for fast computation of dense optical flow using RLOF (see [Geistert2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Geistert2016)).
-	/// For this scheme the following steps are applied:
-	/// -# motion vector seeded at a regular sampled grid are computed. The sparsity of this grid can be configured with setGridStep
-	/// -# (optinally) errornous motion vectors are filter based on the forward backward confidence. The threshold can be configured
-	/// with setForwardBackward. The filter is only applied if the threshold >0 but than the runtime is doubled due to the estimation
-	/// of the backward flow.
-	/// -# Vector field interpolation is applied to the motion vector set to obtain a dense vector field.
-	/// 
-	/// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
-	/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2016).
-	/// 
-	/// 
-	/// Note: If the grid size is set to (1,1) and the forward backward threshold <= 0 than pixelwise dense optical flow field is
-	/// computed by RLOF without using interpolation.
-	/// 
-	/// 
-	/// Note: Note that in output, if no correspondences are found between \a I0 and \a I1, the \a flow is set to 0.
-	/// ## See also
-	/// optflow::calcOpticalFlowDenseRLOF(), optflow::RLOFOpticalFlowParameter
-	pub trait DenseRLOFOpticalFlow: crate::optflow::DenseRLOFOpticalFlowConst + crate::video::DenseOpticalFlow {
+	/// Mutable methods for [crate::optflow::DenseRLOFOpticalFlow]
+	pub trait DenseRLOFOpticalFlowTrait: crate::optflow::DenseRLOFOpticalFlowTraitConst + crate::video::DenseOpticalFlowTrait {
 		fn as_raw_mut_DenseRLOFOpticalFlow(&mut self) -> *mut c_void;
 	
 		/// Configuration of the RLOF alogrithm.
@@ -990,7 +964,74 @@ pub mod optflow {
 		
 	}
 	
-	impl dyn DenseRLOFOpticalFlow + '_ {
+	/// Fast dense optical flow computation based on robust local optical flow (RLOF) algorithms and sparse-to-dense interpolation
+	/// scheme.
+	/// 
+	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2014)
+	/// and [Senst2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+	/// proposed by [Bouguet00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2019).
+	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
+	/// 
+	/// The sparse-to-dense interpolation scheme allows for fast computation of dense optical flow using RLOF (see [Geistert2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Geistert2016)).
+	/// For this scheme the following steps are applied:
+	/// -# motion vector seeded at a regular sampled grid are computed. The sparsity of this grid can be configured with setGridStep
+	/// -# (optinally) errornous motion vectors are filter based on the forward backward confidence. The threshold can be configured
+	/// with setForwardBackward. The filter is only applied if the threshold >0 but than the runtime is doubled due to the estimation
+	/// of the backward flow.
+	/// -# Vector field interpolation is applied to the motion vector set to obtain a dense vector field.
+	/// 
+	/// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
+	/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2016).
+	/// 
+	/// 
+	/// Note: If the grid size is set to (1,1) and the forward backward threshold <= 0 than pixelwise dense optical flow field is
+	/// computed by RLOF without using interpolation.
+	/// 
+	/// 
+	/// Note: Note that in output, if no correspondences are found between \a I0 and \a I1, the \a flow is set to 0.
+	/// ## See also
+	/// optflow::calcOpticalFlowDenseRLOF(), optflow::RLOFOpticalFlowParameter
+	pub struct DenseRLOFOpticalFlow {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { DenseRLOFOpticalFlow }
+	
+	impl Drop for DenseRLOFOpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_DenseRLOFOpticalFlow_delete(instance: *mut c_void); }
+			unsafe { cv_DenseRLOFOpticalFlow_delete(self.as_raw_mut_DenseRLOFOpticalFlow()) };
+		}
+	}
+	
+	unsafe impl Send for DenseRLOFOpticalFlow {}
+	
+	impl core::AlgorithmTraitConst for DenseRLOFOpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for DenseRLOFOpticalFlow {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::video::DenseOpticalFlowTraitConst for DenseRLOFOpticalFlow {
+		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::video::DenseOpticalFlowTrait for DenseRLOFOpticalFlow {
+		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::optflow::DenseRLOFOpticalFlowTraitConst for DenseRLOFOpticalFlow {
+		#[inline] fn as_raw_DenseRLOFOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::optflow::DenseRLOFOpticalFlowTrait for DenseRLOFOpticalFlow {
+		#[inline] fn as_raw_mut_DenseRLOFOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl DenseRLOFOpticalFlow {
 		/// Creates instance of optflow::DenseRLOFOpticalFlow
 		/// 
 		/// ## Parameters
@@ -1023,18 +1064,21 @@ pub mod optflow {
 		/// * fgs_sigma: 1.5f
 		/// * use_variational_refinement: false
 		#[inline]
-		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<core::Ptr<dyn crate::optflow::DenseRLOFOpticalFlow>> {
+		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<core::Ptr<crate::optflow::DenseRLOFOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, grid_step.opencv_as_extern(), interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { DenseRLOFOpticalFlow, core::Algorithm, cv_DenseRLOFOpticalFlow_to_Algorithm }
+	
 	/// Constant methods for [crate::optflow::DualTVL1OpticalFlow]
-	pub trait DualTVL1OpticalFlowConst: crate::video::DenseOpticalFlowConst {
+	pub trait DualTVL1OpticalFlowTraitConst: crate::video::DenseOpticalFlowTraitConst {
 		fn as_raw_DualTVL1OpticalFlow(&self) -> *const c_void;
 	
 		/// Time step of the numerical scheme
@@ -1183,48 +1227,8 @@ pub mod optflow {
 		
 	}
 	
-	/// "Dual TV L1" Optical Flow Algorithm.
-	/// 
-	/// The class implements the "Dual TV L1" optical flow algorithm described in [Zach2007](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Zach2007) and
-	/// [Javier2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Javier2012) .
-	/// Here are important members of the class that control the algorithm, which you can set after
-	/// constructing the class instance:
-	/// 
-	/// *   member double tau
-	///    Time step of the numerical scheme.
-	/// 
-	/// *   member double lambda
-	///    Weight parameter for the data term, attachment parameter. This is the most relevant
-	///    parameter, which determines the smoothness of the output. The smaller this parameter is,
-	///    the smoother the solutions we obtain. It depends on the range of motions of the images, so
-	///    its value should be adapted to each image sequence.
-	/// 
-	/// *   member double theta
-	///    Weight parameter for (u - v)\^2, tightness parameter. It serves as a link between the
-	///    attachment and the regularization terms. In theory, it should have a small value in order
-	///    to maintain both parts in correspondence. The method is stable for a large range of values
-	///    of this parameter.
-	/// 
-	/// *   member int nscales
-	///    Number of scales used to create the pyramid of images.
-	/// 
-	/// *   member int warps
-	///    Number of warpings per scale. Represents the number of times that I1(x+u0) and grad(
-	///    I1(x+u0) ) are computed per scale. This is a parameter that assures the stability of the
-	///    method. It also affects the running time, so it is a compromise between speed and
-	///    accuracy.
-	/// 
-	/// *   member double epsilon
-	///    Stopping criterion threshold used in the numerical scheme, which is a trade-off between
-	///    precision and running time. A small value will yield more accurate solutions at the
-	///    expense of a slower convergence.
-	/// 
-	/// *   member int iterations
-	///    Stopping criterion iterations number used in the numerical scheme.
-	/// 
-	/// C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
-	/// Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
-	pub trait DualTVL1OpticalFlow: crate::optflow::DualTVL1OpticalFlowConst + crate::video::DenseOpticalFlow {
+	/// Mutable methods for [crate::optflow::DualTVL1OpticalFlow]
+	pub trait DualTVL1OpticalFlowTrait: crate::optflow::DualTVL1OpticalFlowTraitConst + crate::video::DenseOpticalFlowTrait {
 		fn as_raw_mut_DualTVL1OpticalFlow(&mut self) -> *mut c_void;
 	
 		/// Time step of the numerical scheme
@@ -1373,7 +1377,88 @@ pub mod optflow {
 		
 	}
 	
-	impl dyn DualTVL1OpticalFlow + '_ {
+	/// "Dual TV L1" Optical Flow Algorithm.
+	/// 
+	/// The class implements the "Dual TV L1" optical flow algorithm described in [Zach2007](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Zach2007) and
+	/// [Javier2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Javier2012) .
+	/// Here are important members of the class that control the algorithm, which you can set after
+	/// constructing the class instance:
+	/// 
+	/// *   member double tau
+	///    Time step of the numerical scheme.
+	/// 
+	/// *   member double lambda
+	///    Weight parameter for the data term, attachment parameter. This is the most relevant
+	///    parameter, which determines the smoothness of the output. The smaller this parameter is,
+	///    the smoother the solutions we obtain. It depends on the range of motions of the images, so
+	///    its value should be adapted to each image sequence.
+	/// 
+	/// *   member double theta
+	///    Weight parameter for (u - v)\^2, tightness parameter. It serves as a link between the
+	///    attachment and the regularization terms. In theory, it should have a small value in order
+	///    to maintain both parts in correspondence. The method is stable for a large range of values
+	///    of this parameter.
+	/// 
+	/// *   member int nscales
+	///    Number of scales used to create the pyramid of images.
+	/// 
+	/// *   member int warps
+	///    Number of warpings per scale. Represents the number of times that I1(x+u0) and grad(
+	///    I1(x+u0) ) are computed per scale. This is a parameter that assures the stability of the
+	///    method. It also affects the running time, so it is a compromise between speed and
+	///    accuracy.
+	/// 
+	/// *   member double epsilon
+	///    Stopping criterion threshold used in the numerical scheme, which is a trade-off between
+	///    precision and running time. A small value will yield more accurate solutions at the
+	///    expense of a slower convergence.
+	/// 
+	/// *   member int iterations
+	///    Stopping criterion iterations number used in the numerical scheme.
+	/// 
+	/// C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
+	/// Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
+	pub struct DualTVL1OpticalFlow {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { DualTVL1OpticalFlow }
+	
+	impl Drop for DualTVL1OpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_DualTVL1OpticalFlow_delete(instance: *mut c_void); }
+			unsafe { cv_DualTVL1OpticalFlow_delete(self.as_raw_mut_DualTVL1OpticalFlow()) };
+		}
+	}
+	
+	unsafe impl Send for DualTVL1OpticalFlow {}
+	
+	impl core::AlgorithmTraitConst for DualTVL1OpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for DualTVL1OpticalFlow {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::video::DenseOpticalFlowTraitConst for DualTVL1OpticalFlow {
+		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::video::DenseOpticalFlowTrait for DualTVL1OpticalFlow {
+		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::optflow::DualTVL1OpticalFlowTraitConst for DualTVL1OpticalFlow {
+		#[inline] fn as_raw_DualTVL1OpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::optflow::DualTVL1OpticalFlowTrait for DualTVL1OpticalFlow {
+		#[inline] fn as_raw_mut_DualTVL1OpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl DualTVL1OpticalFlow {
 		/// Creates instance of cv::DualTVL1OpticalFlow
 		/// 
 		/// ## C++ default parameters
@@ -1390,16 +1475,19 @@ pub mod optflow {
 		/// * median_filtering: 5
 		/// * use_initial_flow: false
 		#[inline]
-		pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<core::Ptr<dyn crate::optflow::DualTVL1OpticalFlow>> {
+		pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::optflow::DualTVL1OpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { DualTVL1OpticalFlow, core::Algorithm, cv_DualTVL1OpticalFlow_to_Algorithm }
+	
 	/// Constant methods for [crate::optflow::GPCDetails]
 	pub trait GPCDetailsTraitConst {
 		fn as_raw_GPCDetails(&self) -> *const c_void;
@@ -1935,13 +2023,13 @@ pub mod optflow {
 	}
 	
 	/// Constant methods for [crate::optflow::OpticalFlowPCAFlow]
-	pub trait OpticalFlowPCAFlowTraitConst: crate::video::DenseOpticalFlowConst {
+	pub trait OpticalFlowPCAFlowTraitConst: crate::video::DenseOpticalFlowTraitConst {
 		fn as_raw_OpticalFlowPCAFlow(&self) -> *const c_void;
 	
 	}
 	
 	/// Mutable methods for [crate::optflow::OpticalFlowPCAFlow]
-	pub trait OpticalFlowPCAFlowTrait: crate::optflow::OpticalFlowPCAFlowTraitConst + crate::video::DenseOpticalFlow {
+	pub trait OpticalFlowPCAFlowTrait: crate::optflow::OpticalFlowPCAFlowTraitConst + crate::video::DenseOpticalFlowTrait {
 		fn as_raw_mut_OpticalFlowPCAFlow(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -1992,11 +2080,11 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::video::DenseOpticalFlowConst for OpticalFlowPCAFlow {
+	impl crate::video::DenseOpticalFlowTraitConst for OpticalFlowPCAFlow {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::video::DenseOpticalFlow for OpticalFlowPCAFlow {
+	impl crate::video::DenseOpticalFlowTrait for OpticalFlowPCAFlow {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -2648,7 +2736,7 @@ pub mod optflow {
 	}
 	
 	/// Constant methods for [crate::optflow::SparseRLOFOpticalFlow]
-	pub trait SparseRLOFOpticalFlowConst: crate::video::SparseOpticalFlowConst {
+	pub trait SparseRLOFOpticalFlowTraitConst: crate::video::SparseOpticalFlowTraitConst {
 		fn as_raw_SparseRLOFOpticalFlow(&self) -> *const c_void;
 	
 		/// @copydoc DenseRLOFOpticalFlow::setRLOFOpticalFlowParameter
@@ -2683,21 +2771,8 @@ pub mod optflow {
 		
 	}
 	
-	/// Class used for calculation sparse optical flow and feature tracking with robust local optical flow (RLOF) algorithms.
-	/// 
-	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2014)
-	/// and [Senst2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-	/// proposed by [Bouguet00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2019).
-	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
-	/// 
-	/// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
-	/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2016).
-	/// 
-	/// 
-	/// Note: SIMD parallelization is only available when compiling with SSE4.1.
-	/// ## See also
-	/// optflow::calcOpticalFlowSparseRLOF(), optflow::RLOFOpticalFlowParameter
-	pub trait SparseRLOFOpticalFlow: crate::optflow::SparseRLOFOpticalFlowConst + crate::video::SparseOpticalFlow {
+	/// Mutable methods for [crate::optflow::SparseRLOFOpticalFlow]
+	pub trait SparseRLOFOpticalFlowTrait: crate::optflow::SparseRLOFOpticalFlowTraitConst + crate::video::SparseOpticalFlowTrait {
 		fn as_raw_mut_SparseRLOFOpticalFlow(&mut self) -> *mut c_void;
 	
 		/// @copydoc DenseRLOFOpticalFlow::setRLOFOpticalFlowParameter
@@ -2728,7 +2803,61 @@ pub mod optflow {
 		
 	}
 	
-	impl dyn SparseRLOFOpticalFlow + '_ {
+	/// Class used for calculation sparse optical flow and feature tracking with robust local optical flow (RLOF) algorithms.
+	/// 
+	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2014)
+	/// and [Senst2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+	/// proposed by [Bouguet00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2019).
+	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
+	/// 
+	/// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
+	/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Senst2016).
+	/// 
+	/// 
+	/// Note: SIMD parallelization is only available when compiling with SSE4.1.
+	/// ## See also
+	/// optflow::calcOpticalFlowSparseRLOF(), optflow::RLOFOpticalFlowParameter
+	pub struct SparseRLOFOpticalFlow {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { SparseRLOFOpticalFlow }
+	
+	impl Drop for SparseRLOFOpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_SparseRLOFOpticalFlow_delete(instance: *mut c_void); }
+			unsafe { cv_SparseRLOFOpticalFlow_delete(self.as_raw_mut_SparseRLOFOpticalFlow()) };
+		}
+	}
+	
+	unsafe impl Send for SparseRLOFOpticalFlow {}
+	
+	impl core::AlgorithmTraitConst for SparseRLOFOpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for SparseRLOFOpticalFlow {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::video::SparseOpticalFlowTraitConst for SparseRLOFOpticalFlow {
+		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::video::SparseOpticalFlowTrait for SparseRLOFOpticalFlow {
+		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::optflow::SparseRLOFOpticalFlowTraitConst for SparseRLOFOpticalFlow {
+		#[inline] fn as_raw_SparseRLOFOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::optflow::SparseRLOFOpticalFlowTrait for SparseRLOFOpticalFlow {
+		#[inline] fn as_raw_mut_SparseRLOFOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl SparseRLOFOpticalFlow {
 		/// Creates instance of SparseRLOFOpticalFlow
 		/// 
 		/// ## Parameters
@@ -2739,13 +2868,16 @@ pub mod optflow {
 		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
 		/// * forward_backward_threshold: 1.f
 		#[inline]
-		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<core::Ptr<dyn crate::optflow::SparseRLOFOpticalFlow>> {
+		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<core::Ptr<crate::optflow::SparseRLOFOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::optflow::SparseRLOFOpticalFlow>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::optflow::SparseRLOFOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
-	}}
+	}
+	
+	boxed_cast_base! { SparseRLOFOpticalFlow, core::Algorithm, cv_SparseRLOFOpticalFlow_to_Algorithm }
+}

@@ -2,16 +2,17 @@ pub mod plot {
 	//! # Plot function for Mat data
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::Plot2dConst, super::Plot2d };
+		pub use { super::Plot2dTraitConst, super::Plot2dTrait };
 	}
 	
 	/// Constant methods for [crate::plot::Plot2d]
-	pub trait Plot2dConst: core::AlgorithmTraitConst {
+	pub trait Plot2dTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Plot2d(&self) -> *const c_void;
 	
 	}
 	
-	pub trait Plot2d: core::AlgorithmTrait + crate::plot::Plot2dConst {
+	/// Mutable methods for [crate::plot::Plot2d]
+	pub trait Plot2dTrait: core::AlgorithmTrait + crate::plot::Plot2dTraitConst {
 		fn as_raw_mut_Plot2d(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -188,20 +189,52 @@ pub mod plot {
 		
 	}
 	
-	impl dyn Plot2d + '_ {
+	pub struct Plot2d {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Plot2d }
+	
+	impl Drop for Plot2d {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Plot2d_delete(instance: *mut c_void); }
+			unsafe { cv_Plot2d_delete(self.as_raw_mut_Plot2d()) };
+		}
+	}
+	
+	unsafe impl Send for Plot2d {}
+	
+	impl core::AlgorithmTraitConst for Plot2d {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Plot2d {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::plot::Plot2dTraitConst for Plot2d {
+		#[inline] fn as_raw_Plot2d(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::plot::Plot2dTrait for Plot2d {
+		#[inline] fn as_raw_mut_Plot2d(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Plot2d {
 		/// Creates Plot2d object
 		/// 
 		/// ## Parameters
 		/// * data: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot. ![inline formula](https://latex.codecogs.com/png.latex?X) values
 		/// will be equal to indexes of correspondind elements in data matrix.
 		#[inline]
-		pub fn create(data: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::plot::Plot2d>> {
+		pub fn create(data: &dyn core::ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
 			extern_container_arg!(data);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR(data.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::plot::Plot2d>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -211,15 +244,18 @@ pub mod plot {
 		/// * dataX: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix ![inline formula](https://latex.codecogs.com/png.latex?X) values of points to plot.
 		/// * dataY: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot.
 		#[inline]
-		pub fn create_1(data_x: &dyn core::ToInputArray, data_y: &dyn core::ToInputArray) -> Result<core::Ptr<dyn crate::plot::Plot2d>> {
+		pub fn create_1(data_x: &dyn core::ToInputArray, data_y: &dyn core::ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
 			extern_container_arg!(data_x);
 			extern_container_arg!(data_y);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR_const__InputArrayR(data_x.as_raw__InputArray(), data_y.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::plot::Plot2d>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
-	}}
+	}
+	
+	boxed_cast_base! { Plot2d, core::Algorithm, cv_Plot2d_to_Algorithm }
+}

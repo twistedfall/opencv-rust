@@ -75,7 +75,7 @@ pub mod objdetect {
 	//!        for Google Summer of Code 2015 (GSoC 15).
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::SimilarRectsTraitConst, super::SimilarRectsTrait, super::BaseCascadeClassifier_MaskGeneratorConst, super::BaseCascadeClassifier_MaskGenerator, super::BaseCascadeClassifierConst, super::BaseCascadeClassifier, super::CascadeClassifierTraitConst, super::CascadeClassifierTrait, super::DetectionROITraitConst, super::DetectionROITrait, super::HOGDescriptorTraitConst, super::HOGDescriptorTrait, super::QRCodeEncoderConst, super::QRCodeEncoder, super::QRCodeDetectorTraitConst, super::QRCodeDetectorTrait, super::DetectionBasedTracker_ParametersTraitConst, super::DetectionBasedTracker_ParametersTrait, super::DetectionBasedTracker_IDetectorConst, super::DetectionBasedTracker_IDetector, super::DetectionBasedTracker_ExtObjectTraitConst, super::DetectionBasedTracker_ExtObjectTrait, super::DetectionBasedTrackerTraitConst, super::DetectionBasedTrackerTrait, super::FaceDetectorYNConst, super::FaceDetectorYN, super::FaceRecognizerSFConst, super::FaceRecognizerSF, super::DictionaryTraitConst, super::DictionaryTrait, super::BoardTraitConst, super::BoardTrait, super::GridBoardTraitConst, super::GridBoardTrait, super::CharucoBoardTraitConst, super::CharucoBoardTrait, super::DetectorParametersTraitConst, super::DetectorParametersTrait, super::ArucoDetectorTraitConst, super::ArucoDetectorTrait, super::CharucoParametersTraitConst, super::CharucoParametersTrait, super::CharucoDetectorTraitConst, super::CharucoDetectorTrait };
+		pub use { super::SimilarRectsTraitConst, super::SimilarRectsTrait, super::BaseCascadeClassifier_MaskGeneratorTraitConst, super::BaseCascadeClassifier_MaskGeneratorTrait, super::BaseCascadeClassifierTraitConst, super::BaseCascadeClassifierTrait, super::CascadeClassifierTraitConst, super::CascadeClassifierTrait, super::DetectionROITraitConst, super::DetectionROITrait, super::HOGDescriptorTraitConst, super::HOGDescriptorTrait, super::QRCodeEncoderTraitConst, super::QRCodeEncoderTrait, super::QRCodeDetectorTraitConst, super::QRCodeDetectorTrait, super::DetectionBasedTracker_ParametersTraitConst, super::DetectionBasedTracker_ParametersTrait, super::DetectionBasedTracker_IDetectorTraitConst, super::DetectionBasedTracker_IDetectorTrait, super::DetectionBasedTracker_ExtObjectTraitConst, super::DetectionBasedTracker_ExtObjectTrait, super::DetectionBasedTrackerTraitConst, super::DetectionBasedTrackerTrait, super::FaceDetectorYNTraitConst, super::FaceDetectorYNTrait, super::FaceRecognizerSFTraitConst, super::FaceRecognizerSFTrait, super::DictionaryTraitConst, super::DictionaryTrait, super::BoardTraitConst, super::BoardTrait, super::GridBoardTraitConst, super::GridBoardTrait, super::CharucoBoardTraitConst, super::CharucoBoardTrait, super::DetectorParametersTraitConst, super::DetectorParametersTrait, super::ArucoDetectorTraitConst, super::ArucoDetectorTrait, super::CharucoParametersTraitConst, super::CharucoParametersTrait, super::CharucoDetectorTraitConst, super::CharucoDetectorTrait };
 	}
 	
 	pub const CASCADE_DO_CANNY_PRUNING: i32 = 1;
@@ -460,12 +460,12 @@ pub mod objdetect {
 	}
 	
 	#[inline]
-	pub fn create_face_detection_mask_generator() -> Result<core::Ptr<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
+	pub fn create_face_detection_mask_generator() -> Result<core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createFaceDetectionMaskGenerator(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::objdetect::BaseCascadeClassifier_MaskGenerator>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -595,7 +595,7 @@ pub mod objdetect {
 	}
 	
 	/// Constant methods for [crate::objdetect::BaseCascadeClassifier]
-	pub trait BaseCascadeClassifierConst: core::AlgorithmTraitConst {
+	pub trait BaseCascadeClassifierTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_BaseCascadeClassifier(&self) -> *const c_void;
 	
 		#[inline]
@@ -636,7 +636,8 @@ pub mod objdetect {
 		
 	}
 	
-	pub trait BaseCascadeClassifier: core::AlgorithmTrait + crate::objdetect::BaseCascadeClassifierConst {
+	/// Mutable methods for [crate::objdetect::BaseCascadeClassifier]
+	pub trait BaseCascadeClassifierTrait: core::AlgorithmTrait + crate::objdetect::BaseCascadeClassifierTraitConst {
 		fn as_raw_mut_BaseCascadeClassifier(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -689,7 +690,7 @@ pub mod objdetect {
 		}
 		
 		#[inline]
-		fn set_mask_generator(&mut self, mask_generator: &core::Ptr<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>) -> Result<()> {
+		fn set_mask_generator(&mut self, mask_generator: &core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BaseCascadeClassifier_setMaskGenerator_const_PtrLMaskGeneratorGR(self.as_raw_mut_BaseCascadeClassifier(), mask_generator.as_raw_PtrOfBaseCascadeClassifier_MaskGenerator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -698,24 +699,62 @@ pub mod objdetect {
 		}
 		
 		#[inline]
-		fn get_mask_generator(&mut self) -> Result<core::Ptr<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
+		fn get_mask_generator(&mut self) -> Result<core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BaseCascadeClassifier_getMaskGenerator(self.as_raw_mut_BaseCascadeClassifier(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::objdetect::BaseCascadeClassifier_MaskGenerator>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
+	pub struct BaseCascadeClassifier {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { BaseCascadeClassifier }
+	
+	impl Drop for BaseCascadeClassifier {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_BaseCascadeClassifier_delete(instance: *mut c_void); }
+			unsafe { cv_BaseCascadeClassifier_delete(self.as_raw_mut_BaseCascadeClassifier()) };
+		}
+	}
+	
+	unsafe impl Send for BaseCascadeClassifier {}
+	
+	impl core::AlgorithmTraitConst for BaseCascadeClassifier {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for BaseCascadeClassifier {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::objdetect::BaseCascadeClassifierTraitConst for BaseCascadeClassifier {
+		#[inline] fn as_raw_BaseCascadeClassifier(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::BaseCascadeClassifierTrait for BaseCascadeClassifier {
+		#[inline] fn as_raw_mut_BaseCascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl BaseCascadeClassifier {
+	}
+	
+	boxed_cast_base! { BaseCascadeClassifier, core::Algorithm, cv_BaseCascadeClassifier_to_Algorithm }
+	
 	/// Constant methods for [crate::objdetect::BaseCascadeClassifier_MaskGenerator]
-	pub trait BaseCascadeClassifier_MaskGeneratorConst {
+	pub trait BaseCascadeClassifier_MaskGeneratorTraitConst {
 		fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *const c_void;
 	
 	}
 	
-	pub trait BaseCascadeClassifier_MaskGenerator: crate::objdetect::BaseCascadeClassifier_MaskGeneratorConst {
+	/// Mutable methods for [crate::objdetect::BaseCascadeClassifier_MaskGenerator]
+	pub trait BaseCascadeClassifier_MaskGeneratorTrait: crate::objdetect::BaseCascadeClassifier_MaskGeneratorTraitConst {
 		fn as_raw_mut_BaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -737,6 +776,33 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+	}
+	
+	pub struct BaseCascadeClassifier_MaskGenerator {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { BaseCascadeClassifier_MaskGenerator }
+	
+	impl Drop for BaseCascadeClassifier_MaskGenerator {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_BaseCascadeClassifier_MaskGenerator_delete(instance: *mut c_void); }
+			unsafe { cv_BaseCascadeClassifier_MaskGenerator_delete(self.as_raw_mut_BaseCascadeClassifier_MaskGenerator()) };
+		}
+	}
+	
+	unsafe impl Send for BaseCascadeClassifier_MaskGenerator {}
+	
+	impl crate::objdetect::BaseCascadeClassifier_MaskGeneratorTraitConst for BaseCascadeClassifier_MaskGenerator {
+		#[inline] fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::BaseCascadeClassifier_MaskGeneratorTrait for BaseCascadeClassifier_MaskGenerator {
+		#[inline] fn as_raw_mut_BaseCascadeClassifier_MaskGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl BaseCascadeClassifier_MaskGenerator {
 	}
 	
 	/// Constant methods for [crate::objdetect::CascadeClassifier]
@@ -787,14 +853,14 @@ pub mod objdetect {
 		fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn cc(&mut self) -> core::Ptr<dyn crate::objdetect::BaseCascadeClassifier> {
+		fn cc(&mut self) -> core::Ptr<crate::objdetect::BaseCascadeClassifier> {
 			let ret = unsafe { sys::cv_CascadeClassifier_getPropCc(self.as_raw_mut_CascadeClassifier()) };
-			let ret = unsafe { core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::objdetect::BaseCascadeClassifier>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
-		fn set_cc(&mut self, mut val: core::Ptr<dyn crate::objdetect::BaseCascadeClassifier>) {
+		fn set_cc(&mut self, mut val: core::Ptr<crate::objdetect::BaseCascadeClassifier>) {
 			let ret = unsafe { sys::cv_CascadeClassifier_setPropCc_PtrLBaseCascadeClassifierG(self.as_raw_mut_CascadeClassifier(), val.as_raw_mut_PtrOfBaseCascadeClassifier()) };
 			ret
 		}
@@ -967,7 +1033,7 @@ pub mod objdetect {
 		}
 		
 		#[inline]
-		fn set_mask_generator(&mut self, mask_generator: &core::Ptr<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>) -> Result<()> {
+		fn set_mask_generator(&mut self, mask_generator: &core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CascadeClassifier_setMaskGenerator_const_PtrLMaskGeneratorGR(self.as_raw_mut_CascadeClassifier(), mask_generator.as_raw_PtrOfBaseCascadeClassifier_MaskGenerator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -976,12 +1042,12 @@ pub mod objdetect {
 		}
 		
 		#[inline]
-		fn get_mask_generator(&mut self) -> Result<core::Ptr<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
+		fn get_mask_generator(&mut self) -> Result<core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CascadeClassifier_getMaskGenerator(self.as_raw_mut_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::objdetect::BaseCascadeClassifier_MaskGenerator>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::objdetect::BaseCascadeClassifier_MaskGenerator>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -1184,7 +1250,7 @@ pub mod objdetect {
 	
 	impl DetectionBasedTracker {
 		#[inline]
-		pub fn new(mut main_detector: core::Ptr<dyn crate::objdetect::DetectionBasedTracker_IDetector>, mut tracking_detector: core::Ptr<dyn crate::objdetect::DetectionBasedTracker_IDetector>, params: &crate::objdetect::DetectionBasedTracker_Parameters) -> Result<crate::objdetect::DetectionBasedTracker> {
+		pub fn new(mut main_detector: core::Ptr<crate::objdetect::DetectionBasedTracker_IDetector>, mut tracking_detector: core::Ptr<crate::objdetect::DetectionBasedTracker_IDetector>, params: &crate::objdetect::DetectionBasedTracker_Parameters) -> Result<crate::objdetect::DetectionBasedTracker> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DetectionBasedTracker_DetectionBasedTracker_PtrLIDetectorG_PtrLIDetectorG_const_ParametersR(main_detector.as_raw_mut_PtrOfDetectionBasedTracker_IDetector(), tracking_detector.as_raw_mut_PtrOfDetectionBasedTracker_IDetector(), params.as_raw_DetectionBasedTracker_Parameters(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1293,7 +1359,7 @@ pub mod objdetect {
 	}
 	
 	/// Constant methods for [crate::objdetect::DetectionBasedTracker_IDetector]
-	pub trait DetectionBasedTracker_IDetectorConst {
+	pub trait DetectionBasedTracker_IDetectorTraitConst {
 		fn as_raw_DetectionBasedTracker_IDetector(&self) -> *const c_void;
 	
 		#[inline]
@@ -1316,7 +1382,8 @@ pub mod objdetect {
 		
 	}
 	
-	pub trait DetectionBasedTracker_IDetector: crate::objdetect::DetectionBasedTracker_IDetectorConst {
+	/// Mutable methods for [crate::objdetect::DetectionBasedTracker_IDetector]
+	pub trait DetectionBasedTracker_IDetectorTrait: crate::objdetect::DetectionBasedTracker_IDetectorTraitConst {
 		fn as_raw_mut_DetectionBasedTracker_IDetector(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -1382,6 +1449,33 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+	}
+	
+	pub struct DetectionBasedTracker_IDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { DetectionBasedTracker_IDetector }
+	
+	impl Drop for DetectionBasedTracker_IDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_DetectionBasedTracker_IDetector_delete(instance: *mut c_void); }
+			unsafe { cv_DetectionBasedTracker_IDetector_delete(self.as_raw_mut_DetectionBasedTracker_IDetector()) };
+		}
+	}
+	
+	unsafe impl Send for DetectionBasedTracker_IDetector {}
+	
+	impl crate::objdetect::DetectionBasedTracker_IDetectorTraitConst for DetectionBasedTracker_IDetector {
+		#[inline] fn as_raw_DetectionBasedTracker_IDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::DetectionBasedTracker_IDetectorTrait for DetectionBasedTracker_IDetector {
+		#[inline] fn as_raw_mut_DetectionBasedTracker_IDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl DetectionBasedTracker_IDetector {
 	}
 	
 	/// Constant methods for [crate::objdetect::DetectionBasedTracker_Parameters]
@@ -1542,15 +1636,13 @@ pub mod objdetect {
 	}
 	
 	/// Constant methods for [crate::objdetect::FaceDetectorYN]
-	pub trait FaceDetectorYNConst {
+	pub trait FaceDetectorYNTraitConst {
 		fn as_raw_FaceDetectorYN(&self) -> *const c_void;
 	
 	}
 	
-	/// DNN-based face detector
-	/// 
-	/// model download link: <https://github.com/opencv/opencv_zoo/tree/master/models/face_detection_yunet>
-	pub trait FaceDetectorYN: crate::objdetect::FaceDetectorYNConst {
+	/// Mutable methods for [crate::objdetect::FaceDetectorYN]
+	pub trait FaceDetectorYNTrait: crate::objdetect::FaceDetectorYNTraitConst {
 		fn as_raw_mut_FaceDetectorYN(&mut self) -> *mut c_void;
 	
 		/// Set the size for the network input, which overwrites the input size of creating model. Call this method when the size of input image does not match the input size when creating model
@@ -1659,7 +1751,34 @@ pub mod objdetect {
 		
 	}
 	
-	impl dyn FaceDetectorYN + '_ {
+	/// DNN-based face detector
+	/// 
+	/// model download link: <https://github.com/opencv/opencv_zoo/tree/master/models/face_detection_yunet>
+	pub struct FaceDetectorYN {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { FaceDetectorYN }
+	
+	impl Drop for FaceDetectorYN {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_FaceDetectorYN_delete(instance: *mut c_void); }
+			unsafe { cv_FaceDetectorYN_delete(self.as_raw_mut_FaceDetectorYN()) };
+		}
+	}
+	
+	unsafe impl Send for FaceDetectorYN {}
+	
+	impl crate::objdetect::FaceDetectorYNTraitConst for FaceDetectorYN {
+		#[inline] fn as_raw_FaceDetectorYN(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::FaceDetectorYNTrait for FaceDetectorYN {
+		#[inline] fn as_raw_mut_FaceDetectorYN(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl FaceDetectorYN {
 		/// Creates an instance of this class with given parameters
 		/// 
 		/// ## Parameters
@@ -1679,20 +1798,21 @@ pub mod objdetect {
 		/// * backend_id: 0
 		/// * target_id: 0
 		#[inline]
-		pub fn create(model: &str, config: &str, input_size: core::Size, score_threshold: f32, nms_threshold: f32, top_k: i32, backend_id: i32, target_id: i32) -> Result<core::Ptr<dyn crate::objdetect::FaceDetectorYN>> {
+		pub fn create(model: &str, config: &str, input_size: core::Size, score_threshold: f32, nms_threshold: f32, top_k: i32, backend_id: i32, target_id: i32) -> Result<core::Ptr<crate::objdetect::FaceDetectorYN>> {
 			extern_container_arg!(model);
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FaceDetectorYN_create_const_StringR_const_StringR_const_SizeR_float_float_int_int_int(model.opencv_as_extern(), config.opencv_as_extern(), &input_size, score_threshold, nms_threshold, top_k, backend_id, target_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::objdetect::FaceDetectorYN>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::objdetect::FaceDetectorYN>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::objdetect::FaceRecognizerSF]
-	pub trait FaceRecognizerSFConst {
+	pub trait FaceRecognizerSFTraitConst {
 		fn as_raw_FaceRecognizerSF(&self) -> *const c_void;
 	
 		/// Aligning image to put face on the standard position
@@ -1733,10 +1853,8 @@ pub mod objdetect {
 		
 	}
 	
-	/// DNN-based face recognizer
-	/// 
-	/// model download link: <https://github.com/opencv/opencv_zoo/tree/master/models/face_recognition_sface>
-	pub trait FaceRecognizerSF: crate::objdetect::FaceRecognizerSFConst {
+	/// Mutable methods for [crate::objdetect::FaceRecognizerSF]
+	pub trait FaceRecognizerSFTrait: crate::objdetect::FaceRecognizerSFTraitConst {
 		fn as_raw_mut_FaceRecognizerSF(&mut self) -> *mut c_void;
 	
 		/// Extracting face feature from aligned image
@@ -1756,7 +1874,34 @@ pub mod objdetect {
 		
 	}
 	
-	impl dyn FaceRecognizerSF + '_ {
+	/// DNN-based face recognizer
+	/// 
+	/// model download link: <https://github.com/opencv/opencv_zoo/tree/master/models/face_recognition_sface>
+	pub struct FaceRecognizerSF {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { FaceRecognizerSF }
+	
+	impl Drop for FaceRecognizerSF {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_FaceRecognizerSF_delete(instance: *mut c_void); }
+			unsafe { cv_FaceRecognizerSF_delete(self.as_raw_mut_FaceRecognizerSF()) };
+		}
+	}
+	
+	unsafe impl Send for FaceRecognizerSF {}
+	
+	impl crate::objdetect::FaceRecognizerSFTraitConst for FaceRecognizerSF {
+		#[inline] fn as_raw_FaceRecognizerSF(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::FaceRecognizerSFTrait for FaceRecognizerSF {
+		#[inline] fn as_raw_mut_FaceRecognizerSF(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl FaceRecognizerSF {
 		/// Creates an instance of this class with given parameters
 		/// ## Parameters
 		/// * model: the path of the onnx model used for face recognition
@@ -1768,18 +1913,19 @@ pub mod objdetect {
 		/// * backend_id: 0
 		/// * target_id: 0
 		#[inline]
-		pub fn create(model: &str, config: &str, backend_id: i32, target_id: i32) -> Result<core::Ptr<dyn crate::objdetect::FaceRecognizerSF>> {
+		pub fn create(model: &str, config: &str, backend_id: i32, target_id: i32) -> Result<core::Ptr<crate::objdetect::FaceRecognizerSF>> {
 			extern_container_arg!(model);
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FaceRecognizerSF_create_const_StringR_const_StringR_int_int(model.opencv_as_extern(), config.opencv_as_extern(), backend_id, target_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::objdetect::FaceRecognizerSF>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::objdetect::FaceRecognizerSF>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::objdetect::HOGDescriptor]
 	pub trait HOGDescriptorTraitConst {
 		fn as_raw_HOGDescriptor(&self) -> *const c_void;
@@ -2748,12 +2894,13 @@ pub mod objdetect {
 	}
 	
 	/// Constant methods for [crate::objdetect::QRCodeEncoder]
-	pub trait QRCodeEncoderConst {
+	pub trait QRCodeEncoderTraitConst {
 		fn as_raw_QRCodeEncoder(&self) -> *const c_void;
 	
 	}
 	
-	pub trait QRCodeEncoder: crate::objdetect::QRCodeEncoderConst {
+	/// Mutable methods for [crate::objdetect::QRCodeEncoder]
+	pub trait QRCodeEncoderTrait: crate::objdetect::QRCodeEncoderTraitConst {
 		fn as_raw_mut_QRCodeEncoder(&mut self) -> *mut c_void;
 	
 		/// Generates QR code from input string.
@@ -2788,7 +2935,31 @@ pub mod objdetect {
 		
 	}
 	
-	impl dyn QRCodeEncoder + '_ {
+	pub struct QRCodeEncoder {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { QRCodeEncoder }
+	
+	impl Drop for QRCodeEncoder {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_QRCodeEncoder_delete(instance: *mut c_void); }
+			unsafe { cv_QRCodeEncoder_delete(self.as_raw_mut_QRCodeEncoder()) };
+		}
+	}
+	
+	unsafe impl Send for QRCodeEncoder {}
+	
+	impl crate::objdetect::QRCodeEncoderTraitConst for QRCodeEncoder {
+		#[inline] fn as_raw_QRCodeEncoder(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::QRCodeEncoderTrait for QRCodeEncoder {
+		#[inline] fn as_raw_mut_QRCodeEncoder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl QRCodeEncoder {
 		/// Constructor
 		/// ## Parameters
 		/// * parameters: QR code encoder parameters QRCodeEncoder::Params
@@ -2796,16 +2967,17 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * parameters: QRCodeEncoder::Params()
 		#[inline]
-		pub fn create(parameters: crate::objdetect::QRCodeEncoder_Params) -> Result<core::Ptr<dyn crate::objdetect::QRCodeEncoder>> {
+		pub fn create(parameters: crate::objdetect::QRCodeEncoder_Params) -> Result<core::Ptr<crate::objdetect::QRCodeEncoder>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeEncoder_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::objdetect::QRCodeEncoder>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::objdetect::QRCodeEncoder>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// QR code encoder parameters.
 	/// ## Parameters
 	/// * version: The optional version of QR code (by default - maximum possible depending on

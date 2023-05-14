@@ -11,7 +11,7 @@ pub mod hdf {
 	//! means cmake should find it using `find_package(HDF5)` .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::HDF5Const, super::HDF5 };
+		pub use { super::HDF5TraitConst, super::HDF5Trait };
 	}
 	
 	/// Get the chunk sizes of a dataset. see also: dsgetsize()
@@ -71,18 +71,18 @@ pub mod hdf {
 	/// ```
 	/// 
 	#[inline]
-	pub fn open(hdf5_filename: &str) -> Result<core::Ptr<dyn crate::hdf::HDF5>> {
+	pub fn open(hdf5_filename: &str) -> Result<core::Ptr<crate::hdf::HDF5>> {
 		extern_container_arg!(hdf5_filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_hdf_open_const_StringR(hdf5_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::hdf::HDF5>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::hdf::HDF5>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Constant methods for [crate::hdf::HDF5]
-	pub trait HDF5Const {
+	pub trait HDF5TraitConst {
 		fn as_raw_HDF5(&self) -> *const c_void;
 	
 		/// Check if label exists or not.
@@ -1176,10 +1176,8 @@ pub mod hdf {
 		
 	}
 	
-	/// Hierarchical Data Format version 5 interface.
-	/// 
-	/// Notice that this module is compiled only when hdf5 is correctly installed.
-	pub trait HDF5: crate::hdf::HDF5Const {
+	/// Mutable methods for [crate::hdf::HDF5]
+	pub trait HDF5Trait: crate::hdf::HDF5TraitConst {
 		fn as_raw_mut_HDF5(&mut self) -> *mut c_void;
 	
 		/// Close and release hdf5 object.
@@ -1453,5 +1451,35 @@ pub mod hdf {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// Hierarchical Data Format version 5 interface.
+	/// 
+	/// Notice that this module is compiled only when hdf5 is correctly installed.
+	pub struct HDF5 {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { HDF5 }
+	
+	impl Drop for HDF5 {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_HDF5_delete(instance: *mut c_void); }
+			unsafe { cv_HDF5_delete(self.as_raw_mut_HDF5()) };
+		}
+	}
+	
+	unsafe impl Send for HDF5 {}
+	
+	impl crate::hdf::HDF5TraitConst for HDF5 {
+		#[inline] fn as_raw_HDF5(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::hdf::HDF5Trait for HDF5 {
+		#[inline] fn as_raw_mut_HDF5(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl HDF5 {
 	}
 }

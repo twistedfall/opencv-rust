@@ -2,17 +2,17 @@ pub mod cudaobjdetect {
 	//! # Object Detection
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::HOGConst, super::HOG, super::CascadeClassifierConst, super::CascadeClassifier };
+		pub use { super::CUDA_HOGTraitConst, super::CUDA_HOGTrait, super::CUDA_CascadeClassifierTraitConst, super::CUDA_CascadeClassifierTrait };
 	}
 	
-	/// Constant methods for [crate::cudaobjdetect::CascadeClassifier]
-	pub trait CascadeClassifierConst: core::AlgorithmTraitConst {
-		fn as_raw_CascadeClassifier(&self) -> *const c_void;
+	/// Constant methods for [crate::cudaobjdetect::CUDA_CascadeClassifier]
+	pub trait CUDA_CascadeClassifierTraitConst: core::AlgorithmTraitConst {
+		fn as_raw_CUDA_CascadeClassifier(&self) -> *const c_void;
 	
 		#[inline]
 		fn get_max_object_size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_getMaxObjectSize_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_getMaxObjectSize_const(self.as_raw_CUDA_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -21,7 +21,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_min_object_size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_getMinObjectSize_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_getMinObjectSize_const(self.as_raw_CUDA_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -30,7 +30,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_scale_factor(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_getScaleFactor_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_getScaleFactor_const(self.as_raw_CUDA_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -39,7 +39,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_min_neighbors(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_getMinNeighbors_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_getMinNeighbors_const(self.as_raw_CUDA_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -48,7 +48,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_max_num_objects(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_getMaxNumObjects_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_getMaxNumObjects_const(self.as_raw_CUDA_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -57,7 +57,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_classifier_size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_getClassifierSize_const(self.as_raw_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_getClassifierSize_const(self.as_raw_CUDA_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -65,23 +65,16 @@ pub mod cudaobjdetect {
 		
 	}
 	
-	/// Cascade classifier class used for object detection. Supports HAAR and LBP cascades. :
-	/// 
-	/// 
-	/// Note:
-	///    *   A cascade classifier example can be found at
-	///        opencv_source_code/samples/gpu/cascadeclassifier.cpp
-	///    *   A Nvidea API specific cascade classifier example can be found at
-	///        opencv_source_code/samples/gpu/cascadeclassifier_nvidia_api.cpp
-	pub trait CascadeClassifier: core::AlgorithmTrait + crate::cudaobjdetect::CascadeClassifierConst {
-		fn as_raw_mut_CascadeClassifier(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::cudaobjdetect::CUDA_CascadeClassifier]
+	pub trait CUDA_CascadeClassifierTrait: core::AlgorithmTrait + crate::cudaobjdetect::CUDA_CascadeClassifierTraitConst {
+		fn as_raw_mut_CUDA_CascadeClassifier(&mut self) -> *mut c_void;
 	
 		/// Maximum possible object size. Objects larger than that are ignored. Used for
 		/// second signature and supported only for LBP cascades.
 		#[inline]
 		fn set_max_object_size(&mut self, max_object_size: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_setMaxObjectSize_Size(self.as_raw_mut_CascadeClassifier(), max_object_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_setMaxObjectSize_Size(self.as_raw_mut_CUDA_CascadeClassifier(), max_object_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -91,7 +84,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_min_object_size(&mut self, min_size: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_setMinObjectSize_Size(self.as_raw_mut_CascadeClassifier(), min_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_setMinObjectSize_Size(self.as_raw_mut_CUDA_CascadeClassifier(), min_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -101,7 +94,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_scale_factor(&mut self, scale_factor: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_setScaleFactor_double(self.as_raw_mut_CascadeClassifier(), scale_factor, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_setScaleFactor_double(self.as_raw_mut_CUDA_CascadeClassifier(), scale_factor, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -112,7 +105,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_min_neighbors(&mut self, min_neighbors: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_setMinNeighbors_int(self.as_raw_mut_CascadeClassifier(), min_neighbors, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_setMinNeighbors_int(self.as_raw_mut_CUDA_CascadeClassifier(), min_neighbors, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -121,7 +114,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_find_largest_object(&mut self, find_largest_object: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_setFindLargestObject_bool(self.as_raw_mut_CascadeClassifier(), find_largest_object, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_setFindLargestObject_bool(self.as_raw_mut_CUDA_CascadeClassifier(), find_largest_object, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -130,7 +123,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_find_largest_object(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_getFindLargestObject(self.as_raw_mut_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_getFindLargestObject(self.as_raw_mut_CUDA_CascadeClassifier(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -139,7 +132,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_max_num_objects(&mut self, max_num_objects: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_setMaxNumObjects_int(self.as_raw_mut_CascadeClassifier(), max_num_objects, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_setMaxNumObjects_int(self.as_raw_mut_CUDA_CascadeClassifier(), max_num_objects, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -181,7 +174,7 @@ pub mod cudaobjdetect {
 			extern_container_arg!(image);
 			extern_container_arg!(objects);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_detectMultiScale_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_detectMultiScale_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -196,7 +189,7 @@ pub mod cudaobjdetect {
 		fn convert(&mut self, gpu_objects: &mut dyn core::ToOutputArray, objects: &mut core::Vector<core::Rect>) -> Result<()> {
 			extern_container_arg!(gpu_objects);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_convert_const__OutputArrayR_vectorLRectGR(self.as_raw_mut_CascadeClassifier(), gpu_objects.as_raw__OutputArray(), objects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_convert_const__OutputArrayR_vectorLRectGR(self.as_raw_mut_CUDA_CascadeClassifier(), gpu_objects.as_raw__OutputArray(), objects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -204,7 +197,47 @@ pub mod cudaobjdetect {
 		
 	}
 	
-	impl dyn CascadeClassifier + '_ {
+	/// Cascade classifier class used for object detection. Supports HAAR and LBP cascades. :
+	/// 
+	/// 
+	/// Note:
+	///    *   A cascade classifier example can be found at
+	///        opencv_source_code/samples/gpu/cascadeclassifier.cpp
+	///    *   A Nvidea API specific cascade classifier example can be found at
+	///        opencv_source_code/samples/gpu/cascadeclassifier_nvidia_api.cpp
+	pub struct CUDA_CascadeClassifier {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_CascadeClassifier }
+	
+	impl Drop for CUDA_CascadeClassifier {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_CascadeClassifier_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_CascadeClassifier_delete(self.as_raw_mut_CUDA_CascadeClassifier()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_CascadeClassifier {}
+	
+	impl core::AlgorithmTraitConst for CUDA_CascadeClassifier {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_CascadeClassifier {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaobjdetect::CUDA_CascadeClassifierTraitConst for CUDA_CascadeClassifier {
+		#[inline] fn as_raw_CUDA_CascadeClassifier(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaobjdetect::CUDA_CascadeClassifierTrait for CUDA_CascadeClassifier {
+		#[inline] fn as_raw_mut_CUDA_CascadeClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_CascadeClassifier {
 		/// Loads the classifier from a file. Cascade type is detected automatically by constructor parameter.
 		/// 
 		/// ## Parameters
@@ -212,13 +245,13 @@ pub mod cudaobjdetect {
 		/// (trained by the haar training application) and NVIDIA's nvbin are supported for HAAR and only new
 		/// type of OpenCV XML cascade supported for LBP. The working haar models can be found at opencv_folder/data/haarcascades_cuda/
 		#[inline]
-		pub fn create(filename: &str) -> Result<core::Ptr<dyn crate::cudaobjdetect::CascadeClassifier>> {
+		pub fn create(filename: &str) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>> {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_CascadeClassifier_create_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::cudaobjdetect::CascadeClassifier>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_CascadeClassifier>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -231,24 +264,27 @@ pub mod cudaobjdetect {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		pub fn create_1(file: &core::FileStorage) -> Result<core::Ptr<dyn crate::cudaobjdetect::CascadeClassifier>> {
+		pub fn create_1(file: &core::FileStorage) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_CascadeClassifier_create_const_FileStorageR(file.as_raw_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::cudaobjdetect::CascadeClassifier>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_CascadeClassifier>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
-	/// Constant methods for [crate::cudaobjdetect::HOG]
-	pub trait HOGConst: core::AlgorithmTraitConst {
-		fn as_raw_HOG(&self) -> *const c_void;
+	
+	boxed_cast_base! { CUDA_CascadeClassifier, core::Algorithm, cv_CUDA_CascadeClassifier_to_Algorithm }
+	
+	/// Constant methods for [crate::cudaobjdetect::CUDA_HOG]
+	pub trait CUDA_HOGTraitConst: core::AlgorithmTraitConst {
+		fn as_raw_CUDA_HOG(&self) -> *const c_void;
 	
 		#[inline]
 		fn get_win_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getWinSigma_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getWinSigma_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -257,7 +293,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_l2_hys_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getL2HysThreshold_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getL2HysThreshold_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -266,7 +302,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_gamma_correction(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getGammaCorrection_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getGammaCorrection_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -275,7 +311,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_num_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getNumLevels_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getNumLevels_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -284,7 +320,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_hit_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getHitThreshold_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getHitThreshold_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -293,7 +329,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_win_stride(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getWinStride_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getWinStride_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -302,7 +338,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_scale_factor(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getScaleFactor_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getScaleFactor_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -311,7 +347,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_group_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getGroupThreshold_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getGroupThreshold_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -320,7 +356,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_descriptor_format(&self) -> Result<crate::objdetect::HOGDescriptor_DescriptorStorageFormat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getDescriptorFormat_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getDescriptorFormat_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -330,7 +366,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_descriptor_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getDescriptorSize_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getDescriptorSize_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -340,7 +376,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_block_histogram_size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getBlockHistogramSize_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getBlockHistogramSize_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -350,7 +386,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn get_default_people_detector(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_getDefaultPeopleDetector_const(self.as_raw_HOG(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_getDefaultPeopleDetector_const(self.as_raw_CUDA_HOG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -359,24 +395,15 @@ pub mod cudaobjdetect {
 		
 	}
 	
-	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
-	/// 
-	/// 
-	/// Note:
-	///    *   An example applying the HOG descriptor for people detection can be found at
-	///        opencv_source_code/samples/cpp/peopledetect.cpp
-	///    *   A CUDA example applying the HOG descriptor for people detection can be found at
-	///        opencv_source_code/samples/gpu/hog.cpp
-	///    *   (Python) An example applying the HOG descriptor for people detection can be found at
-	///        opencv_source_code/samples/python/peopledetect.py
-	pub trait HOG: core::AlgorithmTrait + crate::cudaobjdetect::HOGConst {
-		fn as_raw_mut_HOG(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::cudaobjdetect::CUDA_HOG]
+	pub trait CUDA_HOGTrait: core::AlgorithmTrait + crate::cudaobjdetect::CUDA_HOGTraitConst {
+		fn as_raw_mut_CUDA_HOG(&mut self) -> *mut c_void;
 	
 		/// Gaussian smoothing window parameter.
 		#[inline]
 		fn set_win_sigma(&mut self, win_sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setWinSigma_double(self.as_raw_mut_HOG(), win_sigma, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setWinSigma_double(self.as_raw_mut_CUDA_HOG(), win_sigma, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -386,7 +413,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_l2_hys_threshold(&mut self, threshold_l2hys: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setL2HysThreshold_double(self.as_raw_mut_HOG(), threshold_l2hys, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setL2HysThreshold_double(self.as_raw_mut_CUDA_HOG(), threshold_l2hys, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -396,7 +423,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_gamma_correction(&mut self, gamma_correction: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setGammaCorrection_bool(self.as_raw_mut_HOG(), gamma_correction, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setGammaCorrection_bool(self.as_raw_mut_CUDA_HOG(), gamma_correction, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -406,7 +433,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_num_levels(&mut self, nlevels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setNumLevels_int(self.as_raw_mut_HOG(), nlevels, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setNumLevels_int(self.as_raw_mut_CUDA_HOG(), nlevels, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -419,7 +446,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_hit_threshold(&mut self, hit_threshold: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setHitThreshold_double(self.as_raw_mut_HOG(), hit_threshold, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setHitThreshold_double(self.as_raw_mut_CUDA_HOG(), hit_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -429,7 +456,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_win_stride(&mut self, win_stride: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setWinStride_Size(self.as_raw_mut_HOG(), win_stride.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setWinStride_Size(self.as_raw_mut_CUDA_HOG(), win_stride.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -439,7 +466,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_scale_factor(&mut self, scale0: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setScaleFactor_double(self.as_raw_mut_HOG(), scale0, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setScaleFactor_double(self.as_raw_mut_CUDA_HOG(), scale0, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -451,7 +478,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_group_threshold(&mut self, group_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setGroupThreshold_int(self.as_raw_mut_HOG(), group_threshold, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setGroupThreshold_int(self.as_raw_mut_CUDA_HOG(), group_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -463,7 +490,7 @@ pub mod cudaobjdetect {
 		#[inline]
 		fn set_descriptor_format(&mut self, descr_format: crate::objdetect::HOGDescriptor_DescriptorStorageFormat) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setDescriptorFormat_DescriptorStorageFormat(self.as_raw_mut_HOG(), descr_format, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setDescriptorFormat_DescriptorStorageFormat(self.as_raw_mut_CUDA_HOG(), descr_format, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -474,7 +501,7 @@ pub mod cudaobjdetect {
 		fn set_svm_detector(&mut self, detector: &dyn core::ToInputArray) -> Result<()> {
 			extern_container_arg!(detector);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_setSVMDetector_const__InputArrayR(self.as_raw_mut_HOG(), detector.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_setSVMDetector_const__InputArrayR(self.as_raw_mut_CUDA_HOG(), detector.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -493,7 +520,7 @@ pub mod cudaobjdetect {
 		fn detect(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
 			extern_container_arg!(img);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGX(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGX(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -503,7 +530,7 @@ pub mod cudaobjdetect {
 		fn detect_1(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
 			extern_container_arg!(img);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -518,7 +545,7 @@ pub mod cudaobjdetect {
 		fn detect_without_conf(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>) -> Result<()> {
 			extern_container_arg!(img);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_detectWithoutConf_const__InputArrayR_vectorLPointGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_detectWithoutConf_const__InputArrayR_vectorLPointGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -537,7 +564,7 @@ pub mod cudaobjdetect {
 		fn detect_multi_scale(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
 			extern_container_arg!(img);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGX(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGX(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -547,7 +574,7 @@ pub mod cudaobjdetect {
 		fn detect_multi_scale_1(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
 			extern_container_arg!(img);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -562,7 +589,7 @@ pub mod cudaobjdetect {
 		fn detect_multi_scale_without_conf(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>) -> Result<()> {
 			extern_container_arg!(img);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_detectMultiScaleWithoutConf_const__InputArrayR_vectorLRectGR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_detectMultiScaleWithoutConf_const__InputArrayR_vectorLRectGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -582,7 +609,7 @@ pub mod cudaobjdetect {
 			extern_container_arg!(img);
 			extern_container_arg!(descriptors);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_HOG(), img.as_raw__InputArray(), descriptors.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HOG_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), descriptors.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -590,7 +617,49 @@ pub mod cudaobjdetect {
 		
 	}
 	
-	impl dyn HOG + '_ {
+	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
+	/// 
+	/// 
+	/// Note:
+	///    *   An example applying the HOG descriptor for people detection can be found at
+	///        opencv_source_code/samples/cpp/peopledetect.cpp
+	///    *   A CUDA example applying the HOG descriptor for people detection can be found at
+	///        opencv_source_code/samples/gpu/hog.cpp
+	///    *   (Python) An example applying the HOG descriptor for people detection can be found at
+	///        opencv_source_code/samples/python/peopledetect.py
+	pub struct CUDA_HOG {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_HOG }
+	
+	impl Drop for CUDA_HOG {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_HOG_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_HOG_delete(self.as_raw_mut_CUDA_HOG()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_HOG {}
+	
+	impl core::AlgorithmTraitConst for CUDA_HOG {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_HOG {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaobjdetect::CUDA_HOGTraitConst for CUDA_HOG {
+		#[inline] fn as_raw_CUDA_HOG(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaobjdetect::CUDA_HOGTrait for CUDA_HOG {
+		#[inline] fn as_raw_mut_CUDA_HOG(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_HOG {
 		/// Creates the HOG descriptor and detector.
 		/// 
 		/// ## Parameters
@@ -607,13 +676,16 @@ pub mod cudaobjdetect {
 		/// * cell_size: Size(8,8)
 		/// * nbins: 9
 		#[inline]
-		pub fn create(win_size: core::Size, block_size: core::Size, block_stride: core::Size, cell_size: core::Size, nbins: i32) -> Result<core::Ptr<dyn crate::cudaobjdetect::HOG>> {
+		pub fn create(win_size: core::Size, block_size: core::Size, block_stride: core::Size, cell_size: core::Size, nbins: i32) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_HOG>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_create_Size_Size_Size_Size_int(win_size.opencv_as_extern(), block_size.opencv_as_extern(), block_stride.opencv_as_extern(), cell_size.opencv_as_extern(), nbins, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::cudaobjdetect::HOG>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_HOG>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
-	}}
+	}
+	
+	boxed_cast_base! { CUDA_HOG, core::Algorithm, cv_CUDA_HOG_to_Algorithm }
+}

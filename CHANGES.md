@@ -1,3 +1,9 @@
+* 0.82.0
+  * Change the handling of abstract C++ classes, they are no longer exposed as `dyn Class` but a struct is generated for
+    them making them easier to use from Rust. One notable change is calling static methods on those classes no longer
+    requires UCS. So `<dyn ORB>::default()` becomes just `ORB::default()`. You might also need to adjust your imports
+    because while traits are imported as part of the prelude, the structs need to be imported explicitly.
+
 * 0.81.5
   * Bring back the `clang-runtime` feature to improve cooperation with other crates.
 

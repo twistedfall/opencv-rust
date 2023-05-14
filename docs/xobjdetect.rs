@@ -2,11 +2,11 @@ pub mod xobjdetect {
 	//! # Extended object detection
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::WBDetectorConst, super::WBDetector };
+		pub use { super::WBDetectorTraitConst, super::WBDetectorTrait };
 	}
 	
 	/// Constant methods for [crate::xobjdetect::WBDetector]
-	pub trait WBDetectorConst {
+	pub trait WBDetectorTraitConst {
 		fn as_raw_WBDetector(&self) -> *const c_void;
 	
 		/// Write detector to FileStorage.
@@ -23,8 +23,8 @@ pub mod xobjdetect {
 		
 	}
 	
-	/// WaldBoost detector
-	pub trait WBDetector: crate::xobjdetect::WBDetectorConst {
+	/// Mutable methods for [crate::xobjdetect::WBDetector]
+	pub trait WBDetectorTrait: crate::xobjdetect::WBDetectorTraitConst {
 		fn as_raw_mut_WBDetector(&mut self) -> *mut c_void;
 	
 		/// Read detector from FileNode.
@@ -70,16 +70,42 @@ pub mod xobjdetect {
 		
 	}
 	
-	impl dyn WBDetector + '_ {
+	/// WaldBoost detector
+	pub struct WBDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { WBDetector }
+	
+	impl Drop for WBDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_WBDetector_delete(instance: *mut c_void); }
+			unsafe { cv_WBDetector_delete(self.as_raw_mut_WBDetector()) };
+		}
+	}
+	
+	unsafe impl Send for WBDetector {}
+	
+	impl crate::xobjdetect::WBDetectorTraitConst for WBDetector {
+		#[inline] fn as_raw_WBDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::xobjdetect::WBDetectorTrait for WBDetector {
+		#[inline] fn as_raw_mut_WBDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl WBDetector {
 		/// Create instance of WBDetector
 		#[inline]
-		pub fn create() -> Result<core::Ptr<dyn crate::xobjdetect::WBDetector>> {
+		pub fn create() -> Result<core::Ptr<crate::xobjdetect::WBDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xobjdetect_WBDetector_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::xobjdetect::WBDetector>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::xobjdetect::WBDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
-	}}
+	}
+}

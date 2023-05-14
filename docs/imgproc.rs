@@ -149,7 +149,7 @@ pub mod imgproc {
 	//!        # Interface
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::GeneralizedHoughConst, super::GeneralizedHough, super::GeneralizedHoughBallardConst, super::GeneralizedHoughBallard, super::GeneralizedHoughGuilConst, super::GeneralizedHoughGuil, super::CLAHEConst, super::CLAHE, super::Subdiv2DTraitConst, super::Subdiv2DTrait, super::LineSegmentDetectorConst, super::LineSegmentDetector, super::LineIteratorTraitConst, super::LineIteratorTrait, super::IntelligentScissorsMBTraitConst, super::IntelligentScissorsMBTrait };
+		pub use { super::GeneralizedHoughTraitConst, super::GeneralizedHoughTrait, super::GeneralizedHoughBallardTraitConst, super::GeneralizedHoughBallardTrait, super::GeneralizedHoughGuilTraitConst, super::GeneralizedHoughGuilTrait, super::CLAHETraitConst, super::CLAHETrait, super::Subdiv2DTraitConst, super::Subdiv2DTrait, super::LineSegmentDetectorTraitConst, super::LineSegmentDetectorTrait, super::LineIteratorTraitConst, super::LineIteratorTrait, super::IntelligentScissorsMBTraitConst, super::IntelligentScissorsMBTrait };
 	}
 	
 	/// the threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2C%20y%29) is a weighted sum (cross-correlation with a Gaussian
@@ -3746,34 +3746,34 @@ pub mod imgproc {
 	/// * clip_limit: 40.0
 	/// * tile_grid_size: Size(8,8)
 	#[inline]
-	pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr<dyn crate::imgproc::CLAHE>> {
+	pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr<crate::imgproc::CLAHE>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::imgproc::CLAHE>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::imgproc::CLAHE>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Creates a smart pointer to a cv::GeneralizedHoughBallard class and initializes it.
 	#[inline]
-	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughBallard>> {
+	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughBallard>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createGeneralizedHoughBallard(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Creates a smart pointer to a cv::GeneralizedHoughGuil class and initializes it.
 	#[inline]
-	pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughGuil>> {
+	pub fn create_generalized_hough_guil() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughGuil>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createGeneralizedHoughGuil(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -3828,12 +3828,12 @@ pub mod imgproc {
 	/// * density_th: 0.7
 	/// * n_bins: 1024
 	#[inline]
-	pub fn create_line_segment_detector(refine: i32, scale: f64, sigma_scale: f64, quant: f64, ang_th: f64, log_eps: f64, density_th: f64, n_bins: i32) -> Result<core::Ptr<dyn crate::imgproc::LineSegmentDetector>> {
+	pub fn create_line_segment_detector(refine: i32, scale: f64, sigma_scale: f64, quant: f64, ang_th: f64, log_eps: f64, density_th: f64, n_bins: i32) -> Result<core::Ptr<crate::imgproc::LineSegmentDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createLineSegmentDetector_int_double_double_double_double_double_double_int(refine, scale, sigma_scale, quant, ang_th, log_eps, density_th, n_bins, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::imgproc::LineSegmentDetector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::imgproc::LineSegmentDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -6979,7 +6979,7 @@ pub mod imgproc {
 	}
 	
 	/// Constant methods for [crate::imgproc::CLAHE]
-	pub trait CLAHEConst: core::AlgorithmTraitConst {
+	pub trait CLAHETraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CLAHE(&self) -> *const c_void;
 	
 		/// Returns threshold value for contrast limiting.
@@ -7004,8 +7004,8 @@ pub mod imgproc {
 		
 	}
 	
-	/// Base class for Contrast Limited Adaptive Histogram Equalization.
-	pub trait CLAHE: core::AlgorithmTrait + crate::imgproc::CLAHEConst {
+	/// Mutable methods for [crate::imgproc::CLAHE]
+	pub trait CLAHETrait: core::AlgorithmTrait + crate::imgproc::CLAHETraitConst {
 		fn as_raw_mut_CLAHE(&mut self) -> *mut c_void;
 	
 		/// Equalizes the histogram of a grayscale image using Contrast Limited Adaptive Histogram Equalization.
@@ -7062,8 +7062,46 @@ pub mod imgproc {
 		
 	}
 	
+	/// Base class for Contrast Limited Adaptive Histogram Equalization.
+	pub struct CLAHE {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CLAHE }
+	
+	impl Drop for CLAHE {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CLAHE_delete(instance: *mut c_void); }
+			unsafe { cv_CLAHE_delete(self.as_raw_mut_CLAHE()) };
+		}
+	}
+	
+	unsafe impl Send for CLAHE {}
+	
+	impl core::AlgorithmTraitConst for CLAHE {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CLAHE {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::imgproc::CLAHETraitConst for CLAHE {
+		#[inline] fn as_raw_CLAHE(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::imgproc::CLAHETrait for CLAHE {
+		#[inline] fn as_raw_mut_CLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CLAHE {
+	}
+	
+	boxed_cast_base! { CLAHE, core::Algorithm, cv_CLAHE_to_Algorithm }
+	
 	/// Constant methods for [crate::imgproc::GeneralizedHough]
-	pub trait GeneralizedHoughConst: core::AlgorithmTraitConst {
+	pub trait GeneralizedHoughTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_GeneralizedHough(&self) -> *const c_void;
 	
 		#[inline]
@@ -7113,8 +7151,8 @@ pub mod imgproc {
 		
 	}
 	
-	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
-	pub trait GeneralizedHough: core::AlgorithmTrait + crate::imgproc::GeneralizedHoughConst {
+	/// Mutable methods for [crate::imgproc::GeneralizedHough]
+	pub trait GeneralizedHoughTrait: core::AlgorithmTrait + crate::imgproc::GeneralizedHoughTraitConst {
 		fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void;
 	
 		/// set template to search
@@ -7229,8 +7267,46 @@ pub mod imgproc {
 		
 	}
 	
+	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
+	pub struct GeneralizedHough {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GeneralizedHough }
+	
+	impl Drop for GeneralizedHough {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_GeneralizedHough_delete(instance: *mut c_void); }
+			unsafe { cv_GeneralizedHough_delete(self.as_raw_mut_GeneralizedHough()) };
+		}
+	}
+	
+	unsafe impl Send for GeneralizedHough {}
+	
+	impl core::AlgorithmTraitConst for GeneralizedHough {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for GeneralizedHough {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughTraitConst for GeneralizedHough {
+		#[inline] fn as_raw_GeneralizedHough(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughTrait for GeneralizedHough {
+		#[inline] fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl GeneralizedHough {
+	}
+	
+	boxed_cast_base! { GeneralizedHough, core::Algorithm, cv_GeneralizedHough_to_Algorithm }
+	
 	/// Constant methods for [crate::imgproc::GeneralizedHoughBallard]
-	pub trait GeneralizedHoughBallardConst: crate::imgproc::GeneralizedHoughConst {
+	pub trait GeneralizedHoughBallardTraitConst: crate::imgproc::GeneralizedHoughTraitConst {
 		fn as_raw_GeneralizedHoughBallard(&self) -> *const c_void;
 	
 		#[inline]
@@ -7253,10 +7329,8 @@ pub mod imgproc {
 		
 	}
 	
-	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
-	/// 
-	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
-	pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough + crate::imgproc::GeneralizedHoughBallardConst {
+	/// Mutable methods for [crate::imgproc::GeneralizedHoughBallard]
+	pub trait GeneralizedHoughBallardTrait: crate::imgproc::GeneralizedHoughBallardTraitConst + crate::imgproc::GeneralizedHoughTrait {
 		fn as_raw_mut_GeneralizedHoughBallard(&mut self) -> *mut c_void;
 	
 		/// R-Table levels.
@@ -7281,8 +7355,56 @@ pub mod imgproc {
 		
 	}
 	
+	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
+	/// 
+	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+	pub struct GeneralizedHoughBallard {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GeneralizedHoughBallard }
+	
+	impl Drop for GeneralizedHoughBallard {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_GeneralizedHoughBallard_delete(instance: *mut c_void); }
+			unsafe { cv_GeneralizedHoughBallard_delete(self.as_raw_mut_GeneralizedHoughBallard()) };
+		}
+	}
+	
+	unsafe impl Send for GeneralizedHoughBallard {}
+	
+	impl core::AlgorithmTraitConst for GeneralizedHoughBallard {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for GeneralizedHoughBallard {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughTraitConst for GeneralizedHoughBallard {
+		#[inline] fn as_raw_GeneralizedHough(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughTrait for GeneralizedHoughBallard {
+		#[inline] fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughBallardTraitConst for GeneralizedHoughBallard {
+		#[inline] fn as_raw_GeneralizedHoughBallard(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughBallardTrait for GeneralizedHoughBallard {
+		#[inline] fn as_raw_mut_GeneralizedHoughBallard(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl GeneralizedHoughBallard {
+	}
+	
+	boxed_cast_base! { GeneralizedHoughBallard, core::Algorithm, cv_GeneralizedHoughBallard_to_Algorithm }
+	
 	/// Constant methods for [crate::imgproc::GeneralizedHoughGuil]
-	pub trait GeneralizedHoughGuilConst: crate::imgproc::GeneralizedHoughConst {
+	pub trait GeneralizedHoughGuilTraitConst: crate::imgproc::GeneralizedHoughTraitConst {
 		fn as_raw_GeneralizedHoughGuil(&self) -> *const c_void;
 	
 		#[inline]
@@ -7395,10 +7517,8 @@ pub mod imgproc {
 		
 	}
 	
-	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
-	/// 
-	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Guil1999) .
-	pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough + crate::imgproc::GeneralizedHoughGuilConst {
+	/// Mutable methods for [crate::imgproc::GeneralizedHoughGuil]
+	pub trait GeneralizedHoughGuilTrait: crate::imgproc::GeneralizedHoughGuilTraitConst + crate::imgproc::GeneralizedHoughTrait {
 		fn as_raw_mut_GeneralizedHoughGuil(&mut self) -> *mut c_void;
 	
 		/// Angle difference in degrees between two points in feature.
@@ -7522,6 +7642,54 @@ pub mod imgproc {
 		}
 		
 	}
+	
+	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
+	/// 
+	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+	pub struct GeneralizedHoughGuil {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GeneralizedHoughGuil }
+	
+	impl Drop for GeneralizedHoughGuil {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_GeneralizedHoughGuil_delete(instance: *mut c_void); }
+			unsafe { cv_GeneralizedHoughGuil_delete(self.as_raw_mut_GeneralizedHoughGuil()) };
+		}
+	}
+	
+	unsafe impl Send for GeneralizedHoughGuil {}
+	
+	impl core::AlgorithmTraitConst for GeneralizedHoughGuil {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for GeneralizedHoughGuil {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughTraitConst for GeneralizedHoughGuil {
+		#[inline] fn as_raw_GeneralizedHough(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughTrait for GeneralizedHoughGuil {
+		#[inline] fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughGuilTraitConst for GeneralizedHoughGuil {
+		#[inline] fn as_raw_GeneralizedHoughGuil(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::imgproc::GeneralizedHoughGuilTrait for GeneralizedHoughGuil {
+		#[inline] fn as_raw_mut_GeneralizedHoughGuil(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl GeneralizedHoughGuil {
+	}
+	
+	boxed_cast_base! { GeneralizedHoughGuil, core::Algorithm, cv_GeneralizedHoughGuil_to_Algorithm }
 	
 	/// Constant methods for [crate::imgproc::LineIterator]
 	pub trait LineIteratorTraitConst {
@@ -7866,19 +8034,13 @@ pub mod imgproc {
 	}
 	
 	/// Constant methods for [crate::imgproc::LineSegmentDetector]
-	pub trait LineSegmentDetectorConst: core::AlgorithmTraitConst {
+	pub trait LineSegmentDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_LineSegmentDetector(&self) -> *const c_void;
 	
 	}
 	
-	/// Line segment detector class
-	/// 
-	/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Rafael12) .
-	/// 
-	/// 
-	/// Note: Implementation has been removed from OpenCV version 3.4.6 to 3.4.15 and version 4.1.0 to 4.5.3 due original code license conflict.
-	/// restored again after [Computation of a NFA](https://github.com/rafael-grompone-von-gioi/binomial_nfa) code published under the MIT license.
-	pub trait LineSegmentDetector: core::AlgorithmTrait + crate::imgproc::LineSegmentDetectorConst {
+	/// Mutable methods for [crate::imgproc::LineSegmentDetector]
+	pub trait LineSegmentDetectorTrait: core::AlgorithmTrait + crate::imgproc::LineSegmentDetectorTraitConst {
 		fn as_raw_mut_LineSegmentDetector(&mut self) -> *mut c_void;
 	
 		/// Finds lines in the input image.
@@ -7960,6 +8122,50 @@ pub mod imgproc {
 		}
 		
 	}
+	
+	/// Line segment detector class
+	/// 
+	/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Rafael12) .
+	/// 
+	/// 
+	/// Note: Implementation has been removed from OpenCV version 3.4.6 to 3.4.15 and version 4.1.0 to 4.5.3 due original code license conflict.
+	/// restored again after [Computation of a NFA](https://github.com/rafael-grompone-von-gioi/binomial_nfa) code published under the MIT license.
+	pub struct LineSegmentDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { LineSegmentDetector }
+	
+	impl Drop for LineSegmentDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_LineSegmentDetector_delete(instance: *mut c_void); }
+			unsafe { cv_LineSegmentDetector_delete(self.as_raw_mut_LineSegmentDetector()) };
+		}
+	}
+	
+	unsafe impl Send for LineSegmentDetector {}
+	
+	impl core::AlgorithmTraitConst for LineSegmentDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for LineSegmentDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::imgproc::LineSegmentDetectorTraitConst for LineSegmentDetector {
+		#[inline] fn as_raw_LineSegmentDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::imgproc::LineSegmentDetectorTrait for LineSegmentDetector {
+		#[inline] fn as_raw_mut_LineSegmentDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl LineSegmentDetector {
+	}
+	
+	boxed_cast_base! { LineSegmentDetector, core::Algorithm, cv_LineSegmentDetector_to_Algorithm }
 	
 	/// Constant methods for [crate::imgproc::Subdiv2D]
 	pub trait Subdiv2DTraitConst {

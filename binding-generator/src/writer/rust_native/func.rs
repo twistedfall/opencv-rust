@@ -5,7 +5,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 use regex::Regex;
 
-use crate::func::{Kind, OperatorKind};
+use crate::func::OperatorKind;
 use crate::type_ref::{ConstnessOverride, CppNameStyle, ExternDir, FishStyle, NameStyle};
 use crate::writer::rust_native::func_desc::FuncDescReturn;
 use crate::{
@@ -88,12 +88,11 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	};
 	let identifier = f.identifier();
 	let is_safe = !f.is_unsafe();
-	let is_static_func = matches!(f.kind(), Kind::StaticMethod(..) | Kind::Function);
 	let return_type = f.return_type();
 	let return_type_func_decl = if is_infallible {
-		return_type.rust_return(FishStyle::No, is_static_func)
+		return_type.rust_return(FishStyle::No)
 	} else {
-		format!("Result<{}>", return_type.rust_return(FishStyle::No, is_static_func)).into()
+		format!("Result<{}>", return_type.rust_return(FishStyle::No)).into()
 	};
 	let return_type_func_decl = if return_type_func_decl == "()" {
 		Cow::Borrowed("")
@@ -122,7 +121,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	if !is_infallible {
 		ret_convert.push("let ret = ret.into_result()?;".into())
 	}
-	let ret_map = rust_return_map(&return_type, "ret", is_safe, is_static_func, is_infallible);
+	let ret_map = rust_return_map(&return_type, "ret", is_safe, is_infallible);
 	if !ret_map.is_empty() {
 		ret_convert.push(format!("let ret = {ret_map};").into());
 	}
@@ -166,13 +165,7 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	})
 }
 
-fn rust_return_map(
-	return_type: &TypeRef,
-	ret_name: &str,
-	is_safe_context: bool,
-	is_static_func: bool,
-	is_infallible: bool,
-) -> Cow<'static, str> {
+fn rust_return_map(return_type: &TypeRef, ret_name: &str, is_safe_context: bool, is_infallible: bool) -> Cow<'static, str> {
 	let unsafety_call = if is_safe_context {
 		"unsafe "
 	} else {
@@ -182,7 +175,7 @@ fn rust_return_map(
 		format!(
 			"{unsafety_call}{{ {typ}::opencv_from_extern({ret_name}) }}",
 			unsafety_call = unsafety_call,
-			typ = return_type.rust_return(FishStyle::Turbo, is_static_func),
+			typ = return_type.rust_return(FishStyle::Turbo),
 			ret_name = ret_name,
 		)
 		.into()

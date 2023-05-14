@@ -32,16 +32,17 @@ pub mod hfs {
 	//! Hierarchical Feature Selection for Efficient Image Segmentation, ECCV 2016
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::HfsSegmentConst, super::HfsSegment };
+		pub use { super::HfsSegmentTraitConst, super::HfsSegmentTrait };
 	}
 	
 	/// Constant methods for [crate::hfs::HfsSegment]
-	pub trait HfsSegmentConst: core::AlgorithmTraitConst {
+	pub trait HfsSegmentTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_HfsSegment(&self) -> *const c_void;
 	
 	}
 	
-	pub trait HfsSegment: core::AlgorithmTrait + crate::hfs::HfsSegmentConst {
+	/// Mutable methods for [crate::hfs::HfsSegment]
+	pub trait HfsSegmentTrait: core::AlgorithmTrait + crate::hfs::HfsSegmentTraitConst {
 		fn as_raw_mut_HfsSegment(&mut self) -> *mut c_void;
 	
 		/// set and get the parameter segEgbThresholdI.
@@ -246,7 +247,39 @@ pub mod hfs {
 		
 	}
 	
-	impl dyn HfsSegment + '_ {
+	pub struct HfsSegment {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { HfsSegment }
+	
+	impl Drop for HfsSegment {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_HfsSegment_delete(instance: *mut c_void); }
+			unsafe { cv_HfsSegment_delete(self.as_raw_mut_HfsSegment()) };
+		}
+	}
+	
+	unsafe impl Send for HfsSegment {}
+	
+	impl core::AlgorithmTraitConst for HfsSegment {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for HfsSegment {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::hfs::HfsSegmentTraitConst for HfsSegment {
+		#[inline] fn as_raw_HfsSegment(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::hfs::HfsSegmentTrait for HfsSegment {
+		#[inline] fn as_raw_mut_HfsSegment(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl HfsSegment {
 		/// create a hfs object
 		/// ## Parameters
 		/// * height: : the height of the input image
@@ -268,13 +301,16 @@ pub mod hfs {
 		/// * slic_spixel_size: 8
 		/// * num_slic_iter: 5
 		#[inline]
-		pub fn create(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<core::Ptr<dyn crate::hfs::HfsSegment>> {
+		pub fn create(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<core::Ptr<crate::hfs::HfsSegment>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_create_int_int_float_int_float_int_float_int_int(height, width, seg_egb_threshold_i, min_region_size_i, seg_egb_threshold_ii, min_region_size_ii, spatial_weight, slic_spixel_size, num_slic_iter, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::hfs::HfsSegment>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::hfs::HfsSegment>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
-	}}
+	}
+	
+	boxed_cast_base! { HfsSegment, core::Algorithm, cv_HfsSegment_to_Algorithm }
+}

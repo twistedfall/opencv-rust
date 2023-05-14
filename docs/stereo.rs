@@ -2,7 +2,7 @@ pub mod stereo {
 	//! # Stereo Correspondance Algorithms
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::QuasiDenseStereoConst, super::QuasiDenseStereo };
+		pub use { super::QuasiDenseStereoTraitConst, super::QuasiDenseStereoTrait };
 	}
 	
 	pub const CV_CS_CENSUS: i32 = 2;
@@ -169,7 +169,7 @@ pub mod stereo {
 	}
 	
 	/// Constant methods for [crate::stereo::QuasiDenseStereo]
-	pub trait QuasiDenseStereoConst {
+	pub trait QuasiDenseStereoTraitConst {
 		fn as_raw_QuasiDenseStereo(&self) -> *const c_void;
 	
 		#[inline]
@@ -182,28 +182,8 @@ pub mod stereo {
 		
 	}
 	
-	/// Class containing the methods needed for Quasi Dense Stereo computation.
-	/// 
-	/// This module contains the code to perform quasi dense stereo matching.
-	/// The method initially starts with a sparse 3D reconstruction based on feature matching across a
-	/// stereo image pair and subsequently propagates the structure into neighboring image regions.
-	/// To obtain initial seed correspondences, the algorithm locates Shi and Tomashi features in the
-	/// left image of the stereo pair and then tracks them using pyramidal Lucas-Kanade in the right image.
-	/// To densify the sparse correspondences, the algorithm computes the zero-mean normalized
-	/// cross-correlation (ZNCC) in small patches around every seed pair and uses it as a quality metric
-	/// for each match. In this code, we introduce a custom structure to store the location and ZNCC value
-	/// of correspondences called "Match". Seed Matches are stored in a priority queue sorted according to
-	/// their ZNCC value, allowing for the best quality Match to be readily available. The algorithm pops
-	/// Matches and uses them to extract new matches around them. This is done by considering a small
-	/// neighboring area around each Seed and retrieving correspondences above a certain texture threshold
-	/// that are not previously computed. New matches are stored in the seed priority queue and used as seeds.
-	/// The propagation process ends when no additional matches can be retrieved.
-	/// ## See also
-	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
-	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
-	/// 
-	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lhuillier2000)
-	pub trait QuasiDenseStereo: crate::stereo::QuasiDenseStereoConst {
+	/// Mutable methods for [crate::stereo::QuasiDenseStereo]
+	pub trait QuasiDenseStereoTrait: crate::stereo::QuasiDenseStereoTraitConst {
 		fn as_raw_mut_QuasiDenseStereo(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -349,18 +329,64 @@ pub mod stereo {
 		
 	}
 	
-	impl dyn QuasiDenseStereo + '_ {
+	/// Class containing the methods needed for Quasi Dense Stereo computation.
+	/// 
+	/// This module contains the code to perform quasi dense stereo matching.
+	/// The method initially starts with a sparse 3D reconstruction based on feature matching across a
+	/// stereo image pair and subsequently propagates the structure into neighboring image regions.
+	/// To obtain initial seed correspondences, the algorithm locates Shi and Tomashi features in the
+	/// left image of the stereo pair and then tracks them using pyramidal Lucas-Kanade in the right image.
+	/// To densify the sparse correspondences, the algorithm computes the zero-mean normalized
+	/// cross-correlation (ZNCC) in small patches around every seed pair and uses it as a quality metric
+	/// for each match. In this code, we introduce a custom structure to store the location and ZNCC value
+	/// of correspondences called "Match". Seed Matches are stored in a priority queue sorted according to
+	/// their ZNCC value, allowing for the best quality Match to be readily available. The algorithm pops
+	/// Matches and uses them to extract new matches around them. This is done by considering a small
+	/// neighboring area around each Seed and retrieving correspondences above a certain texture threshold
+	/// that are not previously computed. New matches are stored in the seed priority queue and used as seeds.
+	/// The propagation process ends when no additional matches can be retrieved.
+	/// ## See also
+	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	/// 
+	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lhuillier2000)
+	pub struct QuasiDenseStereo {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { QuasiDenseStereo }
+	
+	impl Drop for QuasiDenseStereo {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_QuasiDenseStereo_delete(instance: *mut c_void); }
+			unsafe { cv_QuasiDenseStereo_delete(self.as_raw_mut_QuasiDenseStereo()) };
+		}
+	}
+	
+	unsafe impl Send for QuasiDenseStereo {}
+	
+	impl crate::stereo::QuasiDenseStereoTraitConst for QuasiDenseStereo {
+		#[inline] fn as_raw_QuasiDenseStereo(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::stereo::QuasiDenseStereoTrait for QuasiDenseStereo {
+		#[inline] fn as_raw_mut_QuasiDenseStereo(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl QuasiDenseStereo {
 		/// ## C++ default parameters
 		/// * param_filepath: cv::String()
 		#[inline]
-		pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr<dyn crate::stereo::QuasiDenseStereo>> {
+		pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr<crate::stereo::QuasiDenseStereo>> {
 			extern_container_arg!(mut param_filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
-	}}
+	}
+}

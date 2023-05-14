@@ -8,7 +8,7 @@ pub mod gapi {
 	//!    # G-API Serialization functionality
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::anyTraitConst, super::anyTrait, super::TextTraitConst, super::TextTrait, super::ImageTraitConst, super::ImageTrait, super::PolyTraitConst, super::PolyTrait, super::GCompileArgTraitConst, super::GCompileArgTrait, super::GMatTraitConst, super::GMatTrait, super::GMatPTraitConst, super::GMatPTrait, super::GMatDescTraitConst, super::GMatDescTrait, super::GScalarTraitConst, super::GScalarTrait, super::GScalarDescTraitConst, super::GScalarDescTrait, super::GArrayDescTraitConst, super::GArrayDescTrait, super::GArrayUTraitConst, super::GArrayUTrait, super::GOpaqueDescTraitConst, super::GOpaqueDescTrait, super::GOpaqueUTraitConst, super::GOpaqueUTrait, super::GFrameTraitConst, super::GFrameTrait, super::GFrameDescTraitConst, super::GFrameDescTrait, super::ScalarTraitConst, super::ScalarTrait, super::MediaFrameTraitConst, super::MediaFrameTrait, super::MediaFrame_ViewTraitConst, super::MediaFrame_ViewTrait, super::MediaFrame_IAdapterConst, super::MediaFrame_IAdapter, super::RMat_ViewTraitConst, super::RMat_ViewTrait, super::RMat_IAdapterConst, super::RMat_IAdapter, super::RMatTraitConst, super::RMatTrait, super::GArgTraitConst, super::GArgTrait, super::GRunArgTraitConst, super::GRunArgTrait, super::DataTraitConst, super::DataTrait, super::ExtractArgsCallbackTraitConst, super::ExtractArgsCallbackTrait, super::ExtractMetaCallbackTraitConst, super::ExtractMetaCallbackTrait, super::GCompiledTraitConst, super::GCompiledTrait, super::GStreamingCompiledTraitConst, super::GStreamingCompiledTrait, super::GComputationTraitConst, super::GComputationTrait, super::GCallTraitConst, super::GCallTrait, super::GTransformTraitConst, super::GTransformTrait, super::GTypeInfoTraitConst, super::GTypeInfoTrait, super::GKernelTraitConst, super::GKernelTrait, super::GKernelImplTraitConst, super::GKernelImplTrait, super::GBackendTraitConst, super::GBackendTrait, super::GFunctorConst, super::GFunctor, super::GKernelPackageTraitConst, super::GKernelPackageTrait, super::use_onlyTraitConst, super::use_onlyTrait };
+		pub use { super::anyTraitConst, super::anyTrait, super::TextTraitConst, super::TextTrait, super::ImageTraitConst, super::ImageTrait, super::PolyTraitConst, super::PolyTrait, super::GCompileArgTraitConst, super::GCompileArgTrait, super::GMatTraitConst, super::GMatTrait, super::GMatPTraitConst, super::GMatPTrait, super::GMatDescTraitConst, super::GMatDescTrait, super::GScalarTraitConst, super::GScalarTrait, super::GScalarDescTraitConst, super::GScalarDescTrait, super::GArrayDescTraitConst, super::GArrayDescTrait, super::GArrayUTraitConst, super::GArrayUTrait, super::GOpaqueDescTraitConst, super::GOpaqueDescTrait, super::GOpaqueUTraitConst, super::GOpaqueUTrait, super::GFrameTraitConst, super::GFrameTrait, super::GFrameDescTraitConst, super::GFrameDescTrait, super::ScalarTraitConst, super::ScalarTrait, super::MediaFrameTraitConst, super::MediaFrameTrait, super::MediaFrame_ViewTraitConst, super::MediaFrame_ViewTrait, super::MediaFrame_IAdapterTraitConst, super::MediaFrame_IAdapterTrait, super::RMat_ViewTraitConst, super::RMat_ViewTrait, super::RMat_IAdapterTraitConst, super::RMat_IAdapterTrait, super::RMatTraitConst, super::RMatTrait, super::GArgTraitConst, super::GArgTrait, super::GRunArgTraitConst, super::GRunArgTrait, super::DataTraitConst, super::DataTrait, super::ExtractArgsCallbackTraitConst, super::ExtractArgsCallbackTrait, super::ExtractMetaCallbackTraitConst, super::ExtractMetaCallbackTrait, super::GCompiledTraitConst, super::GCompiledTrait, super::GStreamingCompiledTraitConst, super::GStreamingCompiledTrait, super::GComputationTraitConst, super::GComputationTrait, super::GCallTraitConst, super::GCallTrait, super::GTransformTraitConst, super::GTransformTrait, super::GTypeInfoTraitConst, super::GTypeInfoTrait, super::GKernelTraitConst, super::GKernelTrait, super::GKernelImplTraitConst, super::GKernelImplTrait, super::GBackendTraitConst, super::GBackendTrait, super::GFunctorTraitConst, super::GFunctorTrait, super::GKernelPackageTraitConst, super::GKernelPackageTrait, super::use_onlyTraitConst, super::use_onlyTrait };
 	}
 	
 	pub const ArgKind_GARRAY: i32 = 6;
@@ -140,7 +140,7 @@ pub mod gapi {
 	pub type GRunArgs = core::Vector<crate::gapi::GRunArg>;
 	pub type GShapes = core::Vector<crate::gapi::GShape>;
 	pub type GTypesInfo = core::Vector<crate::gapi::GTypeInfo>;
-	pub type RMat_Adapter = dyn crate::gapi::RMat_IAdapter;
+	pub type RMat_Adapter = crate::gapi::RMat_IAdapter;
 	pub type RMat_View_stepsT = core::Vector<size_t>;
 	pub type GMat2 = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>;
 	pub type GMat3 = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
@@ -6002,7 +6002,7 @@ pub mod gapi {
 		fn as_raw_mut_GKernelPackage(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn include(&mut self, functor: &dyn crate::gapi::GFunctor) -> Result<()> {
+		fn include(&mut self, functor: &crate::gapi::GFunctor) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GKernelPackage_include_const_GFunctorR(self.as_raw_mut_GKernelPackage(), functor.as_raw_GFunctor(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7394,7 +7394,7 @@ pub mod gapi {
 	}
 	
 	/// Constant methods for [crate::gapi::MediaFrame_IAdapter]
-	pub trait MediaFrame_IAdapterConst {
+	pub trait MediaFrame_IAdapterTraitConst {
 		fn as_raw_MediaFrame_IAdapter(&self) -> *const c_void;
 	
 		#[inline]
@@ -7419,6 +7419,12 @@ pub mod gapi {
 		
 	}
 	
+	/// Mutable methods for [crate::gapi::MediaFrame_IAdapter]
+	pub trait MediaFrame_IAdapterTrait: crate::gapi::MediaFrame_IAdapterTraitConst {
+		fn as_raw_mut_MediaFrame_IAdapter(&mut self) -> *mut c_void;
+	
+	}
+	
 	/// An interface class for MediaFrame data adapters.
 	/// 
 	/// Implement this interface to wrap media data in the MediaFrame. It
@@ -7428,9 +7434,31 @@ pub mod gapi {
 	/// media data may be passed to graph without any copy. For example, a
 	/// GStreamer-based stream source can implement an adapter over
 	/// `GstBuffer` and G-API will transparently use it in the graph.
-	pub trait MediaFrame_IAdapter: crate::gapi::MediaFrame_IAdapterConst {
-		fn as_raw_mut_MediaFrame_IAdapter(&mut self) -> *mut c_void;
+	pub struct MediaFrame_IAdapter {
+		ptr: *mut c_void
+	}
 	
+	opencv_type_boxed! { MediaFrame_IAdapter }
+	
+	impl Drop for MediaFrame_IAdapter {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_MediaFrame_IAdapter_delete(instance: *mut c_void); }
+			unsafe { cv_MediaFrame_IAdapter_delete(self.as_raw_mut_MediaFrame_IAdapter()) };
+		}
+	}
+	
+	unsafe impl Send for MediaFrame_IAdapter {}
+	
+	impl crate::gapi::MediaFrame_IAdapterTraitConst for MediaFrame_IAdapter {
+		#[inline] fn as_raw_MediaFrame_IAdapter(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::gapi::MediaFrame_IAdapterTrait for MediaFrame_IAdapter {
+		#[inline] fn as_raw_mut_MediaFrame_IAdapter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl MediaFrame_IAdapter {
 	}
 	
 	/// Constant methods for [crate::gapi::MediaFrame_View]
@@ -7582,7 +7610,7 @@ pub mod gapi {
 	}
 	
 	/// Constant methods for [crate::gapi::RMat_IAdapter]
-	pub trait RMat_IAdapterConst {
+	pub trait RMat_IAdapterTraitConst {
 		fn as_raw_RMat_IAdapter(&self) -> *const c_void;
 	
 		#[inline]
@@ -7597,9 +7625,37 @@ pub mod gapi {
 		
 	}
 	
-	pub trait RMat_IAdapter: crate::gapi::RMat_IAdapterConst {
+	/// Mutable methods for [crate::gapi::RMat_IAdapter]
+	pub trait RMat_IAdapterTrait: crate::gapi::RMat_IAdapterTraitConst {
 		fn as_raw_mut_RMat_IAdapter(&mut self) -> *mut c_void;
 	
+	}
+	
+	pub struct RMat_IAdapter {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { RMat_IAdapter }
+	
+	impl Drop for RMat_IAdapter {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_RMat_IAdapter_delete(instance: *mut c_void); }
+			unsafe { cv_RMat_IAdapter_delete(self.as_raw_mut_RMat_IAdapter()) };
+		}
+	}
+	
+	unsafe impl Send for RMat_IAdapter {}
+	
+	impl crate::gapi::RMat_IAdapterTraitConst for RMat_IAdapter {
+		#[inline] fn as_raw_RMat_IAdapter(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::gapi::RMat_IAdapterTrait for RMat_IAdapter {
+		#[inline] fn as_raw_mut_RMat_IAdapter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl RMat_IAdapter {
 	}
 	
 	/// Constant methods for [crate::gapi::RMat_View]
@@ -7983,7 +8039,7 @@ pub mod gapi {
 	}
 	
 	/// Constant methods for [crate::gapi::GFunctor]
-	pub trait GFunctorConst {
+	pub trait GFunctorTraitConst {
 		fn as_raw_GFunctor(&self) -> *const c_void;
 	
 		#[inline]
@@ -8018,10 +8074,38 @@ pub mod gapi {
 		
 	}
 	
-	/// @private
-	pub trait GFunctor: crate::gapi::GFunctorConst {
+	/// Mutable methods for [crate::gapi::GFunctor]
+	pub trait GFunctorTrait: crate::gapi::GFunctorTraitConst {
 		fn as_raw_mut_GFunctor(&mut self) -> *mut c_void;
 	
+	}
+	
+	/// @private
+	pub struct GFunctor {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GFunctor }
+	
+	impl Drop for GFunctor {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_GFunctor_delete(instance: *mut c_void); }
+			unsafe { cv_GFunctor_delete(self.as_raw_mut_GFunctor()) };
+		}
+	}
+	
+	unsafe impl Send for GFunctor {}
+	
+	impl crate::gapi::GFunctorTraitConst for GFunctor {
+		#[inline] fn as_raw_GFunctor(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::gapi::GFunctorTrait for GFunctor {
+		#[inline] fn as_raw_mut_GFunctor(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl GFunctor {
 	}
 	
 	/// Constant methods for [crate::gapi::Scalar]

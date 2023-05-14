@@ -20,7 +20,6 @@ use crate::{
 	GeneratedType, GeneratorVisitor, IteratorExt, StrExt, Typedef,
 };
 
-mod abstract_ref_wrapper;
 mod class;
 mod comment;
 mod constant;

@@ -6,7 +6,7 @@ pub mod cudaimgproc {
 	//!    # Feature Detection
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::CUDA_CLAHEConst, super::CUDA_CLAHE, super::CUDA_CannyEdgeDetectorConst, super::CUDA_CannyEdgeDetector, super::CUDA_HoughLinesDetectorConst, super::CUDA_HoughLinesDetector, super::CUDA_HoughSegmentDetectorConst, super::CUDA_HoughSegmentDetector, super::CUDA_HoughCirclesDetectorConst, super::CUDA_HoughCirclesDetector, super::CUDA_CornernessCriteriaConst, super::CUDA_CornernessCriteria, super::CUDA_CornersDetectorConst, super::CUDA_CornersDetector, super::CUDA_TemplateMatchingConst, super::CUDA_TemplateMatching };
+		pub use { super::CUDA_CLAHETraitConst, super::CUDA_CLAHETrait, super::CUDA_CannyEdgeDetectorTraitConst, super::CUDA_CannyEdgeDetectorTrait, super::CUDA_HoughLinesDetectorTraitConst, super::CUDA_HoughLinesDetectorTrait, super::CUDA_HoughSegmentDetectorTraitConst, super::CUDA_HoughSegmentDetectorTrait, super::CUDA_HoughCirclesDetectorTraitConst, super::CUDA_HoughCirclesDetectorTrait, super::CUDA_CornernessCriteriaTraitConst, super::CUDA_CornernessCriteriaTrait, super::CUDA_CornersDetectorTraitConst, super::CUDA_CornersDetectorTrait, super::CUDA_TemplateMatchingTraitConst, super::CUDA_TemplateMatchingTrait };
 	}
 	
 	pub const CUDA_ALPHA_ATOP: i32 = 3;
@@ -344,12 +344,12 @@ pub mod cudaimgproc {
 	/// * clip_limit: 40.0
 	/// * tile_grid_size: Size(8,8)
 	#[inline]
-	pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CLAHE>> {
+	pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CLAHE>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -368,34 +368,34 @@ pub mod cudaimgproc {
 	/// * apperture_size: 3
 	/// * l2gradient: false
 	#[inline]
-	pub fn create_canny_edge_detector(low_thresh: f64, high_thresh: f64, apperture_size: i32, l2gradient: bool) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>> {
+	pub fn create_canny_edge_detector(low_thresh: f64, high_thresh: f64, apperture_size: i32, l2gradient: bool) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createCannyEdgeDetector_double_double_int_bool(low_thresh, high_thresh, apperture_size, l2gradient, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CannyEdgeDetector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CannyEdgeDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 	#[inline]
-	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughBallard>> {
+	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughBallard>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createGeneralizedHoughBallard(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 	#[inline]
-	pub fn create_generalized_hough_guil() -> Result<core::Ptr<dyn crate::imgproc::GeneralizedHoughGuil>> {
+	pub fn create_generalized_hough_guil() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughGuil>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createGeneralizedHoughGuil(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -426,12 +426,12 @@ pub mod cudaimgproc {
 	/// * use_harris_detector: false
 	/// * harris_k: 0.04
 	#[inline]
-	pub fn create_good_features_to_track_detector(src_type: i32, max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, harris_k: f64) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CornersDetector>> {
+	pub fn create_good_features_to_track_detector(src_type: i32, max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, harris_k: f64) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CornersDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createGoodFeaturesToTrackDetector_int_int_double_double_int_bool_double(src_type, max_corners, quality_level, min_distance, block_size, use_harris_detector, harris_k, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornersDetector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornersDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -450,12 +450,12 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * border_type: BORDER_REFLECT101
 	#[inline]
-	pub fn create_harris_corner(src_type: i32, block_size: i32, ksize: i32, k: f64, border_type: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CornernessCriteria>> {
+	pub fn create_harris_corner(src_type: i32, block_size: i32, ksize: i32, k: f64, border_type: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createHarrisCorner_int_int_int_double_int(src_type, block_size, ksize, k, border_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -479,12 +479,12 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * max_circles: 4096
 	#[inline]
-	pub fn create_hough_circles_detector(dp: f32, min_dist: f32, canny_threshold: i32, votes_threshold: i32, min_radius: i32, max_radius: i32, max_circles: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_HoughCirclesDetector>> {
+	pub fn create_hough_circles_detector(dp: f32, min_dist: f32, canny_threshold: i32, votes_threshold: i32, min_radius: i32, max_radius: i32, max_circles: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createHoughCirclesDetector_float_float_int_int_int_int_int(dp, min_dist, canny_threshold, votes_threshold, min_radius, max_radius, max_circles, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughCirclesDetector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughCirclesDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -502,12 +502,12 @@ pub mod cudaimgproc {
 	/// * do_sort: false
 	/// * max_lines: 4096
 	#[inline]
-	pub fn create_hough_lines_detector(rho: f32, theta: f32, threshold: i32, do_sort: bool, max_lines: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_HoughLinesDetector>> {
+	pub fn create_hough_lines_detector(rho: f32, theta: f32, threshold: i32, do_sort: bool, max_lines: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createHoughLinesDetector_float_float_int_bool_int(rho, theta, threshold, do_sort, max_lines, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughLinesDetector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughLinesDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -523,12 +523,12 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * max_lines: 4096
 	#[inline]
-	pub fn create_hough_segment_detector(rho: f32, theta: f32, min_line_length: i32, max_line_gap: i32, max_lines: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_HoughSegmentDetector>> {
+	pub fn create_hough_segment_detector(rho: f32, theta: f32, min_line_length: i32, max_line_gap: i32, max_lines: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createHoughSegmentDetector_float_float_int_int_int(rho, theta, min_line_length, max_line_gap, max_lines, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_HoughSegmentDetector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughSegmentDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -547,12 +547,12 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * border_type: BORDER_REFLECT101
 	#[inline]
-	pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, border_type: i32) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_CornernessCriteria>> {
+	pub fn create_min_eigen_val_corner(src_type: i32, block_size: i32, ksize: i32, border_type: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createMinEigenValCorner_int_int_int_int(src_type, block_size, ksize, border_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -586,12 +586,12 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * user_block_size: Size()
 	#[inline]
-	pub fn create_template_matching(src_type: i32, method: i32, user_block_size: core::Size) -> Result<core::Ptr<dyn crate::cudaimgproc::CUDA_TemplateMatching>> {
+	pub fn create_template_matching(src_type: i32, method: i32, user_block_size: core::Size) -> Result<core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createTemplateMatching_int_int_Size(src_type, method, user_block_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -884,13 +884,13 @@ pub mod cudaimgproc {
 	}
 	
 	/// Constant methods for [crate::cudaimgproc::CUDA_CLAHE]
-	pub trait CUDA_CLAHEConst: crate::imgproc::CLAHEConst {
+	pub trait CUDA_CLAHETraitConst: crate::imgproc::CLAHETraitConst {
 		fn as_raw_CUDA_CLAHE(&self) -> *const c_void;
 	
 	}
 	
-	/// Base class for Contrast Limited Adaptive Histogram Equalization. :
-	pub trait CUDA_CLAHE: crate::cudaimgproc::CUDA_CLAHEConst + crate::imgproc::CLAHE {
+	/// Mutable methods for [crate::cudaimgproc::CUDA_CLAHE]
+	pub trait CUDA_CLAHETrait: crate::cudaimgproc::CUDA_CLAHETraitConst + crate::imgproc::CLAHETrait {
 		fn as_raw_mut_CUDA_CLAHE(&mut self) -> *mut c_void;
 	
 		/// Equalizes the histogram of a grayscale image using Contrast Limited Adaptive Histogram Equalization.
@@ -912,8 +912,54 @@ pub mod cudaimgproc {
 		
 	}
 	
+	/// Base class for Contrast Limited Adaptive Histogram Equalization. :
+	pub struct CUDA_CLAHE {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_CLAHE }
+	
+	impl Drop for CUDA_CLAHE {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_CLAHE_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_CLAHE_delete(self.as_raw_mut_CUDA_CLAHE()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_CLAHE {}
+	
+	impl core::AlgorithmTraitConst for CUDA_CLAHE {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_CLAHE {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::imgproc::CLAHETraitConst for CUDA_CLAHE {
+		#[inline] fn as_raw_CLAHE(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::imgproc::CLAHETrait for CUDA_CLAHE {
+		#[inline] fn as_raw_mut_CLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CLAHETraitConst for CUDA_CLAHE {
+		#[inline] fn as_raw_CUDA_CLAHE(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CLAHETrait for CUDA_CLAHE {
+		#[inline] fn as_raw_mut_CUDA_CLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_CLAHE {
+	}
+	
+	boxed_cast_base! { CUDA_CLAHE, core::Algorithm, cv_CUDA_CLAHE_to_Algorithm }
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_CannyEdgeDetector]
-	pub trait CUDA_CannyEdgeDetectorConst: core::AlgorithmTraitConst {
+	pub trait CUDA_CannyEdgeDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_CannyEdgeDetector(&self) -> *const c_void;
 	
 		#[inline]
@@ -954,8 +1000,8 @@ pub mod cudaimgproc {
 		
 	}
 	
-	/// Base class for Canny Edge Detector. :
-	pub trait CUDA_CannyEdgeDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CannyEdgeDetectorConst {
+	/// Mutable methods for [crate::cudaimgproc::CUDA_CannyEdgeDetector]
+	pub trait CUDA_CannyEdgeDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst {
 		fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void;
 	
 		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
@@ -1044,14 +1090,52 @@ pub mod cudaimgproc {
 		
 	}
 	
+	/// Base class for Canny Edge Detector. :
+	pub struct CUDA_CannyEdgeDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_CannyEdgeDetector }
+	
+	impl Drop for CUDA_CannyEdgeDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_CannyEdgeDetector_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_CannyEdgeDetector_delete(self.as_raw_mut_CUDA_CannyEdgeDetector()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_CannyEdgeDetector {}
+	
+	impl core::AlgorithmTraitConst for CUDA_CannyEdgeDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_CannyEdgeDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst for CUDA_CannyEdgeDetector {
+		#[inline] fn as_raw_CUDA_CannyEdgeDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CannyEdgeDetectorTrait for CUDA_CannyEdgeDetector {
+		#[inline] fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_CannyEdgeDetector {
+	}
+	
+	boxed_cast_base! { CUDA_CannyEdgeDetector, core::Algorithm, cv_CUDA_CannyEdgeDetector_to_Algorithm }
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_CornernessCriteria]
-	pub trait CUDA_CornernessCriteriaConst: core::AlgorithmTraitConst {
+	pub trait CUDA_CornernessCriteriaTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void;
 	
 	}
 	
-	/// Base class for Cornerness Criteria computation. :
-	pub trait CUDA_CornernessCriteria: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornernessCriteriaConst {
+	/// Mutable methods for [crate::cudaimgproc::CUDA_CornernessCriteria]
+	pub trait CUDA_CornernessCriteriaTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst {
 		fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void;
 	
 		/// Computes the cornerness criteria at each image pixel.
@@ -1077,14 +1161,52 @@ pub mod cudaimgproc {
 		
 	}
 	
+	/// Base class for Cornerness Criteria computation. :
+	pub struct CUDA_CornernessCriteria {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_CornernessCriteria }
+	
+	impl Drop for CUDA_CornernessCriteria {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_CornernessCriteria_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_CornernessCriteria_delete(self.as_raw_mut_CUDA_CornernessCriteria()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_CornernessCriteria {}
+	
+	impl core::AlgorithmTraitConst for CUDA_CornernessCriteria {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_CornernessCriteria {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst for CUDA_CornernessCriteria {
+		#[inline] fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CornernessCriteriaTrait for CUDA_CornernessCriteria {
+		#[inline] fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_CornernessCriteria {
+	}
+	
+	boxed_cast_base! { CUDA_CornernessCriteria, core::Algorithm, cv_CUDA_CornernessCriteria_to_Algorithm }
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_CornersDetector]
-	pub trait CUDA_CornersDetectorConst: core::AlgorithmTraitConst {
+	pub trait CUDA_CornersDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_CornersDetector(&self) -> *const c_void;
 	
 	}
 	
-	/// Base class for Corners Detector. :
-	pub trait CUDA_CornersDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornersDetectorConst {
+	/// Mutable methods for [crate::cudaimgproc::CUDA_CornersDetector]
+	pub trait CUDA_CornersDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornersDetectorTraitConst {
 		fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void;
 	
 		/// Determines strong corners on an image.
@@ -1114,8 +1236,46 @@ pub mod cudaimgproc {
 		
 	}
 	
+	/// Base class for Corners Detector. :
+	pub struct CUDA_CornersDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_CornersDetector }
+	
+	impl Drop for CUDA_CornersDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_CornersDetector_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_CornersDetector_delete(self.as_raw_mut_CUDA_CornersDetector()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_CornersDetector {}
+	
+	impl core::AlgorithmTraitConst for CUDA_CornersDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_CornersDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CornersDetectorTraitConst for CUDA_CornersDetector {
+		#[inline] fn as_raw_CUDA_CornersDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_CornersDetectorTrait for CUDA_CornersDetector {
+		#[inline] fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_CornersDetector {
+	}
+	
+	boxed_cast_base! { CUDA_CornersDetector, core::Algorithm, cv_CUDA_CornersDetector_to_Algorithm }
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughCirclesDetector]
-	pub trait CUDA_HoughCirclesDetectorConst: core::AlgorithmTraitConst {
+	pub trait CUDA_HoughCirclesDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_HoughCirclesDetector(&self) -> *const c_void;
 	
 		#[inline]
@@ -1183,8 +1343,8 @@ pub mod cudaimgproc {
 		
 	}
 	
-	/// Base class for circles detector algorithm. :
-	pub trait CUDA_HoughCirclesDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughCirclesDetectorConst {
+	/// Mutable methods for [crate::cudaimgproc::CUDA_HoughCirclesDetector]
+	pub trait CUDA_HoughCirclesDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughCirclesDetectorTraitConst {
 		fn as_raw_mut_CUDA_HoughCirclesDetector(&mut self) -> *mut c_void;
 	
 		/// Finds circles in a grayscale image using the Hough transform.
@@ -1275,8 +1435,46 @@ pub mod cudaimgproc {
 		
 	}
 	
+	/// Base class for circles detector algorithm. :
+	pub struct CUDA_HoughCirclesDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_HoughCirclesDetector }
+	
+	impl Drop for CUDA_HoughCirclesDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_HoughCirclesDetector_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_HoughCirclesDetector_delete(self.as_raw_mut_CUDA_HoughCirclesDetector()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_HoughCirclesDetector {}
+	
+	impl core::AlgorithmTraitConst for CUDA_HoughCirclesDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_HoughCirclesDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_HoughCirclesDetectorTraitConst for CUDA_HoughCirclesDetector {
+		#[inline] fn as_raw_CUDA_HoughCirclesDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_HoughCirclesDetectorTrait for CUDA_HoughCirclesDetector {
+		#[inline] fn as_raw_mut_CUDA_HoughCirclesDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_HoughCirclesDetector {
+	}
+	
+	boxed_cast_base! { CUDA_HoughCirclesDetector, core::Algorithm, cv_CUDA_HoughCirclesDetector_to_Algorithm }
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughLinesDetector]
-	pub trait CUDA_HoughLinesDetectorConst: core::AlgorithmTraitConst {
+	pub trait CUDA_HoughLinesDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_HoughLinesDetector(&self) -> *const c_void;
 	
 		#[inline]
@@ -1326,8 +1524,8 @@ pub mod cudaimgproc {
 		
 	}
 	
-	/// Base class for lines detector algorithm. :
-	pub trait CUDA_HoughLinesDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughLinesDetectorConst {
+	/// Mutable methods for [crate::cudaimgproc::CUDA_HoughLinesDetector]
+	pub trait CUDA_HoughLinesDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughLinesDetectorTraitConst {
 		fn as_raw_mut_CUDA_HoughLinesDetector(&mut self) -> *mut c_void;
 	
 		/// Finds lines in a binary image using the classical Hough transform.
@@ -1425,8 +1623,46 @@ pub mod cudaimgproc {
 		
 	}
 	
+	/// Base class for lines detector algorithm. :
+	pub struct CUDA_HoughLinesDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_HoughLinesDetector }
+	
+	impl Drop for CUDA_HoughLinesDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_HoughLinesDetector_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_HoughLinesDetector_delete(self.as_raw_mut_CUDA_HoughLinesDetector()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_HoughLinesDetector {}
+	
+	impl core::AlgorithmTraitConst for CUDA_HoughLinesDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_HoughLinesDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_HoughLinesDetectorTraitConst for CUDA_HoughLinesDetector {
+		#[inline] fn as_raw_CUDA_HoughLinesDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_HoughLinesDetectorTrait for CUDA_HoughLinesDetector {
+		#[inline] fn as_raw_mut_CUDA_HoughLinesDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_HoughLinesDetector {
+	}
+	
+	boxed_cast_base! { CUDA_HoughLinesDetector, core::Algorithm, cv_CUDA_HoughLinesDetector_to_Algorithm }
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughSegmentDetector]
-	pub trait CUDA_HoughSegmentDetectorConst: core::AlgorithmTraitConst {
+	pub trait CUDA_HoughSegmentDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_HoughSegmentDetector(&self) -> *const c_void;
 	
 		#[inline]
@@ -1476,8 +1712,8 @@ pub mod cudaimgproc {
 		
 	}
 	
-	/// Base class for line segments detector algorithm. :
-	pub trait CUDA_HoughSegmentDetector: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughSegmentDetectorConst {
+	/// Mutable methods for [crate::cudaimgproc::CUDA_HoughSegmentDetector]
+	pub trait CUDA_HoughSegmentDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughSegmentDetectorTraitConst {
 		fn as_raw_mut_CUDA_HoughSegmentDetector(&mut self) -> *mut c_void;
 	
 		/// Finds line segments in a binary image using the probabilistic Hough transform.
@@ -1551,14 +1787,52 @@ pub mod cudaimgproc {
 		
 	}
 	
+	/// Base class for line segments detector algorithm. :
+	pub struct CUDA_HoughSegmentDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_HoughSegmentDetector }
+	
+	impl Drop for CUDA_HoughSegmentDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_HoughSegmentDetector_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_HoughSegmentDetector_delete(self.as_raw_mut_CUDA_HoughSegmentDetector()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_HoughSegmentDetector {}
+	
+	impl core::AlgorithmTraitConst for CUDA_HoughSegmentDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_HoughSegmentDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_HoughSegmentDetectorTraitConst for CUDA_HoughSegmentDetector {
+		#[inline] fn as_raw_CUDA_HoughSegmentDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_HoughSegmentDetectorTrait for CUDA_HoughSegmentDetector {
+		#[inline] fn as_raw_mut_CUDA_HoughSegmentDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_HoughSegmentDetector {
+	}
+	
+	boxed_cast_base! { CUDA_HoughSegmentDetector, core::Algorithm, cv_CUDA_HoughSegmentDetector_to_Algorithm }
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_TemplateMatching]
-	pub trait CUDA_TemplateMatchingConst: core::AlgorithmTraitConst {
+	pub trait CUDA_TemplateMatchingTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_TemplateMatching(&self) -> *const c_void;
 	
 	}
 	
-	/// Base class for Template Matching. :
-	pub trait CUDA_TemplateMatching: core::AlgorithmTrait + crate::cudaimgproc::CUDA_TemplateMatchingConst {
+	/// Mutable methods for [crate::cudaimgproc::CUDA_TemplateMatching]
+	pub trait CUDA_TemplateMatchingTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_TemplateMatchingTraitConst {
 		fn as_raw_mut_CUDA_TemplateMatching(&mut self) -> *mut c_void;
 	
 		/// Computes a proximity map for a raster template and an image where the template is searched for.
@@ -1585,4 +1859,42 @@ pub mod cudaimgproc {
 		}
 		
 	}
+	
+	/// Base class for Template Matching. :
+	pub struct CUDA_TemplateMatching {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_TemplateMatching }
+	
+	impl Drop for CUDA_TemplateMatching {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_TemplateMatching_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_TemplateMatching_delete(self.as_raw_mut_CUDA_TemplateMatching()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_TemplateMatching {}
+	
+	impl core::AlgorithmTraitConst for CUDA_TemplateMatching {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_TemplateMatching {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_TemplateMatchingTraitConst for CUDA_TemplateMatching {
+		#[inline] fn as_raw_CUDA_TemplateMatching(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudaimgproc::CUDA_TemplateMatchingTrait for CUDA_TemplateMatching {
+		#[inline] fn as_raw_mut_CUDA_TemplateMatching(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_TemplateMatching {
+	}
+	
+	boxed_cast_base! { CUDA_TemplateMatching, core::Algorithm, cv_CUDA_TemplateMatching_to_Algorithm }
 }

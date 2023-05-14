@@ -138,10 +138,9 @@ impl TypeRefRenderer<'_> for RustRenderer {
 			Kind::Class(cls) => {
 				let fish_style = self.name_style.turbo_fish_style();
 				format!(
-					"{dyn}{name}{generic}",
-					dyn=if self.name_style.is_reference() && cls.is_abstract() { "dyn " } else { "" },
-					name=cls.rust_name(self.name_style),
-					generic=render_rust_tpl_decl(self, type_ref, fish_style),
+					"{name}{generic}",
+					name = cls.rust_name(self.name_style),
+					generic = render_rust_tpl_decl(self, type_ref, fish_style),
 				)
 				.into()
 			}

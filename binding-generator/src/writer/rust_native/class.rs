@@ -48,12 +48,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 	static TRAIT_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/trait.tpl.rs").compile_interpolation());
 
-	static TRAIT_DYN_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| include_str!("tpl/class/trait_dyn.tpl.rs").compile_interpolation());
-
 	let type_ref = c.type_ref();
 	let is_trait = c.is_trait();
-	let is_abstract = c.is_abstract();
 	let class_kind = c.kind();
 	let doc_comment = c.rendered_doc_comment(opencv_version);
 
@@ -103,44 +99,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			&mut trait_methods_pool,
 			opencv_version,
 		);
-		let dyn_impl = if is_abstract {
-			let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
 
-			let mut methods_pool = NamePool::with_capacity(method_count);
-			let inherent_methods = rust_generate_funcs(
-				const_methods
-					.iter()
-					.chain(mut_methods.iter())
-					.filter(|m| m.kind().as_static_method().is_some()),
-				&mut methods_pool,
-				opencv_version,
-			);
-			if !inherent_methods.is_empty() || !consts.is_empty() {
-				TRAIT_DYN_TPL.interpolate(&hashmap! {
-					"rust_local" => c.rust_trait_name(NameStyle::decl(), Constness::Mut),
-					"consts" => consts.into(),
-					"inherent_methods" => inherent_methods.into(),
-				})
-			} else {
-				String::new()
-			}
-		} else {
-			String::new()
-		};
-
-		let (const_trait_comment, mut_trait_comment) = if is_abstract {
-			let rust_trait_local_mut = c.rust_trait_name(NameStyle::ref_(), Constness::Mut);
-			(
-				Cow::Owned(format!("/// Constant methods for [{rust_trait_local_mut}]")),
-				Cow::Borrowed(doc_comment.as_str()),
-			)
-		} else {
-			let rust_local = type_ref.rust_name(NameStyle::ref_());
-			(
-				format!("/// Constant methods for [{rust_local}]").into(),
-				format!("/// Mutable methods for [{rust_local}]").into(),
-			)
-		};
+		let rust_local = type_ref.rust_name(NameStyle::ref_());
+		let const_trait_comment = format!("/// Constant methods for [{rust_local}]").into();
+		let mut_trait_comment = format!("/// Mutable methods for [{rust_local}]").into();
 
 		out = TRAIT_TPL.interpolate(&hashmap! {
 			"const_trait_comment" => const_trait_comment,
@@ -155,177 +117,174 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			"trait_bases_mut" => trait_bases_mut.into(),
 			"trait_const_methods" => trait_const_methods.into(),
 			"trait_mut_methods" => trait_mut_methods.into(),
-			"dyn_impl" => dyn_impl.into(),
 		});
 	}
 
-	if !is_abstract {
-		let rust_local = c.rust_name(NameStyle::decl());
-		let mut impls = if c.has_explicit_clone() {
-			IMPL_EXPLICIT_CLONE_TPL.interpolate(&hashmap! {
-				"rust_local" => rust_local.as_ref(),
-			})
-		} else if c.has_implicit_clone() {
-			IMPL_IMPLICIT_CLONE_TPL.interpolate(&hashmap! {
-				"rust_local" => rust_local.as_ref(),
-			})
-		} else {
-			"".to_string()
-		};
+	let rust_local = c.rust_name(NameStyle::decl());
+	let mut impls = if c.has_explicit_clone() {
+		IMPL_EXPLICIT_CLONE_TPL.interpolate(&hashmap! {
+			"rust_local" => rust_local.as_ref(),
+		})
+	} else if c.has_implicit_clone() {
+		IMPL_IMPLICIT_CLONE_TPL.interpolate(&hashmap! {
+			"rust_local" => rust_local.as_ref(),
+		})
+	} else {
+		"".to_string()
+	};
 
-		let mut bases = c.all_bases().into_iter()
+	let mut bases = c.all_bases().into_iter()
 			.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
 			.collect::<Vec<_>>();
-		bases.sort_unstable_by(|a, b| {
-			a.cpp_name(CppNameStyle::Declaration)
-				.cmp(&b.cpp_name(CppNameStyle::Declaration))
-		});
-		if !class_kind.is_simple() {
-			if c.is_polymorphic() {
-				let mut descendants = c
-					.descendants()
-					.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
-					.collect::<Vec<_>>();
-				descendants.sort_unstable_by(|a, b| {
-					a.cpp_name(CppNameStyle::Declaration)
-						.cmp(&b.cpp_name(CppNameStyle::Declaration))
+	bases.sort_unstable_by(|a, b| {
+		a.cpp_name(CppNameStyle::Declaration)
+			.cmp(&b.cpp_name(CppNameStyle::Declaration))
+	});
+	if !class_kind.is_simple() {
+		if c.is_polymorphic() {
+			let mut descendants = c
+				.descendants()
+				.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
+				.collect::<Vec<_>>();
+			descendants.sort_unstable_by(|a, b| {
+				a.cpp_name(CppNameStyle::Declaration)
+					.cmp(&b.cpp_name(CppNameStyle::Declaration))
+			});
+			for d in descendants {
+				let desc_local = d.rust_name(NameStyle::decl());
+				let desc_full = d.rust_name(NameStyle::ref_());
+				impls += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
+					"rust_local" => rust_local.as_ref(),
+					"descendant_rust_local" => desc_local.as_ref(),
+					"descendant_rust_full" => desc_full.as_ref(),
 				});
-				for d in descendants {
-					let desc_local = d.rust_name(NameStyle::decl());
-					let desc_full = d.rust_name(NameStyle::ref_());
-					impls += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
-						"rust_local" => rust_local.as_ref(),
-						"descendant_rust_local" => desc_local.as_ref(),
-						"descendant_rust_full" => desc_full.as_ref(),
-					});
-				}
-			}
-			for b in &bases {
-				if !b.is_abstract() {
-					let base_local = b.rust_name(NameStyle::decl());
-					let base_full = b.rust_name(NameStyle::ref_());
-					impls += &BASE_CAST_TPL.interpolate(&hashmap! {
-						"rust_local" => rust_local.as_ref(),
-						"base_rust_local" => base_local.as_ref(),
-						"base_rust_full" => base_full.as_ref(),
-					});
-				}
 			}
 		}
+		for b in &bases {
+			if !b.is_abstract() {
+				let base_local = b.rust_name(NameStyle::decl());
+				let base_full = b.rust_name(NameStyle::ref_());
+				impls += &BASE_CAST_TPL.interpolate(&hashmap! {
+					"rust_local" => rust_local.as_ref(),
+					"base_rust_local" => base_local.as_ref(),
+					"base_rust_full" => base_full.as_ref(),
+				});
+			}
+		}
+	}
 
-		if is_trait {
-			bases.push(c.clone());
-		}
-		let bases = bases
+	if is_trait {
+		bases.push(c.clone());
+	}
+	let bases = bases
+		.into_iter()
+		.map(|base| {
+			let base_type_ref = base.type_ref();
+			let tpl = if class_kind.is_simple() {
+				&SIMPLE_BASE_TPL
+			} else {
+				&BASE_TPL
+			};
+			tpl.interpolate(&hashmap! {
+				"base_rust_full" => base.rust_trait_name(NameStyle::ref_(), Constness::Mut),
+				"base_const_rust_full" => base.rust_trait_name(NameStyle::ref_(), Constness::Const),
+				"rust_local" => type_ref.rust_name(NameStyle::decl()),
+				"base_rust_local" => base_type_ref.rust_name(NameStyle::decl()),
+				"base_rust_extern_const" => base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+				"base_rust_extern_mut" => base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
+			})
+		})
+		.collect::<Vec<_>>();
+
+	let fields = if class_kind.is_simple() {
+		fields
 			.into_iter()
-			.map(|base| {
-				let base_type_ref = base.type_ref();
-				let tpl = if class_kind.is_simple() {
-					&SIMPLE_BASE_TPL
-				} else {
-					&BASE_TPL
-				};
-				tpl.interpolate(&hashmap! {
-					"base_rust_full" => base.rust_trait_name(NameStyle::ref_(), Constness::Mut),
-					"base_const_rust_full" => base.rust_trait_name(NameStyle::ref_(), Constness::Const),
-					"rust_local" => type_ref.rust_name(NameStyle::decl()),
-					"base_rust_local" => base_type_ref.rust_name(NameStyle::decl()),
-					"base_rust_extern_const" => base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
-					"base_rust_extern_mut" => base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
+			.map(|f| {
+				let type_ref = f.type_ref();
+				let mut typ = type_ref.rust_name(NameStyle::ref_());
+				// hack for converting the references to array types in struct definitions
+				if type_ref.as_fixed_array().is_some() {
+					if let Some(new_typ) = typ.strip_prefix("&mut ") {
+						typ = new_typ.to_string().into()
+					}
+				}
+				SIMPLE_FIELD_TPL.interpolate(&hashmap! {
+					"doc_comment" => Cow::Owned(f.rendered_doc_comment(opencv_version)),
+					"visibility" => "pub ".into(),
+					"name" => f.rust_leafname(FishStyle::No),
+					"type" => typ,
 				})
 			})
-			.collect::<Vec<_>>();
+			.collect()
+	} else {
+		vec![]
+	};
 
-		let fields = if class_kind.is_simple() {
-			fields
-				.into_iter()
-				.map(|f| {
-					let type_ref = f.type_ref();
-					let mut typ = type_ref.rust_name(NameStyle::ref_());
-					// hack for converting the references to array types in struct definitions
-					if type_ref.as_fixed_array().is_some() {
-						if let Some(new_typ) = typ.strip_prefix("&mut ") {
-							typ = new_typ.to_string().into()
-						}
-					}
-					SIMPLE_FIELD_TPL.interpolate(&hashmap! {
-						"doc_comment" => Cow::Owned(f.rendered_doc_comment(opencv_version)),
-						"visibility" => "pub ".into(),
-						"name" => f.rust_leafname(FishStyle::No),
-						"type" => typ,
-					})
-				})
-				.collect()
-		} else {
-			vec![]
-		};
+	let mut inherent_methods = String::with_capacity(512 * (const_methods.len() + mut_methods.len()));
+	let mut inherent_methods_pool = NamePool::with_capacity(method_count);
 
-		let mut inherent_methods = String::with_capacity(512 * (const_methods.len() + mut_methods.len()));
-		let mut inherent_methods_pool = NamePool::with_capacity(method_count);
-
-		let mut needs_default_impl = false;
-		if let Some(def_cons) = mut_methods.iter().find(|m| m.is_default_constructor() && !m.is_excluded()) {
-			if def_cons.is_infallible() {
-				needs_default_impl = true;
-			}
-		}
-		let needs_default_ctor = needs_default_ctor(class_kind, c, const_methods.iter().chain(mut_methods.iter()));
-		if needs_default_ctor {
-			inherent_methods.push_str(&DEFAULT_CTOR.interpolate(&hashmap! {
-				"rust_local" => rust_local.as_ref(),
-			}));
-			inherent_methods_pool.add_name("default");
+	let mut needs_default_impl = false;
+	if let Some(def_cons) = mut_methods.iter().find(|m| m.is_default_constructor() && !m.is_excluded()) {
+		if def_cons.is_infallible() {
 			needs_default_impl = true;
 		}
+	}
+	let needs_default_ctor = needs_default_ctor(class_kind, c, const_methods.iter().chain(mut_methods.iter()));
+	if needs_default_ctor {
+		inherent_methods.push_str(&DEFAULT_CTOR.interpolate(&hashmap! {
+			"rust_local" => rust_local.as_ref(),
+		}));
+		inherent_methods_pool.add_name("default");
+		needs_default_impl = true;
+	}
 
-		if needs_default_impl {
-			impls += &IMPL_DEFAULT_TPL.interpolate(&hashmap! {
-				"rust_local" => rust_local.as_ref(),
-			});
-		}
-
-		inherent_methods.push_str(&if is_trait {
-			rust_generate_funcs(
-				const_methods.iter().chain(mut_methods.iter()).filter(|m| {
-					let kind = m.kind();
-					kind.as_static_method().is_some() || kind.as_constructor().is_some()
-				}),
-				&mut inherent_methods_pool,
-				opencv_version,
-			)
-		} else {
-			rust_generate_funcs(
-				const_methods.iter().chain(mut_methods.iter()),
-				&mut inherent_methods_pool,
-				opencv_version,
-			)
-		});
-
-		let tpl = if class_kind.is_simple() {
-			&SIMPLE_TPL
-		} else {
-			&BOXED_TPL
-		};
-
-		let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
-
-		out += &tpl.interpolate(&hashmap! {
-			"doc_comment" => Cow::Owned(doc_comment),
-			"debug" => get_debug(c).into(),
-			"rust_local" => rust_local.clone(),
-			"rust_full" => c.rust_name(NameStyle::ref_()),
-			"rust_extern_const" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
-			"rust_extern_mut" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
-			"fields" => fields.join("").into(),
-			"bases" => bases.join("").into(),
-			"impl" => IMPL_TPL.interpolate(&hashmap! {
-				"rust_local" => rust_local,
-				"consts" => consts.into(),
-				"inherent_methods" => inherent_methods.into(),
-			}).into(),
-			"impls" => impls.into(),
+	if needs_default_impl {
+		impls += &IMPL_DEFAULT_TPL.interpolate(&hashmap! {
+			"rust_local" => rust_local.as_ref(),
 		});
 	}
+
+	inherent_methods.push_str(&if is_trait {
+		rust_generate_funcs(
+			const_methods.iter().chain(mut_methods.iter()).filter(|m| {
+				let kind = m.kind();
+				kind.as_static_method().is_some() || kind.as_constructor().is_some()
+			}),
+			&mut inherent_methods_pool,
+			opencv_version,
+		)
+	} else {
+		rust_generate_funcs(
+			const_methods.iter().chain(mut_methods.iter()),
+			&mut inherent_methods_pool,
+			opencv_version,
+		)
+	});
+
+	let tpl = if class_kind.is_simple() {
+		&SIMPLE_TPL
+	} else {
+		&BOXED_TPL
+	};
+
+	let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
+
+	out += &tpl.interpolate(&hashmap! {
+		"doc_comment" => Cow::Owned(doc_comment),
+		"debug" => get_debug(c).into(),
+		"rust_local" => rust_local.clone(),
+		"rust_full" => c.rust_name(NameStyle::ref_()),
+		"rust_extern_const" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+		"rust_extern_mut" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
+		"fields" => fields.join("").into(),
+		"bases" => bases.join("").into(),
+		"impl" => IMPL_TPL.interpolate(&hashmap! {
+			"rust_local" => rust_local,
+			"consts" => consts.into(),
+			"inherent_methods" => inherent_methods.into(),
+		}).into(),
+		"impls" => impls.into(),
+	});
 	out
 }
 
@@ -590,11 +549,12 @@ pub trait ClassExt {
 impl ClassExt for Class<'_, '_> {
 	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str> {
 		let mut out = self.rust_name(style);
-		if self.is_trait() && !self.is_abstract() {
-			out.to_mut().push_str("Trait");
-		}
-		if constness.is_const() {
-			out.to_mut().push_str("Const");
+		if self.is_trait() {
+			if constness.is_const() {
+				out.to_mut().push_str("TraitConst");
+			} else {
+				out.to_mut().push_str("Trait");
+			}
 		}
 		out
 	}

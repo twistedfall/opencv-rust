@@ -52,7 +52,7 @@ pub mod text {
 	//!    # Scene Text Recognition
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::ERStatTraitConst, super::ERStatTrait, super::ERFilter_CallbackConst, super::ERFilter_Callback, super::ERFilterConst, super::ERFilter, super::BaseOCRConst, super::BaseOCR, super::OCRTesseractConst, super::OCRTesseract, super::OCRHMMDecoder_ClassifierCallbackTraitConst, super::OCRHMMDecoder_ClassifierCallbackTrait, super::OCRHMMDecoderTraitConst, super::OCRHMMDecoderTrait, super::OCRBeamSearchDecoder_ClassifierCallbackTraitConst, super::OCRBeamSearchDecoder_ClassifierCallbackTrait, super::OCRBeamSearchDecoderTraitConst, super::OCRBeamSearchDecoderTrait, super::OCRHolisticWordRecognizerConst, super::OCRHolisticWordRecognizer, super::TextDetectorConst, super::TextDetector, super::TextDetectorCNNConst, super::TextDetectorCNN };
+		pub use { super::ERStatTraitConst, super::ERStatTrait, super::ERFilter_CallbackTraitConst, super::ERFilter_CallbackTrait, super::ERFilterTraitConst, super::ERFilterTrait, super::BaseOCRTraitConst, super::BaseOCRTrait, super::OCRTesseractTraitConst, super::OCRTesseractTrait, super::OCRHMMDecoder_ClassifierCallbackTraitConst, super::OCRHMMDecoder_ClassifierCallbackTrait, super::OCRHMMDecoderTraitConst, super::OCRHMMDecoderTrait, super::OCRBeamSearchDecoder_ClassifierCallbackTraitConst, super::OCRBeamSearchDecoder_ClassifierCallbackTrait, super::OCRBeamSearchDecoderTraitConst, super::OCRBeamSearchDecoderTrait, super::OCRHolisticWordRecognizerTraitConst, super::OCRHolisticWordRecognizerTrait, super::TextDetectorTraitConst, super::TextDetectorTrait, super::TextDetectorCNNTraitConst, super::TextDetectorCNNTrait };
 	}
 	
 	pub const ERFILTER_NM_IHSGrad: i32 = 1;
@@ -258,12 +258,12 @@ pub mod text {
 	/// * non_max_suppression: true
 	/// * min_probability_diff: (float)0.1
 	#[inline]
-	pub fn create_er_filter_nm1(cb: &core::Ptr<dyn crate::text::ERFilter_Callback>, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr<dyn crate::text::ERFilter>> {
+	pub fn create_er_filter_nm1(cb: &core::Ptr<crate::text::ERFilter_Callback>, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr<crate::text::ERFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM1_const_PtrLCallbackGR_int_float_float_float_bool_float(cb.as_raw_PtrOfERFilter_Callback(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -301,13 +301,13 @@ pub mod text {
 	/// * non_max_suppression: true
 	/// * min_probability_diff: (float)0.1
 	#[inline]
-	pub fn create_er_filter_nm1_from_file(filename: &str, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr<dyn crate::text::ERFilter>> {
+	pub fn create_er_filter_nm1_from_file(filename: &str, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr<crate::text::ERFilter>> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM1_const_StringR_int_float_float_float_bool_float(filename.opencv_as_extern(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -326,12 +326,12 @@ pub mod text {
 	/// ## C++ default parameters
 	/// * min_probability: (float)0.3
 	#[inline]
-	pub fn create_er_filter_nm2(cb: &core::Ptr<dyn crate::text::ERFilter_Callback>, min_probability: f32) -> Result<core::Ptr<dyn crate::text::ERFilter>> {
+	pub fn create_er_filter_nm2(cb: &core::Ptr<crate::text::ERFilter_Callback>, min_probability: f32) -> Result<core::Ptr<crate::text::ERFilter>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM2_const_PtrLCallbackGR_float(cb.as_raw_PtrOfERFilter_Callback(), min_probability, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -355,13 +355,13 @@ pub mod text {
 	/// ## C++ default parameters
 	/// * min_probability: (float)0.3
 	#[inline]
-	pub fn create_er_filter_nm2_from_file(filename: &str, min_probability: f32) -> Result<core::Ptr<dyn crate::text::ERFilter>> {
+	pub fn create_er_filter_nm2_from_file(filename: &str, min_probability: f32) -> Result<core::Ptr<crate::text::ERFilter>> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_createERFilterNM2_const_StringR_float(filename.opencv_as_extern(), min_probability, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::text::ERFilter>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -418,7 +418,7 @@ pub mod text {
 	/// * filename: String()
 	/// * min_probability: (float)0.5
 	#[inline]
-	pub fn detect_regions_from_file(image: &dyn core::ToInputArray, er_filter1: &core::Ptr<dyn crate::text::ERFilter>, er_filter2: &core::Ptr<dyn crate::text::ERFilter>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probability: f32) -> Result<()> {
+	pub fn detect_regions_from_file(image: &dyn core::ToInputArray, er_filter1: &core::Ptr<crate::text::ERFilter>, er_filter2: &core::Ptr<crate::text::ERFilter>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probability: f32) -> Result<()> {
 		extern_container_arg!(image);
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
@@ -429,7 +429,7 @@ pub mod text {
 	}
 	
 	#[inline]
-	pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &core::Ptr<dyn crate::text::ERFilter>, er_filter2: &core::Ptr<dyn crate::text::ERFilter>, regions: &mut core::Vector<core::Vector<core::Point>>) -> Result<()> {
+	pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &core::Ptr<crate::text::ERFilter>, er_filter2: &core::Ptr<crate::text::ERFilter>, regions: &mut core::Vector<core::Vector<core::Point>>) -> Result<()> {
 		extern_container_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLvectorLPointGGR(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
@@ -524,13 +524,13 @@ pub mod text {
 	/// 
 	/// returns a pointer to ERFilter::Callback.
 	#[inline]
-	pub fn load_classifier_nm1(filename: &str) -> Result<core::Ptr<dyn crate::text::ERFilter_Callback>> {
+	pub fn load_classifier_nm1(filename: &str) -> Result<core::Ptr<crate::text::ERFilter_Callback>> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_loadClassifierNM1_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter_Callback>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -541,13 +541,13 @@ pub mod text {
 	/// 
 	/// returns a pointer to ERFilter::Callback.
 	#[inline]
-	pub fn load_classifier_nm2(filename: &str) -> Result<core::Ptr<dyn crate::text::ERFilter_Callback>> {
+	pub fn load_classifier_nm2(filename: &str) -> Result<core::Ptr<crate::text::ERFilter_Callback>> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_loadClassifierNM2_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter_Callback>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -639,12 +639,13 @@ pub mod text {
 	}
 	
 	/// Constant methods for [crate::text::BaseOCR]
-	pub trait BaseOCRConst {
+	pub trait BaseOCRTraitConst {
 		fn as_raw_BaseOCR(&self) -> *const c_void;
 	
 	}
 	
-	pub trait BaseOCR: crate::text::BaseOCRConst {
+	/// Mutable methods for [crate::text::BaseOCR]
+	pub trait BaseOCRTrait: crate::text::BaseOCRTraitConst {
 		fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void;
 	
 		/// ## C++ default parameters
@@ -681,8 +682,39 @@ pub mod text {
 		
 	}
 	
+	pub struct BaseOCR {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { BaseOCR }
+	
+	impl Drop for BaseOCR {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_BaseOCR_delete(instance: *mut c_void); }
+			unsafe { cv_BaseOCR_delete(self.as_raw_mut_BaseOCR()) };
+		}
+	}
+	
+	unsafe impl Send for BaseOCR {}
+	
+	impl crate::text::BaseOCRTraitConst for BaseOCR {
+		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::BaseOCRTrait for BaseOCR {
+		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl BaseOCR {
+	}
+	
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRBeamSearchDecoder, cv_BaseOCR_to_OCRBeamSearchDecoder }
+	
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRHMMDecoder, cv_BaseOCR_to_OCRHMMDecoder }
+	
 	/// Constant methods for [crate::text::ERFilter]
-	pub trait ERFilterConst: core::AlgorithmTraitConst {
+	pub trait ERFilterTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_ERFilter(&self) -> *const c_void;
 	
 		#[inline]
@@ -696,10 +728,8 @@ pub mod text {
 		
 	}
 	
-	/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12). :
-	/// 
-	/// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given classifier.
-	pub trait ERFilter: core::AlgorithmTrait + crate::text::ERFilterConst {
+	/// Mutable methods for [crate::text::ERFilter]
+	pub trait ERFilterTrait: core::AlgorithmTrait + crate::text::ERFilterTraitConst {
 		fn as_raw_mut_ERFilter(&mut self) -> *mut c_void;
 	
 		/// The key method of ERFilter algorithm.
@@ -727,7 +757,7 @@ pub mod text {
 		
 		/// set/get methods to set the algorithm properties,
 		#[inline]
-		fn set_callback(&mut self, cb: &core::Ptr<dyn crate::text::ERFilter_Callback>) -> Result<()> {
+		fn set_callback(&mut self, cb: &core::Ptr<crate::text::ERFilter_Callback>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_setCallback_const_PtrLCallbackGR(self.as_raw_mut_ERFilter(), cb.as_raw_PtrOfERFilter_Callback(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -791,17 +821,54 @@ pub mod text {
 		
 	}
 	
+	/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Neumann12). :
+	/// 
+	/// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given classifier.
+	pub struct ERFilter {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { ERFilter }
+	
+	impl Drop for ERFilter {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_ERFilter_delete(instance: *mut c_void); }
+			unsafe { cv_ERFilter_delete(self.as_raw_mut_ERFilter()) };
+		}
+	}
+	
+	unsafe impl Send for ERFilter {}
+	
+	impl core::AlgorithmTraitConst for ERFilter {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for ERFilter {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::text::ERFilterTraitConst for ERFilter {
+		#[inline] fn as_raw_ERFilter(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::ERFilterTrait for ERFilter {
+		#[inline] fn as_raw_mut_ERFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl ERFilter {
+	}
+	
+	boxed_cast_base! { ERFilter, core::Algorithm, cv_ERFilter_to_Algorithm }
+	
 	/// Constant methods for [crate::text::ERFilter_Callback]
-	pub trait ERFilter_CallbackConst {
+	pub trait ERFilter_CallbackTraitConst {
 		fn as_raw_ERFilter_Callback(&self) -> *const c_void;
 	
 	}
 	
-	/// Callback with the classifier is made a class.
-	/// 
-	/// By doing it we hide SVM, Boost etc. Developers can provide their own classifiers to the
-	/// ERFilter algorithm.
-	pub trait ERFilter_Callback: crate::text::ERFilter_CallbackConst {
+	/// Mutable methods for [crate::text::ERFilter_Callback]
+	pub trait ERFilter_CallbackTrait: crate::text::ERFilter_CallbackTraitConst {
 		fn as_raw_mut_ERFilter_Callback(&mut self) -> *mut c_void;
 	
 		/// The classifier must return probability measure for the region.
@@ -817,6 +884,37 @@ pub mod text {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// Callback with the classifier is made a class.
+	/// 
+	/// By doing it we hide SVM, Boost etc. Developers can provide their own classifiers to the
+	/// ERFilter algorithm.
+	pub struct ERFilter_Callback {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { ERFilter_Callback }
+	
+	impl Drop for ERFilter_Callback {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_ERFilter_Callback_delete(instance: *mut c_void); }
+			unsafe { cv_ERFilter_Callback_delete(self.as_raw_mut_ERFilter_Callback()) };
+		}
+	}
+	
+	unsafe impl Send for ERFilter_Callback {}
+	
+	impl crate::text::ERFilter_CallbackTraitConst for ERFilter_Callback {
+		#[inline] fn as_raw_ERFilter_Callback(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::ERFilter_CallbackTrait for ERFilter_Callback {
+		#[inline] fn as_raw_mut_ERFilter_Callback(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl ERFilter_Callback {
 	}
 	
 	/// Constant methods for [crate::text::ERStat]
@@ -1137,13 +1235,13 @@ pub mod text {
 	}
 	
 	/// Constant methods for [crate::text::OCRBeamSearchDecoder]
-	pub trait OCRBeamSearchDecoderTraitConst: crate::text::BaseOCRConst {
+	pub trait OCRBeamSearchDecoderTraitConst: crate::text::BaseOCRTraitConst {
 		fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void;
 	
 	}
 	
 	/// Mutable methods for [crate::text::OCRBeamSearchDecoder]
-	pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR + crate::text::OCRBeamSearchDecoderTraitConst {
+	pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCRTrait + crate::text::OCRBeamSearchDecoderTraitConst {
 		fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void;
 	
 		/// Recognize text using Beam Search.
@@ -1252,11 +1350,11 @@ pub mod text {
 	
 	unsafe impl Send for OCRBeamSearchDecoder {}
 	
-	impl crate::text::BaseOCRConst for OCRBeamSearchDecoder {
+	impl crate::text::BaseOCRTraitConst for OCRBeamSearchDecoder {
 		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::text::BaseOCR for OCRBeamSearchDecoder {
+	impl crate::text::BaseOCRTrait for OCRBeamSearchDecoder {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -1430,13 +1528,13 @@ pub mod text {
 	}
 	
 	/// Constant methods for [crate::text::OCRHMMDecoder]
-	pub trait OCRHMMDecoderTraitConst: crate::text::BaseOCRConst {
+	pub trait OCRHMMDecoderTraitConst: crate::text::BaseOCRTraitConst {
 		fn as_raw_OCRHMMDecoder(&self) -> *const c_void;
 	
 	}
 	
 	/// Mutable methods for [crate::text::OCRHMMDecoder]
-	pub trait OCRHMMDecoderTrait: crate::text::BaseOCR + crate::text::OCRHMMDecoderTraitConst {
+	pub trait OCRHMMDecoderTrait: crate::text::BaseOCRTrait + crate::text::OCRHMMDecoderTraitConst {
 		fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void;
 	
 		/// Recognize text using HMM.
@@ -1569,11 +1667,11 @@ pub mod text {
 	
 	unsafe impl Send for OCRHMMDecoder {}
 	
-	impl crate::text::BaseOCRConst for OCRHMMDecoder {
+	impl crate::text::BaseOCRTraitConst for OCRHMMDecoder {
 		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::text::BaseOCR for OCRHMMDecoder {
+	impl crate::text::BaseOCRTrait for OCRHMMDecoder {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -1724,19 +1822,13 @@ pub mod text {
 	}
 	
 	/// Constant methods for [crate::text::OCRHolisticWordRecognizer]
-	pub trait OCRHolisticWordRecognizerConst: crate::text::BaseOCRConst {
+	pub trait OCRHolisticWordRecognizerTraitConst: crate::text::BaseOCRTraitConst {
 		fn as_raw_OCRHolisticWordRecognizer(&self) -> *const c_void;
 	
 	}
 	
-	/// OCRHolisticWordRecognizer class provides the functionallity of segmented wordspotting.
-	/// Given a predefined vocabulary , a DictNet is employed to select the most probable
-	/// word given an input image.
-	/// 
-	/// DictNet is described in detail in:
-	/// Max Jaderberg et al.: Reading Text in the Wild with Convolutional Neural Networks, IJCV 2015
-	/// <http://arxiv.org/abs/1412.1842>
-	pub trait OCRHolisticWordRecognizer: crate::text::BaseOCR + crate::text::OCRHolisticWordRecognizerConst {
+	/// Mutable methods for [crate::text::OCRHolisticWordRecognizer]
+	pub trait OCRHolisticWordRecognizerTrait: crate::text::BaseOCRTrait + crate::text::OCRHolisticWordRecognizerTraitConst {
 		fn as_raw_mut_OCRHolisticWordRecognizer(&mut self) -> *mut c_void;
 	
 		/// ## C++ default parameters
@@ -1797,10 +1889,49 @@ pub mod text {
 		
 	}
 	
-	impl dyn OCRHolisticWordRecognizer + '_ {
+	/// OCRHolisticWordRecognizer class provides the functionallity of segmented wordspotting.
+	/// Given a predefined vocabulary , a DictNet is employed to select the most probable
+	/// word given an input image.
+	/// 
+	/// DictNet is described in detail in:
+	/// Max Jaderberg et al.: Reading Text in the Wild with Convolutional Neural Networks, IJCV 2015
+	/// <http://arxiv.org/abs/1412.1842>
+	pub struct OCRHolisticWordRecognizer {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { OCRHolisticWordRecognizer }
+	
+	impl Drop for OCRHolisticWordRecognizer {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_OCRHolisticWordRecognizer_delete(instance: *mut c_void); }
+			unsafe { cv_OCRHolisticWordRecognizer_delete(self.as_raw_mut_OCRHolisticWordRecognizer()) };
+		}
+	}
+	
+	unsafe impl Send for OCRHolisticWordRecognizer {}
+	
+	impl crate::text::BaseOCRTraitConst for OCRHolisticWordRecognizer {
+		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::BaseOCRTrait for OCRHolisticWordRecognizer {
+		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::text::OCRHolisticWordRecognizerTraitConst for OCRHolisticWordRecognizer {
+		#[inline] fn as_raw_OCRHolisticWordRecognizer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::OCRHolisticWordRecognizerTrait for OCRHolisticWordRecognizer {
+		#[inline] fn as_raw_mut_OCRHolisticWordRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl OCRHolisticWordRecognizer {
 		/// Creates an instance of the OCRHolisticWordRecognizer class.
 		#[inline]
-		pub fn create(arch_filename: &str, weights_filename: &str, words_filename: &str) -> Result<core::Ptr<dyn crate::text::OCRHolisticWordRecognizer>> {
+		pub fn create(arch_filename: &str, weights_filename: &str, words_filename: &str) -> Result<core::Ptr<crate::text::OCRHolisticWordRecognizer>> {
 			extern_container_arg!(arch_filename);
 			extern_container_arg!(weights_filename);
 			extern_container_arg!(words_filename);
@@ -1808,30 +1939,20 @@ pub mod text {
 			unsafe { sys::cv_text_OCRHolisticWordRecognizer_create_const_stringR_const_stringR_const_stringR(arch_filename.opencv_as_extern(), weights_filename.opencv_as_extern(), words_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::text::OCRHolisticWordRecognizer>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::text::OCRHolisticWordRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::text::OCRTesseract]
-	pub trait OCRTesseractConst: crate::text::BaseOCRConst {
+	pub trait OCRTesseractTraitConst: crate::text::BaseOCRTraitConst {
 		fn as_raw_OCRTesseract(&self) -> *const c_void;
 	
 	}
 	
-	/// OCRTesseract class provides an interface with the tesseract-ocr API (v3.02.02) in C++.
-	/// 
-	/// Notice that it is compiled only when tesseract-ocr is correctly installed.
-	/// 
-	/// 
-	/// Note:
-	///    *   (C++) An example of OCRTesseract recognition combined with scene text detection can be found
-	///        at the end_to_end_recognition demo:
-	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/end_to_end_recognition.cpp>
-	///    *   (C++) Another example of OCRTesseract recognition combined with scene text detection can be
-	///        found at the webcam_demo:
-	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
-	pub trait OCRTesseract: crate::text::BaseOCR + crate::text::OCRTesseractConst {
+	/// Mutable methods for [crate::text::OCRTesseract]
+	pub trait OCRTesseractTrait: crate::text::BaseOCRTrait + crate::text::OCRTesseractTraitConst {
 		fn as_raw_mut_OCRTesseract(&mut self) -> *mut c_void;
 	
 		/// Recognize text using the tesseract-ocr API.
@@ -1922,7 +2043,51 @@ pub mod text {
 		
 	}
 	
-	impl dyn OCRTesseract + '_ {
+	/// OCRTesseract class provides an interface with the tesseract-ocr API (v3.02.02) in C++.
+	/// 
+	/// Notice that it is compiled only when tesseract-ocr is correctly installed.
+	/// 
+	/// 
+	/// Note:
+	///    *   (C++) An example of OCRTesseract recognition combined with scene text detection can be found
+	///        at the end_to_end_recognition demo:
+	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/end_to_end_recognition.cpp>
+	///    *   (C++) Another example of OCRTesseract recognition combined with scene text detection can be
+	///        found at the webcam_demo:
+	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
+	pub struct OCRTesseract {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { OCRTesseract }
+	
+	impl Drop for OCRTesseract {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_OCRTesseract_delete(instance: *mut c_void); }
+			unsafe { cv_OCRTesseract_delete(self.as_raw_mut_OCRTesseract()) };
+		}
+	}
+	
+	unsafe impl Send for OCRTesseract {}
+	
+	impl crate::text::BaseOCRTraitConst for OCRTesseract {
+		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::BaseOCRTrait for OCRTesseract {
+		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::text::OCRTesseractTraitConst for OCRTesseract {
+		#[inline] fn as_raw_OCRTesseract(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::OCRTesseractTrait for OCRTesseract {
+		#[inline] fn as_raw_mut_OCRTesseract(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl OCRTesseract {
 		/// Creates an instance of the OCRTesseract class. Initializes Tesseract.
 		/// 
 		/// ## Parameters
@@ -1945,7 +2110,7 @@ pub mod text {
 		/// * oem: OEM_DEFAULT
 		/// * psmode: PSM_AUTO
 		#[inline]
-		pub fn create(datapath: &str, language: &str, char_whitelist: &str, oem: i32, psmode: i32) -> Result<core::Ptr<dyn crate::text::OCRTesseract>> {
+		pub fn create(datapath: &str, language: &str, char_whitelist: &str, oem: i32, psmode: i32) -> Result<core::Ptr<crate::text::OCRTesseract>> {
 			extern_container_arg!(datapath);
 			extern_container_arg!(language);
 			extern_container_arg!(char_whitelist);
@@ -1953,19 +2118,20 @@ pub mod text {
 			unsafe { sys::cv_text_OCRTesseract_create_const_charX_const_charX_const_charX_int_int(datapath.opencv_as_extern(), language.opencv_as_extern(), char_whitelist.opencv_as_extern(), oem, psmode, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::text::OCRTesseract>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::text::OCRTesseract>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [crate::text::TextDetector]
-	pub trait TextDetectorConst {
+	pub trait TextDetectorTraitConst {
 		fn as_raw_TextDetector(&self) -> *const c_void;
 	
 	}
 	
-	/// An abstract class providing interface for text detection algorithms
-	pub trait TextDetector: crate::text::TextDetectorConst {
+	/// Mutable methods for [crate::text::TextDetector]
+	pub trait TextDetectorTrait: crate::text::TextDetectorTraitConst {
 		fn as_raw_mut_TextDetector(&mut self) -> *mut c_void;
 	
 		/// Method that provides a quick and simple interface to detect text inside an image
@@ -1986,19 +2152,42 @@ pub mod text {
 		
 	}
 	
+	/// An abstract class providing interface for text detection algorithms
+	pub struct TextDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { TextDetector }
+	
+	impl Drop for TextDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_TextDetector_delete(instance: *mut c_void); }
+			unsafe { cv_TextDetector_delete(self.as_raw_mut_TextDetector()) };
+		}
+	}
+	
+	unsafe impl Send for TextDetector {}
+	
+	impl crate::text::TextDetectorTraitConst for TextDetector {
+		#[inline] fn as_raw_TextDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::TextDetectorTrait for TextDetector {
+		#[inline] fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl TextDetector {
+	}
+	
 	/// Constant methods for [crate::text::TextDetectorCNN]
-	pub trait TextDetectorCNNConst: crate::text::TextDetectorConst {
+	pub trait TextDetectorCNNTraitConst: crate::text::TextDetectorTraitConst {
 		fn as_raw_TextDetectorCNN(&self) -> *const c_void;
 	
 	}
 	
-	/// TextDetectorCNN class provides the functionallity of text bounding box detection.
-	/// This class is representing to find bounding boxes of text words given an input image.
-	/// This class uses OpenCV dnn module to load pre-trained model described in [LiaoSBWL17](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17).
-	/// The original repository with the modified SSD Caffe version: <https://github.com/MhLiao/TextBoxes>.
-	/// Model can be downloaded from [DropBox](https://www.dropbox.com/s/g8pjzv2de9gty8g/TextBoxes_icdar13.caffemodel?dl=0).
-	/// Modified .prototxt file with the model description can be found in `opencv_contrib/modules/text/samples/textbox.prototxt`.
-	pub trait TextDetectorCNN: crate::text::TextDetector + crate::text::TextDetectorCNNConst {
+	/// Mutable methods for [crate::text::TextDetectorCNN]
+	pub trait TextDetectorCNNTrait: crate::text::TextDetectorCNNTraitConst + crate::text::TextDetectorTrait {
 		fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void;
 	
 		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
@@ -2019,7 +2208,45 @@ pub mod text {
 		
 	}
 	
-	impl dyn TextDetectorCNN + '_ {
+	/// TextDetectorCNN class provides the functionallity of text bounding box detection.
+	/// This class is representing to find bounding boxes of text words given an input image.
+	/// This class uses OpenCV dnn module to load pre-trained model described in [LiaoSBWL17](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17).
+	/// The original repository with the modified SSD Caffe version: <https://github.com/MhLiao/TextBoxes>.
+	/// Model can be downloaded from [DropBox](https://www.dropbox.com/s/g8pjzv2de9gty8g/TextBoxes_icdar13.caffemodel?dl=0).
+	/// Modified .prototxt file with the model description can be found in `opencv_contrib/modules/text/samples/textbox.prototxt`.
+	pub struct TextDetectorCNN {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { TextDetectorCNN }
+	
+	impl Drop for TextDetectorCNN {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_TextDetectorCNN_delete(instance: *mut c_void); }
+			unsafe { cv_TextDetectorCNN_delete(self.as_raw_mut_TextDetectorCNN()) };
+		}
+	}
+	
+	unsafe impl Send for TextDetectorCNN {}
+	
+	impl crate::text::TextDetectorTraitConst for TextDetectorCNN {
+		#[inline] fn as_raw_TextDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::TextDetectorTrait for TextDetectorCNN {
+		#[inline] fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::text::TextDetectorCNNTraitConst for TextDetectorCNN {
+		#[inline] fn as_raw_TextDetectorCNN(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::text::TextDetectorCNNTrait for TextDetectorCNN {
+		#[inline] fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl TextDetectorCNN {
 		/// Creates an instance of the TextDetectorCNN class using the provided parameters.
 		/// 
 		/// ## Parameters
@@ -2028,14 +2255,14 @@ pub mod text {
 		/// * detectionSizes: a list of sizes for multiscale detection. The values`[(300,300),(700,500),(700,300),(700,700),(1600,1600)]` are
 		/// recommended in [LiaoSBWL17](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17) to achieve the best quality.
 		#[inline]
-		pub fn create_with_sizes(model_arch_filename: &str, model_weights_filename: &str, mut detection_sizes: core::Vector<core::Size>) -> Result<core::Ptr<dyn crate::text::TextDetectorCNN>> {
+		pub fn create_with_sizes(model_arch_filename: &str, model_weights_filename: &str, mut detection_sizes: core::Vector<core::Size>) -> Result<core::Ptr<crate::text::TextDetectorCNN>> {
 			extern_container_arg!(model_arch_filename);
 			extern_container_arg!(model_weights_filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR_vectorLSizeG(model_arch_filename.opencv_as_extern(), model_weights_filename.opencv_as_extern(), detection_sizes.as_raw_mut_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::text::TextDetectorCNN>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -2049,15 +2276,16 @@ pub mod text {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		pub fn create(model_arch_filename: &str, model_weights_filename: &str) -> Result<core::Ptr<dyn crate::text::TextDetectorCNN>> {
+		pub fn create(model_arch_filename: &str, model_weights_filename: &str) -> Result<core::Ptr<crate::text::TextDetectorCNN>> {
 			extern_container_arg!(model_arch_filename);
 			extern_container_arg!(model_weights_filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_TextDetectorCNN_create_const_StringR_const_StringR(model_arch_filename.opencv_as_extern(), model_weights_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::text::TextDetectorCNN>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::text::TextDetectorCNN>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
-	}}
+	}
+}

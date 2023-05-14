@@ -27,7 +27,7 @@ pub mod ovis {
 	//! You should still use ogre-meshviewer to verify that the geometry is converted correctly.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::WindowSceneConst, super::WindowScene };
+		pub use { super::WindowSceneTraitConst, super::WindowSceneTrait };
 	}
 	
 	pub const ENTITY_AABB_WORLD: i32 = 2;
@@ -224,13 +224,13 @@ pub mod ovis {
 	/// ## C++ default parameters
 	/// * flags: SCENE_INTERACTIVE|SCENE_AA
 	#[inline]
-	pub fn create_window(title: &str, size: core::Size, flags: i32) -> Result<core::Ptr<dyn crate::ovis::WindowScene>> {
+	pub fn create_window(title: &str, size: core::Size, flags: i32) -> Result<core::Ptr<crate::ovis::WindowScene>> {
 		extern_container_arg!(title);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ovis_createWindow_const_StringR_const_SizeR_int(title.opencv_as_extern(), &size, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::ovis::WindowScene>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::ovis::WindowScene>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -333,13 +333,13 @@ pub mod ovis {
 	}
 	
 	/// Constant methods for [crate::ovis::WindowScene]
-	pub trait WindowSceneConst {
+	pub trait WindowSceneTraitConst {
 		fn as_raw_WindowScene(&self) -> *const c_void;
 	
 	}
 	
-	/// A 3D viewport and the associated scene
-	pub trait WindowScene: crate::ovis::WindowSceneConst {
+	/// Mutable methods for [crate::ovis::WindowScene]
+	pub trait WindowSceneTrait: crate::ovis::WindowSceneTraitConst {
 		fn as_raw_mut_WindowScene(&mut self) -> *mut c_void;
 	
 		/// set window background to custom image/ color
@@ -831,5 +831,33 @@ pub mod ovis {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// A 3D viewport and the associated scene
+	pub struct WindowScene {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { WindowScene }
+	
+	impl Drop for WindowScene {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_WindowScene_delete(instance: *mut c_void); }
+			unsafe { cv_WindowScene_delete(self.as_raw_mut_WindowScene()) };
+		}
+	}
+	
+	unsafe impl Send for WindowScene {}
+	
+	impl crate::ovis::WindowSceneTraitConst for WindowScene {
+		#[inline] fn as_raw_WindowScene(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::ovis::WindowSceneTrait for WindowScene {
+		#[inline] fn as_raw_mut_WindowScene(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl WindowScene {
 	}
 }

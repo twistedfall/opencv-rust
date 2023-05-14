@@ -2,11 +2,11 @@ pub mod cudafeatures2d {
 	//! # Feature Detection and Description
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::CUDA_DescriptorMatcherConst, super::CUDA_DescriptorMatcher, super::CUDA_Feature2DAsyncConst, super::CUDA_Feature2DAsync, super::CUDA_FastFeatureDetectorConst, super::CUDA_FastFeatureDetector, super::CUDA_ORBConst, super::CUDA_ORB };
+		pub use { super::CUDA_DescriptorMatcherTraitConst, super::CUDA_DescriptorMatcherTrait, super::CUDA_Feature2DAsyncTraitConst, super::CUDA_Feature2DAsyncTrait, super::CUDA_FastFeatureDetectorTraitConst, super::CUDA_FastFeatureDetectorTrait, super::CUDA_ORBTraitConst, super::CUDA_ORBTrait };
 	}
 	
 	/// Constant methods for [crate::cudafeatures2d::CUDA_DescriptorMatcher]
-	pub trait CUDA_DescriptorMatcherConst: core::AlgorithmTraitConst {
+	pub trait CUDA_DescriptorMatcherTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_DescriptorMatcher(&self) -> *const c_void;
 	
 		/// Returns true if the descriptor matcher supports masking permissible matches.
@@ -42,11 +42,8 @@ pub mod cudafeatures2d {
 		
 	}
 	
-	/// Abstract base class for matching keypoint descriptors.
-	/// 
-	/// It has two groups of match methods: for matching descriptors of an image with another image or with
-	/// an image set.
-	pub trait CUDA_DescriptorMatcher: core::AlgorithmTrait + crate::cudafeatures2d::CUDA_DescriptorMatcherConst {
+	/// Mutable methods for [crate::cudafeatures2d::CUDA_DescriptorMatcher]
+	pub trait CUDA_DescriptorMatcherTrait: core::AlgorithmTrait + crate::cudafeatures2d::CUDA_DescriptorMatcherTraitConst {
 		fn as_raw_mut_CUDA_DescriptorMatcher(&mut self) -> *mut c_void;
 	
 		/// Adds descriptors to train a descriptor collection.
@@ -562,7 +559,43 @@ pub mod cudafeatures2d {
 		
 	}
 	
-	impl dyn CUDA_DescriptorMatcher + '_ {
+	/// Abstract base class for matching keypoint descriptors.
+	/// 
+	/// It has two groups of match methods: for matching descriptors of an image with another image or with
+	/// an image set.
+	pub struct CUDA_DescriptorMatcher {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_DescriptorMatcher }
+	
+	impl Drop for CUDA_DescriptorMatcher {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_DescriptorMatcher_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_DescriptorMatcher_delete(self.as_raw_mut_CUDA_DescriptorMatcher()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_DescriptorMatcher {}
+	
+	impl core::AlgorithmTraitConst for CUDA_DescriptorMatcher {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_DescriptorMatcher {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_DescriptorMatcherTraitConst for CUDA_DescriptorMatcher {
+		#[inline] fn as_raw_CUDA_DescriptorMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_DescriptorMatcherTrait for CUDA_DescriptorMatcher {
+		#[inline] fn as_raw_mut_CUDA_DescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_DescriptorMatcher {
 		/// Brute-force descriptor matcher.
 		/// 
 		/// For each descriptor in the first set, this matcher finds the closest descriptor in the second set
@@ -577,18 +610,21 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * norm_type: cv::NORM_L2
 		#[inline]
-		pub fn create_bf_matcher(norm_type: i32) -> Result<core::Ptr<dyn crate::cudafeatures2d::CUDA_DescriptorMatcher>> {
+		pub fn create_bf_matcher(norm_type: i32) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_createBFMatcher_int(norm_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::cudafeatures2d::CUDA_DescriptorMatcher>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { CUDA_DescriptorMatcher, core::Algorithm, cv_CUDA_DescriptorMatcher_to_Algorithm }
+	
 	/// Constant methods for [crate::cudafeatures2d::CUDA_FastFeatureDetector]
-	pub trait CUDA_FastFeatureDetectorConst: crate::cudafeatures2d::CUDA_Feature2DAsyncConst {
+	pub trait CUDA_FastFeatureDetectorTraitConst: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst {
 		fn as_raw_CUDA_FastFeatureDetector(&self) -> *const c_void;
 	
 		#[inline]
@@ -602,8 +638,8 @@ pub mod cudafeatures2d {
 		
 	}
 	
-	/// Wrapping class for feature detection using the FAST method.
-	pub trait CUDA_FastFeatureDetector: crate::cudafeatures2d::CUDA_FastFeatureDetectorConst + crate::cudafeatures2d::CUDA_Feature2DAsync {
+	/// Mutable methods for [crate::cudafeatures2d::CUDA_FastFeatureDetector]
+	pub trait CUDA_FastFeatureDetectorTrait: crate::cudafeatures2d::CUDA_FastFeatureDetectorTraitConst + crate::cudafeatures2d::CUDA_Feature2DAsyncTrait {
 		fn as_raw_mut_CUDA_FastFeatureDetector(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -626,7 +662,56 @@ pub mod cudafeatures2d {
 		
 	}
 	
-	impl dyn CUDA_FastFeatureDetector + '_ {
+	/// Wrapping class for feature detection using the FAST method.
+	pub struct CUDA_FastFeatureDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_FastFeatureDetector }
+	
+	impl Drop for CUDA_FastFeatureDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_FastFeatureDetector_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_FastFeatureDetector_delete(self.as_raw_mut_CUDA_FastFeatureDetector()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_FastFeatureDetector {}
+	
+	impl core::AlgorithmTraitConst for CUDA_FastFeatureDetector {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_FastFeatureDetector {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::features2d::Feature2DTraitConst for CUDA_FastFeatureDetector {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::features2d::Feature2DTrait for CUDA_FastFeatureDetector {
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_FastFeatureDetector {
+		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTrait for CUDA_FastFeatureDetector {
+		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_FastFeatureDetectorTraitConst for CUDA_FastFeatureDetector {
+		#[inline] fn as_raw_CUDA_FastFeatureDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_FastFeatureDetectorTrait for CUDA_FastFeatureDetector {
+		#[inline] fn as_raw_mut_CUDA_FastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_FastFeatureDetector {
 		pub const LOCATION_ROW: i32 = 0;
 		pub const RESPONSE_ROW: i32 = 1;
 		pub const ROWS_COUNT: i32 = 2;
@@ -637,24 +722,29 @@ pub mod cudafeatures2d {
 		/// * typ: cv::FastFeatureDetector::TYPE_9_16
 		/// * max_npoints: 5000
 		#[inline]
-		pub fn create(threshold: i32, nonmax_suppression: bool, typ: i32, max_npoints: i32) -> Result<core::Ptr<dyn crate::cudafeatures2d::CUDA_FastFeatureDetector>> {
+		pub fn create(threshold: i32, nonmax_suppression: bool, typ: i32, max_npoints: i32) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_FastFeatureDetector_create_int_bool_int_int(threshold, nonmax_suppression, typ, max_npoints, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::cudafeatures2d::CUDA_FastFeatureDetector>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_FastFeatureDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { CUDA_FastFeatureDetector, core::Algorithm, cv_CUDA_FastFeatureDetector_to_Algorithm }
+	
+	boxed_cast_base! { CUDA_FastFeatureDetector, crate::features2d::Feature2D, cv_CUDA_FastFeatureDetector_to_Feature2D }
+	
 	/// Constant methods for [crate::cudafeatures2d::CUDA_Feature2DAsync]
-	pub trait CUDA_Feature2DAsyncConst: crate::features2d::Feature2DTraitConst {
+	pub trait CUDA_Feature2DAsyncTraitConst: crate::features2d::Feature2DTraitConst {
 		fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void;
 	
 	}
 	
-	/// Abstract base class for CUDA asynchronous 2D image feature detectors and descriptor extractors.
-	pub trait CUDA_Feature2DAsync: crate::cudafeatures2d::CUDA_Feature2DAsyncConst + crate::features2d::Feature2DTrait {
+	/// Mutable methods for [crate::cudafeatures2d::CUDA_Feature2DAsync]
+	pub trait CUDA_Feature2DAsyncTrait: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst + crate::features2d::Feature2DTrait {
 		fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void;
 	
 		/// Detects keypoints in an image.
@@ -734,8 +824,56 @@ pub mod cudafeatures2d {
 		
 	}
 	
+	/// Abstract base class for CUDA asynchronous 2D image feature detectors and descriptor extractors.
+	pub struct CUDA_Feature2DAsync {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_Feature2DAsync }
+	
+	impl Drop for CUDA_Feature2DAsync {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_Feature2DAsync_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_Feature2DAsync_delete(self.as_raw_mut_CUDA_Feature2DAsync()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_Feature2DAsync {}
+	
+	impl core::AlgorithmTraitConst for CUDA_Feature2DAsync {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_Feature2DAsync {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::features2d::Feature2DTraitConst for CUDA_Feature2DAsync {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::features2d::Feature2DTrait for CUDA_Feature2DAsync {
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_Feature2DAsync {
+		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTrait for CUDA_Feature2DAsync {
+		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_Feature2DAsync {
+	}
+	
+	boxed_cast_base! { CUDA_Feature2DAsync, core::Algorithm, cv_CUDA_Feature2DAsync_to_Algorithm }
+	
+	boxed_cast_base! { CUDA_Feature2DAsync, crate::features2d::Feature2D, cv_CUDA_Feature2DAsync_to_Feature2D }
+	
 	/// Constant methods for [crate::cudafeatures2d::CUDA_ORB]
-	pub trait CUDA_ORBConst: crate::cudafeatures2d::CUDA_Feature2DAsyncConst {
+	pub trait CUDA_ORBTraitConst: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst {
 		fn as_raw_CUDA_ORB(&self) -> *const c_void;
 	
 		#[inline]
@@ -830,10 +968,8 @@ pub mod cudafeatures2d {
 		
 	}
 	
-	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
-	/// ## See also
-	/// cv::ORB
-	pub trait CUDA_ORB: crate::cudafeatures2d::CUDA_Feature2DAsync + crate::cudafeatures2d::CUDA_ORBConst {
+	/// Mutable methods for [crate::cudafeatures2d::CUDA_ORB]
+	pub trait CUDA_ORBTrait: crate::cudafeatures2d::CUDA_Feature2DAsyncTrait + crate::cudafeatures2d::CUDA_ORBTraitConst {
 		fn as_raw_mut_CUDA_ORB(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -929,7 +1065,58 @@ pub mod cudafeatures2d {
 		
 	}
 	
-	impl dyn CUDA_ORB + '_ {
+	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
+	/// ## See also
+	/// cv::ORB
+	pub struct CUDA_ORB {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { CUDA_ORB }
+	
+	impl Drop for CUDA_ORB {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_CUDA_ORB_delete(instance: *mut c_void); }
+			unsafe { cv_CUDA_ORB_delete(self.as_raw_mut_CUDA_ORB()) };
+		}
+	}
+	
+	unsafe impl Send for CUDA_ORB {}
+	
+	impl core::AlgorithmTraitConst for CUDA_ORB {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for CUDA_ORB {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::features2d::Feature2DTraitConst for CUDA_ORB {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::features2d::Feature2DTrait for CUDA_ORB {
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_ORB {
+		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTrait for CUDA_ORB {
+		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_ORBTraitConst for CUDA_ORB {
+		#[inline] fn as_raw_CUDA_ORB(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::cudafeatures2d::CUDA_ORBTrait for CUDA_ORB {
+		#[inline] fn as_raw_mut_CUDA_ORB(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl CUDA_ORB {
 		pub const X_ROW: i32 = 0;
 		pub const Y_ROW: i32 = 1;
 		pub const RESPONSE_ROW: i32 = 2;
@@ -949,13 +1136,18 @@ pub mod cudafeatures2d {
 		/// * fast_threshold: 20
 		/// * blur_for_descriptor: false
 		#[inline]
-		pub fn create(nfeatures: i32, scale_factor: f32, nlevels: i32, edge_threshold: i32, first_level: i32, wta_k: i32, score_type: i32, patch_size: i32, fast_threshold: i32, blur_for_descriptor: bool) -> Result<core::Ptr<dyn crate::cudafeatures2d::CUDA_ORB>> {
+		pub fn create(nfeatures: i32, scale_factor: f32, nlevels: i32, edge_threshold: i32, first_level: i32, wta_k: i32, score_type: i32, patch_size: i32, fast_threshold: i32, blur_for_descriptor: bool) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_ORB>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_ORB_create_int_float_int_int_int_int_int_int_int_bool(nfeatures, scale_factor, nlevels, edge_threshold, first_level, wta_k, score_type, patch_size, fast_threshold, blur_for_descriptor, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::cudafeatures2d::CUDA_ORB>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_ORB>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
-	}}
+	}
+	
+	boxed_cast_base! { CUDA_ORB, core::Algorithm, cv_CUDA_ORB_to_Algorithm }
+	
+	boxed_cast_base! { CUDA_ORB, crate::features2d::Feature2D, cv_CUDA_ORB_to_Feature2D }
+}

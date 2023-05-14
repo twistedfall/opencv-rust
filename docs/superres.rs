@@ -6,110 +6,110 @@ pub mod superres {
 	//! the papers [Farsiu03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Mitzel09) .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::Superres_DenseOpticalFlowExtConst, super::Superres_DenseOpticalFlowExt, super::Superres_FarnebackOpticalFlowConst, super::Superres_FarnebackOpticalFlow, super::Superres_DualTVL1OpticalFlowConst, super::Superres_DualTVL1OpticalFlow, super::Superres_BroxOpticalFlowConst, super::Superres_BroxOpticalFlow, super::Superres_PyrLKOpticalFlowConst, super::Superres_PyrLKOpticalFlow, super::Superres_FrameSourceConst, super::Superres_FrameSource, super::Superres_SuperResolutionConst, super::Superres_SuperResolution };
+		pub use { super::Superres_DenseOpticalFlowExtTraitConst, super::Superres_DenseOpticalFlowExtTrait, super::Superres_FarnebackOpticalFlowTraitConst, super::Superres_FarnebackOpticalFlowTrait, super::Superres_DualTVL1OpticalFlowTraitConst, super::Superres_DualTVL1OpticalFlowTrait, super::Superres_BroxOpticalFlowTraitConst, super::Superres_BroxOpticalFlowTrait, super::Superres_PyrLKOpticalFlowTraitConst, super::Superres_PyrLKOpticalFlowTrait, super::Superres_FrameSourceTraitConst, super::Superres_FrameSourceTrait, super::Superres_SuperResolutionTraitConst, super::Superres_SuperResolutionTrait };
 	}
 	
 	/// ## C++ default parameters
 	/// * device_id: 0
 	#[inline]
-	pub fn create_frame_source_camera(device_id: i32) -> Result<core::Ptr<dyn crate::superres::Superres_FrameSource>> {
+	pub fn create_frame_source_camera(device_id: i32) -> Result<core::Ptr<crate::superres::Superres_FrameSource>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createFrameSource_Camera_int(device_id, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_frame_source_empty() -> Result<core::Ptr<dyn crate::superres::Superres_FrameSource>> {
+	pub fn create_frame_source_empty() -> Result<core::Ptr<crate::superres::Superres_FrameSource>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createFrameSource_Empty(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_frame_source_video_cuda(file_name: &str) -> Result<core::Ptr<dyn crate::superres::Superres_FrameSource>> {
+	pub fn create_frame_source_video_cuda(file_name: &str) -> Result<core::Ptr<crate::superres::Superres_FrameSource>> {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createFrameSource_Video_CUDA_const_StringR(file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_frame_source_video(file_name: &str) -> Result<core::Ptr<dyn crate::superres::Superres_FrameSource>> {
+	pub fn create_frame_source_video(file_name: &str) -> Result<core::Ptr<crate::superres::Superres_FrameSource>> {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createFrameSource_Video_const_StringR(file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_FrameSource>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_opt_flow_brox_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_BroxOpticalFlow>> {
+	pub fn create_opt_flow_brox_cuda() -> Result<core::Ptr<crate::superres::Superres_BroxOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_Brox_CUDA(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_BroxOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_BroxOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr<dyn crate::superres::Superres_DualTVL1OpticalFlow>> {
+	pub fn create_opt_flow_dual_tvl1() -> Result<core::Ptr<crate::superres::Superres_DualTVL1OpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_DualTVL1(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_opt_flow_dual_tvl1_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_DualTVL1OpticalFlow>> {
+	pub fn create_opt_flow_dual_tvl1_cuda() -> Result<core::Ptr<crate::superres::Superres_DualTVL1OpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_DualTVL1_CUDA(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_DualTVL1OpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_opt_flow_farneback() -> Result<core::Ptr<dyn crate::superres::Superres_FarnebackOpticalFlow>> {
+	pub fn create_opt_flow_farneback() -> Result<core::Ptr<crate::superres::Superres_FarnebackOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_Farneback(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_opt_flow_farneback_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_FarnebackOpticalFlow>> {
+	pub fn create_opt_flow_farneback_cuda() -> Result<core::Ptr<crate::superres::Superres_FarnebackOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_Farneback_CUDA(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_FarnebackOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_opt_flow_pyr_lk_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_PyrLKOpticalFlow>> {
+	pub fn create_opt_flow_pyr_lk_cuda() -> Result<core::Ptr<crate::superres::Superres_PyrLKOpticalFlow>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createOptFlow_PyrLK_CUDA(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_PyrLKOpticalFlow>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_PyrLKOpticalFlow>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -132,27 +132,27 @@ pub mod superres {
 	/// *   **int temporalAreaRadius** Radius of the temporal search area.
 	/// *   **Ptr\<DenseOpticalFlowExt\> opticalFlow** Dense optical flow algorithm.
 	#[inline]
-	pub fn create_super_resolution_btvl1() -> Result<core::Ptr<dyn crate::superres::Superres_SuperResolution>> {
+	pub fn create_super_resolution_btvl1() -> Result<core::Ptr<crate::superres::Superres_SuperResolution>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createSuperResolution_BTVL1(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_SuperResolution>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn create_super_resolution_btvl1_cuda() -> Result<core::Ptr<dyn crate::superres::Superres_SuperResolution>> {
+	pub fn create_super_resolution_btvl1_cuda() -> Result<core::Ptr<crate::superres::Superres_SuperResolution>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_SuperResolution>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::superres::Superres_SuperResolution>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	/// Constant methods for [crate::superres::Superres_BroxOpticalFlow]
-	pub trait Superres_BroxOpticalFlowConst: crate::superres::Superres_DenseOpticalFlowExtConst {
+	pub trait Superres_BroxOpticalFlowTraitConst: crate::superres::Superres_DenseOpticalFlowExtTraitConst {
 		fn as_raw_Superres_BroxOpticalFlow(&self) -> *const c_void;
 	
 		/// Flow smoothness
@@ -229,7 +229,8 @@ pub mod superres {
 		
 	}
 	
-	pub trait Superres_BroxOpticalFlow: crate::superres::Superres_BroxOpticalFlowConst + crate::superres::Superres_DenseOpticalFlowExt {
+	/// Mutable methods for [crate::superres::Superres_BroxOpticalFlow]
+	pub trait Superres_BroxOpticalFlowTrait: crate::superres::Superres_BroxOpticalFlowTraitConst + crate::superres::Superres_DenseOpticalFlowExtTrait {
 		fn as_raw_mut_Superres_BroxOpticalFlow(&mut self) -> *mut c_void;
 	
 		/// Flow smoothness
@@ -306,13 +307,59 @@ pub mod superres {
 		
 	}
 	
+	pub struct Superres_BroxOpticalFlow {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Superres_BroxOpticalFlow }
+	
+	impl Drop for Superres_BroxOpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Superres_BroxOpticalFlow_delete(instance: *mut c_void); }
+			unsafe { cv_Superres_BroxOpticalFlow_delete(self.as_raw_mut_Superres_BroxOpticalFlow()) };
+		}
+	}
+	
+	unsafe impl Send for Superres_BroxOpticalFlow {}
+	
+	impl core::AlgorithmTraitConst for Superres_BroxOpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Superres_BroxOpticalFlow {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTraitConst for Superres_BroxOpticalFlow {
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTrait for Superres_BroxOpticalFlow {
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_BroxOpticalFlowTraitConst for Superres_BroxOpticalFlow {
+		#[inline] fn as_raw_Superres_BroxOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_BroxOpticalFlowTrait for Superres_BroxOpticalFlow {
+		#[inline] fn as_raw_mut_Superres_BroxOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Superres_BroxOpticalFlow {
+	}
+	
+	boxed_cast_base! { Superres_BroxOpticalFlow, core::Algorithm, cv_Superres_BroxOpticalFlow_to_Algorithm }
+	
 	/// Constant methods for [crate::superres::Superres_DenseOpticalFlowExt]
-	pub trait Superres_DenseOpticalFlowExtConst: core::AlgorithmTraitConst {
+	pub trait Superres_DenseOpticalFlowExtTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void;
 	
 	}
 	
-	pub trait Superres_DenseOpticalFlowExt: core::AlgorithmTrait + crate::superres::Superres_DenseOpticalFlowExtConst {
+	/// Mutable methods for [crate::superres::Superres_DenseOpticalFlowExt]
+	pub trait Superres_DenseOpticalFlowExtTrait: core::AlgorithmTrait + crate::superres::Superres_DenseOpticalFlowExtTraitConst {
 		fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void;
 	
 		/// ## C++ default parameters
@@ -341,8 +388,45 @@ pub mod superres {
 		
 	}
 	
+	pub struct Superres_DenseOpticalFlowExt {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Superres_DenseOpticalFlowExt }
+	
+	impl Drop for Superres_DenseOpticalFlowExt {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Superres_DenseOpticalFlowExt_delete(instance: *mut c_void); }
+			unsafe { cv_Superres_DenseOpticalFlowExt_delete(self.as_raw_mut_Superres_DenseOpticalFlowExt()) };
+		}
+	}
+	
+	unsafe impl Send for Superres_DenseOpticalFlowExt {}
+	
+	impl core::AlgorithmTraitConst for Superres_DenseOpticalFlowExt {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Superres_DenseOpticalFlowExt {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTraitConst for Superres_DenseOpticalFlowExt {
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTrait for Superres_DenseOpticalFlowExt {
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Superres_DenseOpticalFlowExt {
+	}
+	
+	boxed_cast_base! { Superres_DenseOpticalFlowExt, core::Algorithm, cv_Superres_DenseOpticalFlowExt_to_Algorithm }
+	
 	/// Constant methods for [crate::superres::Superres_DualTVL1OpticalFlow]
-	pub trait Superres_DualTVL1OpticalFlowConst: crate::superres::Superres_DenseOpticalFlowExtConst {
+	pub trait Superres_DualTVL1OpticalFlowTraitConst: crate::superres::Superres_DenseOpticalFlowExtTraitConst {
 		fn as_raw_Superres_DualTVL1OpticalFlow(&self) -> *const c_void;
 	
 		/// ## See also
@@ -435,7 +519,8 @@ pub mod superres {
 		
 	}
 	
-	pub trait Superres_DualTVL1OpticalFlow: crate::superres::Superres_DenseOpticalFlowExt + crate::superres::Superres_DualTVL1OpticalFlowConst {
+	/// Mutable methods for [crate::superres::Superres_DualTVL1OpticalFlow]
+	pub trait Superres_DualTVL1OpticalFlowTrait: crate::superres::Superres_DenseOpticalFlowExtTrait + crate::superres::Superres_DualTVL1OpticalFlowTraitConst {
 		fn as_raw_mut_Superres_DualTVL1OpticalFlow(&mut self) -> *mut c_void;
 	
 		/// ## See also
@@ -528,8 +613,53 @@ pub mod superres {
 		
 	}
 	
+	pub struct Superres_DualTVL1OpticalFlow {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Superres_DualTVL1OpticalFlow }
+	
+	impl Drop for Superres_DualTVL1OpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Superres_DualTVL1OpticalFlow_delete(instance: *mut c_void); }
+			unsafe { cv_Superres_DualTVL1OpticalFlow_delete(self.as_raw_mut_Superres_DualTVL1OpticalFlow()) };
+		}
+	}
+	
+	unsafe impl Send for Superres_DualTVL1OpticalFlow {}
+	
+	impl core::AlgorithmTraitConst for Superres_DualTVL1OpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Superres_DualTVL1OpticalFlow {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTraitConst for Superres_DualTVL1OpticalFlow {
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTrait for Superres_DualTVL1OpticalFlow {
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_DualTVL1OpticalFlowTraitConst for Superres_DualTVL1OpticalFlow {
+		#[inline] fn as_raw_Superres_DualTVL1OpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_DualTVL1OpticalFlowTrait for Superres_DualTVL1OpticalFlow {
+		#[inline] fn as_raw_mut_Superres_DualTVL1OpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Superres_DualTVL1OpticalFlow {
+	}
+	
+	boxed_cast_base! { Superres_DualTVL1OpticalFlow, core::Algorithm, cv_Superres_DualTVL1OpticalFlow_to_Algorithm }
+	
 	/// Constant methods for [crate::superres::Superres_FarnebackOpticalFlow]
-	pub trait Superres_FarnebackOpticalFlowConst: crate::superres::Superres_DenseOpticalFlowExtConst {
+	pub trait Superres_FarnebackOpticalFlowTraitConst: crate::superres::Superres_DenseOpticalFlowExtTraitConst {
 		fn as_raw_Superres_FarnebackOpticalFlow(&self) -> *const c_void;
 	
 		/// ## See also
@@ -611,7 +741,8 @@ pub mod superres {
 		
 	}
 	
-	pub trait Superres_FarnebackOpticalFlow: crate::superres::Superres_DenseOpticalFlowExt + crate::superres::Superres_FarnebackOpticalFlowConst {
+	/// Mutable methods for [crate::superres::Superres_FarnebackOpticalFlow]
+	pub trait Superres_FarnebackOpticalFlowTrait: crate::superres::Superres_DenseOpticalFlowExtTrait + crate::superres::Superres_FarnebackOpticalFlowTraitConst {
 		fn as_raw_mut_Superres_FarnebackOpticalFlow(&mut self) -> *mut c_void;
 	
 		/// ## See also
@@ -693,13 +824,59 @@ pub mod superres {
 		
 	}
 	
+	pub struct Superres_FarnebackOpticalFlow {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Superres_FarnebackOpticalFlow }
+	
+	impl Drop for Superres_FarnebackOpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Superres_FarnebackOpticalFlow_delete(instance: *mut c_void); }
+			unsafe { cv_Superres_FarnebackOpticalFlow_delete(self.as_raw_mut_Superres_FarnebackOpticalFlow()) };
+		}
+	}
+	
+	unsafe impl Send for Superres_FarnebackOpticalFlow {}
+	
+	impl core::AlgorithmTraitConst for Superres_FarnebackOpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Superres_FarnebackOpticalFlow {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTraitConst for Superres_FarnebackOpticalFlow {
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTrait for Superres_FarnebackOpticalFlow {
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_FarnebackOpticalFlowTraitConst for Superres_FarnebackOpticalFlow {
+		#[inline] fn as_raw_Superres_FarnebackOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_FarnebackOpticalFlowTrait for Superres_FarnebackOpticalFlow {
+		#[inline] fn as_raw_mut_Superres_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Superres_FarnebackOpticalFlow {
+	}
+	
+	boxed_cast_base! { Superres_FarnebackOpticalFlow, core::Algorithm, cv_Superres_FarnebackOpticalFlow_to_Algorithm }
+	
 	/// Constant methods for [crate::superres::Superres_FrameSource]
-	pub trait Superres_FrameSourceConst {
+	pub trait Superres_FrameSourceTraitConst {
 		fn as_raw_Superres_FrameSource(&self) -> *const c_void;
 	
 	}
 	
-	pub trait Superres_FrameSource: crate::superres::Superres_FrameSourceConst {
+	/// Mutable methods for [crate::superres::Superres_FrameSource]
+	pub trait Superres_FrameSourceTrait: crate::superres::Superres_FrameSourceTraitConst {
 		fn as_raw_mut_Superres_FrameSource(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -723,8 +900,35 @@ pub mod superres {
 		
 	}
 	
+	pub struct Superres_FrameSource {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Superres_FrameSource }
+	
+	impl Drop for Superres_FrameSource {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Superres_FrameSource_delete(instance: *mut c_void); }
+			unsafe { cv_Superres_FrameSource_delete(self.as_raw_mut_Superres_FrameSource()) };
+		}
+	}
+	
+	unsafe impl Send for Superres_FrameSource {}
+	
+	impl crate::superres::Superres_FrameSourceTraitConst for Superres_FrameSource {
+		#[inline] fn as_raw_Superres_FrameSource(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_FrameSourceTrait for Superres_FrameSource {
+		#[inline] fn as_raw_mut_Superres_FrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Superres_FrameSource {
+	}
+	
 	/// Constant methods for [crate::superres::Superres_PyrLKOpticalFlow]
-	pub trait Superres_PyrLKOpticalFlowConst: crate::superres::Superres_DenseOpticalFlowExtConst {
+	pub trait Superres_PyrLKOpticalFlowTraitConst: crate::superres::Superres_DenseOpticalFlowExtTraitConst {
 		fn as_raw_Superres_PyrLKOpticalFlow(&self) -> *const c_void;
 	
 		/// ## See also
@@ -762,7 +966,8 @@ pub mod superres {
 		
 	}
 	
-	pub trait Superres_PyrLKOpticalFlow: crate::superres::Superres_DenseOpticalFlowExt + crate::superres::Superres_PyrLKOpticalFlowConst {
+	/// Mutable methods for [crate::superres::Superres_PyrLKOpticalFlow]
+	pub trait Superres_PyrLKOpticalFlowTrait: crate::superres::Superres_DenseOpticalFlowExtTrait + crate::superres::Superres_PyrLKOpticalFlowTraitConst {
 		fn as_raw_mut_Superres_PyrLKOpticalFlow(&mut self) -> *mut c_void;
 	
 		/// ## See also
@@ -800,8 +1005,53 @@ pub mod superres {
 		
 	}
 	
+	pub struct Superres_PyrLKOpticalFlow {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Superres_PyrLKOpticalFlow }
+	
+	impl Drop for Superres_PyrLKOpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Superres_PyrLKOpticalFlow_delete(instance: *mut c_void); }
+			unsafe { cv_Superres_PyrLKOpticalFlow_delete(self.as_raw_mut_Superres_PyrLKOpticalFlow()) };
+		}
+	}
+	
+	unsafe impl Send for Superres_PyrLKOpticalFlow {}
+	
+	impl core::AlgorithmTraitConst for Superres_PyrLKOpticalFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Superres_PyrLKOpticalFlow {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTraitConst for Superres_PyrLKOpticalFlow {
+		#[inline] fn as_raw_Superres_DenseOpticalFlowExt(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_DenseOpticalFlowExtTrait for Superres_PyrLKOpticalFlow {
+		#[inline] fn as_raw_mut_Superres_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_PyrLKOpticalFlowTraitConst for Superres_PyrLKOpticalFlow {
+		#[inline] fn as_raw_Superres_PyrLKOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_PyrLKOpticalFlowTrait for Superres_PyrLKOpticalFlow {
+		#[inline] fn as_raw_mut_Superres_PyrLKOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Superres_PyrLKOpticalFlow {
+	}
+	
+	boxed_cast_base! { Superres_PyrLKOpticalFlow, core::Algorithm, cv_Superres_PyrLKOpticalFlow_to_Algorithm }
+	
 	/// Constant methods for [crate::superres::Superres_SuperResolution]
-	pub trait Superres_SuperResolutionConst: core::AlgorithmTraitConst + crate::superres::Superres_FrameSourceConst {
+	pub trait Superres_SuperResolutionTraitConst: core::AlgorithmTraitConst + crate::superres::Superres_FrameSourceTraitConst {
 		fn as_raw_Superres_SuperResolution(&self) -> *const c_void;
 	
 		/// Scale factor
@@ -916,22 +1166,19 @@ pub mod superres {
 		/// ## See also
 		/// setOpticalFlow
 		#[inline]
-		fn get_optical_flow(&self) -> Result<core::Ptr<dyn crate::superres::Superres_DenseOpticalFlowExt>> {
+		fn get_optical_flow(&self) -> Result<core::Ptr<crate::superres::Superres_DenseOpticalFlowExt>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_getOpticalFlow_const(self.as_raw_Superres_SuperResolution(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn crate::superres::Superres_DenseOpticalFlowExt>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::superres::Superres_DenseOpticalFlowExt>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	/// Base class for Super Resolution algorithms.
-	/// 
-	/// The class is only used to define the common interface for the whole family of Super Resolution
-	/// algorithms.
-	pub trait Superres_SuperResolution: core::AlgorithmTrait + crate::superres::Superres_FrameSource + crate::superres::Superres_SuperResolutionConst {
+	/// Mutable methods for [crate::superres::Superres_SuperResolution]
+	pub trait Superres_SuperResolutionTrait: core::AlgorithmTrait + crate::superres::Superres_FrameSourceTrait + crate::superres::Superres_SuperResolutionTraitConst {
 		fn as_raw_mut_Superres_SuperResolution(&mut self) -> *mut c_void;
 	
 		/// Set input frame source for Super Resolution algorithm.
@@ -939,7 +1186,7 @@ pub mod superres {
 		/// ## Parameters
 		/// * frameSource: Input frame source
 		#[inline]
-		fn set_input(&mut self, frame_source: &core::Ptr<dyn crate::superres::Superres_FrameSource>) -> Result<()> {
+		fn set_input(&mut self, frame_source: &core::Ptr<crate::superres::Superres_FrameSource>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setInput_const_PtrLFrameSourceGR(self.as_raw_mut_Superres_SuperResolution(), frame_source.as_raw_PtrOfSuperres_FrameSource(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1092,7 +1339,7 @@ pub mod superres {
 		/// ## See also
 		/// setOpticalFlow getOpticalFlow
 		#[inline]
-		fn set_optical_flow(&mut self, val: &core::Ptr<dyn crate::superres::Superres_DenseOpticalFlowExt>) -> Result<()> {
+		fn set_optical_flow(&mut self, val: &core::Ptr<crate::superres::Superres_DenseOpticalFlowExt>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_setOpticalFlow_const_PtrLDenseOpticalFlowExtGR(self.as_raw_mut_Superres_SuperResolution(), val.as_raw_PtrOfSuperres_DenseOpticalFlowExt(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1101,4 +1348,53 @@ pub mod superres {
 		}
 		
 	}
+	
+	/// Base class for Super Resolution algorithms.
+	/// 
+	/// The class is only used to define the common interface for the whole family of Super Resolution
+	/// algorithms.
+	pub struct Superres_SuperResolution {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Superres_SuperResolution }
+	
+	impl Drop for Superres_SuperResolution {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Superres_SuperResolution_delete(instance: *mut c_void); }
+			unsafe { cv_Superres_SuperResolution_delete(self.as_raw_mut_Superres_SuperResolution()) };
+		}
+	}
+	
+	unsafe impl Send for Superres_SuperResolution {}
+	
+	impl core::AlgorithmTraitConst for Superres_SuperResolution {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Superres_SuperResolution {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_FrameSourceTraitConst for Superres_SuperResolution {
+		#[inline] fn as_raw_Superres_FrameSource(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_FrameSourceTrait for Superres_SuperResolution {
+		#[inline] fn as_raw_mut_Superres_FrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::superres::Superres_SuperResolutionTraitConst for Superres_SuperResolution {
+		#[inline] fn as_raw_Superres_SuperResolution(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::superres::Superres_SuperResolutionTrait for Superres_SuperResolution {
+		#[inline] fn as_raw_mut_Superres_SuperResolution(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Superres_SuperResolution {
+	}
+	
+	boxed_cast_base! { Superres_SuperResolution, core::Algorithm, cv_Superres_SuperResolution_to_Algorithm }
 }

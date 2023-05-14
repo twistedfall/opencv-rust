@@ -34,23 +34,71 @@ pub mod saliency {
 	//! Note: This API has been designed with PlantUML. If you modify this API please change UML.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::SaliencyConst, super::Saliency, super::StaticSaliencyConst, super::StaticSaliency, super::MotionSaliencyConst, super::MotionSaliency, super::ObjectnessConst, super::Objectness, super::StaticSaliencySpectralResidualTraitConst, super::StaticSaliencySpectralResidualTrait, super::StaticSaliencyFineGrainedTraitConst, super::StaticSaliencyFineGrainedTrait, super::MotionSaliencyBinWangApr2014TraitConst, super::MotionSaliencyBinWangApr2014Trait, super::ObjectnessBINGTraitConst, super::ObjectnessBINGTrait };
+		pub use { super::SaliencyTraitConst, super::SaliencyTrait, super::StaticSaliencyTraitConst, super::StaticSaliencyTrait, super::MotionSaliencyTraitConst, super::MotionSaliencyTrait, super::ObjectnessTraitConst, super::ObjectnessTrait, super::StaticSaliencySpectralResidualTraitConst, super::StaticSaliencySpectralResidualTrait, super::StaticSaliencyFineGrainedTraitConst, super::StaticSaliencyFineGrainedTrait, super::MotionSaliencyBinWangApr2014TraitConst, super::MotionSaliencyBinWangApr2014Trait, super::ObjectnessBINGTraitConst, super::ObjectnessBINGTrait };
 	}
 	
 	/// Constant methods for [crate::saliency::MotionSaliency]
-	pub trait MotionSaliencyConst: crate::saliency::SaliencyConst {
+	pub trait MotionSaliencyTraitConst: crate::saliency::SaliencyTraitConst {
 		fn as_raw_MotionSaliency(&self) -> *const c_void;
 	
 	}
 	
-	/// ********************************* Motion Saliency Base Class ***********************************
-	pub trait MotionSaliency: crate::saliency::MotionSaliencyConst + crate::saliency::Saliency {
+	/// Mutable methods for [crate::saliency::MotionSaliency]
+	pub trait MotionSaliencyTrait: crate::saliency::MotionSaliencyTraitConst + crate::saliency::SaliencyTrait {
 		fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void;
 	
 	}
 	
+	/// ********************************* Motion Saliency Base Class ***********************************
+	pub struct MotionSaliency {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { MotionSaliency }
+	
+	impl Drop for MotionSaliency {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_MotionSaliency_delete(instance: *mut c_void); }
+			unsafe { cv_MotionSaliency_delete(self.as_raw_mut_MotionSaliency()) };
+		}
+	}
+	
+	unsafe impl Send for MotionSaliency {}
+	
+	impl core::AlgorithmTraitConst for MotionSaliency {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for MotionSaliency {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::saliency::SaliencyTraitConst for MotionSaliency {
+		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::saliency::SaliencyTrait for MotionSaliency {
+		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::saliency::MotionSaliencyTraitConst for MotionSaliency {
+		#[inline] fn as_raw_MotionSaliency(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::saliency::MotionSaliencyTrait for MotionSaliency {
+		#[inline] fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl MotionSaliency {
+	}
+	
+	boxed_cast_descendant! { MotionSaliency, crate::saliency::MotionSaliencyBinWangApr2014, cv_MotionSaliency_to_MotionSaliencyBinWangApr2014 }
+	
+	boxed_cast_base! { MotionSaliency, core::Algorithm, cv_MotionSaliency_to_Algorithm }
+	
 	/// Constant methods for [crate::saliency::MotionSaliencyBinWangApr2014]
-	pub trait MotionSaliencyBinWangApr2014TraitConst: crate::saliency::MotionSaliencyConst {
+	pub trait MotionSaliencyBinWangApr2014TraitConst: crate::saliency::MotionSaliencyTraitConst {
 		fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void;
 	
 		#[inline]
@@ -74,7 +122,7 @@ pub mod saliency {
 	}
 	
 	/// Mutable methods for [crate::saliency::MotionSaliencyBinWangApr2014]
-	pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliency + crate::saliency::MotionSaliencyBinWangApr2014TraitConst {
+	pub trait MotionSaliencyBinWangApr2014Trait: crate::saliency::MotionSaliencyBinWangApr2014TraitConst + crate::saliency::MotionSaliencyTrait {
 		fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -165,19 +213,19 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::saliency::MotionSaliencyConst for MotionSaliencyBinWangApr2014 {
+	impl crate::saliency::MotionSaliencyTraitConst for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_MotionSaliency(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::saliency::MotionSaliency for MotionSaliencyBinWangApr2014 {
+	impl crate::saliency::MotionSaliencyTrait for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::saliency::SaliencyConst for MotionSaliencyBinWangApr2014 {
+	impl crate::saliency::SaliencyTraitConst for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::saliency::Saliency for MotionSaliencyBinWangApr2014 {
+	impl crate::saliency::SaliencyTrait for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -215,19 +263,67 @@ pub mod saliency {
 	boxed_cast_base! { MotionSaliencyBinWangApr2014, core::Algorithm, cv_MotionSaliencyBinWangApr2014_to_Algorithm }
 	
 	/// Constant methods for [crate::saliency::Objectness]
-	pub trait ObjectnessConst: crate::saliency::SaliencyConst {
+	pub trait ObjectnessTraitConst: crate::saliency::SaliencyTraitConst {
 		fn as_raw_Objectness(&self) -> *const c_void;
 	
 	}
 	
-	/// ********************************* Objectness Base Class ***********************************
-	pub trait Objectness: crate::saliency::ObjectnessConst + crate::saliency::Saliency {
+	/// Mutable methods for [crate::saliency::Objectness]
+	pub trait ObjectnessTrait: crate::saliency::ObjectnessTraitConst + crate::saliency::SaliencyTrait {
 		fn as_raw_mut_Objectness(&mut self) -> *mut c_void;
 	
 	}
 	
+	/// ********************************* Objectness Base Class ***********************************
+	pub struct Objectness {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Objectness }
+	
+	impl Drop for Objectness {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Objectness_delete(instance: *mut c_void); }
+			unsafe { cv_Objectness_delete(self.as_raw_mut_Objectness()) };
+		}
+	}
+	
+	unsafe impl Send for Objectness {}
+	
+	impl core::AlgorithmTraitConst for Objectness {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Objectness {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::saliency::SaliencyTraitConst for Objectness {
+		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::saliency::SaliencyTrait for Objectness {
+		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::saliency::ObjectnessTraitConst for Objectness {
+		#[inline] fn as_raw_Objectness(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::saliency::ObjectnessTrait for Objectness {
+		#[inline] fn as_raw_mut_Objectness(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Objectness {
+	}
+	
+	boxed_cast_descendant! { Objectness, crate::saliency::ObjectnessBING, cv_Objectness_to_ObjectnessBING }
+	
+	boxed_cast_base! { Objectness, core::Algorithm, cv_Objectness_to_Algorithm }
+	
 	/// Constant methods for [crate::saliency::ObjectnessBING]
-	pub trait ObjectnessBINGTraitConst: crate::saliency::ObjectnessConst {
+	pub trait ObjectnessBINGTraitConst: crate::saliency::ObjectnessTraitConst {
 		fn as_raw_ObjectnessBING(&self) -> *const c_void;
 	
 		#[inline]
@@ -269,7 +365,7 @@ pub mod saliency {
 	}
 	
 	/// Mutable methods for [crate::saliency::ObjectnessBING]
-	pub trait ObjectnessBINGTrait: crate::saliency::Objectness + crate::saliency::ObjectnessBINGTraitConst {
+	pub trait ObjectnessBINGTrait: crate::saliency::ObjectnessBINGTraitConst + crate::saliency::ObjectnessTrait {
 		fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -392,19 +488,19 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::saliency::ObjectnessConst for ObjectnessBING {
+	impl crate::saliency::ObjectnessTraitConst for ObjectnessBING {
 		#[inline] fn as_raw_Objectness(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::saliency::Objectness for ObjectnessBING {
+	impl crate::saliency::ObjectnessTrait for ObjectnessBING {
 		#[inline] fn as_raw_mut_Objectness(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::saliency::SaliencyConst for ObjectnessBING {
+	impl crate::saliency::SaliencyTraitConst for ObjectnessBING {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::saliency::Saliency for ObjectnessBING {
+	impl crate::saliency::SaliencyTrait for ObjectnessBING {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -442,13 +538,13 @@ pub mod saliency {
 	boxed_cast_base! { ObjectnessBING, core::Algorithm, cv_ObjectnessBING_to_Algorithm }
 	
 	/// Constant methods for [crate::saliency::Saliency]
-	pub trait SaliencyConst: core::AlgorithmTraitConst {
+	pub trait SaliencyTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Saliency(&self) -> *const c_void;
 	
 	}
 	
-	/// ********************************* Saliency Base Class ***********************************
-	pub trait Saliency: core::AlgorithmTrait + crate::saliency::SaliencyConst {
+	/// Mutable methods for [crate::saliency::Saliency]
+	pub trait SaliencyTrait: core::AlgorithmTrait + crate::saliency::SaliencyTraitConst {
 		fn as_raw_mut_Saliency(&mut self) -> *mut c_void;
 	
 		/// \brief Compute the saliency
@@ -468,14 +564,52 @@ pub mod saliency {
 		
 	}
 	
+	/// ********************************* Saliency Base Class ***********************************
+	pub struct Saliency {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Saliency }
+	
+	impl Drop for Saliency {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Saliency_delete(instance: *mut c_void); }
+			unsafe { cv_Saliency_delete(self.as_raw_mut_Saliency()) };
+		}
+	}
+	
+	unsafe impl Send for Saliency {}
+	
+	impl core::AlgorithmTraitConst for Saliency {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for Saliency {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::saliency::SaliencyTraitConst for Saliency {
+		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::saliency::SaliencyTrait for Saliency {
+		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Saliency {
+	}
+	
+	boxed_cast_base! { Saliency, core::Algorithm, cv_Saliency_to_Algorithm }
+	
 	/// Constant methods for [crate::saliency::StaticSaliency]
-	pub trait StaticSaliencyConst: crate::saliency::SaliencyConst {
+	pub trait StaticSaliencyTraitConst: crate::saliency::SaliencyTraitConst {
 		fn as_raw_StaticSaliency(&self) -> *const c_void;
 	
 	}
 	
-	/// ********************************* Static Saliency Base Class ***********************************
-	pub trait StaticSaliency: crate::saliency::Saliency + crate::saliency::StaticSaliencyConst {
+	/// Mutable methods for [crate::saliency::StaticSaliency]
+	pub trait StaticSaliencyTrait: crate::saliency::SaliencyTrait + crate::saliency::StaticSaliencyTraitConst {
 		fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void;
 	
 		/// This function perform a binary map of given saliency map. This is obtained in this
@@ -506,14 +640,64 @@ pub mod saliency {
 		
 	}
 	
+	/// ********************************* Static Saliency Base Class ***********************************
+	pub struct StaticSaliency {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { StaticSaliency }
+	
+	impl Drop for StaticSaliency {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_StaticSaliency_delete(instance: *mut c_void); }
+			unsafe { cv_StaticSaliency_delete(self.as_raw_mut_StaticSaliency()) };
+		}
+	}
+	
+	unsafe impl Send for StaticSaliency {}
+	
+	impl core::AlgorithmTraitConst for StaticSaliency {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for StaticSaliency {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::saliency::SaliencyTraitConst for StaticSaliency {
+		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::saliency::SaliencyTrait for StaticSaliency {
+		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::saliency::StaticSaliencyTraitConst for StaticSaliency {
+		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::saliency::StaticSaliencyTrait for StaticSaliency {
+		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl StaticSaliency {
+	}
+	
+	boxed_cast_descendant! { StaticSaliency, crate::saliency::StaticSaliencyFineGrained, cv_StaticSaliency_to_StaticSaliencyFineGrained }
+	
+	boxed_cast_descendant! { StaticSaliency, crate::saliency::StaticSaliencySpectralResidual, cv_StaticSaliency_to_StaticSaliencySpectralResidual }
+	
+	boxed_cast_base! { StaticSaliency, core::Algorithm, cv_StaticSaliency_to_Algorithm }
+	
 	/// Constant methods for [crate::saliency::StaticSaliencyFineGrained]
-	pub trait StaticSaliencyFineGrainedTraitConst: crate::saliency::StaticSaliencyConst {
+	pub trait StaticSaliencyFineGrainedTraitConst: crate::saliency::StaticSaliencyTraitConst {
 		fn as_raw_StaticSaliencyFineGrained(&self) -> *const c_void;
 	
 	}
 	
 	/// Mutable methods for [crate::saliency::StaticSaliencyFineGrained]
-	pub trait StaticSaliencyFineGrainedTrait: crate::saliency::StaticSaliency + crate::saliency::StaticSaliencyFineGrainedTraitConst {
+	pub trait StaticSaliencyFineGrainedTrait: crate::saliency::StaticSaliencyFineGrainedTraitConst + crate::saliency::StaticSaliencyTrait {
 		fn as_raw_mut_StaticSaliencyFineGrained(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -557,19 +741,19 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::saliency::SaliencyConst for StaticSaliencyFineGrained {
+	impl crate::saliency::SaliencyTraitConst for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::saliency::Saliency for StaticSaliencyFineGrained {
+	impl crate::saliency::SaliencyTrait for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::saliency::StaticSaliencyConst for StaticSaliencyFineGrained {
+	impl crate::saliency::StaticSaliencyTraitConst for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::saliency::StaticSaliency for StaticSaliencyFineGrained {
+	impl crate::saliency::StaticSaliencyTrait for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
@@ -607,7 +791,7 @@ pub mod saliency {
 	boxed_cast_base! { StaticSaliencyFineGrained, core::Algorithm, cv_StaticSaliencyFineGrained_to_Algorithm }
 	
 	/// Constant methods for [crate::saliency::StaticSaliencySpectralResidual]
-	pub trait StaticSaliencySpectralResidualTraitConst: crate::saliency::StaticSaliencyConst {
+	pub trait StaticSaliencySpectralResidualTraitConst: crate::saliency::StaticSaliencyTraitConst {
 		fn as_raw_StaticSaliencySpectralResidual(&self) -> *const c_void;
 	
 		#[inline]
@@ -640,7 +824,7 @@ pub mod saliency {
 	}
 	
 	/// Mutable methods for [crate::saliency::StaticSaliencySpectralResidual]
-	pub trait StaticSaliencySpectralResidualTrait: crate::saliency::StaticSaliency + crate::saliency::StaticSaliencySpectralResidualTraitConst {
+	pub trait StaticSaliencySpectralResidualTrait: crate::saliency::StaticSaliencySpectralResidualTraitConst + crate::saliency::StaticSaliencyTrait {
 		fn as_raw_mut_StaticSaliencySpectralResidual(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -713,19 +897,19 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::saliency::SaliencyConst for StaticSaliencySpectralResidual {
+	impl crate::saliency::SaliencyTraitConst for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::saliency::Saliency for StaticSaliencySpectralResidual {
+	impl crate::saliency::SaliencyTrait for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::saliency::StaticSaliencyConst for StaticSaliencySpectralResidual {
+	impl crate::saliency::StaticSaliencyTraitConst for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::saliency::StaticSaliency for StaticSaliencySpectralResidual {
+	impl crate::saliency::StaticSaliencyTrait for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	

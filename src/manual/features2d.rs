@@ -1,8 +1,10 @@
 use std::ffi::c_void;
 
-use crate::{features2d::ORB, sys, traits::Boxed, types, Result};
+use crate::features2d::ORB;
+use crate::traits::Boxed;
+use crate::{sys, types, Result};
 
-impl dyn ORB + '_ {
+impl ORB {
 	#[allow(clippy::should_implement_trait)]
 	pub fn default() -> Result<types::PtrOfORB> {
 		extern "C" {

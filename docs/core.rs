@@ -31,7 +31,7 @@ pub mod core {
 	//!        # Parallel backends API
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::HammingTraitConst, super::HammingTrait, super::Detail_CheckContextTraitConst, super::Detail_CheckContextTrait, super::Matx_AddOpTraitConst, super::Matx_AddOpTrait, super::Matx_SubOpTraitConst, super::Matx_SubOpTrait, super::Matx_ScaleOpTraitConst, super::Matx_ScaleOpTrait, super::Matx_MulOpTraitConst, super::Matx_MulOpTrait, super::Matx_DivOpTraitConst, super::Matx_DivOpTrait, super::Matx_MatMulOpTraitConst, super::Matx_MatMulOpTrait, super::Matx_TOpTraitConst, super::Matx_TOpTrait, super::RotatedRectTraitConst, super::RotatedRectTrait, super::RangeTraitConst, super::RangeTrait, super::KeyPointTraitConst, super::KeyPointTrait, super::_InputArrayTraitConst, super::_InputArrayTrait, super::_OutputArrayTraitConst, super::_OutputArrayTrait, super::_InputOutputArrayTraitConst, super::_InputOutputArrayTrait, super::UMatDataTraitConst, super::UMatDataTrait, super::MatSizeTraitConst, super::MatSizeTrait, super::MatStepTraitConst, super::MatStepTrait, super::MatTraitConst, super::MatTrait, super::UMatTraitConst, super::UMatTrait, super::SparseMat_HdrTraitConst, super::SparseMat_HdrTrait, super::SparseMat_NodeTraitConst, super::SparseMat_NodeTrait, super::SparseMatTraitConst, super::SparseMatTrait, super::MatConstIteratorTraitConst, super::MatConstIteratorTrait, super::SparseMatConstIteratorTraitConst, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTraitConst, super::SparseMatIteratorTrait, super::MatOpConst, super::MatOp, super::MatExprTraitConst, super::MatExprTrait, super::FileStorageTraitConst, super::FileStorageTrait, super::FileNodeTraitConst, super::FileNodeTrait, super::FileNodeIteratorTraitConst, super::FileNodeIteratorTrait, super::WriteStructContextTraitConst, super::WriteStructContextTrait, super::ExceptionTraitConst, super::ExceptionTrait, super::PCATraitConst, super::PCATrait, super::LDATraitConst, super::LDATrait, super::SVDTraitConst, super::SVDTrait, super::RNGTraitConst, super::RNGTrait, super::RNG_MT19937TraitConst, super::RNG_MT19937Trait, super::FormattedConst, super::Formatted, super::FormatterConst, super::Formatter, super::AlgorithmTraitConst, super::AlgorithmTrait, super::TickMeterTraitConst, super::TickMeterTrait, super::ParallelLoopBodyConst, super::ParallelLoopBody, super::CommandLineParserTraitConst, super::CommandLineParserTrait, super::TLSDataContainerConst, super::TLSDataContainer, super::NodeDataTraitConst, super::NodeDataTrait, super::MinProblemSolver_FunctionConst, super::MinProblemSolver_Function, super::MinProblemSolverConst, super::MinProblemSolver, super::DownhillSolverConst, super::DownhillSolver, super::ConjGradSolverConst, super::ConjGradSolver, super::DeviceTraitConst, super::DeviceTrait, super::Context_UserContextTraitConst, super::Context_UserContextTrait, super::ContextTraitConst, super::ContextTrait, super::PlatformTraitConst, super::PlatformTrait, super::QueueTraitConst, super::QueueTrait, super::KernelArgTraitConst, super::KernelArgTrait, super::KernelTraitConst, super::KernelTrait, super::ProgramTraitConst, super::ProgramTrait, super::ProgramSourceTraitConst, super::ProgramSourceTrait, super::PlatformInfoTraitConst, super::PlatformInfoTrait, super::Image2DTraitConst, super::Image2DTrait, super::TimerTraitConst, super::TimerTrait, super::OpenCLExecutionContextTraitConst, super::OpenCLExecutionContextTrait, super::GpuMat_AllocatorConst, super::GpuMat_Allocator, super::GpuMatTraitConst, super::GpuMatTrait, super::GpuDataTraitConst, super::GpuDataTrait, super::GpuMatNDTraitConst, super::GpuMatNDTrait, super::BufferPoolTraitConst, super::BufferPoolTrait, super::HostMemTraitConst, super::HostMemTrait, super::StreamTraitConst, super::StreamTrait, super::EventTraitConst, super::EventTrait, super::TargetArchsTraitConst, super::TargetArchsTrait, super::DeviceInfoTraitConst, super::DeviceInfoTrait, super::BufferTraitConst, super::BufferTrait, super::Texture2DTraitConst, super::Texture2DTrait, super::ArraysTraitConst, super::ArraysTrait, super::AsyncArrayTraitConst, super::AsyncArrayTrait, super::AsyncPromiseTraitConst, super::AsyncPromiseTrait, super::LogTagTraitConst, super::LogTagTrait, super::OriginalClassNameTraitConst, super::OriginalClassNameTrait };
+		pub use { super::HammingTraitConst, super::HammingTrait, super::Detail_CheckContextTraitConst, super::Detail_CheckContextTrait, super::Matx_AddOpTraitConst, super::Matx_AddOpTrait, super::Matx_SubOpTraitConst, super::Matx_SubOpTrait, super::Matx_ScaleOpTraitConst, super::Matx_ScaleOpTrait, super::Matx_MulOpTraitConst, super::Matx_MulOpTrait, super::Matx_DivOpTraitConst, super::Matx_DivOpTrait, super::Matx_MatMulOpTraitConst, super::Matx_MatMulOpTrait, super::Matx_TOpTraitConst, super::Matx_TOpTrait, super::RotatedRectTraitConst, super::RotatedRectTrait, super::RangeTraitConst, super::RangeTrait, super::KeyPointTraitConst, super::KeyPointTrait, super::_InputArrayTraitConst, super::_InputArrayTrait, super::_OutputArrayTraitConst, super::_OutputArrayTrait, super::_InputOutputArrayTraitConst, super::_InputOutputArrayTrait, super::UMatDataTraitConst, super::UMatDataTrait, super::MatSizeTraitConst, super::MatSizeTrait, super::MatStepTraitConst, super::MatStepTrait, super::MatTraitConst, super::MatTrait, super::UMatTraitConst, super::UMatTrait, super::SparseMat_HdrTraitConst, super::SparseMat_HdrTrait, super::SparseMat_NodeTraitConst, super::SparseMat_NodeTrait, super::SparseMatTraitConst, super::SparseMatTrait, super::MatConstIteratorTraitConst, super::MatConstIteratorTrait, super::SparseMatConstIteratorTraitConst, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTraitConst, super::SparseMatIteratorTrait, super::MatOpTraitConst, super::MatOpTrait, super::MatExprTraitConst, super::MatExprTrait, super::FileStorageTraitConst, super::FileStorageTrait, super::FileNodeTraitConst, super::FileNodeTrait, super::FileNodeIteratorTraitConst, super::FileNodeIteratorTrait, super::WriteStructContextTraitConst, super::WriteStructContextTrait, super::ExceptionTraitConst, super::ExceptionTrait, super::PCATraitConst, super::PCATrait, super::LDATraitConst, super::LDATrait, super::SVDTraitConst, super::SVDTrait, super::RNGTraitConst, super::RNGTrait, super::RNG_MT19937TraitConst, super::RNG_MT19937Trait, super::FormattedTraitConst, super::FormattedTrait, super::FormatterTraitConst, super::FormatterTrait, super::AlgorithmTraitConst, super::AlgorithmTrait, super::TickMeterTraitConst, super::TickMeterTrait, super::ParallelLoopBodyTraitConst, super::ParallelLoopBodyTrait, super::CommandLineParserTraitConst, super::CommandLineParserTrait, super::TLSDataContainerTraitConst, super::TLSDataContainerTrait, super::NodeDataTraitConst, super::NodeDataTrait, super::MinProblemSolver_FunctionTraitConst, super::MinProblemSolver_FunctionTrait, super::MinProblemSolverTraitConst, super::MinProblemSolverTrait, super::DownhillSolverTraitConst, super::DownhillSolverTrait, super::ConjGradSolverTraitConst, super::ConjGradSolverTrait, super::DeviceTraitConst, super::DeviceTrait, super::Context_UserContextTraitConst, super::Context_UserContextTrait, super::ContextTraitConst, super::ContextTrait, super::PlatformTraitConst, super::PlatformTrait, super::QueueTraitConst, super::QueueTrait, super::KernelArgTraitConst, super::KernelArgTrait, super::KernelTraitConst, super::KernelTrait, super::ProgramTraitConst, super::ProgramTrait, super::ProgramSourceTraitConst, super::ProgramSourceTrait, super::PlatformInfoTraitConst, super::PlatformInfoTrait, super::Image2DTraitConst, super::Image2DTrait, super::TimerTraitConst, super::TimerTrait, super::OpenCLExecutionContextTraitConst, super::OpenCLExecutionContextTrait, super::GpuMat_AllocatorTraitConst, super::GpuMat_AllocatorTrait, super::GpuMatTraitConst, super::GpuMatTrait, super::GpuDataTraitConst, super::GpuDataTrait, super::GpuMatNDTraitConst, super::GpuMatNDTrait, super::BufferPoolTraitConst, super::BufferPoolTrait, super::HostMemTraitConst, super::HostMemTrait, super::StreamTraitConst, super::StreamTrait, super::EventTraitConst, super::EventTrait, super::TargetArchsTraitConst, super::TargetArchsTrait, super::DeviceInfoTraitConst, super::DeviceInfoTrait, super::BufferTraitConst, super::BufferTrait, super::Texture2DTraitConst, super::Texture2DTrait, super::ArraysTraitConst, super::ArraysTrait, super::AsyncArrayTraitConst, super::AsyncArrayTrait, super::AsyncPromiseTraitConst, super::AsyncPromiseTrait, super::LogTagTraitConst, super::LogTagTrait, super::OriginalClassNameTraitConst, super::OriginalClassNameTrait };
 	}
 	
 	pub const ACCESS_FAST: i32 = 67108864;
@@ -6699,7 +6699,7 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * nstripes: -1.
 	#[inline]
-	pub fn parallel_for_(range: &core::Range, body: &dyn core::ParallelLoopBody, nstripes: f64) -> Result<()> {
+	pub fn parallel_for_(range: &core::Range, body: &core::ParallelLoopBody, nstripes: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_parallel_for__const_RangeR_const_ParallelLoopBodyR_double(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), nstripes, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -9391,8 +9391,14 @@ pub mod core {
 	}
 	
 	/// Constant methods for [core::ConjGradSolver]
-	pub trait ConjGradSolverConst: core::MinProblemSolverConst {
+	pub trait ConjGradSolverTraitConst: core::MinProblemSolverTraitConst {
 		fn as_raw_ConjGradSolver(&self) -> *const c_void;
+	
+	}
+	
+	/// Mutable methods for [core::ConjGradSolver]
+	pub trait ConjGradSolverTrait: core::ConjGradSolverTraitConst + core::MinProblemSolverTrait {
+		fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void;
 	
 	}
 	
@@ -9431,12 +9437,47 @@ pub mod core {
 	///    termcrit.type == TermCriteria::MAX_ITER) && termcrit.maxCount > 0
 	/// ```
 	/// 
-	pub trait ConjGradSolver: core::ConjGradSolverConst + core::MinProblemSolver {
-		fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void;
-	
+	pub struct ConjGradSolver {
+		ptr: *mut c_void
 	}
 	
-	impl dyn ConjGradSolver + '_ {
+	opencv_type_boxed! { ConjGradSolver }
+	
+	impl Drop for ConjGradSolver {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_ConjGradSolver_delete(instance: *mut c_void); }
+			unsafe { cv_ConjGradSolver_delete(self.as_raw_mut_ConjGradSolver()) };
+		}
+	}
+	
+	unsafe impl Send for ConjGradSolver {}
+	
+	impl core::AlgorithmTraitConst for ConjGradSolver {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for ConjGradSolver {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::MinProblemSolverTraitConst for ConjGradSolver {
+		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::MinProblemSolverTrait for ConjGradSolver {
+		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::ConjGradSolverTraitConst for ConjGradSolver {
+		#[inline] fn as_raw_ConjGradSolver(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::ConjGradSolverTrait for ConjGradSolver {
+		#[inline] fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl ConjGradSolver {
 		/// This function returns the reference to the ready-to-use ConjGradSolver object.
 		/// 
 		/// All the parameters are optional, so this procedure can be called even without parameters at
@@ -9455,16 +9496,19 @@ pub mod core {
 		/// * f: Ptr<ConjGradSolver::Function>()
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
 		#[inline]
-		pub fn create(f: &core::Ptr<dyn core::MinProblemSolver_Function>, termcrit: core::TermCriteria) -> Result<core::Ptr<dyn core::ConjGradSolver>> {
+		pub fn create(f: &core::Ptr<core::MinProblemSolver_Function>, termcrit: core::TermCriteria) -> Result<core::Ptr<core::ConjGradSolver>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ConjGradSolver_create_const_PtrLFunctionGR_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), termcrit.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn core::ConjGradSolver>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<core::ConjGradSolver>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { ConjGradSolver, core::Algorithm, cv_ConjGradSolver_to_Algorithm }
+	
 	/// Class for matching keypoint descriptors
 	/// 
 	/// query descriptor index, train descriptor index, train image index, and distance between
@@ -9524,7 +9568,7 @@ pub mod core {
 	}
 	
 	/// Constant methods for [core::DownhillSolver]
-	pub trait DownhillSolverConst: core::MinProblemSolverConst {
+	pub trait DownhillSolverTraitConst: core::MinProblemSolverTraitConst {
 		fn as_raw_DownhillSolver(&self) -> *const c_void;
 	
 		/// Returns the initial step that will be used in downhill simplex algorithm.
@@ -9539,6 +9583,36 @@ pub mod core {
 			extern_container_arg!(step);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_getInitStep_const_const__OutputArrayR(self.as_raw_DownhillSolver(), step.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+	}
+	
+	/// Mutable methods for [core::DownhillSolver]
+	pub trait DownhillSolverTrait: core::DownhillSolverTraitConst + core::MinProblemSolverTrait {
+		fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void;
+	
+		/// Sets the initial step that will be used in downhill simplex algorithm.
+		/// 
+		/// Step, together with initial point (given in DownhillSolver::minimize) are two `n`-dimensional
+		/// vectors that are used to determine the shape of initial simplex. Roughly said, initial point
+		/// determines the position of a simplex (it will become simplex's centroid), while step determines the
+		/// spread (size in each dimension) of a simplex. To be more precise, if ![inline formula](https://latex.codecogs.com/png.latex?s%2Cx%5F0%5Cin%5Cmathbb%7BR%7D%5En) are
+		/// the initial step and initial point respectively, the vertices of a simplex will be:
+		/// ![inline formula](https://latex.codecogs.com/png.latex?v%5F0%3A%3Dx%5F0%2D%5Cfrac%7B1%7D%7B2%7D%20s) and ![inline formula](https://latex.codecogs.com/png.latex?v%5Fi%3A%3Dx%5F0%2Bs%5Fi) for ![inline formula](https://latex.codecogs.com/png.latex?i%3D1%2C2%2C%5Cdots%2Cn) where ![inline formula](https://latex.codecogs.com/png.latex?s%5Fi) denotes
+		/// projections of the initial step of *n*-th coordinate (the result of projection is treated to be
+		/// vector given by ![inline formula](https://latex.codecogs.com/png.latex?s%5Fi%3A%3De%5Fi%5Ccdot%5Cleft%3Ce%5Fi%5Ccdot%20s%5Cright%3E), where ![inline formula](https://latex.codecogs.com/png.latex?e%5Fi) form canonical basis)
+		/// 
+		/// ## Parameters
+		/// * step: Initial step that will be used in algorithm. Roughly said, it determines the spread
+		/// (size in each dimension) of an initial simplex.
+		#[inline]
+		fn set_init_step(&mut self, step: &dyn core::ToInputArray) -> Result<()> {
+			extern_container_arg!(step);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DownhillSolver_setInitStep_const__InputArrayR(self.as_raw_mut_DownhillSolver(), step.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9578,36 +9652,47 @@ pub mod core {
 	///    termcrit.type == (TermCriteria::MAX_ITER + TermCriteria::EPS) && termcrit.epsilon > 0 && termcrit.maxCount > 0
 	/// ```
 	/// 
-	pub trait DownhillSolver: core::DownhillSolverConst + core::MinProblemSolver {
-		fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void;
-	
-		/// Sets the initial step that will be used in downhill simplex algorithm.
-		/// 
-		/// Step, together with initial point (given in DownhillSolver::minimize) are two `n`-dimensional
-		/// vectors that are used to determine the shape of initial simplex. Roughly said, initial point
-		/// determines the position of a simplex (it will become simplex's centroid), while step determines the
-		/// spread (size in each dimension) of a simplex. To be more precise, if ![inline formula](https://latex.codecogs.com/png.latex?s%2Cx%5F0%5Cin%5Cmathbb%7BR%7D%5En) are
-		/// the initial step and initial point respectively, the vertices of a simplex will be:
-		/// ![inline formula](https://latex.codecogs.com/png.latex?v%5F0%3A%3Dx%5F0%2D%5Cfrac%7B1%7D%7B2%7D%20s) and ![inline formula](https://latex.codecogs.com/png.latex?v%5Fi%3A%3Dx%5F0%2Bs%5Fi) for ![inline formula](https://latex.codecogs.com/png.latex?i%3D1%2C2%2C%5Cdots%2Cn) where ![inline formula](https://latex.codecogs.com/png.latex?s%5Fi) denotes
-		/// projections of the initial step of *n*-th coordinate (the result of projection is treated to be
-		/// vector given by ![inline formula](https://latex.codecogs.com/png.latex?s%5Fi%3A%3De%5Fi%5Ccdot%5Cleft%3Ce%5Fi%5Ccdot%20s%5Cright%3E), where ![inline formula](https://latex.codecogs.com/png.latex?e%5Fi) form canonical basis)
-		/// 
-		/// ## Parameters
-		/// * step: Initial step that will be used in algorithm. Roughly said, it determines the spread
-		/// (size in each dimension) of an initial simplex.
-		#[inline]
-		fn set_init_step(&mut self, step: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(step);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DownhillSolver_setInitStep_const__InputArrayR(self.as_raw_mut_DownhillSolver(), step.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
+	pub struct DownhillSolver {
+		ptr: *mut c_void
 	}
 	
-	impl dyn DownhillSolver + '_ {
+	opencv_type_boxed! { DownhillSolver }
+	
+	impl Drop for DownhillSolver {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_DownhillSolver_delete(instance: *mut c_void); }
+			unsafe { cv_DownhillSolver_delete(self.as_raw_mut_DownhillSolver()) };
+		}
+	}
+	
+	unsafe impl Send for DownhillSolver {}
+	
+	impl core::AlgorithmTraitConst for DownhillSolver {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for DownhillSolver {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::MinProblemSolverTraitConst for DownhillSolver {
+		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::MinProblemSolverTrait for DownhillSolver {
+		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::DownhillSolverTraitConst for DownhillSolver {
+		#[inline] fn as_raw_DownhillSolver(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::DownhillSolverTrait for DownhillSolver {
+		#[inline] fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl DownhillSolver {
 		/// This function returns the reference to the ready-to-use DownhillSolver object.
 		/// 
 		/// All the parameters are optional, so this procedure can be called even without parameters at
@@ -9630,17 +9715,20 @@ pub mod core {
 		/// * init_step: Mat_<double>(1,1,0.0)
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
 		#[inline]
-		pub fn create(f: &core::Ptr<dyn core::MinProblemSolver_Function>, init_step: &dyn core::ToInputArray, termcrit: core::TermCriteria) -> Result<core::Ptr<dyn core::DownhillSolver>> {
+		pub fn create(f: &core::Ptr<core::MinProblemSolver_Function>, init_step: &dyn core::ToInputArray, termcrit: core::TermCriteria) -> Result<core::Ptr<core::DownhillSolver>> {
 			extern_container_arg!(init_step);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_create_const_PtrLFunctionGR_const__InputArrayR_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), init_step.as_raw__InputArray(), termcrit.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn core::DownhillSolver>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<core::DownhillSolver>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
+	boxed_cast_base! { DownhillSolver, core::Algorithm, cv_DownhillSolver_to_Algorithm }
+	
 	/// Constant methods for [core::Exception]
 	pub trait ExceptionTraitConst {
 		fn as_raw_Exception(&self) -> *const c_void;
@@ -10926,13 +11014,13 @@ pub mod core {
 	}
 	
 	/// Constant methods for [core::Formatted]
-	pub trait FormattedConst {
+	pub trait FormattedTraitConst {
 		fn as_raw_Formatted(&self) -> *const c_void;
 	
 	}
 	
-	/// @todo document
-	pub trait Formatted: core::FormattedConst {
+	/// Mutable methods for [core::Formatted]
+	pub trait FormattedTrait: core::FormattedTraitConst {
 		fn as_raw_mut_Formatted(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -10956,24 +11044,52 @@ pub mod core {
 		
 	}
 	
+	/// @todo document
+	pub struct Formatted {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Formatted }
+	
+	impl Drop for Formatted {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Formatted_delete(instance: *mut c_void); }
+			unsafe { cv_Formatted_delete(self.as_raw_mut_Formatted()) };
+		}
+	}
+	
+	unsafe impl Send for Formatted {}
+	
+	impl core::FormattedTraitConst for Formatted {
+		#[inline] fn as_raw_Formatted(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::FormattedTrait for Formatted {
+		#[inline] fn as_raw_mut_Formatted(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Formatted {
+	}
+	
 	/// Constant methods for [core::Formatter]
-	pub trait FormatterConst {
+	pub trait FormatterTraitConst {
 		fn as_raw_Formatter(&self) -> *const c_void;
 	
 		#[inline]
-		fn format(&self, mtx: &core::Mat) -> Result<core::Ptr<dyn core::Formatted>> {
+		fn format(&self, mtx: &core::Mat) -> Result<core::Ptr<core::Formatted>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_format_const_const_MatR(self.as_raw_Formatter(), mtx.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn core::Formatted>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<core::Formatted>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	/// @todo document
-	pub trait Formatter: core::FormatterConst {
+	/// Mutable methods for [core::Formatter]
+	pub trait FormatterTrait: core::FormatterTraitConst {
 		fn as_raw_mut_Formatter(&mut self) -> *mut c_void;
 	
 		/// ## C++ default parameters
@@ -11022,20 +11138,46 @@ pub mod core {
 		
 	}
 	
-	impl dyn Formatter + '_ {
+	/// @todo document
+	pub struct Formatter {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { Formatter }
+	
+	impl Drop for Formatter {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_Formatter_delete(instance: *mut c_void); }
+			unsafe { cv_Formatter_delete(self.as_raw_mut_Formatter()) };
+		}
+	}
+	
+	unsafe impl Send for Formatter {}
+	
+	impl core::FormatterTraitConst for Formatter {
+		#[inline] fn as_raw_Formatter(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::FormatterTrait for Formatter {
+		#[inline] fn as_raw_mut_Formatter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl Formatter {
 		/// ## C++ default parameters
 		/// * fmt: FMT_DEFAULT
 		#[inline]
-		pub fn get(fmt: core::Formatter_FormatType) -> Result<core::Ptr<dyn core::Formatter>> {
+		pub fn get(fmt: core::Formatter_FormatType) -> Result<core::Ptr<core::Formatter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_get_FormatType(fmt, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn core::Formatter>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<core::Formatter>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
+	
 	/// Constant methods for [core::Hamming]
 	pub trait HammingTraitConst {
 		fn as_raw_Hamming(&self) -> *const c_void;
@@ -15076,7 +15218,7 @@ pub mod core {
 		/// * _beta: 1
 		/// * _s: Scalar()
 		#[inline]
-		pub fn new(_op: &dyn core::MatOp, _flags: i32, _a: &core::Mat, _b: &core::Mat, _c: &core::Mat, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
+		pub fn new(_op: &core::MatOp, _flags: i32, _a: &core::Mat, _b: &core::Mat, _c: &core::Mat, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int_const_MatR_const_MatR_const_MatR_double_double_const_ScalarR(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, &_s, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -15088,7 +15230,7 @@ pub mod core {
 	}
 	
 	/// Constant methods for [core::MatOp]
-	pub trait MatOpConst {
+	pub trait MatOpTraitConst {
 		fn as_raw_MatOp(&self) -> *const c_void;
 	
 		#[inline]
@@ -15324,10 +15466,38 @@ pub mod core {
 		
 	}
 	
-	/// ////////////////////////////// Matrix Expressions /////////////////////////////////
-	pub trait MatOp: core::MatOpConst {
+	/// Mutable methods for [core::MatOp]
+	pub trait MatOpTrait: core::MatOpTraitConst {
 		fn as_raw_mut_MatOp(&mut self) -> *mut c_void;
 	
+	}
+	
+	/// ////////////////////////////// Matrix Expressions /////////////////////////////////
+	pub struct MatOp {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { MatOp }
+	
+	impl Drop for MatOp {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_MatOp_delete(instance: *mut c_void); }
+			unsafe { cv_MatOp_delete(self.as_raw_mut_MatOp()) };
+		}
+	}
+	
+	unsafe impl Send for MatOp {}
+	
+	impl core::MatOpTraitConst for MatOp {
+		#[inline] fn as_raw_MatOp(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::MatOpTrait for MatOp {
+		#[inline] fn as_raw_mut_MatOp(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl MatOp {
 	}
 	
 	/// Constant methods for [core::MatSize]
@@ -15957,7 +16127,7 @@ pub mod core {
 	}
 	
 	/// Constant methods for [core::MinProblemSolver]
-	pub trait MinProblemSolverConst: core::AlgorithmTraitConst {
+	pub trait MinProblemSolverTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_MinProblemSolver(&self) -> *const c_void;
 	
 		/// Getter for the optimized function.
@@ -15969,12 +16139,12 @@ pub mod core {
 		/// Smart-pointer to an object that implements Function interface - it represents the
 		/// function that is being optimized. It can be empty, if no function was given so far.
 		#[inline]
-		fn get_function(&self) -> Result<core::Ptr<dyn core::MinProblemSolver_Function>> {
+		fn get_function(&self) -> Result<core::Ptr<core::MinProblemSolver_Function>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_getFunction_const(self.as_raw_MinProblemSolver(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn core::MinProblemSolver_Function>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<core::MinProblemSolver_Function>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -15993,8 +16163,8 @@ pub mod core {
 		
 	}
 	
-	/// Basic interface for all solvers
-	pub trait MinProblemSolver: core::AlgorithmTrait + core::MinProblemSolverConst {
+	/// Mutable methods for [core::MinProblemSolver]
+	pub trait MinProblemSolverTrait: core::AlgorithmTrait + core::MinProblemSolverTraitConst {
 		fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void;
 	
 		/// Setter for the optimized function.
@@ -16004,7 +16174,7 @@ pub mod core {
 		/// ## Parameters
 		/// * f: The new function to optimize.
 		#[inline]
-		fn set_function(&mut self, f: &core::Ptr<dyn core::MinProblemSolver_Function>) -> Result<()> {
+		fn set_function(&mut self, f: &core::Ptr<core::MinProblemSolver_Function>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_setFunction_const_PtrLFunctionGR(self.as_raw_mut_MinProblemSolver(), f.as_raw_PtrOfMinProblemSolver_Function(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16057,8 +16227,46 @@ pub mod core {
 		
 	}
 	
+	/// Basic interface for all solvers
+	pub struct MinProblemSolver {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { MinProblemSolver }
+	
+	impl Drop for MinProblemSolver {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_MinProblemSolver_delete(instance: *mut c_void); }
+			unsafe { cv_MinProblemSolver_delete(self.as_raw_mut_MinProblemSolver()) };
+		}
+	}
+	
+	unsafe impl Send for MinProblemSolver {}
+	
+	impl core::AlgorithmTraitConst for MinProblemSolver {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for MinProblemSolver {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::MinProblemSolverTraitConst for MinProblemSolver {
+		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::MinProblemSolverTrait for MinProblemSolver {
+		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl MinProblemSolver {
+	}
+	
+	boxed_cast_base! { MinProblemSolver, core::Algorithm, cv_MinProblemSolver_to_Algorithm }
+	
 	/// Constant methods for [core::MinProblemSolver_Function]
-	pub trait MinProblemSolver_FunctionConst {
+	pub trait MinProblemSolver_FunctionTraitConst {
 		fn as_raw_MinProblemSolver_Function(&self) -> *const c_void;
 	
 		#[inline]
@@ -16090,8 +16298,8 @@ pub mod core {
 		
 	}
 	
-	/// Represents function being optimized
-	pub trait MinProblemSolver_Function: core::MinProblemSolver_FunctionConst {
+	/// Mutable methods for [core::MinProblemSolver_Function]
+	pub trait MinProblemSolver_FunctionTrait: core::MinProblemSolver_FunctionTraitConst {
 		fn as_raw_mut_MinProblemSolver_Function(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -16103,6 +16311,34 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// Represents function being optimized
+	pub struct MinProblemSolver_Function {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { MinProblemSolver_Function }
+	
+	impl Drop for MinProblemSolver_Function {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_MinProblemSolver_Function_delete(instance: *mut c_void); }
+			unsafe { cv_MinProblemSolver_Function_delete(self.as_raw_mut_MinProblemSolver_Function()) };
+		}
+	}
+	
+	unsafe impl Send for MinProblemSolver_Function {}
+	
+	impl core::MinProblemSolver_FunctionTraitConst for MinProblemSolver_Function {
+		#[inline] fn as_raw_MinProblemSolver_Function(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::MinProblemSolver_FunctionTrait for MinProblemSolver_Function {
+		#[inline] fn as_raw_mut_MinProblemSolver_Function(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl MinProblemSolver_Function {
 	}
 	
 	/// struct returned by cv::moments
@@ -16658,7 +16894,7 @@ pub mod core {
 	}
 	
 	/// Constant methods for [core::ParallelLoopBody]
-	pub trait ParallelLoopBodyConst {
+	pub trait ParallelLoopBodyTraitConst {
 		fn as_raw_ParallelLoopBody(&self) -> *const c_void;
 	
 		#[inline]
@@ -16672,12 +16908,40 @@ pub mod core {
 		
 	}
 	
+	/// Mutable methods for [core::ParallelLoopBody]
+	pub trait ParallelLoopBodyTrait: core::ParallelLoopBodyTraitConst {
+		fn as_raw_mut_ParallelLoopBody(&mut self) -> *mut c_void;
+	
+	}
+	
 	/// Base class for parallel data processors
 	/// 
 	/// @ingroup core_parallel
-	pub trait ParallelLoopBody: core::ParallelLoopBodyConst {
-		fn as_raw_mut_ParallelLoopBody(&mut self) -> *mut c_void;
+	pub struct ParallelLoopBody {
+		ptr: *mut c_void
+	}
 	
+	opencv_type_boxed! { ParallelLoopBody }
+	
+	impl Drop for ParallelLoopBody {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_ParallelLoopBody_delete(instance: *mut c_void); }
+			unsafe { cv_ParallelLoopBody_delete(self.as_raw_mut_ParallelLoopBody()) };
+		}
+	}
+	
+	unsafe impl Send for ParallelLoopBody {}
+	
+	impl core::ParallelLoopBodyTraitConst for ParallelLoopBody {
+		#[inline] fn as_raw_ParallelLoopBody(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::ParallelLoopBodyTrait for ParallelLoopBody {
+		#[inline] fn as_raw_mut_ParallelLoopBody(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl ParallelLoopBody {
 	}
 	
 	/// Constant methods for [core::RNG]
@@ -19046,17 +19310,13 @@ pub mod core {
 	boxed_cast_base! { SparseMatIterator, core::SparseMatConstIterator, cv_SparseMatIterator_to_SparseMatConstIterator }
 	
 	/// Constant methods for [core::TLSDataContainer]
-	pub trait TLSDataContainerConst {
+	pub trait TLSDataContainerTraitConst {
 		fn as_raw_TLSDataContainer(&self) -> *const c_void;
 	
 	}
 	
-	/// TLS container base implementation
-	/// 
-	/// Don't use directly.
-	/// ## See also
-	/// TLSData, TLSDataAccumulator templates
-	pub trait TLSDataContainer: core::TLSDataContainerConst {
+	/// Mutable methods for [core::TLSDataContainer]
+	pub trait TLSDataContainerTrait: core::TLSDataContainerTraitConst {
 		fn as_raw_mut_TLSDataContainer(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -19068,6 +19328,38 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// TLS container base implementation
+	/// 
+	/// Don't use directly.
+	/// ## See also
+	/// TLSData, TLSDataAccumulator templates
+	pub struct TLSDataContainer {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { TLSDataContainer }
+	
+	impl Drop for TLSDataContainer {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_TLSDataContainer_delete(instance: *mut c_void); }
+			unsafe { cv_TLSDataContainer_delete(self.as_raw_mut_TLSDataContainer()) };
+		}
+	}
+	
+	unsafe impl Send for TLSDataContainer {}
+	
+	impl core::TLSDataContainerTraitConst for TLSDataContainer {
+		#[inline] fn as_raw_TLSDataContainer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::TLSDataContainerTrait for TLSDataContainer {
+		#[inline] fn as_raw_mut_TLSDataContainer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl TLSDataContainer {
 	}
 	
 	/// The class defining termination criteria for iterative algorithms.
@@ -21933,12 +22225,12 @@ pub mod core {
 	
 		/// Returns the allocator associated with the stream.
 		#[inline]
-		fn get_allocator(&self) -> Result<core::Ptr<dyn core::GpuMat_Allocator>> {
+		fn get_allocator(&self) -> Result<core::Ptr<core::GpuMat_Allocator>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BufferPool_getAllocator_const(self.as_raw_BufferPool(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<dyn core::GpuMat_Allocator>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<core::GpuMat_Allocator>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -23459,15 +23751,15 @@ pub mod core {
 		
 		/// allocator
 		#[inline]
-		fn allocator(&mut self) -> types::AbstractRefMut<dyn core::GpuMat_Allocator> {
+		fn allocator(&mut self) -> core::GpuMat_Allocator {
 			let ret = unsafe { sys::cv_cuda_GpuMat_getPropAllocator(self.as_raw_mut_GpuMat()) };
-			let ret = unsafe { types::AbstractRefMut::<dyn core::GpuMat_Allocator>::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat_Allocator::opencv_from_extern(ret) };
 			ret
 		}
 		
 		/// allocator
 		#[inline]
-		unsafe fn set_allocator(&mut self, val: &mut dyn core::GpuMat_Allocator) {
+		unsafe fn set_allocator(&mut self, val: &mut core::GpuMat_Allocator) {
 			let ret = { sys::cv_cuda_GpuMat_setPropAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_mut_GpuMat_Allocator()) };
 			ret
 		}
@@ -23683,17 +23975,17 @@ pub mod core {
 	impl GpuMat {
 		/// default allocator
 		#[inline]
-		pub fn default_allocator() -> Result<types::AbstractRefMut<'static, dyn core::GpuMat_Allocator>> {
+		pub fn default_allocator() -> Result<core::GpuMat_Allocator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_defaultAllocator(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { types::AbstractRefMut::<'static, dyn core::GpuMat_Allocator>::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMat_Allocator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		#[inline]
-		pub unsafe fn set_default_allocator(allocator: &mut dyn core::GpuMat_Allocator) -> Result<()> {
+		pub unsafe fn set_default_allocator(allocator: &mut core::GpuMat_Allocator) -> Result<()> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -23706,7 +23998,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new(allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new(allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -23720,7 +24012,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX(rows, cols, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -23732,7 +24024,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new_size(size: core::Size, typ: i32, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new_size(size: core::Size, typ: i32, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX(size.opencv_as_extern(), typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -23746,7 +24038,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX(rows, cols, typ, s.opencv_as_extern(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -23758,7 +24050,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX(size.opencv_as_extern(), typ, s.opencv_as_extern(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -23830,7 +24122,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn from_hostmem(arr: &dyn core::ToInputArray, allocator: &mut dyn core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn from_hostmem(arr: &dyn core::ToInputArray, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
 			extern_container_arg!(arr);
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
@@ -23851,12 +24143,13 @@ pub mod core {
 	}
 	
 	/// Constant methods for [core::GpuMat_Allocator]
-	pub trait GpuMat_AllocatorConst {
+	pub trait GpuMat_AllocatorTraitConst {
 		fn as_raw_GpuMat_Allocator(&self) -> *const c_void;
 	
 	}
 	
-	pub trait GpuMat_Allocator: core::GpuMat_AllocatorConst {
+	/// Mutable methods for [core::GpuMat_Allocator]
+	pub trait GpuMat_AllocatorTrait: core::GpuMat_AllocatorTraitConst {
 		fn as_raw_mut_GpuMat_Allocator(&mut self) -> *mut c_void;
 	
 		#[inline]
@@ -23877,6 +24170,33 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	pub struct GpuMat_Allocator {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GpuMat_Allocator }
+	
+	impl Drop for GpuMat_Allocator {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_GpuMat_Allocator_delete(instance: *mut c_void); }
+			unsafe { cv_GpuMat_Allocator_delete(self.as_raw_mut_GpuMat_Allocator()) };
+		}
+	}
+	
+	unsafe impl Send for GpuMat_Allocator {}
+	
+	impl core::GpuMat_AllocatorTraitConst for GpuMat_Allocator {
+		#[inline] fn as_raw_GpuMat_Allocator(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::GpuMat_AllocatorTrait for GpuMat_Allocator {
+		#[inline] fn as_raw_mut_GpuMat_Allocator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl GpuMat_Allocator {
 	}
 	
 	/// Constant methods for [core::GpuMatND]
@@ -24892,7 +25212,7 @@ pub mod core {
 		
 		/// creates a new asynchronous stream with custom allocator
 		#[inline]
-		pub fn new(allocator: &core::Ptr<dyn core::GpuMat_Allocator>) -> Result<core::Stream> {
+		pub fn new(allocator: &core::Ptr<core::GpuMat_Allocator>) -> Result<core::Stream> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_Stream_const_PtrLAllocatorGR(allocator.as_raw_PtrOfGpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
