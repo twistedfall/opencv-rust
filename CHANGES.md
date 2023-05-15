@@ -1,3 +1,6 @@
+* 0.81.4
+  * Change the way the binding generator is run decreasing the complexity and improving the compatibility with vendored builds.
+
 * 0.81.3
   * Don't require `runtime` feature of `clang`.
 

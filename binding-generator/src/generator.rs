@@ -457,7 +457,7 @@ impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 }
 
 impl Generator {
-	pub fn new(opencv_include_dir: &Path, additional_include_dirs: &[PathBuf], src_cpp_dir: &Path, clang: Clang) -> Self {
+	pub fn new(opencv_include_dir: &Path, additional_include_dirs: &[&Path], src_cpp_dir: &Path) -> Self {
 		let clang_bin = clang_sys::support::Clang::find(None, &[]).expect("Can't find clang binary");
 		let mut clang_include_dirs = clang_bin.cpp_search_paths.unwrap_or_default();
 		for additional_dir in additional_include_dirs {
@@ -481,7 +481,7 @@ impl Generator {
 			opencv_include_dir: canonicalize(opencv_include_dir).expect("Can't canonicalize opencv_include_dir"),
 			opencv_module_header_dir: canonicalize(opencv_module_header_dir).expect("Can't canonicalize opencv_module_header_dir"),
 			src_cpp_dir: canonicalize(src_cpp_dir).expect("Can't canonicalize src_cpp_dir"),
-			clang,
+			clang: Clang::new().expect("Can't initialize clang"),
 		}
 	}
 

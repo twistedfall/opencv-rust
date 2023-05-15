@@ -3,7 +3,7 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::{env, fmt, mem};
 
-use clang::{Clang, Entity, EntityKind, Type};
+use clang::{Entity, EntityKind, Type};
 
 use opencv_binding_generator::{
 	opencv_module_from_path, settings, Class, CppNameStyle, Element, EntityExt, EntityWalker, EntityWalkerVisitor, Func, FuncId,
@@ -120,8 +120,7 @@ fn main() {
 				p.set_extension("");
 				p.file_name().and_then(|f| f.to_str()).map(|f| f.to_string())
 			});
-		let clang = Clang::new().expect("Cannot initialize clang");
-		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir, clang);
+		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir);
 		for module in modules {
 			println!("  {module}");
 			gen.process_module(&module, false, |root_tu, _hdr| {

@@ -1,15 +1,121 @@
-use std::ffi::OsStr;
+use std::ffi::{OsStr, OsString};
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::{Path, PathBuf};
-use std::process::{Child, Command};
+use std::process::Command;
 use std::sync::Arc;
 use std::time::Instant;
 use std::{env, fs, io, thread};
 
+use opencv_binding_generator::{Generator, IteratorExt};
+
 use crate::docs::transfer_bindings_to_docs;
 
-use super::{files_with_extension, files_with_predicate, Library, Result, HOST_TRIPLE, MODULES, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
+use super::{files_with_extension, files_with_predicate, Library, Result, MODULES, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
+
+pub struct BindingGenerator {
+	build_script_path: OsString,
+}
+
+impl BindingGenerator {
+	pub fn new(build_script_path: OsString) -> Self {
+		Self { build_script_path }
+	}
+
+	pub fn generate_wrapper(&self, opencv_header_dir: &Path, opencv: &Library) -> Result<()> {
+		let target_docs_dir = env::var_os("OCVRS_DOCS_GENERATE_DIR").map(PathBuf::from);
+		let target_module_dir = OUT_DIR.join("opencv");
+		let manual_dir = SRC_DIR.join("manual");
+
+		eprintln!("=== Generating code in: {}", OUT_DIR.display());
+		eprintln!("=== Placing generated bindings into: {}", target_module_dir.display());
+		if let Some(target_docs_dir) = target_docs_dir.as_ref() {
+			eprintln!(
+				"=== Placing static generated docs bindings into: {}",
+				target_docs_dir.display()
+			);
+		}
+		eprintln!("=== Using OpenCV headers from: {}", opencv_header_dir.display());
+
+		let non_dll_files = files_with_predicate(&OUT_DIR, |p| {
+			p.extension().map_or(true, |ext| !ext.eq_ignore_ascii_case("dll"))
+		})?;
+		for path in non_dll_files {
+			let _ = fs::remove_file(path);
+		}
+
+		let modules = MODULES.get().expect("MODULES not initialized");
+
+		self.run(modules, opencv_header_dir, opencv)?;
+
+		collect_generated_bindings(modules, &target_module_dir, &manual_dir)?;
+
+		if let Some(target_docs_dir) = target_docs_dir {
+			if !target_docs_dir.exists() {
+				fs::create_dir(&target_docs_dir)?;
+			}
+			transfer_bindings_to_docs(&OUT_DIR, &target_docs_dir);
+		}
+
+		Ok(())
+	}
+
+	fn run(&self, modules: &'static [String], opencv_header_dir: &Path, opencv: &Library) -> Result<()> {
+		let additional_include_dirs = opencv
+			.include_paths
+			.iter()
+			.map(|path| path.as_path())
+			.filter(|&include_path| include_path != opencv_header_dir)
+			.collect::<Vec<_>>();
+
+		eprintln!("=== Clang: {}", clang::get_version());
+		let gen = Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR);
+		eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
+
+		let additional_include_dirs = Arc::new(
+			additional_include_dirs
+				.into_iter()
+				.map(|p| p.to_str().expect("Can't convert additional include dir to UTF-8 string"))
+				.join(","),
+		);
+		let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
+		let job_server = build_job_server()?;
+		let mut join_handles = Vec::with_capacity(modules.len());
+		let start = Instant::now();
+		// todo use thread::scope when MSRV is 1.63
+		modules.iter().for_each(|module| {
+			let token = job_server.acquire().expect("Can't acquire token from job server");
+			let join_handle = thread::spawn({
+				let additional_include_dirs = Arc::clone(&additional_include_dirs);
+				let opencv_header_dir = Arc::clone(&opencv_header_dir);
+				let build_script_path = self.build_script_path.clone();
+				move || {
+					let module_start = Instant::now();
+					let mut bin_generator = Command::new(build_script_path);
+					bin_generator
+						.arg(&*opencv_header_dir)
+						.arg(&*SRC_CPP_DIR)
+						.arg(&*OUT_DIR)
+						.arg(module)
+						.arg(&*additional_include_dirs);
+					eprintln!("=== Running: {bin_generator:?}");
+					let res = bin_generator.status().expect("Can't run bindings generator");
+					if !res.success() {
+						panic!("Failed to run the bindings generator");
+					}
+					eprintln!("=== Generated: {module} in {:?}", module_start.elapsed());
+					drop(token); // needed to move the token to the thread
+				}
+			});
+			join_handles.push(join_handle);
+		});
+		for join_handle in join_handles {
+			join_handle.join().expect("Generator process panicked");
+		}
+		eprintln!("=== Total binding generation time: {:?}", start.elapsed());
+		Ok(())
+	}
+}
 
 fn is_type_file(path: &Path, module: &str) -> bool {
 	path.file_stem().and_then(OsStr::to_str).map_or(false, |stem| {
@@ -29,89 +135,6 @@ fn copy_indent(mut read: impl BufRead, mut write: impl Write, indent: &str) -> R
 		write.write_all(&line)?;
 		line.clear();
 	}
-	Ok(())
-}
-
-fn run_binding_generator(
-	modules: &'static [String],
-	mut generator_build: Child,
-	job_server: jobserver::Client,
-	opencv_header_dir: &Path,
-	opencv: &Library,
-) -> Result<()> {
-	let additional_include_dirs = opencv
-		.include_paths
-		.iter()
-		.filter(|&include_path| include_path != opencv_header_dir)
-		.cloned()
-		.collect::<Vec<_>>();
-
-	let clang = clang::Clang::new().expect("Cannot initialize clang");
-	eprintln!("=== Clang: {}", clang::get_version());
-	let gen = opencv_binding_generator::Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR, clang);
-	eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
-
-	eprintln!("=== Building binding-generator binary:");
-	if let Some(child_stderr) = generator_build.stderr.take() {
-		for line in BufReader::new(child_stderr).lines().flatten() {
-			eprintln!("=== {line}");
-		}
-	}
-	if let Some(child_stdout) = generator_build.stdout.take() {
-		for line in BufReader::new(child_stdout).lines().flatten() {
-			eprintln!("=== {line}");
-		}
-	}
-	let child_status = generator_build.wait()?;
-	if !child_status.success() {
-		return Err("Failed to build the bindings generator".into());
-	}
-
-	let additional_include_dirs = Arc::new(
-		additional_include_dirs
-			.iter()
-			.cloned()
-			.map(|p| {
-				p.to_str()
-					.expect("Can't convert additional include dir to UTF-8 string")
-					.to_string()
-			})
-			.collect::<Vec<_>>(),
-	);
-	let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
-	let mut join_handles = Vec::with_capacity(modules.len());
-	let start = Instant::now();
-	modules.iter().for_each(|module| {
-		let token = job_server.acquire().expect("Can't acquire token from job server");
-		let join_handle = thread::spawn({
-			let additional_include_dirs = Arc::clone(&additional_include_dirs);
-			let opencv_header_dir = Arc::clone(&opencv_header_dir);
-			move || {
-				let mut bin_generator = match HOST_TRIPLE.as_ref() {
-					Some(host_triple) => Command::new(OUT_DIR.join(format!("{host_triple}/release/binding-generator"))),
-					None => Command::new(OUT_DIR.join("release/binding-generator")),
-				};
-				bin_generator
-					.arg(&*opencv_header_dir)
-					.arg(&*SRC_CPP_DIR)
-					.arg(&*OUT_DIR)
-					.arg(module)
-					.arg(additional_include_dirs.join(","));
-				eprintln!("=== Running: {bin_generator:?}");
-				let res = bin_generator.status().expect("Can't run bindings generator");
-				if !res.success() {
-					panic!("Failed to run the bindings generator");
-				}
-				eprintln!("=== Generated: {module}");
-				drop(token); // needed to move the token to the thread
-			}
-		});
-		join_handles.push(join_handle);
-	});
-	for join_handle in join_handles {
-		join_handle.join().expect("Generator thread panicked");
-	}
-	eprintln!("=== Total binding generation time: {:?}", start.elapsed());
 	Ok(())
 }
 
@@ -256,45 +279,28 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 	Ok(())
 }
 
-pub fn gen_wrapper(
-	opencv_header_dir: &Path,
-	opencv: &Library,
-	job_server: jobserver::Client,
-	generator_build: Child,
-) -> Result<()> {
-	let target_docs_dir = env::var_os("OCVRS_DOCS_GENERATE_DIR").map(PathBuf::from);
-	let target_module_dir = OUT_DIR.join("opencv");
-	let manual_dir = SRC_DIR.join("manual");
-
-	eprintln!("=== Generating code in: {}", OUT_DIR.display());
-	eprintln!("=== Placing generated bindings into: {}", target_module_dir.display());
-	if let Some(target_docs_dir) = target_docs_dir.as_ref() {
-		eprintln!(
-			"=== Placing static generated docs bindings into: {}",
-			target_docs_dir.display()
-		);
-	}
-	eprintln!("=== Using OpenCV headers from: {}", opencv_header_dir.display());
-
-	let non_dll_files = files_with_predicate(&OUT_DIR, |p| {
-		p.extension().map_or(true, |ext| !ext.eq_ignore_ascii_case("dll"))
-	})?;
-	for path in non_dll_files {
-		let _ = fs::remove_file(path);
-	}
-
-	let modules = MODULES.get().expect("MODULES not initialized");
-
-	run_binding_generator(modules, generator_build, job_server, opencv_header_dir, opencv)?;
-
-	collect_generated_bindings(modules, &target_module_dir, &manual_dir)?;
-
-	if let Some(target_docs_dir) = target_docs_dir {
-		if !target_docs_dir.exists() {
-			fs::create_dir(&target_docs_dir)?;
-		}
-		transfer_bindings_to_docs(&OUT_DIR, &target_docs_dir);
-	}
-
-	Ok(())
+fn build_job_server() -> Result<jobserver::Client> {
+	unsafe { jobserver::Client::from_env() }
+		.and_then(|c| {
+			let available_jobs = c.available().unwrap_or(0);
+			if available_jobs > 0 {
+				eprintln!("=== Using environment job server with the the amount of available jobs: {available_jobs}");
+				Some(c)
+			} else {
+				eprintln!(
+					"=== Available jobs from the environment created jobserver is: {available_jobs} or there is an error reading that value"
+				);
+				None
+			}
+		})
+		.or_else(|| {
+			let num_jobs = env::var("NUM_JOBS")
+				.ok()
+				.and_then(|jobs| jobs.parse().ok())
+				.unwrap_or(2)
+				.max(1);
+			eprintln!("=== Creating a new job server with num_jobs: {num_jobs}");
+			jobserver::Client::new(num_jobs).ok()
+		})
+		.ok_or_else(|| "Can't create job server".into())
 }

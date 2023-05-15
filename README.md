@@ -297,10 +297,6 @@ The following variables affect the building the of the `opencv` crate, but belon
   and [this SO answer](https://stackoverflow.com/a/3172515) for more info. Path specified here must contain
   `*.dylib` files.
 
-* `HOST_TRIPLE`
-  If you set default build target in [Cargo configuration file](https://doc.rust-lang.org/cargo/reference/config.html),
-  you need set `HOST_TRIPLE` to same target value.
-
 * `PATH`
   Windows searches for `*.dll`s in `PATH` among other places, be sure to set it up, or copy required OpenCV
   `*.dll`s next to your binary. Be sure to specify paths in UNIX style (/C/Program Files/Dir) because colon

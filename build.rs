@@ -3,9 +3,8 @@ use std::ffi::OsStr;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
-use std::process::{Child, Command, Stdio};
 use std::time::Instant;
-use std::{env, io, iter};
+use std::{env, iter};
 
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
@@ -13,7 +12,10 @@ use semver::{Version, VersionReq};
 use library::Library;
 
 use crate::docs::{handle_running_in_docsrs, GenerateFullBindings};
+use crate::generator::BindingGenerator;
 
+#[path = "build/binding-generator.rs"]
+mod binding_generator;
 #[path = "build/cmake_probe.rs"]
 mod cmake_probe;
 #[path = "build/docs.rs"]
@@ -32,7 +34,6 @@ static MANIFEST_DIR: Lazy<PathBuf> =
 	Lazy::new(|| PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var")));
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
-static HOST_TRIPLE: Lazy<Option<String>> = Lazy::new(|| env::var("HOST_TRIPLE").ok());
 static TARGET_ENV_MSVC: Lazy<bool> =
 	Lazy::new(|| env::var("CARGO_CFG_TARGET_ENV").map_or(false, |target_env| target_env == "msvc"));
 static TARGET_VENDOR_APPLE: Lazy<bool> =
@@ -47,7 +48,7 @@ static OPENCV_BRANCH_34: Lazy<VersionReq> =
 static OPENCV_BRANCH_4: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
 
-static ENV_VARS: [&str; 17] = [
+static ENV_VARS: [&str; 16] = [
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
 	"OPENCV_CMAKE_NAME",
@@ -64,7 +65,6 @@ static ENV_VARS: [&str; 17] = [
 	"VCPKGRS_DYNAMIC",
 	"OCVRS_DOCS_GENERATE_DIR",
 	"DOCS_RS",
-	"HOST_TRIPLE",
 ];
 
 fn files_with_predicate<'p>(
@@ -252,56 +252,6 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 	out
 }
 
-fn build_job_server() -> Option<jobserver::Client> {
-	unsafe { jobserver::Client::from_env() }
-		.and_then(|c| {
-			let available_jobs = c.available().unwrap_or(0);
-			if available_jobs > 0 {
-				eprintln!("=== Using environment job server with the the amount of available jobs: {available_jobs}");
-				Some(c)
-			} else {
-				eprintln!(
-					"=== Available jobs from the environment created jobserver is: {available_jobs} or there is an error reading that value"
-				);
-				None
-			}
-		})
-		.or_else(|| {
-			let num_jobs = env::var("NUM_JOBS")
-				.ok()
-				.and_then(|jobs| jobs.parse().ok())
-				.unwrap_or(2)
-				.max(1);
-			eprintln!("=== Creating a new job server with num_jobs: {num_jobs}");
-			jobserver::Client::new(num_jobs).ok()
-		})
-}
-
-// todo: replace by https://github.com/rust-lang/cargo/issues/9096 when stable
-fn build_clang_generator() -> io::Result<Child> {
-	let cargo_bin = PathBuf::from(env::var_os("CARGO").unwrap_or_else(|| "cargo".into()));
-	let mut cargo = Command::new(cargo_bin);
-	// generator script is quite slow in debug mode, so we force it to be built in release mode
-	cargo
-		.args([
-			"build",
-			"--release",
-			"--package",
-			"opencv-binding-generator",
-			"--bin",
-			"binding-generator",
-		])
-		.env("CARGO_TARGET_DIR", &*OUT_DIR)
-		.env_remove("CARGO_ENCODED_RUSTFLAGS"); // RUSTFLAGS are meant to affect final build artifacts only
-	if let Some(host_triple) = HOST_TRIPLE.as_ref() {
-		cargo.args(["--target", host_triple]);
-	}
-	println!("=== Running: {cargo:?}");
-	cargo.stdout(Stdio::piped());
-	cargo.stderr(Stdio::piped());
-	cargo.spawn()
-}
-
 fn setup_rerun() -> Result<()> {
 	for &v in ENV_VARS.iter() {
 		println!("cargo:rerun-if-env-changed={v}");
@@ -341,8 +291,16 @@ fn main() -> Result<()> {
 		return Ok(());
 	}
 
-	let job_server = build_job_server().ok_or("Can't create job server")?;
-	let generator_build = build_clang_generator()?;
+	// Because clang can't be used from multiple threads we run the binding generator helper for each
+	// module as a separate process. Building an additional helper binary from the build script is problematic
+	// so we employ the trick and we actually run the build script itself again with some additional arguments.
+	// When those arguments are detected the build script will generate the bindings for a single
+	// OpenCV module instead of running its main logic.
+	let mut args = env::args_os().peekable();
+	let build_script_path = args.next().ok_or("Can't read build script path")?;
+	if args.peek().is_some() {
+		return binding_generator::run(args);
+	}
 
 	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));
 	eprintln!("=== Environment configuration:");
@@ -415,7 +373,8 @@ fn main() -> Result<()> {
 
 	setup_rerun()?;
 
-	generator::gen_wrapper(opencv_header_dir, &opencv, job_server, generator_build)?;
+	let binding_generator = BindingGenerator::new(build_script_path);
+	binding_generator.generate_wrapper(opencv_header_dir, &opencv)?;
 	build_wrapper(&opencv);
 	// -l linker args should be emitted after -l static
 	opencv.emit_cargo_metadata();
