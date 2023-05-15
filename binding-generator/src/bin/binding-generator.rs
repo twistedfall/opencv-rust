@@ -1,12 +1,12 @@
 use std::env;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::io::BufReader;
 use std::path::{Path, PathBuf};
 
 use clang::Clang;
 
 use opencv_binding_generator::writer::RustNativeBindingWriter;
-use opencv_binding_generator::Generator;
+use opencv_binding_generator::{line_reader, Generator};
 
 fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
 	let out = header_dir.join("opencv2/core/version.hpp");
@@ -27,12 +27,8 @@ fn get_version_from_headers(header_dir: &Path) -> Option<String> {
 	let mut major = None;
 	let mut minor = None;
 	let mut revision = None;
-	let mut line = String::with_capacity(256);
-	let mut reader = BufReader::new(File::open(version_hpp).ok()?);
-	while let Ok(bytes_read) = reader.read_line(&mut line) {
-		if bytes_read == 0 {
-			break;
-		}
+	let reader = BufReader::new(File::open(version_hpp).ok()?);
+	line_reader(reader, |line| {
 		if let Some(line) = line.strip_prefix("#define CV_VERSION_") {
 			let mut parts = line.split_whitespace();
 			if let (Some(ver_spec), Some(version)) = (parts.next(), parts.next()) {
@@ -50,11 +46,11 @@ fn get_version_from_headers(header_dir: &Path) -> Option<String> {
 				}
 			}
 			if major.is_some() && minor.is_some() && revision.is_some() {
-				break;
+				return false;
 			}
 		}
-		line.clear();
-	}
+		true
+	});
 	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
 		Some(format!("{major}.{minor}.{revision}"))
 	} else {

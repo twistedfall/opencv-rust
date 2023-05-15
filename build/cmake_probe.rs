@@ -80,7 +80,7 @@ impl<'r> CmakeProbe<'r> {
 
 	fn extract_from_output(output: &Output, version: &mut Option<Version>, opencv_include_paths: &mut Vec<PathBuf>) -> Result<()> {
 		if output.status.success() {
-			let mut line = String::new();
+			let mut line = String::with_capacity(256);
 			let mut reader = BufReader::new(output.stderr.as_slice());
 			while let Ok(bytes_read) = reader.read_line(&mut line) {
 				if bytes_read == 0 {
@@ -174,7 +174,7 @@ impl<'r> CmakeProbe<'r> {
 		link_libs: &mut Vec<String>,
 	) -> Result<()> {
 		let mut link_cmdline = BufReader::new(File::open(self.build_dir.join("build.ninja"))?);
-		let mut line = String::new();
+		let mut line = String::with_capacity(2048);
 		#[derive(Copy, Clone)]
 		enum State {
 			Searching,

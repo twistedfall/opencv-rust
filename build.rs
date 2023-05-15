@@ -158,13 +158,13 @@ fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
 			if let (Some(ver_spec), Some(version)) = (parts.next(), parts.next()) {
 				match ver_spec {
 					"MAJOR" => {
-						major = Some(version.to_string());
+						major = Some(version.parse().ok()?);
 					}
 					"MINOR" => {
-						minor = Some(version.to_string());
+						minor = Some(version.parse().ok()?);
 					}
 					"REVISION" => {
-						revision = Some(version.to_string());
+						revision = Some(version.parse().ok()?);
 					}
 					_ => {}
 				}
@@ -176,7 +176,7 @@ fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
 		line.clear();
 	}
 	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
-		Some(Version::new(major.parse().ok()?, minor.parse().ok()?, revision.parse().ok()?))
+		Some(Version::new(major, minor, revision))
 	} else {
 		None
 	}
