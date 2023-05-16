@@ -18,3 +18,6 @@ maplit = "1"
 once_cell = "1"
 percent-encoding = "2"
 regex = "1"
+
+[features]
+clang-runtime = ["clang/runtime", "clang-sys/runtime"]

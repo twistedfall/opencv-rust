@@ -1,3 +1,6 @@
+* 0.81.5
+  * Bring back the `clang-runtime` feature to improve cooperation with other crates.
+
 * 0.81.4
   * Change the way the binding generator is run decreasing the complexity and improving the compatibility with vendored builds.
 
@@ -5,10 +8,10 @@
   * Don't require `runtime` feature of `clang`.
 
 * 0.81.2
-  * Fix building when crosscompiling with target-specific RUSTFLAGS
+  * Fix building when crosscompiling with target-specific RUSTFLAGS.
 
 * 0.81.1
-  * Fix building on macOS (fixes https://github.com/twistedfall/opencv-rust/issues/460)
+  * Fix building on macOS (fixes https://github.com/twistedfall/opencv-rust/issues/460).
 
 * 0.81.0
   * Fix compilation when using clang-6.

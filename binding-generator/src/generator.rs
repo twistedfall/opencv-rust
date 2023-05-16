@@ -505,6 +505,10 @@ impl Generator {
 		}
 	}
 
+	pub fn clang_version(&self) -> String {
+		clang::get_version()
+	}
+
 	pub fn build_clang_command_line_args(&self) -> Vec<Cow<'static, str>> {
 		let mut args = self
 			.clang_include_dirs

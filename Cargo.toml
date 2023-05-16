@@ -71,7 +71,6 @@ rgb = { version = "0.8.20", features = ["argb"], optional = true }
 [build-dependencies]
 opencv-binding-generator = { version = "0.63.0", path = "binding-generator" }
 cc = { version = "1", features = ["parallel"] }
-clang = { version = "2", features = ["clang_6_0"] }
 dunce = "1"
 # jobserver-0.1.25 is the first one that has Client::available() method
 jobserver = "0.1.25"
@@ -222,6 +221,7 @@ ximgproc = ["calib3d"]
 xobjdetect = []
 xphoto = ["photo"]
 wechat_qrcode = []
+clang-runtime = ["opencv-binding-generator/clang-runtime"]
 
 [package.metadata.docs.rs]
 no-default-features = true

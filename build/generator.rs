@@ -68,8 +68,8 @@ impl BindingGenerator {
 			.filter(|&include_path| include_path != opencv_header_dir)
 			.collect::<Vec<_>>();
 
-		eprintln!("=== Clang: {}", clang::get_version());
 		let gen = Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR);
+		eprintln!("=== Clang: {}", gen.clang_version());
 		eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 
 		let additional_include_dirs = Arc::new(
