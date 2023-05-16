@@ -282,6 +282,7 @@ pub mod flann {
 	opencv_type_boxed! { AutotunedIndexParams }
 	
 	impl Drop for AutotunedIndexParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AutotunedIndexParams_delete(instance: *mut c_void); }
 			unsafe { cv_AutotunedIndexParams_delete(self.as_raw_mut_AutotunedIndexParams()) };
@@ -345,6 +346,7 @@ pub mod flann {
 	opencv_type_boxed! { CompositeIndexParams }
 	
 	impl Drop for CompositeIndexParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CompositeIndexParams_delete(instance: *mut c_void); }
 			unsafe { cv_CompositeIndexParams_delete(self.as_raw_mut_CompositeIndexParams()) };
@@ -409,6 +411,7 @@ pub mod flann {
 	opencv_type_boxed! { HierarchicalClusteringIndexParams }
 	
 	impl Drop for HierarchicalClusteringIndexParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_HierarchicalClusteringIndexParams_delete(instance: *mut c_void); }
 			unsafe { cv_HierarchicalClusteringIndexParams_delete(self.as_raw_mut_HierarchicalClusteringIndexParams()) };
@@ -560,6 +563,7 @@ pub mod flann {
 	opencv_type_boxed! { Index }
 	
 	impl Drop for Index {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Index_delete(instance: *mut c_void); }
 			unsafe { cv_Index_delete(self.as_raw_mut_Index()) };
@@ -740,6 +744,7 @@ pub mod flann {
 	opencv_type_boxed! { IndexParams }
 	
 	impl Drop for IndexParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_IndexParams_delete(instance: *mut c_void); }
 			unsafe { cv_IndexParams_delete(self.as_raw_mut_IndexParams()) };
@@ -788,6 +793,7 @@ pub mod flann {
 	opencv_type_boxed! { KDTreeIndexParams }
 	
 	impl Drop for KDTreeIndexParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KDTreeIndexParams_delete(instance: *mut c_void); }
 			unsafe { cv_KDTreeIndexParams_delete(self.as_raw_mut_KDTreeIndexParams()) };
@@ -848,6 +854,7 @@ pub mod flann {
 	opencv_type_boxed! { KMeansIndexParams }
 	
 	impl Drop for KMeansIndexParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KMeansIndexParams_delete(instance: *mut c_void); }
 			unsafe { cv_KMeansIndexParams_delete(self.as_raw_mut_KMeansIndexParams()) };
@@ -911,6 +918,7 @@ pub mod flann {
 	opencv_type_boxed! { LinearIndexParams }
 	
 	impl Drop for LinearIndexParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LinearIndexParams_delete(instance: *mut c_void); }
 			unsafe { cv_LinearIndexParams_delete(self.as_raw_mut_LinearIndexParams()) };
@@ -969,6 +977,7 @@ pub mod flann {
 	opencv_type_boxed! { LshIndexParams }
 	
 	impl Drop for LshIndexParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LshIndexParams_delete(instance: *mut c_void); }
 			unsafe { cv_LshIndexParams_delete(self.as_raw_mut_LshIndexParams()) };
@@ -1027,6 +1036,7 @@ pub mod flann {
 	opencv_type_boxed! { SavedIndexParams }
 	
 	impl Drop for SavedIndexParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SavedIndexParams_delete(instance: *mut c_void); }
 			unsafe { cv_SavedIndexParams_delete(self.as_raw_mut_SavedIndexParams()) };
@@ -1086,6 +1096,7 @@ pub mod flann {
 	opencv_type_boxed! { SearchParams }
 	
 	impl Drop for SearchParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SearchParams_delete(instance: *mut c_void); }
 			unsafe { cv_SearchParams_delete(self.as_raw_mut_SearchParams()) };

@@ -161,6 +161,7 @@ pub mod dnn_superres {
 	opencv_type_boxed! { DnnSuperResImpl }
 	
 	impl Drop for DnnSuperResImpl {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DnnSuperResImpl_delete(instance: *mut c_void); }
 			unsafe { cv_DnnSuperResImpl_delete(self.as_raw_mut_DnnSuperResImpl()) };

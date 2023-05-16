@@ -208,6 +208,7 @@ pub mod structured_light {
 	opencv_type_boxed! { GrayCodePattern_Params }
 	
 	impl Drop for GrayCodePattern_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GrayCodePattern_Params_delete(instance: *mut c_void); }
 			unsafe { cv_GrayCodePattern_Params_delete(self.as_raw_mut_GrayCodePattern_Params()) };
@@ -486,6 +487,7 @@ pub mod structured_light {
 	opencv_type_boxed! { SinusoidalPattern_Params }
 	
 	impl Drop for SinusoidalPattern_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SinusoidalPattern_Params_delete(instance: *mut c_void); }
 			unsafe { cv_SinusoidalPattern_Params_delete(self.as_raw_mut_SinusoidalPattern_Params()) };

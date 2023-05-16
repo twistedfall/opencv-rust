@@ -118,6 +118,7 @@ pub mod cvv {
 	opencv_type_boxed! { CallMetaData }
 	
 	impl Drop for CallMetaData {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CallMetaData_delete(instance: *mut c_void); }
 			unsafe { cv_CallMetaData_delete(self.as_raw_mut_CallMetaData()) };

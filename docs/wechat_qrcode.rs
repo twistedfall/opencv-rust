@@ -81,6 +81,7 @@ pub mod wechat_qrcode {
 	opencv_type_boxed! { WeChatQRCode }
 	
 	impl Drop for WeChatQRCode {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WeChatQRCode_delete(instance: *mut c_void); }
 			unsafe { cv_WeChatQRCode_delete(self.as_raw_mut_WeChatQRCode()) };

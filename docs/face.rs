@@ -621,6 +621,7 @@ pub mod face {
 	opencv_type_boxed! { CParams }
 	
 	impl Drop for CParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CParams_delete(instance: *mut c_void); }
 			unsafe { cv_CParams_delete(self.as_raw_mut_CParams()) };
@@ -1399,6 +1400,7 @@ pub mod face {
 	opencv_type_boxed! { FacemarkAAM_Config }
 	
 	impl Drop for FacemarkAAM_Config {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FacemarkAAM_Config_delete(instance: *mut c_void); }
 			unsafe { cv_FacemarkAAM_Config_delete(self.as_raw_mut_FacemarkAAM_Config()) };
@@ -1466,6 +1468,7 @@ pub mod face {
 	opencv_type_boxed! { FacemarkAAM_Data }
 	
 	impl Drop for FacemarkAAM_Data {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FacemarkAAM_Data_delete(instance: *mut c_void); }
 			unsafe { cv_FacemarkAAM_Data_delete(self.as_raw_mut_FacemarkAAM_Data()) };
@@ -1583,6 +1586,7 @@ pub mod face {
 	opencv_type_boxed! { FacemarkAAM_Model }
 	
 	impl Drop for FacemarkAAM_Model {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FacemarkAAM_Model_delete(instance: *mut c_void); }
 			unsafe { cv_FacemarkAAM_Model_delete(self.as_raw_mut_FacemarkAAM_Model()) };
@@ -1753,6 +1757,7 @@ pub mod face {
 	opencv_type_boxed! { FacemarkAAM_Model_Texture }
 	
 	impl Drop for FacemarkAAM_Model_Texture {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FacemarkAAM_Model_Texture_delete(instance: *mut c_void); }
 			unsafe { cv_FacemarkAAM_Model_Texture_delete(self.as_raw_mut_FacemarkAAM_Model_Texture()) };
@@ -1934,6 +1939,7 @@ pub mod face {
 	opencv_type_boxed! { FacemarkAAM_Params }
 	
 	impl Drop for FacemarkAAM_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FacemarkAAM_Params_delete(instance: *mut c_void); }
 			unsafe { cv_FacemarkAAM_Params_delete(self.as_raw_mut_FacemarkAAM_Params()) };
@@ -2184,6 +2190,7 @@ pub mod face {
 	opencv_type_boxed! { FacemarkKazemi_Params }
 	
 	impl Drop for FacemarkKazemi_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FacemarkKazemi_Params_delete(instance: *mut c_void); }
 			unsafe { cv_FacemarkKazemi_Params_delete(self.as_raw_mut_FacemarkKazemi_Params()) };
@@ -2468,6 +2475,7 @@ pub mod face {
 	opencv_type_boxed! { FacemarkLBF_Params }
 	
 	impl Drop for FacemarkLBF_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FacemarkLBF_Params_delete(instance: *mut c_void); }
 			unsafe { cv_FacemarkLBF_Params_delete(self.as_raw_mut_FacemarkLBF_Params()) };
@@ -3219,6 +3227,7 @@ pub mod face {
 	opencv_type_boxed! { StandardCollector }
 	
 	impl Drop for StandardCollector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_StandardCollector_delete(instance: *mut c_void); }
 			unsafe { cv_StandardCollector_delete(self.as_raw_mut_StandardCollector()) };

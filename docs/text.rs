@@ -1099,6 +1099,7 @@ pub mod text {
 	opencv_type_boxed! { ERStat }
 	
 	impl Drop for ERStat {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ERStat_delete(instance: *mut c_void); }
 			unsafe { cv_ERStat_delete(self.as_raw_mut_ERStat()) };
@@ -1242,6 +1243,7 @@ pub mod text {
 	opencv_type_boxed! { OCRBeamSearchDecoder }
 	
 	impl Drop for OCRBeamSearchDecoder {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_OCRBeamSearchDecoder_delete(instance: *mut c_void); }
 			unsafe { cv_OCRBeamSearchDecoder_delete(self.as_raw_mut_OCRBeamSearchDecoder()) };
@@ -1407,6 +1409,7 @@ pub mod text {
 	opencv_type_boxed! { OCRBeamSearchDecoder_ClassifierCallback }
 	
 	impl Drop for OCRBeamSearchDecoder_ClassifierCallback {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_OCRBeamSearchDecoder_ClassifierCallback_delete(instance: *mut c_void); }
 			unsafe { cv_OCRBeamSearchDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback()) };
@@ -1557,6 +1560,7 @@ pub mod text {
 	opencv_type_boxed! { OCRHMMDecoder }
 	
 	impl Drop for OCRHMMDecoder {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_OCRHMMDecoder_delete(instance: *mut c_void); }
 			unsafe { cv_OCRHMMDecoder_delete(self.as_raw_mut_OCRHMMDecoder()) };
@@ -1699,6 +1703,7 @@ pub mod text {
 	opencv_type_boxed! { OCRHMMDecoder_ClassifierCallback }
 	
 	impl Drop for OCRHMMDecoder_ClassifierCallback {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_OCRHMMDecoder_ClassifierCallback_delete(instance: *mut c_void); }
 			unsafe { cv_OCRHMMDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback()) };

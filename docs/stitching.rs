@@ -391,6 +391,7 @@ pub mod stitching {
 	opencv_type_boxed! { AffineWarper }
 	
 	impl Drop for AffineWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AffineWarper_delete(instance: *mut c_void); }
 			unsafe { cv_AffineWarper_delete(self.as_raw_mut_AffineWarper()) };
@@ -447,6 +448,7 @@ pub mod stitching {
 	opencv_type_boxed! { CompressedRectilinearPortraitWarper }
 	
 	impl Drop for CompressedRectilinearPortraitWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CompressedRectilinearPortraitWarper_delete(instance: *mut c_void); }
 			unsafe { cv_CompressedRectilinearPortraitWarper_delete(self.as_raw_mut_CompressedRectilinearPortraitWarper()) };
@@ -516,6 +518,7 @@ pub mod stitching {
 	opencv_type_boxed! { CompressedRectilinearWarper }
 	
 	impl Drop for CompressedRectilinearWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CompressedRectilinearWarper_delete(instance: *mut c_void); }
 			unsafe { cv_CompressedRectilinearWarper_delete(self.as_raw_mut_CompressedRectilinearWarper()) };
@@ -588,6 +591,7 @@ pub mod stitching {
 	opencv_type_boxed! { CylindricalWarper }
 	
 	impl Drop for CylindricalWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CylindricalWarper_delete(instance: *mut c_void); }
 			unsafe { cv_CylindricalWarper_delete(self.as_raw_mut_CylindricalWarper()) };
@@ -644,6 +648,7 @@ pub mod stitching {
 	opencv_type_boxed! { CylindricalWarperGpu }
 	
 	impl Drop for CylindricalWarperGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CylindricalWarperGpu_delete(instance: *mut c_void); }
 			unsafe { cv_CylindricalWarperGpu_delete(self.as_raw_mut_CylindricalWarperGpu()) };
@@ -700,6 +705,7 @@ pub mod stitching {
 	opencv_type_boxed! { FisheyeWarper }
 	
 	impl Drop for FisheyeWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FisheyeWarper_delete(instance: *mut c_void); }
 			unsafe { cv_FisheyeWarper_delete(self.as_raw_mut_FisheyeWarper()) };
@@ -756,6 +762,7 @@ pub mod stitching {
 	opencv_type_boxed! { MercatorWarper }
 	
 	impl Drop for MercatorWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MercatorWarper_delete(instance: *mut c_void); }
 			unsafe { cv_MercatorWarper_delete(self.as_raw_mut_MercatorWarper()) };
@@ -812,6 +819,7 @@ pub mod stitching {
 	opencv_type_boxed! { PaniniPortraitWarper }
 	
 	impl Drop for PaniniPortraitWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PaniniPortraitWarper_delete(instance: *mut c_void); }
 			unsafe { cv_PaniniPortraitWarper_delete(self.as_raw_mut_PaniniPortraitWarper()) };
@@ -881,6 +889,7 @@ pub mod stitching {
 	opencv_type_boxed! { PaniniWarper }
 	
 	impl Drop for PaniniWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PaniniWarper_delete(instance: *mut c_void); }
 			unsafe { cv_PaniniWarper_delete(self.as_raw_mut_PaniniWarper()) };
@@ -953,6 +962,7 @@ pub mod stitching {
 	opencv_type_boxed! { PlaneWarper }
 	
 	impl Drop for PlaneWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PlaneWarper_delete(instance: *mut c_void); }
 			unsafe { cv_PlaneWarper_delete(self.as_raw_mut_PlaneWarper()) };
@@ -1009,6 +1019,7 @@ pub mod stitching {
 	opencv_type_boxed! { PlaneWarperGpu }
 	
 	impl Drop for PlaneWarperGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PlaneWarperGpu_delete(instance: *mut c_void); }
 			unsafe { cv_PlaneWarperGpu_delete(self.as_raw_mut_PlaneWarperGpu()) };
@@ -1190,6 +1201,7 @@ pub mod stitching {
 	opencv_type_boxed! { PyRotationWarper }
 	
 	impl Drop for PyRotationWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PyRotationWarper_delete(instance: *mut c_void); }
 			unsafe { cv_PyRotationWarper_delete(self.as_raw_mut_PyRotationWarper()) };
@@ -1260,6 +1272,7 @@ pub mod stitching {
 	opencv_type_boxed! { SphericalWarper }
 	
 	impl Drop for SphericalWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SphericalWarper_delete(instance: *mut c_void); }
 			unsafe { cv_SphericalWarper_delete(self.as_raw_mut_SphericalWarper()) };
@@ -1316,6 +1329,7 @@ pub mod stitching {
 	opencv_type_boxed! { SphericalWarperGpu }
 	
 	impl Drop for SphericalWarperGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SphericalWarperGpu_delete(instance: *mut c_void); }
 			unsafe { cv_SphericalWarperGpu_delete(self.as_raw_mut_SphericalWarperGpu()) };
@@ -1372,6 +1386,7 @@ pub mod stitching {
 	opencv_type_boxed! { StereographicWarper }
 	
 	impl Drop for StereographicWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_StereographicWarper_delete(instance: *mut c_void); }
 			unsafe { cv_StereographicWarper_delete(self.as_raw_mut_StereographicWarper()) };
@@ -2010,6 +2025,7 @@ pub mod stitching {
 	opencv_type_boxed! { Stitcher }
 	
 	impl Drop for Stitcher {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Stitcher_delete(instance: *mut c_void); }
 			unsafe { cv_Stitcher_delete(self.as_raw_mut_Stitcher()) };
@@ -2080,6 +2096,7 @@ pub mod stitching {
 	opencv_type_boxed! { TransverseMercatorWarper }
 	
 	impl Drop for TransverseMercatorWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TransverseMercatorWarper_delete(instance: *mut c_void); }
 			unsafe { cv_TransverseMercatorWarper_delete(self.as_raw_mut_TransverseMercatorWarper()) };
@@ -2154,6 +2171,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_AffineBasedEstimator }
 	
 	impl Drop for Detail_AffineBasedEstimator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_AffineBasedEstimator_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_AffineBasedEstimator_delete(self.as_raw_mut_Detail_AffineBasedEstimator()) };
@@ -2218,6 +2236,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_AffineBestOf2NearestMatcher }
 	
 	impl Drop for Detail_AffineBestOf2NearestMatcher {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_AffineBestOf2NearestMatcher_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_AffineBestOf2NearestMatcher_delete(self.as_raw_mut_Detail_AffineBestOf2NearestMatcher()) };
@@ -2408,6 +2427,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_AffineWarper }
 	
 	impl Drop for Detail_AffineWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_AffineWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_AffineWarper_delete(self.as_raw_mut_Detail_AffineWarper()) };
@@ -2494,6 +2514,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_BestOf2NearestMatcher }
 	
 	impl Drop for Detail_BestOf2NearestMatcher {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_BestOf2NearestMatcher_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_BestOf2NearestMatcher_delete(self.as_raw_mut_Detail_BestOf2NearestMatcher()) };
@@ -2588,6 +2609,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_BestOf2NearestRangeMatcher }
 	
 	impl Drop for Detail_BestOf2NearestRangeMatcher {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_BestOf2NearestRangeMatcher_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_BestOf2NearestRangeMatcher_delete(self.as_raw_mut_Detail_BestOf2NearestRangeMatcher()) };
@@ -2726,6 +2748,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_Blender }
 	
 	impl Drop for Detail_Blender {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_Blender_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_Blender_delete(self.as_raw_mut_Detail_Blender()) };
@@ -2791,6 +2814,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_BlocksChannelsCompensator }
 	
 	impl Drop for Detail_BlocksChannelsCompensator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_BlocksChannelsCompensator_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_BlocksChannelsCompensator_delete(self.as_raw_mut_Detail_BlocksChannelsCompensator()) };
@@ -3021,6 +3045,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_BlocksGainCompensator }
 	
 	impl Drop for Detail_BlocksGainCompensator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_BlocksGainCompensator_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_BlocksGainCompensator_delete(self.as_raw_mut_Detail_BlocksGainCompensator()) };
@@ -3106,6 +3131,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_BundleAdjusterAffine }
 	
 	impl Drop for Detail_BundleAdjusterAffine {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_BundleAdjusterAffine_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_BundleAdjusterAffine_delete(self.as_raw_mut_Detail_BundleAdjusterAffine()) };
@@ -3178,6 +3204,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_BundleAdjusterAffinePartial }
 	
 	impl Drop for Detail_BundleAdjusterAffinePartial {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_BundleAdjusterAffinePartial_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_BundleAdjusterAffinePartial_delete(self.as_raw_mut_Detail_BundleAdjusterAffinePartial()) };
@@ -3313,6 +3340,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_BundleAdjusterRay }
 	
 	impl Drop for Detail_BundleAdjusterRay {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_BundleAdjusterRay_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_BundleAdjusterRay_delete(self.as_raw_mut_Detail_BundleAdjusterRay()) };
@@ -3382,6 +3410,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_BundleAdjusterReproj }
 	
 	impl Drop for Detail_BundleAdjusterReproj {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_BundleAdjusterReproj_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_BundleAdjusterReproj_delete(self.as_raw_mut_Detail_BundleAdjusterReproj()) };
@@ -3534,6 +3563,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CameraParams }
 	
 	impl Drop for Detail_CameraParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CameraParams_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CameraParams_delete(self.as_raw_mut_Detail_CameraParams()) };
@@ -3686,6 +3716,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_ChannelsCompensator }
 	
 	impl Drop for Detail_ChannelsCompensator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_ChannelsCompensator_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_ChannelsCompensator_delete(self.as_raw_mut_Detail_ChannelsCompensator()) };
@@ -3786,6 +3817,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CompressedRectilinearPortraitProjector }
 	
 	impl Drop for Detail_CompressedRectilinearPortraitProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CompressedRectilinearPortraitProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CompressedRectilinearPortraitProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector()) };
@@ -3834,6 +3866,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CompressedRectilinearPortraitWarper }
 	
 	impl Drop for Detail_CompressedRectilinearPortraitWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CompressedRectilinearPortraitWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CompressedRectilinearPortraitWarper_delete(self.as_raw_mut_Detail_CompressedRectilinearPortraitWarper()) };
@@ -3935,6 +3968,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CompressedRectilinearProjector }
 	
 	impl Drop for Detail_CompressedRectilinearProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CompressedRectilinearProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CompressedRectilinearProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearProjector()) };
@@ -3983,6 +4017,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CompressedRectilinearWarper }
 	
 	impl Drop for Detail_CompressedRectilinearWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CompressedRectilinearWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CompressedRectilinearWarper_delete(self.as_raw_mut_Detail_CompressedRectilinearWarper()) };
@@ -4060,6 +4095,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CylindricalPortraitProjector }
 	
 	impl Drop for Detail_CylindricalPortraitProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CylindricalPortraitProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CylindricalPortraitProjector_delete(self.as_raw_mut_Detail_CylindricalPortraitProjector()) };
@@ -4108,6 +4144,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CylindricalPortraitWarper }
 	
 	impl Drop for Detail_CylindricalPortraitWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CylindricalPortraitWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CylindricalPortraitWarper_delete(self.as_raw_mut_Detail_CylindricalPortraitWarper()) };
@@ -4182,6 +4219,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CylindricalProjector }
 	
 	impl Drop for Detail_CylindricalProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CylindricalProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CylindricalProjector_delete(self.as_raw_mut_Detail_CylindricalProjector()) };
@@ -4257,6 +4295,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CylindricalWarper }
 	
 	impl Drop for Detail_CylindricalWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CylindricalWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CylindricalWarper_delete(self.as_raw_mut_Detail_CylindricalWarper()) };
@@ -4367,6 +4406,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_CylindricalWarperGpu }
 	
 	impl Drop for Detail_CylindricalWarperGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CylindricalWarperGpu_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CylindricalWarperGpu_delete(self.as_raw_mut_Detail_CylindricalWarperGpu()) };
@@ -4486,6 +4526,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_DisjointSets }
 	
 	impl Drop for Detail_DisjointSets {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_DisjointSets_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_DisjointSets_delete(self.as_raw_mut_Detail_DisjointSets()) };
@@ -4573,6 +4614,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_DpSeamFinder }
 	
 	impl Drop for Detail_DpSeamFinder {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_DpSeamFinder_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_DpSeamFinder_delete(self.as_raw_mut_Detail_DpSeamFinder()) };
@@ -4847,6 +4889,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_FeatherBlender }
 	
 	impl Drop for Detail_FeatherBlender {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_FeatherBlender_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_FeatherBlender_delete(self.as_raw_mut_Detail_FeatherBlender()) };
@@ -5005,6 +5048,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_FisheyeProjector }
 	
 	impl Drop for Detail_FisheyeProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_FisheyeProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_FisheyeProjector_delete(self.as_raw_mut_Detail_FisheyeProjector()) };
@@ -5053,6 +5097,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_FisheyeWarper }
 	
 	impl Drop for Detail_FisheyeWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_FisheyeWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_FisheyeWarper_delete(self.as_raw_mut_Detail_FisheyeWarper()) };
@@ -5213,6 +5258,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_GainCompensator }
 	
 	impl Drop for Detail_GainCompensator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_GainCompensator_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_GainCompensator_delete(self.as_raw_mut_Detail_GainCompensator()) };
@@ -5306,6 +5352,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_Graph }
 	
 	impl Drop for Detail_Graph {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_Graph_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_Graph_delete(self.as_raw_mut_Detail_Graph()) };
@@ -5366,6 +5413,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_GraphCutSeamFinder }
 	
 	impl Drop for Detail_GraphCutSeamFinder {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_GraphCutSeamFinder_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_GraphCutSeamFinder_delete(self.as_raw_mut_Detail_GraphCutSeamFinder()) };
@@ -5451,6 +5499,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_GraphCutSeamFinderBase }
 	
 	impl Drop for Detail_GraphCutSeamFinderBase {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_GraphCutSeamFinderBase_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_GraphCutSeamFinderBase_delete(self.as_raw_mut_Detail_GraphCutSeamFinderBase()) };
@@ -5507,6 +5556,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_GraphCutSeamFinderGpu }
 	
 	impl Drop for Detail_GraphCutSeamFinderGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_GraphCutSeamFinderGpu_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_GraphCutSeamFinderGpu_delete(self.as_raw_mut_Detail_GraphCutSeamFinderGpu()) };
@@ -5639,6 +5689,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_GraphEdge }
 	
 	impl Drop for Detail_GraphEdge {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_GraphEdge_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_GraphEdge_delete(self.as_raw_mut_Detail_GraphEdge()) };
@@ -5688,6 +5739,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_HomographyBasedEstimator }
 	
 	impl Drop for Detail_HomographyBasedEstimator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_HomographyBasedEstimator_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_HomographyBasedEstimator_delete(self.as_raw_mut_Detail_HomographyBasedEstimator()) };
@@ -5809,6 +5861,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_ImageFeatures }
 	
 	impl Drop for Detail_ImageFeatures {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_ImageFeatures_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_ImageFeatures_delete(self.as_raw_mut_Detail_ImageFeatures()) };
@@ -5991,6 +6044,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_MatchesInfo }
 	
 	impl Drop for Detail_MatchesInfo {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_MatchesInfo_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_MatchesInfo_delete(self.as_raw_mut_Detail_MatchesInfo()) };
@@ -6075,6 +6129,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_MercatorProjector }
 	
 	impl Drop for Detail_MercatorProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_MercatorProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_MercatorProjector_delete(self.as_raw_mut_Detail_MercatorProjector()) };
@@ -6123,6 +6178,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_MercatorWarper }
 	
 	impl Drop for Detail_MercatorWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_MercatorWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_MercatorWarper_delete(self.as_raw_mut_Detail_MercatorWarper()) };
@@ -6229,6 +6285,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_MultiBandBlender }
 	
 	impl Drop for Detail_MultiBandBlender {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_MultiBandBlender_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_MultiBandBlender_delete(self.as_raw_mut_Detail_MultiBandBlender()) };
@@ -6292,6 +6349,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_NoBundleAdjuster }
 	
 	impl Drop for Detail_NoBundleAdjuster {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_NoBundleAdjuster_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_NoBundleAdjuster_delete(self.as_raw_mut_Detail_NoBundleAdjuster()) };
@@ -6395,6 +6453,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_NoExposureCompensator }
 	
 	impl Drop for Detail_NoExposureCompensator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_NoExposureCompensator_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_NoExposureCompensator_delete(self.as_raw_mut_Detail_NoExposureCompensator()) };
@@ -6451,6 +6510,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_NoSeamFinder }
 	
 	impl Drop for Detail_NoSeamFinder {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_NoSeamFinder_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_NoSeamFinder_delete(self.as_raw_mut_Detail_NoSeamFinder()) };
@@ -6560,6 +6620,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_PaniniPortraitProjector }
 	
 	impl Drop for Detail_PaniniPortraitProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_PaniniPortraitProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_PaniniPortraitProjector_delete(self.as_raw_mut_Detail_PaniniPortraitProjector()) };
@@ -6608,6 +6669,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_PaniniPortraitWarper }
 	
 	impl Drop for Detail_PaniniPortraitWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_PaniniPortraitWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_PaniniPortraitWarper_delete(self.as_raw_mut_Detail_PaniniPortraitWarper()) };
@@ -6709,6 +6771,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_PaniniProjector }
 	
 	impl Drop for Detail_PaniniProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_PaniniProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_PaniniProjector_delete(self.as_raw_mut_Detail_PaniniProjector()) };
@@ -6757,6 +6820,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_PaniniWarper }
 	
 	impl Drop for Detail_PaniniWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_PaniniWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_PaniniWarper_delete(self.as_raw_mut_Detail_PaniniWarper()) };
@@ -6834,6 +6898,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_PlanePortraitProjector }
 	
 	impl Drop for Detail_PlanePortraitProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_PlanePortraitProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_PlanePortraitProjector_delete(self.as_raw_mut_Detail_PlanePortraitProjector()) };
@@ -6882,6 +6947,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_PlanePortraitWarper }
 	
 	impl Drop for Detail_PlanePortraitWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_PlanePortraitWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_PlanePortraitWarper_delete(self.as_raw_mut_Detail_PlanePortraitWarper()) };
@@ -6956,6 +7022,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_PlaneProjector }
 	
 	impl Drop for Detail_PlaneProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_PlaneProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_PlaneProjector_delete(self.as_raw_mut_Detail_PlaneProjector()) };
@@ -7128,6 +7195,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_PlaneWarper }
 	
 	impl Drop for Detail_PlaneWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_PlaneWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_PlaneWarper_delete(self.as_raw_mut_Detail_PlaneWarper()) };
@@ -7295,6 +7363,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_PlaneWarperGpu }
 	
 	impl Drop for Detail_PlaneWarperGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_PlaneWarperGpu_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_PlaneWarperGpu_delete(self.as_raw_mut_Detail_PlaneWarperGpu()) };
@@ -7427,6 +7496,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_ProjectorBase }
 	
 	impl Drop for Detail_ProjectorBase {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_ProjectorBase_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_ProjectorBase_delete(self.as_raw_mut_Detail_ProjectorBase()) };
@@ -7690,6 +7760,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_SphericalPortraitProjector }
 	
 	impl Drop for Detail_SphericalPortraitProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_SphericalPortraitProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_SphericalPortraitProjector_delete(self.as_raw_mut_Detail_SphericalPortraitProjector()) };
@@ -7738,6 +7809,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_SphericalPortraitWarper }
 	
 	impl Drop for Detail_SphericalPortraitWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_SphericalPortraitWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_SphericalPortraitWarper_delete(self.as_raw_mut_Detail_SphericalPortraitWarper()) };
@@ -7812,6 +7884,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_SphericalProjector }
 	
 	impl Drop for Detail_SphericalProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_SphericalProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_SphericalProjector_delete(self.as_raw_mut_Detail_SphericalProjector()) };
@@ -7912,6 +7985,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_SphericalWarper }
 	
 	impl Drop for Detail_SphericalWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_SphericalWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_SphericalWarper_delete(self.as_raw_mut_Detail_SphericalWarper()) };
@@ -8023,6 +8097,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_SphericalWarperGpu }
 	
 	impl Drop for Detail_SphericalWarperGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_SphericalWarperGpu_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_SphericalWarperGpu_delete(self.as_raw_mut_Detail_SphericalWarperGpu()) };
@@ -8107,6 +8182,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_StereographicProjector }
 	
 	impl Drop for Detail_StereographicProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_StereographicProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_StereographicProjector_delete(self.as_raw_mut_Detail_StereographicProjector()) };
@@ -8155,6 +8231,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_StereographicWarper }
 	
 	impl Drop for Detail_StereographicWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_StereographicWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_StereographicWarper_delete(self.as_raw_mut_Detail_StereographicWarper()) };
@@ -8229,6 +8306,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_TransverseMercatorProjector }
 	
 	impl Drop for Detail_TransverseMercatorProjector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_TransverseMercatorProjector_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_TransverseMercatorProjector_delete(self.as_raw_mut_Detail_TransverseMercatorProjector()) };
@@ -8277,6 +8355,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_TransverseMercatorWarper }
 	
 	impl Drop for Detail_TransverseMercatorWarper {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_TransverseMercatorWarper_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_TransverseMercatorWarper_delete(self.as_raw_mut_Detail_TransverseMercatorWarper()) };
@@ -8352,6 +8431,7 @@ pub mod stitching {
 	opencv_type_boxed! { Detail_VoronoiSeamFinder }
 	
 	impl Drop for Detail_VoronoiSeamFinder {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_VoronoiSeamFinder_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_VoronoiSeamFinder_delete(self.as_raw_mut_Detail_VoronoiSeamFinder()) };

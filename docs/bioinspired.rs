@@ -759,6 +759,7 @@ pub mod bioinspired {
 	opencv_type_boxed! { RetinaParameters }
 	
 	impl Drop for RetinaParameters {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RetinaParameters_delete(instance: *mut c_void); }
 			unsafe { cv_RetinaParameters_delete(self.as_raw_mut_RetinaParameters()) };

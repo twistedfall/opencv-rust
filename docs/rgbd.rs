@@ -908,6 +908,7 @@ pub mod rgbd {
 	opencv_type_boxed! { ColoredKinfu_Params }
 	
 	impl Drop for ColoredKinfu_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ColoredKinfu_Params_delete(instance: *mut c_void); }
 			unsafe { cv_ColoredKinfu_Params_delete(self.as_raw_mut_ColoredKinfu_Params()) };
@@ -1905,6 +1906,7 @@ pub mod rgbd {
 	opencv_type_boxed! { Kinfu_Params }
 	
 	impl Drop for Kinfu_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Kinfu_Params_delete(instance: *mut c_void); }
 			unsafe { cv_Kinfu_Params_delete(self.as_raw_mut_Kinfu_Params()) };
@@ -2316,6 +2318,7 @@ pub mod rgbd {
 	opencv_type_boxed! { Kinfu_VolumeParams }
 	
 	impl Drop for Kinfu_VolumeParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Kinfu_VolumeParams_delete(instance: *mut c_void); }
 			unsafe { cv_Kinfu_VolumeParams_delete(self.as_raw_mut_Kinfu_VolumeParams()) };
@@ -2906,6 +2909,7 @@ pub mod rgbd {
 	opencv_type_boxed! { Params }
 	
 	impl Drop for Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Params_delete(instance: *mut c_void); }
 			unsafe { cv_Params_delete(self.as_raw_mut_Params()) };
@@ -3046,6 +3050,7 @@ pub mod rgbd {
 	opencv_type_boxed! { Linemod_ColorGradient }
 	
 	impl Drop for Linemod_ColorGradient {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Linemod_ColorGradient_delete(instance: *mut c_void); }
 			unsafe { cv_Linemod_ColorGradient_delete(self.as_raw_mut_Linemod_ColorGradient()) };
@@ -3206,6 +3211,7 @@ pub mod rgbd {
 	opencv_type_boxed! { Linemod_DepthNormal }
 	
 	impl Drop for Linemod_DepthNormal {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Linemod_DepthNormal_delete(instance: *mut c_void); }
 			unsafe { cv_Linemod_DepthNormal_delete(self.as_raw_mut_Linemod_DepthNormal()) };
@@ -3505,6 +3511,7 @@ pub mod rgbd {
 	opencv_type_boxed! { Linemod_Detector }
 	
 	impl Drop for Linemod_Detector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Linemod_Detector_delete(instance: *mut c_void); }
 			unsafe { cv_Linemod_Detector_delete(self.as_raw_mut_Linemod_Detector()) };
@@ -3704,6 +3711,7 @@ pub mod rgbd {
 	opencv_type_boxed! { Linemod_Match }
 	
 	impl Drop for Linemod_Match {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Linemod_Match_delete(instance: *mut c_void); }
 			unsafe { cv_Linemod_Match_delete(self.as_raw_mut_Linemod_Match()) };
@@ -3976,6 +3984,7 @@ pub mod rgbd {
 	opencv_type_boxed! { Linemod_Template }
 	
 	impl Drop for Linemod_Template {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Linemod_Template_delete(instance: *mut c_void); }
 			unsafe { cv_Linemod_Template_delete(self.as_raw_mut_Linemod_Template()) };
@@ -4116,6 +4125,7 @@ pub mod rgbd {
 	opencv_type_boxed! { DepthCleaner }
 	
 	impl Drop for DepthCleaner {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DepthCleaner_delete(instance: *mut c_void); }
 			unsafe { cv_DepthCleaner_delete(self.as_raw_mut_DepthCleaner()) };
@@ -4371,6 +4381,7 @@ pub mod rgbd {
 	opencv_type_boxed! { FastICPOdometry }
 	
 	impl Drop for FastICPOdometry {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FastICPOdometry_delete(instance: *mut c_void); }
 			unsafe { cv_FastICPOdometry_delete(self.as_raw_mut_FastICPOdometry()) };
@@ -4668,6 +4679,7 @@ pub mod rgbd {
 	opencv_type_boxed! { ICPOdometry }
 	
 	impl Drop for ICPOdometry {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ICPOdometry_delete(instance: *mut c_void); }
 			unsafe { cv_ICPOdometry_delete(self.as_raw_mut_ICPOdometry()) };
@@ -5103,6 +5115,7 @@ pub mod rgbd {
 	opencv_type_boxed! { OdometryFrame }
 	
 	impl Drop for OdometryFrame {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_OdometryFrame_delete(instance: *mut c_void); }
 			unsafe { cv_OdometryFrame_delete(self.as_raw_mut_OdometryFrame()) };
@@ -5265,6 +5278,7 @@ pub mod rgbd {
 	opencv_type_boxed! { RgbdFrame }
 	
 	impl Drop for RgbdFrame {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RgbdFrame_delete(instance: *mut c_void); }
 			unsafe { cv_RgbdFrame_delete(self.as_raw_mut_RgbdFrame()) };
@@ -5548,6 +5562,7 @@ pub mod rgbd {
 	opencv_type_boxed! { RgbdICPOdometry }
 	
 	impl Drop for RgbdICPOdometry {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RgbdICPOdometry_delete(instance: *mut c_void); }
 			unsafe { cv_RgbdICPOdometry_delete(self.as_raw_mut_RgbdICPOdometry()) };
@@ -5808,6 +5823,7 @@ pub mod rgbd {
 	opencv_type_boxed! { RgbdNormals }
 	
 	impl Drop for RgbdNormals {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RgbdNormals_delete(instance: *mut c_void); }
 			unsafe { cv_RgbdNormals_delete(self.as_raw_mut_RgbdNormals()) };
@@ -6097,6 +6113,7 @@ pub mod rgbd {
 	opencv_type_boxed! { RgbdOdometry }
 	
 	impl Drop for RgbdOdometry {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RgbdOdometry_delete(instance: *mut c_void); }
 			unsafe { cv_RgbdOdometry_delete(self.as_raw_mut_RgbdOdometry()) };
@@ -6379,6 +6396,7 @@ pub mod rgbd {
 	opencv_type_boxed! { RgbdPlane }
 	
 	impl Drop for RgbdPlane {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RgbdPlane_delete(instance: *mut c_void); }
 			unsafe { cv_RgbdPlane_delete(self.as_raw_mut_RgbdPlane()) };

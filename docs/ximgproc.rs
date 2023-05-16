@@ -2409,6 +2409,7 @@ pub mod ximgproc {
 	opencv_type_boxed! { ContourFitting }
 	
 	impl Drop for ContourFitting {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ContourFitting_delete(instance: *mut c_void); }
 			unsafe { cv_ContourFitting_delete(self.as_raw_mut_ContourFitting()) };

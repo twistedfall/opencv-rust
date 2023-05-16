@@ -437,6 +437,7 @@ pub mod surface_matching {
 	opencv_type_boxed! { ICP }
 	
 	impl Drop for ICP {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ICP_delete(instance: *mut c_void); }
 			unsafe { cv_ICP_delete(self.as_raw_mut_ICP()) };
@@ -581,6 +582,7 @@ pub mod surface_matching {
 	opencv_type_boxed! { PPF3DDetector }
 	
 	impl Drop for PPF3DDetector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PPF3DDetector_delete(instance: *mut c_void); }
 			unsafe { cv_PPF3DDetector_delete(self.as_raw_mut_PPF3DDetector()) };
@@ -835,6 +837,7 @@ pub mod surface_matching {
 	opencv_type_boxed! { Pose3D }
 	
 	impl Drop for Pose3D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Pose3D_delete(instance: *mut c_void); }
 			unsafe { cv_Pose3D_delete(self.as_raw_mut_Pose3D()) };
@@ -968,6 +971,7 @@ pub mod surface_matching {
 	opencv_type_boxed! { PoseCluster3D }
 	
 	impl Drop for PoseCluster3D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PoseCluster3D_delete(instance: *mut c_void); }
 			unsafe { cv_PoseCluster3D_delete(self.as_raw_mut_PoseCluster3D()) };

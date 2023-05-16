@@ -304,7 +304,7 @@ fn main() -> Result<()> {
 
 	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));
 	eprintln!("=== Environment configuration:");
-	for v in ENV_VARS.iter().copied().chain(iter::once("PATH")) {
+	for v in ENV_VARS.into_iter().chain(iter::once("PATH")) {
 		eprintln!("===   {v} = {:?}", env::var_os(v));
 	}
 	eprintln!("=== Enabled features:");

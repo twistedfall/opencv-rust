@@ -1479,6 +1479,7 @@ pub mod videoio {
 	opencv_type_boxed! { VideoCapture }
 	
 	impl Drop for VideoCapture {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_VideoCapture_delete(instance: *mut c_void); }
 			unsafe { cv_VideoCapture_delete(self.as_raw_mut_VideoCapture()) };
@@ -1847,6 +1848,7 @@ pub mod videoio {
 	opencv_type_boxed! { VideoWriter }
 	
 	impl Drop for VideoWriter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_VideoWriter_delete(instance: *mut c_void); }
 			unsafe { cv_VideoWriter_delete(self.as_raw_mut_VideoWriter()) };

@@ -859,6 +859,7 @@ pub mod features2d {
 	opencv_type_boxed! { BFMatcher }
 	
 	impl Drop for BFMatcher {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BFMatcher_delete(instance: *mut c_void); }
 			unsafe { cv_BFMatcher_delete(self.as_raw_mut_BFMatcher()) };
@@ -1076,6 +1077,7 @@ pub mod features2d {
 	opencv_type_boxed! { BOWImgDescriptorExtractor }
 	
 	impl Drop for BOWImgDescriptorExtractor {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BOWImgDescriptorExtractor_delete(instance: *mut c_void); }
 			unsafe { cv_BOWImgDescriptorExtractor_delete(self.as_raw_mut_BOWImgDescriptorExtractor()) };
@@ -1171,6 +1173,7 @@ pub mod features2d {
 	opencv_type_boxed! { BOWKMeansTrainer }
 	
 	impl Drop for BOWKMeansTrainer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BOWKMeansTrainer_delete(instance: *mut c_void); }
 			unsafe { cv_BOWKMeansTrainer_delete(self.as_raw_mut_BOWKMeansTrainer()) };
@@ -2253,6 +2256,7 @@ pub mod features2d {
 	opencv_type_boxed! { Feature2D }
 	
 	impl Drop for Feature2D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Feature2D_delete(instance: *mut c_void); }
 			unsafe { cv_Feature2D_delete(self.as_raw_mut_Feature2D()) };
@@ -2375,6 +2379,7 @@ pub mod features2d {
 	opencv_type_boxed! { FlannBasedMatcher }
 	
 	impl Drop for FlannBasedMatcher {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FlannBasedMatcher_delete(instance: *mut c_void); }
 			unsafe { cv_FlannBasedMatcher_delete(self.as_raw_mut_FlannBasedMatcher()) };
@@ -2803,6 +2808,7 @@ pub mod features2d {
 	opencv_type_boxed! { KeyPointsFilter }
 	
 	impl Drop for KeyPointsFilter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KeyPointsFilter_delete(instance: *mut c_void); }
 			unsafe { cv_KeyPointsFilter_delete(self.as_raw_mut_KeyPointsFilter()) };

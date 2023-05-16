@@ -148,6 +148,7 @@ pub mod saliency {
 	opencv_type_boxed! { MotionSaliencyBinWangApr2014 }
 	
 	impl Drop for MotionSaliencyBinWangApr2014 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MotionSaliencyBinWangApr2014_delete(instance: *mut c_void); }
 			unsafe { cv_MotionSaliencyBinWangApr2014_delete(self.as_raw_mut_MotionSaliencyBinWangApr2014()) };
@@ -374,6 +375,7 @@ pub mod saliency {
 	opencv_type_boxed! { ObjectnessBING }
 	
 	impl Drop for ObjectnessBING {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ObjectnessBING_delete(instance: *mut c_void); }
 			unsafe { cv_ObjectnessBING_delete(self.as_raw_mut_ObjectnessBING()) };
@@ -538,6 +540,7 @@ pub mod saliency {
 	opencv_type_boxed! { StaticSaliencyFineGrained }
 	
 	impl Drop for StaticSaliencyFineGrained {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_StaticSaliencyFineGrained_delete(instance: *mut c_void); }
 			unsafe { cv_StaticSaliencyFineGrained_delete(self.as_raw_mut_StaticSaliencyFineGrained()) };
@@ -693,6 +696,7 @@ pub mod saliency {
 	opencv_type_boxed! { StaticSaliencySpectralResidual }
 	
 	impl Drop for StaticSaliencySpectralResidual {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_StaticSaliencySpectralResidual_delete(instance: *mut c_void); }
 			unsafe { cv_StaticSaliencySpectralResidual_delete(self.as_raw_mut_StaticSaliencySpectralResidual()) };

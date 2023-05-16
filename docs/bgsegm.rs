@@ -628,6 +628,7 @@ pub mod bgsegm {
 	opencv_type_boxed! { BackgroundSubtractorLSBPDesc }
 	
 	impl Drop for BackgroundSubtractorLSBPDesc {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BackgroundSubtractorLSBPDesc_delete(instance: *mut c_void); }
 			unsafe { cv_BackgroundSubtractorLSBPDesc_delete(self.as_raw_mut_BackgroundSubtractorLSBPDesc()) };
@@ -802,6 +803,7 @@ pub mod bgsegm {
 	opencv_type_boxed! { SyntheticSequenceGenerator }
 	
 	impl Drop for SyntheticSequenceGenerator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SyntheticSequenceGenerator_delete(instance: *mut c_void); }
 			unsafe { cv_SyntheticSequenceGenerator_delete(self.as_raw_mut_SyntheticSequenceGenerator()) };

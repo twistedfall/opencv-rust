@@ -171,6 +171,7 @@ pub mod dpm {
 	opencv_type_boxed! { DPMDetector_ObjectDetection }
 	
 	impl Drop for DPMDetector_ObjectDetection {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DPMDetector_ObjectDetection_delete(instance: *mut c_void); }
 			unsafe { cv_DPMDetector_ObjectDetection_delete(self.as_raw_mut_DPMDetector_ObjectDetection()) };

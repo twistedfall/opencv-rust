@@ -426,6 +426,7 @@ pub mod line_descriptor {
 	opencv_type_boxed! { BinaryDescriptor }
 	
 	impl Drop for BinaryDescriptor {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BinaryDescriptor_delete(instance: *mut c_void); }
 			unsafe { cv_BinaryDescriptor_delete(self.as_raw_mut_BinaryDescriptor()) };
@@ -591,6 +592,7 @@ pub mod line_descriptor {
 	opencv_type_boxed! { BinaryDescriptor_Params }
 	
 	impl Drop for BinaryDescriptor_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BinaryDescriptor_Params_delete(instance: *mut c_void); }
 			unsafe { cv_BinaryDescriptor_Params_delete(self.as_raw_mut_BinaryDescriptor_Params()) };
@@ -883,6 +885,7 @@ pub mod line_descriptor {
 	opencv_type_boxed! { BinaryDescriptorMatcher }
 	
 	impl Drop for BinaryDescriptorMatcher {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BinaryDescriptorMatcher_delete(instance: *mut c_void); }
 			unsafe { cv_BinaryDescriptorMatcher_delete(self.as_raw_mut_BinaryDescriptorMatcher()) };
@@ -1112,6 +1115,7 @@ pub mod line_descriptor {
 	opencv_type_boxed! { LSDDetector }
 	
 	impl Drop for LSDDetector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LSDDetector_delete(instance: *mut c_void); }
 			unsafe { cv_LSDDetector_delete(self.as_raw_mut_LSDDetector()) };

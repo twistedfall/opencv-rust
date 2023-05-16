@@ -416,6 +416,7 @@ pub mod tracking {
 	opencv_type_boxed! { TrackerCSRT_Params }
 	
 	impl Drop for TrackerCSRT_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TrackerCSRT_Params_delete(instance: *mut c_void); }
 			unsafe { cv_TrackerCSRT_Params_delete(self.as_raw_mut_TrackerCSRT_Params()) };

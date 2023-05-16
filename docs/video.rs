@@ -1864,6 +1864,7 @@ pub mod video {
 	opencv_type_boxed! { KalmanFilter }
 	
 	impl Drop for KalmanFilter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KalmanFilter_delete(instance: *mut c_void); }
 			unsafe { cv_KalmanFilter_delete(self.as_raw_mut_KalmanFilter()) };
@@ -2248,6 +2249,7 @@ pub mod video {
 	opencv_type_boxed! { TrackerDaSiamRPN_Params }
 	
 	impl Drop for TrackerDaSiamRPN_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TrackerDaSiamRPN_Params_delete(instance: *mut c_void); }
 			unsafe { cv_TrackerDaSiamRPN_Params_delete(self.as_raw_mut_TrackerDaSiamRPN_Params()) };
@@ -2375,6 +2377,7 @@ pub mod video {
 	opencv_type_boxed! { TrackerGOTURN_Params }
 	
 	impl Drop for TrackerGOTURN_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TrackerGOTURN_Params_delete(instance: *mut c_void); }
 			unsafe { cv_TrackerGOTURN_Params_delete(self.as_raw_mut_TrackerGOTURN_Params()) };
@@ -2598,6 +2601,7 @@ pub mod video {
 	opencv_type_boxed! { TrackerNano_Params }
 	
 	impl Drop for TrackerNano_Params {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TrackerNano_Params_delete(instance: *mut c_void); }
 			unsafe { cv_TrackerNano_Params_delete(self.as_raw_mut_TrackerNano_Params()) };

@@ -1643,6 +1643,7 @@ pub mod ml {
 	opencv_type_boxed! { DTrees_Node }
 	
 	impl Drop for DTrees_Node {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DTrees_Node_delete(instance: *mut c_void); }
 			unsafe { cv_DTrees_Node_delete(self.as_raw_mut_DTrees_Node()) };
@@ -1806,6 +1807,7 @@ pub mod ml {
 	opencv_type_boxed! { DTrees_Split }
 	
 	impl Drop for DTrees_Split {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DTrees_Split_delete(instance: *mut c_void); }
 			unsafe { cv_DTrees_Split_delete(self.as_raw_mut_DTrees_Split()) };
@@ -2766,6 +2768,7 @@ pub mod ml {
 	opencv_type_boxed! { ParamGrid }
 	
 	impl Drop for ParamGrid {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ParamGrid_delete(instance: *mut c_void); }
 			unsafe { cv_ParamGrid_delete(self.as_raw_mut_ParamGrid()) };

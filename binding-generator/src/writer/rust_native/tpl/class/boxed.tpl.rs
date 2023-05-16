@@ -7,6 +7,7 @@ pub struct {{rust_local}} {
 opencv_type_boxed! { {{rust_local}} }
 
 impl Drop for {{rust_local}} {
+	#[inline]
 	fn drop(&mut self) {
 		extern "C" { fn cv_{{rust_local}}_delete(instance: {{rust_extern_mut}}); }
 		unsafe { cv_{{rust_local}}_delete(self.as_raw_mut_{{rust_local}}()) };

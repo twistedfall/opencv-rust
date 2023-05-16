@@ -999,6 +999,7 @@ pub mod objdetect {
 	opencv_type_boxed! { CascadeClassifier }
 	
 	impl Drop for CascadeClassifier {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CascadeClassifier_delete(instance: *mut c_void); }
 			unsafe { cv_CascadeClassifier_delete(self.as_raw_mut_CascadeClassifier()) };
@@ -1164,6 +1165,7 @@ pub mod objdetect {
 	opencv_type_boxed! { DetectionBasedTracker }
 	
 	impl Drop for DetectionBasedTracker {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DetectionBasedTracker_delete(instance: *mut c_void); }
 			unsafe { cv_DetectionBasedTracker_delete(self.as_raw_mut_DetectionBasedTracker()) };
@@ -1252,6 +1254,7 @@ pub mod objdetect {
 	opencv_type_boxed! { DetectionBasedTracker_ExtObject }
 	
 	impl Drop for DetectionBasedTracker_ExtObject {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DetectionBasedTracker_ExtObject_delete(instance: *mut c_void); }
 			unsafe { cv_DetectionBasedTracker_ExtObject_delete(self.as_raw_mut_DetectionBasedTracker_ExtObject()) };
@@ -1424,6 +1427,7 @@ pub mod objdetect {
 	opencv_type_boxed! { DetectionBasedTracker_Parameters }
 	
 	impl Drop for DetectionBasedTracker_Parameters {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DetectionBasedTracker_Parameters_delete(instance: *mut c_void); }
 			unsafe { cv_DetectionBasedTracker_Parameters_delete(self.as_raw_mut_DetectionBasedTracker_Parameters()) };
@@ -1517,6 +1521,7 @@ pub mod objdetect {
 	opencv_type_boxed! { DetectionROI }
 	
 	impl Drop for DetectionROI {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DetectionROI_delete(instance: *mut c_void); }
 			unsafe { cv_DetectionROI_delete(self.as_raw_mut_DetectionROI()) };
@@ -2378,6 +2383,7 @@ pub mod objdetect {
 	opencv_type_boxed! { HOGDescriptor }
 	
 	impl Drop for HOGDescriptor {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_HOGDescriptor_delete(instance: *mut c_void); }
 			unsafe { cv_HOGDescriptor_delete(self.as_raw_mut_HOGDescriptor()) };
@@ -2711,6 +2717,7 @@ pub mod objdetect {
 	opencv_type_boxed! { QRCodeDetector }
 	
 	impl Drop for QRCodeDetector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_QRCodeDetector_delete(instance: *mut c_void); }
 			unsafe { cv_QRCodeDetector_delete(self.as_raw_mut_QRCodeDetector()) };
@@ -2872,6 +2879,7 @@ pub mod objdetect {
 	opencv_type_boxed! { SimilarRects }
 	
 	impl Drop for SimilarRects {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SimilarRects_delete(instance: *mut c_void); }
 			unsafe { cv_SimilarRects_delete(self.as_raw_mut_SimilarRects()) };
@@ -3094,6 +3102,7 @@ pub mod objdetect {
 	opencv_type_boxed! { ArucoDetector }
 	
 	impl Drop for ArucoDetector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ArucoDetector_delete(instance: *mut c_void); }
 			unsafe { cv_ArucoDetector_delete(self.as_raw_mut_ArucoDetector()) };
@@ -3271,6 +3280,7 @@ pub mod objdetect {
 	opencv_type_boxed! { Board }
 	
 	impl Drop for Board {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Board_delete(instance: *mut c_void); }
 			unsafe { cv_Board_delete(self.as_raw_mut_Board()) };
@@ -3431,6 +3441,7 @@ pub mod objdetect {
 	opencv_type_boxed! { CharucoBoard }
 	
 	impl Drop for CharucoBoard {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CharucoBoard_delete(instance: *mut c_void); }
 			unsafe { cv_CharucoBoard_delete(self.as_raw_mut_CharucoBoard()) };
@@ -3672,6 +3683,7 @@ pub mod objdetect {
 	opencv_type_boxed! { CharucoDetector }
 	
 	impl Drop for CharucoDetector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CharucoDetector_delete(instance: *mut c_void); }
 			unsafe { cv_CharucoDetector_delete(self.as_raw_mut_CharucoDetector()) };
@@ -3800,6 +3812,7 @@ pub mod objdetect {
 	opencv_type_boxed! { CharucoParameters }
 	
 	impl Drop for CharucoParameters {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CharucoParameters_delete(instance: *mut c_void); }
 			unsafe { cv_CharucoParameters_delete(self.as_raw_mut_CharucoParameters()) };
@@ -4381,6 +4394,7 @@ pub mod objdetect {
 	opencv_type_boxed! { DetectorParameters }
 	
 	impl Drop for DetectorParameters {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DetectorParameters_delete(instance: *mut c_void); }
 			unsafe { cv_DetectorParameters_delete(self.as_raw_mut_DetectorParameters()) };
@@ -4562,6 +4576,7 @@ pub mod objdetect {
 	opencv_type_boxed! { Dictionary }
 	
 	impl Drop for Dictionary {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Dictionary_delete(instance: *mut c_void); }
 			unsafe { cv_Dictionary_delete(self.as_raw_mut_Dictionary()) };
@@ -4683,6 +4698,7 @@ pub mod objdetect {
 	opencv_type_boxed! { GridBoard }
 	
 	impl Drop for GridBoard {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GridBoard_delete(instance: *mut c_void); }
 			unsafe { cv_GridBoard_delete(self.as_raw_mut_GridBoard()) };

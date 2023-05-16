@@ -102,6 +102,7 @@ pub mod barcode {
 	opencv_type_boxed! { BarcodeDetector }
 	
 	impl Drop for BarcodeDetector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BarcodeDetector_delete(instance: *mut c_void); }
 			unsafe { cv_BarcodeDetector_delete(self.as_raw_mut_BarcodeDetector()) };

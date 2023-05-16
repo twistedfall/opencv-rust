@@ -7,13 +7,7 @@ use opencv_binding_generator::Generator;
 use crate::{get_version_from_headers, Result};
 
 pub fn run(mut args: impl Iterator<Item = OsString>) -> Result<()> {
-	let mut opencv_header_dir = args.next();
-	let mut debug = false;
-	if opencv_header_dir.as_ref().map_or(false, |debug| debug == "--debug") {
-		debug = true;
-		opencv_header_dir = args.next();
-	}
-	let opencv_header_dir = PathBuf::from(opencv_header_dir.ok_or("1st argument must be OpenCV header dir")?);
+	let opencv_header_dir = PathBuf::from(args.next().ok_or("1st argument must be OpenCV header dir")?);
 	let src_cpp_dir = PathBuf::from(args.next().ok_or("2nd argument must be dir with custom cpp")?);
 	let out_dir = PathBuf::from(args.next().ok_or("3rd argument must be output dir")?);
 	let module = args.next().ok_or("4th argument must be module name")?;
@@ -31,7 +25,7 @@ pub fn run(mut args: impl Iterator<Item = OsString>) -> Result<()> {
 		.filter(|s| !s.is_empty())
 		.map(Path::new)
 		.collect::<Vec<_>>();
-	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, &version, debug);
+	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, &version, false);
 	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir).process_opencv_module(module, bindings_writer);
 	Ok(())
 }

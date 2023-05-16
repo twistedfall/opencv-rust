@@ -618,6 +618,7 @@ pub mod aruco {
 	opencv_type_boxed! { EstimateParameters }
 	
 	impl Drop for EstimateParameters {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_EstimateParameters_delete(instance: *mut c_void); }
 			unsafe { cv_EstimateParameters_delete(self.as_raw_mut_EstimateParameters()) };

@@ -510,6 +510,7 @@ pub mod viz {
 	opencv_type_boxed! { Camera }
 	
 	impl Drop for Camera {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Camera_delete(instance: *mut c_void); }
 			unsafe { cv_Camera_delete(self.as_raw_mut_Camera()) };
@@ -673,6 +674,7 @@ pub mod viz {
 	opencv_type_boxed! { Color }
 	
 	impl Drop for Color {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Color_delete(instance: *mut c_void); }
 			unsafe { cv_Color_delete(self.as_raw_mut_Color()) };
@@ -1157,6 +1159,7 @@ pub mod viz {
 	opencv_type_boxed! { KeyboardEvent }
 	
 	impl Drop for KeyboardEvent {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KeyboardEvent_delete(instance: *mut c_void); }
 			unsafe { cv_KeyboardEvent_delete(self.as_raw_mut_KeyboardEvent()) };
@@ -1302,6 +1305,7 @@ pub mod viz {
 	opencv_type_boxed! { Mesh }
 	
 	impl Drop for Mesh {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Mesh_delete(instance: *mut c_void); }
 			unsafe { cv_Mesh_delete(self.as_raw_mut_Mesh()) };
@@ -1436,6 +1440,7 @@ pub mod viz {
 	opencv_type_boxed! { MouseEvent }
 	
 	impl Drop for MouseEvent {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MouseEvent_delete(instance: *mut c_void); }
 			unsafe { cv_MouseEvent_delete(self.as_raw_mut_MouseEvent()) };
@@ -2067,6 +2072,7 @@ pub mod viz {
 	opencv_type_boxed! { Viz3d }
 	
 	impl Drop for Viz3d {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Viz3d_delete(instance: *mut c_void); }
 			unsafe { cv_Viz3d_delete(self.as_raw_mut_Viz3d()) };
@@ -2134,6 +2140,7 @@ pub mod viz {
 	opencv_type_boxed! { WArrow }
 	
 	impl Drop for WArrow {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WArrow_delete(instance: *mut c_void); }
 			unsafe { cv_WArrow_delete(self.as_raw_mut_WArrow()) };
@@ -2217,6 +2224,7 @@ pub mod viz {
 	opencv_type_boxed! { WCameraPosition }
 	
 	impl Drop for WCameraPosition {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WCameraPosition_delete(instance: *mut c_void); }
 			unsafe { cv_WCameraPosition_delete(self.as_raw_mut_WCameraPosition()) };
@@ -2392,6 +2400,7 @@ pub mod viz {
 	opencv_type_boxed! { WCircle }
 	
 	impl Drop for WCircle {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WCircle_delete(instance: *mut c_void); }
 			unsafe { cv_WCircle_delete(self.as_raw_mut_WCircle()) };
@@ -2496,6 +2505,7 @@ pub mod viz {
 	opencv_type_boxed! { WCloud }
 	
 	impl Drop for WCloud {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WCloud_delete(instance: *mut c_void); }
 			unsafe { cv_WCloud_delete(self.as_raw_mut_WCloud()) };
@@ -2688,6 +2698,7 @@ pub mod viz {
 	opencv_type_boxed! { WCloudCollection }
 	
 	impl Drop for WCloudCollection {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WCloudCollection_delete(instance: *mut c_void); }
 			unsafe { cv_WCloudCollection_delete(self.as_raw_mut_WCloudCollection()) };
@@ -2757,6 +2768,7 @@ pub mod viz {
 	opencv_type_boxed! { WCloudNormals }
 	
 	impl Drop for WCloudNormals {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WCloudNormals_delete(instance: *mut c_void); }
 			unsafe { cv_WCloudNormals_delete(self.as_raw_mut_WCloudNormals()) };
@@ -2844,6 +2856,7 @@ pub mod viz {
 	opencv_type_boxed! { WCone }
 	
 	impl Drop for WCone {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WCone_delete(instance: *mut c_void); }
 			unsafe { cv_WCone_delete(self.as_raw_mut_WCone()) };
@@ -2946,6 +2959,7 @@ pub mod viz {
 	opencv_type_boxed! { WCoordinateSystem }
 	
 	impl Drop for WCoordinateSystem {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WCoordinateSystem_delete(instance: *mut c_void); }
 			unsafe { cv_WCoordinateSystem_delete(self.as_raw_mut_WCoordinateSystem()) };
@@ -3022,6 +3036,7 @@ pub mod viz {
 	opencv_type_boxed! { WCube }
 	
 	impl Drop for WCube {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WCube_delete(instance: *mut c_void); }
 			unsafe { cv_WCube_delete(self.as_raw_mut_WCube()) };
@@ -3106,6 +3121,7 @@ pub mod viz {
 	opencv_type_boxed! { WCylinder }
 	
 	impl Drop for WCylinder {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WCylinder_delete(instance: *mut c_void); }
 			unsafe { cv_WCylinder_delete(self.as_raw_mut_WCylinder()) };
@@ -3187,6 +3203,7 @@ pub mod viz {
 	opencv_type_boxed! { WGrid }
 	
 	impl Drop for WGrid {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WGrid_delete(instance: *mut c_void); }
 			unsafe { cv_WGrid_delete(self.as_raw_mut_WGrid()) };
@@ -3310,6 +3327,7 @@ pub mod viz {
 	opencv_type_boxed! { WImage3D }
 	
 	impl Drop for WImage3D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WImage3D_delete(instance: *mut c_void); }
 			unsafe { cv_WImage3D_delete(self.as_raw_mut_WImage3D()) };
@@ -3418,6 +3436,7 @@ pub mod viz {
 	opencv_type_boxed! { WImageOverlay }
 	
 	impl Drop for WImageOverlay {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WImageOverlay_delete(instance: *mut c_void); }
 			unsafe { cv_WImageOverlay_delete(self.as_raw_mut_WImageOverlay()) };
@@ -3493,6 +3512,7 @@ pub mod viz {
 	opencv_type_boxed! { WLine }
 	
 	impl Drop for WLine {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WLine_delete(instance: *mut c_void); }
 			unsafe { cv_WLine_delete(self.as_raw_mut_WLine()) };
@@ -3578,6 +3598,7 @@ pub mod viz {
 	opencv_type_boxed! { WMesh }
 	
 	impl Drop for WMesh {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WMesh_delete(instance: *mut c_void); }
 			unsafe { cv_WMesh_delete(self.as_raw_mut_WMesh()) };
@@ -3663,6 +3684,7 @@ pub mod viz {
 	opencv_type_boxed! { WPaintedCloud }
 	
 	impl Drop for WPaintedCloud {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WPaintedCloud_delete(instance: *mut c_void); }
 			unsafe { cv_WPaintedCloud_delete(self.as_raw_mut_WPaintedCloud()) };
@@ -3758,6 +3780,7 @@ pub mod viz {
 	opencv_type_boxed! { WPlane }
 	
 	impl Drop for WPlane {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WPlane_delete(instance: *mut c_void); }
 			unsafe { cv_WPlane_delete(self.as_raw_mut_WPlane()) };
@@ -3858,6 +3881,7 @@ pub mod viz {
 	opencv_type_boxed! { WPolyLine }
 	
 	impl Drop for WPolyLine {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WPolyLine_delete(instance: *mut c_void); }
 			unsafe { cv_WPolyLine_delete(self.as_raw_mut_WPolyLine()) };
@@ -3948,6 +3972,7 @@ pub mod viz {
 	opencv_type_boxed! { WSphere }
 	
 	impl Drop for WSphere {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WSphere_delete(instance: *mut c_void); }
 			unsafe { cv_WSphere_delete(self.as_raw_mut_WSphere()) };
@@ -4053,6 +4078,7 @@ pub mod viz {
 	opencv_type_boxed! { WText }
 	
 	impl Drop for WText {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WText_delete(instance: *mut c_void); }
 			unsafe { cv_WText_delete(self.as_raw_mut_WText()) };
@@ -4159,6 +4185,7 @@ pub mod viz {
 	opencv_type_boxed! { WText3D }
 	
 	impl Drop for WText3D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WText3D_delete(instance: *mut c_void); }
 			unsafe { cv_WText3D_delete(self.as_raw_mut_WText3D()) };
@@ -4242,6 +4269,7 @@ pub mod viz {
 	opencv_type_boxed! { WTrajectory }
 	
 	impl Drop for WTrajectory {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WTrajectory_delete(instance: *mut c_void); }
 			unsafe { cv_WTrajectory_delete(self.as_raw_mut_WTrajectory()) };
@@ -4330,6 +4358,7 @@ pub mod viz {
 	opencv_type_boxed! { WTrajectoryFrustums }
 	
 	impl Drop for WTrajectoryFrustums {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WTrajectoryFrustums_delete(instance: *mut c_void); }
 			unsafe { cv_WTrajectoryFrustums_delete(self.as_raw_mut_WTrajectoryFrustums()) };
@@ -4440,6 +4469,7 @@ pub mod viz {
 	opencv_type_boxed! { WTrajectorySpheres }
 	
 	impl Drop for WTrajectorySpheres {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WTrajectorySpheres_delete(instance: *mut c_void); }
 			unsafe { cv_WTrajectorySpheres_delete(self.as_raw_mut_WTrajectorySpheres()) };
@@ -4552,6 +4582,7 @@ pub mod viz {
 	opencv_type_boxed! { WWidgetMerger }
 	
 	impl Drop for WWidgetMerger {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WWidgetMerger_delete(instance: *mut c_void); }
 			unsafe { cv_WWidgetMerger_delete(self.as_raw_mut_WWidgetMerger()) };
@@ -4689,6 +4720,7 @@ pub mod viz {
 	opencv_type_boxed! { Widget }
 	
 	impl Drop for Widget {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Widget_delete(instance: *mut c_void); }
 			unsafe { cv_Widget_delete(self.as_raw_mut_Widget()) };
@@ -4776,6 +4808,7 @@ pub mod viz {
 	opencv_type_boxed! { Widget2D }
 	
 	impl Drop for Widget2D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Widget2D_delete(instance: *mut c_void); }
 			unsafe { cv_Widget2D_delete(self.as_raw_mut_Widget2D()) };
@@ -4897,6 +4930,7 @@ pub mod viz {
 	opencv_type_boxed! { Widget3D }
 	
 	impl Drop for Widget3D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Widget3D_delete(instance: *mut c_void); }
 			unsafe { cv_Widget3D_delete(self.as_raw_mut_Widget3D()) };

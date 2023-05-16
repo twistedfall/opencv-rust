@@ -1489,6 +1489,7 @@ pub mod highgui {
 	opencv_type_boxed! { QtFont }
 	
 	impl Drop for QtFont {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_QtFont_delete(instance: *mut c_void); }
 			unsafe { cv_QtFont_delete(self.as_raw_mut_QtFont()) };

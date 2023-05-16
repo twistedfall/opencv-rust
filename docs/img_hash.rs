@@ -214,6 +214,7 @@ pub mod img_hash {
 	opencv_type_boxed! { AverageHash }
 	
 	impl Drop for AverageHash {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AverageHash_delete(instance: *mut c_void); }
 			unsafe { cv_AverageHash_delete(self.as_raw_mut_AverageHash()) };
@@ -307,6 +308,7 @@ pub mod img_hash {
 	opencv_type_boxed! { BlockMeanHash }
 	
 	impl Drop for BlockMeanHash {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BlockMeanHash_delete(instance: *mut c_void); }
 			unsafe { cv_BlockMeanHash_delete(self.as_raw_mut_BlockMeanHash()) };
@@ -380,6 +382,7 @@ pub mod img_hash {
 	opencv_type_boxed! { ColorMomentHash }
 	
 	impl Drop for ColorMomentHash {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ColorMomentHash_delete(instance: *mut c_void); }
 			unsafe { cv_ColorMomentHash_delete(self.as_raw_mut_ColorMomentHash()) };
@@ -482,6 +485,7 @@ pub mod img_hash {
 	opencv_type_boxed! { ImgHashBase }
 	
 	impl Drop for ImgHashBase {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ImgHashBase_delete(instance: *mut c_void); }
 			unsafe { cv_ImgHashBase_delete(self.as_raw_mut_ImgHashBase()) };
@@ -566,6 +570,7 @@ pub mod img_hash {
 	opencv_type_boxed! { MarrHildrethHash }
 	
 	impl Drop for MarrHildrethHash {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MarrHildrethHash_delete(instance: *mut c_void); }
 			unsafe { cv_MarrHildrethHash_delete(self.as_raw_mut_MarrHildrethHash()) };
@@ -646,6 +651,7 @@ pub mod img_hash {
 	opencv_type_boxed! { PHash }
 	
 	impl Drop for PHash {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PHash_delete(instance: *mut c_void); }
 			unsafe { cv_PHash_delete(self.as_raw_mut_PHash()) };
@@ -793,6 +799,7 @@ pub mod img_hash {
 	opencv_type_boxed! { RadialVarianceHash }
 	
 	impl Drop for RadialVarianceHash {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RadialVarianceHash_delete(instance: *mut c_void); }
 			unsafe { cv_RadialVarianceHash_delete(self.as_raw_mut_RadialVarianceHash()) };

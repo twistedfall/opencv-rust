@@ -124,7 +124,7 @@ fn probabilistic_hough(edges: &Mat, p_trackbar: i32) -> Result<()> {
 	cvt_color(edges, &mut probabalistic_hough, COLOR_GRAY2BGR, 0)?;
 
 	// 2. Use Probabilistic Hough Transform
-	hough_lines_p(&edges, &mut p_lines, 1., PI / 180., MIN_THRESHOLD + p_trackbar, 30., 10.)?;
+	hough_lines_p(edges, &mut p_lines, 1., PI / 180., MIN_THRESHOLD + p_trackbar, 30., 10.)?;
 
 	// Show the result
 	for l in p_lines {

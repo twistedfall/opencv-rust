@@ -1141,6 +1141,7 @@ pub mod dnn {
 	opencv_type_boxed! { AbsLayer }
 	
 	impl Drop for AbsLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AbsLayer_delete(instance: *mut c_void); }
 			unsafe { cv_AbsLayer_delete(self.as_raw_mut_AbsLayer()) };
@@ -1219,6 +1220,7 @@ pub mod dnn {
 	opencv_type_boxed! { AccumLayer }
 	
 	impl Drop for AccumLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AccumLayer_delete(instance: *mut c_void); }
 			unsafe { cv_AccumLayer_delete(self.as_raw_mut_AccumLayer()) };
@@ -1287,6 +1289,7 @@ pub mod dnn {
 	opencv_type_boxed! { AcosLayer }
 	
 	impl Drop for AcosLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AcosLayer_delete(instance: *mut c_void); }
 			unsafe { cv_AcosLayer_delete(self.as_raw_mut_AcosLayer()) };
@@ -1365,6 +1368,7 @@ pub mod dnn {
 	opencv_type_boxed! { AcoshLayer }
 	
 	impl Drop for AcoshLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AcoshLayer_delete(instance: *mut c_void); }
 			unsafe { cv_AcoshLayer_delete(self.as_raw_mut_AcoshLayer()) };
@@ -1461,6 +1465,7 @@ pub mod dnn {
 	opencv_type_boxed! { ActivationLayer }
 	
 	impl Drop for ActivationLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ActivationLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ActivationLayer_delete(self.as_raw_mut_ActivationLayer()) };
@@ -1603,6 +1608,7 @@ pub mod dnn {
 	opencv_type_boxed! { ActivationLayerInt8 }
 	
 	impl Drop for ActivationLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ActivationLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_ActivationLayerInt8_delete(self.as_raw_mut_ActivationLayerInt8()) };
@@ -1684,6 +1690,7 @@ pub mod dnn {
 	opencv_type_boxed! { ArgLayer }
 	
 	impl Drop for ArgLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ArgLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ArgLayer_delete(self.as_raw_mut_ArgLayer()) };
@@ -1752,6 +1759,7 @@ pub mod dnn {
 	opencv_type_boxed! { AsinLayer }
 	
 	impl Drop for AsinLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AsinLayer_delete(instance: *mut c_void); }
 			unsafe { cv_AsinLayer_delete(self.as_raw_mut_AsinLayer()) };
@@ -1830,6 +1838,7 @@ pub mod dnn {
 	opencv_type_boxed! { AsinhLayer }
 	
 	impl Drop for AsinhLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AsinhLayer_delete(instance: *mut c_void); }
 			unsafe { cv_AsinhLayer_delete(self.as_raw_mut_AsinhLayer()) };
@@ -1908,6 +1917,7 @@ pub mod dnn {
 	opencv_type_boxed! { AtanLayer }
 	
 	impl Drop for AtanLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AtanLayer_delete(instance: *mut c_void); }
 			unsafe { cv_AtanLayer_delete(self.as_raw_mut_AtanLayer()) };
@@ -1986,6 +1996,7 @@ pub mod dnn {
 	opencv_type_boxed! { AtanhLayer }
 	
 	impl Drop for AtanhLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AtanhLayer_delete(instance: *mut c_void); }
 			unsafe { cv_AtanhLayer_delete(self.as_raw_mut_AtanhLayer()) };
@@ -2064,6 +2075,7 @@ pub mod dnn {
 	opencv_type_boxed! { BNLLLayer }
 	
 	impl Drop for BNLLLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BNLLLayer_delete(instance: *mut c_void); }
 			unsafe { cv_BNLLLayer_delete(self.as_raw_mut_BNLLLayer()) };
@@ -2157,6 +2169,7 @@ pub mod dnn {
 	opencv_type_boxed! { BackendNode }
 	
 	impl Drop for BackendNode {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BackendNode_delete(instance: *mut c_void); }
 			unsafe { cv_BackendNode_delete(self.as_raw_mut_BackendNode()) };
@@ -2429,6 +2442,7 @@ pub mod dnn {
 	opencv_type_boxed! { BaseConvolutionLayer }
 	
 	impl Drop for BaseConvolutionLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BaseConvolutionLayer_delete(instance: *mut c_void); }
 			unsafe { cv_BaseConvolutionLayer_delete(self.as_raw_mut_BaseConvolutionLayer()) };
@@ -2523,6 +2537,7 @@ pub mod dnn {
 	opencv_type_boxed! { BatchNormLayer }
 	
 	impl Drop for BatchNormLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BatchNormLayer_delete(instance: *mut c_void); }
 			unsafe { cv_BatchNormLayer_delete(self.as_raw_mut_BatchNormLayer()) };
@@ -2649,6 +2664,7 @@ pub mod dnn {
 	opencv_type_boxed! { BatchNormLayerInt8 }
 	
 	impl Drop for BatchNormLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BatchNormLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_BatchNormLayerInt8_delete(self.as_raw_mut_BatchNormLayerInt8()) };
@@ -2756,6 +2772,7 @@ pub mod dnn {
 	opencv_type_boxed! { BlankLayer }
 	
 	impl Drop for BlankLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BlankLayer_delete(instance: *mut c_void); }
 			unsafe { cv_BlankLayer_delete(self.as_raw_mut_BlankLayer()) };
@@ -2824,6 +2841,7 @@ pub mod dnn {
 	opencv_type_boxed! { CeilLayer }
 	
 	impl Drop for CeilLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CeilLayer_delete(instance: *mut c_void); }
 			unsafe { cv_CeilLayer_delete(self.as_raw_mut_CeilLayer()) };
@@ -2914,6 +2932,7 @@ pub mod dnn {
 	opencv_type_boxed! { CeluLayer }
 	
 	impl Drop for CeluLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CeluLayer_delete(instance: *mut c_void); }
 			unsafe { cv_CeluLayer_delete(self.as_raw_mut_CeluLayer()) };
@@ -2992,6 +3011,7 @@ pub mod dnn {
 	opencv_type_boxed! { ChannelsPReLULayer }
 	
 	impl Drop for ChannelsPReLULayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ChannelsPReLULayer_delete(instance: *mut c_void); }
 			unsafe { cv_ChannelsPReLULayer_delete(self.as_raw_mut_ChannelsPReLULayer()) };
@@ -3134,6 +3154,7 @@ pub mod dnn {
 	opencv_type_boxed! { ClassificationModel }
 	
 	impl Drop for ClassificationModel {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ClassificationModel_delete(instance: *mut c_void); }
 			unsafe { cv_ClassificationModel_delete(self.as_raw_mut_ClassificationModel()) };
@@ -3233,6 +3254,7 @@ pub mod dnn {
 	opencv_type_boxed! { CompareLayer }
 	
 	impl Drop for CompareLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CompareLayer_delete(instance: *mut c_void); }
 			unsafe { cv_CompareLayer_delete(self.as_raw_mut_CompareLayer()) };
@@ -3345,6 +3367,7 @@ pub mod dnn {
 	opencv_type_boxed! { ConcatLayer }
 	
 	impl Drop for ConcatLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ConcatLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ConcatLayer_delete(self.as_raw_mut_ConcatLayer()) };
@@ -3414,6 +3437,7 @@ pub mod dnn {
 	opencv_type_boxed! { ConstLayer }
 	
 	impl Drop for ConstLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ConstLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ConstLayer_delete(self.as_raw_mut_ConstLayer()) };
@@ -3538,6 +3562,7 @@ pub mod dnn {
 	opencv_type_boxed! { ConvolutionLayer }
 	
 	impl Drop for ConvolutionLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ConvolutionLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ConvolutionLayer_delete(self.as_raw_mut_ConvolutionLayer()) };
@@ -3690,6 +3715,7 @@ pub mod dnn {
 	opencv_type_boxed! { ConvolutionLayerInt8 }
 	
 	impl Drop for ConvolutionLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ConvolutionLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_ConvolutionLayerInt8_delete(self.as_raw_mut_ConvolutionLayerInt8()) };
@@ -3768,6 +3794,7 @@ pub mod dnn {
 	opencv_type_boxed! { CorrelationLayer }
 	
 	impl Drop for CorrelationLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CorrelationLayer_delete(instance: *mut c_void); }
 			unsafe { cv_CorrelationLayer_delete(self.as_raw_mut_CorrelationLayer()) };
@@ -3836,6 +3863,7 @@ pub mod dnn {
 	opencv_type_boxed! { CosLayer }
 	
 	impl Drop for CosLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CosLayer_delete(instance: *mut c_void); }
 			unsafe { cv_CosLayer_delete(self.as_raw_mut_CosLayer()) };
@@ -3914,6 +3942,7 @@ pub mod dnn {
 	opencv_type_boxed! { CoshLayer }
 	
 	impl Drop for CoshLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CoshLayer_delete(instance: *mut c_void); }
 			unsafe { cv_CoshLayer_delete(self.as_raw_mut_CoshLayer()) };
@@ -3992,6 +4021,7 @@ pub mod dnn {
 	opencv_type_boxed! { CropAndResizeLayer }
 	
 	impl Drop for CropAndResizeLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CropAndResizeLayer_delete(instance: *mut c_void); }
 			unsafe { cv_CropAndResizeLayer_delete(self.as_raw_mut_CropAndResizeLayer()) };
@@ -4060,6 +4090,7 @@ pub mod dnn {
 	opencv_type_boxed! { CropLayer }
 	
 	impl Drop for CropLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CropLayer_delete(instance: *mut c_void); }
 			unsafe { cv_CropLayer_delete(self.as_raw_mut_CropLayer()) };
@@ -4152,6 +4183,7 @@ pub mod dnn {
 	opencv_type_boxed! { CumSumLayer }
 	
 	impl Drop for CumSumLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CumSumLayer_delete(instance: *mut c_void); }
 			unsafe { cv_CumSumLayer_delete(self.as_raw_mut_CumSumLayer()) };
@@ -4220,6 +4252,7 @@ pub mod dnn {
 	opencv_type_boxed! { DataAugmentationLayer }
 	
 	impl Drop for DataAugmentationLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DataAugmentationLayer_delete(instance: *mut c_void); }
 			unsafe { cv_DataAugmentationLayer_delete(self.as_raw_mut_DataAugmentationLayer()) };
@@ -4288,6 +4321,7 @@ pub mod dnn {
 	opencv_type_boxed! { DeconvolutionLayer }
 	
 	impl Drop for DeconvolutionLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DeconvolutionLayer_delete(instance: *mut c_void); }
 			unsafe { cv_DeconvolutionLayer_delete(self.as_raw_mut_DeconvolutionLayer()) };
@@ -4392,6 +4426,7 @@ pub mod dnn {
 	opencv_type_boxed! { DequantizeLayer }
 	
 	impl Drop for DequantizeLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DequantizeLayer_delete(instance: *mut c_void); }
 			unsafe { cv_DequantizeLayer_delete(self.as_raw_mut_DequantizeLayer()) };
@@ -4514,6 +4549,7 @@ pub mod dnn {
 	opencv_type_boxed! { DetectionModel }
 	
 	impl Drop for DetectionModel {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DetectionModel_delete(instance: *mut c_void); }
 			unsafe { cv_DetectionModel_delete(self.as_raw_mut_DetectionModel()) };
@@ -4619,6 +4655,7 @@ pub mod dnn {
 	opencv_type_boxed! { DetectionOutputLayer }
 	
 	impl Drop for DetectionOutputLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DetectionOutputLayer_delete(instance: *mut c_void); }
 			unsafe { cv_DetectionOutputLayer_delete(self.as_raw_mut_DetectionOutputLayer()) };
@@ -4795,6 +4832,7 @@ pub mod dnn {
 	opencv_type_boxed! { Dict }
 	
 	impl Drop for Dict {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Dict_delete(instance: *mut c_void); }
 			unsafe { cv_Dict_delete(self.as_raw_mut_Dict()) };
@@ -4950,6 +4988,7 @@ pub mod dnn {
 	opencv_type_boxed! { DictValue }
 	
 	impl Drop for DictValue {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DictValue_delete(instance: *mut c_void); }
 			unsafe { cv_DictValue_delete(self.as_raw_mut_DictValue()) };
@@ -5073,6 +5112,7 @@ pub mod dnn {
 	opencv_type_boxed! { ELULayer }
 	
 	impl Drop for ELULayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ELULayer_delete(instance: *mut c_void); }
 			unsafe { cv_ELULayer_delete(self.as_raw_mut_ELULayer()) };
@@ -5157,6 +5197,7 @@ pub mod dnn {
 	opencv_type_boxed! { EltwiseLayer }
 	
 	impl Drop for EltwiseLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_EltwiseLayer_delete(instance: *mut c_void); }
 			unsafe { cv_EltwiseLayer_delete(self.as_raw_mut_EltwiseLayer()) };
@@ -5225,6 +5266,7 @@ pub mod dnn {
 	opencv_type_boxed! { EltwiseLayerInt8 }
 	
 	impl Drop for EltwiseLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_EltwiseLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_EltwiseLayerInt8_delete(self.as_raw_mut_EltwiseLayerInt8()) };
@@ -5293,6 +5335,7 @@ pub mod dnn {
 	opencv_type_boxed! { ErfLayer }
 	
 	impl Drop for ErfLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ErfLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ErfLayer_delete(self.as_raw_mut_ErfLayer()) };
@@ -5407,6 +5450,7 @@ pub mod dnn {
 	opencv_type_boxed! { ExpLayer }
 	
 	impl Drop for ExpLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ExpLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ExpLayer_delete(self.as_raw_mut_ExpLayer()) };
@@ -5485,6 +5529,7 @@ pub mod dnn {
 	opencv_type_boxed! { FlattenLayer }
 	
 	impl Drop for FlattenLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FlattenLayer_delete(instance: *mut c_void); }
 			unsafe { cv_FlattenLayer_delete(self.as_raw_mut_FlattenLayer()) };
@@ -5553,6 +5598,7 @@ pub mod dnn {
 	opencv_type_boxed! { FloorLayer }
 	
 	impl Drop for FloorLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FloorLayer_delete(instance: *mut c_void); }
 			unsafe { cv_FloorLayer_delete(self.as_raw_mut_FloorLayer()) };
@@ -5631,6 +5677,7 @@ pub mod dnn {
 	opencv_type_boxed! { FlowWarpLayer }
 	
 	impl Drop for FlowWarpLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FlowWarpLayer_delete(instance: *mut c_void); }
 			unsafe { cv_FlowWarpLayer_delete(self.as_raw_mut_FlowWarpLayer()) };
@@ -5725,6 +5772,7 @@ pub mod dnn {
 	opencv_type_boxed! { GRULayer }
 	
 	impl Drop for GRULayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GRULayer_delete(instance: *mut c_void); }
 			unsafe { cv_GRULayer_delete(self.as_raw_mut_GRULayer()) };
@@ -5795,6 +5843,7 @@ pub mod dnn {
 	opencv_type_boxed! { GatherLayer }
 	
 	impl Drop for GatherLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GatherLayer_delete(instance: *mut c_void); }
 			unsafe { cv_GatherLayer_delete(self.as_raw_mut_GatherLayer()) };
@@ -5887,6 +5936,7 @@ pub mod dnn {
 	opencv_type_boxed! { HardSigmoidLayer }
 	
 	impl Drop for HardSigmoidLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_HardSigmoidLayer_delete(instance: *mut c_void); }
 			unsafe { cv_HardSigmoidLayer_delete(self.as_raw_mut_HardSigmoidLayer()) };
@@ -5965,6 +6015,7 @@ pub mod dnn {
 	opencv_type_boxed! { HardSwishLayer }
 	
 	impl Drop for HardSwishLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_HardSwishLayer_delete(instance: *mut c_void); }
 			unsafe { cv_HardSwishLayer_delete(self.as_raw_mut_HardSwishLayer()) };
@@ -6055,6 +6106,7 @@ pub mod dnn {
 	opencv_type_boxed! { InnerProductLayer }
 	
 	impl Drop for InnerProductLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_InnerProductLayer_delete(instance: *mut c_void); }
 			unsafe { cv_InnerProductLayer_delete(self.as_raw_mut_InnerProductLayer()) };
@@ -6183,6 +6235,7 @@ pub mod dnn {
 	opencv_type_boxed! { InnerProductLayerInt8 }
 	
 	impl Drop for InnerProductLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_InnerProductLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_InnerProductLayerInt8_delete(self.as_raw_mut_InnerProductLayerInt8()) };
@@ -6264,6 +6317,7 @@ pub mod dnn {
 	opencv_type_boxed! { InterpLayer }
 	
 	impl Drop for InterpLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_InterpLayer_delete(instance: *mut c_void); }
 			unsafe { cv_InterpLayer_delete(self.as_raw_mut_InterpLayer()) };
@@ -6357,6 +6411,7 @@ pub mod dnn {
 	opencv_type_boxed! { KeypointsModel }
 	
 	impl Drop for KeypointsModel {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KeypointsModel_delete(instance: *mut c_void); }
 			unsafe { cv_KeypointsModel_delete(self.as_raw_mut_KeypointsModel()) };
@@ -6518,6 +6573,7 @@ pub mod dnn {
 	opencv_type_boxed! { LRNLayer }
 	
 	impl Drop for LRNLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LRNLayer_delete(instance: *mut c_void); }
 			unsafe { cv_LRNLayer_delete(self.as_raw_mut_LRNLayer()) };
@@ -7229,6 +7285,7 @@ pub mod dnn {
 	opencv_type_boxed! { Layer }
 	
 	impl Drop for Layer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Layer_delete(instance: *mut c_void); }
 			unsafe { cv_Layer_delete(self.as_raw_mut_Layer()) };
@@ -7398,6 +7455,7 @@ pub mod dnn {
 	opencv_type_boxed! { LayerFactory }
 	
 	impl Drop for LayerFactory {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LayerFactory_delete(instance: *mut c_void); }
 			unsafe { cv_LayerFactory_delete(self.as_raw_mut_LayerFactory()) };
@@ -7537,6 +7595,7 @@ pub mod dnn {
 	opencv_type_boxed! { LayerParams }
 	
 	impl Drop for LayerParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LayerParams_delete(instance: *mut c_void); }
 			unsafe { cv_LayerParams_delete(self.as_raw_mut_LayerParams()) };
@@ -7585,6 +7644,7 @@ pub mod dnn {
 	opencv_type_boxed! { LogLayer }
 	
 	impl Drop for LogLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LogLayer_delete(instance: *mut c_void); }
 			unsafe { cv_LogLayer_delete(self.as_raw_mut_LogLayer()) };
@@ -7699,6 +7759,7 @@ pub mod dnn {
 	opencv_type_boxed! { MVNLayer }
 	
 	impl Drop for MVNLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MVNLayer_delete(instance: *mut c_void); }
 			unsafe { cv_MVNLayer_delete(self.as_raw_mut_MVNLayer()) };
@@ -7809,6 +7870,7 @@ pub mod dnn {
 	opencv_type_boxed! { MaxUnpoolLayer }
 	
 	impl Drop for MaxUnpoolLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MaxUnpoolLayer_delete(instance: *mut c_void); }
 			unsafe { cv_MaxUnpoolLayer_delete(self.as_raw_mut_MaxUnpoolLayer()) };
@@ -7877,6 +7939,7 @@ pub mod dnn {
 	opencv_type_boxed! { MishLayer }
 	
 	impl Drop for MishLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MishLayer_delete(instance: *mut c_void); }
 			unsafe { cv_MishLayer_delete(self.as_raw_mut_MishLayer()) };
@@ -8130,6 +8193,7 @@ pub mod dnn {
 	opencv_type_boxed! { Model }
 	
 	impl Drop for Model {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Model_delete(instance: *mut c_void); }
 			unsafe { cv_Model_delete(self.as_raw_mut_Model()) };
@@ -8233,6 +8297,7 @@ pub mod dnn {
 	opencv_type_boxed! { NaryEltwiseLayer }
 	
 	impl Drop for NaryEltwiseLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NaryEltwiseLayer_delete(instance: *mut c_void); }
 			unsafe { cv_NaryEltwiseLayer_delete(self.as_raw_mut_NaryEltwiseLayer()) };
@@ -9205,6 +9270,7 @@ pub mod dnn {
 	opencv_type_boxed! { Net }
 	
 	impl Drop for Net {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Net_delete(instance: *mut c_void); }
 			unsafe { cv_Net_delete(self.as_raw_mut_Net()) };
@@ -9373,6 +9439,7 @@ pub mod dnn {
 	opencv_type_boxed! { NormalizeBBoxLayer }
 	
 	impl Drop for NormalizeBBoxLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NormalizeBBoxLayer_delete(instance: *mut c_void); }
 			unsafe { cv_NormalizeBBoxLayer_delete(self.as_raw_mut_NormalizeBBoxLayer()) };
@@ -9441,6 +9508,7 @@ pub mod dnn {
 	opencv_type_boxed! { NotLayer }
 	
 	impl Drop for NotLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NotLayer_delete(instance: *mut c_void); }
 			unsafe { cv_NotLayer_delete(self.as_raw_mut_NotLayer()) };
@@ -9539,6 +9607,7 @@ pub mod dnn {
 	opencv_type_boxed! { PaddingLayer }
 	
 	impl Drop for PaddingLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PaddingLayer_delete(instance: *mut c_void); }
 			unsafe { cv_PaddingLayer_delete(self.as_raw_mut_PaddingLayer()) };
@@ -9607,6 +9676,7 @@ pub mod dnn {
 	opencv_type_boxed! { PermuteLayer }
 	
 	impl Drop for PermuteLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PermuteLayer_delete(instance: *mut c_void); }
 			unsafe { cv_PermuteLayer_delete(self.as_raw_mut_PermuteLayer()) };
@@ -9854,6 +9924,7 @@ pub mod dnn {
 	opencv_type_boxed! { PoolingLayer }
 	
 	impl Drop for PoolingLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PoolingLayer_delete(instance: *mut c_void); }
 			unsafe { cv_PoolingLayer_delete(self.as_raw_mut_PoolingLayer()) };
@@ -9970,6 +10041,7 @@ pub mod dnn {
 	opencv_type_boxed! { PoolingLayerInt8 }
 	
 	impl Drop for PoolingLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PoolingLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_PoolingLayerInt8_delete(self.as_raw_mut_PoolingLayerInt8()) };
@@ -10084,6 +10156,7 @@ pub mod dnn {
 	opencv_type_boxed! { PowerLayer }
 	
 	impl Drop for PowerLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PowerLayer_delete(instance: *mut c_void); }
 			unsafe { cv_PowerLayer_delete(self.as_raw_mut_PowerLayer()) };
@@ -10162,6 +10235,7 @@ pub mod dnn {
 	opencv_type_boxed! { PriorBoxLayer }
 	
 	impl Drop for PriorBoxLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PriorBoxLayer_delete(instance: *mut c_void); }
 			unsafe { cv_PriorBoxLayer_delete(self.as_raw_mut_PriorBoxLayer()) };
@@ -10230,6 +10304,7 @@ pub mod dnn {
 	opencv_type_boxed! { ProposalLayer }
 	
 	impl Drop for ProposalLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ProposalLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ProposalLayer_delete(self.as_raw_mut_ProposalLayer()) };
@@ -10324,6 +10399,7 @@ pub mod dnn {
 	opencv_type_boxed! { QuantizeLayer }
 	
 	impl Drop for QuantizeLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_QuantizeLayer_delete(instance: *mut c_void); }
 			unsafe { cv_QuantizeLayer_delete(self.as_raw_mut_QuantizeLayer()) };
@@ -10489,6 +10565,7 @@ pub mod dnn {
 	opencv_type_boxed! { ReLU6Layer }
 	
 	impl Drop for ReLU6Layer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ReLU6Layer_delete(instance: *mut c_void); }
 			unsafe { cv_ReLU6Layer_delete(self.as_raw_mut_ReLU6Layer()) };
@@ -10579,6 +10656,7 @@ pub mod dnn {
 	opencv_type_boxed! { ReLULayer }
 	
 	impl Drop for ReLULayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ReLULayer_delete(instance: *mut c_void); }
 			unsafe { cv_ReLULayer_delete(self.as_raw_mut_ReLULayer()) };
@@ -10657,6 +10735,7 @@ pub mod dnn {
 	opencv_type_boxed! { ReciprocalLayer }
 	
 	impl Drop for ReciprocalLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ReciprocalLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ReciprocalLayer_delete(self.as_raw_mut_ReciprocalLayer()) };
@@ -10773,6 +10852,7 @@ pub mod dnn {
 	opencv_type_boxed! { ReduceLayer }
 	
 	impl Drop for ReduceLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ReduceLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ReduceLayer_delete(self.as_raw_mut_ReduceLayer()) };
@@ -10841,6 +10921,7 @@ pub mod dnn {
 	opencv_type_boxed! { ReduceLayerInt8 }
 	
 	impl Drop for ReduceLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ReduceLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_ReduceLayerInt8_delete(self.as_raw_mut_ReduceLayerInt8()) };
@@ -10931,6 +11012,7 @@ pub mod dnn {
 	opencv_type_boxed! { RegionLayer }
 	
 	impl Drop for RegionLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RegionLayer_delete(instance: *mut c_void); }
 			unsafe { cv_RegionLayer_delete(self.as_raw_mut_RegionLayer()) };
@@ -10999,6 +11081,7 @@ pub mod dnn {
 	opencv_type_boxed! { ReorgLayer }
 	
 	impl Drop for ReorgLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ReorgLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ReorgLayer_delete(self.as_raw_mut_ReorgLayer()) };
@@ -11091,6 +11174,7 @@ pub mod dnn {
 	opencv_type_boxed! { RequantizeLayer }
 	
 	impl Drop for RequantizeLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RequantizeLayer_delete(instance: *mut c_void); }
 			unsafe { cv_RequantizeLayer_delete(self.as_raw_mut_RequantizeLayer()) };
@@ -11185,6 +11269,7 @@ pub mod dnn {
 	opencv_type_boxed! { ReshapeLayer }
 	
 	impl Drop for ReshapeLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ReshapeLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ReshapeLayer_delete(self.as_raw_mut_ReshapeLayer()) };
@@ -11256,6 +11341,7 @@ pub mod dnn {
 	opencv_type_boxed! { ResizeLayer }
 	
 	impl Drop for ResizeLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ResizeLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ResizeLayer_delete(self.as_raw_mut_ResizeLayer()) };
@@ -11324,6 +11410,7 @@ pub mod dnn {
 	opencv_type_boxed! { RoundLayer }
 	
 	impl Drop for RoundLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RoundLayer_delete(instance: *mut c_void); }
 			unsafe { cv_RoundLayer_delete(self.as_raw_mut_RoundLayer()) };
@@ -11440,6 +11527,7 @@ pub mod dnn {
 	opencv_type_boxed! { ScaleLayer }
 	
 	impl Drop for ScaleLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ScaleLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ScaleLayer_delete(self.as_raw_mut_ScaleLayer()) };
@@ -11532,6 +11620,7 @@ pub mod dnn {
 	opencv_type_boxed! { ScaleLayerInt8 }
 	
 	impl Drop for ScaleLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ScaleLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_ScaleLayerInt8_delete(self.as_raw_mut_ScaleLayerInt8()) };
@@ -11610,6 +11699,7 @@ pub mod dnn {
 	opencv_type_boxed! { ScatterLayer }
 	
 	impl Drop for ScatterLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ScatterLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ScatterLayer_delete(self.as_raw_mut_ScatterLayer()) };
@@ -11678,6 +11768,7 @@ pub mod dnn {
 	opencv_type_boxed! { ScatterNDLayer }
 	
 	impl Drop for ScatterNDLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ScatterNDLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ScatterNDLayer_delete(self.as_raw_mut_ScatterNDLayer()) };
@@ -11766,6 +11857,7 @@ pub mod dnn {
 	opencv_type_boxed! { SegmentationModel }
 	
 	impl Drop for SegmentationModel {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SegmentationModel_delete(instance: *mut c_void); }
 			unsafe { cv_SegmentationModel_delete(self.as_raw_mut_SegmentationModel()) };
@@ -11879,6 +11971,7 @@ pub mod dnn {
 	opencv_type_boxed! { SeluLayer }
 	
 	impl Drop for SeluLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SeluLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SeluLayer_delete(self.as_raw_mut_SeluLayer()) };
@@ -11957,6 +12050,7 @@ pub mod dnn {
 	opencv_type_boxed! { ShiftLayer }
 	
 	impl Drop for ShiftLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ShiftLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ShiftLayer_delete(self.as_raw_mut_ShiftLayer()) };
@@ -12025,6 +12119,7 @@ pub mod dnn {
 	opencv_type_boxed! { ShiftLayerInt8 }
 	
 	impl Drop for ShiftLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ShiftLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_ShiftLayerInt8_delete(self.as_raw_mut_ShiftLayerInt8()) };
@@ -12117,6 +12212,7 @@ pub mod dnn {
 	opencv_type_boxed! { ShrinkLayer }
 	
 	impl Drop for ShrinkLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ShrinkLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ShrinkLayer_delete(self.as_raw_mut_ShrinkLayer()) };
@@ -12215,6 +12311,7 @@ pub mod dnn {
 	opencv_type_boxed! { ShuffleChannelLayer }
 	
 	impl Drop for ShuffleChannelLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ShuffleChannelLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ShuffleChannelLayer_delete(self.as_raw_mut_ShuffleChannelLayer()) };
@@ -12283,6 +12380,7 @@ pub mod dnn {
 	opencv_type_boxed! { SigmoidLayer }
 	
 	impl Drop for SigmoidLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SigmoidLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SigmoidLayer_delete(self.as_raw_mut_SigmoidLayer()) };
@@ -12361,6 +12459,7 @@ pub mod dnn {
 	opencv_type_boxed! { SignLayer }
 	
 	impl Drop for SignLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SignLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SignLayer_delete(self.as_raw_mut_SignLayer()) };
@@ -12439,6 +12538,7 @@ pub mod dnn {
 	opencv_type_boxed! { SinLayer }
 	
 	impl Drop for SinLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SinLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SinLayer_delete(self.as_raw_mut_SinLayer()) };
@@ -12517,6 +12617,7 @@ pub mod dnn {
 	opencv_type_boxed! { SinhLayer }
 	
 	impl Drop for SinhLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SinhLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SinhLayer_delete(self.as_raw_mut_SinhLayer()) };
@@ -12676,6 +12777,7 @@ pub mod dnn {
 	opencv_type_boxed! { SliceLayer }
 	
 	impl Drop for SliceLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SliceLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SliceLayer_delete(self.as_raw_mut_SliceLayer()) };
@@ -12756,6 +12858,7 @@ pub mod dnn {
 	opencv_type_boxed! { SoftmaxLayer }
 	
 	impl Drop for SoftmaxLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SoftmaxLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SoftmaxLayer_delete(self.as_raw_mut_SoftmaxLayer()) };
@@ -12848,6 +12951,7 @@ pub mod dnn {
 	opencv_type_boxed! { SoftmaxLayerInt8 }
 	
 	impl Drop for SoftmaxLayerInt8 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SoftmaxLayerInt8_delete(instance: *mut c_void); }
 			unsafe { cv_SoftmaxLayerInt8_delete(self.as_raw_mut_SoftmaxLayerInt8()) };
@@ -12926,6 +13030,7 @@ pub mod dnn {
 	opencv_type_boxed! { SoftplusLayer }
 	
 	impl Drop for SoftplusLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SoftplusLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SoftplusLayer_delete(self.as_raw_mut_SoftplusLayer()) };
@@ -13004,6 +13109,7 @@ pub mod dnn {
 	opencv_type_boxed! { SoftsignLayer }
 	
 	impl Drop for SoftsignLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SoftsignLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SoftsignLayer_delete(self.as_raw_mut_SoftsignLayer()) };
@@ -13096,6 +13202,7 @@ pub mod dnn {
 	opencv_type_boxed! { SplitLayer }
 	
 	impl Drop for SplitLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SplitLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SplitLayer_delete(self.as_raw_mut_SplitLayer()) };
@@ -13164,6 +13271,7 @@ pub mod dnn {
 	opencv_type_boxed! { SqrtLayer }
 	
 	impl Drop for SqrtLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SqrtLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SqrtLayer_delete(self.as_raw_mut_SqrtLayer()) };
@@ -13242,6 +13350,7 @@ pub mod dnn {
 	opencv_type_boxed! { SwishLayer }
 	
 	impl Drop for SwishLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SwishLayer_delete(instance: *mut c_void); }
 			unsafe { cv_SwishLayer_delete(self.as_raw_mut_SwishLayer()) };
@@ -13320,6 +13429,7 @@ pub mod dnn {
 	opencv_type_boxed! { TanHLayer }
 	
 	impl Drop for TanHLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TanHLayer_delete(instance: *mut c_void); }
 			unsafe { cv_TanHLayer_delete(self.as_raw_mut_TanHLayer()) };
@@ -13398,6 +13508,7 @@ pub mod dnn {
 	opencv_type_boxed! { TanLayer }
 	
 	impl Drop for TanLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TanLayer_delete(instance: *mut c_void); }
 			unsafe { cv_TanLayer_delete(self.as_raw_mut_TanLayer()) };
@@ -13585,6 +13696,7 @@ pub mod dnn {
 	opencv_type_boxed! { TextDetectionModel }
 	
 	impl Drop for TextDetectionModel {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TextDetectionModel_delete(instance: *mut c_void); }
 			unsafe { cv_TextDetectionModel_delete(self.as_raw_mut_TextDetectionModel()) };
@@ -13720,6 +13832,7 @@ pub mod dnn {
 	opencv_type_boxed! { TextDetectionModel_DB }
 	
 	impl Drop for TextDetectionModel_DB {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TextDetectionModel_DB_delete(instance: *mut c_void); }
 			unsafe { cv_TextDetectionModel_DB_delete(self.as_raw_mut_TextDetectionModel_DB()) };
@@ -13880,6 +13993,7 @@ pub mod dnn {
 	opencv_type_boxed! { TextDetectionModel_EAST }
 	
 	impl Drop for TextDetectionModel_EAST {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TextDetectionModel_EAST_delete(instance: *mut c_void); }
 			unsafe { cv_TextDetectionModel_EAST_delete(self.as_raw_mut_TextDetectionModel_EAST()) };
@@ -14100,6 +14214,7 @@ pub mod dnn {
 	opencv_type_boxed! { TextRecognitionModel }
 	
 	impl Drop for TextRecognitionModel {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TextRecognitionModel_delete(instance: *mut c_void); }
 			unsafe { cv_TextRecognitionModel_delete(self.as_raw_mut_TextRecognitionModel()) };
@@ -14212,6 +14327,7 @@ pub mod dnn {
 	opencv_type_boxed! { ThresholdedReluLayer }
 	
 	impl Drop for ThresholdedReluLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ThresholdedReluLayer_delete(instance: *mut c_void); }
 			unsafe { cv_ThresholdedReluLayer_delete(self.as_raw_mut_ThresholdedReluLayer()) };
@@ -14290,6 +14406,7 @@ pub mod dnn {
 	opencv_type_boxed! { TileLayer }
 	
 	impl Drop for TileLayer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TileLayer_delete(instance: *mut c_void); }
 			unsafe { cv_TileLayer_delete(self.as_raw_mut_TileLayer()) };
@@ -14358,6 +14475,7 @@ pub mod dnn {
 	opencv_type_boxed! { _Range }
 	
 	impl Drop for _Range {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv__Range_delete(instance: *mut c_void); }
 			unsafe { cv__Range_delete(self.as_raw_mut__Range()) };

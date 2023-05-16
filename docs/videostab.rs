@@ -199,6 +199,7 @@ pub mod videostab {
 	opencv_type_boxed! { ColorAverageInpainter }
 	
 	impl Drop for ColorAverageInpainter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ColorAverageInpainter_delete(instance: *mut c_void); }
 			unsafe { cv_ColorAverageInpainter_delete(self.as_raw_mut_ColorAverageInpainter()) };
@@ -254,6 +255,7 @@ pub mod videostab {
 	opencv_type_boxed! { ColorInpainter }
 	
 	impl Drop for ColorInpainter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ColorInpainter_delete(instance: *mut c_void); }
 			unsafe { cv_ColorInpainter_delete(self.as_raw_mut_ColorInpainter()) };
@@ -340,6 +342,7 @@ pub mod videostab {
 	opencv_type_boxed! { ConsistentMosaicInpainter }
 	
 	impl Drop for ConsistentMosaicInpainter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ConsistentMosaicInpainter_delete(instance: *mut c_void); }
 			unsafe { cv_ConsistentMosaicInpainter_delete(self.as_raw_mut_ConsistentMosaicInpainter()) };
@@ -505,6 +508,7 @@ pub mod videostab {
 	opencv_type_boxed! { DensePyrLkOptFlowEstimatorGpu }
 	
 	impl Drop for DensePyrLkOptFlowEstimatorGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DensePyrLkOptFlowEstimatorGpu_delete(instance: *mut c_void); }
 			unsafe { cv_DensePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_DensePyrLkOptFlowEstimatorGpu()) };
@@ -586,6 +590,7 @@ pub mod videostab {
 	opencv_type_boxed! { FastMarchingMethod }
 	
 	impl Drop for FastMarchingMethod {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FastMarchingMethod_delete(instance: *mut c_void); }
 			unsafe { cv_FastMarchingMethod_delete(self.as_raw_mut_FastMarchingMethod()) };
@@ -646,6 +651,7 @@ pub mod videostab {
 	opencv_type_boxed! { FromFileMotionReader }
 	
 	impl Drop for FromFileMotionReader {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FromFileMotionReader_delete(instance: *mut c_void); }
 			unsafe { cv_FromFileMotionReader_delete(self.as_raw_mut_FromFileMotionReader()) };
@@ -742,6 +748,7 @@ pub mod videostab {
 	opencv_type_boxed! { GaussianMotionFilter }
 	
 	impl Drop for GaussianMotionFilter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GaussianMotionFilter_delete(instance: *mut c_void); }
 			unsafe { cv_GaussianMotionFilter_delete(self.as_raw_mut_GaussianMotionFilter()) };
@@ -1220,6 +1227,7 @@ pub mod videostab {
 	opencv_type_boxed! { InpaintingPipeline }
 	
 	impl Drop for InpaintingPipeline {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_InpaintingPipeline_delete(instance: *mut c_void); }
 			unsafe { cv_InpaintingPipeline_delete(self.as_raw_mut_InpaintingPipeline()) };
@@ -1379,6 +1387,7 @@ pub mod videostab {
 	opencv_type_boxed! { KeypointBasedMotionEstimator }
 	
 	impl Drop for KeypointBasedMotionEstimator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KeypointBasedMotionEstimator_delete(instance: *mut c_void); }
 			unsafe { cv_KeypointBasedMotionEstimator_delete(self.as_raw_mut_KeypointBasedMotionEstimator()) };
@@ -1496,6 +1505,7 @@ pub mod videostab {
 	opencv_type_boxed! { KeypointBasedMotionEstimatorGpu }
 	
 	impl Drop for KeypointBasedMotionEstimatorGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KeypointBasedMotionEstimatorGpu_delete(instance: *mut c_void); }
 			unsafe { cv_KeypointBasedMotionEstimatorGpu_delete(self.as_raw_mut_KeypointBasedMotionEstimatorGpu()) };
@@ -1562,6 +1572,7 @@ pub mod videostab {
 	opencv_type_boxed! { LogToStdout }
 	
 	impl Drop for LogToStdout {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LogToStdout_delete(instance: *mut c_void); }
 			unsafe { cv_LogToStdout_delete(self.as_raw_mut_LogToStdout()) };
@@ -1743,6 +1754,7 @@ pub mod videostab {
 	opencv_type_boxed! { LpMotionStabilizer }
 	
 	impl Drop for LpMotionStabilizer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LpMotionStabilizer_delete(instance: *mut c_void); }
 			unsafe { cv_LpMotionStabilizer_delete(self.as_raw_mut_LpMotionStabilizer()) };
@@ -1820,6 +1832,7 @@ pub mod videostab {
 	opencv_type_boxed! { MaskFrameSource }
 	
 	impl Drop for MaskFrameSource {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MaskFrameSource_delete(instance: *mut c_void); }
 			unsafe { cv_MaskFrameSource_delete(self.as_raw_mut_MaskFrameSource()) };
@@ -1885,6 +1898,7 @@ pub mod videostab {
 	opencv_type_boxed! { MoreAccurateMotionWobbleSuppressor }
 	
 	impl Drop for MoreAccurateMotionWobbleSuppressor {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MoreAccurateMotionWobbleSuppressor_delete(instance: *mut c_void); }
 			unsafe { cv_MoreAccurateMotionWobbleSuppressor_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressor()) };
@@ -1986,6 +2000,7 @@ pub mod videostab {
 	opencv_type_boxed! { MoreAccurateMotionWobbleSuppressorGpu }
 	
 	impl Drop for MoreAccurateMotionWobbleSuppressorGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MoreAccurateMotionWobbleSuppressorGpu_delete(instance: *mut c_void); }
 			unsafe { cv_MoreAccurateMotionWobbleSuppressorGpu_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu()) };
@@ -2117,6 +2132,7 @@ pub mod videostab {
 	opencv_type_boxed! { MotionEstimatorL1 }
 	
 	impl Drop for MotionEstimatorL1 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MotionEstimatorL1_delete(instance: *mut c_void); }
 			unsafe { cv_MotionEstimatorL1_delete(self.as_raw_mut_MotionEstimatorL1()) };
@@ -2227,6 +2243,7 @@ pub mod videostab {
 	opencv_type_boxed! { MotionEstimatorRansacL2 }
 	
 	impl Drop for MotionEstimatorRansacL2 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MotionEstimatorRansacL2_delete(instance: *mut c_void); }
 			unsafe { cv_MotionEstimatorRansacL2_delete(self.as_raw_mut_MotionEstimatorRansacL2()) };
@@ -2397,6 +2414,7 @@ pub mod videostab {
 	opencv_type_boxed! { MotionInpainter }
 	
 	impl Drop for MotionInpainter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MotionInpainter_delete(instance: *mut c_void); }
 			unsafe { cv_MotionInpainter_delete(self.as_raw_mut_MotionInpainter()) };
@@ -2480,6 +2498,7 @@ pub mod videostab {
 	opencv_type_boxed! { MotionStabilizationPipeline }
 	
 	impl Drop for MotionStabilizationPipeline {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MotionStabilizationPipeline_delete(instance: *mut c_void); }
 			unsafe { cv_MotionStabilizationPipeline_delete(self.as_raw_mut_MotionStabilizationPipeline()) };
@@ -2535,6 +2554,7 @@ pub mod videostab {
 	opencv_type_boxed! { NullDeblurer }
 	
 	impl Drop for NullDeblurer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NullDeblurer_delete(instance: *mut c_void); }
 			unsafe { cv_NullDeblurer_delete(self.as_raw_mut_NullDeblurer()) };
@@ -2600,6 +2620,7 @@ pub mod videostab {
 	opencv_type_boxed! { NullFrameSource }
 	
 	impl Drop for NullFrameSource {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NullFrameSource_delete(instance: *mut c_void); }
 			unsafe { cv_NullFrameSource_delete(self.as_raw_mut_NullFrameSource()) };
@@ -2655,6 +2676,7 @@ pub mod videostab {
 	opencv_type_boxed! { NullInpainter }
 	
 	impl Drop for NullInpainter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NullInpainter_delete(instance: *mut c_void); }
 			unsafe { cv_NullInpainter_delete(self.as_raw_mut_NullInpainter()) };
@@ -2711,6 +2733,7 @@ pub mod videostab {
 	opencv_type_boxed! { NullLog }
 	
 	impl Drop for NullLog {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NullLog_delete(instance: *mut c_void); }
 			unsafe { cv_NullLog_delete(self.as_raw_mut_NullLog()) };
@@ -2769,6 +2792,7 @@ pub mod videostab {
 	opencv_type_boxed! { NullOutlierRejector }
 	
 	impl Drop for NullOutlierRejector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NullOutlierRejector_delete(instance: *mut c_void); }
 			unsafe { cv_NullOutlierRejector_delete(self.as_raw_mut_NullOutlierRejector()) };
@@ -2824,6 +2848,7 @@ pub mod videostab {
 	opencv_type_boxed! { NullWobbleSuppressor }
 	
 	impl Drop for NullWobbleSuppressor {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NullWobbleSuppressor_delete(instance: *mut c_void); }
 			unsafe { cv_NullWobbleSuppressor_delete(self.as_raw_mut_NullWobbleSuppressor()) };
@@ -2908,6 +2933,7 @@ pub mod videostab {
 	opencv_type_boxed! { OnePassStabilizer }
 	
 	impl Drop for OnePassStabilizer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_OnePassStabilizer_delete(instance: *mut c_void); }
 			unsafe { cv_OnePassStabilizer_delete(self.as_raw_mut_OnePassStabilizer()) };
@@ -3008,6 +3034,7 @@ pub mod videostab {
 	opencv_type_boxed! { PyrLkOptFlowEstimatorBase }
 	
 	impl Drop for PyrLkOptFlowEstimatorBase {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PyrLkOptFlowEstimatorBase_delete(instance: *mut c_void); }
 			unsafe { cv_PyrLkOptFlowEstimatorBase_delete(self.as_raw_mut_PyrLkOptFlowEstimatorBase()) };
@@ -3130,6 +3157,7 @@ pub mod videostab {
 	opencv_type_boxed! { RansacParams }
 	
 	impl Drop for RansacParams {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RansacParams_delete(instance: *mut c_void); }
 			unsafe { cv_RansacParams_delete(self.as_raw_mut_RansacParams()) };
@@ -3223,6 +3251,7 @@ pub mod videostab {
 	opencv_type_boxed! { SparsePyrLkOptFlowEstimator }
 	
 	impl Drop for SparsePyrLkOptFlowEstimator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SparsePyrLkOptFlowEstimator_delete(instance: *mut c_void); }
 			unsafe { cv_SparsePyrLkOptFlowEstimator_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimator()) };
@@ -3312,6 +3341,7 @@ pub mod videostab {
 	opencv_type_boxed! { SparsePyrLkOptFlowEstimatorGpu }
 	
 	impl Drop for SparsePyrLkOptFlowEstimatorGpu {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SparsePyrLkOptFlowEstimatorGpu_delete(instance: *mut c_void); }
 			unsafe { cv_SparsePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimatorGpu()) };
@@ -3615,6 +3645,7 @@ pub mod videostab {
 	opencv_type_boxed! { ToFileMotionWriter }
 	
 	impl Drop for ToFileMotionWriter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ToFileMotionWriter_delete(instance: *mut c_void); }
 			unsafe { cv_ToFileMotionWriter_delete(self.as_raw_mut_ToFileMotionWriter()) };
@@ -3721,6 +3752,7 @@ pub mod videostab {
 	opencv_type_boxed! { TranslationBasedLocalOutlierRejector }
 	
 	impl Drop for TranslationBasedLocalOutlierRejector {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TranslationBasedLocalOutlierRejector_delete(instance: *mut c_void); }
 			unsafe { cv_TranslationBasedLocalOutlierRejector_delete(self.as_raw_mut_TranslationBasedLocalOutlierRejector()) };
@@ -3852,6 +3884,7 @@ pub mod videostab {
 	opencv_type_boxed! { TwoPassStabilizer }
 	
 	impl Drop for TwoPassStabilizer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TwoPassStabilizer_delete(instance: *mut c_void); }
 			unsafe { cv_TwoPassStabilizer_delete(self.as_raw_mut_TwoPassStabilizer()) };
@@ -3971,6 +4004,7 @@ pub mod videostab {
 	opencv_type_boxed! { VideoFileSource }
 	
 	impl Drop for VideoFileSource {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_VideoFileSource_delete(instance: *mut c_void); }
 			unsafe { cv_VideoFileSource_delete(self.as_raw_mut_VideoFileSource()) };
@@ -4057,6 +4091,7 @@ pub mod videostab {
 	opencv_type_boxed! { WeightingDeblurer }
 	
 	impl Drop for WeightingDeblurer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WeightingDeblurer_delete(instance: *mut c_void); }
 			unsafe { cv_WeightingDeblurer_delete(self.as_raw_mut_WeightingDeblurer()) };

@@ -7778,6 +7778,7 @@ pub mod imgproc {
 	opencv_type_boxed! { LineIterator }
 	
 	impl Drop for LineIterator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LineIterator_delete(instance: *mut c_void); }
 			unsafe { cv_LineIterator_delete(self.as_raw_mut_LineIterator()) };
@@ -8281,6 +8282,7 @@ pub mod imgproc {
 	opencv_type_boxed! { Subdiv2D }
 	
 	impl Drop for Subdiv2D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Subdiv2D_delete(instance: *mut c_void); }
 			unsafe { cv_Subdiv2D_delete(self.as_raw_mut_Subdiv2D()) };
@@ -8533,6 +8535,7 @@ pub mod imgproc {
 	opencv_type_boxed! { IntelligentScissorsMB }
 	
 	impl Drop for IntelligentScissorsMB {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_IntelligentScissorsMB_delete(instance: *mut c_void); }
 			unsafe { cv_IntelligentScissorsMB_delete(self.as_raw_mut_IntelligentScissorsMB()) };

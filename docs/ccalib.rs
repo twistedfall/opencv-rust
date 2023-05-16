@@ -609,6 +609,7 @@ pub mod ccalib {
 	opencv_type_boxed! { CustomPattern }
 	
 	impl Drop for CustomPattern {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CustomPattern_delete(instance: *mut c_void); }
 			unsafe { cv_CustomPattern_delete(self.as_raw_mut_CustomPattern()) };
@@ -725,6 +726,7 @@ pub mod ccalib {
 	opencv_type_boxed! { MultiCameraCalibration }
 	
 	impl Drop for MultiCameraCalibration {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MultiCameraCalibration_delete(instance: *mut c_void); }
 			unsafe { cv_MultiCameraCalibration_delete(self.as_raw_mut_MultiCameraCalibration()) };
@@ -832,6 +834,7 @@ pub mod ccalib {
 	opencv_type_boxed! { MultiCameraCalibration_edge }
 	
 	impl Drop for MultiCameraCalibration_edge {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MultiCameraCalibration_edge_delete(instance: *mut c_void); }
 			unsafe { cv_MultiCameraCalibration_edge_delete(self.as_raw_mut_MultiCameraCalibration_edge()) };
@@ -905,6 +908,7 @@ pub mod ccalib {
 	opencv_type_boxed! { MultiCameraCalibration_vertex }
 	
 	impl Drop for MultiCameraCalibration_vertex {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MultiCameraCalibration_vertex_delete(instance: *mut c_void); }
 			unsafe { cv_MultiCameraCalibration_vertex_delete(self.as_raw_mut_MultiCameraCalibration_vertex()) };
@@ -1029,6 +1033,7 @@ pub mod ccalib {
 	opencv_type_boxed! { RandomPatternCornerFinder }
 	
 	impl Drop for RandomPatternCornerFinder {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RandomPatternCornerFinder_delete(instance: *mut c_void); }
 			unsafe { cv_RandomPatternCornerFinder_delete(self.as_raw_mut_RandomPatternCornerFinder()) };
@@ -1104,6 +1109,7 @@ pub mod ccalib {
 	opencv_type_boxed! { RandomPatternGenerator }
 	
 	impl Drop for RandomPatternGenerator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RandomPatternGenerator_delete(instance: *mut c_void); }
 			unsafe { cv_RandomPatternGenerator_delete(self.as_raw_mut_RandomPatternGenerator()) };

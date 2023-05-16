@@ -1419,6 +1419,7 @@ pub mod optflow {
 	opencv_type_boxed! { GPCDetails }
 	
 	impl Drop for GPCDetails {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GPCDetails_delete(instance: *mut c_void); }
 			unsafe { cv_GPCDetails_delete(self.as_raw_mut_GPCDetails()) };
@@ -1558,6 +1559,7 @@ pub mod optflow {
 	opencv_type_boxed! { GPCPatchDescriptor }
 	
 	impl Drop for GPCPatchDescriptor {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GPCPatchDescriptor_delete(instance: *mut c_void); }
 			unsafe { cv_GPCPatchDescriptor_delete(self.as_raw_mut_GPCPatchDescriptor()) };
@@ -1646,6 +1648,7 @@ pub mod optflow {
 	opencv_type_boxed! { GPCPatchSample }
 	
 	impl Drop for GPCPatchSample {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GPCPatchSample_delete(instance: *mut c_void); }
 			unsafe { cv_GPCPatchSample_delete(self.as_raw_mut_GPCPatchSample()) };
@@ -1745,6 +1748,7 @@ pub mod optflow {
 	opencv_type_boxed! { GPCTrainingSamples }
 	
 	impl Drop for GPCTrainingSamples {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GPCTrainingSamples_delete(instance: *mut c_void); }
 			unsafe { cv_GPCTrainingSamples_delete(self.as_raw_mut_GPCTrainingSamples()) };
@@ -1865,6 +1869,7 @@ pub mod optflow {
 	opencv_type_boxed! { GPCTree }
 	
 	impl Drop for GPCTree {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GPCTree_delete(instance: *mut c_void); }
 			unsafe { cv_GPCTree_delete(self.as_raw_mut_GPCTree()) };
@@ -1970,6 +1975,7 @@ pub mod optflow {
 	opencv_type_boxed! { OpticalFlowPCAFlow }
 	
 	impl Drop for OpticalFlowPCAFlow {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_OpticalFlowPCAFlow_delete(instance: *mut c_void); }
 			unsafe { cv_OpticalFlowPCAFlow_delete(self.as_raw_mut_OpticalFlowPCAFlow()) };
@@ -2085,6 +2091,7 @@ pub mod optflow {
 	opencv_type_boxed! { PCAPrior }
 	
 	impl Drop for PCAPrior {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PCAPrior_delete(instance: *mut c_void); }
 			unsafe { cv_PCAPrior_delete(self.as_raw_mut_PCAPrior()) };
@@ -2599,6 +2606,7 @@ pub mod optflow {
 	opencv_type_boxed! { RLOFOpticalFlowParameter }
 	
 	impl Drop for RLOFOpticalFlowParameter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RLOFOpticalFlowParameter_delete(instance: *mut c_void); }
 			unsafe { cv_RLOFOpticalFlowParameter_delete(self.as_raw_mut_RLOFOpticalFlowParameter()) };

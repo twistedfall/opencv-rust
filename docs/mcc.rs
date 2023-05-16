@@ -764,6 +764,7 @@ pub mod mcc {
 	opencv_type_boxed! { ColorCorrectionModel }
 	
 	impl Drop for ColorCorrectionModel {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ColorCorrectionModel_delete(instance: *mut c_void); }
 			unsafe { cv_ColorCorrectionModel_delete(self.as_raw_mut_ColorCorrectionModel()) };
@@ -1466,6 +1467,7 @@ pub mod mcc {
 	opencv_type_boxed! { MCC_DetectorParameters }
 	
 	impl Drop for MCC_DetectorParameters {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MCC_DetectorParameters_delete(instance: *mut c_void); }
 			unsafe { cv_MCC_DetectorParameters_delete(self.as_raw_mut_MCC_DetectorParameters()) };

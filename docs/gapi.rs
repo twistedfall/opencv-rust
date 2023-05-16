@@ -4520,6 +4520,7 @@ pub mod gapi {
 	opencv_type_boxed! { GArg }
 	
 	impl Drop for GArg {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GArg_delete(instance: *mut c_void); }
 			unsafe { cv_GArg_delete(self.as_raw_mut_GArg()) };
@@ -4578,6 +4579,7 @@ pub mod gapi {
 	opencv_type_boxed! { GArrayDesc }
 	
 	impl Drop for GArrayDesc {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GArrayDesc_delete(instance: *mut c_void); }
 			unsafe { cv_GArrayDesc_delete(self.as_raw_mut_GArrayDesc()) };
@@ -4714,6 +4716,7 @@ pub mod gapi {
 	opencv_type_boxed! { GCall }
 	
 	impl Drop for GCall {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GCall_delete(instance: *mut c_void); }
 			unsafe { cv_GCall_delete(self.as_raw_mut_GCall()) };
@@ -4785,6 +4788,7 @@ pub mod gapi {
 	opencv_type_boxed! { GCompileArg }
 	
 	impl Drop for GCompileArg {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GCompileArg_delete(instance: *mut c_void); }
 			unsafe { cv_GCompileArg_delete(self.as_raw_mut_GCompileArg()) };
@@ -5100,6 +5104,7 @@ pub mod gapi {
 	opencv_type_boxed! { GCompiled }
 	
 	impl Drop for GCompiled {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GCompiled_delete(instance: *mut c_void); }
 			unsafe { cv_GCompiled_delete(self.as_raw_mut_GCompiled()) };
@@ -5414,6 +5419,7 @@ pub mod gapi {
 	opencv_type_boxed! { GComputation }
 	
 	impl Drop for GComputation {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GComputation_delete(instance: *mut c_void); }
 			unsafe { cv_GComputation_delete(self.as_raw_mut_GComputation()) };
@@ -5654,6 +5660,7 @@ pub mod gapi {
 	opencv_type_boxed! { GFrame }
 	
 	impl Drop for GFrame {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GFrame_delete(instance: *mut c_void); }
 			unsafe { cv_GFrame_delete(self.as_raw_mut_GFrame()) };
@@ -5754,6 +5761,7 @@ pub mod gapi {
 	opencv_type_boxed! { GFrameDesc }
 	
 	impl Drop for GFrameDesc {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GFrameDesc_delete(instance: *mut c_void); }
 			unsafe { cv_GFrameDesc_delete(self.as_raw_mut_GFrameDesc()) };
@@ -5846,6 +5854,7 @@ pub mod gapi {
 	opencv_type_boxed! { GKernel }
 	
 	impl Drop for GKernel {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GKernel_delete(instance: *mut c_void); }
 			unsafe { cv_GKernel_delete(self.as_raw_mut_GKernel()) };
@@ -5897,6 +5906,7 @@ pub mod gapi {
 	opencv_type_boxed! { GKernelImpl }
 	
 	impl Drop for GKernelImpl {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GKernelImpl_delete(instance: *mut c_void); }
 			unsafe { cv_GKernelImpl_delete(self.as_raw_mut_GKernelImpl()) };
@@ -6064,6 +6074,7 @@ pub mod gapi {
 	opencv_type_boxed! { GKernelPackage }
 	
 	impl Drop for GKernelPackage {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GKernelPackage_delete(instance: *mut c_void); }
 			unsafe { cv_GKernelPackage_delete(self.as_raw_mut_GKernelPackage()) };
@@ -6160,6 +6171,7 @@ pub mod gapi {
 	opencv_type_boxed! { GMat }
 	
 	impl Drop for GMat {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GMat_delete(instance: *mut c_void); }
 			unsafe { cv_GMat_delete(self.as_raw_mut_GMat()) };
@@ -6411,6 +6423,7 @@ pub mod gapi {
 	opencv_type_boxed! { GMatDesc }
 	
 	impl Drop for GMatDesc {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GMatDesc_delete(instance: *mut c_void); }
 			unsafe { cv_GMatDesc_delete(self.as_raw_mut_GMatDesc()) };
@@ -6499,6 +6512,7 @@ pub mod gapi {
 	opencv_type_boxed! { GMatP }
 	
 	impl Drop for GMatP {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GMatP_delete(instance: *mut c_void); }
 			unsafe { cv_GMatP_delete(self.as_raw_mut_GMatP()) };
@@ -6557,6 +6571,7 @@ pub mod gapi {
 	opencv_type_boxed! { GOpaqueDesc }
 	
 	impl Drop for GOpaqueDesc {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GOpaqueDesc_delete(instance: *mut c_void); }
 			unsafe { cv_GOpaqueDesc_delete(self.as_raw_mut_GOpaqueDesc()) };
@@ -6616,6 +6631,7 @@ pub mod gapi {
 	opencv_type_boxed! { GRunArg }
 	
 	impl Drop for GRunArg {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GRunArg_delete(instance: *mut c_void); }
 			unsafe { cv_GRunArg_delete(self.as_raw_mut_GRunArg()) };
@@ -6698,6 +6714,7 @@ pub mod gapi {
 	opencv_type_boxed! { GScalar }
 	
 	impl Drop for GScalar {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GScalar_delete(instance: *mut c_void); }
 			unsafe { cv_GScalar_delete(self.as_raw_mut_GScalar()) };
@@ -6881,6 +6898,7 @@ pub mod gapi {
 	opencv_type_boxed! { GScalarDesc }
 	
 	impl Drop for GScalarDesc {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GScalarDesc_delete(instance: *mut c_void); }
 			unsafe { cv_GScalarDesc_delete(self.as_raw_mut_GScalarDesc()) };
@@ -7099,6 +7117,7 @@ pub mod gapi {
 	opencv_type_boxed! { GStreamingCompiled }
 	
 	impl Drop for GStreamingCompiled {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GStreamingCompiled_delete(instance: *mut c_void); }
 			unsafe { cv_GStreamingCompiled_delete(self.as_raw_mut_GStreamingCompiled()) };
@@ -7169,6 +7188,7 @@ pub mod gapi {
 	opencv_type_boxed! { GTransform }
 	
 	impl Drop for GTransform {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GTransform_delete(instance: *mut c_void); }
 			unsafe { cv_GTransform_delete(self.as_raw_mut_GTransform()) };
@@ -7235,6 +7255,7 @@ pub mod gapi {
 	opencv_type_boxed! { GTypeInfo }
 	
 	impl Drop for GTypeInfo {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GTypeInfo_delete(instance: *mut c_void); }
 			unsafe { cv_GTypeInfo_delete(self.as_raw_mut_GTypeInfo()) };
@@ -7339,6 +7360,7 @@ pub mod gapi {
 	opencv_type_boxed! { MediaFrame }
 	
 	impl Drop for MediaFrame {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MediaFrame_delete(instance: *mut c_void); }
 			unsafe { cv_MediaFrame_delete(self.as_raw_mut_MediaFrame()) };
@@ -7465,6 +7487,7 @@ pub mod gapi {
 	opencv_type_boxed! { MediaFrame_View }
 	
 	impl Drop for MediaFrame_View {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MediaFrame_View_delete(instance: *mut c_void); }
 			unsafe { cv_MediaFrame_View_delete(self.as_raw_mut_MediaFrame_View()) };
@@ -7523,6 +7546,7 @@ pub mod gapi {
 	opencv_type_boxed! { RMat }
 	
 	impl Drop for RMat {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RMat_delete(instance: *mut c_void); }
 			unsafe { cv_RMat_delete(self.as_raw_mut_RMat()) };
@@ -7691,6 +7715,7 @@ pub mod gapi {
 	opencv_type_boxed! { RMat_View }
 	
 	impl Drop for RMat_View {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RMat_View_delete(instance: *mut c_void); }
 			unsafe { cv_RMat_View_delete(self.as_raw_mut_RMat_View()) };
@@ -7761,6 +7786,7 @@ pub mod gapi {
 	opencv_type_boxed! { ExtractArgsCallback }
 	
 	impl Drop for ExtractArgsCallback {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ExtractArgsCallback_delete(instance: *mut c_void); }
 			unsafe { cv_ExtractArgsCallback_delete(self.as_raw_mut_ExtractArgsCallback()) };
@@ -7799,6 +7825,7 @@ pub mod gapi {
 	opencv_type_boxed! { ExtractMetaCallback }
 	
 	impl Drop for ExtractMetaCallback {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ExtractMetaCallback_delete(instance: *mut c_void); }
 			unsafe { cv_ExtractMetaCallback_delete(self.as_raw_mut_ExtractMetaCallback()) };
@@ -7837,6 +7864,7 @@ pub mod gapi {
 	opencv_type_boxed! { GArrayU }
 	
 	impl Drop for GArrayU {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GArrayU_delete(instance: *mut c_void); }
 			unsafe { cv_GArrayU_delete(self.as_raw_mut_GArrayU()) };
@@ -7875,6 +7903,7 @@ pub mod gapi {
 	opencv_type_boxed! { GOpaqueU }
 	
 	impl Drop for GOpaqueU {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GOpaqueU_delete(instance: *mut c_void); }
 			unsafe { cv_GOpaqueU_delete(self.as_raw_mut_GOpaqueU()) };
@@ -7923,6 +7952,7 @@ pub mod gapi {
 	opencv_type_boxed! { GBackend }
 	
 	impl Drop for GBackend {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GBackend_delete(instance: *mut c_void); }
 			unsafe { cv_GBackend_delete(self.as_raw_mut_GBackend()) };
@@ -8038,6 +8068,7 @@ pub mod gapi {
 	opencv_type_boxed! { Scalar }
 	
 	impl Drop for Scalar {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Scalar_delete(instance: *mut c_void); }
 			unsafe { cv_Scalar_delete(self.as_raw_mut_Scalar()) };
@@ -8169,6 +8200,7 @@ pub mod gapi {
 	opencv_type_boxed! { use_only }
 	
 	impl Drop for use_only {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_use_only_delete(instance: *mut c_void); }
 			unsafe { cv_use_only_delete(self.as_raw_mut_use_only()) };
@@ -8212,6 +8244,7 @@ pub mod gapi {
 	opencv_type_boxed! { Data }
 	
 	impl Drop for Data {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Data_delete(instance: *mut c_void); }
 			unsafe { cv_Data_delete(self.as_raw_mut_Data()) };
@@ -8373,6 +8406,7 @@ pub mod gapi {
 	opencv_type_boxed! { Image }
 	
 	impl Drop for Image {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Image_delete(instance: *mut c_void); }
 			unsafe { cv_Image_delete(self.as_raw_mut_Image()) };
@@ -8631,6 +8665,7 @@ pub mod gapi {
 	opencv_type_boxed! { Poly }
 	
 	impl Drop for Poly {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Poly_delete(instance: *mut c_void); }
 			unsafe { cv_Poly_delete(self.as_raw_mut_Poly()) };
@@ -8897,6 +8932,7 @@ pub mod gapi {
 	opencv_type_boxed! { Text }
 	
 	impl Drop for Text {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Text_delete(instance: *mut c_void); }
 			unsafe { cv_Text_delete(self.as_raw_mut_Text()) };
@@ -8985,6 +9021,7 @@ pub mod gapi {
 	opencv_type_boxed! { any }
 	
 	impl Drop for any {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_any_delete(instance: *mut c_void); }
 			unsafe { cv_any_delete(self.as_raw_mut_any()) };

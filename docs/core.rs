@@ -8845,6 +8845,7 @@ pub mod core {
 	opencv_type_boxed! { Algorithm }
 	
 	impl Drop for Algorithm {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Algorithm_delete(instance: *mut c_void); }
 			unsafe { cv_Algorithm_delete(self.as_raw_mut_Algorithm()) };
@@ -8980,6 +8981,7 @@ pub mod core {
 	opencv_type_boxed! { AsyncArray }
 	
 	impl Drop for AsyncArray {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AsyncArray_delete(instance: *mut c_void); }
 			unsafe { cv_AsyncArray_delete(self.as_raw_mut_AsyncArray()) };
@@ -9101,6 +9103,7 @@ pub mod core {
 	opencv_type_boxed! { AsyncPromise }
 	
 	impl Drop for AsyncPromise {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_AsyncPromise_delete(instance: *mut c_void); }
 			unsafe { cv_AsyncPromise_delete(self.as_raw_mut_AsyncPromise()) };
@@ -9336,6 +9339,7 @@ pub mod core {
 	opencv_type_boxed! { CommandLineParser }
 	
 	impl Drop for CommandLineParser {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_CommandLineParser_delete(instance: *mut c_void); }
 			unsafe { cv_CommandLineParser_delete(self.as_raw_mut_CommandLineParser()) };
@@ -9776,6 +9780,7 @@ pub mod core {
 	opencv_type_boxed! { Exception }
 	
 	impl Drop for Exception {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Exception_delete(instance: *mut c_void); }
 			unsafe { cv_Exception_delete(self.as_raw_mut_Exception()) };
@@ -10213,6 +10218,7 @@ pub mod core {
 	opencv_type_boxed! { FileNode }
 	
 	impl Drop for FileNode {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FileNode_delete(instance: *mut c_void); }
 			unsafe { cv_FileNode_delete(self.as_raw_mut_FileNode()) };
@@ -10427,6 +10433,7 @@ pub mod core {
 	opencv_type_boxed! { FileNodeIterator }
 	
 	impl Drop for FileNodeIterator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FileNodeIterator_delete(instance: *mut c_void); }
 			unsafe { cv_FileNodeIterator_delete(self.as_raw_mut_FileNodeIterator()) };
@@ -10845,6 +10852,7 @@ pub mod core {
 	opencv_type_boxed! { FileStorage }
 	
 	impl Drop for FileStorage {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_FileStorage_delete(instance: *mut c_void); }
 			unsafe { cv_FileStorage_delete(self.as_raw_mut_FileStorage()) };
@@ -11057,6 +11065,7 @@ pub mod core {
 	opencv_type_boxed! { Hamming }
 	
 	impl Drop for Hamming {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Hamming_delete(instance: *mut c_void); }
 			unsafe { cv_Hamming_delete(self.as_raw_mut_Hamming()) };
@@ -11205,6 +11214,7 @@ pub mod core {
 	opencv_type_boxed! { KeyPoint }
 	
 	impl Drop for KeyPoint {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KeyPoint_delete(instance: *mut c_void); }
 			unsafe { cv_KeyPoint_delete(self.as_raw_mut_KeyPoint()) };
@@ -11480,6 +11490,7 @@ pub mod core {
 	opencv_type_boxed! { LDA }
 	
 	impl Drop for LDA {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LDA_delete(instance: *mut c_void); }
 			unsafe { cv_LDA_delete(self.as_raw_mut_LDA()) };
@@ -13737,6 +13748,7 @@ pub mod core {
 	opencv_type_boxed! { Mat }
 	
 	impl Drop for Mat {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Mat_delete(instance: *mut c_void); }
 			unsafe { cv_Mat_delete(self.as_raw_mut_Mat()) };
@@ -14631,6 +14643,7 @@ pub mod core {
 	opencv_type_boxed! { MatConstIterator }
 	
 	impl Drop for MatConstIterator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MatConstIterator_delete(instance: *mut c_void); }
 			unsafe { cv_MatConstIterator_delete(self.as_raw_mut_MatConstIterator()) };
@@ -15017,6 +15030,7 @@ pub mod core {
 	opencv_type_boxed! { MatExpr }
 	
 	impl Drop for MatExpr {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MatExpr_delete(instance: *mut c_void); }
 			unsafe { cv_MatExpr_delete(self.as_raw_mut_MatExpr()) };
@@ -15398,6 +15412,7 @@ pub mod core {
 	opencv_type_boxed! { MatSize }
 	
 	impl Drop for MatSize {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MatSize_delete(instance: *mut c_void); }
 			unsafe { cv_MatSize_delete(self.as_raw_mut_MatSize()) };
@@ -15484,6 +15499,7 @@ pub mod core {
 	opencv_type_boxed! { MatStep }
 	
 	impl Drop for MatStep {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_MatStep_delete(instance: *mut c_void); }
 			unsafe { cv_MatStep_delete(self.as_raw_mut_MatStep()) };
@@ -15546,6 +15562,7 @@ pub mod core {
 	opencv_type_boxed! { Matx_AddOp }
 	
 	impl Drop for Matx_AddOp {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Matx_AddOp_delete(instance: *mut c_void); }
 			unsafe { cv_Matx_AddOp_delete(self.as_raw_mut_Matx_AddOp()) };
@@ -15604,6 +15621,7 @@ pub mod core {
 	opencv_type_boxed! { Matx_DivOp }
 	
 	impl Drop for Matx_DivOp {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Matx_DivOp_delete(instance: *mut c_void); }
 			unsafe { cv_Matx_DivOp_delete(self.as_raw_mut_Matx_DivOp()) };
@@ -15662,6 +15680,7 @@ pub mod core {
 	opencv_type_boxed! { Matx_MatMulOp }
 	
 	impl Drop for Matx_MatMulOp {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Matx_MatMulOp_delete(instance: *mut c_void); }
 			unsafe { cv_Matx_MatMulOp_delete(self.as_raw_mut_Matx_MatMulOp()) };
@@ -15720,6 +15739,7 @@ pub mod core {
 	opencv_type_boxed! { Matx_MulOp }
 	
 	impl Drop for Matx_MulOp {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Matx_MulOp_delete(instance: *mut c_void); }
 			unsafe { cv_Matx_MulOp_delete(self.as_raw_mut_Matx_MulOp()) };
@@ -15778,6 +15798,7 @@ pub mod core {
 	opencv_type_boxed! { Matx_ScaleOp }
 	
 	impl Drop for Matx_ScaleOp {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Matx_ScaleOp_delete(instance: *mut c_void); }
 			unsafe { cv_Matx_ScaleOp_delete(self.as_raw_mut_Matx_ScaleOp()) };
@@ -15836,6 +15857,7 @@ pub mod core {
 	opencv_type_boxed! { Matx_SubOp }
 	
 	impl Drop for Matx_SubOp {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Matx_SubOp_delete(instance: *mut c_void); }
 			unsafe { cv_Matx_SubOp_delete(self.as_raw_mut_Matx_SubOp()) };
@@ -15894,6 +15916,7 @@ pub mod core {
 	opencv_type_boxed! { Matx_TOp }
 	
 	impl Drop for Matx_TOp {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Matx_TOp_delete(instance: *mut c_void); }
 			unsafe { cv_Matx_TOp_delete(self.as_raw_mut_Matx_TOp()) };
@@ -16542,6 +16565,7 @@ pub mod core {
 	opencv_type_boxed! { PCA }
 	
 	impl Drop for PCA {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PCA_delete(instance: *mut c_void); }
 			unsafe { cv_PCA_delete(self.as_raw_mut_PCA()) };
@@ -17045,6 +17069,7 @@ pub mod core {
 	opencv_type_boxed! { RNG }
 	
 	impl Drop for RNG {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RNG_delete(instance: *mut c_void); }
 			unsafe { cv_RNG_delete(self.as_raw_mut_RNG()) };
@@ -17228,6 +17253,7 @@ pub mod core {
 	opencv_type_boxed! { RNG_MT19937 }
 	
 	impl Drop for RNG_MT19937 {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RNG_MT19937_delete(instance: *mut c_void); }
 			unsafe { cv_RNG_MT19937_delete(self.as_raw_mut_RNG_MT19937()) };
@@ -17351,6 +17377,7 @@ pub mod core {
 	opencv_type_boxed! { Range }
 	
 	impl Drop for Range {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Range_delete(instance: *mut c_void); }
 			unsafe { cv_Range_delete(self.as_raw_mut_Range()) };
@@ -17508,6 +17535,7 @@ pub mod core {
 	opencv_type_boxed! { RotatedRect }
 	
 	impl Drop for RotatedRect {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_RotatedRect_delete(instance: *mut c_void); }
 			unsafe { cv_RotatedRect_delete(self.as_raw_mut_RotatedRect()) };
@@ -17696,6 +17724,7 @@ pub mod core {
 	opencv_type_boxed! { SVD }
 	
 	impl Drop for SVD {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SVD_delete(instance: *mut c_void); }
 			unsafe { cv_SVD_delete(self.as_raw_mut_SVD()) };
@@ -18419,6 +18448,7 @@ pub mod core {
 	opencv_type_boxed! { SparseMat }
 	
 	impl Drop for SparseMat {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SparseMat_delete(instance: *mut c_void); }
 			unsafe { cv_SparseMat_delete(self.as_raw_mut_SparseMat()) };
@@ -18643,6 +18673,7 @@ pub mod core {
 	opencv_type_boxed! { SparseMat_Hdr }
 	
 	impl Drop for SparseMat_Hdr {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SparseMat_Hdr_delete(instance: *mut c_void); }
 			unsafe { cv_SparseMat_Hdr_delete(self.as_raw_mut_SparseMat_Hdr()) };
@@ -18728,6 +18759,7 @@ pub mod core {
 	opencv_type_boxed! { SparseMat_Node }
 	
 	impl Drop for SparseMat_Node {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SparseMat_Node_delete(instance: *mut c_void); }
 			unsafe { cv_SparseMat_Node_delete(self.as_raw_mut_SparseMat_Node()) };
@@ -18852,6 +18884,7 @@ pub mod core {
 	opencv_type_boxed! { SparseMatConstIterator }
 	
 	impl Drop for SparseMatConstIterator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SparseMatConstIterator_delete(instance: *mut c_void); }
 			unsafe { cv_SparseMatConstIterator_delete(self.as_raw_mut_SparseMatConstIterator()) };
@@ -18949,6 +18982,7 @@ pub mod core {
 	opencv_type_boxed! { SparseMatIterator }
 	
 	impl Drop for SparseMatIterator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SparseMatIterator_delete(instance: *mut c_void); }
 			unsafe { cv_SparseMatIterator_delete(self.as_raw_mut_SparseMatIterator()) };
@@ -19227,6 +19261,7 @@ pub mod core {
 	opencv_type_boxed! { TickMeter }
 	
 	impl Drop for TickMeter {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TickMeter_delete(instance: *mut c_void); }
 			unsafe { cv_TickMeter_delete(self.as_raw_mut_TickMeter()) };
@@ -19907,6 +19942,7 @@ pub mod core {
 	opencv_type_boxed! { UMat }
 	
 	impl Drop for UMat {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_UMat_delete(instance: *mut c_void); }
 			unsafe { cv_UMat_delete(self.as_raw_mut_UMat()) };
@@ -20531,6 +20567,7 @@ pub mod core {
 	opencv_type_boxed! { UMatData }
 	
 	impl Drop for UMatData {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_UMatData_delete(instance: *mut c_void); }
 			unsafe { cv_UMatData_delete(self.as_raw_mut_UMatData()) };
@@ -21029,6 +21066,7 @@ pub mod core {
 	opencv_type_boxed! { _InputArray }
 	
 	impl Drop for _InputArray {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv__InputArray_delete(instance: *mut c_void); }
 			unsafe { cv__InputArray_delete(self.as_raw_mut__InputArray()) };
@@ -21197,6 +21235,7 @@ pub mod core {
 	opencv_type_boxed! { _InputOutputArray }
 	
 	impl Drop for _InputOutputArray {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv__InputOutputArray_delete(instance: *mut c_void); }
 			unsafe { cv__InputOutputArray_delete(self.as_raw_mut__InputOutputArray()) };
@@ -21676,6 +21715,7 @@ pub mod core {
 	opencv_type_boxed! { _OutputArray }
 	
 	impl Drop for _OutputArray {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv__OutputArray_delete(instance: *mut c_void); }
 			unsafe { cv__OutputArray_delete(self.as_raw_mut__OutputArray()) };
@@ -22062,6 +22102,7 @@ pub mod core {
 	opencv_type_boxed! { BufferPool }
 	
 	impl Drop for BufferPool {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_BufferPool_delete(instance: *mut c_void); }
 			unsafe { cv_BufferPool_delete(self.as_raw_mut_BufferPool()) };
@@ -22699,6 +22740,7 @@ pub mod core {
 	opencv_type_boxed! { DeviceInfo }
 	
 	impl Drop for DeviceInfo {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_DeviceInfo_delete(instance: *mut c_void); }
 			unsafe { cv_DeviceInfo_delete(self.as_raw_mut_DeviceInfo()) };
@@ -22798,6 +22840,7 @@ pub mod core {
 	opencv_type_boxed! { Event }
 	
 	impl Drop for Event {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Event_delete(instance: *mut c_void); }
 			unsafe { cv_Event_delete(self.as_raw_mut_Event()) };
@@ -22882,6 +22925,7 @@ pub mod core {
 	opencv_type_boxed! { GpuData }
 	
 	impl Drop for GpuData {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GpuData_delete(instance: *mut c_void); }
 			unsafe { cv_GpuData_delete(self.as_raw_mut_GpuData()) };
@@ -23619,6 +23663,7 @@ pub mod core {
 	opencv_type_boxed! { GpuMat }
 	
 	impl Drop for GpuMat {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GpuMat_delete(instance: *mut c_void); }
 			unsafe { cv_GpuMat_delete(self.as_raw_mut_GpuMat()) };
@@ -24209,6 +24254,7 @@ pub mod core {
 	opencv_type_boxed! { GpuMatND }
 	
 	impl Drop for GpuMatND {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_GpuMatND_delete(instance: *mut c_void); }
 			unsafe { cv_GpuMatND_delete(self.as_raw_mut_GpuMatND()) };
@@ -24618,6 +24664,7 @@ pub mod core {
 	opencv_type_boxed! { HostMem }
 	
 	impl Drop for HostMem {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_HostMem_delete(instance: *mut c_void); }
 			unsafe { cv_HostMem_delete(self.as_raw_mut_HostMem()) };
@@ -24814,6 +24861,7 @@ pub mod core {
 	opencv_type_boxed! { Stream }
 	
 	impl Drop for Stream {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Stream_delete(instance: *mut c_void); }
 			unsafe { cv_Stream_delete(self.as_raw_mut_Stream()) };
@@ -24911,6 +24959,7 @@ pub mod core {
 	opencv_type_boxed! { TargetArchs }
 	
 	impl Drop for TargetArchs {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TargetArchs_delete(instance: *mut c_void); }
 			unsafe { cv_TargetArchs_delete(self.as_raw_mut_TargetArchs()) };
@@ -25092,6 +25141,7 @@ pub mod core {
 	opencv_type_boxed! { Detail_CheckContext }
 	
 	impl Drop for Detail_CheckContext {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Detail_CheckContext_delete(instance: *mut c_void); }
 			unsafe { cv_Detail_CheckContext_delete(self.as_raw_mut_Detail_CheckContext()) };
@@ -25302,6 +25352,7 @@ pub mod core {
 	opencv_type_boxed! { NodeData }
 	
 	impl Drop for NodeData {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_NodeData_delete(instance: *mut c_void); }
 			unsafe { cv_NodeData_delete(self.as_raw_mut_NodeData()) };
@@ -25370,6 +25421,7 @@ pub mod core {
 	opencv_type_boxed! { WriteStructContext }
 	
 	impl Drop for WriteStructContext {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_WriteStructContext_delete(instance: *mut c_void); }
 			unsafe { cv_WriteStructContext_delete(self.as_raw_mut_WriteStructContext()) };
@@ -25544,6 +25596,7 @@ pub mod core {
 	opencv_type_boxed! { Context }
 	
 	impl Drop for Context {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Context_delete(instance: *mut c_void); }
 			unsafe { cv_Context_delete(self.as_raw_mut_Context()) };
@@ -25669,6 +25722,7 @@ pub mod core {
 	opencv_type_boxed! { Context_UserContext }
 	
 	impl Drop for Context_UserContext {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Context_UserContext_delete(instance: *mut c_void); }
 			unsafe { cv_Context_UserContext_delete(self.as_raw_mut_Context_UserContext()) };
@@ -26400,6 +26454,7 @@ pub mod core {
 	opencv_type_boxed! { Device }
 	
 	impl Drop for Device {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Device_delete(instance: *mut c_void); }
 			unsafe { cv_Device_delete(self.as_raw_mut_Device()) };
@@ -26524,6 +26579,7 @@ pub mod core {
 	opencv_type_boxed! { Image2D }
 	
 	impl Drop for Image2D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Image2D_delete(instance: *mut c_void); }
 			unsafe { cv_Image2D_delete(self.as_raw_mut_Image2D()) };
@@ -26823,6 +26879,7 @@ pub mod core {
 	opencv_type_boxed! { Kernel }
 	
 	impl Drop for Kernel {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Kernel_delete(instance: *mut c_void); }
 			unsafe { cv_Kernel_delete(self.as_raw_mut_Kernel()) };
@@ -26988,6 +27045,7 @@ pub mod core {
 	opencv_type_boxed! { KernelArg }
 	
 	impl Drop for KernelArg {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_KernelArg_delete(instance: *mut c_void); }
 			unsafe { cv_KernelArg_delete(self.as_raw_mut_KernelArg()) };
@@ -27299,6 +27357,7 @@ pub mod core {
 	opencv_type_boxed! { OpenCLExecutionContext }
 	
 	impl Drop for OpenCLExecutionContext {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_OpenCLExecutionContext_delete(instance: *mut c_void); }
 			unsafe { cv_OpenCLExecutionContext_delete(self.as_raw_mut_OpenCLExecutionContext()) };
@@ -27471,6 +27530,7 @@ pub mod core {
 	opencv_type_boxed! { Platform }
 	
 	impl Drop for Platform {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Platform_delete(instance: *mut c_void); }
 			unsafe { cv_Platform_delete(self.as_raw_mut_Platform()) };
@@ -27628,6 +27688,7 @@ pub mod core {
 	opencv_type_boxed! { PlatformInfo }
 	
 	impl Drop for PlatformInfo {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_PlatformInfo_delete(instance: *mut c_void); }
 			unsafe { cv_PlatformInfo_delete(self.as_raw_mut_PlatformInfo()) };
@@ -27799,6 +27860,7 @@ pub mod core {
 	opencv_type_boxed! { Program }
 	
 	impl Drop for Program {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Program_delete(instance: *mut c_void); }
 			unsafe { cv_Program_delete(self.as_raw_mut_Program()) };
@@ -27921,6 +27983,7 @@ pub mod core {
 	opencv_type_boxed! { ProgramSource }
 	
 	impl Drop for ProgramSource {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ProgramSource_delete(instance: *mut c_void); }
 			unsafe { cv_ProgramSource_delete(self.as_raw_mut_ProgramSource()) };
@@ -28135,6 +28198,7 @@ pub mod core {
 	opencv_type_boxed! { Queue }
 	
 	impl Drop for Queue {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Queue_delete(instance: *mut c_void); }
 			unsafe { cv_Queue_delete(self.as_raw_mut_Queue()) };
@@ -28254,6 +28318,7 @@ pub mod core {
 	opencv_type_boxed! { Timer }
 	
 	impl Drop for Timer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Timer_delete(instance: *mut c_void); }
 			unsafe { cv_Timer_delete(self.as_raw_mut_Timer()) };
@@ -28448,6 +28513,7 @@ pub mod core {
 	opencv_type_boxed! { Arrays }
 	
 	impl Drop for Arrays {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Arrays_delete(instance: *mut c_void); }
 			unsafe { cv_Arrays_delete(self.as_raw_mut_Arrays()) };
@@ -28860,6 +28926,7 @@ pub mod core {
 	opencv_type_boxed! { Buffer }
 	
 	impl Drop for Buffer {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Buffer_delete(instance: *mut c_void); }
 			unsafe { cv_Buffer_delete(self.as_raw_mut_Buffer()) };
@@ -29235,6 +29302,7 @@ pub mod core {
 	opencv_type_boxed! { Texture2D }
 	
 	impl Drop for Texture2D {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Texture2D_delete(instance: *mut c_void); }
 			unsafe { cv_Texture2D_delete(self.as_raw_mut_Texture2D()) };
@@ -29443,6 +29511,7 @@ pub mod core {
 	opencv_type_boxed! { LogTag }
 	
 	impl Drop for LogTag {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_LogTag_delete(instance: *mut c_void); }
 			unsafe { cv_LogTag_delete(self.as_raw_mut_LogTag()) };
@@ -29510,6 +29579,7 @@ pub mod core {
 	opencv_type_boxed! { OriginalClassName }
 	
 	impl Drop for OriginalClassName {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_OriginalClassName_delete(instance: *mut c_void); }
 			unsafe { cv_OriginalClassName_delete(self.as_raw_mut_OriginalClassName()) };

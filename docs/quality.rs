@@ -46,6 +46,7 @@ pub mod quality {
 	opencv_type_boxed! { QualityBRISQUE }
 	
 	impl Drop for QualityBRISQUE {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_QualityBRISQUE_delete(instance: *mut c_void); }
 			unsafe { cv_QualityBRISQUE_delete(self.as_raw_mut_QualityBRISQUE()) };
@@ -259,6 +260,7 @@ pub mod quality {
 	opencv_type_boxed! { QualityGMSD }
 	
 	impl Drop for QualityGMSD {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_QualityGMSD_delete(instance: *mut c_void); }
 			unsafe { cv_QualityGMSD_delete(self.as_raw_mut_QualityGMSD()) };
@@ -384,6 +386,7 @@ pub mod quality {
 	opencv_type_boxed! { QualityMSE }
 	
 	impl Drop for QualityMSE {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_QualityMSE_delete(instance: *mut c_void); }
 			unsafe { cv_QualityMSE_delete(self.as_raw_mut_QualityMSE()) };
@@ -531,6 +534,7 @@ pub mod quality {
 	opencv_type_boxed! { QualityPSNR }
 	
 	impl Drop for QualityPSNR {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_QualityPSNR_delete(instance: *mut c_void); }
 			unsafe { cv_QualityPSNR_delete(self.as_raw_mut_QualityPSNR()) };
@@ -665,6 +669,7 @@ pub mod quality {
 	opencv_type_boxed! { QualitySSIM }
 	
 	impl Drop for QualitySSIM {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_QualitySSIM_delete(instance: *mut c_void); }
 			unsafe { cv_QualitySSIM_delete(self.as_raw_mut_QualitySSIM()) };

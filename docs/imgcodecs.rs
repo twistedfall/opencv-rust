@@ -736,6 +736,7 @@ pub mod imgcodecs {
 	opencv_type_boxed! { ImageCollection }
 	
 	impl Drop for ImageCollection {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ImageCollection_delete(instance: *mut c_void); }
 			unsafe { cv_ImageCollection_delete(self.as_raw_mut_ImageCollection()) };
@@ -815,6 +816,7 @@ pub mod imgcodecs {
 	opencv_type_boxed! { ImageCollection_iterator }
 	
 	impl Drop for ImageCollection_iterator {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_ImageCollection_iterator_delete(instance: *mut c_void); }
 			unsafe { cv_ImageCollection_iterator_delete(self.as_raw_mut_ImageCollection_iterator()) };

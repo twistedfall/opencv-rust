@@ -607,6 +607,7 @@ pub mod xfeatures2d {
 	opencv_type_boxed! { SURF_CUDA }
 	
 	impl Drop for SURF_CUDA {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_SURF_CUDA_delete(instance: *mut c_void); }
 			unsafe { cv_SURF_CUDA_delete(self.as_raw_mut_SURF_CUDA()) };
@@ -1405,6 +1406,7 @@ pub mod xfeatures2d {
 	opencv_type_boxed! { Elliptic_KeyPoint }
 	
 	impl Drop for Elliptic_KeyPoint {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_Elliptic_KeyPoint_delete(instance: *mut c_void); }
 			unsafe { cv_Elliptic_KeyPoint_delete(self.as_raw_mut_Elliptic_KeyPoint()) };
@@ -3341,6 +3343,7 @@ pub mod xfeatures2d {
 	opencv_type_boxed! { TEBLID }
 	
 	impl Drop for TEBLID {
+		#[inline]
 		fn drop(&mut self) {
 			extern "C" { fn cv_TEBLID_delete(instance: *mut c_void); }
 			unsafe { cv_TEBLID_delete(self.as_raw_mut_TEBLID()) };
