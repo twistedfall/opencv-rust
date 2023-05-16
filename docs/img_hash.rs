@@ -83,9 +83,9 @@ pub mod img_hash {
 	/// * inputArr: input image want to compute hash value, type should be CV_8UC4, CV_8UC3 or CV_8UC1.
 	/// * outputArr: Hash value of input, it will contain 16 hex decimal number, return type is CV_8U
 	#[inline]
-	pub fn average_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(input_arr);
-		extern_container_arg!(output_arr);
+	pub fn average_hash(input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(input_arr);
+		output_array_arg!(output_arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_img_hash_averageHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -102,9 +102,9 @@ pub mod img_hash {
 	/// ## C++ default parameters
 	/// * mode: BLOCK_MEAN_HASH_MODE_0
 	#[inline]
-	pub fn block_mean_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, mode: i32) -> Result<()> {
-		extern_container_arg!(input_arr);
-		extern_container_arg!(output_arr);
+	pub fn block_mean_hash(input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray, mode: i32) -> Result<()> {
+		input_array_arg!(input_arr);
+		output_array_arg!(output_arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_img_hash_blockMeanHash_const__InputArrayR_const__OutputArrayR_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), mode, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -120,9 +120,9 @@ pub mod img_hash {
 	/// type should be CV_8UC4, CV_8UC3 or CV_8UC1.
 	/// * outputArr: 42 hash values with type CV_64F(double)
 	#[inline]
-	pub fn color_moment_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(input_arr);
-		extern_container_arg!(output_arr);
+	pub fn color_moment_hash(input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(input_arr);
+		output_array_arg!(output_arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_img_hash_colorMomentHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -143,9 +143,9 @@ pub mod img_hash {
 	/// * alpha: 2.0f
 	/// * scale: 1.0f
 	#[inline]
-	pub fn marr_hildreth_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, alpha: f32, scale: f32) -> Result<()> {
-		extern_container_arg!(input_arr);
-		extern_container_arg!(output_arr);
+	pub fn marr_hildreth_hash(input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray, alpha: f32, scale: f32) -> Result<()> {
+		input_array_arg!(input_arr);
+		output_array_arg!(output_arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_img_hash_marrHildrethHash_const__InputArrayR_const__OutputArrayR_float_float(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), alpha, scale, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -159,9 +159,9 @@ pub mod img_hash {
 	///  type should be CV_8UC4, CV_8UC3, CV_8UC1.
 	/// * outputArr: Hash value of input, it will contain 8 uchar value
 	#[inline]
-	pub fn p_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(input_arr);
-		extern_container_arg!(output_arr);
+	pub fn p_hash(input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(input_arr);
+		output_array_arg!(output_arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_img_hash_pHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -181,9 +181,9 @@ pub mod img_hash {
 	/// * sigma: 1
 	/// * num_of_angle_line: 180
 	#[inline]
-	pub fn radial_variance_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray, sigma: f64, num_of_angle_line: i32) -> Result<()> {
-		extern_container_arg!(input_arr);
-		extern_container_arg!(output_arr);
+	pub fn radial_variance_hash(input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray, sigma: f64, num_of_angle_line: i32) -> Result<()> {
+		input_array_arg!(input_arr);
+		output_array_arg!(output_arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_img_hash_radialVarianceHash_const__InputArrayR_const__OutputArrayR_double_int(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), sigma, num_of_angle_line, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -444,9 +444,9 @@ pub mod img_hash {
 		/// value indicate similarity between inOne and inTwo, the meaning
 		/// of the value vary from algorithms to algorithms
 		#[inline]
-		fn compare(&self, hash_one: &dyn core::ToInputArray, hash_two: &dyn core::ToInputArray) -> Result<f64> {
-			extern_container_arg!(hash_one);
-			extern_container_arg!(hash_two);
+		fn compare(&self, hash_one: &impl core::ToInputArray, hash_two: &impl core::ToInputArray) -> Result<f64> {
+			input_array_arg!(hash_one);
+			input_array_arg!(hash_two);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_img_hash_ImgHashBase_compare_const_const__InputArrayR_const__InputArrayR(self.as_raw_ImgHashBase(), hash_one.as_raw__InputArray(), hash_two.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -465,9 +465,9 @@ pub mod img_hash {
 		/// * inputArr: input image want to compute hash value
 		/// * outputArr: hash of the image
 		#[inline]
-		fn compute(&mut self, input_arr: &dyn core::ToInputArray, output_arr: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(input_arr);
-			extern_container_arg!(output_arr);
+		fn compute(&mut self, input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(input_arr);
+			output_array_arg!(output_arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_img_hash_ImgHashBase_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ImgHashBase(), input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

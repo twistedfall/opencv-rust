@@ -20,8 +20,8 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with the score in the first element.  The score ranges from 0 (best quality) to 100 (worst quality)
 		#[inline]
-		fn compute(&mut self, img: &dyn core::ToInputArray) -> Result<core::Scalar> {
-			extern_container_arg!(img);
+		fn compute(&mut self, img: &impl core::ToInputArray) -> Result<core::Scalar> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR(self.as_raw_mut_QualityBRISQUE(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -118,8 +118,8 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with the score in the first element.  The score ranges from 0 (best quality) to 100 (worst quality)
 		#[inline]
-		pub fn compute(img: &dyn core::ToInputArray, model_file_path: &str, range_file_path: &str) -> Result<core::Scalar> {
-			extern_container_arg!(img);
+		pub fn compute(img: &impl core::ToInputArray, model_file_path: &str, range_file_path: &str) -> Result<core::Scalar> {
+			input_array_arg!(img);
 			extern_container_arg!(model_file_path);
 			extern_container_arg!(range_file_path);
 			return_send!(via ocvrs_return);
@@ -134,9 +134,9 @@ pub mod quality {
 		/// * img: image (BGR(A) or grayscale) for which to compute features
 		/// * features: output row vector of features to cv::Mat or cv::UMat
 		#[inline]
-		pub fn compute_features(img: &dyn core::ToInputArray, features: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(img);
-			extern_container_arg!(features);
+		pub fn compute_features(img: &impl core::ToInputArray, features: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(img);
+			output_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityBRISQUE_computeFeatures_const__InputArrayR_const__OutputArrayR(img.as_raw__InputArray(), features.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -154,8 +154,8 @@ pub mod quality {
 	
 		/// Returns output quality map that was generated during computation, if supported by the algorithm
 		#[inline]
-		fn get_quality_map(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(dst);
+		fn get_quality_map(&self, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityBase_getQualityMap_const_const__OutputArrayR(self.as_raw_QualityBase(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -183,8 +183,8 @@ pub mod quality {
 		/// ## Parameters
 		/// * img: comparison image, or image to evalute for no-reference quality algorithms
 		#[inline]
-		fn compute(&mut self, img: &dyn core::ToInputArray) -> Result<core::Scalar> {
-			extern_container_arg!(img);
+		fn compute(&mut self, img: &impl core::ToInputArray) -> Result<core::Scalar> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityBase_compute_const__InputArrayR(self.as_raw_mut_QualityBase(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -278,8 +278,8 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality value.  Values range from 0 (worst) to 1 (best)
 		#[inline]
-		fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
-			extern_container_arg!(cmp);
+		fn compute(&mut self, cmp: &impl core::ToInputArray) -> Result<core::Scalar> {
+			input_array_arg!(cmp);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR(self.as_raw_mut_QualityGMSD(), cmp.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -346,8 +346,8 @@ pub mod quality {
 		/// ## Parameters
 		/// * ref: reference image
 		#[inline]
-		pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityGMSD>> {
-			extern_container_arg!(ref_);
+		pub fn create(ref_: &impl core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityGMSD>> {
+			input_array_arg!(ref_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityGMSD_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -364,10 +364,10 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality value.  Values range from 0 (worst) to 1 (best)
 		#[inline]
-		pub fn compute(ref_: &dyn core::ToInputArray, cmp: &dyn core::ToInputArray, quality_map: &mut dyn core::ToOutputArray) -> Result<core::Scalar> {
-			extern_container_arg!(ref_);
-			extern_container_arg!(cmp);
-			extern_container_arg!(quality_map);
+		pub fn compute(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray) -> Result<core::Scalar> {
+			input_array_arg!(ref_);
+			input_array_arg!(cmp);
+			output_array_arg!(quality_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -405,8 +405,8 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality values.  Values range from 0 (best) to potentially max float (worst)
 		#[inline]
-		fn compute(&mut self, cmp_imgs: &dyn core::ToInputArray) -> Result<core::Scalar> {
-			extern_container_arg!(cmp_imgs);
+		fn compute(&mut self, cmp_imgs: &impl core::ToInputArray) -> Result<core::Scalar> {
+			input_array_arg!(cmp_imgs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR(self.as_raw_mut_QualityMSE(), cmp_imgs.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -472,8 +472,8 @@ pub mod quality {
 		/// ## Parameters
 		/// * ref: input image to use as the reference for comparison
 		#[inline]
-		pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityMSE>> {
-			extern_container_arg!(ref_);
+		pub fn create(ref_: &impl core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityMSE>> {
+			input_array_arg!(ref_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityMSE_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -490,10 +490,10 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality values.  Values range from 0 (best) to max float (worst)
 		#[inline]
-		pub fn compute(ref_: &dyn core::ToInputArray, cmp: &dyn core::ToInputArray, quality_map: &mut dyn core::ToOutputArray) -> Result<core::Scalar> {
-			extern_container_arg!(ref_);
-			extern_container_arg!(cmp);
-			extern_container_arg!(quality_map);
+		pub fn compute(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray) -> Result<core::Scalar> {
+			input_array_arg!(ref_);
+			input_array_arg!(cmp);
+			output_array_arg!(quality_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -541,8 +541,8 @@ pub mod quality {
 		/// ## Returns
 		/// Per-channel PSNR value, or std::numeric_limits<double>::infinity() if the MSE between the two images == 0
 		#[inline]
-		fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
-			extern_container_arg!(cmp);
+		fn compute(&mut self, cmp: &impl core::ToInputArray) -> Result<core::Scalar> {
+			input_array_arg!(cmp);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR(self.as_raw_mut_QualityPSNR(), cmp.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -625,8 +625,8 @@ pub mod quality {
 		/// ## C++ default parameters
 		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
 		#[inline]
-		pub fn create(ref_: &dyn core::ToInputArray, max_pixel_value: f64) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
-			extern_container_arg!(ref_);
+		pub fn create(ref_: &impl core::ToInputArray, max_pixel_value: f64) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
+			input_array_arg!(ref_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityPSNR_create_const__InputArrayR_double(ref_.as_raw__InputArray(), max_pixel_value, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -647,10 +647,10 @@ pub mod quality {
 		/// ## C++ default parameters
 		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
 		#[inline]
-		pub fn compute(ref_: &dyn core::ToInputArray, cmp: &dyn core::ToInputArray, quality_map: &mut dyn core::ToOutputArray, max_pixel_value: f64) -> Result<core::Scalar> {
-			extern_container_arg!(ref_);
-			extern_container_arg!(cmp);
-			extern_container_arg!(quality_map);
+		pub fn compute(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray, max_pixel_value: f64) -> Result<core::Scalar> {
+			input_array_arg!(ref_);
+			input_array_arg!(cmp);
+			output_array_arg!(quality_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), max_pixel_value, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -688,8 +688,8 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality values.  Values range from 0 (worst) to 1 (best)
 		#[inline]
-		fn compute(&mut self, cmp: &dyn core::ToInputArray) -> Result<core::Scalar> {
-			extern_container_arg!(cmp);
+		fn compute(&mut self, cmp: &impl core::ToInputArray) -> Result<core::Scalar> {
+			input_array_arg!(cmp);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR(self.as_raw_mut_QualitySSIM(), cmp.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -755,8 +755,8 @@ pub mod quality {
 		/// ## Parameters
 		/// * ref: input image to use as the reference image for comparison
 		#[inline]
-		pub fn create(ref_: &dyn core::ToInputArray) -> Result<core::Ptr<crate::quality::QualitySSIM>> {
-			extern_container_arg!(ref_);
+		pub fn create(ref_: &impl core::ToInputArray) -> Result<core::Ptr<crate::quality::QualitySSIM>> {
+			input_array_arg!(ref_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualitySSIM_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -773,10 +773,10 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality values.  Values range from 0 (worst) to 1 (best)
 		#[inline]
-		pub fn compute(ref_: &dyn core::ToInputArray, cmp: &dyn core::ToInputArray, quality_map: &mut dyn core::ToOutputArray) -> Result<core::Scalar> {
-			extern_container_arg!(ref_);
-			extern_container_arg!(cmp);
-			extern_container_arg!(quality_map);
+		pub fn compute(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray) -> Result<core::Scalar> {
+			input_array_arg!(ref_);
+			input_array_arg!(cmp);
+			output_array_arg!(quality_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

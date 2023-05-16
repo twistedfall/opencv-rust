@@ -146,9 +146,9 @@ pub mod cudastereo {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn draw_color_disp(src_disp: &dyn core::ToInputArray, dst_disp: &mut dyn core::ToOutputArray, ndisp: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src_disp);
-		extern_container_arg!(dst_disp);
+	pub fn draw_color_disp(src_disp: &impl core::ToInputArray, dst_disp: &mut impl core::ToOutputArray, ndisp: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src_disp);
+		output_array_arg!(dst_disp);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_drawColorDisp_const__InputArrayR_const__OutputArrayR_int_StreamR(src_disp.as_raw__InputArray(), dst_disp.as_raw__OutputArray(), ndisp, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -187,10 +187,10 @@ pub mod cudastereo {
 	/// * dst_cn: 4
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn reproject_image_to_3d(disp: &dyn core::ToInputArray, xyzw: &mut dyn core::ToOutputArray, q: &dyn core::ToInputArray, dst_cn: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(disp);
-		extern_container_arg!(xyzw);
-		extern_container_arg!(q);
+	pub fn reproject_image_to_3d(disp: &impl core::ToInputArray, xyzw: &mut impl core::ToOutputArray, q: &impl core::ToInputArray, dst_cn: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(disp);
+		output_array_arg!(xyzw);
+		input_array_arg!(q);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(disp.as_raw__InputArray(), xyzw.as_raw__OutputArray(), q.as_raw__InputArray(), dst_cn, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -276,10 +276,10 @@ pub mod cudastereo {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn apply(&mut self, disparity: &dyn core::ToInputArray, image: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(disparity);
-			extern_container_arg!(image);
-			extern_container_arg!(dst);
+		fn apply(&mut self, disparity: &impl core::ToInputArray, image: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(disparity);
+			input_array_arg!(image);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_DisparityBilateralFilter(), disparity.as_raw__InputArray(), image.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -394,10 +394,10 @@ pub mod cudastereo {
 		fn as_raw_mut_CUDA_StereoBM(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(left);
-			extern_container_arg!(right);
-			extern_container_arg!(disparity);
+		fn compute(&mut self, left: &impl core::ToInputArray, right: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(left);
+			input_array_arg!(right);
+			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -555,10 +555,10 @@ pub mod cudastereo {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn compute(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(left);
-			extern_container_arg!(right);
-			extern_container_arg!(disparity);
+		fn compute(&mut self, left: &impl core::ToInputArray, right: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(left);
+			input_array_arg!(right);
+			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -579,9 +579,9 @@ pub mod cudastereo {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute_1(&mut self, data: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(data);
-			extern_container_arg!(disparity);
+		fn compute_1(&mut self, data: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(data);
+			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -895,10 +895,10 @@ pub mod cudastereo {
 		/// * disparity: Output disparity map. It has the same size as the input images.
 		/// StereoSGM computes 16-bit fixed-point disparity map (where each disparity value has 4 fractional bits).
 		#[inline]
-		fn compute(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(left);
-			extern_container_arg!(right);
-			extern_container_arg!(disparity);
+		fn compute(&mut self, left: &impl core::ToInputArray, right: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(left);
+			input_array_arg!(right);
+			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -910,10 +910,10 @@ pub mod cudastereo {
 		/// ## See also
 		/// compute
 		#[inline]
-		fn compute_with_stream(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(left);
-			extern_container_arg!(right);
-			extern_container_arg!(disparity);
+		fn compute_with_stream(&mut self, left: &impl core::ToInputArray, right: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(left);
+			input_array_arg!(right);
+			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoSGM_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoSGM(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

@@ -218,8 +218,8 @@ pub mod hfs {
 		/// ## C++ default parameters
 		/// * if_draw: true
 		#[inline]
-		fn perform_segment_gpu(&mut self, src: &dyn core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
-			extern_container_arg!(src);
+		fn perform_segment_gpu(&mut self, src: &impl core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -235,8 +235,8 @@ pub mod hfs {
 		/// ## C++ default parameters
 		/// * if_draw: true
 		#[inline]
-		fn perform_segment_cpu(&mut self, src: &dyn core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
-			extern_container_arg!(src);
+		fn perform_segment_cpu(&mut self, src: &impl core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

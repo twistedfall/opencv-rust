@@ -64,9 +64,9 @@ pub mod face {
 	/// ## C++ default parameters
 	/// * color: Scalar(255,0,0)
 	#[inline]
-	pub fn draw_facemarks(image: &mut dyn core::ToInputOutputArray, points: &dyn core::ToInputArray, color: core::Scalar) -> Result<()> {
-		extern_container_arg!(image);
-		extern_container_arg!(points);
+	pub fn draw_facemarks(image: &mut impl core::ToInputOutputArray, points: &impl core::ToInputArray, color: core::Scalar) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_drawFacemarks_const__InputOutputArrayR_const__InputArrayR_Scalar(image.as_raw__InputOutputArray(), points.as_raw__InputArray(), color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -75,9 +75,9 @@ pub mod face {
 	}
 	
 	#[inline]
-	pub fn get_faces_haar(image: &dyn core::ToInputArray, faces: &mut dyn core::ToOutputArray, face_cascade_name: &str) -> Result<bool> {
-		extern_container_arg!(image);
-		extern_container_arg!(faces);
+	pub fn get_faces_haar(image: &impl core::ToInputArray, faces: &mut impl core::ToOutputArray, face_cascade_name: &str) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(faces);
 		extern_container_arg!(face_cascade_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_getFacesHAAR_const__InputArrayR_const__OutputArrayR_const_StringR(image.as_raw__InputArray(), faces.as_raw__OutputArray(), face_cascade_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -109,9 +109,9 @@ pub mod face {
 	/// ```
 	/// 
 	#[inline]
-	pub fn get_faces(image: &dyn core::ToInputArray, faces: &mut dyn core::ToOutputArray, params: &mut crate::face::CParams) -> Result<bool> {
-		extern_container_arg!(image);
-		extern_container_arg!(faces);
+	pub fn get_faces(image: &impl core::ToInputArray, faces: &mut impl core::ToOutputArray, params: &mut crate::face::CParams) -> Result<bool> {
+		input_array_arg!(image);
+		output_array_arg!(faces);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_getFaces_const__InputArrayR_const__OutputArrayR_CParamsX(image.as_raw__InputArray(), faces.as_raw__OutputArray(), params.as_raw_mut_CParams(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -177,9 +177,9 @@ pub mod face {
 	/// ## C++ default parameters
 	/// * offset: 0.0f
 	#[inline]
-	pub fn load_face_points(filename: &str, points: &mut dyn core::ToOutputArray, offset: f32) -> Result<bool> {
+	pub fn load_face_points(filename: &str, points: &mut impl core::ToOutputArray, offset: f32) -> Result<bool> {
 		extern_container_arg!(mut filename);
-		extern_container_arg!(points);
+		output_array_arg!(points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadFacePoints_String_const__OutputArrayR_float(filename.opencv_as_extern_mut(), points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -230,10 +230,10 @@ pub mod face {
 	/// ## C++ default parameters
 	/// * offset: 0.0f
 	#[inline]
-	pub fn load_training_data_1(image_list: &str, ground_truth: &str, images: &mut core::Vector<String>, face_points: &mut dyn core::ToOutputArray, offset: f32) -> Result<bool> {
+	pub fn load_training_data_1(image_list: &str, ground_truth: &str, images: &mut core::Vector<String>, face_points: &mut impl core::ToOutputArray, offset: f32) -> Result<bool> {
 		extern_container_arg!(mut image_list);
 		extern_container_arg!(mut ground_truth);
-		extern_container_arg!(face_points);
+		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadTrainingData_String_String_vectorLStringGR_const__OutputArrayR_float(image_list.opencv_as_extern_mut(), ground_truth.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -273,9 +273,9 @@ pub mod face {
 	/// * delim: ' '
 	/// * offset: 0.0f
 	#[inline]
-	pub fn load_training_data(filename: &str, images: &mut core::Vector<String>, face_points: &mut dyn core::ToOutputArray, delim: i8, offset: f32) -> Result<bool> {
+	pub fn load_training_data(filename: &str, images: &mut core::Vector<String>, face_points: &mut impl core::ToOutputArray, delim: i8, offset: f32) -> Result<bool> {
 		extern_container_arg!(mut filename);
-		extern_container_arg!(face_points);
+		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_face_loadTrainingData_String_vectorLStringGR_const__OutputArrayR_char_float(filename.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), delim, offset, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -340,9 +340,9 @@ pub mod face {
 		/// * image: Input image (CV_32FC1).
 		/// * features: Feature vector (CV_32FC1).
 		#[inline]
-		fn compute(&self, image: &dyn core::ToInputArray, features: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(features);
+		fn compute(&self, image: &impl core::ToInputArray, features: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_BIF_compute_const_const__InputArrayR_const__OutputArrayR(self.as_raw_BIF(), image.as_raw__InputArray(), features.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -890,8 +890,8 @@ pub mod face {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn predict_label(&self, src: &dyn core::ToInputArray) -> Result<i32> {
-			extern_container_arg!(src);
+		fn predict_label(&self, src: &impl core::ToInputArray) -> Result<i32> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -937,8 +937,8 @@ pub mod face {
 		/// ```
 		/// 
 		#[inline]
-		fn predict(&self, src: &dyn core::ToInputArray, label: &mut i32, confidence: &mut f64) -> Result<()> {
-			extern_container_arg!(src);
+		fn predict(&self, src: &impl core::ToInputArray, label: &mut i32, confidence: &mut f64) -> Result<()> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_intR_doubleR(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), label, confidence, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -954,8 +954,8 @@ pub mod face {
 		/// To implement this method u just have to do same internal cycle as in predict(InputArray src, CV_OUT int &label, CV_OUT double &confidence) but
 		/// not try to get "best@ result, just resend it to caller side with given collector
 		#[inline]
-		fn predict_collect(&self, src: &dyn core::ToInputArray, mut collector: core::Ptr<crate::face::PredictCollector>) -> Result<()> {
-			extern_container_arg!(src);
+		fn predict_collect(&self, src: &impl core::ToInputArray, mut collector: core::Ptr<crate::face::PredictCollector>) -> Result<()> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayR_PtrLPredictCollectorG(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_mut_PtrOfPredictCollector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1119,9 +1119,9 @@ pub mod face {
 		/// ```
 		/// 
 		#[inline]
-		fn train(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(labels);
+		fn train(&mut self, src: &impl core::ToInputArray, labels: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_train_const__InputArrayR_const__InputArrayR(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1180,9 +1180,9 @@ pub mod face {
 		/// memory intense and it's not the responsibility of te FaceRecognizer to do so. The caller is
 		/// responsible for maintaining the dataset, he want to work with.
 		#[inline]
-		fn update(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(labels);
+		fn update(&mut self, src: &impl core::ToInputArray, labels: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FaceRecognizer_update_const__InputArrayR_const__InputArrayR(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1431,10 +1431,10 @@ pub mod face {
 		/// ```
 		/// 
 		#[inline]
-		fn fit(&mut self, image: &dyn core::ToInputArray, faces: &dyn core::ToInputArray, landmarks: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(faces);
-			extern_container_arg!(landmarks);
+		fn fit(&mut self, image: &impl core::ToInputArray, faces: &impl core::ToInputArray, landmarks: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			input_array_arg!(faces);
+			output_array_arg!(landmarks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_Facemark_fit_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Facemark(), image.as_raw__InputArray(), faces.as_raw__InputArray(), landmarks.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1511,10 +1511,10 @@ pub mod face {
 	
 		/// overload with additional Config structures
 		#[inline]
-		fn fit_config(&mut self, image: &dyn core::ToInputArray, roi: &dyn core::ToInputArray, _landmarks: &mut dyn core::ToOutputArray, runtime_params: &core::Vector<crate::face::FacemarkAAM_Config>) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(roi);
-			extern_container_arg!(_landmarks);
+		fn fit_config(&mut self, image: &impl core::ToInputArray, roi: &impl core::ToInputArray, _landmarks: &mut impl core::ToOutputArray, runtime_params: &core::Vector<crate::face::FacemarkAAM_Config>) -> Result<bool> {
+			input_array_arg!(image);
+			input_array_arg!(roi);
+			output_array_arg!(_landmarks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkAAM_fitConfig_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const_vectorLConfigGR(self.as_raw_mut_FacemarkAAM(), image.as_raw__InputArray(), roi.as_raw__InputArray(), _landmarks.as_raw__OutputArray(), runtime_params.as_raw_VectorOfFacemarkAAM_Config(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2280,9 +2280,9 @@ pub mod face {
 		
 		/// get faces using the custom detector
 		#[inline]
-		fn get_faces(&mut self, image: &dyn core::ToInputArray, faces: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(faces);
+		fn get_faces(&mut self, image: &impl core::ToInputArray, faces: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			output_array_arg!(faces);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkKazemi_getFaces_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_FacemarkKazemi(), image.as_raw__InputArray(), faces.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2920,9 +2920,9 @@ pub mod face {
 		/// ```
 		/// 
 		#[inline]
-		fn add_training_sample(&mut self, image: &dyn core::ToInputArray, landmarks: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(landmarks);
+		fn add_training_sample(&mut self, image: &impl core::ToInputArray, landmarks: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(image);
+			input_array_arg!(landmarks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkTrain_addTrainingSample_const__InputArrayR_const__InputArrayR(self.as_raw_mut_FacemarkTrain(), image.as_raw__InputArray(), landmarks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3014,9 +3014,9 @@ pub mod face {
 		/// ```
 		/// 
 		#[inline]
-		fn get_faces(&mut self, image: &dyn core::ToInputArray, faces: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(faces);
+		fn get_faces(&mut self, image: &impl core::ToInputArray, faces: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			output_array_arg!(faces);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkTrain_getFaces_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_FacemarkTrain(), image.as_raw__InputArray(), faces.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3478,8 +3478,8 @@ pub mod face {
 		/// ## Parameters
 		/// * query: a Mat with query image
 		#[inline]
-		fn same(&self, query: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(query);
+		fn same(&self, query: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(query);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_MACE_same_const_const__InputArrayR(self.as_raw_MACE(), query.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3512,8 +3512,8 @@ pub mod face {
 		/// ## Parameters
 		/// * images: a vector<Mat> with the train images
 		#[inline]
-		fn train(&mut self, images: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(images);
+		fn train(&mut self, images: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_MACE_train_const__InputArrayR(self.as_raw_mut_MACE(), images.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

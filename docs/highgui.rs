@@ -770,9 +770,9 @@ pub mod highgui {
 	/// * winname: Name of the window.
 	/// * mat: Image to be shown.
 	#[inline]
-	pub fn imshow(winname: &str, mat: &dyn core::ToInputArray) -> Result<()> {
+	pub fn imshow(winname: &str, mat: &impl core::ToInputArray) -> Result<()> {
 		extern_container_arg!(winname);
-		extern_container_arg!(mat);
+		input_array_arg!(mat);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imshow_const_StringR_const__InputArrayR(winname.opencv_as_extern(), mat.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -963,9 +963,9 @@ pub mod highgui {
 	/// * show_crosshair: true
 	/// * from_center: false
 	#[inline]
-	pub fn select_roi_for_window(window_name: &str, img: &dyn core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
+	pub fn select_roi_for_window(window_name: &str, img: &impl core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
 		extern_container_arg!(window_name);
-		extern_container_arg!(img);
+		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROI_const_StringR_const__InputArrayR_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -997,8 +997,8 @@ pub mod highgui {
 	/// * show_crosshair: true
 	/// * from_center: false
 	#[inline]
-	pub fn select_roi(img: &dyn core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
-		extern_container_arg!(img);
+	pub fn select_roi(img: &impl core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
+		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROI_const__InputArrayR_bool_bool(img.as_raw__InputArray(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1028,9 +1028,9 @@ pub mod highgui {
 	/// * show_crosshair: true
 	/// * from_center: false
 	#[inline]
-	pub fn select_rois(window_name: &str, img: &dyn core::ToInputArray, bounding_boxes: &mut core::Vector<core::Rect>, show_crosshair: bool, from_center: bool) -> Result<()> {
+	pub fn select_rois(window_name: &str, img: &impl core::ToInputArray, bounding_boxes: &mut core::Vector<core::Rect>, show_crosshair: bool, from_center: bool) -> Result<()> {
 		extern_container_arg!(window_name);
-		extern_container_arg!(img);
+		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROIs_const_StringR_const__InputArrayR_vectorLRectGR_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), bounding_boxes.as_raw_mut_VectorOfRect(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

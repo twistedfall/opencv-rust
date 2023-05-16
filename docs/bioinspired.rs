@@ -315,8 +315,8 @@ pub mod bioinspired {
 		/// * inputImage: the input Mat image to be processed, can be gray level or BGR coded in any
 		/// format (from 8bit to 16bits)
 		#[inline]
-		fn run(&mut self, input_image: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(input_image);
+		fn run(&mut self, input_image: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(input_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_run_const__InputArrayR(self.as_raw_mut_Retina(), input_image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -341,9 +341,9 @@ pub mod bioinspired {
 		/// CV_32FC1, CV_32F_C3, CV_32F_C4, the 4th channel won't be considered).
 		/// * outputToneMappedImage: the output 8bit/channel tone mapped image (CV_8U or CV_8UC3 format).
 		#[inline]
-		fn apply_fast_tone_mapping(&mut self, input_image: &dyn core::ToInputArray, output_tone_mapped_image: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(input_image);
-			extern_container_arg!(output_tone_mapped_image);
+		fn apply_fast_tone_mapping(&mut self, input_image: &impl core::ToInputArray, output_tone_mapped_image: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(input_image);
+			output_array_arg!(output_tone_mapped_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_applyFastToneMapping_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Retina(), input_image.as_raw__InputArray(), output_tone_mapped_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -365,8 +365,8 @@ pub mod bioinspired {
 		/// ## See also
 		/// getParvoRAW
 		#[inline]
-		fn get_parvo(&mut self, retina_output_parvo: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(retina_output_parvo);
+		fn get_parvo(&mut self, retina_output_parvo: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(retina_output_parvo);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_getParvo_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_parvo.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -378,8 +378,8 @@ pub mod bioinspired {
 		/// ## See also
 		/// getParvo
 		#[inline]
-		fn get_parvo_raw_to(&mut self, retina_output_parvo: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(retina_output_parvo);
+		fn get_parvo_raw_to(&mut self, retina_output_parvo: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(retina_output_parvo);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_getParvoRAW_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_parvo.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -399,8 +399,8 @@ pub mod bioinspired {
 		/// ## See also
 		/// getMagnoRAW
 		#[inline]
-		fn get_magno(&mut self, retina_output_magno: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(retina_output_magno);
+		fn get_magno(&mut self, retina_output_magno: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(retina_output_magno);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_getMagno_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_magno.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -412,8 +412,8 @@ pub mod bioinspired {
 		/// ## See also
 		/// getMagno
 		#[inline]
-		fn get_magno_raw_to(&mut self, retina_output_magno: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(retina_output_magno);
+		fn get_magno_raw_to(&mut self, retina_output_magno: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(retina_output_magno);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_magno.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -630,9 +630,9 @@ pub mod bioinspired {
 		/// * inputImage: the input image to process RGB or gray levels
 		/// * outputToneMappedImage: the output tone mapped image
 		#[inline]
-		fn apply_fast_tone_mapping(&mut self, input_image: &dyn core::ToInputArray, output_tone_mapped_image: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(input_image);
-			extern_container_arg!(output_tone_mapped_image);
+		fn apply_fast_tone_mapping(&mut self, input_image: &impl core::ToInputArray, output_tone_mapped_image: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(input_image);
+			output_array_arg!(output_tone_mapped_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_RetinaFastToneMapping(), input_image.as_raw__InputArray(), output_tone_mapped_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1092,8 +1092,8 @@ pub mod bioinspired {
 		/// ## C++ default parameters
 		/// * channel_index: 0
 		#[inline]
-		fn run(&mut self, input_to_segment: &dyn core::ToInputArray, channel_index: i32) -> Result<()> {
-			extern_container_arg!(input_to_segment);
+		fn run(&mut self, input_to_segment: &impl core::ToInputArray, channel_index: i32) -> Result<()> {
+			input_array_arg!(input_to_segment);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_run_const__InputArrayR_const_int(self.as_raw_mut_TransientAreasSegmentationModule(), input_to_segment.as_raw__InputArray(), channel_index, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1104,8 +1104,8 @@ pub mod bioinspired {
 		/// access function
 		/// return the last segmentation result: a boolean picture which is resampled between 0 and 255 for a display purpose
 		#[inline]
-		fn get_segmentation_picture(&mut self, transient_areas: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(transient_areas);
+		fn get_segmentation_picture(&mut self, transient_areas: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(transient_areas);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_const__OutputArrayR(self.as_raw_mut_TransientAreasSegmentationModule(), transient_areas.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

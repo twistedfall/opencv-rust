@@ -15,9 +15,9 @@ pub mod shape {
 	/// the histogram in each bin.
 	/// * signature2: Second signature of the same format and size as signature1.
 	#[inline]
-	pub fn emdl1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputArray) -> Result<f32> {
-		extern_container_arg!(signature1);
-		extern_container_arg!(signature2);
+	pub fn emdl1(signature1: &impl core::ToInputArray, signature2: &impl core::ToInputArray) -> Result<f32> {
+		input_array_arg!(signature1);
+		input_array_arg!(signature2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_EMDL1_const__InputArrayR_const__InputArrayR(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -543,10 +543,10 @@ pub mod shape {
 		fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn build_cost_matrix(&mut self, descriptors1: &dyn core::ToInputArray, descriptors2: &dyn core::ToInputArray, cost_matrix: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(descriptors1);
-			extern_container_arg!(descriptors2);
-			extern_container_arg!(cost_matrix);
+		fn build_cost_matrix(&mut self, descriptors1: &impl core::ToInputArray, descriptors2: &impl core::ToInputArray, cost_matrix: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(descriptors1);
+			input_array_arg!(descriptors2);
+			output_array_arg!(cost_matrix);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HistogramCostExtractor_buildCostMatrix_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_HistogramCostExtractor(), descriptors1.as_raw__InputArray(), descriptors2.as_raw__InputArray(), cost_matrix.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -765,9 +765,9 @@ pub mod shape {
 		}
 		
 		#[inline]
-		fn get_images(&self, image1: &mut dyn core::ToOutputArray, image2: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image1);
-			extern_container_arg!(image2);
+		fn get_images(&self, image1: &mut impl core::ToOutputArray, image2: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(image1);
+			output_array_arg!(image2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_getImages_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_ShapeContextDistanceExtractor(), image1.as_raw__OutputArray(), image2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -939,9 +939,9 @@ pub mod shape {
 		/// * image1: Image corresponding to the shape defined by contours1.
 		/// * image2: Image corresponding to the shape defined by contours2.
 		#[inline]
-		fn set_images(&mut self, image1: &dyn core::ToInputArray, image2: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image1);
-			extern_container_arg!(image2);
+		fn set_images(&mut self, image1: &impl core::ToInputArray, image2: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(image1);
+			input_array_arg!(image2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeContextDistanceExtractor_setImages_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ShapeContextDistanceExtractor(), image1.as_raw__InputArray(), image2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1070,9 +1070,9 @@ pub mod shape {
 		/// * contour1: Contour defining first shape.
 		/// * contour2: Contour defining second shape.
 		#[inline]
-		fn compute_distance(&mut self, contour1: &dyn core::ToInputArray, contour2: &dyn core::ToInputArray) -> Result<f32> {
-			extern_container_arg!(contour1);
-			extern_container_arg!(contour2);
+		fn compute_distance(&mut self, contour1: &impl core::ToInputArray, contour2: &impl core::ToInputArray) -> Result<f32> {
+			input_array_arg!(contour1);
+			input_array_arg!(contour2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeDistanceExtractor_computeDistance_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ShapeDistanceExtractor(), contour1.as_raw__InputArray(), contour2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1141,9 +1141,9 @@ pub mod shape {
 		/// * border_mode: BORDER_CONSTANT
 		/// * border_value: Scalar()
 		#[inline]
-		fn warp_image(&self, transforming_image: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
-			extern_container_arg!(transforming_image);
-			extern_container_arg!(output);
+		fn warp_image(&self, transforming_image: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
+			input_array_arg!(transforming_image);
+			output_array_arg!(output);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_warpImage_const_const__InputArrayR_const__OutputArrayR_int_int_const_ScalarR(self.as_raw_ShapeTransformer(), transforming_image.as_raw__InputArray(), output.as_raw__OutputArray(), flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1164,9 +1164,9 @@ pub mod shape {
 		/// * targetShape: Contour defining second shape (Target).
 		/// * matches: Standard vector of Matches between points.
 		#[inline]
-		fn estimate_transformation(&mut self, transforming_shape: &dyn core::ToInputArray, target_shape: &dyn core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
-			extern_container_arg!(transforming_shape);
-			extern_container_arg!(target_shape);
+		fn estimate_transformation(&mut self, transforming_shape: &impl core::ToInputArray, target_shape: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+			input_array_arg!(transforming_shape);
+			input_array_arg!(target_shape);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_estimateTransformation_const__InputArrayR_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_ShapeTransformer(), transforming_shape.as_raw__InputArray(), target_shape.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1183,9 +1183,9 @@ pub mod shape {
 		/// ## C++ default parameters
 		/// * output: noArray()
 		#[inline]
-		fn apply_transformation(&mut self, input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray) -> Result<f32> {
-			extern_container_arg!(input);
-			extern_container_arg!(output);
+		fn apply_transformation(&mut self, input: &impl core::ToInputArray, output: &mut impl core::ToOutputArray) -> Result<f32> {
+			input_array_arg!(input);
+			output_array_arg!(output);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_applyTransformation_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ShapeTransformer(), input.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

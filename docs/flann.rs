@@ -497,8 +497,8 @@ pub mod flann {
 		/// ## C++ default parameters
 		/// * dist_type: cvflann::FLANN_DIST_L2
 		#[inline]
-		fn build(&mut self, features: &dyn core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<()> {
-			extern_container_arg!(features);
+		fn build(&mut self, features: &impl core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<()> {
+			input_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_build_const__InputArrayR_const_IndexParamsR_flann_distance_t(self.as_raw_mut_Index(), features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -509,10 +509,10 @@ pub mod flann {
 		/// ## C++ default parameters
 		/// * params: SearchParams()
 		#[inline]
-		fn knn_search(&mut self, query: &dyn core::ToInputArray, indices: &mut dyn core::ToOutputArray, dists: &mut dyn core::ToOutputArray, knn: i32, params: &crate::flann::SearchParams) -> Result<()> {
-			extern_container_arg!(query);
-			extern_container_arg!(indices);
-			extern_container_arg!(dists);
+		fn knn_search(&mut self, query: &impl core::ToInputArray, indices: &mut impl core::ToOutputArray, dists: &mut impl core::ToOutputArray, knn: i32, params: &crate::flann::SearchParams) -> Result<()> {
+			input_array_arg!(query);
+			output_array_arg!(indices);
+			output_array_arg!(dists);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_knnSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_SearchParamsR(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), knn, params.as_raw_SearchParams(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -523,10 +523,10 @@ pub mod flann {
 		/// ## C++ default parameters
 		/// * params: SearchParams()
 		#[inline]
-		fn radius_search(&mut self, query: &dyn core::ToInputArray, indices: &mut dyn core::ToOutputArray, dists: &mut dyn core::ToOutputArray, radius: f64, max_results: i32, params: &crate::flann::SearchParams) -> Result<i32> {
-			extern_container_arg!(query);
-			extern_container_arg!(indices);
-			extern_container_arg!(dists);
+		fn radius_search(&mut self, query: &impl core::ToInputArray, indices: &mut impl core::ToOutputArray, dists: &mut impl core::ToOutputArray, radius: f64, max_results: i32, params: &crate::flann::SearchParams) -> Result<i32> {
+			input_array_arg!(query);
+			output_array_arg!(indices);
+			output_array_arg!(dists);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_radiusSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_int_const_SearchParamsR(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), radius, max_results, params.as_raw_SearchParams(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -535,8 +535,8 @@ pub mod flann {
 		}
 		
 		#[inline]
-		fn load(&mut self, features: &dyn core::ToInputArray, filename: &str) -> Result<bool> {
-			extern_container_arg!(features);
+		fn load(&mut self, features: &impl core::ToInputArray, filename: &str) -> Result<bool> {
+			input_array_arg!(features);
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_load_const__InputArrayR_const_StringR(self.as_raw_mut_Index(), features.as_raw__InputArray(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -594,8 +594,8 @@ pub mod flann {
 		/// ## C++ default parameters
 		/// * dist_type: cvflann::FLANN_DIST_L2
 		#[inline]
-		pub fn new(features: &dyn core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<crate::flann::Index> {
-			extern_container_arg!(features);
+		pub fn new(features: &impl core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<crate::flann::Index> {
+			input_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_Index_const__InputArrayR_const_IndexParamsR_flann_distance_t(features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

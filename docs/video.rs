@@ -38,8 +38,8 @@ pub mod video {
 	/// *   (Python) A sample explaining the camshift tracking algorithm can be found at
 	///    opencv_source_code/samples/python/camshift.py
 	#[inline]
-	pub fn cam_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<core::RotatedRect> {
-		extern_container_arg!(prob_image);
+	pub fn cam_shift(prob_image: &impl core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<core::RotatedRect> {
+		input_array_arg!(prob_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_CamShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -71,9 +71,9 @@ pub mod video {
 	/// * deriv_border: BORDER_CONSTANT
 	/// * try_reuse_input_image: true
 	#[inline]
-	pub fn build_optical_flow_pyramid(img: &dyn core::ToInputArray, pyramid: &mut dyn core::ToOutputArray, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> Result<i32> {
-		extern_container_arg!(img);
-		extern_container_arg!(pyramid);
+	pub fn build_optical_flow_pyramid(img: &impl core::ToInputArray, pyramid: &mut impl core::ToOutputArray, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> Result<i32> {
+		input_array_arg!(img);
+		output_array_arg!(pyramid);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int_bool_int_int_bool(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), win_size.opencv_as_extern(), max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -121,10 +121,10 @@ pub mod video {
 	/// *   (Python) An example using the optical flow algorithm described by Gunnar Farneback can be
 	///    found at opencv_source_code/samples/python/opt_flow.py
 	#[inline]
-	pub fn calc_optical_flow_farneback(prev: &dyn core::ToInputArray, next: &dyn core::ToInputArray, flow: &mut dyn core::ToInputOutputArray, pyr_scale: f64, levels: i32, winsize: i32, iterations: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<()> {
-		extern_container_arg!(prev);
-		extern_container_arg!(next);
-		extern_container_arg!(flow);
+	pub fn calc_optical_flow_farneback(prev: &impl core::ToInputArray, next: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray, pyr_scale: f64, levels: i32, winsize: i32, iterations: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<()> {
+		input_array_arg!(prev);
+		input_array_arg!(next);
+		input_output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcOpticalFlowFarneback_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_double_int_int_int_int_double_int(prev.as_raw__InputArray(), next.as_raw__InputArray(), flow.as_raw__InputOutputArray(), pyr_scale, levels, winsize, iterations, poly_n, poly_sigma, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -188,13 +188,13 @@ pub mod video {
 	/// * flags: 0
 	/// * min_eig_threshold: 1e-4
 	#[inline]
-	pub fn calc_optical_flow_pyr_lk(prev_img: &dyn core::ToInputArray, next_img: &dyn core::ToInputArray, prev_pts: &dyn core::ToInputArray, next_pts: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, err: &mut dyn core::ToOutputArray, win_size: core::Size, max_level: i32, criteria: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<()> {
-		extern_container_arg!(prev_img);
-		extern_container_arg!(next_img);
-		extern_container_arg!(prev_pts);
-		extern_container_arg!(next_pts);
-		extern_container_arg!(status);
-		extern_container_arg!(err);
+	pub fn calc_optical_flow_pyr_lk(prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, err: &mut impl core::ToOutputArray, win_size: core::Size, max_level: i32, criteria: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<()> {
+		input_array_arg!(prev_img);
+		input_array_arg!(next_img);
+		input_array_arg!(prev_pts);
+		input_output_array_arg!(next_pts);
+		output_array_arg!(status);
+		output_array_arg!(err);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), win_size.opencv_as_extern(), max_level, criteria.opencv_as_extern(), flags, min_eig_threshold, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -215,10 +215,10 @@ pub mod video {
 	/// ## C++ default parameters
 	/// * input_mask: noArray()
 	#[inline]
-	pub fn compute_ecc(template_image: &dyn core::ToInputArray, input_image: &dyn core::ToInputArray, input_mask: &dyn core::ToInputArray) -> Result<f64> {
-		extern_container_arg!(template_image);
-		extern_container_arg!(input_image);
-		extern_container_arg!(input_mask);
+	pub fn compute_ecc(template_image: &impl core::ToInputArray, input_image: &impl core::ToInputArray, input_mask: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(template_image);
+		input_array_arg!(input_image);
+		input_array_arg!(input_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_computeECC_const__InputArrayR_const__InputArrayR_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), input_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -305,9 +305,9 @@ pub mod video {
 	/// estimateAffine2D, estimateAffinePartial2D, getAffineTransform, getPerspectiveTransform, findHomography
 	#[deprecated = "Use cv::estimateAffine2D, cv::estimateAffinePartial2D instead. If you are using this function"]
 	#[inline]
-	pub fn estimate_rigid_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, full_affine: bool) -> Result<core::Mat> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn estimate_rigid_transform(src: &impl core::ToInputArray, dst: &impl core::ToInputArray, full_affine: bool) -> Result<core::Mat> {
+		input_array_arg!(src);
+		input_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_estimateRigidTransform_const__InputArrayR_const__InputArrayR_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), full_affine, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -374,11 +374,11 @@ pub mod video {
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,50,0.001)
 	/// * input_mask: noArray()
 	#[inline]
-	pub fn find_transform_ecc_1(template_image: &dyn core::ToInputArray, input_image: &dyn core::ToInputArray, warp_matrix: &mut dyn core::ToInputOutputArray, motion_type: i32, criteria: core::TermCriteria, input_mask: &dyn core::ToInputArray) -> Result<f64> {
-		extern_container_arg!(template_image);
-		extern_container_arg!(input_image);
-		extern_container_arg!(warp_matrix);
-		extern_container_arg!(input_mask);
+	pub fn find_transform_ecc_1(template_image: &impl core::ToInputArray, input_image: &impl core::ToInputArray, warp_matrix: &mut impl core::ToInputOutputArray, motion_type: i32, criteria: core::TermCriteria, input_mask: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(template_image);
+		input_array_arg!(input_image);
+		input_output_array_arg!(warp_matrix);
+		input_array_arg!(input_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_as_extern(), input_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -437,11 +437,11 @@ pub mod video {
 	/// ## See also
 	/// computeECC, estimateAffine2D, estimateAffinePartial2D, findHomography
 	#[inline]
-	pub fn find_transform_ecc(template_image: &dyn core::ToInputArray, input_image: &dyn core::ToInputArray, warp_matrix: &mut dyn core::ToInputOutputArray, motion_type: i32, criteria: core::TermCriteria, input_mask: &dyn core::ToInputArray, gauss_filt_size: i32) -> Result<f64> {
-		extern_container_arg!(template_image);
-		extern_container_arg!(input_image);
-		extern_container_arg!(warp_matrix);
-		extern_container_arg!(input_mask);
+	pub fn find_transform_ecc(template_image: &impl core::ToInputArray, input_image: &impl core::ToInputArray, warp_matrix: &mut impl core::ToInputOutputArray, motion_type: i32, criteria: core::TermCriteria, input_mask: &impl core::ToInputArray, gauss_filt_size: i32) -> Result<f64> {
+		input_array_arg!(template_image);
+		input_array_arg!(input_image);
+		input_output_array_arg!(warp_matrix);
+		input_array_arg!(input_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR_int(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_as_extern(), input_mask.as_raw__InputArray(), gauss_filt_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -468,8 +468,8 @@ pub mod video {
 	/// with findContours , throwing away contours with small area ( contourArea ), and rendering the
 	/// remaining contours with drawContours.
 	#[inline]
-	pub fn mean_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<i32> {
-		extern_container_arg!(prob_image);
+	pub fn mean_shift(prob_image: &impl core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<i32> {
+		input_array_arg!(prob_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_meanShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -506,9 +506,9 @@ pub mod video {
 	/// The flow field must be a 2-channel, floating-point matrix (CV_32FC2). First channel corresponds
 	/// to the flow in the horizontal direction (u), second - vertical (v).
 	#[inline]
-	pub fn write_optical_flow(path: &str, flow: &dyn core::ToInputArray) -> Result<bool> {
+	pub fn write_optical_flow(path: &str, flow: &impl core::ToInputArray) -> Result<bool> {
 		extern_container_arg!(path);
-		extern_container_arg!(flow);
+		input_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_writeOpticalFlow_const_StringR_const__InputArrayR(path.opencv_as_extern(), flow.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -529,8 +529,8 @@ pub mod video {
 		/// Note: Sometimes the background image can be very blurry, as it contain the average background
 		/// statistics.
 		#[inline]
-		fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(background_image);
+		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractor_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractor(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -557,9 +557,9 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(fgmask);
+		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractor_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractor(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1119,9 +1119,9 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(fgmask);
+		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1545,10 +1545,10 @@ pub mod video {
 		/// * I1: second input image of the same size and the same type as prev.
 		/// * flow: computed flow image that has the same size as prev and type CV_32FC2.
 		#[inline]
-		fn calc(&mut self, i0: &dyn core::ToInputArray, i1: &dyn core::ToInputArray, flow: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(i0);
-			extern_container_arg!(i1);
-			extern_container_arg!(flow);
+		fn calc(&mut self, i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_array_arg!(i0);
+			input_array_arg!(i1);
+			input_output_array_arg!(flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DenseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_DenseOpticalFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2194,13 +2194,13 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * err: cv::noArray()
 		#[inline]
-		fn calc(&mut self, prev_img: &dyn core::ToInputArray, next_img: &dyn core::ToInputArray, prev_pts: &dyn core::ToInputArray, next_pts: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, err: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(prev_img);
-			extern_container_arg!(next_img);
-			extern_container_arg!(prev_pts);
-			extern_container_arg!(next_pts);
-			extern_container_arg!(status);
-			extern_container_arg!(err);
+		fn calc(&mut self, prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, err: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(prev_img);
+			input_array_arg!(next_img);
+			input_array_arg!(prev_pts);
+			input_output_array_arg!(next_pts);
+			output_array_arg!(status);
+			output_array_arg!(err);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2432,8 +2432,8 @@ pub mod video {
 		/// * image: The initial frame
 		/// * boundingBox: The initial bounding box
 		#[inline]
-		fn init(&mut self, image: &dyn core::ToInputArray, bounding_box: core::Rect) -> Result<()> {
-			extern_container_arg!(image);
+		fn init(&mut self, image: &impl core::ToInputArray, bounding_box: core::Rect) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tracker_init_const__InputArrayR_const_RectR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), &bounding_box, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2452,8 +2452,8 @@ pub mod video {
 		/// current frame. Note, that latter *does not* imply that tracker has failed, maybe target is indeed
 		/// missing from the frame (say, out of sight)
 		#[inline]
-		fn update(&mut self, image: &dyn core::ToInputArray, bounding_box: &mut core::Rect) -> Result<bool> {
-			extern_container_arg!(image);
+		fn update(&mut self, image: &impl core::ToInputArray, bounding_box: &mut core::Rect) -> Result<bool> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tracker_update_const__InputArrayR_RectR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), bounding_box, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3227,11 +3227,11 @@ pub mod video {
 		/// [calc] function overload to handle separate horizontal (u) and vertical (v) flow components
 		/// (to avoid extra splits/merges)
 		#[inline]
-		fn calc_uv(&mut self, i0: &dyn core::ToInputArray, i1: &dyn core::ToInputArray, flow_u: &mut dyn core::ToInputOutputArray, flow_v: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(i0);
-			extern_container_arg!(i1);
-			extern_container_arg!(flow_u);
-			extern_container_arg!(flow_v);
+		fn calc_uv(&mut self, i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow_u: &mut impl core::ToInputOutputArray, flow_v: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_array_arg!(i0);
+			input_array_arg!(i1);
+			input_output_array_arg!(flow_u);
+			input_output_array_arg!(flow_v);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VariationalRefinement_calcUV_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_VariationalRefinement(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow_u.as_raw__InputOutputArray(), flow_v.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

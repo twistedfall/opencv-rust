@@ -147,8 +147,8 @@ pub mod viz {
 	/// * mesh: Input mesh.
 	/// * normals: Normals at very point in the mesh of type CV_64FC3.
 	#[inline]
-	pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(normals);
+	pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(normals);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_computeNormals_const_MeshR_const__OutputArrayR(mesh.as_raw_Mesh(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -182,9 +182,9 @@ pub mod viz {
 	/// ## C++ default parameters
 	/// * window_size: Size(-1,-1)
 	#[inline]
-	pub fn imshow(window_name: &str, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
+	pub fn imshow(window_name: &str, image: &impl core::ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
 		extern_container_arg!(window_name);
-		extern_container_arg!(image);
+		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_imshow_const_StringR_const__InputArrayR_const_SizeR(window_name.opencv_as_extern(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -248,10 +248,10 @@ pub mod viz {
 	/// * colors: noArray()
 	/// * normals: noArray()
 	#[inline]
-	pub fn read_cloud(file: &str, colors: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
+	pub fn read_cloud(file: &str, colors: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<core::Mat> {
 		extern_container_arg!(file);
-		extern_container_arg!(colors);
-		extern_container_arg!(normals);
+		output_array_arg!(colors);
+		output_array_arg!(normals);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_readCloud_const_StringR_const__OutputArrayR_const__OutputArrayR(file.opencv_as_extern(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -309,8 +309,8 @@ pub mod viz {
 	/// * end: INT_MAX
 	/// * tag: "pose"
 	#[inline]
-	pub fn read_trajectory(traj: &mut dyn core::ToOutputArray, files_format: &str, start: i32, end: i32, tag: &str) -> Result<()> {
-		extern_container_arg!(traj);
+	pub fn read_trajectory(traj: &mut impl core::ToOutputArray, files_format: &str, start: i32, end: i32, tag: &str) -> Result<()> {
+		output_array_arg!(traj);
 		extern_container_arg!(files_format);
 		extern_container_arg!(tag);
 		return_send!(via ocvrs_return);
@@ -343,11 +343,11 @@ pub mod viz {
 	/// * normals: noArray()
 	/// * binary: false
 	#[inline]
-	pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, binary: bool) -> Result<()> {
+	pub fn write_cloud(file: &str, cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray, normals: &impl core::ToInputArray, binary: bool) -> Result<()> {
 		extern_container_arg!(file);
-		extern_container_arg!(cloud);
-		extern_container_arg!(colors);
-		extern_container_arg!(normals);
+		input_array_arg!(cloud);
+		input_array_arg!(colors);
+		input_array_arg!(normals);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_writeCloud_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR_bool(file.opencv_as_extern(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -389,8 +389,8 @@ pub mod viz {
 	/// * start: 0
 	/// * tag: "pose"
 	#[inline]
-	pub fn write_trajectory(traj: &dyn core::ToInputArray, files_format: &str, start: i32, tag: &str) -> Result<()> {
-		extern_container_arg!(traj);
+	pub fn write_trajectory(traj: &impl core::ToInputArray, files_format: &str, start: i32, tag: &str) -> Result<()> {
+		input_array_arg!(traj);
 		extern_container_arg!(files_format);
 		extern_container_arg!(tag);
 		return_send!(via ocvrs_return);
@@ -1636,8 +1636,8 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * window_size: Size(-1,-1)
 		#[inline]
-		fn show_image(&mut self, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<()> {
-			extern_container_arg!(image);
+		fn show_image(&mut self, image: &impl core::ToInputArray, window_size: core::Size) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR_const_SizeR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1825,8 +1825,8 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * image: noArray()
 		#[inline]
-		fn set_background_texture(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
+		fn set_background_texture(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_setBackgroundTexture_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2337,8 +2337,8 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_3(k: core::Matx33d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
-			extern_container_arg!(image);
+		pub fn new_3(k: core::Matx33d, image: &impl core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR_double_const_ColorR(&k, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2364,8 +2364,8 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_4(fov: core::Vec2d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
-			extern_container_arg!(image);
+		pub fn new_4(fov: core::Vec2d, image: &impl core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR_double_const_ColorR(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2547,9 +2547,9 @@ pub mod viz {
 		/// 
 		/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 		#[inline]
-		pub fn new(cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
-			extern_container_arg!(cloud);
-			extern_container_arg!(colors);
+		pub fn new(cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<crate::viz::WCloud> {
+			input_array_arg!(cloud);
+			input_array_arg!(colors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2568,8 +2568,8 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(cloud: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WCloud> {
-			extern_container_arg!(cloud);
+		pub fn new_1(cloud: &impl core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WCloud> {
+			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR(cloud.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2586,10 +2586,10 @@ pub mod viz {
 		/// 
 		/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 		#[inline]
-		pub fn new_2(cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
-			extern_container_arg!(cloud);
-			extern_container_arg!(colors);
-			extern_container_arg!(normals);
+		pub fn new_2(cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray, normals: &impl core::ToInputArray) -> Result<crate::viz::WCloud> {
+			input_array_arg!(cloud);
+			input_array_arg!(colors);
+			input_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2607,9 +2607,9 @@ pub mod viz {
 		/// Size and type should match with the cloud parameter.
 		/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 		#[inline]
-		pub fn new_3(cloud: &dyn core::ToInputArray, color: &crate::viz::Color, normals: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
-			extern_container_arg!(cloud);
-			extern_container_arg!(normals);
+		pub fn new_3(cloud: &impl core::ToInputArray, color: &crate::viz::Color, normals: &impl core::ToInputArray) -> Result<crate::viz::WCloud> {
+			input_array_arg!(cloud);
+			input_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR_const__InputArrayR(cloud.as_raw__InputArray(), color.as_raw_Color(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2644,9 +2644,9 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn add_cloud(&mut self, cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, pose: core::Affine3d) -> Result<()> {
-			extern_container_arg!(cloud);
-			extern_container_arg!(colors);
+		fn add_cloud(&mut self, cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray, pose: core::Affine3d) -> Result<()> {
+			input_array_arg!(cloud);
+			input_array_arg!(colors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const__InputArrayR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), &pose, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2665,8 +2665,8 @@ pub mod viz {
 		/// * color: Color::white()
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn add_cloud_1(&mut self, cloud: &dyn core::ToInputArray, color: &crate::viz::Color, pose: core::Affine3d) -> Result<()> {
-			extern_container_arg!(cloud);
+		fn add_cloud_1(&mut self, cloud: &impl core::ToInputArray, color: &crate::viz::Color, pose: core::Affine3d) -> Result<()> {
+			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const_ColorR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), color.as_raw_Color(), &pose, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2819,9 +2819,9 @@ pub mod viz {
 		/// * scale: 0.1
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(cloud: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, level: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCloudNormals> {
-			extern_container_arg!(cloud);
-			extern_container_arg!(normals);
+		pub fn new(cloud: &impl core::ToInputArray, normals: &impl core::ToInputArray, level: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCloudNormals> {
+			input_array_arg!(cloud);
+			input_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_const__InputArrayR_const__InputArrayR_int_double_const_ColorR(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), level, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3295,8 +3295,8 @@ pub mod viz {
 		/// ## Parameters
 		/// * image: BGR or Gray-Scale image.
 		#[inline]
-		fn set_image(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
+		fn set_image(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImage3D_setImage_const__InputArrayR(self.as_raw_mut_WImage3D(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3367,8 +3367,8 @@ pub mod viz {
 		/// * image: BGR or Gray-Scale image.
 		/// * size: Size of the image.
 		#[inline]
-		pub fn new(image: &dyn core::ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
-			extern_container_arg!(image);
+		pub fn new(image: &impl core::ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR(image.as_raw__InputArray(), &size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3386,8 +3386,8 @@ pub mod viz {
 		/// * normal: Normal of the plane that represents the image.
 		/// * up_vector: Determines orientation of the image.
 		#[inline]
-		pub fn new_1(image: &dyn core::ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
-			extern_container_arg!(image);
+		pub fn new_1(image: &impl core::ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(image.as_raw__InputArray(), &size, &center, &normal, &up_vector, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3417,8 +3417,8 @@ pub mod viz {
 		/// ## Parameters
 		/// * image: BGR or Gray-Scale image.
 		#[inline]
-		fn set_image(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
+		fn set_image(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImageOverlay_setImage_const__InputArrayR(self.as_raw_mut_WImageOverlay(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3476,8 +3476,8 @@ pub mod viz {
 		/// * image: BGR or Gray-Scale image.
 		/// * rect: Image is scaled and positioned based on rect.
 		#[inline]
-		pub fn new(image: &dyn core::ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
-			extern_container_arg!(image);
+		pub fn new(image: &impl core::ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayR_const_RectR(image.as_raw__InputArray(), &rect, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3646,11 +3646,11 @@ pub mod viz {
 		/// * colors: noArray()
 		/// * normals: noArray()
 		#[inline]
-		pub fn new_1(cloud: &dyn core::ToInputArray, polygons: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray) -> Result<crate::viz::WMesh> {
-			extern_container_arg!(cloud);
-			extern_container_arg!(polygons);
-			extern_container_arg!(colors);
-			extern_container_arg!(normals);
+		pub fn new_1(cloud: &impl core::ToInputArray, polygons: &impl core::ToInputArray, colors: &impl core::ToInputArray, normals: &impl core::ToInputArray) -> Result<crate::viz::WMesh> {
+			input_array_arg!(cloud);
+			input_array_arg!(polygons);
+			input_array_arg!(colors);
+			input_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3720,8 +3720,8 @@ pub mod viz {
 	impl WPaintedCloud {
 		/// Paint cloud with default gradient between cloud bounds points
 		#[inline]
-		pub fn new(cloud: &dyn core::ToInputArray) -> Result<crate::viz::WPaintedCloud> {
-			extern_container_arg!(cloud);
+		pub fn new(cloud: &impl core::ToInputArray) -> Result<crate::viz::WPaintedCloud> {
+			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR(cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3732,8 +3732,8 @@ pub mod viz {
 		
 		/// Paint cloud with default gradient between given points
 		#[inline]
-		pub fn new_1(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d) -> Result<crate::viz::WPaintedCloud> {
-			extern_container_arg!(cloud);
+		pub fn new_1(cloud: &impl core::ToInputArray, p1: core::Point3d, p2: core::Point3d) -> Result<crate::viz::WPaintedCloud> {
+			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR(cloud.as_raw__InputArray(), &p1, &p2, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3744,8 +3744,8 @@ pub mod viz {
 		
 		/// Paint cloud with gradient specified by given colors between given points
 		#[inline]
-		pub fn new_2(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d, c1: &crate::viz::Color, c2: crate::viz::Color) -> Result<crate::viz::WPaintedCloud> {
-			extern_container_arg!(cloud);
+		pub fn new_2(cloud: &impl core::ToInputArray, p1: core::Point3d, p2: core::Point3d, c1: &crate::viz::Color, c2: crate::viz::Color) -> Result<crate::viz::WPaintedCloud> {
+			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR_const_ColorR_const_Color(cloud.as_raw__InputArray(), &p1, &p2, c1.as_raw_Color(), c2.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3916,9 +3916,9 @@ pub mod viz {
 	
 	impl WPolyLine {
 		#[inline]
-		pub fn new(points: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WPolyLine> {
-			extern_container_arg!(points);
-			extern_container_arg!(colors);
+		pub fn new(points: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<crate::viz::WPolyLine> {
+			input_array_arg!(points);
+			input_array_arg!(colors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const__InputArrayR(points.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3936,8 +3936,8 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(points: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WPolyLine> {
-			extern_container_arg!(points);
+		pub fn new_1(points: &impl core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WPolyLine> {
+			input_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const_ColorR(points.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4322,8 +4322,8 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(path: &dyn core::ToInputArray, display_mode: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectory> {
-			extern_container_arg!(path);
+		pub fn new(path: &impl core::ToInputArray, display_mode: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectory> {
+			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR_int_double_const_ColorR(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4406,8 +4406,8 @@ pub mod viz {
 		/// * scale: 1.
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(path: &dyn core::ToInputArray, k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
-			extern_container_arg!(path);
+		pub fn new(path: &impl core::ToInputArray, k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
+			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR_double_const_ColorR(path.as_raw__InputArray(), &k, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4430,8 +4430,8 @@ pub mod viz {
 		/// * scale: 1.
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(path: &dyn core::ToInputArray, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
-			extern_container_arg!(path);
+		pub fn new_1(path: &impl core::ToInputArray, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
+			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR_double_const_ColorR(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4518,8 +4518,8 @@ pub mod viz {
 		/// * from: Color::red()
 		/// * to: Color::white()
 		#[inline]
-		pub fn new(path: &dyn core::ToInputArray, line_length: f64, radius: f64, from: &crate::viz::Color, to: &crate::viz::Color) -> Result<crate::viz::WTrajectorySpheres> {
-			extern_container_arg!(path);
+		pub fn new(path: &impl core::ToInputArray, line_length: f64, radius: f64, from: &crate::viz::Color, to: &crate::viz::Color) -> Result<crate::viz::WTrajectorySpheres> {
+			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR_double_double_const_ColorR_const_ColorR(path.as_raw__InputArray(), line_length, radius, from.as_raw_Color(), to.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

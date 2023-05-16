@@ -180,9 +180,9 @@ pub mod bgsegm {
 	/// * wavespeed: 0.2
 	/// * objspeed: 6.0
 	#[inline]
-	pub fn create_synthetic_sequence_generator(background: &dyn core::ToInputArray, object: &dyn core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>> {
-		extern_container_arg!(background);
-		extern_container_arg!(object);
+	pub fn create_synthetic_sequence_generator(background: &impl core::ToInputArray, object: &impl core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>> {
+		input_array_arg!(background);
+		input_array_arg!(object);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -196,8 +196,8 @@ pub mod bgsegm {
 		fn as_raw_BackgroundSubtractorCNT(&self) -> *const c_void;
 	
 		#[inline]
-		fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(background_image);
+		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorCNT(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -254,9 +254,9 @@ pub mod bgsegm {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(fgmask);
+		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -633,8 +633,8 @@ pub mod bgsegm {
 		fn as_raw_BackgroundSubtractorGSOC(&self) -> *const c_void;
 	
 		#[inline]
-		fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(background_image);
+		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorGSOC(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -651,9 +651,9 @@ pub mod bgsegm {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(fgmask);
+		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -716,8 +716,8 @@ pub mod bgsegm {
 		fn as_raw_BackgroundSubtractorLSBP(&self) -> *const c_void;
 	
 		#[inline]
-		fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(background_image);
+		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorLSBP(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -734,9 +734,9 @@ pub mod bgsegm {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(fgmask);
+		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -831,8 +831,8 @@ pub mod bgsegm {
 	
 	impl BackgroundSubtractorLSBPDesc {
 		#[inline]
-		pub fn calc_local_svd_values(local_svd_values: &mut dyn core::ToOutputArray, frame: &core::Mat) -> Result<()> {
-			extern_container_arg!(local_svd_values);
+		pub fn calc_local_svd_values(local_svd_values: &mut impl core::ToOutputArray, frame: &core::Mat) -> Result<()> {
+			output_array_arg!(local_svd_values);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_calcLocalSVDValues_const__OutputArrayR_const_MatR(local_svd_values.as_raw__OutputArray(), frame.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -841,8 +841,8 @@ pub mod bgsegm {
 		}
 		
 		#[inline]
-		pub fn compute_from_local_svd_values(desc: &mut dyn core::ToOutputArray, local_svd_values: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
-			extern_container_arg!(desc);
+		pub fn compute_from_local_svd_values(desc: &mut impl core::ToOutputArray, local_svd_values: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
+			output_array_arg!(desc);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_computeFromLocalSVDValues_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), local_svd_values.as_raw_Mat(), lsbp_sample_points, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -851,8 +851,8 @@ pub mod bgsegm {
 		}
 		
 		#[inline]
-		pub fn compute(desc: &mut dyn core::ToOutputArray, frame: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
-			extern_container_arg!(desc);
+		pub fn compute(desc: &mut impl core::ToOutputArray, frame: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
+			output_array_arg!(desc);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_compute_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), frame.as_raw_Mat(), lsbp_sample_points, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1010,9 +1010,9 @@ pub mod bgsegm {
 		/// * frame: Output frame.
 		/// * gtMask: Output ground-truth (reference) segmentation mask object/background.
 		#[inline]
-		fn get_next_frame(&mut self, frame: &mut dyn core::ToOutputArray, gt_mask: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame);
-			extern_container_arg!(gt_mask);
+		fn get_next_frame(&mut self, frame: &mut impl core::ToOutputArray, gt_mask: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(frame);
+			output_array_arg!(gt_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_getNextFrame_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SyntheticSequenceGenerator(), frame.as_raw__OutputArray(), gt_mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1069,9 +1069,9 @@ pub mod bgsegm {
 		/// * wavespeed: How fast waves will move.
 		/// * objspeed: How fast object will fly over background.
 		#[inline]
-		pub fn new(background: &dyn core::ToInputArray, object: &dyn core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<crate::bgsegm::SyntheticSequenceGenerator> {
-			extern_container_arg!(background);
-			extern_container_arg!(object);
+		pub fn new(background: &impl core::ToInputArray, object: &impl core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<crate::bgsegm::SyntheticSequenceGenerator> {
+			input_array_arg!(background);
+			input_array_arg!(object);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_SyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

@@ -53,9 +53,9 @@ pub mod structured_light {
 		/// * blackImage: The generated all-black CV_8U image, at projector's resolution.
 		/// * whiteImage: The generated all-white CV_8U image, at projector's resolution.
 		#[inline]
-		fn get_images_for_shadow_masks(&self, black_image: &mut dyn core::ToInputOutputArray, white_image: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(black_image);
-			extern_container_arg!(white_image);
+		fn get_images_for_shadow_masks(&self, black_image: &mut impl core::ToInputOutputArray, white_image: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_output_array_arg!(black_image);
+			input_output_array_arg!(white_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_getImagesForShadowMasks_const_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_GrayCodePattern(), black_image.as_raw__InputOutputArray(), white_image.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -74,8 +74,8 @@ pub mod structured_light {
 		/// * y: y coordinate of the image pixel.
 		/// * projPix: Projector's pixel corresponding to the camera's pixel: projPix.x and projPix.y are the image coordinates of the projector's pixel corresponding to the pixel being decoded in a camera.
 		#[inline]
-		fn get_proj_pixel(&self, pattern_images: &dyn core::ToInputArray, x: i32, y: i32, proj_pix: &mut core::Point) -> Result<bool> {
-			extern_container_arg!(pattern_images);
+		fn get_proj_pixel(&self, pattern_images: &impl core::ToInputArray, x: i32, y: i32, proj_pix: &mut core::Point) -> Result<bool> {
+			input_array_arg!(pattern_images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_GrayCodePattern_getProjPixel_const_const__InputArrayR_int_int_PointR(self.as_raw_GrayCodePattern(), pattern_images.as_raw__InputArray(), x, y, proj_pix, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -303,11 +303,11 @@ pub mod structured_light {
 		/// * shadow_mask: noArray()
 		/// * fundamental: noArray()
 		#[inline]
-		fn compute_phase_map(&mut self, pattern_images: &dyn core::ToInputArray, wrapped_phase_map: &mut dyn core::ToOutputArray, shadow_mask: &mut dyn core::ToOutputArray, fundamental: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(pattern_images);
-			extern_container_arg!(wrapped_phase_map);
-			extern_container_arg!(shadow_mask);
-			extern_container_arg!(fundamental);
+		fn compute_phase_map(&mut self, pattern_images: &impl core::ToInputArray, wrapped_phase_map: &mut impl core::ToOutputArray, shadow_mask: &mut impl core::ToOutputArray, fundamental: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(pattern_images);
+			output_array_arg!(wrapped_phase_map);
+			output_array_arg!(shadow_mask);
+			input_array_arg!(fundamental);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_computePhaseMap_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_SinusoidalPattern(), pattern_images.as_raw__InputArray(), wrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__OutputArray(), fundamental.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -325,10 +325,10 @@ pub mod structured_light {
 		/// ## C++ default parameters
 		/// * shadow_mask: noArray()
 		#[inline]
-		fn unwrap_phase_map(&mut self, wrapped_phase_map: &dyn core::ToInputArray, unwrapped_phase_map: &mut dyn core::ToOutputArray, cam_size: core::Size, shadow_mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(wrapped_phase_map);
-			extern_container_arg!(unwrapped_phase_map);
-			extern_container_arg!(shadow_mask);
+		fn unwrap_phase_map(&mut self, wrapped_phase_map: &impl core::ToInputArray, unwrapped_phase_map: &mut impl core::ToOutputArray, cam_size: core::Size, shadow_mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(wrapped_phase_map);
+			output_array_arg!(unwrapped_phase_map);
+			input_array_arg!(shadow_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_Size_const__InputArrayR(self.as_raw_mut_SinusoidalPattern(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), cam_size.opencv_as_extern(), shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -342,10 +342,10 @@ pub mod structured_light {
 		/// * camUnwrappedPhaseMap: Camera's unwrapped phase map.
 		/// * matches: Images used to display correspondences map.
 		#[inline]
-		fn find_pro_cam_matches(&mut self, proj_unwrapped_phase_map: &dyn core::ToInputArray, cam_unwrapped_phase_map: &dyn core::ToInputArray, matches: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(proj_unwrapped_phase_map);
-			extern_container_arg!(cam_unwrapped_phase_map);
-			extern_container_arg!(matches);
+		fn find_pro_cam_matches(&mut self, proj_unwrapped_phase_map: &impl core::ToInputArray, cam_unwrapped_phase_map: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(proj_unwrapped_phase_map);
+			input_array_arg!(cam_unwrapped_phase_map);
+			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_findProCamMatches_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_SinusoidalPattern(), proj_unwrapped_phase_map.as_raw__InputArray(), cam_unwrapped_phase_map.as_raw__InputArray(), matches.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -359,10 +359,10 @@ pub mod structured_light {
 		/// * dataModulationTerm: Mat where the data modulation term is saved.
 		/// * shadowMask: Mask used to discard shadow regions.
 		#[inline]
-		fn compute_data_modulation_term(&mut self, pattern_images: &dyn core::ToInputArray, data_modulation_term: &mut dyn core::ToOutputArray, shadow_mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(pattern_images);
-			extern_container_arg!(data_modulation_term);
-			extern_container_arg!(shadow_mask);
+		fn compute_data_modulation_term(&mut self, pattern_images: &impl core::ToInputArray, data_modulation_term: &mut impl core::ToOutputArray, shadow_mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(pattern_images);
+			output_array_arg!(data_modulation_term);
+			input_array_arg!(shadow_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_SinusoidalPattern_computeDataModulationTerm_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_SinusoidalPattern(), pattern_images.as_raw__InputArray(), data_modulation_term.as_raw__OutputArray(), shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -625,10 +625,10 @@ pub mod structured_light {
 		/// * white_images: noArray()
 		/// * flags: DECODE_3D_UNDERWORLD
 		#[inline]
-		fn decode(&self, pattern_images: &core::Vector<core::Vector<core::Mat>>, disparity_map: &mut dyn core::ToOutputArray, black_images: &dyn core::ToInputArray, white_images: &dyn core::ToInputArray, flags: i32) -> Result<bool> {
-			extern_container_arg!(disparity_map);
-			extern_container_arg!(black_images);
-			extern_container_arg!(white_images);
+		fn decode(&self, pattern_images: &core::Vector<core::Vector<core::Mat>>, disparity_map: &mut impl core::ToOutputArray, black_images: &impl core::ToInputArray, white_images: &impl core::ToInputArray, flags: i32) -> Result<bool> {
+			output_array_arg!(disparity_map);
+			input_array_arg!(black_images);
+			input_array_arg!(white_images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_StructuredLightPattern_decode_const_const_vectorLvectorLMatGGR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_int(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfVectorOfMat(), disparity_map.as_raw__OutputArray(), black_images.as_raw__InputArray(), white_images.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -647,8 +647,8 @@ pub mod structured_light {
 		/// ## Parameters
 		/// * patternImages: The generated pattern: a vector<Mat>, in which each image is a CV_8U Mat at projector's resolution.
 		#[inline]
-		fn generate(&mut self, pattern_images: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(pattern_images);
+		fn generate(&mut self, pattern_images: &mut impl core::ToOutputArray) -> Result<bool> {
+			output_array_arg!(pattern_images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_structured_light_StructuredLightPattern_generate_const__OutputArrayR(self.as_raw_mut_StructuredLightPattern(), pattern_images.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

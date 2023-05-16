@@ -472,9 +472,9 @@ pub mod ml {
 	pub type ANN_MLP_ANNEAL = crate::ml::ANN_MLP;
 	/// Creates test set
 	#[inline]
-	pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasses: i32, samples: &mut dyn core::ToOutputArray, responses: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(samples);
-		extern_container_arg!(responses);
+	pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasses: i32, samples: &mut impl core::ToOutputArray, responses: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(samples);
+		output_array_arg!(responses);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_createConcentricSpheresTestSet_int_int_int_const__OutputArrayR_const__OutputArrayR(nsamples, nfeatures, nclasses, samples.as_raw__OutputArray(), responses.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -490,10 +490,10 @@ pub mod ml {
 	/// * nsamples: returned samples count
 	/// * samples: returned samples array
 	#[inline]
-	pub fn rand_mv_normal(mean: &dyn core::ToInputArray, cov: &dyn core::ToInputArray, nsamples: i32, samples: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(mean);
-		extern_container_arg!(cov);
-		extern_container_arg!(samples);
+	pub fn rand_mv_normal(mean: &impl core::ToInputArray, cov: &impl core::ToInputArray, nsamples: i32, samples: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(mean);
+		input_array_arg!(cov);
+		output_array_arg!(samples);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ml_randMVNormal_const__InputArrayR_const__InputArrayR_int_const__OutputArrayR(mean.as_raw__InputArray(), cov.as_raw__InputArray(), nsamples, samples.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -749,8 +749,8 @@ pub mod ml {
 		/// ## See also
 		/// getLayerSizes
 		#[inline]
-		fn set_layer_sizes(&mut self, _layer_sizes: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(_layer_sizes);
+		fn set_layer_sizes(&mut self, _layer_sizes: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(_layer_sizes);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setLayerSizes_const__InputArrayR(self.as_raw_mut_ANN_MLP(), _layer_sizes.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2076,9 +2076,9 @@ pub mod ml {
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
-		fn predict(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
-			extern_container_arg!(samples);
-			extern_container_arg!(results);
+		fn predict(&self, samples: &impl core::ToInputArray, results: &mut impl core::ToOutputArray, flags: i32) -> Result<f32> {
+			input_array_arg!(samples);
+			output_array_arg!(results);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_predict_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_EM(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2099,9 +2099,9 @@ pub mod ml {
 		/// the sample. First element is an index of the most probable mixture component for the given
 		/// sample.
 		#[inline]
-		fn predict2(&self, sample: &dyn core::ToInputArray, probs: &mut dyn core::ToOutputArray) -> Result<core::Vec2d> {
-			extern_container_arg!(sample);
-			extern_container_arg!(probs);
+		fn predict2(&self, sample: &impl core::ToInputArray, probs: &mut impl core::ToOutputArray) -> Result<core::Vec2d> {
+			input_array_arg!(sample);
+			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_predict2_const_const__InputArrayR_const__OutputArrayR(self.as_raw_EM(), sample.as_raw__InputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2192,11 +2192,11 @@ pub mod ml {
 		/// * labels: noArray()
 		/// * probs: noArray()
 		#[inline]
-		fn train_em(&mut self, samples: &dyn core::ToInputArray, log_likelihoods: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, probs: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(samples);
-			extern_container_arg!(log_likelihoods);
-			extern_container_arg!(labels);
-			extern_container_arg!(probs);
+		fn train_em(&mut self, samples: &impl core::ToInputArray, log_likelihoods: &mut impl core::ToOutputArray, labels: &mut impl core::ToOutputArray, probs: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(samples);
+			output_array_arg!(log_likelihoods);
+			output_array_arg!(labels);
+			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainEM_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2239,14 +2239,14 @@ pub mod ml {
 		/// * labels: noArray()
 		/// * probs: noArray()
 		#[inline]
-		fn train_e(&mut self, samples: &dyn core::ToInputArray, means0: &dyn core::ToInputArray, covs0: &dyn core::ToInputArray, weights0: &dyn core::ToInputArray, log_likelihoods: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, probs: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(samples);
-			extern_container_arg!(means0);
-			extern_container_arg!(covs0);
-			extern_container_arg!(weights0);
-			extern_container_arg!(log_likelihoods);
-			extern_container_arg!(labels);
-			extern_container_arg!(probs);
+		fn train_e(&mut self, samples: &impl core::ToInputArray, means0: &impl core::ToInputArray, covs0: &impl core::ToInputArray, weights0: &impl core::ToInputArray, log_likelihoods: &mut impl core::ToOutputArray, labels: &mut impl core::ToOutputArray, probs: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(samples);
+			input_array_arg!(means0);
+			input_array_arg!(covs0);
+			input_array_arg!(weights0);
+			output_array_arg!(log_likelihoods);
+			output_array_arg!(labels);
+			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainE_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), means0.as_raw__InputArray(), covs0.as_raw__InputArray(), weights0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2278,12 +2278,12 @@ pub mod ml {
 		/// * labels: noArray()
 		/// * probs: noArray()
 		#[inline]
-		fn train_m(&mut self, samples: &dyn core::ToInputArray, probs0: &dyn core::ToInputArray, log_likelihoods: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, probs: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(samples);
-			extern_container_arg!(probs0);
-			extern_container_arg!(log_likelihoods);
-			extern_container_arg!(labels);
-			extern_container_arg!(probs);
+		fn train_m(&mut self, samples: &impl core::ToInputArray, probs0: &impl core::ToInputArray, log_likelihoods: &mut impl core::ToOutputArray, labels: &mut impl core::ToOutputArray, probs: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(samples);
+			input_array_arg!(probs0);
+			output_array_arg!(log_likelihoods);
+			output_array_arg!(labels);
+			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainM_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), probs0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2461,11 +2461,11 @@ pub mod ml {
 		/// * neighbor_responses: noArray()
 		/// * dist: noArray()
 		#[inline]
-		fn find_nearest(&self, samples: &dyn core::ToInputArray, k: i32, results: &mut dyn core::ToOutputArray, neighbor_responses: &mut dyn core::ToOutputArray, dist: &mut dyn core::ToOutputArray) -> Result<f32> {
-			extern_container_arg!(samples);
-			extern_container_arg!(results);
-			extern_container_arg!(neighbor_responses);
-			extern_container_arg!(dist);
+		fn find_nearest(&self, samples: &impl core::ToInputArray, k: i32, results: &mut impl core::ToOutputArray, neighbor_responses: &mut impl core::ToOutputArray, dist: &mut impl core::ToOutputArray) -> Result<f32> {
+			input_array_arg!(samples);
+			output_array_arg!(results);
+			output_array_arg!(neighbor_responses);
+			output_array_arg!(dist);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_findNearest_const_const__InputArrayR_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_KNearest(), samples.as_raw__InputArray(), k, results.as_raw__OutputArray(), neighbor_responses.as_raw__OutputArray(), dist.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2698,9 +2698,9 @@ pub mod ml {
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
-		fn predict(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
-			extern_container_arg!(samples);
-			extern_container_arg!(results);
+		fn predict(&self, samples: &impl core::ToInputArray, results: &mut impl core::ToOutputArray, flags: i32) -> Result<f32> {
+			input_array_arg!(samples);
+			output_array_arg!(results);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_predict_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_LogisticRegression(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2904,10 +2904,10 @@ pub mod ml {
 		/// ## C++ default parameters
 		/// * flags: 0
 		#[inline]
-		fn predict_prob(&self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray, output_probs: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
-			extern_container_arg!(inputs);
-			extern_container_arg!(outputs);
-			extern_container_arg!(output_probs);
+		fn predict_prob(&self, inputs: &impl core::ToInputArray, outputs: &mut impl core::ToOutputArray, output_probs: &mut impl core::ToOutputArray, flags: i32) -> Result<f32> {
+			input_array_arg!(inputs);
+			output_array_arg!(outputs);
+			output_array_arg!(output_probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_NormalBayesClassifier_predictProb_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(self.as_raw_NormalBayesClassifier(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), output_probs.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3221,9 +3221,9 @@ pub mod ml {
 		/// * results: Array where the result of the calculation will be written.
 		/// * flags: Flags for defining the type of RTrees.
 		#[inline]
-		fn get_votes(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-			extern_container_arg!(samples);
-			extern_container_arg!(results);
+		fn get_votes(&self, samples: &impl core::ToInputArray, results: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+			input_array_arg!(samples);
+			output_array_arg!(results);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_getVotes_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_RTrees(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3570,9 +3570,9 @@ pub mod ml {
 		/// The method returns rho parameter of the decision function, a scalar subtracted from the weighted
 		/// sum of kernel responses.
 		#[inline]
-		fn get_decision_function(&self, i: i32, alpha: &mut dyn core::ToOutputArray, svidx: &mut dyn core::ToOutputArray) -> Result<f64> {
-			extern_container_arg!(alpha);
-			extern_container_arg!(svidx);
+		fn get_decision_function(&self, i: i32, alpha: &mut impl core::ToOutputArray, svidx: &mut impl core::ToOutputArray) -> Result<f64> {
+			output_array_arg!(alpha);
+			output_array_arg!(svidx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_getDecisionFunction_const_int_const__OutputArrayR_const__OutputArrayR(self.as_raw_SVM(), i, alpha.as_raw__OutputArray(), svidx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3822,9 +3822,9 @@ pub mod ml {
 		/// * degree_grid: SVM::getDefaultGridPtr(SVM::DEGREE)
 		/// * balanced: false
 		#[inline]
-		fn train_auto_with_data(&mut self, samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, k_fold: i32, mut cgrid: core::Ptr<crate::ml::ParamGrid>, mut gamma_grid: core::Ptr<crate::ml::ParamGrid>, mut p_grid: core::Ptr<crate::ml::ParamGrid>, mut nu_grid: core::Ptr<crate::ml::ParamGrid>, mut coeff_grid: core::Ptr<crate::ml::ParamGrid>, mut degree_grid: core::Ptr<crate::ml::ParamGrid>, balanced: bool) -> Result<bool> {
-			extern_container_arg!(samples);
-			extern_container_arg!(responses);
+		fn train_auto_with_data(&mut self, samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray, k_fold: i32, mut cgrid: core::Ptr<crate::ml::ParamGrid>, mut gamma_grid: core::Ptr<crate::ml::ParamGrid>, mut p_grid: core::Ptr<crate::ml::ParamGrid>, mut nu_grid: core::Ptr<crate::ml::ParamGrid>, mut coeff_grid: core::Ptr<crate::ml::ParamGrid>, mut degree_grid: core::Ptr<crate::ml::ParamGrid>, balanced: bool) -> Result<bool> {
+			input_array_arg!(samples);
+			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_bool(self.as_raw_mut_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), k_fold, cgrid.as_raw_mut_PtrOfParamGrid(), gamma_grid.as_raw_mut_PtrOfParamGrid(), p_grid.as_raw_mut_PtrOfParamGrid(), nu_grid.as_raw_mut_PtrOfParamGrid(), coeff_grid.as_raw_mut_PtrOfParamGrid(), degree_grid.as_raw_mut_PtrOfParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4426,8 +4426,8 @@ pub mod ml {
 		/// The method uses StatModel::predict to compute the error. For regression models the error is
 		/// computed as RMS, for classifiers - as a percent of missclassified samples (0%-100%).
 		#[inline]
-		fn calc_error(&self, data: &core::Ptr<crate::ml::TrainData>, test: bool, resp: &mut dyn core::ToOutputArray) -> Result<f32> {
-			extern_container_arg!(resp);
+		fn calc_error(&self, data: &core::Ptr<crate::ml::TrainData>, test: bool, resp: &mut impl core::ToOutputArray) -> Result<f32> {
+			output_array_arg!(resp);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_calcError_const_const_PtrLTrainDataGR_bool_const__OutputArrayR(self.as_raw_StatModel(), data.as_raw_PtrOfTrainData(), test, resp.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4446,9 +4446,9 @@ pub mod ml {
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
-		fn predict(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
-			extern_container_arg!(samples);
-			extern_container_arg!(results);
+		fn predict(&self, samples: &impl core::ToInputArray, results: &mut impl core::ToOutputArray, flags: i32) -> Result<f32> {
+			input_array_arg!(samples);
+			output_array_arg!(results);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_predict_const_const__InputArrayR_const__OutputArrayR_int(self.as_raw_StatModel(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4488,9 +4488,9 @@ pub mod ml {
 		/// * layout: See ml::SampleTypes.
 		/// * responses: vector of responses associated with the training samples.
 		#[inline]
-		fn train(&mut self, samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(samples);
-			extern_container_arg!(responses);
+		fn train(&mut self, samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(samples);
+			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_train_const__InputArrayR_int_const__InputArrayR(self.as_raw_mut_StatModel(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4597,8 +4597,8 @@ pub mod ml {
 		}
 		
 		#[inline]
-		fn get_sample(&self, var_idx: &dyn core::ToInputArray, sidx: i32, buf: &mut f32) -> Result<()> {
-			extern_container_arg!(var_idx);
+		fn get_sample(&self, var_idx: &impl core::ToInputArray, sidx: i32, buf: &mut f32) -> Result<()> {
+			input_array_arg!(var_idx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getSample_const_const__InputArrayR_int_floatX(self.as_raw_TrainData(), var_idx.as_raw__InputArray(), sidx, buf, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4812,8 +4812,8 @@ pub mod ml {
 		}
 		
 		#[inline]
-		fn get_values(&self, vi: i32, sidx: &dyn core::ToInputArray, values: &mut f32) -> Result<()> {
-			extern_container_arg!(sidx);
+		fn get_values(&self, vi: i32, sidx: &impl core::ToInputArray, values: &mut f32) -> Result<()> {
+			input_array_arg!(sidx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getValues_const_int_const__InputArrayR_floatX(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4822,8 +4822,8 @@ pub mod ml {
 		}
 		
 		#[inline]
-		fn get_norm_cat_values(&self, vi: i32, sidx: &dyn core::ToInputArray, values: &mut i32) -> Result<()> {
-			extern_container_arg!(sidx);
+		fn get_norm_cat_values(&self, vi: i32, sidx: &impl core::ToInputArray, values: &mut i32) -> Result<()> {
+			input_array_arg!(sidx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNormCatValues_const_int_const__InputArrayR_intX(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5102,13 +5102,13 @@ pub mod ml {
 		/// * sample_weights: noArray()
 		/// * var_type: noArray()
 		#[inline]
-		pub fn create(samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, var_idx: &dyn core::ToInputArray, sample_idx: &dyn core::ToInputArray, sample_weights: &dyn core::ToInputArray, var_type: &dyn core::ToInputArray) -> Result<core::Ptr<crate::ml::TrainData>> {
-			extern_container_arg!(samples);
-			extern_container_arg!(responses);
-			extern_container_arg!(var_idx);
-			extern_container_arg!(sample_idx);
-			extern_container_arg!(sample_weights);
-			extern_container_arg!(var_type);
+		pub fn create(samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray, var_idx: &impl core::ToInputArray, sample_idx: &impl core::ToInputArray, sample_weights: &impl core::ToInputArray, var_type: &impl core::ToInputArray) -> Result<core::Ptr<crate::ml::TrainData>> {
+			input_array_arg!(samples);
+			input_array_arg!(responses);
+			input_array_arg!(var_idx);
+			input_array_arg!(sample_idx);
+			input_array_arg!(sample_weights);
+			input_array_arg!(var_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_create_const__InputArrayR_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), var_idx.as_raw__InputArray(), sample_idx.as_raw__InputArray(), sample_weights.as_raw__InputArray(), var_type.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

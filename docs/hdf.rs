@@ -634,8 +634,8 @@ pub mod hdf {
 		}
 		
 		#[inline]
-		fn dswrite(&self, array: &dyn core::ToInputArray, dslabel: &str) -> Result<()> {
-			extern_container_arg!(array);
+		fn dswrite(&self, array: &impl core::ToInputArray, dslabel: &str) -> Result<()> {
+			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -645,8 +645,8 @@ pub mod hdf {
 		}
 		
 		#[inline]
-		fn dswrite_1(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &i32) -> Result<()> {
-			extern_container_arg!(array);
+		fn dswrite_1(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &i32) -> Result<()> {
+			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset, ocvrs_return.as_mut_ptr()) };
@@ -658,8 +658,8 @@ pub mod hdf {
 		/// ## C++ default parameters
 		/// * dims_counts: vector<int>()
 		#[inline]
-		fn dswrite_2(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
-			extern_container_arg!(array);
+		fn dswrite_2(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
+			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_vectorLintGR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
@@ -734,8 +734,8 @@ pub mod hdf {
 		/// ```
 		/// 
 		#[inline]
-		fn dswrite_3(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &i32, dims_counts: &i32) -> Result<()> {
-			extern_container_arg!(array);
+		fn dswrite_3(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &i32, dims_counts: &i32) -> Result<()> {
+			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset, dims_counts, ocvrs_return.as_mut_ptr()) };
@@ -745,8 +745,8 @@ pub mod hdf {
 		}
 		
 		#[inline]
-		fn dsinsert(&self, array: &dyn core::ToInputArray, dslabel: &str) -> Result<()> {
-			extern_container_arg!(array);
+		fn dsinsert(&self, array: &impl core::ToInputArray, dslabel: &str) -> Result<()> {
+			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -756,8 +756,8 @@ pub mod hdf {
 		}
 		
 		#[inline]
-		fn dsinsert_1(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &i32) -> Result<()> {
-			extern_container_arg!(array);
+		fn dsinsert_1(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &i32) -> Result<()> {
+			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset, ocvrs_return.as_mut_ptr()) };
@@ -769,8 +769,8 @@ pub mod hdf {
 		/// ## C++ default parameters
 		/// * dims_counts: vector<int>()
 		#[inline]
-		fn dsinsert_2(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
-			extern_container_arg!(array);
+		fn dsinsert_2(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
+			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_vectorLintGR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
@@ -829,8 +829,8 @@ pub mod hdf {
 		/// ```
 		/// 
 		#[inline]
-		fn dsinsert_3(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &i32, dims_counts: &i32) -> Result<()> {
-			extern_container_arg!(array);
+		fn dsinsert_3(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &i32, dims_counts: &i32) -> Result<()> {
+			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX_const_intX(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset, dims_counts, ocvrs_return.as_mut_ptr()) };
@@ -840,8 +840,8 @@ pub mod hdf {
 		}
 		
 		#[inline]
-		fn dsread(&self, array: &mut dyn core::ToOutputArray, dslabel: &str) -> Result<()> {
-			extern_container_arg!(array);
+		fn dsread(&self, array: &mut impl core::ToOutputArray, dslabel: &str) -> Result<()> {
+			output_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -851,8 +851,8 @@ pub mod hdf {
 		}
 		
 		#[inline]
-		fn dsread_1(&self, array: &mut dyn core::ToOutputArray, dslabel: &str, dims_offset: &i32) -> Result<()> {
-			extern_container_arg!(array);
+		fn dsread_1(&self, array: &mut impl core::ToOutputArray, dslabel: &str, dims_offset: &i32) -> Result<()> {
+			output_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_intX(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_as_extern(), dims_offset, ocvrs_return.as_mut_ptr()) };
@@ -864,8 +864,8 @@ pub mod hdf {
 		/// ## C++ default parameters
 		/// * dims_counts: vector<int>()
 		#[inline]
-		fn dsread_2(&self, array: &mut dyn core::ToOutputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
-			extern_container_arg!(array);
+		fn dsread_2(&self, array: &mut impl core::ToOutputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
+			output_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_vectorLintGR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
@@ -917,8 +917,8 @@ pub mod hdf {
 		/// ```
 		/// 
 		#[inline]
-		fn dsread_3(&self, array: &mut dyn core::ToOutputArray, dslabel: &str, dims_offset: &i32, dims_counts: &i32) -> Result<()> {
-			extern_container_arg!(array);
+		fn dsread_3(&self, array: &mut impl core::ToOutputArray, dslabel: &str, dims_offset: &i32, dims_counts: &i32) -> Result<()> {
+			output_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_intX_const_intX(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_as_extern(), dims_offset, dims_counts, ocvrs_return.as_mut_ptr()) };
@@ -1419,8 +1419,8 @@ pub mod hdf {
 		/// ## See also
 		/// atexists, atdelete, atread.
 		#[inline]
-		fn atwrite_3(&mut self, value: &dyn core::ToInputArray, atlabel: &str) -> Result<()> {
-			extern_container_arg!(value);
+		fn atwrite_3(&mut self, value: &impl core::ToInputArray, atlabel: &str) -> Result<()> {
+			input_array_arg!(value);
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atwrite_const__InputArrayR_const_StringR(self.as_raw_mut_HDF5(), value.as_raw__InputArray(), atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -1441,8 +1441,8 @@ pub mod hdf {
 		/// ## See also
 		/// atexists, atdelete, atwrite
 		#[inline]
-		fn atread_3(&mut self, value: &mut dyn core::ToOutputArray, atlabel: &str) -> Result<()> {
-			extern_container_arg!(value);
+		fn atread_3(&mut self, value: &mut impl core::ToOutputArray, atlabel: &str) -> Result<()> {
+			output_array_arg!(value);
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_atread_const__OutputArrayR_const_StringR(self.as_raw_mut_HDF5(), value.as_raw__OutputArray(), atlabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };

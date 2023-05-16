@@ -159,9 +159,9 @@ pub mod stitching {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn compute_image_features2(features_finder: &core::Ptr<crate::features2d::Feature2D>, image: &dyn core::ToInputArray, features: &mut crate::stitching::Detail_ImageFeatures, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(image);
-		extern_container_arg!(mask);
+	pub fn compute_image_features2(features_finder: &core::Ptr<crate::features2d::Feature2D>, image: &impl core::ToInputArray, features: &mut crate::stitching::Detail_ImageFeatures, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(image);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_computeImageFeatures_const_PtrLFeature2DGR_const__InputArrayR_ImageFeaturesR_const__InputArrayR(features_finder.as_raw_PtrOfFeature2D(), image.as_raw__InputArray(), features.as_raw_mut_Detail_ImageFeatures(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -180,9 +180,9 @@ pub mod stitching {
 	/// ## C++ default parameters
 	/// * masks: noArray()
 	#[inline]
-	pub fn compute_image_features(features_finder: &core::Ptr<crate::features2d::Feature2D>, images: &dyn core::ToInputArray, features: &mut core::Vector<crate::stitching::Detail_ImageFeatures>, masks: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(images);
-		extern_container_arg!(masks);
+	pub fn compute_image_features(features_finder: &core::Ptr<crate::features2d::Feature2D>, images: &impl core::ToInputArray, features: &mut core::Vector<crate::stitching::Detail_ImageFeatures>, masks: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(images);
+		input_array_arg!(masks);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_computeImageFeatures_const_PtrLFeature2DGR_const__InputArrayR_vectorLImageFeaturesGR_const__InputArrayR(features_finder.as_raw_PtrOfFeature2D(), images.as_raw__InputArray(), features.as_raw_mut_VectorOfDetail_ImageFeatures(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -191,8 +191,8 @@ pub mod stitching {
 	}
 	
 	#[inline]
-	pub fn create_laplace_pyr_gpu(img: &dyn core::ToInputArray, num_levels: i32, pyr: &mut core::Vector<core::UMat>) -> Result<()> {
-		extern_container_arg!(img);
+	pub fn create_laplace_pyr_gpu(img: &impl core::ToInputArray, num_levels: i32, pyr: &mut core::Vector<core::UMat>) -> Result<()> {
+		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_createLaplacePyrGpu_const__InputArrayR_int_vectorLUMatGR(img.as_raw__InputArray(), num_levels, pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -201,8 +201,8 @@ pub mod stitching {
 	}
 	
 	#[inline]
-	pub fn create_laplace_pyr(img: &dyn core::ToInputArray, num_levels: i32, pyr: &mut core::Vector<core::UMat>) -> Result<()> {
-		extern_container_arg!(img);
+	pub fn create_laplace_pyr(img: &impl core::ToInputArray, num_levels: i32, pyr: &mut core::Vector<core::UMat>) -> Result<()> {
+		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_createLaplacePyr_const__InputArrayR_int_vectorLUMatGR(img.as_raw__InputArray(), num_levels, pyr.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -211,9 +211,9 @@ pub mod stitching {
 	}
 	
 	#[inline]
-	pub fn create_weight_map(mask: &dyn core::ToInputArray, sharpness: f32, weight: &mut dyn core::ToInputOutputArray) -> Result<()> {
-		extern_container_arg!(mask);
-		extern_container_arg!(weight);
+	pub fn create_weight_map(mask: &impl core::ToInputArray, sharpness: f32, weight: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_array_arg!(mask);
+		input_output_array_arg!(weight);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_createWeightMap_const__InputArrayR_float_const__InputOutputArrayR(mask.as_raw__InputArray(), sharpness, weight.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -253,9 +253,9 @@ pub mod stitching {
 	
 	/// ///////////////////////////////////////////////////////////////////////////
 	#[inline]
-	pub fn normalize_using_weight_map(weight: &dyn core::ToInputArray, src: &mut dyn core::ToInputOutputArray) -> Result<()> {
-		extern_container_arg!(weight);
-		extern_container_arg!(src);
+	pub fn normalize_using_weight_map(weight: &impl core::ToInputArray, src: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_array_arg!(weight);
+		input_output_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_normalizeUsingWeightMap_const__InputArrayR_const__InputOutputArrayR(weight.as_raw__InputArray(), src.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1075,9 +1075,9 @@ pub mod stitching {
 		/// ## Returns
 		/// Projected point
 		#[inline]
-		fn warp_point(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_point(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PyRotationWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_PyRotationWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1086,9 +1086,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_point_backward(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_point_backward(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PyRotationWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_PyRotationWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1107,11 +1107,11 @@ pub mod stitching {
 		/// ## Returns
 		/// Projected image minimum bounding box
 		#[inline]
-		fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PyRotationWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_PyRotationWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1131,11 +1131,11 @@ pub mod stitching {
 		/// ## Returns
 		/// Project image top-left corner
 		#[inline]
-		fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PyRotationWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_PyRotationWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1154,11 +1154,11 @@ pub mod stitching {
 		/// * dst_size: Backward-projected image size
 		/// * dst: Backward-projected image
 		#[inline]
-		fn warp_backward(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst_size: core::Size, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp_backward(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst_size: core::Size, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PyRotationWarper_warpBackward_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_Size_const__OutputArrayR(self.as_raw_mut_PyRotationWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst_size.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1173,9 +1173,9 @@ pub mod stitching {
 		/// ## Returns
 		/// Projected image minimum bounding box
 		#[inline]
-		fn warp_roi(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_roi(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PyRotationWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(self.as_raw_mut_PyRotationWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1862,9 +1862,9 @@ pub mod stitching {
 		/// ## C++ default parameters
 		/// * masks: noArray()
 		#[inline]
-		fn estimate_transform(&mut self, images: &dyn core::ToInputArray, masks: &dyn core::ToInputArray) -> Result<crate::stitching::Stitcher_Status> {
-			extern_container_arg!(images);
-			extern_container_arg!(masks);
+		fn estimate_transform(&mut self, images: &impl core::ToInputArray, masks: &impl core::ToInputArray) -> Result<crate::stitching::Stitcher_Status> {
+			input_array_arg!(images);
+			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_estimateTransform_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1882,8 +1882,8 @@ pub mod stitching {
 		/// ## Returns
 		/// Status code.
 		#[inline]
-		fn set_transform(&mut self, images: &dyn core::ToInputArray, cameras: &core::Vector<crate::stitching::Detail_CameraParams>, component: &core::Vector<i32>) -> Result<crate::stitching::Stitcher_Status> {
-			extern_container_arg!(images);
+		fn set_transform(&mut self, images: &impl core::ToInputArray, cameras: &core::Vector<crate::stitching::Detail_CameraParams>, component: &core::Vector<i32>) -> Result<crate::stitching::Stitcher_Status> {
+			input_array_arg!(images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_setTransform_const__InputArrayR_const_vectorLCameraParamsGR_const_vectorLintGR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), cameras.as_raw_VectorOfDetail_CameraParams(), component.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1903,8 +1903,8 @@ pub mod stitching {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn set_transform_1(&mut self, images: &dyn core::ToInputArray, cameras: &core::Vector<crate::stitching::Detail_CameraParams>) -> Result<crate::stitching::Stitcher_Status> {
-			extern_container_arg!(images);
+		fn set_transform_1(&mut self, images: &impl core::ToInputArray, cameras: &core::Vector<crate::stitching::Detail_CameraParams>) -> Result<crate::stitching::Stitcher_Status> {
+			input_array_arg!(images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_setTransform_const__InputArrayR_const_vectorLCameraParamsGR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), cameras.as_raw_VectorOfDetail_CameraParams(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1928,8 +1928,8 @@ pub mod stitching {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn compose_panorama(&mut self, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
-			extern_container_arg!(pano);
+		fn compose_panorama(&mut self, pano: &mut impl core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+			output_array_arg!(pano);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_composePanorama_const__OutputArrayR(self.as_raw_mut_Stitcher(), pano.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1951,9 +1951,9 @@ pub mod stitching {
 		/// ## Returns
 		/// Status code.
 		#[inline]
-		fn compose_panorama_images(&mut self, images: &dyn core::ToInputArray, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
-			extern_container_arg!(images);
-			extern_container_arg!(pano);
+		fn compose_panorama_images(&mut self, images: &impl core::ToInputArray, pano: &mut impl core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+			input_array_arg!(images);
+			output_array_arg!(pano);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_composePanorama_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), pano.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1972,9 +1972,9 @@ pub mod stitching {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn stitch(&mut self, images: &dyn core::ToInputArray, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
-			extern_container_arg!(images);
-			extern_container_arg!(pano);
+		fn stitch(&mut self, images: &impl core::ToInputArray, pano: &mut impl core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+			input_array_arg!(images);
+			output_array_arg!(pano);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_stitch_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), pano.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1991,10 +1991,10 @@ pub mod stitching {
 		/// ## Returns
 		/// Status code.
 		#[inline]
-		fn stitch_mask(&mut self, images: &dyn core::ToInputArray, masks: &dyn core::ToInputArray, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
-			extern_container_arg!(images);
-			extern_container_arg!(masks);
-			extern_container_arg!(pano);
+		fn stitch_mask(&mut self, images: &impl core::ToInputArray, masks: &impl core::ToInputArray, pano: &mut impl core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+			input_array_arg!(images);
+			input_array_arg!(masks);
+			output_array_arg!(pano);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_stitch_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), masks.as_raw__InputArray(), pano.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2379,9 +2379,9 @@ pub mod stitching {
 		/// ## Returns
 		/// Projected point
 		#[inline]
-		fn warp_point(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, h: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(h);
+		fn warp_point(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, h: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(h);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_AffineWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_AffineWarper(), &pt, k.as_raw__InputArray(), h.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2398,9 +2398,9 @@ pub mod stitching {
 		/// ## Returns
 		/// Backward-projected point
 		#[inline]
-		fn warp_point_backward(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, h: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(h);
+		fn warp_point_backward(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, h: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(h);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_AffineWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_AffineWarper(), &pt, k.as_raw__InputArray(), h.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2419,11 +2419,11 @@ pub mod stitching {
 		/// ## Returns
 		/// Projected image minimum bounding box
 		#[inline]
-		fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, h: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(h);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps(&mut self, src_size: core::Size, k: &impl core::ToInputArray, h: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(h);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_AffineWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_AffineWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), h.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2443,11 +2443,11 @@ pub mod stitching {
 		/// ## Returns
 		/// Project image top-left corner
 		#[inline]
-		fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, h: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(h);
-			extern_container_arg!(dst);
+		fn warp(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, h: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(h);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_AffineWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_AffineWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), h.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2462,9 +2462,9 @@ pub mod stitching {
 		/// ## Returns
 		/// Projected image minimum bounding box
 		#[inline]
-		fn warp_roi(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, h: &dyn core::ToInputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(h);
+		fn warp_roi(&mut self, src_size: core::Size, k: &impl core::ToInputArray, h: &impl core::ToInputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(h);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_AffineWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_AffineWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), h.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2768,9 +2768,9 @@ pub mod stitching {
 		/// * mask: Source image mask
 		/// * tl: Source image top-left corners
 		#[inline]
-		fn feed(&mut self, img: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, tl: core::Point) -> Result<()> {
-			extern_container_arg!(img);
-			extern_container_arg!(mask);
+		fn feed(&mut self, img: &impl core::ToInputArray, mask: &impl core::ToInputArray, tl: core::Point) -> Result<()> {
+			input_array_arg!(img);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_Blender_feed_const__InputArrayR_const__InputArrayR_Point(self.as_raw_mut_Detail_Blender(), img.as_raw__InputArray(), mask.as_raw__InputArray(), tl.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2784,9 +2784,9 @@ pub mod stitching {
 		/// * dst: Final pano
 		/// * dst_mask: Final pano mask
 		#[inline]
-		fn blend(&mut self, dst: &mut dyn core::ToInputOutputArray, dst_mask: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(dst);
-			extern_container_arg!(dst_mask);
+		fn blend(&mut self, dst: &mut impl core::ToInputOutputArray, dst_mask: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_output_array_arg!(dst);
+			input_output_array_arg!(dst_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_Blender_blend_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_Detail_Blender(), dst.as_raw__InputOutputArray(), dst_mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2960,9 +2960,9 @@ pub mod stitching {
 		fn as_raw_mut_Detail_BlocksCompensator(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
+		fn apply(&mut self, index: i32, corner: core::Point, image: &mut impl core::ToInputOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			input_output_array_arg!(image);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_BlocksCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_Detail_BlocksCompensator(), index, corner.opencv_as_extern(), image.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3104,9 +3104,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
+		fn apply(&mut self, index: i32, corner: core::Point, image: &mut impl core::ToInputOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			input_output_array_arg!(image);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_BlocksGainCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_Detail_BlocksGainCompensator(), index, corner.opencv_as_extern(), image.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3794,9 +3794,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
+		fn apply(&mut self, index: i32, corner: core::Point, image: &mut impl core::ToInputOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			input_output_array_arg!(image);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_ChannelsCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_Detail_ChannelsCompensator(), index, corner.opencv_as_extern(), image.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4404,11 +4404,11 @@ pub mod stitching {
 		fn as_raw_mut_Detail_CylindricalWarper(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_CylindricalWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_CylindricalWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4417,11 +4417,11 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_CylindricalWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_CylindricalWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4494,11 +4494,11 @@ pub mod stitching {
 		fn as_raw_mut_Detail_CylindricalWarperGpu(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_CylindricalWarperGpu(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4507,11 +4507,11 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_CylindricalWarperGpu_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_CylindricalWarperGpu(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4520,9 +4520,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn build_maps_1(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn build_maps_1(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(self.as_raw_mut_Detail_CylindricalWarperGpu(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4531,9 +4531,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_1(&mut self, src: &core::GpuMat, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut core::GpuMat) -> Result<core::Point> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_1(&mut self, src: &core::GpuMat, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut core::GpuMat) -> Result<core::Point> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_CylindricalWarperGpu_warp_const_GpuMatR_const__InputArrayR_const__InputArrayR_int_int_GpuMatR(self.as_raw_mut_Detail_CylindricalWarperGpu(), src.as_raw_GpuMat(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4925,9 +4925,9 @@ pub mod stitching {
 		/// * image: Image to process
 		/// * mask: Image mask
 		#[inline]
-		fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
+		fn apply(&mut self, index: i32, corner: core::Point, image: &mut impl core::ToInputOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			input_output_array_arg!(image);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_ExposureCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_Detail_ExposureCompensator(), index, corner.opencv_as_extern(), image.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5055,9 +5055,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn feed(&mut self, img: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, tl: core::Point) -> Result<()> {
-			extern_container_arg!(img);
-			extern_container_arg!(mask);
+		fn feed(&mut self, img: &impl core::ToInputArray, mask: &impl core::ToInputArray, tl: core::Point) -> Result<()> {
+			input_array_arg!(img);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_FeatherBlender_feed_const__InputArrayR_const__InputArrayR_Point(self.as_raw_mut_Detail_FeatherBlender(), img.as_raw__InputArray(), mask.as_raw__InputArray(), tl.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5066,9 +5066,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn blend(&mut self, dst: &mut dyn core::ToInputOutputArray, dst_mask: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(dst);
-			extern_container_arg!(dst_mask);
+		fn blend(&mut self, dst: &mut impl core::ToInputOutputArray, dst_mask: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_output_array_arg!(dst);
+			input_output_array_arg!(dst_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_FeatherBlender_blend_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_Detail_FeatherBlender(), dst.as_raw__InputOutputArray(), dst_mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5421,9 +5421,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
+		fn apply(&mut self, index: i32, corner: core::Point, image: &mut impl core::ToInputOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			input_output_array_arg!(image);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_GainCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_Detail_GainCompensator(), index, corner.opencv_as_extern(), image.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6492,9 +6492,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn feed(&mut self, img: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, tl: core::Point) -> Result<()> {
-			extern_container_arg!(img);
-			extern_container_arg!(mask);
+		fn feed(&mut self, img: &impl core::ToInputArray, mask: &impl core::ToInputArray, tl: core::Point) -> Result<()> {
+			input_array_arg!(img);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_MultiBandBlender_feed_const__InputArrayR_const__InputArrayR_Point(self.as_raw_mut_Detail_MultiBandBlender(), img.as_raw__InputArray(), mask.as_raw__InputArray(), tl.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6503,9 +6503,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn blend(&mut self, dst: &mut dyn core::ToInputOutputArray, dst_mask: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(dst);
-			extern_container_arg!(dst_mask);
+		fn blend(&mut self, dst: &mut impl core::ToInputOutputArray, dst_mask: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_output_array_arg!(dst);
+			input_output_array_arg!(dst_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_MultiBandBlender_blend_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_Detail_MultiBandBlender(), dst.as_raw__InputOutputArray(), dst_mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6653,9 +6653,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn apply(&mut self, unnamed: i32, unnamed_1: core::Point, unnamed_2: &mut dyn core::ToInputOutputArray, unnamed_3: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(unnamed_2);
-			extern_container_arg!(unnamed_3);
+		fn apply(&mut self, unnamed: i32, unnamed_1: core::Point, unnamed_2: &mut impl core::ToInputOutputArray, unnamed_3: &impl core::ToInputArray) -> Result<()> {
+			input_output_array_arg!(unnamed_2);
+			input_array_arg!(unnamed_3);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_NoExposureCompensator_apply_int_Point_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_Detail_NoExposureCompensator(), unnamed, unnamed_1.opencv_as_extern(), unnamed_2.as_raw__InputOutputArray(), unnamed_3.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7341,9 +7341,9 @@ pub mod stitching {
 		fn as_raw_mut_Detail_PlaneWarper(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn warp_point(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_point(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_PlaneWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7352,10 +7352,10 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_point_1(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
+		fn warp_point_1(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_PlaneWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7364,9 +7364,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_point_backward(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_point_backward(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_PlaneWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7375,10 +7375,10 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_point_backward_1(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
+		fn warp_point_backward_1(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_PlaneWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7387,12 +7387,12 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_PlaneWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7401,11 +7401,11 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn build_maps_1(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps_1(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_PlaneWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7414,11 +7414,11 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_PlaneWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7427,12 +7427,12 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_1(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
-			extern_container_arg!(dst);
+		fn warp_1(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_PlaneWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7441,9 +7441,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_roi(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_roi(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_PlaneWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7452,10 +7452,10 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_roi_1(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
+		fn warp_roi_1(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_PlaneWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7533,11 +7533,11 @@ pub mod stitching {
 		fn as_raw_mut_Detail_PlaneWarperGpu(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_PlaneWarperGpu(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7546,12 +7546,12 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn build_maps_1(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps_1(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_PlaneWarperGpu(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7560,11 +7560,11 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarperGpu_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_PlaneWarperGpu(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7573,12 +7573,12 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_1(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
-			extern_container_arg!(dst);
+		fn warp_1(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarperGpu_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_PlaneWarperGpu(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7587,9 +7587,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn build_maps_2(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn build_maps_2(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(self.as_raw_mut_Detail_PlaneWarperGpu(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7598,10 +7598,10 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn build_maps_3(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
+		fn build_maps_3(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(self.as_raw_mut_Detail_PlaneWarperGpu(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7610,9 +7610,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_2(&mut self, src: &core::GpuMat, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut core::GpuMat) -> Result<core::Point> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_2(&mut self, src: &core::GpuMat, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut core::GpuMat) -> Result<core::Point> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarperGpu_warp_const_GpuMatR_const__InputArrayR_const__InputArrayR_int_int_GpuMatR(self.as_raw_mut_Detail_PlaneWarperGpu(), src.as_raw_GpuMat(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7621,10 +7621,10 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_3(&mut self, src: &core::GpuMat, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut core::GpuMat) -> Result<core::Point> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
+		fn warp_3(&mut self, src: &core::GpuMat, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut core::GpuMat) -> Result<core::Point> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PlaneWarperGpu_warp_const_GpuMatR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_GpuMatR(self.as_raw_mut_Detail_PlaneWarperGpu(), src.as_raw_GpuMat(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7753,10 +7753,10 @@ pub mod stitching {
 		/// * r: Mat::eye(3,3,CV_32F)
 		/// * t: Mat::zeros(3,1,CV_32F)
 		#[inline]
-		fn set_camera_params(&mut self, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(t);
+		fn set_camera_params(&mut self, k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			input_array_arg!(t);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_ProjectorBase_setCameraParams_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_ProjectorBase(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7843,9 +7843,9 @@ pub mod stitching {
 		/// ## Returns
 		/// Projected point
 		#[inline]
-		fn warp_point(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_point(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_RotationWarper_warpPoint_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_RotationWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7854,9 +7854,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_point_backward(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_point_backward(&mut self, pt: core::Point2f, k: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<core::Point2f> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_RotationWarper_warpPointBackward_const_Point2fR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_RotationWarper(), &pt, k.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7875,11 +7875,11 @@ pub mod stitching {
 		/// ## Returns
 		/// Projected image minimum bounding box
 		#[inline]
-		fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_RotationWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_RotationWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7899,11 +7899,11 @@ pub mod stitching {
 		/// ## Returns
 		/// Project image top-left corner
 		#[inline]
-		fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_RotationWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_RotationWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7922,11 +7922,11 @@ pub mod stitching {
 		/// * dst_size: Backward-projected image size
 		/// * dst: Backward-projected image
 		#[inline]
-		fn warp_backward(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst_size: core::Size, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp_backward(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst_size: core::Size, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_RotationWarper_warpBackward_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_Size_const__OutputArrayR(self.as_raw_mut_Detail_RotationWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst_size.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7941,9 +7941,9 @@ pub mod stitching {
 		/// ## Returns
 		/// Projected image minimum bounding box
 		#[inline]
-		fn warp_roi(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_roi(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_RotationWarper_warpRoi_Size_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_RotationWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8284,11 +8284,11 @@ pub mod stitching {
 		fn as_raw_mut_Detail_SphericalWarper(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_SphericalWarper_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_SphericalWarper(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8297,11 +8297,11 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_SphericalWarper_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_SphericalWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8379,11 +8379,11 @@ pub mod stitching {
 		fn as_raw_mut_Detail_SphericalWarperGpu(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(xmap);
-			extern_container_arg!(ymap);
+		fn build_maps(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut impl core::ToOutputArray, ymap: &mut impl core::ToOutputArray) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(xmap);
+			output_array_arg!(ymap);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Detail_SphericalWarperGpu(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8392,11 +8392,11 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
-			extern_container_arg!(src);
-			extern_container_arg!(k);
-			extern_container_arg!(r);
-			extern_container_arg!(dst);
+		fn warp(&mut self, src: &impl core::ToInputArray, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut impl core::ToOutputArray) -> Result<core::Point> {
+			input_array_arg!(src);
+			input_array_arg!(k);
+			input_array_arg!(r);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_SphericalWarperGpu_warp_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_const__OutputArrayR(self.as_raw_mut_Detail_SphericalWarperGpu(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8405,9 +8405,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn build_maps_1(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat) -> Result<core::Rect> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn build_maps_1(&mut self, src_size: core::Size, k: &impl core::ToInputArray, r: &impl core::ToInputArray, xmap: &mut core::GpuMat, ymap: &mut core::GpuMat) -> Result<core::Rect> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayR_const__InputArrayR_GpuMatR_GpuMatR(self.as_raw_mut_Detail_SphericalWarperGpu(), src_size.opencv_as_extern(), k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw_mut_GpuMat(), ymap.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8416,9 +8416,9 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn warp_1(&mut self, src: &core::GpuMat, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut core::GpuMat) -> Result<core::Point> {
-			extern_container_arg!(k);
-			extern_container_arg!(r);
+		fn warp_1(&mut self, src: &core::GpuMat, k: &impl core::ToInputArray, r: &impl core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut core::GpuMat) -> Result<core::Point> {
+			input_array_arg!(k);
+			input_array_arg!(r);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_SphericalWarperGpu_warp_const_GpuMatR_const__InputArrayR_const__InputArrayR_int_int_GpuMatR(self.as_raw_mut_Detail_SphericalWarperGpu(), src.as_raw_GpuMat(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

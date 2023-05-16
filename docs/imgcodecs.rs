@@ -380,8 +380,8 @@ pub mod imgcodecs {
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	#[inline]
-	pub fn imdecode(buf: &dyn core::ToInputArray, flags: i32) -> Result<core::Mat> {
-		extern_container_arg!(buf);
+	pub fn imdecode(buf: &impl core::ToInputArray, flags: i32) -> Result<core::Mat> {
+		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecode_const__InputArrayR_int(buf.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -410,8 +410,8 @@ pub mod imgcodecs {
 	/// * dst: The optional output placeholder for the decoded matrix. It can save the image
 	/// reallocations when the function is called repeatedly for images of the same size.
 	#[inline]
-	pub fn imdecode_to(buf: &dyn core::ToInputArray, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
-		extern_container_arg!(buf);
+	pub fn imdecode_to(buf: &impl core::ToInputArray, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
+		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecode_const__InputArrayR_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -434,8 +434,8 @@ pub mod imgcodecs {
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	/// * mats: A vector of Mat objects holding each page, if more than one.
 	#[inline]
-	pub fn imdecodemulti(buf: &dyn core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
-		extern_container_arg!(buf);
+	pub fn imdecodemulti(buf: &impl core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
+		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -457,9 +457,9 @@ pub mod imgcodecs {
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
+	pub fn imencode(ext: &str, img: &impl core::ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(ext);
-		extern_container_arg!(img);
+		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -612,9 +612,9 @@ pub mod imgcodecs {
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imwrite(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
+	pub fn imwrite(filename: &str, img: &impl core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
-		extern_container_arg!(img);
+		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vectorLintGR(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -627,9 +627,9 @@ pub mod imgcodecs {
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imwritemulti(filename: &str, img: &dyn core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
+	pub fn imwritemulti(filename: &str, img: &impl core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
-		extern_container_arg!(img);
+		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imwritemulti_const_StringR_const__InputArrayR_const_vectorLintGR(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

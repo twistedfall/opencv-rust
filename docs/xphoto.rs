@@ -107,9 +107,9 @@ pub mod xphoto {
 	/// * gainG: gain for the G channel
 	/// * gainR: gain for the R channel
 	#[inline]
-	pub fn apply_channel_gains(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, gain_b: f32, gain_g: f32, gain_r: f32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn apply_channel_gains(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, gain_b: f32, gain_g: f32, gain_r: f32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_applyChannelGains_const__InputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), gain_b, gain_g, gain_r, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -167,10 +167,10 @@ pub mod xphoto {
 	/// * step: cv::xphoto::BM3D_STEPALL
 	/// * transform_type: cv::xphoto::HAAR
 	#[inline]
-	pub fn bm3d_denoising(src: &dyn core::ToInputArray, dst_step1: &mut dyn core::ToInputOutputArray, dst_step2: &mut dyn core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst_step1);
-		extern_container_arg!(dst_step2);
+	pub fn bm3d_denoising(src: &impl core::ToInputArray, dst_step1: &mut impl core::ToInputOutputArray, dst_step2: &mut impl core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
+		input_array_arg!(src);
+		input_output_array_arg!(dst_step1);
+		output_array_arg!(dst_step2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst_step1.as_raw__InputOutputArray(), dst_step2.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -228,9 +228,9 @@ pub mod xphoto {
 	/// * step: cv::xphoto::BM3D_STEPALL
 	/// * transform_type: cv::xphoto::HAAR
 	#[inline]
-	pub fn bm3d_denoising_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn bm3d_denoising_1(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_int_int_int_int_float_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size, block_matching_step1, block_matching_step2, group_size, sliding_step, beta, norm_type, step, transform_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -360,9 +360,9 @@ pub mod xphoto {
 	/// * size: neighbouring size is 2-size+1
 	/// * dynRatio: image is divided by dynRatio before histogram processing
 	#[inline]
-	pub fn oil_painting_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, size: i32, dyn_ratio: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn oil_painting_1(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, size: i32, dyn_ratio: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_oilPainting_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), size, dyn_ratio, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -379,9 +379,9 @@ pub mod xphoto {
 	/// * dynRatio: image is divided by dynRatio before histogram processing
 	/// * code: 	color space conversion code(see ColorConversionCodes). Histogram will used only first plane
 	#[inline]
-	pub fn oil_painting(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, size: i32, dyn_ratio: i32, code: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn oil_painting(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, size: i32, dyn_ratio: i32, code: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_oilPainting_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), size, dyn_ratio, code, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -557,9 +557,9 @@ pub mod xphoto {
 		/// * src: Input three-channel image (BGR color space is assumed).
 		/// * dst: An array of four (r,g) chromaticity tuples corresponding to the features listed above.
 		#[inline]
-		fn extract_simple_features(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
+		fn extract_simple_features(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_LearningBasedWB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1002,9 +1002,9 @@ pub mod xphoto {
 		/// ## See also
 		/// cvtColor, equalizeHist
 		#[inline]
-		fn balance_white(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
+		fn balance_white(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WhiteBalancer(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

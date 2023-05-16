@@ -217,9 +217,9 @@ pub mod dnn {
 	/// * crop: false
 	/// * ddepth: CV_32F
 	#[inline]
-	pub fn blob_from_image_to(image: &dyn core::ToInputArray, blob: &mut dyn core::ToOutputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
-		extern_container_arg!(image);
-		extern_container_arg!(blob);
+	pub fn blob_from_image_to(image: &impl core::ToInputArray, blob: &mut impl core::ToOutputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(blob);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_blobFromImage_const__InputArrayR_const__OutputArrayR_double_const_SizeR_const_ScalarR_bool_bool_int(image.as_raw__InputArray(), blob.as_raw__OutputArray(), scalefactor, &size, &mean, swap_rb, crop, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -253,8 +253,8 @@ pub mod dnn {
 	/// * crop: false
 	/// * ddepth: CV_32F
 	#[inline]
-	pub fn blob_from_image(image: &dyn core::ToInputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
-		extern_container_arg!(image);
+	pub fn blob_from_image(image: &impl core::ToInputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
+		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_blobFromImage_const__InputArrayR_double_const_SizeR_const_ScalarR_bool_bool_int(image.as_raw__InputArray(), scalefactor, &size, &mean, swap_rb, crop, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -275,9 +275,9 @@ pub mod dnn {
 	/// * crop: false
 	/// * ddepth: CV_32F
 	#[inline]
-	pub fn blob_from_images_to(images: &dyn core::ToInputArray, blob: &mut dyn core::ToOutputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
-		extern_container_arg!(images);
-		extern_container_arg!(blob);
+	pub fn blob_from_images_to(images: &impl core::ToInputArray, blob: &mut impl core::ToOutputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
+		input_array_arg!(images);
+		output_array_arg!(blob);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_blobFromImages_const__InputArrayR_const__OutputArrayR_double_Size_const_ScalarR_bool_bool_int(images.as_raw__InputArray(), blob.as_raw__OutputArray(), scalefactor, size.opencv_as_extern(), &mean, swap_rb, crop, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -312,8 +312,8 @@ pub mod dnn {
 	/// * crop: false
 	/// * ddepth: CV_32F
 	#[inline]
-	pub fn blob_from_images(images: &dyn core::ToInputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
-		extern_container_arg!(images);
+	pub fn blob_from_images(images: &impl core::ToInputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
+		input_array_arg!(images);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_blobFromImages_const__InputArrayR_double_Size_const_ScalarR_bool_bool_int(images.as_raw__InputArray(), scalefactor, size.opencv_as_extern(), &mean, swap_rb, crop, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -433,8 +433,8 @@ pub mod dnn {
 	/// (CV_32F). They are non normalized neither mean added. The number of returned images equals the first dimension
 	/// of the blob (batch size). Every image has a number of channels equals to the second dimension of the blob (depth).
 	#[inline]
-	pub fn images_from_blob(blob_: &core::Mat, images_: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(images_);
+	pub fn images_from_blob(blob_: &core::Mat, images_: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(images_);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_imagesFromBlob_const_MatR_const__OutputArrayR(blob_.as_raw_Mat(), images_.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3143,8 +3143,8 @@ pub mod dnn {
 		/// ## Parameters
 		/// * frame: The input image.
 		#[inline]
-		fn classify(&mut self, frame: &dyn core::ToInputArray) -> Result<core::Tuple<(i32, f32)>> {
-			extern_container_arg!(frame);
+		fn classify(&mut self, frame: &impl core::ToInputArray) -> Result<core::Tuple<(i32, f32)>> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_ClassificationModel_classify_const__InputArrayR(self.as_raw_mut_ClassificationModel(), frame.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3159,8 +3159,8 @@ pub mod dnn {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn classify_1(&mut self, frame: &dyn core::ToInputArray, class_id: &mut i32, conf: &mut f32) -> Result<()> {
-			extern_container_arg!(frame);
+		fn classify_1(&mut self, frame: &impl core::ToInputArray, class_id: &mut i32, conf: &mut f32) -> Result<()> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_ClassificationModel_classify_const__InputArrayR_intR_floatR(self.as_raw_mut_ClassificationModel(), frame.as_raw__InputArray(), class_id, conf, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4553,8 +4553,8 @@ pub mod dnn {
 		/// * conf_threshold: 0.5f
 		/// * nms_threshold: 0.0f
 		#[inline]
-		fn detect(&mut self, frame: &dyn core::ToInputArray, class_ids: &mut core::Vector<i32>, confidences: &mut core::Vector<f32>, boxes: &mut core::Vector<core::Rect>, conf_threshold: f32, nms_threshold: f32) -> Result<()> {
-			extern_container_arg!(frame);
+		fn detect(&mut self, frame: &impl core::ToInputArray, class_ids: &mut core::Vector<i32>, confidences: &mut core::Vector<f32>, boxes: &mut core::Vector<core::Rect>, conf_threshold: f32, nms_threshold: f32) -> Result<()> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_DetectionModel_detect_const__InputArrayR_vectorLintGR_vectorLfloatGR_vectorLRectGR_float_float(self.as_raw_mut_DetectionModel(), frame.as_raw__InputArray(), class_ids.as_raw_mut_VectorOfi32(), confidences.as_raw_mut_VectorOff32(), boxes.as_raw_mut_VectorOfRect(), conf_threshold, nms_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6415,8 +6415,8 @@ pub mod dnn {
 		/// ## C++ default parameters
 		/// * thresh: 0.5
 		#[inline]
-		fn estimate(&mut self, frame: &dyn core::ToInputArray, thresh: f32) -> Result<core::Vector<core::Point2f>> {
-			extern_container_arg!(frame);
+		fn estimate(&mut self, frame: &impl core::ToInputArray, thresh: f32) -> Result<core::Vector<core::Point2f>> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_KeypointsModel_estimate_const__InputArrayR_float(self.as_raw_mut_KeypointsModel(), frame.as_raw__InputArray(), thresh, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6992,9 +6992,9 @@ pub mod dnn {
 		/// If this method is called after network has allocated all memory for input and output blobs
 		/// and before inferencing.
 		#[inline]
-		fn finalize(&mut self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(inputs);
-			extern_container_arg!(outputs);
+		fn finalize(&mut self, inputs: &impl core::ToInputArray, outputs: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(inputs);
+			output_array_arg!(outputs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Layer_finalize_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Layer(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7025,10 +7025,10 @@ pub mod dnn {
 		/// * outputs:[out] allocated output blobs, which will store results of the computation.
 		/// * internals:[out] allocated internal blobs
 		#[inline]
-		fn forward(&mut self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray, internals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(inputs);
-			extern_container_arg!(outputs);
-			extern_container_arg!(internals);
+		fn forward(&mut self, inputs: &impl core::ToInputArray, outputs: &mut impl core::ToOutputArray, internals: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(inputs);
+			output_array_arg!(outputs);
+			output_array_arg!(internals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Layer_forward_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Layer(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), internals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7058,10 +7058,10 @@ pub mod dnn {
 		/// * outputs:[out] allocated output blobs, which will store results of the computation.
 		/// * internals:[out] allocated internal blobs
 		#[inline]
-		fn forward_fallback(&mut self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray, internals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(inputs);
-			extern_container_arg!(outputs);
-			extern_container_arg!(internals);
+		fn forward_fallback(&mut self, inputs: &impl core::ToInputArray, outputs: &mut impl core::ToOutputArray, internals: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(inputs);
+			output_array_arg!(outputs);
+			output_array_arg!(internals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Layer_forward_fallback_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Layer(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), internals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8082,9 +8082,9 @@ pub mod dnn {
 		/// * frame: The input image.
 		/// * outs:[out] Allocated output blobs, which will store results of the computation.
 		#[inline]
-		fn predict(&self, frame: &dyn core::ToInputArray, outs: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame);
-			extern_container_arg!(outs);
+		fn predict(&self, frame: &impl core::ToInputArray, outs: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(frame);
+			output_array_arg!(outs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Model_predict_const_const__InputArrayR_const__OutputArrayR(self.as_raw_Model(), frame.as_raw__InputArray(), outs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -9106,8 +9106,8 @@ pub mod dnn {
 		/// ## C++ default parameters
 		/// * output_name: String()
 		#[inline]
-		fn forward_layer(&mut self, output_blobs: &mut dyn core::ToOutputArray, output_name: &str) -> Result<()> {
-			extern_container_arg!(output_blobs);
+		fn forward_layer(&mut self, output_blobs: &mut impl core::ToOutputArray, output_name: &str) -> Result<()> {
+			output_array_arg!(output_blobs);
 			extern_container_arg!(output_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Net_forward_const__OutputArrayR_const_StringR(self.as_raw_mut_Net(), output_blobs.as_raw__OutputArray(), output_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -9121,8 +9121,8 @@ pub mod dnn {
 		/// * outputBlobs: contains blobs for first outputs of specified layers.
 		/// * outBlobNames: names for layers which outputs are needed to get
 		#[inline]
-		fn forward(&mut self, output_blobs: &mut dyn core::ToOutputArray, out_blob_names: &core::Vector<String>) -> Result<()> {
-			extern_container_arg!(output_blobs);
+		fn forward(&mut self, output_blobs: &mut impl core::ToOutputArray, out_blob_names: &core::Vector<String>) -> Result<()> {
+			output_array_arg!(output_blobs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Net_forward_const__OutputArrayR_const_vectorLStringGR(self.as_raw_mut_Net(), output_blobs.as_raw__OutputArray(), out_blob_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -9154,8 +9154,8 @@ pub mod dnn {
 		/// ## C++ default parameters
 		/// * per_channel: true
 		#[inline]
-		fn quantize(&mut self, calib_data: &dyn core::ToInputArray, inputs_dtype: i32, outputs_dtype: i32, per_channel: bool) -> Result<crate::dnn::Net> {
-			extern_container_arg!(calib_data);
+		fn quantize(&mut self, calib_data: &impl core::ToInputArray, inputs_dtype: i32, outputs_dtype: i32, per_channel: bool) -> Result<crate::dnn::Net> {
+			input_array_arg!(calib_data);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Net_quantize_const__InputArrayR_int_int_bool(self.as_raw_mut_Net(), calib_data.as_raw__InputArray(), inputs_dtype, outputs_dtype, per_channel, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -9244,8 +9244,8 @@ pub mod dnn {
 		/// * scalefactor: 1.0
 		/// * mean: Scalar()
 		#[inline]
-		fn set_input(&mut self, blob: &dyn core::ToInputArray, name: &str, scalefactor: f64, mean: core::Scalar) -> Result<()> {
-			extern_container_arg!(blob);
+		fn set_input(&mut self, blob: &impl core::ToInputArray, name: &str, scalefactor: f64, mean: core::Scalar) -> Result<()> {
+			input_array_arg!(blob);
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Net_setInput_const__InputArrayR_const_StringR_double_const_ScalarR(self.as_raw_mut_Net(), blob.as_raw__InputArray(), name.opencv_as_extern(), scalefactor, &mean, ocvrs_return.as_mut_ptr()) };
@@ -11953,9 +11953,9 @@ pub mod dnn {
 		/// * frame: The input image.
 		/// * mask:[out] Allocated class prediction for each pixel
 		#[inline]
-		fn segment(&mut self, frame: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame);
-			extern_container_arg!(mask);
+		fn segment(&mut self, frame: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(frame);
+			output_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_SegmentationModel_segment_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_SegmentationModel(), frame.as_raw__InputArray(), mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -13712,8 +13712,8 @@ pub mod dnn {
 		/// * detections:[out] array with detections' quadrangles (4 points per result)
 		/// * confidences:[out] array with detection confidences
 		#[inline]
-		fn detect_with_confidences(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector<core::Vector<core::Point>>, confidences: &mut core::Vector<f32>) -> Result<()> {
-			extern_container_arg!(frame);
+		fn detect_with_confidences(&self, frame: &impl core::ToInputArray, detections: &mut core::Vector<core::Vector<core::Point>>, confidences: &mut core::Vector<f32>) -> Result<()> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vectorLvectorLPointGGR_vectorLfloatGR(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfVectorOfPoint(), confidences.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -13743,8 +13743,8 @@ pub mod dnn {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn detect(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector<core::Vector<core::Point>>) -> Result<()> {
-			extern_container_arg!(frame);
+		fn detect(&self, frame: &impl core::ToInputArray, detections: &mut core::Vector<core::Vector<core::Point>>) -> Result<()> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_TextDetectionModel_detect_const_const__InputArrayR_vectorLvectorLPointGGR(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -13766,8 +13766,8 @@ pub mod dnn {
 		/// * detections:[out] array with detections' RotationRect results
 		/// * confidences:[out] array with detection confidences
 		#[inline]
-		fn detect_text_rectangles(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector<core::RotatedRect>, confidences: &mut core::Vector<f32>) -> Result<()> {
-			extern_container_arg!(frame);
+		fn detect_text_rectangles(&self, frame: &impl core::ToInputArray, detections: &mut core::Vector<core::RotatedRect>, confidences: &mut core::Vector<f32>) -> Result<()> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vectorLRotatedRectGR_vectorLfloatGR(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfRotatedRect(), confidences.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -13791,8 +13791,8 @@ pub mod dnn {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn detect_text_rectangles_1(&self, frame: &dyn core::ToInputArray, detections: &mut core::Vector<core::RotatedRect>) -> Result<()> {
-			extern_container_arg!(frame);
+		fn detect_text_rectangles_1(&self, frame: &impl core::ToInputArray, detections: &mut core::Vector<core::RotatedRect>) -> Result<()> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_TextDetectionModel_detectTextRectangles_const_const__InputArrayR_vectorLRotatedRectGR(self.as_raw_TextDetectionModel(), frame.as_raw__InputArray(), detections.as_raw_mut_VectorOfRotatedRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -14240,8 +14240,8 @@ pub mod dnn {
 		/// ## Returns
 		/// The text recognition result
 		#[inline]
-		fn recognize(&self, frame: &dyn core::ToInputArray) -> Result<String> {
-			extern_container_arg!(frame);
+		fn recognize(&self, frame: &impl core::ToInputArray) -> Result<String> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_TextRecognitionModel_recognize_const_const__InputArrayR(self.as_raw_TextRecognitionModel(), frame.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -14256,9 +14256,9 @@ pub mod dnn {
 		/// * roiRects: List of text detection regions of interest (cv::Rect, CV_32SC4). ROIs is be cropped as the network inputs
 		/// * results:[out] A set of text recognition results.
 		#[inline]
-		fn recognize_1(&self, frame: &dyn core::ToInputArray, roi_rects: &dyn core::ToInputArray, results: &mut core::Vector<String>) -> Result<()> {
-			extern_container_arg!(frame);
-			extern_container_arg!(roi_rects);
+		fn recognize_1(&self, frame: &impl core::ToInputArray, roi_rects: &impl core::ToInputArray, results: &mut core::Vector<String>) -> Result<()> {
+			input_array_arg!(frame);
+			input_array_arg!(roi_rects);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_TextRecognitionModel_recognize_const_const__InputArrayR_const__InputArrayR_vectorLstringGR(self.as_raw_TextRecognitionModel(), frame.as_raw__InputArray(), roi_rects.as_raw__InputArray(), results.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

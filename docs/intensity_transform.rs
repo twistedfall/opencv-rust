@@ -37,9 +37,9 @@ pub mod intensity_transform {
 	/// * a: -0.3293f
 	/// * b: 1.1258f
 	#[inline]
-	pub fn bimef(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, mu: f32, a: f32, b: f32) -> Result<()> {
-		extern_container_arg!(input);
-		extern_container_arg!(output);
+	pub fn bimef(input: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, mu: f32, a: f32, b: f32) -> Result<()> {
+		input_array_arg!(input);
+		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), mu, a, b, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -63,9 +63,9 @@ pub mod intensity_transform {
 	/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
 	/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
 	#[inline]
-	pub fn bimef2(input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, k: f32, mu: f32, a: f32, b: f32) -> Result<()> {
-		extern_container_arg!(input);
-		extern_container_arg!(output);
+	pub fn bimef2(input: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, k: f32, mu: f32, a: f32, b: f32) -> Result<()> {
+		input_array_arg!(input);
+		output_array_arg!(output);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), k, mu, a, b, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

@@ -313,10 +313,10 @@ pub mod objdetect {
 	/// * charuco_ids: noArray()
 	/// * corner_color: Scalar(255,0,0)
 	#[inline]
-	pub fn draw_detected_corners_charuco(image: &mut dyn core::ToInputOutputArray, charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, corner_color: core::Scalar) -> Result<()> {
-		extern_container_arg!(image);
-		extern_container_arg!(charuco_corners);
-		extern_container_arg!(charuco_ids);
+	pub fn draw_detected_corners_charuco(image: &mut impl core::ToInputOutputArray, charuco_corners: &impl core::ToInputArray, charuco_ids: &impl core::ToInputArray, corner_color: core::Scalar) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(charuco_corners);
+		input_array_arg!(charuco_ids);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_aruco_drawDetectedCornersCharuco_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(image.as_raw__InputOutputArray(), charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), corner_color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -346,10 +346,10 @@ pub mod objdetect {
 	/// * diamond_ids: noArray()
 	/// * border_color: Scalar(0,0,255)
 	#[inline]
-	pub fn draw_detected_diamonds(image: &mut dyn core::ToInputOutputArray, diamond_corners: &dyn core::ToInputArray, diamond_ids: &dyn core::ToInputArray, border_color: core::Scalar) -> Result<()> {
-		extern_container_arg!(image);
-		extern_container_arg!(diamond_corners);
-		extern_container_arg!(diamond_ids);
+	pub fn draw_detected_diamonds(image: &mut impl core::ToInputOutputArray, diamond_corners: &impl core::ToInputArray, diamond_ids: &impl core::ToInputArray, border_color: core::Scalar) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(diamond_corners);
+		input_array_arg!(diamond_ids);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_aruco_drawDetectedDiamonds_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(image.as_raw__InputOutputArray(), diamond_corners.as_raw__InputArray(), diamond_ids.as_raw__InputArray(), border_color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -377,10 +377,10 @@ pub mod objdetect {
 	/// * ids: noArray()
 	/// * border_color: Scalar(0,255,0)
 	#[inline]
-	pub fn draw_detected_markers(image: &mut dyn core::ToInputOutputArray, corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, border_color: core::Scalar) -> Result<()> {
-		extern_container_arg!(image);
-		extern_container_arg!(corners);
-		extern_container_arg!(ids);
+	pub fn draw_detected_markers(image: &mut impl core::ToInputOutputArray, corners: &impl core::ToInputArray, ids: &impl core::ToInputArray, border_color: core::Scalar) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(corners);
+		input_array_arg!(ids);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_aruco_drawDetectedMarkers_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(image.as_raw__InputOutputArray(), corners.as_raw__InputArray(), ids.as_raw__InputArray(), border_color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -428,8 +428,8 @@ pub mod objdetect {
 	/// ## C++ default parameters
 	/// * border_bits: 1
 	#[inline]
-	pub fn generate_image_marker(dictionary: &crate::objdetect::Dictionary, id: i32, side_pixels: i32, img: &mut dyn core::ToOutputArray, border_bits: i32) -> Result<()> {
-		extern_container_arg!(img);
+	pub fn generate_image_marker(dictionary: &crate::objdetect::Dictionary, id: i32, side_pixels: i32, img: &mut impl core::ToOutputArray, border_bits: i32) -> Result<()> {
+		output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_aruco_generateImageMarker_const_DictionaryR_int_int_const__OutputArrayR_int(dictionary.as_raw_Dictionary(), id, side_pixels, img.as_raw__OutputArray(), border_bits, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -651,8 +651,8 @@ pub mod objdetect {
 		}
 		
 		#[inline]
-		fn detect_multi_scale(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector<core::Rect>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-			extern_container_arg!(image);
+		fn detect_multi_scale(&mut self, image: &impl core::ToInputArray, objects: &mut core::Vector<core::Rect>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_double_int_int_Size_Size(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), scale_factor, min_neighbors, flags, min_size.opencv_as_extern(), max_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -661,8 +661,8 @@ pub mod objdetect {
 		}
 		
 		#[inline]
-		fn detect_multi_scale_num(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector<core::Rect>, num_detections: &mut core::Vector<i32>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-			extern_container_arg!(image);
+		fn detect_multi_scale_num(&mut self, image: &impl core::ToInputArray, objects: &mut core::Vector<core::Rect>, num_detections: &mut core::Vector<i32>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_double_int_int_Size_Size(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), scale_factor, min_neighbors, flags, min_size.opencv_as_extern(), max_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -671,8 +671,8 @@ pub mod objdetect {
 		}
 		
 		#[inline]
-		fn detect_multi_scale_levels(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
-			extern_container_arg!(image);
+		fn detect_multi_scale_levels(&mut self, image: &impl core::ToInputArray, objects: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool(self.as_raw_mut_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), scale_factor, min_neighbors, flags, min_size.opencv_as_extern(), max_size.opencv_as_extern(), output_reject_levels, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -916,8 +916,8 @@ pub mod objdetect {
 		/// * min_size: Size()
 		/// * max_size: Size()
 		#[inline]
-		fn detect_multi_scale(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector<core::Rect>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-			extern_container_arg!(image);
+		fn detect_multi_scale(&mut self, image: &impl core::ToInputArray, objects: &mut core::Vector<core::Rect>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_double_int_int_Size_Size(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), scale_factor, min_neighbors, flags, min_size.opencv_as_extern(), max_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -963,8 +963,8 @@ pub mod objdetect {
 		/// * min_size: Size()
 		/// * max_size: Size()
 		#[inline]
-		fn detect_multi_scale2(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector<core::Rect>, num_detections: &mut core::Vector<i32>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-			extern_container_arg!(image);
+		fn detect_multi_scale2(&mut self, image: &impl core::ToInputArray, objects: &mut core::Vector<core::Rect>, num_detections: &mut core::Vector<i32>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_double_int_int_Size_Size(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), scale_factor, min_neighbors, flags, min_size.opencv_as_extern(), max_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1014,8 +1014,8 @@ pub mod objdetect {
 		/// * max_size: Size()
 		/// * output_reject_levels: false
 		#[inline]
-		fn detect_multi_scale3(&mut self, image: &dyn core::ToInputArray, objects: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
-			extern_container_arg!(image);
+		fn detect_multi_scale3(&mut self, image: &impl core::ToInputArray, objects: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), scale_factor, min_neighbors, flags, min_size.opencv_as_extern(), max_size.opencv_as_extern(), output_reject_levels, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1739,9 +1739,9 @@ pub mod objdetect {
 		/// * image: an image to detect
 		/// * faces: detection results stored in a cv::Mat
 		#[inline]
-		fn detect(&mut self, image: &dyn core::ToInputArray, faces: &mut dyn core::ToOutputArray) -> Result<i32> {
-			extern_container_arg!(image);
-			extern_container_arg!(faces);
+		fn detect(&mut self, image: &impl core::ToInputArray, faces: &mut impl core::ToOutputArray) -> Result<i32> {
+			input_array_arg!(image);
+			output_array_arg!(faces);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FaceDetectorYN_detect_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_FaceDetectorYN(), image.as_raw__InputArray(), faces.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1821,10 +1821,10 @@ pub mod objdetect {
 		/// * face_box: the detection result used for indicate face in input image
 		/// * aligned_img: output aligned image
 		#[inline]
-		fn align_crop(&self, src_img: &dyn core::ToInputArray, face_box: &dyn core::ToInputArray, aligned_img: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(src_img);
-			extern_container_arg!(face_box);
-			extern_container_arg!(aligned_img);
+		fn align_crop(&self, src_img: &impl core::ToInputArray, face_box: &impl core::ToInputArray, aligned_img: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src_img);
+			input_array_arg!(face_box);
+			output_array_arg!(aligned_img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FaceRecognizerSF_alignCrop_const_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_FaceRecognizerSF(), src_img.as_raw__InputArray(), face_box.as_raw__InputArray(), aligned_img.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1841,9 +1841,9 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * dis_type: FaceRecognizerSF::FR_COSINE
 		#[inline]
-		fn match_(&self, face_feature1: &dyn core::ToInputArray, face_feature2: &dyn core::ToInputArray, dis_type: i32) -> Result<f64> {
-			extern_container_arg!(face_feature1);
-			extern_container_arg!(face_feature2);
+		fn match_(&self, face_feature1: &impl core::ToInputArray, face_feature2: &impl core::ToInputArray, dis_type: i32) -> Result<f64> {
+			input_array_arg!(face_feature1);
+			input_array_arg!(face_feature2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FaceRecognizerSF_match_const_const__InputArrayR_const__InputArrayR_int(self.as_raw_FaceRecognizerSF(), face_feature1.as_raw__InputArray(), face_feature2.as_raw__InputArray(), dis_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1862,9 +1862,9 @@ pub mod objdetect {
 		/// * aligned_img: input aligned image
 		/// * face_feature: output face feature
 		#[inline]
-		fn feature(&mut self, aligned_img: &dyn core::ToInputArray, face_feature: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(aligned_img);
-			extern_container_arg!(face_feature);
+		fn feature(&mut self, aligned_img: &impl core::ToInputArray, face_feature: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(aligned_img);
+			output_array_arg!(face_feature);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FaceRecognizerSF_feature_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_FaceRecognizerSF(), aligned_img.as_raw__InputArray(), face_feature.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2136,8 +2136,8 @@ pub mod objdetect {
 		/// * padding: Size()
 		/// * locations: std::vector<Point>()
 		#[inline]
-		fn compute(&self, img: &dyn core::ToInputArray, descriptors: &mut core::Vector<f32>, win_stride: core::Size, padding: core::Size, locations: &core::Vector<core::Point>) -> Result<()> {
-			extern_container_arg!(img);
+		fn compute(&self, img: &impl core::ToInputArray, descriptors: &mut core::Vector<f32>, win_stride: core::Size, padding: core::Size, locations: &core::Vector<core::Point>) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_compute_const_const__InputArrayR_vectorLfloatGR_Size_Size_const_vectorLPointGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), descriptors.as_raw_mut_VectorOff32(), win_stride.opencv_as_extern(), padding.opencv_as_extern(), locations.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2163,8 +2163,8 @@ pub mod objdetect {
 		/// * padding: Size()
 		/// * search_locations: std::vector<Point>()
 		#[inline]
-		fn detect_weights(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, weights: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &core::Vector<core::Point>) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_weights(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>, weights: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &core::Vector<core::Point>) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), weights.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), search_locations.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2189,8 +2189,8 @@ pub mod objdetect {
 		/// * padding: Size()
 		/// * search_locations: std::vector<Point>()
 		#[inline]
-		fn detect(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &core::Vector<core::Point>) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &core::Vector<core::Point>) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_double_Size_Size_const_vectorLPointGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), search_locations.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2222,8 +2222,8 @@ pub mod objdetect {
 		/// * group_threshold: 2.0
 		/// * use_meanshift_grouping: false
 		#[inline]
-		fn detect_multi_scale_weights(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, group_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_multi_scale_weights(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, group_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), scale, group_threshold, use_meanshift_grouping, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2254,8 +2254,8 @@ pub mod objdetect {
 		/// * group_threshold: 2.0
 		/// * use_meanshift_grouping: false
 		#[inline]
-		fn detect_multi_scale(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, group_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_multi_scale(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, group_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), scale, group_threshold, use_meanshift_grouping, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2275,10 +2275,10 @@ pub mod objdetect {
 		/// * padding_tl: Size()
 		/// * padding_br: Size()
 		#[inline]
-		fn compute_gradient(&self, img: &dyn core::ToInputArray, grad: &mut dyn core::ToInputOutputArray, angle_ofs: &mut dyn core::ToInputOutputArray, padding_tl: core::Size, padding_br: core::Size) -> Result<()> {
-			extern_container_arg!(img);
-			extern_container_arg!(grad);
-			extern_container_arg!(angle_ofs);
+		fn compute_gradient(&self, img: &impl core::ToInputArray, grad: &mut impl core::ToInputOutputArray, angle_ofs: &mut impl core::ToInputOutputArray, padding_tl: core::Size, padding_br: core::Size) -> Result<()> {
+			input_array_arg!(img);
+			input_output_array_arg!(grad);
+			input_output_array_arg!(angle_ofs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_computeGradient_const_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), grad.as_raw__InputOutputArray(), angle_ofs.as_raw__InputOutputArray(), padding_tl.opencv_as_extern(), padding_br.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2303,8 +2303,8 @@ pub mod objdetect {
 		/// * win_stride: Size()
 		/// * padding: Size()
 		#[inline]
-		fn detect_roi(&self, img: &dyn core::ToInputArray, locations: &core::Vector<core::Point>, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_roi(&self, img: &impl core::ToInputArray, locations: &core::Vector<core::Point>, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>, hit_threshold: f64, win_stride: core::Size, padding: core::Size) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_detectROI_const_const__InputArrayR_const_vectorLPointGR_vectorLPointGR_vectorLdoubleGR_double_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), locations.as_raw_VectorOfPoint(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2325,8 +2325,8 @@ pub mod objdetect {
 		/// * hit_threshold: 0
 		/// * group_threshold: 0
 		#[inline]
-		fn detect_multi_scale_roi(&self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, locations: &mut core::Vector<crate::objdetect::DetectionROI>, hit_threshold: f64, group_threshold: i32) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_multi_scale_roi(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, locations: &mut core::Vector<crate::objdetect::DetectionROI>, hit_threshold: f64, group_threshold: i32) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_detectMultiScaleROI_const_const__InputArrayR_vectorLRectGR_vectorLDetectionROIGR_double_int(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), locations.as_raw_mut_VectorOfDetectionROI(), hit_threshold, group_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2466,8 +2466,8 @@ pub mod objdetect {
 		/// ## Parameters
 		/// * svmdetector: coefficients for the linear SVM classifier.
 		#[inline]
-		fn set_svm_detector(&mut self, svmdetector: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(svmdetector);
+		fn set_svm_detector(&mut self, svmdetector: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(svmdetector);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_setSVMDetector_const__InputArrayR(self.as_raw_mut_HOGDescriptor(), svmdetector.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2672,9 +2672,9 @@ pub mod objdetect {
 		/// * img: grayscale or color (BGR) image containing (or not) QR code.
 		/// * points: Output vector of vertices of the minimum-area quadrangle containing the code.
 		#[inline]
-		fn detect(&self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(img);
-			extern_container_arg!(points);
+		fn detect(&self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(img);
+			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_detect_const_const__InputArrayR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2687,9 +2687,9 @@ pub mod objdetect {
 		/// * img: grayscale or color (BGR) image containing (or not) QR codes.
 		/// * points: Output vector of vector of vertices of the minimum-area quadrangle containing the codes.
 		#[inline]
-		fn detect_multi(&self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(img);
-			extern_container_arg!(points);
+		fn detect_multi(&self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(img);
+			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_detectMulti_const_const__InputArrayR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2707,10 +2707,10 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * straight_qrcode: noArray()
 		#[inline]
-		fn decode_multi(&self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, decoded_info: &mut core::Vector<String>, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(img);
-			extern_container_arg!(points);
-			extern_container_arg!(straight_qrcode);
+		fn decode_multi(&self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>, straight_qrcode: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(img);
+			input_array_arg!(points);
+			output_array_arg!(straight_qrcode);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vectorLstringGR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2773,10 +2773,10 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * straight_qrcode: noArray()
 		#[inline]
-		fn decode(&mut self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<Vec<u8>> {
-			extern_container_arg!(img);
-			extern_container_arg!(points);
-			extern_container_arg!(straight_qrcode);
+		fn decode(&mut self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, straight_qrcode: &mut impl core::ToOutputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			input_array_arg!(points);
+			output_array_arg!(straight_qrcode);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_decode_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2796,10 +2796,10 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * straight_qrcode: noArray()
 		#[inline]
-		fn decode_curved(&mut self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<Vec<u8>> {
-			extern_container_arg!(img);
-			extern_container_arg!(points);
-			extern_container_arg!(straight_qrcode);
+		fn decode_curved(&mut self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, straight_qrcode: &mut impl core::ToOutputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			input_array_arg!(points);
+			output_array_arg!(straight_qrcode);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_decodeCurved_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2819,10 +2819,10 @@ pub mod objdetect {
 		/// * points: noArray()
 		/// * straight_qrcode: noArray()
 		#[inline]
-		fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<Vec<u8>> {
-			extern_container_arg!(img);
-			extern_container_arg!(points);
-			extern_container_arg!(straight_qrcode);
+		fn detect_and_decode(&mut self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray, straight_qrcode: &mut impl core::ToOutputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			output_array_arg!(points);
+			output_array_arg!(straight_qrcode);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_detectAndDecode_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2842,10 +2842,10 @@ pub mod objdetect {
 		/// * points: noArray()
 		/// * straight_qrcode: noArray()
 		#[inline]
-		fn detect_and_decode_curved(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<Vec<u8>> {
-			extern_container_arg!(img);
-			extern_container_arg!(points);
-			extern_container_arg!(straight_qrcode);
+		fn detect_and_decode_curved(&mut self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray, straight_qrcode: &mut impl core::ToOutputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			output_array_arg!(points);
+			output_array_arg!(straight_qrcode);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_detectAndDecodeCurved_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2908,9 +2908,9 @@ pub mod objdetect {
 		/// * encoded_info: Input string to encode.
 		/// * qrcode: Generated QR code.
 		#[inline]
-		fn encode(&mut self, encoded_info: &str, qrcode: &mut dyn core::ToOutputArray) -> Result<()> {
+		fn encode(&mut self, encoded_info: &str, qrcode: &mut impl core::ToOutputArray) -> Result<()> {
 			extern_container_arg!(encoded_info);
-			extern_container_arg!(qrcode);
+			output_array_arg!(qrcode);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeEncoder_encode_const_StringR_const__OutputArrayR(self.as_raw_mut_QRCodeEncoder(), encoded_info.opencv_as_extern(), qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2923,9 +2923,9 @@ pub mod objdetect {
 		/// * encoded_info: Input string to encode.
 		/// * qrcodes: Vector of generated QR codes.
 		#[inline]
-		fn encode_structured_append(&mut self, encoded_info: &str, qrcodes: &mut dyn core::ToOutputArray) -> Result<()> {
+		fn encode_structured_append(&mut self, encoded_info: &str, qrcodes: &mut impl core::ToOutputArray) -> Result<()> {
 			extern_container_arg!(encoded_info);
-			extern_container_arg!(qrcodes);
+			output_array_arg!(qrcodes);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeEncoder_encodeStructuredAppend_const_StringR_const__OutputArrayR(self.as_raw_mut_QRCodeEncoder(), encoded_info.opencv_as_extern(), qrcodes.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3111,11 +3111,11 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * rejected_img_points: noArray()
 		#[inline]
-		fn detect_markers(&self, image: &dyn core::ToInputArray, corners: &mut dyn core::ToOutputArray, ids: &mut dyn core::ToOutputArray, rejected_img_points: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(corners);
-			extern_container_arg!(ids);
-			extern_container_arg!(rejected_img_points);
+		fn detect_markers(&self, image: &impl core::ToInputArray, corners: &mut impl core::ToOutputArray, ids: &mut impl core::ToOutputArray, rejected_img_points: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(corners);
+			output_array_arg!(ids);
+			output_array_arg!(rejected_img_points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_ArucoDetector_detectMarkers_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), rejected_img_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3151,14 +3151,14 @@ pub mod objdetect {
 		/// * dist_coeffs: noArray()
 		/// * recovered_idxs: noArray()
 		#[inline]
-		fn refine_detected_markers(&self, image: &dyn core::ToInputArray, board: &crate::objdetect::Board, detected_corners: &mut dyn core::ToInputOutputArray, detected_ids: &mut dyn core::ToInputOutputArray, rejected_corners: &mut dyn core::ToInputOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, recovered_idxs: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(detected_corners);
-			extern_container_arg!(detected_ids);
-			extern_container_arg!(rejected_corners);
-			extern_container_arg!(camera_matrix);
-			extern_container_arg!(dist_coeffs);
-			extern_container_arg!(recovered_idxs);
+		fn refine_detected_markers(&self, image: &impl core::ToInputArray, board: &crate::objdetect::Board, detected_corners: &mut impl core::ToInputOutputArray, detected_ids: &mut impl core::ToInputOutputArray, rejected_corners: &mut impl core::ToInputOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, recovered_idxs: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_output_array_arg!(detected_corners);
+			input_output_array_arg!(detected_ids);
+			input_output_array_arg!(rejected_corners);
+			input_array_arg!(camera_matrix);
+			input_array_arg!(dist_coeffs);
+			output_array_arg!(recovered_idxs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_ArucoDetector_refineDetectedMarkers_const_const__InputArrayR_const_BoardR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), board.as_raw_Board(), detected_corners.as_raw__InputOutputArray(), detected_ids.as_raw__InputOutputArray(), rejected_corners.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), recovered_idxs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3393,11 +3393,11 @@ pub mod objdetect {
 		/// * objPoints: Vector of vectors of board marker points in the board coordinate space.
 		/// * imgPoints: Vector of vectors of the projections of board marker corner points.
 		#[inline]
-		fn match_image_points(&self, detected_corners: &dyn core::ToInputArray, detected_ids: &dyn core::ToInputArray, obj_points: &mut dyn core::ToOutputArray, img_points: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(detected_corners);
-			extern_container_arg!(detected_ids);
-			extern_container_arg!(obj_points);
-			extern_container_arg!(img_points);
+		fn match_image_points(&self, detected_corners: &impl core::ToInputArray, detected_ids: &impl core::ToInputArray, obj_points: &mut impl core::ToOutputArray, img_points: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(detected_corners);
+			input_array_arg!(detected_ids);
+			output_array_arg!(obj_points);
+			output_array_arg!(img_points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Board_matchImagePoints_const_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Board(), detected_corners.as_raw__InputArray(), detected_ids.as_raw__InputArray(), obj_points.as_raw__OutputArray(), img_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3420,8 +3420,8 @@ pub mod objdetect {
 		/// * margin_size: 0
 		/// * border_bits: 1
 		#[inline]
-		fn generate_image(&self, out_size: core::Size, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
-			extern_container_arg!(img);
+		fn generate_image(&self, out_size: core::Size, img: &mut impl core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
+			output_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Board_generateImage_const_Size_const__OutputArrayR_int_int(self.as_raw_Board(), out_size.opencv_as_extern(), img.as_raw__OutputArray(), margin_size, border_bits, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3477,9 +3477,9 @@ pub mod objdetect {
 		/// * dictionary: the dictionary of markers employed for this board
 		/// * ids: vector of the identifiers of the markers in the board
 		#[inline]
-		pub fn new(obj_points: &dyn core::ToInputArray, dictionary: &crate::objdetect::Dictionary, ids: &dyn core::ToInputArray) -> Result<crate::objdetect::Board> {
-			extern_container_arg!(obj_points);
-			extern_container_arg!(ids);
+		pub fn new(obj_points: &impl core::ToInputArray, dictionary: &crate::objdetect::Dictionary, ids: &impl core::ToInputArray) -> Result<crate::objdetect::Board> {
+			input_array_arg!(obj_points);
+			input_array_arg!(ids);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Board_Board_const__InputArrayR_const_DictionaryR_const__InputArrayR(obj_points.as_raw__InputArray(), dictionary.as_raw_Dictionary(), ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3585,8 +3585,8 @@ pub mod objdetect {
 		/// Axis parallel, as well as diagonal and other straight lines detected.  Degenerate cases:
 		/// for number of charucoIDs <= 2,the function returns true.
 		#[inline]
-		fn check_charuco_corners_collinear(&self, charuco_ids: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(charuco_ids);
+		fn check_charuco_corners_collinear(&self, charuco_ids: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(charuco_ids);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_CharucoBoard_checkCharucoCornersCollinear_const_const__InputArrayR(self.as_raw_CharucoBoard(), charuco_ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3652,8 +3652,8 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * ids: noArray()
 		#[inline]
-		pub fn new(size: core::Size, square_length: f32, marker_length: f32, dictionary: &crate::objdetect::Dictionary, ids: &dyn core::ToInputArray) -> Result<crate::objdetect::CharucoBoard> {
-			extern_container_arg!(ids);
+		pub fn new(size: core::Size, square_length: f32, marker_length: f32, dictionary: &crate::objdetect::Dictionary, ids: &impl core::ToInputArray) -> Result<crate::objdetect::CharucoBoard> {
+			input_array_arg!(ids);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_CharucoBoard_CharucoBoard_const_SizeR_float_float_const_DictionaryR_const__InputArrayR(&size, square_length, marker_length, dictionary.as_raw_Dictionary(), ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3754,12 +3754,12 @@ pub mod objdetect {
 		/// * marker_corners: noArray()
 		/// * marker_ids: noArray()
 		#[inline]
-		fn detect_board(&self, image: &dyn core::ToInputArray, charuco_corners: &mut dyn core::ToOutputArray, charuco_ids: &mut dyn core::ToOutputArray, marker_corners: &mut dyn core::ToInputOutputArray, marker_ids: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(charuco_corners);
-			extern_container_arg!(charuco_ids);
-			extern_container_arg!(marker_corners);
-			extern_container_arg!(marker_ids);
+		fn detect_board(&self, image: &impl core::ToInputArray, charuco_corners: &mut impl core::ToOutputArray, charuco_ids: &mut impl core::ToOutputArray, marker_corners: &mut impl core::ToInputOutputArray, marker_ids: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(charuco_corners);
+			output_array_arg!(charuco_ids);
+			input_output_array_arg!(marker_corners);
+			input_output_array_arg!(marker_ids);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_CharucoDetector_detectBoard_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_CharucoDetector(), image.as_raw__InputArray(), charuco_corners.as_raw__OutputArray(), charuco_ids.as_raw__OutputArray(), marker_corners.as_raw__InputOutputArray(), marker_ids.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3791,12 +3791,12 @@ pub mod objdetect {
 		/// * marker_corners: noArray()
 		/// * marker_ids: noArray()
 		#[inline]
-		fn detect_diamonds(&self, image: &dyn core::ToInputArray, diamond_corners: &mut dyn core::ToOutputArray, diamond_ids: &mut dyn core::ToOutputArray, marker_corners: &mut dyn core::ToInputOutputArray, marker_ids: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(diamond_corners);
-			extern_container_arg!(diamond_ids);
-			extern_container_arg!(marker_corners);
-			extern_container_arg!(marker_ids);
+		fn detect_diamonds(&self, image: &impl core::ToInputArray, diamond_corners: &mut impl core::ToOutputArray, diamond_ids: &mut impl core::ToOutputArray, marker_corners: &mut impl core::ToInputOutputArray, marker_ids: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(diamond_corners);
+			output_array_arg!(diamond_ids);
+			input_output_array_arg!(marker_corners);
+			input_output_array_arg!(marker_ids);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_CharucoDetector_detectDiamonds_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_CharucoDetector(), image.as_raw__InputArray(), diamond_corners.as_raw__OutputArray(), diamond_ids.as_raw__OutputArray(), marker_corners.as_raw__InputOutputArray(), marker_ids.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4646,8 +4646,8 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * all_rotations: true
 		#[inline]
-		fn get_distance_to_id(&self, bits: &dyn core::ToInputArray, id: i32, all_rotations: bool) -> Result<i32> {
-			extern_container_arg!(bits);
+		fn get_distance_to_id(&self, bits: &impl core::ToInputArray, id: i32, all_rotations: bool) -> Result<i32> {
+			input_array_arg!(bits);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Dictionary_getDistanceToId_const_const__InputArrayR_int_bool(self.as_raw_Dictionary(), bits.as_raw__InputArray(), id, all_rotations, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4660,8 +4660,8 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * border_bits: 1
 		#[inline]
-		fn generate_image_marker(&self, id: i32, side_pixels: i32, _img: &mut dyn core::ToOutputArray, border_bits: i32) -> Result<()> {
-			extern_container_arg!(_img);
+		fn generate_image_marker(&self, id: i32, side_pixels: i32, _img: &mut impl core::ToOutputArray, border_bits: i32) -> Result<()> {
+			output_array_arg!(_img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Dictionary_generateImageMarker_const_int_int_const__OutputArrayR_int(self.as_raw_Dictionary(), id, side_pixels, _img.as_raw__OutputArray(), border_bits, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4908,8 +4908,8 @@ pub mod objdetect {
 		/// ## C++ default parameters
 		/// * ids: noArray()
 		#[inline]
-		pub fn new(size: core::Size, marker_length: f32, marker_separation: f32, dictionary: &crate::objdetect::Dictionary, ids: &dyn core::ToInputArray) -> Result<crate::objdetect::GridBoard> {
-			extern_container_arg!(ids);
+		pub fn new(size: core::Size, marker_length: f32, marker_separation: f32, dictionary: &crate::objdetect::Dictionary, ids: &impl core::ToInputArray) -> Result<crate::objdetect::GridBoard> {
+			input_array_arg!(ids);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_GridBoard_GridBoard_const_SizeR_float_float_const_DictionaryR_const__InputArrayR(&size, marker_length, marker_separation, dictionary.as_raw_Dictionary(), ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

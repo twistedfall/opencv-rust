@@ -217,8 +217,8 @@ pub mod cudafilters {
 	/// * border_mode: BORDER_DEFAULT
 	/// * border_val: Scalar::all(0)
 	#[inline]
-	pub fn create_linear_filter(src_type: i32, dst_type: i32, kernel: &dyn core::ToInputArray, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
-		extern_container_arg!(kernel);
+	pub fn create_linear_filter(src_type: i32, dst_type: i32, kernel: &impl core::ToInputArray, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
+		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createLinearFilter_int_int_const__InputArrayR_Point_int_Scalar(src_type, dst_type, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), border_mode, border_val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -275,8 +275,8 @@ pub mod cudafilters {
 	/// * anchor: Point(-1,-1)
 	/// * iterations: 1
 	#[inline]
-	pub fn create_morphology_filter(op: i32, src_type: i32, kernel: &dyn core::ToInputArray, anchor: core::Point, iterations: i32) -> Result<core::Ptr<crate::cudafilters::Filter>> {
-		extern_container_arg!(kernel);
+	pub fn create_morphology_filter(op: i32, src_type: i32, kernel: &impl core::ToInputArray, anchor: core::Point, iterations: i32) -> Result<core::Ptr<crate::cudafilters::Filter>> {
+		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createMorphologyFilter_int_int_const__InputArrayR_Point_int(op, src_type, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), iterations, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -358,9 +358,9 @@ pub mod cudafilters {
 	/// * row_border_mode: BORDER_DEFAULT
 	/// * column_border_mode: -1
 	#[inline]
-	pub fn create_separable_linear_filter(src_type: i32, dst_type: i32, row_kernel: &dyn core::ToInputArray, column_kernel: &dyn core::ToInputArray, anchor: core::Point, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<crate::cudafilters::Filter>> {
-		extern_container_arg!(row_kernel);
-		extern_container_arg!(column_kernel);
+	pub fn create_separable_linear_filter(src_type: i32, dst_type: i32, row_kernel: &impl core::ToInputArray, column_kernel: &impl core::ToInputArray, anchor: core::Point, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<crate::cudafilters::Filter>> {
+		input_array_arg!(row_kernel);
+		input_array_arg!(column_kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createSeparableLinearFilter_int_int_const__InputArrayR_const__InputArrayR_Point_int_int(src_type, dst_type, row_kernel.as_raw__InputArray(), column_kernel.as_raw__InputArray(), anchor.opencv_as_extern(), row_border_mode, column_border_mode, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -420,9 +420,9 @@ pub mod cudafilters {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn apply(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
+		fn apply(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Filter_apply_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_Filter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

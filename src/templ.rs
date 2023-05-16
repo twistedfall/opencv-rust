@@ -64,6 +64,24 @@ macro_rules! userdata_arg {
 	};
 }
 
+macro_rules! input_array_arg {
+	($name: ident) => {
+		let $name = $name.input_array()?;
+	};
+}
+
+macro_rules! output_array_arg {
+	($name: ident) => {
+		let $name = $name.output_array()?;
+	};
+}
+
+macro_rules! input_output_array_arg {
+	($name: ident) => {
+		let $name = $name.input_output_array()?;
+	};
+}
+
 macro_rules! string_array_arg {
 	($name: ident) => {
 		let $name = $name.iter().map(|x| x.as_ptr() as _).collect::<::std::vec::Vec<_>>();

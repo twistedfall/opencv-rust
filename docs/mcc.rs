@@ -1067,8 +1067,8 @@ pub mod mcc {
 		/// * use_net: false
 		/// * params: DetectorParameters::create()
 		#[inline]
-		fn process_with_roi(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
-			extern_container_arg!(image);
+		fn process_with_roi(&mut self, image: &impl core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vectorLRectGR_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1101,8 +1101,8 @@ pub mod mcc {
 		/// * use_net: false
 		/// * params: DetectorParameters::create()
 		#[inline]
-		fn process(&mut self, image: &dyn core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
-			extern_container_arg!(image);
+		fn process(&mut self, image: &impl core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1201,8 +1201,8 @@ pub mod mcc {
 		/// \param img image in color space BGR
 		/// \return void
 		#[inline]
-		fn draw(&mut self, img: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(img);
+		fn draw(&mut self, img: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_output_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDraw_draw_const__InputOutputArrayR(self.as_raw_mut_MCC_CCheckerDraw(), img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

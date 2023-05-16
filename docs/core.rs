@@ -1912,10 +1912,10 @@ pub mod core {
 	/// ## See also
 	/// convertScaleAbs, Mat::convertTo
 	#[inline]
-	pub fn lut(src: &dyn core::ToInputArray, lut: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(lut);
-		extern_container_arg!(dst);
+	pub fn lut(src: &impl core::ToInputArray, lut: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(lut);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_LUT_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lut.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1954,10 +1954,10 @@ pub mod core {
 	/// * v2: second 1D input vector.
 	/// * icovar: inverse covariance matrix.
 	#[inline]
-	pub fn mahalanobis(v1: &dyn core::ToInputArray, v2: &dyn core::ToInputArray, icovar: &dyn core::ToInputArray) -> Result<f64> {
-		extern_container_arg!(v1);
-		extern_container_arg!(v2);
-		extern_container_arg!(icovar);
+	pub fn mahalanobis(v1: &impl core::ToInputArray, v2: &impl core::ToInputArray, icovar: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(v1);
+		input_array_arg!(v2);
+		input_array_arg!(icovar);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_Mahalanobis_const__InputArrayR_const__InputArrayR_const__InputArrayR(v1.as_raw__InputArray(), v2.as_raw__InputArray(), icovar.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1967,11 +1967,11 @@ pub mod core {
 	
 	/// wrap PCA::backProject
 	#[inline]
-	pub fn pca_back_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, eigenvectors: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(data);
-		extern_container_arg!(mean);
-		extern_container_arg!(eigenvectors);
-		extern_container_arg!(result);
+	pub fn pca_back_project(data: &impl core::ToInputArray, mean: &impl core::ToInputArray, eigenvectors: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(data);
+		input_array_arg!(mean);
+		input_array_arg!(eigenvectors);
+		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCABackProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1981,11 +1981,11 @@ pub mod core {
 	
 	/// wrap PCA::operator() and add eigenvalues output parameter
 	#[inline]
-	pub fn pca_compute2_variance(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, eigenvalues: &mut dyn core::ToOutputArray, retained_variance: f64) -> Result<()> {
-		extern_container_arg!(data);
-		extern_container_arg!(mean);
-		extern_container_arg!(eigenvectors);
-		extern_container_arg!(eigenvalues);
+	pub fn pca_compute2_variance(data: &impl core::ToInputArray, mean: &mut impl core::ToInputOutputArray, eigenvectors: &mut impl core::ToOutputArray, eigenvalues: &mut impl core::ToOutputArray, retained_variance: f64) -> Result<()> {
+		input_array_arg!(data);
+		input_output_array_arg!(mean);
+		output_array_arg!(eigenvectors);
+		output_array_arg!(eigenvalues);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), retained_variance, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1998,11 +1998,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * max_components: 0
 	#[inline]
-	pub fn pca_compute2(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, eigenvalues: &mut dyn core::ToOutputArray, max_components: i32) -> Result<()> {
-		extern_container_arg!(data);
-		extern_container_arg!(mean);
-		extern_container_arg!(eigenvectors);
-		extern_container_arg!(eigenvalues);
+	pub fn pca_compute2(data: &impl core::ToInputArray, mean: &mut impl core::ToInputOutputArray, eigenvectors: &mut impl core::ToOutputArray, eigenvalues: &mut impl core::ToOutputArray, max_components: i32) -> Result<()> {
+		input_array_arg!(data);
+		input_output_array_arg!(mean);
+		output_array_arg!(eigenvectors);
+		output_array_arg!(eigenvalues);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), max_components, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2012,10 +2012,10 @@ pub mod core {
 	
 	/// wrap PCA::operator()
 	#[inline]
-	pub fn pca_compute_variance(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, retained_variance: f64) -> Result<()> {
-		extern_container_arg!(data);
-		extern_container_arg!(mean);
-		extern_container_arg!(eigenvectors);
+	pub fn pca_compute_variance(data: &impl core::ToInputArray, mean: &mut impl core::ToInputOutputArray, eigenvectors: &mut impl core::ToOutputArray, retained_variance: f64) -> Result<()> {
+		input_array_arg!(data);
+		input_output_array_arg!(mean);
+		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), retained_variance, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2028,10 +2028,10 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * max_components: 0
 	#[inline]
-	pub fn pca_compute(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, max_components: i32) -> Result<()> {
-		extern_container_arg!(data);
-		extern_container_arg!(mean);
-		extern_container_arg!(eigenvectors);
+	pub fn pca_compute(data: &impl core::ToInputArray, mean: &mut impl core::ToInputOutputArray, eigenvectors: &mut impl core::ToOutputArray, max_components: i32) -> Result<()> {
+		input_array_arg!(data);
+		input_output_array_arg!(mean);
+		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), max_components, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2041,11 +2041,11 @@ pub mod core {
 	
 	/// wrap PCA::project
 	#[inline]
-	pub fn pca_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, eigenvectors: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(data);
-		extern_container_arg!(mean);
-		extern_container_arg!(eigenvectors);
-		extern_container_arg!(result);
+	pub fn pca_project(data: &impl core::ToInputArray, mean: &impl core::ToInputArray, eigenvectors: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(data);
+		input_array_arg!(mean);
+		input_array_arg!(eigenvectors);
+		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCAProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2073,9 +2073,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * r: 255.
 	#[inline]
-	pub fn psnr(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, r: f64) -> Result<f64> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
+	pub fn psnr(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, r: f64) -> Result<f64> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PSNR_const__InputArrayR_const__InputArrayR_double(src1.as_raw__InputArray(), src2.as_raw__InputArray(), r, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2085,12 +2085,12 @@ pub mod core {
 	
 	/// wrap SVD::backSubst
 	#[inline]
-	pub fn sv_back_subst(w: &dyn core::ToInputArray, u: &dyn core::ToInputArray, vt: &dyn core::ToInputArray, rhs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(w);
-		extern_container_arg!(u);
-		extern_container_arg!(vt);
-		extern_container_arg!(rhs);
-		extern_container_arg!(dst);
+	pub fn sv_back_subst(w: &impl core::ToInputArray, u: &impl core::ToInputArray, vt: &impl core::ToInputArray, rhs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(w);
+		input_array_arg!(u);
+		input_array_arg!(vt);
+		input_array_arg!(rhs);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVBackSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2103,11 +2103,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * flags: 0
 	#[inline]
-	pub fn sv_decomp(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, u: &mut dyn core::ToOutputArray, vt: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(w);
-		extern_container_arg!(u);
-		extern_container_arg!(vt);
+	pub fn sv_decomp(src: &impl core::ToInputArray, w: &mut impl core::ToOutputArray, u: &mut impl core::ToOutputArray, vt: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(w);
+		output_array_arg!(u);
+		output_array_arg!(vt);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVDecomp_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2193,10 +2193,10 @@ pub mod core {
 	/// ## See also
 	/// cv::abs(const Mat&)
 	#[inline]
-	pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn absdiff(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2233,10 +2233,10 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * dtype: -1
 	#[inline]
-	pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToInputArray, beta: f64, gamma: f64, dst: &mut dyn core::ToOutputArray, dtype: i32) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn add_weighted(src1: &impl core::ToInputArray, alpha: f64, src2: &impl core::ToInputArray, beta: f64, gamma: f64, dst: &mut impl core::ToOutputArray, dtype: i32) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2288,11 +2288,11 @@ pub mod core {
 	/// * mask: noArray()
 	/// * dtype: -1
 	#[inline]
-	pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn add(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, dtype: i32) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2312,12 +2312,12 @@ pub mod core {
 	/// * update: 0
 	/// * crosscheck: false
 	#[inline]
-	pub fn batch_distance(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dist: &mut dyn core::ToOutputArray, dtype: i32, nidx: &mut dyn core::ToOutputArray, norm_type: i32, k: i32, mask: &dyn core::ToInputArray, update: i32, crosscheck: bool) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dist);
-		extern_container_arg!(nidx);
-		extern_container_arg!(mask);
+	pub fn batch_distance(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dist: &mut impl core::ToOutputArray, dtype: i32, nidx: &mut impl core::ToOutputArray, norm_type: i32, k: i32, mask: &impl core::ToInputArray, update: i32, crosscheck: bool) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dist);
+		output_array_arg!(nidx);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_batchDistance_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__OutputArrayR_int_int_const__InputArrayR_int_bool(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dist.as_raw__OutputArray(), dtype, nidx.as_raw__OutputArray(), norm_type, k, mask.as_raw__InputArray(), update, crosscheck, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2354,11 +2354,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn bitwise_and(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2384,10 +2384,10 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn bitwise_not(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn bitwise_not(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2423,11 +2423,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn bitwise_or(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn bitwise_or(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2464,11 +2464,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn bitwise_xor(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2535,10 +2535,10 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * ctype: CV_64F
 	#[inline]
-	pub fn calc_covar_matrix(samples: &dyn core::ToInputArray, covar: &mut dyn core::ToOutputArray, mean: &mut dyn core::ToInputOutputArray, flags: i32, ctype: i32) -> Result<()> {
-		extern_container_arg!(samples);
-		extern_container_arg!(covar);
-		extern_container_arg!(mean);
+	pub fn calc_covar_matrix(samples: &impl core::ToInputArray, covar: &mut impl core::ToOutputArray, mean: &mut impl core::ToInputOutputArray, flags: i32, ctype: i32) -> Result<()> {
+		input_array_arg!(samples);
+		output_array_arg!(covar);
+		input_output_array_arg!(mean);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int(samples.as_raw__InputArray(), covar.as_raw__OutputArray(), mean.as_raw__InputOutputArray(), flags, ctype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2569,11 +2569,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	#[inline]
-	pub fn cart_to_polar(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
-		extern_container_arg!(x);
-		extern_container_arg!(y);
-		extern_container_arg!(magnitude);
-		extern_container_arg!(angle);
+	pub fn cart_to_polar(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, angle: &mut impl core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
+		input_array_arg!(x);
+		input_array_arg!(y);
+		output_array_arg!(magnitude);
+		output_array_arg!(angle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2620,8 +2620,8 @@ pub mod core {
 	/// * min_val: -DBL_MAX
 	/// * max_val: DBL_MAX
 	#[inline]
-	pub fn check_range(a: &dyn core::ToInputArray, quiet: bool, pos: &mut core::Point, min_val: f64, max_val: f64) -> Result<bool> {
-		extern_container_arg!(a);
+	pub fn check_range(a: &impl core::ToInputArray, quiet: bool, pos: &mut core::Point, min_val: f64, max_val: f64) -> Result<bool> {
+		input_array_arg!(a);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_checkRange_const__InputArrayR_bool_PointX_double_double(a.as_raw__InputArray(), quiet, pos, min_val, max_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2658,10 +2658,10 @@ pub mod core {
 	/// ## See also
 	/// checkRange, min, max, threshold
 	#[inline]
-	pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, cmpop: i32) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn compare(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, cmpop: i32) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2688,8 +2688,8 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * lower_to_upper: false
 	#[inline]
-	pub fn complete_symm(m: &mut dyn core::ToInputOutputArray, lower_to_upper: bool) -> Result<()> {
-		extern_container_arg!(m);
+	pub fn complete_symm(m: &mut impl core::ToInputOutputArray, lower_to_upper: bool) -> Result<()> {
+		input_output_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_completeSymm_const__InputOutputArrayR_bool(m.as_raw__InputOutputArray(), lower_to_upper, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2708,9 +2708,9 @@ pub mod core {
 	/// * src: input array.
 	/// * dst: output array.
 	#[inline]
-	pub fn convert_fp16(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn convert_fp16(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convertFp16_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2750,9 +2750,9 @@ pub mod core {
 	/// * alpha: 1
 	/// * beta: 0
 	#[inline]
-	pub fn convert_scale_abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, alpha: f64, beta: f64) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn convert_scale_abs(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, alpha: f64, beta: f64) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convertScaleAbs_const__InputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2809,9 +2809,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * value: Scalar()
 	#[inline]
-	pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn copy_make_border(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_const_ScalarR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, &value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2829,10 +2829,10 @@ pub mod core {
 	/// * mask: Operation mask of the same size as \*this. Its non-zero elements indicate which matrix
 	/// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels.
 	#[inline]
-	pub fn copy_to(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn copy_to(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_copyTo_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2849,8 +2849,8 @@ pub mod core {
 	/// ## See also
 	/// mean, meanStdDev, norm, minMaxLoc, calcCovarMatrix
 	#[inline]
-	pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
-		extern_container_arg!(src);
+	pub fn count_non_zero(src: &impl core::ToInputArray) -> Result<i32> {
+		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_countNonZero_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2886,8 +2886,8 @@ pub mod core {
 	/// Matrix is called continuous if its elements are stored continuously, that is, without gaps at the
 	/// end of each row.
 	#[inline]
-	pub fn create_continuous(rows: i32, cols: i32, typ: i32, arr: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(arr);
+	pub fn create_continuous(rows: i32, cols: i32, typ: i32, arr: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createContinuous_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2915,8 +2915,8 @@ pub mod core {
 	/// 
 	/// The function does not reallocate memory if the matrix has proper attributes already.
 	#[inline]
-	pub fn ensure_size_is_enough(rows: i32, cols: i32, typ: i32, arr: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(arr);
+	pub fn ensure_size_is_enough(rows: i32, cols: i32, typ: i32, arr: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_ensureSizeIsEnough_int_int_int_const__OutputArrayR(rows, cols, typ, arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3103,9 +3103,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * flags: 0
 	#[inline]
-	pub fn dct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn dct(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3320,8 +3320,8 @@ pub mod core {
 	/// ## See also
 	/// trace, invert, solve, eigen, [MatrixExpressions]
 	#[inline]
-	pub fn determinant(mtx: &dyn core::ToInputArray) -> Result<f64> {
-		extern_container_arg!(mtx);
+	pub fn determinant(mtx: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(mtx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_determinant_const__InputArrayR(mtx.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3469,9 +3469,9 @@ pub mod core {
 	/// * flags: 0
 	/// * nonzero_rows: 0
 	#[inline]
-	pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn dft(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3540,10 +3540,10 @@ pub mod core {
 	/// * scale: 1
 	/// * dtype: -1
 	#[inline]
-	pub fn divide2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn divide2(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, scale: f64, dtype: i32) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3585,9 +3585,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * dtype: -1
 	#[inline]
-	pub fn divide(scale: f64, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dtype: i32) -> Result<()> {
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn divide(scale: f64, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, dtype: i32) -> Result<()> {
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_divide_double_const__InputArrayR_const__OutputArrayR_int(scale, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), dtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3613,10 +3613,10 @@ pub mod core {
 	/// ## See also
 	/// eigen
 	#[inline]
-	pub fn eigen_non_symmetric(src: &dyn core::ToInputArray, eigenvalues: &mut dyn core::ToOutputArray, eigenvectors: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(eigenvalues);
-		extern_container_arg!(eigenvectors);
+	pub fn eigen_non_symmetric(src: &impl core::ToInputArray, eigenvalues: &mut impl core::ToOutputArray, eigenvectors: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(eigenvalues);
+		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_eigenNonSymmetric_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3650,10 +3650,10 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * eigenvectors: noArray()
 	#[inline]
-	pub fn eigen(src: &dyn core::ToInputArray, eigenvalues: &mut dyn core::ToOutputArray, eigenvectors: &mut dyn core::ToOutputArray) -> Result<bool> {
-		extern_container_arg!(src);
-		extern_container_arg!(eigenvalues);
-		extern_container_arg!(eigenvectors);
+	pub fn eigen(src: &impl core::ToInputArray, eigenvalues: &mut impl core::ToOutputArray, eigenvectors: &mut impl core::ToOutputArray) -> Result<bool> {
+		input_array_arg!(src);
+		output_array_arg!(eigenvalues);
+		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_eigen_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3721,9 +3721,9 @@ pub mod core {
 	/// ## See also
 	/// log , cartToPolar , polarToCart , phase , pow , sqrt , magnitude
 	#[inline]
-	pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn exp(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_exp_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3739,9 +3739,9 @@ pub mod core {
 	/// ## See also
 	/// mixChannels, split
 	#[inline]
-	pub fn extract_channel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, coi: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn extract_channel(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, coi: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_extractChannel_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), coi, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3794,9 +3794,9 @@ pub mod core {
 	/// * src: single-channel array
 	/// * idx: the output array, type of cv::Mat or std::vector<Point>, corresponding to non-zero indices in the input
 	#[inline]
-	pub fn find_non_zero(src: &dyn core::ToInputArray, idx: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(idx);
+	pub fn find_non_zero(src: &impl core::ToInputArray, idx: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(idx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_findNonZero_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3810,9 +3810,9 @@ pub mod core {
 	/// * dst: output array that has the same shape of src
 	/// * axis: axis that performs a flip on. 0 <= axis < src.dims.
 	#[inline]
-	pub fn flip_nd(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, axis: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn flip_nd(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, axis: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_flipND_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3847,9 +3847,9 @@ pub mod core {
 	/// ## See also
 	/// transpose , repeat , completeSymm
 	#[inline]
-	pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flip_code: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn flip(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flip_code: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_flip_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3891,11 +3891,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * flags: 0
 	#[inline]
-	pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha: f64, src3: &dyn core::ToInputArray, beta: f64, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(src3);
-		extern_container_arg!(dst);
+	pub fn gemm(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, alpha: f64, src3: &impl core::ToInputArray, beta: f64, dst: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		input_array_arg!(src3);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4219,10 +4219,10 @@ pub mod core {
 	/// * src2: second input array to be considered for horizontal concatenation.
 	/// * dst: output array. It has the same number of rows and depth as the src1 and src2, and the sum of cols of the src1 and src2.
 	#[inline]
-	pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn hconcat2(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_hconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4274,9 +4274,9 @@ pub mod core {
 	/// * dst: output array. It has the same number of rows and depth as the src, and the sum of cols of the src.
 	/// same depth.
 	#[inline]
-	pub fn hconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn hconcat(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_hconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4297,9 +4297,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * flags: 0
 	#[inline]
-	pub fn idct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn idct(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_idct_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4326,9 +4326,9 @@ pub mod core {
 	/// * flags: 0
 	/// * nonzero_rows: 0
 	#[inline]
-	pub fn idft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn idft(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_idft_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4356,11 +4356,11 @@ pub mod core {
 	/// * upperb: inclusive upper boundary array or a scalar.
 	/// * dst: output array of the same size as src and CV_8U type.
 	#[inline]
-	pub fn in_range(src: &dyn core::ToInputArray, lowerb: &dyn core::ToInputArray, upperb: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(lowerb);
-		extern_container_arg!(upperb);
-		extern_container_arg!(dst);
+	pub fn in_range(src: &impl core::ToInputArray, lowerb: &impl core::ToInputArray, upperb: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(lowerb);
+		input_array_arg!(upperb);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_inRange_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), lowerb.as_raw__InputArray(), upperb.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4376,9 +4376,9 @@ pub mod core {
 	/// ## See also
 	/// mixChannels, merge
 	#[inline]
-	pub fn insert_channel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, coi: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn insert_channel(src: &impl core::ToInputArray, dst: &mut impl core::ToInputOutputArray, coi: i32) -> Result<()> {
+		input_array_arg!(src);
+		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_insertChannel_const__InputArrayR_const__InputOutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), coi, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4461,9 +4461,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * flags: DECOMP_LU
 	#[inline]
-	pub fn invert(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<f64> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn invert(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32) -> Result<f64> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_invert_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4599,10 +4599,10 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * centers: noArray()
 	#[inline]
-	pub fn kmeans(data: &dyn core::ToInputArray, k: i32, best_labels: &mut dyn core::ToInputOutputArray, criteria: core::TermCriteria, attempts: i32, flags: i32, centers: &mut dyn core::ToOutputArray) -> Result<f64> {
-		extern_container_arg!(data);
-		extern_container_arg!(best_labels);
-		extern_container_arg!(centers);
+	pub fn kmeans(data: &impl core::ToInputArray, k: i32, best_labels: &mut impl core::ToInputOutputArray, criteria: core::TermCriteria, attempts: i32, flags: i32, centers: &mut impl core::ToOutputArray) -> Result<f64> {
+		input_array_arg!(data);
+		input_output_array_arg!(best_labels);
+		output_array_arg!(centers);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_kmeans_const__InputArrayR_int_const__InputOutputArrayR_TermCriteria_int_int_const__OutputArrayR(data.as_raw__InputArray(), k, best_labels.as_raw__InputOutputArray(), criteria.opencv_as_extern(), attempts, flags, centers.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4623,9 +4623,9 @@ pub mod core {
 	/// ## See also
 	/// exp, cartToPolar, polarToCart, phase, pow, sqrt, magnitude
 	#[inline]
-	pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn log(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_log_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4646,10 +4646,10 @@ pub mod core {
 	/// ## See also
 	/// cartToPolar, polarToCart, phase, sqrt
 	#[inline]
-	pub fn magnitude(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(x);
-		extern_container_arg!(y);
-		extern_container_arg!(magnitude);
+	pub fn magnitude(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(x);
+		input_array_arg!(y);
+		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4740,10 +4740,10 @@ pub mod core {
 	/// ## See also
 	/// min, compare, inRange, minMaxLoc, [MatrixExpressions]
 	#[inline]
-	pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn max(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4787,11 +4787,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn mean_std_dev(src: &dyn core::ToInputArray, mean: &mut dyn core::ToOutputArray, stddev: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(mean);
-		extern_container_arg!(stddev);
-		extern_container_arg!(mask);
+	pub fn mean_std_dev(src: &impl core::ToInputArray, mean: &mut impl core::ToOutputArray, stddev: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(mean);
+		output_array_arg!(stddev);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_meanStdDev_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), mean.as_raw__OutputArray(), stddev.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4815,9 +4815,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
+	pub fn mean(src: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<core::Scalar> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mean_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4853,9 +4853,9 @@ pub mod core {
 	/// * dst: output array of the same size and the same depth as mv[0]; The number of channels will
 	/// be the total number of channels in the matrix array.
 	#[inline]
-	pub fn merge(mv: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(mv);
-		extern_container_arg!(dst);
+	pub fn merge(mv: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(mv);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_merge_const__InputArrayR_const__OutputArrayR(mv.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4894,9 +4894,9 @@ pub mod core {
 	/// * max_idx: 0
 	/// * mask: noArray()
 	#[inline]
-	pub fn min_max_idx(src: &dyn core::ToInputArray, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_idx: Option<&mut i32>, max_idx: Option<&mut i32>, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
+	pub fn min_max_idx(src: &impl core::ToInputArray, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_idx: Option<&mut i32>, max_idx: Option<&mut i32>, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX_doubleX_intX_intX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4972,9 +4972,9 @@ pub mod core {
 	/// * max_loc: 0
 	/// * mask: noArray()
 	#[inline]
-	pub fn min_max_loc(src: &dyn core::ToInputArray, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_loc: Option<&mut core::Point>, max_loc: Option<&mut core::Point>, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
+	pub fn min_max_loc(src: &impl core::ToInputArray, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_loc: Option<&mut core::Point>, max_loc: Option<&mut core::Point>, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_loc.map_or(::core::ptr::null_mut(), |min_loc| min_loc as *mut _), max_loc.map_or(::core::ptr::null_mut(), |max_loc| max_loc as *mut _), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5065,10 +5065,10 @@ pub mod core {
 	/// ## See also
 	/// max, compare, inRange, minMaxLoc
 	#[inline]
-	pub fn min(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn min(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5146,9 +5146,9 @@ pub mod core {
 	/// filled with zero .
 	/// * npairs: number of index pairs in fromTo.
 	#[inline]
-	pub fn mix_channels(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, from_to: &[i32]) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn mix_channels(src: &impl core::ToInputArray, dst: &mut impl core::ToInputOutputArray, from_to: &[i32]) -> Result<()> {
+		input_array_arg!(src);
+		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_intX_size_t(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_ptr(), (from_to.len() / 2) as _, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5215,9 +5215,9 @@ pub mod core {
 	/// channels; as a special case, when fromTo[k\*2] is negative, the corresponding output channel is
 	/// filled with zero .
 	#[inline]
-	pub fn mix_channels_vec(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, from_to: &core::Vector<i32>) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn mix_channels_vec(src: &impl core::ToInputArray, dst: &mut impl core::ToInputOutputArray, from_to: &core::Vector<i32>) -> Result<()> {
+		input_array_arg!(src);
+		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_vectorLintGR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5246,10 +5246,10 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * conj_b: false
 	#[inline]
-	pub fn mul_spectrums(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, c: &mut dyn core::ToOutputArray, flags: i32, conj_b: bool) -> Result<()> {
-		extern_container_arg!(a);
-		extern_container_arg!(b);
-		extern_container_arg!(c);
+	pub fn mul_spectrums(a: &impl core::ToInputArray, b: &impl core::ToInputArray, c: &mut impl core::ToOutputArray, flags: i32, conj_b: bool) -> Result<()> {
+		input_array_arg!(a);
+		input_array_arg!(b);
+		output_array_arg!(c);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5292,10 +5292,10 @@ pub mod core {
 	/// * scale: 1
 	/// * dtype: -1
 	#[inline]
-	pub fn mul_transposed(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, a_ta: bool, delta: &dyn core::ToInputArray, scale: f64, dtype: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(delta);
+	pub fn mul_transposed(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, a_ta: bool, delta: &impl core::ToInputArray, scale: f64, dtype: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(delta);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mulTransposed_const__InputArrayR_const__OutputArrayR_bool_const__InputArrayR_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), a_ta, delta.as_raw__InputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5331,10 +5331,10 @@ pub mod core {
 	/// * scale: 1
 	/// * dtype: -1
 	#[inline]
-	pub fn multiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn multiply(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, scale: f64, dtype: i32) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5390,10 +5390,10 @@ pub mod core {
 	/// * norm_type: NORM_L2
 	/// * mask: noArray()
 	#[inline]
-	pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(mask);
+	pub fn norm2(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, norm_type: i32, mask: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_norm_const__InputArrayR_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5442,9 +5442,9 @@ pub mod core {
 	/// * norm_type: NORM_L2
 	/// * mask: noArray()
 	#[inline]
-	pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
-		extern_container_arg!(src1);
-		extern_container_arg!(mask);
+	pub fn norm(src1: &impl core::ToInputArray, norm_type: i32, mask: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(src1);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_norm_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5597,10 +5597,10 @@ pub mod core {
 	/// * dtype: -1
 	/// * mask: noArray()
 	#[inline]
-	pub fn normalize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn normalize(src: &impl core::ToInputArray, dst: &mut impl core::ToInputOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_normalize_const__InputArrayR_const__InputOutputArrayR_double_double_int_int_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5630,10 +5630,10 @@ pub mod core {
 	}
 	
 	#[inline]
-	pub fn build_options_add_matrix_description(build_options: &mut String, name: &str, _m: &dyn core::ToInputArray) -> Result<()> {
+	pub fn build_options_add_matrix_description(build_options: &mut String, name: &str, _m: &impl core::ToInputArray) -> Result<()> {
 		string_arg_output_send!(via build_options_via);
 		extern_container_arg!(name);
-		extern_container_arg!(_m);
+		input_array_arg!(_m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_buildOptionsAddMatrixDescription_StringR_const_StringR_const__InputArrayR(&mut build_options_via, name.opencv_as_extern(), _m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5653,16 +5653,16 @@ pub mod core {
 	/// * src9: noArray()
 	/// * strat: OCL_VECTOR_DEFAULT
 	#[inline]
-	pub fn check_optimal_vector_width(vector_widths: &i32, src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, src3: &dyn core::ToInputArray, src4: &dyn core::ToInputArray, src5: &dyn core::ToInputArray, src6: &dyn core::ToInputArray, src7: &dyn core::ToInputArray, src8: &dyn core::ToInputArray, src9: &dyn core::ToInputArray, strat: core::OclVectorStrategy) -> Result<i32> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(src3);
-		extern_container_arg!(src4);
-		extern_container_arg!(src5);
-		extern_container_arg!(src6);
-		extern_container_arg!(src7);
-		extern_container_arg!(src8);
-		extern_container_arg!(src9);
+	pub fn check_optimal_vector_width(vector_widths: &i32, src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, src3: &impl core::ToInputArray, src4: &impl core::ToInputArray, src5: &impl core::ToInputArray, src6: &impl core::ToInputArray, src7: &impl core::ToInputArray, src8: &impl core::ToInputArray, src9: &impl core::ToInputArray, strat: core::OclVectorStrategy) -> Result<i32> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		input_array_arg!(src3);
+		input_array_arg!(src4);
+		input_array_arg!(src5);
+		input_array_arg!(src6);
+		input_array_arg!(src7);
+		input_array_arg!(src8);
+		input_array_arg!(src9);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_checkOptimalVectorWidth_const_intX_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(vector_widths, src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5789,8 +5789,8 @@ pub mod core {
 	/// * ddepth: -1
 	/// * name: NULL
 	#[inline]
-	pub fn kernel_to_str(_kernel: &dyn core::ToInputArray, ddepth: i32, name: &str) -> Result<String> {
-		extern_container_arg!(_kernel);
+	pub fn kernel_to_str(_kernel: &impl core::ToInputArray, ddepth: i32, name: &str) -> Result<String> {
+		input_array_arg!(_kernel);
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_kernelToStr_const__InputArrayR_int_const_charX(_kernel.as_raw__InputArray(), ddepth, name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -5820,16 +5820,16 @@ pub mod core {
 	/// * src8: noArray()
 	/// * src9: noArray()
 	#[inline]
-	pub fn predict_optimal_vector_width_max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, src3: &dyn core::ToInputArray, src4: &dyn core::ToInputArray, src5: &dyn core::ToInputArray, src6: &dyn core::ToInputArray, src7: &dyn core::ToInputArray, src8: &dyn core::ToInputArray, src9: &dyn core::ToInputArray) -> Result<i32> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(src3);
-		extern_container_arg!(src4);
-		extern_container_arg!(src5);
-		extern_container_arg!(src6);
-		extern_container_arg!(src7);
-		extern_container_arg!(src8);
-		extern_container_arg!(src9);
+	pub fn predict_optimal_vector_width_max(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, src3: &impl core::ToInputArray, src4: &impl core::ToInputArray, src5: &impl core::ToInputArray, src6: &impl core::ToInputArray, src7: &impl core::ToInputArray, src8: &impl core::ToInputArray, src9: &impl core::ToInputArray) -> Result<i32> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		input_array_arg!(src3);
+		input_array_arg!(src4);
+		input_array_arg!(src5);
+		input_array_arg!(src6);
+		input_array_arg!(src7);
+		input_array_arg!(src8);
+		input_array_arg!(src9);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5848,16 +5848,16 @@ pub mod core {
 	/// * src9: noArray()
 	/// * strat: OCL_VECTOR_DEFAULT
 	#[inline]
-	pub fn predict_optimal_vector_width(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, src3: &dyn core::ToInputArray, src4: &dyn core::ToInputArray, src5: &dyn core::ToInputArray, src6: &dyn core::ToInputArray, src7: &dyn core::ToInputArray, src8: &dyn core::ToInputArray, src9: &dyn core::ToInputArray, strat: core::OclVectorStrategy) -> Result<i32> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(src3);
-		extern_container_arg!(src4);
-		extern_container_arg!(src5);
-		extern_container_arg!(src6);
-		extern_container_arg!(src7);
-		extern_container_arg!(src8);
-		extern_container_arg!(src9);
+	pub fn predict_optimal_vector_width(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, src3: &impl core::ToInputArray, src4: &impl core::ToInputArray, src5: &impl core::ToInputArray, src6: &impl core::ToInputArray, src7: &impl core::ToInputArray, src8: &impl core::ToInputArray, src9: &impl core::ToInputArray, strat: core::OclVectorStrategy) -> Result<i32> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		input_array_arg!(src3);
+		input_array_arg!(src4);
+		input_array_arg!(src5);
+		input_array_arg!(src6);
+		input_array_arg!(src7);
+		input_array_arg!(src8);
+		input_array_arg!(src9);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_predictOptimalVectorWidth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_OclVectorStrategy(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5908,8 +5908,8 @@ pub mod core {
 	/// * texture: - source Texture2D object.
 	/// * dst: - destination OutputArray.
 	#[inline]
-	pub fn convert_from_gl_texture_2d(texture: &core::Texture2D, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(dst);
+	pub fn convert_from_gl_texture_2d(texture: &core::Texture2D, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_convertFromGLTexture2D_const_Texture2DR_const__OutputArrayR(texture.as_raw_Texture2D(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5922,8 +5922,8 @@ pub mod core {
 	/// * src: - source InputArray.
 	/// * texture: - destination Texture2D object.
 	#[inline]
-	pub fn convert_to_gl_texture_2d(src: &dyn core::ToInputArray, texture: &mut core::Texture2D) -> Result<()> {
-		extern_container_arg!(src);
+	pub fn convert_to_gl_texture_2d(src: &impl core::ToInputArray, texture: &mut core::Texture2D) -> Result<()> {
+		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_convertToGLTexture2D_const__InputArrayR_Texture2DR(src.as_raw__InputArray(), texture.as_raw_mut_Texture2D(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5986,8 +5986,8 @@ pub mod core {
 	/// * mode: POINTS
 	/// * color: Scalar::all(255)
 	#[inline]
-	pub fn render_2(arr: &core::Arrays, indices: &dyn core::ToInputArray, mode: i32, color: core::Scalar) -> Result<()> {
-		extern_container_arg!(indices);
+	pub fn render_2(arr: &core::Arrays, indices: &impl core::ToInputArray, mode: i32, color: core::Scalar) -> Result<()> {
+		input_array_arg!(indices);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR_int_Scalar(arr.as_raw_Arrays(), indices.as_raw__InputArray(), mode, color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -6715,8 +6715,8 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * val: 0
 	#[inline]
-	pub fn patch_na_ns(a: &mut dyn core::ToInputOutputArray, val: f64) -> Result<()> {
-		extern_container_arg!(a);
+	pub fn patch_na_ns(a: &mut impl core::ToInputOutputArray, val: f64) -> Result<()> {
+		input_output_array_arg!(a);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_patchNaNs_const__InputOutputArrayR_double(a.as_raw__InputOutputArray(), val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -6752,10 +6752,10 @@ pub mod core {
 	/// ## See also
 	/// transform, warpPerspective, getPerspectiveTransform, findHomography
 	#[inline]
-	pub fn perspective_transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(m);
+	pub fn perspective_transform(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, m: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_perspectiveTransform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -6783,10 +6783,10 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	#[inline]
-	pub fn phase(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
-		extern_container_arg!(x);
-		extern_container_arg!(y);
-		extern_container_arg!(angle);
+	pub fn phase(x: &impl core::ToInputArray, y: &impl core::ToInputArray, angle: &mut impl core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
+		input_array_arg!(x);
+		input_array_arg!(y);
+		output_array_arg!(angle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -6819,11 +6819,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	#[inline]
-	pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInputArray, x: &mut dyn core::ToOutputArray, y: &mut dyn core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
-		extern_container_arg!(magnitude);
-		extern_container_arg!(angle);
-		extern_container_arg!(x);
-		extern_container_arg!(y);
+	pub fn polar_to_cart(magnitude: &impl core::ToInputArray, angle: &impl core::ToInputArray, x: &mut impl core::ToOutputArray, y: &mut impl core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
+		input_array_arg!(magnitude);
+		input_array_arg!(angle);
+		output_array_arg!(x);
+		output_array_arg!(y);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -6857,9 +6857,9 @@ pub mod core {
 	/// ## See also
 	/// sqrt, exp, log, cartToPolar, polarToCart
 	#[inline]
-	pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn pow(src: &impl core::ToInputArray, power: f64, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pow_const__InputArrayR_double_const__OutputArrayR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -6884,8 +6884,8 @@ pub mod core {
 	/// * iter_factor: 1.
 	/// * rng: 0
 	#[inline]
-	pub fn rand_shuffle(dst: &mut dyn core::ToInputOutputArray, iter_factor: f64, rng: &mut core::RNG) -> Result<()> {
-		extern_container_arg!(dst);
+	pub fn rand_shuffle(dst: &mut impl core::ToInputOutputArray, iter_factor: f64, rng: &mut core::RNG) -> Result<()> {
+		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_randShuffle_const__InputOutputArrayR_double_RNGX(dst.as_raw__InputOutputArray(), iter_factor, rng.as_raw_mut_RNG(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -6906,10 +6906,10 @@ pub mod core {
 	/// ## See also
 	/// RNG, randu
 	#[inline]
-	pub fn randn(dst: &mut dyn core::ToInputOutputArray, mean: &dyn core::ToInputArray, stddev: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(dst);
-		extern_container_arg!(mean);
-		extern_container_arg!(stddev);
+	pub fn randn(dst: &mut impl core::ToInputOutputArray, mean: &impl core::ToInputArray, stddev: &impl core::ToInputArray) -> Result<()> {
+		input_output_array_arg!(dst);
+		input_array_arg!(mean);
+		input_array_arg!(stddev);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_randn_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), mean.as_raw__InputArray(), stddev.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -6929,10 +6929,10 @@ pub mod core {
 	/// ## See also
 	/// RNG, randn, theRNG
 	#[inline]
-	pub fn randu(dst: &mut dyn core::ToInputOutputArray, low: &dyn core::ToInputArray, high: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(dst);
-		extern_container_arg!(low);
-		extern_container_arg!(high);
+	pub fn randu(dst: &mut impl core::ToInputOutputArray, low: &impl core::ToInputArray, high: &impl core::ToInputArray) -> Result<()> {
+		input_output_array_arg!(dst);
+		input_array_arg!(low);
+		input_array_arg!(high);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_randu_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(dst.as_raw__InputOutputArray(), low.as_raw__InputArray(), high.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7075,9 +7075,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * last_index: false
 	#[inline]
-	pub fn reduce_arg_max(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, axis: i32, last_index: bool) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn reduce_arg_max(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, axis: i32, last_index: bool) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduceArgMax_const__InputArrayR_const__OutputArrayR_int_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, last_index, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7105,9 +7105,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * last_index: false
 	#[inline]
-	pub fn reduce_arg_min(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, axis: i32, last_index: bool) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn reduce_arg_min(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, axis: i32, last_index: bool) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduceArgMin_const__InputArrayR_const__OutputArrayR_int_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, last_index, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7144,9 +7144,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * dtype: -1
 	#[inline]
-	pub fn reduce(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dim: i32, rtype: i32, dtype: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn reduce(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, dim: i32, rtype: i32, dtype: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduce_const__InputArrayR_const__OutputArrayR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dim, rtype, dtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7201,9 +7201,9 @@ pub mod core {
 	/// ## See also
 	/// cv::reduce
 	#[inline]
-	pub fn repeat_to(src: &dyn core::ToInputArray, ny: i32, nx: i32, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn repeat_to(src: &impl core::ToInputArray, ny: i32, nx: i32, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_repeat_const__InputArrayR_int_int_const__OutputArrayR(src.as_raw__InputArray(), ny, nx, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7224,9 +7224,9 @@ pub mod core {
 	/// ## See also
 	/// transpose , repeat , completeSymm, flip, RotateFlags
 	#[inline]
-	pub fn rotate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, rotate_code: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn rotate(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, rotate_code: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rotate_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), rotate_code, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7341,10 +7341,10 @@ pub mod core {
 	/// ## See also
 	/// add, addWeighted, subtract, Mat::dot, Mat::convertTo
 	#[inline]
-	pub fn scale_add(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn scale_add(src1: &impl core::ToInputArray, alpha: f64, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_scaleAdd_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7388,8 +7388,8 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * s: Scalar(1)
 	#[inline]
-	pub fn set_identity(mtx: &mut dyn core::ToInputOutputArray, s: core::Scalar) -> Result<()> {
-		extern_container_arg!(mtx);
+	pub fn set_identity(mtx: &mut impl core::ToInputOutputArray, s: core::Scalar) -> Result<()> {
+		input_output_array_arg!(mtx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setIdentity_const__InputOutputArrayR_const_ScalarR(mtx.as_raw__InputOutputArray(), &s, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7498,9 +7498,9 @@ pub mod core {
 	/// ## Returns
 	/// number of real roots. It can be 0, 1 or 2.
 	#[inline]
-	pub fn solve_cubic(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutputArray) -> Result<i32> {
-		extern_container_arg!(coeffs);
-		extern_container_arg!(roots);
+	pub fn solve_cubic(coeffs: &impl core::ToInputArray, roots: &mut impl core::ToOutputArray) -> Result<i32> {
+		input_array_arg!(coeffs);
+		output_array_arg!(roots);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solveCubic_const__InputArrayR_const__OutputArrayR(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7538,10 +7538,10 @@ pub mod core {
 	/// ## Returns
 	/// One of cv::SolveLPResult
 	#[inline]
-	pub fn solve_lp(func: &dyn core::ToInputArray, constr: &dyn core::ToInputArray, z: &mut dyn core::ToOutputArray) -> Result<i32> {
-		extern_container_arg!(func);
-		extern_container_arg!(constr);
-		extern_container_arg!(z);
+	pub fn solve_lp(func: &impl core::ToInputArray, constr: &impl core::ToInputArray, z: &mut impl core::ToOutputArray) -> Result<i32> {
+		input_array_arg!(func);
+		input_array_arg!(constr);
+		output_array_arg!(z);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solveLP_const__InputArrayR_const__InputArrayR_const__OutputArrayR(func.as_raw__InputArray(), constr.as_raw__InputArray(), z.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7561,9 +7561,9 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * max_iters: 300
 	#[inline]
-	pub fn solve_poly(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutputArray, max_iters: i32) -> Result<f64> {
-		extern_container_arg!(coeffs);
-		extern_container_arg!(roots);
+	pub fn solve_poly(coeffs: &impl core::ToInputArray, roots: &mut impl core::ToOutputArray, max_iters: i32) -> Result<f64> {
+		input_array_arg!(coeffs);
+		output_array_arg!(roots);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solvePoly_const__InputArrayR_const__OutputArrayR_int(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), max_iters, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7599,10 +7599,10 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * flags: DECOMP_LU
 	#[inline]
-	pub fn solve(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn solve(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32) -> Result<bool> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solve_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7631,9 +7631,9 @@ pub mod core {
 	/// ## See also
 	/// sort, randShuffle
 	#[inline]
-	pub fn sort_idx(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn sort_idx(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sortIdx_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7656,9 +7656,9 @@ pub mod core {
 	/// ## See also
 	/// sortIdx, randShuffle
 	#[inline]
-	pub fn sort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn sort(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sort_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7713,9 +7713,9 @@ pub mod core {
 	/// * m: input multi-channel array.
 	/// * mv: output vector of arrays; the arrays themselves are reallocated, if needed.
 	#[inline]
-	pub fn split(m: &dyn core::ToInputArray, mv: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(m);
-		extern_container_arg!(mv);
+	pub fn split(m: &impl core::ToInputArray, mv: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(m);
+		output_array_arg!(mv);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_split_const__InputArrayR_const__OutputArrayR(m.as_raw__InputArray(), mv.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7733,9 +7733,9 @@ pub mod core {
 	/// * src: input floating-point array.
 	/// * dst: output array of the same size and type as src.
 	#[inline]
-	pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn sqrt(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sqrt_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7788,11 +7788,11 @@ pub mod core {
 	/// * mask: noArray()
 	/// * dtype: -1
 	#[inline]
-	pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn subtract(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, dtype: i32) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7809,8 +7809,8 @@ pub mod core {
 	/// ## See also
 	/// countNonZero, mean, meanStdDev, norm, minMaxLoc, reduce
 	#[inline]
-	pub fn sum_elems(src: &dyn core::ToInputArray) -> Result<core::Scalar> {
-		extern_container_arg!(src);
+	pub fn sum_elems(src: &impl core::ToInputArray) -> Result<core::Scalar> {
+		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sum_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7880,8 +7880,8 @@ pub mod core {
 	/// ## Parameters
 	/// * mtx: input matrix.
 	#[inline]
-	pub fn trace(mtx: &dyn core::ToInputArray) -> Result<core::Scalar> {
-		extern_container_arg!(mtx);
+	pub fn trace(mtx: &impl core::ToInputArray) -> Result<core::Scalar> {
+		input_array_arg!(mtx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_trace_const__InputArrayR(mtx.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7915,10 +7915,10 @@ pub mod core {
 	/// ## See also
 	/// perspectiveTransform, getAffineTransform, estimateAffine2D, warpAffine, warpPerspective
 	#[inline]
-	pub fn transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(m);
+	pub fn transform(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, m: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(m);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_transform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7936,9 +7936,9 @@ pub mod core {
 	/// The i’th axis of dst will correspond to the axis numbered order[i] of the input.
 	/// * dst: output array of the same type as src.
 	#[inline]
-	pub fn transpose_nd(src: &dyn core::ToInputArray, order: &core::Vector<i32>, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn transpose_nd(src: &impl core::ToInputArray, order: &core::Vector<i32>, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_transposeND_const__InputArrayR_const_vectorLintGR_const__OutputArrayR(src.as_raw__InputArray(), order.as_raw_VectorOfi32(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -7957,9 +7957,9 @@ pub mod core {
 	/// * src: input array.
 	/// * dst: output array of the same type as src.
 	#[inline]
-	pub fn transpose(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn transpose(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_transpose_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8042,8 +8042,8 @@ pub mod core {
 	}
 	
 	#[inline]
-	pub fn dump_input_array_of_arrays(argument: &dyn core::ToInputArray) -> Result<String> {
-		extern_container_arg!(argument);
+	pub fn dump_input_array_of_arrays(argument: &impl core::ToInputArray) -> Result<String> {
+		input_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInputArrayOfArrays_const__InputArrayR(argument.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8053,8 +8053,8 @@ pub mod core {
 	}
 	
 	#[inline]
-	pub fn dump_input_array(argument: &dyn core::ToInputArray) -> Result<String> {
-		extern_container_arg!(argument);
+	pub fn dump_input_array(argument: &impl core::ToInputArray) -> Result<String> {
+		input_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInputArray_const__InputArrayR(argument.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8064,8 +8064,8 @@ pub mod core {
 	}
 	
 	#[inline]
-	pub fn dump_input_output_array_of_arrays(argument: &mut dyn core::ToInputOutputArray) -> Result<String> {
-		extern_container_arg!(argument);
+	pub fn dump_input_output_array_of_arrays(argument: &mut impl core::ToInputOutputArray) -> Result<String> {
+		input_output_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInputOutputArrayOfArrays_const__InputOutputArrayR(argument.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8075,8 +8075,8 @@ pub mod core {
 	}
 	
 	#[inline]
-	pub fn dump_input_output_array(argument: &mut dyn core::ToInputOutputArray) -> Result<String> {
-		extern_container_arg!(argument);
+	pub fn dump_input_output_array(argument: &mut impl core::ToInputOutputArray) -> Result<String> {
+		input_output_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpInputOutputArray_const__InputOutputArrayR(argument.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8351,8 +8351,8 @@ pub mod core {
 	}
 	
 	#[inline]
-	pub fn test_async_array(argument: &dyn core::ToInputArray) -> Result<core::AsyncArray> {
-		extern_container_arg!(argument);
+	pub fn test_async_array(argument: &impl core::ToInputArray) -> Result<core::AsyncArray> {
+		input_array_arg!(argument);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_testAsyncArray_const__InputArrayR(argument.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8451,8 +8451,8 @@ pub mod core {
 	/// * size: - size of image represented by VASurfaceID object.
 	/// * dst: - destination OutputArray.
 	#[inline]
-	pub unsafe fn convert_from_va_surface(display: core::va_display, surface: core::va_surface_id, size: core::Size, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(dst);
+	pub unsafe fn convert_from_va_surface(display: core::va_display, surface: core::va_surface_id, size: core::Size, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		{ sys::cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display, surface, size.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
@@ -8467,8 +8467,8 @@ pub mod core {
 	/// * surface: - destination VASurfaceID object.
 	/// * size: - size of image represented by VASurfaceID object.
 	#[inline]
-	pub unsafe fn convert_to_va_surface(display: core::va_display, src: &dyn core::ToInputArray, surface: core::va_surface_id, size: core::Size) -> Result<()> {
-		extern_container_arg!(src);
+	pub unsafe fn convert_to_va_surface(display: core::va_display, src: &impl core::ToInputArray, surface: core::va_surface_id, size: core::Size) -> Result<()> {
+		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		{ sys::cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display, src.as_raw__InputArray(), surface, size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
@@ -8543,10 +8543,10 @@ pub mod core {
 	/// * src2: second input array to be considered for vertical concatenation.
 	/// * dst: output array. It has the same number of cols and depth as the src1 and src2, and the sum of rows of the src1 and src2.
 	#[inline]
-	pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn vconcat2(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_vconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8596,9 +8596,9 @@ pub mod core {
 	/// * dst: output array. It has the same number of cols and depth as the src, and the sum of rows of the src.
 	/// same depth.
 	#[inline]
-	pub fn vconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn vconcat(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_vconcat_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -8891,8 +8891,8 @@ pub mod core {
 		/// 
 		/// Note: Result or stored exception can be fetched only once.
 		#[inline]
-		fn get(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(dst);
+		fn get(&self, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8911,8 +8911,8 @@ pub mod core {
 		/// 
 		/// Note: Result or stored exception can be fetched only once.
 		#[inline]
-		fn get_with_timeout(&self, dst: &mut dyn core::ToOutputArray, timeout_ns: i64) -> Result<bool> {
-			extern_container_arg!(dst);
+		fn get_with_timeout(&self, dst: &mut impl core::ToOutputArray, timeout_ns: i64) -> Result<bool> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_int64_t(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8921,8 +8921,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn get_with_timeout_f64(&self, dst: &mut dyn core::ToOutputArray, timeout_ns: f64) -> Result<bool> {
-			extern_container_arg!(dst);
+		fn get_with_timeout_f64(&self, dst: &mut impl core::ToOutputArray, timeout_ns: f64) -> Result<bool> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncArray_get_const_const__OutputArrayR_double(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -9072,8 +9072,8 @@ pub mod core {
 		/// ## Parameters
 		/// * value: result
 		#[inline]
-		fn set_value(&mut self, value: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(value);
+		fn set_value(&mut self, value: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(value);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AsyncPromise_setValue_const__InputArrayR(self.as_raw_mut_AsyncPromise(), value.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -9579,8 +9579,8 @@ pub mod core {
 		/// ## See also
 		/// DownhillSolver::setInitStep
 		#[inline]
-		fn get_init_step(&self, step: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(step);
+		fn get_init_step(&self, step: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(step);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_getInitStep_const_const__OutputArrayR(self.as_raw_DownhillSolver(), step.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -9609,8 +9609,8 @@ pub mod core {
 		/// * step: Initial step that will be used in algorithm. Roughly said, it determines the spread
 		/// (size in each dimension) of an initial simplex.
 		#[inline]
-		fn set_init_step(&mut self, step: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(step);
+		fn set_init_step(&mut self, step: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(step);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_setInitStep_const__InputArrayR(self.as_raw_mut_DownhillSolver(), step.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -9715,8 +9715,8 @@ pub mod core {
 		/// * init_step: Mat_<double>(1,1,0.0)
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
 		#[inline]
-		pub fn create(f: &core::Ptr<core::MinProblemSolver_Function>, init_step: &dyn core::ToInputArray, termcrit: core::TermCriteria) -> Result<core::Ptr<core::DownhillSolver>> {
-			extern_container_arg!(init_step);
+		pub fn create(f: &core::Ptr<core::MinProblemSolver_Function>, init_step: &impl core::ToInputArray, termcrit: core::TermCriteria) -> Result<core::Ptr<core::DownhillSolver>> {
+			input_array_arg!(init_step);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_create_const_PtrLFunctionGR_const__InputArrayR_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), init_step.as_raw__InputArray(), termcrit.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -11585,9 +11585,9 @@ pub mod core {
 		
 		/// Compute the discriminants for data in src (row aligned) and labels.
 		#[inline]
-		fn compute(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(labels);
+		fn compute(&mut self, src: &impl core::ToInputArray, labels: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_compute_const__InputArrayR_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -11598,8 +11598,8 @@ pub mod core {
 		/// Projects samples into the LDA subspace.
 		/// src may be one or more row aligned samples.
 		#[inline]
-		fn project(&mut self, src: &dyn core::ToInputArray) -> Result<core::Mat> {
-			extern_container_arg!(src);
+		fn project(&mut self, src: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_project_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -11611,8 +11611,8 @@ pub mod core {
 		/// Reconstructs projections from the LDA subspace.
 		/// src may be one or more row aligned projections.
 		#[inline]
-		fn reconstruct(&mut self, src: &dyn core::ToInputArray) -> Result<core::Mat> {
-			extern_container_arg!(src);
+		fn reconstruct(&mut self, src: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_reconstruct_const__InputArrayR(self.as_raw_mut_LDA(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -11673,9 +11673,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * num_components: 0
 		#[inline]
-		pub fn new_with_data(src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray, num_components: i32) -> Result<core::LDA> {
-			extern_container_arg!(src);
-			extern_container_arg!(labels);
+		pub fn new_with_data(src: &impl core::ToInputArray, labels: &impl core::ToInputArray, num_components: i32) -> Result<core::LDA> {
+			input_array_arg!(src);
+			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), labels.as_raw__InputArray(), num_components, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -11685,10 +11685,10 @@ pub mod core {
 		}
 		
 		#[inline]
-		pub fn subspace_project(w: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, src: &dyn core::ToInputArray) -> Result<core::Mat> {
-			extern_container_arg!(w);
-			extern_container_arg!(mean);
-			extern_container_arg!(src);
+		pub fn subspace_project(w: &impl core::ToInputArray, mean: &impl core::ToInputArray, src: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(w);
+			input_array_arg!(mean);
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_subspaceProject_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -11698,10 +11698,10 @@ pub mod core {
 		}
 		
 		#[inline]
-		pub fn subspace_reconstruct(w: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, src: &dyn core::ToInputArray) -> Result<core::Mat> {
-			extern_container_arg!(w);
-			extern_container_arg!(mean);
-			extern_container_arg!(src);
+		pub fn subspace_reconstruct(w: &impl core::ToInputArray, mean: &impl core::ToInputArray, src: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(w);
+			input_array_arg!(mean);
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_subspaceReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -12016,8 +12016,8 @@ pub mod core {
 		/// * m: Destination matrix. If it does not have a proper size or type before the operation, it is
 		/// reallocated.
 		#[inline]
-		fn copy_to(&self, m: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(m);
+		fn copy_to(&self, m: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -12049,9 +12049,9 @@ pub mod core {
 		/// * mask: Operation mask of the same size as \*this. Its non-zero elements indicate which matrix
 		///    elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels.
 		#[inline]
-		fn copy_to_masked(&self, m: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(m);
-			extern_container_arg!(mask);
+		fn copy_to_masked(&self, m: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			output_array_arg!(m);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_Mat(), m.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -12077,8 +12077,8 @@ pub mod core {
 		/// * alpha: 1
 		/// * beta: 0
 		#[inline]
-		fn convert_to(&self, m: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-			extern_container_arg!(m);
+		fn convert_to(&self, m: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_Mat(), m.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -12273,8 +12273,8 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * scale: 1
 		#[inline]
-		fn mul(&self, m: &dyn core::ToInputArray, scale: f64) -> Result<core::MatExpr> {
-			extern_container_arg!(m);
+		fn mul(&self, m: &impl core::ToInputArray, scale: f64) -> Result<core::MatExpr> {
+			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_mul_const_const__InputArrayR_double(self.as_raw_Mat(), m.as_raw__InputArray(), scale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -12291,8 +12291,8 @@ pub mod core {
 		/// ## Parameters
 		/// * m: Another cross-product operand.
 		#[inline]
-		fn cross(&self, m: &dyn core::ToInputArray) -> Result<core::Mat> {
-			extern_container_arg!(m);
+		fn cross(&self, m: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_cross_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -12310,8 +12310,8 @@ pub mod core {
 		/// ## Parameters
 		/// * m: another dot-product operand.
 		#[inline]
-		fn dot(&self, m: &dyn core::ToInputArray) -> Result<f64> {
-			extern_container_arg!(m);
+		fn dot(&self, m: &impl core::ToInputArray) -> Result<f64> {
+			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_dot_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -13012,9 +13012,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
-		fn set_to(&mut self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Mat> {
-			extern_container_arg!(value);
-			extern_container_arg!(mask);
+		fn set_to(&mut self, value: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(value);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Mat(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16216,8 +16216,8 @@ pub mod core {
 		/// ## Returns
 		/// The value of a function at the point found.
 		#[inline]
-		fn minimize(&mut self, x: &mut dyn core::ToInputOutputArray) -> Result<f64> {
-			extern_container_arg!(x);
+		fn minimize(&mut self, x: &mut impl core::ToInputOutputArray) -> Result<f64> {
+			input_output_array_arg!(x);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MinProblemSolver_minimize_const__InputOutputArrayR(self.as_raw_mut_MinProblemSolver(), x.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16495,8 +16495,8 @@ pub mod core {
 		/// (vector dimensionality) and `vec.rows` is the number of vectors to
 		/// project, and the same is true for the PCA::DATA_AS_COL case.
 		#[inline]
-		fn project(&self, vec: &dyn core::ToInputArray) -> Result<core::Mat> {
-			extern_container_arg!(vec);
+		fn project(&self, vec: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(vec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_project_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16533,9 +16533,9 @@ pub mod core {
 		///    number of principal components (for example, `maxComponents` parameter
 		///    passed to the constructor).
 		#[inline]
-		fn project_to(&self, vec: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(vec);
-			extern_container_arg!(result);
+		fn project_to(&self, vec: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(vec);
+			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_project_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16557,8 +16557,8 @@ pub mod core {
 		/// subspace, the layout and size are the same as of PCA::project output
 		/// vectors.
 		#[inline]
-		fn back_project(&self, vec: &dyn core::ToInputArray) -> Result<core::Mat> {
-			extern_container_arg!(vec);
+		fn back_project(&self, vec: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(vec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_backProject_const_const__InputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16589,9 +16589,9 @@ pub mod core {
 		/// * result: reconstructed vectors; the layout and size are the same as
 		///    of PCA::project input vectors.
 		#[inline]
-		fn back_project_to(&self, vec: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(vec);
-			extern_container_arg!(result);
+		fn back_project_to(&self, vec: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(vec);
+			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_backProject_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16661,9 +16661,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * max_components: 0
 		#[inline]
-		fn apply(&mut self, data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
-			extern_container_arg!(data);
-			extern_container_arg!(mean);
+		fn apply(&mut self, data: &impl core::ToInputArray, mean: &impl core::ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
+			input_array_arg!(data);
+			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16704,9 +16704,9 @@ pub mod core {
 		///    Using this parameter will let the %PCA decided how many components to
 		///    retain but it will always keep at least 2.
 		#[inline]
-		fn apply_1(&mut self, data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
-			extern_container_arg!(data);
-			extern_container_arg!(mean);
+		fn apply_1(&mut self, data: &impl core::ToInputArray, mean: &impl core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
+			input_array_arg!(data);
+			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int_double(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16852,9 +16852,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * max_components: 0
 		#[inline]
-		pub fn new(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
-			extern_container_arg!(data);
-			extern_container_arg!(mean);
+		pub fn new(data: &impl core::ToInputArray, mean: &impl core::ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
+			input_array_arg!(data);
+			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16880,9 +16880,9 @@ pub mod core {
 		///    Using this parameter will let the PCA decided how many components to
 		///    retain but it will always keep at least 2.
 		#[inline]
-		pub fn new_with_variance(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
-			extern_container_arg!(data);
-			extern_container_arg!(mean);
+		pub fn new_with_variance(data: &impl core::ToInputArray, mean: &impl core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
+			input_array_arg!(data);
+			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_double(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -17285,10 +17285,10 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * saturate_range: false
 		#[inline]
-		fn fill(&mut self, mat: &mut dyn core::ToInputOutputArray, dist_type: i32, a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, saturate_range: bool) -> Result<()> {
-			extern_container_arg!(mat);
-			extern_container_arg!(a);
-			extern_container_arg!(b);
+		fn fill(&mut self, mat: &mut impl core::ToInputOutputArray, dist_type: i32, a: &impl core::ToInputArray, b: &impl core::ToInputArray, saturate_range: bool) -> Result<()> {
+			input_output_array_arg!(mat);
+			input_array_arg!(a);
+			input_array_arg!(b);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RNG_fill_const__InputOutputArrayR_int_const__InputArrayR_const__InputArrayR_bool(self.as_raw_mut_RNG(), mat.as_raw__InputOutputArray(), dist_type, a.as_raw__InputArray(), b.as_raw__InputArray(), saturate_range, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -17907,9 +17907,9 @@ pub mod core {
 		/// (possibly with multiple rhs immediately available), simply call solve
 		/// add pass #DECOMP_SVD there. It does absolutely the same thing.
 		#[inline]
-		fn back_subst(&self, rhs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(rhs);
-			extern_container_arg!(dst);
+		fn back_subst(&self, rhs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(rhs);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_backSubst_const_const__InputArrayR_const__OutputArrayR(self.as_raw_SVD(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -17956,8 +17956,8 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * flags: 0
 		#[inline]
-		fn apply(&mut self, src: &dyn core::ToInputArray, flags: i32) -> Result<core::SVD> {
-			extern_container_arg!(src);
+		fn apply(&mut self, src: &impl core::ToInputArray, flags: i32) -> Result<core::SVD> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_operator___const__InputArrayR_int(self.as_raw_mut_SVD(), src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -18033,8 +18033,8 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * flags: 0
 		#[inline]
-		pub fn new(src: &dyn core::ToInputArray, flags: i32) -> Result<core::SVD> {
-			extern_container_arg!(src);
+		pub fn new(src: &impl core::ToInputArray, flags: i32) -> Result<core::SVD> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_SVD_const__InputArrayR_int(src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -18065,11 +18065,11 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * flags: 0
 		#[inline]
-		pub fn compute_ext(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, u: &mut dyn core::ToOutputArray, vt: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(w);
-			extern_container_arg!(u);
-			extern_container_arg!(vt);
+		pub fn compute_ext(src: &impl core::ToInputArray, w: &mut impl core::ToOutputArray, u: &mut impl core::ToOutputArray, vt: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(w);
+			output_array_arg!(u);
+			output_array_arg!(vt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -18106,9 +18106,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * flags: 0
 		#[inline]
-		pub fn compute(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(w);
+		pub fn compute(src: &impl core::ToInputArray, w: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(w);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -18118,12 +18118,12 @@ pub mod core {
 		
 		/// performs back substitution
 		#[inline]
-		pub fn back_subst_multi(w: &dyn core::ToInputArray, u: &dyn core::ToInputArray, vt: &dyn core::ToInputArray, rhs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(w);
-			extern_container_arg!(u);
-			extern_container_arg!(vt);
-			extern_container_arg!(rhs);
-			extern_container_arg!(dst);
+		pub fn back_subst_multi(w: &impl core::ToInputArray, u: &impl core::ToInputArray, vt: &impl core::ToInputArray, rhs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(w);
+			input_array_arg!(u);
+			input_array_arg!(vt);
+			input_array_arg!(rhs);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_backSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -18142,9 +18142,9 @@ pub mod core {
 		/// * src: left-hand-side matrix.
 		/// * dst: found solution.
 		#[inline]
-		pub fn solve_z(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
+		pub fn solve_z(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_solveZ_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -19757,8 +19757,8 @@ pub mod core {
 		
 		/// copies the matrix content to "m".
 		#[inline]
-		fn copy_to(&self, m: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(m);
+		fn copy_to(&self, m: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -19768,9 +19768,9 @@ pub mod core {
 		
 		/// copies those matrix elements to "m" that are marked with non-zero mask elements.
 		#[inline]
-		fn copy_to_masked(&self, m: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(m);
-			extern_container_arg!(mask);
+		fn copy_to_masked(&self, m: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			output_array_arg!(m);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_UMat(), m.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -19784,8 +19784,8 @@ pub mod core {
 		/// * alpha: 1
 		/// * beta: 0
 		#[inline]
-		fn convert_to(&self, m: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-			extern_container_arg!(m);
+		fn convert_to(&self, m: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+			output_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_UMat(), m.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -19858,8 +19858,8 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * scale: 1
 		#[inline]
-		fn mul(&self, m: &dyn core::ToInputArray, scale: f64) -> Result<core::UMat> {
-			extern_container_arg!(m);
+		fn mul(&self, m: &impl core::ToInputArray, scale: f64) -> Result<core::UMat> {
+			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_mul_const_const__InputArrayR_double(self.as_raw_UMat(), m.as_raw__InputArray(), scale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -19870,8 +19870,8 @@ pub mod core {
 		
 		/// computes dot-product
 		#[inline]
-		fn dot(&self, m: &dyn core::ToInputArray) -> Result<f64> {
-			extern_container_arg!(m);
+		fn dot(&self, m: &impl core::ToInputArray) -> Result<f64> {
+			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_dot_const_const__InputArrayR(self.as_raw_UMat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -20116,9 +20116,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
-		fn set_to(&mut self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::UMat> {
-			extern_container_arg!(value);
-			extern_container_arg!(mask);
+		fn set_to(&mut self, value: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<core::UMat> {
+			input_array_arg!(value);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_setTo_const__InputArrayR_const__InputArrayR(self.as_raw_mut_UMat(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -21058,8 +21058,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn same_size(&self, arr: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(arr);
+		fn same_size(&self, arr: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_sameSize_const_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -21143,8 +21143,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn copy_to(&self, arr: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(arr);
+		fn copy_to(&self, arr: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -21153,9 +21153,9 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn copy_to_masked(&self, arr: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(arr);
-			extern_container_arg!(mask);
+		fn copy_to_masked(&self, arr: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			output_array_arg!(arr);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw__InputArray(), arr.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -21873,8 +21873,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		unsafe fn create_same_size(&self, arr: &dyn core::ToInputArray, mtype: i32) -> Result<()> {
-			extern_container_arg!(arr);
+		unsafe fn create_same_size(&self, arr: &impl core::ToInputArray, mtype: i32) -> Result<()> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			{ sys::cv__OutputArray_createSameSize_const_const__InputArrayR_int(self.as_raw__OutputArray(), arr.as_raw__InputArray(), mtype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -21903,9 +21903,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * mask: _InputArray()
 		#[inline]
-		fn set_to(&self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(value);
-			extern_container_arg!(mask);
+		fn set_to(&self, value: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(value);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_setTo_const_const__InputArrayR_const__InputArrayR(self.as_raw__OutputArray(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23294,8 +23294,8 @@ pub mod core {
 		/// This function copies data from device memory to host memory. As being a blocking call, it is
 		/// guaranteed that the copy operation is finished when this function returns.
 		#[inline]
-		fn download(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(dst);
+		fn download(&self, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23311,8 +23311,8 @@ pub mod core {
 		/// The copy operation may be overlapped with operations in other non-default streams if \p stream is
 		/// not the default stream and \p dst is HostMem allocated with HostMem::PAGE_LOCKED option.
 		#[inline]
-		fn download_async(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(dst);
+		fn download_async(&self, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23333,8 +23333,8 @@ pub mod core {
 		
 		/// copies the GpuMat content to device memory (Blocking call)
 		#[inline]
-		fn copy_to(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(dst);
+		fn copy_to(&self, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23344,8 +23344,8 @@ pub mod core {
 		
 		/// copies the GpuMat content to device memory (Non-Blocking call)
 		#[inline]
-		fn copy_to_1(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(dst);
+		fn copy_to_1(&self, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23355,9 +23355,9 @@ pub mod core {
 		
 		/// copies those GpuMat elements to "m" that are marked with non-zero mask elements (Blocking call)
 		#[inline]
-		fn copy_to_2(&self, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(dst);
-			extern_container_arg!(mask);
+		fn copy_to_2(&self, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+			output_array_arg!(dst);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23367,9 +23367,9 @@ pub mod core {
 		
 		/// copies those GpuMat elements to "m" that are marked with non-zero mask elements (Non-Blocking call)
 		#[inline]
-		fn copy_to_3(&self, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(dst);
-			extern_container_arg!(mask);
+		fn copy_to_3(&self, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(dst);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23379,8 +23379,8 @@ pub mod core {
 		
 		/// converts GpuMat to another datatype (Blocking call)
 		#[inline]
-		fn convert_to(&self, dst: &mut dyn core::ToOutputArray, rtype: i32) -> Result<()> {
-			extern_container_arg!(dst);
+		fn convert_to(&self, dst: &mut impl core::ToOutputArray, rtype: i32) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23390,8 +23390,8 @@ pub mod core {
 		
 		/// converts GpuMat to another datatype (Non-Blocking call)
 		#[inline]
-		fn convert_to_1(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(dst);
+		fn convert_to_1(&self, dst: &mut impl core::ToOutputArray, rtype: i32, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23404,8 +23404,8 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * beta: 0.0
 		#[inline]
-		fn convert_to_2(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-			extern_container_arg!(dst);
+		fn convert_to_2(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23415,8 +23415,8 @@ pub mod core {
 		
 		/// converts GpuMat to another datatype with scaling (Non-Blocking call)
 		#[inline]
-		fn convert_to_3(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(dst);
+		fn convert_to_3(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23426,8 +23426,8 @@ pub mod core {
 		
 		/// converts GpuMat to another datatype with scaling (Non-Blocking call)
 		#[inline]
-		fn convert_to_4(&self, dst: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(dst);
+		fn convert_to_4(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, beta: f64, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23808,8 +23808,8 @@ pub mod core {
 		/// This function copies data from host memory to device memory. As being a blocking call, it is
 		/// guaranteed that the copy operation is finished when this function returns.
 		#[inline]
-		fn upload(&mut self, arr: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(arr);
+		fn upload(&mut self, arr: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23825,8 +23825,8 @@ pub mod core {
 		/// The copy operation may be overlapped with operations in other non-default streams if \p stream is
 		/// not the default stream and \p dst is HostMem allocated with HostMem::PAGE_LOCKED option.
 		#[inline]
-		fn upload_async(&mut self, arr: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(arr);
+		fn upload_async(&mut self, arr: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23858,8 +23858,8 @@ pub mod core {
 		
 		/// sets some of the GpuMat elements to s, according to the mask (Blocking call)
 		#[inline]
-		fn set_to_2(&mut self, s: core::Scalar, mask: &dyn core::ToInputArray) -> Result<core::GpuMat> {
-			extern_container_arg!(mask);
+		fn set_to_2(&mut self, s: core::Scalar, mask: &impl core::ToInputArray) -> Result<core::GpuMat> {
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23870,8 +23870,8 @@ pub mod core {
 		
 		/// sets some of the GpuMat elements to s, according to the mask (Non-Blocking call)
 		#[inline]
-		fn set_to_3(&mut self, s: core::Scalar, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<core::GpuMat> {
-			extern_container_arg!(mask);
+		fn set_to_3(&mut self, s: core::Scalar, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<core::GpuMat> {
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_setTo_Scalar_const__InputArrayR_StreamR(self.as_raw_mut_GpuMat(), s.opencv_as_extern(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -24122,8 +24122,8 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn from_hostmem(arr: &dyn core::ToInputArray, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
-			extern_container_arg!(arr);
+		pub unsafe fn from_hostmem(arr: &impl core::ToInputArray, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -24356,8 +24356,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn download(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(dst);
+		fn download(&self, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -24366,8 +24366,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn download_1(&self, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(dst);
+		fn download_1(&self, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_download_const_const__OutputArrayR_StreamR(self.as_raw_GpuMatND(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -24546,8 +24546,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn upload(&mut self, src: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
+		fn upload(&mut self, src: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -24556,8 +24556,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn upload_1(&mut self, src: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(src);
+		fn upload_1(&mut self, src: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_upload_const__InputArrayR_StreamR(self.as_raw_mut_GpuMatND(), src.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -25053,8 +25053,8 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
 		#[inline]
-		pub fn new_3(arr: &dyn core::ToInputArray, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
-			extern_container_arg!(arr);
+		pub fn new_3(arr: &impl core::ToInputArray, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR_AllocType(arr.as_raw__InputArray(), alloc_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -28711,8 +28711,8 @@ pub mod core {
 		/// ## Parameters
 		/// * vertex: array with vertex coordinates, can be both host and device memory.
 		#[inline]
-		fn set_vertex_array(&mut self, vertex: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(vertex);
+		fn set_vertex_array(&mut self, vertex: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(vertex);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_setVertexArray_const__InputArrayR(self.as_raw_mut_Arrays(), vertex.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -28734,8 +28734,8 @@ pub mod core {
 		/// ## Parameters
 		/// * color: array with vertex colors, can be both host and device memory.
 		#[inline]
-		fn set_color_array(&mut self, color: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(color);
+		fn set_color_array(&mut self, color: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(color);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_setColorArray_const__InputArrayR(self.as_raw_mut_Arrays(), color.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -28757,8 +28757,8 @@ pub mod core {
 		/// ## Parameters
 		/// * normal: array with vertex normals, can be both host and device memory.
 		#[inline]
-		fn set_normal_array(&mut self, normal: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(normal);
+		fn set_normal_array(&mut self, normal: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(normal);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_setNormalArray_const__InputArrayR(self.as_raw_mut_Arrays(), normal.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -28780,8 +28780,8 @@ pub mod core {
 		/// ## Parameters
 		/// * texCoord: array with vertex texture coordinates, can be both host and device memory.
 		#[inline]
-		fn set_tex_coord_array(&mut self, tex_coord: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(tex_coord);
+		fn set_tex_coord_array(&mut self, tex_coord: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(tex_coord);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Arrays_setTexCoordArray_const__InputArrayR(self.as_raw_mut_Arrays(), tex_coord.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -28874,8 +28874,8 @@ pub mod core {
 		/// * arr: Destination array (host or device memory, can be Mat , cuda::GpuMat , std::vector or
 		/// ogl::Buffer ).
 		#[inline]
-		fn copy_to(&self, arr: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(arr);
+		fn copy_to(&self, arr: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -28891,8 +28891,8 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn copy_to_1(&self, arr: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(arr);
+		fn copy_to_1(&self, arr: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_Buffer(), arr.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -29118,8 +29118,8 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		fn copy_from(&mut self, arr: &dyn core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
-			extern_container_arg!(arr);
+		fn copy_from(&mut self, arr: &impl core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -29139,8 +29139,8 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		fn copy_from_1(&mut self, arr: &dyn core::ToInputArray, stream: &mut core::Stream, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
-			extern_container_arg!(arr);
+		fn copy_from_1(&mut self, arr: &impl core::ToInputArray, stream: &mut core::Stream, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -29398,8 +29398,8 @@ pub mod core {
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
-		pub fn new_4(arr: &dyn core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
-			extern_container_arg!(arr);
+		pub fn new_4(arr: &impl core::ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -29439,8 +29439,8 @@ pub mod core {
 		/// * ddepth: CV_32F
 		/// * auto_release: false
 		#[inline]
-		fn copy_to(&self, arr: &mut dyn core::ToOutputArray, ddepth: i32, auto_release: bool) -> Result<()> {
-			extern_container_arg!(arr);
+		fn copy_to(&self, arr: &mut impl core::ToOutputArray, ddepth: i32, auto_release: bool) -> Result<()> {
+			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ddepth, auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -29603,8 +29603,8 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		fn copy_from(&mut self, arr: &dyn core::ToInputArray, auto_release: bool) -> Result<()> {
-			extern_container_arg!(arr);
+		fn copy_from(&mut self, arr: &impl core::ToInputArray, auto_release: bool) -> Result<()> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -29755,8 +29755,8 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * auto_release: false
 		#[inline]
-		pub fn new_4(arr: &dyn core::ToInputArray, auto_release: bool) -> Result<core::Texture2D> {
-			extern_container_arg!(arr);
+		pub fn new_4(arr: &impl core::ToInputArray, auto_release: bool) -> Result<core::Texture2D> {
+			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

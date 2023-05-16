@@ -69,10 +69,10 @@ pub mod photo {
 	/// * green_mul: 1.0f
 	/// * blue_mul: 1.0f
 	#[inline]
-	pub fn color_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, red_mul: f32, green_mul: f32, blue_mul: f32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
-		extern_container_arg!(dst);
+	pub fn color_change(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, red_mul: f32, green_mul: f32, blue_mul: f32) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_colorChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), red_mul, green_mul, blue_mul, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -316,9 +316,9 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_colored_cuda(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn fast_nl_means_denoising_colored_cuda(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h_luminance, photo_render, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -365,9 +365,9 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_cuda(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn fast_nl_means_denoising_cuda(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -409,9 +409,9 @@ pub mod photo {
 	/// * border_mode: BORDER_DEFAULT
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn non_local_means(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn non_local_means(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_nonLocalMeans_const__InputArrayR_const__OutputArrayR_float_int_int_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, search_window, block_size, border_mode, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -430,10 +430,10 @@ pub mod photo {
 	/// 
 	/// This function is to be applied on color images.
 	#[inline]
-	pub fn decolor(src: &dyn core::ToInputArray, grayscale: &mut dyn core::ToOutputArray, color_boost: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(grayscale);
-		extern_container_arg!(color_boost);
+	pub fn decolor(src: &impl core::ToInputArray, grayscale: &mut impl core::ToOutputArray, color_boost: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(grayscale);
+		output_array_arg!(color_boost);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_decolor_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), grayscale.as_raw__OutputArray(), color_boost.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -503,9 +503,9 @@ pub mod photo {
 	/// * sigma_s: 10
 	/// * sigma_r: 0.15f
 	#[inline]
-	pub fn detail_enhance(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn detail_enhance(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detailEnhance_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -528,9 +528,9 @@ pub mod photo {
 	/// * sigma_s: 60
 	/// * sigma_r: 0.4f
 	#[inline]
-	pub fn edge_preserving_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, sigma_s: f32, sigma_r: f32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn edge_preserving_filter(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32, sigma_s: f32, sigma_r: f32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_edgePreservingFilter_const__InputArrayR_const__OutputArrayR_int_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -568,9 +568,9 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_colored_multi(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
-		extern_container_arg!(src_imgs);
-		extern_container_arg!(dst);
+	pub fn fast_nl_means_denoising_colored_multi(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+		input_array_arg!(src_imgs);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingColoredMulti_const__InputArrayR_const__OutputArrayR_int_int_float_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, h_color, template_window_size, search_window_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -603,9 +603,9 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_colored(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn fast_nl_means_denoising_colored(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, h_color, template_window_size, search_window_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -644,9 +644,9 @@ pub mod photo {
 	/// * search_window_size: 21
 	/// * norm_type: NORM_L2
 	#[inline]
-	pub fn fast_nl_means_denoising_multi_vec(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
-		extern_container_arg!(src_imgs);
-		extern_container_arg!(dst);
+	pub fn fast_nl_means_denoising_multi_vec(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
+		input_array_arg!(src_imgs);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vectorLfloatGR_int_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -683,9 +683,9 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_multi(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
-		extern_container_arg!(src_imgs);
-		extern_container_arg!(dst);
+	pub fn fast_nl_means_denoising_multi(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+		input_array_arg!(src_imgs);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, template_window_size, search_window_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -723,9 +723,9 @@ pub mod photo {
 	/// * search_window_size: 21
 	/// * norm_type: NORM_L2
 	#[inline]
-	pub fn fast_nl_means_denoising_vec(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn fast_nl_means_denoising_vec(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vectorLfloatGR_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h.as_raw_VectorOff32(), template_window_size, search_window_size, norm_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -759,9 +759,9 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn fast_nl_means_denoising(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -785,10 +785,10 @@ pub mod photo {
 	/// * alpha: 0.2f
 	/// * beta: 0.4f
 	#[inline]
-	pub fn illumination_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, alpha: f32, beta: f32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
-		extern_container_arg!(dst);
+	pub fn illumination_change(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, alpha: f32, beta: f32) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_illuminationChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -818,10 +818,10 @@ pub mod photo {
 	///    *   (Python) An example using the inpainting technique can be found at
 	///        opencv_source_code/samples/python/inpaint.py
 	#[inline]
-	pub fn inpaint(src: &dyn core::ToInputArray, inpaint_mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, inpaint_radius: f64, flags: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(inpaint_mask);
-		extern_container_arg!(dst);
+	pub fn inpaint(src: &impl core::ToInputArray, inpaint_mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, inpaint_radius: f64, flags: i32) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(inpaint_mask);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_inpaint_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src.as_raw__InputArray(), inpaint_mask.as_raw__InputArray(), dst.as_raw__OutputArray(), inpaint_radius, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -847,10 +847,10 @@ pub mod photo {
 	/// * sigma_r: 0.07f
 	/// * shade_factor: 0.02f
 	#[inline]
-	pub fn pencil_sketch(src: &dyn core::ToInputArray, dst1: &mut dyn core::ToOutputArray, dst2: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32, shade_factor: f32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst1);
-		extern_container_arg!(dst2);
+	pub fn pencil_sketch(src: &impl core::ToInputArray, dst1: &mut impl core::ToOutputArray, dst2: &mut impl core::ToOutputArray, sigma_s: f32, sigma_r: f32, shade_factor: f32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst1);
+		output_array_arg!(dst2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pencilSketch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), dst1.as_raw__OutputArray(), dst2.as_raw__OutputArray(), sigma_s, sigma_r, shade_factor, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -875,11 +875,11 @@ pub mod photo {
 	/// * blend: Output image with the same size and type as dst.
 	/// * flags: Cloning method that could be cv::NORMAL_CLONE, cv::MIXED_CLONE or cv::MONOCHROME_TRANSFER
 	#[inline]
-	pub fn seamless_clone(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, p: core::Point, blend: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
-		extern_container_arg!(blend);
+	pub fn seamless_clone(src: &impl core::ToInputArray, dst: &impl core::ToInputArray, mask: &impl core::ToInputArray, p: core::Point, blend: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(dst);
+		input_array_arg!(mask);
+		output_array_arg!(blend);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), p.opencv_as_extern(), blend.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -901,9 +901,9 @@ pub mod photo {
 	/// * sigma_s: 60
 	/// * sigma_r: 0.45f
 	#[inline]
-	pub fn stylization(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn stylization(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_stylization_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -933,10 +933,10 @@ pub mod photo {
 	/// * high_threshold: 45
 	/// * kernel_size: 3
 	#[inline]
-	pub fn texture_flattening(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, low_threshold: f32, high_threshold: f32, kernel_size: i32) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
-		extern_container_arg!(dst);
+	pub fn texture_flattening(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, low_threshold: f32, high_threshold: f32, kernel_size: i32) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_textureFlattening_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_float_int(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), low_threshold, high_threshold, kernel_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -963,10 +963,10 @@ pub mod photo {
 		/// * response: 256x1 matrix with inverse camera response function for each pixel value, it should
 		/// have the same number of channels as images.
 		#[inline]
-		fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut core::Vector<core::Mat>, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(times);
-			extern_container_arg!(response);
+		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut core::Vector<core::Mat>, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			input_array_arg!(times);
+			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignExposures_process_const__InputArrayR_vectorLMatGR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignExposures(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1052,10 +1052,10 @@ pub mod photo {
 		fn as_raw_mut_AlignMTB(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut core::Vector<core::Mat>, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(times);
-			extern_container_arg!(response);
+		fn process_with_response(&mut self, src: &impl core::ToInputArray, dst: &mut core::Vector<core::Mat>, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			input_array_arg!(times);
+			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vectorLMatGR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1069,8 +1069,8 @@ pub mod photo {
 		/// * src: vector of input images
 		/// * dst: vector of aligned images
 		#[inline]
-		fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut core::Vector<core::Mat>) -> Result<()> {
-			extern_container_arg!(src);
+		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut core::Vector<core::Mat>) -> Result<()> {
+			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vectorLMatGR(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1085,9 +1085,9 @@ pub mod photo {
 		/// * img0: first image
 		/// * img1: second image
 		#[inline]
-		fn calculate_shift(&mut self, img0: &dyn core::ToInputArray, img1: &dyn core::ToInputArray) -> Result<core::Point> {
-			extern_container_arg!(img0);
-			extern_container_arg!(img1);
+		fn calculate_shift(&mut self, img0: &impl core::ToInputArray, img1: &impl core::ToInputArray) -> Result<core::Point> {
+			input_array_arg!(img0);
+			input_array_arg!(img1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_calculateShift_const__InputArrayR_const__InputArrayR(self.as_raw_mut_AlignMTB(), img0.as_raw__InputArray(), img1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1102,9 +1102,9 @@ pub mod photo {
 		/// * dst: result image
 		/// * shift: shift value
 		#[inline]
-		fn shift_mat(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, shift: core::Point) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
+		fn shift_mat(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, shift: core::Point) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_const_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1119,10 +1119,10 @@ pub mod photo {
 		/// * tb: median threshold bitmap
 		/// * eb: exclude bitmap
 		#[inline]
-		fn compute_bitmaps(&mut self, img: &dyn core::ToInputArray, tb: &mut dyn core::ToOutputArray, eb: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(img);
-			extern_container_arg!(tb);
-			extern_container_arg!(eb);
+		fn compute_bitmaps(&mut self, img: &impl core::ToInputArray, tb: &mut impl core::ToOutputArray, eb: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(img);
+			output_array_arg!(tb);
+			output_array_arg!(eb);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_computeBitmaps_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_AlignMTB(), img.as_raw__InputArray(), tb.as_raw__OutputArray(), eb.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1229,10 +1229,10 @@ pub mod photo {
 		/// * dst: 256x1 matrix with inverse camera response function
 		/// * times: vector of exposure time values for each image
 		#[inline]
-		fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
-			extern_container_arg!(times);
+		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			input_array_arg!(times);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CalibrateCRF_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_CalibrateCRF(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1514,11 +1514,11 @@ pub mod photo {
 		fn as_raw_mut_MergeDebevec(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
-			extern_container_arg!(times);
-			extern_container_arg!(response);
+		fn process_with_response(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			input_array_arg!(times);
+			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1527,10 +1527,10 @@ pub mod photo {
 		}
 		
 		#[inline]
-		fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
-			extern_container_arg!(times);
+		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			input_array_arg!(times);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeDebevec_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1608,11 +1608,11 @@ pub mod photo {
 		/// * response: 256x1 matrix with inverse camera response function for each pixel value, it should
 		/// have the same number of channels as images.
 		#[inline]
-		fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
-			extern_container_arg!(times);
-			extern_container_arg!(response);
+		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			input_array_arg!(times);
+			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeExposures_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeExposures(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1698,11 +1698,11 @@ pub mod photo {
 		fn as_raw_mut_MergeMertens(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
-			extern_container_arg!(times);
-			extern_container_arg!(response);
+		fn process_with_response(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			input_array_arg!(times);
+			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1716,9 +1716,9 @@ pub mod photo {
 		/// * src: vector of input images
 		/// * dst: result image
 		#[inline]
-		fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
+		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeMertens_process_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1821,11 +1821,11 @@ pub mod photo {
 		fn as_raw_mut_MergeRobertson(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
-			extern_container_arg!(times);
-			extern_container_arg!(response);
+		fn process_with_response(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			input_array_arg!(times);
+			input_array_arg!(response);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1834,10 +1834,10 @@ pub mod photo {
 		}
 		
 		#[inline]
-		fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
-			extern_container_arg!(times);
+		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			input_array_arg!(times);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MergeRobertson_process_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1921,9 +1921,9 @@ pub mod photo {
 		/// * src: source image - CV_32FC3 Mat (float 32 bits 3 channels)
 		/// * dst: destination image - CV_32FC3 Mat with values in [0, 1] range
 		#[inline]
-		fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
+		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tonemap_process_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Tonemap(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

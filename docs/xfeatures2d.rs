@@ -186,8 +186,8 @@ pub mod xfeatures2d {
 	/// * nonmax_suppression: true
 	/// * typ: FastFeatureDetector::TYPE_9_16
 	#[inline]
-	pub fn fast_for_point_set(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<()> {
-		extern_container_arg!(image);
+	pub fn fast_for_point_set(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<()> {
+		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xfeatures2d_FASTForPointSet_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -698,9 +698,9 @@ pub mod xfeatures2d {
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
-		fn detect(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
+		fn detect(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>, mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_AffineFeature2D_detect_const__InputArrayR_vectorLElliptic_KeyPointGR_const__InputArrayR(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -714,10 +714,10 @@ pub mod xfeatures2d {
 		/// ## C++ default parameters
 		/// * use_provided_keypoints: false
 		#[inline]
-		fn detect_and_compute(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, keypoints: &mut core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>, descriptors: &mut dyn core::ToOutputArray, use_provided_keypoints: bool) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
-			extern_container_arg!(descriptors);
+		fn detect_and_compute(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>, descriptors: &mut impl core::ToOutputArray, use_provided_keypoints: bool) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_AffineFeature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vectorLElliptic_KeyPointGR_const__OutputArrayR_bool(self.as_raw_mut_AffineFeature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfElliptic_KeyPoint(), descriptors.as_raw__OutputArray(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1401,8 +1401,8 @@ pub mod xfeatures2d {
 		}
 		
 		#[inline]
-		fn set_h(&mut self, h: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(h);
+		fn set_h(&mut self, h: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(h);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_setH_const__InputArrayR(self.as_raw_mut_DAISY(), h.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1434,9 +1434,9 @@ pub mod xfeatures2d {
 		/// * keypoints: of interest within image
 		/// * descriptors: resulted descriptors array
 		#[inline]
-		fn compute(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(descriptors);
+		fn compute(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1445,9 +1445,9 @@ pub mod xfeatures2d {
 		}
 		
 		#[inline]
-		fn compute_1(&mut self, images: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(images);
-			extern_container_arg!(descriptors);
+		fn compute_1(&mut self, images: &impl core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(images);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR(self.as_raw_mut_DAISY(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1461,9 +1461,9 @@ pub mod xfeatures2d {
 		/// * roi: region of interest within image
 		/// * descriptors: resulted descriptors array for roi image pixels
 		#[inline]
-		fn compute_2(&mut self, image: &dyn core::ToInputArray, roi: core::Rect, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(descriptors);
+		fn compute_2(&mut self, image: &impl core::ToInputArray, roi: core::Rect, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_Rect_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), roi.opencv_as_extern(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1476,9 +1476,9 @@ pub mod xfeatures2d {
 		/// * image: image to extract descriptors
 		/// * descriptors: resulted descriptors array for all image pixels
 		#[inline]
-		fn compute_3(&mut self, image: &dyn core::ToInputArray, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(descriptors);
+		fn compute_3(&mut self, image: &impl core::ToInputArray, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1554,8 +1554,8 @@ pub mod xfeatures2d {
 		/// * interpolation: true
 		/// * use_orientation: false
 		#[inline]
-		pub fn create(radius: f32, q_radius: i32, q_theta: i32, q_hist: i32, norm: crate::xfeatures2d::DAISY_NormalizationType, h: &dyn core::ToInputArray, interpolation: bool, use_orientation: bool) -> Result<core::Ptr<crate::xfeatures2d::DAISY>> {
-			extern_container_arg!(h);
+		pub fn create(radius: f32, q_radius: i32, q_theta: i32, q_hist: i32, norm: crate::xfeatures2d::DAISY_NormalizationType, h: &impl core::ToInputArray, interpolation: bool, use_orientation: bool) -> Result<core::Ptr<crate::xfeatures2d::DAISY>> {
+			input_array_arg!(h);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_DAISY_create_float_int_int_int_NormalizationType_const__InputArrayR_bool_bool(radius, q_radius, q_theta, q_hist, norm, h.as_raw__InputArray(), interpolation, use_orientation, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2621,9 +2621,9 @@ pub mod xfeatures2d {
 		/// * image: Input image of CV_8U type.
 		/// * signature: Output computed signature.
 		#[inline]
-		fn compute_signature(&self, image: &dyn core::ToInputArray, signature: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(signature);
+		fn compute_signature(&self, image: &impl core::ToInputArray, signature: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(signature);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_computeSignature_const_const__InputArrayR_const__OutputArrayR(self.as_raw_PCTSignatures(), image.as_raw__InputArray(), signature.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3271,10 +3271,10 @@ pub mod xfeatures2d {
 		/// * radius_to_shorter_side_ratio: 1.0/8
 		/// * border_thickness: 1
 		#[inline]
-		pub fn draw_signature(source: &dyn core::ToInputArray, signature: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray, radius_to_shorter_side_ratio: f32, border_thickness: i32) -> Result<()> {
-			extern_container_arg!(source);
-			extern_container_arg!(signature);
-			extern_container_arg!(result);
+		pub fn draw_signature(source: &impl core::ToInputArray, signature: &impl core::ToInputArray, result: &mut impl core::ToOutputArray, radius_to_shorter_side_ratio: f32, border_thickness: i32) -> Result<()> {
+			input_array_arg!(source);
+			input_array_arg!(signature);
+			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignatures_drawSignature_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_int(source.as_raw__InputArray(), signature.as_raw__InputArray(), result.as_raw__OutputArray(), radius_to_shorter_side_ratio, border_thickness, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3312,9 +3312,9 @@ pub mod xfeatures2d {
 		/// * _signature0: The first signature.
 		/// * _signature1: The second signature.
 		#[inline]
-		fn compute_quadratic_form_distance(&self, _signature0: &dyn core::ToInputArray, _signature1: &dyn core::ToInputArray) -> Result<f32> {
-			extern_container_arg!(_signature0);
-			extern_container_arg!(_signature1);
+		fn compute_quadratic_form_distance(&self, _signature0: &impl core::ToInputArray, _signature1: &impl core::ToInputArray) -> Result<f32> {
+			input_array_arg!(_signature0);
+			input_array_arg!(_signature1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistance_const_const__InputArrayR_const__InputArrayR(self.as_raw_PCTSignaturesSQFD(), _signature0.as_raw__InputArray(), _signature1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

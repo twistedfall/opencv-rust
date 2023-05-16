@@ -106,9 +106,9 @@ pub mod videostab {
 	/// * model: MM_AFFINE
 	/// * rmse: 0
 	#[inline]
-	pub fn estimate_global_motion_least_squares(points0: &mut dyn core::ToInputOutputArray, points1: &mut dyn core::ToInputOutputArray, model: i32, rmse: &mut f32) -> Result<core::Mat> {
-		extern_container_arg!(points0);
-		extern_container_arg!(points1);
+	pub fn estimate_global_motion_least_squares(points0: &mut impl core::ToInputOutputArray, points1: &mut impl core::ToInputOutputArray, model: i32, rmse: &mut f32) -> Result<core::Mat> {
+		input_output_array_arg!(points0);
+		input_output_array_arg!(points1);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videostab_estimateGlobalMotionLeastSquares_const__InputOutputArrayR_const__InputOutputArrayR_int_floatX(points0.as_raw__InputOutputArray(), points1.as_raw__InputOutputArray(), model, rmse, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -133,9 +133,9 @@ pub mod videostab {
 	/// * rmse: 0
 	/// * ninliers: 0
 	#[inline]
-	pub fn estimate_global_motion_ransac(points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, model: i32, params: &crate::videostab::RansacParams, rmse: &mut f32, ninliers: &mut i32) -> Result<core::Mat> {
-		extern_container_arg!(points0);
-		extern_container_arg!(points1);
+	pub fn estimate_global_motion_ransac(points0: &impl core::ToInputArray, points1: &impl core::ToInputArray, model: i32, params: &crate::videostab::RansacParams, rmse: &mut f32, ninliers: &mut i32) -> Result<core::Mat> {
+		input_array_arg!(points0);
+		input_array_arg!(points1);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videostab_estimateGlobalMotionRansac_const__InputArrayR_const__InputArrayR_int_const_RansacParamsR_floatX_intX(points0.as_raw__InputArray(), points1.as_raw__InputArray(), model, params.as_raw_RansacParams(), rmse, ninliers, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -518,12 +518,12 @@ pub mod videostab {
 		fn as_raw_mut_DensePyrLkOptFlowEstimatorGpu(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, flow_x: &mut dyn core::ToInputOutputArray, flow_y: &mut dyn core::ToInputOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame0);
-			extern_container_arg!(frame1);
-			extern_container_arg!(flow_x);
-			extern_container_arg!(flow_y);
-			extern_container_arg!(errors);
+		fn run(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray, flow_x: &mut impl core::ToInputOutputArray, flow_y: &mut impl core::ToInputOutputArray, errors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(frame0);
+			input_array_arg!(frame1);
+			input_output_array_arg!(flow_x);
+			input_output_array_arg!(flow_y);
+			output_array_arg!(errors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_DensePyrLkOptFlowEstimatorGpu_run_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR(self.as_raw_mut_DensePyrLkOptFlowEstimatorGpu(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow_x.as_raw__InputOutputArray(), flow_y.as_raw__InputOutputArray(), errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -840,12 +840,12 @@ pub mod videostab {
 		fn as_raw_mut_IDenseOptFlowEstimator(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, flow_x: &mut dyn core::ToInputOutputArray, flow_y: &mut dyn core::ToInputOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame0);
-			extern_container_arg!(frame1);
-			extern_container_arg!(flow_x);
-			extern_container_arg!(flow_y);
-			extern_container_arg!(errors);
+		fn run(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray, flow_x: &mut impl core::ToInputOutputArray, flow_y: &mut impl core::ToInputOutputArray, errors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(frame0);
+			input_array_arg!(frame1);
+			input_output_array_arg!(flow_x);
+			input_output_array_arg!(flow_y);
+			output_array_arg!(errors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_IDenseOptFlowEstimator_run_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR(self.as_raw_mut_IDenseOptFlowEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow_x.as_raw__InputOutputArray(), flow_y.as_raw__InputOutputArray(), errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1069,10 +1069,10 @@ pub mod videostab {
 		fn as_raw_mut_IOutlierRejector(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points0);
-			extern_container_arg!(points1);
-			extern_container_arg!(mask);
+		fn process(&mut self, frame_size: core::Size, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points0);
+			input_array_arg!(points1);
+			output_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_IOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_IOutlierRejector(), frame_size.opencv_as_extern(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1124,13 +1124,13 @@ pub mod videostab {
 		fn as_raw_mut_ISparseOptFlowEstimator(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, points0: &dyn core::ToInputArray, points1: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame0);
-			extern_container_arg!(frame1);
-			extern_container_arg!(points0);
-			extern_container_arg!(points1);
-			extern_container_arg!(status);
-			extern_container_arg!(errors);
+		fn run(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray, points0: &impl core::ToInputArray, points1: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, errors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(frame0);
+			input_array_arg!(frame1);
+			input_array_arg!(points0);
+			input_output_array_arg!(points1);
+			output_array_arg!(status);
+			output_array_arg!(errors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_ISparseOptFlowEstimator_run_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_ISparseOptFlowEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), points0.as_raw__InputArray(), points1.as_raw__InputOutputArray(), status.as_raw__OutputArray(), errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1200,8 +1200,8 @@ pub mod videostab {
 		}
 		
 		#[inline]
-		fn set_frame_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(mask);
+		fn set_frame_mask(&mut self, mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_ImageMotionEstimatorBase_setFrameMask_const__InputArrayR(self.as_raw_mut_ImageMotionEstimatorBase(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1645,8 +1645,8 @@ pub mod videostab {
 		}
 		
 		#[inline]
-		fn set_frame_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(mask);
+		fn set_frame_mask(&mut self, mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setFrameMask_const__InputArrayR(self.as_raw_mut_KeypointBasedMotionEstimator(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1669,9 +1669,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
-			extern_container_arg!(frame0);
-			extern_container_arg!(frame1);
+		fn estimate(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+			input_array_arg!(frame0);
+			input_array_arg!(frame1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_KeypointBasedMotionEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), ok, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2426,9 +2426,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
-			extern_container_arg!(points0);
-			extern_container_arg!(points1);
+		fn estimate(&mut self, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+			input_array_arg!(points0);
+			input_array_arg!(points1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_MotionEstimatorBase_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_MotionEstimatorBase(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2484,9 +2484,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
-			extern_container_arg!(points0);
-			extern_container_arg!(points1);
+		fn estimate(&mut self, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+			input_array_arg!(points0);
+			input_array_arg!(points1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_MotionEstimatorL1_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_MotionEstimatorL1(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2598,9 +2598,9 @@ pub mod videostab {
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
-		fn estimate(&mut self, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
-			extern_container_arg!(points0);
-			extern_container_arg!(points1);
+		fn estimate(&mut self, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+			input_array_arg!(points0);
+			input_array_arg!(points1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_MotionEstimatorRansacL2(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3186,10 +3186,10 @@ pub mod videostab {
 		fn as_raw_mut_NullOutlierRejector(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points0);
-			extern_container_arg!(points1);
-			extern_container_arg!(mask);
+		fn process(&mut self, frame_size: core::Size, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points0);
+			input_array_arg!(points1);
+			output_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_NullOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_NullOutlierRejector(), frame_size.opencv_as_extern(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3642,13 +3642,13 @@ pub mod videostab {
 		fn as_raw_mut_SparsePyrLkOptFlowEstimator(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, points0: &dyn core::ToInputArray, points1: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame0);
-			extern_container_arg!(frame1);
-			extern_container_arg!(points0);
-			extern_container_arg!(points1);
-			extern_container_arg!(status);
-			extern_container_arg!(errors);
+		fn run(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray, points0: &impl core::ToInputArray, points1: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, errors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(frame0);
+			input_array_arg!(frame1);
+			input_array_arg!(points0);
+			input_output_array_arg!(points1);
+			output_array_arg!(status);
+			output_array_arg!(errors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimator_run_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SparsePyrLkOptFlowEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), points0.as_raw__InputArray(), points1.as_raw__InputOutputArray(), status.as_raw__OutputArray(), errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3714,13 +3714,13 @@ pub mod videostab {
 		fn as_raw_mut_SparsePyrLkOptFlowEstimatorGpu(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, points0: &dyn core::ToInputArray, points1: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame0);
-			extern_container_arg!(frame1);
-			extern_container_arg!(points0);
-			extern_container_arg!(points1);
-			extern_container_arg!(status);
-			extern_container_arg!(errors);
+		fn run(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray, points0: &impl core::ToInputArray, points1: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, errors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(frame0);
+			input_array_arg!(frame1);
+			input_array_arg!(points0);
+			input_output_array_arg!(points1);
+			output_array_arg!(status);
+			output_array_arg!(errors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimatorGpu_run_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SparsePyrLkOptFlowEstimatorGpu(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), points0.as_raw__InputArray(), points1.as_raw__InputOutputArray(), status.as_raw__OutputArray(), errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4061,8 +4061,8 @@ pub mod videostab {
 		}
 		
 		#[inline]
-		fn set_frame_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(mask);
+		fn set_frame_mask(&mut self, mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_ToFileMotionWriter_setFrameMask_const__InputArrayR(self.as_raw_mut_ToFileMotionWriter(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4178,10 +4178,10 @@ pub mod videostab {
 		}
 		
 		#[inline]
-		fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points0);
-			extern_container_arg!(points1);
-			extern_container_arg!(mask);
+		fn process(&mut self, frame_size: core::Size, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points0);
+			input_array_arg!(points1);
+			output_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_TranslationBasedLocalOutlierRejector(), frame_size.opencv_as_extern(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

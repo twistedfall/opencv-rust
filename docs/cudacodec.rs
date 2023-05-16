@@ -746,8 +746,8 @@ pub mod cudacodec {
 		/// ## C++ default parameters
 		/// * idx: static_cast<size_t>(VideoReaderProps::PROP_DECODED_FRAME_IDX)
 		#[inline]
-		fn retrieve(&self, frame: &mut dyn core::ToOutputArray, idx: size_t) -> Result<bool> {
-			extern_container_arg!(frame);
+		fn retrieve(&self, frame: &mut impl core::ToOutputArray, idx: size_t) -> Result<bool> {
+			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_const__OutputArrayR_const_size_t(self.as_raw_VideoReader(), frame.as_raw__OutputArray(), idx, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1043,8 +1043,8 @@ pub mod cudacodec {
 		/// The method encodes the specified image to a video stream. The image must have the same size and the same
 		/// surface format as has been specified when opening the video writer.
 		#[inline]
-		fn write(&mut self, frame: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(frame);
+		fn write(&mut self, frame: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), frame.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

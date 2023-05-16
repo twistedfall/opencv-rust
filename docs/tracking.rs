@@ -36,8 +36,8 @@ pub mod tracking {
 		fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_initial_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(mask);
+		fn set_initial_mask(&mut self, mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_setInitialMask_const__InputArrayR(self.as_raw_mut_TrackerCSRT(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

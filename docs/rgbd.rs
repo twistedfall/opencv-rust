@@ -92,8 +92,8 @@ pub mod rgbd {
 	/// ## C++ default parameters
 	/// * size: 10
 	#[inline]
-	pub fn draw_features(img: &mut dyn core::ToInputOutputArray, templates: &core::Vector<crate::rgbd::Linemod_Template>, tl: core::Point2i, size: i32) -> Result<()> {
-		extern_container_arg!(img);
+	pub fn draw_features(img: &mut impl core::ToInputOutputArray, templates: &core::Vector<crate::rgbd::Linemod_Template>, tl: core::Point2i, size: i32) -> Result<()> {
+		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_linemod_drawFeatures_const__InputOutputArrayR_const_vectorLTemplateGR_const_Point2iR_int(img.as_raw__InputOutputArray(), templates.as_raw_VectorOfLinemod_Template(), &tl, size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -134,11 +134,11 @@ pub mod rgbd {
 	/// * in_points: the list of xy coordinates
 	/// * points3d: the resulting 3d points
 	#[inline]
-	pub fn depth_to3d_sparse(depth: &dyn core::ToInputArray, in_k: &dyn core::ToInputArray, in_points: &dyn core::ToInputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(depth);
-		extern_container_arg!(in_k);
-		extern_container_arg!(in_points);
-		extern_container_arg!(points3d);
+	pub fn depth_to3d_sparse(depth: &impl core::ToInputArray, in_k: &impl core::ToInputArray, in_points: &impl core::ToInputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(depth);
+		input_array_arg!(in_k);
+		input_array_arg!(in_points);
+		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_depthTo3dSparse_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(depth.as_raw__InputArray(), in_k.as_raw__InputArray(), in_points.as_raw__InputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -159,11 +159,11 @@ pub mod rgbd {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn depth_to3d(depth: &dyn core::ToInputArray, k: &dyn core::ToInputArray, points3d: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(depth);
-		extern_container_arg!(k);
-		extern_container_arg!(points3d);
-		extern_container_arg!(mask);
+	pub fn depth_to3d(depth: &impl core::ToInputArray, k: &impl core::ToInputArray, points3d: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(depth);
+		input_array_arg!(k);
+		output_array_arg!(points3d);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_depthTo3d_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR(depth.as_raw__InputArray(), k.as_raw__InputArray(), points3d.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -251,13 +251,13 @@ pub mod rgbd {
 	/// ## C++ default parameters
 	/// * depth_dilation: false
 	#[inline]
-	pub fn register_depth(unregistered_camera_matrix: &dyn core::ToInputArray, registered_camera_matrix: &dyn core::ToInputArray, registered_dist_coeffs: &dyn core::ToInputArray, rt: &dyn core::ToInputArray, unregistered_depth: &dyn core::ToInputArray, output_image_plane_size: core::Size, registered_depth: &mut dyn core::ToOutputArray, depth_dilation: bool) -> Result<()> {
-		extern_container_arg!(unregistered_camera_matrix);
-		extern_container_arg!(registered_camera_matrix);
-		extern_container_arg!(registered_dist_coeffs);
-		extern_container_arg!(rt);
-		extern_container_arg!(unregistered_depth);
-		extern_container_arg!(registered_depth);
+	pub fn register_depth(unregistered_camera_matrix: &impl core::ToInputArray, registered_camera_matrix: &impl core::ToInputArray, registered_dist_coeffs: &impl core::ToInputArray, rt: &impl core::ToInputArray, unregistered_depth: &impl core::ToInputArray, output_image_plane_size: core::Size, registered_depth: &mut impl core::ToOutputArray, depth_dilation: bool) -> Result<()> {
+		input_array_arg!(unregistered_camera_matrix);
+		input_array_arg!(registered_camera_matrix);
+		input_array_arg!(registered_dist_coeffs);
+		input_array_arg!(rt);
+		input_array_arg!(unregistered_depth);
+		output_array_arg!(registered_depth);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_registerDepth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__OutputArrayR_bool(unregistered_camera_matrix.as_raw__InputArray(), registered_camera_matrix.as_raw__InputArray(), registered_dist_coeffs.as_raw__InputArray(), rt.as_raw__InputArray(), unregistered_depth.as_raw__InputArray(), &output_image_plane_size, registered_depth.as_raw__OutputArray(), depth_dilation, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -278,9 +278,9 @@ pub mod rgbd {
 	/// ## C++ default parameters
 	/// * depth_factor: 1000.0
 	#[inline]
-	pub fn rescale_depth(in_: &dyn core::ToInputArray, depth: i32, out: &mut dyn core::ToOutputArray, depth_factor: f64) -> Result<()> {
-		extern_container_arg!(in_);
-		extern_container_arg!(out);
+	pub fn rescale_depth(in_: &impl core::ToInputArray, depth: i32, out: &mut impl core::ToOutputArray, depth_factor: f64) -> Result<()> {
+		input_array_arg!(in_);
+		output_array_arg!(out);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_rescaleDepth_const__InputArrayR_int_const__OutputArrayR_double(in_.as_raw__InputArray(), depth, out.as_raw__OutputArray(), depth_factor, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -306,10 +306,10 @@ pub mod rgbd {
 	/// * warped_depth: noArray()
 	/// * warped_mask: noArray()
 	#[inline]
-	pub fn warp_frame(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, rt: &core::Mat, camera_matrix: &core::Mat, dist_coeff: &core::Mat, warped_image: &mut dyn core::ToOutputArray, warped_depth: &mut dyn core::ToOutputArray, warped_mask: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(warped_image);
-		extern_container_arg!(warped_depth);
-		extern_container_arg!(warped_mask);
+	pub fn warp_frame(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, rt: &core::Mat, camera_matrix: &core::Mat, dist_coeff: &core::Mat, warped_image: &mut impl core::ToOutputArray, warped_depth: &mut impl core::ToOutputArray, warped_mask: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(warped_image);
+		output_array_arg!(warped_depth);
+		output_array_arg!(warped_mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_warpFrame_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), rt.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeff.as_raw_Mat(), warped_image.as_raw__OutputArray(), warped_depth.as_raw__OutputArray(), warped_mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -340,8 +340,8 @@ pub mod rgbd {
 		/// ## Parameters
 		/// * image: resulting image
 		#[inline]
-		fn render(&self, image: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
+		fn render(&self, image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_render_const_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -359,8 +359,8 @@ pub mod rgbd {
 		/// * cameraPose: pose of camera to render from. If empty then render from current pose
 		///   which is a last frame camera pose.
 		#[inline]
-		fn render_1(&self, image: &mut dyn core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
-			extern_container_arg!(image);
+		fn render_1(&self, image: &mut impl core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
+			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_ColoredKinfu_ColoredKinFu(), image.as_raw__OutputArray(), &camera_pose, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -381,10 +381,10 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * colors: noArray()
 		#[inline]
-		fn get_cloud(&self, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray, colors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
-			extern_container_arg!(colors);
+		fn get_cloud(&self, points: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray, colors: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
+			output_array_arg!(normals);
+			output_array_arg!(colors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getCloud_const_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), colors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -399,8 +399,8 @@ pub mod rgbd {
 		/// ## Parameters
 		/// * points: vector of points which are 4-float vectors
 		#[inline]
-		fn get_points(&self, points: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
+		fn get_points(&self, points: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getPoints_const_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -413,9 +413,9 @@ pub mod rgbd {
 		/// * points: input vector of points which are 4-float vectors
 		/// * normals: output vector of corresponding normals which are 4-float vectors
 		#[inline]
-		fn get_normals(&self, points: &dyn core::ToInputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn get_normals(&self, points: &impl core::ToInputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -459,9 +459,9 @@ pub mod rgbd {
 		/// ## Returns
 		/// true if succeeded to align new frame with current scene, false if opposite
 		#[inline]
-		fn update(&mut self, depth: &dyn core::ToInputArray, rgb: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(depth);
-			extern_container_arg!(rgb);
+		fn update(&mut self, depth: &impl core::ToInputArray, rgb: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(depth);
+			input_array_arg!(rgb);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_colored_kinfu_ColoredKinFu_update_const__InputArrayR_const__InputArrayR(self.as_raw_mut_ColoredKinfu_ColoredKinFu(), depth.as_raw__InputArray(), rgb.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1070,8 +1070,8 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * camera_pose: Matx44f::eye()
 		#[inline]
-		fn render(&self, image: &mut dyn core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
-			extern_container_arg!(image);
+		fn render(&self, image: &mut impl core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
+			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_Dynafu_DynaFu(), image.as_raw__OutputArray(), &camera_pose, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1088,9 +1088,9 @@ pub mod rgbd {
 		/// * points: vector of points which are 4-float vectors
 		/// * normals: vector of normals which are 4-float vectors
 		#[inline]
-		fn get_cloud(&self, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn get_cloud(&self, points: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_getCloud_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1105,8 +1105,8 @@ pub mod rgbd {
 		/// ## Parameters
 		/// * points: vector of points which are 4-float vectors
 		#[inline]
-		fn get_points(&self, points: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
+		fn get_points(&self, points: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_getPoints_const_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1119,9 +1119,9 @@ pub mod rgbd {
 		/// * points: input vector of points which are 4-float vectors
 		/// * normals: output vector of corresponding normals which are 4-float vectors
 		#[inline]
-		fn get_normals(&self, points: &dyn core::ToInputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn get_normals(&self, points: &impl core::ToInputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_getNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1150,9 +1150,9 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn march_cubes(&self, vertices: &mut dyn core::ToOutputArray, edges: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(vertices);
-			extern_container_arg!(edges);
+		fn march_cubes(&self, vertices: &mut impl core::ToOutputArray, edges: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(vertices);
+			output_array_arg!(edges);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_marchCubes_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), vertices.as_raw__OutputArray(), edges.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1188,8 +1188,8 @@ pub mod rgbd {
 		/// ## Returns
 		/// true if succeeded to align new frame with current scene, false if opposite
 		#[inline]
-		fn update(&mut self, depth: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(depth);
+		fn update(&mut self, depth: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_update_const__InputArrayR(self.as_raw_mut_Dynafu_DynaFu(), depth.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1200,10 +1200,10 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * warp: true
 		#[inline]
-		fn render_surface(&mut self, depth_image: &mut dyn core::ToOutputArray, vert_image: &mut dyn core::ToOutputArray, norm_image: &mut dyn core::ToOutputArray, warp: bool) -> Result<()> {
-			extern_container_arg!(depth_image);
-			extern_container_arg!(vert_image);
-			extern_container_arg!(norm_image);
+		fn render_surface(&mut self, depth_image: &mut impl core::ToOutputArray, vert_image: &mut impl core::ToOutputArray, norm_image: &mut impl core::ToOutputArray, warp: bool) -> Result<()> {
+			output_array_arg!(depth_image);
+			output_array_arg!(vert_image);
+			output_array_arg!(norm_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_renderSurface_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_bool(self.as_raw_mut_Dynafu_DynaFu(), depth_image.as_raw__OutputArray(), vert_image.as_raw__OutputArray(), norm_image.as_raw__OutputArray(), warp, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1408,8 +1408,8 @@ pub mod rgbd {
 		/// ## Parameters
 		/// * image: resulting image
 		#[inline]
-		fn render(&self, image: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
+		fn render(&self, image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_render_const_const__OutputArrayR(self.as_raw_Kinfu_KinFu(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1427,8 +1427,8 @@ pub mod rgbd {
 		/// * cameraPose: pose of camera to render from. If empty then render from current pose
 		///   which is a last frame camera pose.
 		#[inline]
-		fn render_1(&self, image: &mut dyn core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
-			extern_container_arg!(image);
+		fn render_1(&self, image: &mut impl core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
+			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_Kinfu_KinFu(), image.as_raw__OutputArray(), &camera_pose, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1445,9 +1445,9 @@ pub mod rgbd {
 		/// * points: vector of points which are 4-float vectors
 		/// * normals: vector of normals which are 4-float vectors
 		#[inline]
-		fn get_cloud(&self, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn get_cloud(&self, points: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_getCloud_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_KinFu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1462,8 +1462,8 @@ pub mod rgbd {
 		/// ## Parameters
 		/// * points: vector of points which are 4-float vectors
 		#[inline]
-		fn get_points(&self, points: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
+		fn get_points(&self, points: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_getPoints_const_const__OutputArrayR(self.as_raw_Kinfu_KinFu(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1476,9 +1476,9 @@ pub mod rgbd {
 		/// * points: input vector of points which are 4-float vectors
 		/// * normals: output vector of corresponding normals which are 4-float vectors
 		#[inline]
-		fn get_normals(&self, points: &dyn core::ToInputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn get_normals(&self, points: &impl core::ToInputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_getNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_Kinfu_KinFu(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1524,8 +1524,8 @@ pub mod rgbd {
 		/// ## Returns
 		/// true if succeeded to align new frame with current scene, false if opposite
 		#[inline]
-		fn update(&mut self, depth: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(depth);
+		fn update(&mut self, depth: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_KinFu_update_const__InputArrayR(self.as_raw_mut_Kinfu_KinFu(), depth.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2123,9 +2123,9 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn raycast(&self, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, frame_size: core::Size, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn raycast(&self, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, frame_size: core::Size, points: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_const_SizeR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), &camera_pose, &intrinsics, &frame_size, points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2134,10 +2134,10 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn raycast_1(&self, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, frame_size: core::Size, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray, colors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
-			extern_container_arg!(colors);
+		fn raycast_1(&self, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, frame_size: core::Size, points: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray, colors: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
+			output_array_arg!(normals);
+			output_array_arg!(colors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_raycast_const_const_Matx44fR_const_IntrR_const_SizeR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), &camera_pose, &intrinsics, &frame_size, points.as_raw__OutputArray(), normals.as_raw__OutputArray(), colors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2146,9 +2146,9 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn fetch_normals(&self, points: &dyn core::ToInputArray, _normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(_normals);
+		fn fetch_normals(&self, points: &impl core::ToInputArray, _normals: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points);
+			output_array_arg!(_normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_fetchNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), points.as_raw__InputArray(), _normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2157,9 +2157,9 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn fetch_points_normals(&self, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn fetch_points_normals(&self, points: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_fetchPointsNormals_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2168,10 +2168,10 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn fetch_points_normals_colors(&self, unnamed: &mut dyn core::ToOutputArray, unnamed_1: &mut dyn core::ToOutputArray, unnamed_2: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(unnamed);
-			extern_container_arg!(unnamed_1);
-			extern_container_arg!(unnamed_2);
+		fn fetch_points_normals_colors(&self, unnamed: &mut impl core::ToOutputArray, unnamed_1: &mut impl core::ToOutputArray, unnamed_2: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(unnamed);
+			output_array_arg!(unnamed_1);
+			output_array_arg!(unnamed_2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_fetchPointsNormalsColors_const_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_Kinfu_Volume(), unnamed.as_raw__OutputArray(), unnamed_1.as_raw__OutputArray(), unnamed_2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2188,8 +2188,8 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * frame_id: 0
 		#[inline]
-		fn integrate(&mut self, _depth: &dyn core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, frame_id: i32) -> Result<()> {
-			extern_container_arg!(_depth);
+		fn integrate(&mut self, _depth: &impl core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, frame_id: i32) -> Result<()> {
+			input_array_arg!(_depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_int(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, frame_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2200,9 +2200,9 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * frame_id: 0
 		#[inline]
-		fn integrate_1(&mut self, _depth: &dyn core::ToInputArray, _rgb: &dyn core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, rgb_intrinsics: crate::rgbd::Kinfu_Intr, frame_id: i32) -> Result<()> {
-			extern_container_arg!(_depth);
-			extern_container_arg!(_rgb);
+		fn integrate_1(&mut self, _depth: &impl core::ToInputArray, _rgb: &impl core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, rgb_intrinsics: crate::rgbd::Kinfu_Intr, frame_id: i32) -> Result<()> {
+			input_array_arg!(_depth);
+			input_array_arg!(_rgb);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_IntrR_const_int(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), _rgb.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, &rgb_intrinsics, frame_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2663,8 +2663,8 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn render(&self, image: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
+		fn render(&self, image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_render_const_const__OutputArrayR(self.as_raw_LargeKinfu(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2673,8 +2673,8 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn render_1(&self, image: &mut dyn core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
-			extern_container_arg!(image);
+		fn render_1(&self, image: &mut impl core::ToOutputArray, camera_pose: core::Matx44f) -> Result<()> {
+			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_render_const_const__OutputArrayR_const_Matx44fR(self.as_raw_LargeKinfu(), image.as_raw__OutputArray(), &camera_pose, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2683,9 +2683,9 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn get_cloud(&self, points: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn get_cloud(&self, points: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_getCloud_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_LargeKinfu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2694,8 +2694,8 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn get_points(&self, points: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
+		fn get_points(&self, points: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_getPoints_const_const__OutputArrayR(self.as_raw_LargeKinfu(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2704,9 +2704,9 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn get_normals(&self, points: &dyn core::ToInputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn get_normals(&self, points: &impl core::ToInputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_getNormals_const_const__InputArrayR_const__OutputArrayR(self.as_raw_LargeKinfu(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2739,8 +2739,8 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn update(&mut self, depth: &dyn core::ToInputArray) -> Result<bool> {
-			extern_container_arg!(depth);
+		fn update(&mut self, depth: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_large_kinfu_LargeKinfu_update_const__InputArrayR(self.as_raw_mut_LargeKinfu(), depth.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3459,8 +3459,8 @@ pub mod rgbd {
 		/// * quantized_images: noArray()
 		/// * masks: std::vector<Mat>()
 		#[inline]
-		fn match_(&self, sources: &core::Vector<core::Mat>, threshold: f32, matches: &mut core::Vector<crate::rgbd::Linemod_Match>, class_ids: &core::Vector<String>, quantized_images: &mut dyn core::ToOutputArray, masks: &core::Vector<core::Mat>) -> Result<()> {
-			extern_container_arg!(quantized_images);
+		fn match_(&self, sources: &core::Vector<core::Mat>, threshold: f32, matches: &mut core::Vector<crate::rgbd::Linemod_Match>, class_ids: &core::Vector<String>, quantized_images: &mut impl core::ToOutputArray, masks: &core::Vector<core::Mat>) -> Result<()> {
+			output_array_arg!(quantized_images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_match_const_const_vectorLMatGR_float_vectorLMatchGR_const_vectorLStringGR_const__OutputArrayR_const_vectorLMatGR(self.as_raw_Linemod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLinemod_Match(), class_ids.as_raw_VectorOfString(), quantized_images.as_raw__OutputArray(), masks.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4250,9 +4250,9 @@ pub mod rgbd {
 		/// * points: a rows x cols x 3 matrix of CV_32F/CV64F or a rows x cols x 1 CV_U16S
 		/// * depth: a rows x cols matrix of the cleaned up depth
 		#[inline]
-		fn apply(&self, points: &dyn core::ToInputArray, depth: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(depth);
+		fn apply(&self, points: &impl core::ToInputArray, depth: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points);
+			output_array_arg!(depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_operator___const_const__InputArrayR_const__OutputArrayR(self.as_raw_DepthCleaner(), points.as_raw__InputArray(), depth.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5015,8 +5015,8 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * init_rt: Mat()
 		#[inline]
-		fn compute(&self, src_image: &core::Mat, src_depth: &core::Mat, src_mask: &core::Mat, dst_image: &core::Mat, dst_depth: &core::Mat, dst_mask: &core::Mat, rt: &mut dyn core::ToOutputArray, init_rt: &core::Mat) -> Result<bool> {
-			extern_container_arg!(rt);
+		fn compute(&self, src_image: &core::Mat, src_depth: &core::Mat, src_mask: &core::Mat, dst_image: &core::Mat, dst_depth: &core::Mat, dst_mask: &core::Mat, rt: &mut impl core::ToOutputArray, init_rt: &core::Mat) -> Result<bool> {
+			output_array_arg!(rt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_compute_const_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR_const_MatR(self.as_raw_Odometry(), src_image.as_raw_Mat(), src_depth.as_raw_Mat(), src_mask.as_raw_Mat(), dst_image.as_raw_Mat(), dst_depth.as_raw_Mat(), dst_mask.as_raw_Mat(), rt.as_raw__OutputArray(), init_rt.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5030,8 +5030,8 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * init_rt: Mat()
 		#[inline]
-		fn compute2(&self, src_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, dst_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, rt: &mut dyn core::ToOutputArray, init_rt: &core::Mat) -> Result<bool> {
-			extern_container_arg!(rt);
+		fn compute2(&self, src_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, dst_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, rt: &mut impl core::ToOutputArray, init_rt: &core::Mat) -> Result<bool> {
+			output_array_arg!(rt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_compute_const_PtrLOdometryFrameGR_PtrLOdometryFrameGR_const__OutputArrayR_const_MatR(self.as_raw_Odometry(), src_frame.as_raw_mut_PtrOfOdometryFrame(), dst_frame.as_raw_mut_PtrOfOdometryFrame(), rt.as_raw__OutputArray(), init_rt.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5929,9 +5929,9 @@ pub mod rgbd {
 		/// * points: a rows x cols x 3 matrix of CV_32F/CV64F or a rows x cols x 1 CV_U16S
 		/// * normals: a rows x cols x 3 matrix
 		#[inline]
-		fn apply(&self, points: &dyn core::ToInputArray, normals: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points);
-			extern_container_arg!(normals);
+		fn apply(&self, points: &impl core::ToInputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points);
+			output_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_operator___const_const__InputArrayR_const__OutputArrayR(self.as_raw_RgbdNormals(), points.as_raw__InputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6132,8 +6132,8 @@ pub mod rgbd {
 		/// * window_size: 5
 		/// * method: RgbdNormals::RGBD_NORMALS_METHOD_FALS
 		#[inline]
-		pub fn new(rows: i32, cols: i32, depth: i32, k: &dyn core::ToInputArray, window_size: i32, method: i32) -> Result<crate::rgbd::RgbdNormals> {
-			extern_container_arg!(k);
+		pub fn new(rows: i32, cols: i32, depth: i32, k: &impl core::ToInputArray, window_size: i32, method: i32) -> Result<crate::rgbd::RgbdNormals> {
+			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_RgbdNormals_int_int_int_const__InputArrayR_int_int(rows, cols, depth, k.as_raw__InputArray(), window_size, method, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6146,8 +6146,8 @@ pub mod rgbd {
 		/// * window_size: 5
 		/// * method: RgbdNormals::RGBD_NORMALS_METHOD_FALS
 		#[inline]
-		pub fn create(rows: i32, cols: i32, depth: i32, k: &dyn core::ToInputArray, window_size: i32, method: i32) -> Result<core::Ptr<crate::rgbd::RgbdNormals>> {
-			extern_container_arg!(k);
+		pub fn create(rows: i32, cols: i32, depth: i32, k: &impl core::ToInputArray, window_size: i32, method: i32) -> Result<core::Ptr<crate::rgbd::RgbdNormals>> {
+			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_create_int_int_int_const__InputArrayR_int_int(rows, cols, depth, k.as_raw__InputArray(), window_size, method, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6553,11 +6553,11 @@ pub mod rgbd {
 		/// * plane_coefficients: the coefficients of the corresponding planes (a,b,c,d) such that ax+by+cz+d=0, norm(a,b,c)=1
 		///        and c < 0 (so that the normal points towards the camera)
 		#[inline]
-		fn apply(&mut self, points3d: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, plane_coefficients: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points3d);
-			extern_container_arg!(normals);
-			extern_container_arg!(mask);
-			extern_container_arg!(plane_coefficients);
+		fn apply(&mut self, points3d: &impl core::ToInputArray, normals: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, plane_coefficients: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points3d);
+			input_array_arg!(normals);
+			output_array_arg!(mask);
+			output_array_arg!(plane_coefficients);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_operator___const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_RgbdPlane(), points3d.as_raw__InputArray(), normals.as_raw__InputArray(), mask.as_raw__OutputArray(), plane_coefficients.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6572,10 +6572,10 @@ pub mod rgbd {
 		///        and 255 if it does not belong to any plane
 		/// * plane_coefficients: the coefficients of the corresponding planes (a,b,c,d) such that ax+by+cz+d=0
 		#[inline]
-		fn apply_1(&mut self, points3d: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, plane_coefficients: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points3d);
-			extern_container_arg!(mask);
-			extern_container_arg!(plane_coefficients);
+		fn apply_1(&mut self, points3d: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, plane_coefficients: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points3d);
+			output_array_arg!(mask);
+			output_array_arg!(plane_coefficients);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_operator___const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_RgbdPlane(), points3d.as_raw__InputArray(), mask.as_raw__OutputArray(), plane_coefficients.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

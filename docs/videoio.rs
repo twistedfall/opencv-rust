@@ -1374,8 +1374,8 @@ pub mod videoio {
 		/// ## C++ default parameters
 		/// * flag: 0
 		#[inline]
-		fn retrieve(&mut self, image: &mut dyn core::ToOutputArray, flag: i32) -> Result<bool> {
-			extern_container_arg!(image);
+		fn retrieve(&mut self, image: &mut impl core::ToOutputArray, flag: i32) -> Result<bool> {
+			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayR_int(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), flag, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1400,8 +1400,8 @@ pub mod videoio {
 		/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
 		/// cvCloneImage and then do whatever you want with the copy.
 		#[inline]
-		fn read(&mut self, image: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(image);
+		fn read(&mut self, image: &mut impl core::ToOutputArray) -> Result<bool> {
+			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_read_const__OutputArrayR(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1809,8 +1809,8 @@ pub mod videoio {
 		/// The function/method writes the specified image to video file. It must have the same size as has
 		/// been specified when opening the video writer.
 		#[inline]
-		fn write(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
+		fn write(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

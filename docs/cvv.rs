@@ -16,9 +16,9 @@ pub mod cvv {
 	}
 	
 	#[inline]
-	pub fn debug_d_match(img1: &dyn core::ToInputArray, mut keypoints1: core::Vector<core::KeyPoint>, img2: &dyn core::ToInputArray, mut keypoints2: core::Vector<core::KeyPoint>, mut matches: core::Vector<core::DMatch>, data: &crate::cvv::CallMetaData, description: &str, view: &str, use_train_descriptor: bool) -> Result<()> {
-		extern_container_arg!(img1);
-		extern_container_arg!(img2);
+	pub fn debug_d_match(img1: &impl core::ToInputArray, mut keypoints1: core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, mut keypoints2: core::Vector<core::KeyPoint>, mut matches: core::Vector<core::DMatch>, data: &crate::cvv::CallMetaData, description: &str, view: &str, use_train_descriptor: bool) -> Result<()> {
+		input_array_arg!(img1);
+		input_array_arg!(img2);
 		extern_container_arg!(description);
 		extern_container_arg!(view);
 		return_send!(via ocvrs_return);
@@ -29,9 +29,9 @@ pub mod cvv {
 	}
 	
 	#[inline]
-	pub fn debug_filter(original: &dyn core::ToInputArray, result: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
-		extern_container_arg!(original);
-		extern_container_arg!(result);
+	pub fn debug_filter(original: &impl core::ToInputArray, result: &impl core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
+		input_array_arg!(original);
+		input_array_arg!(result);
 		extern_container_arg!(description);
 		extern_container_arg!(view);
 		return_send!(via ocvrs_return);
@@ -51,8 +51,8 @@ pub mod cvv {
 	}
 	
 	#[inline]
-	pub fn show_image(img: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
-		extern_container_arg!(img);
+	pub fn show_image(img: &impl core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
+		input_array_arg!(img);
 		extern_container_arg!(description);
 		extern_container_arg!(view);
 		return_send!(via ocvrs_return);

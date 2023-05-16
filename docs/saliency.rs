@@ -126,9 +126,9 @@ pub mod saliency {
 		fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(saliency_map);
+		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_MotionSaliencyBinWangApr2014(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -369,9 +369,9 @@ pub mod saliency {
 		fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(saliency_map);
+		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_ObjectnessBING_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ObjectnessBING(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -552,9 +552,9 @@ pub mod saliency {
 		/// \param saliencyMap      The computed saliency map.
 		/// \return true if the saliency map is computed, false otherwise
 		#[inline]
-		fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(saliency_map);
+		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_Saliency_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Saliency(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -628,9 +628,9 @@ pub mod saliency {
 		/// * _saliencyMap: the saliency map obtained through one of the specialized algorithms
 		/// * _binaryMap: the binary map
 		#[inline]
-		fn compute_binary_map(&mut self, _saliency_map: &dyn core::ToInputArray, _binary_map: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(_saliency_map);
-			extern_container_arg!(_binary_map);
+		fn compute_binary_map(&mut self, _saliency_map: &impl core::ToInputArray, _binary_map: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(_saliency_map);
+			output_array_arg!(_binary_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliency_computeBinaryMap_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliency(), _saliency_map.as_raw__InputArray(), _binary_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -701,9 +701,9 @@ pub mod saliency {
 		fn as_raw_mut_StaticSaliencyFineGrained(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(saliency_map);
+		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliencyFineGrained(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -828,9 +828,9 @@ pub mod saliency {
 		fn as_raw_mut_StaticSaliencySpectralResidual(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute_saliency(&mut self, image: &dyn core::ToInputArray, saliency_map: &mut dyn core::ToOutputArray) -> Result<bool> {
-			extern_container_arg!(image);
-			extern_container_arg!(saliency_map);
+		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_computeSaliency_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_StaticSaliencySpectralResidual(), image.as_raw__InputArray(), saliency_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

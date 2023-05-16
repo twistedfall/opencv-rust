@@ -105,10 +105,10 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
-		fn match_(&mut self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::DMatch>, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(train_descriptors);
-			extern_container_arg!(mask);
+		fn match_(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>, mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_match_const__InputArrayR_const__InputArrayR_vectorLDMatchGR_const__InputArrayR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -138,8 +138,8 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * masks: std::vector<GpuMat>()
 		#[inline]
-		fn match__1(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::DMatch>, masks: &core::Vector<core::GpuMat>) -> Result<()> {
-			extern_container_arg!(query_descriptors);
+		fn match__1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>, masks: &core::Vector<core::GpuMat>) -> Result<()> {
+			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR_const_vectorLGpuMatGR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), masks.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -169,11 +169,11 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn match_async(&mut self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(train_descriptors);
-			extern_container_arg!(matches);
-			extern_container_arg!(mask);
+		fn match_async(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			output_array_arg!(matches);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_matchAsync_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -205,9 +205,9 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn match_async_1(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut dyn core::ToOutputArray, masks: &core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(matches);
+		fn match_async_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, masks: &core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_matchAsync_const__InputArrayR_const__OutputArrayR_const_vectorLGpuMatGR_StreamR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), masks.as_raw_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -224,8 +224,8 @@ pub mod cudafeatures2d {
 		/// * gpu_matches: Matches, returned from DescriptorMatcher::matchAsync.
 		/// * matches: Vector of DMatch objects.
 		#[inline]
-		fn match_convert(&mut self, gpu_matches: &dyn core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
-			extern_container_arg!(gpu_matches);
+		fn match_convert(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_matchConvert_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -256,10 +256,10 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match(&mut self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(train_descriptors);
-			extern_container_arg!(mask);
+		fn knn_match(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatch_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, mask.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -292,8 +292,8 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_1(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &core::Vector<core::GpuMat>, compact_result: bool) -> Result<()> {
-			extern_container_arg!(query_descriptors);
+		fn knn_match_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &core::Vector<core::GpuMat>, compact_result: bool) -> Result<()> {
+			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int_const_vectorLGpuMatGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, masks.as_raw_VectorOfGpuMat(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -323,11 +323,11 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn knn_match_async(&mut self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut dyn core::ToOutputArray, k: i32, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(train_descriptors);
-			extern_container_arg!(matches);
-			extern_container_arg!(mask);
+		fn knn_match_async(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, k: i32, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			output_array_arg!(matches);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchAsync_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_StreamR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), k, mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -359,9 +359,9 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn knn_match_async_1(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut dyn core::ToOutputArray, k: i32, masks: &core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(matches);
+		fn knn_match_async_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, k: i32, masks: &core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchAsync_const__InputArrayR_const__OutputArrayR_int_const_vectorLGpuMatGR_StreamR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), k, masks.as_raw_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -384,8 +384,8 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_convert(&mut self, gpu_matches: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, compact_result: bool) -> Result<()> {
-			extern_container_arg!(gpu_matches);
+		fn knn_match_convert(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, compact_result: bool) -> Result<()> {
+			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -417,10 +417,10 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match(&mut self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(train_descriptors);
-			extern_container_arg!(mask);
+		fn radius_match(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatch_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, mask.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -454,8 +454,8 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_1(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &core::Vector<core::GpuMat>, compact_result: bool) -> Result<()> {
-			extern_container_arg!(query_descriptors);
+		fn radius_match_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &core::Vector<core::GpuMat>, compact_result: bool) -> Result<()> {
+			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float_const_vectorLGpuMatGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, masks.as_raw_VectorOfGpuMat(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -486,11 +486,11 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn radius_match_async(&mut self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut dyn core::ToOutputArray, max_distance: f32, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(train_descriptors);
-			extern_container_arg!(matches);
-			extern_container_arg!(mask);
+		fn radius_match_async(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, max_distance: f32, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			output_array_arg!(matches);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchAsync_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float_const__InputArrayR_StreamR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), max_distance, mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -523,9 +523,9 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn radius_match_async_1(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut dyn core::ToOutputArray, max_distance: f32, masks: &core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(matches);
+		fn radius_match_async_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, max_distance: f32, masks: &core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchAsync_const__InputArrayR_const__OutputArrayR_float_const_vectorLGpuMatGR_StreamR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), max_distance, masks.as_raw_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -548,8 +548,8 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_convert(&mut self, gpu_matches: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, compact_result: bool) -> Result<()> {
-			extern_container_arg!(gpu_matches);
+		fn radius_match_convert(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, compact_result: bool) -> Result<()> {
+			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -760,10 +760,10 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_async(&mut self, image: &dyn core::ToInputArray, keypoints: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(keypoints);
-			extern_container_arg!(mask);
+		fn detect_async(&mut self, image: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(keypoints);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Feature2DAsync_detectAsync_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_mut_CUDA_Feature2DAsync(), image.as_raw__InputArray(), keypoints.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -782,10 +782,10 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute_async(&mut self, image: &dyn core::ToInputArray, keypoints: &mut dyn core::ToOutputArray, descriptors: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(keypoints);
-			extern_container_arg!(descriptors);
+		fn compute_async(&mut self, image: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, descriptors: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(keypoints);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Feature2DAsync_computeAsync_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_Feature2DAsync(), image.as_raw__InputArray(), keypoints.as_raw__OutputArray(), descriptors.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -799,11 +799,11 @@ pub mod cudafeatures2d {
 		/// * use_provided_keypoints: false
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_and_compute_async(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, keypoints: &mut dyn core::ToOutputArray, descriptors: &mut dyn core::ToOutputArray, use_provided_keypoints: bool, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
-			extern_container_arg!(keypoints);
-			extern_container_arg!(descriptors);
+		fn detect_and_compute_async(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, descriptors: &mut impl core::ToOutputArray, use_provided_keypoints: bool, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
+			output_array_arg!(keypoints);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Feature2DAsync_detectAndComputeAsync_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(self.as_raw_mut_CUDA_Feature2DAsync(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw__OutputArray(), descriptors.as_raw__OutputArray(), use_provided_keypoints, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -813,8 +813,8 @@ pub mod cudafeatures2d {
 		
 		/// Converts keypoints array from internal representation to standard vector.
 		#[inline]
-		fn convert(&mut self, gpu_keypoints: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
-			extern_container_arg!(gpu_keypoints);
+		fn convert(&mut self, gpu_keypoints: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
+			input_array_arg!(gpu_keypoints);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Feature2DAsync_convert_const__InputArrayR_vectorLKeyPointGR(self.as_raw_mut_CUDA_Feature2DAsync(), gpu_keypoints.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

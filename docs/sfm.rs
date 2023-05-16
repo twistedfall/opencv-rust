@@ -78,11 +78,11 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) A4.1.1 pag.579
 	#[inline]
-	pub fn k_rt_from_projection(p: &dyn core::ToInputArray, k: &mut dyn core::ToOutputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(p);
-		extern_container_arg!(k);
-		extern_container_arg!(r);
-		extern_container_arg!(t);
+	pub fn k_rt_from_projection(p: &impl core::ToInputArray, k: &mut impl core::ToOutputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(p);
+		output_array_arg!(k);
+		output_array_arg!(r);
+		output_array_arg!(t);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_KRtFromProjection_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(p.as_raw__InputArray(), k.as_raw__OutputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -96,10 +96,10 @@ pub mod sfm {
 	/// * T: Input 3x3 transformation matrix such that ![inline formula](https://latex.codecogs.com/png.latex?x%20%3D%20T%2AX), where ![inline formula](https://latex.codecogs.com/png.latex?X) are the points to transform and ![inline formula](https://latex.codecogs.com/png.latex?x) the transformed points.
 	/// * transformed_points: Output vector of N-dimensional transformed points.
 	#[inline]
-	pub fn apply_transformation_to_points(points: &dyn core::ToInputArray, t: &dyn core::ToInputArray, transformed_points: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(points);
-		extern_container_arg!(t);
-		extern_container_arg!(transformed_points);
+	pub fn apply_transformation_to_points(points: &impl core::ToInputArray, t: &impl core::ToInputArray, transformed_points: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points);
+		input_array_arg!(t);
+		output_array_arg!(transformed_points);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_applyTransformationToPoints_const__InputArrayR_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), t.as_raw__InputArray(), transformed_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -118,11 +118,11 @@ pub mod sfm {
 	/// Find the best transformation such that xp=projection*(s*R*x+t) (same as Pose Estimation, ePNP).
 	/// The routines below are only for the orthographic case for now.
 	#[inline]
-	pub fn compute_orientation(x1: &dyn core::ToInputArray, x2: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, s: f64) -> Result<()> {
-		extern_container_arg!(x1);
-		extern_container_arg!(x2);
-		extern_container_arg!(r);
-		extern_container_arg!(t);
+	pub fn compute_orientation(x1: &impl core::ToInputArray, x2: &impl core::ToInputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, s: f64) -> Result<()> {
+		input_array_arg!(x1);
+		input_array_arg!(x2);
+		output_array_arg!(r);
+		output_array_arg!(t);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_computeOrientation_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double(x1.as_raw__InputArray(), x2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), s, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -136,10 +136,10 @@ pub mod sfm {
 	/// * t: Input 3x1 translation vector.
 	/// * X: Input 3x1 or 4x1 vector with the 3d point.
 	#[inline]
-	pub fn depth(r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, x: &dyn core::ToInputArray) -> Result<f64> {
-		extern_container_arg!(r);
-		extern_container_arg!(t);
-		extern_container_arg!(x);
+	pub fn depth(r: &impl core::ToInputArray, t: &impl core::ToInputArray, x: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(r);
+		input_array_arg!(t);
+		input_array_arg!(x);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_depth_const__InputArrayR_const__InputArrayR_const__InputArrayR(r.as_raw__InputArray(), t.as_raw__InputArray(), x.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -156,11 +156,11 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
 	#[inline]
-	pub fn essential_from_fundamental(f: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, e: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(f);
-		extern_container_arg!(k1);
-		extern_container_arg!(k2);
-		extern_container_arg!(e);
+	pub fn essential_from_fundamental(f: &impl core::ToInputArray, k1: &impl core::ToInputArray, k2: &impl core::ToInputArray, e: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(f);
+		input_array_arg!(k1);
+		input_array_arg!(k2);
+		output_array_arg!(e);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_essentialFromFundamental_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(f.as_raw__InputArray(), k1.as_raw__InputArray(), k2.as_raw__InputArray(), e.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -178,12 +178,12 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
 	#[inline]
-	pub fn essential_from_rt(r1: &dyn core::ToInputArray, t1: &dyn core::ToInputArray, r2: &dyn core::ToInputArray, t2: &dyn core::ToInputArray, e: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(r1);
-		extern_container_arg!(t1);
-		extern_container_arg!(r2);
-		extern_container_arg!(t2);
-		extern_container_arg!(e);
+	pub fn essential_from_rt(r1: &impl core::ToInputArray, t1: &impl core::ToInputArray, r2: &impl core::ToInputArray, t2: &impl core::ToInputArray, e: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(r1);
+		input_array_arg!(t1);
+		input_array_arg!(r2);
+		input_array_arg!(t2);
+		output_array_arg!(e);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_essentialFromRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(r1.as_raw__InputArray(), t1.as_raw__InputArray(), r2.as_raw__InputArray(), t2.as_raw__InputArray(), e.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -196,9 +196,9 @@ pub mod sfm {
 	/// * src: Input vector of N-dimensional points.
 	/// * dst: Output vector of N+1-dimensional points.
 	#[inline]
-	pub fn euclidean_to_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn euclidean_to_homogeneous(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_euclideanToHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -224,11 +224,11 @@ pub mod sfm {
 	/// ## C++ default parameters
 	/// * outliers_probability: 1e-2
 	#[inline]
-	pub fn fundamental_from_correspondences7_point_robust(x1: &dyn core::ToInputArray, x2: &dyn core::ToInputArray, max_error: f64, f: &mut dyn core::ToOutputArray, inliers: &mut dyn core::ToOutputArray, outliers_probability: f64) -> Result<f64> {
-		extern_container_arg!(x1);
-		extern_container_arg!(x2);
-		extern_container_arg!(f);
-		extern_container_arg!(inliers);
+	pub fn fundamental_from_correspondences7_point_robust(x1: &impl core::ToInputArray, x2: &impl core::ToInputArray, max_error: f64, f: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray, outliers_probability: f64) -> Result<f64> {
+		input_array_arg!(x1);
+		input_array_arg!(x2);
+		output_array_arg!(f);
+		output_array_arg!(inliers);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_fundamentalFromCorrespondences7PointRobust_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR_const__OutputArrayR_double(x1.as_raw__InputArray(), x2.as_raw__InputArray(), max_error, f.as_raw__OutputArray(), inliers.as_raw__OutputArray(), outliers_probability, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -254,11 +254,11 @@ pub mod sfm {
 	/// ## C++ default parameters
 	/// * outliers_probability: 1e-2
 	#[inline]
-	pub fn fundamental_from_correspondences8_point_robust(x1: &dyn core::ToInputArray, x2: &dyn core::ToInputArray, max_error: f64, f: &mut dyn core::ToOutputArray, inliers: &mut dyn core::ToOutputArray, outliers_probability: f64) -> Result<f64> {
-		extern_container_arg!(x1);
-		extern_container_arg!(x2);
-		extern_container_arg!(f);
-		extern_container_arg!(inliers);
+	pub fn fundamental_from_correspondences8_point_robust(x1: &impl core::ToInputArray, x2: &impl core::ToInputArray, max_error: f64, f: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray, outliers_probability: f64) -> Result<f64> {
+		input_array_arg!(x1);
+		input_array_arg!(x2);
+		output_array_arg!(f);
+		output_array_arg!(inliers);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_fundamentalFromCorrespondences8PointRobust_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR_const__OutputArrayR_double(x1.as_raw__InputArray(), x2.as_raw__InputArray(), max_error, f.as_raw__OutputArray(), inliers.as_raw__OutputArray(), outliers_probability, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -275,11 +275,11 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12) or <http://ai.stanford.edu/~birch/projective/node20.html>
 	#[inline]
-	pub fn fundamental_from_essential(e: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, f: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(e);
-		extern_container_arg!(k1);
-		extern_container_arg!(k2);
-		extern_container_arg!(f);
+	pub fn fundamental_from_essential(e: &impl core::ToInputArray, k1: &impl core::ToInputArray, k2: &impl core::ToInputArray, f: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(e);
+		input_array_arg!(k1);
+		input_array_arg!(k2);
+		output_array_arg!(f);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_fundamentalFromEssential_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(e.as_raw__InputArray(), k1.as_raw__InputArray(), k2.as_raw__InputArray(), f.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -293,10 +293,10 @@ pub mod sfm {
 	/// * P2: Input 3x4 second projection matrix.
 	/// * F: Output 3x3 fundamental matrix.
 	#[inline]
-	pub fn fundamental_from_projections(p1: &dyn core::ToInputArray, p2: &dyn core::ToInputArray, f: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(p1);
-		extern_container_arg!(p2);
-		extern_container_arg!(f);
+	pub fn fundamental_from_projections(p1: &impl core::ToInputArray, p2: &impl core::ToInputArray, f: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(p1);
+		input_array_arg!(p2);
+		output_array_arg!(f);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_fundamentalFromProjections_const__InputArrayR_const__InputArrayR_const__OutputArrayR(p1.as_raw__InputArray(), p2.as_raw__InputArray(), f.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -309,9 +309,9 @@ pub mod sfm {
 	/// * src: Input vector of N-dimensional points.
 	/// * dst: Output vector of N-1-dimensional points.
 	#[inline]
-	pub fn homogeneous_to_euclidean(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn homogeneous_to_euclidean(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_homogeneousToEuclidean_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -333,12 +333,12 @@ pub mod sfm {
 	/// ## C++ default parameters
 	/// * file_format: SFM_IO_BUNDLER
 	#[inline]
-	pub fn import_reconstruction(file: &str, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, ks: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray, file_format: i32) -> Result<()> {
+	pub fn import_reconstruction(file: &str, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, ks: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray, file_format: i32) -> Result<()> {
 		extern_container_arg!(file);
-		extern_container_arg!(rs);
-		extern_container_arg!(ts);
-		extern_container_arg!(ks);
-		extern_container_arg!(points3d);
+		output_array_arg!(rs);
+		output_array_arg!(ts);
+		output_array_arg!(ks);
+		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_importReconstruction_const_StringR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int(file.opencv_as_extern(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), ks.as_raw__OutputArray(), points3d.as_raw__OutputArray(), file_format, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -356,9 +356,9 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 	#[inline]
-	pub fn isotropic_preconditioner_from_points(points: &dyn core::ToInputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(points);
-		extern_container_arg!(t);
+	pub fn isotropic_preconditioner_from_points(points: &impl core::ToInputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points);
+		output_array_arg!(t);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_isotropicPreconditionerFromPoints_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -374,10 +374,10 @@ pub mod sfm {
 	/// 
 	/// It computes in the same way as woud do [reduce] but with \a Variance function.
 	#[inline]
-	pub fn mean_and_variance_along_rows(a: &dyn core::ToInputArray, mean: &mut dyn core::ToOutputArray, variance: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(a);
-		extern_container_arg!(mean);
-		extern_container_arg!(variance);
+	pub fn mean_and_variance_along_rows(a: &impl core::ToInputArray, mean: &mut impl core::ToOutputArray, variance: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(a);
+		output_array_arg!(mean);
+		output_array_arg!(variance);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_meanAndVarianceAlongRows_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(a.as_raw__InputArray(), mean.as_raw__OutputArray(), variance.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -399,13 +399,13 @@ pub mod sfm {
 	/// 
 	/// Reference: See [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (9.6.3 Geometrical interpretation of the 4 solutions).
 	#[inline]
-	pub fn motion_from_essential_choose_solution(rs: &dyn core::ToInputArray, ts: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, x1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, x2: &dyn core::ToInputArray) -> Result<i32> {
-		extern_container_arg!(rs);
-		extern_container_arg!(ts);
-		extern_container_arg!(k1);
-		extern_container_arg!(x1);
-		extern_container_arg!(k2);
-		extern_container_arg!(x2);
+	pub fn motion_from_essential_choose_solution(rs: &impl core::ToInputArray, ts: &impl core::ToInputArray, k1: &impl core::ToInputArray, x1: &impl core::ToInputArray, k2: &impl core::ToInputArray, x2: &impl core::ToInputArray) -> Result<i32> {
+		input_array_arg!(rs);
+		input_array_arg!(ts);
+		input_array_arg!(k1);
+		input_array_arg!(x1);
+		input_array_arg!(k2);
+		input_array_arg!(x2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_motionFromEssentialChooseSolution_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(rs.as_raw__InputArray(), ts.as_raw__InputArray(), k1.as_raw__InputArray(), x1.as_raw__InputArray(), k2.as_raw__InputArray(), x2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -421,10 +421,10 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (Result 9.19)
 	#[inline]
-	pub fn motion_from_essential(e: &dyn core::ToInputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(e);
-		extern_container_arg!(rs);
-		extern_container_arg!(ts);
+	pub fn motion_from_essential(e: &impl core::ToInputArray, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(e);
+		output_array_arg!(rs);
+		output_array_arg!(ts);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_motionFromEssential_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(e.as_raw__InputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -439,9 +439,9 @@ pub mod sfm {
 	/// 
 	/// By default divides the fundamental matrix by its L2 norm.
 	#[inline]
-	pub fn normalize_fundamental(f: &dyn core::ToInputArray, f_normalized: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(f);
-		extern_container_arg!(f_normalized);
+	pub fn normalize_fundamental(f: &impl core::ToInputArray, f_normalized: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(f);
+		output_array_arg!(f_normalized);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_normalizeFundamental_const__InputArrayR_const__OutputArrayR(f.as_raw__InputArray(), f_normalized.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -460,10 +460,10 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 	#[inline]
-	pub fn normalize_isotropic_points(points: &dyn core::ToInputArray, normalized_points: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(points);
-		extern_container_arg!(normalized_points);
-		extern_container_arg!(t);
+	pub fn normalize_isotropic_points(points: &impl core::ToInputArray, normalized_points: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points);
+		output_array_arg!(normalized_points);
+		output_array_arg!(t);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_normalizeIsotropicPoints_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(points.as_raw__InputArray(), normalized_points.as_raw__OutputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -482,10 +482,10 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 	#[inline]
-	pub fn normalize_points(points: &dyn core::ToInputArray, normalized_points: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(points);
-		extern_container_arg!(normalized_points);
-		extern_container_arg!(t);
+	pub fn normalize_points(points: &impl core::ToInputArray, normalized_points: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points);
+		output_array_arg!(normalized_points);
+		output_array_arg!(t);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_normalizePoints_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(points.as_raw__InputArray(), normalized_points.as_raw__OutputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -502,10 +502,10 @@ pub mod sfm {
 	/// Uses the normalized 8-point fundamental matrix solver.
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.2 pag.281 (x1 = x, x2 = x')
 	#[inline]
-	pub fn normalized_eight_point_solver(x1: &dyn core::ToInputArray, x2: &dyn core::ToInputArray, f: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(x1);
-		extern_container_arg!(x2);
-		extern_container_arg!(f);
+	pub fn normalized_eight_point_solver(x1: &impl core::ToInputArray, x2: &impl core::ToInputArray, f: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(x1);
+		input_array_arg!(x2);
+		output_array_arg!(f);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_normalizedEightPointSolver_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x1.as_raw__InputArray(), x2.as_raw__InputArray(), f.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -523,9 +523,9 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 	#[inline]
-	pub fn preconditioner_from_points(points: &dyn core::ToInputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(points);
-		extern_container_arg!(t);
+	pub fn preconditioner_from_points(points: &impl core::ToInputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points);
+		output_array_arg!(t);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_preconditionerFromPoints_const__InputArrayR_const__OutputArrayR(points.as_raw__InputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -542,11 +542,11 @@ pub mod sfm {
 	/// 
 	/// This function estimate the projection matrix by solving the following equation: ![inline formula](https://latex.codecogs.com/png.latex?P%20%3D%20K%20%2A%20%5BR%7Ct%5D)
 	#[inline]
-	pub fn projection_from_k_rt(k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, p: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(k);
-		extern_container_arg!(r);
-		extern_container_arg!(t);
-		extern_container_arg!(p);
+	pub fn projection_from_k_rt(k: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, p: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(k);
+		input_array_arg!(r);
+		input_array_arg!(t);
+		output_array_arg!(p);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_projectionFromKRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), p.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -560,10 +560,10 @@ pub mod sfm {
 	/// * P1: Output 3x4 one possible projection matrix.
 	/// * P2: Output 3x4 another possible projection matrix.
 	#[inline]
-	pub fn projections_from_fundamental(f: &dyn core::ToInputArray, p1: &mut dyn core::ToOutputArray, p2: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(f);
-		extern_container_arg!(p1);
-		extern_container_arg!(p2);
+	pub fn projections_from_fundamental(f: &impl core::ToInputArray, p1: &mut impl core::ToOutputArray, p2: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(f);
+		output_array_arg!(p1);
+		output_array_arg!(p2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_projectionsFromFundamental_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(f.as_raw__InputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -588,11 +588,11 @@ pub mod sfm {
 	/// ## C++ default parameters
 	/// * is_projective: false
 	#[inline]
-	pub fn reconstruct(points2d: &dyn core::ToInputArray, ps: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, is_projective: bool) -> Result<()> {
-		extern_container_arg!(points2d);
-		extern_container_arg!(ps);
-		extern_container_arg!(points3d);
-		extern_container_arg!(k);
+	pub fn reconstruct(points2d: &impl core::ToInputArray, ps: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray, k: &mut impl core::ToInputOutputArray, is_projective: bool) -> Result<()> {
+		input_array_arg!(points2d);
+		output_array_arg!(ps);
+		output_array_arg!(points3d);
+		input_output_array_arg!(k);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_reconstruct_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(points2d.as_raw__InputArray(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -619,12 +619,12 @@ pub mod sfm {
 	/// ## C++ default parameters
 	/// * is_projective: false
 	#[inline]
-	pub fn reconstruct_1(points2d: &dyn core::ToInputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, points3d: &mut dyn core::ToOutputArray, is_projective: bool) -> Result<()> {
-		extern_container_arg!(points2d);
-		extern_container_arg!(rs);
-		extern_container_arg!(ts);
-		extern_container_arg!(k);
-		extern_container_arg!(points3d);
+	pub fn reconstruct_1(points2d: &impl core::ToInputArray, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, k: &mut impl core::ToInputOutputArray, points3d: &mut impl core::ToOutputArray, is_projective: bool) -> Result<()> {
+		input_array_arg!(points2d);
+		output_array_arg!(rs);
+		output_array_arg!(ts);
+		input_output_array_arg!(k);
+		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_reconstruct_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR_bool(points2d.as_raw__InputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -650,10 +650,10 @@ pub mod sfm {
 	/// ## C++ default parameters
 	/// * is_projective: false
 	#[inline]
-	pub fn reconstruct_2(images: core::Vector<String>, ps: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, is_projective: bool) -> Result<()> {
-		extern_container_arg!(ps);
-		extern_container_arg!(points3d);
-		extern_container_arg!(k);
+	pub fn reconstruct_2(images: core::Vector<String>, ps: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray, k: &mut impl core::ToInputOutputArray, is_projective: bool) -> Result<()> {
+		output_array_arg!(ps);
+		output_array_arg!(points3d);
+		input_output_array_arg!(k);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_reconstruct_const_vectorLStringG_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(images.as_raw_VectorOfString(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -681,11 +681,11 @@ pub mod sfm {
 	/// ## C++ default parameters
 	/// * is_projective: false
 	#[inline]
-	pub fn reconstruct_3(images: core::Vector<String>, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, points3d: &mut dyn core::ToOutputArray, is_projective: bool) -> Result<()> {
-		extern_container_arg!(rs);
-		extern_container_arg!(ts);
-		extern_container_arg!(k);
-		extern_container_arg!(points3d);
+	pub fn reconstruct_3(images: core::Vector<String>, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, k: &mut impl core::ToInputOutputArray, points3d: &mut impl core::ToOutputArray, is_projective: bool) -> Result<()> {
+		output_array_arg!(rs);
+		output_array_arg!(ts);
+		input_output_array_arg!(k);
+		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_reconstruct_const_vectorLStringG_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR_bool(images.as_raw_VectorOfString(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -706,13 +706,13 @@ pub mod sfm {
 	/// of the second one assuming the first one to be at the origin.
 	/// If T1 and T2 are the camera motions, the computed relative motion is ![inline formula](https://latex.codecogs.com/png.latex?T%20%3D%20T%5F2%20T%5F1%5E%7B%2D1%7D)
 	#[inline]
-	pub fn relative_camera_motion(r1: &dyn core::ToInputArray, t1: &dyn core::ToInputArray, r2: &dyn core::ToInputArray, t2: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(r1);
-		extern_container_arg!(t1);
-		extern_container_arg!(r2);
-		extern_container_arg!(t2);
-		extern_container_arg!(r);
-		extern_container_arg!(t);
+	pub fn relative_camera_motion(r1: &impl core::ToInputArray, t1: &impl core::ToInputArray, r2: &impl core::ToInputArray, t2: &impl core::ToInputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(r1);
+		input_array_arg!(t1);
+		input_array_arg!(r2);
+		input_array_arg!(t2);
+		output_array_arg!(r);
+		output_array_arg!(t);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_relativeCameraMotion_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(r1.as_raw__InputArray(), t1.as_raw__InputArray(), r2.as_raw__InputArray(), t2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -726,8 +726,8 @@ pub mod sfm {
 	/// 
 	/// Reference: [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00), p581, equation (A4.5).
 	#[inline]
-	pub fn skew(x: &dyn core::ToInputArray) -> Result<core::Mat> {
-		extern_container_arg!(x);
+	pub fn skew(x: &impl core::ToInputArray) -> Result<core::Mat> {
+		input_array_arg!(x);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_skew_const__InputArrayR(x.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -745,10 +745,10 @@ pub mod sfm {
 	/// Triangulates the 3d position of 2d correspondences between several images.
 	/// Reference: Internally it uses DLT method [HartleyZ00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 12.2 pag.312
 	#[inline]
-	pub fn triangulate_points(points2d: &dyn core::ToInputArray, projection_matrices: &dyn core::ToInputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(points2d);
-		extern_container_arg!(projection_matrices);
-		extern_container_arg!(points3d);
+	pub fn triangulate_points(points2d: &impl core::ToInputArray, projection_matrices: &impl core::ToInputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points2d);
+		input_array_arg!(projection_matrices);
+		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_triangulatePoints_const__InputArrayR_const__InputArrayR_const__OutputArrayR(points2d.as_raw__InputArray(), projection_matrices.as_raw__InputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -786,8 +786,8 @@ pub mod sfm {
 		fn as_raw_mut_BaseSFM(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn run(&mut self, points2d: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(points2d);
+		fn run(&mut self, points2d: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(points2d);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_BaseSFM_run_const__InputArrayR(self.as_raw_mut_BaseSFM(), points2d.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -796,12 +796,12 @@ pub mod sfm {
 		}
 		
 		#[inline]
-		fn run_1(&mut self, points2d: &dyn core::ToInputArray, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points2d);
-			extern_container_arg!(k);
-			extern_container_arg!(rs);
-			extern_container_arg!(ts);
-			extern_container_arg!(points3d);
+		fn run_1(&mut self, points2d: &impl core::ToInputArray, k: &mut impl core::ToInputOutputArray, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points2d);
+			input_output_array_arg!(k);
+			output_array_arg!(rs);
+			output_array_arg!(ts);
+			output_array_arg!(points3d);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_BaseSFM_run_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_BaseSFM(), points2d.as_raw__InputArray(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -819,11 +819,11 @@ pub mod sfm {
 		}
 		
 		#[inline]
-		fn run_3(&mut self, images: &core::Vector<String>, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(k);
-			extern_container_arg!(rs);
-			extern_container_arg!(ts);
-			extern_container_arg!(points3d);
+		fn run_3(&mut self, images: &core::Vector<String>, k: &mut impl core::ToInputOutputArray, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+			input_output_array_arg!(k);
+			output_array_arg!(rs);
+			output_array_arg!(ts);
+			output_array_arg!(points3d);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_BaseSFM_run_const_vectorLStringGR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_BaseSFM(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -832,8 +832,8 @@ pub mod sfm {
 		}
 		
 		#[inline]
-		fn get_points(&mut self, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points3d);
+		fn get_points(&mut self, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points3d);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_BaseSFM_getPoints_const__OutputArrayR(self.as_raw_mut_BaseSFM(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -842,9 +842,9 @@ pub mod sfm {
 		}
 		
 		#[inline]
-		fn get_cameras(&mut self, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(rs);
-			extern_container_arg!(ts);
+		fn get_cameras(&mut self, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(rs);
+			output_array_arg!(ts);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_BaseSFM_getCameras_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_BaseSFM(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -939,8 +939,8 @@ pub mod sfm {
 		/// Note:
 		///   - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
 		#[inline]
-		fn run(&mut self, points2d: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(points2d);
+		fn run(&mut self, points2d: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(points2d);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_const__InputArrayR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), points2d.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -960,12 +960,12 @@ pub mod sfm {
 		/// Note:
 		///   - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
 		#[inline]
-		fn run_1(&mut self, points2d: &dyn core::ToInputArray, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points2d);
-			extern_container_arg!(k);
-			extern_container_arg!(rs);
-			extern_container_arg!(ts);
-			extern_container_arg!(points3d);
+		fn run_1(&mut self, points2d: &impl core::ToInputArray, k: &mut impl core::ToInputOutputArray, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(points2d);
+			input_output_array_arg!(k);
+			output_array_arg!(rs);
+			output_array_arg!(ts);
+			output_array_arg!(points3d);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), points2d.as_raw__InputArray(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1003,11 +1003,11 @@ pub mod sfm {
 		///   - The images must be ordered as they were an image sequence. Additionally, each frame should be as close as posible to the previous and posterior.
 		///   - For now DAISY features are used in order to compute the 2d points tracks and it only works for 3-4 images.
 		#[inline]
-		fn run_3(&mut self, images: &core::Vector<String>, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(k);
-			extern_container_arg!(rs);
-			extern_container_arg!(ts);
-			extern_container_arg!(points3d);
+		fn run_3(&mut self, images: &core::Vector<String>, k: &mut impl core::ToInputOutputArray, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+			input_output_array_arg!(k);
+			output_array_arg!(rs);
+			output_array_arg!(ts);
+			output_array_arg!(points3d);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_const_vectorLStringGR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1019,8 +1019,8 @@ pub mod sfm {
 		/// ## Parameters
 		/// * points3d: Output array with estimated 3d points.
 		#[inline]
-		fn get_points(&mut self, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(points3d);
+		fn get_points(&mut self, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points3d);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getPoints_const__OutputArrayR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1033,9 +1033,9 @@ pub mod sfm {
 		/// * Rs: Output vector of 3x3 rotations of the camera.
 		/// * Ts: Output vector of 3x1 translations of the camera.
 		#[inline]
-		fn get_cameras(&mut self, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(rs);
-			extern_container_arg!(ts);
+		fn get_cameras(&mut self, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(rs);
+			output_array_arg!(ts);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getCameras_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SFMLibmvEuclideanReconstruction(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

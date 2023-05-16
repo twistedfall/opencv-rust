@@ -297,10 +297,10 @@ pub mod line_descriptor {
 		/// * use_provided_key_lines: false
 		/// * return_float_descr: false
 		#[inline]
-		fn apply(&self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut dyn core::ToOutputArray, use_provided_key_lines: bool, return_float_descr: bool) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
-			extern_container_arg!(descriptors);
+		fn apply(&self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut impl core::ToOutputArray, use_provided_key_lines: bool, return_float_descr: bool) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_operator___const_const__InputArrayR_const__InputArrayR_vectorLKeyLineGR_const__OutputArrayR_bool_bool(self.as_raw_BinaryDescriptor(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keylines.as_raw_mut_VectorOfKeyLine(), descriptors.as_raw__OutputArray(), use_provided_key_lines, return_float_descr, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

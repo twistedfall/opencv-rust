@@ -58,8 +58,8 @@ pub mod cudabgsegm {
 		fn as_raw_CUDA_BackgroundSubtractorMOG(&self) -> *const c_void;
 	
 		#[inline]
-		fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(background_image);
+		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_getBackgroundImage_const_const__OutputArrayR_StreamR(self.as_raw_CUDA_BackgroundSubtractorMOG(), background_image.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -110,9 +110,9 @@ pub mod cudabgsegm {
 		fn as_raw_mut_CUDA_BackgroundSubtractorMOG(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(fgmask);
+		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_apply_const__InputArrayR_const__OutputArrayR_double_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorMOG(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -229,8 +229,8 @@ pub mod cudabgsegm {
 		fn as_raw_CUDA_BackgroundSubtractorMOG2(&self) -> *const c_void;
 	
 		#[inline]
-		fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(background_image);
+		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_getBackgroundImage_const_const__OutputArrayR_StreamR(self.as_raw_CUDA_BackgroundSubtractorMOG2(), background_image.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -245,9 +245,9 @@ pub mod cudabgsegm {
 		fn as_raw_mut_CUDA_BackgroundSubtractorMOG2(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(fgmask);
+		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__OutputArrayR_double_StreamR(self.as_raw_mut_CUDA_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

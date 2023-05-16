@@ -18,9 +18,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn abs_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
+	pub fn abs_sum(src: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<core::Scalar> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_absSum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -40,9 +40,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn abs(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_abs_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -63,10 +63,10 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn absdiff(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -100,10 +100,10 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToInputArray, beta: f64, gamma: f64, dst: &mut dyn core::ToOutputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn add_weighted(src1: &impl core::ToInputArray, alpha: f64, src2: &impl core::ToInputArray, beta: f64, gamma: f64, dst: &mut impl core::ToOutputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -130,11 +130,11 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn add(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -156,11 +156,11 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn bitwise_and(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -181,10 +181,10 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_not(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn bitwise_not(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -206,11 +206,11 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_or(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn bitwise_or(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -232,11 +232,11 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn bitwise_xor(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -250,10 +250,10 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_abs_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn calc_abs_sum(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_calcAbsSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -267,10 +267,10 @@ pub mod cudaarithm {
 	/// * norm_type: NORM_L2
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_norm_diff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, norm_type: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn calc_norm_diff(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, norm_type: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_calcNormDiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), norm_type, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -284,10 +284,10 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_norm(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, norm_type: i32, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn calc_norm(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, norm_type: i32, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_calcNorm_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), norm_type, mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -301,10 +301,10 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_sqr_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn calc_sqr_sum(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_calcSqrSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -318,10 +318,10 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_sum(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn calc_sum(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_calcSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -345,11 +345,11 @@ pub mod cudaarithm {
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn cart_to_polar(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(x);
-		extern_container_arg!(y);
-		extern_container_arg!(magnitude);
-		extern_container_arg!(angle);
+	pub fn cart_to_polar(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, angle: &mut impl core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(x);
+		input_array_arg!(y);
+		output_array_arg!(magnitude);
+		output_array_arg!(angle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -377,10 +377,10 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, cmpop: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn compare(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, cmpop: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -408,9 +408,9 @@ pub mod cudaarithm {
 	/// * value: Scalar()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn copy_make_border(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, value.opencv_as_extern(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -427,8 +427,8 @@ pub mod cudaarithm {
 	/// ## See also
 	/// countNonZero
 	#[inline]
-	pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
-		extern_container_arg!(src);
+	pub fn count_non_zero(src: &impl core::ToInputArray) -> Result<i32> {
+		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_countNonZero_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -450,9 +450,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn count_non_zero_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn count_non_zero_1(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_countNonZero_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -507,8 +507,8 @@ pub mod cudaarithm {
 	/// ## Parameters
 	/// * lut: Look-up table of 256 elements. It is a continuous CV_8U matrix.
 	#[inline]
-	pub fn create_look_up_table(lut: &dyn core::ToInputArray) -> Result<core::Ptr<crate::cudaarithm::LookUpTable>> {
-		extern_container_arg!(lut);
+	pub fn create_look_up_table(lut: &impl core::ToInputArray) -> Result<core::Ptr<crate::cudaarithm::LookUpTable>> {
+		input_array_arg!(lut);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createLookUpTable_const__InputArrayR(lut.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -557,9 +557,9 @@ pub mod cudaarithm {
 	/// * flags: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dft_size: core::Size, flags: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn dft(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, dft_size: core::Size, flags: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dft_size.opencv_as_extern(), flags, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -587,10 +587,10 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn divide(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn divide(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, scale: f64, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -610,9 +610,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn exp(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_exp_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -626,11 +626,11 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn find_min_max_loc(src: &dyn core::ToInputArray, min_max_vals: &mut dyn core::ToOutputArray, loc: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(min_max_vals);
-		extern_container_arg!(loc);
-		extern_container_arg!(mask);
+	pub fn find_min_max_loc(src: &impl core::ToInputArray, min_max_vals: &mut impl core::ToOutputArray, loc: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(min_max_vals);
+		output_array_arg!(loc);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_findMinMaxLoc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), min_max_vals.as_raw__OutputArray(), loc.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -644,10 +644,10 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn find_min_max(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn find_min_max(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_findMinMax_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -672,9 +672,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flip_code: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn flip(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flip_code: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_flip_const__InputArrayR_const__OutputArrayR_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -713,11 +713,11 @@ pub mod cudaarithm {
 	/// * flags: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha: f64, src3: &dyn core::ToInputArray, beta: f64, dst: &mut dyn core::ToOutputArray, flags: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(src3);
-		extern_container_arg!(dst);
+	pub fn gemm(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, alpha: f64, src3: &impl core::ToInputArray, beta: f64, dst: &mut impl core::ToOutputArray, flags: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		input_array_arg!(src3);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -752,9 +752,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn in_range(src: &dyn core::ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn in_range(src: &impl core::ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_inRange_const__InputArrayR_const_ScalarR_const_ScalarR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &lowerb, &upperb, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -774,9 +774,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn integral(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(sum);
+	pub fn integral(src: &impl core::ToInputArray, sum: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(sum);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_integral_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), sum.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -796,9 +796,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn log(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_log_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -818,9 +818,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn lshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn lshift(src: &impl core::ToInputArray, val: core::Scalar_<i32>, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -831,9 +831,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn lshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn lshift_1(src: &impl core::ToInputArray, val: core::Scalar, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -860,10 +860,10 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_sqr_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(x);
-		extern_container_arg!(y);
-		extern_container_arg!(magnitude);
+	pub fn magnitude_sqr_1(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(x);
+		input_array_arg!(y);
+		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -881,9 +881,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_sqr(xy: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(xy);
-		extern_container_arg!(magnitude);
+	pub fn magnitude_sqr(xy: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(xy);
+		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__OutputArrayR_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -912,10 +912,10 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_1(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(x);
-		extern_container_arg!(y);
-		extern_container_arg!(magnitude);
+	pub fn magnitude_1(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(x);
+		input_array_arg!(y);
+		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -935,9 +935,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude(xy: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(xy);
-		extern_container_arg!(magnitude);
+	pub fn magnitude(xy: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(xy);
+		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__OutputArrayR_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -958,10 +958,10 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn max(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -985,8 +985,8 @@ pub mod cudaarithm {
 	/// * mean: Mean value.
 	/// * stddev: Standard deviation value.
 	#[inline]
-	pub fn mean_std_dev_3(mtx: &dyn core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar) -> Result<()> {
-		extern_container_arg!(mtx);
+	pub fn mean_std_dev_3(mtx: &impl core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar) -> Result<()> {
+		input_array_arg!(mtx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR(mtx.as_raw__InputArray(), mean, stddev, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1011,9 +1011,9 @@ pub mod cudaarithm {
 	/// * stddev: Standard deviation value.
 	/// * mask: Operation mask.
 	#[inline]
-	pub fn mean_std_dev_2(src: &dyn core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
+	pub fn mean_std_dev_2(src: &impl core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR_const__InputArrayR(src.as_raw__InputArray(), mean, stddev, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1040,9 +1040,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_std_dev_1(mtx: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(mtx);
-		extern_container_arg!(dst);
+	pub fn mean_std_dev_1(mtx: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(mtx);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR_StreamR(mtx.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1063,10 +1063,10 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_std_dev(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn mean_std_dev(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1087,8 +1087,8 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn merge(src: &core::GpuMat, n: size_t, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(dst);
+	pub fn merge(src: &core::GpuMat, n: size_t, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_merge_const_GpuMatX_size_t_const__OutputArrayR_StreamR(src.as_raw_GpuMat(), n, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1111,8 +1111,8 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(dst);
+	pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_merge_const_vectorLGpuMatGR_const__OutputArrayR_StreamR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1137,9 +1137,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn min_max_loc(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
+	pub fn min_max_loc(src: &impl core::ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val, max_val, min_loc, max_loc, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1162,9 +1162,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn min_max(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mut f64, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
+	pub fn min_max(src: &impl core::ToInputArray, min_val: &mut f64, max_val: &mut f64, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_minMax_const__InputArrayR_doubleX_doubleX_const__InputArrayR(src.as_raw__InputArray(), min_val, max_val, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1185,10 +1185,10 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn min(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn min(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1216,10 +1216,10 @@ pub mod cudaarithm {
 	/// * conj_b: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mul_and_scale_spectrums(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, scale: f32, conj_b: bool, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn mul_and_scale_spectrums(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32, scale: f32, conj_b: bool, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_mulAndScaleSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_float_bool_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, scale, conj_b, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1246,10 +1246,10 @@ pub mod cudaarithm {
 	/// * conj_b: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mul_spectrums(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, conj_b: bool, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn mul_spectrums(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32, conj_b: bool, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, conj_b, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1275,10 +1275,10 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn multiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
+	pub fn multiply(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, scale: f64, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1298,9 +1298,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * norm_type: NORM_L2
 	#[inline]
-	pub fn norm_1(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_type: i32) -> Result<f64> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
+	pub fn norm_1(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, norm_type: i32) -> Result<f64> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_norm_const__InputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1320,9 +1320,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
-		extern_container_arg!(src1);
-		extern_container_arg!(mask);
+	pub fn norm(src1: &impl core::ToInputArray, norm_type: i32, mask: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(src1);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_norm_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1351,10 +1351,10 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn normalize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &dyn core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn normalize(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_normalize_const__InputArrayR_const__OutputArrayR_double_double_int_int_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1377,10 +1377,10 @@ pub mod cudaarithm {
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn phase(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(x);
-		extern_container_arg!(y);
-		extern_container_arg!(angle);
+	pub fn phase(x: &impl core::ToInputArray, y: &impl core::ToInputArray, angle: &mut impl core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(x);
+		input_array_arg!(y);
+		output_array_arg!(angle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1402,11 +1402,11 @@ pub mod cudaarithm {
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInputArray, x: &mut dyn core::ToOutputArray, y: &mut dyn core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(magnitude);
-		extern_container_arg!(angle);
-		extern_container_arg!(x);
-		extern_container_arg!(y);
+	pub fn polar_to_cart(magnitude: &impl core::ToInputArray, angle: &impl core::ToInputArray, x: &mut impl core::ToOutputArray, y: &mut impl core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(magnitude);
+		input_array_arg!(angle);
+		output_array_arg!(x);
+		output_array_arg!(y);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1431,9 +1431,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn pow(src: &impl core::ToInputArray, power: f64, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_pow_const__InputArrayR_double_const__OutputArrayR_StreamR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1453,10 +1453,10 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn rect_std_dev(src: &dyn core::ToInputArray, sqr: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, rect: core::Rect, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(sqr);
-		extern_container_arg!(dst);
+	pub fn rect_std_dev(src: &impl core::ToInputArray, sqr: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, rect: core::Rect, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(sqr);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect_StreamR(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), rect.opencv_as_extern(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1495,9 +1495,9 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn reduce(mtx: &dyn core::ToInputArray, vec: &mut dyn core::ToOutputArray, dim: i32, reduce_op: i32, dtype: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(mtx);
-		extern_container_arg!(vec);
+	pub fn reduce(mtx: &impl core::ToInputArray, vec: &mut impl core::ToOutputArray, dim: i32, reduce_op: i32, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(mtx);
+		output_array_arg!(vec);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_reduce_const__InputArrayR_const__OutputArrayR_int_int_int_StreamR(mtx.as_raw__InputArray(), vec.as_raw__OutputArray(), dim, reduce_op, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1516,9 +1516,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn rshift(src: &dyn core::ToInputArray, val: core::Scalar_<i32>, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn rshift(src: &impl core::ToInputArray, val: core::Scalar_<i32>, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1529,9 +1529,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn rshift_1(src: &dyn core::ToInputArray, val: core::Scalar, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn rshift_1(src: &impl core::ToInputArray, val: core::Scalar, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1551,8 +1551,8 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn split(src: &dyn core::ToInputArray, dst: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
+	pub fn split(src: &impl core::ToInputArray, dst: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_split_const__InputArrayR_GpuMatX_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1574,8 +1574,8 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn split_1(src: &dyn core::ToInputArray, dst: &mut core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
+	pub fn split_1(src: &impl core::ToInputArray, dst: &mut core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_split_const__InputArrayR_vectorLGpuMatGR_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1594,9 +1594,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn sqr_integral(src: &dyn core::ToInputArray, sqsum: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(sqsum);
+	pub fn sqr_integral(src: &impl core::ToInputArray, sqsum: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(sqsum);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_sqrIntegral_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), sqsum.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1613,9 +1613,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn sqr_sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
+	pub fn sqr_sum(src: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<core::Scalar> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_sqrSum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1633,9 +1633,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn sqr(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn sqr(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_sqr_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1655,9 +1655,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn sqrt(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_sqrt_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1684,11 +1684,11 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(src2);
-		extern_container_arg!(dst);
-		extern_container_arg!(mask);
+	pub fn subtract(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1707,9 +1707,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn sum(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
-		extern_container_arg!(src);
-		extern_container_arg!(mask);
+	pub fn sum(src: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<core::Scalar> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_sum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1733,9 +1733,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn threshold(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, thresh: f64, maxval: f64, typ: i32, stream: &mut core::Stream) -> Result<f64> {
-		extern_container_arg!(src);
-		extern_container_arg!(dst);
+	pub fn threshold(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, thresh: f64, maxval: f64, typ: i32, stream: &mut core::Stream) -> Result<f64> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_threshold_const__InputArrayR_const__OutputArrayR_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thresh, maxval, typ, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1755,9 +1755,9 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn transpose(src1: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-		extern_container_arg!(src1);
-		extern_container_arg!(dst);
+	pub fn transpose(src1: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_transpose_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1790,10 +1790,10 @@ pub mod cudaarithm {
 		/// * ccorr: false
 		/// * stream: Stream::Null()
 		#[inline]
-		fn convolve(&mut self, image: &dyn core::ToInputArray, templ: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray, ccorr: bool, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(templ);
-			extern_container_arg!(result);
+		fn convolve(&mut self, image: &impl core::ToInputArray, templ: &impl core::ToInputArray, result: &mut impl core::ToOutputArray, ccorr: bool, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(templ);
+			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Convolution_convolve_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(self.as_raw_mut_Convolution(), image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), ccorr, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1861,9 +1861,9 @@ pub mod cudaarithm {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute(&mut self, image: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(result);
+		fn compute(&mut self, image: &impl core::ToInputArray, result: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DFT_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_DFT(), image.as_raw__InputArray(), result.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1932,9 +1932,9 @@ pub mod cudaarithm {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn transform(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(src);
-			extern_container_arg!(dst);
+		fn transform(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_LookUpTable_transform_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_LookUpTable(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

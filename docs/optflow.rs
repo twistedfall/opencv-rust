@@ -107,10 +107,10 @@ pub mod optflow {
 	/// histogram, where a recent motion has a larger weight and the motion occurred in the past has a
 	/// smaller weight, as recorded in mhi .
 	#[inline]
-	pub fn calc_global_orientation(orientation: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, mhi: &dyn core::ToInputArray, timestamp: f64, duration: f64) -> Result<f64> {
-		extern_container_arg!(orientation);
-		extern_container_arg!(mask);
-		extern_container_arg!(mhi);
+	pub fn calc_global_orientation(orientation: &impl core::ToInputArray, mask: &impl core::ToInputArray, mhi: &impl core::ToInputArray, timestamp: f64, duration: f64) -> Result<f64> {
+		input_array_arg!(orientation);
+		input_array_arg!(mask);
+		input_array_arg!(mhi);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_motempl_calcGlobalOrientation_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_double(orientation.as_raw__InputArray(), mask.as_raw__InputArray(), mhi.as_raw__InputArray(), timestamp, duration, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -151,10 +151,10 @@ pub mod optflow {
 	/// ## C++ default parameters
 	/// * aperture_size: 3
 	#[inline]
-	pub fn calc_motion_gradient(mhi: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, orientation: &mut dyn core::ToOutputArray, delta1: f64, delta2: f64, aperture_size: i32) -> Result<()> {
-		extern_container_arg!(mhi);
-		extern_container_arg!(mask);
-		extern_container_arg!(orientation);
+	pub fn calc_motion_gradient(mhi: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, orientation: &mut impl core::ToOutputArray, delta1: f64, delta2: f64, aperture_size: i32) -> Result<()> {
+		input_array_arg!(mhi);
+		output_array_arg!(mask);
+		output_array_arg!(orientation);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_motempl_calcMotionGradient_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_double_int(mhi.as_raw__InputArray(), mask.as_raw__OutputArray(), orientation.as_raw__OutputArray(), delta1, delta2, aperture_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -178,9 +178,9 @@ pub mod optflow {
 	/// direction for every component can be calculated with calcGlobalOrientation using the extracted mask
 	/// of the particular component.
 	#[inline]
-	pub fn segment_motion(mhi: &dyn core::ToInputArray, segmask: &mut dyn core::ToOutputArray, bounding_rects: &mut core::Vector<core::Rect>, timestamp: f64, seg_thresh: f64) -> Result<()> {
-		extern_container_arg!(mhi);
-		extern_container_arg!(segmask);
+	pub fn segment_motion(mhi: &impl core::ToInputArray, segmask: &mut impl core::ToOutputArray, bounding_rects: &mut core::Vector<core::Rect>, timestamp: f64, seg_thresh: f64) -> Result<()> {
+		input_array_arg!(mhi);
+		output_array_arg!(segmask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_motempl_segmentMotion_const__InputArrayR_const__OutputArrayR_vectorLRectGR_double_double(mhi.as_raw__InputArray(), segmask.as_raw__OutputArray(), bounding_rects.as_raw_mut_VectorOfRect(), timestamp, seg_thresh, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -207,9 +207,9 @@ pub mod optflow {
 	/// The function, together with calcMotionGradient and calcGlobalOrientation , implements a motion
 	/// templates technique described in [Davis97](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Davis97) and [Bradski00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bradski00) .
 	#[inline]
-	pub fn update_motion_history(silhouette: &dyn core::ToInputArray, mhi: &mut dyn core::ToInputOutputArray, timestamp: f64, duration: f64) -> Result<()> {
-		extern_container_arg!(silhouette);
-		extern_container_arg!(mhi);
+	pub fn update_motion_history(silhouette: &impl core::ToInputArray, mhi: &mut impl core::ToInputOutputArray, timestamp: f64, duration: f64) -> Result<()> {
+		input_array_arg!(silhouette);
+		input_output_array_arg!(mhi);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_motempl_updateMotionHistory_const__InputArrayR_const__InputOutputArrayR_double_double(silhouette.as_raw__InputArray(), mhi.as_raw__InputOutputArray(), timestamp, duration, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -290,10 +290,10 @@ pub mod optflow {
 	/// * fgs_sigma: 1.5f
 	/// * use_variational_refinement: false
 	#[inline]
-	pub fn calc_optical_flow_dense_rlof(i0: &dyn core::ToInputArray, i1: &dyn core::ToInputArray, flow: &mut dyn core::ToInputOutputArray, mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<()> {
-		extern_container_arg!(i0);
-		extern_container_arg!(i1);
-		extern_container_arg!(flow);
+	pub fn calc_optical_flow_dense_rlof(i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray, mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<()> {
+		input_array_arg!(i0);
+		input_array_arg!(i1);
+		input_output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowDenseRLOF_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, grid_step.opencv_as_extern(), interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -331,10 +331,10 @@ pub mod optflow {
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
-	pub fn calc_optical_flow_sf(from: &dyn core::ToInputArray, to: &dyn core::ToInputArray, flow: &mut dyn core::ToOutputArray, layers: i32, averaging_block_size: i32, max_flow: i32) -> Result<()> {
-		extern_container_arg!(from);
-		extern_container_arg!(to);
-		extern_container_arg!(flow);
+	pub fn calc_optical_flow_sf(from: &impl core::ToInputArray, to: &impl core::ToInputArray, flow: &mut impl core::ToOutputArray, layers: i32, averaging_block_size: i32, max_flow: i32) -> Result<()> {
+		input_array_arg!(from);
+		input_array_arg!(to);
+		output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSF_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), layers, averaging_block_size, max_flow, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -370,10 +370,10 @@ pub mod optflow {
 	/// Note:
 	///    *   An example using the simpleFlow algorithm can be found at samples/simpleflow_demo.cpp
 	#[inline]
-	pub fn calc_optical_flow_sf_1(from: &dyn core::ToInputArray, to: &dyn core::ToInputArray, flow: &mut dyn core::ToOutputArray, layers: i32, averaging_block_size: i32, max_flow: i32, sigma_dist: f64, sigma_color: f64, postprocess_window: i32, sigma_dist_fix: f64, sigma_color_fix: f64, occ_thr: f64, upscale_averaging_radius: i32, upscale_sigma_dist: f64, upscale_sigma_color: f64, speed_up_thr: f64) -> Result<()> {
-		extern_container_arg!(from);
-		extern_container_arg!(to);
-		extern_container_arg!(flow);
+	pub fn calc_optical_flow_sf_1(from: &impl core::ToInputArray, to: &impl core::ToInputArray, flow: &mut impl core::ToOutputArray, layers: i32, averaging_block_size: i32, max_flow: i32, sigma_dist: f64, sigma_color: f64, postprocess_window: i32, sigma_dist_fix: f64, sigma_color_fix: f64, occ_thr: f64, upscale_averaging_radius: i32, upscale_sigma_dist: f64, upscale_sigma_color: f64, speed_up_thr: f64) -> Result<()> {
+		input_array_arg!(from);
+		input_array_arg!(to);
+		output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSF_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_int_double_double_int_double_double_double_int_double_double_double(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), layers, averaging_block_size, max_flow, sigma_dist, sigma_color, postprocess_window, sigma_dist_fix, sigma_color_fix, occ_thr, upscale_averaging_radius, upscale_sigma_dist, upscale_sigma_color, speed_up_thr, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -415,13 +415,13 @@ pub mod optflow {
 	/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
 	/// * forward_backward_threshold: 0
 	#[inline]
-	pub fn calc_optical_flow_sparse_rlof(prev_img: &dyn core::ToInputArray, next_img: &dyn core::ToInputArray, prev_pts: &dyn core::ToInputArray, next_pts: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, err: &mut dyn core::ToOutputArray, mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<()> {
-		extern_container_arg!(prev_img);
-		extern_container_arg!(next_img);
-		extern_container_arg!(prev_pts);
-		extern_container_arg!(next_pts);
-		extern_container_arg!(status);
-		extern_container_arg!(err);
+	pub fn calc_optical_flow_sparse_rlof(prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, err: &mut impl core::ToOutputArray, mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<()> {
+		input_array_arg!(prev_img);
+		input_array_arg!(next_img);
+		input_array_arg!(prev_pts);
+		input_output_array_arg!(next_pts);
+		output_array_arg!(status);
+		output_array_arg!(err);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSparseRLOF_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_PtrLRLOFOpticalFlowParameterG_float(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -456,10 +456,10 @@ pub mod optflow {
 	/// * fgs_lambda: 500.0f
 	/// * fgs_sigma: 1.5f
 	#[inline]
-	pub fn calc_optical_flow_sparse_to_dense(from: &dyn core::ToInputArray, to: &dyn core::ToInputArray, flow: &mut dyn core::ToOutputArray, grid_step: i32, k: i32, sigma: f32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32) -> Result<()> {
-		extern_container_arg!(from);
-		extern_container_arg!(to);
-		extern_container_arg!(flow);
+	pub fn calc_optical_flow_sparse_to_dense(from: &impl core::ToInputArray, to: &impl core::ToInputArray, flow: &mut impl core::ToOutputArray, grid_step: i32, k: i32, sigma: f32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32) -> Result<()> {
+		input_array_arg!(from);
+		input_array_arg!(to);
+		output_array_arg!(flow);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_optflow_calcOpticalFlowSparseToDense_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_int_float_bool_float_float(from.as_raw__InputArray(), to.as_raw__InputArray(), flow.as_raw__OutputArray(), grid_step, k, sigma, use_post_proc, fgs_lambda, fgs_sigma, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1867,10 +1867,10 @@ pub mod optflow {
 		}
 		
 		#[inline]
-		pub fn create_1(images_from: &dyn core::ToInputArray, images_to: &dyn core::ToInputArray, gt: &dyn core::ToInputArray, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
-			extern_container_arg!(images_from);
-			extern_container_arg!(images_to);
-			extern_container_arg!(gt);
+		pub fn create_1(images_from: &impl core::ToInputArray, images_to: &impl core::ToInputArray, gt: &impl core::ToInputArray, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
+			input_array_arg!(images_from);
+			input_array_arg!(images_to);
+			input_array_arg!(gt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTrainingSamples_create_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(images_from.as_raw__InputArray(), images_to.as_raw__InputArray(), gt.as_raw__InputArray(), descriptor_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2033,10 +2033,10 @@ pub mod optflow {
 		fn as_raw_mut_OpticalFlowPCAFlow(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn calc(&mut self, i0: &dyn core::ToInputArray, i1: &dyn core::ToInputArray, flow: &mut dyn core::ToInputOutputArray) -> Result<()> {
-			extern_container_arg!(i0);
-			extern_container_arg!(i1);
-			extern_container_arg!(flow);
+		fn calc(&mut self, i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_array_arg!(i0);
+			input_array_arg!(i1);
+			input_output_array_arg!(flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_OpticalFlowPCAFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

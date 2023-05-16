@@ -3,6 +3,8 @@
     them making them easier to use from Rust. One notable change is calling static methods on those classes no longer
     requires UCS. So `<dyn ORB>::default()` becomes just `ORB::default()`. You might also need to adjust your imports
     because while traits are imported as part of the prelude, the structs need to be imported explicitly.
+  * Functions that take `Input/OutputArray` now take them by `&impl` instead of `&dyn` making those calls faster because
+    they don't use dynamic dispatch anymore.
 
 * 0.81.5
   * Bring back the `clang-runtime` feature to improve cooperation with other crates.

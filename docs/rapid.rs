@@ -19,12 +19,12 @@ pub mod rapid {
 	/// * pts3d: noArray()
 	/// * mask: noArray()
 	#[inline]
-	pub fn convert_correspondencies(cols: &dyn core::ToInputArray, src_locations: &dyn core::ToInputArray, pts2d: &mut dyn core::ToOutputArray, pts3d: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(cols);
-		extern_container_arg!(src_locations);
-		extern_container_arg!(pts2d);
-		extern_container_arg!(pts3d);
-		extern_container_arg!(mask);
+	pub fn convert_correspondencies(cols: &impl core::ToInputArray, src_locations: &impl core::ToInputArray, pts2d: &mut impl core::ToOutputArray, pts3d: &mut impl core::ToInputOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(cols);
+		input_array_arg!(src_locations);
+		output_array_arg!(pts2d);
+		input_output_array_arg!(pts3d);
+		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rapid_convertCorrespondencies_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__InputArrayR(cols.as_raw__InputArray(), src_locations.as_raw__InputArray(), pts2d.as_raw__OutputArray(), pts3d.as_raw__InputOutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -41,10 +41,10 @@ pub mod rapid {
 	/// ## C++ default parameters
 	/// * colors: noArray()
 	#[inline]
-	pub fn draw_correspondencies(bundle: &mut dyn core::ToInputOutputArray, cols: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<()> {
-		extern_container_arg!(bundle);
-		extern_container_arg!(cols);
-		extern_container_arg!(colors);
+	pub fn draw_correspondencies(bundle: &mut impl core::ToInputOutputArray, cols: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<()> {
+		input_output_array_arg!(bundle);
+		input_array_arg!(cols);
+		input_array_arg!(colors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rapid_drawCorrespondencies_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR(bundle.as_raw__InputOutputArray(), cols.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -58,9 +58,9 @@ pub mod rapid {
 	/// * locations: the source locations of a line bundle
 	/// * color: the line color
 	#[inline]
-	pub fn draw_search_lines(img: &mut dyn core::ToInputOutputArray, locations: &dyn core::ToInputArray, color: core::Scalar) -> Result<()> {
-		extern_container_arg!(img);
-		extern_container_arg!(locations);
+	pub fn draw_search_lines(img: &mut impl core::ToInputOutputArray, locations: &impl core::ToInputArray, color: core::Scalar) -> Result<()> {
+		input_output_array_arg!(img);
+		input_array_arg!(locations);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rapid_drawSearchLines_const__InputOutputArrayR_const__InputArrayR_const_ScalarR(img.as_raw__InputOutputArray(), locations.as_raw__InputArray(), &color, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -81,10 +81,10 @@ pub mod rapid {
 	/// * typ: LINE_8
 	/// * cull_backface: false
 	#[inline]
-	pub fn draw_wireframe(img: &mut dyn core::ToInputOutputArray, pts2d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, color: core::Scalar, typ: i32, cull_backface: bool) -> Result<()> {
-		extern_container_arg!(img);
-		extern_container_arg!(pts2d);
-		extern_container_arg!(tris);
+	pub fn draw_wireframe(img: &mut impl core::ToInputOutputArray, pts2d: &impl core::ToInputArray, tris: &impl core::ToInputArray, color: core::Scalar, typ: i32, cull_backface: bool) -> Result<()> {
+		input_output_array_arg!(img);
+		input_array_arg!(pts2d);
+		input_array_arg!(tris);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rapid_drawWireframe_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const_ScalarR_int_bool(img.as_raw__InputOutputArray(), pts2d.as_raw__InputArray(), tris.as_raw__InputArray(), &color, typ, cull_backface, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -107,14 +107,14 @@ pub mod rapid {
 	/// * ctl2d: the 2D locations of the control points
 	/// * ctl3d: matching 3D points of the mesh
 	#[inline]
-	pub fn extract_control_points(num: i32, len: i32, pts3d: &dyn core::ToInputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, k: &dyn core::ToInputArray, imsize: core::Size, tris: &dyn core::ToInputArray, ctl2d: &mut dyn core::ToOutputArray, ctl3d: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(pts3d);
-		extern_container_arg!(rvec);
-		extern_container_arg!(tvec);
-		extern_container_arg!(k);
-		extern_container_arg!(tris);
-		extern_container_arg!(ctl2d);
-		extern_container_arg!(ctl3d);
+	pub fn extract_control_points(num: i32, len: i32, pts3d: &impl core::ToInputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, k: &impl core::ToInputArray, imsize: core::Size, tris: &impl core::ToInputArray, ctl2d: &mut impl core::ToOutputArray, ctl3d: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(pts3d);
+		input_array_arg!(rvec);
+		input_array_arg!(tvec);
+		input_array_arg!(k);
+		input_array_arg!(tris);
+		output_array_arg!(ctl2d);
+		output_array_arg!(ctl3d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rapid_extractControlPoints_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(num, len, pts3d.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), &imsize, tris.as_raw__InputArray(), ctl2d.as_raw__OutputArray(), ctl3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -131,11 +131,11 @@ pub mod rapid {
 	/// * bundle: line bundle image with size `ctl2d.rows() x (2 * len + 1)` and the same type as @p img
 	/// * srcLocations: the source pixel locations of @p bundle in @p img as CV_16SC2
 	#[inline]
-	pub fn extract_line_bundle(len: i32, ctl2d: &dyn core::ToInputArray, img: &dyn core::ToInputArray, bundle: &mut dyn core::ToOutputArray, src_locations: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(ctl2d);
-		extern_container_arg!(img);
-		extern_container_arg!(bundle);
-		extern_container_arg!(src_locations);
+	pub fn extract_line_bundle(len: i32, ctl2d: &impl core::ToInputArray, img: &impl core::ToInputArray, bundle: &mut impl core::ToOutputArray, src_locations: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(ctl2d);
+		input_array_arg!(img);
+		output_array_arg!(bundle);
+		output_array_arg!(src_locations);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rapid_extractLineBundle_int_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(len, ctl2d.as_raw__InputArray(), img.as_raw__InputArray(), bundle.as_raw__OutputArray(), src_locations.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -153,10 +153,10 @@ pub mod rapid {
 	/// ## C++ default parameters
 	/// * response: noArray()
 	#[inline]
-	pub fn find_correspondencies(bundle: &dyn core::ToInputArray, cols: &mut dyn core::ToOutputArray, response: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(bundle);
-		extern_container_arg!(cols);
-		extern_container_arg!(response);
+	pub fn find_correspondencies(bundle: &impl core::ToInputArray, cols: &mut impl core::ToOutputArray, response: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(bundle);
+		output_array_arg!(cols);
+		output_array_arg!(response);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rapid_findCorrespondencies_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(bundle.as_raw__InputArray(), cols.as_raw__OutputArray(), response.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -188,13 +188,13 @@ pub mod rapid {
 	/// ## C++ default parameters
 	/// * rmsd: 0
 	#[inline]
-	pub fn rapid(img: &dyn core::ToInputArray, num: i32, len: i32, pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, k: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, rmsd: &mut f64) -> Result<f32> {
-		extern_container_arg!(img);
-		extern_container_arg!(pts3d);
-		extern_container_arg!(tris);
-		extern_container_arg!(k);
-		extern_container_arg!(rvec);
-		extern_container_arg!(tvec);
+	pub fn rapid(img: &impl core::ToInputArray, num: i32, len: i32, pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, k: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, rmsd: &mut f64) -> Result<f32> {
+		input_array_arg!(img);
+		input_array_arg!(pts3d);
+		input_array_arg!(tris);
+		input_array_arg!(k);
+		input_output_array_arg!(rvec);
+		input_output_array_arg!(tvec);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_doubleX(img.as_raw__InputArray(), num, len, pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), rmsd, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -260,9 +260,9 @@ pub mod rapid {
 		/// * hist_bins: 4
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::OLSTracker>> {
-			extern_container_arg!(pts3d);
-			extern_container_arg!(tris);
+		pub fn create(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::OLSTracker>> {
+			input_array_arg!(pts3d);
+			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_GOSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), hist_bins, sobel_thesh, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -334,9 +334,9 @@ pub mod rapid {
 		/// * hist_bins: 8
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::OLSTracker>> {
-			extern_container_arg!(pts3d);
-			extern_container_arg!(tris);
+		pub fn create(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::OLSTracker>> {
+			input_array_arg!(pts3d);
+			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_OLSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), hist_bins, sobel_thesh, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -404,9 +404,9 @@ pub mod rapid {
 	
 	impl Rapid {
 		#[inline]
-		pub fn create(pts3d: &dyn core::ToInputArray, tris: &dyn core::ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid>> {
-			extern_container_arg!(pts3d);
-			extern_container_arg!(tris);
+		pub fn create(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid>> {
+			input_array_arg!(pts3d);
+			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_Rapid_create_const__InputArrayR_const__InputArrayR(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -432,11 +432,11 @@ pub mod rapid {
 		/// ## C++ default parameters
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS,5,1.5)
 		#[inline]
-		fn compute(&mut self, img: &dyn core::ToInputArray, num: i32, len: i32, k: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, termcrit: core::TermCriteria) -> Result<f32> {
-			extern_container_arg!(img);
-			extern_container_arg!(k);
-			extern_container_arg!(rvec);
-			extern_container_arg!(tvec);
+		fn compute(&mut self, img: &impl core::ToInputArray, num: i32, len: i32, k: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, termcrit: core::TermCriteria) -> Result<f32> {
+			input_array_arg!(img);
+			input_array_arg!(k);
+			input_output_array_arg!(rvec);
+			input_output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_Tracker_compute_const__InputArrayR_int_int_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_TermCriteriaR(self.as_raw_mut_Tracker(), img.as_raw__InputArray(), num, len, k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), &termcrit, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

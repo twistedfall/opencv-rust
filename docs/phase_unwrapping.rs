@@ -34,8 +34,8 @@ pub mod phase_unwrapping {
 		/// ## Parameters
 		/// * reliabilityMap: Image where the reliability map is stored.
 		#[inline]
-		fn get_inverse_reliability_map(&mut self, reliability_map: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(reliability_map);
+		fn get_inverse_reliability_map(&mut self, reliability_map: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(reliability_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayR(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -169,10 +169,10 @@ pub mod phase_unwrapping {
 		/// ## C++ default parameters
 		/// * shadow_mask: noArray()
 		#[inline]
-		fn unwrap_phase_map(&mut self, wrapped_phase_map: &dyn core::ToInputArray, unwrapped_phase_map: &mut dyn core::ToOutputArray, shadow_mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(wrapped_phase_map);
-			extern_container_arg!(unwrapped_phase_map);
-			extern_container_arg!(shadow_mask);
+		fn unwrap_phase_map(&mut self, wrapped_phase_map: &impl core::ToInputArray, unwrapped_phase_map: &mut impl core::ToOutputArray, shadow_mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(wrapped_phase_map);
+			output_array_arg!(unwrapped_phase_map);
+			input_array_arg!(shadow_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

@@ -365,11 +365,11 @@ pub mod superres {
 		/// ## C++ default parameters
 		/// * flow2: noArray()
 		#[inline]
-		fn calc(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, flow1: &mut dyn core::ToOutputArray, flow2: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame0);
-			extern_container_arg!(frame1);
-			extern_container_arg!(flow1);
-			extern_container_arg!(flow2);
+		fn calc(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray, flow1: &mut impl core::ToOutputArray, flow2: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(frame0);
+			input_array_arg!(frame1);
+			output_array_arg!(flow1);
+			output_array_arg!(flow2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Superres_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), flow2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -880,8 +880,8 @@ pub mod superres {
 		fn as_raw_mut_Superres_FrameSource(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame);
+		fn next_frame(&mut self, frame: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_FrameSource_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_FrameSource(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1199,8 +1199,8 @@ pub mod superres {
 		/// ## Parameters
 		/// * frame: Output result
 		#[inline]
-		fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(frame);
+		fn next_frame(&mut self, frame: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_SuperResolution_nextFrame_const__OutputArrayR(self.as_raw_mut_Superres_SuperResolution(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

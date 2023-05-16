@@ -21,10 +21,10 @@ pub mod alphamat {
 	/// 
 	/// The function infoFlow performs alpha matting on a RGB image using a greyscale trimap image, and outputs a greyscale alpha matte image. The output alpha matte can be used to softly extract the foreground object from a background image. Examples can be found in the samples directory.
 	#[inline]
-	pub fn info_flow(image: &dyn core::ToInputArray, tmap: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
-		extern_container_arg!(image);
-		extern_container_arg!(tmap);
-		extern_container_arg!(result);
+	pub fn info_flow(image: &impl core::ToInputArray, tmap: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		input_array_arg!(tmap);
+		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_alphamat_infoFlow_const__InputArrayR_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), tmap.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

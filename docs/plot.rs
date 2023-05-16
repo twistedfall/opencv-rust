@@ -178,8 +178,8 @@ pub mod plot {
 		}
 		
 		#[inline]
-		fn render(&mut self, _plot_result: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(_plot_result);
+		fn render(&mut self, _plot_result: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(_plot_result);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_render_const__OutputArrayR(self.as_raw_mut_Plot2d(), _plot_result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -228,8 +228,8 @@ pub mod plot {
 		/// * data: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot. ![inline formula](https://latex.codecogs.com/png.latex?X) values
 		/// will be equal to indexes of correspondind elements in data matrix.
 		#[inline]
-		pub fn create(data: &dyn core::ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
-			extern_container_arg!(data);
+		pub fn create(data: &impl core::ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
+			input_array_arg!(data);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR(data.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -244,9 +244,9 @@ pub mod plot {
 		/// * dataX: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix ![inline formula](https://latex.codecogs.com/png.latex?X) values of points to plot.
 		/// * dataY: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot.
 		#[inline]
-		pub fn create_1(data_x: &dyn core::ToInputArray, data_y: &dyn core::ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
-			extern_container_arg!(data_x);
-			extern_container_arg!(data_y);
+		pub fn create_1(data_x: &impl core::ToInputArray, data_y: &impl core::ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
+			input_array_arg!(data_x);
+			input_array_arg!(data_y);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR_const__InputArrayR(data_x.as_raw__InputArray(), data_y.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

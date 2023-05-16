@@ -170,9 +170,9 @@ pub mod cudaobjdetect {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_multi_scale(&mut self, image: &dyn core::ToInputArray, objects: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(objects);
+		fn detect_multi_scale(&mut self, image: &impl core::ToInputArray, objects: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(objects);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_CascadeClassifier_detectMultiScale_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -186,8 +186,8 @@ pub mod cudaobjdetect {
 		/// * gpu_objects: Objects array in internal representation.
 		/// * objects: Resulting array.
 		#[inline]
-		fn convert(&mut self, gpu_objects: &mut dyn core::ToOutputArray, objects: &mut core::Vector<core::Rect>) -> Result<()> {
-			extern_container_arg!(gpu_objects);
+		fn convert(&mut self, gpu_objects: &mut impl core::ToOutputArray, objects: &mut core::Vector<core::Rect>) -> Result<()> {
+			output_array_arg!(gpu_objects);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_CascadeClassifier_convert_const__OutputArrayR_vectorLRectGR(self.as_raw_mut_CUDA_CascadeClassifier(), gpu_objects.as_raw__OutputArray(), objects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -498,8 +498,8 @@ pub mod cudaobjdetect {
 		
 		/// Sets coefficients for the linear SVM classifier.
 		#[inline]
-		fn set_svm_detector(&mut self, detector: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(detector);
+		fn set_svm_detector(&mut self, detector: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(detector);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_setSVMDetector_const__InputArrayR(self.as_raw_mut_CUDA_HOG(), detector.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -517,8 +517,8 @@ pub mod cudaobjdetect {
 		/// ## C++ default parameters
 		/// * confidences: NULL
 		#[inline]
-		fn detect(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGX(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -527,8 +527,8 @@ pub mod cudaobjdetect {
 		}
 		
 		#[inline]
-		fn detect_1(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_1(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR_vectorLdoubleGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -542,8 +542,8 @@ pub mod cudaobjdetect {
 		/// * img: Source image. CV_8UC1 and CV_8UC4 types are supported for now.
 		/// * found_locations: Left-top corner points of detected objects boundaries.
 		#[inline]
-		fn detect_without_conf(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Point>) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_without_conf(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_detectWithoutConf_const__InputArrayR_vectorLPointGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -561,8 +561,8 @@ pub mod cudaobjdetect {
 		/// ## C++ default parameters
 		/// * confidences: NULL
 		#[inline]
-		fn detect_multi_scale(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_multi_scale(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGX(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -571,8 +571,8 @@ pub mod cudaobjdetect {
 		}
 		
 		#[inline]
-		fn detect_multi_scale_1(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_multi_scale_1(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -586,8 +586,8 @@ pub mod cudaobjdetect {
 		/// * img: Source image. See cuda::HOGDescriptor::detect for type limitations.
 		/// * found_locations: Detected objects boundaries.
 		#[inline]
-		fn detect_multi_scale_without_conf(&mut self, img: &dyn core::ToInputArray, found_locations: &mut core::Vector<core::Rect>) -> Result<()> {
-			extern_container_arg!(img);
+		fn detect_multi_scale_without_conf(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>) -> Result<()> {
+			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_detectMultiScaleWithoutConf_const__InputArrayR_vectorLRectGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -605,9 +605,9 @@ pub mod cudaobjdetect {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute(&mut self, img: &dyn core::ToInputArray, descriptors: &mut dyn core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
-			extern_container_arg!(img);
-			extern_container_arg!(descriptors);
+		fn compute(&mut self, img: &impl core::ToInputArray, descriptors: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(img);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), descriptors.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

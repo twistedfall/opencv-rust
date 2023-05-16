@@ -28,9 +28,9 @@ pub mod wechat_qrcode {
 		/// ## C++ default parameters
 		/// * points: noArray()
 		#[inline]
-		fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<core::Vector<String>> {
-			extern_container_arg!(img);
-			extern_container_arg!(points);
+		fn detect_and_decode(&mut self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray) -> Result<core::Vector<String>> {
+			input_array_arg!(img);
+			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_detectAndDecode_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_WeChatQRCode(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

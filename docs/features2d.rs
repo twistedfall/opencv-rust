@@ -188,8 +188,8 @@ pub mod features2d {
 	/// ## C++ default parameters
 	/// * nonmax_suppression: true
 	#[inline]
-	pub fn agast(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
-		extern_container_arg!(image);
+	pub fn agast(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
+		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -215,8 +215,8 @@ pub mod features2d {
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
 	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	#[inline]
-	pub fn agast_with_type(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
-		extern_container_arg!(image);
+	pub fn agast_with_type(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
+		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -249,8 +249,8 @@ pub mod features2d {
 	/// ## C++ default parameters
 	/// * nonmax_suppression: true
 	#[inline]
-	pub fn fast(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
-		extern_container_arg!(image);
+	pub fn fast(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
+		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -278,8 +278,8 @@ pub mod features2d {
 	/// cv.FAST_FEATURE_DETECTOR_TYPE_7_12 and cv.FAST_FEATURE_DETECTOR_TYPE_9_16. For corner
 	/// detection, use cv.FAST.detect() method.
 	#[inline]
-	pub fn fast_with_type(image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<()> {
-		extern_container_arg!(image);
+	pub fn fast_with_type(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<()> {
+		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -317,9 +317,9 @@ pub mod features2d {
 	/// * color: Scalar::all(-1)
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_keypoints(image: &dyn core::ToInputArray, keypoints: &core::Vector<core::KeyPoint>, out_image: &mut dyn core::ToInputOutputArray, color: core::Scalar, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
-		extern_container_arg!(image);
-		extern_container_arg!(out_image);
+	pub fn draw_keypoints(image: &impl core::ToInputArray, keypoints: &core::Vector<core::KeyPoint>, out_image: &mut impl core::ToInputOutputArray, color: core::Scalar, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+		input_array_arg!(image);
+		input_output_array_arg!(out_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawKeypoints_const__InputArrayR_const_vectorLKeyPointGR_const__InputOutputArrayR_const_ScalarR_DrawMatchesFlags(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), out_image.as_raw__InputOutputArray(), &color, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -356,10 +356,10 @@ pub mod features2d {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches(img1: &dyn core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &dyn core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut dyn core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
-		extern_container_arg!(img1);
-		extern_container_arg!(img2);
-		extern_container_arg!(out_img);
+	pub fn draw_matches(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+		input_array_arg!(img1);
+		input_array_arg!(img2);
+		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -398,10 +398,10 @@ pub mod features2d {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_1(img1: &dyn core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &dyn core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut dyn core::ToInputOutputArray, matches_thickness: i32, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
-		extern_container_arg!(img1);
-		extern_container_arg!(img2);
-		extern_container_arg!(out_img);
+	pub fn draw_matches_1(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, matches_thickness: i32, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+		input_array_arg!(img1);
+		input_array_arg!(img2);
+		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), matches_thickness, &match_color, &single_point_color, matches_mask.as_raw_VectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -415,10 +415,10 @@ pub mod features2d {
 	/// * matches_mask: std::vector<std::vector<char>>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_knn(img1: &dyn core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &dyn core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut dyn core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<core::Vector<i8>>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
-		extern_container_arg!(img1);
-		extern_container_arg!(img2);
-		extern_container_arg!(out_img);
+	pub fn draw_matches_knn(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut impl core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<core::Vector<i8>>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+		input_array_arg!(img1);
+		input_array_arg!(img2);
+		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLvectorLDMatchGGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLvectorLcharGGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfVectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1146,9 +1146,9 @@ pub mod features2d {
 		/// * point_idxs_of_clusters: 0
 		/// * descriptors: 0
 		#[inline]
-		fn compute_desc(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut dyn core::ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>, descriptors: &mut core::Mat) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(img_descriptor);
+		fn compute_desc(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut impl core::ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>, descriptors: &mut core::Mat) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_vectorLvectorLintGGX_MatX(self.as_raw_mut_BOWImgDescriptorExtractor(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), img_descriptor.as_raw__OutputArray(), point_idxs_of_clusters.as_raw_mut_VectorOfVectorOfi32(), descriptors.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1178,9 +1178,9 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * point_idxs_of_clusters: 0
 		#[inline]
-		fn compute(&mut self, keypoint_descriptors: &dyn core::ToInputArray, img_descriptor: &mut dyn core::ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>) -> Result<()> {
-			extern_container_arg!(keypoint_descriptors);
-			extern_container_arg!(img_descriptor);
+		fn compute(&mut self, keypoint_descriptors: &impl core::ToInputArray, img_descriptor: &mut impl core::ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>) -> Result<()> {
+			input_array_arg!(keypoint_descriptors);
+			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_const__OutputArrayR_vectorLvectorLintGGX(self.as_raw_mut_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw__InputArray(), img_descriptor.as_raw__OutputArray(), point_idxs_of_clusters.as_raw_mut_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1755,10 +1755,10 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
-		fn train_match(&self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::DMatch>, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(train_descriptors);
-			extern_container_arg!(mask);
+		fn train_match(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>, mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vectorLDMatchGR_const__InputArrayR(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1789,10 +1789,10 @@ pub mod features2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn knn_train_match(&self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(train_descriptors);
-			extern_container_arg!(mask);
+		fn knn_train_match(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, mask.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1824,10 +1824,10 @@ pub mod features2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn radius_train_match(&self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(train_descriptors);
-			extern_container_arg!(mask);
+		fn radius_train_match(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, mask.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1909,8 +1909,8 @@ pub mod features2d {
 		/// * descriptors: Descriptors to add. Each descriptors[i] is a set of descriptors from the same
 		/// train image.
 		#[inline]
-		fn add(&mut self, descriptors: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(descriptors);
+		fn add(&mut self, descriptors: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_add_const__InputArrayR(self.as_raw_mut_DescriptorMatcher(), descriptors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1971,9 +1971,9 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * masks: noArray()
 		#[inline]
-		fn match_(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::DMatch>, masks: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(masks);
+		fn match_(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>, masks: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR_const__InputArrayR(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2016,9 +2016,9 @@ pub mod features2d {
 		/// * masks: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(masks);
+		fn knn_match(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, masks.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2063,9 +2063,9 @@ pub mod features2d {
 		/// * masks: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
-			extern_container_arg!(query_descriptors);
-			extern_container_arg!(masks);
+		fn radius_match(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, masks.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2417,9 +2417,9 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
-		fn detect(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, mask: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
+		fn detect(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, mask: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLKeyPointGR_const__InputArrayR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2447,9 +2447,9 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * masks: noArray()
 		#[inline]
-		fn detect_multiple(&mut self, images: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, masks: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(images);
-			extern_container_arg!(masks);
+		fn detect_multiple(&mut self, images: &impl core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, masks: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(images);
+			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR_const__InputArrayR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2469,9 +2469,9 @@ pub mod features2d {
 		/// descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
 		/// descriptor for keypoint j-th keypoint.
 		#[inline]
-		fn compute(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(descriptors);
+		fn compute(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2502,9 +2502,9 @@ pub mod features2d {
 		///    descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
 		///    descriptor for keypoint j-th keypoint.
 		#[inline]
-		fn compute_multiple(&mut self, images: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
-			extern_container_arg!(images);
-			extern_container_arg!(descriptors);
+		fn compute_multiple(&mut self, images: &impl core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(images);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2517,10 +2517,10 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * use_provided_keypoints: false
 		#[inline]
-		fn detect_and_compute(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut dyn core::ToOutputArray, use_provided_keypoints: bool) -> Result<()> {
-			extern_container_arg!(image);
-			extern_container_arg!(mask);
-			extern_container_arg!(descriptors);
+		fn detect_and_compute(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::ToOutputArray, use_provided_keypoints: bool) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
+			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_bool(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2628,8 +2628,8 @@ pub mod features2d {
 		fn as_raw_mut_FlannBasedMatcher(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn add(&mut self, descriptors: &dyn core::ToInputArray) -> Result<()> {
-			extern_container_arg!(descriptors);
+		fn add(&mut self, descriptors: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_add_const__InputArrayR(self.as_raw_mut_FlannBasedMatcher(), descriptors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3412,8 +3412,8 @@ pub mod features2d {
 		/// * msers: resulting list of point sets
 		/// * bboxes: resulting bounding boxes
 		#[inline]
-		fn detect_regions(&mut self, image: &dyn core::ToInputArray, msers: &mut core::Vector<core::Vector<core::Point>>, bboxes: &mut core::Vector<core::Rect>) -> Result<()> {
-			extern_container_arg!(image);
+		fn detect_regions(&mut self, image: &impl core::ToInputArray, msers: &mut core::Vector<core::Vector<core::Point>>, bboxes: &mut core::Vector<core::Rect>) -> Result<()> {
+			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_detectRegions_const__InputArrayR_vectorLvectorLPointGGR_vectorLRectGR(self.as_raw_mut_MSER(), image.as_raw__InputArray(), msers.as_raw_mut_VectorOfVectorOfPoint(), bboxes.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
