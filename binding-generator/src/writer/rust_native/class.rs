@@ -1,6 +1,6 @@
 use std::borrow::Cow;
+use std::collections::HashMap;
 
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::class::Kind;
@@ -104,31 +104,36 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let const_trait_comment = format!("/// Constant methods for [{rust_local}]").into();
 		let mut_trait_comment = format!("/// Mutable methods for [{rust_local}]").into();
 
-		out = TRAIT_TPL.interpolate(&hashmap! {
-			"const_trait_comment" => const_trait_comment,
-			"mut_trait_comment" => mut_trait_comment,
-			"debug" => get_debug(c).into(),
-			"rust_trait_local" => c.rust_trait_name(NameStyle::decl(), Constness::Mut),
-			"rust_trait_local_const" => c.rust_trait_name(NameStyle::decl(), Constness::Const),
-			"rust_local" => type_ref.rust_name(NameStyle::decl()),
-			"rust_extern_const" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
-			"rust_extern_mut" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
-			"trait_bases_const" => trait_bases_const.into(),
-			"trait_bases_mut" => trait_bases_mut.into(),
-			"trait_const_methods" => trait_const_methods.into(),
-			"trait_mut_methods" => trait_mut_methods.into(),
-		});
+		out = TRAIT_TPL.interpolate(&HashMap::from([
+			("const_trait_comment", const_trait_comment),
+			("mut_trait_comment", mut_trait_comment),
+			("debug", get_debug(c).into()),
+			("rust_trait_local", c.rust_trait_name(NameStyle::decl(), Constness::Mut)),
+			(
+				"rust_trait_local_const",
+				c.rust_trait_name(NameStyle::decl(), Constness::Const),
+			),
+			("rust_local", type_ref.rust_name(NameStyle::decl())),
+			(
+				"rust_extern_const",
+				type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+			),
+			(
+				"rust_extern_mut",
+				type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
+			),
+			("trait_bases_const", trait_bases_const.into()),
+			("trait_bases_mut", trait_bases_mut.into()),
+			("trait_const_methods", trait_const_methods.into()),
+			("trait_mut_methods", trait_mut_methods.into()),
+		]));
 	}
 
 	let rust_local = c.rust_name(NameStyle::decl());
 	let mut impls = if c.has_explicit_clone() {
-		IMPL_EXPLICIT_CLONE_TPL.interpolate(&hashmap! {
-			"rust_local" => rust_local.as_ref(),
-		})
+		IMPL_EXPLICIT_CLONE_TPL.interpolate(&HashMap::from([("rust_local", rust_local.as_ref())]))
 	} else if c.has_implicit_clone() {
-		IMPL_IMPLICIT_CLONE_TPL.interpolate(&hashmap! {
-			"rust_local" => rust_local.as_ref(),
-		})
+		IMPL_IMPLICIT_CLONE_TPL.interpolate(&HashMap::from([("rust_local", rust_local.as_ref())]))
 	} else {
 		"".to_string()
 	};
@@ -153,22 +158,22 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			for d in descendants {
 				let desc_local = d.rust_name(NameStyle::decl());
 				let desc_full = d.rust_name(NameStyle::ref_());
-				impls += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
-					"rust_local" => rust_local.as_ref(),
-					"descendant_rust_local" => desc_local.as_ref(),
-					"descendant_rust_full" => desc_full.as_ref(),
-				});
+				impls += &DESCENDANT_CAST_TPL.interpolate(&HashMap::from([
+					("rust_local", rust_local.as_ref()),
+					("descendant_rust_local", desc_local.as_ref()),
+					("descendant_rust_full", desc_full.as_ref()),
+				]));
 			}
 		}
 		for b in &bases {
 			if !b.is_abstract() {
 				let base_local = b.rust_name(NameStyle::decl());
 				let base_full = b.rust_name(NameStyle::ref_());
-				impls += &BASE_CAST_TPL.interpolate(&hashmap! {
-					"rust_local" => rust_local.as_ref(),
-					"base_rust_local" => base_local.as_ref(),
-					"base_rust_full" => base_full.as_ref(),
-				});
+				impls += &BASE_CAST_TPL.interpolate(&HashMap::from([
+					("rust_local", rust_local.as_ref()),
+					("base_rust_local", base_local.as_ref()),
+					("base_rust_full", base_full.as_ref()),
+				]));
 			}
 		}
 	}
@@ -185,14 +190,23 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			} else {
 				&BASE_TPL
 			};
-			tpl.interpolate(&hashmap! {
-				"base_rust_full" => base.rust_trait_name(NameStyle::ref_(), Constness::Mut),
-				"base_const_rust_full" => base.rust_trait_name(NameStyle::ref_(), Constness::Const),
-				"rust_local" => type_ref.rust_name(NameStyle::decl()),
-				"base_rust_local" => base_type_ref.rust_name(NameStyle::decl()),
-				"base_rust_extern_const" => base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
-				"base_rust_extern_mut" => base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
-			})
+			tpl.interpolate(&HashMap::from([
+				("base_rust_full", base.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
+				(
+					"base_const_rust_full",
+					base.rust_trait_name(NameStyle::ref_(), Constness::Const),
+				),
+				("rust_local", type_ref.rust_name(NameStyle::decl())),
+				("base_rust_local", base_type_ref.rust_name(NameStyle::decl())),
+				(
+					"base_rust_extern_const",
+					base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+				),
+				(
+					"base_rust_extern_mut",
+					base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
+				),
+			]))
 		})
 		.collect::<Vec<_>>();
 
@@ -208,12 +222,12 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 						typ = new_typ.to_string().into()
 					}
 				}
-				SIMPLE_FIELD_TPL.interpolate(&hashmap! {
-					"doc_comment" => Cow::Owned(f.rendered_doc_comment(opencv_version)),
-					"visibility" => "pub ".into(),
-					"name" => f.rust_leafname(FishStyle::No),
-					"type" => typ,
-				})
+				SIMPLE_FIELD_TPL.interpolate(&HashMap::from([
+					("doc_comment", Cow::Owned(f.rendered_doc_comment(opencv_version))),
+					("visibility", "pub ".into()),
+					("name", f.rust_leafname(FishStyle::No)),
+					("type", typ),
+				]))
 			})
 			.collect()
 	} else {
@@ -231,17 +245,13 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	}
 	let needs_default_ctor = needs_default_ctor(class_kind, c, const_methods.iter().chain(mut_methods.iter()));
 	if needs_default_ctor {
-		inherent_methods.push_str(&DEFAULT_CTOR.interpolate(&hashmap! {
-			"rust_local" => rust_local.as_ref(),
-		}));
+		inherent_methods.push_str(&DEFAULT_CTOR.interpolate(&HashMap::from([("rust_local", rust_local.as_ref())])));
 		inherent_methods_pool.add_name("default");
 		needs_default_impl = true;
 	}
 
 	if needs_default_impl {
-		impls += &IMPL_DEFAULT_TPL.interpolate(&hashmap! {
-			"rust_local" => rust_local.as_ref(),
-		});
+		impls += &IMPL_DEFAULT_TPL.interpolate(&HashMap::from([("rust_local", rust_local.as_ref())]));
 	}
 
 	inherent_methods.push_str(&if is_trait {
@@ -269,22 +279,33 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 	let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
 
-	out += &tpl.interpolate(&hashmap! {
-		"doc_comment" => Cow::Owned(doc_comment),
-		"debug" => get_debug(c).into(),
-		"rust_local" => rust_local.clone(),
-		"rust_full" => c.rust_name(NameStyle::ref_()),
-		"rust_extern_const" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
-		"rust_extern_mut" => type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
-		"fields" => fields.join("").into(),
-		"bases" => bases.join("").into(),
-		"impl" => IMPL_TPL.interpolate(&hashmap! {
-			"rust_local" => rust_local,
-			"consts" => consts.into(),
-			"inherent_methods" => inherent_methods.into(),
-		}).into(),
-		"impls" => impls.into(),
-	});
+	out += &tpl.interpolate(&HashMap::from([
+		("doc_comment", Cow::Owned(doc_comment)),
+		("debug", get_debug(c).into()),
+		("rust_local", rust_local.clone()),
+		("rust_full", c.rust_name(NameStyle::ref_())),
+		(
+			"rust_extern_const",
+			type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+		),
+		(
+			"rust_extern_mut",
+			type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
+		),
+		("fields", fields.join("").into()),
+		("bases", bases.join("").into()),
+		(
+			"impl",
+			IMPL_TPL
+				.interpolate(&HashMap::from([
+					("rust_local", rust_local),
+					("consts", consts.into()),
+					("inherent_methods", inherent_methods.into()),
+				]))
+				.into(),
+		),
+		("impls", impls.into()),
+	]));
 	out
 }
 
@@ -343,35 +364,35 @@ fn gen_cpp_boxed(c: &Class) -> String {
 				for d in descendants {
 					let desc_rust_local = d.rust_name(NameStyle::decl());
 					let desc_cpp_ref = d.cpp_name(CppNameStyle::Reference);
-					casts += &DESCENDANT_CAST_TPL.interpolate(&hashmap! {
-						"rust_local" => rust_local.as_ref(),
-						"descendant_rust_local" => desc_rust_local.as_ref(),
-						"descendant_cpp_full" => desc_cpp_ref.as_ref(),
-						"cpp_decl" => &cpp_decl,
-					});
+					casts += &DESCENDANT_CAST_TPL.interpolate(&HashMap::from([
+						("rust_local", rust_local.as_ref()),
+						("descendant_rust_local", desc_rust_local.as_ref()),
+						("descendant_cpp_full", desc_cpp_ref.as_ref()),
+						("cpp_decl", &cpp_decl),
+					]));
 				}
 			}
 			for b in bases {
 				let base_rust_local = b.rust_name(NameStyle::decl());
 				let base_cpp_full = b.cpp_name(CppNameStyle::Reference);
-				casts += &BASE_CAST_TPL.interpolate(&hashmap! {
-					"rust_local" => rust_local.as_ref(),
-					"base_rust_local" => base_rust_local.as_ref(),
-					"base_cpp_full" => base_cpp_full.as_ref(),
-					"cpp_decl" => &cpp_decl,
-				});
+				casts += &BASE_CAST_TPL.interpolate(&HashMap::from([
+					("rust_local", rust_local.as_ref()),
+					("base_rust_local", base_rust_local.as_ref()),
+					("base_cpp_full", base_cpp_full.as_ref()),
+					("cpp_decl", &cpp_decl),
+				]));
 			}
 		}
 
 		let type_ref = c.type_ref();
 		let delete = method_delete(&rust_local, ClassDesc::from(c), c.gen_env.resolve_typeref("void"));
-		out += &BOXED_CPP_TPL.interpolate(&hashmap! {
-			"rust_local" => type_ref.rust_name(NameStyle::decl()),
-			"cpp_full" => type_ref.cpp_name(CppNameStyle::Reference),
-			"cpp_extern" => type_ref.cpp_extern(),
-			"casts" => casts.into(),
-			"delete" => delete.into(),
-		})
+		out += &BOXED_CPP_TPL.interpolate(&HashMap::from([
+			("rust_local", type_ref.rust_name(NameStyle::decl())),
+			("cpp_full", type_ref.cpp_name(CppNameStyle::Reference)),
+			("cpp_extern", type_ref.cpp_extern()),
+			("casts", casts.into()),
+			("delete", delete.into()),
+		]))
 	}
 	out
 }

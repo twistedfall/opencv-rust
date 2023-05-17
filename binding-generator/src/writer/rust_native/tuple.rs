@@ -1,7 +1,6 @@
 use std::borrow::Cow;
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::type_ref::{Constness, FishStyle};
@@ -65,12 +64,12 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 			})
 			.join(",\n");
 
-		RUST_TPL.interpolate(&hashmap! {
-			"rust_localalias" => rust_localalias,
-			"rust_full" => self.rust_name(NameStyle::ref_()),
-			"inner_rust_full" => self.rust_inner().into(),
-			"getters" => getters.into(),
-		})
+		RUST_TPL.interpolate(&HashMap::from([
+			("rust_localalias", rust_localalias),
+			("rust_full", self.rust_name(NameStyle::ref_())),
+			("inner_rust_full", self.rust_inner().into()),
+			("getters", getters.into()),
+		]))
 	}
 
 	fn gen_cpp(&self) -> String {
@@ -94,9 +93,7 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 			methods.push(method_get(&rust_localalias, &tuple_desc, &typ, i));
 		}
 
-		CPP_TPL.interpolate(&hashmap! {
-			"methods" => methods.join(""),
-		})
+		CPP_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
 	}
 }
 

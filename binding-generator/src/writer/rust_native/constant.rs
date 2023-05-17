@@ -1,7 +1,7 @@
 use std::borrow::Cow;
+use std::collections::HashMap;
 
 use clang::EntityKind;
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::constant::ValueKind;
@@ -73,12 +73,12 @@ impl RustNativeGeneratedElement for Const<'_> {
 					ValueKind::String => &STRING_TPL,
 				}
 			};
-			tpl.interpolate(&hashmap! {
-				"doc_comment" => Cow::Owned(self.rendered_doc_comment(opencv_version)),
-				"debug" => get_debug(self).into(),
-				"name" => name,
-				"value" => value.to_string().into(),
-			})
+			tpl.interpolate(&HashMap::from([
+				("doc_comment", Cow::Owned(self.rendered_doc_comment(opencv_version))),
+				("debug", get_debug(self).into()),
+				("name", name),
+				("value", value.to_string().into()),
+			]))
 		} else {
 			String::new()
 		}

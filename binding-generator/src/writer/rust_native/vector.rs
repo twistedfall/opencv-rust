@@ -1,6 +1,6 @@
 use std::borrow::Cow;
+use std::collections::HashMap;
 
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, FishStyle, NameStyle};
@@ -66,11 +66,11 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			return "".to_string();
 		}
 		let element_type = self.element_type();
-		let mut inter_vars = hashmap! {
-			"rust_localalias" => self.rust_localalias(),
-			"rust_full" => self.rust_name(NameStyle::ref_()),
-			"inner_rust_full" => element_type.rust_name(NameStyle::ref_()),
-		};
+		let mut inter_vars = HashMap::from([
+			("rust_localalias", self.rust_localalias()),
+			("rust_full", self.rust_name(NameStyle::ref_())),
+			("inner_rust_full", element_type.rust_name(NameStyle::ref_())),
+		]);
 
 		if settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref()) {
 			inter_vars.insert("extern", "".into());
@@ -165,14 +165,17 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 				self.gen_env.resolve_typeref("cv::_InputOutputArray"),
 			));
 		}
-		let mut inter_vars = hashmap! {
-			"rust_localalias" => rust_localalias.as_ref().into(),
-			"cpp_full" => vec_type.cpp_name(CppNameStyle::Reference),
-			"cpp_extern_return" => vec_type.cpp_extern_return(ConstnessOverride::No),
-			"inner_cpp_full" => inner_cpp_full.as_ref().into(),
-			"inner_cpp_extern_return" => element_type.cpp_extern_return(ConstnessOverride::No),
-			"methods" => methods.join("").into(),
-		};
+		let mut inter_vars = HashMap::from([
+			("rust_localalias", rust_localalias.as_ref().into()),
+			("cpp_full", vec_type.cpp_name(CppNameStyle::Reference)),
+			("cpp_extern_return", vec_type.cpp_extern_return(ConstnessOverride::No)),
+			("inner_cpp_full", inner_cpp_full.as_ref().into()),
+			(
+				"inner_cpp_extern_return",
+				element_type.cpp_extern_return(ConstnessOverride::No),
+			),
+			("methods", methods.join("").into()),
+		]);
 
 		let mut exports = String::new();
 		if element_type.is_copy() && !element_is_bool {

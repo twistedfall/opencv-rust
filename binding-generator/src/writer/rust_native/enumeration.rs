@@ -1,7 +1,6 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
 
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::type_ref::{FishStyle, NameStyle};
@@ -60,20 +59,20 @@ impl RustNativeGeneratedElement for Enum<'_> {
 					c.rendered_doc_comment(opencv_version)
 				};
 				generated_values.insert(value.clone(), name.clone());
-				tpl.interpolate(&hashmap! {
-					"doc_comment" => doc_comment,
-					"duplicate_name" => duplicate_name.unwrap_or_default(),
-					"name" => name,
-					"value" => value,
-				})
+				tpl.interpolate(&HashMap::from([
+					("doc_comment", doc_comment),
+					("duplicate_name", duplicate_name.unwrap_or_default()),
+					("name", name),
+					("value", value),
+				]))
 			})
 			.collect::<Vec<_>>();
-		ENUM_TPL.interpolate(&hashmap! {
-			"doc_comment" => self.rendered_doc_comment(opencv_version).into(),
-			"debug" => get_debug(self).into(),
-			"rust_local" => self.rust_name(NameStyle::decl()),
-			"rust_full" => self.rust_name(NameStyle::ref_()),
-			"consts" => consts.join("").into(),
-		})
+		ENUM_TPL.interpolate(&HashMap::from([
+			("doc_comment", self.rendered_doc_comment(opencv_version).into()),
+			("debug", get_debug(self).into()),
+			("rust_local", self.rust_name(NameStyle::decl())),
+			("rust_full", self.rust_name(NameStyle::ref_())),
+			("consts", consts.join("").into()),
+		]))
 	}
 }

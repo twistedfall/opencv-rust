@@ -1,6 +1,6 @@
 use std::borrow::Cow;
+use std::collections::HashMap;
 
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::renderer::CppRenderer;
@@ -60,11 +60,11 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 
 		let pointee_type = self.pointee();
 
-		let mut inter_vars = hashmap! {
-			"rust_localalias" => self.rust_localalias(),
-			"rust_full" => self.rust_name(NameStyle::ref_()),
-			"inner_rust_full" => pointee_type.rust_name(NameStyle::ref_()),
-		};
+		let mut inter_vars = HashMap::from([
+			("rust_localalias", self.rust_localalias()),
+			("rust_full", self.rust_name(NameStyle::ref_())),
+			("inner_rust_full", pointee_type.rust_name(NameStyle::ref_())),
+		]);
 
 		let mut impls = String::new();
 		let mut gen_ctor = pointee_type.is_primitive();
@@ -134,13 +134,13 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let cpp_ref_const = type_ref.render(const_renderer);
 
 		let rust_localalias = self.rust_localalias();
-		let mut inter_vars = hashmap! {
-			"rust_localalias" => rust_localalias.as_ref().into(),
-			"cpp_decl" => type_ref.cpp_arg_func_decl("instance").into(),
-			"cpp_full_const" => cpp_ref_const,
-			"inner_cpp_extern" => inner_cpp_extern,
-			"inner_cpp_extern_const" => inner_cpp_extern_const,
-		};
+		let mut inter_vars = HashMap::from([
+			("rust_localalias", rust_localalias.as_ref().into()),
+			("cpp_decl", type_ref.cpp_arg_func_decl("instance").into()),
+			("cpp_full_const", cpp_ref_const),
+			("inner_cpp_extern", inner_cpp_extern),
+			("inner_cpp_extern_const", inner_cpp_extern_const),
+		]);
 
 		let mut base_cast = String::new();
 		let mut gen_ctor = pointee_type.is_copy();

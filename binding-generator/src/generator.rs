@@ -9,7 +9,6 @@ use std::path::{Path, PathBuf};
 use clang::diagnostic::{Diagnostic, Severity};
 use clang::{Clang, Entity, EntityKind, EntityVisitResult, Index, TranslationUnit, Type, Unsaved};
 use dunce::canonicalize;
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::entity::WalkAction;
@@ -134,11 +133,11 @@ impl<'m> EphemeralGenerator<'m> {
 			}
 		}
 
-		TPL.interpolate(&hashmap! {
-			"includes" => includes,
-			"resolve_types" => resolve_types,
-			"generate_types" => generate_types.join(",\n"),
-		})
+		TPL.interpolate(&HashMap::from([
+			("includes", includes),
+			("resolve_types", resolve_types),
+			("generate_types", generate_types.join(",\n")),
+		]))
 	}
 }
 

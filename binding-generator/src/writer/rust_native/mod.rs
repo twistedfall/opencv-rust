@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 use std::fmt::Debug;
 use std::fs::{File, OpenOptions};
 use std::io::{ErrorKind, Write};
@@ -6,7 +6,6 @@ use std::path::{Path, PathBuf};
 use std::{fs, iter};
 
 use dunce::canonicalize;
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use class::ClassExt;
@@ -269,19 +268,20 @@ impl Drop for RustNativeBindingWriter<'_> {
 		rust += &join(&mut typedefs);
 		rust += &join(&mut self.rust_funcs);
 		rust += &join(&mut self.rust_classes);
-		let prelude = RUST_PRELUDE.interpolate(&hashmap! {
-			"traits" => self.prelude_traits.join(", "),
-		});
+		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("traits", self.prelude_traits.join(", "))]));
 		File::create(&self.rust_path)
 			.expect("Can't create rust file")
 			.write_all(
 				RUST
-					.interpolate(&hashmap! {
-						"static_modules" => settings::STATIC_MODULES.iter().join(", "),
-						"comment" => comment::render_doc_comment(&self.comment, "//!", self.opencv_version),
-						"prelude" => prelude,
-						"code" => rust,
-					})
+					.interpolate(&HashMap::from([
+						("static_modules", settings::STATIC_MODULES.iter().join(", ")),
+						(
+							"comment",
+							comment::render_doc_comment(&self.comment, "//!", self.opencv_version),
+						),
+						("prelude", prelude),
+						("code", rust),
+					]))
 					.as_bytes(),
 			)
 			.expect("Can't write rust file");
@@ -299,11 +299,11 @@ impl Drop for RustNativeBindingWriter<'_> {
 		File::create(&self.cpp_path)
 			.expect("Can't create cpp file")
 			.write_all(
-				CPP.interpolate(&hashmap! {
-					"module" => self.module,
-					"includes" => includes.as_str(),
-					"code" => cpp.as_str(),
-				})
+				CPP.interpolate(&HashMap::from([
+					("module", self.module),
+					("includes", includes.as_str()),
+					("code", cpp.as_str()),
+				]))
 				.as_bytes(),
 			)
 			.expect("Can't write cpp file");
@@ -312,13 +312,7 @@ impl Drop for RustNativeBindingWriter<'_> {
 		exports += &join(&mut self.export_classes);
 		File::create(&self.exports_path)
 			.expect("Can't create rust exports file")
-			.write_all(
-				RUST_EXTERNS_TPL
-					.interpolate(&hashmap! {
-						"code" => exports,
-					})
-					.as_bytes(),
-			)
+			.write_all(RUST_EXTERNS_TPL.interpolate(&HashMap::from([("code", exports)])).as_bytes())
 			.expect("Can't write rust exports file");
 	}
 }

@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use maplit::hashmap;
 use regex::Regex;
 
 use crate::string_ext::Indent;
@@ -307,7 +306,7 @@ fn bump_counter() {
 fn interpolate() {
 	{
 		let tpl = "";
-		let res = tpl.compile_interpolation().interpolate(&hashmap! {"test" => "test"});
+		let res = tpl.compile_interpolation().interpolate(&HashMap::from([("test", "test")]));
 		assert_eq!("", res);
 	}
 
@@ -320,11 +319,9 @@ fn interpolate() {
 	{
 		let tpl = "{{ name1 }}, {{name2}}, {{name3
 		}}, {{{name4}}}";
-		let res = tpl.compile_interpolation().interpolate(&hashmap! {
-			"name1" => "test1",
-			"name2" => "test2",
-			"name3" => "test3",
-		});
+		let res =
+			tpl.compile_interpolation()
+				.interpolate(&HashMap::from([("name1", "test1"), ("name2", "test2"), ("name3", "test3")]));
 		assert_eq!(
 			"test1, test2, {{name3
 		}}, {<parameter not found>}",
@@ -340,11 +337,11 @@ fn interpolate() {
 			{{name3 }} end
 
 		";
-		let res = tpl.compile_interpolation().interpolate(&hashmap! {
-			"name1" => "test1",
-			"name2" => "test21\ntest22",
-			"name3" => "test3",
-		});
+		let res = tpl.compile_interpolation().interpolate(&HashMap::from([
+			("name1", "test1"),
+			("name2", "test21\ntest22"),
+			("name3", "test3"),
+		]));
 		assert_eq!(
 			"test1 tt
 line
@@ -362,11 +359,11 @@ test3 end
          {{name1}}
             {{ name2}}
          {{name3 }}";
-		let res = tpl.compile_interpolation().interpolate(&hashmap! {
-			"name1" => "test1",
-			"name2" => "test21\ntest22",
-			"name3" => "",
-		});
+		let res = tpl.compile_interpolation().interpolate(&HashMap::from([
+			("name1", "test1"),
+			("name2", "test21\ntest22"),
+			("name3", ""),
+		]));
 		assert_eq!(
 			"test1
    test21
@@ -379,11 +376,9 @@ test3 end
 		let tpl = "
 			{{name1}}
 				{{ name2}} 			{{name3 }}";
-		let res = tpl.compile_interpolation().interpolate(&hashmap! {
-			"name1" => "",
-			"name2" => "test2",
-			"name3" => "test3",
-		});
+		let res = tpl
+			.compile_interpolation()
+			.interpolate(&HashMap::from([("name1", ""), ("name2", "test2"), ("name3", "test3")]));
 		assert_eq!("	test2 			test3", res);
 	}
 }

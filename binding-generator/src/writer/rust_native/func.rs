@@ -1,7 +1,7 @@
 use std::borrow::Cow;
+use std::collections::HashMap;
 use std::fmt::Write;
 
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 use regex::Regex;
 
@@ -144,25 +144,39 @@ fn gen_rust_with_name(f: &Func, name: &str, opencv_version: &str) -> String {
 	} else {
 		&TPL
 	};
-	tpl.interpolate(&hashmap! {
-		"doc_comment" => doc_comment.as_str(),
-		"debug" => &debug,
-		"attributes" => &attributes,
-		"visibility" => visibility,
-		"unsafety_decl" => if is_safe { "" } else { "unsafe " },
-		"name" => name,
-		"generic_decl" => "",
-		"decl_args" => &decl_args,
-		"rv_rust_full" => return_type_func_decl.as_ref(),
-		"pre_call_args" => &pre_call_args,
-		"unsafety_call" => if is_safe { "unsafe " } else { "" },
-		"identifier" => identifier.as_ref(),
-		"call_args" => &call_args,
-		"forward_args" => &forward_args,
-		"ret_receive" => ret_receive,
-		"ret_convert" => ret_convert.as_ref(),
-		"post_call_args" => &post_call_args,
-	})
+	tpl.interpolate(&HashMap::from([
+		("doc_comment", doc_comment.as_str()),
+		("debug", &debug),
+		("attributes", &attributes),
+		("visibility", visibility),
+		(
+			"unsafety_decl",
+			if is_safe {
+				""
+			} else {
+				"unsafe "
+			},
+		),
+		("name", name),
+		("generic_decl", ""),
+		("decl_args", &decl_args),
+		("rv_rust_full", return_type_func_decl.as_ref()),
+		("pre_call_args", &pre_call_args),
+		(
+			"unsafety_call",
+			if is_safe {
+				"unsafe "
+			} else {
+				""
+			},
+		),
+		("identifier", identifier.as_ref()),
+		("call_args", &call_args),
+		("forward_args", &forward_args),
+		("ret_receive", ret_receive),
+		("ret_convert", ret_convert.as_ref()),
+		("post_call_args", &post_call_args),
+	]))
 }
 
 fn rust_return_map(return_type: &TypeRef, ret_name: &str, is_safe_context: bool, is_infallible: bool) -> Cow<'static, str> {
@@ -427,13 +441,13 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else {
 			format!(" -> {return_wrapper_type}").into()
 		};
-		TPL.interpolate(&hashmap! {
-			"attributes" => attributes.into(),
-			"debug" => get_debug(self).into(),
-			"identifier" => identifier,
-			"args" => args.join(", ").into(),
-			"return_type" => return_wrapper_type,
-		})
+		TPL.interpolate(&HashMap::from([
+			("attributes", attributes.into()),
+			("debug", get_debug(self).into()),
+			("identifier", identifier),
+			("args", args.join(", ").into()),
+			("return_type", return_wrapper_type),
+		]))
 	}
 
 	fn gen_cpp(&self) -> String {

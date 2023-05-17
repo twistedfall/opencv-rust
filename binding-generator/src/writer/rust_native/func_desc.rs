@@ -1,7 +1,7 @@
 use std::borrow::Cow;
+use std::collections::HashMap;
 use std::fmt::Debug;
 
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::func::{Kind, OperatorKind};
@@ -70,13 +70,13 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 			""
 		};
 
-		let mut inter_vars = hashmap! {
-			"ret_type" => ret_type,
-			"ret_with_type" => ret_with_type,
-			"doref" => doref.into(),
-			"generic" => generic.into(),
-			"args" => args.as_str().into(),
-		};
+		let mut inter_vars = HashMap::from([
+			("ret_type", ret_type),
+			("ret_with_type", ret_with_type),
+			("doref", doref.into()),
+			("generic", generic.into()),
+			("args", args.as_str().into()),
+		]);
 
 		let call_name = match &self.call {
 			FuncDescCppCall::Auto { name_decl, name_ref } => match &self.kind {
@@ -168,11 +168,7 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 					format!("Ok{cast}({ret}, {ocv_ret_name});").into()
 				}
 			}
-			FuncDescReturn::Manual(ret_expr) => ret_expr
-				.interpolate(&hashmap! {
-					"ret_name" => ocv_ret_name,
-				})
-				.into(),
+			FuncDescReturn::Manual(ret_expr) => ret_expr.interpolate(&HashMap::from([("ret_name", ocv_ret_name)])).into(),
 		}
 	}
 
@@ -256,21 +252,24 @@ impl<'tu, 'ge> CppFuncDesc<'tu, 'ge, '_> {
 			format!("}} OCVRS_CATCH({typ}, {ocv_ret_name});").into()
 		};
 
-		TPL.interpolate(&hashmap! {
-			"attributes_begin" => attributes_begin.into(),
-			"debug" => self.debug.as_str().into(),
-			"return_spec" => return_spec,
-			"identifier" => self.extern_name.as_ref().into(),
-			"decl_args" => decl_args.join(", ").into(),
-			"try" => func_try.into(),
-			"pre_call_args" => pre_call_args.join("\n").into(),
-			"call" => self.cpp_call_invoke().into(),
-			"post_call_args" => post_call_args.join("\n").into(),
-			"cleanup_args" => cleanup_args.join("\n").into(),
-			"return" => self.cpp_return(&ret, ret_cast.then(|| ret_full.as_ref().into()), ocv_ret_name),
-			"catch" => catch,
-			"attributes_end" => attributes_end.into(),
-		})
+		TPL.interpolate(&HashMap::from([
+			("attributes_begin", attributes_begin.into()),
+			("debug", self.debug.as_str().into()),
+			("return_spec", return_spec),
+			("identifier", self.extern_name.as_ref().into()),
+			("decl_args", decl_args.join(", ").into()),
+			("try", func_try.into()),
+			("pre_call_args", pre_call_args.join("\n").into()),
+			("call", self.cpp_call_invoke().into()),
+			("post_call_args", post_call_args.join("\n").into()),
+			("cleanup_args", cleanup_args.join("\n").into()),
+			(
+				"return",
+				self.cpp_return(&ret, ret_cast.then(|| ret_full.as_ref().into()), ocv_ret_name),
+			),
+			("catch", catch),
+			("attributes_end", attributes_end.into()),
+		]))
 	}
 }
 

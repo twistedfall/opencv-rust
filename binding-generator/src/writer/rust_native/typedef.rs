@@ -1,6 +1,6 @@
 use std::borrow::Cow;
+use std::collections::HashMap;
 
-use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::type_ref::{FishStyle, Kind, NameStyle};
@@ -52,12 +52,15 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 			format!("<{lifetimes}>")
 		};
 
-		TPL.interpolate(&hashmap! {
-			"doc_comment" => Cow::Owned(self.rendered_doc_comment(opencv_version)),
-			"debug" => get_debug(self).into(),
-			"rust_local" => self.rust_name(NameStyle::decl()),
-			"generic_args" => generic_args.into(),
-			"definition" => underlying_type.rust_name_ext(NameStyle::ref_(), Lifetime::explicit()),
-		})
+		TPL.interpolate(&HashMap::from([
+			("doc_comment", Cow::Owned(self.rendered_doc_comment(opencv_version))),
+			("debug", get_debug(self).into()),
+			("rust_local", self.rust_name(NameStyle::decl())),
+			("generic_args", generic_args.into()),
+			(
+				"definition",
+				underlying_type.rust_name_ext(NameStyle::ref_(), Lifetime::explicit()),
+			),
+		]))
 	}
 }
