@@ -1,6 +1,6 @@
 # Rust OpenCV bindings
 
-[![Github Actions](https://github.com/twistedfall/opencv-rust/workflows/opencv-rust/badge.svg)](https://github.com/twistedfall/opencv-rust/actions?query=workflow%3Aopencv-rust)
+[![Build status](https://github.com/twistedfall/opencv-rust/workflows/opencv-rust/badge.svg)](https://github.com/twistedfall/opencv-rust/actions/workflows/opencv-rust.yml)
 [![Documentation](https://docs.rs/opencv/badge.svg)](https://docs.rs/opencv)
 [![Package](https://img.shields.io/crates/v/opencv.svg)](https://crates.io/crates/opencv)
 
