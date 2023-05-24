@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -vex
+set -xeu
 
 # remove system vcpkg
 rm -rf "$VCPKG_INSTALLATION_ROOT"

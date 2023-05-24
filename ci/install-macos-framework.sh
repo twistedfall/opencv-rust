@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -vex
+set -xeu
 
 base_dir="$HOME/build/opencv/"
 mkdir -p "$base_dir"

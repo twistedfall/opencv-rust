@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -vex
+set -xeu
 
 sudo apt-get update
 sudo apt-get install -y clang libharfbuzz0b git curl zip unzip tar bison gperf libx11-dev libxft-dev libxext-dev \
@@ -25,6 +25,6 @@ echo "set(VCPKG_BUILD_TYPE release)" >> triplets/x64-linux.cmake
 export VCPKG_DEFAULT_TRIPLET=x64-linux
 #./vcpkg install llvm  # takes very long time
 # workaround to make clang_sys crate detect installed libclang
-sudo ln -s libclang.so.1 /usr/lib/llvm-10/lib/libclang.so
+sudo ln -fs libclang.so.1 /usr/lib/llvm-14/lib/libclang.so
 ./vcpkg install --recurse "opencv[contrib,nonfree]"
 popd

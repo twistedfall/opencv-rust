@@ -1,9 +1,9 @@
 #!/bin/bash
 
-set -vex
+set -xeu
 
-if [[ "$OPENCV_VERSION" == "4.2.0" ]]; then
-	rm -vf tests/*4_2_0_norun.rs
+if [[ "$OPENCV_VERSION" == "4.5.4" ]]; then
+	rm -vf tests/*4_5_4_norun.rs
 fi
 
 echo "=== Current directory: $(pwd)"

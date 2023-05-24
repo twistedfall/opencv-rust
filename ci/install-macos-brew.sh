@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -vex
+set -xeu
 
 brew -v update
 

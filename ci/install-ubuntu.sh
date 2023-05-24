@@ -1,14 +1,14 @@
 #!/bin/bash
 
-set -vex
+set -xeu
 
 sudo apt-get update
 
 sudo apt-get install -y clang
 # workaround to make clang_sys crate detect installed libclang
-sudo ln -fs libclang.so.1 /usr/lib/llvm-10/lib/libclang.so
+sudo ln -fs libclang.so.1 /usr/lib/llvm-14/lib/libclang.so
 
-if [[ "$OPENCV_VERSION" == "4.2.0" ]]; then
+if [[ "$OPENCV_VERSION" == "4.5.4" ]]; then
 	sudo apt-get -y install "libopencv-dev=${OPENCV_VERSION}*"
 	exit 0
 fi
@@ -147,11 +147,10 @@ else # dynamic build
 		libatlas3-base \
 		libavcodec58 \
 		libavformat58 \
-		libavresample4 \
-		libceres1 \
-		libdc1394-22 \
+		libceres2 \
+		libdc1394-25 \
 		libfreetype6 \
-		libgdal26 \
+		libgdal30 \
 		libgflags2.2 \
 		libgoogle-glog0v5 \
 		libgphoto2-6 \
@@ -161,27 +160,29 @@ else # dynamic build
 		libjpeg8 \
 		liblapacke \
 		liblept5 \
-		libopenexr24 \
+		libopenexr25 \
 		libpng16-16 \
-		libswscale5 \
-		libtbb2 \
-		libtesseract4 \
-		libvtk7.1 \
-		libwebp6 \
 		libqt5core5a \
 		libqt5gui5 \
 		libqt5opengl5 \
 		libqt5test5 \
-		libqt5widgets5
+		libqt5widgets5 \
+		libswscale5 \
+		libtbb2 \
+		libtesseract4 \
+		libvtk7.1p \
+		libwebp7
+
+	# need to do that separately to remove conflicting packages
+	sudo apt-get install libunwind-dev
 
 	# build deps
 	sudo apt-get -y install \
 		libatlas-base-dev \
 		libavcodec-dev \
 		libavformat-dev \
-		libavresample-dev \
 		libceres-dev \
-		libdc1394-22-dev \
+		libdc1394-dev \
 		libeigen3-dev \
 		libfreetype6-dev \
 		libgdal-dev \
@@ -197,7 +198,7 @@ else # dynamic build
 		libopenexr-dev \
 		libpng-dev \
 		libswscale-dev \
-		libtbb-dev \
+		libtbb2-dev \
 		libtesseract-dev \
 		libtiff-dev \
 		libvtk7-dev \

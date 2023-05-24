@@ -14,17 +14,17 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - ubuntu-20.04
-          - macos-11
+          - ubuntu-22.04
+          - macos-12
         version:
           - opencv: 3.4.19
           - opencv: 4.7.0
         exclude:
-          - os-image: macos-11
+          - os-image: macos-12
             version:
               opencv: 3.4.19
         include:
-          - os-image: ubuntu-20.04
+          - os-image: ubuntu-22.04
             version:
               opencv: 4.7.0-static
     runs-on: ${{ matrix.os-image }}
@@ -46,8 +46,7 @@ jobs:
         run: ci/install.sh
         shell: bash
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
 
       - name: Test project
         env:
@@ -60,7 +59,7 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - ubuntu-20.04
+          - ubuntu-22.04
           - windows-2022
         version:
           - vcpkg: 2023.02.24
@@ -82,8 +81,7 @@ jobs:
         run: ci/install.sh
         shell: bash
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
 
       - name: Test project
         env:
@@ -96,7 +94,7 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - macos-11
+          - macos-12
           - windows-2022
         version:
           - branch: 3.4
@@ -106,9 +104,9 @@ jobs:
             opencv: 4.6.0
             brew: "@4"
         include:
-          - os-image: ubuntu-20.04
+          - os-image: ubuntu-22.04
             version:
-              opencv: 4.2.0
+              opencv: 4.5.4
               brew: excluded
     runs-on: ${{ matrix.os-image }}
     env:
@@ -123,8 +121,7 @@ jobs:
         run: ci/install.sh
         shell: bash
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
 
       - name: Test project
         env:
@@ -133,21 +130,20 @@ jobs:
         shell: bash
 
   docs-rs:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
 
       - name: Run a documentation generation test
         run: ci/docs-rs.sh
         shell: bash
 
   msrv:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
-      OPENCV_VERSION: 4.2.0
+      OPENCV_VERSION: 4.5.4
     steps:
       - uses: actions/checkout@v3
 
@@ -161,8 +157,7 @@ jobs:
         id: metadata
         run: cargo metadata --no-deps --format-version 1 | jq -r '"msrv="+(.packages[]|select(.name=="opencv").rust_version)' >> $GITHUB_OUTPUT
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@master
+      - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ steps.metadata.outputs.msrv }}
 

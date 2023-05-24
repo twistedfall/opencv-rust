@@ -1,11 +1,11 @@
 #!/bin/bash
 
-set -vex
+set -xeu
 
 if [[ "$OS_FAMILY" == "Windows" ]]; then
 	export PATH="/C/Program Files/LLVM/bin:$PATH"
 	export LIBCLANG_PATH="/C/Program Files/LLVM/bin"
-	if [[ "$VCPKG_VERSION" != "" ]]; then # vcpkg build
+	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		export VCPKGRS_DYNAMIC=1
 		export VCPKG_ROOT="$HOME/build/vcpkg"
 		echo "=== Installed vcpkg packages:"
@@ -21,7 +21,7 @@ if [[ "$OS_FAMILY" == "Windows" ]]; then
 elif [[ "$OS_FAMILY" == "macOS" ]]; then
 	toolchain_path="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
 	export DYLD_FALLBACK_LIBRARY_PATH="$toolchain_path/usr/lib/"
-	if [[ "$BREW_OPENCV_VERSION" != "" ]]; then # brew build
+	if [[ "${BREW_OPENCV_VERSION:-}" != "" ]]; then # brew build
 		if [[ "$BREW_OPENCV_VERSION" == "@3" ]]; then
 			export CMAKE_PREFIX_PATH="$(echo /usr/local/Cellar/opencv@3/3.4.*)"
 		fi
@@ -34,7 +34,7 @@ elif [[ "$OS_FAMILY" == "macOS" ]]; then
 	echo "=== Installed brew packages:"
 	brew list --versions
 elif [[ "$OS_FAMILY" == "Linux" ]]; then
-	if [[ "$VCPKG_VERSION" != "" ]]; then # vcpkg build
+	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		export VCPKG_ROOT="$HOME/build/vcpkg"
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list
@@ -46,8 +46,8 @@ elif [[ "$OS_FAMILY" == "Linux" ]]; then
 	fi
 fi
 
-if [[ "$OPENCV_VERSION" == "4.2.0" || "$OPENCV_VERSION" == "3.4.16" ]]; then
-	rm -vf tests/*4_2_0_norun.rs
+if [[ "${OPENCV_VERSION:-}" == "4.5.4" || "${OPENCV_VERSION:-}" == "3.4.16" ]]; then
+	rm -vf tests/*4_5_4_norun.rs
 fi
 
 echo "=== Current directory: $(pwd)"

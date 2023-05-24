@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 
 branch="${1:-4}"
 

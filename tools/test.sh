@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 
 script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 cd "$script_dir/.."
