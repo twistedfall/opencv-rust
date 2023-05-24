@@ -1310,7 +1310,7 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 		(
 			"tracking",
 			ModuleTweak {
-				includes: vec!["tracking.hpp"],
+				includes: vec!["tracking.hpp", "tracking/tracking_legacy.hpp"],
 				..Default::default()
 			},
 		),
