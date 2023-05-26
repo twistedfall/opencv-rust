@@ -14,10 +14,6 @@ if [[ -d "$build_dir/opencv2.framework" ]]; then
 	exit 0
 fi
 
-brew -v update
-# cmake 3.25.0 installed by default has an issue which breaks the build of the OpenCV
-brew -v install cmake
-
 opencv_dist="$base_dir/opencv-$OPENCV_VERSION.tar.gz"
 if [ ! -f "$opencv_dist" ]; then
 	curl -L "https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz" -o "$opencv_dist"
