@@ -13,23 +13,23 @@ impl<'tu> EntityElement<'tu> for Entity<'tu> {
 
 impl Element for Entity<'_> {
 	fn is_system(&self) -> bool {
-		DefaultElement::is_system(self)
+		DefaultElement::is_system(self.entity())
 	}
 
 	fn is_public(&self) -> bool {
-		DefaultElement::is_public(self)
+		DefaultElement::is_public(self.entity())
 	}
 
-	fn usr(&self) -> Cow<str> {
-		DefaultElement::usr(self)
+	fn doc_comment(&self) -> Cow<str> {
+		self.get_comment().unwrap_or_default().into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self).into()
+		DefaultElement::cpp_namespace(self.entity()).into()
 	}
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
-		DefaultElement::cpp_name(self, style)
+		DefaultElement::cpp_name(self, self.entity(), style)
 	}
 }
 

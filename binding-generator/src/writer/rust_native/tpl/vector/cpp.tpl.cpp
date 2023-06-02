@@ -1,6 +1,5 @@
 extern "C" {
 	{{methods}}
-	{{exports}}
 }
 
 

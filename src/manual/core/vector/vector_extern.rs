@@ -194,15 +194,8 @@ macro_rules! vector_copy_non_bool {
 		$extern_clone: ident $(,)?
 	) => {
 		extern "C" {
-			fn $extern_clone<'a>(
-				instance: extern_send!($crate::core::Vector<$type>),
-	) -> extern_receive!($crate::core::Vector<$type>: 'a);
 			fn $extern_data_const(instance: extern_send!($crate::core::Vector<$type>)) -> *const $type;
 	fn $extern_data_mut(instance: extern_send!(mut $crate::core::Vector<$type>)) -> *mut $type;
-			fn $extern_from_slice<'a>(
-				data: *const $type,
-				len: $crate::platform_types::size_t,
-	) -> extern_receive!($crate::core::Vector<$type>: 'a);
 		}
 
 		impl $crate::core::Vector<$type>
@@ -211,7 +204,7 @@ macro_rules! vector_copy_non_bool {
 		{
 			#[inline]
 			unsafe fn extern_clone(&self) -> extern_receive!(Self) {
-				$extern_clone(self.as_raw())
+				sys::$extern_clone(self.as_raw())
 			}
 		}
 
@@ -248,7 +241,7 @@ macro_rules! vector_copy_non_bool {
 
 			#[inline]
 			unsafe fn extern_from_slice<'a>(data: *const $type, len: $crate::platform_types::size_t) -> extern_receive!(Self: 'a) {
-				$extern_from_slice(data, len)
+				sys::$extern_from_slice(data, len)
 			}
 		}
 	};

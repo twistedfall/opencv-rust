@@ -1,11 +1,12 @@
 use std::borrow::Cow;
+use std::fmt::Debug;
 
-use clang::EntityKind;
+use clang::{Entity, EntityKind};
 
 use crate::type_ref::FishStyle;
 use crate::{
-	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, EntityElement, GeneratedType, IteratorExt,
-	NameStyle, StrExt, StringExt,
+	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, StrExt,
+	StringExt,
 };
 
 use super::comment;
@@ -13,9 +14,8 @@ use super::comment;
 pub struct DefaultRustNativeElement;
 
 impl DefaultRustNativeElement {
-	pub fn rust_module<'tu>(this: &(impl EntityElement<'tu> + ?Sized)) -> Cow<str> {
-		let loc = this
-			.entity()
+	pub fn rust_module(entity: Entity) -> Cow<'static, str> {
+		let loc = entity
 			.get_location()
 			.expect("Can't get location")
 			.get_spelling_location()
@@ -25,12 +25,12 @@ impl DefaultRustNativeElement {
 		opencv_module_from_path(&loc).map_or_else(|| "core".into(), |x| x.to_string().into())
 	}
 
-	pub fn rust_namespace(this: &(impl RustElement + ?Sized)) -> Cow<str> {
+	pub fn rust_module_reference(this: &(impl RustElement + ?Sized)) -> Cow<str> {
 		let module = this.rust_module();
 		if settings::STATIC_MODULES.contains(module.as_ref()) {
 			module
 		} else {
-			format!("crate::{}", this.rust_module()).into()
+			format!("crate::{}", module).into()
 		}
 	}
 
@@ -38,14 +38,14 @@ impl DefaultRustNativeElement {
 		reserved_rename(this.cpp_name(CppNameStyle::Declaration).to_snake_case().into())
 	}
 
-	pub fn rust_name<'tu>(this: &(impl EntityElement<'tu> + RustElement + ?Sized), name_style: NameStyle) -> Cow<str> {
+	pub fn rust_name(this: &(impl RustElement + ?Sized), entity: Entity, name_style: NameStyle) -> String {
 		let mut parts = Vec::with_capacity(4);
 		parts.push(this.rust_leafname(name_style.turbo_fish_style()).into_owned());
-		let module = Self::rust_module(this);
-		let mut e = this.entity();
-		while let Some(parent) = e.get_semantic_parent() {
+		let mut entity = entity;
+		let module = Self::rust_module(entity);
+		while let Some(parent) = entity.get_semantic_parent() {
 			match parent.get_kind() {
-				EntityKind::ClassDecl | EntityKind::StructDecl => {
+				EntityKind::ClassDecl | EntityKind::StructDecl | EntityKind::ClassTemplate => {
 					let parent_name = parent.get_name().expect("Can't get parent name");
 					if parts.last().map_or(true, |last| last != &parent_name) {
 						parts.push(parent_name);
@@ -56,7 +56,7 @@ impl DefaultRustNativeElement {
 						parts.push(parent.get_name().expect("Can't get parent name"));
 					}
 				}
-				EntityKind::TranslationUnit | EntityKind::UnexposedDecl => {
+				EntityKind::TranslationUnit | EntityKind::UnexposedDecl | EntityKind::FunctionTemplate => {
 					break;
 				}
 				EntityKind::Namespace => {
@@ -75,30 +75,27 @@ impl DefaultRustNativeElement {
 						break;
 					}
 				}
-				EntityKind::Constructor
-				| EntityKind::FunctionTemplate
-				| EntityKind::FunctionDecl
-				| EntityKind::Method
-				| EntityKind::NotImplemented => {}
+				EntityKind::Constructor | EntityKind::FunctionDecl | EntityKind::Method | EntityKind::NotImplemented => {}
 				_ => {
-					unreachable!("Can't get kind of parent: {parent:#?} for element: {e:#?}")
+					unreachable!("Can't get kind of parent: {parent:#?} for element: {entity:#?}")
 				}
 			}
-			e = parent;
+			entity = parent;
 		}
 		let decl_name = parts.into_iter().rev().join("_");
 		match name_style {
-			NameStyle::Declaration => decl_name.into(),
+			NameStyle::Declaration => decl_name,
 			NameStyle::Reference(_) => {
-				let mut out = this.rust_namespace();
-				out.to_mut().extend_sep("::", &decl_name);
+				let mut out = this.rust_module_reference().into_owned();
+				out.extend_sep("::", &decl_name);
 				out
 			}
 		}
 	}
 
-	pub fn rendered_doc_comment_with_prefix<'tu>(this: &impl EntityElement<'tu>, prefix: &str, opencv_version: &str) -> String {
-		comment::render_doc_comment(&this.entity().get_comment().unwrap_or_default(), prefix, opencv_version)
+	pub fn rendered_doc_comment_with_prefix(entity: Entity, prefix: &str, opencv_version: &str) -> String {
+		let comment = entity.get_comment();
+		comment::render_doc_comment(comment.as_deref().unwrap_or(""), prefix, opencv_version)
 	}
 
 	pub fn rendered_doc_comment(this: &(impl RustElement + ?Sized), opencv_version: &str) -> String {
@@ -130,8 +127,8 @@ pub trait RustNativeGeneratedElement {
 pub trait RustElement: Element {
 	fn rust_module(&self) -> Cow<str>;
 
-	fn rust_namespace(&self) -> Cow<str> {
-		DefaultRustNativeElement::rust_namespace(self)
+	fn rust_module_reference(&self) -> Cow<str> {
+		DefaultRustNativeElement::rust_module_reference(self)
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str>;
@@ -145,6 +142,12 @@ pub trait RustElement: Element {
 	fn rendered_doc_comment(&self, opencv_version: &str) -> String {
 		DefaultRustNativeElement::rendered_doc_comment(self, opencv_version)
 	}
+}
+
+pub trait DebugRust {
+	type DebugType: Debug;
+
+	fn dbg_rust(self) -> Self::DebugType;
 }
 
 impl<'ne, 'tu: 'ne, 'ge: 'ne> AsRef<dyn RustNativeGeneratedElement + 'ne> for GeneratedType<'tu, 'ge> {

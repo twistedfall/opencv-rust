@@ -6,7 +6,7 @@ impl {{rust_full}} {
 }
 
 tuple_extern! { {{inner_rust_full}},
-	cv_{{rust_localalias}}_new, cv_{{rust_localalias}}_delete,
+	{{new_extern}}, {{delete_extern}},
 	{{getters}}
 }
 

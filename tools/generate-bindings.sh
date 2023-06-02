@@ -145,14 +145,14 @@ all_modules_34="aruco
 modules_34="${*:-$all_modules_34}"
 for module in $modules_4; do
 	rm -f "$OUT_DIR_4/$module.rs" "$OUT_DIR_4/$module.externs.rs" "$OUT_DIR_4/$module.cpp" "$OUT_DIR_4/ocvrs_ephemeral_$module.hpp"
-	rm -f "$OUT_DIR_4"/???-"$module"-*.type.cpp "$OUT_DIR_4"/???-"$module"-*.type.rs
+	rm -f "$OUT_DIR_4"/???-"$module"-*.type.cpp "$OUT_DIR_4"/???-"$module"-*.type.rs "$OUT_DIR_4"/???-"$module"-*.type.externs.rs
 done
 
 modules_4="${*:-$all_modules_4}"
 
 for module in $modules_34; do
 	rm -f "$OUT_DIR_34/$module.rs" "$OUT_DIR_34/$module.externs.rs" "$OUT_DIR_34/$module.cpp" "$OUT_DIR_34/ocvrs_ephemeral_$module.hpp"
-	rm -f "$OUT_DIR_34"/???-"$module"-*.type.cpp "$OUT_DIR_34"/???-"$module"-*.type.rs
+	rm -f "$OUT_DIR_34"/???-"$module"-*.type.cpp "$OUT_DIR_34"/???-"$module"-*.type.rs "$OUT_DIR_34"/???-"$module"-*.type.externs.rs
 done
 
 export OPENCV_BINDING_GENERATOR_EMIT_DEBUG=1

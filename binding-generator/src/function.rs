@@ -51,7 +51,7 @@ impl Element for Function<'_, '_> {
 		true
 	}
 
-	fn usr(&self) -> Cow<str> {
+	fn doc_comment(&self) -> Cow<str> {
 		"".into()
 	}
 

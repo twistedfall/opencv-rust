@@ -1,17 +1,13 @@
 use std::path::Path;
 
-use clang::{Entity, EntityKind, Type};
+use clang::{Entity, EntityKind};
 
-use crate::element::main_opencv_module_from_path;
 use crate::entity::WalkAction;
 
 #[allow(unused)]
 pub trait EntityWalkerVisitor<'tu> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		true
-	}
-	fn visit_resolve_type(&mut self, typ: Type<'tu>) -> WalkAction {
-		WalkAction::Continue
 	}
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction;
 }
@@ -23,22 +19,6 @@ pub struct EntityWalker<'tu> {
 impl<'tu> EntityWalker<'tu> {
 	pub fn new(root_entity: Entity<'tu>) -> Self {
 		Self { root_entity }
-	}
-
-	fn visit_resolve_types_namespace(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisitor<'tu>) -> WalkAction {
-		WalkAction::continue_until(ns.visit_children(|decl, _| {
-			let res = match decl.get_kind() {
-				EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
-					if let Some(typ) = decl.get_typedef_underlying_type() {
-						visitor.visit_resolve_type(typ)
-					} else {
-						WalkAction::Continue
-					}
-				}
-				_ => WalkAction::Continue,
-			};
-			res.into()
-		}))
 	}
 
 	fn visit_cv_namespace(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisitor<'tu>) -> WalkAction {
@@ -81,20 +61,8 @@ impl<'tu> EntityWalker<'tu> {
 					if visitor.wants_file(&file) {
 						match root_decl.get_kind() {
 							EntityKind::Namespace => {
-								if let Some(name) = root_decl.get_name() {
-									if name == "ocvrs_resolve_types" {
-										Self::visit_resolve_types_namespace(root_decl, &mut visitor)
-									} else if name.starts_with("cv") {
-										// + e.g. cvflann, cvv
-										// fixme: it should be possible to use opencv_module_from_path here,
-										// but it breaks module documentation generation
-										if main_opencv_module_from_path(&file).is_some() {
-											visitor.visit_entity(root_decl);
-										}
-										Self::visit_cv_namespace(root_decl, &mut visitor)
-									} else {
-										WalkAction::Continue
-									}
+								if root_decl.get_name().map_or(false, |name| name.starts_with("cv")) {
+									Self::visit_cv_namespace(root_decl, &mut visitor)
 								} else {
 									WalkAction::Continue
 								}

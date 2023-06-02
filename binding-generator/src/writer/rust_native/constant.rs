@@ -5,24 +5,25 @@ use clang::EntityKind;
 use once_cell::sync::Lazy;
 
 use crate::constant::ValueKind;
+use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{get_debug, settings, CompiledInterpolation, Const, CppNameStyle, Element, EntityElement, StrExt};
+use crate::{settings, CompiledInterpolation, Const, CppNameStyle, Element, EntityElement, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
 
 impl RustElement for Const<'_> {
 	fn rust_module(&self) -> Cow<str> {
-		DefaultRustNativeElement::rust_module(self)
+		DefaultRustNativeElement::rust_module(self.entity())
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		let mut out = DefaultRustNativeElement::rust_name(self, style);
+		let mut out = DefaultRustNativeElement::rust_name(self, self.entity(), style);
 		if let Some(without_suffix) = out.strip_suffix("_OCVRS_OVERRIDE") {
 			let new_len = without_suffix.len();
-			out.to_mut().truncate(new_len);
+			out.truncate(new_len);
 		}
-		out
+		out.into()
 	}
 
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
@@ -30,7 +31,7 @@ impl RustElement for Const<'_> {
 	}
 
 	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self.entity(), prefix, opencv_version)
 	}
 }
 
@@ -64,7 +65,7 @@ impl RustNativeGeneratedElement for Const<'_> {
 			};
 			RUST_TPL.interpolate(&HashMap::from([
 				("doc_comment", Cow::Owned(self.rendered_doc_comment(opencv_version))),
-				("debug", get_debug(self).into()),
+				("debug", self.get_debug().into()),
 				("name", name),
 				("type", typ.into()),
 				("value", value.to_string().into()),

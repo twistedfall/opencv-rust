@@ -6,7 +6,3 @@ const {{inner_cpp_extern_return}}* cv_{{rust_localalias}}_data(const {{cpp_full}
 	return instance->data();
 }
 
-{{cpp_extern_return}} cv_{{rust_localalias}}_from_slice(const {{inner_cpp_full}}* data, size_t len) {
-	return new {{cpp_full}}(data, data + len);
-}
-

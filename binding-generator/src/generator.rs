@@ -12,11 +12,12 @@ use dunce::canonicalize;
 use once_cell::sync::Lazy;
 
 use crate::entity::WalkAction;
-use crate::type_ref::{CppNameStyle, FishStyle, Kind as TypeRefKind};
+use crate::type_ref::{CppNameStyle, FishStyle};
+use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
 use crate::{
 	get_definition_text, line_reader, opencv_module_from_path, settings, Class, ClassSimplicity, CompiledInterpolation, Const,
-	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, FunctionTypeHint, GeneratorEnv, SmartPtr, StrExt, Tuple,
+	Element, EntityExt, EntityWalker, EntityWalkerVisitor, Enum, Func, GeneratorEnv, LineReaderAction, SmartPtr, StrExt, Tuple,
 	Typedef, Vector,
 };
 
@@ -86,19 +87,13 @@ impl<'m> EphemeralGenerator<'m> {
 			Lazy::new(|| include_str!("../tpl/ephemeral/ephemeral.tpl.hpp").compile_interpolation());
 
 		let mut includes = String::with_capacity(128);
-		let mut resolve_types = String::with_capacity(1024);
 		let mut generate_types: Vec<Cow<_>> = Vec::with_capacity(32);
 
-		let mut resolve_types_idx = 0usize;
 		let global_tweaks = settings::GENERATOR_MODULE_TWEAKS.get("*");
 		let module_tweaks = settings::GENERATOR_MODULE_TWEAKS.get(self.module);
 		for tweak in global_tweaks.iter().chain(module_tweaks.iter()) {
 			for &include in &tweak.includes {
 				writeln!(includes, "#include <opencv2/{include}>").expect("Can't fail");
-			}
-			for &res_type in &tweak.resolve_types {
-				writeln!(resolve_types, "typedef {res_type} ephem{resolve_types_idx};").expect("Can't fail");
-				resolve_types_idx += 1;
 			}
 			for &gen_type in &tweak.generate_types {
 				generate_types.push(gen_type.into());
@@ -135,7 +130,6 @@ impl<'m> EphemeralGenerator<'m> {
 
 		TPL.interpolate(&HashMap::from([
 			("includes", includes),
-			("resolve_types", resolve_types),
 			("generate_types", generate_types.join(",\n")),
 		]))
 	}
@@ -188,10 +182,8 @@ pub struct Generator {
 
 struct OpenCvWalker<'tu, 'r, V: GeneratorVisitor> {
 	opencv_module_header_dir: &'r Path,
-	module: &'r str,
 	visitor: V,
 	gen_env: GeneratorEnv<'tu>,
-	comment_found: bool,
 }
 
 impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_, V> {
@@ -201,22 +193,6 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
 		match entity.get_kind() {
-			EntityKind::Namespace => {
-				if !self.comment_found {
-					if let Some(c) = entity.get_comment() {
-						if c.contains("@defgroup") {
-							if let Some(entity_file) = entity.get_location().and_then(|loc| loc.get_file_location().file) {
-								if !settings::IGNORE_CLANG_MODULE_COMMENT.contains(self.module)
-									&& opencv_module_from_path(&entity_file.get_path()).map_or(false, |m| m == self.module)
-								{
-									self.comment_found = true;
-									self.visitor.visit_module_comment(c)
-								}
-							}
-						}
-					}
-				}
-			}
 			EntityKind::MacroDefinition => self.process_const(entity),
 			EntityKind::MacroExpansion => {
 				if let Some(name) = entity.get_name() {
@@ -280,19 +256,17 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 }
 
 impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
-	pub fn new(opencv_module_header_dir: &'r Path, module: &'r str, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
+	pub fn new(opencv_module_header_dir: &'r Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
 		Self {
 			opencv_module_header_dir,
-			module,
 			visitor,
 			gen_env,
-			comment_found: false,
 		}
 	}
 
 	fn process_const(&mut self, const_decl: Entity) {
 		let cnst = Const::new(const_decl);
-		if !cnst.is_excluded() {
+		if cnst.exclude_kind().is_included() {
 			self.visitor.visit_const(cnst);
 		}
 	}
@@ -300,7 +274,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 	fn process_class(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, class_decl: Entity<'tu>) {
 		if gen_env.get_export_config(class_decl).is_some() {
 			let cls = Class::new(class_decl, gen_env);
-			if !cls.is_excluded() {
+			if cls.exclude_kind().is_included() {
 				cls.generated_types().into_iter().for_each(|dep| {
 					visitor.visit_generated_type(dep);
 				});
@@ -320,10 +294,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 					WalkAction::Continue
 				});
 				class_decl.walk_typedefs_while(|tdef| {
-					let typedef = Typedef::new(tdef, gen_env);
-					if !typedef.is_excluded() {
-						visitor.visit_typedef(typedef);
-					}
+					Self::process_typedef(visitor, gen_env, tdef);
 					WalkAction::Continue
 				});
 				let cls = Class::new(class_decl, gen_env);
@@ -334,9 +305,9 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 
 	fn process_enum(visitor: &mut V, enum_decl: Entity) {
 		let enm = Enum::new(enum_decl);
-		if !enm.is_excluded() {
+		if enm.exclude_kind().is_included() {
 			for cnst in enm.consts() {
-				if !cnst.is_excluded() {
+				if cnst.exclude_kind().is_included() {
 					visitor.visit_const(cnst);
 				}
 			}
@@ -349,54 +320,57 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 	fn process_func(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
 		if let Some(e) = gen_env.get_export_config(func_decl) {
 			let func = Func::new(func_decl, gen_env);
-			if !func.is_excluded() {
-				let specs = settings::FUNC_SPECIALIZE.get(func.identifier().as_ref()).map_or_else(
-					|| vec![FunctionTypeHint::None],
-					|specs| specs.iter().map(FunctionTypeHint::Specialized).collect::<Vec<_>>(),
-				);
-				for type_hint in specs {
-					let mut name_hint = None;
-					if !e.only_generated_types {
-						let mut name = Func::new_ext(func_decl, type_hint, None, gen_env)
-							.rust_leafname(FishStyle::No)
-							.into_owned()
-							.into();
-						gen_env.func_names.make_unique_name(&mut name);
-						if let Cow::Owned(name) = name {
-							name_hint = Some(name);
+			if func.exclude_kind().is_included() {
+				let identifier = func.identifier();
+				let mut processor = |spec| {
+					let func = if e.only_generated_types {
+						Func::new(func_decl, gen_env)
+					} else {
+						let mut name = Func::new(func_decl, gen_env).rust_leafname(FishStyle::No).into_owned().into();
+						let mut custom_rust_leafname = None;
+						if gen_env.func_names.make_unique_name(&mut name).is_changed() {
+							custom_rust_leafname = Some(name.into());
 						}
-					}
-					let func = Func::new_ext(func_decl, type_hint, name_hint, gen_env);
+						Func::new_ext(func_decl, custom_rust_leafname, gen_env)
+					};
+					let func = if let Some(spec) = spec {
+						func.specialize(spec)
+					} else {
+						func
+					};
 					func.generated_types().into_iter().for_each(|dep| {
 						visitor.visit_generated_type(dep);
 					});
 					if !e.only_generated_types {
 						visitor.visit_func(func);
 					}
+				};
+				if let Some(specs) = settings::FUNC_SPECIALIZE.get(identifier.as_str()) {
+					for spec in specs {
+						processor(Some(spec));
+					}
+				} else {
+					processor(None);
 				}
 			}
 		}
 	}
 
 	fn process_typedef(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, typedef_decl: Entity<'tu>) {
-		let typedef = Typedef::new(typedef_decl, gen_env);
-		let type_ref = typedef.type_ref();
-		match type_ref.kind() {
-			TypeRefKind::Class(..) => Self::process_class(visitor, gen_env, typedef_decl),
-			TypeRefKind::Enum(..) => Self::process_enum(visitor, typedef_decl),
-			_ => {
-				if !typedef.is_excluded() {
+		let typedef = Typedef::try_new(typedef_decl, gen_env);
+		if typedef.exclude_kind().is_included() {
+			match typedef {
+				NewTypedefResult::Typedef(typedef) => {
+					let type_ref = typedef.type_ref();
 					let export = gen_env.get_export_config(typedef_decl).is_some()
 						// we need to have a typedef even if it's not exported for e.g. cv::Size
 						|| type_ref.is_data_type()
 						|| {
 						let underlying_type = typedef.underlying_type_ref();
 						underlying_type.as_function().is_some()
-							|| !underlying_type.is_excluded()
-							|| underlying_type.as_template_specialization().map_or(false, |templ| {
-							let cpp_refname = templ.cpp_name(CppNameStyle::Reference);
-							settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
-								|| settings::IMPLEMENTED_CONST_GENERICS.contains(cpp_refname.as_ref())
+							|| !underlying_type.exclude_kind().is_ignored()
+							|| underlying_type.template_kind().as_template_specialization().map_or(false, |templ| {
+							settings::IMPLEMENTED_GENERICS.contains(templ.cpp_name(CppNameStyle::Reference).as_ref())
 						})
 					};
 
@@ -408,6 +382,9 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						visitor.visit_typedef(typedef)
 					}
 				}
+				NewTypedefResult::Class(_) | NewTypedefResult::Enum(_) => {
+					// don't generate those because libclang will also emit normal classes and enums too
+				}
 			}
 		}
 	}
@@ -415,41 +392,41 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 
 impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 	fn drop(&mut self) {
-		if !self.comment_found {
-			// some module level comments like "bioinspired" are not attached to anything and libclang
-			// doesn't seem to offer a way to extract them, do it the hard way then
-			let mut comment = String::with_capacity(2048);
-			let module_path = self.opencv_module_header_dir.join(format!("{}.hpp", self.gen_env.module()));
-			let f = BufReader::new(File::open(module_path).expect("Can't open main module file"));
-			let mut found_module_comment = false;
-			let mut defgroup_found = false;
-			line_reader(f, |line| {
-				if !found_module_comment && line.trim_start().starts_with("/**") {
-					found_module_comment = true;
-					defgroup_found = false;
-				}
-				if found_module_comment {
-					if comment.contains("@defgroup") {
-						defgroup_found = true;
-					}
-					comment.push_str(line);
-					if line.trim_end().ends_with("*/") {
-						if defgroup_found {
-							return false;
-						} else {
-							comment.clear();
-							found_module_comment = false;
-						}
-					}
-				}
-				true
-			});
-			if !defgroup_found {
-				comment.clear();
+		// Some module level comments like "bioinspired" are not attached to anything and libclang
+		// doesn't seem to offer a way to extract them, do it the hard way then.
+		// That's actually the case for all modules starting with OpenCV 4.8.0 so this is now a single
+		// method of extracting comments
+		let mut comment = String::with_capacity(2048);
+		let module_path = self.opencv_module_header_dir.join(format!("{}.hpp", self.gen_env.module()));
+		let f = BufReader::new(File::open(module_path).expect("Can't open main module file"));
+		let mut found_module_comment = false;
+		let mut defgroup_found = false;
+		line_reader(f, |line| {
+			if !found_module_comment && line.trim_start().starts_with("/**") {
+				found_module_comment = true;
+				defgroup_found = false;
 			}
 			if found_module_comment {
-				self.visitor.visit_module_comment(comment);
+				if comment.contains("@defgroup") {
+					defgroup_found = true;
+				}
+				comment.push_str(line);
+				if line.trim_end().ends_with("*/") {
+					if defgroup_found {
+						return LineReaderAction::Break;
+					} else {
+						comment.clear();
+						found_module_comment = false;
+					}
+				}
 			}
+			LineReaderAction::Continue
+		});
+		if !defgroup_found {
+			comment.clear();
+		}
+		if found_module_comment {
+			self.visitor.visit_module_comment(comment);
 		}
 	}
 }
@@ -554,7 +531,7 @@ impl Generator {
 			let root_entity = root_tu.get_entity();
 			visitor.visit_ephemeral_header(ephemeral_header);
 			let gen_env = GeneratorEnv::new(root_entity, module);
-			let opencv_walker = OpenCvWalker::new(&self.opencv_module_header_dir, module, visitor, gen_env);
+			let opencv_walker = OpenCvWalker::new(&self.opencv_module_header_dir, visitor, gen_env);
 			let walker = EntityWalker::new(root_entity);
 			walker.walk_opencv_entities(opencv_walker);
 		});

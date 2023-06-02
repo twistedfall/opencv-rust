@@ -17,19 +17,17 @@
 use std::borrow::Cow;
 use std::fs::File;
 use std::io::{BufRead, Read, Seek, SeekFrom};
-use std::{env, fmt};
 
 use clang::Entity;
-use dunce::canonicalize;
-use once_cell::sync::Lazy;
 
+use crate::debug::NameDebug;
 pub use class::Class;
 pub use constant::Const;
 pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Element, EntityElement};
 pub use entity::{EntityExt, WalkAction, WalkResult};
 pub use enumeration::Enum;
 use field::{Field, FieldTypeHint};
-pub use func::{Func, FuncId, FunctionTypeHint};
+pub use func::{Func, FuncId, FuncTypeHint};
 use function::Function;
 #[allow(unused)]
 use generator::{dbg_clang_entity, dbg_clang_type};
@@ -50,6 +48,7 @@ pub use walker::{EntityWalker, EntityWalkerVisitor};
 mod class;
 pub mod comment;
 mod constant;
+mod debug;
 mod element;
 mod entity;
 mod enumeration;
@@ -74,12 +73,6 @@ mod vector;
 mod walker;
 pub mod writer;
 
-static EMIT_DEBUG: Lazy<bool> = Lazy::new(|| {
-	env::var("OPENCV_BINDING_GENERATOR_EMIT_DEBUG")
-		.map(|v| v == "1")
-		.unwrap_or(false)
-});
-
 fn get_definition_text(entity: Entity) -> String {
 	if let Some(range) = entity.get_range() {
 		let loc = range.get_start().get_spelling_location();
@@ -95,27 +88,6 @@ fn get_definition_text(entity: Entity) -> String {
 	}
 }
 
-fn get_debug<'tu>(e: &(impl EntityElement<'tu> + fmt::Display)) -> String {
-	if *EMIT_DEBUG {
-		let loc = e
-			.entity()
-			.get_location()
-			.expect("Can't get entity location")
-			.get_file_location();
-
-		format!(
-			"// {} {}:{}",
-			e,
-			canonicalize(loc.file.expect("Can't get file for debug").get_path())
-				.expect("Can't canonicalize path")
-				.display(),
-			loc.line
-		)
-	} else {
-		"".to_string()
-	}
-}
-
 fn reserved_rename(val: Cow<str>) -> Cow<str> {
 	if let Some(&v) = settings::RESERVED_RENAME.get(val.as_ref()) {
 		v.into()
@@ -124,14 +96,19 @@ fn reserved_rename(val: Cow<str>) -> Cow<str> {
 	}
 }
 
+pub enum LineReaderAction {
+	Continue,
+	Break,
+}
+
 #[inline(always)]
-pub fn line_reader(mut b: impl BufRead, mut cb: impl FnMut(&str) -> bool) {
+pub fn line_reader(mut b: impl BufRead, mut cb: impl FnMut(&str) -> LineReaderAction) {
 	let mut line = String::with_capacity(256);
 	while let Ok(bytes_read) = b.read_line(&mut line) {
 		if bytes_read == 0 {
 			break;
 		}
-		if !cb(&line) {
+		if matches!(cb(&line), LineReaderAction::Break) {
 			break;
 		}
 		line.clear();

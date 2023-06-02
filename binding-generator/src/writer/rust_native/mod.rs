@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::HashMap;
 use std::fmt::Debug;
 use std::fs::{File, OpenOptions};
 use std::io::{ErrorKind, Write};
@@ -10,6 +10,7 @@ use once_cell::sync::Lazy;
 
 use class::ClassExt;
 use element::{RustElement, RustNativeGeneratedElement};
+pub use string_ext::RustStringExt;
 
 use crate::field::Field;
 use crate::name_pool::NamePool;
@@ -26,17 +27,17 @@ pub mod element;
 mod enumeration;
 mod field;
 mod func;
-mod func_desc;
 mod function;
 pub mod renderer;
 mod smart_ptr;
+mod string_ext;
 mod tuple;
 pub mod type_ref;
 mod typedef;
 mod vector;
 
 type Entries = Vec<(String, String)>;
-type UniqueEntries = BTreeMap<String, String>;
+type UniqueEntries = HashMap<String, String>;
 
 #[derive(Clone, Debug)]
 pub struct RustNativeBindingWriter<'s> {
@@ -87,7 +88,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 			consts: vec![],
 			enums: vec![],
 			rust_funcs: vec![],
-			rust_typedefs: Some(BTreeMap::new()),
+			rust_typedefs: Some(UniqueEntries::new()),
 			rust_classes: vec![],
 			export_funcs: vec![],
 			export_classes: vec![],
@@ -137,7 +138,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 
 	fn visit_func(&mut self, func: Func) {
 		self.emit_debug_log(&func);
-		let name: String = func.identifier().into_owned();
+		let name = func.identifier();
 		self.rust_funcs.push((name.clone(), func.gen_rust(self.opencv_version)));
 		self.export_funcs.push((name.clone(), func.gen_rust_exports()));
 		self.cpp_funcs.push((name, func.gen_cpp()));
@@ -181,52 +182,36 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		let prio = typ.element_order();
 		let safe_id = typ.element_safe_id();
 
-		let suffix = ".type.rs";
-		let mut file_name = format!("{prio:03}-{safe_id}");
-		ensure_filename_length(&mut file_name, suffix.len());
-		file_name.push_str(suffix);
-		let path = self.types_dir.join(file_name);
-		let file = OpenOptions::new().create_new(true).write(true).open(&path);
-		match file {
-			Ok(mut file) => {
-				let gen = typ.gen_rust(self.opencv_version);
-				if !gen.is_empty() {
-					file.write_all(gen.as_bytes()).expect("Can't write to rust file");
-				} else {
-					drop(file);
-					fs::remove_file(&path).expect("Can't remove empty file");
+		fn write_generated_type(types_dir: &Path, typ: &str, prio: u8, safe_id: &str, generator: impl FnOnce() -> String) {
+			let suffix = format!(".type.{typ}");
+			let mut file_name = format!("{prio:03}-{safe_id}");
+			ensure_filename_length(&mut file_name, suffix.len());
+			file_name.push_str(&suffix);
+			let path = types_dir.join(file_name);
+			let file = OpenOptions::new().create_new(true).write(true).open(&path);
+			match file {
+				Ok(mut file) => {
+					let gen = generator();
+					if !gen.is_empty() {
+						file
+							.write_all(gen.as_bytes())
+							.unwrap_or_else(|e| panic!("Can't write to {typ} file: {e}"));
+					} else {
+						drop(file);
+						fs::remove_file(&path).expect("Can't remove empty file");
+					}
 				}
-			}
-			Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ }
-			Err(e) if e.kind() == ErrorKind::PermissionDenied => { /* happens sporadically on Windows */ }
-			Err(e) => {
-				panic!("Error while creating file for rust generated type: {e}")
+				Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ }
+				Err(e) if e.kind() == ErrorKind::PermissionDenied => { /* happens sporadically on Windows */ }
+				Err(e) => {
+					panic!("Error while creating file for {typ} generated type: {e}")
+				}
 			}
 		}
 
-		let suffix = ".type.cpp";
-		let mut filename = format!("{prio:03}-{safe_id}");
-		ensure_filename_length(&mut filename, suffix.len());
-		filename.push_str(suffix);
-
-		let path = self.types_dir.join(filename);
-		let file = OpenOptions::new().create_new(true).write(true).open(&path);
-		match file {
-			Ok(mut file) => {
-				let gen = typ.gen_cpp();
-				if !gen.is_empty() {
-					file.write_all(gen.as_bytes()).expect("Can't write to cpp file");
-				} else {
-					drop(file);
-					fs::remove_file(&path).expect("Can't remove empty file");
-				}
-			}
-			Err(e) if e.kind() == ErrorKind::AlreadyExists => { /* expected, we need to exclusively create file */ }
-			Err(e) if e.kind() == ErrorKind::PermissionDenied => { /* happens sporadically on Windows */ }
-			Err(e) => {
-				panic!("Error while creating file for cpp generated type: {e}")
-			}
-		}
+		write_generated_type(&self.types_dir, "rs", prio, &safe_id, || typ.gen_rust(self.opencv_version));
+		write_generated_type(&self.types_dir, "externs.rs", prio, &safe_id, || typ.gen_rust_exports());
+		write_generated_type(&self.types_dir, "cpp", prio, &safe_id, || typ.gen_cpp());
 	}
 
 	fn visit_ephemeral_header(&mut self, contents: &str) {
@@ -260,22 +245,19 @@ impl Drop for RustNativeBindingWriter<'_> {
 		let mut typedefs = self
 			.rust_typedefs
 			.take()
-			.map(|typedefs| typedefs.into_iter().collect())
-			.unwrap_or_default();
+			.map_or(vec![], |typedefs| typedefs.into_iter().collect());
 		rust += &join(&mut typedefs);
 		rust += &join(&mut self.rust_funcs);
 		rust += &join(&mut self.rust_classes);
 		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("traits", self.prelude_traits.join(", "))]));
+		let comment = comment::render_doc_comment(&self.comment, "//!", self.opencv_version);
 		File::create(&self.rust_path)
 			.expect("Can't create rust file")
 			.write_all(
 				RUST
 					.interpolate(&HashMap::from([
 						("static_modules", settings::STATIC_MODULES.iter().join(", ")),
-						(
-							"comment",
-							comment::render_doc_comment(&self.comment, "//!", self.opencv_version),
-						),
+						("comment", comment),
 						("prelude", prelude),
 						("code", rust),
 					]))
@@ -324,14 +306,15 @@ fn ensure_filename_length(file_name: &mut String, reserve: usize) {
 	}
 }
 
-fn rust_disambiguate_names<'tu, 'ge, I: IntoIterator<Item = Field<'tu, 'ge>>>(
-	args: I,
+fn rust_disambiguate_names<'tu, 'ge>(
+	args: impl IntoIterator<Item = Field<'tu, 'ge>>,
 ) -> impl Iterator<Item = (String, Field<'tu, 'ge>)>
 where
 	'tu: 'ge,
 {
 	let args = args.into_iter();
-	NamePool::with_capacity(args.size_hint().1.unwrap_or_default()).into_disambiguator(args, |f| f.rust_leafname(FishStyle::No))
+	let size_hint = args.size_hint();
+	NamePool::with_capacity(size_hint.1.unwrap_or(size_hint.0)).into_disambiguator(args, |f| f.rust_leafname(FishStyle::No))
 }
 
 pub fn disambiguate_single_name(name: &str) -> impl Iterator<Item = String> + '_ {

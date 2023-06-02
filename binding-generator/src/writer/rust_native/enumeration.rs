@@ -3,19 +3,20 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
+use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{get_debug, CompiledInterpolation, CppNameStyle, Element, Enum, StrExt};
+use crate::{CompiledInterpolation, CppNameStyle, Element, EntityElement, Enum, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
 
 impl RustElement for Enum<'_> {
 	fn rust_module(&self) -> Cow<str> {
-		DefaultRustNativeElement::rust_module(self)
+		DefaultRustNativeElement::rust_module(self.entity())
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultRustNativeElement::rust_name(self, style)
+		DefaultRustNativeElement::rust_name(self, self.entity(), style).into()
 	}
 
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
@@ -23,7 +24,7 @@ impl RustElement for Enum<'_> {
 	}
 
 	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self.entity(), prefix, opencv_version)
 	}
 }
 
@@ -69,7 +70,7 @@ impl RustNativeGeneratedElement for Enum<'_> {
 			.collect::<Vec<_>>();
 		ENUM_TPL.interpolate(&HashMap::from([
 			("doc_comment", self.rendered_doc_comment(opencv_version).into()),
-			("debug", get_debug(self).into()),
+			("debug", self.get_debug().into()),
 			("rust_local", self.rust_name(NameStyle::decl())),
 			("rust_full", self.rust_name(NameStyle::ref_())),
 			("consts", consts.join("").into()),

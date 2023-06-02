@@ -5,6 +5,8 @@ use std::iter;
 use once_cell::sync::Lazy;
 use regex::{CaptureLocations, Regex};
 
+use crate::CppNameStyle;
+
 pub trait StringExt {
 	fn replacen_in_place(&mut self, from: &str, limit: usize, to: &str) -> bool;
 	fn replace_in_place(&mut self, from: &str, to: &str) -> bool;
@@ -369,8 +371,13 @@ pub trait StrExt {
 	fn compile_interpolation(&self) -> CompiledInterpolation;
 	fn trim_start_idx(&self) -> usize;
 	fn trim_end_idx(&self) -> usize;
+	/// For `cv::rapid::Rapid` returns `Rapid`
 	fn localname(&self) -> &str;
+	/// For `cv::rapid::Rapid` returns `cv::rapid`
 	fn namespace(&self) -> &str;
+	/// For `crate::rapid::Rapid` and `rapid::Rapid` returns `rapid`
+	fn module(&self) -> &str;
+	fn cpp_name_from_fullname(&self, style: CppNameStyle) -> &str;
 }
 
 impl StrExt for str {
@@ -410,11 +417,10 @@ impl StrExt for str {
 			.char_indices()
 			.take_while(|&(_, c)| c == ' ' || c == '\t')
 			.last()
-			.map(|(idx, chr)| Indent {
+			.map_or_else(Indent::default, |(idx, chr)| Indent {
 				len: idx + 1,
 				symbol: chr,
 			})
-			.unwrap_or_default()
 	}
 
 	fn compile_interpolation(&self) -> CompiledInterpolation {
@@ -482,19 +488,26 @@ impl StrExt for str {
 	}
 
 	fn localname(&self) -> &str {
-		const SEP: &str = "::";
-		if let Some(idx) = self.rfind(SEP) {
-			&self[idx + SEP.len()..]
-		} else {
-			self
-		}
+		self.rsplit("::").next().unwrap_or(self)
 	}
 
 	fn namespace(&self) -> &str {
-		if let Some(idx) = self.rfind("::") {
-			&self[..idx]
-		} else {
-			self
+		self.rsplit_once("::").map_or(self, |(left, _right)| left)
+	}
+
+	fn module(&self) -> &str {
+		self
+			.strip_prefix("crate::")
+			.unwrap_or(self)
+			.split("::")
+			.next()
+			.unwrap_or(self)
+	}
+
+	fn cpp_name_from_fullname(&self, style: CppNameStyle) -> &str {
+		match style {
+			CppNameStyle::Declaration => self.localname(),
+			CppNameStyle::Reference => self,
 		}
 	}
 }

@@ -3,23 +3,24 @@ use std::collections::{HashMap, HashSet};
 
 use once_cell::sync::Lazy;
 
+use crate::class::ClassDesc;
+use crate::field::{Field, FieldDesc};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::type_ref::{Constness, FishStyle};
-use crate::writer::rust_native::func_desc::FuncDescReturn;
-use crate::{CompiledInterpolation, CppNameStyle, FunctionTypeHint, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
+use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 
 use super::disambiguate_single_name;
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
 impl RustElement for Tuple<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
-		DefaultRustNativeElement::rust_module(self)
+		DefaultRustNativeElement::rust_module(self.entity())
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultRustNativeElement::rust_name(self, style)
+		DefaultRustNativeElement::rust_name(self, self.entity(), style).into()
 	}
 
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
@@ -32,7 +33,7 @@ impl RustElement for Tuple<'_, '_> {
 	}
 
 	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self.entity(), prefix, opencv_version)
 	}
 }
 
@@ -44,31 +45,35 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 	fn gen_rust(&self, _opencv_version: &str) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/rust.tpl.rs").compile_interpolation());
 
+		let type_ref = self.type_ref();
 		let rust_localalias = self.rust_localalias();
+		let elements = self.elements();
+		let tuple_desc = tuple_class(&type_ref);
 
 		let mut rets = disambiguate_single_name("arg");
 
-		let getters = self
-			.elements()
-			.into_iter()
+		let getters = elements
+			.iter()
 			.enumerate()
-			.map(|(i, typ)| {
+			.map(|(num, typ)| {
 				let ret_name = rets.next().expect("Endless iterator");
+				let get_extern = method_get(&rust_localalias, tuple_desc.clone(), typ.clone(), num).identifier();
 				format!(
-					"{num} = {ret_name}: {typ}, get_{num} via cv_{alias}_get_{num}",
-					num = i,
-					ret_name = ret_name,
+					"{num} = {ret_name}: {typ}, get_{num} via {get_extern}",
 					typ = typ.rust_name(NameStyle::ref_()),
-					alias = rust_localalias,
 				)
 			})
 			.join(",\n");
+		let new_extern = method_new(&rust_localalias, type_ref, &elements).identifier();
+		let delete_extern = FuncDesc::method_delete(&rust_localalias, tuple_desc).identifier();
 
 		RUST_TPL.interpolate(&HashMap::from([
 			("rust_localalias", rust_localalias),
 			("rust_full", self.rust_name(NameStyle::ref_())),
 			("inner_rust_full", self.rust_inner().into()),
 			("getters", getters.into()),
+			("new_extern", new_extern.into()),
+			("delete_extern", delete_extern.into()),
 		]))
 	}
 
@@ -76,22 +81,16 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		static CPP_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/cpp.tpl.cpp").compile_interpolation());
 
 		let type_ref = self.type_ref();
-
 		let rust_localalias = self.rust_localalias();
 		let elements = self.elements();
-		let tuple_desc = ClassDesc {
-			is_boxed: true,
-			cpp_name_ref: type_ref.cpp_name(CppNameStyle::Reference).into_owned(),
-		};
-		let void = self.gen_env.resolve_typeref("void");
-		let mut methods = vec![
-			method_new(&rust_localalias, &type_ref, self.tuple_type, &elements),
-			method_delete(&rust_localalias, &tuple_desc, &void),
-		];
+		let tuple_desc = tuple_class(&type_ref);
 
+		let mut methods = Vec::with_capacity(elements.len() + 2);
+		methods.push(method_new(&rust_localalias, type_ref, &elements).gen_cpp());
 		for (i, typ) in elements.into_iter().enumerate() {
-			methods.push(method_get(&rust_localalias, &tuple_desc, &typ, i));
+			methods.push(method_get(&rust_localalias, tuple_desc.clone(), typ, i).gen_cpp());
 		}
+		methods.push(FuncDesc::method_delete(&rust_localalias, tuple_desc).gen_cpp());
 
 		CPP_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
 	}
@@ -150,57 +149,45 @@ impl TupleExt for Tuple<'_, '_> {
 	}
 }
 
-fn method_new(rust_localalias: &str, tuple_typeref: &TypeRef, tuple_type: &str, elements: &[TypeRef]) -> String {
+fn tuple_class<'tu, 'ge>(typle_type_ref: &TypeRef<'tu, 'ge>) -> Class<'tu, 'ge> {
+	Class::new_desc(ClassDesc::boxed(typle_type_ref.cpp_name(CppNameStyle::Reference), "<unused>"))
+}
+
+fn method_new<'tu, 'ge>(
+	rust_localalias: &str,
+	tuple_typeref: TypeRef<'tu, 'ge>,
+	elements: &[TypeRef<'tu, 'ge>],
+) -> Func<'tu, 'ge> {
 	let arguments = disambiguate_single_name("arg")
 		.zip(elements.iter())
-		.map(|(arg_name, type_ref)| (arg_name, type_ref.clone()))
-		.collect();
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_new").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: tuple_typeref.clone(),
-		kind: FuncDescKind::Function,
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall(format!("std::make_{tuple_type}({{{{args}}}})").compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
+		.map(|(arg_name, type_ref)| Field::new_desc(FieldDesc::new(arg_name, type_ref.clone())))
+		.collect::<Vec<_>>();
+	Func::new_desc(FuncDesc::new(
+		FuncKind::Constructor(tuple_class(&tuple_typeref)),
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::new"),
+		"<unused>",
 		arguments,
-	}
-	.gen_cpp()
+		FuncCppBody::Auto,
+		tuple_typeref,
+	))
 }
 
-fn method_delete(rust_localalias: &str, tuple_desc: &ClassDesc, void: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_delete").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(tuple_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
-}
-
-fn method_get(rust_localalias: &str, tuple_desc: &ClassDesc, element_type: &TypeRef, num: usize) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_get_{num}").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: false,
-		return_type: element_type.clone(),
-		kind: FuncDescKind::InstanceMethod(tuple_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall(format!("std::get<{num}>(*instance)").compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_get<'tu, 'ge>(
+	rust_localalias: &str,
+	tuple_desc: Class<'tu, 'ge>,
+	element_type: TypeRef<'tu, 'ge>,
+	num: usize,
+) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(tuple_desc),
+		Constness::Const,
+		ReturnKind::InfallibleViaArg,
+		format!("cv::{rust_localalias}::get_{num}"),
+		"<unused>",
+		vec![],
+		FuncCppBody::ManualCall(format!("std::get<{num}>(*instance)").into()),
+		element_type.clone(),
+	))
 }

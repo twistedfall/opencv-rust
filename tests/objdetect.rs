@@ -12,6 +12,7 @@ fn qr_code() -> Result<()> {
 	let objdetect_missing_quirc = cfg!(target_os = "linux") && core::get_build_information()?.contains("/opencv-4.5.4+dfsg/");
 
 	{
+		#[allow(unused_mut)]
 		let mut detector = objdetect::QRCodeDetector::default()?;
 		let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
 		let mut pts = VectorOfPoint::new();
@@ -28,6 +29,7 @@ fn qr_code() -> Result<()> {
 	}
 
 	{
+		#[allow(unused_mut)]
 		let mut detector = objdetect::QRCodeDetector::default()?;
 		let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
 		let mut pts = VectorOfPoint::new();
@@ -48,6 +50,7 @@ fn qr_code() -> Result<()> {
 	let binary_qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr-binary.png");
 
 	{
+		#[allow(unused_mut)]
 		let mut detector = objdetect::QRCodeDetector::default()?;
 		let src = imgcodecs::imread(binary_qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
 		let mut pts = VectorOfPoint::new();

@@ -3,7 +3,7 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::{env, fmt, mem};
 
-use clang::{Entity, EntityKind, Type};
+use clang::{Entity, EntityKind};
 
 use opencv_binding_generator::{
 	opencv_module_from_path, settings, Class, CppNameStyle, Element, EntityExt, EntityWalker, EntityWalkerVisitor, Func, FuncId,
@@ -26,14 +26,14 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 		let func_id = f.func_id();
 		let cpp_refname = f.cpp_name(CppNameStyle::Reference);
 
-		self.func_rename_unused.borrow_mut().remove(identifier.as_ref());
-		self.func_cfg_attr_unused.borrow_mut().remove(identifier.as_ref());
+		self.func_rename_unused.borrow_mut().remove(identifier.as_str());
+		self.func_cfg_attr_unused.borrow_mut().remove(identifier.as_str());
 		{
 			let static_func_id: FuncId<'static> = unsafe { mem::transmute(func_id) };
 			self.func_unsafe_unused.borrow_mut().remove(&static_func_id);
 		}
-		self.func_manual_unused.borrow_mut().remove(identifier.as_ref());
-		self.func_specialize_unused.borrow_mut().remove(identifier.as_ref());
+		self.func_manual_unused.borrow_mut().remove(identifier.as_str());
+		self.func_specialize_unused.borrow_mut().remove(identifier.as_str());
 		self.argument_override_unused.borrow_mut().remove(cpp_refname.as_ref());
 	}
 }
@@ -43,10 +43,6 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 		opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
 	}
 
-	fn visit_resolve_type(&mut self, _typ: Type<'tu>) -> WalkAction {
-		WalkAction::Interrupt
-	}
-
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
 		match entity.get_kind() {
 			EntityKind::ClassDecl
@@ -54,23 +50,19 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 			| EntityKind::ClassTemplatePartialSpecialization
 			| EntityKind::StructDecl => {
 				let c = Class::new(entity, &self.gen_env);
-				if !c.is_template() {
+				if !c.template_kind().is_template() {
+					c.methods(None).into_iter().for_each(|f| self.update_used_func(&f));
 					let fields = c.fields();
-					let mut methods = c
-						.methods(None)
+					c.field_methods(fields.iter(), None)
 						.into_iter()
-						.chain(c.field_methods(fields.iter(), None))
-						.collect::<Vec<_>>();
+						.for_each(|f| self.update_used_func(&f));
 					entity.walk_methods_while(|child| {
 						let func = Func::new(child, &self.gen_env);
 						if func.is_generic() {
-							methods.push(func);
+							self.update_used_func(&func);
 						}
 						WalkAction::Continue
 					});
-					for f in methods {
-						self.update_used_func(&f);
-					}
 					entity.walk_classes_while(|child| self.visit_entity(child));
 				}
 				WalkAction::Continue

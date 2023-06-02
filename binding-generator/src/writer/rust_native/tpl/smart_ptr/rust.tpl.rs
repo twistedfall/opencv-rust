@@ -1,7 +1,7 @@
 pub type {{rust_localalias}} = {{rust_full}};
 
 ptr_extern! { {{inner_rust_full}},
-	cv_{{rust_localalias}}_delete, cv_{{rust_localalias}}_get_inner_ptr, cv_{{rust_localalias}}_get_inner_ptr_mut
+	{{extern_delete}}, {{extern_get_inner_ptr}}, {{extern_get_inner_ptr_mut}}
 }
 
 {{ctor}}

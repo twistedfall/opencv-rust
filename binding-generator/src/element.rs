@@ -6,26 +6,34 @@ use std::path::{Component, Path};
 use clang::{Accessibility, Entity, EntityKind};
 
 use crate::type_ref::CppNameStyle;
-use crate::{settings, IteratorExt, StringExt};
+use crate::{settings, IteratorExt, StrExt, StringExt};
 
 pub const UNNAMED: &str = "unnamed";
 
 pub struct DefaultElement;
 
 impl DefaultElement {
-	pub fn is_excluded(this: &(impl Element + ?Sized)) -> bool {
-		this.is_ignored() || this.is_system() || settings::ELEMENT_EXCLUDE.contains(this.cpp_name(CppNameStyle::Reference).as_ref())
+	pub fn exclude_kind(this: &(impl Element + ?Sized)) -> ExcludeKind {
+		let cpp_refname = this.cpp_name(CppNameStyle::Reference);
+		ExcludeKind::Included
+			.with_is_ignored(|| {
+				!this.is_public()
+					|| settings::ELEMENT_EXCLUDE_KIND
+						.get(cpp_refname.as_ref())
+						.map_or(false, |ek| ek.is_ignored())
+			})
+			.with_is_excluded(|| {
+				(this.is_system() && !settings::IMPLEMENTED_SYSTEM_CLASSES.contains(cpp_refname.as_ref()))
+					|| settings::ELEMENT_EXCLUDE_KIND
+						.get(cpp_refname.as_ref())
+						.map_or(false, |ek| ek.is_excluded())
+			})
 	}
 
-	pub fn is_ignored(this: &(impl Element + ?Sized)) -> bool {
-		!this.is_public() || settings::ELEMENT_IGNORE.contains(this.cpp_name(CppNameStyle::Reference).as_ref())
-	}
-
-	pub fn is_system<'tu>(this: &impl EntityElement<'tu>) -> bool {
-		this.entity().is_in_system_header()
+	pub fn is_system(entity: Entity) -> bool {
+		entity.is_in_system_header()
 			&& !is_opencv_path(
-				&this
-					.entity()
+				&entity
 					.get_location()
 					.expect("Can't get entity location")
 					.get_spelling_location()
@@ -35,18 +43,14 @@ impl DefaultElement {
 			)
 	}
 
-	pub fn is_public<'tu>(this: &impl EntityElement<'tu>) -> bool {
-		this.entity().get_accessibility().map_or(true, |a| Accessibility::Public == a)
+	pub fn is_public(entity: Entity) -> bool {
+		entity.get_accessibility().map_or(true, |a| Accessibility::Public == a)
 	}
 
-	pub fn usr<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
-		this.entity().get_usr().expect("Can't get USR").0.into()
-	}
-
-	pub fn cpp_namespace<'tu>(this: &impl EntityElement<'tu>) -> String {
+	pub fn cpp_namespace(entity: Entity) -> String {
+		let mut entity = entity;
 		let mut parts = vec![];
-		let mut e = this.entity();
-		while let Some(parent) = e.get_semantic_parent() {
+		while let Some(parent) = entity.get_semantic_parent() {
 			match parent.get_kind() {
 				EntityKind::ClassDecl
 				| EntityKind::Namespace
@@ -54,7 +58,9 @@ impl DefaultElement {
 				| EntityKind::EnumDecl
 				| EntityKind::UnionDecl
 				| EntityKind::ClassTemplate
-				| EntityKind::ClassTemplatePartialSpecialization => {
+				| EntityKind::ClassTemplatePartialSpecialization
+				| EntityKind::FunctionTemplate
+				| EntityKind::Method => {
 					// handle anonymous enums inside classes and anonymous namespaces
 					if let Some(parent_name) = parent.get_name() {
 						parts.push(parent_name);
@@ -65,7 +71,7 @@ impl DefaultElement {
 					unreachable!("Can't get kind of parent for cpp namespace: {:#?}", parent)
 				}
 			}
-			e = parent;
+			entity = parent;
 		}
 		parts.into_iter().rev().join("::")
 	}
@@ -76,10 +82,28 @@ impl DefaultElement {
 		out
 	}
 
-	pub fn cpp_name<'tu>(this: &(impl EntityElement<'tu> + Element + ?Sized), style: CppNameStyle) -> Cow<str> {
-		let decl_name = this.entity().get_name().unwrap_or_else(|| UNNAMED.to_string());
+	pub fn cpp_name<'t>(this: &'t (impl Element + ?Sized), entity: Entity, style: CppNameStyle) -> Cow<'t, str> {
+		let decl_name = entity
+			.get_name()
+			.or_else(|| {
+				if matches!(
+					entity.get_kind(),
+					EntityKind::StructDecl | EntityKind::ClassDecl | EntityKind::EnumDecl
+				) {
+					// for <clang-16 the classes and enums defined with `typedef struct` will have no name
+					// and the only way to get the name from the typedef is to rely on the type's `get_display_name`
+					entity.get_type().map(|typ| {
+						typ.get_display_name()
+							.cpp_name_from_fullname(CppNameStyle::Declaration)
+							.to_string()
+					})
+				} else {
+					None
+				}
+			})
+			.map_or(Cow::Borrowed(UNNAMED), Cow::Owned);
 		match style {
-			CppNameStyle::Declaration => decl_name.into(),
+			CppNameStyle::Declaration => decl_name,
 			CppNameStyle::Reference => DefaultElement::cpp_decl_name_with_namespace(this, &decl_name),
 		}
 	}
@@ -92,31 +116,109 @@ pub trait Element: fmt::Debug {
 	) -> &'dref mut fmt::DebugStruct<'a, 'b> {
 		struct_debug
 			.field("cpp_fullname", &self.cpp_name(CppNameStyle::Reference))
-			.field("is_excluded", &self.is_excluded())
-			.field("is_ignored", &self.is_ignored())
+			.field("exclude_kind", &self.exclude_kind())
 			.field("is_system", &self.is_system())
 			.field("is_public", &self.is_public())
 	}
 
-	/// true if an element shouldn't be generated
-	fn is_excluded(&self) -> bool {
-		DefaultElement::is_excluded(self)
-	}
-
-	/// true if there shouldn't be any references to that element
-	fn is_ignored(&self) -> bool {
-		DefaultElement::is_ignored(self)
+	fn exclude_kind(&self) -> ExcludeKind {
+		DefaultElement::exclude_kind(self)
 	}
 
 	fn is_system(&self) -> bool;
 
 	fn is_public(&self) -> bool;
 
-	fn usr(&self) -> Cow<str>;
+	fn doc_comment(&self) -> Cow<str>;
 
 	fn cpp_namespace(&self) -> Cow<str>;
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str>;
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub enum ExcludeKind {
+	Included,
+	/// The bindings will not be generated for this element
+	Excluded,
+	/// Like [ExcludeKind::Excluded], but any element that references this element will also be excluded
+	Ignored,
+}
+
+impl ExcludeKind {
+	pub fn is_excluded(self) -> bool {
+		match self {
+			Self::Excluded | Self::Ignored => true,
+			Self::Included => false,
+		}
+	}
+
+	pub fn is_ignored(self) -> bool {
+		match self {
+			Self::Ignored => true,
+			Self::Included | Self::Excluded => false,
+		}
+	}
+
+	pub fn is_included(self) -> bool {
+		match self {
+			Self::Included => true,
+			Self::Ignored | Self::Excluded => false,
+		}
+	}
+
+	/// Return [ExcludeKind::Excluded] if `is_excluded` is true and `self` is [ExcludeKind::Included],
+	/// `self` otherwise
+	pub fn with_is_excluded(self, is_excluded: impl FnOnce() -> bool) -> ExcludeKind {
+		match self {
+			Self::Included => {
+				if is_excluded() {
+					Self::Excluded
+				} else {
+					self
+				}
+			}
+			Self::Excluded | Self::Ignored => self,
+		}
+	}
+
+	/// Return [ExcludeKind::Ignored] if `is_ignored` is true, `self` otherwise
+	pub fn with_is_ignored(self, is_ignored: impl FnOnce() -> bool) -> ExcludeKind {
+		match self {
+			Self::Included | Self::Excluded => {
+				if is_ignored() {
+					Self::Ignored
+				} else {
+					self
+				}
+			}
+			Self::Ignored => self,
+		}
+	}
+
+	/// Return the most ignored kind between `self` and `new()`
+	pub fn with_exclude_kind(self, new: impl FnOnce() -> ExcludeKind) -> ExcludeKind {
+		match self {
+			Self::Included => new(),
+			Self::Excluded => match new() {
+				Self::Ignored => Self::Ignored,
+				Self::Included | Self::Excluded => self,
+			},
+			Self::Ignored => self,
+		}
+	}
+
+	/// Like [ExcludeKind::with_exclude_kind], but will return [ExcludeKind::Excluded] if `new()`
+	/// returns [ExcludeKind::Ignored], useful for container types like [crate::Vector]
+	pub fn with_reference_exclude_kind(self, new: impl FnOnce() -> ExcludeKind) -> ExcludeKind {
+		match self {
+			Self::Included => match new() {
+				Self::Ignored => Self::Excluded,
+				Self::Included | Self::Excluded => self,
+			},
+			Self::Excluded | Self::Ignored => self,
+		}
+	}
 }
 
 pub trait EntityElement<'tu> {
@@ -161,13 +263,6 @@ fn opencv_module_component(path: &Path) -> Option<&OsStr> {
 		}
 	}
 	module
-}
-
-/// Return OpenCV module name if the path points to the main header file, e.g. "opencv2/dnn.hpp".
-pub fn main_opencv_module_from_path(path: &Path) -> Option<&str> {
-	opencv_module_component(path)
-		.and_then(|m| m.to_str())
-		.and_then(|m| m.strip_suffix(".hpp"))
 }
 
 /// Return OpenCV module from the given path

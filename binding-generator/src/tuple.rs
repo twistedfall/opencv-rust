@@ -3,8 +3,9 @@ use std::fmt;
 
 use clang::{Entity, Type};
 
+use crate::element::ExcludeKind;
 use crate::type_ref::{Constness, CppNameStyle, TemplateArg};
-use crate::{DefaultElement, Element, EntityElement, GeneratorEnv, IteratorExt, TypeRef};
+use crate::{DefaultElement, Element, EntityElement, GeneratorEnv, TypeRef};
 
 #[derive(Clone)]
 pub struct Tuple<'tu, 'ge> {
@@ -36,9 +37,11 @@ impl<'tu, 'ge> Tuple<'tu, 'ge> {
 	}
 
 	pub fn elements(&self) -> Vec<TypeRef<'tu, 'ge>> {
+		#[allow(clippy::unnecessary_to_owned)]
 		self
 			.type_ref()
 			.template_specialization_args()
+			.into_owned()
 			.into_iter()
 			.filter_map(TemplateArg::into_typename)
 			.collect()
@@ -56,20 +59,27 @@ impl<'tu> EntityElement<'tu> for Tuple<'tu, '_> {
 }
 
 impl Element for Tuple<'_, '_> {
-	fn is_ignored(&self) -> bool {
-		DefaultElement::is_ignored(self) || self.elements().into_iter().any(|e| e.is_ignored())
+	fn exclude_kind(&self) -> ExcludeKind {
+		DefaultElement::exclude_kind(self).with_exclude_kind(|| {
+			self
+				.elements()
+				.into_iter()
+				.map(|tref| tref.exclude_kind())
+				.reduce(|left, right| left.with_exclude_kind(|| right))
+				.unwrap_or(ExcludeKind::Included)
+		})
 	}
 
 	fn is_system(&self) -> bool {
-		DefaultElement::is_system(self)
+		DefaultElement::is_system(self.entity())
 	}
 
 	fn is_public(&self) -> bool {
-		DefaultElement::is_public(self)
+		DefaultElement::is_public(self.entity())
 	}
 
-	fn usr(&self) -> Cow<str> {
-		DefaultElement::usr(self)
+	fn doc_comment(&self) -> Cow<str> {
+		self.entity().get_comment().unwrap_or_default().into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
@@ -77,18 +87,9 @@ impl Element for Tuple<'_, '_> {
 	}
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
-		let mut decl_name = format!("{}<", self.tuple_type);
-		decl_name.push_str(
-			&self
-				.elements()
-				.into_iter()
-				.map(|e| e.cpp_name(CppNameStyle::Reference).into_owned())
-				.join(", "),
-		);
-		decl_name.push('>');
 		match style {
-			CppNameStyle::Declaration => decl_name.into(),
-			CppNameStyle::Reference => DefaultElement::cpp_decl_name_with_namespace(self, &decl_name),
+			CppNameStyle::Declaration => self.tuple_type.into(),
+			CppNameStyle::Reference => DefaultElement::cpp_decl_name_with_namespace(self, self.tuple_type),
 		}
 	}
 }

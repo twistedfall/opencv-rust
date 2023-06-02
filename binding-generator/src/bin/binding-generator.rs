@@ -4,7 +4,7 @@ use std::io::BufReader;
 use std::path::{Path, PathBuf};
 
 use opencv_binding_generator::writer::RustNativeBindingWriter;
-use opencv_binding_generator::{line_reader, Generator};
+use opencv_binding_generator::{line_reader, Generator, LineReaderAction};
 
 fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
 	let out = header_dir.join("opencv2/core/version.hpp");
@@ -44,10 +44,10 @@ fn get_version_from_headers(header_dir: &Path) -> Option<String> {
 				}
 			}
 			if major.is_some() && minor.is_some() && revision.is_some() {
-				return false;
+				return LineReaderAction::Break;
 			}
 		}
-		true
+		LineReaderAction::Continue
 	});
 	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
 		Some(format!("{major}.{minor}.{revision}"))

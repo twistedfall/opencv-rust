@@ -4,6 +4,8 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 
 use once_cell::sync::Lazy;
 
+use crate::element::ExcludeKind;
+use crate::type_ref::{TypeRef, TypeRefDesc};
 use crate::{CompiledInterpolation, ExportConfig, FuncId, StrExt};
 
 /// map of functions to rename or skip, key is Func.identifier(), value is new name ("+" will be replaced by old name) or "-" to skip
@@ -315,9 +317,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_dnn_DictValue_get_int64_t_const_int", "+_i64"),
 		("cv_dnn_DictValue_get_int_const_int", "+_i32"),
 		("cv_dnn_Dict_ptr_const_StringR", "+_mut"),
-		("cv_dnn_Dict_set_cv_String_const_StringR_const_StringR", "+_str"),
-		("cv_dnn_Dict_set_double_const_StringR_const_doubleR", "+_f64"),
-		("cv_dnn_Dict_set_int64_t_const_StringR_const_int64_tR", "+_i64"),
+		("cv_dnn_Dict_set_const_cv_String_const_StringR_const_StringR", "+_str"),
+		("cv_dnn_Dict_set_const_double_const_StringR_const_doubleR", "+_f64"),
+		("cv_dnn_Dict_set_const_int64_t_const_StringR_const_int64_tR", "+_i64"),
 		("cv_dnn_Layer_finalize_const_vectorLMatGR", "+_mat"),
 		("cv_dnn_Layer_finalize_const_vectorLMatGR_vectorLMatGR", "+_mat_to"),
 		("cv_dnn_Layer_forward_vectorLMatXGR_vectorLMatGR_vectorLMatGR", "+_mat"),
@@ -553,39 +555,32 @@ pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {
 });
 
 /// cpp_name(Reference)
-pub static ELEMENT_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
-	HashSet::from([
-		"cv::String",
-		"cv::internal::format",        // 3.2 duplicate definition
-		"cv::face::FacemarkLBF::BBox", // not used, not exported in windows dll
-	])
-});
-
-/// cpp_name(Reference)
-pub static ELEMENT_IGNORE: Lazy<HashSet<&str>> = Lazy::new(|| {
-	HashSet::from([
-		"CV_DEPRECATED",
-		"CV_EXPORTS",
-		"CV_IMPL", // 3.2
-		"CV_MAKE_TYPE",
-		"CvFileNode", // 3.2 3.4 C struct
-		"CvSeq",      // 3.2 C struct
-		"FILE",
-		"HG_AUTOSIZE", // 3.2
-		"cv::ErrorCallback",
-		"cv::MatAllocator",    // doesn't handle cpp part too well
-		"cv::NAryMatIterator", // uses pointers of pointers
-		"cv::Node",            // template class
-		"cv::gapi::own::Mat",  // internal alias to Mat
-		"std::exception_ptr",
-		"std::random_access_iterator_tag",
+pub static ELEMENT_EXCLUDE_KIND: Lazy<HashMap<&str, ExcludeKind>> = Lazy::new(|| {
+	HashMap::from([
+		("cv::internal::format", ExcludeKind::Excluded),        // 3.2 duplicate definition
+		("cv::face::FacemarkLBF::BBox", ExcludeKind::Excluded), // not used, not exported in windows dll
+		("CV_DEPRECATED", ExcludeKind::Ignored),
+		("CV_EXPORTS", ExcludeKind::Ignored),
+		("CV_IMPL", ExcludeKind::Ignored), // 3.2
+		("CV_MAKE_TYPE", ExcludeKind::Ignored),
+		("CvFileNode", ExcludeKind::Ignored), // 3.2 3.4 C struct
+		("CvSeq", ExcludeKind::Ignored),      // 3.2 C struct
+		("FILE", ExcludeKind::Ignored),
+		("HG_AUTOSIZE", ExcludeKind::Ignored), // 3.2
+		("cv::ErrorCallback", ExcludeKind::Ignored),
+		("cv::MatAllocator", ExcludeKind::Ignored),    // doesn't handle cpp part too well
+		("cv::NAryMatIterator", ExcludeKind::Ignored), // uses pointers of pointers
+		("cv::Node", ExcludeKind::Ignored),            // template class
+		("cv::gapi::own::Mat", ExcludeKind::Ignored),  // internal alias to Mat
+		("std::exception_ptr", ExcludeKind::Ignored),
+		("std::random_access_iterator_tag", ExcludeKind::Ignored),
 	])
 });
 
 /// Manual export config adjustments in form of "cpp_name(Reference)" => fn(&mut ExportConfig). If the export config is not
 /// detected from the sources an `ExportConfig::default()` is passed to the function.
 #[allow(clippy::type_complexity)]
-pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = Lazy::new(|| {
+pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(ExportConfig) -> Option<ExportConfig>>> = Lazy::new(|| {
 	HashMap::from([
 		("VADisplay", ExportConfig::export as _),
 		("VASurfaceID", ExportConfig::export as _),
@@ -614,6 +609,7 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = La
 		("cv::FileNodeIterator::SeqReader", ExportConfig::export as _),
 		("cv::KeyPoint", ExportConfig::force_boxed as _), // has descendants in xfeatures2d
 		("cv::Mat_", ExportConfig::export as _),
+		("cv::String", ExportConfig::no_export as _),
 		("cv::QtFont", ExportConfig::export as _),
 		("cv::TermCriteria", ExportConfig::simple as _),
 		("cv::RotatedRect", ExportConfig::simple as _), // marked simple since 4.8.0
@@ -654,6 +650,7 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = La
 		("cv::utils::logging::LogTag", ExportConfig::export as _),
 		("cv::videostab::MaskFrameSource", ExportConfig::export as _),
 		("cv::viz::Color", ExportConfig::export as _),
+		("cv::ximgproc::Box", ExportConfig::simple as _), // used by Boxes typedef
 		("cvv::impl::CallMetaData", ExportConfig::force_boxed as _),
 		// gapi
 		("cv::GCompileArg", ExportConfig::export as _),
@@ -703,12 +700,15 @@ pub static FUNC_UNSAFE: Lazy<HashSet<FuncId>> = Lazy::new(|| {
 		FuncId::new("cv::cuda::GpuMat::GpuMat", ["arr", "allocator"]),
 		FuncId::new("cv::cuda::GpuMat::GpuMat", ["rows", "cols", "type", "allocator"]),
 		FuncId::new("cv::cuda::GpuMat::GpuMat", ["rows", "cols", "type", "s", "allocator"]),
-		FuncId::new("cv::cuda::GpuMat::allocator", ["val"]),
+		FuncId::new("cv::cuda::GpuMat::setAllocator", ["val"]),
 		FuncId::new("cv::cuda::GpuMat::setDefaultAllocator", ["allocator"]), // fixme, should take 'static
 	])
 });
 
 pub static IMPLEMENTED_FUNCTION_LIKE_MACROS: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["CV_MAKETYPE"]));
+
+pub static IMPLEMENTED_SYSTEM_CLASSES: Lazy<HashSet<&str>> =
+	Lazy::new(|| HashSet::from(["std::pair", "std::string", "std::tuple", "std::vector"]));
 
 // fixme, generalize, make it use constant::ValueKind
 pub static CONST_TYPE_USIZE: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["Mat_AUTO_STEP"]));
@@ -782,24 +782,29 @@ pub static FUNC_MANUAL: Lazy<HashMap<&str, CompiledInterpolation>> = Lazy::new(|
 	])
 });
 
-pub static FUNC_SPECIALIZE: Lazy<HashMap<&str, Vec<HashMap<&str, &str>>>> = Lazy::new(|| {
+pub static TYPES: Lazy<fn() -> TypeRef<'static, 'static>> = Lazy::new(|| TypeRefDesc::void);
+
+pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
+
+// todo: get rid of FUNC_SPECIALIZE and property reader/writer generation in favor of just injecting manual functions
+pub static FUNC_SPECIALIZE: Lazy<HashMap<&str, Vec<HashMap<&str, TypeRefFactory>>>> = Lazy::new(|| {
 	HashMap::from([
 		(
 			"cv_dnn_Dict_set_const_StringR_const_TR",
 			vec![
-				HashMap::from([("const T", "cv::String")]),
-				HashMap::from([("const T", "cv::dnn::DictValue")]),
-				HashMap::from([("const T", "double")]),
-				HashMap::from([("const T", "int64_t")]),
+				HashMap::from([("const T", TypeRefDesc::string as _)]),
+				HashMap::from([("const T", TypeRefDesc::dict_value as _)]),
+				HashMap::from([("const T", TypeRefDesc::double as _)]),
+				HashMap::from([("const T", TypeRefDesc::int64_t as _)]),
 			],
 		),
 		(
 			"cv_dnn_DictValue_get_const_int",
 			vec![
-				HashMap::from([("T", "cv::String")]),
-				HashMap::from([("T", "double")]),
-				HashMap::from([("T", "int")]),
-				HashMap::from([("T", "int64_t")]),
+				HashMap::from([("T", TypeRefDesc::string as _)]),
+				HashMap::from([("T", TypeRefDesc::double as _)]),
+				HashMap::from([("T", TypeRefDesc::int as _)]),
+				HashMap::from([("T", TypeRefDesc::int64_t as _)]),
 			],
 		),
 	])
@@ -868,7 +873,6 @@ pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| 
 		("size_t", ("size_t", "size_t")),
 		("ptrdiff_t", ("ptrdiff_t", "ptrdiff_t")),
 		("clock_t", ("clock_t", "clock_t")),
-		("FILE", ("FILE", "FILE")),
 		("schar", ("i8", "signed char")),
 		("uchar", ("u8", "unsigned char")),
 		("uint8_t", ("u8", "uint8_t")),
@@ -940,8 +944,11 @@ pub static DATA_TYPES: Lazy<BTreeSet<&str>> = Lazy::new(|| {
 });
 
 /// cpp_name(Reference)
+pub static IMPLEMENTED_CONST_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["cv::Vec"]));
+
+/// cpp_name(Reference)
 pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| {
-	HashSet::from([
+	let mut out = HashSet::from([
 		"cv::Affine3",
 		"cv::Mat_",
 		"cv::Matx",
@@ -950,13 +957,12 @@ pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv::Rect_",
 		"cv::Scalar_",
 		"cv::Size_",
-	])
+	]);
+	out.extend(&*IMPLEMENTED_CONST_GENERICS);
+	out
 });
 
-/// cpp_name(Reference)
-pub static IMPLEMENTED_CONST_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["cv::Vec"]));
-
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum ArgOverride {
 	Nullable,
 	NullableSlice,
@@ -1197,38 +1203,11 @@ pub static PREVENT_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(||
 #[derive(Default)]
 pub struct ModuleTweak {
 	pub includes: Vec<&'static str>,
-	pub resolve_types: Vec<&'static str>,
 	pub generate_types: Vec<&'static str>,
 }
 
 pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new(|| {
 	HashMap::from([
-		(
-			"*",
-			ModuleTweak {
-				resolve_types: vec![
-					// void is used as return type for property setters
-					"void",
-					// base types
-					"bool",
-					"int",
-					"unsigned int",
-					"double",
-					"size_t",
-					// return of String
-					"const char*",
-					"void*",
-					// handling vector of strings
-					"std::vector<cv::String>",
-					"std::vector<std::string>",
-					// for return of vector<DataType> types
-					"cv::_InputArray",
-					"cv::_OutputArray",
-					"cv::_InputOutputArray",
-				],
-				..Default::default()
-			},
-		),
 		(
 			"aruco",
 			ModuleTweak {
@@ -1264,7 +1243,6 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 				generate_types: vec![
 					"cv::Ptr<float>", // for 3.2, no function uses that so it's not generated
 				],
-				..Default::default()
 			},
 		),
 		(
@@ -1272,13 +1250,6 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 			ModuleTweak {
 				includes: vec!["dnn/dict.hpp"],
 				generate_types: vec!["std::vector<std::vector<int>>"], // Make sure that `Vector<MatShape>` is generated
-				resolve_types: vec![
-					// for specializing cv::dnn::Dict::set
-					"cv::dnn::DictValue",
-					// for specializing cv::dnn::DictValue::get
-					"cv::String",
-					"int64_t",
-				],
 			},
 		),
 		(
@@ -1294,7 +1265,6 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 				includes: vec!["features2d.hpp"],
 				// type used in other modules, thus needs casting (https://github.com/twistedfall/opencv-rust/issues/218)
 				generate_types: vec!["cv::Ptr<cv::Feature2D>"],
-				..Default::default()
 			},
 		),
 		(
@@ -1350,6 +1320,3 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 		),
 	])
 });
-
-/// list of module names that must use manual module comment extraction
-pub static IGNORE_CLANG_MODULE_COMMENT: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["tracking"]));

@@ -3,22 +3,28 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
-use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, FishStyle, NameStyle};
-use crate::writer::rust_native::func_desc::FuncDescReturn;
-use crate::{settings, CompiledInterpolation, FunctionTypeHint, StrExt, TypeRef, Vector};
+use crate::class::ClassDesc;
+use crate::field::{Field, FieldDesc};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc};
+use crate::writer::rust_native::RustStringExt;
+use crate::{settings, Class, CompiledInterpolation, Func, StrExt, TypeRef, Vector};
 
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
 impl RustElement for Vector<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
-		DefaultRustNativeElement::rust_module(self)
+		"core".into()
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultRustNativeElement::rust_name(self, style)
+		format!("{}::{}", self.rust_module(), self.rust_leafname(style.turbo_fish_style()))
+			.as_str()
+			.rust_name_from_fullname(style)
+			.into_owned()
+			.into()
 	}
 
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
@@ -36,7 +42,14 @@ impl RustElement for Vector<'_, '_> {
 	}
 
 	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+		match self {
+			Vector::Clang { .. } => DefaultRustNativeElement::rendered_doc_comment_with_prefix(
+				self.entity().expect("Can't get entity"),
+				prefix,
+				opencv_version,
+			),
+			Vector::Desc(_) => "".to_string(),
+		}
 	}
 }
 
@@ -45,7 +58,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		format!("{}-{}", self.rust_element_module(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &str) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/vector/rust.tpl.rs").compile_interpolation());
 
 		static EXTERN_TPL: Lazy<CompiledInterpolation> =
@@ -60,16 +73,49 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		static INPUT_OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/rust_input_output_array.tpl.rs").compile_interpolation());
 
-		let vec_type = self.type_ref();
-		if vec_type.constness().is_const() {
+		let vec_type_ref = self.type_ref();
+
+		if vec_type_ref.constness().is_const() {
 			// todo we should generate smth like VectorRef in this case
 			return "".to_string();
 		}
+		let rust_localalias = self.rust_localalias();
 		let element_type = self.element_type();
+		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
+
+		let extern_new = method_new(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).identifier();
+		let extern_delete = FuncDesc::method_delete(&rust_localalias, vector_class.clone()).identifier();
+		let extern_len = method_len(&rust_localalias, vector_class.clone()).identifier();
+		let extern_is_empty = method_is_empty(&rust_localalias, vector_class.clone()).identifier();
+		let extern_capacity = method_capacity(&rust_localalias, vector_class.clone()).identifier();
+		let extern_shrink_to_fit = method_shrink_to_fit(&rust_localalias, vector_class.clone()).identifier();
+		let extern_reserve = method_reserve(&rust_localalias, vector_class.clone()).identifier();
+		let extern_remove = method_remove(&rust_localalias, vector_class.clone()).identifier();
+		let extern_swap = method_swap(&rust_localalias, vector_class.clone(), element_type.is_bool()).identifier();
+		let extern_clear = method_clear(&rust_localalias, vector_class.clone()).identifier();
+		let extern_get = method_get(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
+		let extern_set = method_set(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
+		let extern_push = method_push(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
+		let extern_insert = method_insert(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
+
 		let mut inter_vars = HashMap::from([
-			("rust_localalias", self.rust_localalias()),
+			("rust_localalias", rust_localalias.clone()),
 			("rust_full", self.rust_name(NameStyle::ref_())),
 			("inner_rust_full", element_type.rust_name(NameStyle::ref_())),
+			("extern_new", extern_new.into()),
+			("extern_delete", extern_delete.into()),
+			("extern_len", extern_len.into()),
+			("extern_is_empty", extern_is_empty.into()),
+			("extern_capacity", extern_capacity.into()),
+			("extern_shrink_to_fit", extern_shrink_to_fit.into()),
+			("extern_reserve", extern_reserve.into()),
+			("extern_remove", extern_remove.into()),
+			("extern_swap", extern_swap.into()),
+			("extern_clear", extern_clear.into()),
+			("extern_get", extern_get.into()),
+			("extern_set", extern_set.into()),
+			("extern_push", extern_push.into()),
+			("extern_insert", extern_insert.into()),
 		]);
 
 		if settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref()) {
@@ -82,6 +128,12 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			let mut impls = String::new();
 			let mut additional_methods = String::new();
 			if element_type.is_copy() && !element_type.is_bool() {
+				let extern_clone = method_clone(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).identifier();
+				let extern_from_slice = method_from_slice(&rust_localalias, vec_type_ref, element_type.clone()).identifier();
+				inter_vars.extend([
+					("extern_clone", extern_clone.into()),
+					("extern_from_slice", extern_from_slice.into()),
+				]);
 				additional_methods += &ADD_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 			} else {
 				inter_vars.insert(
@@ -95,7 +147,15 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 				);
 				additional_methods += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 			}
-			if self.is_data_type(&element_type) {
+			if element_type.is_element_data_type() {
+				let input_array = method_input_array(&rust_localalias, vector_class.clone()).gen_rust(opencv_version);
+				let output_array = method_output_array(&rust_localalias, vector_class.clone()).gen_rust(opencv_version);
+				let input_output_array = method_input_output_array(&rust_localalias, vector_class).gen_rust(opencv_version);
+				inter_vars.extend([
+					("input_array_impl", input_array.into()),
+					("output_array_impl", output_array.into()),
+					("input_output_array_impl", input_output_array.into()),
+				]);
 				impls += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
 			}
 
@@ -106,6 +166,25 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		RUST_TPL.interpolate(&inter_vars)
 	}
 
+	fn gen_rust_exports(&self) -> String {
+		let vec_type_ref = self.type_ref();
+		let rust_localalias = self.rust_localalias();
+		let element_type = self.element_type();
+		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
+
+		let mut out = String::new();
+		if element_type.is_element_data_type() {
+			out.push_str(&method_input_array(&rust_localalias, vector_class.clone()).gen_rust_exports());
+			out.push_str(&method_output_array(&rust_localalias, vector_class.clone()).gen_rust_exports());
+			out.push_str(&method_input_output_array(&rust_localalias, vector_class.clone()).gen_rust_exports());
+		}
+		if element_type.is_copy() && !element_type.is_bool() {
+			out.push_str(&method_clone(&rust_localalias, vector_class, vec_type_ref.clone()).gen_rust_exports());
+			out.push_str(&method_from_slice(&rust_localalias, vec_type_ref, element_type.clone()).gen_rust_exports());
+		}
+		out
+	}
+
 	fn gen_cpp(&self) -> String {
 		static COMMON_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/cpp.tpl.cpp").compile_interpolation());
@@ -113,8 +192,8 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		static METHODS_COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/cpp_methods_copy_non_bool.tpl.cpp").compile_interpolation());
 
-		let vec_type = self.type_ref();
-		if vec_type.constness().is_const() {
+		let vec_type_ref = self.type_ref();
+		if vec_type_ref.constness().is_const() {
 			// todo we should generate smth like VectorRef in this case
 			return "".to_string();
 		}
@@ -122,66 +201,44 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let element_is_bool = element_type.is_bool();
 		let inner_cpp_full = element_type.cpp_name(CppNameStyle::Reference);
 		let rust_localalias = self.rust_localalias();
-		let vector_class_desc = ClassDesc {
-			is_boxed: true,
-			cpp_name_ref: vec_type.cpp_name(CppNameStyle::Reference).into_owned(),
-		};
-		let size_t = self.gen_env.resolve_typeref("size_t");
-		let void = self.gen_env.resolve_typeref("void");
-		let boolean = self.gen_env.resolve_typeref("bool");
+		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
 		let mut methods = vec![
-			method_new(&rust_localalias, &vector_class_desc, &vec_type),
-			method_delete(&rust_localalias, &vector_class_desc, &void),
-			method_len(&rust_localalias, &vector_class_desc, &size_t),
-			method_is_empty(&rust_localalias, &vector_class_desc, &boolean),
-			method_capacity(&rust_localalias, &vector_class_desc, &size_t),
-			method_shrink_to_fit(&rust_localalias, &vector_class_desc, &void),
-			method_reserve(&rust_localalias, &vector_class_desc, &void, &size_t),
-			method_remove(&rust_localalias, &vector_class_desc, &void, &size_t),
-			method_swap(&rust_localalias, &vector_class_desc, element_is_bool, &void, &size_t),
-			method_clear(&rust_localalias, &vector_class_desc, &void),
-			method_push(&rust_localalias, &vector_class_desc, &element_type, &void),
-			method_insert(&rust_localalias, &vector_class_desc, &element_type, &void, &size_t),
-			method_get(&rust_localalias, &vector_class_desc, &element_type, &size_t),
-			method_set(&rust_localalias, &vector_class_desc, &element_type, &void, &size_t),
+			method_new(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).gen_cpp(),
+			FuncDesc::method_delete(&rust_localalias, vector_class.clone()).gen_cpp(),
+			method_len(&rust_localalias, vector_class.clone()).gen_cpp(),
+			method_is_empty(&rust_localalias, vector_class.clone()).gen_cpp(),
+			method_capacity(&rust_localalias, vector_class.clone()).gen_cpp(),
+			method_shrink_to_fit(&rust_localalias, vector_class.clone()).gen_cpp(),
+			method_reserve(&rust_localalias, vector_class.clone()).gen_cpp(),
+			method_remove(&rust_localalias, vector_class.clone()).gen_cpp(),
+			method_swap(&rust_localalias, vector_class.clone(), element_is_bool).gen_cpp(),
+			method_clear(&rust_localalias, vector_class.clone()).gen_cpp(),
+			method_push(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp(),
+			method_insert(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp(),
+			method_get(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp(),
+			method_set(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp(),
 		];
 		if element_type.is_copy() && !element_is_bool {
-			methods.push(method_clone(&rust_localalias, &vector_class_desc, &vec_type));
+			methods.push(method_clone(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).gen_cpp());
 		}
-		if self.is_data_type(&element_type) {
-			methods.push(method_input_array(
-				&rust_localalias,
-				&vector_class_desc,
-				self.gen_env.resolve_typeref("cv::_InputArray"),
-			));
-			methods.push(method_output_array(
-				&rust_localalias,
-				&vector_class_desc,
-				self.gen_env.resolve_typeref("cv::_OutputArray"),
-			));
-			methods.push(method_input_output_array(
-				&rust_localalias,
-				&vector_class_desc,
-				self.gen_env.resolve_typeref("cv::_InputOutputArray"),
-			));
+		if element_type.is_element_data_type() {
+			methods.push(method_input_array(&rust_localalias, vector_class.clone()).gen_cpp());
+			methods.push(method_output_array(&rust_localalias, vector_class.clone()).gen_cpp());
+			methods.push(method_input_output_array(&rust_localalias, vector_class).gen_cpp());
 		}
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.as_ref().into()),
-			("cpp_full", vec_type.cpp_name(CppNameStyle::Reference)),
-			("cpp_extern_return", vec_type.cpp_extern_return(ConstnessOverride::No)),
+			("cpp_full", vec_type_ref.cpp_name(CppNameStyle::Reference)),
+			("cpp_extern_return", vec_type_ref.cpp_extern_return()),
 			("inner_cpp_full", inner_cpp_full.as_ref().into()),
-			(
-				"inner_cpp_extern_return",
-				element_type.cpp_extern_return(ConstnessOverride::No),
-			),
-			("methods", methods.join("").into()),
+			("inner_cpp_extern_return", element_type.cpp_extern_return()),
 		]);
 
-		let mut exports = String::new();
 		if element_type.is_copy() && !element_is_bool {
-			exports += &METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
+			methods.push(METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars));
+			methods.push(method_from_slice(&rust_localalias, vec_type_ref.clone(), element_type.clone()).gen_cpp());
 		}
-		inter_vars.insert("exports", exports.into());
+		inter_vars.insert("methods", methods.join("").into());
 
 		COMMON_TPL.interpolate(&inter_vars)
 	}
@@ -202,343 +259,280 @@ impl VectorExt for Vector<'_, '_> {
 	}
 }
 
-fn method_new(rust_localalias: &str, vector_class_desc: &ClassDesc, vec_type: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_new").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: vec_type.clone(),
-		kind: FuncDescKind::Constructor(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::Auto {
-			name_decl: "<unsued>".into(),
-			name_ref: "<unused>".into(),
-		},
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn vector_class<'tu, 'ge>(vec_type_ref: &TypeRef, rust_localalias: &str) -> Class<'tu, 'ge> {
+	Class::new_desc(ClassDesc::boxed(
+		vec_type_ref.cpp_name(CppNameStyle::Reference),
+		format!("core::{rust_localalias}"),
+	))
 }
 
-fn method_delete(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_delete").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_new<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::Constructor(vector_class),
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::new"),
+		"core",
+		vec![],
+		FuncCppBody::Auto,
+		vec_type_ref,
+	))
 }
 
-fn method_len(rust_localalias: &str, vector_class_desc: &ClassDesc, size_t: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_len").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: size_t.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("instance->size()".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_len<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::len"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("instance->size()".into()),
+		TypeRefDesc::size_t(),
+	))
 }
 
-fn method_is_empty(rust_localalias: &str, vector_class_desc: &ClassDesc, boolean: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_is_empty").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: boolean.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("instance->empty()".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_is_empty<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::isEmpty"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("instance->empty()".into()),
+		TypeRefDesc::bool(),
+	))
 }
 
-fn method_capacity(rust_localalias: &str, vector_class_desc: &ClassDesc, size_t: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_capacity").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: size_t.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("instance->capacity()".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_capacity<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::capacity"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("instance->capacity()".into()),
+		TypeRefDesc::size_t(),
+	))
 }
 
-fn method_shrink_to_fit(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_shrink_to_fit").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("instance->shrink_to_fit()".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_shrink_to_fit<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::shrinkToFit"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("instance->shrink_to_fit()".into()),
+		TypeRefDesc::void(),
+	))
 }
 
-fn method_reserve(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef, size_t: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_reserve").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("instance->reserve(instance->size() + {{args}})".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![("additional".to_string(), size_t.clone())],
-	}
-	.gen_cpp()
+fn method_reserve<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::reserve"),
+		"core",
+		vec![Field::new_desc(FieldDesc::new("additional", TypeRefDesc::size_t()))],
+		FuncCppBody::ManualCall("instance->reserve(instance->size() + {{args}})".into()),
+		TypeRefDesc::void(),
+	))
 }
 
-fn method_remove(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef, size_t: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_remove").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("instance->erase(instance->begin() + {{args}})".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![("index".to_string(), size_t.clone())],
-	}
-	.gen_cpp()
+fn method_remove<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::remove"),
+		"core",
+		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
+		FuncCppBody::ManualCall("instance->erase(instance->begin() + {{args}})".into()),
+		TypeRefDesc::void(),
+	))
 }
 
-fn method_swap(
-	rust_localalias: &str,
-	vector_class_desc: &ClassDesc,
-	element_is_bool: bool,
-	void: &TypeRef,
-	size_t: &TypeRef,
-) -> String {
+fn method_swap<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, element_is_bool: bool) -> Func<'tu, 'ge> {
 	// https://stackoverflow.com/questions/58660207/why-doesnt-stdswap-work-on-vectorbool-elements-under-clang-win
 	let swap_func = if element_is_bool {
 		"instance->swap"
 	} else {
 		"std::swap"
 	};
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_swap").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall(format!("{swap_func}((*instance)[index1], (*instance)[index2])").compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![("index1".to_string(), size_t.clone()), ("index2".to_string(), size_t.clone())],
-	}
-	.gen_cpp()
-}
-
-fn method_clear(rust_localalias: &str, vector_class_desc: &ClassDesc, void: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_clear").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("instance->clear()".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
-}
-
-fn method_push(rust_localalias: &str, vector_class_desc: &ClassDesc, element_type: &TypeRef, void: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_push").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("instance->push_back({{args}})".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![("val".to_string(), element_type.clone())],
-	}
-	.gen_cpp()
-}
-
-fn method_insert(
-	rust_localalias: &str,
-	vector_class_desc: &ClassDesc,
-	element_type: &TypeRef,
-	void: &TypeRef,
-	size_t: &TypeRef,
-) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_insert").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("instance->insert(instance->begin() + {{args}})".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![
-			("index".to_string(), size_t.clone()),
-			("val".to_string(), element_type.clone()),
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::swap"),
+		"core",
+		vec![
+			Field::new_desc(FieldDesc::new("index1", TypeRefDesc::size_t())),
+			Field::new_desc(FieldDesc::new("index2", TypeRefDesc::size_t())),
 		],
-	}
-	.gen_cpp()
+		FuncCppBody::ManualCall(format!("{swap_func}((*instance)[index1], (*instance)[index2])").into()),
+		TypeRefDesc::void(),
+	))
 }
 
-fn method_get(rust_localalias: &str, vector_class_desc: &ClassDesc, element_type: &TypeRef, size_t: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_get").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: false,
-		return_type: element_type.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("(*instance)[{{args}}]".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![("index".to_string(), size_t.clone())],
-	}
-	.gen_cpp()
+fn method_clear<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::clear"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("instance->clear()".into()),
+		TypeRefDesc::void(),
+	))
 }
 
-fn method_set(
+fn method_push<'tu, 'ge>(
 	rust_localalias: &str,
-	vector_class_desc: &ClassDesc,
-	element_type: &TypeRef,
-	void: &TypeRef,
-	size_t: &TypeRef,
-) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_set").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall(
-			format!("(*instance)[index] = {}", element_type.cpp_arg_func_call("val")).compile_interpolation(),
-		),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![
-			("index".to_string(), size_t.clone()),
-			("val".to_string(), element_type.clone()),
+	vector_class: Class<'tu, 'ge>,
+	element_type: TypeRef<'tu, 'ge>,
+) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::push"),
+		"core",
+		vec![Field::new_desc(FieldDesc::new("val", element_type))],
+		FuncCppBody::ManualCall("instance->push_back({{args}})".into()),
+		TypeRefDesc::void(),
+	))
+}
+
+fn method_insert<'tu, 'ge>(
+	rust_localalias: &str,
+	vector_class: Class<'tu, 'ge>,
+	element_type: TypeRef<'tu, 'ge>,
+) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::insert"),
+		"core",
+		vec![
+			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
+			Field::new_desc(FieldDesc::new("val", element_type)),
 		],
-	}
-	.gen_cpp()
+		FuncCppBody::ManualCall("instance->insert(instance->begin() + {{args}})".into()),
+		TypeRefDesc::void(),
+	))
 }
 
-fn method_clone(rust_localalias: &str, vector_class_desc: &ClassDesc, vec_type: &TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_clone").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: vec_type.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("{{ret_type}}(*instance)".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_get<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Const,
+		ReturnKind::InfallibleViaArg,
+		format!("cv::{rust_localalias}::get"),
+		"core",
+		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
+		FuncCppBody::ManualCall("(*instance)[{{args}}]".into()),
+		element_type,
+	))
 }
 
-fn method_input_array(rust_localalias: &str, vector_class_desc: &ClassDesc, input_array: TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_input_array").into(),
-		constness: Constness::Mut,
-		is_infallible: false,
-		is_naked_return: false,
-		return_type: input_array,
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("cv::_InputArray(*instance)".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_set<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::set"),
+		"core",
+		vec![
+			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
+			Field::new_desc(FieldDesc::new("val", element_type.clone())),
+		],
+		FuncCppBody::ManualCall(format!("(*instance)[index] = {}", element_type.cpp_arg_func_call("val")).into()),
+		TypeRefDesc::void(),
+	))
 }
 
-fn method_output_array(rust_localalias: &str, vector_class_desc: &ClassDesc, output_array: TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_output_array").into(),
-		constness: Constness::Mut,
-		is_infallible: false,
-		is_naked_return: false,
-		return_type: output_array.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("cv::_OutputArray(*instance)".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_clone<'tu, 'ge>(
+	rust_localalias: &str,
+	vector_class: Class<'tu, 'ge>,
+	vec_type_ref: TypeRef<'tu, 'ge>,
+) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::clone"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("{{ret_type}}(*instance)".into()),
+		vec_type_ref,
+	))
 }
 
-fn method_input_output_array(rust_localalias: &str, vector_class_desc: &ClassDesc, input_output_array: TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_localalias}_input_output_array").into(),
-		constness: Constness::Mut,
-		is_infallible: false,
-		is_naked_return: false,
-		return_type: input_output_array.clone(),
-		kind: FuncDescKind::InstanceMethod(vector_class_desc.clone()),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("cv::_InputOutputArray(*instance)".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_from_slice<'tu, 'ge>(
+	rust_localalias: &str,
+	vec_type_ref: TypeRef<'tu, 'ge>,
+	element_type: TypeRef<'tu, 'ge>,
+) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::Function,
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::fromSlice"),
+		"core",
+		vec![
+			Field::new_desc(FieldDesc::new(
+				"data",
+				TypeRef::new_pointer(element_type.with_constness(Constness::Const)),
+			)),
+			Field::new_desc(FieldDesc::new("len", TypeRefDesc::size_t())),
+		],
+		FuncCppBody::ManualFull("return new {{ret_type}}(data, data + len);".into()),
+		vec_type_ref,
+	))
+}
+
+fn method_input_array<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Const,
+		ReturnKind::Fallible,
+		format!("cv::{rust_localalias}::inputArray"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("cv::_InputArray(*instance)".into()),
+		TypeRefDesc::input_array(),
+	))
+}
+
+fn method_output_array<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::Fallible,
+		format!("cv::{rust_localalias}::outputArray"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("cv::_OutputArray(*instance)".into()),
+		TypeRefDesc::output_array(),
+	))
+}
+
+fn method_input_output_array<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::Fallible,
+		format!("cv::{rust_localalias}::inputOutputArray"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("cv::_InputOutputArray(*instance)".into()),
+		TypeRefDesc::input_output_array(),
+	))
 }

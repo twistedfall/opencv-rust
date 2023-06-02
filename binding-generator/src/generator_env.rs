@@ -5,13 +5,13 @@ use std::fs::File;
 use std::io::{BufRead, BufReader, Read, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
 
-use clang::{Entity, EntityKind, EntityVisitResult, StorageClass, Type};
+use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
 
-use crate::class::Kind as ClassKind;
+use crate::class::ClassKind;
 use crate::type_ref::CppNameStyle;
 use crate::{
 	comment, is_ephemeral_header, is_opencv_path, opencv_module_from_path, settings, Class, Const, Element, EntityWalker,
-	EntityWalkerVisitor, Func, MemoizeMap, MemoizeMapExt, NamePool, TypeRef, WalkAction,
+	EntityWalkerVisitor, Func, MemoizeMap, MemoizeMapExt, NamePool, WalkAction,
 };
 
 #[derive(Clone, Debug)]
@@ -47,18 +47,27 @@ impl Default for ExportConfig {
 
 impl ExportConfig {
 	/// Doesn't change export config, but putting it into `ELEMENT_EXPORT_TWEAK` will force the creation of the default `ExportConfig`
-	pub fn export(_: &mut ExportConfig) {}
-
-	pub fn override_boxed(src: &mut ExportConfig) {
-		src.simplicity = ClassSimplicity::Boxed
+	pub fn export(src: ExportConfig) -> Option<ExportConfig> {
+		Some(src)
 	}
 
-	pub fn force_boxed(src: &mut ExportConfig) {
-		src.simplicity = ClassSimplicity::BoxedForced
+	pub fn no_export(_src: ExportConfig) -> Option<ExportConfig> {
+		None
 	}
 
-	pub fn simple(src: &mut ExportConfig) {
+	pub fn override_boxed(mut src: ExportConfig) -> Option<ExportConfig> {
+		src.simplicity = ClassSimplicity::Boxed;
+		Some(src)
+	}
+
+	pub fn force_boxed(mut src: ExportConfig) -> Option<ExportConfig> {
+		src.simplicity = ClassSimplicity::BoxedForced;
+		Some(src)
+	}
+
+	pub fn simple(mut src: ExportConfig) -> Option<ExportConfig> {
 		src.simplicity = ClassSimplicity::Simple;
+		Some(src)
 	}
 }
 
@@ -79,10 +88,10 @@ struct DbPopulator<'tu, 'ge> {
 
 impl<'tu> DbPopulator<'tu, '_> {
 	fn add_func_comment(&mut self, entity: Entity) {
-		let raw_comment = entity.get_comment().unwrap_or_default();
+		let raw_comment = entity.doc_comment();
 		if !raw_comment.is_empty() && !raw_comment.contains("@overload") {
 			let name = entity.cpp_name(CppNameStyle::Reference).into_owned();
-			let line = entity.get_location().map(|l| l.get_file_location().line).unwrap_or(0);
+			let line = entity.get_location().map_or(0, |l| l.get_file_location().line);
 			let defs = self.gen_env.func_comments.entry(name).or_insert_with(Vec::new);
 			defs.push((line, comment::strip_comment_markers(&raw_comment)));
 			// reverse sort due to how we're querying this
@@ -104,9 +113,9 @@ impl<'tu> DbPopulator<'tu, '_> {
 	fn add_used_in_smart_ptr(&mut self, func: Entity<'tu>) {
 		let args = Func::new(func, self.gen_env)
 			.arguments()
-			.into_iter()
+			.iter()
 			.filter_map(|arg| arg.type_ref().as_smart_ptr())
-			.filter_map(|smart_ptr| smart_ptr.pointee().clang_type().get_declaration())
+			.map(|smart_ptr| smart_ptr.pointee().cpp_name(CppNameStyle::Reference).into_owned())
 			.collect::<Vec<_>>();
 		for arg in args {
 			self.gen_env.used_in_smart_ptr.insert(arg);
@@ -119,13 +128,6 @@ impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 		is_opencv_path(path)
 			|| is_ephemeral_header(path)
 			|| opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module)
-	}
-
-	fn visit_resolve_type(&mut self, typ: Type<'tu>) -> WalkAction {
-		let type_ref = TypeRef::new(typ, self.gen_env);
-		let name = type_ref.cpp_name(CppNameStyle::Reference).into_owned();
-		self.gen_env.type_resolve_cache.insert(name, typ);
-		WalkAction::Continue
 	}
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
@@ -179,8 +181,7 @@ pub struct GeneratorEnv<'tu> {
 	func_comments: HashMap<String, Vec<(u32, String)>>,
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
 	class_constants: HashMap<String, Const<'tu>>,
-	type_resolve_cache: HashMap<String, Type<'tu>>,
-	used_in_smart_ptr: HashSet<Entity<'tu>>,
+	used_in_smart_ptr: HashSet<String>,
 	pub descendants: HashMap<String, HashSet<Entity<'tu>>>,
 }
 
@@ -194,7 +195,6 @@ impl<'tu> GeneratorEnv<'tu> {
 			func_comments: HashMap::with_capacity(2048),
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
 			class_constants: HashMap::with_capacity(32),
-			type_resolve_cache: HashMap::with_capacity(32),
 			used_in_smart_ptr: HashSet::with_capacity(32),
 			descendants: HashMap::with_capacity(16),
 		};
@@ -285,12 +285,10 @@ impl<'tu> GeneratorEnv<'tu> {
 	}
 
 	pub fn get_export_config(&self, entity: Entity) -> Option<ExportConfig> {
-		let cpp_refname = entity.cpp_name(CppNameStyle::Reference);
 		let out = Self::get_with_fuzzy_key(entity, |key| self.export_map.get(key)).cloned();
+		let cpp_refname = entity.cpp_name(CppNameStyle::Reference);
 		if let Some(tweak) = settings::ELEMENT_EXPORT_TWEAK.get(cpp_refname.as_ref()) {
-			let mut out = out.map_or_else(ExportConfig::default, |e| e);
-			tweak(&mut out);
-			Some(out)
+			tweak(out.unwrap_or_default())
 		} else {
 			out
 		}
@@ -323,15 +321,15 @@ impl<'tu> GeneratorEnv<'tu> {
 	}
 
 	pub fn get_class_kind(&self, entity: Entity<'tu>) -> Option<ClassKind> {
-		let id = entity.usr();
+		let id = entity.cpp_name(CppNameStyle::Reference);
 		self.class_kind_cache.memo_get(id.as_ref(), || {
+			let entity = if let Some(tpl_decl) = entity.get_template() {
+				tpl_decl
+			} else {
+				entity
+			};
 			if let Some(range) = entity.get_range() {
-				let name_ranges = if let Some(tpl_decl) = entity.get_template() {
-					tpl_decl
-				} else {
-					entity
-				}
-				.get_name_ranges();
+				let name_ranges = entity.get_name_ranges();
 				if !name_ranges.is_empty() {
 					let file_location = range.get_start().get_file_location();
 					if let Some(file) = file_location.file {
@@ -364,19 +362,8 @@ impl<'tu> GeneratorEnv<'tu> {
 		self.class_constants.get(constant)
 	}
 
-	pub fn resolve_type(&self, typ: &str) -> Option<Type<'tu>> {
-		self.type_resolve_cache.get(typ).copied()
-	}
-
-	pub fn resolve_typeref<'ge>(&'ge self, typ: &str) -> TypeRef<'tu, 'ge> {
-		self
-			.resolve_type(typ)
-			.map(|typ| TypeRef::new(typ, self))
-			.unwrap_or_else(|| panic!("Can't resolve type: {typ}"))
-	}
-
-	pub fn is_used_in_smart_ptr(&self, entity: Entity) -> bool {
-		self.used_in_smart_ptr.contains(&entity)
+	pub fn is_used_in_smart_ptr(&self, cpp_refname: &str) -> bool {
+		self.used_in_smart_ptr.contains(cpp_refname)
 	}
 }
 
@@ -389,7 +376,6 @@ impl fmt::Debug for GeneratorEnv<'_> {
 				"class_kind_cache",
 				&format!("{} elements", self.class_kind_cache.borrow().len()),
 			)
-			.field("type_resolve_cache", &format!("{} elements", self.type_resolve_cache.len()))
 			.finish()
 	}
 }

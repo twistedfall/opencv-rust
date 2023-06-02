@@ -5,8 +5,10 @@ use std::fmt::Write;
 use clang::token::{Token, TokenKind};
 use clang::{Entity, EntityKind, EvaluationResult};
 
+use crate::debug::LocationName;
+use crate::element::ExcludeKind;
 use crate::type_ref::CppNameStyle;
-use crate::{settings, DefaultElement, Element, EntityElement};
+use crate::{settings, DefaultElement, Element, EntityElement, NameDebug};
 
 pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> Option<Value> {
 	let mut out = Value {
@@ -25,7 +27,7 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> 
 					match entity.get_kind() {
 						EntityKind::MacroExpansion => {
 							let cnst = Const::new(entity);
-							if cnst.is_excluded() {
+							if cnst.exclude_kind().is_excluded() {
 								return None;
 							}
 						}
@@ -147,36 +149,37 @@ impl<'tu> EntityElement<'tu> for Const<'tu> {
 }
 
 impl Element for Const<'_> {
-	fn is_excluded(&self) -> bool {
-		DefaultElement::is_excluded(self)
-			|| (self.entity.is_function_like_macro()
-				&& !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_name(CppNameStyle::Reference).as_ref()))
+	fn exclude_kind(&self) -> ExcludeKind {
+		DefaultElement::exclude_kind(self).with_is_excluded(|| {
+			self.entity.is_function_like_macro()
+				&& !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
+		})
 	}
 
 	fn is_system(&self) -> bool {
-		DefaultElement::is_system(self)
+		DefaultElement::is_system(self.entity)
 	}
 
 	fn is_public(&self) -> bool {
-		DefaultElement::is_public(self)
+		DefaultElement::is_public(self.entity)
 	}
 
-	fn usr(&self) -> Cow<str> {
-		DefaultElement::usr(self)
+	fn doc_comment(&self) -> Cow<str> {
+		self.entity.get_comment().unwrap_or_default().into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self).into()
+		DefaultElement::cpp_namespace(self.entity).into()
 	}
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
-		DefaultElement::cpp_name(self, style)
+		DefaultElement::cpp_name(self, self.entity(), style)
 	}
 }
 
-impl fmt::Display for Const<'_> {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
+impl<'me> NameDebug<'me> for &'me Const<'_> {
+	fn file_line_name(self) -> LocationName<'me> {
+		self.entity.file_line_name()
 	}
 }
 

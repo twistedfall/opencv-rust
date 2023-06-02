@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use regex::Regex;
 
 use crate::string_ext::Indent;
+use crate::type_ref::FishStyle;
 use crate::{StrExt, StringExt};
 
 #[test]
@@ -435,6 +436,7 @@ fn trim_index() {
 
 #[test]
 fn localname() {
+	assert_eq!("test", "std::namespace::test".localname());
 	assert_eq!("test", "namespace::test".localname());
 	assert_eq!("test", "test".localname());
 	assert_eq!("", "".localname());
@@ -443,8 +445,33 @@ fn localname() {
 
 #[test]
 fn namespace() {
+	assert_eq!("std::namespace", "std::namespace::test".namespace());
 	assert_eq!("namespace", "namespace::test".namespace());
 	assert_eq!("test", "test".namespace());
 	assert_eq!("", "".namespace());
 	assert_eq!("", "::".namespace());
+}
+
+#[test]
+fn module() {
+	assert_eq!("core", "core::VecN".module());
+	assert_eq!("imgproc", "crate::imgproc::VecN".module());
+	assert_eq!("test", "test".module());
+	assert_eq!("", "".module());
+	assert_eq!("", "::".module());
+}
+
+#[test]
+fn fish_apply() {
+	let rust_fish_fullname = "crate::VecN::<3, 2>";
+	assert_eq!("crate::VecN<3, 2>", FishStyle::No.apply(rust_fish_fullname));
+	assert_eq!("crate::VecN::<3, 2>", FishStyle::Turbo.apply(rust_fish_fullname));
+
+	let rust_no_fish_fullname = "crate::VecN<3, 2>";
+	assert_eq!("crate::VecN<3, 2>", FishStyle::No.apply(rust_no_fish_fullname));
+	assert_eq!("crate::VecN::<3, 2>", FishStyle::Turbo.apply(rust_no_fish_fullname));
+
+	let rust_no_generics_fullname = "crate::VecN";
+	assert_eq!("crate::VecN", FishStyle::No.apply(rust_no_generics_fullname));
+	assert_eq!("crate::VecN", FishStyle::Turbo.apply(rust_no_generics_fullname));
 }

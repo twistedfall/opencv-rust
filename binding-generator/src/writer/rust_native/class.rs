@@ -3,13 +3,15 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
-use crate::class::Kind;
-use crate::type_ref::{Constness, ConstnessOverride, CppNameStyle, ExternDir, FishStyle, NameStyle};
-use crate::writer::rust_native::func_desc::{cpp_return_map, FuncDescReturn};
-use crate::{get_debug, Class, CompiledInterpolation, Element, Func, FunctionTypeHint, IteratorExt, NamePool, StrExt, TypeRef};
+use crate::class::ClassKind;
+use crate::debug::NameDebug;
+use crate::field::{Field, FieldDesc};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef, TypeRefDesc, TypeRefKind};
+use crate::writer::rust_native::func::cpp_return_map;
+use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::func_desc::{ClassDesc, CppFuncDesc, FuncDescCppCall, FuncDescKind};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
@@ -61,8 +63,11 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		(vec![], vec![])
 	} else {
 		(
-			c.field_methods(fields.iter(), Some(Constness::Const)),
-			c.field_methods(fields.iter(), Some(Constness::Mut)),
+			c.field_methods(
+				fields.iter().filter(|f| f.exclude_kind().is_included()),
+				Some(Constness::Const),
+			),
+			c.field_methods(fields.iter().filter(|f| f.exclude_kind().is_included()), Some(Constness::Mut)),
 		)
 	};
 	const_methods.extend(c.methods(Some(Constness::Const)));
@@ -74,7 +79,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let mut bases_mut = Vec::with_capacity(bases.len() + 1);
 		bases_mut.push(c.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned());
 		// todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
-		for b in bases.into_iter().filter(|b| !b.is_excluded() && !b.is_simple()) {
+		for b in bases
+			.iter()
+			.filter(|b| b.exclude_kind().is_included() && !b.kind().is_simple())
+		{
 			bases_const.push(b.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned());
 			bases_mut.push(b.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned());
 		}
@@ -107,7 +115,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		out = TRAIT_TPL.interpolate(&HashMap::from([
 			("const_trait_comment", const_trait_comment),
 			("mut_trait_comment", mut_trait_comment),
-			("debug", get_debug(c).into()),
+			("debug", c.get_debug().into()),
 			("rust_trait_local", c.rust_trait_name(NameStyle::decl(), Constness::Mut)),
 			(
 				"rust_trait_local_const",
@@ -116,11 +124,11 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			("rust_local", type_ref.rust_name(NameStyle::decl())),
 			(
 				"rust_extern_const",
-				type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+				type_ref.with_constness(Constness::Const).rust_extern(ExternDir::ToCpp),
 			),
 			(
 				"rust_extern_mut",
-				type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
+				type_ref.with_constness(Constness::Mut).rust_extern(ExternDir::ToCpp),
 			),
 			("trait_bases_const", trait_bases_const.into()),
 			("trait_bases_mut", trait_bases_mut.into()),
@@ -138,23 +146,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		"".to_string()
 	};
 
-	let mut bases = c.all_bases().into_iter()
-			.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
-			.collect::<Vec<_>>();
-	bases.sort_unstable_by(|a, b| {
-		a.cpp_name(CppNameStyle::Declaration)
-			.cmp(&b.cpp_name(CppNameStyle::Declaration))
-	});
-	if !class_kind.is_simple() {
+	let mut bases = all_bases(c);
+	if class_kind.is_boxed() {
 		if c.is_polymorphic() {
-			let mut descendants = c
-				.descendants()
-				.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
-				.collect::<Vec<_>>();
-			descendants.sort_unstable_by(|a, b| {
-				a.cpp_name(CppNameStyle::Declaration)
-					.cmp(&b.cpp_name(CppNameStyle::Declaration))
-			});
+			let descendants = descendants(c);
 			for d in descendants {
 				let desc_local = d.rust_name(NameStyle::decl());
 				let desc_full = d.rust_name(NameStyle::ref_());
@@ -166,15 +161,13 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			}
 		}
 		for b in &bases {
-			if !b.is_abstract() {
-				let base_local = b.rust_name(NameStyle::decl());
-				let base_full = b.rust_name(NameStyle::ref_());
-				impls += &BASE_CAST_TPL.interpolate(&HashMap::from([
-					("rust_local", rust_local.as_ref()),
-					("base_rust_local", base_local.as_ref()),
-					("base_rust_full", base_full.as_ref()),
-				]));
-			}
+			let base_local = b.rust_name(NameStyle::decl());
+			let base_full = b.rust_name(NameStyle::ref_());
+			impls += &BASE_CAST_TPL.interpolate(&HashMap::from([
+				("rust_local", rust_local.as_ref()),
+				("base_rust_local", base_local.as_ref()),
+				("base_rust_full", base_full.as_ref()),
+			]));
 		}
 	}
 
@@ -200,11 +193,11 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				("base_rust_local", base_type_ref.rust_name(NameStyle::decl())),
 				(
 					"base_rust_extern_const",
-					base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+					base_type_ref.with_constness(Constness::Const).rust_extern(ExternDir::ToCpp),
 				),
 				(
 					"base_rust_extern_mut",
-					base_type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
+					base_type_ref.with_constness(Constness::Mut).rust_extern(ExternDir::ToCpp),
 				),
 			]))
 		})
@@ -238,8 +231,11 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	let mut inherent_methods_pool = NamePool::with_capacity(method_count);
 
 	let mut needs_default_impl = false;
-	if let Some(def_cons) = mut_methods.iter().find(|m| m.is_default_constructor() && !m.is_excluded()) {
-		if def_cons.is_infallible() {
+	if let Some(def_cons) = mut_methods
+		.iter()
+		.find(|m| m.is_default_constructor() && m.exclude_kind().is_included())
+	{
+		if def_cons.return_kind().is_infallible() {
 			needs_default_impl = true;
 		}
 	}
@@ -281,16 +277,16 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 	out += &tpl.interpolate(&HashMap::from([
 		("doc_comment", Cow::Owned(doc_comment)),
-		("debug", get_debug(c).into()),
+		("debug", c.get_debug().into()),
 		("rust_local", rust_local.clone()),
 		("rust_full", c.rust_name(NameStyle::ref_())),
 		(
 			"rust_extern_const",
-			type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Const)),
+			type_ref.with_constness(Constness::Const).rust_extern(ExternDir::ToCpp),
 		),
 		(
 			"rust_extern_mut",
-			type_ref.rust_extern(ExternDir::ToCpp(ConstnessOverride::Mut)),
+			type_ref.with_constness(Constness::Mut).rust_extern(ExternDir::ToCpp),
 		),
 		("fields", fields.join("").into()),
 		("bases", bases.join("").into()),
@@ -312,8 +308,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 fn gen_rust_exports_boxed(c: &Class) -> String {
 	let fields = c.fields();
 	let mut out = String::with_capacity((fields.len() + 1) * 128);
-	for func in c.field_methods(fields.iter().filter(|f| !f.is_excluded()), None) {
-		if !func.is_excluded() {
+	for func in c.field_methods(fields.iter().filter(|f| f.exclude_kind().is_included()), None) {
+		if func.exclude_kind().is_included() {
 			out += &func.gen_rust_exports();
 		}
 	}
@@ -327,73 +323,45 @@ fn gen_cpp_boxed(c: &Class) -> String {
 	static DESCENDANT_CAST_TPL: Lazy<CompiledInterpolation> =
 		Lazy::new(|| include_str!("tpl/class/descendant_cast.tpl.cpp").compile_interpolation());
 
-	static BASE_CAST_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| include_str!("tpl/class/base_cast.tpl.cpp").compile_interpolation());
-
 	let fields = c.fields();
 	let mut out = String::with_capacity(fields.len() * 512);
-	for func in c.field_methods(fields.iter().filter(|f| !f.is_excluded()), None) {
-		if !func.is_excluded() {
+	for func in c.field_methods(fields.iter().filter(|f| f.exclude_kind().is_included()), None) {
+		if func.exclude_kind().is_included() {
 			out += &func.gen_cpp();
 		}
 	}
 
 	let mut casts = String::new();
-	if !c.is_abstract() {
-		let rust_local = c.rust_name(NameStyle::decl());
-		let mut bases = c
-			.all_bases()
-			.into_iter()
-			.filter(|b| !b.is_excluded() && !b.is_simple() && !b.is_abstract())
-			.collect::<Vec<_>>();
-		bases.sort_unstable_by(|a, b| {
-			a.cpp_name(CppNameStyle::Declaration)
-				.cmp(&b.cpp_name(CppNameStyle::Declaration))
-		});
-		if !c.is_simple() {
-			let cpp_decl = c.type_ref().cpp_arg_func_decl("instance");
-			if c.is_polymorphic() {
-				let mut descendants = c
-					.descendants()
-					.filter(|d| !d.is_excluded() && !d.is_simple() && !d.is_abstract())
-					.collect::<Vec<_>>();
-				descendants.sort_unstable_by(|a, b| {
-					a.cpp_name(CppNameStyle::Declaration)
-						.cmp(&b.cpp_name(CppNameStyle::Declaration))
-				});
-				for d in descendants {
-					let desc_rust_local = d.rust_name(NameStyle::decl());
-					let desc_cpp_ref = d.cpp_name(CppNameStyle::Reference);
-					casts += &DESCENDANT_CAST_TPL.interpolate(&HashMap::from([
-						("rust_local", rust_local.as_ref()),
-						("descendant_rust_local", desc_rust_local.as_ref()),
-						("descendant_cpp_full", desc_cpp_ref.as_ref()),
-						("cpp_decl", &cpp_decl),
-					]));
-				}
-			}
-			for b in bases {
-				let base_rust_local = b.rust_name(NameStyle::decl());
-				let base_cpp_full = b.cpp_name(CppNameStyle::Reference);
-				casts += &BASE_CAST_TPL.interpolate(&HashMap::from([
+	let rust_local = c.rust_name(NameStyle::decl());
+	let bases = all_bases(c);
+	if c.kind().is_boxed() {
+		if c.is_polymorphic() {
+			let cpp_decl = c.type_ref().cpp_self_func_decl(Constness::Mut);
+			for d in descendants(c) {
+				let desc_rust_local = d.rust_name(NameStyle::decl());
+				let desc_cpp_ref = d.cpp_name(CppNameStyle::Reference);
+				casts += &DESCENDANT_CAST_TPL.interpolate(&HashMap::from([
 					("rust_local", rust_local.as_ref()),
-					("base_rust_local", base_rust_local.as_ref()),
-					("base_cpp_full", base_cpp_full.as_ref()),
+					("descendant_rust_local", desc_rust_local.as_ref()),
+					("descendant_cpp_full", desc_cpp_ref.as_ref()),
 					("cpp_decl", &cpp_decl),
 				]));
 			}
 		}
-
-		let type_ref = c.type_ref();
-		let delete = method_delete(&rust_local, ClassDesc::from(c), c.gen_env.resolve_typeref("void"));
-		out += &BOXED_CPP_TPL.interpolate(&HashMap::from([
-			("rust_local", type_ref.rust_name(NameStyle::decl())),
-			("cpp_full", type_ref.cpp_name(CppNameStyle::Reference)),
-			("cpp_extern", type_ref.cpp_extern()),
-			("casts", casts.into()),
-			("delete", delete.into()),
-		]))
+		for b in bases {
+			casts += &method_cast_to_base(c.clone(), b, &rust_local).gen_cpp();
+		}
 	}
+
+	let type_ref = c.type_ref();
+	let delete = FuncDesc::method_delete(&rust_local, c.clone()).gen_cpp();
+	out += &BOXED_CPP_TPL.interpolate(&HashMap::from([
+		("rust_local", type_ref.rust_name(NameStyle::decl())),
+		("cpp_full", type_ref.cpp_name(CppNameStyle::Reference)),
+		("cpp_extern", type_ref.cpp_extern()),
+		("casts", casts.into()),
+		("delete", delete.into()),
+	]));
 	out
 }
 
@@ -406,13 +374,13 @@ where
 	'tu: 'ge,
 	'ge: 'f,
 {
-	let fns = fns.filter(|f| !f.is_excluded());
+	let fns = fns.filter(|f| f.exclude_kind().is_included());
 	fns.map(move |func| {
 		let mut func = Cow::Borrowed(func);
 		let mut name = func.rust_leafname(FishStyle::No);
-		name_pool.make_unique_name(&mut name);
-		if let Cow::Owned(name) = name {
-			func.to_mut().set_name_hint(Some(name));
+		if name_pool.make_unique_name(&mut name).is_changed() {
+			let name = name.into();
+			func.to_mut().set_custom_rust_leafname(Some(name));
 		}
 		func.gen_rust(opencv_version) // fixme
 	})
@@ -421,15 +389,24 @@ where
 
 impl RustElement for Class<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
-		DefaultRustNativeElement::rust_module(self)
+		match self {
+			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_module(entity),
+			Self::Desc(desc) => desc.rust_fullname.module().into(),
+		}
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultRustNativeElement::rust_name(self, style)
+		match self {
+			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_name(self, entity, style).into(),
+			Self::Desc(desc) => match style {
+				NameStyle::Declaration => desc.rust_fullname.localname().into(),
+				NameStyle::Reference(fish) => fish.apply(desc.rust_fullname.as_ref()),
+			},
+		}
 	}
 
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		if self.type_ref().as_string().is_some() {
+		if self.string_type().is_some() {
 			"String".into()
 		} else {
 			let cpp_declname = self.cpp_name(CppNameStyle::Declaration);
@@ -442,7 +419,12 @@ impl RustElement for Class<'_, '_> {
 	}
 
 	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+		match self {
+			&Self::Clang { entity, .. } => {
+				DefaultRustNativeElement::rendered_doc_comment_with_prefix(entity, prefix, opencv_version)
+			}
+			Self::Desc(_) => "".to_string(),
+		}
 	}
 }
 
@@ -453,21 +435,21 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
 		match self.kind() {
-			Kind::Simple | Kind::Boxed | Kind::BoxedForced => gen_rust_class(self, opencv_version),
-			Kind::System | Kind::Other => "".to_string(),
+			ClassKind::Simple | ClassKind::Boxed | ClassKind::BoxedForced => gen_rust_class(self, opencv_version),
+			ClassKind::System | ClassKind::Other => "".to_string(),
 		}
 	}
 
 	fn gen_rust_exports(&self) -> String {
 		let out = match self.kind() {
-			Kind::Boxed | Kind::BoxedForced => gen_rust_exports_boxed(self),
-			Kind::Simple | Kind::System | Kind::Other => "".to_string(),
+			ClassKind::Boxed | ClassKind::BoxedForced => gen_rust_exports_boxed(self),
+			ClassKind::Simple | ClassKind::System | ClassKind::Other => "".to_string(),
 		};
 
 		let mut methods = self
 			.methods(None)
 			.into_iter()
-			.filter(|m| !m.is_excluded())
+			.filter(|m| m.exclude_kind().is_included())
 			.map(|m| m.gen_rust_exports());
 
 		out + &methods.join("")
@@ -475,8 +457,8 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 	fn gen_cpp(&self) -> String {
 		let out = match self.kind() {
-			Kind::Boxed | Kind::BoxedForced => gen_cpp_boxed(self),
-			Kind::Simple | Kind::System | Kind::Other => "".to_string(),
+			ClassKind::Boxed | ClassKind::BoxedForced => gen_cpp_boxed(self),
+			ClassKind::Simple | ClassKind::System | ClassKind::Other => "".to_string(),
 		};
 
 		let methods = self.methods(None);
@@ -485,7 +467,7 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 		let mut cpp_methods: Vec<_> = methods
 			.into_iter()
-			.filter(|m| !m.is_excluded())
+			.filter(|m| m.exclude_kind().is_included())
 			.map(|m| m.gen_cpp())
 			.collect();
 
@@ -495,10 +477,10 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 			let rust_local = self.rust_name(NameStyle::decl());
 			let type_ref = self.type_ref();
 			if has_implicit_clone {
-				cpp_methods.push(method_implicit_clone(&rust_local, type_ref.clone()));
+				cpp_methods.push(method_implicit_clone(&rust_local, type_ref.clone()).gen_cpp());
 			}
 			if needs_default_ctor {
-				cpp_methods.push(method_default_new(&rust_local, type_ref));
+				cpp_methods.push(method_default_new(&rust_local, type_ref).gen_cpp());
 			}
 		}
 
@@ -506,61 +488,74 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 	}
 }
 
-fn needs_default_ctor<'r>(kind: Kind, c: &Class, mut methods: impl Iterator<Item = &'r Func<'r, 'r>>) -> bool {
-	matches!(kind, Kind::BoxedForced)
+fn needs_default_ctor<'r>(kind: ClassKind, c: &Class, mut methods: impl Iterator<Item = &'r Func<'r, 'r>>) -> bool {
+	matches!(kind, ClassKind::BoxedForced)
 		&& !c.is_abstract()
-		&& methods.all(|m| !m.kind().as_constructor().is_some() || m.is_excluded())
+		&& methods.all(|m| !m.kind().as_constructor().is_some() || m.exclude_kind().is_excluded())
 }
 
-fn method_default_new(rust_local: &str, type_ref: TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_local}_default_new").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: type_ref,
-		kind: FuncDescKind::Function,
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualFullCall("return new {{ret_type}}();".compile_interpolation()),
-		ret: FuncDescReturn::Manual("".compile_interpolation()),
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn all_bases<'tu, 'ge>(cls: &Class<'tu, 'ge>) -> Vec<Class<'tu, 'ge>> {
+	let mut out = cls.all_bases().into_iter()
+		.filter(|b| b.exclude_kind().is_included() && !b.kind().is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
+		.collect::<Vec<_>>();
+	out.sort_unstable_by(|a, b| {
+		a.cpp_name(CppNameStyle::Declaration)
+			.cmp(&b.cpp_name(CppNameStyle::Declaration))
+	});
+	out
 }
 
-fn method_implicit_clone(rust_local: &str, type_ref: TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_local}_implicit_clone").into(),
-		constness: Constness::Const,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: type_ref.clone(),
-		kind: FuncDescKind::Function,
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualFullCall("".compile_interpolation()),
-		ret: FuncDescReturn::Manual(format!("return {};", cpp_return_map(&type_ref, "*val", false).0).compile_interpolation()),
-		debug: "".to_string(),
-		arguments: vec![("val".to_string(), type_ref)],
-	}
-	.gen_cpp()
+fn descendants<'tu, 'ge>(cls: &Class<'tu, 'ge>) -> Vec<Class<'tu, 'ge>> {
+	let mut out = cls
+		.descendants()
+		.into_iter()
+		.filter(|d| d.exclude_kind().is_included() && !d.kind().is_simple())
+		.collect::<Vec<_>>();
+	out.sort_unstable_by(|a, b| {
+		a.cpp_name(CppNameStyle::Declaration)
+			.cmp(&b.cpp_name(CppNameStyle::Declaration))
+	});
+	out
 }
 
-fn method_delete(rust_local: &str, class_desc: ClassDesc, void: TypeRef) -> String {
-	CppFuncDesc {
-		extern_name: format!("cv_{rust_local}_delete").into(),
-		constness: Constness::Mut,
-		is_infallible: true,
-		is_naked_return: true,
-		return_type: void,
-		kind: FuncDescKind::InstanceMethod(class_desc),
-		type_hint: FunctionTypeHint::None,
-		call: FuncDescCppCall::ManualCall("delete instance".compile_interpolation()),
-		ret: FuncDescReturn::Auto,
-		debug: "".to_string(),
-		arguments: vec![],
-	}
-	.gen_cpp()
+fn method_default_new<'tu, 'ge>(rust_local: &str, type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::Function,
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_local}::defaultNew"),
+		"<unused>",
+		vec![],
+		FuncCppBody::ManualFull("return new {{ret_type}}();".into()),
+		type_ref,
+	))
+}
+
+fn method_implicit_clone<'tu, 'ge>(rust_local: &str, type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::Function,
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_local}::implicitClone"),
+		"<unused>",
+		vec![Field::new_desc(FieldDesc::new("val", type_ref.clone()))],
+		FuncCppBody::ManualFull(format!("return {};", cpp_return_map(&type_ref, "*val", false).0).into()),
+		type_ref,
+	))
+}
+
+fn method_cast_to_base<'tu, 'ge>(class: Class<'tu, 'ge>, base_class: Class<'tu, 'ge>, rust_local: &str) -> Func<'tu, 'ge> {
+	let base_rust_local = base_class.rust_name(NameStyle::decl());
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_local}::to_{base_rust_local}"),
+		"<unused>",
+		vec![],
+		FuncCppBody::ManualFull("return dynamic_cast<{{ret_type}}*>(instance);".into()),
+		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Class(base_class))),
+	))
 }
 
 pub trait ClassExt {

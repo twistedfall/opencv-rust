@@ -130,6 +130,17 @@ fn is_type_file(path: &Path, module: &str) -> bool {
 	})
 }
 
+fn is_type_externs_file(path: &Path, module: &str) -> bool {
+	path.file_stem().and_then(OsStr::to_str).map_or(false, |stem| {
+		let mut stem_chars = stem.chars();
+		(&mut stem_chars).take(3).all(|c| c.is_ascii_digit()) && // first 3 chars are digits
+			matches!(stem_chars.next(), Some('-')) && // dash
+			module.chars().zip(&mut stem_chars).all(|(m, s)| m == s) && // module name
+			matches!(stem_chars.next(), Some('-')) && // dash
+			stem.ends_with(".type.externs") // ends with ".type"
+	})
+}
+
 fn copy_indent(mut read: impl BufRead, mut write: impl Write, indent: &str) -> Result<()> {
 	let mut line = Vec::with_capacity(100);
 	while read.read_until(b'\n', &mut line)? != 0 {
@@ -244,14 +255,26 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 			writeln!(types_rs)?;
 		}
 
-		// merge module-specific *.externs.rs into a single sys.rs
+		// merge module-specific *.externs.rs and generated type-specific *.type.externs.rs into a single sys.rs
 		let externs_rs = OUT_DIR.join(format!("{module}.externs.rs"));
 		write_has_module(&mut sys_rs, module)?;
 		writeln!(sys_rs, "mod {module}_sys {{")?;
 		writeln!(sys_rs, "\tuse super::*;")?;
 		writeln!(sys_rs)?;
-		copy_indent(BufReader::new(File::open(&externs_rs)?), &mut sys_rs, "\t")?;
+		writeln!(sys_rs, "\textern \"C\" {{")?;
+		copy_indent(BufReader::new(File::open(&externs_rs)?), &mut sys_rs, "\t\t")?;
 		let _ = fs::remove_file(externs_rs);
+		let mut type_extern_files = files_with_extension(&OUT_DIR, "rs")?
+			.filter(|f| is_type_externs_file(f, module))
+			.collect::<Vec<_>>();
+		type_extern_files.sort_unstable();
+		for entry in type_extern_files {
+			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
+				copy_indent(BufReader::new(File::open(&entry)?), &mut sys_rs, "\t\t")?;
+			}
+			let _ = fs::remove_file(entry);
+		}
+		writeln!(sys_rs, "\t}}")?;
 		writeln!(sys_rs, "}}")?;
 		write_has_module(&mut sys_rs, module)?;
 		writeln!(sys_rs, "pub use {module}_sys::*;")?;
