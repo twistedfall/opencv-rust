@@ -795,7 +795,6 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				out.push(GeneratedType::SmartPtr(ptr));
 				out
 			}
-			Kind::Typedef(typedef) => typedef.generated_types(),
 			_ => {
 				vec![]
 			}

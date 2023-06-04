@@ -28,7 +28,7 @@ pub struct ExportConfig {
 	pub no_return: bool,
 	pub no_except: bool,
 	pub no_discard: bool,
-	// the function is used only to generate helper types using OCVRS_ONLY_DEPENDENT_TYPES
+	// the function is used to generate only the helper types using OCVRS_ONLY_DEPENDENT_TYPES
 	pub only_generated_types: bool,
 }
 

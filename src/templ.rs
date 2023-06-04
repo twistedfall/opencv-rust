@@ -88,6 +88,7 @@ macro_rules! string_array_arg {
 	};
 }
 
+#[allow(unused_macros)]
 macro_rules! string_array_arg_mut {
 	($name: ident) => {
 		let mut $name = $name.iter().map(|x| x.as_ptr() as _).collect::<::std::vec::Vec<_>>();
