@@ -1172,7 +1172,12 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 	])
 });
 
-pub static PREVENT_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["cv::dnn::MatShape"]));
+pub static PREVENT_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| {
+	HashSet::from([
+		// `MatShape` is an alias to `Vector<i32>` and this leads to duplication of definition for that type
+		"cv::dnn::MatShape",
+	])
+});
 
 #[derive(Default)]
 pub struct ModuleTweak {
@@ -1251,6 +1256,7 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 			"dnn",
 			ModuleTweak {
 				includes: vec!["dnn/dict.hpp"],
+				generate_types: vec!["std::vector<std::vector<int>>"], // Make sure that `Vector<MatShape>` is generated
 				resolve_types: vec![
 					// for specializing cv::dnn::Dict::set
 					"cv::dnn::DictValue",
