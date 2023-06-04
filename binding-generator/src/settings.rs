@@ -1149,26 +1149,29 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 
 pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str>>> = Lazy::new(|| {
 	HashMap::from([
-		(
-			"*",
-			HashMap::from([
-				("detail", "Detail"),
-				("dynafu", "Dynafu"),
-				("fisheye", "Fisheye"),
-				("kinfu", "Kinfu"),
-				("colored_kinfu", "ColoredKinfu"),
-				("linemod", "Linemod"),
-				("superres", "Superres"),
-			]),
-		),
+		("*", HashMap::from([("detail", "Detail")])),
+		("calib3d", HashMap::from([("fisheye", "Fisheye")])),
 		("cudabgsegm", HashMap::from([("cuda", "CUDA")])),
+		("cudacodec", HashMap::from([("cudacodec", "CUDA")])),
 		("cudafeatures2d", HashMap::from([("cuda", "CUDA")])),
 		("cudaimgproc", HashMap::from([("cuda", "CUDA")])),
 		("cudaobjdetect", HashMap::from([("cuda", "CUDA")])),
 		("cudaoptflow", HashMap::from([("cuda", "CUDA")])),
 		("cudastereo", HashMap::from([("cuda", "CUDA")])),
-		("mcc", HashMap::from([("mcc", "MCC")])),
 		("gapi", HashMap::from([("imgproc", "ImgProc")])),
+		("mcc", HashMap::from([("mcc", "MCC")])),
+		("rapid", HashMap::from([("rapid", "Rapid")])),
+		(
+			"rgbd",
+			HashMap::from([
+				("dynafu", "Dynafu"),
+				("kinfu", "Kinfu"),
+				("colored_kinfu", "ColoredKinfu"),
+				("linemod", "LineMod"),
+			]),
+		),
+		("stitching", HashMap::from([("fisheye", "Fisheye")])),
+		("superres", HashMap::from([("superres", "SuperRes")])),
 	])
 });
 

@@ -60,10 +60,15 @@ impl DefaultRustNativeElement {
 					break;
 				}
 				EntityKind::Namespace => {
+					let parent_namespace = parent.get_name().expect("Can't get parent name");
 					let no_skip_prefix = settings::NO_SKIP_NAMESPACE_IN_LOCALNAME
 						.get(module.as_ref())
-						.or_else(|| settings::NO_SKIP_NAMESPACE_IN_LOCALNAME.get("*"))
-						.and_then(|config| config.get(parent.get_name().expect("Can't get parent name").as_str()));
+						.and_then(|module_specific| module_specific.get(parent_namespace.as_str()))
+						.or_else(|| {
+							settings::NO_SKIP_NAMESPACE_IN_LOCALNAME
+								.get("*")
+								.and_then(|generic| generic.get(parent_namespace.as_str()))
+						});
 					if let Some(&prefix) = no_skip_prefix {
 						parts.push(prefix.to_string());
 					} else {
