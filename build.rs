@@ -11,7 +11,8 @@ use semver::{Version, VersionReq};
 
 use library::Library;
 
-use crate::docs::{handle_running_in_docsrs, GenerateFullBindings};
+use crate::binding_generator::handle_running_binding_generator;
+use crate::docs::handle_running_in_docsrs;
 use crate::generator::BindingGenerator;
 
 #[path = "build/binding-generator.rs"]
@@ -66,6 +67,11 @@ static ENV_VARS: [&str; 16] = [
 	"OCVRS_DOCS_GENERATE_DIR",
 	"DOCS_RS",
 ];
+
+pub enum GenerateFullBindings {
+	Stop,
+	Proceed,
+}
 
 fn files_with_predicate<'p>(
 	dir: &Path,
@@ -291,15 +297,10 @@ fn main() -> Result<()> {
 		return Ok(());
 	}
 
-	// Because clang can't be used from multiple threads we run the binding generator helper for each
-	// module as a separate process. Building an additional helper binary from the build script is problematic
-	// so we employ the trick and we actually run the build script itself again with some additional arguments.
-	// When those arguments are detected the build script will generate the bindings for a single
-	// OpenCV module instead of running its main logic.
 	let mut args = env::args_os().peekable();
 	let build_script_path = args.next().ok_or("Can't read build script path")?;
-	if args.peek().is_some() {
-		return binding_generator::run(args);
+	if matches!(handle_running_binding_generator(args)?, GenerateFullBindings::Stop) {
+		return Ok(());
 	}
 
 	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));

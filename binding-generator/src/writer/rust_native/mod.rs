@@ -157,10 +157,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	fn visit_class(&mut self, class: Class) {
 		self.emit_debug_log(&class);
 		if let Some(enm) = class.as_enum() {
-			self.enums.push((
-				enm.rust_name(NameStyle::decl()).into_owned(),
-				enm.gen_rust(self.opencv_version),
-			));
+			self.visit_enum(enm);
 		} else {
 			if class.is_trait() {
 				self.prelude_traits.push(format!(

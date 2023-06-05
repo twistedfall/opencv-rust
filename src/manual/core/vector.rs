@@ -286,7 +286,7 @@ where
 {
 	#[inline]
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		f.debug_list().entries(self.iter()).finish()
+		f.debug_list().entries(self).finish()
 	}
 }
 

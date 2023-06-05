@@ -8,8 +8,9 @@ use regex::{Captures, Regex};
 
 use crate::entity::WalkAction;
 use crate::renderer::{CppExternReturnRenderer, CppRenderer};
+use crate::settings;
+use crate::settings::ArgOverride;
 use crate::{
-	settings::{self, ArgOverride},
 	Class, Element, EntityExt, Enum, Function, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Tuple, Typedef, Vector,
 };
 

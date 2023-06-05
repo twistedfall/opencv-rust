@@ -1,5 +1,5 @@
 edition = "2021"
-fn_args_layout = "Tall"
+fn_params_layout = "Tall"
 force_explicit_abi = true
 hard_tabs = true
 match_arm_leading_pipes = "Never"

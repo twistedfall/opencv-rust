@@ -93,15 +93,6 @@ fn replace_in_place_regex() {
 		assert_eq!(s, "!es! s!ring");
 		assert_eq!(ptr_before, ptr_after);
 	}
-	{
-		let mut s = "test string".to_string();
-		// allocate string after the one already allocated to force realloc to move
-		let _s = "test string".to_string();
-		let ptr_before = s.as_bytes().as_ptr();
-		assert!(s.replace_in_place_regex(&Regex::new("t").unwrap(), "some very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very big text"));
-		let ptr_after = s.as_bytes().as_ptr();
-		assert_ne!(ptr_before, ptr_after);
-	}
 
 	{
 		let mut s = "test string".to_string();

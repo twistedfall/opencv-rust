@@ -50,8 +50,8 @@ impl WalkAction {
 }
 
 impl From<WalkAction> for EntityVisitResult {
-	fn from(value: WalkAction) -> Self {
-		match value {
+	fn from(action: WalkAction) -> Self {
+		match action {
 			WalkAction::Continue => Self::Continue,
 			WalkAction::Interrupt => Self::Break,
 		}
@@ -82,14 +82,8 @@ pub trait EntityExt<'tu> {
 }
 
 impl<'tu> EntityExt<'tu> for Entity<'tu> {
-	/// # Arguments
-	/// * `predicate`: returns true to continue iteration or false to stop
-	/// returns: true if predicate stopped iteration, false otherwise
 	fn walk_children_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult {
-		let res = self.visit_children(|child, _| match predicate(child) {
-			WalkAction::Continue => EntityVisitResult::Continue,
-			WalkAction::Interrupt => EntityVisitResult::Break,
-		});
+		let res = self.visit_children(|child, _| predicate(child).into());
 		if res {
 			WalkResult::Interrupted
 		} else {

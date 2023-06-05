@@ -99,7 +99,6 @@ impl<'tu> DbPopulator<'tu, '_> {
 			full_name.drain(..idx + SEP.len());
 			self.gen_env.class_constants.insert(full_name.clone(), cnst.clone());
 		}
-		self.gen_env.class_constants.insert(full_name, cnst);
 	}
 
 	fn add_used_in_smart_ptr(&mut self, func: Entity<'tu>) {

@@ -40,18 +40,7 @@ impl RustNativeGeneratedElement for Const<'_> {
 	}
 
 	fn gen_rust(&self, opencv_version: &str) -> String {
-		static STRING_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/const/string.tpl.rs").compile_interpolation());
-
-		static INT_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/const/int.tpl.rs").compile_interpolation());
-
-		static UINT_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/const/uint.tpl.rs").compile_interpolation());
-
-		static USIZE_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/const/usize.tpl.rs").compile_interpolation());
-
-		static FLOAT_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/const/float.tpl.rs").compile_interpolation());
+		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/const/rust.tpl.rs").compile_interpolation());
 
 		let parent_is_class = self.entity().get_lexical_parent().map_or(false, |p| {
 			matches!(p.get_kind(), EntityKind::ClassDecl | EntityKind::StructDecl)
@@ -63,20 +52,21 @@ impl RustNativeGeneratedElement for Const<'_> {
 		};
 
 		if let Some(value) = self.value() {
-			let tpl = if settings::CONST_TYPE_USIZE.contains(name.as_ref()) {
-				&USIZE_TPL
+			let typ = if settings::CONST_TYPE_USIZE.contains(name.as_ref()) {
+				"usize"
 			} else {
 				match value.kind {
-					ValueKind::Integer => &INT_TPL,
-					ValueKind::UnsignedInteger => &UINT_TPL,
-					ValueKind::Float => &FLOAT_TPL,
-					ValueKind::String => &STRING_TPL,
+					ValueKind::Integer => "i32",
+					ValueKind::UnsignedInteger => "u32",
+					ValueKind::Float => "f64",
+					ValueKind::String => "&str",
 				}
 			};
-			tpl.interpolate(&HashMap::from([
+			RUST_TPL.interpolate(&HashMap::from([
 				("doc_comment", Cow::Owned(self.rendered_doc_comment(opencv_version))),
 				("debug", get_debug(self).into()),
 				("name", name),
+				("type", typ.into()),
 				("value", value.to_string().into()),
 			]))
 		} else {

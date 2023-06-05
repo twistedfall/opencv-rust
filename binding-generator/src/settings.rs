@@ -668,7 +668,7 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = La
 		("cv::gapi::GFunctor", ExportConfig::export as _),
 		("cv::util::any", ExportConfig::export as _),
 		// force pure boxed
-		("cv::dnn::TextDetectionModel", ExportConfig::override_boxed as _), // marked as simple, can't be simple, but has protected constructor
+		("cv::dnn::TextDetectionModel", ExportConfig::override_boxed as _), // marked as simple, can be simple, but has protected constructor
 	])
 });
 
@@ -1264,7 +1264,6 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 					"cv::String",
 					"int64_t",
 				],
-				..Default::default()
 			},
 		),
 		(

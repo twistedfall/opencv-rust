@@ -1,4 +1,6 @@
-use std::{ffi::c_void, marker::PhantomData, mem::ManuallyDrop};
+use std::ffi::c_void;
+use std::marker::PhantomData;
+use std::mem::ManuallyDrop;
 
 pub use ptr_extern::{PtrExtern, PtrExternCtor};
 
