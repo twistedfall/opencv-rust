@@ -62,7 +62,7 @@ jobs:
           - ubuntu-22.04
           - windows-2022
         version:
-          - vcpkg: 2023.02.24
+          - vcpkg: 662dbb50e63af15baa2909b7eac5b1b87e86a0aa
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.version.vcpkg }}
