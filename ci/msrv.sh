@@ -13,4 +13,5 @@ echo "=== Target settings:"
 rustc --version
 rustc --print=cfg
 
+cargo update
 cargo check -vv --all-targets --all-features --workspace --tests
