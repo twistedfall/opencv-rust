@@ -417,6 +417,14 @@ pub mod face {
 	
 	boxed_cast_base! { BIF, core::Algorithm, cv_BIF_to_Algorithm }
 	
+	impl std::fmt::Debug for BIF {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BIF")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::face::BasicFaceRecognizer]
 	pub trait BasicFaceRecognizerTraitConst: crate::face::FaceRecognizerTraitConst {
 		fn as_raw_BasicFaceRecognizer(&self) -> *const c_void;
@@ -593,7 +601,21 @@ pub mod face {
 	impl BasicFaceRecognizer {
 	}
 	
+	boxed_cast_descendant! { BasicFaceRecognizer, crate::face::EigenFaceRecognizer, cv_BasicFaceRecognizer_to_EigenFaceRecognizer }
+	
+	boxed_cast_descendant! { BasicFaceRecognizer, crate::face::FisherFaceRecognizer, cv_BasicFaceRecognizer_to_FisherFaceRecognizer }
+	
 	boxed_cast_base! { BasicFaceRecognizer, core::Algorithm, cv_BasicFaceRecognizer_to_Algorithm }
+	
+	boxed_cast_base! { BasicFaceRecognizer, crate::face::FaceRecognizer, cv_BasicFaceRecognizer_to_FaceRecognizer }
+	
+	impl std::fmt::Debug for BasicFaceRecognizer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BasicFaceRecognizer")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::CParams]
 	pub trait CParamsTraitConst {
@@ -739,6 +761,20 @@ pub mod face {
 		
 	}
 	
+	impl std::fmt::Debug for CParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CParams")
+				.field("cascade", &crate::face::CParamsTraitConst::cascade(self))
+				.field("scale_factor", &crate::face::CParamsTraitConst::scale_factor(self))
+				.field("min_neighbors", &crate::face::CParamsTraitConst::min_neighbors(self))
+				.field("min_size", &crate::face::CParamsTraitConst::min_size(self))
+				.field("max_size", &crate::face::CParamsTraitConst::max_size(self))
+				.field("face_cascade", &crate::face::CParamsTraitConst::face_cascade(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::face::EigenFaceRecognizer]
 	pub trait EigenFaceRecognizerTraitConst: crate::face::BasicFaceRecognizerTraitConst {
 		fn as_raw_EigenFaceRecognizer(&self) -> *const c_void;
@@ -845,6 +881,18 @@ pub mod face {
 	}
 	
 	boxed_cast_base! { EigenFaceRecognizer, core::Algorithm, cv_EigenFaceRecognizer_to_Algorithm }
+	
+	boxed_cast_base! { EigenFaceRecognizer, crate::face::BasicFaceRecognizer, cv_EigenFaceRecognizer_to_BasicFaceRecognizer }
+	
+	boxed_cast_base! { EigenFaceRecognizer, crate::face::FaceRecognizer, cv_EigenFaceRecognizer_to_FaceRecognizer }
+	
+	impl std::fmt::Debug for EigenFaceRecognizer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EigenFaceRecognizer")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::FaceRecognizer]
 	pub trait FaceRecognizerTraitConst: core::AlgorithmTraitConst {
@@ -1384,7 +1432,19 @@ pub mod face {
 	impl FaceRecognizer {
 	}
 	
+	boxed_cast_descendant! { FaceRecognizer, crate::face::BasicFaceRecognizer, cv_FaceRecognizer_to_BasicFaceRecognizer }
+	
+	boxed_cast_descendant! { FaceRecognizer, crate::face::LBPHFaceRecognizer, cv_FaceRecognizer_to_LBPHFaceRecognizer }
+	
 	boxed_cast_base! { FaceRecognizer, core::Algorithm, cv_FaceRecognizer_to_Algorithm }
+	
+	impl std::fmt::Debug for FaceRecognizer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FaceRecognizer")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::Facemark]
 	pub trait FacemarkTraitConst: core::AlgorithmTraitConst {
@@ -1497,7 +1557,19 @@ pub mod face {
 	impl Facemark {
 	}
 	
+	boxed_cast_descendant! { Facemark, crate::face::FacemarkKazemi, cv_Facemark_to_FacemarkKazemi }
+	
+	boxed_cast_descendant! { Facemark, crate::face::FacemarkTrain, cv_Facemark_to_FacemarkTrain }
+	
 	boxed_cast_base! { Facemark, core::Algorithm, cv_Facemark_to_Algorithm }
+	
+	impl std::fmt::Debug for Facemark {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Facemark")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::FacemarkAAM]
 	pub trait FacemarkAAMTraitConst: crate::face::FacemarkTrainTraitConst {
@@ -1590,6 +1662,18 @@ pub mod face {
 	}
 	
 	boxed_cast_base! { FacemarkAAM, core::Algorithm, cv_FacemarkAAM_to_Algorithm }
+	
+	boxed_cast_base! { FacemarkAAM, crate::face::Facemark, cv_FacemarkAAM_to_Facemark }
+	
+	boxed_cast_base! { FacemarkAAM, crate::face::FacemarkTrain, cv_FacemarkAAM_to_FacemarkTrain }
+	
+	impl std::fmt::Debug for FacemarkAAM {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkAAM")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::FacemarkAAM_Config]
 	pub trait FacemarkAAM_ConfigTraitConst {
@@ -1697,6 +1781,18 @@ pub mod face {
 		
 	}
 	
+	impl std::fmt::Debug for FacemarkAAM_Config {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkAAM_Config")
+				.field("r", &crate::face::FacemarkAAM_ConfigTraitConst::r(self))
+				.field("t", &crate::face::FacemarkAAM_ConfigTraitConst::t(self))
+				.field("scale", &crate::face::FacemarkAAM_ConfigTraitConst::scale(self))
+				.field("model_scale_idx", &crate::face::FacemarkAAM_ConfigTraitConst::model_scale_idx(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::face::FacemarkAAM_Data]
 	pub trait FacemarkAAM_DataTraitConst {
 		fn as_raw_FacemarkAAM_Data(&self) -> *const c_void;
@@ -1748,6 +1844,15 @@ pub mod face {
 	}
 	
 	impl FacemarkAAM_Data {
+	}
+	
+	impl std::fmt::Debug for FacemarkAAM_Data {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkAAM_Data")
+				.field("s0", &crate::face::FacemarkAAM_DataTraitConst::s0(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::face::FacemarkAAM_Model]
@@ -1866,6 +1971,20 @@ pub mod face {
 	}
 	
 	impl FacemarkAAM_Model {
+	}
+	
+	impl std::fmt::Debug for FacemarkAAM_Model {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkAAM_Model")
+				.field("scales", &crate::face::FacemarkAAM_ModelTraitConst::scales(self))
+				.field("triangles", &crate::face::FacemarkAAM_ModelTraitConst::triangles(self))
+				.field("textures", &crate::face::FacemarkAAM_ModelTraitConst::textures(self))
+				.field("s0", &crate::face::FacemarkAAM_ModelTraitConst::s0(self))
+				.field("s", &crate::face::FacemarkAAM_ModelTraitConst::s(self))
+				.field("q", &crate::face::FacemarkAAM_ModelTraitConst::q(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::face::FacemarkAAM_Model_Texture]
@@ -2037,6 +2156,24 @@ pub mod face {
 	}
 	
 	impl FacemarkAAM_Model_Texture {
+	}
+	
+	impl std::fmt::Debug for FacemarkAAM_Model_Texture {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkAAM_Model_Texture")
+				.field("max_m", &crate::face::FacemarkAAM_Model_TextureTraitConst::max_m(self))
+				.field("resolution", &crate::face::FacemarkAAM_Model_TextureTraitConst::resolution(self))
+				.field("a", &crate::face::FacemarkAAM_Model_TextureTraitConst::a(self))
+				.field("a0", &crate::face::FacemarkAAM_Model_TextureTraitConst::a0(self))
+				.field("aa", &crate::face::FacemarkAAM_Model_TextureTraitConst::aa(self))
+				.field("aa0", &crate::face::FacemarkAAM_Model_TextureTraitConst::aa0(self))
+				.field("texture_idx", &crate::face::FacemarkAAM_Model_TextureTraitConst::texture_idx(self))
+				.field("base_shape", &crate::face::FacemarkAAM_Model_TextureTraitConst::base_shape(self))
+				.field("ind1", &crate::face::FacemarkAAM_Model_TextureTraitConst::ind1(self))
+				.field("ind2", &crate::face::FacemarkAAM_Model_TextureTraitConst::ind2(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::face::FacemarkAAM_Params]
@@ -2232,6 +2369,24 @@ pub mod face {
 		
 	}
 	
+	impl std::fmt::Debug for FacemarkAAM_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkAAM_Params")
+				.field("model_filename", &crate::face::FacemarkAAM_ParamsTraitConst::model_filename(self))
+				.field("m", &crate::face::FacemarkAAM_ParamsTraitConst::m(self))
+				.field("n", &crate::face::FacemarkAAM_ParamsTraitConst::n(self))
+				.field("n_iter", &crate::face::FacemarkAAM_ParamsTraitConst::n_iter(self))
+				.field("verbose", &crate::face::FacemarkAAM_ParamsTraitConst::verbose(self))
+				.field("save_model", &crate::face::FacemarkAAM_ParamsTraitConst::save_model(self))
+				.field("max_m", &crate::face::FacemarkAAM_ParamsTraitConst::max_m(self))
+				.field("max_n", &crate::face::FacemarkAAM_ParamsTraitConst::max_n(self))
+				.field("texture_max_m", &crate::face::FacemarkAAM_ParamsTraitConst::texture_max_m(self))
+				.field("scales", &crate::face::FacemarkAAM_ParamsTraitConst::scales(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::face::FacemarkKazemi]
 	pub trait FacemarkKazemiTraitConst: crate::face::FacemarkTraitConst {
 		fn as_raw_FacemarkKazemi(&self) -> *const c_void;
@@ -2348,6 +2503,16 @@ pub mod face {
 	}
 	
 	boxed_cast_base! { FacemarkKazemi, core::Algorithm, cv_FacemarkKazemi_to_Algorithm }
+	
+	boxed_cast_base! { FacemarkKazemi, crate::face::Facemark, cv_FacemarkKazemi_to_Facemark }
+	
+	impl std::fmt::Debug for FacemarkKazemi {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkKazemi")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::FacemarkKazemi_Params]
 	pub trait FacemarkKazemi_ParamsTraitConst {
@@ -2527,6 +2692,23 @@ pub mod face {
 		
 	}
 	
+	impl std::fmt::Debug for FacemarkKazemi_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkKazemi_Params")
+				.field("cascade_depth", &crate::face::FacemarkKazemi_ParamsTraitConst::cascade_depth(self))
+				.field("tree_depth", &crate::face::FacemarkKazemi_ParamsTraitConst::tree_depth(self))
+				.field("num_trees_per_cascade_level", &crate::face::FacemarkKazemi_ParamsTraitConst::num_trees_per_cascade_level(self))
+				.field("learning_rate", &crate::face::FacemarkKazemi_ParamsTraitConst::learning_rate(self))
+				.field("oversampling_amount", &crate::face::FacemarkKazemi_ParamsTraitConst::oversampling_amount(self))
+				.field("num_test_coordinates", &crate::face::FacemarkKazemi_ParamsTraitConst::num_test_coordinates(self))
+				.field("lambda", &crate::face::FacemarkKazemi_ParamsTraitConst::lambda(self))
+				.field("num_test_splits", &crate::face::FacemarkKazemi_ParamsTraitConst::num_test_splits(self))
+				.field("configfile", &crate::face::FacemarkKazemi_ParamsTraitConst::configfile(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::face::FacemarkLBF]
 	pub trait FacemarkLBFTraitConst: crate::face::FacemarkTrainTraitConst {
 		fn as_raw_FacemarkLBF(&self) -> *const c_void;
@@ -2603,6 +2785,18 @@ pub mod face {
 	}
 	
 	boxed_cast_base! { FacemarkLBF, core::Algorithm, cv_FacemarkLBF_to_Algorithm }
+	
+	boxed_cast_base! { FacemarkLBF, crate::face::Facemark, cv_FacemarkLBF_to_Facemark }
+	
+	boxed_cast_base! { FacemarkLBF, crate::face::FacemarkTrain, cv_FacemarkLBF_to_FacemarkTrain }
+	
+	impl std::fmt::Debug for FacemarkLBF {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkLBF")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::FacemarkLBF_Params]
 	pub trait FacemarkLBF_ParamsTraitConst {
@@ -2862,6 +3056,29 @@ pub mod face {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for FacemarkLBF_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkLBF_Params")
+				.field("shape_offset", &crate::face::FacemarkLBF_ParamsTraitConst::shape_offset(self))
+				.field("cascade_face", &crate::face::FacemarkLBF_ParamsTraitConst::cascade_face(self))
+				.field("verbose", &crate::face::FacemarkLBF_ParamsTraitConst::verbose(self))
+				.field("n_landmarks", &crate::face::FacemarkLBF_ParamsTraitConst::n_landmarks(self))
+				.field("init_shape_n", &crate::face::FacemarkLBF_ParamsTraitConst::init_shape_n(self))
+				.field("stages_n", &crate::face::FacemarkLBF_ParamsTraitConst::stages_n(self))
+				.field("tree_n", &crate::face::FacemarkLBF_ParamsTraitConst::tree_n(self))
+				.field("tree_depth", &crate::face::FacemarkLBF_ParamsTraitConst::tree_depth(self))
+				.field("bagging_overlap", &crate::face::FacemarkLBF_ParamsTraitConst::bagging_overlap(self))
+				.field("model_filename", &crate::face::FacemarkLBF_ParamsTraitConst::model_filename(self))
+				.field("save_model", &crate::face::FacemarkLBF_ParamsTraitConst::save_model(self))
+				.field("seed", &crate::face::FacemarkLBF_ParamsTraitConst::seed(self))
+				.field("feats_m", &crate::face::FacemarkLBF_ParamsTraitConst::feats_m(self))
+				.field("radius_m", &crate::face::FacemarkLBF_ParamsTraitConst::radius_m(self))
+				.field("detect_roi", &crate::face::FacemarkLBF_ParamsTraitConst::detect_roi(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::face::FacemarkTrain]
@@ -3125,7 +3342,21 @@ pub mod face {
 	impl FacemarkTrain {
 	}
 	
+	boxed_cast_descendant! { FacemarkTrain, crate::face::FacemarkAAM, cv_FacemarkTrain_to_FacemarkAAM }
+	
+	boxed_cast_descendant! { FacemarkTrain, crate::face::FacemarkLBF, cv_FacemarkTrain_to_FacemarkLBF }
+	
 	boxed_cast_base! { FacemarkTrain, core::Algorithm, cv_FacemarkTrain_to_Algorithm }
+	
+	boxed_cast_base! { FacemarkTrain, crate::face::Facemark, cv_FacemarkTrain_to_Facemark }
+	
+	impl std::fmt::Debug for FacemarkTrain {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FacemarkTrain")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::FisherFaceRecognizer]
 	pub trait FisherFaceRecognizerTraitConst: crate::face::BasicFaceRecognizerTraitConst {
@@ -3234,6 +3465,18 @@ pub mod face {
 	}
 	
 	boxed_cast_base! { FisherFaceRecognizer, core::Algorithm, cv_FisherFaceRecognizer_to_Algorithm }
+	
+	boxed_cast_base! { FisherFaceRecognizer, crate::face::BasicFaceRecognizer, cv_FisherFaceRecognizer_to_BasicFaceRecognizer }
+	
+	boxed_cast_base! { FisherFaceRecognizer, crate::face::FaceRecognizer, cv_FisherFaceRecognizer_to_FaceRecognizer }
+	
+	impl std::fmt::Debug for FisherFaceRecognizer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FisherFaceRecognizer")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::LBPHFaceRecognizer]
 	pub trait LBPHFaceRecognizerTraitConst: crate::face::FaceRecognizerTraitConst {
@@ -3470,6 +3713,16 @@ pub mod face {
 	
 	boxed_cast_base! { LBPHFaceRecognizer, core::Algorithm, cv_LBPHFaceRecognizer_to_Algorithm }
 	
+	boxed_cast_base! { LBPHFaceRecognizer, crate::face::FaceRecognizer, cv_LBPHFaceRecognizer_to_FaceRecognizer }
+	
+	impl std::fmt::Debug for LBPHFaceRecognizer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LBPHFaceRecognizer")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::face::MACE]
 	pub trait MACETraitConst: core::AlgorithmTraitConst {
 		fn as_raw_MACE(&self) -> *const c_void;
@@ -3527,7 +3780,7 @@ pub mod face {
 	///    useful for authentication with (cancellable) biometrical features.
 	///    (does not need many positives to train (10-50), and no negatives at all, also robust to noise/salting)
 	/// 
-	///    see also: [Savvides04](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Savvides04)
+	///    see also: [Savvides04](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Savvides04)
 	/// 
 	///    this implementation is largely based on: <https://code.google.com/archive/p/pam-face-authentication> (GSOC 2009)
 	/// 
@@ -3647,6 +3900,14 @@ pub mod face {
 	
 	boxed_cast_base! { MACE, core::Algorithm, cv_MACE_to_Algorithm }
 	
+	impl std::fmt::Debug for MACE {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MACE")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::face::PredictCollector]
 	pub trait PredictCollectorTraitConst {
 		fn as_raw_PredictCollector(&self) -> *const c_void;
@@ -3713,6 +3974,14 @@ pub mod face {
 	}
 	
 	boxed_cast_descendant! { PredictCollector, crate::face::StandardCollector, cv_PredictCollector_to_StandardCollector }
+	
+	impl std::fmt::Debug for PredictCollector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PredictCollector")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::face::StandardCollector]
 	pub trait StandardCollectorTraitConst: crate::face::PredictCollectorTraitConst {
@@ -3851,6 +4120,16 @@ pub mod face {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { StandardCollector, crate::face::PredictCollector, cv_StandardCollector_to_PredictCollector }
+	
+	impl std::fmt::Debug for StandardCollector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StandardCollector")
+				.finish()
+		}
 	}
 	
 	#[repr(C)]

@@ -291,7 +291,7 @@ pub mod viz {
 		Ok(ret)
 	}
 	
-	/// takes vector<Affine3<T>> with T = float/dobule and loads poses from sequence of files
+	/// takes vector<Affine3<T>> with T = float/double and loads poses from sequence of files
 	/// 
 	/// ## Parameters
 	/// * traj: Output array containing a lists of poses. It can be
@@ -373,7 +373,7 @@ pub mod viz {
 		Ok(ret)
 	}
 	
-	/// takes vector<Affine3<T>> with T = float/dobule and writes to a sequence of files with given filename format
+	/// takes vector<Affine3<T>> with T = float/double and writes to a sequence of files with given filename format
 	/// ## Parameters
 	/// * traj: Trajectory containing a list of poses. It can be
 	///          - std::vector<cv::Mat>, each cv::Mat is of type CV_32F16 or CV_64FC16
@@ -643,6 +643,14 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Camera {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Camera")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::viz::Color]
@@ -1087,6 +1095,14 @@ pub mod viz {
 		
 	}
 	
+	impl std::fmt::Debug for Color {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Color")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::KeyboardEvent]
 	pub trait KeyboardEventTraitConst {
 		fn as_raw_KeyboardEvent(&self) -> *const c_void;
@@ -1195,6 +1211,18 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for KeyboardEvent {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KeyboardEvent")
+				.field("action", &crate::viz::KeyboardEventTraitConst::action(self))
+				.field("symbol", &crate::viz::KeyboardEventTraitConst::symbol(self))
+				.field("code", &crate::viz::KeyboardEventTraitConst::code(self))
+				.field("modifiers", &crate::viz::KeyboardEventTraitConst::modifiers(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::viz::Mesh]
@@ -1361,8 +1389,22 @@ pub mod viz {
 	impl Clone for Mesh {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Mesh_implicit_clone(val: extern_send!(Mesh)) -> extern_receive!(Mesh: 'static); }
-			unsafe { Self::from_raw(cv_Mesh_implicit_clone(self.as_raw_Mesh())) }
+			extern "C" { fn cv_Mesh_implicitClone_const_Mesh(val: extern_send!(Mesh)) -> extern_receive!(Mesh: 'static); }
+			unsafe { Self::from_raw(cv_Mesh_implicitClone_const_Mesh(self.as_raw_Mesh())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Mesh {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Mesh")
+				.field("cloud", &crate::viz::MeshTraitConst::cloud(self))
+				.field("colors", &crate::viz::MeshTraitConst::colors(self))
+				.field("normals", &crate::viz::MeshTraitConst::normals(self))
+				.field("polygons", &crate::viz::MeshTraitConst::polygons(self))
+				.field("texture", &crate::viz::MeshTraitConst::texture(self))
+				.field("tcoords", &crate::viz::MeshTraitConst::tcoords(self))
+				.finish()
 		}
 	}
 	
@@ -1477,6 +1519,18 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for MouseEvent {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MouseEvent")
+				.field("typ", &crate::viz::MouseEventTraitConst::typ(self))
+				.field("button", &crate::viz::MouseEventTraitConst::button(self))
+				.field("pointer", &crate::viz::MouseEventTraitConst::pointer(self))
+				.field("modifiers", &crate::viz::MouseEventTraitConst::modifiers(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::viz::Viz3d]
@@ -2120,6 +2174,14 @@ pub mod viz {
 		
 	}
 	
+	impl std::fmt::Debug for Viz3d {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Viz3d")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WArrow]
 	pub trait WArrowTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WArrow(&self) -> *const c_void;
@@ -2204,6 +2266,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WArrow, crate::viz::Widget3D, cv_WArrow_to_Widget3D }
 	
+	impl std::fmt::Debug for WArrow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WArrow")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WCameraPosition]
 	pub trait WCameraPositionTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WCameraPosition(&self) -> *const c_void;
@@ -2260,7 +2330,7 @@ pub mod viz {
 	impl WCameraPosition {
 		/// Creates camera coordinate frame at the origin.
 		/// 
-		/// ![Camera coordinate frame](https://docs.opencv.org/4.7.0/cpw1.png)
+		/// ![Camera coordinate frame](https://docs.opencv.org/4.8.0/cpw1.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2282,7 +2352,7 @@ pub mod viz {
 		/// 
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K.
 		/// 
-		/// ![Camera viewing frustum](https://docs.opencv.org/4.7.0/cpw2.png)
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.0/cpw2.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2305,7 +2375,7 @@ pub mod viz {
 		/// 
 		/// Creates viewing frustum of the camera based on its field of view fov.
 		/// 
-		/// ![Camera viewing frustum](https://docs.opencv.org/4.7.0/cpw2.png)
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.0/cpw2.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2331,7 +2401,7 @@ pub mod viz {
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 		/// the far end plane.
 		/// 
-		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.7.0/cpw3.png)
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.0/cpw3.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2358,7 +2428,7 @@ pub mod viz {
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 		/// the far end plane.
 		/// 
-		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.7.0/cpw3.png)
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.0/cpw3.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2379,6 +2449,14 @@ pub mod viz {
 	boxed_cast_base! { WCameraPosition, crate::viz::Widget, cv_WCameraPosition_to_Widget }
 	
 	boxed_cast_base! { WCameraPosition, crate::viz::Widget3D, cv_WCameraPosition_to_Widget3D }
+	
+	impl std::fmt::Debug for WCameraPosition {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCameraPosition")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WCircle]
 	pub trait WCircleTraitConst: crate::viz::Widget3DTraitConst {
@@ -2481,6 +2559,14 @@ pub mod viz {
 	boxed_cast_base! { WCircle, crate::viz::Widget, cv_WCircle_to_Widget }
 	
 	boxed_cast_base! { WCircle, crate::viz::Widget3D, cv_WCircle_to_Widget3D }
+	
+	impl std::fmt::Debug for WCircle {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCircle")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WCloud]
 	pub trait WCloudTraitConst: crate::viz::Widget3DTraitConst {
@@ -2624,6 +2710,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WCloud, crate::viz::Widget3D, cv_WCloud_to_Widget3D }
 	
+	impl std::fmt::Debug for WCloud {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCloud")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WCloudCollection]
 	pub trait WCloudCollectionTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WCloudCollection(&self) -> *const c_void;
@@ -2748,6 +2842,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WCloudCollection, crate::viz::Widget3D, cv_WCloudCollection_to_Widget3D }
 	
+	impl std::fmt::Debug for WCloudCollection {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCloudCollection")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WCloudNormals]
 	pub trait WCloudNormalsTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WCloudNormals(&self) -> *const c_void;
@@ -2835,6 +2937,14 @@ pub mod viz {
 	boxed_cast_base! { WCloudNormals, crate::viz::Widget, cv_WCloudNormals_to_Widget }
 	
 	boxed_cast_base! { WCloudNormals, crate::viz::Widget3D, cv_WCloudNormals_to_Widget3D }
+	
+	impl std::fmt::Debug for WCloudNormals {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCloudNormals")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WCone]
 	pub trait WConeTraitConst: crate::viz::Widget3DTraitConst {
@@ -2939,6 +3049,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WCone, crate::viz::Widget3D, cv_WCone_to_Widget3D }
 	
+	impl std::fmt::Debug for WCone {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCone")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WCoordinateSystem]
 	pub trait WCoordinateSystemTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WCoordinateSystem(&self) -> *const c_void;
@@ -3016,6 +3134,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget3D, cv_WCoordinateSystem_to_Widget3D }
 	
+	impl std::fmt::Debug for WCoordinateSystem {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCoordinateSystem")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WCube]
 	pub trait WCubeTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WCube(&self) -> *const c_void;
@@ -3078,7 +3204,7 @@ pub mod viz {
 		/// * wire_frame: If true, cube is represented as wireframe.
 		/// * color: Color of the cube.
 		/// 
-		/// ![Cube Widget](https://docs.opencv.org/4.7.0/cube_widget.png)
+		/// ![Cube Widget](https://docs.opencv.org/4.8.0/cube_widget.png)
 		/// 
 		/// ## C++ default parameters
 		/// * min_point: Vec3d::all(-0.5)
@@ -3100,6 +3226,14 @@ pub mod viz {
 	boxed_cast_base! { WCube, crate::viz::Widget, cv_WCube_to_Widget }
 	
 	boxed_cast_base! { WCube, crate::viz::Widget3D, cv_WCube_to_Widget3D }
+	
+	impl std::fmt::Debug for WCube {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCube")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WCylinder]
 	pub trait WCylinderTraitConst: crate::viz::Widget3DTraitConst {
@@ -3182,6 +3316,14 @@ pub mod viz {
 	boxed_cast_base! { WCylinder, crate::viz::Widget, cv_WCylinder_to_Widget }
 	
 	boxed_cast_base! { WCylinder, crate::viz::Widget3D, cv_WCylinder_to_Widget3D }
+	
+	impl std::fmt::Debug for WCylinder {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCylinder")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WGrid]
 	pub trait WGridTraitConst: crate::viz::Widget3DTraitConst {
@@ -3279,6 +3421,14 @@ pub mod viz {
 	boxed_cast_base! { WGrid, crate::viz::Widget, cv_WGrid_to_Widget }
 	
 	boxed_cast_base! { WGrid, crate::viz::Widget3D, cv_WGrid_to_Widget3D }
+	
+	impl std::fmt::Debug for WGrid {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WGrid")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WImage3D]
 	pub trait WImage3DTraitConst: crate::viz::Widget3DTraitConst {
@@ -3402,6 +3552,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WImage3D, crate::viz::Widget3D, cv_WImage3D_to_Widget3D }
 	
+	impl std::fmt::Debug for WImage3D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WImage3D")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WImageOverlay]
 	pub trait WImageOverlayTraitConst: crate::viz::Widget2DTraitConst {
 		fn as_raw_WImageOverlay(&self) -> *const c_void;
@@ -3492,6 +3650,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WImageOverlay, crate::viz::Widget2D, cv_WImageOverlay_to_Widget2D }
 	
+	impl std::fmt::Debug for WImageOverlay {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WImageOverlay")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WLine]
 	pub trait WLineTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WLine(&self) -> *const c_void;
@@ -3570,6 +3736,14 @@ pub mod viz {
 	boxed_cast_base! { WLine, crate::viz::Widget, cv_WLine_to_Widget }
 	
 	boxed_cast_base! { WLine, crate::viz::Widget3D, cv_WLine_to_Widget3D }
+	
+	impl std::fmt::Debug for WLine {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WLine")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WMesh]
 	pub trait WMeshTraitConst: crate::viz::Widget3DTraitConst {
@@ -3665,6 +3839,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WMesh, crate::viz::Widget3D, cv_WMesh_to_Widget3D }
 	
+	impl std::fmt::Debug for WMesh {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WMesh")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WPaintedCloud]
 	pub trait WPaintedCloudTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WPaintedCloud(&self) -> *const c_void;
@@ -3759,6 +3941,14 @@ pub mod viz {
 	boxed_cast_base! { WPaintedCloud, crate::viz::Widget, cv_WPaintedCloud_to_Widget }
 	
 	boxed_cast_base! { WPaintedCloud, crate::viz::Widget3D, cv_WPaintedCloud_to_Widget3D }
+	
+	impl std::fmt::Debug for WPaintedCloud {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WPaintedCloud")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WPlane]
 	pub trait WPlaneTraitConst: crate::viz::Widget3DTraitConst {
@@ -3861,6 +4051,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WPlane, crate::viz::Widget3D, cv_WPlane_to_Widget3D }
 	
+	impl std::fmt::Debug for WPlane {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WPlane")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WPolyLine]
 	pub trait WPolyLineTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WPolyLine(&self) -> *const c_void;
@@ -3952,6 +4150,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WPolyLine, crate::viz::Widget3D, cv_WPolyLine_to_Widget3D }
 	
+	impl std::fmt::Debug for WPolyLine {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WPolyLine")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WSphere]
 	pub trait WSphereTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WSphere(&self) -> *const c_void;
@@ -4032,6 +4238,14 @@ pub mod viz {
 	boxed_cast_base! { WSphere, crate::viz::Widget, cv_WSphere_to_Widget }
 	
 	boxed_cast_base! { WSphere, crate::viz::Widget3D, cv_WSphere_to_Widget3D }
+	
+	impl std::fmt::Debug for WSphere {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WSphere")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WText]
 	pub trait WTextTraitConst: crate::viz::Widget2DTraitConst {
@@ -4139,6 +4353,14 @@ pub mod viz {
 	boxed_cast_base! { WText, crate::viz::Widget, cv_WText_to_Widget }
 	
 	boxed_cast_base! { WText, crate::viz::Widget2D, cv_WText_to_Widget2D }
+	
+	impl std::fmt::Debug for WText {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WText")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WText3D]
 	pub trait WText3DTraitConst: crate::viz::Widget3DTraitConst {
@@ -4249,6 +4471,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WText3D, crate::viz::Widget3D, cv_WText3D_to_Widget3D }
 	
+	impl std::fmt::Debug for WText3D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WText3D")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WTrajectory]
 	pub trait WTrajectoryTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WTrajectory(&self) -> *const c_void;
@@ -4337,6 +4567,14 @@ pub mod viz {
 	boxed_cast_base! { WTrajectory, crate::viz::Widget, cv_WTrajectory_to_Widget }
 	
 	boxed_cast_base! { WTrajectory, crate::viz::Widget3D, cv_WTrajectory_to_Widget3D }
+	
+	impl std::fmt::Debug for WTrajectory {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WTrajectory")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WTrajectoryFrustums]
 	pub trait WTrajectoryFrustumsTraitConst: crate::viz::Widget3DTraitConst {
@@ -4446,6 +4684,14 @@ pub mod viz {
 	
 	boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget3D, cv_WTrajectoryFrustums_to_Widget3D }
 	
+	impl std::fmt::Debug for WTrajectoryFrustums {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WTrajectoryFrustums")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::WTrajectorySpheres]
 	pub trait WTrajectorySpheresTraitConst: crate::viz::Widget3DTraitConst {
 		fn as_raw_WTrajectorySpheres(&self) -> *const c_void;
@@ -4533,6 +4779,14 @@ pub mod viz {
 	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget, cv_WTrajectorySpheres_to_Widget }
 	
 	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget3D, cv_WTrajectorySpheres_to_Widget3D }
+	
+	impl std::fmt::Debug for WTrajectorySpheres {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WTrajectorySpheres")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::WWidgetMerger]
 	pub trait WWidgetMergerTraitConst: crate::viz::Widget3DTraitConst {
@@ -4631,6 +4885,14 @@ pub mod viz {
 	boxed_cast_base! { WWidgetMerger, crate::viz::Widget, cv_WWidgetMerger_to_Widget }
 	
 	boxed_cast_base! { WWidgetMerger, crate::viz::Widget3D, cv_WWidgetMerger_to_Widget3D }
+	
+	impl std::fmt::Debug for WWidgetMerger {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WWidgetMerger")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::Widget]
 	pub trait WidgetTraitConst {
@@ -4775,6 +5037,14 @@ pub mod viz {
 		
 	}
 	
+	impl std::fmt::Debug for Widget {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Widget")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::viz::Widget2D]
 	pub trait Widget2DTraitConst: crate::viz::WidgetTraitConst {
 		fn as_raw_Widget2D(&self) -> *const c_void;
@@ -4847,6 +5117,14 @@ pub mod viz {
 	}
 	
 	boxed_cast_base! { Widget2D, crate::viz::Widget, cv_Widget2D_to_Widget }
+	
+	impl std::fmt::Debug for Widget2D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Widget2D")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::viz::Widget3D]
 	pub trait Widget3DTraitConst: crate::viz::WidgetTraitConst {
@@ -4969,4 +5247,12 @@ pub mod viz {
 	}
 	
 	boxed_cast_base! { Widget3D, crate::viz::Widget, cv_Widget3D_to_Widget }
+	
+	impl std::fmt::Debug for Widget3D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Widget3D")
+				.finish()
+		}
+	}
 }

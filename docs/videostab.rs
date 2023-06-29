@@ -3,7 +3,7 @@ pub mod videostab {
 	//! 
 	//! The video stabilization module contains a set of functions and classes that can be used to solve the
 	//! problem of video stabilization. There are a few methods implemented, most of them are described in
-	//! the papers [OF06](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
+	//! the papers [OF06](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 	//! paper methods.
 	//! 
 	//! ### References
@@ -21,7 +21,7 @@ pub mod videostab {
 	//! 
 	//!          # Fast Marching Method
 	//! 
-	//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
+	//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 	//! color inpainting. The method is implemented is a flexible way and it's made public for other users.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
@@ -227,6 +227,16 @@ pub mod videostab {
 	impl ColorAverageInpainter {
 	}
 	
+	boxed_cast_base! { ColorAverageInpainter, crate::videostab::InpainterBase, cv_ColorAverageInpainter_to_InpainterBase }
+	
+	impl std::fmt::Debug for ColorAverageInpainter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColorAverageInpainter")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::ColorInpainter]
 	pub trait ColorInpainterTraitConst: crate::videostab::InpainterBaseTraitConst {
 		fn as_raw_ColorInpainter(&self) -> *const c_void;
@@ -294,6 +304,16 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { ColorInpainter, crate::videostab::InpainterBase, cv_ColorInpainter_to_InpainterBase }
+	
+	impl std::fmt::Debug for ColorInpainter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColorInpainter")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::ConsistentMosaicInpainter]
@@ -378,6 +398,16 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { ConsistentMosaicInpainter, crate::videostab::InpainterBase, cv_ConsistentMosaicInpainter_to_InpainterBase }
+	
+	impl std::fmt::Debug for ConsistentMosaicInpainter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ConsistentMosaicInpainter")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::DeblurerBase]
@@ -507,6 +537,14 @@ pub mod videostab {
 	
 	boxed_cast_descendant! { DeblurerBase, crate::videostab::WeightingDeblurer, cv_DeblurerBase_to_WeightingDeblurer }
 	
+	impl std::fmt::Debug for DeblurerBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DeblurerBase")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::DensePyrLkOptFlowEstimatorGpu]
 	pub trait DensePyrLkOptFlowEstimatorGpuTraitConst: crate::videostab::IDenseOptFlowEstimatorTraitConst + crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst {
 		fn as_raw_DensePyrLkOptFlowEstimatorGpu(&self) -> *const c_void;
@@ -586,7 +624,17 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::IDenseOptFlowEstimator, cv_DensePyrLkOptFlowEstimatorGpu_to_IDenseOptFlowEstimator }
+	
 	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_DensePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
+	
+	impl std::fmt::Debug for DensePyrLkOptFlowEstimatorGpu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DensePyrLkOptFlowEstimatorGpu")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::FastMarchingMethod]
 	pub trait FastMarchingMethodTraitConst {
@@ -650,6 +698,14 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for FastMarchingMethod {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FastMarchingMethod")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::FromFileMotionReader]
@@ -720,6 +776,16 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { FromFileMotionReader, crate::videostab::ImageMotionEstimatorBase, cv_FromFileMotionReader_to_ImageMotionEstimatorBase }
+	
+	impl std::fmt::Debug for FromFileMotionReader {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FromFileMotionReader")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::GaussianMotionFilter]
@@ -829,6 +895,18 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { GaussianMotionFilter, crate::videostab::IMotionStabilizer, cv_GaussianMotionFilter_to_IMotionStabilizer }
+	
+	boxed_cast_base! { GaussianMotionFilter, crate::videostab::MotionFilterBase, cv_GaussianMotionFilter_to_MotionFilterBase }
+	
+	impl std::fmt::Debug for GaussianMotionFilter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GaussianMotionFilter")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::IDenseOptFlowEstimator]
 	pub trait IDenseOptFlowEstimatorTraitConst {
 		fn as_raw_IDenseOptFlowEstimator(&self) -> *const c_void;
@@ -883,6 +961,14 @@ pub mod videostab {
 	}
 	
 	boxed_cast_descendant! { IDenseOptFlowEstimator, crate::videostab::DensePyrLkOptFlowEstimatorGpu, cv_IDenseOptFlowEstimator_to_DensePyrLkOptFlowEstimatorGpu }
+	
+	impl std::fmt::Debug for IDenseOptFlowEstimator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IDenseOptFlowEstimator")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::IFrameSource]
 	pub trait IFrameSourceTraitConst {
@@ -952,6 +1038,14 @@ pub mod videostab {
 	
 	boxed_cast_descendant! { IFrameSource, crate::videostab::VideoFileSource, cv_IFrameSource_to_VideoFileSource }
 	
+	impl std::fmt::Debug for IFrameSource {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IFrameSource")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::ILog]
 	pub trait ILogTraitConst {
 		fn as_raw_ILog(&self) -> *const c_void;
@@ -1005,6 +1099,14 @@ pub mod videostab {
 	
 	boxed_cast_descendant! { ILog, crate::videostab::NullLog, cv_ILog_to_NullLog }
 	
+	impl std::fmt::Debug for ILog {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ILog")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::IMotionStabilizer]
 	pub trait IMotionStabilizerTraitConst {
 		fn as_raw_IMotionStabilizer(&self) -> *const c_void;
@@ -1056,7 +1158,17 @@ pub mod videostab {
 	
 	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::LpMotionStabilizer, cv_IMotionStabilizer_to_LpMotionStabilizer }
 	
+	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionFilterBase, cv_IMotionStabilizer_to_MotionFilterBase }
+	
 	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionStabilizationPipeline, cv_IMotionStabilizer_to_MotionStabilizationPipeline }
+	
+	impl std::fmt::Debug for IMotionStabilizer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IMotionStabilizer")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::IOutlierRejector]
 	pub trait IOutlierRejectorTraitConst {
@@ -1112,6 +1224,14 @@ pub mod videostab {
 	boxed_cast_descendant! { IOutlierRejector, crate::videostab::NullOutlierRejector, cv_IOutlierRejector_to_NullOutlierRejector }
 	
 	boxed_cast_descendant! { IOutlierRejector, crate::videostab::TranslationBasedLocalOutlierRejector, cv_IOutlierRejector_to_TranslationBasedLocalOutlierRejector }
+	
+	impl std::fmt::Debug for IOutlierRejector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IOutlierRejector")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::ISparseOptFlowEstimator]
 	pub trait ISparseOptFlowEstimatorTraitConst {
@@ -1170,6 +1290,14 @@ pub mod videostab {
 	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimator, cv_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimator }
 	
 	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimatorGpu }
+	
+	impl std::fmt::Debug for ISparseOptFlowEstimator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ISparseOptFlowEstimator")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::ImageMotionEstimatorBase]
 	pub trait ImageMotionEstimatorBaseTraitConst {
@@ -1258,6 +1386,14 @@ pub mod videostab {
 	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::KeypointBasedMotionEstimatorGpu, cv_ImageMotionEstimatorBase_to_KeypointBasedMotionEstimatorGpu }
 	
 	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::ToFileMotionWriter, cv_ImageMotionEstimatorBase_to_ToFileMotionWriter }
+	
+	impl std::fmt::Debug for ImageMotionEstimatorBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ImageMotionEstimatorBase")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::InpainterBase]
 	pub trait InpainterBaseTraitConst {
@@ -1431,6 +1567,14 @@ pub mod videostab {
 	
 	boxed_cast_descendant! { InpainterBase, crate::videostab::NullInpainter, cv_InpainterBase_to_NullInpainter }
 	
+	impl std::fmt::Debug for InpainterBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("InpainterBase")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::InpaintingPipeline]
 	pub trait InpaintingPipelineTraitConst: crate::videostab::InpainterBaseTraitConst {
 		fn as_raw_InpaintingPipeline(&self) -> *const c_void;
@@ -1557,6 +1701,16 @@ pub mod videostab {
 	}
 	
 	impl InpaintingPipeline {
+	}
+	
+	boxed_cast_base! { InpaintingPipeline, crate::videostab::InpainterBase, cv_InpaintingPipeline_to_InpainterBase }
+	
+	impl std::fmt::Debug for InpaintingPipeline {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("InpaintingPipeline")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::KeypointBasedMotionEstimator]
@@ -1729,6 +1883,16 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { KeypointBasedMotionEstimator, crate::videostab::ImageMotionEstimatorBase, cv_KeypointBasedMotionEstimator_to_ImageMotionEstimatorBase }
+	
+	impl std::fmt::Debug for KeypointBasedMotionEstimator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KeypointBasedMotionEstimator")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::KeypointBasedMotionEstimatorGpu]
 	pub trait KeypointBasedMotionEstimatorGpuTraitConst: crate::videostab::ImageMotionEstimatorBaseTraitConst {
 		fn as_raw_KeypointBasedMotionEstimatorGpu(&self) -> *const c_void;
@@ -1847,6 +2011,16 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { KeypointBasedMotionEstimatorGpu, crate::videostab::ImageMotionEstimatorBase, cv_KeypointBasedMotionEstimatorGpu_to_ImageMotionEstimatorBase }
+	
+	impl std::fmt::Debug for KeypointBasedMotionEstimatorGpu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KeypointBasedMotionEstimatorGpu")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::LogToStdout]
 	pub trait LogToStdoutTraitConst: crate::videostab::ILogTraitConst {
 		fn as_raw_LogToStdout(&self) -> *const c_void;
@@ -1902,6 +2076,16 @@ pub mod videostab {
 	}
 	
 	impl LogToStdout {
+	}
+	
+	boxed_cast_base! { LogToStdout, crate::videostab::ILog, cv_LogToStdout_to_ILog }
+	
+	impl std::fmt::Debug for LogToStdout {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LogToStdout")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::LpMotionStabilizer]
@@ -2098,6 +2282,16 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { LpMotionStabilizer, crate::videostab::IMotionStabilizer, cv_LpMotionStabilizer_to_IMotionStabilizer }
+	
+	impl std::fmt::Debug for LpMotionStabilizer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LpMotionStabilizer")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::MaskFrameSource]
 	pub trait MaskFrameSourceTraitConst: crate::videostab::IFrameSourceTraitConst {
 		fn as_raw_MaskFrameSource(&self) -> *const c_void;
@@ -2174,6 +2368,16 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { MaskFrameSource, crate::videostab::IFrameSource, cv_MaskFrameSource_to_IFrameSource }
+	
+	impl std::fmt::Debug for MaskFrameSource {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MaskFrameSource")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::MoreAccurateMotionWobbleSuppressor]
 	pub trait MoreAccurateMotionWobbleSuppressorTraitConst: crate::videostab::MoreAccurateMotionWobbleSuppressorBaseTraitConst {
 		fn as_raw_MoreAccurateMotionWobbleSuppressor(&self) -> *const c_void;
@@ -2236,6 +2440,18 @@ pub mod videostab {
 	}
 	
 	impl MoreAccurateMotionWobbleSuppressor {
+	}
+	
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressor_to_MoreAccurateMotionWobbleSuppressorBase }
+	
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressor_to_WobbleSuppressorBase }
+	
+	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MoreAccurateMotionWobbleSuppressor")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::MoreAccurateMotionWobbleSuppressorBase]
@@ -2306,6 +2522,16 @@ pub mod videostab {
 	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressor, cv_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressor }
 	
 	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorGpu, cv_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorGpu }
+	
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::WobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressorBase_to_WobbleSuppressorBase }
+	
+	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MoreAccurateMotionWobbleSuppressorBase")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::MoreAccurateMotionWobbleSuppressorGpu]
 	pub trait MoreAccurateMotionWobbleSuppressorGpuTraitConst: crate::videostab::MoreAccurateMotionWobbleSuppressorBaseTraitConst {
@@ -2378,6 +2604,18 @@ pub mod videostab {
 	}
 	
 	impl MoreAccurateMotionWobbleSuppressorGpu {
+	}
+	
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressorGpu_to_MoreAccurateMotionWobbleSuppressorBase }
+	
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::WobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressorGpu_to_WobbleSuppressorBase }
+	
+	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorGpu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MoreAccurateMotionWobbleSuppressorGpu")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::MotionEstimatorBase]
@@ -2471,6 +2709,14 @@ pub mod videostab {
 	
 	boxed_cast_descendant! { MotionEstimatorBase, crate::videostab::MotionEstimatorRansacL2, cv_MotionEstimatorBase_to_MotionEstimatorRansacL2 }
 	
+	impl std::fmt::Debug for MotionEstimatorBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionEstimatorBase")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::MotionEstimatorL1]
 	pub trait MotionEstimatorL1TraitConst: crate::videostab::MotionEstimatorBaseTraitConst {
 		fn as_raw_MotionEstimatorL1(&self) -> *const c_void;
@@ -2546,6 +2792,16 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { MotionEstimatorL1, crate::videostab::MotionEstimatorBase, cv_MotionEstimatorL1_to_MotionEstimatorBase }
+	
+	impl std::fmt::Debug for MotionEstimatorL1 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionEstimatorL1")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::MotionEstimatorRansacL2]
@@ -2659,6 +2915,16 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { MotionEstimatorRansacL2, crate::videostab::MotionEstimatorBase, cv_MotionEstimatorRansacL2_to_MotionEstimatorBase }
+	
+	impl std::fmt::Debug for MotionEstimatorRansacL2 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionEstimatorRansacL2")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::MotionFilterBase]
 	pub trait MotionFilterBaseTraitConst: crate::videostab::IMotionStabilizerTraitConst {
 		fn as_raw_MotionFilterBase(&self) -> *const c_void;
@@ -2726,6 +2992,16 @@ pub mod videostab {
 	}
 	
 	boxed_cast_descendant! { MotionFilterBase, crate::videostab::GaussianMotionFilter, cv_MotionFilterBase_to_GaussianMotionFilter }
+	
+	boxed_cast_base! { MotionFilterBase, crate::videostab::IMotionStabilizer, cv_MotionFilterBase_to_IMotionStabilizer }
+	
+	impl std::fmt::Debug for MotionFilterBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionFilterBase")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::MotionInpainter]
 	pub trait MotionInpainterTraitConst: crate::videostab::InpainterBaseTraitConst {
@@ -2866,6 +3142,16 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { MotionInpainter, crate::videostab::InpainterBase, cv_MotionInpainter_to_InpainterBase }
+	
+	impl std::fmt::Debug for MotionInpainter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionInpainter")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::MotionStabilizationPipeline]
 	pub trait MotionStabilizationPipelineTraitConst: crate::videostab::IMotionStabilizerTraitConst {
 		fn as_raw_MotionStabilizationPipeline(&self) -> *const c_void;
@@ -2940,6 +3226,16 @@ pub mod videostab {
 	impl MotionStabilizationPipeline {
 	}
 	
+	boxed_cast_base! { MotionStabilizationPipeline, crate::videostab::IMotionStabilizer, cv_MotionStabilizationPipeline_to_IMotionStabilizer }
+	
+	impl std::fmt::Debug for MotionStabilizationPipeline {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionStabilizationPipeline")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::NullDeblurer]
 	pub trait NullDeblurerTraitConst: crate::videostab::DeblurerBaseTraitConst {
 		fn as_raw_NullDeblurer(&self) -> *const c_void;
@@ -2994,6 +3290,16 @@ pub mod videostab {
 	}
 	
 	impl NullDeblurer {
+	}
+	
+	boxed_cast_base! { NullDeblurer, crate::videostab::DeblurerBase, cv_NullDeblurer_to_DeblurerBase }
+	
+	impl std::fmt::Debug for NullDeblurer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullDeblurer")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::NullFrameSource]
@@ -3062,6 +3368,16 @@ pub mod videostab {
 	impl NullFrameSource {
 	}
 	
+	boxed_cast_base! { NullFrameSource, crate::videostab::IFrameSource, cv_NullFrameSource_to_IFrameSource }
+	
+	impl std::fmt::Debug for NullFrameSource {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullFrameSource")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::NullInpainter]
 	pub trait NullInpainterTraitConst: crate::videostab::InpainterBaseTraitConst {
 		fn as_raw_NullInpainter(&self) -> *const c_void;
@@ -3116,6 +3432,16 @@ pub mod videostab {
 	}
 	
 	impl NullInpainter {
+	}
+	
+	boxed_cast_base! { NullInpainter, crate::videostab::InpainterBase, cv_NullInpainter_to_InpainterBase }
+	
+	impl std::fmt::Debug for NullInpainter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullInpainter")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::NullLog]
@@ -3173,6 +3499,16 @@ pub mod videostab {
 	}
 	
 	impl NullLog {
+	}
+	
+	boxed_cast_base! { NullLog, crate::videostab::ILog, cv_NullLog_to_ILog }
+	
+	impl std::fmt::Debug for NullLog {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullLog")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::NullOutlierRejector]
@@ -3234,6 +3570,16 @@ pub mod videostab {
 	impl NullOutlierRejector {
 	}
 	
+	boxed_cast_base! { NullOutlierRejector, crate::videostab::IOutlierRejector, cv_NullOutlierRejector_to_IOutlierRejector }
+	
+	impl std::fmt::Debug for NullOutlierRejector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullOutlierRejector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::NullWobbleSuppressor]
 	pub trait NullWobbleSuppressorTraitConst: crate::videostab::WobbleSuppressorBaseTraitConst {
 		fn as_raw_NullWobbleSuppressor(&self) -> *const c_void;
@@ -3288,6 +3634,16 @@ pub mod videostab {
 	}
 	
 	impl NullWobbleSuppressor {
+	}
+	
+	boxed_cast_base! { NullWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_NullWobbleSuppressor_to_WobbleSuppressorBase }
+	
+	impl std::fmt::Debug for NullWobbleSuppressor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullWobbleSuppressor")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::OnePassStabilizer]
@@ -3393,6 +3749,18 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { OnePassStabilizer, crate::videostab::IFrameSource, cv_OnePassStabilizer_to_IFrameSource }
+	
+	boxed_cast_base! { OnePassStabilizer, crate::videostab::StabilizerBase, cv_OnePassStabilizer_to_StabilizerBase }
+	
+	impl std::fmt::Debug for OnePassStabilizer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OnePassStabilizer")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::PyrLkOptFlowEstimatorBase]
 	pub trait PyrLkOptFlowEstimatorBaseTraitConst {
 		fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void;
@@ -3483,6 +3851,14 @@ pub mod videostab {
 	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimator, cv_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimator }
 	
 	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimatorGpu }
+	
+	impl std::fmt::Debug for PyrLkOptFlowEstimatorBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PyrLkOptFlowEstimatorBase")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::RansacParams]
 	pub trait RansacParamsTraitConst {
@@ -3631,6 +4007,18 @@ pub mod videostab {
 		
 	}
 	
+	impl std::fmt::Debug for RansacParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RansacParams")
+				.field("size", &crate::videostab::RansacParamsTraitConst::size(self))
+				.field("thresh", &crate::videostab::RansacParamsTraitConst::thresh(self))
+				.field("eps", &crate::videostab::RansacParamsTraitConst::eps(self))
+				.field("prob", &crate::videostab::RansacParamsTraitConst::prob(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::SparsePyrLkOptFlowEstimator]
 	pub trait SparsePyrLkOptFlowEstimatorTraitConst: crate::videostab::ISparseOptFlowEstimatorTraitConst + crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst {
 		fn as_raw_SparsePyrLkOptFlowEstimator(&self) -> *const c_void;
@@ -3701,7 +4089,17 @@ pub mod videostab {
 	impl SparsePyrLkOptFlowEstimator {
 	}
 	
+	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::ISparseOptFlowEstimator, cv_SparsePyrLkOptFlowEstimator_to_ISparseOptFlowEstimator }
+	
 	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::PyrLkOptFlowEstimatorBase, cv_SparsePyrLkOptFlowEstimator_to_PyrLkOptFlowEstimatorBase }
+	
+	impl std::fmt::Debug for SparsePyrLkOptFlowEstimator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparsePyrLkOptFlowEstimator")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::SparsePyrLkOptFlowEstimatorGpu]
 	pub trait SparsePyrLkOptFlowEstimatorGpuTraitConst: crate::videostab::ISparseOptFlowEstimatorTraitConst + crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst {
@@ -3801,7 +4199,17 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::ISparseOptFlowEstimator, cv_SparsePyrLkOptFlowEstimatorGpu_to_ISparseOptFlowEstimator }
+	
 	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_SparsePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
+	
+	impl std::fmt::Debug for SparsePyrLkOptFlowEstimatorGpu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparsePyrLkOptFlowEstimatorGpu")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::videostab::StabilizerBase]
 	pub trait StabilizerBaseTraitConst {
@@ -4032,6 +4440,14 @@ pub mod videostab {
 	
 	boxed_cast_descendant! { StabilizerBase, crate::videostab::TwoPassStabilizer, cv_StabilizerBase_to_TwoPassStabilizer }
 	
+	impl std::fmt::Debug for StabilizerBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StabilizerBase")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::ToFileMotionWriter]
 	pub trait ToFileMotionWriterTraitConst: crate::videostab::ImageMotionEstimatorBaseTraitConst {
 		fn as_raw_ToFileMotionWriter(&self) -> *const c_void;
@@ -4128,6 +4544,16 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { ToFileMotionWriter, crate::videostab::ImageMotionEstimatorBase, cv_ToFileMotionWriter_to_ImageMotionEstimatorBase }
+	
+	impl std::fmt::Debug for ToFileMotionWriter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ToFileMotionWriter")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::TranslationBasedLocalOutlierRejector]
@@ -4234,6 +4660,16 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { TranslationBasedLocalOutlierRejector, crate::videostab::IOutlierRejector, cv_TranslationBasedLocalOutlierRejector_to_IOutlierRejector }
+	
+	impl std::fmt::Debug for TranslationBasedLocalOutlierRejector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TranslationBasedLocalOutlierRejector")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::TwoPassStabilizer]
@@ -4376,6 +4812,18 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { TwoPassStabilizer, crate::videostab::IFrameSource, cv_TwoPassStabilizer_to_IFrameSource }
+	
+	boxed_cast_base! { TwoPassStabilizer, crate::videostab::StabilizerBase, cv_TwoPassStabilizer_to_StabilizerBase }
+	
+	impl std::fmt::Debug for TwoPassStabilizer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TwoPassStabilizer")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::VideoFileSource]
 	pub trait VideoFileSourceTraitConst: crate::videostab::IFrameSourceTraitConst {
 		fn as_raw_VideoFileSource(&self) -> *const c_void;
@@ -4491,6 +4939,16 @@ pub mod videostab {
 		
 	}
 	
+	boxed_cast_base! { VideoFileSource, crate::videostab::IFrameSource, cv_VideoFileSource_to_IFrameSource }
+	
+	impl std::fmt::Debug for VideoFileSource {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("VideoFileSource")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videostab::WeightingDeblurer]
 	pub trait WeightingDeblurerTraitConst: crate::videostab::DeblurerBaseTraitConst {
 		fn as_raw_WeightingDeblurer(&self) -> *const c_void;
@@ -4573,6 +5031,16 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { WeightingDeblurer, crate::videostab::DeblurerBase, cv_WeightingDeblurer_to_DeblurerBase }
+	
+	impl std::fmt::Debug for WeightingDeblurer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WeightingDeblurer")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::videostab::WobbleSuppressorBase]
@@ -4717,5 +5185,15 @@ pub mod videostab {
 	impl WobbleSuppressorBase {
 	}
 	
+	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorBase }
+	
 	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::NullWobbleSuppressor, cv_WobbleSuppressorBase_to_NullWobbleSuppressor }
+	
+	impl std::fmt::Debug for WobbleSuppressorBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WobbleSuppressorBase")
+				.finish()
+		}
+	}
 }

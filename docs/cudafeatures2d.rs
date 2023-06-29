@@ -623,6 +623,14 @@ pub mod cudafeatures2d {
 	
 	boxed_cast_base! { CUDA_DescriptorMatcher, core::Algorithm, cv_CUDA_DescriptorMatcher_to_Algorithm }
 	
+	impl std::fmt::Debug for CUDA_DescriptorMatcher {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_DescriptorMatcher")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudafeatures2d::CUDA_FastFeatureDetector]
 	pub trait CUDA_FastFeatureDetectorTraitConst: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst {
 		fn as_raw_CUDA_FastFeatureDetector(&self) -> *const c_void;
@@ -736,6 +744,16 @@ pub mod cudafeatures2d {
 	boxed_cast_base! { CUDA_FastFeatureDetector, core::Algorithm, cv_CUDA_FastFeatureDetector_to_Algorithm }
 	
 	boxed_cast_base! { CUDA_FastFeatureDetector, crate::features2d::Feature2D, cv_CUDA_FastFeatureDetector_to_Feature2D }
+	
+	boxed_cast_base! { CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_CUDA_FastFeatureDetector_to_CUDA_Feature2DAsync }
+	
+	impl std::fmt::Debug for CUDA_FastFeatureDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_FastFeatureDetector")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudafeatures2d::CUDA_Feature2DAsync]
 	pub trait CUDA_Feature2DAsyncTraitConst: crate::features2d::Feature2DTraitConst {
@@ -868,9 +886,21 @@ pub mod cudafeatures2d {
 	impl CUDA_Feature2DAsync {
 	}
 	
+	boxed_cast_descendant! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_FastFeatureDetector, cv_CUDA_Feature2DAsync_to_CUDA_FastFeatureDetector }
+	
+	boxed_cast_descendant! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_ORB, cv_CUDA_Feature2DAsync_to_CUDA_ORB }
+	
 	boxed_cast_base! { CUDA_Feature2DAsync, core::Algorithm, cv_CUDA_Feature2DAsync_to_Algorithm }
 	
 	boxed_cast_base! { CUDA_Feature2DAsync, crate::features2d::Feature2D, cv_CUDA_Feature2DAsync_to_Feature2D }
+	
+	impl std::fmt::Debug for CUDA_Feature2DAsync {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_Feature2DAsync")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudafeatures2d::CUDA_ORB]
 	pub trait CUDA_ORBTraitConst: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst {
@@ -1150,4 +1180,14 @@ pub mod cudafeatures2d {
 	boxed_cast_base! { CUDA_ORB, core::Algorithm, cv_CUDA_ORB_to_Algorithm }
 	
 	boxed_cast_base! { CUDA_ORB, crate::features2d::Feature2D, cv_CUDA_ORB_to_Feature2D }
+	
+	boxed_cast_base! { CUDA_ORB, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_CUDA_ORB_to_CUDA_Feature2DAsync }
+	
+	impl std::fmt::Debug for CUDA_ORB {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_ORB")
+				.finish()
+		}
+	}
 }

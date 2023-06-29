@@ -108,4 +108,12 @@ pub mod xobjdetect {
 		}
 		
 	}
+	
+	impl std::fmt::Debug for WBDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WBDetector")
+				.finish()
+		}
+	}
 }

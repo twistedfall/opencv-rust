@@ -2,8 +2,6 @@
 include!(concat!(env!("OUT_DIR"), "/opencv/alphamat.rs"));
 #[cfg(ocvrs_has_module_aruco)]
 include!(concat!(env!("OUT_DIR"), "/opencv/aruco.rs"));
-#[cfg(ocvrs_has_module_barcode)]
-include!(concat!(env!("OUT_DIR"), "/opencv/barcode.rs"));
 #[cfg(ocvrs_has_module_bgsegm)]
 include!(concat!(env!("OUT_DIR"), "/opencv/bgsegm.rs"));
 #[cfg(ocvrs_has_module_bioinspired)]
@@ -142,8 +140,6 @@ pub mod hub_prelude {
 	pub use super::alphamat::prelude::*;
 	#[cfg(ocvrs_has_module_aruco)]
 	pub use super::aruco::prelude::*;
-	#[cfg(ocvrs_has_module_barcode)]
-	pub use super::barcode::prelude::*;
 	#[cfg(ocvrs_has_module_bgsegm)]
 	pub use super::bgsegm::prelude::*;
 	#[cfg(ocvrs_has_module_bioinspired)]

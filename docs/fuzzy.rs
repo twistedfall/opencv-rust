@@ -272,7 +272,7 @@ pub mod fuzzy {
 	/// 
 	/// 
 	/// Note:
-	///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Vlas:FT).
+	///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Vlas:FT).
 	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
@@ -364,7 +364,7 @@ pub mod fuzzy {
 	/// 
 	/// 
 	/// Note:
-	///    The algorithms are described in paper [Perf:rec](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Perf:rec).
+	///    The algorithms are described in paper [Perf:rec](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Perf:rec).
 	#[inline]
 	pub fn inpaint(image: &impl core::ToInputArray, mask: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, radius: i32, function: i32, algorithm: i32) -> Result<()> {
 		input_array_arg!(image);

@@ -1841,6 +1841,14 @@ pub mod cudaarithm {
 	
 	boxed_cast_base! { Convolution, core::Algorithm, cv_Convolution_to_Algorithm }
 	
+	impl std::fmt::Debug for Convolution {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Convolution")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudaarithm::DFT]
 	pub trait DFTTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_DFT(&self) -> *const c_void;
@@ -1910,6 +1918,14 @@ pub mod cudaarithm {
 	}
 	
 	boxed_cast_base! { DFT, core::Algorithm, cv_DFT_to_Algorithm }
+	
+	impl std::fmt::Debug for DFT {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DFT")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaarithm::LookUpTable]
 	pub trait LookUpTableTraitConst: core::AlgorithmTraitConst {
@@ -1981,4 +1997,12 @@ pub mod cudaarithm {
 	}
 	
 	boxed_cast_base! { LookUpTable, core::Algorithm, cv_LookUpTable_to_Algorithm }
+	
+	impl std::fmt::Debug for LookUpTable {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LookUpTable")
+				.finish()
+		}
+	}
 }

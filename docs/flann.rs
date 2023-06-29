@@ -4,7 +4,7 @@ pub mod flann {
 	//! This section documents OpenCV's interface to the FLANN library. FLANN (Fast Library for Approximate
 	//! Nearest Neighbors) is a library that contains a collection of algorithms optimized for fast nearest
 	//! neighbor search in large datasets and for high dimensional features. More information about FLANN
-	//! can be found in [Muja2009](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Muja2009) .
+	//! can be found in [Muja2009](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Muja2009) .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::IndexParamsTraitConst, super::IndexParamsTrait, super::KDTreeIndexParamsTraitConst, super::KDTreeIndexParamsTrait, super::LinearIndexParamsTraitConst, super::LinearIndexParamsTrait, super::CompositeIndexParamsTraitConst, super::CompositeIndexParamsTrait, super::AutotunedIndexParamsTraitConst, super::AutotunedIndexParamsTrait, super::HierarchicalClusteringIndexParamsTraitConst, super::HierarchicalClusteringIndexParamsTrait, super::KMeansIndexParamsTraitConst, super::KMeansIndexParamsTrait, super::LshIndexParamsTraitConst, super::LshIndexParamsTrait, super::SavedIndexParamsTraitConst, super::SavedIndexParamsTrait, super::SearchParamsTraitConst, super::SearchParamsTrait, super::IndexTraitConst, super::IndexTrait };
@@ -241,6 +241,8 @@ pub mod flann {
 	
 	opencv_type_enum! { crate::flann::flann_log_level_t }
 	
+	/// A bucket in an LSH table
+	pub type Bucket = core::Vector<crate::flann::feature_index>;
 	/// The id from which we can get a bucket back in an LSH table
 	pub type bucket_key = u32;
 	/// What is stored in an LSH bucket
@@ -327,6 +329,14 @@ pub mod flann {
 	
 	boxed_cast_base! { AutotunedIndexParams, crate::flann::IndexParams, cv_AutotunedIndexParams_to_IndexParams }
 	
+	impl std::fmt::Debug for AutotunedIndexParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AutotunedIndexParams")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::flann::CompositeIndexParams]
 	pub trait CompositeIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 		fn as_raw_CompositeIndexParams(&self) -> *const c_void;
@@ -392,6 +402,14 @@ pub mod flann {
 	
 	boxed_cast_base! { CompositeIndexParams, crate::flann::IndexParams, cv_CompositeIndexParams_to_IndexParams }
 	
+	impl std::fmt::Debug for CompositeIndexParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CompositeIndexParams")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::flann::HierarchicalClusteringIndexParams]
 	pub trait HierarchicalClusteringIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 		fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void;
@@ -455,6 +473,14 @@ pub mod flann {
 	}
 	
 	boxed_cast_base! { HierarchicalClusteringIndexParams, crate::flann::IndexParams, cv_HierarchicalClusteringIndexParams_to_IndexParams }
+	
+	impl std::fmt::Debug for HierarchicalClusteringIndexParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HierarchicalClusteringIndexParams")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::flann::Index]
 	pub trait IndexTraitConst {
@@ -604,6 +630,14 @@ pub mod flann {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Index {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Index")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::flann::IndexParams]
@@ -774,6 +808,14 @@ pub mod flann {
 		
 	}
 	
+	impl std::fmt::Debug for IndexParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IndexParams")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::flann::KDTreeIndexParams]
 	pub trait KDTreeIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 		fn as_raw_KDTreeIndexParams(&self) -> *const c_void;
@@ -834,6 +876,14 @@ pub mod flann {
 	}
 	
 	boxed_cast_base! { KDTreeIndexParams, crate::flann::IndexParams, cv_KDTreeIndexParams_to_IndexParams }
+	
+	impl std::fmt::Debug for KDTreeIndexParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KDTreeIndexParams")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::flann::KMeansIndexParams]
 	pub trait KMeansIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
@@ -899,6 +949,14 @@ pub mod flann {
 	
 	boxed_cast_base! { KMeansIndexParams, crate::flann::IndexParams, cv_KMeansIndexParams_to_IndexParams }
 	
+	impl std::fmt::Debug for KMeansIndexParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KMeansIndexParams")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::flann::LinearIndexParams]
 	pub trait LinearIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 		fn as_raw_LinearIndexParams(&self) -> *const c_void;
@@ -957,6 +1015,14 @@ pub mod flann {
 	}
 	
 	boxed_cast_base! { LinearIndexParams, crate::flann::IndexParams, cv_LinearIndexParams_to_IndexParams }
+	
+	impl std::fmt::Debug for LinearIndexParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LinearIndexParams")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::flann::LshIndexParams]
 	pub trait LshIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
@@ -1017,6 +1083,14 @@ pub mod flann {
 	
 	boxed_cast_base! { LshIndexParams, crate::flann::IndexParams, cv_LshIndexParams_to_IndexParams }
 	
+	impl std::fmt::Debug for LshIndexParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LshIndexParams")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::flann::SavedIndexParams]
 	pub trait SavedIndexParamsTraitConst: crate::flann::IndexParamsTraitConst {
 		fn as_raw_SavedIndexParams(&self) -> *const c_void;
@@ -1076,6 +1150,14 @@ pub mod flann {
 	}
 	
 	boxed_cast_base! { SavedIndexParams, crate::flann::IndexParams, cv_SavedIndexParams_to_IndexParams }
+	
+	impl std::fmt::Debug for SavedIndexParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SavedIndexParams")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::flann::SearchParams]
 	pub trait SearchParamsTraitConst: crate::flann::IndexParamsTraitConst {
@@ -1149,4 +1231,12 @@ pub mod flann {
 	}
 	
 	boxed_cast_base! { SearchParams, crate::flann::IndexParams, cv_SearchParams_to_IndexParams }
+	
+	impl std::fmt::Debug for SearchParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SearchParams")
+				.finish()
+		}
+	}
 }

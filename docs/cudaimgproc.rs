@@ -22,9 +22,9 @@ pub mod cudaimgproc {
 	pub const CUDA_ALPHA_PREMUL: i32 = 12;
 	pub const CUDA_ALPHA_XOR: i32 = 4;
 	pub const CUDA_ALPHA_XOR_PREMUL: i32 = 10;
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	pub const CUDA_CCL_BKE: i32 = 0;
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	pub const CUDA_CCL_DEFAULT: i32 = -1;
 	/// Bayer Demosaicing (Malvar, He, and Cutler)
 	pub const CUDA_COLOR_BayerBG2BGR_MHT: i32 = 256;
@@ -74,9 +74,9 @@ pub mod cudaimgproc {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_ConnectedComponentsAlgorithmsTypes {
-		/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+		/// BKE [Allegretti2019](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_DEFAULT = -1,
-		/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+		/// BKE [Allegretti2019](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_BKE = 0,
 	}
 	
@@ -264,7 +264,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the #ConnectedComponentsAlgorithmsTypes
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the #ConnectedComponentsAlgorithmsTypes
 	/// for details. Note that labels in the output are not required to be sequential.
 	/// 
 	/// ## Parameters
@@ -308,7 +308,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the #ConnectedComponentsAlgorithmsTypes
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the #ConnectedComponentsAlgorithmsTypes
 	/// for details. Note that labels in the output are not required to be sequential.
 	/// 
 	/// ## Parameters
@@ -377,7 +377,7 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 	
-	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 	#[inline]
 	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughBallard>> {
 		return_send!(via ocvrs_return);
@@ -388,7 +388,7 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 	
-	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 	#[inline]
 	pub fn create_generalized_hough_guil() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughGuil>> {
 		return_send!(via ocvrs_return);
@@ -519,13 +519,16 @@ pub mod cudaimgproc {
 	/// * minLineLength: Minimum line length. Line segments shorter than that are rejected.
 	/// * maxLineGap: Maximum allowed gap between points on the same line to link them.
 	/// * maxLines: Maximum number of output lines.
+	/// * threshold: %Accumulator threshold parameter. Only those lines are returned that get enough
+	/// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
 	/// 
 	/// ## C++ default parameters
 	/// * max_lines: 4096
+	/// * threshold: -1
 	#[inline]
-	pub fn create_hough_segment_detector(rho: f32, theta: f32, min_line_length: i32, max_line_gap: i32, max_lines: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector>> {
+	pub fn create_hough_segment_detector(rho: f32, theta: f32, min_line_length: i32, max_line_gap: i32, max_lines: i32, threshold: i32) -> Result<core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createHoughSegmentDetector_float_float_int_int_int(rho, theta, min_line_length, max_line_gap, max_lines, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createHoughSegmentDetector_float_float_int_int_int_int(rho, theta, min_line_length, max_line_gap, max_lines, threshold, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughSegmentDetector>::opencv_from_extern(ret) };
@@ -641,7 +644,7 @@ pub mod cudaimgproc {
 	///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 	///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
 	/// 
-	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MHT2011))
+	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MHT2011))
 	/// 
 	///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 	///    >     COLOR_BayerGR2GRAY_MHT
@@ -958,6 +961,16 @@ pub mod cudaimgproc {
 	
 	boxed_cast_base! { CUDA_CLAHE, core::Algorithm, cv_CUDA_CLAHE_to_Algorithm }
 	
+	boxed_cast_base! { CUDA_CLAHE, crate::imgproc::CLAHE, cv_CUDA_CLAHE_to_CLAHE }
+	
+	impl std::fmt::Debug for CUDA_CLAHE {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CLAHE")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_CannyEdgeDetector]
 	pub trait CUDA_CannyEdgeDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_CannyEdgeDetector(&self) -> *const c_void;
@@ -1004,7 +1017,7 @@ pub mod cudaimgproc {
 	pub trait CUDA_CannyEdgeDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst {
 		fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void;
 	
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		/// 
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -1024,7 +1037,7 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 		
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		/// 
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -1128,6 +1141,14 @@ pub mod cudaimgproc {
 	
 	boxed_cast_base! { CUDA_CannyEdgeDetector, core::Algorithm, cv_CUDA_CannyEdgeDetector_to_Algorithm }
 	
+	impl std::fmt::Debug for CUDA_CannyEdgeDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CannyEdgeDetector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_CornernessCriteria]
 	pub trait CUDA_CornernessCriteriaTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void;
@@ -1198,6 +1219,14 @@ pub mod cudaimgproc {
 	}
 	
 	boxed_cast_base! { CUDA_CornernessCriteria, core::Algorithm, cv_CUDA_CornernessCriteria_to_Algorithm }
+	
+	impl std::fmt::Debug for CUDA_CornernessCriteria {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CornernessCriteria")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaimgproc::CUDA_CornersDetector]
 	pub trait CUDA_CornersDetectorTraitConst: core::AlgorithmTraitConst {
@@ -1273,6 +1302,14 @@ pub mod cudaimgproc {
 	}
 	
 	boxed_cast_base! { CUDA_CornersDetector, core::Algorithm, cv_CUDA_CornersDetector_to_Algorithm }
+	
+	impl std::fmt::Debug for CUDA_CornersDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CornersDetector")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughCirclesDetector]
 	pub trait CUDA_HoughCirclesDetectorTraitConst: core::AlgorithmTraitConst {
@@ -1473,6 +1510,14 @@ pub mod cudaimgproc {
 	
 	boxed_cast_base! { CUDA_HoughCirclesDetector, core::Algorithm, cv_CUDA_HoughCirclesDetector_to_Algorithm }
 	
+	impl std::fmt::Debug for CUDA_HoughCirclesDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_HoughCirclesDetector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughLinesDetector]
 	pub trait CUDA_HoughLinesDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_HoughLinesDetector(&self) -> *const c_void;
@@ -1661,6 +1706,14 @@ pub mod cudaimgproc {
 	
 	boxed_cast_base! { CUDA_HoughLinesDetector, core::Algorithm, cv_CUDA_HoughLinesDetector_to_Algorithm }
 	
+	impl std::fmt::Debug for CUDA_HoughLinesDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_HoughLinesDetector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughSegmentDetector]
 	pub trait CUDA_HoughSegmentDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_HoughSegmentDetector(&self) -> *const c_void;
@@ -1705,6 +1758,15 @@ pub mod cudaimgproc {
 		fn get_max_lines(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HoughSegmentDetector_getMaxLines_const(self.as_raw_CUDA_HoughSegmentDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn get_threshold(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HoughSegmentDetector_getThreshold_const(self.as_raw_CUDA_HoughSegmentDetector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1785,6 +1847,15 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 		
+		#[inline]
+		fn set_threshold(&mut self, threshold: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HoughSegmentDetector_setThreshold_int(self.as_raw_mut_CUDA_HoughSegmentDetector(), threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Base class for line segments detector algorithm. :
@@ -1824,6 +1895,14 @@ pub mod cudaimgproc {
 	}
 	
 	boxed_cast_base! { CUDA_HoughSegmentDetector, core::Algorithm, cv_CUDA_HoughSegmentDetector_to_Algorithm }
+	
+	impl std::fmt::Debug for CUDA_HoughSegmentDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_HoughSegmentDetector")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaimgproc::CUDA_TemplateMatching]
 	pub trait CUDA_TemplateMatchingTraitConst: core::AlgorithmTraitConst {
@@ -1897,4 +1976,12 @@ pub mod cudaimgproc {
 	}
 	
 	boxed_cast_base! { CUDA_TemplateMatching, core::Algorithm, cv_CUDA_TemplateMatching_to_Algorithm }
+	
+	impl std::fmt::Debug for CUDA_TemplateMatching {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_TemplateMatching")
+				.finish()
+		}
+	}
 }

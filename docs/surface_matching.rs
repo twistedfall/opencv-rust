@@ -59,7 +59,7 @@ pub mod surface_matching {
 	//! ----------------------------------------------
 	//! 
 	//! The state of the algorithms in order to achieve the task 3D matching is heavily based on
-	//! [drost2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
+	//! [drost2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
 	//! approach is composed of extracting 3D feature points randomly from depth images or generic point
 	//! clouds, indexing them and later in runtime querying them efficiently. Only the 3D structure is
 	//! considered, and a trivial hash table is used for feature queries.
@@ -69,7 +69,7 @@ pub mod surface_matching {
 	//! methods (Typically for such algorithms training on a CAD model is not needed, and a point cloud
 	//! would be sufficient). Below is the outline of the entire algorithm:
 	//! 
-	//! ![Outline of the Algorithm](https://docs.opencv.org/4.7.0/outline.jpg)
+	//! ![Outline of the Algorithm](https://docs.opencv.org/4.8.0/outline.jpg)
 	//! 
 	//! As explained, the algorithm relies on the extraction and indexing of point pair features, which are
 	//! defined as follows:
@@ -218,7 +218,7 @@ pub mod surface_matching {
 	//! increase the speed. However this is not an optimality guarantee and many times causes wrong points
 	//! to be matched. Luckily the assignments are corrected over iterations.
 	//! 
-	//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
+	//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
 	//! correspondences) are two well-known methods. Picky ICP first finds the correspondences in the
 	//! old-fashioned way and then among the resulting corresponding pairs, if more than one scene point
 	//! ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) is assigned to the same model point ![inline formula](https://latex.codecogs.com/png.latex?m%5Fj), it selects ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) that corresponds to the minimum
@@ -245,7 +245,7 @@ pub mod surface_matching {
 	//! 
 	//! ### Error Metric
 	//! 
-	//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
+	//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
 	//! both speeds up the registration process and improves convergence.
 	//! 
 	//! ### Minimization
@@ -294,11 +294,11 @@ pub mod surface_matching {
 	//! This section is dedicated to the results of surface matching (point-pair-feature matching and a
 	//! following ICP refinement):
 	//! 
-	//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/4.7.0/gsoc_forg_matches.jpg)
+	//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/4.8.0/gsoc_forg_matches.jpg)
 	//! 
 	//! Matches of different models for Mian dataset is presented below:
 	//! 
-	//! ![Matches of different models for Mian dataset](https://docs.opencv.org/4.7.0/snapshot27.jpg)
+	//! ![Matches of different models for Mian dataset](https://docs.opencv.org/4.8.0/snapshot27.jpg)
 	//! 
 	//! You might checkout the video on [youTube here](http://www.youtube.com/watch?v=uFnqLFznuZU).
 	//! 
@@ -322,8 +322,8 @@ pub mod surface_matching {
 	//! quadratically increased as the complexity is O(N\^2). This is especially a concern for 32 bit
 	//! systems, where large models can easily overshoot the available memory. Typically, values in the
 	//! range of 0.025 - 0.05 seem adequate for most of the applications, where the default value is 0.03.
-	//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_drost2010) . In
-	//! [drost2010](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
+	//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_drost2010) . In
+	//! [drost2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
 	//! sampling. In my implementation, the cuboid is a rectangular prism, and each dimension is quantized
 	//! independently. I do not take reference from the diameter but along the individual dimensions.
 	//! 
@@ -498,6 +498,14 @@ pub mod surface_matching {
 		
 	}
 	
+	impl std::fmt::Debug for ICP {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ICP")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::surface_matching::PPF3DDetector]
 	pub trait PPF3DDetectorTraitConst {
 		fn as_raw_PPF3DDetector(&self) -> *const c_void;
@@ -630,6 +638,14 @@ pub mod surface_matching {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for PPF3DDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PPF3DDetector")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::surface_matching::Pose3D]
@@ -880,6 +896,22 @@ pub mod surface_matching {
 		
 	}
 	
+	impl std::fmt::Debug for Pose3D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Pose3D")
+				.field("alpha", &crate::surface_matching::Pose3DTraitConst::alpha(self))
+				.field("residual", &crate::surface_matching::Pose3DTraitConst::residual(self))
+				.field("model_index", &crate::surface_matching::Pose3DTraitConst::model_index(self))
+				.field("num_votes", &crate::surface_matching::Pose3DTraitConst::num_votes(self))
+				.field("pose", &crate::surface_matching::Pose3DTraitConst::pose(self))
+				.field("angle", &crate::surface_matching::Pose3DTraitConst::angle(self))
+				.field("t", &crate::surface_matching::Pose3DTraitConst::t(self))
+				.field("q", &crate::surface_matching::Pose3DTraitConst::q(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::surface_matching::PoseCluster3D]
 	pub trait PoseCluster3DTraitConst {
 		fn as_raw_PoseCluster3D(&self) -> *const c_void;
@@ -1019,5 +1051,16 @@ pub mod surface_matching {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for PoseCluster3D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PoseCluster3D")
+				.field("pose_list", &crate::surface_matching::PoseCluster3DTraitConst::pose_list(self))
+				.field("num_votes", &crate::surface_matching::PoseCluster3DTraitConst::num_votes(self))
+				.field("id", &crate::surface_matching::PoseCluster3DTraitConst::id(self))
+				.finish()
+		}
 	}
 }

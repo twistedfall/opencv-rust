@@ -34,10 +34,10 @@ pub mod quality {
 	/// BRISQUE (Blind/Referenceless Image Spatial Quality Evaluator) is a No Reference Image Quality Assessment (NR-IQA) algorithm.
 	/// 
 	/// BRISQUE computes a score based on extracting Natural Scene Statistics (<https://en.wikipedia.org/wiki/Scene_statistics>)
-	/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Mittal2_software) .
+	/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Mittal2_software) .
 	/// 
-	/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
-	/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
+	/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
+	/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
 	/// C++ code for the BRISQUE LIVE-R2 trainer and TID2008 evaluator are also provided in the /samples/ directory.
 	pub struct QualityBRISQUE {
 		ptr: *mut c_void
@@ -148,6 +148,16 @@ pub mod quality {
 	
 	boxed_cast_base! { QualityBRISQUE, core::Algorithm, cv_QualityBRISQUE_to_Algorithm }
 	
+	boxed_cast_base! { QualityBRISQUE, crate::quality::QualityBase, cv_QualityBRISQUE_to_QualityBase }
+	
+	impl std::fmt::Debug for QualityBRISQUE {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QualityBRISQUE")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::quality::QualityBase]
 	pub trait QualityBaseTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_QualityBase(&self) -> *const c_void;
@@ -251,6 +261,14 @@ pub mod quality {
 	boxed_cast_descendant! { QualityBase, crate::quality::QualitySSIM, cv_QualityBase_to_QualitySSIM }
 	
 	boxed_cast_base! { QualityBase, core::Algorithm, cv_QualityBase_to_Algorithm }
+	
+	impl std::fmt::Debug for QualityBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QualityBase")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::quality::QualityGMSD]
 	pub trait QualityGMSDTraitConst: crate::quality::QualityBaseTraitConst {
@@ -379,6 +397,16 @@ pub mod quality {
 	
 	boxed_cast_base! { QualityGMSD, core::Algorithm, cv_QualityGMSD_to_Algorithm }
 	
+	boxed_cast_base! { QualityGMSD, crate::quality::QualityBase, cv_QualityGMSD_to_QualityBase }
+	
+	impl std::fmt::Debug for QualityGMSD {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QualityGMSD")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::quality::QualityMSE]
 	pub trait QualityMSETraitConst: crate::quality::QualityBaseTraitConst {
 		fn as_raw_QualityMSE(&self) -> *const c_void;
@@ -504,6 +532,16 @@ pub mod quality {
 	}
 	
 	boxed_cast_base! { QualityMSE, core::Algorithm, cv_QualityMSE_to_Algorithm }
+	
+	boxed_cast_base! { QualityMSE, crate::quality::QualityBase, cv_QualityMSE_to_QualityBase }
+	
+	impl std::fmt::Debug for QualityMSE {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QualityMSE")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::quality::QualityPSNR]
 	pub trait QualityPSNRTraitConst: crate::quality::QualityBaseTraitConst {
@@ -662,6 +700,16 @@ pub mod quality {
 	
 	boxed_cast_base! { QualityPSNR, core::Algorithm, cv_QualityPSNR_to_Algorithm }
 	
+	boxed_cast_base! { QualityPSNR, crate::quality::QualityBase, cv_QualityPSNR_to_QualityBase }
+	
+	impl std::fmt::Debug for QualityPSNR {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QualityPSNR")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::quality::QualitySSIM]
 	pub trait QualitySSIMTraitConst: crate::quality::QualityBaseTraitConst {
 		fn as_raw_QualitySSIM(&self) -> *const c_void;
@@ -787,4 +835,14 @@ pub mod quality {
 	}
 	
 	boxed_cast_base! { QualitySSIM, core::Algorithm, cv_QualitySSIM_to_Algorithm }
+	
+	boxed_cast_base! { QualitySSIM, crate::quality::QualityBase, cv_QualitySSIM_to_QualityBase }
+	
+	impl std::fmt::Debug for QualitySSIM {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QualitySSIM")
+				.finish()
+		}
+	}
 }

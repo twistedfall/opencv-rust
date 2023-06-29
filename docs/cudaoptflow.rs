@@ -228,7 +228,7 @@ pub mod cudaoptflow {
 		
 	}
 	
-	/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Brox2004)).
+	/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Brox2004)).
 	pub struct CUDA_BroxOpticalFlow {
 		ptr: *mut c_void
 	}
@@ -290,6 +290,16 @@ pub mod cudaoptflow {
 	}
 	
 	boxed_cast_base! { CUDA_BroxOpticalFlow, core::Algorithm, cv_CUDA_BroxOpticalFlow_to_Algorithm }
+	
+	boxed_cast_base! { CUDA_BroxOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_CUDA_BroxOpticalFlow_to_CUDA_DenseOpticalFlow }
+	
+	impl std::fmt::Debug for CUDA_BroxOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_BroxOpticalFlow")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaoptflow::CUDA_DenseOpticalFlow]
 	pub trait CUDA_DenseOpticalFlowTraitConst: core::AlgorithmTraitConst {
@@ -361,7 +371,23 @@ pub mod cudaoptflow {
 	impl CUDA_DenseOpticalFlow {
 	}
 	
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_BroxOpticalFlow, cv_CUDA_DenseOpticalFlow_to_CUDA_BroxOpticalFlow }
+	
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow, cv_CUDA_DenseOpticalFlow_to_CUDA_DensePyrLKOpticalFlow }
+	
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_FarnebackOpticalFlow, cv_CUDA_DenseOpticalFlow_to_CUDA_FarnebackOpticalFlow }
+	
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1, cv_CUDA_DenseOpticalFlow_to_CUDA_OpticalFlowDual_TVL1 }
+	
 	boxed_cast_base! { CUDA_DenseOpticalFlow, core::Algorithm, cv_CUDA_DenseOpticalFlow_to_Algorithm }
+	
+	impl std::fmt::Debug for CUDA_DenseOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_DenseOpticalFlow")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow]
 	pub trait CUDA_DensePyrLKOpticalFlowTraitConst: crate::cudaoptflow::CUDA_DenseOpticalFlowTraitConst {
@@ -510,6 +536,16 @@ pub mod cudaoptflow {
 	}
 	
 	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, core::Algorithm, cv_CUDA_DensePyrLKOpticalFlow_to_Algorithm }
+	
+	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_CUDA_DensePyrLKOpticalFlow_to_CUDA_DenseOpticalFlow }
+	
+	impl std::fmt::Debug for CUDA_DensePyrLKOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_DensePyrLKOpticalFlow")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaoptflow::CUDA_FarnebackOpticalFlow]
 	pub trait CUDA_FarnebackOpticalFlowTraitConst: crate::cudaoptflow::CUDA_DenseOpticalFlowTraitConst {
@@ -732,6 +768,16 @@ pub mod cudaoptflow {
 	
 	boxed_cast_base! { CUDA_FarnebackOpticalFlow, core::Algorithm, cv_CUDA_FarnebackOpticalFlow_to_Algorithm }
 	
+	boxed_cast_base! { CUDA_FarnebackOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_CUDA_FarnebackOpticalFlow_to_CUDA_DenseOpticalFlow }
+	
+	impl std::fmt::Debug for CUDA_FarnebackOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_FarnebackOpticalFlow")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow]
 	pub trait CUDA_NvidiaHWOpticalFlowTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_NvidiaHWOpticalFlow(&self) -> *const c_void;
@@ -842,7 +888,19 @@ pub mod cudaoptflow {
 	impl CUDA_NvidiaHWOpticalFlow {
 	}
 	
+	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0, cv_CUDA_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_1_0 }
+	
+	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0, cv_CUDA_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_2_0 }
+	
 	boxed_cast_base! { CUDA_NvidiaHWOpticalFlow, core::Algorithm, cv_CUDA_NvidiaHWOpticalFlow_to_Algorithm }
+	
+	impl std::fmt::Debug for CUDA_NvidiaHWOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_NvidiaHWOpticalFlow")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0]
 	pub trait CUDA_NvidiaOpticalFlow_1_0TraitConst: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst {
@@ -964,6 +1022,16 @@ pub mod cudaoptflow {
 	}
 	
 	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, core::Algorithm, cv_CUDA_NvidiaOpticalFlow_1_0_to_Algorithm }
+	
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_CUDA_NvidiaOpticalFlow_1_0_to_CUDA_NvidiaHWOpticalFlow }
+	
+	impl std::fmt::Debug for CUDA_NvidiaOpticalFlow_1_0 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_NvidiaOpticalFlow_1_0")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0]
 	pub trait CUDA_NvidiaOpticalFlow_2_0TraitConst: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst {
@@ -1132,6 +1200,16 @@ pub mod cudaoptflow {
 	}
 	
 	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, core::Algorithm, cv_CUDA_NvidiaOpticalFlow_2_0_to_Algorithm }
+	
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_CUDA_NvidiaOpticalFlow_2_0_to_CUDA_NvidiaHWOpticalFlow }
+	
+	impl std::fmt::Debug for CUDA_NvidiaOpticalFlow_2_0 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_NvidiaOpticalFlow_2_0")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1]
 	pub trait CUDA_OpticalFlowDual_TVL1TraitConst: crate::cudaoptflow::CUDA_DenseOpticalFlowTraitConst {
@@ -1418,6 +1496,16 @@ pub mod cudaoptflow {
 	
 	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, core::Algorithm, cv_CUDA_OpticalFlowDual_TVL1_to_Algorithm }
 	
+	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_CUDA_OpticalFlowDual_TVL1_to_CUDA_DenseOpticalFlow }
+	
+	impl std::fmt::Debug for CUDA_OpticalFlowDual_TVL1 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_OpticalFlowDual_TVL1")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudaoptflow::CUDA_SparseOpticalFlow]
 	pub trait CUDA_SparseOpticalFlowTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_SparseOpticalFlow(&self) -> *const c_void;
@@ -1496,7 +1584,17 @@ pub mod cudaoptflow {
 	impl CUDA_SparseOpticalFlow {
 	}
 	
+	boxed_cast_descendant! { CUDA_SparseOpticalFlow, crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow, cv_CUDA_SparseOpticalFlow_to_CUDA_SparsePyrLKOpticalFlow }
+	
 	boxed_cast_base! { CUDA_SparseOpticalFlow, core::Algorithm, cv_CUDA_SparseOpticalFlow_to_Algorithm }
+	
+	impl std::fmt::Debug for CUDA_SparseOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_SparseOpticalFlow")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow]
 	pub trait CUDA_SparsePyrLKOpticalFlowTraitConst: crate::cudaoptflow::CUDA_SparseOpticalFlowTraitConst {
@@ -1652,4 +1750,14 @@ pub mod cudaoptflow {
 	}
 	
 	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, core::Algorithm, cv_CUDA_SparsePyrLKOpticalFlow_to_Algorithm }
+	
+	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, crate::cudaoptflow::CUDA_SparseOpticalFlow, cv_CUDA_SparsePyrLKOpticalFlow_to_CUDA_SparseOpticalFlow }
+	
+	impl std::fmt::Debug for CUDA_SparsePyrLKOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_SparsePyrLKOpticalFlow")
+				.finish()
+		}
+	}
 }

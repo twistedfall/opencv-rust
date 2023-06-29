@@ -26,7 +26,7 @@ pub mod video {
 	/// * criteria: Stop criteria for the underlying meanShift.
 	/// returns
 	/// (in old interfaces) Number of iterations CAMSHIFT took to converge
-	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
+	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
 	/// object center using meanShift and then adjusts the window size and finds the optimal rotation. The
 	/// function returns the rotated rectangle structure that includes the object position, size, and
 	/// orientation. The next position of the search window can be obtained with RotatedRect::boundingRect()
@@ -44,7 +44,6 @@ pub mod video {
 		unsafe { sys::cv_CamShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::RotatedRect::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -109,7 +108,7 @@ pub mod video {
 	///      normally, winsize for a Gaussian window should be set to a larger value to achieve the same
 	///      level of robustness.
 	/// 
-	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
+	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bprev%7D%20%28y%2Cx%29%20%20%5Csim%20%5Ctexttt%7Bnext%7D%20%28%20y%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B1%5D%2C%20%20x%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B0%5D%29)
 	/// 
@@ -163,13 +162,13 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	/// 
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	/// 
 	/// 
 	/// Note:
@@ -202,7 +201,7 @@ pub mod video {
 		Ok(ret)
 	}
 	
-	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08) .
 	/// 
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -316,7 +315,7 @@ pub mod video {
 		Ok(ret)
 	}
 	
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08) .
 	/// 
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -341,7 +340,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	/// 
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	/// 
@@ -386,7 +385,7 @@ pub mod video {
 		Ok(ret)
 	}
 	
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08) .
 	/// 
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -411,7 +410,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	/// 
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	/// 
@@ -608,7 +607,19 @@ pub mod video {
 	impl BackgroundSubtractor {
 	}
 	
+	boxed_cast_descendant! { BackgroundSubtractor, crate::video::BackgroundSubtractorKNN, cv_BackgroundSubtractor_to_BackgroundSubtractorKNN }
+	
+	boxed_cast_descendant! { BackgroundSubtractor, crate::video::BackgroundSubtractorMOG2, cv_BackgroundSubtractor_to_BackgroundSubtractorMOG2 }
+	
 	boxed_cast_base! { BackgroundSubtractor, core::Algorithm, cv_BackgroundSubtractor_to_Algorithm }
+	
+	impl std::fmt::Debug for BackgroundSubtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractor")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::video::BackgroundSubtractorKNN]
 	pub trait BackgroundSubtractorKNNTraitConst: crate::video::BackgroundSubtractorTraitConst {
@@ -783,7 +794,7 @@ pub mod video {
 	
 	/// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 	/// 
-	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	/// Very efficient if number of foreground pixels is low.
 	pub struct BackgroundSubtractorKNN {
 		ptr: *mut c_void
@@ -829,6 +840,16 @@ pub mod video {
 	}
 	
 	boxed_cast_base! { BackgroundSubtractorKNN, core::Algorithm, cv_BackgroundSubtractorKNN_to_Algorithm }
+	
+	boxed_cast_base! { BackgroundSubtractorKNN, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorKNN_to_BackgroundSubtractor }
+	
+	impl std::fmt::Debug for BackgroundSubtractorKNN {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorKNN")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::video::BackgroundSubtractorMOG2]
 	pub trait BackgroundSubtractorMOG2TraitConst: crate::video::BackgroundSubtractorTraitConst {
@@ -1133,8 +1154,8 @@ pub mod video {
 	
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	/// 
-	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
-	/// and [Zivkovic2006](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
+	/// and [Zivkovic2006](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	pub struct BackgroundSubtractorMOG2 {
 		ptr: *mut c_void
 	}
@@ -1179,6 +1200,16 @@ pub mod video {
 	}
 	
 	boxed_cast_base! { BackgroundSubtractorMOG2, core::Algorithm, cv_BackgroundSubtractorMOG2_to_Algorithm }
+	
+	boxed_cast_base! { BackgroundSubtractorMOG2, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorMOG2_to_BackgroundSubtractor }
+	
+	impl std::fmt::Debug for BackgroundSubtractorMOG2 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorMOG2")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::video::DISOpticalFlow]
 	pub trait DISOpticalFlowTraitConst: crate::video::DenseOpticalFlowTraitConst {
@@ -1458,7 +1489,7 @@ pub mod video {
 	/// DIS optical flow algorithm.
 	/// 
 	/// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
-	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
+	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
 	/// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
 	/// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
 	/// 
@@ -1527,6 +1558,16 @@ pub mod video {
 	}
 	
 	boxed_cast_base! { DISOpticalFlow, core::Algorithm, cv_DISOpticalFlow_to_Algorithm }
+	
+	boxed_cast_base! { DISOpticalFlow, crate::video::DenseOpticalFlow, cv_DISOpticalFlow_to_DenseOpticalFlow }
+	
+	impl std::fmt::Debug for DISOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DISOpticalFlow")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::video::DenseOpticalFlow]
 	pub trait DenseOpticalFlowTraitConst: core::AlgorithmTraitConst {
@@ -1604,7 +1645,21 @@ pub mod video {
 	impl DenseOpticalFlow {
 	}
 	
+	boxed_cast_descendant! { DenseOpticalFlow, crate::video::DISOpticalFlow, cv_DenseOpticalFlow_to_DISOpticalFlow }
+	
+	boxed_cast_descendant! { DenseOpticalFlow, crate::video::FarnebackOpticalFlow, cv_DenseOpticalFlow_to_FarnebackOpticalFlow }
+	
+	boxed_cast_descendant! { DenseOpticalFlow, crate::video::VariationalRefinement, cv_DenseOpticalFlow_to_VariationalRefinement }
+	
 	boxed_cast_base! { DenseOpticalFlow, core::Algorithm, cv_DenseOpticalFlow_to_Algorithm }
+	
+	impl std::fmt::Debug for DenseOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DenseOpticalFlow")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::video::FarnebackOpticalFlow]
 	pub trait FarnebackOpticalFlowTraitConst: crate::video::DenseOpticalFlowTraitConst {
@@ -1826,6 +1881,16 @@ pub mod video {
 	}
 	
 	boxed_cast_base! { FarnebackOpticalFlow, core::Algorithm, cv_FarnebackOpticalFlow_to_Algorithm }
+	
+	boxed_cast_base! { FarnebackOpticalFlow, crate::video::DenseOpticalFlow, cv_FarnebackOpticalFlow_to_DenseOpticalFlow }
+	
+	impl std::fmt::Debug for FarnebackOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FarnebackOpticalFlow")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::video::KalmanFilter]
 	pub trait KalmanFilterTraitConst {
@@ -2108,7 +2173,7 @@ pub mod video {
 	/// Kalman filter class.
 	/// 
 	/// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-	/// [Welch95](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+	/// [Welch95](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
 	/// an extended Kalman filter functionality.
 	/// 
 	/// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
@@ -2168,6 +2233,29 @@ pub mod video {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for KalmanFilter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KalmanFilter")
+				.field("state_pre", &crate::video::KalmanFilterTraitConst::state_pre(self))
+				.field("state_post", &crate::video::KalmanFilterTraitConst::state_post(self))
+				.field("transition_matrix", &crate::video::KalmanFilterTraitConst::transition_matrix(self))
+				.field("control_matrix", &crate::video::KalmanFilterTraitConst::control_matrix(self))
+				.field("measurement_matrix", &crate::video::KalmanFilterTraitConst::measurement_matrix(self))
+				.field("process_noise_cov", &crate::video::KalmanFilterTraitConst::process_noise_cov(self))
+				.field("measurement_noise_cov", &crate::video::KalmanFilterTraitConst::measurement_noise_cov(self))
+				.field("error_cov_pre", &crate::video::KalmanFilterTraitConst::error_cov_pre(self))
+				.field("gain", &crate::video::KalmanFilterTraitConst::gain(self))
+				.field("error_cov_post", &crate::video::KalmanFilterTraitConst::error_cov_post(self))
+				.field("temp1", &crate::video::KalmanFilterTraitConst::temp1(self))
+				.field("temp2", &crate::video::KalmanFilterTraitConst::temp2(self))
+				.field("temp3", &crate::video::KalmanFilterTraitConst::temp3(self))
+				.field("temp4", &crate::video::KalmanFilterTraitConst::temp4(self))
+				.field("temp5", &crate::video::KalmanFilterTraitConst::temp5(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::video::SparseOpticalFlow]
@@ -2246,7 +2334,17 @@ pub mod video {
 	impl SparseOpticalFlow {
 	}
 	
+	boxed_cast_descendant! { SparseOpticalFlow, crate::video::SparsePyrLKOpticalFlow, cv_SparseOpticalFlow_to_SparsePyrLKOpticalFlow }
+	
 	boxed_cast_base! { SparseOpticalFlow, core::Algorithm, cv_SparseOpticalFlow_to_Algorithm }
+	
+	impl std::fmt::Debug for SparseOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseOpticalFlow")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::video::SparsePyrLKOpticalFlow]
 	pub trait SparsePyrLKOpticalFlowTraitConst: crate::video::SparseOpticalFlowTraitConst {
@@ -2417,6 +2515,16 @@ pub mod video {
 	
 	boxed_cast_base! { SparsePyrLKOpticalFlow, core::Algorithm, cv_SparsePyrLKOpticalFlow_to_Algorithm }
 	
+	boxed_cast_base! { SparsePyrLKOpticalFlow, crate::video::SparseOpticalFlow, cv_SparsePyrLKOpticalFlow_to_SparseOpticalFlow }
+	
+	impl std::fmt::Debug for SparsePyrLKOpticalFlow {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparsePyrLKOpticalFlow")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::video::Tracker]
 	pub trait TrackerTraitConst {
 		fn as_raw_Tracker(&self) -> *const c_void;
@@ -2491,6 +2599,22 @@ pub mod video {
 	impl Tracker {
 	}
 	
+	boxed_cast_descendant! { Tracker, crate::video::TrackerDaSiamRPN, cv_Tracker_to_TrackerDaSiamRPN }
+	
+	boxed_cast_descendant! { Tracker, crate::video::TrackerGOTURN, cv_Tracker_to_TrackerGOTURN }
+	
+	boxed_cast_descendant! { Tracker, crate::video::TrackerMIL, cv_Tracker_to_TrackerMIL }
+	
+	boxed_cast_descendant! { Tracker, crate::video::TrackerNano, cv_Tracker_to_TrackerNano }
+	
+	impl std::fmt::Debug for Tracker {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Tracker")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::video::TrackerDaSiamRPN]
 	pub trait TrackerDaSiamRPNTraitConst: crate::video::TrackerTraitConst {
 		fn as_raw_TrackerDaSiamRPN(&self) -> *const c_void;
@@ -2562,6 +2686,16 @@ pub mod video {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { TrackerDaSiamRPN, crate::video::Tracker, cv_TrackerDaSiamRPN_to_Tracker }
+	
+	impl std::fmt::Debug for TrackerDaSiamRPN {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerDaSiamRPN")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::video::TrackerDaSiamRPN_Params]
@@ -2682,8 +2816,21 @@ pub mod video {
 	impl Clone for TrackerDaSiamRPN_Params {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TrackerDaSiamRPN_Params_implicit_clone(val: extern_send!(TrackerDaSiamRPN_Params)) -> extern_receive!(TrackerDaSiamRPN_Params: 'static); }
-			unsafe { Self::from_raw(cv_TrackerDaSiamRPN_Params_implicit_clone(self.as_raw_TrackerDaSiamRPN_Params())) }
+			extern "C" { fn cv_TrackerDaSiamRPN_Params_implicitClone_const_TrackerDaSiamRPN_Params(val: extern_send!(TrackerDaSiamRPN_Params)) -> extern_receive!(TrackerDaSiamRPN_Params: 'static); }
+			unsafe { Self::from_raw(cv_TrackerDaSiamRPN_Params_implicitClone_const_TrackerDaSiamRPN_Params(self.as_raw_TrackerDaSiamRPN_Params())) }
+		}
+	}
+	
+	impl std::fmt::Debug for TrackerDaSiamRPN_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerDaSiamRPN_Params")
+				.field("model", &crate::video::TrackerDaSiamRPN_ParamsTraitConst::model(self))
+				.field("kernel_cls1", &crate::video::TrackerDaSiamRPN_ParamsTraitConst::kernel_cls1(self))
+				.field("kernel_r1", &crate::video::TrackerDaSiamRPN_ParamsTraitConst::kernel_r1(self))
+				.field("backend", &crate::video::TrackerDaSiamRPN_ParamsTraitConst::backend(self))
+				.field("target", &crate::video::TrackerDaSiamRPN_ParamsTraitConst::target(self))
+				.finish()
 		}
 	}
 	
@@ -2701,7 +2848,7 @@ pub mod video {
 	
 	/// the GOTURN (Generic Object Tracking Using Regression Networks) tracker
 	/// 
-	/// GOTURN ([GOTURN](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
+	/// GOTURN ([GOTURN](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
 	/// GOTURN is much faster due to offline training without online fine-tuning nature.
 	/// GOTURN tracker addresses the problem of single target tracking: given a bounding box label of an object in the first frame of the video,
 	/// we track that object through the rest of the video. NOTE: Current method of GOTURN does not handle occlusions; however, it is fairly
@@ -2762,6 +2909,16 @@ pub mod video {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { TrackerGOTURN, crate::video::Tracker, cv_TrackerGOTURN_to_Tracker }
+	
+	impl std::fmt::Debug for TrackerGOTURN {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerGOTURN")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::video::TrackerGOTURN_Params]
@@ -2844,8 +3001,18 @@ pub mod video {
 	impl Clone for TrackerGOTURN_Params {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TrackerGOTURN_Params_implicit_clone(val: extern_send!(TrackerGOTURN_Params)) -> extern_receive!(TrackerGOTURN_Params: 'static); }
-			unsafe { Self::from_raw(cv_TrackerGOTURN_Params_implicit_clone(self.as_raw_TrackerGOTURN_Params())) }
+			extern "C" { fn cv_TrackerGOTURN_Params_implicitClone_const_TrackerGOTURN_Params(val: extern_send!(TrackerGOTURN_Params)) -> extern_receive!(TrackerGOTURN_Params: 'static); }
+			unsafe { Self::from_raw(cv_TrackerGOTURN_Params_implicitClone_const_TrackerGOTURN_Params(self.as_raw_TrackerGOTURN_Params())) }
+		}
+	}
+	
+	impl std::fmt::Debug for TrackerGOTURN_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerGOTURN_Params")
+				.field("model_txt", &crate::video::TrackerGOTURN_ParamsTraitConst::model_txt(self))
+				.field("model_bin", &crate::video::TrackerGOTURN_ParamsTraitConst::model_bin(self))
+				.finish()
 		}
 	}
 	
@@ -2865,7 +3032,7 @@ pub mod video {
 	/// background.
 	/// 
 	/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
-	/// based on [MIL](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MIL) .
+	/// based on [MIL](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MIL) .
 	/// 
 	/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
 	pub struct TrackerMIL {
@@ -2917,6 +3084,16 @@ pub mod video {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { TrackerMIL, crate::video::Tracker, cv_TrackerMIL_to_Tracker }
+	
+	impl std::fmt::Debug for TrackerMIL {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerMIL")
+				.finish()
+		}
 	}
 	
 	#[repr(C)]
@@ -3032,6 +3209,16 @@ pub mod video {
 		
 	}
 	
+	boxed_cast_base! { TrackerNano, crate::video::Tracker, cv_TrackerNano_to_Tracker }
+	
+	impl std::fmt::Debug for TrackerNano {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerNano")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::video::TrackerNano_Params]
 	pub trait TrackerNano_ParamsTraitConst {
 		fn as_raw_TrackerNano_Params(&self) -> *const c_void;
@@ -3136,8 +3323,20 @@ pub mod video {
 	impl Clone for TrackerNano_Params {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TrackerNano_Params_implicit_clone(val: extern_send!(TrackerNano_Params)) -> extern_receive!(TrackerNano_Params: 'static); }
-			unsafe { Self::from_raw(cv_TrackerNano_Params_implicit_clone(self.as_raw_TrackerNano_Params())) }
+			extern "C" { fn cv_TrackerNano_Params_implicitClone_const_TrackerNano_Params(val: extern_send!(TrackerNano_Params)) -> extern_receive!(TrackerNano_Params: 'static); }
+			unsafe { Self::from_raw(cv_TrackerNano_Params_implicitClone_const_TrackerNano_Params(self.as_raw_TrackerNano_Params())) }
+		}
+	}
+	
+	impl std::fmt::Debug for TrackerNano_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerNano_Params")
+				.field("backbone", &crate::video::TrackerNano_ParamsTraitConst::backbone(self))
+				.field("neckhead", &crate::video::TrackerNano_ParamsTraitConst::neckhead(self))
+				.field("backend", &crate::video::TrackerNano_ParamsTraitConst::backend(self))
+				.field("target", &crate::video::TrackerNano_ParamsTraitConst::target(self))
+				.finish()
 		}
 	}
 	
@@ -3322,7 +3521,7 @@ pub mod video {
 	/// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
 	/// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
 	/// influence of outliers. A complete formulation and a description of the minimization
-	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Brox2004)
+	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Brox2004)
 	pub struct VariationalRefinement {
 		ptr: *mut c_void
 	}
@@ -3378,4 +3577,14 @@ pub mod video {
 	}
 	
 	boxed_cast_base! { VariationalRefinement, core::Algorithm, cv_VariationalRefinement_to_Algorithm }
+	
+	boxed_cast_base! { VariationalRefinement, crate::video::DenseOpticalFlow, cv_VariationalRefinement_to_DenseOpticalFlow }
+	
+	impl std::fmt::Debug for VariationalRefinement {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("VariationalRefinement")
+				.finish()
+		}
+	}
 }

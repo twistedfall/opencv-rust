@@ -15,7 +15,7 @@ pub mod xphoto {
 	pub const HAAR: i32 = 0;
 	/// Performs Frequency Selective Reconstruction (FSR).
 	/// One of the two quality profiles BEST and FAST can be chosen, depending on the time available for reconstruction.
-	/// See [GenserPCS2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
+	/// See [GenserPCS2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
 	/// 
 	/// The algorithm may be utilized for the following areas of application:
 	/// 1. %Error Concealment (Inpainting).
@@ -23,7 +23,7 @@ pub mod xphoto {
 	///    image to be reconstructed.
 	/// 2. Non-Regular Sampling.
 	///    For more information on how to choose a good sampling mask, please review
-	///    [GroscheICIP2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
+	///    [GroscheICIP2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
 	/// 
 	/// 1-channel grayscale or 3-channel BGR image are accepted.
 	/// 
@@ -64,7 +64,7 @@ pub mod xphoto {
 		INPAINT_SHIFTMAP = 0,
 		/// Performs Frequency Selective Reconstruction (FSR).
 		/// One of the two quality profiles BEST and FAST can be chosen, depending on the time available for reconstruction.
-		/// See [GenserPCS2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
+		/// See [GenserPCS2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
 		/// 
 		/// The algorithm may be utilized for the following areas of application:
 		/// 1. %Error Concealment (Inpainting).
@@ -72,7 +72,7 @@ pub mod xphoto {
 		///    image to be reconstructed.
 		/// 2. Non-Regular Sampling.
 		///    For more information on how to choose a good sampling mask, please review
-		///    [GroscheICIP2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
+		///    [GroscheICIP2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
 		/// 
 		/// 1-channel grayscale or 3-channel BGR image are accepted.
 		/// 
@@ -330,7 +330,7 @@ pub mod xphoto {
 	
 	/// The function implements different single-image inpainting algorithms.
 	/// 
-	/// See the original papers [He2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_He2012) (Shiftmap) or [GenserPCS2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) (FSR) for details.
+	/// See the original papers [He2012](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_He2012) (Shiftmap) or [GenserPCS2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) (FSR) for details.
 	/// 
 	/// ## Parameters
 	/// * src: source image
@@ -353,7 +353,7 @@ pub mod xphoto {
 	}
 	
 	/// oilPainting
-	/// See the book [Holzmann1988](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
+	/// See the book [Holzmann1988](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
 	/// ## Parameters
 	/// * src: Input three-channel or one channel image (either CV_8UC3 or CV_8UC1)
 	/// * dst: Output image of the same size and type as src.
@@ -371,7 +371,7 @@ pub mod xphoto {
 	}
 	
 	/// oilPainting
-	/// See the book [Holzmann1988](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
+	/// See the book [Holzmann1988](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
 	/// ## Parameters
 	/// * src: Input three-channel or one channel image (either CV_8UC3 or CV_8UC1)
 	/// * dst: Output image of the same size and type as src.
@@ -492,6 +492,16 @@ pub mod xphoto {
 	
 	boxed_cast_base! { GrayworldWB, core::Algorithm, cv_GrayworldWB_to_Algorithm }
 	
+	boxed_cast_base! { GrayworldWB, crate::xphoto::WhiteBalancer, cv_GrayworldWB_to_WhiteBalancer }
+	
+	impl std::fmt::Debug for GrayworldWB {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GrayworldWB")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::xphoto::LearningBasedWB]
 	pub trait LearningBasedWBTraitConst: crate::xphoto::WhiteBalancerTraitConst {
 		fn as_raw_LearningBasedWB(&self) -> *const c_void;
@@ -544,7 +554,7 @@ pub mod xphoto {
 	
 		/// Implements the feature extraction part of the algorithm.
 		/// 
-		/// In accordance with [Cheng2015](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
+		/// In accordance with [Cheng2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
 		/// 1. Chromaticity of an average (R,G,B) tuple
 		/// 2. Chromaticity of the brightest (R,G,B) tuple (while ignoring saturated pixels)
 		/// 3. Chromaticity of the dominant (R,G,B) tuple (the one that has the highest value in the RGB histogram)
@@ -614,7 +624,7 @@ pub mod xphoto {
 	/// As [GrayworldWB], this algorithm works by applying different gains to the input
 	/// image channels, but their computation is a bit more involved compared to the
 	/// simple gray-world assumption. More details about the algorithm can be found in
-	/// [Cheng2015](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Cheng2015) .
+	/// [Cheng2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Cheng2015) .
 	/// 
 	/// To mask out saturated pixels this function uses only pixels that satisfy the
 	/// following condition:
@@ -666,6 +676,16 @@ pub mod xphoto {
 	}
 	
 	boxed_cast_base! { LearningBasedWB, core::Algorithm, cv_LearningBasedWB_to_Algorithm }
+	
+	boxed_cast_base! { LearningBasedWB, crate::xphoto::WhiteBalancer, cv_LearningBasedWB_to_WhiteBalancer }
+	
+	impl std::fmt::Debug for LearningBasedWB {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LearningBasedWB")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::xphoto::SimpleWB]
 	pub trait SimpleWBTraitConst: crate::xphoto::WhiteBalancerTraitConst {
@@ -847,6 +867,16 @@ pub mod xphoto {
 	
 	boxed_cast_base! { SimpleWB, core::Algorithm, cv_SimpleWB_to_Algorithm }
 	
+	boxed_cast_base! { SimpleWB, crate::xphoto::WhiteBalancer, cv_SimpleWB_to_WhiteBalancer }
+	
+	impl std::fmt::Debug for SimpleWB {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SimpleWB")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::xphoto::TonemapDurand]
 	pub trait TonemapDurandTraitConst: crate::photo::TonemapTraitConst {
 		fn as_raw_TonemapDurand(&self) -> *const c_void;
@@ -938,7 +968,7 @@ pub mod xphoto {
 	/// 
 	/// Saturation enhancement is possible as in cv::TonemapDrago.
 	/// 
-	/// For more information see [DD02](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_DD02) .
+	/// For more information see [DD02](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_DD02) .
 	pub struct TonemapDurand {
 		ptr: *mut c_void
 	}
@@ -983,6 +1013,16 @@ pub mod xphoto {
 	}
 	
 	boxed_cast_base! { TonemapDurand, core::Algorithm, cv_TonemapDurand_to_Algorithm }
+	
+	boxed_cast_base! { TonemapDurand, crate::photo::Tonemap, cv_TonemapDurand_to_Tonemap }
+	
+	impl std::fmt::Debug for TonemapDurand {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TonemapDurand")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::xphoto::WhiteBalancer]
 	pub trait WhiteBalancerTraitConst: core::AlgorithmTraitConst {
@@ -1050,5 +1090,19 @@ pub mod xphoto {
 	impl WhiteBalancer {
 	}
 	
+	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::GrayworldWB, cv_WhiteBalancer_to_GrayworldWB }
+	
+	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::LearningBasedWB, cv_WhiteBalancer_to_LearningBasedWB }
+	
+	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::SimpleWB, cv_WhiteBalancer_to_SimpleWB }
+	
 	boxed_cast_base! { WhiteBalancer, core::Algorithm, cv_WhiteBalancer_to_Algorithm }
+	
+	impl std::fmt::Debug for WhiteBalancer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WhiteBalancer")
+				.finish()
+		}
+	}
 }

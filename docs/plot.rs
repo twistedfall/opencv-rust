@@ -258,4 +258,12 @@ pub mod plot {
 	}
 	
 	boxed_cast_base! { Plot2d, core::Algorithm, cv_Plot2d_to_Algorithm }
+	
+	impl std::fmt::Debug for Plot2d {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Plot2d")
+				.finish()
+		}
+	}
 }

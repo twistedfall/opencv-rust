@@ -2,8 +2,8 @@ pub mod objdetect {
 	//! # Object Detection
 	//!    # Cascade Classifier for Object Detection
 	//! 
-	//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Viola01) and
-	//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
+	//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Viola01) and
+	//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
 	//! 
 	//! First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 	//! trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -29,7 +29,7 @@ pub mod objdetect {
 	//! classifiers, and are calculated as described below. The current algorithm uses the following
 	//! Haar-like features:
 	//! 
-	//! ![image](https://docs.opencv.org/4.7.0/haarfeatures.png)
+	//! ![image](https://docs.opencv.org/4.8.0/haarfeatures.png)
 	//! 
 	//! The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 	//! the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -52,6 +52,7 @@ pub mod objdetect {
 	//! <https://github.com/SvHey/thesis/blob/master/Literature/ObjectDetection/violaJones_CVPR2001.pdf>
 	//! 
 	//!    # HOG (Histogram of Oriented Gradients) descriptor and object detector
+	//!    # Barcode detection and decoding
 	//!    # QRCode detection and encoding
 	//!    # DNN-based face detection and recognition
 	//! Check [tutorial_dnn_face] "the corresponding tutorial" for more details.
@@ -66,23 +67,23 @@ pub mod objdetect {
 	//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
 	//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
 	//! 
-	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Aruco2014).
+	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Aruco2014).
 	//! 
-	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 	//! ## See also
-	//! [Aruco2014](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Aruco2014)
+	//! [Aruco2014](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Aruco2014)
 	//!        This code has been originally developed by Sergio Garrido-Jurado as a project
 	//!        for Google Summer of Code 2015 (GSoC 15).
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::SimilarRectsTraitConst, super::SimilarRectsTrait, super::BaseCascadeClassifier_MaskGeneratorTraitConst, super::BaseCascadeClassifier_MaskGeneratorTrait, super::BaseCascadeClassifierTraitConst, super::BaseCascadeClassifierTrait, super::CascadeClassifierTraitConst, super::CascadeClassifierTrait, super::DetectionROITraitConst, super::DetectionROITrait, super::HOGDescriptorTraitConst, super::HOGDescriptorTrait, super::QRCodeEncoderTraitConst, super::QRCodeEncoderTrait, super::QRCodeDetectorTraitConst, super::QRCodeDetectorTrait, super::DetectionBasedTracker_ParametersTraitConst, super::DetectionBasedTracker_ParametersTrait, super::DetectionBasedTracker_IDetectorTraitConst, super::DetectionBasedTracker_IDetectorTrait, super::DetectionBasedTracker_ExtObjectTraitConst, super::DetectionBasedTracker_ExtObjectTrait, super::DetectionBasedTrackerTraitConst, super::DetectionBasedTrackerTrait, super::FaceDetectorYNTraitConst, super::FaceDetectorYNTrait, super::FaceRecognizerSFTraitConst, super::FaceRecognizerSFTrait, super::DictionaryTraitConst, super::DictionaryTrait, super::BoardTraitConst, super::BoardTrait, super::GridBoardTraitConst, super::GridBoardTrait, super::CharucoBoardTraitConst, super::CharucoBoardTrait, super::DetectorParametersTraitConst, super::DetectorParametersTrait, super::ArucoDetectorTraitConst, super::ArucoDetectorTrait, super::CharucoParametersTraitConst, super::CharucoParametersTrait, super::CharucoDetectorTraitConst, super::CharucoDetectorTrait };
+		pub use { super::DictionaryTraitConst, super::DictionaryTrait, super::BoardTraitConst, super::BoardTrait, super::GridBoardTraitConst, super::GridBoardTrait, super::CharucoBoardTraitConst, super::CharucoBoardTrait, super::DetectorParametersTraitConst, super::DetectorParametersTrait, super::ArucoDetectorTraitConst, super::ArucoDetectorTrait, super::GraphicalCodeDetectorTraitConst, super::GraphicalCodeDetectorTrait, super::SimilarRectsTraitConst, super::SimilarRectsTrait, super::BaseCascadeClassifier_MaskGeneratorTraitConst, super::BaseCascadeClassifier_MaskGeneratorTrait, super::BaseCascadeClassifierTraitConst, super::BaseCascadeClassifierTrait, super::CascadeClassifierTraitConst, super::CascadeClassifierTrait, super::DetectionROITraitConst, super::DetectionROITrait, super::HOGDescriptorTraitConst, super::HOGDescriptorTrait, super::QRCodeEncoderTraitConst, super::QRCodeEncoderTrait, super::QRCodeDetectorTraitConst, super::QRCodeDetectorTrait, super::QRCodeDetectorArucoTraitConst, super::QRCodeDetectorArucoTrait, super::DetectionBasedTracker_ParametersTraitConst, super::DetectionBasedTracker_ParametersTrait, super::DetectionBasedTracker_IDetectorTraitConst, super::DetectionBasedTracker_IDetectorTrait, super::DetectionBasedTracker_ExtObjectTraitConst, super::DetectionBasedTracker_ExtObjectTrait, super::DetectionBasedTrackerTraitConst, super::DetectionBasedTrackerTrait, super::FaceDetectorYNTraitConst, super::FaceDetectorYNTrait, super::FaceRecognizerSFTraitConst, super::FaceRecognizerSFTrait, super::CharucoParametersTraitConst, super::CharucoParametersTrait, super::CharucoDetectorTraitConst, super::CharucoDetectorTrait, super::BarcodeDetectorTraitConst, super::BarcodeDetectorTrait };
 	}
 	
 	pub const CASCADE_DO_CANNY_PRUNING: i32 = 1;
 	pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
 	pub const CASCADE_FIND_BIGGEST_OBJECT: i32 = 4;
 	pub const CASCADE_SCALE_IMAGE: i32 = 2;
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 	pub const CORNER_REFINE_APRILTAG: i32 = 3;
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -130,6 +131,8 @@ pub mod objdetect {
 	pub const DICT_APRILTAG_36h10: i32 = 19;
 	/// 6x6 bits, minimum hamming distance between any two codes = 11, 587 codes
 	pub const DICT_APRILTAG_36h11: i32 = 20;
+	/// 6x6 bits, minimum hamming distance between any two codes = 12, 250 codes
+	pub const DICT_ARUCO_MIP_36h12: i32 = 21;
 	/// 6x6 bits, minimum hamming distance between any two codes = 3, 1024 codes
 	pub const DICT_ARUCO_ORIGINAL: i32 = 16;
 	pub const DetectionBasedTracker_DETECTED: i32 = 1;
@@ -165,7 +168,7 @@ pub mod objdetect {
 		CORNER_REFINE_SUBPIX = 1,
 		/// ArUco approach and refine the corners locations using the contour-points line fitting
 		CORNER_REFINE_CONTOUR = 2,
-		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 		CORNER_REFINE_APRILTAG = 3,
 	}
 	
@@ -260,6 +263,8 @@ pub mod objdetect {
 		DICT_APRILTAG_36h10 = 19,
 		/// 6x6 bits, minimum hamming distance between any two codes = 11, 587 codes
 		DICT_APRILTAG_36h11 = 20,
+		/// 6x6 bits, minimum hamming distance between any two codes = 12, 250 codes
+		DICT_ARUCO_MIP_36h12 = 21,
 	}
 	
 	opencv_type_enum! { crate::objdetect::PredefinedDictionaryType }
@@ -747,6 +752,14 @@ pub mod objdetect {
 	
 	boxed_cast_base! { BaseCascadeClassifier, core::Algorithm, cv_BaseCascadeClassifier_to_Algorithm }
 	
+	impl std::fmt::Debug for BaseCascadeClassifier {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BaseCascadeClassifier")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::objdetect::BaseCascadeClassifier_MaskGenerator]
 	pub trait BaseCascadeClassifier_MaskGeneratorTraitConst {
 		fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *const c_void;
@@ -803,6 +816,14 @@ pub mod objdetect {
 	}
 	
 	impl BaseCascadeClassifier_MaskGenerator {
+	}
+	
+	impl std::fmt::Debug for BaseCascadeClassifier_MaskGenerator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BaseCascadeClassifier_MaskGenerator")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::objdetect::CascadeClassifier]
@@ -1121,6 +1142,14 @@ pub mod objdetect {
 		
 	}
 	
+	impl std::fmt::Debug for CascadeClassifier {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CascadeClassifier")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::objdetect::DetectionBasedTracker]
 	pub trait DetectionBasedTrackerTraitConst {
 		fn as_raw_DetectionBasedTracker(&self) -> *const c_void;
@@ -1261,6 +1290,14 @@ pub mod objdetect {
 		
 	}
 	
+	impl std::fmt::Debug for DetectionBasedTracker {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DetectionBasedTracker")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::objdetect::DetectionBasedTracker_ExtObject]
 	pub trait DetectionBasedTracker_ExtObjectTraitConst {
 		fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *const c_void;
@@ -1353,8 +1390,19 @@ pub mod objdetect {
 	impl Clone for DetectionBasedTracker_ExtObject {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_DetectionBasedTracker_ExtObject_implicit_clone(val: extern_send!(DetectionBasedTracker_ExtObject)) -> extern_receive!(DetectionBasedTracker_ExtObject: 'static); }
-			unsafe { Self::from_raw(cv_DetectionBasedTracker_ExtObject_implicit_clone(self.as_raw_DetectionBasedTracker_ExtObject())) }
+			extern "C" { fn cv_DetectionBasedTracker_ExtObject_implicitClone_const_DetectionBasedTracker_ExtObject(val: extern_send!(DetectionBasedTracker_ExtObject)) -> extern_receive!(DetectionBasedTracker_ExtObject: 'static); }
+			unsafe { Self::from_raw(cv_DetectionBasedTracker_ExtObject_implicitClone_const_DetectionBasedTracker_ExtObject(self.as_raw_DetectionBasedTracker_ExtObject())) }
+		}
+	}
+	
+	impl std::fmt::Debug for DetectionBasedTracker_ExtObject {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DetectionBasedTracker_ExtObject")
+				.field("id", &crate::objdetect::DetectionBasedTracker_ExtObjectTraitConst::id(self))
+				.field("location", &crate::objdetect::DetectionBasedTracker_ExtObjectTraitConst::location(self))
+				.field("status", &crate::objdetect::DetectionBasedTracker_ExtObjectTraitConst::status(self))
+				.finish()
 		}
 	}
 	
@@ -1478,6 +1526,14 @@ pub mod objdetect {
 	impl DetectionBasedTracker_IDetector {
 	}
 	
+	impl std::fmt::Debug for DetectionBasedTracker_IDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DetectionBasedTracker_IDetector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::objdetect::DetectionBasedTracker_Parameters]
 	pub trait DetectionBasedTracker_ParametersTraitConst {
 		fn as_raw_DetectionBasedTracker_Parameters(&self) -> *const c_void;
@@ -1549,6 +1605,16 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for DetectionBasedTracker_Parameters {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DetectionBasedTracker_Parameters")
+				.field("max_track_lifetime", &crate::objdetect::DetectionBasedTracker_ParametersTraitConst::max_track_lifetime(self))
+				.field("min_detection_period", &crate::objdetect::DetectionBasedTracker_ParametersTraitConst::min_detection_period(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::objdetect::DetectionROI]
@@ -1633,6 +1699,17 @@ pub mod objdetect {
 	}
 	
 	impl DetectionROI {
+	}
+	
+	impl std::fmt::Debug for DetectionROI {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DetectionROI")
+				.field("scale", &crate::objdetect::DetectionROITraitConst::scale(self))
+				.field("locations", &crate::objdetect::DetectionROITraitConst::locations(self))
+				.field("confidences", &crate::objdetect::DetectionROITraitConst::confidences(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::objdetect::FaceDetectorYN]
@@ -1733,11 +1810,21 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
-		/// A simple interface to detect face from given image
+		/// Detects faces in the input image. Following is an example output.
+		/// 
+		/// * ![image](https://docs.opencv.org/4.8.0/lena-face-detection.jpg)
 		/// 
 		/// ## Parameters
 		/// * image: an image to detect
-		/// * faces: detection results stored in a cv::Mat
+		/// * faces: detection results stored in a 2D cv::Mat of shape [num_faces, 15]
+		/// *  - 0-1: x, y of bbox top left corner
+		/// *  - 2-3: width, height of bbox
+		/// *  - 4-5: x, y of right eye (blue point in the example image)
+		/// *  - 6-7: x, y of left eye (red point in the example image)
+		/// *  - 8-9: x, y of nose tip (green point in the example image)
+		/// *  - 10-11: x, y of right corner of mouth (pink point in the example image)
+		/// *  - 12-13: x, y of left corner of mouth (yellow point in the example image)
+		/// *  - 14: face score
 		#[inline]
 		fn detect(&mut self, image: &impl core::ToInputArray, faces: &mut impl core::ToOutputArray) -> Result<i32> {
 			input_array_arg!(image);
@@ -1809,6 +1896,14 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for FaceDetectorYN {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FaceDetectorYN")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::objdetect::FaceRecognizerSF]
@@ -1924,6 +2019,212 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for FaceRecognizerSF {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FaceRecognizerSF")
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::objdetect::GraphicalCodeDetector]
+	pub trait GraphicalCodeDetectorTraitConst {
+		fn as_raw_GraphicalCodeDetector(&self) -> *const c_void;
+	
+		/// Detects graphical code in image and returns the quadrangle containing the code.
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing (or not) graphical code.
+		/// * points: Output vector of vertices of the minimum-area quadrangle containing the code.
+		#[inline]
+		fn detect(&self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(img);
+			output_array_arg!(points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_detect_const_const__InputArrayR_const__OutputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Decodes graphical code in image once it's found by the detect() method.
+		/// 
+		/// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing graphical code.
+		/// * points: Quadrangle vertices found by detect() method (or some other algorithm).
+		/// * straight_code: The optional output image containing binarized code, will be empty if not found.
+		/// 
+		/// ## C++ default parameters
+		/// * straight_code: noArray()
+		#[inline]
+		fn decode(&self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, straight_code: &mut impl core::ToOutputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			input_array_arg!(points);
+			output_array_arg!(straight_code);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_decode_const_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_code.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Both detects and decodes graphical code
+		/// 
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing graphical code.
+		/// * points: optional output array of vertices of the found graphical code quadrangle, will be empty if not found.
+		/// * straight_code: The optional output image containing binarized code
+		/// 
+		/// ## C++ default parameters
+		/// * points: noArray()
+		/// * straight_code: noArray()
+		#[inline]
+		fn detect_and_decode(&self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray, straight_code: &mut impl core::ToOutputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			output_array_arg!(points);
+			output_array_arg!(straight_code);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_detectAndDecode_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_code.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Detects graphical codes in image and returns the vector of the quadrangles containing the codes.
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing (or not) graphical codes.
+		/// * points: Output vector of vector of vertices of the minimum-area quadrangle containing the codes.
+		#[inline]
+		fn detect_multi(&self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(img);
+			output_array_arg!(points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_detectMulti_const_const__InputArrayR_const__OutputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Decodes graphical codes in image once it's found by the detect() method.
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing graphical codes.
+		/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
+		/// * points: vector of Quadrangle vertices found by detect() method (or some other algorithm).
+		/// * straight_code: The optional output vector of images containing binarized codes
+		/// 
+		/// ## C++ default parameters
+		/// * straight_code: noArray()
+		#[inline]
+		fn decode_multi(&self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>, straight_code: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(img);
+			input_array_arg!(points);
+			output_array_arg!(straight_code);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vectorLstringGR_const__OutputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), straight_code.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Both detects and decodes graphical codes
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing graphical codes.
+		/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
+		/// * points: optional output vector of vertices of the found graphical code quadrangles. Will be empty if not found.
+		/// * straight_code: The optional vector of images containing binarized codes
+		/// 
+		/// ## C++ default parameters
+		/// * points: noArray()
+		/// * straight_code: noArray()
+		#[inline]
+		fn detect_and_decode_multi(&self, img: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>, points: &mut impl core::ToOutputArray, straight_code: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(img);
+			output_array_arg!(points);
+			output_array_arg!(straight_code);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vectorLstringGR_const__OutputArrayR_const__OutputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), points.as_raw__OutputArray(), straight_code.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+	}
+	
+	/// Mutable methods for [crate::objdetect::GraphicalCodeDetector]
+	pub trait GraphicalCodeDetectorTrait: crate::objdetect::GraphicalCodeDetectorTraitConst {
+		fn as_raw_mut_GraphicalCodeDetector(&mut self) -> *mut c_void;
+	
+	}
+	
+	pub struct GraphicalCodeDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GraphicalCodeDetector }
+	
+	impl Drop for GraphicalCodeDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_GraphicalCodeDetector_delete(instance: *mut c_void); }
+			unsafe { cv_GraphicalCodeDetector_delete(self.as_raw_mut_GraphicalCodeDetector()) };
+		}
+	}
+	
+	unsafe impl Send for GraphicalCodeDetector {}
+	
+	impl crate::objdetect::GraphicalCodeDetectorTraitConst for GraphicalCodeDetector {
+		#[inline] fn as_raw_GraphicalCodeDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::GraphicalCodeDetectorTrait for GraphicalCodeDetector {
+		#[inline] fn as_raw_mut_GraphicalCodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl GraphicalCodeDetector {
+		#[inline]
+		pub fn default() -> Result<crate::objdetect::GraphicalCodeDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_GraphicalCodeDetector(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::GraphicalCodeDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		#[inline]
+		pub fn copy(unnamed: &crate::objdetect::GraphicalCodeDetector) -> crate::objdetect::GraphicalCodeDetector {
+			let ret = unsafe { sys::cv_GraphicalCodeDetector_GraphicalCodeDetector_const_GraphicalCodeDetectorR(unnamed.as_raw_GraphicalCodeDetector()) };
+			let ret = unsafe { crate::objdetect::GraphicalCodeDetector::opencv_from_extern(ret) };
+			ret
+		}
+		
+		#[inline]
+		pub fn copy_mut(mut unnamed: crate::objdetect::GraphicalCodeDetector) -> crate::objdetect::GraphicalCodeDetector {
+			let ret = unsafe { sys::cv_GraphicalCodeDetector_GraphicalCodeDetector_GraphicalCodeDetectorRR(unnamed.as_raw_mut_GraphicalCodeDetector()) };
+			let ret = unsafe { crate::objdetect::GraphicalCodeDetector::opencv_from_extern(ret) };
+			ret
+		}
+		
+	}
+	
+	impl Clone for GraphicalCodeDetector {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_GraphicalCodeDetector_implicitClone_const_GraphicalCodeDetector(val: extern_send!(GraphicalCodeDetector)) -> extern_receive!(GraphicalCodeDetector: 'static); }
+			unsafe { Self::from_raw(cv_GraphicalCodeDetector_implicitClone_const_GraphicalCodeDetector(self.as_raw_GraphicalCodeDetector())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GraphicalCodeDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GraphicalCodeDetector")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::objdetect::HOGDescriptor]
@@ -2509,7 +2810,7 @@ pub mod objdetect {
 	
 	/// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 	/// 
-	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
+	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 	/// 
 	/// useful links:
 	/// 
@@ -2663,65 +2964,37 @@ pub mod objdetect {
 		
 	}
 	
+	impl std::fmt::Debug for HOGDescriptor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HOGDescriptor")
+				.field("win_size", &crate::objdetect::HOGDescriptorTraitConst::win_size(self))
+				.field("block_size", &crate::objdetect::HOGDescriptorTraitConst::block_size(self))
+				.field("block_stride", &crate::objdetect::HOGDescriptorTraitConst::block_stride(self))
+				.field("cell_size", &crate::objdetect::HOGDescriptorTraitConst::cell_size(self))
+				.field("nbins", &crate::objdetect::HOGDescriptorTraitConst::nbins(self))
+				.field("deriv_aperture", &crate::objdetect::HOGDescriptorTraitConst::deriv_aperture(self))
+				.field("win_sigma", &crate::objdetect::HOGDescriptorTraitConst::win_sigma(self))
+				.field("histogram_norm_type", &crate::objdetect::HOGDescriptorTraitConst::histogram_norm_type(self))
+				.field("l2_hys_threshold", &crate::objdetect::HOGDescriptorTraitConst::l2_hys_threshold(self))
+				.field("gamma_correction", &crate::objdetect::HOGDescriptorTraitConst::gamma_correction(self))
+				.field("svm_detector", &crate::objdetect::HOGDescriptorTraitConst::svm_detector(self))
+				.field("ocl_svm_detector", &crate::objdetect::HOGDescriptorTraitConst::ocl_svm_detector(self))
+				.field("free_coef", &crate::objdetect::HOGDescriptorTraitConst::free_coef(self))
+				.field("nlevels", &crate::objdetect::HOGDescriptorTraitConst::nlevels(self))
+				.field("signed_gradient", &crate::objdetect::HOGDescriptorTraitConst::signed_gradient(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::objdetect::QRCodeDetector]
-	pub trait QRCodeDetectorTraitConst {
+	pub trait QRCodeDetectorTraitConst: crate::objdetect::GraphicalCodeDetectorTraitConst {
 		fn as_raw_QRCodeDetector(&self) -> *const c_void;
 	
-		/// Detects QR code in image and returns the quadrangle containing the code.
-		/// ## Parameters
-		/// * img: grayscale or color (BGR) image containing (or not) QR code.
-		/// * points: Output vector of vertices of the minimum-area quadrangle containing the code.
-		#[inline]
-		fn detect(&self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray) -> Result<bool> {
-			input_array_arg!(img);
-			output_array_arg!(points);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_QRCodeDetector_detect_const_const__InputArrayR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		/// Detects QR codes in image and returns the vector of the quadrangles containing the codes.
-		/// ## Parameters
-		/// * img: grayscale or color (BGR) image containing (or not) QR codes.
-		/// * points: Output vector of vector of vertices of the minimum-area quadrangle containing the codes.
-		#[inline]
-		fn detect_multi(&self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray) -> Result<bool> {
-			input_array_arg!(img);
-			output_array_arg!(points);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_QRCodeDetector_detectMulti_const_const__InputArrayR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		/// Decodes QR codes in image once it's found by the detect() method.
-		/// ## Parameters
-		/// * img: grayscale or color (BGR) image containing QR codes.
-		/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
-		/// * points: vector of Quadrangle vertices found by detect() method (or some other algorithm).
-		/// * straight_qrcode: The optional output vector of images containing rectified and binarized QR codes
-		/// 
-		/// ## C++ default parameters
-		/// * straight_qrcode: noArray()
-		#[inline]
-		fn decode_multi(&self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>, straight_qrcode: &mut impl core::ToOutputArray) -> Result<bool> {
-			input_array_arg!(img);
-			input_array_arg!(points);
-			output_array_arg!(straight_qrcode);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_QRCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vectorLstringGR_const__OutputArrayR(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
 	}
 	
 	/// Mutable methods for [crate::objdetect::QRCodeDetector]
-	pub trait QRCodeDetectorTrait: crate::objdetect::QRCodeDetectorTraitConst {
+	pub trait QRCodeDetectorTrait: crate::objdetect::GraphicalCodeDetectorTrait + crate::objdetect::QRCodeDetectorTraitConst {
 		fn as_raw_mut_QRCodeDetector(&mut self) -> *mut c_void;
 	
 		/// sets the epsilon used during the horizontal scan of QR code stop marker detection.
@@ -2729,11 +3002,12 @@ pub mod objdetect {
 		/// * epsX: Epsilon neighborhood, which allows you to determine the horizontal pattern
 		/// of the scheme 1:1:3:1:1 according to QR code standard.
 		#[inline]
-		fn set_eps_x(&mut self, eps_x: f64) -> Result<()> {
+		fn set_eps_x(&mut self, eps_x: f64) -> Result<crate::objdetect::QRCodeDetector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_setEpsX_double(self.as_raw_mut_QRCodeDetector(), eps_x, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::QRCodeDetector::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -2742,11 +3016,12 @@ pub mod objdetect {
 		/// * epsY: Epsilon neighborhood, which allows you to determine the vertical pattern
 		/// of the scheme 1:1:3:1:1 according to QR code standard.
 		#[inline]
-		fn set_eps_y(&mut self, eps_y: f64) -> Result<()> {
+		fn set_eps_y(&mut self, eps_y: f64) -> Result<crate::objdetect::QRCodeDetector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_setEpsY_double(self.as_raw_mut_QRCodeDetector(), eps_y, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::QRCodeDetector::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -2754,34 +3029,12 @@ pub mod objdetect {
 		/// 
 		/// alignmentMarkers using by default
 		#[inline]
-		fn set_use_alignment_markers(&mut self, use_alignment_markers: bool) -> Result<()> {
+		fn set_use_alignment_markers(&mut self, use_alignment_markers: bool) -> Result<crate::objdetect::QRCodeDetector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_setUseAlignmentMarkers_bool(self.as_raw_mut_QRCodeDetector(), use_alignment_markers, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		/// Decodes QR code in image once it's found by the detect() method.
-		/// 
-		/// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
-		/// ## Parameters
-		/// * img: grayscale or color (BGR) image containing QR code.
-		/// * points: Quadrangle vertices found by detect() method (or some other algorithm).
-		/// * straight_qrcode: The optional output image containing rectified and binarized QR code
-		/// 
-		/// ## C++ default parameters
-		/// * straight_qrcode: noArray()
-		#[inline]
-		fn decode(&mut self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, straight_qrcode: &mut impl core::ToOutputArray) -> Result<Vec<u8>> {
-			input_array_arg!(img);
-			input_array_arg!(points);
-			output_array_arg!(straight_qrcode);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_QRCodeDetector_decode_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::objdetect::QRCodeDetector::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -2802,29 +3055,6 @@ pub mod objdetect {
 			output_array_arg!(straight_qrcode);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_decodeCurved_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-		/// Both detects and decodes QR code
-		/// 
-		/// ## Parameters
-		/// * img: grayscale or color (BGR) image containing QR code.
-		/// * points: optional output array of vertices of the found QR code quadrangle. Will be empty if not found.
-		/// * straight_qrcode: The optional output image containing rectified and binarized QR code
-		/// 
-		/// ## C++ default parameters
-		/// * points: noArray()
-		/// * straight_qrcode: noArray()
-		#[inline]
-		fn detect_and_decode(&mut self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray, straight_qrcode: &mut impl core::ToOutputArray) -> Result<Vec<u8>> {
-			input_array_arg!(img);
-			output_array_arg!(points);
-			output_array_arg!(straight_qrcode);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_QRCodeDetector_detectAndDecode_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
@@ -2872,6 +3102,14 @@ pub mod objdetect {
 	
 	unsafe impl Send for QRCodeDetector {}
 	
+	impl crate::objdetect::GraphicalCodeDetectorTraitConst for QRCodeDetector {
+		#[inline] fn as_raw_GraphicalCodeDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::GraphicalCodeDetectorTrait for QRCodeDetector {
+		#[inline] fn as_raw_mut_GraphicalCodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
 	impl crate::objdetect::QRCodeDetectorTraitConst for QRCodeDetector {
 		#[inline] fn as_raw_QRCodeDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2888,6 +3126,192 @@ pub mod objdetect {
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::objdetect::QRCodeDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	impl Clone for QRCodeDetector {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_QRCodeDetector_implicitClone_const_QRCodeDetector(val: extern_send!(QRCodeDetector)) -> extern_receive!(QRCodeDetector: 'static); }
+			unsafe { Self::from_raw(cv_QRCodeDetector_implicitClone_const_QRCodeDetector(self.as_raw_QRCodeDetector())) }
+		}
+	}
+	
+	boxed_cast_base! { QRCodeDetector, crate::objdetect::GraphicalCodeDetector, cv_QRCodeDetector_to_GraphicalCodeDetector }
+	
+	impl std::fmt::Debug for QRCodeDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QRCodeDetector")
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::objdetect::QRCodeDetectorAruco]
+	pub trait QRCodeDetectorArucoTraitConst: crate::objdetect::GraphicalCodeDetectorTraitConst {
+		fn as_raw_QRCodeDetectorAruco(&self) -> *const c_void;
+	
+		/// Detector parameters getter. See cv::QRCodeDetectorAruco::Params
+		#[inline]
+		fn get_detector_parameters(&self) -> Result<crate::objdetect::QRCodeDetectorAruco_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetectorAruco_getDetectorParameters_const(self.as_raw_QRCodeDetectorAruco(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+	}
+	
+	/// Mutable methods for [crate::objdetect::QRCodeDetectorAruco]
+	pub trait QRCodeDetectorArucoTrait: crate::objdetect::GraphicalCodeDetectorTrait + crate::objdetect::QRCodeDetectorArucoTraitConst {
+		fn as_raw_mut_QRCodeDetectorAruco(&mut self) -> *mut c_void;
+	
+		/// Detector parameters setter. See cv::QRCodeDetectorAruco::Params
+		#[inline]
+		fn set_detector_parameters(&mut self, params: crate::objdetect::QRCodeDetectorAruco_Params) -> Result<crate::objdetect::QRCodeDetectorAruco> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetectorAruco_setDetectorParameters_const_ParamsR(self.as_raw_mut_QRCodeDetectorAruco(), &params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::QRCodeDetectorAruco::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Aruco detector parameters are used to search for the finder patterns.
+		#[inline]
+		fn get_aruco_parameters(&mut self) -> Result<crate::objdetect::DetectorParameters> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetectorAruco_getArucoParameters(self.as_raw_mut_QRCodeDetectorAruco(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::DetectorParameters::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Aruco detector parameters are used to search for the finder patterns.
+		#[inline]
+		fn set_aruco_parameters(&mut self, params: &crate::objdetect::DetectorParameters) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetectorAruco_setArucoParameters_const_DetectorParametersR(self.as_raw_mut_QRCodeDetectorAruco(), params.as_raw_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+	}
+	
+	pub struct QRCodeDetectorAruco {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { QRCodeDetectorAruco }
+	
+	impl Drop for QRCodeDetectorAruco {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_QRCodeDetectorAruco_delete(instance: *mut c_void); }
+			unsafe { cv_QRCodeDetectorAruco_delete(self.as_raw_mut_QRCodeDetectorAruco()) };
+		}
+	}
+	
+	unsafe impl Send for QRCodeDetectorAruco {}
+	
+	impl crate::objdetect::GraphicalCodeDetectorTraitConst for QRCodeDetectorAruco {
+		#[inline] fn as_raw_GraphicalCodeDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::GraphicalCodeDetectorTrait for QRCodeDetectorAruco {
+		#[inline] fn as_raw_mut_GraphicalCodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::objdetect::QRCodeDetectorArucoTraitConst for QRCodeDetectorAruco {
+		#[inline] fn as_raw_QRCodeDetectorAruco(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::QRCodeDetectorArucoTrait for QRCodeDetectorAruco {
+		#[inline] fn as_raw_mut_QRCodeDetectorAruco(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl QRCodeDetectorAruco {
+		#[inline]
+		pub fn default() -> Result<crate::objdetect::QRCodeDetectorAruco> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetectorAruco_QRCodeDetectorAruco(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::QRCodeDetectorAruco::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// QR code detector constructor for Aruco-based algorithm. See cv::QRCodeDetectorAruco::Params
+		#[inline]
+		pub fn new(params: crate::objdetect::QRCodeDetectorAruco_Params) -> Result<crate::objdetect::QRCodeDetectorAruco> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetectorAruco_QRCodeDetectorAruco_const_ParamsR(&params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::QRCodeDetectorAruco::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	impl Clone for QRCodeDetectorAruco {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_QRCodeDetectorAruco_implicitClone_const_QRCodeDetectorAruco(val: extern_send!(QRCodeDetectorAruco)) -> extern_receive!(QRCodeDetectorAruco: 'static); }
+			unsafe { Self::from_raw(cv_QRCodeDetectorAruco_implicitClone_const_QRCodeDetectorAruco(self.as_raw_QRCodeDetectorAruco())) }
+		}
+	}
+	
+	boxed_cast_base! { QRCodeDetectorAruco, crate::objdetect::GraphicalCodeDetector, cv_QRCodeDetectorAruco_to_GraphicalCodeDetector }
+	
+	impl std::fmt::Debug for QRCodeDetectorAruco {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QRCodeDetectorAruco")
+				.finish()
+		}
+	}
+	
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq)]
+	pub struct QRCodeDetectorAruco_Params {
+		/// The minimum allowed pixel size of a QR module in the smallest image in the image pyramid, default 4.f
+		pub min_module_size_in_pyramid: f32,
+		/// The maximum allowed relative rotation for finder patterns in the same QR code, default pi/12
+		pub max_rotation: f32,
+		/// The maximum allowed relative mismatch in module sizes for finder patterns in the same QR code, default 1.75f
+		pub max_module_size_mismatch: f32,
+		/// The maximum allowed module relative mismatch for timing pattern module, default 2.f
+		/// 
+		/// If relative mismatch of timing pattern module more this value, penalty points will be added.
+		/// If a lot of penalty points are added, QR code will be rejected.
+		pub max_timing_pattern_mismatch: f32,
+		/// The maximum allowed percentage of penalty points out of total pins in timing pattern, default 0.4f
+		pub max_penalties: f32,
+		/// The maximum allowed relative color mismatch in the timing pattern, default 0.2f
+		pub max_colors_mismatch: f32,
+		/// The algorithm find QR codes with almost minimum timing pattern score and minimum size, default 0.9f
+		/// 
+		/// The QR code with the minimum "timing pattern score" and minimum "size" is selected as the best QR code.
+		/// If for the current QR code "timing pattern score" * scaleTimingPatternScore < "previous timing pattern score" and "size" < "previous size", then
+		/// current QR code set as the best QR code.
+		pub scale_timing_pattern_score: f32,
+	}
+	
+	opencv_type_simple! { crate::objdetect::QRCodeDetectorAruco_Params }
+	
+	impl QRCodeDetectorAruco_Params {
+		#[inline]
+		pub fn default() -> Result<crate::objdetect::QRCodeDetectorAruco_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetectorAruco_Params_Params(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
 			Ok(ret)
 		}
 		
@@ -2976,6 +3400,14 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for QRCodeEncoder {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QRCodeEncoder")
+				.finish()
+		}
 	}
 	
 	/// QR code encoder parameters.
@@ -3081,6 +3513,15 @@ pub mod objdetect {
 		
 	}
 	
+	impl std::fmt::Debug for SimilarRects {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SimilarRects")
+				.field("eps", &crate::objdetect::SimilarRectsTraitConst::eps(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::objdetect::ArucoDetector]
 	pub trait ArucoDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_ArucoDetector(&self) -> *const c_void;
@@ -3104,7 +3545,7 @@ pub mod objdetect {
 		/// Note that this function does not perform pose estimation.
 		/// 
 		/// Note: The function does not correct lens distortion or takes it into account. It's recommended to undistort
-		/// input image with corresponging camera model, if camera parameters are known
+		/// input image with corresponding camera model, if camera parameters are known
 		/// ## See also
 		/// undistort, estimatePoseSingleMarkers,  estimatePoseBoard
 		/// 
@@ -3123,7 +3564,7 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
-		/// Refind not detected markers based on the already detected and the board layout
+		/// Refine not detected markers based on the already detected and the board layout
 		/// 
 		/// ## Parameters
 		/// * image: input image
@@ -3325,6 +3766,14 @@ pub mod objdetect {
 	
 	boxed_cast_base! { ArucoDetector, core::Algorithm, cv_ArucoDetector_to_Algorithm }
 	
+	impl std::fmt::Debug for ArucoDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ArucoDetector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::objdetect::Board]
 	pub trait BoardTraitConst {
 		fn as_raw_Board(&self) -> *const c_void;
@@ -3383,15 +3832,23 @@ pub mod objdetect {
 		}
 		
 		/// Given a board configuration and a set of detected markers, returns the corresponding
-		/// image points and object points to call solvePnP()
+		/// image points and object points, can be used in solvePnP()
 		/// 
 		/// ## Parameters
 		/// * detectedCorners: List of detected marker corners of the board.
-		/// For CharucoBoard class you can set list of charuco corners.
-		/// * detectedIds: List of identifiers for each marker or list of charuco identifiers for each corner.
-		/// For CharucoBoard class you can set list of charuco identifiers for each corner.
-		/// * objPoints: Vector of vectors of board marker points in the board coordinate space.
-		/// * imgPoints: Vector of vectors of the projections of board marker corner points.
+		/// For cv::Board and cv::GridBoard the method expects std::vector<std::vector<Point2f>> or std::vector<Mat> with Aruco marker corners.
+		/// For cv::CharucoBoard the method expects std::vector<Point2f> or Mat with ChAruco corners (chess board corners matched with Aruco markers).
+		/// 
+		/// * detectedIds: List of identifiers for each marker or charuco corner.
+		/// For any Board class the method expects std::vector<int> or Mat.
+		/// 
+		/// * objPoints: Vector of marker points in the board coordinate space.
+		/// For any Board class the method expects std::vector<cv::Point3f> objectPoints or cv::Mat
+		/// 
+		/// * imgPoints: Vector of marker points in the image coordinate space.
+		/// For any Board class the method expects std::vector<cv::Point2f> objectPoints or cv::Mat
+		/// ## See also
+		/// solvePnP
 		#[inline]
 		fn match_image_points(&self, detected_corners: &impl core::ToInputArray, detected_ids: &impl core::ToInputArray, obj_points: &mut impl core::ToOutputArray, img_points: &mut impl core::ToOutputArray) -> Result<()> {
 			input_array_arg!(detected_corners);
@@ -3503,8 +3960,16 @@ pub mod objdetect {
 	impl Clone for Board {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Board_implicit_clone(val: extern_send!(Board)) -> extern_receive!(Board: 'static); }
-			unsafe { Self::from_raw(cv_Board_implicit_clone(self.as_raw_Board())) }
+			extern "C" { fn cv_Board_implicitClone_const_Board(val: extern_send!(Board)) -> extern_receive!(Board: 'static); }
+			unsafe { Self::from_raw(cv_Board_implicitClone_const_Board(self.as_raw_Board())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Board {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Board")
+				.finish()
 		}
 	}
 	
@@ -3512,6 +3977,15 @@ pub mod objdetect {
 	pub trait CharucoBoardTraitConst: crate::objdetect::BoardTraitConst {
 		fn as_raw_CharucoBoard(&self) -> *const c_void;
 	
+		#[inline]
+		fn get_legacy_pattern(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_CharucoBoard_getLegacyPattern_const(self.as_raw_CharucoBoard(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn get_chessboard_size(&self) -> Result<core::Size> {
 			return_send!(via ocvrs_return);
@@ -3600,6 +4074,23 @@ pub mod objdetect {
 	pub trait CharucoBoardTrait: crate::objdetect::BoardTrait + crate::objdetect::CharucoBoardTraitConst {
 		fn as_raw_mut_CharucoBoard(&mut self) -> *mut c_void;
 	
+		/// set legacy chessboard pattern.
+		/// 
+		/// Legacy setting creates chessboard patterns starting with a white box in the upper left corner
+		/// if there is an even row count of chessboard boxes, otherwise it starts with a black box.
+		/// This setting ensures compatibility to patterns created with OpenCV versions prior OpenCV 4.6.0.
+		/// See <https://github.com/opencv/opencv/issues/23152>.
+		/// 
+		/// Default value: false.
+		#[inline]
+		fn set_legacy_pattern(&mut self, legacy_pattern: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_CharucoBoard_setLegacyPattern_bool(self.as_raw_mut_CharucoBoard(), legacy_pattern, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// ChArUco board is a planar chessboard where the markers are placed inside the white squares of a chessboard.
@@ -3677,12 +4168,20 @@ pub mod objdetect {
 	impl Clone for CharucoBoard {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_CharucoBoard_implicit_clone(val: extern_send!(CharucoBoard)) -> extern_receive!(CharucoBoard: 'static); }
-			unsafe { Self::from_raw(cv_CharucoBoard_implicit_clone(self.as_raw_CharucoBoard())) }
+			extern "C" { fn cv_CharucoBoard_implicitClone_const_CharucoBoard(val: extern_send!(CharucoBoard)) -> extern_receive!(CharucoBoard: 'static); }
+			unsafe { Self::from_raw(cv_CharucoBoard_implicitClone_const_CharucoBoard(self.as_raw_CharucoBoard())) }
 		}
 	}
 	
 	boxed_cast_base! { CharucoBoard, crate::objdetect::Board, cv_CharucoBoard_to_Board }
+	
+	impl std::fmt::Debug for CharucoBoard {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CharucoBoard")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::objdetect::CharucoDetector]
 	pub trait CharucoDetectorTraitConst: core::AlgorithmTraitConst {
@@ -3907,6 +4406,14 @@ pub mod objdetect {
 	
 	boxed_cast_base! { CharucoDetector, core::Algorithm, cv_CharucoDetector_to_Algorithm }
 	
+	impl std::fmt::Debug for CharucoDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CharucoDetector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::objdetect::CharucoParameters]
 	pub trait CharucoParametersTraitConst {
 		fn as_raw_CharucoParameters(&self) -> *const c_void;
@@ -4017,8 +4524,20 @@ pub mod objdetect {
 	impl Clone for CharucoParameters {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_CharucoParameters_implicit_clone(val: extern_send!(CharucoParameters)) -> extern_receive!(CharucoParameters: 'static); }
-			unsafe { Self::from_raw(cv_CharucoParameters_implicit_clone(self.as_raw_CharucoParameters())) }
+			extern "C" { fn cv_CharucoParameters_implicitClone_const_CharucoParameters(val: extern_send!(CharucoParameters)) -> extern_receive!(CharucoParameters: 'static); }
+			unsafe { Self::from_raw(cv_CharucoParameters_implicitClone_const_CharucoParameters(self.as_raw_CharucoParameters())) }
+		}
+	}
+	
+	impl std::fmt::Debug for CharucoParameters {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CharucoParameters")
+				.field("camera_matrix", &crate::objdetect::CharucoParametersTraitConst::camera_matrix(self))
+				.field("dist_coeffs", &crate::objdetect::CharucoParametersTraitConst::dist_coeffs(self))
+				.field("min_markers", &crate::objdetect::CharucoParametersTraitConst::min_markers(self))
+				.field("try_refine_markers", &crate::objdetect::CharucoParametersTraitConst::try_refine_markers(self))
+				.finish()
 		}
 	}
 	
@@ -4104,10 +4623,8 @@ pub mod objdetect {
 		
 		/// default value CORNER_REFINE_NONE
 		#[inline]
-		fn corner_refinement_method(&self) -> crate::objdetect::CornerRefineMethod {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_aruco_DetectorParameters_getPropCornerRefinementMethod_const(self.as_raw_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+		fn corner_refinement_method(&self) -> i32 {
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_getPropCornerRefinementMethod_const(self.as_raw_DetectorParameters()) };
 			ret
 		}
 		
@@ -4361,8 +4878,8 @@ pub mod objdetect {
 		
 		/// default value CORNER_REFINE_NONE
 		#[inline]
-		fn set_corner_refinement_method(&mut self, val: crate::objdetect::CornerRefineMethod) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropCornerRefinementMethod_CornerRefineMethod(self.as_raw_mut_DetectorParameters(), val) };
+		fn set_corner_refinement_method(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_setPropCornerRefinementMethod_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -4599,8 +5116,48 @@ pub mod objdetect {
 	impl Clone for DetectorParameters {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_DetectorParameters_implicit_clone(val: extern_send!(DetectorParameters)) -> extern_receive!(DetectorParameters: 'static); }
-			unsafe { Self::from_raw(cv_DetectorParameters_implicit_clone(self.as_raw_DetectorParameters())) }
+			extern "C" { fn cv_DetectorParameters_implicitClone_const_DetectorParameters(val: extern_send!(DetectorParameters)) -> extern_receive!(DetectorParameters: 'static); }
+			unsafe { Self::from_raw(cv_DetectorParameters_implicitClone_const_DetectorParameters(self.as_raw_DetectorParameters())) }
+		}
+	}
+	
+	impl std::fmt::Debug for DetectorParameters {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DetectorParameters")
+				.field("adaptive_thresh_win_size_min", &crate::objdetect::DetectorParametersTraitConst::adaptive_thresh_win_size_min(self))
+				.field("adaptive_thresh_win_size_max", &crate::objdetect::DetectorParametersTraitConst::adaptive_thresh_win_size_max(self))
+				.field("adaptive_thresh_win_size_step", &crate::objdetect::DetectorParametersTraitConst::adaptive_thresh_win_size_step(self))
+				.field("adaptive_thresh_constant", &crate::objdetect::DetectorParametersTraitConst::adaptive_thresh_constant(self))
+				.field("min_marker_perimeter_rate", &crate::objdetect::DetectorParametersTraitConst::min_marker_perimeter_rate(self))
+				.field("max_marker_perimeter_rate", &crate::objdetect::DetectorParametersTraitConst::max_marker_perimeter_rate(self))
+				.field("polygonal_approx_accuracy_rate", &crate::objdetect::DetectorParametersTraitConst::polygonal_approx_accuracy_rate(self))
+				.field("min_corner_distance_rate", &crate::objdetect::DetectorParametersTraitConst::min_corner_distance_rate(self))
+				.field("min_distance_to_border", &crate::objdetect::DetectorParametersTraitConst::min_distance_to_border(self))
+				.field("min_marker_distance_rate", &crate::objdetect::DetectorParametersTraitConst::min_marker_distance_rate(self))
+				.field("corner_refinement_method", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_method(self))
+				.field("corner_refinement_win_size", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_win_size(self))
+				.field("corner_refinement_max_iterations", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_max_iterations(self))
+				.field("corner_refinement_min_accuracy", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_min_accuracy(self))
+				.field("marker_border_bits", &crate::objdetect::DetectorParametersTraitConst::marker_border_bits(self))
+				.field("perspective_remove_pixel_per_cell", &crate::objdetect::DetectorParametersTraitConst::perspective_remove_pixel_per_cell(self))
+				.field("perspective_remove_ignored_margin_per_cell", &crate::objdetect::DetectorParametersTraitConst::perspective_remove_ignored_margin_per_cell(self))
+				.field("max_erroneous_bits_in_border_rate", &crate::objdetect::DetectorParametersTraitConst::max_erroneous_bits_in_border_rate(self))
+				.field("min_otsu_std_dev", &crate::objdetect::DetectorParametersTraitConst::min_otsu_std_dev(self))
+				.field("error_correction_rate", &crate::objdetect::DetectorParametersTraitConst::error_correction_rate(self))
+				.field("april_tag_quad_decimate", &crate::objdetect::DetectorParametersTraitConst::april_tag_quad_decimate(self))
+				.field("april_tag_quad_sigma", &crate::objdetect::DetectorParametersTraitConst::april_tag_quad_sigma(self))
+				.field("april_tag_min_cluster_pixels", &crate::objdetect::DetectorParametersTraitConst::april_tag_min_cluster_pixels(self))
+				.field("april_tag_max_nmaxima", &crate::objdetect::DetectorParametersTraitConst::april_tag_max_nmaxima(self))
+				.field("april_tag_critical_rad", &crate::objdetect::DetectorParametersTraitConst::april_tag_critical_rad(self))
+				.field("april_tag_max_line_fit_mse", &crate::objdetect::DetectorParametersTraitConst::april_tag_max_line_fit_mse(self))
+				.field("april_tag_min_white_black_diff", &crate::objdetect::DetectorParametersTraitConst::april_tag_min_white_black_diff(self))
+				.field("april_tag_deglitch", &crate::objdetect::DetectorParametersTraitConst::april_tag_deglitch(self))
+				.field("detect_inverted_marker", &crate::objdetect::DetectorParametersTraitConst::detect_inverted_marker(self))
+				.field("use_aruco3_detection", &crate::objdetect::DetectorParametersTraitConst::use_aruco3_detection(self))
+				.field("min_side_length_canonical_img", &crate::objdetect::DetectorParametersTraitConst::min_side_length_canonical_img(self))
+				.field("min_marker_length_ratio_original_img", &crate::objdetect::DetectorParametersTraitConst::min_marker_length_ratio_original_img(self))
+				.finish()
 		}
 	}
 	
@@ -4815,8 +5372,19 @@ pub mod objdetect {
 	impl Clone for Dictionary {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Dictionary_implicit_clone(val: extern_send!(Dictionary)) -> extern_receive!(Dictionary: 'static); }
-			unsafe { Self::from_raw(cv_Dictionary_implicit_clone(self.as_raw_Dictionary())) }
+			extern "C" { fn cv_Dictionary_implicitClone_const_Dictionary(val: extern_send!(Dictionary)) -> extern_receive!(Dictionary: 'static); }
+			unsafe { Self::from_raw(cv_Dictionary_implicitClone_const_Dictionary(self.as_raw_Dictionary())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Dictionary {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Dictionary")
+				.field("bytes_list", &crate::objdetect::DictionaryTraitConst::bytes_list(self))
+				.field("marker_size", &crate::objdetect::DictionaryTraitConst::marker_size(self))
+				.field("max_correction_bits", &crate::objdetect::DictionaryTraitConst::max_correction_bits(self))
+				.finish()
 		}
 	}
 	
@@ -4933,12 +5501,20 @@ pub mod objdetect {
 	impl Clone for GridBoard {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GridBoard_implicit_clone(val: extern_send!(GridBoard)) -> extern_receive!(GridBoard: 'static); }
-			unsafe { Self::from_raw(cv_GridBoard_implicit_clone(self.as_raw_GridBoard())) }
+			extern "C" { fn cv_GridBoard_implicitClone_const_GridBoard(val: extern_send!(GridBoard)) -> extern_receive!(GridBoard: 'static); }
+			unsafe { Self::from_raw(cv_GridBoard_implicitClone_const_GridBoard(self.as_raw_GridBoard())) }
 		}
 	}
 	
 	boxed_cast_base! { GridBoard, crate::objdetect::Board, cv_GridBoard_to_Board }
+	
+	impl std::fmt::Debug for GridBoard {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GridBoard")
+				.finish()
+		}
+	}
 	
 	/// struct RefineParameters is used by ArucoDetector
 	#[repr(C)]
@@ -4997,5 +5573,144 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// Constant methods for [crate::objdetect::BarcodeDetector]
+	pub trait BarcodeDetectorTraitConst: crate::objdetect::GraphicalCodeDetectorTraitConst {
+		fn as_raw_BarcodeDetector(&self) -> *const c_void;
+	
+		/// Decodes barcode in image once it's found by the detect() method.
+		/// 
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing bar code.
+		/// * points: vector of rotated rectangle vertices found by detect() method (or some other algorithm).
+		/// For N detected barcodes, the dimensions of this array should be [N][4].
+		/// Order of four points in vector<Point2f> is bottomLeft, topLeft, topRight, bottomRight.
+		/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
+		/// * decoded_type: vector strings, specifies the type of these barcodes
+		/// ## Returns
+		/// true if at least one valid barcode have been found
+		#[inline]
+		fn decode_with_type(&self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<String>) -> Result<bool> {
+			input_array_arg!(img);
+			input_array_arg!(points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_decodeWithType_const_const__InputArrayR_const__InputArrayR_vectorLstringGR_vectorLstringGR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Both detects and decodes barcode
+		/// 
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing barcode.
+		/// * decoded_info: UTF8-encoded output vector of string(s) or empty vector of string if the codes cannot be decoded.
+		/// * decoded_type: vector of strings, specifies the type of these barcodes
+		/// * points: optional output vector of vertices of the found  barcode rectangle. Will be empty if not found.
+		/// ## Returns
+		/// true if at least one valid barcode have been found
+		/// 
+		/// ## C++ default parameters
+		/// * points: noArray()
+		#[inline]
+		fn detect_and_decode_with_type(&self, img: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<String>, points: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(img);
+			output_array_arg!(points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_detectAndDecodeWithType_const_const__InputArrayR_vectorLstringGR_vectorLstringGR_const__OutputArrayR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfString(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+	}
+	
+	/// Mutable methods for [crate::objdetect::BarcodeDetector]
+	pub trait BarcodeDetectorTrait: crate::objdetect::BarcodeDetectorTraitConst + crate::objdetect::GraphicalCodeDetectorTrait {
+		fn as_raw_mut_BarcodeDetector(&mut self) -> *mut c_void;
+	
+	}
+	
+	pub struct BarcodeDetector {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { BarcodeDetector }
+	
+	impl Drop for BarcodeDetector {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_BarcodeDetector_delete(instance: *mut c_void); }
+			unsafe { cv_BarcodeDetector_delete(self.as_raw_mut_BarcodeDetector()) };
+		}
+	}
+	
+	unsafe impl Send for BarcodeDetector {}
+	
+	impl crate::objdetect::GraphicalCodeDetectorTraitConst for BarcodeDetector {
+		#[inline] fn as_raw_GraphicalCodeDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::GraphicalCodeDetectorTrait for BarcodeDetector {
+		#[inline] fn as_raw_mut_GraphicalCodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::objdetect::BarcodeDetectorTraitConst for BarcodeDetector {
+		#[inline] fn as_raw_BarcodeDetector(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::objdetect::BarcodeDetectorTrait for BarcodeDetector {
+		#[inline] fn as_raw_mut_BarcodeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl BarcodeDetector {
+		/// Initialize the BarcodeDetector.
+		#[inline]
+		pub fn default() -> Result<crate::objdetect::BarcodeDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_BarcodeDetector(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::BarcodeDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Initialize the BarcodeDetector.
+		/// 
+		/// Parameters allow to load _optional_ Super Resolution DNN model for better quality.
+		/// ## Parameters
+		/// * prototxt_path: prototxt file path for the super resolution model
+		/// * model_path: model file path for the super resolution model
+		#[inline]
+		pub fn new(prototxt_path: &str, model_path: &str) -> Result<crate::objdetect::BarcodeDetector> {
+			extern_container_arg!(prototxt_path);
+			extern_container_arg!(model_path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_BarcodeDetector_const_stringR_const_stringR(prototxt_path.opencv_as_extern(), model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::BarcodeDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	impl Clone for BarcodeDetector {
+		#[inline]
+		fn clone(&self) -> Self {
+			extern "C" { fn cv_BarcodeDetector_implicitClone_const_BarcodeDetector(val: extern_send!(BarcodeDetector)) -> extern_receive!(BarcodeDetector: 'static); }
+			unsafe { Self::from_raw(cv_BarcodeDetector_implicitClone_const_BarcodeDetector(self.as_raw_BarcodeDetector())) }
+		}
+	}
+	
+	boxed_cast_base! { BarcodeDetector, crate::objdetect::GraphicalCodeDetector, cv_BarcodeDetector_to_GraphicalCodeDetector }
+	
+	impl std::fmt::Debug for BarcodeDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BarcodeDetector")
+				.finish()
+		}
 	}
 }

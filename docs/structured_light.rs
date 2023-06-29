@@ -11,10 +11,10 @@ pub mod structured_light {
 	//! case, a set of patterns  are successively projected onto the measuring surface.
 	//! The codeword for a given pixel is usually formed by  the sequence of illuminance values for that
 	//! pixel across the projected patterns. Thus, the codification is called  temporal because the bits
-	//! of the codewords are multiplexed in time [pattern](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_pattern) .
+	//! of the codewords are multiplexed in time [pattern](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_pattern) .
 	//! 
 	//! In this module a time-multiplexing coding strategy based on Gray encoding is implemented following the
-	//! (stereo) approach described in 3DUNDERWORLD algorithm [UNDERWORLD](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_UNDERWORLD) .
+	//! (stereo) approach described in 3DUNDERWORLD algorithm [UNDERWORLD](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_UNDERWORLD) .
 	//! For more details, see [tutorial_structured_light].
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
@@ -121,7 +121,7 @@ pub mod structured_light {
 		
 	}
 	
-	/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_UNDERWORLD).
+	/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_UNDERWORLD).
 	/// 
 	/// The generation of the pattern images is performed with Gray encoding using the traditional white and black colors.
 	/// 
@@ -205,6 +205,16 @@ pub mod structured_light {
 	
 	boxed_cast_base! { GrayCodePattern, core::Algorithm, cv_GrayCodePattern_to_Algorithm }
 	
+	boxed_cast_base! { GrayCodePattern, crate::structured_light::StructuredLightPattern, cv_GrayCodePattern_to_StructuredLightPattern }
+	
+	impl std::fmt::Debug for GrayCodePattern {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GrayCodePattern")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::structured_light::GrayCodePattern_Params]
 	pub trait GrayCodePattern_ParamsTraitConst {
 		fn as_raw_GrayCodePattern_Params(&self) -> *const c_void;
@@ -280,6 +290,16 @@ pub mod structured_light {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for GrayCodePattern_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GrayCodePattern_Params")
+				.field("width", &crate::structured_light::GrayCodePattern_ParamsTraitConst::width(self))
+				.field("height", &crate::structured_light::GrayCodePattern_ParamsTraitConst::height(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::structured_light::SinusoidalPattern]
@@ -373,7 +393,7 @@ pub mod structured_light {
 	}
 	
 	/// Class implementing Fourier transform profilometry (FTP) , phase-shifting profilometry (PSP)
-	/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_faps).
+	/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_faps).
 	/// 
 	/// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
 	pub struct SinusoidalPattern {
@@ -436,6 +456,16 @@ pub mod structured_light {
 	}
 	
 	boxed_cast_base! { SinusoidalPattern, core::Algorithm, cv_SinusoidalPattern_to_Algorithm }
+	
+	boxed_cast_base! { SinusoidalPattern, crate::structured_light::StructuredLightPattern, cv_SinusoidalPattern_to_StructuredLightPattern }
+	
+	impl std::fmt::Debug for SinusoidalPattern {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SinusoidalPattern")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::structured_light::SinusoidalPattern_Params]
 	pub trait SinusoidalPattern_ParamsTraitConst {
@@ -605,6 +635,23 @@ pub mod structured_light {
 		
 	}
 	
+	impl std::fmt::Debug for SinusoidalPattern_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SinusoidalPattern_Params")
+				.field("width", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::width(self))
+				.field("height", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::height(self))
+				.field("nbr_of_periods", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::nbr_of_periods(self))
+				.field("shift_value", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::shift_value(self))
+				.field("method_id", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::method_id(self))
+				.field("nbr_of_pixels_between_markers", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::nbr_of_pixels_between_markers(self))
+				.field("horizontal", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::horizontal(self))
+				.field("set_markers", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::set_markers(self))
+				.field("markers_location", &crate::structured_light::SinusoidalPattern_ParamsTraitConst::markers_location(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::structured_light::StructuredLightPattern]
 	pub trait StructuredLightPatternTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_StructuredLightPattern(&self) -> *const c_void;
@@ -694,5 +741,17 @@ pub mod structured_light {
 	impl StructuredLightPattern {
 	}
 	
+	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::GrayCodePattern, cv_StructuredLightPattern_to_GrayCodePattern }
+	
+	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::SinusoidalPattern, cv_StructuredLightPattern_to_SinusoidalPattern }
+	
 	boxed_cast_base! { StructuredLightPattern, core::Algorithm, cv_StructuredLightPattern_to_Algorithm }
+	
+	impl std::fmt::Debug for StructuredLightPattern {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StructuredLightPattern")
+				.finish()
+		}
+	}
 }

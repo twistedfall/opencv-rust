@@ -4,7 +4,7 @@ pub mod rgbd {
 	//! [kinfu_icp]
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::Linemod_TemplateTraitConst, super::Linemod_TemplateTrait, super::Linemod_QuantizedPyramidTraitConst, super::Linemod_QuantizedPyramidTrait, super::Linemod_ModalityTraitConst, super::Linemod_ModalityTrait, super::Linemod_ColorGradientTraitConst, super::Linemod_ColorGradientTrait, super::Linemod_DepthNormalTraitConst, super::Linemod_DepthNormalTrait, super::Linemod_MatchTraitConst, super::Linemod_MatchTrait, super::Linemod_DetectorTraitConst, super::Linemod_DetectorTrait, super::RgbdNormalsTraitConst, super::RgbdNormalsTrait, super::DepthCleanerTraitConst, super::DepthCleanerTrait, super::RgbdPlaneTraitConst, super::RgbdPlaneTrait, super::RgbdFrameTraitConst, super::RgbdFrameTrait, super::OdometryFrameTraitConst, super::OdometryFrameTrait, super::OdometryTraitConst, super::OdometryTrait, super::RgbdOdometryTraitConst, super::RgbdOdometryTrait, super::ICPOdometryTraitConst, super::ICPOdometryTrait, super::RgbdICPOdometryTraitConst, super::RgbdICPOdometryTrait, super::FastICPOdometryTraitConst, super::FastICPOdometryTrait, super::Kinfu_VolumeTraitConst, super::Kinfu_VolumeTrait, super::Kinfu_VolumeParamsTraitConst, super::Kinfu_VolumeParamsTrait, super::Kinfu_ParamsTraitConst, super::Kinfu_ParamsTrait, super::Kinfu_KinFuTraitConst, super::Kinfu_KinFuTrait, super::Dynafu_DynaFuTraitConst, super::Dynafu_DynaFuTrait, super::ParamsTraitConst, super::ParamsTrait, super::LargeKinfuTraitConst, super::LargeKinfuTrait, super::Kinfu_Detail_PoseGraphTraitConst, super::Kinfu_Detail_PoseGraphTrait, super::ColoredKinfu_ParamsTraitConst, super::ColoredKinfu_ParamsTrait, super::ColoredKinfu_ColoredKinFuTraitConst, super::ColoredKinfu_ColoredKinFuTrait };
+		pub use { super::LineMod_TemplateTraitConst, super::LineMod_TemplateTrait, super::LineMod_QuantizedPyramidTraitConst, super::LineMod_QuantizedPyramidTrait, super::LineMod_ModalityTraitConst, super::LineMod_ModalityTrait, super::LineMod_ColorGradientTraitConst, super::LineMod_ColorGradientTrait, super::LineMod_DepthNormalTraitConst, super::LineMod_DepthNormalTrait, super::LineMod_MatchTraitConst, super::LineMod_MatchTrait, super::LineMod_DetectorTraitConst, super::LineMod_DetectorTrait, super::RgbdNormalsTraitConst, super::RgbdNormalsTrait, super::DepthCleanerTraitConst, super::DepthCleanerTrait, super::RgbdPlaneTraitConst, super::RgbdPlaneTrait, super::RgbdFrameTraitConst, super::RgbdFrameTrait, super::OdometryFrameTraitConst, super::OdometryFrameTrait, super::OdometryTraitConst, super::OdometryTrait, super::RgbdOdometryTraitConst, super::RgbdOdometryTrait, super::ICPOdometryTraitConst, super::ICPOdometryTrait, super::RgbdICPOdometryTraitConst, super::RgbdICPOdometryTrait, super::FastICPOdometryTraitConst, super::FastICPOdometryTrait, super::Kinfu_VolumeTraitConst, super::Kinfu_VolumeTrait, super::Kinfu_VolumeParamsTraitConst, super::Kinfu_VolumeParamsTrait, super::Kinfu_ParamsTraitConst, super::Kinfu_ParamsTrait, super::Kinfu_KinFuTraitConst, super::Kinfu_KinFuTrait, super::Dynafu_DynaFuTraitConst, super::Dynafu_DynaFuTrait, super::ParamsTraitConst, super::ParamsTrait, super::LargeKinfuTraitConst, super::LargeKinfuTrait, super::Kinfu_Detail_PoseGraphTraitConst, super::Kinfu_Detail_PoseGraphTrait, super::ColoredKinfu_ParamsTraitConst, super::ColoredKinfu_ParamsTrait, super::ColoredKinfu_ColoredKinFuTraitConst, super::ColoredKinfu_ColoredKinFuTrait };
 	}
 	
 	pub const DepthCleaner_DEPTH_CLEANER_NIL: i32 = 0;
@@ -92,10 +92,10 @@ pub mod rgbd {
 	/// ## C++ default parameters
 	/// * size: 10
 	#[inline]
-	pub fn draw_features(img: &mut impl core::ToInputOutputArray, templates: &core::Vector<crate::rgbd::Linemod_Template>, tl: core::Point2i, size: i32) -> Result<()> {
+	pub fn draw_features(img: &mut impl core::ToInputOutputArray, templates: &core::Vector<crate::rgbd::LineMod_Template>, tl: core::Point2i, size: i32) -> Result<()> {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_linemod_drawFeatures_const__InputOutputArrayR_const_vectorLTemplateGR_const_Point2iR_int(img.as_raw__InputOutputArray(), templates.as_raw_VectorOfLinemod_Template(), &tl, size, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_linemod_drawFeatures_const__InputOutputArrayR_const_vectorLTemplateGR_const_Point2iR_int(img.as_raw__InputOutputArray(), templates.as_raw_VectorOfLineMod_Template(), &tl, size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -105,12 +105,12 @@ pub mod rgbd {
 	/// 
 	/// Default parameter settings suitable for VGA images.
 	#[inline]
-	pub fn get_default_line() -> Result<core::Ptr<crate::rgbd::Linemod_Detector>> {
+	pub fn get_default_line() -> Result<core::Ptr<crate::rgbd::LineMod_Detector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_linemod_getDefaultLINE(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_Detector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_Detector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -119,12 +119,12 @@ pub mod rgbd {
 	/// 
 	/// Default parameter settings suitable for VGA images.
 	#[inline]
-	pub fn get_default_linemod() -> Result<core::Ptr<crate::rgbd::Linemod_Detector>> {
+	pub fn get_default_linemod() -> Result<core::Ptr<crate::rgbd::LineMod_Detector>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_linemod_getDefaultLINEMOD(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_Detector>::opencv_from_extern(ret) };
+		let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_Detector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -474,7 +474,7 @@ pub mod rgbd {
 	/// KinectFusion implementation
 	/// 
 	/// This class implements a 3d reconstruction algorithm described in
-	/// [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+	/// [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
 	/// 
 	/// It takes a sequence of depth images taken from depth sensor
 	/// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
@@ -482,7 +482,7 @@ pub mod rgbd {
 	/// or can be Phong-rendered from given camera pose.
 	/// 
 	/// An internal representation of a model is a voxel cuboid that keeps TSDF values
-	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
 	/// There is no interface to that representation yet.
 	/// 
 	/// KinFu uses OpenCL acceleration automatically if available.
@@ -529,6 +529,14 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for ColoredKinfu_ColoredKinFu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColoredKinfu_ColoredKinFu")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::rgbd::ColoredKinfu_Params]
@@ -1042,6 +1050,36 @@ pub mod rgbd {
 		
 	}
 	
+	impl std::fmt::Debug for ColoredKinfu_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColoredKinfu_Params")
+				.field("frame_size", &crate::rgbd::ColoredKinfu_ParamsTraitConst::frame_size(self))
+				.field("rgb_frame_size", &crate::rgbd::ColoredKinfu_ParamsTraitConst::rgb_frame_size(self))
+				.field("volume_type", &crate::rgbd::ColoredKinfu_ParamsTraitConst::volume_type(self))
+				.field("intr", &crate::rgbd::ColoredKinfu_ParamsTraitConst::intr(self))
+				.field("rgb_intr", &crate::rgbd::ColoredKinfu_ParamsTraitConst::rgb_intr(self))
+				.field("depth_factor", &crate::rgbd::ColoredKinfu_ParamsTraitConst::depth_factor(self))
+				.field("bilateral_sigma_depth", &crate::rgbd::ColoredKinfu_ParamsTraitConst::bilateral_sigma_depth(self))
+				.field("bilateral_sigma_spatial", &crate::rgbd::ColoredKinfu_ParamsTraitConst::bilateral_sigma_spatial(self))
+				.field("bilateral_kernel_size", &crate::rgbd::ColoredKinfu_ParamsTraitConst::bilateral_kernel_size(self))
+				.field("pyramid_levels", &crate::rgbd::ColoredKinfu_ParamsTraitConst::pyramid_levels(self))
+				.field("volume_dims", &crate::rgbd::ColoredKinfu_ParamsTraitConst::volume_dims(self))
+				.field("voxel_size", &crate::rgbd::ColoredKinfu_ParamsTraitConst::voxel_size(self))
+				.field("tsdf_min_camera_movement", &crate::rgbd::ColoredKinfu_ParamsTraitConst::tsdf_min_camera_movement(self))
+				.field("volume_pose", &crate::rgbd::ColoredKinfu_ParamsTraitConst::volume_pose(self))
+				.field("tsdf_trunc_dist", &crate::rgbd::ColoredKinfu_ParamsTraitConst::tsdf_trunc_dist(self))
+				.field("tsdf_max_weight", &crate::rgbd::ColoredKinfu_ParamsTraitConst::tsdf_max_weight(self))
+				.field("raycast_step_factor", &crate::rgbd::ColoredKinfu_ParamsTraitConst::raycast_step_factor(self))
+				.field("light_pose", &crate::rgbd::ColoredKinfu_ParamsTraitConst::light_pose(self))
+				.field("icp_dist_thresh", &crate::rgbd::ColoredKinfu_ParamsTraitConst::icp_dist_thresh(self))
+				.field("icp_angle_thresh", &crate::rgbd::ColoredKinfu_ParamsTraitConst::icp_angle_thresh(self))
+				.field("icp_iterations", &crate::rgbd::ColoredKinfu_ParamsTraitConst::icp_iterations(self))
+				.field("truncate_threshold", &crate::rgbd::ColoredKinfu_ParamsTraitConst::truncate_threshold(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::Dynafu_DynaFu]
 	pub trait Dynafu_DynaFuTraitConst {
 		fn as_raw_Dynafu_DynaFu(&self) -> *const c_void;
@@ -1248,6 +1286,14 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Dynafu_DynaFu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Dynafu_DynaFu")
+				.finish()
+		}
 	}
 	
 	#[repr(C)]
@@ -1538,7 +1584,7 @@ pub mod rgbd {
 	/// KinectFusion implementation
 	/// 
 	/// This class implements a 3d reconstruction algorithm described in
-	/// [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+	/// [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
 	/// 
 	/// It takes a sequence of depth images taken from depth sensor
 	/// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
@@ -1546,7 +1592,7 @@ pub mod rgbd {
 	/// or can be Phong-rendered from given camera pose.
 	/// 
 	/// An internal representation of a model is a voxel cuboid that keeps TSDF values
-	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
 	/// There is no interface to that representation yet.
 	/// 
 	/// KinFu uses OpenCL acceleration automatically if available.
@@ -1593,6 +1639,14 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Kinfu_KinFu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Kinfu_KinFu")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::rgbd::Kinfu_Params]
@@ -2092,6 +2146,35 @@ pub mod rgbd {
 		
 	}
 	
+	impl std::fmt::Debug for Kinfu_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Kinfu_Params")
+				.field("frame_size", &crate::rgbd::Kinfu_ParamsTraitConst::frame_size(self))
+				.field("volume_type", &crate::rgbd::Kinfu_ParamsTraitConst::volume_type(self))
+				.field("intr", &crate::rgbd::Kinfu_ParamsTraitConst::intr(self))
+				.field("rgb_intr", &crate::rgbd::Kinfu_ParamsTraitConst::rgb_intr(self))
+				.field("depth_factor", &crate::rgbd::Kinfu_ParamsTraitConst::depth_factor(self))
+				.field("bilateral_sigma_depth", &crate::rgbd::Kinfu_ParamsTraitConst::bilateral_sigma_depth(self))
+				.field("bilateral_sigma_spatial", &crate::rgbd::Kinfu_ParamsTraitConst::bilateral_sigma_spatial(self))
+				.field("bilateral_kernel_size", &crate::rgbd::Kinfu_ParamsTraitConst::bilateral_kernel_size(self))
+				.field("pyramid_levels", &crate::rgbd::Kinfu_ParamsTraitConst::pyramid_levels(self))
+				.field("volume_dims", &crate::rgbd::Kinfu_ParamsTraitConst::volume_dims(self))
+				.field("voxel_size", &crate::rgbd::Kinfu_ParamsTraitConst::voxel_size(self))
+				.field("tsdf_min_camera_movement", &crate::rgbd::Kinfu_ParamsTraitConst::tsdf_min_camera_movement(self))
+				.field("volume_pose", &crate::rgbd::Kinfu_ParamsTraitConst::volume_pose(self))
+				.field("tsdf_trunc_dist", &crate::rgbd::Kinfu_ParamsTraitConst::tsdf_trunc_dist(self))
+				.field("tsdf_max_weight", &crate::rgbd::Kinfu_ParamsTraitConst::tsdf_max_weight(self))
+				.field("raycast_step_factor", &crate::rgbd::Kinfu_ParamsTraitConst::raycast_step_factor(self))
+				.field("light_pose", &crate::rgbd::Kinfu_ParamsTraitConst::light_pose(self))
+				.field("icp_dist_thresh", &crate::rgbd::Kinfu_ParamsTraitConst::icp_dist_thresh(self))
+				.field("icp_angle_thresh", &crate::rgbd::Kinfu_ParamsTraitConst::icp_angle_thresh(self))
+				.field("icp_iterations", &crate::rgbd::Kinfu_ParamsTraitConst::icp_iterations(self))
+				.field("truncate_threshold", &crate::rgbd::Kinfu_ParamsTraitConst::truncate_threshold(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::Kinfu_Volume]
 	pub trait Kinfu_VolumeTraitConst {
 		fn as_raw_Kinfu_Volume(&self) -> *const c_void;
@@ -2246,6 +2329,18 @@ pub mod rgbd {
 	}
 	
 	impl Kinfu_Volume {
+	}
+	
+	impl std::fmt::Debug for Kinfu_Volume {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Kinfu_Volume")
+				.field("voxel_size", &crate::rgbd::Kinfu_VolumeTraitConst::voxel_size(self))
+				.field("voxel_size_inv", &crate::rgbd::Kinfu_VolumeTraitConst::voxel_size_inv(self))
+				.field("pose", &crate::rgbd::Kinfu_VolumeTraitConst::pose(self))
+				.field("raycast_step_factor", &crate::rgbd::Kinfu_VolumeTraitConst::raycast_step_factor(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::rgbd::Kinfu_VolumeParams]
@@ -2468,6 +2563,23 @@ pub mod rgbd {
 		
 	}
 	
+	impl std::fmt::Debug for Kinfu_VolumeParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Kinfu_VolumeParams")
+				.field("typ", &crate::rgbd::Kinfu_VolumeParamsTraitConst::typ(self))
+				.field("resolution", &crate::rgbd::Kinfu_VolumeParamsTraitConst::resolution(self))
+				.field("unit_resolution", &crate::rgbd::Kinfu_VolumeParamsTraitConst::unit_resolution(self))
+				.field("pose", &crate::rgbd::Kinfu_VolumeParamsTraitConst::pose(self))
+				.field("voxel_size", &crate::rgbd::Kinfu_VolumeParamsTraitConst::voxel_size(self))
+				.field("tsdf_trunc_dist", &crate::rgbd::Kinfu_VolumeParamsTraitConst::tsdf_trunc_dist(self))
+				.field("max_weight", &crate::rgbd::Kinfu_VolumeParamsTraitConst::max_weight(self))
+				.field("depth_trunc_threshold", &crate::rgbd::Kinfu_VolumeParamsTraitConst::depth_trunc_threshold(self))
+				.field("raycast_step_factor", &crate::rgbd::Kinfu_VolumeParamsTraitConst::raycast_step_factor(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::Kinfu_Detail_PoseGraph]
 	pub trait Kinfu_Detail_PoseGraphTraitConst {
 		fn as_raw_Kinfu_Detail_PoseGraph(&self) -> *const c_void;
@@ -2648,6 +2760,14 @@ pub mod rgbd {
 		
 	}
 	
+	impl std::fmt::Debug for Kinfu_Detail_PoseGraph {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Kinfu_Detail_PoseGraph")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::LargeKinfu]
 	pub trait LargeKinfuTraitConst {
 		fn as_raw_LargeKinfu(&self) -> *const c_void;
@@ -2765,7 +2885,7 @@ pub mod rgbd {
 	/// Phong-rendered from given camera pose.
 	/// 
 	/// An internal representation of a model is a spatially hashed voxel cube that stores TSDF values
-	/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_kinectfusion) article
+	/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) article
 	/// about TSDF). There is no interface to that representation yet.
 	/// 
 	/// For posegraph optimization, a Submap abstraction over the Volume class is created.
@@ -2814,6 +2934,14 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for LargeKinfu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LargeKinfu")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::rgbd::Params]
@@ -3124,32 +3252,55 @@ pub mod rgbd {
 		
 	}
 	
-	/// Constant methods for [crate::rgbd::Linemod_ColorGradient]
-	pub trait Linemod_ColorGradientTraitConst: crate::rgbd::Linemod_ModalityTraitConst {
-		fn as_raw_Linemod_ColorGradient(&self) -> *const c_void;
+	impl std::fmt::Debug for Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Params")
+				.field("frame_size", &crate::rgbd::ParamsTraitConst::frame_size(self))
+				.field("intr", &crate::rgbd::ParamsTraitConst::intr(self))
+				.field("rgb_intr", &crate::rgbd::ParamsTraitConst::rgb_intr(self))
+				.field("depth_factor", &crate::rgbd::ParamsTraitConst::depth_factor(self))
+				.field("bilateral_sigma_depth", &crate::rgbd::ParamsTraitConst::bilateral_sigma_depth(self))
+				.field("bilateral_sigma_spatial", &crate::rgbd::ParamsTraitConst::bilateral_sigma_spatial(self))
+				.field("bilateral_kernel_size", &crate::rgbd::ParamsTraitConst::bilateral_kernel_size(self))
+				.field("pyramid_levels", &crate::rgbd::ParamsTraitConst::pyramid_levels(self))
+				.field("tsdf_min_camera_movement", &crate::rgbd::ParamsTraitConst::tsdf_min_camera_movement(self))
+				.field("light_pose", &crate::rgbd::ParamsTraitConst::light_pose(self))
+				.field("icp_dist_thresh", &crate::rgbd::ParamsTraitConst::icp_dist_thresh(self))
+				.field("icp_angle_thresh", &crate::rgbd::ParamsTraitConst::icp_angle_thresh(self))
+				.field("icp_iterations", &crate::rgbd::ParamsTraitConst::icp_iterations(self))
+				.field("truncate_threshold", &crate::rgbd::ParamsTraitConst::truncate_threshold(self))
+				.field("volume_params", &crate::rgbd::ParamsTraitConst::volume_params(self))
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::rgbd::LineMod_ColorGradient]
+	pub trait LineMod_ColorGradientTraitConst: crate::rgbd::LineMod_ModalityTraitConst {
+		fn as_raw_LineMod_ColorGradient(&self) -> *const c_void;
 	
 		#[inline]
 		fn weak_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_getPropWeak_threshold_const(self.as_raw_Linemod_ColorGradient()) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_getPropWeak_threshold_const(self.as_raw_LineMod_ColorGradient()) };
 			ret
 		}
 		
 		#[inline]
 		fn num_features(&self) -> size_t {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_getPropNum_features_const(self.as_raw_Linemod_ColorGradient()) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_getPropNum_features_const(self.as_raw_LineMod_ColorGradient()) };
 			ret
 		}
 		
 		#[inline]
 		fn strong_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_getPropStrong_threshold_const(self.as_raw_Linemod_ColorGradient()) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_getPropStrong_threshold_const(self.as_raw_LineMod_ColorGradient()) };
 			ret
 		}
 		
 		#[inline]
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_ColorGradient_name_const(self.as_raw_Linemod_ColorGradient(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_ColorGradient_name_const(self.as_raw_LineMod_ColorGradient(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -3159,7 +3310,7 @@ pub mod rgbd {
 		#[inline]
 		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_ColorGradient_write_const_FileStorageR(self.as_raw_Linemod_ColorGradient(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_ColorGradient_write_const_FileStorageR(self.as_raw_LineMod_ColorGradient(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3167,32 +3318,32 @@ pub mod rgbd {
 		
 	}
 	
-	/// Mutable methods for [crate::rgbd::Linemod_ColorGradient]
-	pub trait Linemod_ColorGradientTrait: crate::rgbd::Linemod_ColorGradientTraitConst + crate::rgbd::Linemod_ModalityTrait {
-		fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::rgbd::LineMod_ColorGradient]
+	pub trait LineMod_ColorGradientTrait: crate::rgbd::LineMod_ColorGradientTraitConst + crate::rgbd::LineMod_ModalityTrait {
+		fn as_raw_mut_LineMod_ColorGradient(&mut self) -> *mut c_void;
 	
 		#[inline]
 		fn set_weak_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_setPropWeak_threshold_float(self.as_raw_mut_Linemod_ColorGradient(), val) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_setPropWeak_threshold_float(self.as_raw_mut_LineMod_ColorGradient(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_features(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_setPropNum_features_size_t(self.as_raw_mut_Linemod_ColorGradient(), val) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_setPropNum_features_size_t(self.as_raw_mut_LineMod_ColorGradient(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_strong_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_setPropStrong_threshold_float(self.as_raw_mut_Linemod_ColorGradient(), val) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_setPropStrong_threshold_float(self.as_raw_mut_LineMod_ColorGradient(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_ColorGradient_read_const_FileNodeR(self.as_raw_mut_Linemod_ColorGradient(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_ColorGradient_read_const_FileNodeR(self.as_raw_mut_LineMod_ColorGradient(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3201,47 +3352,47 @@ pub mod rgbd {
 	}
 	
 	/// \brief Modality that computes quantized gradient orientations from a color image.
-	pub struct Linemod_ColorGradient {
+	pub struct LineMod_ColorGradient {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { Linemod_ColorGradient }
+	opencv_type_boxed! { LineMod_ColorGradient }
 	
-	impl Drop for Linemod_ColorGradient {
+	impl Drop for LineMod_ColorGradient {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Linemod_ColorGradient_delete(instance: *mut c_void); }
-			unsafe { cv_Linemod_ColorGradient_delete(self.as_raw_mut_Linemod_ColorGradient()) };
+			extern "C" { fn cv_LineMod_ColorGradient_delete(instance: *mut c_void); }
+			unsafe { cv_LineMod_ColorGradient_delete(self.as_raw_mut_LineMod_ColorGradient()) };
 		}
 	}
 	
-	unsafe impl Send for Linemod_ColorGradient {}
+	unsafe impl Send for LineMod_ColorGradient {}
 	
-	impl crate::rgbd::Linemod_ModalityTraitConst for Linemod_ColorGradient {
-		#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
+	impl crate::rgbd::LineMod_ModalityTraitConst for LineMod_ColorGradient {
+		#[inline] fn as_raw_LineMod_Modality(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_ModalityTrait for Linemod_ColorGradient {
-		#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::rgbd::LineMod_ModalityTrait for LineMod_ColorGradient {
+		#[inline] fn as_raw_mut_LineMod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::rgbd::Linemod_ColorGradientTraitConst for Linemod_ColorGradient {
-		#[inline] fn as_raw_Linemod_ColorGradient(&self) -> *const c_void { self.as_raw() }
+	impl crate::rgbd::LineMod_ColorGradientTraitConst for LineMod_ColorGradient {
+		#[inline] fn as_raw_LineMod_ColorGradient(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_ColorGradientTrait for Linemod_ColorGradient {
-		#[inline] fn as_raw_mut_Linemod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::rgbd::LineMod_ColorGradientTrait for LineMod_ColorGradient {
+		#[inline] fn as_raw_mut_LineMod_ColorGradient(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl Linemod_ColorGradient {
+	impl LineMod_ColorGradient {
 		/// \brief Default constructor. Uses reasonable default parameter values.
 		#[inline]
-		pub fn default() -> Result<crate::rgbd::Linemod_ColorGradient> {
+		pub fn default() -> Result<crate::rgbd::LineMod_ColorGradient> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_ColorGradient_ColorGradient(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::rgbd::Linemod_ColorGradient::opencv_from_extern(ret) };
+			let ret = unsafe { crate::rgbd::LineMod_ColorGradient::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -3252,59 +3403,72 @@ pub mod rgbd {
 		/// \param strong_threshold Consider as candidate features only gradients whose norms are
 		///                         larger than this.
 		#[inline]
-		pub fn new(weak_threshold: f32, num_features: size_t, strong_threshold: f32) -> Result<crate::rgbd::Linemod_ColorGradient> {
+		pub fn new(weak_threshold: f32, num_features: size_t, strong_threshold: f32) -> Result<crate::rgbd::LineMod_ColorGradient> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_ColorGradient_ColorGradient_float_size_t_float(weak_threshold, num_features, strong_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::rgbd::Linemod_ColorGradient::opencv_from_extern(ret) };
+			let ret = unsafe { crate::rgbd::LineMod_ColorGradient::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		#[inline]
-		pub fn create(weak_threshold: f32, num_features: size_t, strong_threshold: f32) -> Result<core::Ptr<crate::rgbd::Linemod_ColorGradient>> {
+		pub fn create(weak_threshold: f32, num_features: size_t, strong_threshold: f32) -> Result<core::Ptr<crate::rgbd::LineMod_ColorGradient>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_ColorGradient_create_float_size_t_float(weak_threshold, num_features, strong_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_ColorGradient>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_ColorGradient>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	/// Constant methods for [crate::rgbd::Linemod_DepthNormal]
-	pub trait Linemod_DepthNormalTraitConst: crate::rgbd::Linemod_ModalityTraitConst {
-		fn as_raw_Linemod_DepthNormal(&self) -> *const c_void;
+	boxed_cast_base! { LineMod_ColorGradient, crate::rgbd::LineMod_Modality, cv_LineMod_ColorGradient_to_LineMod_Modality }
+	
+	impl std::fmt::Debug for LineMod_ColorGradient {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LineMod_ColorGradient")
+				.field("weak_threshold", &crate::rgbd::LineMod_ColorGradientTraitConst::weak_threshold(self))
+				.field("num_features", &crate::rgbd::LineMod_ColorGradientTraitConst::num_features(self))
+				.field("strong_threshold", &crate::rgbd::LineMod_ColorGradientTraitConst::strong_threshold(self))
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::rgbd::LineMod_DepthNormal]
+	pub trait LineMod_DepthNormalTraitConst: crate::rgbd::LineMod_ModalityTraitConst {
+		fn as_raw_LineMod_DepthNormal(&self) -> *const c_void;
 	
 		#[inline]
 		fn distance_threshold(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropDistance_threshold_const(self.as_raw_Linemod_DepthNormal()) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropDistance_threshold_const(self.as_raw_LineMod_DepthNormal()) };
 			ret
 		}
 		
 		#[inline]
 		fn difference_threshold(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropDifference_threshold_const(self.as_raw_Linemod_DepthNormal()) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropDifference_threshold_const(self.as_raw_LineMod_DepthNormal()) };
 			ret
 		}
 		
 		#[inline]
 		fn num_features(&self) -> size_t {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropNum_features_const(self.as_raw_Linemod_DepthNormal()) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropNum_features_const(self.as_raw_LineMod_DepthNormal()) };
 			ret
 		}
 		
 		#[inline]
 		fn extract_threshold(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropExtract_threshold_const(self.as_raw_Linemod_DepthNormal()) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropExtract_threshold_const(self.as_raw_LineMod_DepthNormal()) };
 			ret
 		}
 		
 		#[inline]
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_DepthNormal_name_const(self.as_raw_Linemod_DepthNormal(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_DepthNormal_name_const(self.as_raw_LineMod_DepthNormal(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -3314,7 +3478,7 @@ pub mod rgbd {
 		#[inline]
 		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_DepthNormal_write_const_FileStorageR(self.as_raw_Linemod_DepthNormal(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_DepthNormal_write_const_FileStorageR(self.as_raw_LineMod_DepthNormal(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3322,38 +3486,38 @@ pub mod rgbd {
 		
 	}
 	
-	/// Mutable methods for [crate::rgbd::Linemod_DepthNormal]
-	pub trait Linemod_DepthNormalTrait: crate::rgbd::Linemod_DepthNormalTraitConst + crate::rgbd::Linemod_ModalityTrait {
-		fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::rgbd::LineMod_DepthNormal]
+	pub trait LineMod_DepthNormalTrait: crate::rgbd::LineMod_DepthNormalTraitConst + crate::rgbd::LineMod_ModalityTrait {
+		fn as_raw_mut_LineMod_DepthNormal(&mut self) -> *mut c_void;
 	
 		#[inline]
 		fn set_distance_threshold(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropDistance_threshold_int(self.as_raw_mut_Linemod_DepthNormal(), val) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropDistance_threshold_int(self.as_raw_mut_LineMod_DepthNormal(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_difference_threshold(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropDifference_threshold_int(self.as_raw_mut_Linemod_DepthNormal(), val) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropDifference_threshold_int(self.as_raw_mut_LineMod_DepthNormal(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_features(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropNum_features_size_t(self.as_raw_mut_Linemod_DepthNormal(), val) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropNum_features_size_t(self.as_raw_mut_LineMod_DepthNormal(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_extract_threshold(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropExtract_threshold_int(self.as_raw_mut_Linemod_DepthNormal(), val) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropExtract_threshold_int(self.as_raw_mut_LineMod_DepthNormal(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_DepthNormal_read_const_FileNodeR(self.as_raw_mut_Linemod_DepthNormal(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_DepthNormal_read_const_FileNodeR(self.as_raw_mut_LineMod_DepthNormal(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3362,47 +3526,47 @@ pub mod rgbd {
 	}
 	
 	/// \brief Modality that computes quantized surface normals from a dense depth map.
-	pub struct Linemod_DepthNormal {
+	pub struct LineMod_DepthNormal {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { Linemod_DepthNormal }
+	opencv_type_boxed! { LineMod_DepthNormal }
 	
-	impl Drop for Linemod_DepthNormal {
+	impl Drop for LineMod_DepthNormal {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Linemod_DepthNormal_delete(instance: *mut c_void); }
-			unsafe { cv_Linemod_DepthNormal_delete(self.as_raw_mut_Linemod_DepthNormal()) };
+			extern "C" { fn cv_LineMod_DepthNormal_delete(instance: *mut c_void); }
+			unsafe { cv_LineMod_DepthNormal_delete(self.as_raw_mut_LineMod_DepthNormal()) };
 		}
 	}
 	
-	unsafe impl Send for Linemod_DepthNormal {}
+	unsafe impl Send for LineMod_DepthNormal {}
 	
-	impl crate::rgbd::Linemod_ModalityTraitConst for Linemod_DepthNormal {
-		#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
+	impl crate::rgbd::LineMod_ModalityTraitConst for LineMod_DepthNormal {
+		#[inline] fn as_raw_LineMod_Modality(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_ModalityTrait for Linemod_DepthNormal {
-		#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::rgbd::LineMod_ModalityTrait for LineMod_DepthNormal {
+		#[inline] fn as_raw_mut_LineMod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl crate::rgbd::Linemod_DepthNormalTraitConst for Linemod_DepthNormal {
-		#[inline] fn as_raw_Linemod_DepthNormal(&self) -> *const c_void { self.as_raw() }
+	impl crate::rgbd::LineMod_DepthNormalTraitConst for LineMod_DepthNormal {
+		#[inline] fn as_raw_LineMod_DepthNormal(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_DepthNormalTrait for Linemod_DepthNormal {
-		#[inline] fn as_raw_mut_Linemod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::rgbd::LineMod_DepthNormalTrait for LineMod_DepthNormal {
+		#[inline] fn as_raw_mut_LineMod_DepthNormal(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl Linemod_DepthNormal {
+	impl LineMod_DepthNormal {
 		/// \brief Default constructor. Uses reasonable default parameter values.
 		#[inline]
-		pub fn default() -> Result<crate::rgbd::Linemod_DepthNormal> {
+		pub fn default() -> Result<crate::rgbd::LineMod_DepthNormal> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_DepthNormal_DepthNormal(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::rgbd::Linemod_DepthNormal::opencv_from_extern(ret) };
+			let ret = unsafe { crate::rgbd::LineMod_DepthNormal::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -3415,30 +3579,44 @@ pub mod rgbd {
 		/// \param extract_threshold    Consider as candidate feature only if there are no differing
 		///                             orientations within a distance of extract_threshold.
 		#[inline]
-		pub fn new(distance_threshold: i32, difference_threshold: i32, num_features: size_t, extract_threshold: i32) -> Result<crate::rgbd::Linemod_DepthNormal> {
+		pub fn new(distance_threshold: i32, difference_threshold: i32, num_features: size_t, extract_threshold: i32) -> Result<crate::rgbd::LineMod_DepthNormal> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_DepthNormal_DepthNormal_int_int_size_t_int(distance_threshold, difference_threshold, num_features, extract_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::rgbd::Linemod_DepthNormal::opencv_from_extern(ret) };
+			let ret = unsafe { crate::rgbd::LineMod_DepthNormal::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		#[inline]
-		pub fn create(distance_threshold: i32, difference_threshold: i32, num_features: size_t, extract_threshold: i32) -> Result<core::Ptr<crate::rgbd::Linemod_DepthNormal>> {
+		pub fn create(distance_threshold: i32, difference_threshold: i32, num_features: size_t, extract_threshold: i32) -> Result<core::Ptr<crate::rgbd::LineMod_DepthNormal>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_DepthNormal_create_int_int_size_t_int(distance_threshold, difference_threshold, num_features, extract_threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_DepthNormal>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_DepthNormal>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	/// Constant methods for [crate::rgbd::Linemod_Detector]
-	pub trait Linemod_DetectorTraitConst {
-		fn as_raw_Linemod_Detector(&self) -> *const c_void;
+	boxed_cast_base! { LineMod_DepthNormal, crate::rgbd::LineMod_Modality, cv_LineMod_DepthNormal_to_LineMod_Modality }
+	
+	impl std::fmt::Debug for LineMod_DepthNormal {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LineMod_DepthNormal")
+				.field("distance_threshold", &crate::rgbd::LineMod_DepthNormalTraitConst::distance_threshold(self))
+				.field("difference_threshold", &crate::rgbd::LineMod_DepthNormalTraitConst::difference_threshold(self))
+				.field("num_features", &crate::rgbd::LineMod_DepthNormalTraitConst::num_features(self))
+				.field("extract_threshold", &crate::rgbd::LineMod_DepthNormalTraitConst::extract_threshold(self))
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::rgbd::LineMod_Detector]
+	pub trait LineMod_DetectorTraitConst {
+		fn as_raw_LineMod_Detector(&self) -> *const c_void;
 	
 		/// \brief Detect objects by template matching.
 		/// 
@@ -3459,10 +3637,10 @@ pub mod rgbd {
 		/// * quantized_images: noArray()
 		/// * masks: std::vector<Mat>()
 		#[inline]
-		fn match_(&self, sources: &core::Vector<core::Mat>, threshold: f32, matches: &mut core::Vector<crate::rgbd::Linemod_Match>, class_ids: &core::Vector<String>, quantized_images: &mut impl core::ToOutputArray, masks: &core::Vector<core::Mat>) -> Result<()> {
+		fn match_(&self, sources: &core::Vector<core::Mat>, threshold: f32, matches: &mut core::Vector<crate::rgbd::LineMod_Match>, class_ids: &core::Vector<String>, quantized_images: &mut impl core::ToOutputArray, masks: &core::Vector<core::Mat>) -> Result<()> {
 			output_array_arg!(quantized_images);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_match_const_const_vectorLMatGR_float_vectorLMatchGR_const_vectorLStringGR_const__OutputArrayR_const_vectorLMatGR(self.as_raw_Linemod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLinemod_Match(), class_ids.as_raw_VectorOfString(), quantized_images.as_raw__OutputArray(), masks.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_match_const_const_vectorLMatGR_float_vectorLMatchGR_const_vectorLStringGR_const__OutputArrayR_const_vectorLMatGR(self.as_raw_LineMod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLineMod_Match(), class_ids.as_raw_VectorOfString(), quantized_images.as_raw__OutputArray(), masks.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3473,12 +3651,12 @@ pub mod rgbd {
 		/// You are not permitted to add/remove modalities, but you may dynamic_cast them to
 		/// tweak parameters.
 		#[inline]
-		fn get_modalities(&self) -> Result<core::Vector<core::Ptr<crate::rgbd::Linemod_Modality>>> {
+		fn get_modalities(&self) -> Result<core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_getModalities_const(self.as_raw_Linemod_Detector(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_getModalities_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<core::Ptr<crate::rgbd::Linemod_Modality>>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Vector::<core::Ptr<crate::rgbd::LineMod_Modality>>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -3486,7 +3664,7 @@ pub mod rgbd {
 		#[inline]
 		fn get_t(&self, pyramid_level: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_getT_const_int(self.as_raw_Linemod_Detector(), pyramid_level, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_getT_const_int(self.as_raw_LineMod_Detector(), pyramid_level, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3496,7 +3674,7 @@ pub mod rgbd {
 		#[inline]
 		fn pyramid_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_pyramidLevels_const(self.as_raw_Linemod_Detector(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_pyramidLevels_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3507,20 +3685,20 @@ pub mod rgbd {
 		/// For example, with 2 modalities (Gradient, Normal) and two pyramid levels
 		/// (L0, L1), the order is (GradientL0, NormalL0, GradientL1, NormalL1).
 		#[inline]
-		fn get_templates(&self, class_id: &str, template_id: i32) -> Result<core::Vector<crate::rgbd::Linemod_Template>> {
+		fn get_templates(&self, class_id: &str, template_id: i32) -> Result<core::Vector<crate::rgbd::LineMod_Template>> {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_getTemplates_const_const_StringR_int(self.as_raw_Linemod_Detector(), class_id.opencv_as_extern(), template_id, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_getTemplates_const_const_StringR_int(self.as_raw_LineMod_Detector(), class_id.opencv_as_extern(), template_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<crate::rgbd::Linemod_Template>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Vector::<crate::rgbd::LineMod_Template>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		#[inline]
 		fn num_templates(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_numTemplates_const(self.as_raw_Linemod_Detector(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_numTemplates_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3530,7 +3708,7 @@ pub mod rgbd {
 		fn num_templates_1(&self, class_id: &str) -> Result<i32> {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_numTemplates_const_const_StringR(self.as_raw_Linemod_Detector(), class_id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_numTemplates_const_const_StringR(self.as_raw_LineMod_Detector(), class_id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3539,7 +3717,7 @@ pub mod rgbd {
 		#[inline]
 		fn num_classes(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_numClasses_const(self.as_raw_Linemod_Detector(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_numClasses_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3548,7 +3726,7 @@ pub mod rgbd {
 		#[inline]
 		fn class_ids(&self) -> Result<core::Vector<String>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_classIds_const(self.as_raw_Linemod_Detector(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_classIds_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
@@ -3558,7 +3736,7 @@ pub mod rgbd {
 		#[inline]
 		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_write_const_FileStorageR(self.as_raw_Linemod_Detector(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_write_const_FileStorageR(self.as_raw_LineMod_Detector(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3568,7 +3746,7 @@ pub mod rgbd {
 		fn write_class(&self, class_id: &str, fs: &mut core::FileStorage) -> Result<()> {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_writeClass_const_const_StringR_FileStorageR(self.as_raw_Linemod_Detector(), class_id.opencv_as_extern(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_writeClass_const_const_StringR_FileStorageR(self.as_raw_LineMod_Detector(), class_id.opencv_as_extern(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3580,7 +3758,7 @@ pub mod rgbd {
 		fn write_classes(&self, format: &str) -> Result<()> {
 			extern_container_arg!(format);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_writeClasses_const_const_StringR(self.as_raw_Linemod_Detector(), format.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_writeClasses_const_const_StringR(self.as_raw_LineMod_Detector(), format.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3588,9 +3766,9 @@ pub mod rgbd {
 		
 	}
 	
-	/// Mutable methods for [crate::rgbd::Linemod_Detector]
-	pub trait Linemod_DetectorTrait: crate::rgbd::Linemod_DetectorTraitConst {
-		fn as_raw_mut_Linemod_Detector(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::rgbd::LineMod_Detector]
+	pub trait LineMod_DetectorTrait: crate::rgbd::LineMod_DetectorTraitConst {
+		fn as_raw_mut_LineMod_Detector(&mut self) -> *mut c_void;
 	
 		/// \brief Add new object template.
 		/// 
@@ -3607,7 +3785,7 @@ pub mod rgbd {
 		fn add_template(&mut self, sources: &core::Vector<core::Mat>, class_id: &str, object_mask: &core::Mat, bounding_box: &mut core::Rect) -> Result<i32> {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_addTemplate_const_vectorLMatGR_const_StringR_const_MatR_RectX(self.as_raw_mut_Linemod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), bounding_box, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_addTemplate_const_vectorLMatGR_const_StringR_const_MatR_RectX(self.as_raw_mut_LineMod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), bounding_box, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3615,10 +3793,10 @@ pub mod rgbd {
 		
 		/// \brief Add a new object template computed by external means.
 		#[inline]
-		fn add_synthetic_template(&mut self, templates: &core::Vector<crate::rgbd::Linemod_Template>, class_id: &str) -> Result<i32> {
+		fn add_synthetic_template(&mut self, templates: &core::Vector<crate::rgbd::LineMod_Template>, class_id: &str) -> Result<i32> {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_addSyntheticTemplate_const_vectorLTemplateGR_const_StringR(self.as_raw_mut_Linemod_Detector(), templates.as_raw_VectorOfLinemod_Template(), class_id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_addSyntheticTemplate_const_vectorLTemplateGR_const_StringR(self.as_raw_mut_LineMod_Detector(), templates.as_raw_VectorOfLineMod_Template(), class_id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3627,7 +3805,7 @@ pub mod rgbd {
 		#[inline]
 		fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_read_const_FileNodeR(self.as_raw_mut_Linemod_Detector(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_read_const_FileNodeR(self.as_raw_mut_LineMod_Detector(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3639,7 +3817,7 @@ pub mod rgbd {
 		fn read_class(&mut self, fn_: &core::FileNode, class_id_override: &str) -> Result<String> {
 			extern_container_arg!(class_id_override);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_readClass_const_FileNodeR_const_StringR(self.as_raw_mut_Linemod_Detector(), fn_.as_raw_FileNode(), class_id_override.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_readClass_const_FileNodeR_const_StringR(self.as_raw_mut_LineMod_Detector(), fn_.as_raw_FileNode(), class_id_override.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -3652,7 +3830,7 @@ pub mod rgbd {
 		fn read_classes(&mut self, class_ids: &core::Vector<String>, format: &str) -> Result<()> {
 			extern_container_arg!(format);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_readClasses_const_vectorLStringGR_const_StringR(self.as_raw_mut_Linemod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_readClasses_const_vectorLStringGR_const_StringR(self.as_raw_mut_LineMod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3662,39 +3840,39 @@ pub mod rgbd {
 	
 	/// \brief Object detector using the LINE template matching algorithm with any set of
 	/// modalities.
-	pub struct Linemod_Detector {
+	pub struct LineMod_Detector {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { Linemod_Detector }
+	opencv_type_boxed! { LineMod_Detector }
 	
-	impl Drop for Linemod_Detector {
+	impl Drop for LineMod_Detector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Linemod_Detector_delete(instance: *mut c_void); }
-			unsafe { cv_Linemod_Detector_delete(self.as_raw_mut_Linemod_Detector()) };
+			extern "C" { fn cv_LineMod_Detector_delete(instance: *mut c_void); }
+			unsafe { cv_LineMod_Detector_delete(self.as_raw_mut_LineMod_Detector()) };
 		}
 	}
 	
-	unsafe impl Send for Linemod_Detector {}
+	unsafe impl Send for LineMod_Detector {}
 	
-	impl crate::rgbd::Linemod_DetectorTraitConst for Linemod_Detector {
-		#[inline] fn as_raw_Linemod_Detector(&self) -> *const c_void { self.as_raw() }
+	impl crate::rgbd::LineMod_DetectorTraitConst for LineMod_Detector {
+		#[inline] fn as_raw_LineMod_Detector(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_DetectorTrait for Linemod_Detector {
-		#[inline] fn as_raw_mut_Linemod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::rgbd::LineMod_DetectorTrait for LineMod_Detector {
+		#[inline] fn as_raw_mut_LineMod_Detector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl Linemod_Detector {
+	impl LineMod_Detector {
 		/// \brief Empty constructor, initialize with read().
 		#[inline]
-		pub fn default() -> Result<crate::rgbd::Linemod_Detector> {
+		pub fn default() -> Result<crate::rgbd::LineMod_Detector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_Detector(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::rgbd::Linemod_Detector::opencv_from_extern(ret) };
+			let ret = unsafe { crate::rgbd::LineMod_Detector::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -3704,21 +3882,29 @@ pub mod rgbd {
 		/// \param T_pyramid        Value of the sampling step T at each pyramid level. The
 		///                         number of pyramid levels is T_pyramid.size().
 		#[inline]
-		pub fn new(modalities: &core::Vector<core::Ptr<crate::rgbd::Linemod_Modality>>, t_pyramid: &core::Vector<i32>) -> Result<crate::rgbd::Linemod_Detector> {
+		pub fn new(modalities: &core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>>, t_pyramid: &core::Vector<i32>) -> Result<crate::rgbd::LineMod_Detector> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Detector_Detector_const_vectorLPtrLModalityGGR_const_vectorLintGR(modalities.as_raw_VectorOfPtrOfLinemod_Modality(), t_pyramid.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Detector_Detector_const_vectorLPtrLModalityGGR_const_vectorLintGR(modalities.as_raw_VectorOfPtrOfLineMod_Modality(), t_pyramid.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::rgbd::Linemod_Detector::opencv_from_extern(ret) };
+			let ret = unsafe { crate::rgbd::LineMod_Detector::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
+	impl std::fmt::Debug for LineMod_Detector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LineMod_Detector")
+				.finish()
+		}
+	}
+	
 	/// \brief Discriminant feature described by its location and label.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
-	pub struct Linemod_Feature {
+	pub struct LineMod_Feature {
 		/// x offset
 		pub x: i32,
 		/// y offset
@@ -3727,9 +3913,9 @@ pub mod rgbd {
 		pub label: i32,
 	}
 	
-	opencv_type_simple! { crate::rgbd::Linemod_Feature }
+	opencv_type_simple! { crate::rgbd::LineMod_Feature }
 	
-	impl Linemod_Feature {
+	impl LineMod_Feature {
 		#[inline]
 		pub fn write(self, fs: &mut core::FileStorage) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3740,7 +3926,7 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		pub fn default() -> Result<crate::rgbd::Linemod_Feature> {
+		pub fn default() -> Result<crate::rgbd::LineMod_Feature> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Feature_Feature(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3749,7 +3935,7 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		pub fn new(x: i32, y: i32, label: i32) -> Result<crate::rgbd::Linemod_Feature> {
+		pub fn new(x: i32, y: i32, label: i32) -> Result<crate::rgbd::LineMod_Feature> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Feature_Feature_int_int_int(x, y, label, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3768,55 +3954,55 @@ pub mod rgbd {
 		
 	}
 	
-	/// Constant methods for [crate::rgbd::Linemod_Match]
-	pub trait Linemod_MatchTraitConst {
-		fn as_raw_Linemod_Match(&self) -> *const c_void;
+	/// Constant methods for [crate::rgbd::LineMod_Match]
+	pub trait LineMod_MatchTraitConst {
+		fn as_raw_LineMod_Match(&self) -> *const c_void;
 	
 		#[inline]
 		fn x(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Match_getPropX_const(self.as_raw_Linemod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_getPropX_const(self.as_raw_LineMod_Match()) };
 			ret
 		}
 		
 		#[inline]
 		fn y(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Match_getPropY_const(self.as_raw_Linemod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_getPropY_const(self.as_raw_LineMod_Match()) };
 			ret
 		}
 		
 		#[inline]
 		fn similarity(&self) -> f32 {
-			let ret = unsafe { sys::cv_linemod_Match_getPropSimilarity_const(self.as_raw_Linemod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_getPropSimilarity_const(self.as_raw_LineMod_Match()) };
 			ret
 		}
 		
 		#[inline]
 		fn class_id(&self) -> String {
-			let ret = unsafe { sys::cv_linemod_Match_getPropClass_id_const(self.as_raw_Linemod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_getPropClass_id_const(self.as_raw_LineMod_Match()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn template_id(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Match_getPropTemplate_id_const(self.as_raw_Linemod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_getPropTemplate_id_const(self.as_raw_LineMod_Match()) };
 			ret
 		}
 		
 		/// Sort matches with high similarity to the front
 		#[inline]
-		fn less_than(&self, rhs: &crate::rgbd::Linemod_Match) -> Result<bool> {
+		fn less_than(&self, rhs: &crate::rgbd::LineMod_Match) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Match_operatorL_const_const_MatchR(self.as_raw_Linemod_Match(), rhs.as_raw_Linemod_Match(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Match_operatorL_const_const_MatchR(self.as_raw_LineMod_Match(), rhs.as_raw_LineMod_Match(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
 		
 		#[inline]
-		fn equals(&self, rhs: &crate::rgbd::Linemod_Match) -> Result<bool> {
+		fn equals(&self, rhs: &crate::rgbd::LineMod_Match) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Match_operatorEQ_const_const_MatchR(self.as_raw_Linemod_Match(), rhs.as_raw_Linemod_Match(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Match_operatorEQ_const_const_MatchR(self.as_raw_LineMod_Match(), rhs.as_raw_LineMod_Match(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3824,103 +4010,116 @@ pub mod rgbd {
 		
 	}
 	
-	/// Mutable methods for [crate::rgbd::Linemod_Match]
-	pub trait Linemod_MatchTrait: crate::rgbd::Linemod_MatchTraitConst {
-		fn as_raw_mut_Linemod_Match(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::rgbd::LineMod_Match]
+	pub trait LineMod_MatchTrait: crate::rgbd::LineMod_MatchTraitConst {
+		fn as_raw_mut_LineMod_Match(&mut self) -> *mut c_void;
 	
 		#[inline]
 		fn set_x(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Match_setPropX_int(self.as_raw_mut_Linemod_Match(), val) };
+			let ret = unsafe { sys::cv_linemod_Match_setPropX_int(self.as_raw_mut_LineMod_Match(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_y(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Match_setPropY_int(self.as_raw_mut_Linemod_Match(), val) };
+			let ret = unsafe { sys::cv_linemod_Match_setPropY_int(self.as_raw_mut_LineMod_Match(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_similarity(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_linemod_Match_setPropSimilarity_float(self.as_raw_mut_Linemod_Match(), val) };
+			let ret = unsafe { sys::cv_linemod_Match_setPropSimilarity_float(self.as_raw_mut_LineMod_Match(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_class_id(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_linemod_Match_setPropClass_id_String(self.as_raw_mut_Linemod_Match(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_linemod_Match_setPropClass_id_String(self.as_raw_mut_LineMod_Match(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_template_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Match_setPropTemplate_id_int(self.as_raw_mut_Linemod_Match(), val) };
+			let ret = unsafe { sys::cv_linemod_Match_setPropTemplate_id_int(self.as_raw_mut_LineMod_Match(), val) };
 			ret
 		}
 		
 	}
 	
 	/// \brief Represents a successful template match.
-	pub struct Linemod_Match {
+	pub struct LineMod_Match {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { Linemod_Match }
+	opencv_type_boxed! { LineMod_Match }
 	
-	impl Drop for Linemod_Match {
+	impl Drop for LineMod_Match {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Linemod_Match_delete(instance: *mut c_void); }
-			unsafe { cv_Linemod_Match_delete(self.as_raw_mut_Linemod_Match()) };
+			extern "C" { fn cv_LineMod_Match_delete(instance: *mut c_void); }
+			unsafe { cv_LineMod_Match_delete(self.as_raw_mut_LineMod_Match()) };
 		}
 	}
 	
-	unsafe impl Send for Linemod_Match {}
+	unsafe impl Send for LineMod_Match {}
 	
-	impl crate::rgbd::Linemod_MatchTraitConst for Linemod_Match {
-		#[inline] fn as_raw_Linemod_Match(&self) -> *const c_void { self.as_raw() }
+	impl crate::rgbd::LineMod_MatchTraitConst for LineMod_Match {
+		#[inline] fn as_raw_LineMod_Match(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_MatchTrait for Linemod_Match {
-		#[inline] fn as_raw_mut_Linemod_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::rgbd::LineMod_MatchTrait for LineMod_Match {
+		#[inline] fn as_raw_mut_LineMod_Match(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl Linemod_Match {
+	impl LineMod_Match {
 		#[inline]
-		pub fn default() -> Result<crate::rgbd::Linemod_Match> {
+		pub fn default() -> Result<crate::rgbd::LineMod_Match> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Match_Match(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::rgbd::Linemod_Match::opencv_from_extern(ret) };
+			let ret = unsafe { crate::rgbd::LineMod_Match::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		#[inline]
-		pub fn new(x: i32, y: i32, similarity: f32, class_id: &str, template_id: i32) -> Result<crate::rgbd::Linemod_Match> {
+		pub fn new(x: i32, y: i32, similarity: f32, class_id: &str, template_id: i32) -> Result<crate::rgbd::LineMod_Match> {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Match_Match_int_int_float_const_StringR_int(x, y, similarity, class_id.opencv_as_extern(), template_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::rgbd::Linemod_Match::opencv_from_extern(ret) };
+			let ret = unsafe { crate::rgbd::LineMod_Match::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl Clone for Linemod_Match {
+	impl Clone for LineMod_Match {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Linemod_Match_implicit_clone(val: extern_send!(Linemod_Match)) -> extern_receive!(Linemod_Match: 'static); }
-			unsafe { Self::from_raw(cv_Linemod_Match_implicit_clone(self.as_raw_Linemod_Match())) }
+			extern "C" { fn cv_LineMod_Match_implicitClone_const_LineMod_Match(val: extern_send!(LineMod_Match)) -> extern_receive!(LineMod_Match: 'static); }
+			unsafe { Self::from_raw(cv_LineMod_Match_implicitClone_const_LineMod_Match(self.as_raw_LineMod_Match())) }
 		}
 	}
 	
-	/// Constant methods for [crate::rgbd::Linemod_Modality]
-	pub trait Linemod_ModalityTraitConst {
-		fn as_raw_Linemod_Modality(&self) -> *const c_void;
+	impl std::fmt::Debug for LineMod_Match {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LineMod_Match")
+				.field("x", &crate::rgbd::LineMod_MatchTraitConst::x(self))
+				.field("y", &crate::rgbd::LineMod_MatchTraitConst::y(self))
+				.field("similarity", &crate::rgbd::LineMod_MatchTraitConst::similarity(self))
+				.field("class_id", &crate::rgbd::LineMod_MatchTraitConst::class_id(self))
+				.field("template_id", &crate::rgbd::LineMod_MatchTraitConst::template_id(self))
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::rgbd::LineMod_Modality]
+	pub trait LineMod_ModalityTraitConst {
+		fn as_raw_LineMod_Modality(&self) -> *const c_void;
 	
 		/// \brief Form a quantized image pyramid from a source image.
 		/// 
@@ -3931,19 +4130,19 @@ pub mod rgbd {
 		/// ## C++ default parameters
 		/// * mask: Mat()
 		#[inline]
-		fn process(&self, src: &core::Mat, mask: &core::Mat) -> Result<core::Ptr<crate::rgbd::Linemod_QuantizedPyramid>> {
+		fn process(&self, src: &core::Mat, mask: &core::Mat) -> Result<core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Modality_process_const_const_MatR_const_MatR(self.as_raw_Linemod_Modality(), src.as_raw_Mat(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Modality_process_const_const_MatR_const_MatR(self.as_raw_LineMod_Modality(), src.as_raw_Mat(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_QuantizedPyramid>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_QuantizedPyramid>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		#[inline]
 		fn name(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Modality_name_const(self.as_raw_Linemod_Modality(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Modality_name_const(self.as_raw_LineMod_Modality(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -3953,7 +4152,7 @@ pub mod rgbd {
 		#[inline]
 		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Modality_write_const_FileStorageR(self.as_raw_Linemod_Modality(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Modality_write_const_FileStorageR(self.as_raw_LineMod_Modality(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3961,14 +4160,14 @@ pub mod rgbd {
 		
 	}
 	
-	/// Mutable methods for [crate::rgbd::Linemod_Modality]
-	pub trait Linemod_ModalityTrait: crate::rgbd::Linemod_ModalityTraitConst {
-		fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::rgbd::LineMod_Modality]
+	pub trait LineMod_ModalityTrait: crate::rgbd::LineMod_ModalityTraitConst {
+		fn as_raw_mut_LineMod_Modality(&mut self) -> *mut c_void;
 	
 		#[inline]
 		fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Modality_read_const_FileNodeR(self.as_raw_mut_Linemod_Modality(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Modality_read_const_FileNodeR(self.as_raw_mut_LineMod_Modality(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3979,67 +4178,75 @@ pub mod rgbd {
 	/// \brief Interface for modalities that plug into the LINE template matching representation.
 	/// 
 	/// \todo Max response, to allow optimization of summing (255/MAX) features as uint8
-	pub struct Linemod_Modality {
+	pub struct LineMod_Modality {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { Linemod_Modality }
+	opencv_type_boxed! { LineMod_Modality }
 	
-	impl Drop for Linemod_Modality {
+	impl Drop for LineMod_Modality {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Linemod_Modality_delete(instance: *mut c_void); }
-			unsafe { cv_Linemod_Modality_delete(self.as_raw_mut_Linemod_Modality()) };
+			extern "C" { fn cv_LineMod_Modality_delete(instance: *mut c_void); }
+			unsafe { cv_LineMod_Modality_delete(self.as_raw_mut_LineMod_Modality()) };
 		}
 	}
 	
-	unsafe impl Send for Linemod_Modality {}
+	unsafe impl Send for LineMod_Modality {}
 	
-	impl crate::rgbd::Linemod_ModalityTraitConst for Linemod_Modality {
-		#[inline] fn as_raw_Linemod_Modality(&self) -> *const c_void { self.as_raw() }
+	impl crate::rgbd::LineMod_ModalityTraitConst for LineMod_Modality {
+		#[inline] fn as_raw_LineMod_Modality(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_ModalityTrait for Linemod_Modality {
-		#[inline] fn as_raw_mut_Linemod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::rgbd::LineMod_ModalityTrait for LineMod_Modality {
+		#[inline] fn as_raw_mut_LineMod_Modality(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl Linemod_Modality {
+	impl LineMod_Modality {
 		/// \brief Create modality by name.
 		/// 
 		/// The following modality types are supported:
 		/// - "ColorGradient"
 		/// - "DepthNormal"
 		#[inline]
-		pub fn create(modality_type: &str) -> Result<core::Ptr<crate::rgbd::Linemod_Modality>> {
+		pub fn create(modality_type: &str) -> Result<core::Ptr<crate::rgbd::LineMod_Modality>> {
 			extern_container_arg!(modality_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_create_const_StringR(modality_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_Modality>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_Modality>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		/// \brief Load a modality from file.
 		#[inline]
-		pub fn create_1(fn_: &core::FileNode) -> Result<core::Ptr<crate::rgbd::Linemod_Modality>> {
+		pub fn create_1(fn_: &core::FileNode) -> Result<core::Ptr<crate::rgbd::LineMod_Modality>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_create_const_FileNodeR(fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::rgbd::Linemod_Modality>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_Modality>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	boxed_cast_descendant! { Linemod_Modality, crate::rgbd::Linemod_ColorGradient, cv_Linemod_Modality_to_Linemod_ColorGradient }
+	boxed_cast_descendant! { LineMod_Modality, crate::rgbd::LineMod_ColorGradient, cv_LineMod_Modality_to_LineMod_ColorGradient }
 	
-	boxed_cast_descendant! { Linemod_Modality, crate::rgbd::Linemod_DepthNormal, cv_Linemod_Modality_to_Linemod_DepthNormal }
+	boxed_cast_descendant! { LineMod_Modality, crate::rgbd::LineMod_DepthNormal, cv_LineMod_Modality_to_LineMod_DepthNormal }
 	
-	/// Constant methods for [crate::rgbd::Linemod_QuantizedPyramid]
-	pub trait Linemod_QuantizedPyramidTraitConst {
-		fn as_raw_Linemod_QuantizedPyramid(&self) -> *const c_void;
+	impl std::fmt::Debug for LineMod_Modality {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LineMod_Modality")
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::rgbd::LineMod_QuantizedPyramid]
+	pub trait LineMod_QuantizedPyramidTraitConst {
+		fn as_raw_LineMod_QuantizedPyramid(&self) -> *const c_void;
 	
 		/// \brief Compute quantized image at current pyramid level for online detection.
 		/// 
@@ -4048,7 +4255,7 @@ pub mod rgbd {
 		#[inline]
 		fn quantize(&self, dst: &mut core::Mat) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_QuantizedPyramid_quantize_const_MatR(self.as_raw_Linemod_QuantizedPyramid(), dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_QuantizedPyramid_quantize_const_MatR(self.as_raw_LineMod_QuantizedPyramid(), dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4058,9 +4265,9 @@ pub mod rgbd {
 		/// 
 		/// \param[out] templ The new template.
 		#[inline]
-		fn extract_template(&self, templ: &mut crate::rgbd::Linemod_Template) -> Result<bool> {
+		fn extract_template(&self, templ: &mut crate::rgbd::LineMod_Template) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_QuantizedPyramid_extractTemplate_const_TemplateR(self.as_raw_Linemod_QuantizedPyramid(), templ.as_raw_mut_Linemod_Template(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_QuantizedPyramid_extractTemplate_const_TemplateR(self.as_raw_LineMod_QuantizedPyramid(), templ.as_raw_mut_LineMod_Template(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4068,9 +4275,9 @@ pub mod rgbd {
 		
 	}
 	
-	/// Mutable methods for [crate::rgbd::Linemod_QuantizedPyramid]
-	pub trait Linemod_QuantizedPyramidTrait: crate::rgbd::Linemod_QuantizedPyramidTraitConst {
-		fn as_raw_mut_Linemod_QuantizedPyramid(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::rgbd::LineMod_QuantizedPyramid]
+	pub trait LineMod_QuantizedPyramidTrait: crate::rgbd::LineMod_QuantizedPyramidTraitConst {
+		fn as_raw_mut_LineMod_QuantizedPyramid(&mut self) -> *mut c_void;
 	
 		/// \brief Go to the next pyramid level.
 		/// 
@@ -4078,7 +4285,7 @@ pub mod rgbd {
 		#[inline]
 		fn pyr_down(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_QuantizedPyramid_pyrDown(self.as_raw_mut_Linemod_QuantizedPyramid(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_QuantizedPyramid_pyrDown(self.as_raw_mut_LineMod_QuantizedPyramid(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4087,66 +4294,74 @@ pub mod rgbd {
 	}
 	
 	/// \brief Represents a modality operating over an image pyramid.
-	pub struct Linemod_QuantizedPyramid {
+	pub struct LineMod_QuantizedPyramid {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { Linemod_QuantizedPyramid }
+	opencv_type_boxed! { LineMod_QuantizedPyramid }
 	
-	impl Drop for Linemod_QuantizedPyramid {
+	impl Drop for LineMod_QuantizedPyramid {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Linemod_QuantizedPyramid_delete(instance: *mut c_void); }
-			unsafe { cv_Linemod_QuantizedPyramid_delete(self.as_raw_mut_Linemod_QuantizedPyramid()) };
+			extern "C" { fn cv_LineMod_QuantizedPyramid_delete(instance: *mut c_void); }
+			unsafe { cv_LineMod_QuantizedPyramid_delete(self.as_raw_mut_LineMod_QuantizedPyramid()) };
 		}
 	}
 	
-	unsafe impl Send for Linemod_QuantizedPyramid {}
+	unsafe impl Send for LineMod_QuantizedPyramid {}
 	
-	impl crate::rgbd::Linemod_QuantizedPyramidTraitConst for Linemod_QuantizedPyramid {
-		#[inline] fn as_raw_Linemod_QuantizedPyramid(&self) -> *const c_void { self.as_raw() }
+	impl crate::rgbd::LineMod_QuantizedPyramidTraitConst for LineMod_QuantizedPyramid {
+		#[inline] fn as_raw_LineMod_QuantizedPyramid(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_QuantizedPyramidTrait for Linemod_QuantizedPyramid {
-		#[inline] fn as_raw_mut_Linemod_QuantizedPyramid(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::rgbd::LineMod_QuantizedPyramidTrait for LineMod_QuantizedPyramid {
+		#[inline] fn as_raw_mut_LineMod_QuantizedPyramid(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl Linemod_QuantizedPyramid {
+	impl LineMod_QuantizedPyramid {
 	}
 	
-	/// Constant methods for [crate::rgbd::Linemod_Template]
-	pub trait Linemod_TemplateTraitConst {
-		fn as_raw_Linemod_Template(&self) -> *const c_void;
+	impl std::fmt::Debug for LineMod_QuantizedPyramid {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LineMod_QuantizedPyramid")
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::rgbd::LineMod_Template]
+	pub trait LineMod_TemplateTraitConst {
+		fn as_raw_LineMod_Template(&self) -> *const c_void;
 	
 		#[inline]
 		fn width(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Template_getPropWidth_const(self.as_raw_Linemod_Template()) };
+			let ret = unsafe { sys::cv_linemod_Template_getPropWidth_const(self.as_raw_LineMod_Template()) };
 			ret
 		}
 		
 		#[inline]
 		fn height(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Template_getPropHeight_const(self.as_raw_Linemod_Template()) };
+			let ret = unsafe { sys::cv_linemod_Template_getPropHeight_const(self.as_raw_LineMod_Template()) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_level(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Template_getPropPyramid_level_const(self.as_raw_Linemod_Template()) };
+			let ret = unsafe { sys::cv_linemod_Template_getPropPyramid_level_const(self.as_raw_LineMod_Template()) };
 			ret
 		}
 		
 		#[inline]
-		fn features(&self) -> core::Vector<crate::rgbd::Linemod_Feature> {
-			let ret = unsafe { sys::cv_linemod_Template_getPropFeatures_const(self.as_raw_Linemod_Template()) };
-			let ret = unsafe { core::Vector::<crate::rgbd::Linemod_Feature>::opencv_from_extern(ret) };
+		fn features(&self) -> core::Vector<crate::rgbd::LineMod_Feature> {
+			let ret = unsafe { sys::cv_linemod_Template_getPropFeatures_const(self.as_raw_LineMod_Template()) };
+			let ret = unsafe { core::Vector::<crate::rgbd::LineMod_Feature>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Template_write_const_FileStorageR(self.as_raw_Linemod_Template(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Template_write_const_FileStorageR(self.as_raw_LineMod_Template(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4154,38 +4369,38 @@ pub mod rgbd {
 		
 	}
 	
-	/// Mutable methods for [crate::rgbd::Linemod_Template]
-	pub trait Linemod_TemplateTrait: crate::rgbd::Linemod_TemplateTraitConst {
-		fn as_raw_mut_Linemod_Template(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::rgbd::LineMod_Template]
+	pub trait LineMod_TemplateTrait: crate::rgbd::LineMod_TemplateTraitConst {
+		fn as_raw_mut_LineMod_Template(&mut self) -> *mut c_void;
 	
 		#[inline]
 		fn set_width(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Template_setPropWidth_int(self.as_raw_mut_Linemod_Template(), val) };
+			let ret = unsafe { sys::cv_linemod_Template_setPropWidth_int(self.as_raw_mut_LineMod_Template(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_height(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Template_setPropHeight_int(self.as_raw_mut_Linemod_Template(), val) };
+			let ret = unsafe { sys::cv_linemod_Template_setPropHeight_int(self.as_raw_mut_LineMod_Template(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_level(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Template_setPropPyramid_level_int(self.as_raw_mut_Linemod_Template(), val) };
+			let ret = unsafe { sys::cv_linemod_Template_setPropPyramid_level_int(self.as_raw_mut_LineMod_Template(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_features(&mut self, mut val: core::Vector<crate::rgbd::Linemod_Feature>) {
-			let ret = unsafe { sys::cv_linemod_Template_setPropFeatures_vectorLFeatureG(self.as_raw_mut_Linemod_Template(), val.as_raw_mut_VectorOfLinemod_Feature()) };
+		fn set_features(&mut self, mut val: core::Vector<crate::rgbd::LineMod_Feature>) {
+			let ret = unsafe { sys::cv_linemod_Template_setPropFeatures_vectorLFeatureG(self.as_raw_mut_LineMod_Template(), val.as_raw_mut_VectorOfLineMod_Feature()) };
 			ret
 		}
 		
 		#[inline]
 		fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_linemod_Template_read_const_FileNodeR(self.as_raw_mut_Linemod_Template(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_linemod_Template_read_const_FileNodeR(self.as_raw_mut_LineMod_Template(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4193,47 +4408,59 @@ pub mod rgbd {
 		
 	}
 	
-	pub struct Linemod_Template {
+	pub struct LineMod_Template {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { Linemod_Template }
+	opencv_type_boxed! { LineMod_Template }
 	
-	impl Drop for Linemod_Template {
+	impl Drop for LineMod_Template {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Linemod_Template_delete(instance: *mut c_void); }
-			unsafe { cv_Linemod_Template_delete(self.as_raw_mut_Linemod_Template()) };
+			extern "C" { fn cv_LineMod_Template_delete(instance: *mut c_void); }
+			unsafe { cv_LineMod_Template_delete(self.as_raw_mut_LineMod_Template()) };
 		}
 	}
 	
-	unsafe impl Send for Linemod_Template {}
+	unsafe impl Send for LineMod_Template {}
 	
-	impl crate::rgbd::Linemod_TemplateTraitConst for Linemod_Template {
-		#[inline] fn as_raw_Linemod_Template(&self) -> *const c_void { self.as_raw() }
+	impl crate::rgbd::LineMod_TemplateTraitConst for LineMod_Template {
+		#[inline] fn as_raw_LineMod_Template(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::rgbd::Linemod_TemplateTrait for Linemod_Template {
-		#[inline] fn as_raw_mut_Linemod_Template(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::rgbd::LineMod_TemplateTrait for LineMod_Template {
+		#[inline] fn as_raw_mut_LineMod_Template(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl Linemod_Template {
+	impl LineMod_Template {
 		fn default() -> Self {
-			extern "C" { fn cv_Linemod_Template_default_new() -> extern_receive!(Linemod_Template: 'static); }
-			unsafe { Self::from_raw(cv_Linemod_Template_default_new()) }
+			extern "C" { fn cv_LineMod_Template_defaultNew_const() -> extern_receive!(LineMod_Template: 'static); }
+			unsafe { Self::from_raw(cv_LineMod_Template_defaultNew_const()) }
 		}
 		
 	}
 	
-	impl Clone for Linemod_Template {
+	impl Clone for LineMod_Template {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Linemod_Template_implicit_clone(val: extern_send!(Linemod_Template)) -> extern_receive!(Linemod_Template: 'static); }
-			unsafe { Self::from_raw(cv_Linemod_Template_implicit_clone(self.as_raw_Linemod_Template())) }
+			extern "C" { fn cv_LineMod_Template_implicitClone_const_LineMod_Template(val: extern_send!(LineMod_Template)) -> extern_receive!(LineMod_Template: 'static); }
+			unsafe { Self::from_raw(cv_LineMod_Template_implicitClone_const_LineMod_Template(self.as_raw_LineMod_Template())) }
 		}
 	}
 	
-	impl Default for Linemod_Template {
+	impl std::fmt::Debug for LineMod_Template {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LineMod_Template")
+				.field("width", &crate::rgbd::LineMod_TemplateTraitConst::width(self))
+				.field("height", &crate::rgbd::LineMod_TemplateTraitConst::height(self))
+				.field("pyramid_level", &crate::rgbd::LineMod_TemplateTraitConst::pyramid_level(self))
+				.field("features", &crate::rgbd::LineMod_TemplateTraitConst::features(self))
+				.finish()
+		}
+	}
+	
+	impl Default for LineMod_Template {
 		#[inline]
 		/// Forwards to infallible Self::default()
 		fn default() -> Self {
@@ -4412,6 +4639,14 @@ pub mod rgbd {
 	}
 	
 	boxed_cast_base! { DepthCleaner, core::Algorithm, cv_DepthCleaner_to_Algorithm }
+	
+	impl std::fmt::Debug for DepthCleaner {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DepthCleaner")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::rgbd::FastICPOdometry]
 	pub trait FastICPOdometryTraitConst: crate::rgbd::OdometryTraitConst {
@@ -4690,6 +4925,16 @@ pub mod rgbd {
 	}
 	
 	boxed_cast_base! { FastICPOdometry, core::Algorithm, cv_FastICPOdometry_to_Algorithm }
+	
+	boxed_cast_base! { FastICPOdometry, crate::rgbd::Odometry, cv_FastICPOdometry_to_Odometry }
+	
+	impl std::fmt::Debug for FastICPOdometry {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FastICPOdometry")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::rgbd::ICPOdometry]
 	pub trait ICPOdometryTraitConst: crate::rgbd::OdometryTraitConst {
@@ -4989,6 +5234,16 @@ pub mod rgbd {
 	
 	boxed_cast_base! { ICPOdometry, core::Algorithm, cv_ICPOdometry_to_Algorithm }
 	
+	boxed_cast_base! { ICPOdometry, crate::rgbd::Odometry, cv_ICPOdometry_to_Odometry }
+	
+	impl std::fmt::Debug for ICPOdometry {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ICPOdometry")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::Odometry]
 	pub trait OdometryTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Odometry(&self) -> *const c_void;
@@ -5218,6 +5473,14 @@ pub mod rgbd {
 	
 	boxed_cast_base! { Odometry, core::Algorithm, cv_Odometry_to_Algorithm }
 	
+	impl std::fmt::Debug for Odometry {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Odometry")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::OdometryFrame]
 	pub trait OdometryFrameTraitConst: crate::rgbd::RgbdFrameTraitConst {
 		fn as_raw_OdometryFrame(&self) -> *const c_void;
@@ -5445,6 +5708,28 @@ pub mod rgbd {
 	
 	boxed_cast_base! { OdometryFrame, crate::rgbd::RgbdFrame, cv_OdometryFrame_to_RgbdFrame }
 	
+	impl std::fmt::Debug for OdometryFrame {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OdometryFrame")
+				.field("pyramid_image", &crate::rgbd::OdometryFrameTraitConst::pyramid_image(self))
+				.field("pyramid_depth", &crate::rgbd::OdometryFrameTraitConst::pyramid_depth(self))
+				.field("pyramid_mask", &crate::rgbd::OdometryFrameTraitConst::pyramid_mask(self))
+				.field("pyramid_cloud", &crate::rgbd::OdometryFrameTraitConst::pyramid_cloud(self))
+				.field("pyramid_d_i_dx", &crate::rgbd::OdometryFrameTraitConst::pyramid_d_i_dx(self))
+				.field("pyramid_d_i_dy", &crate::rgbd::OdometryFrameTraitConst::pyramid_d_i_dy(self))
+				.field("pyramid_textured_mask", &crate::rgbd::OdometryFrameTraitConst::pyramid_textured_mask(self))
+				.field("pyramid_normals", &crate::rgbd::OdometryFrameTraitConst::pyramid_normals(self))
+				.field("pyramid_normals_mask", &crate::rgbd::OdometryFrameTraitConst::pyramid_normals_mask(self))
+				.field("id", &crate::rgbd::RgbdFrameTraitConst::id(self))
+				.field("image", &crate::rgbd::RgbdFrameTraitConst::image(self))
+				.field("depth", &crate::rgbd::RgbdFrameTraitConst::depth(self))
+				.field("mask", &crate::rgbd::RgbdFrameTraitConst::mask(self))
+				.field("normals", &crate::rgbd::RgbdFrameTraitConst::normals(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::RgbdFrame]
 	pub trait RgbdFrameTraitConst {
 		fn as_raw_RgbdFrame(&self) -> *const c_void;
@@ -5599,6 +5884,19 @@ pub mod rgbd {
 	}
 	
 	boxed_cast_descendant! { RgbdFrame, crate::rgbd::OdometryFrame, cv_RgbdFrame_to_OdometryFrame }
+	
+	impl std::fmt::Debug for RgbdFrame {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RgbdFrame")
+				.field("id", &crate::rgbd::RgbdFrameTraitConst::id(self))
+				.field("image", &crate::rgbd::RgbdFrameTraitConst::image(self))
+				.field("depth", &crate::rgbd::RgbdFrameTraitConst::depth(self))
+				.field("mask", &crate::rgbd::RgbdFrameTraitConst::mask(self))
+				.field("normals", &crate::rgbd::RgbdFrameTraitConst::normals(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::rgbd::RgbdICPOdometry]
 	pub trait RgbdICPOdometryTraitConst: crate::rgbd::OdometryTraitConst {
@@ -5920,6 +6218,16 @@ pub mod rgbd {
 	
 	boxed_cast_base! { RgbdICPOdometry, core::Algorithm, cv_RgbdICPOdometry_to_Algorithm }
 	
+	boxed_cast_base! { RgbdICPOdometry, crate::rgbd::Odometry, cv_RgbdICPOdometry_to_Odometry }
+	
+	impl std::fmt::Debug for RgbdICPOdometry {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RgbdICPOdometry")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::RgbdNormals]
 	pub trait RgbdNormalsTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_RgbdNormals(&self) -> *const c_void;
@@ -6159,6 +6467,14 @@ pub mod rgbd {
 	}
 	
 	boxed_cast_base! { RgbdNormals, core::Algorithm, cv_RgbdNormals_to_Algorithm }
+	
+	impl std::fmt::Debug for RgbdNormals {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RgbdNormals")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::rgbd::RgbdOdometry]
 	pub trait RgbdOdometryTraitConst: crate::rgbd::OdometryTraitConst {
@@ -6471,6 +6787,16 @@ pub mod rgbd {
 	
 	boxed_cast_base! { RgbdOdometry, core::Algorithm, cv_RgbdOdometry_to_Algorithm }
 	
+	boxed_cast_base! { RgbdOdometry, crate::rgbd::Odometry, cv_RgbdOdometry_to_Odometry }
+	
+	impl std::fmt::Debug for RgbdOdometry {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RgbdOdometry")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::rgbd::RgbdPlane]
 	pub trait RgbdPlaneTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_RgbdPlane(&self) -> *const c_void;
@@ -6735,4 +7061,12 @@ pub mod rgbd {
 	}
 	
 	boxed_cast_base! { RgbdPlane, core::Algorithm, cv_RgbdPlane_to_Algorithm }
+	
+	impl std::fmt::Debug for RgbdPlane {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RgbdPlane")
+				.finish()
+		}
+	}
 }

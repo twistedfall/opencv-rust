@@ -37,7 +37,7 @@ pub mod photo {
 	
 	/// Use Navier-Stokes based method
 	pub const INPAINT_NS: i32 = 0;
-	/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Telea04)
+	/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Telea04)
 	pub const INPAINT_TELEA: i32 = 1;
 	pub const LDR_SIZE: i32 = 256;
 	/// The classic method, color-based selection and alpha masking might be time consuming and often leaves an undesirable
@@ -421,7 +421,7 @@ pub mod photo {
 	
 	/// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
 	/// black-and-white photograph rendering, and in many single channel image processing applications
-	/// [CL12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_CL12) .
+	/// [CL12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_CL12) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -447,12 +447,12 @@ pub mod photo {
 	/// exactly what is implemented.
 	/// 
 	/// It should be noted, that this implementation was taken from the July 2013 blog entry
-	/// [MA13](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
+	/// [MA13](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 	/// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 	/// of July 2013 and finally it was slightly adapted by later authors.
 	/// 
 	/// Although the thorough discussion and justification of the algorithm involved may be found in
-	/// [ChambolleEtAl](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
+	/// [ChambolleEtAl](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
 	/// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 	/// pixels (it may be seen as set
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
@@ -514,7 +514,7 @@ pub mod photo {
 	}
 	
 	/// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
-	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EM11) .
+	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EM11) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -615,8 +615,8 @@ pub mod photo {
 	
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. For more details see
-	/// <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.131.6394>
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	/// 
 	/// ## Parameters
 	/// * srcImgs: Input 8-bit or 16-bit (only with NORM_L1) 1-channel,
@@ -656,8 +656,8 @@ pub mod photo {
 	
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. For more details see
-	/// <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.131.6394>
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	/// 
 	/// ## Parameters
 	/// * srcImgs: Input 8-bit 1-channel, 2-channel, 3-channel or
@@ -865,7 +865,7 @@ pub mod photo {
 	/// deformations) or local changes concerned to a selection. Here we are interested in achieving local
 	/// changes, ones that are restricted to a region manually selected (ROI), in a seamless and effortless
 	/// manner. The extent of the changes ranges from slight distortions to complete replacement by novel
-	/// content [PM03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_PM03) .
+	/// content [PM03](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_PM03) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -1012,7 +1012,17 @@ pub mod photo {
 	impl AlignExposures {
 	}
 	
+	boxed_cast_descendant! { AlignExposures, crate::photo::AlignMTB, cv_AlignExposures_to_AlignMTB }
+	
 	boxed_cast_base! { AlignExposures, core::Algorithm, cv_AlignExposures_to_Algorithm }
+	
+	impl std::fmt::Debug for AlignExposures {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AlignExposures")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::AlignMTB]
 	pub trait AlignMTBTraitConst: crate::photo::AlignExposuresTraitConst {
@@ -1166,7 +1176,7 @@ pub mod photo {
 	/// 
 	/// In this implementation new image regions are filled with zeros.
 	/// 
-	/// For more information see [GW03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_GW03) .
+	/// For more information see [GW03](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GW03) .
 	pub struct AlignMTB {
 		ptr: *mut c_void
 	}
@@ -1211,6 +1221,16 @@ pub mod photo {
 	}
 	
 	boxed_cast_base! { AlignMTB, core::Algorithm, cv_AlignMTB_to_Algorithm }
+	
+	boxed_cast_base! { AlignMTB, crate::photo::AlignExposures, cv_AlignMTB_to_AlignExposures }
+	
+	impl std::fmt::Debug for AlignMTB {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AlignMTB")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::CalibrateCRF]
 	pub trait CalibrateCRFTraitConst: core::AlgorithmTraitConst {
@@ -1278,7 +1298,19 @@ pub mod photo {
 	impl CalibrateCRF {
 	}
 	
+	boxed_cast_descendant! { CalibrateCRF, crate::photo::CalibrateDebevec, cv_CalibrateCRF_to_CalibrateDebevec }
+	
+	boxed_cast_descendant! { CalibrateCRF, crate::photo::CalibrateRobertson, cv_CalibrateCRF_to_CalibrateRobertson }
+	
 	boxed_cast_base! { CalibrateCRF, core::Algorithm, cv_CalibrateCRF_to_Algorithm }
+	
+	impl std::fmt::Debug for CalibrateCRF {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CalibrateCRF")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::CalibrateDebevec]
 	pub trait CalibrateDebevecTraitConst: crate::photo::CalibrateCRFTraitConst {
@@ -1350,7 +1382,7 @@ pub mod photo {
 	/// function as linear system. Objective function is constructed using pixel values on the same position
 	/// in all images, extra term is added to make the result smoother.
 	/// 
-	/// For more information see [DM97](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_DM97) .
+	/// For more information see [DM97](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_DM97) .
 	pub struct CalibrateDebevec {
 		ptr: *mut c_void
 	}
@@ -1395,6 +1427,16 @@ pub mod photo {
 	}
 	
 	boxed_cast_base! { CalibrateDebevec, core::Algorithm, cv_CalibrateDebevec_to_Algorithm }
+	
+	boxed_cast_base! { CalibrateDebevec, crate::photo::CalibrateCRF, cv_CalibrateDebevec_to_CalibrateCRF }
+	
+	impl std::fmt::Debug for CalibrateDebevec {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CalibrateDebevec")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::CalibrateRobertson]
 	pub trait CalibrateRobertsonTraitConst: crate::photo::CalibrateCRFTraitConst {
@@ -1457,7 +1499,7 @@ pub mod photo {
 	/// Inverse camera response function is extracted for each brightness value by minimizing an objective
 	/// function as linear system. This algorithm uses all image pixels.
 	/// 
-	/// For more information see [RB99](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RB99) .
+	/// For more information see [RB99](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RB99) .
 	pub struct CalibrateRobertson {
 		ptr: *mut c_void
 	}
@@ -1503,6 +1545,16 @@ pub mod photo {
 	
 	boxed_cast_base! { CalibrateRobertson, core::Algorithm, cv_CalibrateRobertson_to_Algorithm }
 	
+	boxed_cast_base! { CalibrateRobertson, crate::photo::CalibrateCRF, cv_CalibrateRobertson_to_CalibrateCRF }
+	
+	impl std::fmt::Debug for CalibrateRobertson {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CalibrateRobertson")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::photo::MergeDebevec]
 	pub trait MergeDebevecTraitConst: crate::photo::MergeExposuresTraitConst {
 		fn as_raw_MergeDebevec(&self) -> *const c_void;
@@ -1543,7 +1595,7 @@ pub mod photo {
 	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 	/// values and camera response.
 	/// 
-	/// For more information see [DM97](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_DM97) .
+	/// For more information see [DM97](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_DM97) .
 	pub struct MergeDebevec {
 		ptr: *mut c_void
 	}
@@ -1588,6 +1640,16 @@ pub mod photo {
 	}
 	
 	boxed_cast_base! { MergeDebevec, core::Algorithm, cv_MergeDebevec_to_Algorithm }
+	
+	boxed_cast_base! { MergeDebevec, crate::photo::MergeExposures, cv_MergeDebevec_to_MergeExposures }
+	
+	impl std::fmt::Debug for MergeDebevec {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MergeDebevec")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::MergeExposures]
 	pub trait MergeExposuresTraitConst: core::AlgorithmTraitConst {
@@ -1658,7 +1720,21 @@ pub mod photo {
 	impl MergeExposures {
 	}
 	
+	boxed_cast_descendant! { MergeExposures, crate::photo::MergeDebevec, cv_MergeExposures_to_MergeDebevec }
+	
+	boxed_cast_descendant! { MergeExposures, crate::photo::MergeMertens, cv_MergeExposures_to_MergeMertens }
+	
+	boxed_cast_descendant! { MergeExposures, crate::photo::MergeRobertson, cv_MergeExposures_to_MergeRobertson }
+	
 	boxed_cast_base! { MergeExposures, core::Algorithm, cv_MergeExposures_to_Algorithm }
+	
+	impl std::fmt::Debug for MergeExposures {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MergeExposures")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::MergeMertens]
 	pub trait MergeMertensTraitConst: crate::photo::MergeExposuresTraitConst {
@@ -1764,7 +1840,7 @@ pub mod photo {
 	/// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
 	/// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
 	/// 
-	/// For more information see [MK07](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MK07) .
+	/// For more information see [MK07](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MK07) .
 	pub struct MergeMertens {
 		ptr: *mut c_void
 	}
@@ -1810,6 +1886,16 @@ pub mod photo {
 	
 	boxed_cast_base! { MergeMertens, core::Algorithm, cv_MergeMertens_to_Algorithm }
 	
+	boxed_cast_base! { MergeMertens, crate::photo::MergeExposures, cv_MergeMertens_to_MergeExposures }
+	
+	impl std::fmt::Debug for MergeMertens {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MergeMertens")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::photo::MergeRobertson]
 	pub trait MergeRobertsonTraitConst: crate::photo::MergeExposuresTraitConst {
 		fn as_raw_MergeRobertson(&self) -> *const c_void;
@@ -1850,7 +1936,7 @@ pub mod photo {
 	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 	/// values and camera response.
 	/// 
-	/// For more information see [RB99](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RB99) .
+	/// For more information see [RB99](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RB99) .
 	pub struct MergeRobertson {
 		ptr: *mut c_void
 	}
@@ -1895,6 +1981,16 @@ pub mod photo {
 	}
 	
 	boxed_cast_base! { MergeRobertson, core::Algorithm, cv_MergeRobertson_to_Algorithm }
+	
+	boxed_cast_base! { MergeRobertson, crate::photo::MergeExposures, cv_MergeRobertson_to_MergeExposures }
+	
+	impl std::fmt::Debug for MergeRobertson {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MergeRobertson")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::Tonemap]
 	pub trait TonemapTraitConst: core::AlgorithmTraitConst {
@@ -1978,7 +2074,21 @@ pub mod photo {
 	impl Tonemap {
 	}
 	
+	boxed_cast_descendant! { Tonemap, crate::photo::TonemapDrago, cv_Tonemap_to_TonemapDrago }
+	
+	boxed_cast_descendant! { Tonemap, crate::photo::TonemapMantiuk, cv_Tonemap_to_TonemapMantiuk }
+	
+	boxed_cast_descendant! { Tonemap, crate::photo::TonemapReinhard, cv_Tonemap_to_TonemapReinhard }
+	
 	boxed_cast_base! { Tonemap, core::Algorithm, cv_Tonemap_to_Algorithm }
+	
+	impl std::fmt::Debug for Tonemap {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Tonemap")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::TonemapDrago]
 	pub trait TonemapDragoTraitConst: crate::photo::TonemapTraitConst {
@@ -2034,9 +2144,9 @@ pub mod photo {
 	/// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
 	/// bias parameter.
 	/// 
-	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_FL02) .
+	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_FL02) .
 	/// 
-	/// For more information see [DM03](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_DM03) .
+	/// For more information see [DM03](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_DM03) .
 	pub struct TonemapDrago {
 		ptr: *mut c_void
 	}
@@ -2081,6 +2191,16 @@ pub mod photo {
 	}
 	
 	boxed_cast_base! { TonemapDrago, core::Algorithm, cv_TonemapDrago_to_Algorithm }
+	
+	boxed_cast_base! { TonemapDrago, crate::photo::Tonemap, cv_TonemapDrago_to_Tonemap }
+	
+	impl std::fmt::Debug for TonemapDrago {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TonemapDrago")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::TonemapMantiuk]
 	pub trait TonemapMantiukTraitConst: crate::photo::TonemapTraitConst {
@@ -2134,7 +2254,7 @@ pub mod photo {
 	/// transforms contrast values to HVS response and scales the response. After this the image is
 	/// reconstructed from new contrast values.
 	/// 
-	/// For more information see [MM06](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MM06) .
+	/// For more information see [MM06](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MM06) .
 	pub struct TonemapMantiuk {
 		ptr: *mut c_void
 	}
@@ -2179,6 +2299,16 @@ pub mod photo {
 	}
 	
 	boxed_cast_base! { TonemapMantiuk, core::Algorithm, cv_TonemapMantiuk_to_Algorithm }
+	
+	boxed_cast_base! { TonemapMantiuk, crate::photo::Tonemap, cv_TonemapMantiuk_to_Tonemap }
+	
+	impl std::fmt::Debug for TonemapMantiuk {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TonemapMantiuk")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::photo::TonemapReinhard]
 	pub trait TonemapReinhardTraitConst: crate::photo::TonemapTraitConst {
@@ -2251,7 +2381,7 @@ pub mod photo {
 	/// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
 	/// color adaptation.
 	/// 
-	/// For more information see [RD05](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RD05) .
+	/// For more information see [RD05](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RD05) .
 	pub struct TonemapReinhard {
 		ptr: *mut c_void
 	}
@@ -2296,4 +2426,14 @@ pub mod photo {
 	}
 	
 	boxed_cast_base! { TonemapReinhard, core::Algorithm, cv_TonemapReinhard_to_Algorithm }
+	
+	boxed_cast_base! { TonemapReinhard, crate::photo::Tonemap, cv_TonemapReinhard_to_Tonemap }
+	
+	impl std::fmt::Debug for TonemapReinhard {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TonemapReinhard")
+				.finish()
+		}
+	}
 }

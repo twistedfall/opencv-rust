@@ -49,7 +49,7 @@ pub mod tracking {
 	
 	/// the CSRT tracker
 	/// 
-	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
+	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
 	pub struct TrackerCSRT {
 		ptr: *mut c_void
 	}
@@ -99,6 +99,16 @@ pub mod tracking {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { TrackerCSRT, crate::video::Tracker, cv_TrackerCSRT_to_Tracker }
+	
+	impl std::fmt::Debug for TrackerCSRT {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerCSRT")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::tracking::TrackerCSRT_Params]
@@ -483,8 +493,43 @@ pub mod tracking {
 	impl Clone for TrackerCSRT_Params {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TrackerCSRT_Params_implicit_clone(val: extern_send!(TrackerCSRT_Params)) -> extern_receive!(TrackerCSRT_Params: 'static); }
-			unsafe { Self::from_raw(cv_TrackerCSRT_Params_implicit_clone(self.as_raw_TrackerCSRT_Params())) }
+			extern "C" { fn cv_TrackerCSRT_Params_implicitClone_const_TrackerCSRT_Params(val: extern_send!(TrackerCSRT_Params)) -> extern_receive!(TrackerCSRT_Params: 'static); }
+			unsafe { Self::from_raw(cv_TrackerCSRT_Params_implicitClone_const_TrackerCSRT_Params(self.as_raw_TrackerCSRT_Params())) }
+		}
+	}
+	
+	impl std::fmt::Debug for TrackerCSRT_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerCSRT_Params")
+				.field("use_hog", &crate::tracking::TrackerCSRT_ParamsTraitConst::use_hog(self))
+				.field("use_color_names", &crate::tracking::TrackerCSRT_ParamsTraitConst::use_color_names(self))
+				.field("use_gray", &crate::tracking::TrackerCSRT_ParamsTraitConst::use_gray(self))
+				.field("use_rgb", &crate::tracking::TrackerCSRT_ParamsTraitConst::use_rgb(self))
+				.field("use_channel_weights", &crate::tracking::TrackerCSRT_ParamsTraitConst::use_channel_weights(self))
+				.field("use_segmentation", &crate::tracking::TrackerCSRT_ParamsTraitConst::use_segmentation(self))
+				.field("window_function", &crate::tracking::TrackerCSRT_ParamsTraitConst::window_function(self))
+				.field("kaiser_alpha", &crate::tracking::TrackerCSRT_ParamsTraitConst::kaiser_alpha(self))
+				.field("cheb_attenuation", &crate::tracking::TrackerCSRT_ParamsTraitConst::cheb_attenuation(self))
+				.field("template_size", &crate::tracking::TrackerCSRT_ParamsTraitConst::template_size(self))
+				.field("gsl_sigma", &crate::tracking::TrackerCSRT_ParamsTraitConst::gsl_sigma(self))
+				.field("hog_orientations", &crate::tracking::TrackerCSRT_ParamsTraitConst::hog_orientations(self))
+				.field("hog_clip", &crate::tracking::TrackerCSRT_ParamsTraitConst::hog_clip(self))
+				.field("padding", &crate::tracking::TrackerCSRT_ParamsTraitConst::padding(self))
+				.field("filter_lr", &crate::tracking::TrackerCSRT_ParamsTraitConst::filter_lr(self))
+				.field("weights_lr", &crate::tracking::TrackerCSRT_ParamsTraitConst::weights_lr(self))
+				.field("num_hog_channels_used", &crate::tracking::TrackerCSRT_ParamsTraitConst::num_hog_channels_used(self))
+				.field("admm_iterations", &crate::tracking::TrackerCSRT_ParamsTraitConst::admm_iterations(self))
+				.field("histogram_bins", &crate::tracking::TrackerCSRT_ParamsTraitConst::histogram_bins(self))
+				.field("histogram_lr", &crate::tracking::TrackerCSRT_ParamsTraitConst::histogram_lr(self))
+				.field("background_ratio", &crate::tracking::TrackerCSRT_ParamsTraitConst::background_ratio(self))
+				.field("number_of_scales", &crate::tracking::TrackerCSRT_ParamsTraitConst::number_of_scales(self))
+				.field("scale_sigma_factor", &crate::tracking::TrackerCSRT_ParamsTraitConst::scale_sigma_factor(self))
+				.field("scale_model_max_area", &crate::tracking::TrackerCSRT_ParamsTraitConst::scale_model_max_area(self))
+				.field("scale_lr", &crate::tracking::TrackerCSRT_ParamsTraitConst::scale_lr(self))
+				.field("scale_step", &crate::tracking::TrackerCSRT_ParamsTraitConst::scale_step(self))
+				.field("psr_threshold", &crate::tracking::TrackerCSRT_ParamsTraitConst::psr_threshold(self))
+				.finish()
 		}
 	}
 	
@@ -514,7 +559,7 @@ pub mod tracking {
 	/// the KCF (Kernelized Correlation Filter) tracker
 	/// 
 	/// * KCF is a novel tracking framework that utilizes properties of circulant matrix to enhance the processing speed.
-	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
+	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
 	/// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 	/// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 	/// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.
@@ -567,6 +612,16 @@ pub mod tracking {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { TrackerKCF, crate::video::Tracker, cv_TrackerKCF_to_Tracker }
+	
+	impl std::fmt::Debug for TrackerKCF {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerKCF")
+				.finish()
+		}
 	}
 	
 	#[repr(C)]

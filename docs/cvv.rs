@@ -167,8 +167,20 @@ pub mod cvv {
 	impl Clone for CallMetaData {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_CallMetaData_implicit_clone(val: extern_send!(CallMetaData)) -> extern_receive!(CallMetaData: 'static); }
-			unsafe { Self::from_raw(cv_CallMetaData_implicit_clone(self.as_raw_CallMetaData())) }
+			extern "C" { fn cv_CallMetaData_implicitClone_const_CallMetaData(val: extern_send!(CallMetaData)) -> extern_receive!(CallMetaData: 'static); }
+			unsafe { Self::from_raw(cv_CallMetaData_implicitClone_const_CallMetaData(self.as_raw_CallMetaData())) }
+		}
+	}
+	
+	impl std::fmt::Debug for CallMetaData {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CallMetaData")
+				.field("file", &crate::cvv::CallMetaDataTraitConst::file(self))
+				.field("line", &crate::cvv::CallMetaDataTraitConst::line(self))
+				.field("function", &crate::cvv::CallMetaDataTraitConst::function(self))
+				.field("is_known", &crate::cvv::CallMetaDataTraitConst::is_known(self))
+				.finish()
 		}
 	}
 }

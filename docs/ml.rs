@@ -15,7 +15,7 @@ pub mod ml {
 		pub use { super::ParamGridTraitConst, super::ParamGridTrait, super::TrainDataTraitConst, super::TrainDataTrait, super::StatModelTraitConst, super::StatModelTrait, super::NormalBayesClassifierTraitConst, super::NormalBayesClassifierTrait, super::KNearestTraitConst, super::KNearestTrait, super::SVM_KernelTraitConst, super::SVM_KernelTrait, super::SVMTraitConst, super::SVMTrait, super::EMTraitConst, super::EMTrait, super::DTrees_NodeTraitConst, super::DTrees_NodeTrait, super::DTrees_SplitTraitConst, super::DTrees_SplitTrait, super::DTreesTraitConst, super::DTreesTrait, super::RTreesTraitConst, super::RTreesTrait, super::BoostTraitConst, super::BoostTrait, super::ANN_MLPTraitConst, super::ANN_MLPTrait, super::LogisticRegressionTraitConst, super::LogisticRegressionTrait, super::SVMSGDTraitConst, super::SVMSGDTrait };
 	}
 	
-	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 	pub const ANN_MLP_ANNEAL: i32 = 2;
 	/// The back-propagation algorithm.
 	pub const ANN_MLP_BACKPROP: i32 = 0;
@@ -37,7 +37,7 @@ pub mod ml {
 	pub const ANN_MLP_NO_OUTPUT_SCALE: i32 = 4;
 	/// ReLU function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dmax%280%2Cx%29)
 	pub const ANN_MLP_RELU: i32 = 3;
-	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 	pub const ANN_MLP_RPROP: i32 = 1;
 	/// Symmetrical sigmoid: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Cbeta%2A%281%2De%5E%7B%2D%5Calpha%20x%7D%29%2F%281%2Be%5E%7B%2D%5Calpha%20x%7D%29)
 	/// 
@@ -139,7 +139,7 @@ pub mod ml {
 	/// the decision boundary) is used instead of C.
 	pub const SVM_NU_SVC: i32 = 101;
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
-	/// See [LibSVM](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+	/// See [LibSVM](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 	pub const SVM_NU_SVR: i32 = 104;
 	/// Distribution Estimation (One-class %SVM). All the training data are from
 	/// the same class, %SVM builds a boundary that separates the class from the rest of the feature
@@ -217,9 +217,9 @@ pub mod ml {
 	pub enum ANN_MLP_TrainingMethods {
 		/// The back-propagation algorithm.
 		BACKPROP = 0,
-		/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+		/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 		RPROP = 1,
-		/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+		/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 		ANNEAL = 2,
 	}
 	
@@ -362,7 +362,7 @@ pub mod ml {
 	/// SVM::C_SVC SVMs have been trained (one against rest) with auto_train. Evaluation on three
 	/// different kernels (SVM::CHI2, SVM::INTER, SVM::RBF). The color depicts the class with max score.
 	/// Bright means max-score \> 0, dark means max-score \< 0.
-	/// ![image](https://docs.opencv.org/4.7.0/SVM_Comparison.png)
+	/// ![image](https://docs.opencv.org/4.8.0/SVM_Comparison.png)
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SVM_KernelTypes {
@@ -422,7 +422,7 @@ pub mod ml {
 		/// penalty multiplier C is used.
 		EPS_SVR = 103,
 		/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
-		/// See [LibSVM](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+		/// See [LibSVM](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 		NU_SVR = 104,
 	}
 	
@@ -1018,6 +1018,16 @@ pub mod ml {
 	
 	boxed_cast_base! { ANN_MLP, core::Algorithm, cv_ANN_MLP_to_Algorithm }
 	
+	boxed_cast_base! { ANN_MLP, crate::ml::StatModel, cv_ANN_MLP_to_StatModel }
+	
+	impl std::fmt::Debug for ANN_MLP {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ANN_MLP")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::ml::Boost]
 	pub trait BoostTraitConst: crate::ml::DTreesTraitConst {
 		fn as_raw_Boost(&self) -> *const c_void;
@@ -1201,6 +1211,18 @@ pub mod ml {
 	}
 	
 	boxed_cast_base! { Boost, core::Algorithm, cv_Boost_to_Algorithm }
+	
+	boxed_cast_base! { Boost, crate::ml::DTrees, cv_Boost_to_DTrees }
+	
+	boxed_cast_base! { Boost, crate::ml::StatModel, cv_Boost_to_StatModel }
+	
+	impl std::fmt::Debug for Boost {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Boost")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::ml::DTrees]
 	pub trait DTreesTraitConst: crate::ml::StatModelTraitConst {
@@ -1657,7 +1679,21 @@ pub mod ml {
 		
 	}
 	
+	boxed_cast_descendant! { DTrees, crate::ml::Boost, cv_DTrees_to_Boost }
+	
+	boxed_cast_descendant! { DTrees, crate::ml::RTrees, cv_DTrees_to_RTrees }
+	
 	boxed_cast_base! { DTrees, core::Algorithm, cv_DTrees_to_Algorithm }
+	
+	boxed_cast_base! { DTrees, crate::ml::StatModel, cv_DTrees_to_StatModel }
+	
+	impl std::fmt::Debug for DTrees {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DTrees")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::ml::DTrees_Node]
 	pub trait DTrees_NodeTraitConst {
@@ -1811,6 +1847,21 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for DTrees_Node {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DTrees_Node")
+				.field("value", &crate::ml::DTrees_NodeTraitConst::value(self))
+				.field("class_idx", &crate::ml::DTrees_NodeTraitConst::class_idx(self))
+				.field("parent", &crate::ml::DTrees_NodeTraitConst::parent(self))
+				.field("left", &crate::ml::DTrees_NodeTraitConst::left(self))
+				.field("right", &crate::ml::DTrees_NodeTraitConst::right(self))
+				.field("default_dir", &crate::ml::DTrees_NodeTraitConst::default_dir(self))
+				.field("split", &crate::ml::DTrees_NodeTraitConst::split(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::ml::DTrees_Split]
@@ -1975,6 +2026,20 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for DTrees_Split {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DTrees_Split")
+				.field("var_idx", &crate::ml::DTrees_SplitTraitConst::var_idx(self))
+				.field("inversed", &crate::ml::DTrees_SplitTraitConst::inversed(self))
+				.field("quality", &crate::ml::DTrees_SplitTraitConst::quality(self))
+				.field("next", &crate::ml::DTrees_SplitTraitConst::next(self))
+				.field("c", &crate::ml::DTrees_SplitTraitConst::c(self))
+				.field("subset_ofs", &crate::ml::DTrees_SplitTraitConst::subset_ofs(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::ml::EM]
@@ -2378,6 +2443,16 @@ pub mod ml {
 	
 	boxed_cast_base! { EM, core::Algorithm, cv_EM_to_Algorithm }
 	
+	boxed_cast_base! { EM, crate::ml::StatModel, cv_EM_to_StatModel }
+	
+	impl std::fmt::Debug for EM {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EM")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::ml::KNearest]
 	pub trait KNearestTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_KNearest(&self) -> *const c_void;
@@ -2607,6 +2682,16 @@ pub mod ml {
 	}
 	
 	boxed_cast_base! { KNearest, core::Algorithm, cv_KNearest_to_Algorithm }
+	
+	boxed_cast_base! { KNearest, crate::ml::StatModel, cv_KNearest_to_StatModel }
+	
+	impl std::fmt::Debug for KNearest {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KNearest")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::ml::LogisticRegression]
 	pub trait LogisticRegressionTraitConst: crate::ml::StatModelTraitConst {
@@ -2889,6 +2974,16 @@ pub mod ml {
 	
 	boxed_cast_base! { LogisticRegression, core::Algorithm, cv_LogisticRegression_to_Algorithm }
 	
+	boxed_cast_base! { LogisticRegression, crate::ml::StatModel, cv_LogisticRegression_to_StatModel }
+	
+	impl std::fmt::Debug for LogisticRegression {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LogisticRegression")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::ml::NormalBayesClassifier]
 	pub trait NormalBayesClassifierTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_NormalBayesClassifier(&self) -> *const c_void;
@@ -3006,6 +3101,16 @@ pub mod ml {
 	}
 	
 	boxed_cast_base! { NormalBayesClassifier, core::Algorithm, cv_NormalBayesClassifier_to_Algorithm }
+	
+	boxed_cast_base! { NormalBayesClassifier, crate::ml::StatModel, cv_NormalBayesClassifier_to_StatModel }
+	
+	impl std::fmt::Debug for NormalBayesClassifier {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NormalBayesClassifier")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::ml::ParamGrid]
 	pub trait ParamGridTraitConst {
@@ -3145,6 +3250,17 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for ParamGrid {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ParamGrid")
+				.field("min_val", &crate::ml::ParamGridTraitConst::min_val(self))
+				.field("max_val", &crate::ml::ParamGridTraitConst::max_val(self))
+				.field("log_step", &crate::ml::ParamGridTraitConst::log_step(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::ml::RTrees]
@@ -3386,6 +3502,18 @@ pub mod ml {
 	}
 	
 	boxed_cast_base! { RTrees, core::Algorithm, cv_RTrees_to_Algorithm }
+	
+	boxed_cast_base! { RTrees, crate::ml::DTrees, cv_RTrees_to_DTrees }
+	
+	boxed_cast_base! { RTrees, crate::ml::StatModel, cv_RTrees_to_StatModel }
+	
+	impl std::fmt::Debug for RTrees {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RTrees")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::ml::SVM]
 	pub trait SVMTraitConst: crate::ml::StatModelTraitConst {
@@ -3949,6 +4077,16 @@ pub mod ml {
 	
 	boxed_cast_base! { SVM, core::Algorithm, cv_SVM_to_Algorithm }
 	
+	boxed_cast_base! { SVM, crate::ml::StatModel, cv_SVM_to_StatModel }
+	
+	impl std::fmt::Debug for SVM {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SVM")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::ml::SVM_Kernel]
 	pub trait SVM_KernelTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_SVM_Kernel(&self) -> *const c_void;
@@ -4015,6 +4153,14 @@ pub mod ml {
 	}
 	
 	boxed_cast_base! { SVM_Kernel, core::Algorithm, cv_SVM_Kernel_to_Algorithm }
+	
+	impl std::fmt::Debug for SVM_Kernel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SVM_Kernel")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::ml::SVMSGD]
 	pub trait SVMSGDTraitConst: crate::ml::StatModelTraitConst {
@@ -4220,7 +4366,7 @@ pub mod ml {
 	/// Stochastic Gradient Descent SVM classifier
 	/// 
 	/// SVMSGD provides a fast and easy-to-use implementation of the SVM classifier using the Stochastic Gradient Descent approach,
-	/// as presented in [bottou2010large](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_bottou2010large).
+	/// as presented in [bottou2010large](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_bottou2010large).
 	/// 
 	/// The classifier has following parameters:
 	/// - model type,
@@ -4243,7 +4389,7 @@ pub mod ml {
 	/// - \ref ASGD is Average Stochastic Gradient Descent SVM Classifier. ASGD classifier averages weights vector on each step of algorithm by the formula
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cwidehat%7Bw%7D%5F%7Bt%2B1%7D%20%3D%20%5Cfrac%7Bt%7D%7B1%2Bt%7D%5Cwidehat%7Bw%7D%5F%7Bt%7D%20%2B%20%5Cfrac%7B1%7D%7B1%2Bt%7Dw%5F%7Bt%2B1%7D)
 	/// 
-	/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_bottou2010large)).
+	/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_bottou2010large)).
 	/// 
 	/// The margin type may have one of the following values: \ref SOFT_MARGIN or \ref HARD_MARGIN.
 	/// 
@@ -4368,6 +4514,16 @@ pub mod ml {
 	}
 	
 	boxed_cast_base! { SVMSGD, core::Algorithm, cv_SVMSGD_to_Algorithm }
+	
+	boxed_cast_base! { SVMSGD, crate::ml::StatModel, cv_SVMSGD_to_StatModel }
+	
+	impl std::fmt::Debug for SVMSGD {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SVMSGD")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::ml::StatModel]
 	pub trait StatModelTraitConst: core::AlgorithmTraitConst {
@@ -4536,7 +4692,31 @@ pub mod ml {
 	impl StatModel {
 	}
 	
+	boxed_cast_descendant! { StatModel, crate::ml::ANN_MLP, cv_StatModel_to_ANN_MLP }
+	
+	boxed_cast_descendant! { StatModel, crate::ml::DTrees, cv_StatModel_to_DTrees }
+	
+	boxed_cast_descendant! { StatModel, crate::ml::EM, cv_StatModel_to_EM }
+	
+	boxed_cast_descendant! { StatModel, crate::ml::KNearest, cv_StatModel_to_KNearest }
+	
+	boxed_cast_descendant! { StatModel, crate::ml::LogisticRegression, cv_StatModel_to_LogisticRegression }
+	
+	boxed_cast_descendant! { StatModel, crate::ml::NormalBayesClassifier, cv_StatModel_to_NormalBayesClassifier }
+	
+	boxed_cast_descendant! { StatModel, crate::ml::SVM, cv_StatModel_to_SVM }
+	
+	boxed_cast_descendant! { StatModel, crate::ml::SVMSGD, cv_StatModel_to_SVMSGD }
+	
 	boxed_cast_base! { StatModel, core::Algorithm, cv_StatModel_to_Algorithm }
+	
+	impl std::fmt::Debug for StatModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StatModel")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::ml::TrainData]
 	pub trait TrainDataTraitConst {
@@ -5117,5 +5297,13 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for TrainData {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrainData")
+				.finish()
+		}
 	}
 }

@@ -202,4 +202,12 @@ pub mod freetype {
 	}
 	
 	boxed_cast_base! { FreeType2, core::Algorithm, cv_FreeType2_to_Algorithm }
+	
+	impl std::fmt::Debug for FreeType2 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FreeType2")
+				.finish()
+		}
+	}
 }

@@ -181,7 +181,7 @@ pub mod features2d {
 	/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 	/// The 32-bit binary tree tables were generated automatically from original code using perl script.
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
-	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -213,7 +213,7 @@ pub mod features2d {
 	/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 	/// The 32-bit binary tree tables were generated automatically from original code using perl script.
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
-	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	#[inline]
 	pub fn agast_with_type(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
 		input_array_arg!(image);
@@ -237,7 +237,7 @@ pub mod features2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// 
 	/// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -271,7 +271,7 @@ pub mod features2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// 
 	/// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -607,7 +607,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_ANB13).
+	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_ANB13).
 	/// 
 	/// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
 	/// 
@@ -702,6 +702,14 @@ pub mod features2d {
 	
 	boxed_cast_base! { AKAZE, crate::features2d::Feature2D, cv_AKAZE_to_Feature2D }
 	
+	impl std::fmt::Debug for AKAZE {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AKAZE")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::features2d::AffineFeature]
 	pub trait AffineFeatureTraitConst: crate::features2d::Feature2DTraitConst {
 		fn as_raw_AffineFeature(&self) -> *const c_void;
@@ -743,7 +751,7 @@ pub mod features2d {
 	}
 	
 	/// Class for implementing the wrapper which makes detectors and extractors to be affine invariant,
-	/// described as ASIFT in [YM11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_YM11) .
+	/// described as ASIFT in [YM11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_YM11) .
 	pub struct AffineFeature {
 		ptr: *mut c_void
 	}
@@ -812,6 +820,14 @@ pub mod features2d {
 	boxed_cast_base! { AffineFeature, core::Algorithm, cv_AffineFeature_to_Algorithm }
 	
 	boxed_cast_base! { AffineFeature, crate::features2d::Feature2D, cv_AffineFeature_to_Feature2D }
+	
+	impl std::fmt::Debug for AffineFeature {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AffineFeature")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::AgastFeatureDetector]
 	pub trait AgastFeatureDetectorTraitConst: crate::features2d::Feature2DTraitConst {
@@ -951,6 +967,14 @@ pub mod features2d {
 	
 	boxed_cast_base! { AgastFeatureDetector, crate::features2d::Feature2D, cv_AgastFeatureDetector_to_Feature2D }
 	
+	impl std::fmt::Debug for AgastFeatureDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AgastFeatureDetector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::features2d::BFMatcher]
 	pub trait BFMatcherTraitConst: crate::features2d::DescriptorMatcherTraitConst {
 		fn as_raw_BFMatcher(&self) -> *const c_void;
@@ -1075,6 +1099,16 @@ pub mod features2d {
 	}
 	
 	boxed_cast_base! { BFMatcher, core::Algorithm, cv_BFMatcher_to_Algorithm }
+	
+	boxed_cast_base! { BFMatcher, crate::features2d::DescriptorMatcher, cv_BFMatcher_to_DescriptorMatcher }
+	
+	impl std::fmt::Debug for BFMatcher {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BFMatcher")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::BOWImgDescriptorExtractor]
 	pub trait BOWImgDescriptorExtractorTraitConst {
@@ -1271,6 +1305,14 @@ pub mod features2d {
 		
 	}
 	
+	impl std::fmt::Debug for BOWImgDescriptorExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BOWImgDescriptorExtractor")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::features2d::BOWKMeansTrainer]
 	pub trait BOWKMeansTrainerTraitConst: crate::features2d::BOWTrainerTraitConst {
 		fn as_raw_BOWKMeansTrainer(&self) -> *const c_void;
@@ -1355,6 +1397,16 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_base! { BOWKMeansTrainer, crate::features2d::BOWTrainer, cv_BOWKMeansTrainer_to_BOWTrainer }
+	
+	impl std::fmt::Debug for BOWKMeansTrainer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BOWKMeansTrainer")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::features2d::BOWTrainer]
@@ -1488,6 +1540,14 @@ pub mod features2d {
 	
 	boxed_cast_descendant! { BOWTrainer, crate::features2d::BOWKMeansTrainer, cv_BOWTrainer_to_BOWKMeansTrainer }
 	
+	impl std::fmt::Debug for BOWTrainer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BOWTrainer")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::features2d::BRISK]
 	pub trait BRISKTraitConst: crate::features2d::Feature2DTraitConst {
 		fn as_raw_BRISK(&self) -> *const c_void;
@@ -1574,7 +1634,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LCS11) .
+	/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LCS11) .
 	pub struct BRISK {
 		ptr: *mut c_void
 	}
@@ -1699,6 +1759,14 @@ pub mod features2d {
 	boxed_cast_base! { BRISK, core::Algorithm, cv_BRISK_to_Algorithm }
 	
 	boxed_cast_base! { BRISK, crate::features2d::Feature2D, cv_BRISK_to_Feature2D }
+	
+	impl std::fmt::Debug for BRISK {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BRISK")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::DescriptorMatcher]
 	pub trait DescriptorMatcherTraitConst: core::AlgorithmTraitConst {
@@ -2171,6 +2239,14 @@ pub mod features2d {
 	
 	boxed_cast_base! { DescriptorMatcher, core::Algorithm, cv_DescriptorMatcher_to_Algorithm }
 	
+	impl std::fmt::Debug for DescriptorMatcher {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DescriptorMatcher")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::features2d::FastFeatureDetector]
 	pub trait FastFeatureDetectorTraitConst: crate::features2d::Feature2DTraitConst {
 		fn as_raw_FastFeatureDetector(&self) -> *const c_void;
@@ -2308,6 +2384,14 @@ pub mod features2d {
 	boxed_cast_base! { FastFeatureDetector, core::Algorithm, cv_FastFeatureDetector_to_Algorithm }
 	
 	boxed_cast_base! { FastFeatureDetector, crate::features2d::Feature2D, cv_FastFeatureDetector_to_Feature2D }
+	
+	impl std::fmt::Debug for FastFeatureDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FastFeatureDetector")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::Feature2D]
 	pub trait Feature2DTraitConst: core::AlgorithmTraitConst {
@@ -2584,7 +2668,37 @@ pub mod features2d {
 	impl Feature2D {
 	}
 	
+	boxed_cast_descendant! { Feature2D, crate::features2d::AKAZE, cv_Feature2D_to_AKAZE }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::AffineFeature, cv_Feature2D_to_AffineFeature }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::AgastFeatureDetector, cv_Feature2D_to_AgastFeatureDetector }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::BRISK, cv_Feature2D_to_BRISK }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::FastFeatureDetector, cv_Feature2D_to_FastFeatureDetector }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::GFTTDetector, cv_Feature2D_to_GFTTDetector }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::KAZE, cv_Feature2D_to_KAZE }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::MSER, cv_Feature2D_to_MSER }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::ORB, cv_Feature2D_to_ORB }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::SIFT, cv_Feature2D_to_SIFT }
+	
+	boxed_cast_descendant! { Feature2D, crate::features2d::SimpleBlobDetector, cv_Feature2D_to_SimpleBlobDetector }
+	
 	boxed_cast_base! { Feature2D, core::Algorithm, cv_Feature2D_to_Algorithm }
+	
+	impl std::fmt::Debug for Feature2D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Feature2D")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::FlannBasedMatcher]
 	pub trait FlannBasedMatcherTraitConst: crate::features2d::DescriptorMatcherTraitConst {
@@ -2739,6 +2853,16 @@ pub mod features2d {
 	}
 	
 	boxed_cast_base! { FlannBasedMatcher, core::Algorithm, cv_FlannBasedMatcher_to_Algorithm }
+	
+	boxed_cast_base! { FlannBasedMatcher, crate::features2d::DescriptorMatcher, cv_FlannBasedMatcher_to_DescriptorMatcher }
+	
+	impl std::fmt::Debug for FlannBasedMatcher {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FlannBasedMatcher")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::GFTTDetector]
 	pub trait GFTTDetectorTraitConst: crate::features2d::Feature2DTraitConst {
@@ -2966,6 +3090,14 @@ pub mod features2d {
 	
 	boxed_cast_base! { GFTTDetector, crate::features2d::Feature2D, cv_GFTTDetector_to_Feature2D }
 	
+	impl std::fmt::Debug for GFTTDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GFTTDetector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::features2d::KAZE]
 	pub trait KAZETraitConst: crate::features2d::Feature2DTraitConst {
 		fn as_raw_KAZE(&self) -> *const c_void;
@@ -3096,7 +3228,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_ABD12) .
+	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_ABD12) .
 	/// 
 	/// 
 	/// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
@@ -3176,6 +3308,14 @@ pub mod features2d {
 	boxed_cast_base! { KAZE, core::Algorithm, cv_KAZE_to_Algorithm }
 	
 	boxed_cast_base! { KAZE, crate::features2d::Feature2D, cv_KAZE_to_Feature2D }
+	
+	impl std::fmt::Debug for KAZE {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KAZE")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::KeyPointsFilter]
 	pub trait KeyPointsFilterTraitConst {
@@ -3293,6 +3433,14 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for KeyPointsFilter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KeyPointsFilter")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::features2d::MSER]
@@ -3520,10 +3668,10 @@ pub mod features2d {
 	/// 
 	/// - there are two different implementation of %MSER: one for grey image, one for color image
 	/// 
-	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
+	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
 	/// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
 	/// 
-	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
+	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
 	/// than grey image method ( 3~4 times )
 	/// 
 	/// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
@@ -3606,6 +3754,14 @@ pub mod features2d {
 	boxed_cast_base! { MSER, core::Algorithm, cv_MSER_to_Algorithm }
 	
 	boxed_cast_base! { MSER, crate::features2d::Feature2D, cv_MSER_to_Feature2D }
+	
+	impl std::fmt::Debug for MSER {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MSER")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::ORB]
 	pub trait ORBTraitConst: crate::features2d::Feature2DTraitConst {
@@ -3793,7 +3949,7 @@ pub mod features2d {
 	
 	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
 	/// 
-	/// described in [RRKB11](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
+	/// described in [RRKB11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
 	/// the strongest features using FAST or Harris response, finds their orientation using first-order
 	/// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 	/// k-tuples) are rotated according to the measured orientation).
@@ -3896,6 +4052,14 @@ pub mod features2d {
 	boxed_cast_base! { ORB, core::Algorithm, cv_ORB_to_Algorithm }
 	
 	boxed_cast_base! { ORB, crate::features2d::Feature2D, cv_ORB_to_Feature2D }
+	
+	impl std::fmt::Debug for ORB {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ORB")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::SIFT]
 	pub trait SIFTTraitConst: crate::features2d::Feature2DTraitConst {
@@ -4010,7 +4174,7 @@ pub mod features2d {
 	}
 	
 	/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
-	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Lowe04) .
+	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Lowe04) .
 	pub struct SIFT {
 		ptr: *mut c_void
 	}
@@ -4074,16 +4238,21 @@ pub mod features2d {
 		/// * sigma: The sigma of the Gaussian applied to the input image at the octave \#0. If your image
 		/// is captured with a weak camera with soft lenses, you might want to reduce the number.
 		/// 
+		/// * enable_precise_upscale: Whether to enable precise upscaling in the scale pyramid, which maps
+		/// index ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bx%7D) to ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B2x%7D). This prevents localization bias. The option
+		/// is disabled by default.
+		/// 
 		/// ## C++ default parameters
 		/// * nfeatures: 0
 		/// * n_octave_layers: 3
 		/// * contrast_threshold: 0.04
 		/// * edge_threshold: 10
 		/// * sigma: 1.6
+		/// * enable_precise_upscale: false
 		#[inline]
-		pub fn create(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64) -> Result<core::Ptr<crate::features2d::SIFT>> {
+		pub fn create(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, enable_precise_upscale: bool) -> Result<core::Ptr<crate::features2d::SIFT>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_create_int_int_double_double_double(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SIFT_create_int_int_double_double_double_bool(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, enable_precise_upscale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(ret) };
@@ -4114,10 +4283,17 @@ pub mod features2d {
 		/// is captured with a weak camera with soft lenses, you might want to reduce the number.
 		/// 
 		/// * descriptorType: The type of descriptors. Only CV_32F and CV_8U are supported.
+		/// 
+		/// * enable_precise_upscale: Whether to enable precise upscaling in the scale pyramid, which maps
+		/// index ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bx%7D) to ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B2x%7D). This prevents localization bias. The option
+		/// is disabled by default.
+		/// 
+		/// ## C++ default parameters
+		/// * enable_precise_upscale: false
 		#[inline]
-		pub fn create_1(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32) -> Result<core::Ptr<crate::features2d::SIFT>> {
+		pub fn create_1(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32, enable_precise_upscale: bool) -> Result<core::Ptr<crate::features2d::SIFT>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_create_int_int_double_double_double_int(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, descriptor_type, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SIFT_create_int_int_double_double_double_int_bool(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, descriptor_type, enable_precise_upscale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(ret) };
@@ -4129,6 +4305,14 @@ pub mod features2d {
 	boxed_cast_base! { SIFT, core::Algorithm, cv_SIFT_to_Algorithm }
 	
 	boxed_cast_base! { SIFT, crate::features2d::Feature2D, cv_SIFT_to_Feature2D }
+	
+	impl std::fmt::Debug for SIFT {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SIFT")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::features2d::SimpleBlobDetector]
 	pub trait SimpleBlobDetectorTraitConst: crate::features2d::Feature2DTraitConst {
@@ -4268,6 +4452,14 @@ pub mod features2d {
 	boxed_cast_base! { SimpleBlobDetector, core::Algorithm, cv_SimpleBlobDetector_to_Algorithm }
 	
 	boxed_cast_base! { SimpleBlobDetector, crate::features2d::Feature2D, cv_SimpleBlobDetector_to_Feature2D }
+	
+	impl std::fmt::Debug for SimpleBlobDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SimpleBlobDetector")
+				.finish()
+		}
+	}
 	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]

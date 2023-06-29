@@ -313,4 +313,12 @@ pub mod hfs {
 	}
 	
 	boxed_cast_base! { HfsSegment, core::Algorithm, cv_HfsSegment_to_Algorithm }
+	
+	impl std::fmt::Debug for HfsSegment {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HfsSegment")
+				.finish()
+		}
+	}
 }

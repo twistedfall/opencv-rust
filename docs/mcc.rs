@@ -845,6 +845,14 @@ pub mod mcc {
 		
 	}
 	
+	impl std::fmt::Debug for ColorCorrectionModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColorCorrectionModel")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::mcc::MCC_CChecker]
 	pub trait MCC_CCheckerTraitConst {
 		fn as_raw_MCC_CChecker(&self) -> *const c_void;
@@ -1012,6 +1020,14 @@ pub mod mcc {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for MCC_CChecker {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MCC_CChecker")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::mcc::MCC_CCheckerDetector]
@@ -1187,6 +1203,14 @@ pub mod mcc {
 	
 	boxed_cast_base! { MCC_CCheckerDetector, core::Algorithm, cv_MCC_CCheckerDetector_to_Algorithm }
 	
+	impl std::fmt::Debug for MCC_CCheckerDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MCC_CCheckerDetector")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::mcc::MCC_CCheckerDraw]
 	pub trait MCC_CCheckerDrawTraitConst {
 		fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void;
@@ -1271,6 +1295,14 @@ pub mod mcc {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for MCC_CCheckerDraw {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MCC_CCheckerDraw")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::mcc::MCC_DetectorParameters]
@@ -1593,5 +1625,31 @@ pub mod mcc {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for MCC_DetectorParameters {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MCC_DetectorParameters")
+				.field("adaptive_thresh_win_size_min", &crate::mcc::MCC_DetectorParametersTraitConst::adaptive_thresh_win_size_min(self))
+				.field("adaptive_thresh_win_size_max", &crate::mcc::MCC_DetectorParametersTraitConst::adaptive_thresh_win_size_max(self))
+				.field("adaptive_thresh_win_size_step", &crate::mcc::MCC_DetectorParametersTraitConst::adaptive_thresh_win_size_step(self))
+				.field("adaptive_thresh_constant", &crate::mcc::MCC_DetectorParametersTraitConst::adaptive_thresh_constant(self))
+				.field("min_contours_area_rate", &crate::mcc::MCC_DetectorParametersTraitConst::min_contours_area_rate(self))
+				.field("min_contours_area", &crate::mcc::MCC_DetectorParametersTraitConst::min_contours_area(self))
+				.field("confidence_threshold", &crate::mcc::MCC_DetectorParametersTraitConst::confidence_threshold(self))
+				.field("min_contour_solidity", &crate::mcc::MCC_DetectorParametersTraitConst::min_contour_solidity(self))
+				.field("find_candidates_approx_poly_dp_eps_multiplier", &crate::mcc::MCC_DetectorParametersTraitConst::find_candidates_approx_poly_dp_eps_multiplier(self))
+				.field("border_width", &crate::mcc::MCC_DetectorParametersTraitConst::border_width(self))
+				.field("b0factor", &crate::mcc::MCC_DetectorParametersTraitConst::b0factor(self))
+				.field("max_error", &crate::mcc::MCC_DetectorParametersTraitConst::max_error(self))
+				.field("min_contour_points_allowed", &crate::mcc::MCC_DetectorParametersTraitConst::min_contour_points_allowed(self))
+				.field("min_contour_length_allowed", &crate::mcc::MCC_DetectorParametersTraitConst::min_contour_length_allowed(self))
+				.field("min_inter_contour_distance", &crate::mcc::MCC_DetectorParametersTraitConst::min_inter_contour_distance(self))
+				.field("min_inter_checker_distance", &crate::mcc::MCC_DetectorParametersTraitConst::min_inter_checker_distance(self))
+				.field("min_image_size", &crate::mcc::MCC_DetectorParametersTraitConst::min_image_size(self))
+				.field("min_group_size", &crate::mcc::MCC_DetectorParametersTraitConst::min_group_size(self))
+				.finish()
+		}
 	}
 }

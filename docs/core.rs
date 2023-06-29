@@ -31,7 +31,7 @@ pub mod core {
 	//!        # Parallel backends API
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::HammingTraitConst, super::HammingTrait, super::Detail_CheckContextTraitConst, super::Detail_CheckContextTrait, super::Matx_AddOpTraitConst, super::Matx_AddOpTrait, super::Matx_SubOpTraitConst, super::Matx_SubOpTrait, super::Matx_ScaleOpTraitConst, super::Matx_ScaleOpTrait, super::Matx_MulOpTraitConst, super::Matx_MulOpTrait, super::Matx_DivOpTraitConst, super::Matx_DivOpTrait, super::Matx_MatMulOpTraitConst, super::Matx_MatMulOpTrait, super::Matx_TOpTraitConst, super::Matx_TOpTrait, super::RotatedRectTraitConst, super::RotatedRectTrait, super::RangeTraitConst, super::RangeTrait, super::KeyPointTraitConst, super::KeyPointTrait, super::_InputArrayTraitConst, super::_InputArrayTrait, super::_OutputArrayTraitConst, super::_OutputArrayTrait, super::_InputOutputArrayTraitConst, super::_InputOutputArrayTrait, super::UMatDataTraitConst, super::UMatDataTrait, super::MatSizeTraitConst, super::MatSizeTrait, super::MatStepTraitConst, super::MatStepTrait, super::MatTraitConst, super::MatTrait, super::UMatTraitConst, super::UMatTrait, super::SparseMat_HdrTraitConst, super::SparseMat_HdrTrait, super::SparseMat_NodeTraitConst, super::SparseMat_NodeTrait, super::SparseMatTraitConst, super::SparseMatTrait, super::MatConstIteratorTraitConst, super::MatConstIteratorTrait, super::SparseMatConstIteratorTraitConst, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTraitConst, super::SparseMatIteratorTrait, super::MatOpTraitConst, super::MatOpTrait, super::MatExprTraitConst, super::MatExprTrait, super::FileStorageTraitConst, super::FileStorageTrait, super::FileNodeTraitConst, super::FileNodeTrait, super::FileNodeIteratorTraitConst, super::FileNodeIteratorTrait, super::WriteStructContextTraitConst, super::WriteStructContextTrait, super::ExceptionTraitConst, super::ExceptionTrait, super::PCATraitConst, super::PCATrait, super::LDATraitConst, super::LDATrait, super::SVDTraitConst, super::SVDTrait, super::RNGTraitConst, super::RNGTrait, super::RNG_MT19937TraitConst, super::RNG_MT19937Trait, super::FormattedTraitConst, super::FormattedTrait, super::FormatterTraitConst, super::FormatterTrait, super::AlgorithmTraitConst, super::AlgorithmTrait, super::TickMeterTraitConst, super::TickMeterTrait, super::ParallelLoopBodyTraitConst, super::ParallelLoopBodyTrait, super::CommandLineParserTraitConst, super::CommandLineParserTrait, super::TLSDataContainerTraitConst, super::TLSDataContainerTrait, super::NodeDataTraitConst, super::NodeDataTrait, super::MinProblemSolver_FunctionTraitConst, super::MinProblemSolver_FunctionTrait, super::MinProblemSolverTraitConst, super::MinProblemSolverTrait, super::DownhillSolverTraitConst, super::DownhillSolverTrait, super::ConjGradSolverTraitConst, super::ConjGradSolverTrait, super::DeviceTraitConst, super::DeviceTrait, super::Context_UserContextTraitConst, super::Context_UserContextTrait, super::ContextTraitConst, super::ContextTrait, super::PlatformTraitConst, super::PlatformTrait, super::QueueTraitConst, super::QueueTrait, super::KernelArgTraitConst, super::KernelArgTrait, super::KernelTraitConst, super::KernelTrait, super::ProgramTraitConst, super::ProgramTrait, super::ProgramSourceTraitConst, super::ProgramSourceTrait, super::PlatformInfoTraitConst, super::PlatformInfoTrait, super::Image2DTraitConst, super::Image2DTrait, super::TimerTraitConst, super::TimerTrait, super::OpenCLExecutionContextTraitConst, super::OpenCLExecutionContextTrait, super::GpuMat_AllocatorTraitConst, super::GpuMat_AllocatorTrait, super::GpuMatTraitConst, super::GpuMatTrait, super::GpuDataTraitConst, super::GpuDataTrait, super::GpuMatNDTraitConst, super::GpuMatNDTrait, super::BufferPoolTraitConst, super::BufferPoolTrait, super::HostMemTraitConst, super::HostMemTrait, super::StreamTraitConst, super::StreamTrait, super::EventTraitConst, super::EventTrait, super::TargetArchsTraitConst, super::TargetArchsTrait, super::DeviceInfoTraitConst, super::DeviceInfoTrait, super::BufferTraitConst, super::BufferTrait, super::Texture2DTraitConst, super::Texture2DTrait, super::ArraysTraitConst, super::ArraysTrait, super::AsyncArrayTraitConst, super::AsyncArrayTrait, super::AsyncPromiseTraitConst, super::AsyncPromiseTrait, super::LogTagTraitConst, super::LogTagTrait, super::OriginalClassNameTraitConst, super::OriginalClassNameTrait };
+		pub use { super::HammingTraitConst, super::HammingTrait, super::Detail_CheckContextTraitConst, super::Detail_CheckContextTrait, super::Matx_AddOpTraitConst, super::Matx_AddOpTrait, super::Matx_SubOpTraitConst, super::Matx_SubOpTrait, super::Matx_ScaleOpTraitConst, super::Matx_ScaleOpTrait, super::Matx_MulOpTraitConst, super::Matx_MulOpTrait, super::Matx_DivOpTraitConst, super::Matx_DivOpTrait, super::Matx_MatMulOpTraitConst, super::Matx_MatMulOpTrait, super::Matx_TOpTraitConst, super::Matx_TOpTrait, super::RangeTraitConst, super::RangeTrait, super::KeyPointTraitConst, super::KeyPointTrait, super::_InputArrayTraitConst, super::_InputArrayTrait, super::_OutputArrayTraitConst, super::_OutputArrayTrait, super::_InputOutputArrayTraitConst, super::_InputOutputArrayTrait, super::UMatDataTraitConst, super::UMatDataTrait, super::MatSizeTraitConst, super::MatSizeTrait, super::MatStepTraitConst, super::MatStepTrait, super::MatTraitConst, super::MatTrait, super::UMatTraitConst, super::UMatTrait, super::SparseMat_HdrTraitConst, super::SparseMat_HdrTrait, super::SparseMat_NodeTraitConst, super::SparseMat_NodeTrait, super::SparseMatTraitConst, super::SparseMatTrait, super::MatConstIteratorTraitConst, super::MatConstIteratorTrait, super::SparseMatConstIteratorTraitConst, super::SparseMatConstIteratorTrait, super::SparseMatIteratorTraitConst, super::SparseMatIteratorTrait, super::MatOpTraitConst, super::MatOpTrait, super::MatExprTraitConst, super::MatExprTrait, super::FileStorageTraitConst, super::FileStorageTrait, super::FileNodeTraitConst, super::FileNodeTrait, super::FileNodeIteratorTraitConst, super::FileNodeIteratorTrait, super::WriteStructContextTraitConst, super::WriteStructContextTrait, super::ExceptionTraitConst, super::ExceptionTrait, super::PCATraitConst, super::PCATrait, super::LDATraitConst, super::LDATrait, super::SVDTraitConst, super::SVDTrait, super::RNGTraitConst, super::RNGTrait, super::RNG_MT19937TraitConst, super::RNG_MT19937Trait, super::FormattedTraitConst, super::FormattedTrait, super::FormatterTraitConst, super::FormatterTrait, super::AlgorithmTraitConst, super::AlgorithmTrait, super::TickMeterTraitConst, super::TickMeterTrait, super::ParallelLoopBodyTraitConst, super::ParallelLoopBodyTrait, super::CommandLineParserTraitConst, super::CommandLineParserTrait, super::NodeDataTraitConst, super::NodeDataTrait, super::MinProblemSolver_FunctionTraitConst, super::MinProblemSolver_FunctionTrait, super::MinProblemSolverTraitConst, super::MinProblemSolverTrait, super::DownhillSolverTraitConst, super::DownhillSolverTrait, super::ConjGradSolverTraitConst, super::ConjGradSolverTrait, super::DeviceTraitConst, super::DeviceTrait, super::Context_UserContextTraitConst, super::Context_UserContextTrait, super::ContextTraitConst, super::ContextTrait, super::PlatformTraitConst, super::PlatformTrait, super::QueueTraitConst, super::QueueTrait, super::KernelArgTraitConst, super::KernelArgTrait, super::KernelTraitConst, super::KernelTrait, super::ProgramTraitConst, super::ProgramTrait, super::ProgramSourceTraitConst, super::ProgramSourceTrait, super::PlatformInfoTraitConst, super::PlatformInfoTrait, super::Image2DTraitConst, super::Image2DTrait, super::TimerTraitConst, super::TimerTrait, super::OpenCLExecutionContextTraitConst, super::OpenCLExecutionContextTrait, super::GpuMat_AllocatorTraitConst, super::GpuMat_AllocatorTrait, super::GpuMatTraitConst, super::GpuMatTrait, super::GpuDataTraitConst, super::GpuDataTrait, super::GpuMatNDTraitConst, super::GpuMatNDTrait, super::BufferPoolTraitConst, super::BufferPoolTrait, super::HostMemTraitConst, super::HostMemTrait, super::StreamTraitConst, super::StreamTrait, super::EventTraitConst, super::EventTrait, super::TargetArchsTraitConst, super::TargetArchsTrait, super::DeviceInfoTraitConst, super::DeviceInfoTrait, super::BufferTraitConst, super::BufferTrait, super::Texture2DTraitConst, super::Texture2DTrait, super::ArraysTraitConst, super::ArraysTrait, super::AsyncArrayTraitConst, super::AsyncArrayTrait, super::AsyncPromiseTraitConst, super::AsyncPromiseTrait, super::LogTagTraitConst, super::LogTagTrait, super::FunctionParamsTraitConst, super::FunctionParamsTrait, super::OriginalClassNameTraitConst, super::OriginalClassNameTrait };
 	}
 	
 	pub const ACCESS_FAST: i32 = 67108864;
@@ -380,9 +380,9 @@ pub mod core {
 	pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 	pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 	pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-	pub const CV_VERSION: &str = "4.7.0";
+	pub const CV_VERSION: &str = "4.8.0";
 	pub const CV_VERSION_MAJOR: i32 = 4;
-	pub const CV_VERSION_MINOR: i32 = 7;
+	pub const CV_VERSION_MINOR: i32 = 8;
 	pub const CV_VERSION_REVISION: i32 = 0;
 	pub const CV_VERSION_STATUS: &str = "";
 	pub const CV_VSX: i32 = 0;
@@ -695,6 +695,8 @@ pub mod core {
 	pub const REDUCE_MIN: i32 = 3;
 	/// the output is the sum of all rows/columns of the matrix.
 	pub const REDUCE_SUM: i32 = 0;
+	/// the output is the sum of all squared rows/columns of the matrix.
+	pub const REDUCE_SUM2: i32 = 4;
 	pub const RNG_NORMAL: i32 = 1;
 	pub const RNG_UNIFORM: i32 = 0;
 	/// Rotate 180 degrees clockwise
@@ -704,6 +706,8 @@ pub mod core {
 	/// Rotate 270 degrees clockwise
 	pub const ROTATE_90_COUNTERCLOCKWISE: i32 = 2;
 	pub const SHARED_ATOMICS: i32 = 12;
+	/// problem is feasible, but solver lost solution due to floating-point arithmetic errors
+	pub const SOLVELP_LOST: i32 = -3;
 	/// there are multiple maxima for target function - the arbitrary one is returned
 	pub const SOLVELP_MULTI: i32 = 1;
 	/// there is only one maximum for target function
@@ -1540,6 +1544,8 @@ pub mod core {
 		REDUCE_MAX = 2,
 		/// the output is the minimum (column/row-wise) of all rows/columns of the matrix.
 		REDUCE_MIN = 3,
+		/// the output is the sum of all squared rows/columns of the matrix.
+		REDUCE_SUM2 = 4,
 	}
 	
 	opencv_type_enum! { core::ReduceTypes }
@@ -1596,6 +1602,8 @@ pub mod core {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SolveLPResult {
+		/// problem is feasible, but solver lost solution due to floating-point arithmetic errors
+		SOLVELP_LOST = -3,
 		/// problem is unbounded (target function can achieve arbitrary high values)
 		SOLVELP_UNBOUNDED = -2,
 		/// problem is unfeasible (there are no points that satisfy all the constraints imposed)
@@ -2895,6 +2903,59 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// Bindings overload to create a GpuMat from existing GPU memory.
+	/// ## Parameters
+	/// * rows: Row count.
+	/// * cols: Column count.
+	/// * type: Type of the matrix.
+	/// * cudaMemoryAddress: Address of the allocated GPU memory on the device. This does not allocate matrix data. Instead, it just initializes the matrix header that points to the specified \a cudaMemoryAddress, which means that no data is copied. This operation is very efficient and can be used to process external data using OpenCV functions. The external data is not automatically deallocated, so you should take care of it.
+	/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at the end of each row, if any. If the parameter is missing (set to Mat::AUTO_STEP ), no padding is assumed and the actual step is calculated as cols*elemSize(). See GpuMat::elemSize.
+	/// 
+	/// Note: Overload for generation of bindings only, not exported or intended for use internally from C++.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * size: 2D array size: Size(cols, rows). In the Size() constructor, the number of rows and the number of columns go in the reverse order.
+	/// * type: Type of the matrix.
+	/// * cudaMemoryAddress: Address of the allocated GPU memory on the device. This does not allocate matrix data. Instead, it just initializes the matrix header that points to the specified \a cudaMemoryAddress, which means that no data is copied. This operation is very efficient and can be used to process external data using OpenCV functions. The external data is not automatically deallocated, so you should take care of it.
+	/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at the end of each row, if any. If the parameter is missing (set to Mat::AUTO_STEP ), no padding is assumed and the actual step is calculated as cols*elemSize(). See GpuMat::elemSize.
+	/// 
+	/// Note: Overload for generation of bindings only, not exported or intended for use internally from C++.
+	/// 
+	/// ## C++ default parameters
+	/// * step: Mat::AUTO_STEP
+	#[inline]
+	pub fn create_gpu_mat_from_cuda_memory_1(size: core::Size, typ: i32, cuda_memory_address: size_t, step: size_t) -> Result<core::GpuMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createGpuMatFromCudaMemory_Size_int_size_t_size_t(size.opencv_as_extern(), typ, cuda_memory_address, step, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Bindings overload to create a GpuMat from existing GPU memory.
+	/// ## Parameters
+	/// * rows: Row count.
+	/// * cols: Column count.
+	/// * type: Type of the matrix.
+	/// * cudaMemoryAddress: Address of the allocated GPU memory on the device. This does not allocate matrix data. Instead, it just initializes the matrix header that points to the specified \a cudaMemoryAddress, which means that no data is copied. This operation is very efficient and can be used to process external data using OpenCV functions. The external data is not automatically deallocated, so you should take care of it.
+	/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at the end of each row, if any. If the parameter is missing (set to Mat::AUTO_STEP ), no padding is assumed and the actual step is calculated as cols*elemSize(). See GpuMat::elemSize.
+	/// 
+	/// Note: Overload for generation of bindings only, not exported or intended for use internally from C++.
+	/// 
+	/// ## C++ default parameters
+	/// * step: Mat::AUTO_STEP
+	#[inline]
+	pub fn create_gpu_mat_from_cuda_memory(rows: i32, cols: i32, typ: i32, cuda_memory_address: size_t, step: size_t) -> Result<core::GpuMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createGpuMatFromCudaMemory_int_int_int_size_t_size_t(rows, cols, typ, cuda_memory_address, step, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// checks whether current device supports the given feature
 	#[inline]
 	pub fn device_supports(feature_set: core::FeatureSet) -> Result<bool> {
@@ -3054,6 +3115,21 @@ pub mod core {
 		unsafe { sys::cv_cuda_unregisterPageLocked_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Bindings overload to create a Stream object from the address stored in an existing CUDA Runtime API stream pointer (cudaStream_t).
+	/// ## Parameters
+	/// * cudaStreamMemoryAddress: Memory address stored in a CUDA Runtime API stream pointer (cudaStream_t). The created Stream object does not perform any allocation or deallocation and simply wraps existing raw CUDA Runtime API stream pointer.
+	/// 
+	/// Note: Overload for generation of bindings only, not exported or intended for use internally from C++.
+	#[inline]
+	pub fn wrap_stream(cuda_stream_memory_address: size_t) -> Result<core::Stream> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_wrapStream_size_t(cuda_stream_memory_address, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Stream::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -4163,6 +4239,23 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// Checks for the presence of at least one non-zero array element.
+	/// 
+	/// The function returns whether there are non-zero elements in src
+	/// ## Parameters
+	/// * src: single-channel array.
+	/// ## See also
+	/// mean, meanStdDev, norm, minMaxLoc, calcCovarMatrix
+	#[inline]
+	pub fn has_non_zero(src: &impl core::ToInputArray) -> Result<bool> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_hasNonZero_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Check if use of OpenVX is possible
 	#[inline]
 	pub fn have_openvx() -> Result<bool> {
@@ -4835,7 +4928,7 @@ pub mod core {
 	/// advanced way, use cv::mixChannels.
 	/// 
 	/// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -5421,7 +5514,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.7.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.8.0/NormTypes_OneArray_1-2-INF.png)
 	/// 
 	/// When the mask parameter is specified and it is not empty, the norm is
 	/// 
@@ -5714,6 +5807,18 @@ pub mod core {
 		string_arg_output_send!(via buf_via);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, &mut buf_via, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		string_arg_output_receive!(buf_via => buf);
+		Ok(ret)
+	}
+	
+	#[inline]
+	pub fn convert_type_str_1(sdepth: i32, ddepth: i32, cn: i32, buf: &mut String, buf_size: size_t) -> Result<String> {
+		string_arg_output_send!(via buf_via);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX_size_t(sdepth, ddepth, cn, &mut buf_via, buf_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
@@ -7121,14 +7226,14 @@ pub mod core {
 	/// 1D vectors and performing the specified operation on the vectors until a single row/column is
 	/// obtained. For example, the function can be used to compute horizontal and vertical projections of a
 	/// raster image. In case of #REDUCE_MAX and #REDUCE_MIN , the output image should have the same type as the source one.
-	/// In case of #REDUCE_SUM and #REDUCE_AVG , the output may have a larger element bit-depth to preserve accuracy.
+	/// In case of #REDUCE_SUM, #REDUCE_SUM2 and #REDUCE_AVG , the output may have a larger element bit-depth to preserve accuracy.
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	/// 
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input 2D matrix.
@@ -7407,11 +7512,11 @@ pub mod core {
 		Ok(ret)
 	}
 	
-	/// OpenCV will try to set the number of threads for the next parallel region.
+	/// OpenCV will try to set the number of threads for subsequent parallel regions.
 	/// 
-	/// If threads == 0, OpenCV will disable threading optimizations and run all it's functions
-	/// sequentially. Passing threads \< 0 will reset threads number to system default. This function must
-	/// be called outside of parallel region.
+	/// If threads == 1, OpenCV will disable threading optimizations and run all it's functions
+	/// sequentially. Passing threads \< 0 will reset threads number to system default.
+	/// The function is not thread-safe. It must not be called in parallel region or concurrent threads.
 	/// 
 	/// OpenCV will try to run its functions with specified threads number, but some behaviour differs from
 	/// framework:
@@ -7535,15 +7640,60 @@ pub mod core {
 	/// and the remaining to ![inline formula](https://latex.codecogs.com/png.latex?A). It should contain 32- or 64-bit floating point numbers.
 	/// * z: The solution will be returned here as a column-vector - it corresponds to ![inline formula](https://latex.codecogs.com/png.latex?c) in the
 	/// formulation above. It will contain 64-bit floating point numbers.
+	/// * constr_eps: allowed numeric disparity for constraints
 	/// ## Returns
 	/// One of cv::SolveLPResult
+	/// 
+	/// ## Overloaded parameters
 	#[inline]
-	pub fn solve_lp(func: &impl core::ToInputArray, constr: &impl core::ToInputArray, z: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn solve_lp_1(func: &impl core::ToInputArray, constr: &impl core::ToInputArray, z: &mut impl core::ToOutputArray) -> Result<i32> {
 		input_array_arg!(func);
 		input_array_arg!(constr);
 		output_array_arg!(z);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_solveLP_const__InputArrayR_const__InputArrayR_const__OutputArrayR(func.as_raw__InputArray(), constr.as_raw__InputArray(), z.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Solve given (non-integer) linear programming problem using the Simplex Algorithm (Simplex Method).
+	/// 
+	/// What we mean here by "linear programming problem" (or LP problem, for short) can be formulated as:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmbox%7BMaximize%20%7D%20c%5Ccdot%20x%5C%5C%0A%20%5Cmbox%7BSubject%20to%3A%7D%5C%5C%0A%20Ax%5Cleq%20b%5C%5C%0A%20x%5Cgeq%200)
+	/// 
+	/// Where ![inline formula](https://latex.codecogs.com/png.latex?c) is fixed `1`-by-`n` row-vector, ![inline formula](https://latex.codecogs.com/png.latex?A) is fixed `m`-by-`n` matrix, ![inline formula](https://latex.codecogs.com/png.latex?b) is fixed `m`-by-`1`
+	/// column vector and ![inline formula](https://latex.codecogs.com/png.latex?x) is an arbitrary `n`-by-`1` column vector, which satisfies the constraints.
+	/// 
+	/// Simplex algorithm is one of many algorithms that are designed to handle this sort of problems
+	/// efficiently. Although it is not optimal in theoretical sense (there exist algorithms that can solve
+	/// any problem written as above in polynomial time, while simplex method degenerates to exponential
+	/// time for some special cases), it is well-studied, easy to implement and is shown to work well for
+	/// real-life purposes.
+	/// 
+	/// The particular implementation is taken almost verbatim from **Introduction to Algorithms, third
+	/// edition** by T. H. Cormen, C. E. Leiserson, R. L. Rivest and Clifford Stein. In particular, the
+	/// Bland's rule <http://en.wikipedia.org/wiki/Bland%27s_rule> is used to prevent cycling.
+	/// 
+	/// ## Parameters
+	/// * Func: This row-vector corresponds to ![inline formula](https://latex.codecogs.com/png.latex?c) in the LP problem formulation (see above). It should
+	/// contain 32- or 64-bit floating point numbers. As a convenience, column-vector may be also submitted,
+	/// in the latter case it is understood to correspond to ![inline formula](https://latex.codecogs.com/png.latex?c%5ET).
+	/// * Constr: `m`-by-`n+1` matrix, whose rightmost column corresponds to ![inline formula](https://latex.codecogs.com/png.latex?b) in formulation above
+	/// and the remaining to ![inline formula](https://latex.codecogs.com/png.latex?A). It should contain 32- or 64-bit floating point numbers.
+	/// * z: The solution will be returned here as a column-vector - it corresponds to ![inline formula](https://latex.codecogs.com/png.latex?c) in the
+	/// formulation above. It will contain 64-bit floating point numbers.
+	/// * constr_eps: allowed numeric disparity for constraints
+	/// ## Returns
+	/// One of cv::SolveLPResult
+	#[inline]
+	pub fn solve_lp(func: &impl core::ToInputArray, constr: &impl core::ToInputArray, z: &mut impl core::ToOutputArray, constr_eps: f64) -> Result<i32> {
+		input_array_arg!(func);
+		input_array_arg!(constr);
+		output_array_arg!(z);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_solveLP_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(func.as_raw__InputArray(), constr.as_raw__InputArray(), z.as_raw__OutputArray(), constr_eps, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7674,7 +7824,7 @@ pub mod core {
 	/// mixChannels .
 	/// 
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -7699,7 +7849,7 @@ pub mod core {
 	/// mixChannels .
 	/// 
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -8000,6 +8150,20 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// ## C++ default parameters
+	/// * params: FunctionParams()
+	#[inline]
+	pub fn copy_mat_and_dump_named_arguments(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, params: &core::FunctionParams) -> Result<String> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_copyMatAndDumpNamedArguments_const__InputArrayR_const__OutputArrayR_const_FunctionParamsR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), params.as_raw_FunctionParams(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	#[inline]
 	pub fn dump_bool(argument: bool) -> Result<String> {
 		return_send!(via ocvrs_return);
@@ -8126,9 +8290,9 @@ pub mod core {
 	}
 	
 	#[inline]
-	pub fn dump_rotated_rect(argument: &core::RotatedRect) -> Result<String> {
+	pub fn dump_rotated_rect(argument: core::RotatedRect) -> Result<String> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_utils_dumpRotatedRect_const_RotatedRectR(argument.as_raw_RotatedRect(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_utils_dumpRotatedRect_const_RotatedRectR(&argument, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
@@ -8440,7 +8604,6 @@ pub mod core {
 		unsafe { sys::cv_utils_testRotatedRect_float_float_float_float_float(x, y, w, h, angle, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::RotatedRect::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -8837,7 +9000,7 @@ pub mod core {
 	/// etc.).
 	/// 
 	/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-	/// [Algorithm](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [Algorithm](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	pub struct Algorithm {
 		ptr: *mut c_void
 	}
@@ -8873,6 +9036,16 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	boxed_cast_descendant! { Algorithm, core::MinProblemSolver, cv_Algorithm_to_MinProblemSolver }
+	
+	impl std::fmt::Debug for Algorithm {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Algorithm")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::AsyncArray]
@@ -9025,6 +9198,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for AsyncArray {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AsyncArray")
+				.finish()
+		}
+	}
+	
 	impl Default for AsyncArray {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -9145,6 +9326,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for AsyncPromise {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AsyncPromise")
+				.finish()
+		}
 	}
 	
 	impl Default for AsyncPromise {
@@ -9390,6 +9579,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for CommandLineParser {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CommandLineParser")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::ConjGradSolver]
 	pub trait ConjGradSolverTraitConst: core::MinProblemSolverTraitConst {
 		fn as_raw_ConjGradSolver(&self) -> *const c_void;
@@ -9508,6 +9705,16 @@ pub mod core {
 	}
 	
 	boxed_cast_base! { ConjGradSolver, core::Algorithm, cv_ConjGradSolver_to_Algorithm }
+	
+	boxed_cast_base! { ConjGradSolver, core::MinProblemSolver, cv_ConjGradSolver_to_MinProblemSolver }
+	
+	impl std::fmt::Debug for ConjGradSolver {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ConjGradSolver")
+				.finish()
+		}
+	}
 	
 	/// Class for matching keypoint descriptors
 	/// 
@@ -9729,6 +9936,16 @@ pub mod core {
 	
 	boxed_cast_base! { DownhillSolver, core::Algorithm, cv_DownhillSolver_to_Algorithm }
 	
+	boxed_cast_base! { DownhillSolver, core::MinProblemSolver, cv_DownhillSolver_to_MinProblemSolver }
+	
+	impl std::fmt::Debug for DownhillSolver {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DownhillSolver")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Exception]
 	pub trait ExceptionTraitConst {
 		fn as_raw_Exception(&self) -> *const c_void;
@@ -9914,6 +10131,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Exception {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Exception")
+				.field("msg", &core::ExceptionTraitConst::msg(self))
+				.field("code", &core::ExceptionTraitConst::code(self))
+				.field("err", &core::ExceptionTraitConst::err(self))
+				.field("func", &core::ExceptionTraitConst::func(self))
+				.field("file", &core::ExceptionTraitConst::file(self))
+				.field("line", &core::ExceptionTraitConst::line(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::FileNode]
@@ -10430,8 +10661,18 @@ pub mod core {
 	impl Clone for FileNode {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_FileNode_implicit_clone(val: extern_send!(FileNode)) -> extern_receive!(FileNode: 'static); }
-			unsafe { Self::from_raw(cv_FileNode_implicit_clone(self.as_raw_FileNode())) }
+			extern "C" { fn cv_FileNode_implicitClone_const_FileNode(val: extern_send!(FileNode)) -> extern_receive!(FileNode: 'static); }
+			unsafe { Self::from_raw(cv_FileNode_implicitClone_const_FileNode(self.as_raw_FileNode())) }
+		}
+	}
+	
+	impl std::fmt::Debug for FileNode {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FileNode")
+				.field("block_idx", &core::FileNodeTraitConst::block_idx(self))
+				.field("ofs", &core::FileNodeTraitConst::ofs(self))
+				.finish()
 		}
 	}
 	
@@ -10596,6 +10837,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for FileNodeIterator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FileNodeIterator")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::FileStorage]
@@ -11013,6 +11262,16 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for FileStorage {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FileStorage")
+				.field("state", &core::FileStorageTraitConst::state(self))
+				.field("elname", &core::FileStorageTraitConst::elname(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Formatted]
 	pub trait FormattedTraitConst {
 		fn as_raw_Formatted(&self) -> *const c_void;
@@ -11070,6 +11329,14 @@ pub mod core {
 	}
 	
 	impl Formatted {
+	}
+	
+	impl std::fmt::Debug for Formatted {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Formatted")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::Formatter]
@@ -11178,6 +11445,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Formatter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Formatter")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Hamming]
 	pub trait HammingTraitConst {
 		fn as_raw_Hamming(&self) -> *const c_void;
@@ -11226,6 +11501,14 @@ pub mod core {
 	
 	impl Hamming {
 		pub const normType: u32 = 6;
+	}
+	
+	impl std::fmt::Debug for Hamming {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Hamming")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::KeyPoint]
@@ -11504,8 +11787,22 @@ pub mod core {
 	impl Clone for KeyPoint {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_KeyPoint_implicit_clone(val: extern_send!(KeyPoint)) -> extern_receive!(KeyPoint: 'static); }
-			unsafe { Self::from_raw(cv_KeyPoint_implicit_clone(self.as_raw_KeyPoint())) }
+			extern "C" { fn cv_KeyPoint_implicitClone_const_KeyPoint(val: extern_send!(KeyPoint)) -> extern_receive!(KeyPoint: 'static); }
+			unsafe { Self::from_raw(cv_KeyPoint_implicitClone_const_KeyPoint(self.as_raw_KeyPoint())) }
+		}
+	}
+	
+	impl std::fmt::Debug for KeyPoint {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KeyPoint")
+				.field("pt", &core::KeyPointTraitConst::pt(self))
+				.field("size", &core::KeyPointTraitConst::size(self))
+				.field("angle", &core::KeyPointTraitConst::angle(self))
+				.field("response", &core::KeyPointTraitConst::response(self))
+				.field("octave", &core::KeyPointTraitConst::octave(self))
+				.field("class_id", &core::KeyPointTraitConst::class_id(self))
+				.finish()
 		}
 	}
 	
@@ -11710,6 +12007,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for LDA {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LDA")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::Mat]
@@ -12126,6 +12431,20 @@ pub mod core {
 		///                               // This involves copying all the elements
 		/// ```
 		/// 
+		/// 3-channel 2x2 matrix reshaped to 1-channel 4x3 matrix, each column has values from one of original channels:
+		/// ```C++
+		/// Mat m(Size(2, 2), CV_8UC3, Scalar(1, 2, 3));
+		/// vector<int> new_shape {4, 3};
+		/// m = m.reshape(1, new_shape);
+		/// ```
+		/// 
+		/// or:
+		/// ```C++
+		/// Mat m(Size(2, 2), CV_8UC3, Scalar(1, 2, 3));
+		/// const int new_shape[] = {4, 3};
+		/// m = m.reshape(1, 2, new_shape);
+		/// ```
+		/// 
 		/// ## Parameters
 		/// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
 		/// * rows: New number of rows. If the parameter is 0, the number of rows remains the same.
@@ -12164,11 +12483,30 @@ pub mod core {
 		///                               // This involves copying all the elements
 		/// ```
 		/// 
+		/// 3-channel 2x2 matrix reshaped to 1-channel 4x3 matrix, each column has values from one of original channels:
+		/// ```C++
+		/// Mat m(Size(2, 2), CV_8UC3, Scalar(1, 2, 3));
+		/// vector<int> new_shape {4, 3};
+		/// m = m.reshape(1, new_shape);
+		/// ```
+		/// 
+		/// or:
+		/// ```C++
+		/// Mat m(Size(2, 2), CV_8UC3, Scalar(1, 2, 3));
+		/// const int new_shape[] = {4, 3};
+		/// m = m.reshape(1, 2, new_shape);
+		/// ```
+		/// 
 		/// ## Parameters
 		/// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
 		/// * rows: New number of rows. If the parameter is 0, the number of rows remains the same.
 		/// 
 		/// ## Overloaded parameters
+		/// 
+		/// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
+		/// * newndims: New number of dimentions.
+		/// * newsz: Array with new matrix size by all dimentions. If some sizes are zero,
+		///      * the original sizes in those dimensions are presumed.
 		#[inline]
 		fn reshape_nd(&self, cn: i32, newsz: &[i32]) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -12201,11 +12539,29 @@ pub mod core {
 		///                               // This involves copying all the elements
 		/// ```
 		/// 
+		/// 3-channel 2x2 matrix reshaped to 1-channel 4x3 matrix, each column has values from one of original channels:
+		/// ```C++
+		/// Mat m(Size(2, 2), CV_8UC3, Scalar(1, 2, 3));
+		/// vector<int> new_shape {4, 3};
+		/// m = m.reshape(1, new_shape);
+		/// ```
+		/// 
+		/// or:
+		/// ```C++
+		/// Mat m(Size(2, 2), CV_8UC3, Scalar(1, 2, 3));
+		/// const int new_shape[] = {4, 3};
+		/// m = m.reshape(1, 2, new_shape);
+		/// ```
+		/// 
 		/// ## Parameters
 		/// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
 		/// * rows: New number of rows. If the parameter is 0, the number of rows remains the same.
 		/// 
 		/// ## Overloaded parameters
+		/// 
+		/// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
+		/// * newshape: Vector with new matrix size by all dimentions. If some sizes are zero,
+		///      * the original sizes in those dimensions are presumed.
 		#[inline]
 		fn reshape_nd_vec(&self, cn: i32, newshape: &core::Vector<i32>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -12651,10 +13007,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		/// 
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// ## C++ default parameters
 		/// * depth: -1
@@ -14863,6 +15219,19 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for MatConstIterator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MatConstIterator")
+				.field("m", &core::MatConstIteratorTraitConst::m(self))
+				.field("elem_size", &core::MatConstIteratorTraitConst::elem_size(self))
+				.field("ptr", &core::MatConstIteratorTraitConst::ptr(self))
+				.field("slice_start", &core::MatConstIteratorTraitConst::slice_start(self))
+				.field("slice_end", &core::MatConstIteratorTraitConst::slice_end(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::MatExpr]
 	pub trait MatExprTraitConst {
 		fn as_raw_MatExpr(&self) -> *const c_void;
@@ -15229,6 +15598,21 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for MatExpr {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MatExpr")
+				.field("flags", &core::MatExprTraitConst::flags(self))
+				.field("a", &core::MatExprTraitConst::a(self))
+				.field("b", &core::MatExprTraitConst::b(self))
+				.field("c", &core::MatExprTraitConst::c(self))
+				.field("alpha", &core::MatExprTraitConst::alpha(self))
+				.field("beta", &core::MatExprTraitConst::beta(self))
+				.field("s", &core::MatExprTraitConst::s(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::MatOp]
 	pub trait MatOpTraitConst {
 		fn as_raw_MatOp(&self) -> *const c_void;
@@ -15498,6 +15882,14 @@ pub mod core {
 	}
 	
 	impl MatOp {
+	}
+	
+	impl std::fmt::Debug for MatOp {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MatOp")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::MatSize]
@@ -15772,6 +16164,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Matx_AddOp {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Matx_AddOp")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Matx_DivOp]
 	pub trait Matx_DivOpTraitConst {
 		fn as_raw_Matx_DivOp(&self) -> *const c_void;
@@ -15829,6 +16229,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Matx_DivOp {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Matx_DivOp")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::Matx_MatMulOp]
@@ -15890,6 +16298,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Matx_MatMulOp {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Matx_MatMulOp")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Matx_MulOp]
 	pub trait Matx_MulOpTraitConst {
 		fn as_raw_Matx_MulOp(&self) -> *const c_void;
@@ -15947,6 +16363,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Matx_MulOp {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Matx_MulOp")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::Matx_ScaleOp]
@@ -16008,6 +16432,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Matx_ScaleOp {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Matx_ScaleOp")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Matx_SubOp]
 	pub trait Matx_SubOpTraitConst {
 		fn as_raw_Matx_SubOp(&self) -> *const c_void;
@@ -16067,6 +16499,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Matx_SubOp {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Matx_SubOp")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Matx_TOp]
 	pub trait Matx_TOpTraitConst {
 		fn as_raw_Matx_TOp(&self) -> *const c_void;
@@ -16124,6 +16564,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Matx_TOp {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Matx_TOp")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::MinProblemSolver]
@@ -16263,7 +16711,19 @@ pub mod core {
 	impl MinProblemSolver {
 	}
 	
+	boxed_cast_descendant! { MinProblemSolver, core::ConjGradSolver, cv_MinProblemSolver_to_ConjGradSolver }
+	
+	boxed_cast_descendant! { MinProblemSolver, core::DownhillSolver, cv_MinProblemSolver_to_DownhillSolver }
+	
 	boxed_cast_base! { MinProblemSolver, core::Algorithm, cv_MinProblemSolver_to_Algorithm }
+	
+	impl std::fmt::Debug for MinProblemSolver {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MinProblemSolver")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [core::MinProblemSolver_Function]
 	pub trait MinProblemSolver_FunctionTraitConst {
@@ -16339,6 +16799,14 @@ pub mod core {
 	}
 	
 	impl MinProblemSolver_Function {
+	}
+	
+	impl std::fmt::Debug for MinProblemSolver_Function {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MinProblemSolver_Function")
+				.finish()
+		}
 	}
 	
 	/// struct returned by cv::moments
@@ -16893,6 +17361,17 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for PCA {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PCA")
+				.field("eigenvectors", &core::PCATraitConst::eigenvectors(self))
+				.field("eigenvalues", &core::PCATraitConst::eigenvalues(self))
+				.field("mean", &core::PCATraitConst::mean(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::ParallelLoopBody]
 	pub trait ParallelLoopBodyTraitConst {
 		fn as_raw_ParallelLoopBody(&self) -> *const c_void;
@@ -16942,6 +17421,14 @@ pub mod core {
 	}
 	
 	impl ParallelLoopBody {
+	}
+	
+	impl std::fmt::Debug for ParallelLoopBody {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ParallelLoopBody")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::RNG]
@@ -17392,6 +17879,15 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for RNG {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RNG")
+				.field("state", &core::RNGTraitConst::state(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::RNG_MT19937]
 	pub trait RNG_MT19937TraitConst {
 		fn as_raw_RNG_MT19937(&self) -> *const c_void;
@@ -17557,6 +18053,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for RNG_MT19937 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RNG_MT19937")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Range]
 	pub trait RangeTraitConst {
 		fn as_raw_Range(&self) -> *const c_void;
@@ -17692,94 +18196,14 @@ pub mod core {
 		
 	}
 	
-	/// Constant methods for [core::RotatedRect]
-	pub trait RotatedRectTraitConst {
-		fn as_raw_RotatedRect(&self) -> *const c_void;
-	
-		/// returns the rectangle mass center
+	impl std::fmt::Debug for Range {
 		#[inline]
-		fn center(&self) -> core::Point2f {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_RotatedRect_getPropCenter_const(self.as_raw_RotatedRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			ret
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Range")
+				.field("start", &core::RangeTraitConst::start(self))
+				.field("end", &core::RangeTraitConst::end(self))
+				.finish()
 		}
-		
-		/// returns width and height of the rectangle
-		#[inline]
-		fn size(&self) -> core::Size2f {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_RotatedRect_getPropSize_const(self.as_raw_RotatedRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			ret
-		}
-		
-		/// returns the rotation angle. When the angle is 0, 90, 180, 270 etc., the rectangle becomes an up-right rectangle.
-		#[inline]
-		fn angle(&self) -> f32 {
-			let ret = unsafe { sys::cv_RotatedRect_getPropAngle_const(self.as_raw_RotatedRect()) };
-			ret
-		}
-		
-		/// returns 4 vertices of the rectangle
-		/// ## Parameters
-		/// * pts: The points array for storing rectangle vertices. The order is bottomLeft, topLeft, topRight, bottomRight.
-		#[inline]
-		fn points(&self, pts: &mut [core::Point2f]) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_RotatedRect_points_const_Point2fX(self.as_raw_RotatedRect(), pts.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		/// returns the minimal up-right integer rectangle containing the rotated rectangle
-		#[inline]
-		fn bounding_rect(&self) -> Result<core::Rect> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_RotatedRect_boundingRect_const(self.as_raw_RotatedRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		/// returns the minimal (exact) floating point rectangle containing the rotated rectangle, not intended for use with images
-		#[inline]
-		fn bounding_rect2f(&self) -> Result<core::Rect_<f32>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_RotatedRect_boundingRect2f_const(self.as_raw_RotatedRect(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-	}
-	
-	/// Mutable methods for [core::RotatedRect]
-	pub trait RotatedRectTrait: core::RotatedRectTraitConst {
-		fn as_raw_mut_RotatedRect(&mut self) -> *mut c_void;
-	
-		/// returns the rectangle mass center
-		#[inline]
-		fn set_center(&mut self, val: core::Point2f) {
-			let ret = unsafe { sys::cv_RotatedRect_setPropCenter_Point2f(self.as_raw_mut_RotatedRect(), val.opencv_as_extern()) };
-			ret
-		}
-		
-		/// returns width and height of the rectangle
-		#[inline]
-		fn set_size(&mut self, val: core::Size2f) {
-			let ret = unsafe { sys::cv_RotatedRect_setPropSize_Size2f(self.as_raw_mut_RotatedRect(), val.opencv_as_extern()) };
-			ret
-		}
-		
-		/// returns the rotation angle. When the angle is 0, 90, 180, 270 etc., the rectangle becomes an up-right rectangle.
-		#[inline]
-		fn set_angle(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_RotatedRect_setPropAngle_float(self.as_raw_mut_RotatedRect(), val) };
-			ret
-		}
-		
 	}
 	
 	/// The class represents rotated (i.e. not up-right) rectangles on a plane.
@@ -17788,35 +18212,69 @@ pub mod core {
 	/// #Size2f structure) and the rotation angle in degrees.
 	/// 
 	/// The sample below demonstrates how to use RotatedRect:
-	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	/// ![image](https://docs.opencv.org/4.7.0/rotatedrect.png)
+	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// ![image](https://docs.opencv.org/4.8.0/rotatedrect.png)
 	/// ## See also
 	/// CamShift, fitEllipse, minAreaRect, CvBox2D
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct RotatedRect {
-		ptr: *mut c_void
+		/// returns the rectangle mass center
+		pub center: core::Point2f,
+		/// returns width and height of the rectangle
+		pub size: core::Size2f,
+		/// returns the rotation angle. When the angle is 0, 90, 180, 270 etc., the rectangle becomes an up-right rectangle.
+		pub angle: f32,
 	}
 	
-	opencv_type_boxed! { RotatedRect }
-	
-	impl Drop for RotatedRect {
-		#[inline]
-		fn drop(&mut self) {
-			extern "C" { fn cv_RotatedRect_delete(instance: *mut c_void); }
-			unsafe { cv_RotatedRect_delete(self.as_raw_mut_RotatedRect()) };
-		}
-	}
-	
-	unsafe impl Send for RotatedRect {}
-	
-	impl core::RotatedRectTraitConst for RotatedRect {
-		#[inline] fn as_raw_RotatedRect(&self) -> *const c_void { self.as_raw() }
-	}
-	
-	impl core::RotatedRectTrait for RotatedRect {
-		#[inline] fn as_raw_mut_RotatedRect(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
+	opencv_type_simple! { core::RotatedRect }
 	
 	impl RotatedRect {
+		/// returns 4 vertices of the rotated rectangle
+		/// ## Parameters
+		/// * pts: The points array for storing rectangle vertices. The order is _bottomLeft_, _topLeft_, topRight, bottomRight.
+		/// 
+		/// Note: _Bottom_, _Top_, _Left_ and _Right_ sides refer to the original rectangle (angle is 0),
+		/// so after 180 degree rotation _bottomLeft_ point will be located at the top right corner of the
+		/// rectangle.
+		#[inline]
+		pub fn points(self, pts: &mut [core::Point2f]) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RotatedRect_points_const_Point2fX(self.opencv_as_extern(), pts.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		pub fn points_1(self, pts: &mut core::Vector<core::Point2f>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RotatedRect_points_const_vectorLPoint2fGR(self.opencv_as_extern(), pts.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// returns the minimal up-right integer rectangle containing the rotated rectangle
+		#[inline]
+		pub fn bounding_rect(self) -> Result<core::Rect> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RotatedRect_boundingRect_const(self.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// returns the minimal (exact) floating point rectangle containing the rotated rectangle, not intended for use with images
+		#[inline]
+		pub fn bounding_rect2f(self) -> Result<core::Rect_<f32>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RotatedRect_boundingRect2f_const(self.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// default constructor
 		#[inline]
 		pub fn default() -> Result<core::RotatedRect> {
@@ -17824,7 +18282,6 @@ pub mod core {
 			unsafe { sys::cv_RotatedRect_RotatedRect(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::RotatedRect::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -17840,7 +18297,6 @@ pub mod core {
 			unsafe { sys::cv_RotatedRect_RotatedRect_const_Point2fR_const_Size2fR_float(&center, &size, angle, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::RotatedRect::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -17852,7 +18308,6 @@ pub mod core {
 			unsafe { sys::cv_RotatedRect_RotatedRect_const_Point2fR_const_Point2fR_const_Point2fR(&point1, &point2, &point3, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::RotatedRect::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -18152,6 +18607,17 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for SVD {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SVD")
+				.field("u", &core::SVDTraitConst::u(self))
+				.field("w", &core::SVDTraitConst::w(self))
+				.field("vt", &core::SVDTraitConst::vt(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::SparseMat]
@@ -18803,6 +19269,15 @@ pub mod core {
 		}
 	}
 	
+	impl std::fmt::Debug for SparseMat {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseMat")
+				.field("flags", &core::SparseMatTraitConst::flags(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::SparseMat_Hdr]
 	pub trait SparseMat_HdrTraitConst {
 		fn as_raw_SparseMat_Hdr(&self) -> *const c_void;
@@ -18967,6 +19442,22 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for SparseMat_Hdr {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseMat_Hdr")
+				.field("refcount", &core::SparseMat_HdrTraitConst::refcount(self))
+				.field("dims", &core::SparseMat_HdrTraitConst::dims(self))
+				.field("value_offset", &core::SparseMat_HdrTraitConst::value_offset(self))
+				.field("node_size", &core::SparseMat_HdrTraitConst::node_size(self))
+				.field("node_count", &core::SparseMat_HdrTraitConst::node_count(self))
+				.field("free_list", &core::SparseMat_HdrTraitConst::free_list(self))
+				.field("pool", &core::SparseMat_HdrTraitConst::pool(self))
+				.field("hashtab", &core::SparseMat_HdrTraitConst::hashtab(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::SparseMat_Node]
 	pub trait SparseMat_NodeTraitConst {
 		fn as_raw_SparseMat_Node(&self) -> *const c_void;
@@ -19041,6 +19532,16 @@ pub mod core {
 	}
 	
 	impl SparseMat_Node {
+	}
+	
+	impl std::fmt::Debug for SparseMat_Node {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseMat_Node")
+				.field("hashval", &core::SparseMat_NodeTraitConst::hashval(self))
+				.field("next", &core::SparseMat_NodeTraitConst::next(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::SparseMatConstIterator]
@@ -19201,6 +19702,16 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for SparseMatConstIterator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseMatConstIterator")
+				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
+				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::SparseMatIterator]
 	pub trait SparseMatIteratorTraitConst: core::SparseMatConstIteratorTraitConst {
 		fn as_raw_SparseMatIterator(&self) -> *const c_void;
@@ -19309,57 +19820,14 @@ pub mod core {
 	
 	boxed_cast_base! { SparseMatIterator, core::SparseMatConstIterator, cv_SparseMatIterator_to_SparseMatConstIterator }
 	
-	/// Constant methods for [core::TLSDataContainer]
-	pub trait TLSDataContainerTraitConst {
-		fn as_raw_TLSDataContainer(&self) -> *const c_void;
-	
-	}
-	
-	/// Mutable methods for [core::TLSDataContainer]
-	pub trait TLSDataContainerTrait: core::TLSDataContainerTraitConst {
-		fn as_raw_mut_TLSDataContainer(&mut self) -> *mut c_void;
-	
+	impl std::fmt::Debug for SparseMatIterator {
 		#[inline]
-		fn cleanup(&mut self) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TLSDataContainer_cleanup(self.as_raw_mut_TLSDataContainer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseMatIterator")
+				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
+				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
+				.finish()
 		}
-		
-	}
-	
-	/// TLS container base implementation
-	/// 
-	/// Don't use directly.
-	/// ## See also
-	/// TLSData, TLSDataAccumulator templates
-	pub struct TLSDataContainer {
-		ptr: *mut c_void
-	}
-	
-	opencv_type_boxed! { TLSDataContainer }
-	
-	impl Drop for TLSDataContainer {
-		#[inline]
-		fn drop(&mut self) {
-			extern "C" { fn cv_TLSDataContainer_delete(instance: *mut c_void); }
-			unsafe { cv_TLSDataContainer_delete(self.as_raw_mut_TLSDataContainer()) };
-		}
-	}
-	
-	unsafe impl Send for TLSDataContainer {}
-	
-	impl core::TLSDataContainerTraitConst for TLSDataContainer {
-		#[inline] fn as_raw_TLSDataContainer(&self) -> *const c_void { self.as_raw() }
-	}
-	
-	impl core::TLSDataContainerTrait for TLSDataContainer {
-		#[inline] fn as_raw_mut_TLSDataContainer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl TLSDataContainer {
 	}
 	
 	/// The class defining termination criteria for iterative algorithms.
@@ -19540,10 +20008,10 @@ pub mod core {
 	/// 
 	/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 	/// execution time in seconds:
-	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// 
 	/// It is also possible to compute the average time over multiple runs:
-	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// ## See also
 	/// getTickCount, getTickFrequency
 	pub struct TickMeter {
@@ -19582,6 +20050,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for TickMeter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TickMeter")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::UMat]
@@ -20606,6 +21082,22 @@ pub mod core {
 		}
 	}
 	
+	impl std::fmt::Debug for UMat {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("UMat")
+				.field("flags", &core::UMatTraitConst::flags(self))
+				.field("dims", &core::UMatTraitConst::dims(self))
+				.field("rows", &core::UMatTraitConst::rows(self))
+				.field("cols", &core::UMatTraitConst::cols(self))
+				.field("usage_flags", &core::UMatTraitConst::usage_flags(self))
+				.field("offset", &core::UMatTraitConst::offset(self))
+				.field("mat_size", &core::UMatTraitConst::mat_size(self))
+				.field("mat_step", &core::UMatTraitConst::mat_step(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::UMatData]
 	pub trait UMatDataTraitConst {
 		fn as_raw_UMatData(&self) -> *const c_void;
@@ -20877,6 +21369,20 @@ pub mod core {
 	}
 	
 	impl UMatData {
+	}
+	
+	impl std::fmt::Debug for UMatData {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("UMatData")
+				.field("urefcount", &core::UMatDataTraitConst::urefcount(self))
+				.field("refcount", &core::UMatDataTraitConst::refcount(self))
+				.field("size", &core::UMatDataTraitConst::size(self))
+				.field("flags", &core::UMatDataTraitConst::flags(self))
+				.field("allocator_flags_", &core::UMatDataTraitConst::allocator_flags_(self))
+				.field("mapcount", &core::UMatDataTraitConst::mapcount(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::_InputArray]
@@ -21508,6 +22014,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for _InputArray {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("_InputArray")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::_InputOutputArray]
 	pub trait _InputOutputArrayTraitConst: core::_OutputArrayTraitConst {
 		fn as_raw__InputOutputArray(&self) -> *const c_void;
@@ -21737,6 +22251,14 @@ pub mod core {
 	boxed_cast_base! { _InputOutputArray, core::_InputArray, cv__InputOutputArray_to__InputArray }
 	
 	boxed_cast_base! { _InputOutputArray, core::_OutputArray, cv__InputOutputArray_to__OutputArray }
+	
+	impl std::fmt::Debug for _InputOutputArray {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("_InputOutputArray")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [core::_OutputArray]
 	pub trait _OutputArrayTraitConst: core::_InputArrayTraitConst {
@@ -22219,6 +22741,14 @@ pub mod core {
 	
 	boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArray }
 	
+	impl std::fmt::Debug for _OutputArray {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("_OutputArray")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::BufferPool]
 	pub trait BufferPoolTraitConst {
 		fn as_raw_BufferPool(&self) -> *const c_void;
@@ -22308,8 +22838,8 @@ pub mod core {
 	///        GpuMat d_src2 = pool2.getBuffer(1024, 1024, CV_8UC1);   // 1MB
 	///        GpuMat d_dst2 = pool2.getBuffer(1024, 1024, CV_8UC3);   // 3MB
 	/// 
-	///        cvtColor(d_src1, d_dst1, CV_GRAY2BGR, 0, stream1);
-	///        cvtColor(d_src2, d_dst2, CV_GRAY2BGR, 0, stream2);
+	///        cvtColor(d_src1, d_dst1, cv::COLOR_GRAY2BGR, 0, stream1);
+	///        cvtColor(d_src2, d_dst2, cv::COLOR_GRAY2BGR, 0, stream2);
 	///    }
 	/// ```
 	/// 
@@ -22378,8 +22908,8 @@ pub mod core {
 	///            d_src1.setTo(Scalar(i), stream1);
 	///            d_src2.setTo(Scalar(i), stream2);
 	/// 
-	///            cvtColor(d_src1, d_dst1, CV_GRAY2BGR, 0, stream1);
-	///            cvtColor(d_src2, d_dst2, CV_GRAY2BGR, 0, stream2);
+	///            cvtColor(d_src1, d_dst1, cv::COLOR_GRAY2BGR, 0, stream1);
+	///            cvtColor(d_src2, d_dst2, cv::COLOR_GRAY2BGR, 0, stream2);
 	///                                                                     // The order of destruction of the local variables is:
 	///                                                                     //   d_dst2 => d_src2 => d_dst1 => d_src1
 	///                                                                     // LIFO rule is satisfied, this code runs without error
@@ -22423,6 +22953,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for BufferPool {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BufferPool")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::DeviceInfo]
@@ -23080,6 +23618,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for DeviceInfo {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DeviceInfo")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Event]
 	pub trait EventTraitConst {
 		fn as_raw_Event(&self) -> *const c_void;
@@ -23174,6 +23720,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Event {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Event")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::GpuData]
 	pub trait GpuDataTraitConst {
 		fn as_raw_GpuData(&self) -> *const c_void;
@@ -23245,6 +23799,15 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for GpuData {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GpuData")
+				.field("size", &core::GpuDataTraitConst::size(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::GpuMat]
@@ -24142,6 +24705,19 @@ pub mod core {
 		}
 	}
 	
+	impl std::fmt::Debug for GpuMat {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GpuMat")
+				.field("flags", &core::GpuMatTraitConst::flags(self))
+				.field("rows", &core::GpuMatTraitConst::rows(self))
+				.field("cols", &core::GpuMatTraitConst::cols(self))
+				.field("step", &core::GpuMatTraitConst::step(self))
+				.field("dataend", &core::GpuMatTraitConst::dataend(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::GpuMat_Allocator]
 	pub trait GpuMat_AllocatorTraitConst {
 		fn as_raw_GpuMat_Allocator(&self) -> *const c_void;
@@ -24197,6 +24773,14 @@ pub mod core {
 	}
 	
 	impl GpuMat_Allocator {
+	}
+	
+	impl std::fmt::Debug for GpuMat_Allocator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GpuMat_Allocator")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::GpuMatND]
@@ -24673,6 +25257,18 @@ pub mod core {
 		}
 	}
 	
+	impl std::fmt::Debug for GpuMatND {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GpuMatND")
+				.field("flags", &core::GpuMatNDTraitConst::flags(self))
+				.field("dims", &core::GpuMatNDTraitConst::dims(self))
+				.field("size", &core::GpuMatNDTraitConst::size(self))
+				.field("step", &core::GpuMatNDTraitConst::step(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::HostMem]
 	pub trait HostMemTraitConst {
 		fn as_raw_HostMem(&self) -> *const c_void;
@@ -25073,6 +25669,20 @@ pub mod core {
 		}
 	}
 	
+	impl std::fmt::Debug for HostMem {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HostMem")
+				.field("flags", &core::HostMemTraitConst::flags(self))
+				.field("rows", &core::HostMemTraitConst::rows(self))
+				.field("cols", &core::HostMemTraitConst::cols(self))
+				.field("step", &core::HostMemTraitConst::step(self))
+				.field("dataend", &core::HostMemTraitConst::dataend(self))
+				.field("alloc_type", &core::HostMemTraitConst::alloc_type(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Stream]
 	pub trait StreamTraitConst {
 		fn as_raw_Stream(&self) -> *const c_void;
@@ -25255,6 +25865,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Stream {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Stream")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::TargetArchs]
 	pub trait TargetArchsTraitConst {
 		fn as_raw_TargetArchs(&self) -> *const c_void;
@@ -25381,6 +25999,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for TargetArchs {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TargetArchs")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Detail_CheckContext]
 	pub trait Detail_CheckContextTraitConst {
 		fn as_raw_Detail_CheckContext(&self) -> *const c_void;
@@ -25480,8 +26106,8 @@ pub mod core {
 	
 	impl Detail_CheckContext {
 		fn default() -> Self {
-			extern "C" { fn cv_Detail_CheckContext_default_new() -> extern_receive!(Detail_CheckContext: 'static); }
-			unsafe { Self::from_raw(cv_Detail_CheckContext_default_new()) }
+			extern "C" { fn cv_Detail_CheckContext_defaultNew_const() -> extern_receive!(Detail_CheckContext: 'static); }
+			unsafe { Self::from_raw(cv_Detail_CheckContext_defaultNew_const()) }
 		}
 		
 	}
@@ -25489,8 +26115,23 @@ pub mod core {
 	impl Clone for Detail_CheckContext {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Detail_CheckContext_implicit_clone(val: extern_send!(Detail_CheckContext)) -> extern_receive!(Detail_CheckContext: 'static); }
-			unsafe { Self::from_raw(cv_Detail_CheckContext_implicit_clone(self.as_raw_Detail_CheckContext())) }
+			extern "C" { fn cv_Detail_CheckContext_implicitClone_const_Detail_CheckContext(val: extern_send!(Detail_CheckContext)) -> extern_receive!(Detail_CheckContext: 'static); }
+			unsafe { Self::from_raw(cv_Detail_CheckContext_implicitClone_const_Detail_CheckContext(self.as_raw_Detail_CheckContext())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Detail_CheckContext {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_CheckContext")
+				.field("func", &core::Detail_CheckContextTraitConst::func(self))
+				.field("file", &core::Detail_CheckContextTraitConst::file(self))
+				.field("line", &core::Detail_CheckContextTraitConst::line(self))
+				.field("test_op", &core::Detail_CheckContextTraitConst::test_op(self))
+				.field("message", &core::Detail_CheckContextTraitConst::message(self))
+				.field("p1_str", &core::Detail_CheckContextTraitConst::p1_str(self))
+				.field("p2_str", &core::Detail_CheckContextTraitConst::p2_str(self))
+				.finish()
 		}
 	}
 	
@@ -25722,6 +26363,24 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for NodeData {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NodeData")
+				.field("m_fun_name", &core::NodeDataTraitConst::m_fun_name(self))
+				.field("m_instr_type", &core::NodeDataTraitConst::m_instr_type(self))
+				.field("m_impl_type", &core::NodeDataTraitConst::m_impl_type(self))
+				.field("m_file_name", &core::NodeDataTraitConst::m_file_name(self))
+				.field("m_line_num", &core::NodeDataTraitConst::m_line_num(self))
+				.field("m_always_expand", &core::NodeDataTraitConst::m_always_expand(self))
+				.field("m_fun_error", &core::NodeDataTraitConst::m_fun_error(self))
+				.field("m_counter", &core::NodeDataTraitConst::m_counter(self))
+				.field("m_ticks_total", &core::NodeDataTraitConst::m_ticks_total(self))
+				.field("m_threads", &core::NodeDataTraitConst::m_threads(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::WriteStructContext]
 	pub trait WriteStructContextTraitConst {
 		fn as_raw_WriteStructContext(&self) -> *const c_void;
@@ -25773,6 +26432,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for WriteStructContext {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WriteStructContext")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::Context]
@@ -26015,6 +26682,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Context {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Context")
+				.finish()
+		}
+	}
+	
 	impl Default for Context {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -26060,6 +26735,14 @@ pub mod core {
 	}
 	
 	impl Context_UserContext {
+	}
+	
+	impl std::fmt::Debug for Context_UserContext {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Context_UserContext")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::Device]
@@ -26858,8 +27541,16 @@ pub mod core {
 	impl Clone for Device {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Device_implicit_clone(val: extern_send!(Device)) -> extern_receive!(Device: 'static); }
-			unsafe { Self::from_raw(cv_Device_implicit_clone(self.as_raw_Device())) }
+			extern "C" { fn cv_Device_implicitClone_const_Device(val: extern_send!(Device)) -> extern_receive!(Device: 'static); }
+			unsafe { Self::from_raw(cv_Device_implicitClone_const_Device(self.as_raw_Device())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Device {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Device")
+				.finish()
 		}
 	}
 	
@@ -26981,6 +27672,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Image2D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Image2D")
+				.finish()
+		}
 	}
 	
 	impl Default for Image2D {
@@ -27271,6 +27970,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Kernel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Kernel")
+				.finish()
+		}
+	}
+	
 	impl Default for Kernel {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -27533,6 +28240,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for KernelArg {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KernelArg")
+				.field("flags", &core::KernelArgTraitConst::flags(self))
+				.field("obj", &core::KernelArgTraitConst::obj(self))
+				.field("sz", &core::KernelArgTraitConst::sz(self))
+				.field("wscale", &core::KernelArgTraitConst::wscale(self))
+				.field("iwscale", &core::KernelArgTraitConst::iwscale(self))
+				.finish()
+		}
 	}
 	
 	impl Default for KernelArg {
@@ -27804,6 +28524,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for OpenCLExecutionContext {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OpenCLExecutionContext")
+				.finish()
+		}
+	}
+	
 	impl Default for OpenCLExecutionContext {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -27903,6 +28631,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Platform {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Platform")
+				.finish()
+		}
 	}
 	
 	impl Default for Platform {
@@ -28062,6 +28798,14 @@ pub mod core {
 			ret
 		}
 		
+	}
+	
+	impl std::fmt::Debug for PlatformInfo {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PlatformInfo")
+				.finish()
+		}
 	}
 	
 	impl Default for PlatformInfo {
@@ -28246,6 +28990,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Program {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Program")
+				.finish()
+		}
 	}
 	
 	impl Default for Program {
@@ -28441,6 +29193,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for ProgramSource {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ProgramSource")
+				.finish()
+		}
+	}
+	
 	impl Default for ProgramSource {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -28584,6 +29344,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Queue {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Queue")
+				.finish()
+		}
+	}
+	
 	impl Default for Queue {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -28666,6 +29434,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Timer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Timer")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::Arrays]
@@ -28862,6 +29638,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for Arrays {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Arrays")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::Buffer]
@@ -29423,6 +30207,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Buffer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Buffer")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [core::Texture2D]
 	pub trait Texture2DTraitConst {
 		fn as_raw_Texture2D(&self) -> *const c_void;
@@ -29767,6 +30559,14 @@ pub mod core {
 		
 	}
 	
+	impl std::fmt::Debug for Texture2D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Texture2D")
+				.finish()
+		}
+	}
+	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct ClassWithKeywordProperties {
@@ -29789,6 +30589,97 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	/// Constant methods for [core::FunctionParams]
+	pub trait FunctionParamsTraitConst {
+		fn as_raw_FunctionParams(&self) -> *const c_void;
+	
+		#[inline]
+		fn lambda(&self) -> i32 {
+			let ret = unsafe { sys::cv_utils_FunctionParams_getPropLambda_const(self.as_raw_FunctionParams()) };
+			ret
+		}
+		
+		#[inline]
+		fn sigma(&self) -> f32 {
+			let ret = unsafe { sys::cv_utils_FunctionParams_getPropSigma_const(self.as_raw_FunctionParams()) };
+			ret
+		}
+		
+	}
+	
+	/// Mutable methods for [core::FunctionParams]
+	pub trait FunctionParamsTrait: core::FunctionParamsTraitConst {
+		fn as_raw_mut_FunctionParams(&mut self) -> *mut c_void;
+	
+		/// ## C++ default parameters
+		/// * val: -1
+		#[inline]
+		fn set_lambda(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_utils_FunctionParams_setPropLambda_int(self.as_raw_mut_FunctionParams(), val) };
+			ret
+		}
+		
+		/// ## C++ default parameters
+		/// * val: 0.0f
+		#[inline]
+		fn set_sigma(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_utils_FunctionParams_setPropSigma_float(self.as_raw_mut_FunctionParams(), val) };
+			ret
+		}
+		
+		#[inline]
+		fn set_lambda_1(&mut self, value: i32) -> core::FunctionParams {
+			let ret = unsafe { sys::cv_utils_FunctionParams_setLambda_int(self.as_raw_mut_FunctionParams(), value) };
+			let ret = unsafe { core::FunctionParams::opencv_from_extern(ret) };
+			ret
+		}
+		
+		#[inline]
+		fn set_sigma_1(&mut self, value: f32) -> core::FunctionParams {
+			let ret = unsafe { sys::cv_utils_FunctionParams_setSigma_float(self.as_raw_mut_FunctionParams(), value) };
+			let ret = unsafe { core::FunctionParams::opencv_from_extern(ret) };
+			ret
+		}
+		
+	}
+	
+	pub struct FunctionParams {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { FunctionParams }
+	
+	impl Drop for FunctionParams {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_FunctionParams_delete(instance: *mut c_void); }
+			unsafe { cv_FunctionParams_delete(self.as_raw_mut_FunctionParams()) };
+		}
+	}
+	
+	unsafe impl Send for FunctionParams {}
+	
+	impl core::FunctionParamsTraitConst for FunctionParams {
+		#[inline] fn as_raw_FunctionParams(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::FunctionParamsTrait for FunctionParams {
+		#[inline] fn as_raw_mut_FunctionParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl FunctionParams {
+	}
+	
+	impl std::fmt::Debug for FunctionParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FunctionParams")
+				.field("lambda", &core::FunctionParamsTraitConst::lambda(self))
+				.field("sigma", &core::FunctionParamsTraitConst::sigma(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::LogTag]
@@ -29860,6 +30751,16 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for LogTag {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LogTag")
+				.field("name", &core::LogTagTraitConst::name(self))
+				.field("level", &core::LogTagTraitConst::level(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [core::OriginalClassName]
@@ -29951,6 +30852,14 @@ pub mod core {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for OriginalClassName {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OriginalClassName")
+				.finish()
+		}
 	}
 	
 	#[repr(C)]

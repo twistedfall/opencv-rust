@@ -649,6 +649,14 @@ pub mod ccalib {
 	
 	boxed_cast_base! { CustomPattern, core::Algorithm, cv_CustomPattern_to_Algorithm }
 	
+	impl std::fmt::Debug for CustomPattern {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CustomPattern")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::ccalib::MultiCameraCalibration]
 	pub trait MultiCameraCalibrationTraitConst {
 		fn as_raw_MultiCameraCalibration(&self) -> *const c_void;
@@ -766,6 +774,14 @@ pub mod ccalib {
 		
 	}
 	
+	impl std::fmt::Debug for MultiCameraCalibration {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MultiCameraCalibration")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::ccalib::MultiCameraCalibration_edge]
 	pub trait MultiCameraCalibration_edgeTraitConst {
 		fn as_raw_MultiCameraCalibration_edge(&self) -> *const c_void;
@@ -864,6 +880,18 @@ pub mod ccalib {
 		
 	}
 	
+	impl std::fmt::Debug for MultiCameraCalibration_edge {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MultiCameraCalibration_edge")
+				.field("camera_vertex", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::camera_vertex(self))
+				.field("photo_vertex", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::photo_vertex(self))
+				.field("photo_index", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::photo_index(self))
+				.field("transform", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::transform(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::ccalib::MultiCameraCalibration_vertex]
 	pub trait MultiCameraCalibration_vertexTraitConst {
 		fn as_raw_MultiCameraCalibration_vertex(&self) -> *const c_void;
@@ -946,6 +974,16 @@ pub mod ccalib {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for MultiCameraCalibration_vertex {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MultiCameraCalibration_vertex")
+				.field("pose", &crate::ccalib::MultiCameraCalibration_vertexTraitConst::pose(self))
+				.field("timestamp", &crate::ccalib::MultiCameraCalibration_vertexTraitConst::timestamp(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::ccalib::RandomPatternCornerFinder]
@@ -1071,6 +1109,14 @@ pub mod ccalib {
 		
 	}
 	
+	impl std::fmt::Debug for RandomPatternCornerFinder {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RandomPatternCornerFinder")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::ccalib::RandomPatternGenerator]
 	pub trait RandomPatternGeneratorTraitConst {
 		fn as_raw_RandomPatternGenerator(&self) -> *const c_void;
@@ -1137,5 +1183,13 @@ pub mod ccalib {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for RandomPatternGenerator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RandomPatternGenerator")
+				.finish()
+		}
 	}
 }

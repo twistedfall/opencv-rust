@@ -8,18 +8,34 @@ pub mod gapi {
 	//!    # G-API Serialization functionality
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::anyTraitConst, super::anyTrait, super::TextTraitConst, super::TextTrait, super::ImageTraitConst, super::ImageTrait, super::PolyTraitConst, super::PolyTrait, super::GCompileArgTraitConst, super::GCompileArgTrait, super::GMatTraitConst, super::GMatTrait, super::GMatPTraitConst, super::GMatPTrait, super::GMatDescTraitConst, super::GMatDescTrait, super::GScalarTraitConst, super::GScalarTrait, super::GScalarDescTraitConst, super::GScalarDescTrait, super::GArrayDescTraitConst, super::GArrayDescTrait, super::GArrayUTraitConst, super::GArrayUTrait, super::GOpaqueDescTraitConst, super::GOpaqueDescTrait, super::GOpaqueUTraitConst, super::GOpaqueUTrait, super::GFrameTraitConst, super::GFrameTrait, super::GFrameDescTraitConst, super::GFrameDescTrait, super::ScalarTraitConst, super::ScalarTrait, super::MediaFrameTraitConst, super::MediaFrameTrait, super::MediaFrame_ViewTraitConst, super::MediaFrame_ViewTrait, super::MediaFrame_IAdapterTraitConst, super::MediaFrame_IAdapterTrait, super::RMat_ViewTraitConst, super::RMat_ViewTrait, super::RMat_IAdapterTraitConst, super::RMat_IAdapterTrait, super::RMatTraitConst, super::RMatTrait, super::GArgTraitConst, super::GArgTrait, super::GRunArgTraitConst, super::GRunArgTrait, super::DataTraitConst, super::DataTrait, super::ExtractArgsCallbackTraitConst, super::ExtractArgsCallbackTrait, super::ExtractMetaCallbackTraitConst, super::ExtractMetaCallbackTrait, super::GCompiledTraitConst, super::GCompiledTrait, super::GStreamingCompiledTraitConst, super::GStreamingCompiledTrait, super::GComputationTraitConst, super::GComputationTrait, super::GCallTraitConst, super::GCallTrait, super::GTransformTraitConst, super::GTransformTrait, super::GTypeInfoTraitConst, super::GTypeInfoTrait, super::GKernelTraitConst, super::GKernelTrait, super::GKernelImplTraitConst, super::GKernelImplTrait, super::GBackendTraitConst, super::GBackendTrait, super::GFunctorTraitConst, super::GFunctorTrait, super::GKernelPackageTraitConst, super::GKernelPackageTrait, super::use_onlyTraitConst, super::use_onlyTrait };
+		pub use { super::anyTraitConst, super::anyTrait, super::TextTraitConst, super::TextTrait, super::ImageTraitConst, super::ImageTrait, super::PolyTraitConst, super::PolyTrait, super::GCompileArgTraitConst, super::GCompileArgTrait, super::GMatTraitConst, super::GMatTrait, super::GMatPTraitConst, super::GMatPTrait, super::GMatDescTraitConst, super::GMatDescTrait, super::GScalarTraitConst, super::GScalarTrait, super::GScalarDescTraitConst, super::GScalarDescTrait, super::GArrayDescTraitConst, super::GArrayDescTrait, super::Detail_GArrayUTraitConst, super::Detail_GArrayUTrait, super::GOpaqueDescTraitConst, super::GOpaqueDescTrait, super::Detail_GOpaqueUTraitConst, super::Detail_GOpaqueUTrait, super::GFrameTraitConst, super::GFrameTrait, super::GFrameDescTraitConst, super::GFrameDescTrait, super::ScalarTraitConst, super::ScalarTrait, super::MediaFrameTraitConst, super::MediaFrameTrait, super::MediaFrame_ViewTraitConst, super::MediaFrame_ViewTrait, super::MediaFrame_IAdapterTraitConst, super::MediaFrame_IAdapterTrait, super::RMat_ViewTraitConst, super::RMat_ViewTrait, super::RMat_IAdapterTraitConst, super::RMat_IAdapterTrait, super::RMatTraitConst, super::RMatTrait, super::GArgTraitConst, super::GArgTrait, super::GRunArgTraitConst, super::GRunArgTrait, super::DataTraitConst, super::DataTrait, super::Detail_ExtractArgsCallbackTraitConst, super::Detail_ExtractArgsCallbackTrait, super::Detail_ExtractMetaCallbackTraitConst, super::Detail_ExtractMetaCallbackTrait, super::GCompiledTraitConst, super::GCompiledTrait, super::GStreamingCompiledTraitConst, super::GStreamingCompiledTrait, super::GComputationTraitConst, super::GComputationTrait, super::GCallTraitConst, super::GCallTrait, super::GTransformTraitConst, super::GTransformTrait, super::GTypeInfoTraitConst, super::GTypeInfoTrait, super::GKernelTraitConst, super::GKernelTrait, super::GKernelImplTraitConst, super::GKernelImplTrait, super::GBackendTraitConst, super::GBackendTrait, super::GFunctorTraitConst, super::GFunctorTrait, super::GKernelPackageTraitConst, super::GKernelPackageTrait, super::use_onlyTraitConst, super::use_onlyTrait };
 	}
 	
-	pub const ArgKind_GARRAY: i32 = 6;
-	pub const ArgKind_GFRAME: i32 = 4;
-	pub const ArgKind_GMAT: i32 = 2;
-	pub const ArgKind_GMATP: i32 = 3;
-	pub const ArgKind_GOBJREF: i32 = 1;
-	pub const ArgKind_GOPAQUE: i32 = 7;
-	pub const ArgKind_GSCALAR: i32 = 5;
-	pub const ArgKind_OPAQUE: i32 = 0;
-	pub const ArgKind_OPAQUE_VAL: i32 = 0;
+	pub const Detail_ArgKind_GARRAY: i32 = 6;
+	pub const Detail_ArgKind_GFRAME: i32 = 4;
+	pub const Detail_ArgKind_GMAT: i32 = 2;
+	pub const Detail_ArgKind_GMATP: i32 = 3;
+	pub const Detail_ArgKind_GOBJREF: i32 = 1;
+	pub const Detail_ArgKind_GOPAQUE: i32 = 7;
+	pub const Detail_ArgKind_GSCALAR: i32 = 5;
+	pub const Detail_ArgKind_OPAQUE: i32 = 0;
+	pub const Detail_ArgKind_OPAQUE_VAL: i32 = 0;
+	pub const Detail_OpaqueKind_CV_BOOL: i32 = 1;
+	pub const Detail_OpaqueKind_CV_DOUBLE: i32 = 4;
+	pub const Detail_OpaqueKind_CV_DRAW_PRIM: i32 = 15;
+	pub const Detail_OpaqueKind_CV_FLOAT: i32 = 5;
+	pub const Detail_OpaqueKind_CV_INT: i32 = 2;
+	pub const Detail_OpaqueKind_CV_INT64: i32 = 3;
+	pub const Detail_OpaqueKind_CV_MAT: i32 = 14;
+	pub const Detail_OpaqueKind_CV_POINT: i32 = 8;
+	pub const Detail_OpaqueKind_CV_POINT2F: i32 = 9;
+	pub const Detail_OpaqueKind_CV_POINT3F: i32 = 10;
+	pub const Detail_OpaqueKind_CV_RECT: i32 = 12;
+	pub const Detail_OpaqueKind_CV_SCALAR: i32 = 13;
+	pub const Detail_OpaqueKind_CV_SIZE: i32 = 11;
+	pub const Detail_OpaqueKind_CV_STRING: i32 = 7;
+	pub const Detail_OpaqueKind_CV_UINT64: i32 = 6;
+	pub const Detail_OpaqueKind_CV_UNKNOWN: i32 = 0;
 	pub const GShape_GARRAY: i32 = 2;
 	pub const GShape_GFRAME: i32 = 4;
 	pub const GShape_GMAT: i32 = 0;
@@ -32,27 +48,11 @@ pub mod gapi {
 	pub const MediaFrame_Access_R: i32 = 0;
 	/// Access data for writing
 	pub const MediaFrame_Access_W: i32 = 1;
-	pub const OpaqueKind_CV_BOOL: i32 = 1;
-	pub const OpaqueKind_CV_DOUBLE: i32 = 4;
-	pub const OpaqueKind_CV_DRAW_PRIM: i32 = 15;
-	pub const OpaqueKind_CV_FLOAT: i32 = 5;
-	pub const OpaqueKind_CV_INT: i32 = 2;
-	pub const OpaqueKind_CV_INT64: i32 = 3;
-	pub const OpaqueKind_CV_MAT: i32 = 14;
-	pub const OpaqueKind_CV_POINT: i32 = 8;
-	pub const OpaqueKind_CV_POINT2F: i32 = 9;
-	pub const OpaqueKind_CV_POINT3F: i32 = 10;
-	pub const OpaqueKind_CV_RECT: i32 = 12;
-	pub const OpaqueKind_CV_SCALAR: i32 = 13;
-	pub const OpaqueKind_CV_SIZE: i32 = 11;
-	pub const OpaqueKind_CV_STRING: i32 = 7;
-	pub const OpaqueKind_CV_UINT64: i32 = 6;
-	pub const OpaqueKind_CV_UNKNOWN: i32 = 0;
 	pub const RMat_Access_R: i32 = 0;
 	pub const RMat_Access_W: i32 = 1;
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum ArgKind {
+	pub enum Detail_ArgKind {
 		OPAQUE_VAL = 0,
 		// Duplicate, use OPAQUE_VAL instead
 		// OPAQUE = 0,
@@ -65,7 +65,30 @@ pub mod gapi {
 		GOPAQUE = 7,
 	}
 	
-	opencv_type_enum! { crate::gapi::ArgKind }
+	opencv_type_enum! { crate::gapi::Detail_ArgKind }
+	
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum Detail_OpaqueKind {
+		CV_UNKNOWN = 0,
+		CV_BOOL = 1,
+		CV_INT = 2,
+		CV_INT64 = 3,
+		CV_DOUBLE = 4,
+		CV_FLOAT = 5,
+		CV_UINT64 = 6,
+		CV_STRING = 7,
+		CV_POINT = 8,
+		CV_POINT2F = 9,
+		CV_POINT3F = 10,
+		CV_SIZE = 11,
+		CV_RECT = 12,
+		CV_SCALAR = 13,
+		CV_MAT = 14,
+		CV_DRAW_PRIM = 15,
+	}
+	
+	opencv_type_enum! { crate::gapi::Detail_OpaqueKind }
 	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -105,29 +128,6 @@ pub mod gapi {
 	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
-	pub enum OpaqueKind {
-		CV_UNKNOWN = 0,
-		CV_BOOL = 1,
-		CV_INT = 2,
-		CV_INT64 = 3,
-		CV_DOUBLE = 4,
-		CV_FLOAT = 5,
-		CV_UINT64 = 6,
-		CV_STRING = 7,
-		CV_POINT = 8,
-		CV_POINT2F = 9,
-		CV_POINT3F = 10,
-		CV_SIZE = 11,
-		CV_RECT = 12,
-		CV_SCALAR = 13,
-		CV_MAT = 14,
-		CV_DRAW_PRIM = 15,
-	}
-	
-	opencv_type_enum! { crate::gapi::OpaqueKind }
-	
-	#[repr(C)]
-	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RMat_Access {
 		R = 0,
 		W = 1,
@@ -135,8 +135,9 @@ pub mod gapi {
 	
 	opencv_type_enum! { crate::gapi::RMat_Access }
 	
+	pub type GArgs = core::Vector<crate::gapi::GArg>;
 	pub type GCompileArgs = core::Vector<crate::gapi::GCompileArg>;
-	pub type GKinds = core::Vector<crate::gapi::OpaqueKind>;
+	pub type GKinds = core::Vector<crate::gapi::Detail_OpaqueKind>;
 	pub type GRunArgs = core::Vector<crate::gapi::GRunArg>;
 	pub type GShapes = core::Vector<crate::gapi::GShape>;
 	pub type GTypesInfo = core::Vector<crate::gapi::GTypeInfo>;
@@ -3934,7 +3935,7 @@ pub mod gapi {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	/// This function applicable for all threshold types except CV_THRESH_OTSU and CV_THRESH_TRIANGLE
+	/// This function applicable for all threshold types except cv::THRESH_OTSU and cv::THRESH_TRIANGLE
 	/// 
 	/// Note: Function textual ID is "org.opencv.core.matrixop.thresholdOT"
 	#[inline]
@@ -4474,7 +4475,7 @@ pub mod gapi {
 		fn as_raw_GArg(&self) -> *const c_void;
 	
 		#[inline]
-		fn kind(&self) -> crate::gapi::ArgKind {
+		fn kind(&self) -> crate::gapi::Detail_ArgKind {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GArg_getPropKind_const(self.as_raw_GArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4482,7 +4483,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn opaque_kind(&self) -> crate::gapi::OpaqueKind {
+		fn opaque_kind(&self) -> crate::gapi::Detail_OpaqueKind {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GArg_getPropOpaque_kind_const(self.as_raw_GArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4498,7 +4499,7 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * val: detail::ArgKind::OPAQUE_VAL
 		#[inline]
-		fn set_kind(&mut self, val: crate::gapi::ArgKind) {
+		fn set_kind(&mut self, val: crate::gapi::Detail_ArgKind) {
 			let ret = unsafe { sys::cv_GArg_setPropKind_ArgKind(self.as_raw_mut_GArg(), val) };
 			ret
 		}
@@ -4506,7 +4507,7 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * val: detail::OpaqueKind::CV_UNKNOWN
 		#[inline]
-		fn set_opaque_kind(&mut self, val: crate::gapi::OpaqueKind) {
+		fn set_opaque_kind(&mut self, val: crate::gapi::Detail_OpaqueKind) {
 			let ret = unsafe { sys::cv_GArg_setPropOpaque_kind_OpaqueKind(self.as_raw_mut_GArg(), val) };
 			ret
 		}
@@ -4548,6 +4549,16 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for GArg {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GArg")
+				.field("kind", &crate::gapi::GArgTraitConst::kind(self))
+				.field("opaque_kind", &crate::gapi::GArgTraitConst::opaque_kind(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GArrayDesc]
@@ -4598,8 +4609,8 @@ pub mod gapi {
 	
 	impl GArrayDesc {
 		fn default() -> Self {
-			extern "C" { fn cv_GArrayDesc_default_new() -> extern_receive!(GArrayDesc: 'static); }
-			unsafe { Self::from_raw(cv_GArrayDesc_default_new()) }
+			extern "C" { fn cv_GArrayDesc_defaultNew_const() -> extern_receive!(GArrayDesc: 'static); }
+			unsafe { Self::from_raw(cv_GArrayDesc_defaultNew_const()) }
 		}
 		
 	}
@@ -4607,8 +4618,16 @@ pub mod gapi {
 	impl Clone for GArrayDesc {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GArrayDesc_implicit_clone(val: extern_send!(GArrayDesc)) -> extern_receive!(GArrayDesc: 'static); }
-			unsafe { Self::from_raw(cv_GArrayDesc_implicit_clone(self.as_raw_GArrayDesc())) }
+			extern "C" { fn cv_GArrayDesc_implicitClone_const_GArrayDesc(val: extern_send!(GArrayDesc)) -> extern_receive!(GArrayDesc: 'static); }
+			unsafe { Self::from_raw(cv_GArrayDesc_implicitClone_const_GArrayDesc(self.as_raw_GArrayDesc())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GArrayDesc {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GArrayDesc")
+				.finish()
 		}
 	}
 	
@@ -4746,6 +4765,14 @@ pub mod gapi {
 		
 	}
 	
+	impl std::fmt::Debug for GCall {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GCall")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GCompileArg]
 	pub trait GCompileArgTraitConst {
 		fn as_raw_GCompileArg(&self) -> *const c_void;
@@ -4813,6 +4840,15 @@ pub mod gapi {
 			ret
 		}
 		
+	}
+	
+	impl std::fmt::Debug for GCompileArg {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GCompileArg")
+				.field("tag", &crate::gapi::GCompileArgTraitConst::tag(self))
+				.finish()
+		}
 	}
 	
 	impl Default for GCompileArg {
@@ -5135,6 +5171,14 @@ pub mod gapi {
 		
 	}
 	
+	impl std::fmt::Debug for GCompiled {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GCompiled")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GComputation]
 	pub trait GComputationTraitConst {
 		fn as_raw_GComputation(&self) -> *const c_void;
@@ -5150,9 +5194,9 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
-		fn apply(&mut self, callback: &crate::gapi::ExtractArgsCallback, mut args: crate::gapi::GCompileArgs) -> Result<core::Vector<crate::gapi::GRunArg>> {
+		fn apply(&mut self, callback: &crate::gapi::Detail_ExtractArgsCallback, mut args: crate::gapi::GCompileArgs) -> Result<core::Vector<crate::gapi::GRunArg>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GComputation_apply_const_ExtractArgsCallbackR_GCompileArgsRR(self.as_raw_mut_GComputation(), callback.as_raw_ExtractArgsCallback(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GComputation_apply_const_ExtractArgsCallbackR_GCompileArgsRR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractArgsCallback(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<crate::gapi::GRunArg>::opencv_from_extern(ret) };
@@ -5332,9 +5376,9 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
-		fn compile_streaming_1(&mut self, callback: &crate::gapi::ExtractMetaCallback, mut args: crate::gapi::GCompileArgs) -> Result<crate::gapi::GStreamingCompiled> {
+		fn compile_streaming_1(&mut self, callback: &crate::gapi::Detail_ExtractMetaCallback, mut args: crate::gapi::GCompileArgs) -> Result<crate::gapi::GStreamingCompiled> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GComputation_compileStreaming_const_ExtractMetaCallbackR_GCompileArgsRR(self.as_raw_mut_GComputation(), callback.as_raw_ExtractMetaCallback(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GComputation_compileStreaming_const_ExtractMetaCallbackR_GCompileArgsRR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractMetaCallback(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::GStreamingCompiled::opencv_from_extern(ret) };
@@ -5358,11 +5402,11 @@ pub mod gapi {
 	///  executed. The below example expresses calculation of Sobel operator
 	///  for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
 	/// 
-	///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	///  Full pipeline can be now captured with this object declaration:
 	/// 
-	///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	///  Input/output data objects on which a call graph should be
 	///  reconstructed are passed using special wrappers cv::GIn and
@@ -5375,7 +5419,7 @@ pub mod gapi {
 	///  expects that image gradients are already pre-calculated may be
 	///  defined like this:
 	/// 
-	///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	///  The resulting graph would expect two inputs and produce one
 	///  output. In this case, it doesn't matter if gx/gy data objects are
@@ -5611,6 +5655,14 @@ pub mod gapi {
 		
 	}
 	
+	impl std::fmt::Debug for GComputation {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GComputation")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GFrame]
 	pub trait GFrameTraitConst {
 		fn as_raw_GFrame(&self) -> *const c_void;
@@ -5699,8 +5751,16 @@ pub mod gapi {
 	impl Clone for GFrame {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GFrame_implicit_clone(val: extern_send!(GFrame)) -> extern_receive!(GFrame: 'static); }
-			unsafe { Self::from_raw(cv_GFrame_implicit_clone(self.as_raw_GFrame())) }
+			extern "C" { fn cv_GFrame_implicitClone_const_GFrame(val: extern_send!(GFrame)) -> extern_receive!(GFrame: 'static); }
+			unsafe { Self::from_raw(cv_GFrame_implicitClone_const_GFrame(self.as_raw_GFrame())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GFrame {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GFrame")
+				.finish()
 		}
 	}
 	
@@ -5781,6 +5841,16 @@ pub mod gapi {
 	impl GFrameDesc {
 	}
 	
+	impl std::fmt::Debug for GFrameDesc {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GFrameDesc")
+				.field("fmt", &crate::gapi::GFrameDescTraitConst::fmt(self))
+				.field("size", &crate::gapi::GFrameDescTraitConst::size(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GKernel]
 	pub trait GKernelTraitConst {
 		fn as_raw_GKernel(&self) -> *const c_void;
@@ -5807,9 +5877,16 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn in_kinds(&self) -> core::Vector<crate::gapi::OpaqueKind> {
+		fn in_kinds(&self) -> core::Vector<crate::gapi::Detail_OpaqueKind> {
 			let ret = unsafe { sys::cv_GKernel_getPropInKinds_const(self.as_raw_GKernel()) };
-			let ret = unsafe { core::Vector::<crate::gapi::OpaqueKind>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Vector::<crate::gapi::Detail_OpaqueKind>::opencv_from_extern(ret) };
+			ret
+		}
+		
+		#[inline]
+		fn out_kinds(&self) -> core::Vector<crate::gapi::Detail_OpaqueKind> {
+			let ret = unsafe { sys::cv_GKernel_getPropOutKinds_const(self.as_raw_GKernel()) };
+			let ret = unsafe { core::Vector::<crate::gapi::Detail_OpaqueKind>::opencv_from_extern(ret) };
 			ret
 		}
 		
@@ -5841,7 +5918,13 @@ pub mod gapi {
 		
 		#[inline]
 		fn set_in_kinds(&mut self, mut val: crate::gapi::GKinds) {
-			let ret = unsafe { sys::cv_GKernel_setPropInKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfOpaqueKind()) };
+			let ret = unsafe { sys::cv_GKernel_setPropInKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
+			ret
+		}
+		
+		#[inline]
+		fn set_out_kinds(&mut self, mut val: crate::gapi::GKinds) {
+			let ret = unsafe { sys::cv_GKernel_setPropOutKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
 			ret
 		}
 		
@@ -5872,6 +5955,19 @@ pub mod gapi {
 	}
 	
 	impl GKernel {
+	}
+	
+	impl std::fmt::Debug for GKernel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GKernel")
+				.field("name", &crate::gapi::GKernelTraitConst::name(self))
+				.field("tag", &crate::gapi::GKernelTraitConst::tag(self))
+				.field("out_shapes", &crate::gapi::GKernelTraitConst::out_shapes(self))
+				.field("in_kinds", &crate::gapi::GKernelTraitConst::in_kinds(self))
+				.field("out_kinds", &crate::gapi::GKernelTraitConst::out_kinds(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GKernelImpl]
@@ -5924,6 +6020,15 @@ pub mod gapi {
 	}
 	
 	impl GKernelImpl {
+	}
+	
+	impl std::fmt::Debug for GKernelImpl {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GKernelImpl")
+				.field("opaque", &crate::gapi::GKernelImplTraitConst::opaque(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GKernelPackage]
@@ -6093,8 +6198,8 @@ pub mod gapi {
 	
 	impl GKernelPackage {
 		fn default() -> Self {
-			extern "C" { fn cv_GKernelPackage_default_new() -> extern_receive!(GKernelPackage: 'static); }
-			unsafe { Self::from_raw(cv_GKernelPackage_default_new()) }
+			extern "C" { fn cv_GKernelPackage_defaultNew_const() -> extern_receive!(GKernelPackage: 'static); }
+			unsafe { Self::from_raw(cv_GKernelPackage_defaultNew_const()) }
 		}
 		
 	}
@@ -6102,8 +6207,16 @@ pub mod gapi {
 	impl Clone for GKernelPackage {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GKernelPackage_implicit_clone(val: extern_send!(GKernelPackage)) -> extern_receive!(GKernelPackage: 'static); }
-			unsafe { Self::from_raw(cv_GKernelPackage_implicit_clone(self.as_raw_GKernelPackage())) }
+			extern "C" { fn cv_GKernelPackage_implicitClone_const_GKernelPackage(val: extern_send!(GKernelPackage)) -> extern_receive!(GKernelPackage: 'static); }
+			unsafe { Self::from_raw(cv_GKernelPackage_implicitClone_const_GKernelPackage(self.as_raw_GKernelPackage())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GKernelPackage {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GKernelPackage")
+				.finish()
 		}
 	}
 	
@@ -6210,8 +6323,16 @@ pub mod gapi {
 	impl Clone for GMat {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GMat_implicit_clone(val: extern_send!(GMat)) -> extern_receive!(GMat: 'static); }
-			unsafe { Self::from_raw(cv_GMat_implicit_clone(self.as_raw_GMat())) }
+			extern "C" { fn cv_GMat_implicitClone_const_GMat(val: extern_send!(GMat)) -> extern_receive!(GMat: 'static); }
+			unsafe { Self::from_raw(cv_GMat_implicitClone_const_GMat(self.as_raw_GMat())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GMat {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GMat")
+				.finish()
 		}
 	}
 	
@@ -6488,8 +6609,21 @@ pub mod gapi {
 	impl Clone for GMatDesc {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GMatDesc_implicit_clone(val: extern_send!(GMatDesc)) -> extern_receive!(GMatDesc: 'static); }
-			unsafe { Self::from_raw(cv_GMatDesc_implicit_clone(self.as_raw_GMatDesc())) }
+			extern "C" { fn cv_GMatDesc_implicitClone_const_GMatDesc(val: extern_send!(GMatDesc)) -> extern_receive!(GMatDesc: 'static); }
+			unsafe { Self::from_raw(cv_GMatDesc_implicitClone_const_GMatDesc(self.as_raw_GMatDesc())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GMatDesc {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GMatDesc")
+				.field("depth", &crate::gapi::GMatDescTraitConst::depth(self))
+				.field("chan", &crate::gapi::GMatDescTraitConst::chan(self))
+				.field("size", &crate::gapi::GMatDescTraitConst::size(self))
+				.field("planar", &crate::gapi::GMatDescTraitConst::planar(self))
+				.field("dims", &crate::gapi::GMatDescTraitConst::dims(self))
+				.finish()
 		}
 	}
 	
@@ -6542,6 +6676,14 @@ pub mod gapi {
 	
 	boxed_cast_base! { GMatP, crate::gapi::GMat, cv_GMatP_to_GMat }
 	
+	impl std::fmt::Debug for GMatP {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GMatP")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GOpaqueDesc]
 	pub trait GOpaqueDescTraitConst {
 		fn as_raw_GOpaqueDesc(&self) -> *const c_void;
@@ -6590,8 +6732,8 @@ pub mod gapi {
 	
 	impl GOpaqueDesc {
 		fn default() -> Self {
-			extern "C" { fn cv_GOpaqueDesc_default_new() -> extern_receive!(GOpaqueDesc: 'static); }
-			unsafe { Self::from_raw(cv_GOpaqueDesc_default_new()) }
+			extern "C" { fn cv_GOpaqueDesc_defaultNew_const() -> extern_receive!(GOpaqueDesc: 'static); }
+			unsafe { Self::from_raw(cv_GOpaqueDesc_defaultNew_const()) }
 		}
 		
 	}
@@ -6599,8 +6741,16 @@ pub mod gapi {
 	impl Clone for GOpaqueDesc {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GOpaqueDesc_implicit_clone(val: extern_send!(GOpaqueDesc)) -> extern_receive!(GOpaqueDesc: 'static); }
-			unsafe { Self::from_raw(cv_GOpaqueDesc_implicit_clone(self.as_raw_GOpaqueDesc())) }
+			extern "C" { fn cv_GOpaqueDesc_implicitClone_const_GOpaqueDesc(val: extern_send!(GOpaqueDesc)) -> extern_receive!(GOpaqueDesc: 'static); }
+			unsafe { Self::from_raw(cv_GOpaqueDesc_implicitClone_const_GOpaqueDesc(self.as_raw_GOpaqueDesc())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GOpaqueDesc {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GOpaqueDesc")
+				.finish()
 		}
 	}
 	
@@ -6679,6 +6829,14 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for GRunArg {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GRunArg")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GScalar]
@@ -6834,7 +6992,7 @@ pub mod gapi {
 		///  This constructor overload is not marked `explicit` and can be
 		///  used in G-API expression code like this:
 		/// 
-		///  [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.7.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+		///  [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 		/// 
 		///  Here operator+(GMat,GScalar) is used to wrap cv::gapi::addC()
 		///  and a value-initialized GScalar is created on the fly.
@@ -6855,8 +7013,16 @@ pub mod gapi {
 	impl Clone for GScalar {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GScalar_implicit_clone(val: extern_send!(GScalar)) -> extern_receive!(GScalar: 'static); }
-			unsafe { Self::from_raw(cv_GScalar_implicit_clone(self.as_raw_GScalar())) }
+			extern "C" { fn cv_GScalar_implicitClone_const_GScalar(val: extern_send!(GScalar)) -> extern_receive!(GScalar: 'static); }
+			unsafe { Self::from_raw(cv_GScalar_implicitClone_const_GScalar(self.as_raw_GScalar())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GScalar {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GScalar")
+				.finish()
 		}
 	}
 	
@@ -6917,8 +7083,8 @@ pub mod gapi {
 	
 	impl GScalarDesc {
 		fn default() -> Self {
-			extern "C" { fn cv_GScalarDesc_default_new() -> extern_receive!(GScalarDesc: 'static); }
-			unsafe { Self::from_raw(cv_GScalarDesc_default_new()) }
+			extern "C" { fn cv_GScalarDesc_defaultNew_const() -> extern_receive!(GScalarDesc: 'static); }
+			unsafe { Self::from_raw(cv_GScalarDesc_defaultNew_const()) }
 		}
 		
 	}
@@ -6926,8 +7092,16 @@ pub mod gapi {
 	impl Clone for GScalarDesc {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GScalarDesc_implicit_clone(val: extern_send!(GScalarDesc)) -> extern_receive!(GScalarDesc: 'static); }
-			unsafe { Self::from_raw(cv_GScalarDesc_implicit_clone(self.as_raw_GScalarDesc())) }
+			extern "C" { fn cv_GScalarDesc_implicitClone_const_GScalarDesc(val: extern_send!(GScalarDesc)) -> extern_receive!(GScalarDesc: 'static); }
+			unsafe { Self::from_raw(cv_GScalarDesc_implicitClone_const_GScalarDesc(self.as_raw_GScalarDesc())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GScalarDesc {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GScalarDesc")
+				.finish()
 		}
 	}
 	
@@ -7033,9 +7207,9 @@ pub mod gapi {
 		
 		/// @private -- Exclude this function from OpenCV documentation
 		#[inline]
-		fn set_source_1(&mut self, callback: &crate::gapi::ExtractArgsCallback) -> Result<()> {
+		fn set_source_1(&mut self, callback: &crate::gapi::Detail_ExtractArgsCallback) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GStreamingCompiled_setSource_const_ExtractArgsCallbackR(self.as_raw_mut_GStreamingCompiled(), callback.as_raw_ExtractArgsCallback(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GStreamingCompiled_setSource_const_ExtractArgsCallbackR(self.as_raw_mut_GStreamingCompiled(), callback.as_raw_Detail_ExtractArgsCallback(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -7150,8 +7324,16 @@ pub mod gapi {
 	impl Clone for GStreamingCompiled {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GStreamingCompiled_implicit_clone(val: extern_send!(GStreamingCompiled)) -> extern_receive!(GStreamingCompiled: 'static); }
-			unsafe { Self::from_raw(cv_GStreamingCompiled_implicit_clone(self.as_raw_GStreamingCompiled())) }
+			extern "C" { fn cv_GStreamingCompiled_implicitClone_const_GStreamingCompiled(val: extern_send!(GStreamingCompiled)) -> extern_receive!(GStreamingCompiled: 'static); }
+			unsafe { Self::from_raw(cv_GStreamingCompiled_implicitClone_const_GStreamingCompiled(self.as_raw_GStreamingCompiled())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GStreamingCompiled {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GStreamingCompiled")
+				.finish()
 		}
 	}
 	
@@ -7208,6 +7390,15 @@ pub mod gapi {
 	impl GTransform {
 	}
 	
+	impl std::fmt::Debug for GTransform {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GTransform")
+				.field("description", &crate::gapi::GTransformTraitConst::description(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::GTypeInfo]
 	pub trait GTypeInfoTraitConst {
 		fn as_raw_GTypeInfo(&self) -> *const c_void;
@@ -7221,7 +7412,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn kind(&self) -> crate::gapi::OpaqueKind {
+		fn kind(&self) -> crate::gapi::Detail_OpaqueKind {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GTypeInfo_getPropKind_const(self.as_raw_GTypeInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7241,7 +7432,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn set_kind(&mut self, val: crate::gapi::OpaqueKind) {
+		fn set_kind(&mut self, val: crate::gapi::Detail_OpaqueKind) {
 			let ret = unsafe { sys::cv_GTypeInfo_setPropKind_OpaqueKind(self.as_raw_mut_GTypeInfo(), val) };
 			ret
 		}
@@ -7274,8 +7465,8 @@ pub mod gapi {
 	
 	impl GTypeInfo {
 		fn default() -> Self {
-			extern "C" { fn cv_GTypeInfo_default_new() -> extern_receive!(GTypeInfo: 'static); }
-			unsafe { Self::from_raw(cv_GTypeInfo_default_new()) }
+			extern "C" { fn cv_GTypeInfo_defaultNew_const() -> extern_receive!(GTypeInfo: 'static); }
+			unsafe { Self::from_raw(cv_GTypeInfo_defaultNew_const()) }
 		}
 		
 	}
@@ -7283,8 +7474,18 @@ pub mod gapi {
 	impl Clone for GTypeInfo {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GTypeInfo_implicit_clone(val: extern_send!(GTypeInfo)) -> extern_receive!(GTypeInfo: 'static); }
-			unsafe { Self::from_raw(cv_GTypeInfo_implicit_clone(self.as_raw_GTypeInfo())) }
+			extern "C" { fn cv_GTypeInfo_implicitClone_const_GTypeInfo(val: extern_send!(GTypeInfo)) -> extern_receive!(GTypeInfo: 'static); }
+			unsafe { Self::from_raw(cv_GTypeInfo_implicitClone_const_GTypeInfo(self.as_raw_GTypeInfo())) }
+		}
+	}
+	
+	impl std::fmt::Debug for GTypeInfo {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GTypeInfo")
+				.field("shape", &crate::gapi::GTypeInfoTraitConst::shape(self))
+				.field("kind", &crate::gapi::GTypeInfoTraitConst::kind(self))
+				.finish()
 		}
 	}
 	
@@ -7393,6 +7594,14 @@ pub mod gapi {
 		
 	}
 	
+	impl std::fmt::Debug for MediaFrame {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MediaFrame")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::MediaFrame_IAdapter]
 	pub trait MediaFrame_IAdapterTraitConst {
 		fn as_raw_MediaFrame_IAdapter(&self) -> *const c_void;
@@ -7459,6 +7668,14 @@ pub mod gapi {
 	}
 	
 	impl MediaFrame_IAdapter {
+	}
+	
+	impl std::fmt::Debug for MediaFrame_IAdapter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MediaFrame_IAdapter")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::MediaFrame_View]
@@ -7544,6 +7761,14 @@ pub mod gapi {
 		
 	}
 	
+	impl std::fmt::Debug for MediaFrame_View {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MediaFrame_View")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::RMat]
 	pub trait RMatTraitConst {
 		fn as_raw_RMat(&self) -> *const c_void;
@@ -7601,6 +7826,14 @@ pub mod gapi {
 		
 	}
 	
+	impl std::fmt::Debug for RMat {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RMat")
+				.finish()
+		}
+	}
+	
 	impl Default for RMat {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -7656,6 +7889,14 @@ pub mod gapi {
 	}
 	
 	impl RMat_IAdapter {
+	}
+	
+	impl std::fmt::Debug for RMat_IAdapter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RMat_IAdapter")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::RMat_View]
@@ -7805,6 +8046,14 @@ pub mod gapi {
 		
 	}
 	
+	impl std::fmt::Debug for RMat_View {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RMat_View")
+				.finish()
+		}
+	}
+	
 	impl Default for RMat_View {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -7813,14 +8062,14 @@ pub mod gapi {
 		}
 	}
 	
-	/// Constant methods for [crate::gapi::ExtractArgsCallback]
-	pub trait ExtractArgsCallbackTraitConst {
-		fn as_raw_ExtractArgsCallback(&self) -> *const c_void;
+	/// Constant methods for [crate::gapi::Detail_ExtractArgsCallback]
+	pub trait Detail_ExtractArgsCallbackTraitConst {
+		fn as_raw_Detail_ExtractArgsCallback(&self) -> *const c_void;
 	
 		#[inline]
 		fn apply(&self, info: &crate::gapi::GTypesInfo) -> Result<core::Vector<crate::gapi::GRunArg>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_ExtractArgsCallback_operator___const_const_GTypesInfoR(self.as_raw_ExtractArgsCallback(), info.as_raw_VectorOfGTypeInfo(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_ExtractArgsCallback_operator___const_const_GTypesInfoR(self.as_raw_Detail_ExtractArgsCallback(), info.as_raw_VectorOfGTypeInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Vector::<crate::gapi::GRunArg>::opencv_from_extern(ret) };
@@ -7829,154 +8078,186 @@ pub mod gapi {
 		
 	}
 	
-	/// Mutable methods for [crate::gapi::ExtractArgsCallback]
-	pub trait ExtractArgsCallbackTrait: crate::gapi::ExtractArgsCallbackTraitConst {
-		fn as_raw_mut_ExtractArgsCallback(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::gapi::Detail_ExtractArgsCallback]
+	pub trait Detail_ExtractArgsCallbackTrait: crate::gapi::Detail_ExtractArgsCallbackTraitConst {
+		fn as_raw_mut_Detail_ExtractArgsCallback(&mut self) -> *mut c_void;
 	
 	}
 	
-	pub struct ExtractArgsCallback {
+	pub struct Detail_ExtractArgsCallback {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { ExtractArgsCallback }
+	opencv_type_boxed! { Detail_ExtractArgsCallback }
 	
-	impl Drop for ExtractArgsCallback {
+	impl Drop for Detail_ExtractArgsCallback {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ExtractArgsCallback_delete(instance: *mut c_void); }
-			unsafe { cv_ExtractArgsCallback_delete(self.as_raw_mut_ExtractArgsCallback()) };
+			extern "C" { fn cv_Detail_ExtractArgsCallback_delete(instance: *mut c_void); }
+			unsafe { cv_Detail_ExtractArgsCallback_delete(self.as_raw_mut_Detail_ExtractArgsCallback()) };
 		}
 	}
 	
-	unsafe impl Send for ExtractArgsCallback {}
+	unsafe impl Send for Detail_ExtractArgsCallback {}
 	
-	impl crate::gapi::ExtractArgsCallbackTraitConst for ExtractArgsCallback {
-		#[inline] fn as_raw_ExtractArgsCallback(&self) -> *const c_void { self.as_raw() }
+	impl crate::gapi::Detail_ExtractArgsCallbackTraitConst for Detail_ExtractArgsCallback {
+		#[inline] fn as_raw_Detail_ExtractArgsCallback(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::gapi::ExtractArgsCallbackTrait for ExtractArgsCallback {
-		#[inline] fn as_raw_mut_ExtractArgsCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::gapi::Detail_ExtractArgsCallbackTrait for Detail_ExtractArgsCallback {
+		#[inline] fn as_raw_mut_Detail_ExtractArgsCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl ExtractArgsCallback {
+	impl Detail_ExtractArgsCallback {
 	}
 	
-	/// Constant methods for [crate::gapi::ExtractMetaCallback]
-	pub trait ExtractMetaCallbackTraitConst {
-		fn as_raw_ExtractMetaCallback(&self) -> *const c_void;
+	impl std::fmt::Debug for Detail_ExtractArgsCallback {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_ExtractArgsCallback")
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::gapi::Detail_ExtractMetaCallback]
+	pub trait Detail_ExtractMetaCallbackTraitConst {
+		fn as_raw_Detail_ExtractMetaCallback(&self) -> *const c_void;
 	
 	}
 	
-	/// Mutable methods for [crate::gapi::ExtractMetaCallback]
-	pub trait ExtractMetaCallbackTrait: crate::gapi::ExtractMetaCallbackTraitConst {
-		fn as_raw_mut_ExtractMetaCallback(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::gapi::Detail_ExtractMetaCallback]
+	pub trait Detail_ExtractMetaCallbackTrait: crate::gapi::Detail_ExtractMetaCallbackTraitConst {
+		fn as_raw_mut_Detail_ExtractMetaCallback(&mut self) -> *mut c_void;
 	
 	}
 	
-	pub struct ExtractMetaCallback {
+	pub struct Detail_ExtractMetaCallback {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { ExtractMetaCallback }
+	opencv_type_boxed! { Detail_ExtractMetaCallback }
 	
-	impl Drop for ExtractMetaCallback {
+	impl Drop for Detail_ExtractMetaCallback {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ExtractMetaCallback_delete(instance: *mut c_void); }
-			unsafe { cv_ExtractMetaCallback_delete(self.as_raw_mut_ExtractMetaCallback()) };
+			extern "C" { fn cv_Detail_ExtractMetaCallback_delete(instance: *mut c_void); }
+			unsafe { cv_Detail_ExtractMetaCallback_delete(self.as_raw_mut_Detail_ExtractMetaCallback()) };
 		}
 	}
 	
-	unsafe impl Send for ExtractMetaCallback {}
+	unsafe impl Send for Detail_ExtractMetaCallback {}
 	
-	impl crate::gapi::ExtractMetaCallbackTraitConst for ExtractMetaCallback {
-		#[inline] fn as_raw_ExtractMetaCallback(&self) -> *const c_void { self.as_raw() }
+	impl crate::gapi::Detail_ExtractMetaCallbackTraitConst for Detail_ExtractMetaCallback {
+		#[inline] fn as_raw_Detail_ExtractMetaCallback(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::gapi::ExtractMetaCallbackTrait for ExtractMetaCallback {
-		#[inline] fn as_raw_mut_ExtractMetaCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::gapi::Detail_ExtractMetaCallbackTrait for Detail_ExtractMetaCallback {
+		#[inline] fn as_raw_mut_Detail_ExtractMetaCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl ExtractMetaCallback {
+	impl Detail_ExtractMetaCallback {
 	}
 	
-	/// Constant methods for [crate::gapi::GArrayU]
-	pub trait GArrayUTraitConst {
-		fn as_raw_GArrayU(&self) -> *const c_void;
+	impl std::fmt::Debug for Detail_ExtractMetaCallback {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_ExtractMetaCallback")
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::gapi::Detail_GArrayU]
+	pub trait Detail_GArrayUTraitConst {
+		fn as_raw_Detail_GArrayU(&self) -> *const c_void;
 	
 	}
 	
-	/// Mutable methods for [crate::gapi::GArrayU]
-	pub trait GArrayUTrait: crate::gapi::GArrayUTraitConst {
-		fn as_raw_mut_GArrayU(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::gapi::Detail_GArrayU]
+	pub trait Detail_GArrayUTrait: crate::gapi::Detail_GArrayUTraitConst {
+		fn as_raw_mut_Detail_GArrayU(&mut self) -> *mut c_void;
 	
 	}
 	
-	pub struct GArrayU {
+	pub struct Detail_GArrayU {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { GArrayU }
+	opencv_type_boxed! { Detail_GArrayU }
 	
-	impl Drop for GArrayU {
+	impl Drop for Detail_GArrayU {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GArrayU_delete(instance: *mut c_void); }
-			unsafe { cv_GArrayU_delete(self.as_raw_mut_GArrayU()) };
+			extern "C" { fn cv_Detail_GArrayU_delete(instance: *mut c_void); }
+			unsafe { cv_Detail_GArrayU_delete(self.as_raw_mut_Detail_GArrayU()) };
 		}
 	}
 	
-	unsafe impl Send for GArrayU {}
+	unsafe impl Send for Detail_GArrayU {}
 	
-	impl crate::gapi::GArrayUTraitConst for GArrayU {
-		#[inline] fn as_raw_GArrayU(&self) -> *const c_void { self.as_raw() }
+	impl crate::gapi::Detail_GArrayUTraitConst for Detail_GArrayU {
+		#[inline] fn as_raw_Detail_GArrayU(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::gapi::GArrayUTrait for GArrayU {
-		#[inline] fn as_raw_mut_GArrayU(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::gapi::Detail_GArrayUTrait for Detail_GArrayU {
+		#[inline] fn as_raw_mut_Detail_GArrayU(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl GArrayU {
+	impl Detail_GArrayU {
 	}
 	
-	/// Constant methods for [crate::gapi::GOpaqueU]
-	pub trait GOpaqueUTraitConst {
-		fn as_raw_GOpaqueU(&self) -> *const c_void;
+	impl std::fmt::Debug for Detail_GArrayU {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_GArrayU")
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::gapi::Detail_GOpaqueU]
+	pub trait Detail_GOpaqueUTraitConst {
+		fn as_raw_Detail_GOpaqueU(&self) -> *const c_void;
 	
 	}
 	
-	/// Mutable methods for [crate::gapi::GOpaqueU]
-	pub trait GOpaqueUTrait: crate::gapi::GOpaqueUTraitConst {
-		fn as_raw_mut_GOpaqueU(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::gapi::Detail_GOpaqueU]
+	pub trait Detail_GOpaqueUTrait: crate::gapi::Detail_GOpaqueUTraitConst {
+		fn as_raw_mut_Detail_GOpaqueU(&mut self) -> *mut c_void;
 	
 	}
 	
-	pub struct GOpaqueU {
+	pub struct Detail_GOpaqueU {
 		ptr: *mut c_void
 	}
 	
-	opencv_type_boxed! { GOpaqueU }
+	opencv_type_boxed! { Detail_GOpaqueU }
 	
-	impl Drop for GOpaqueU {
+	impl Drop for Detail_GOpaqueU {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GOpaqueU_delete(instance: *mut c_void); }
-			unsafe { cv_GOpaqueU_delete(self.as_raw_mut_GOpaqueU()) };
+			extern "C" { fn cv_Detail_GOpaqueU_delete(instance: *mut c_void); }
+			unsafe { cv_Detail_GOpaqueU_delete(self.as_raw_mut_Detail_GOpaqueU()) };
 		}
 	}
 	
-	unsafe impl Send for GOpaqueU {}
+	unsafe impl Send for Detail_GOpaqueU {}
 	
-	impl crate::gapi::GOpaqueUTraitConst for GOpaqueU {
-		#[inline] fn as_raw_GOpaqueU(&self) -> *const c_void { self.as_raw() }
+	impl crate::gapi::Detail_GOpaqueUTraitConst for Detail_GOpaqueU {
+		#[inline] fn as_raw_Detail_GOpaqueU(&self) -> *const c_void { self.as_raw() }
 	}
 	
-	impl crate::gapi::GOpaqueUTrait for GOpaqueU {
-		#[inline] fn as_raw_mut_GOpaqueU(&mut self) -> *mut c_void { self.as_raw_mut() }
+	impl crate::gapi::Detail_GOpaqueUTrait for Detail_GOpaqueU {
+		#[inline] fn as_raw_mut_Detail_GOpaqueU(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
-	impl GOpaqueU {
+	impl Detail_GOpaqueU {
+	}
+	
+	impl std::fmt::Debug for Detail_GOpaqueU {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_GOpaqueU")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GBackend]
@@ -8036,6 +8317,14 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for GBackend {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GBackend")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::GFunctor]
@@ -8106,6 +8395,14 @@ pub mod gapi {
 	}
 	
 	impl GFunctor {
+	}
+	
+	impl std::fmt::Debug for GFunctor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GFunctor")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::gapi::Scalar]
@@ -8212,6 +8509,14 @@ pub mod gapi {
 		
 	}
 	
+	impl std::fmt::Debug for Scalar {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Scalar")
+				.finish()
+		}
+	}
+	
 	impl Default for Scalar {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -8304,6 +8609,15 @@ pub mod gapi {
 	impl use_only {
 	}
 	
+	impl std::fmt::Debug for use_only {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("use_only")
+				.field("pkg", &crate::gapi::use_onlyTraitConst::pkg(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::gapi::Data]
 	pub trait DataTraitConst: crate::gapi::GRunArgTraitConst {
 		fn as_raw_Data(&self) -> *const c_void;
@@ -8357,6 +8671,14 @@ pub mod gapi {
 	}
 	
 	boxed_cast_base! { Data, crate::gapi::GRunArg, cv_Data_to_GRunArg }
+	
+	impl std::fmt::Debug for Data {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Data")
+				.finish()
+		}
+	}
 	
 	/// This structure represents a circle to draw.
 	/// 
@@ -8536,8 +8858,19 @@ pub mod gapi {
 	impl Clone for Image {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Image_implicit_clone(val: extern_send!(Image)) -> extern_receive!(Image: 'static); }
-			unsafe { Self::from_raw(cv_Image_implicit_clone(self.as_raw_Image())) }
+			extern "C" { fn cv_Image_implicitClone_const_Image(val: extern_send!(Image)) -> extern_receive!(Image: 'static); }
+			unsafe { Self::from_raw(cv_Image_implicitClone_const_Image(self.as_raw_Image())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Image {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Image")
+				.field("org", &crate::gapi::ImageTraitConst::org(self))
+				.field("img", &crate::gapi::ImageTraitConst::img(self))
+				.field("alpha", &crate::gapi::ImageTraitConst::alpha(self))
+				.finish()
 		}
 	}
 	
@@ -8802,8 +9135,21 @@ pub mod gapi {
 	impl Clone for Poly {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Poly_implicit_clone(val: extern_send!(Poly)) -> extern_receive!(Poly: 'static); }
-			unsafe { Self::from_raw(cv_Poly_implicit_clone(self.as_raw_Poly())) }
+			extern "C" { fn cv_Poly_implicitClone_const_Poly(val: extern_send!(Poly)) -> extern_receive!(Poly: 'static); }
+			unsafe { Self::from_raw(cv_Poly_implicitClone_const_Poly(self.as_raw_Poly())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Poly {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Poly")
+				.field("points", &crate::gapi::PolyTraitConst::points(self))
+				.field("color", &crate::gapi::PolyTraitConst::color(self))
+				.field("thick", &crate::gapi::PolyTraitConst::thick(self))
+				.field("lt", &crate::gapi::PolyTraitConst::lt(self))
+				.field("shift", &crate::gapi::PolyTraitConst::shift(self))
+				.finish()
 		}
 	}
 	
@@ -9073,8 +9419,24 @@ pub mod gapi {
 	impl Clone for Text {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Text_implicit_clone(val: extern_send!(Text)) -> extern_receive!(Text: 'static); }
-			unsafe { Self::from_raw(cv_Text_implicit_clone(self.as_raw_Text())) }
+			extern "C" { fn cv_Text_implicitClone_const_Text(val: extern_send!(Text)) -> extern_receive!(Text: 'static); }
+			unsafe { Self::from_raw(cv_Text_implicitClone_const_Text(self.as_raw_Text())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Text {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Text")
+				.field("text", &crate::gapi::TextTraitConst::text(self))
+				.field("org", &crate::gapi::TextTraitConst::org(self))
+				.field("ff", &crate::gapi::TextTraitConst::ff(self))
+				.field("fs", &crate::gapi::TextTraitConst::fs(self))
+				.field("color", &crate::gapi::TextTraitConst::color(self))
+				.field("thick", &crate::gapi::TextTraitConst::thick(self))
+				.field("lt", &crate::gapi::TextTraitConst::lt(self))
+				.field("bottom_left_origin", &crate::gapi::TextTraitConst::bottom_left_origin(self))
+				.finish()
 		}
 	}
 	
@@ -9157,6 +9519,14 @@ pub mod gapi {
 			ret
 		}
 		
+	}
+	
+	impl std::fmt::Debug for any {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("any")
+				.finish()
+		}
 	}
 	
 	impl Default for any {

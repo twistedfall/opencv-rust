@@ -17,8 +17,8 @@ pub mod img_hash {
 	//! 
 	//! You can study more about image hashing from following paper and websites:
 	//! 
-	//! - "Implementation and benchmarking of perceptual image hash functions" [zauner2010implementation](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_zauner2010implementation)
-	//! - "Looks Like It" [lookslikeit](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+	//! - "Implementation and benchmarking of perceptual image hash functions" [zauner2010implementation](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_zauner2010implementation)
+	//! - "Looks Like It" [lookslikeit](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_lookslikeit)
 	//! 
 	//! ### Code Example
 	//! 
@@ -26,12 +26,12 @@ pub mod img_hash {
 	//! 
 	//! ### Performance under different attacks
 	//! 
-	//! ![Performance chart](https://docs.opencv.org/4.7.0/attack_performance.JPG)
+	//! ![Performance chart](https://docs.opencv.org/4.8.0/attack_performance.JPG)
 	//! 
 	//! ### Speed comparison with PHash library (100 images from ukbench)
 	//! 
-	//! ![Hash Computation chart](https://docs.opencv.org/4.7.0/hash_computation_chart.JPG)
-	//! ![Hash comparison chart](https://docs.opencv.org/4.7.0/hash_comparison_chart.JPG)
+	//! ![Hash Computation chart](https://docs.opencv.org/4.8.0/hash_computation_chart.JPG)
+	//! ![Hash comparison chart](https://docs.opencv.org/4.8.0/hash_comparison_chart.JPG)
 	//! 
 	//! As you can see, hash computation speed of img_hash module outperform [PHash library](http://www.phash.org/) a lot.
 	//! 
@@ -206,7 +206,7 @@ pub mod img_hash {
 	/// Computes average hash value of the input image
 	/// 
 	/// This is a fast image hashing algorithm, but only work on simple case. For more details, please
-	/// refer to [lookslikeit](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+	/// refer to [lookslikeit](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_lookslikeit)
 	pub struct AverageHash {
 		ptr: *mut c_void
 	}
@@ -264,6 +264,14 @@ pub mod img_hash {
 	
 	boxed_cast_base! { AverageHash, crate::img_hash::ImgHashBase, cv_AverageHash_to_ImgHashBase }
 	
+	impl std::fmt::Debug for AverageHash {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AverageHash")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::img_hash::BlockMeanHash]
 	pub trait BlockMeanHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 		fn as_raw_BlockMeanHash(&self) -> *const c_void;
@@ -300,7 +308,7 @@ pub mod img_hash {
 	
 	/// Image hash based on block mean.
 	/// 
-	/// See [zauner2010implementation](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+	/// See [zauner2010implementation](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 	pub struct BlockMeanHash {
 		ptr: *mut c_void
 	}
@@ -360,6 +368,14 @@ pub mod img_hash {
 	
 	boxed_cast_base! { BlockMeanHash, crate::img_hash::ImgHashBase, cv_BlockMeanHash_to_ImgHashBase }
 	
+	impl std::fmt::Debug for BlockMeanHash {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BlockMeanHash")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::img_hash::ColorMomentHash]
 	pub trait ColorMomentHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 		fn as_raw_ColorMomentHash(&self) -> *const c_void;
@@ -374,7 +390,7 @@ pub mod img_hash {
 	
 	/// Image hash based on color moments.
 	/// 
-	/// See [tang2012perceptual](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+	/// See [tang2012perceptual](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 	pub struct ColorMomentHash {
 		ptr: *mut c_void
 	}
@@ -431,6 +447,14 @@ pub mod img_hash {
 	boxed_cast_base! { ColorMomentHash, core::Algorithm, cv_ColorMomentHash_to_Algorithm }
 	
 	boxed_cast_base! { ColorMomentHash, crate::img_hash::ImgHashBase, cv_ColorMomentHash_to_ImgHashBase }
+	
+	impl std::fmt::Debug for ColorMomentHash {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColorMomentHash")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::img_hash::ImgHashBase]
 	pub trait ImgHashBaseTraitConst: core::AlgorithmTraitConst {
@@ -515,6 +539,14 @@ pub mod img_hash {
 	
 	boxed_cast_base! { ImgHashBase, core::Algorithm, cv_ImgHashBase_to_Algorithm }
 	
+	impl std::fmt::Debug for ImgHashBase {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ImgHashBase")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::img_hash::MarrHildrethHash]
 	pub trait MarrHildrethHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 		fn as_raw_MarrHildrethHash(&self) -> *const c_void;
@@ -562,7 +594,7 @@ pub mod img_hash {
 	
 	/// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
 	/// 
-	/// See [zauner2010implementation](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+	/// See [zauner2010implementation](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 	pub struct MarrHildrethHash {
 		ptr: *mut c_void
 	}
@@ -627,6 +659,14 @@ pub mod img_hash {
 	
 	boxed_cast_base! { MarrHildrethHash, crate::img_hash::ImgHashBase, cv_MarrHildrethHash_to_ImgHashBase }
 	
+	impl std::fmt::Debug for MarrHildrethHash {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MarrHildrethHash")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::img_hash::PHash]
 	pub trait PHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
 		fn as_raw_PHash(&self) -> *const c_void;
@@ -643,7 +683,7 @@ pub mod img_hash {
 	/// 
 	/// Slower than average_hash, but tolerant of minor modifications
 	/// 
-	/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+	/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_lookslikeit)
 	pub struct PHash {
 		ptr: *mut c_void
 	}
@@ -700,6 +740,14 @@ pub mod img_hash {
 	boxed_cast_base! { PHash, core::Algorithm, cv_PHash_to_Algorithm }
 	
 	boxed_cast_base! { PHash, crate::img_hash::ImgHashBase, cv_PHash_to_ImgHashBase }
+	
+	impl std::fmt::Debug for PHash {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PHash")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::img_hash::RadialVarianceHash]
 	pub trait RadialVarianceHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
@@ -791,7 +839,7 @@ pub mod img_hash {
 	
 	/// Image hash based on Radon transform.
 	/// 
-	/// See [tang2012perceptual](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+	/// See [tang2012perceptual](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 	pub struct RadialVarianceHash {
 		ptr: *mut c_void
 	}
@@ -851,4 +899,12 @@ pub mod img_hash {
 	boxed_cast_base! { RadialVarianceHash, core::Algorithm, cv_RadialVarianceHash_to_Algorithm }
 	
 	boxed_cast_base! { RadialVarianceHash, crate::img_hash::ImgHashBase, cv_RadialVarianceHash_to_ImgHashBase }
+	
+	impl std::fmt::Debug for RadialVarianceHash {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RadialVarianceHash")
+				.finish()
+		}
+	}
 }

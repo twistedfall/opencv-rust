@@ -171,7 +171,7 @@ pub mod cudabgsegm {
 	/// 
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MOG2001) .
+	/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MOG2001) .
 	/// ## See also
 	/// BackgroundSubtractorMOG
 	/// 
@@ -224,6 +224,16 @@ pub mod cudabgsegm {
 	
 	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, core::Algorithm, cv_CUDA_BackgroundSubtractorMOG_to_Algorithm }
 	
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_CUDA_BackgroundSubtractorMOG_to_BackgroundSubtractor }
+	
+	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_BackgroundSubtractorMOG")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2]
 	pub trait CUDA_BackgroundSubtractorMOG2TraitConst: crate::video::BackgroundSubtractorMOG2TraitConst {
 		fn as_raw_CUDA_BackgroundSubtractorMOG2(&self) -> *const c_void;
@@ -270,7 +280,7 @@ pub mod cudabgsegm {
 	/// 
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
+	/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
 	/// ## See also
 	/// BackgroundSubtractorMOG2
 	pub struct CUDA_BackgroundSubtractorMOG2 {
@@ -325,4 +335,16 @@ pub mod cudabgsegm {
 	}
 	
 	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, core::Algorithm, cv_CUDA_BackgroundSubtractorMOG2_to_Algorithm }
+	
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractor, cv_CUDA_BackgroundSubtractorMOG2_to_BackgroundSubtractor }
+	
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2, cv_CUDA_BackgroundSubtractorMOG2_to_BackgroundSubtractorMOG2 }
+	
+	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG2 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_BackgroundSubtractorMOG2")
+				.finish()
+		}
+	}
 }

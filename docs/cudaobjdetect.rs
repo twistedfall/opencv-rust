@@ -277,6 +277,14 @@ pub mod cudaobjdetect {
 	
 	boxed_cast_base! { CUDA_CascadeClassifier, core::Algorithm, cv_CUDA_CascadeClassifier_to_Algorithm }
 	
+	impl std::fmt::Debug for CUDA_CascadeClassifier {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CascadeClassifier")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::cudaobjdetect::CUDA_HOG]
 	pub trait CUDA_HOGTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_HOG(&self) -> *const c_void;
@@ -617,7 +625,7 @@ pub mod cudaobjdetect {
 		
 	}
 	
-	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
+	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
 	/// 
 	/// 
 	/// Note:
@@ -688,4 +696,12 @@ pub mod cudaobjdetect {
 	}
 	
 	boxed_cast_base! { CUDA_HOG, core::Algorithm, cv_CUDA_HOG_to_Algorithm }
+	
+	impl std::fmt::Debug for CUDA_HOG {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_HOG")
+				.finish()
+		}
+	}
 }

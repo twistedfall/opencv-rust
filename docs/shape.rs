@@ -211,6 +211,16 @@ pub mod shape {
 	
 	boxed_cast_base! { AffineTransformer, core::Algorithm, cv_AffineTransformer_to_Algorithm }
 	
+	boxed_cast_base! { AffineTransformer, crate::shape::ShapeTransformer, cv_AffineTransformer_to_ShapeTransformer }
+	
+	impl std::fmt::Debug for AffineTransformer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AffineTransformer")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::shape::ChiHistogramCostExtractor]
 	pub trait ChiHistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
 		fn as_raw_ChiHistogramCostExtractor(&self) -> *const c_void;
@@ -268,6 +278,16 @@ pub mod shape {
 	}
 	
 	boxed_cast_base! { ChiHistogramCostExtractor, core::Algorithm, cv_ChiHistogramCostExtractor_to_Algorithm }
+	
+	boxed_cast_base! { ChiHistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_ChiHistogramCostExtractor_to_HistogramCostExtractor }
+	
+	impl std::fmt::Debug for ChiHistogramCostExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ChiHistogramCostExtractor")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::shape::EMDHistogramCostExtractor]
 	pub trait EMDHistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
@@ -345,6 +365,16 @@ pub mod shape {
 	
 	boxed_cast_base! { EMDHistogramCostExtractor, core::Algorithm, cv_EMDHistogramCostExtractor_to_Algorithm }
 	
+	boxed_cast_base! { EMDHistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_EMDHistogramCostExtractor_to_HistogramCostExtractor }
+	
+	impl std::fmt::Debug for EMDHistogramCostExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EMDHistogramCostExtractor")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::shape::EMDL1HistogramCostExtractor]
 	pub trait EMDL1HistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
 		fn as_raw_EMDL1HistogramCostExtractor(&self) -> *const c_void;
@@ -402,6 +432,16 @@ pub mod shape {
 	}
 	
 	boxed_cast_base! { EMDL1HistogramCostExtractor, core::Algorithm, cv_EMDL1HistogramCostExtractor_to_Algorithm }
+	
+	boxed_cast_base! { EMDL1HistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_EMDL1HistogramCostExtractor_to_HistogramCostExtractor }
+	
+	impl std::fmt::Debug for EMDL1HistogramCostExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EMDL1HistogramCostExtractor")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::shape::HausdorffDistanceExtractor]
 	pub trait HausdorffDistanceExtractorTraitConst: crate::shape::ShapeDistanceExtractorTraitConst {
@@ -514,6 +554,16 @@ pub mod shape {
 	
 	boxed_cast_base! { HausdorffDistanceExtractor, core::Algorithm, cv_HausdorffDistanceExtractor_to_Algorithm }
 	
+	boxed_cast_base! { HausdorffDistanceExtractor, crate::shape::ShapeDistanceExtractor, cv_HausdorffDistanceExtractor_to_ShapeDistanceExtractor }
+	
+	impl std::fmt::Debug for HausdorffDistanceExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HausdorffDistanceExtractor")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::shape::HistogramCostExtractor]
 	pub trait HistogramCostExtractorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_HistogramCostExtractor(&self) -> *const c_void;
@@ -610,7 +660,23 @@ pub mod shape {
 	impl HistogramCostExtractor {
 	}
 	
+	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::ChiHistogramCostExtractor, cv_HistogramCostExtractor_to_ChiHistogramCostExtractor }
+	
+	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::EMDHistogramCostExtractor, cv_HistogramCostExtractor_to_EMDHistogramCostExtractor }
+	
+	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::EMDL1HistogramCostExtractor, cv_HistogramCostExtractor_to_EMDL1HistogramCostExtractor }
+	
+	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::NormHistogramCostExtractor, cv_HistogramCostExtractor_to_NormHistogramCostExtractor }
+	
 	boxed_cast_base! { HistogramCostExtractor, core::Algorithm, cv_HistogramCostExtractor_to_Algorithm }
+	
+	impl std::fmt::Debug for HistogramCostExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HistogramCostExtractor")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::shape::NormHistogramCostExtractor]
 	pub trait NormHistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
@@ -687,6 +753,16 @@ pub mod shape {
 	}
 	
 	boxed_cast_base! { NormHistogramCostExtractor, core::Algorithm, cv_NormHistogramCostExtractor_to_Algorithm }
+	
+	boxed_cast_base! { NormHistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_NormHistogramCostExtractor_to_HistogramCostExtractor }
+	
+	impl std::fmt::Debug for NormHistogramCostExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NormHistogramCostExtractor")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::shape::ShapeContextDistanceExtractor]
 	pub trait ShapeContextDistanceExtractorTraitConst: crate::shape::ShapeDistanceExtractorTraitConst {
@@ -1054,6 +1130,16 @@ pub mod shape {
 	
 	boxed_cast_base! { ShapeContextDistanceExtractor, core::Algorithm, cv_ShapeContextDistanceExtractor_to_Algorithm }
 	
+	boxed_cast_base! { ShapeContextDistanceExtractor, crate::shape::ShapeDistanceExtractor, cv_ShapeContextDistanceExtractor_to_ShapeDistanceExtractor }
+	
+	impl std::fmt::Debug for ShapeContextDistanceExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShapeContextDistanceExtractor")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::shape::ShapeDistanceExtractor]
 	pub trait ShapeDistanceExtractorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void;
@@ -1121,7 +1207,19 @@ pub mod shape {
 	impl ShapeDistanceExtractor {
 	}
 	
+	boxed_cast_descendant! { ShapeDistanceExtractor, crate::shape::HausdorffDistanceExtractor, cv_ShapeDistanceExtractor_to_HausdorffDistanceExtractor }
+	
+	boxed_cast_descendant! { ShapeDistanceExtractor, crate::shape::ShapeContextDistanceExtractor, cv_ShapeDistanceExtractor_to_ShapeContextDistanceExtractor }
+	
 	boxed_cast_base! { ShapeDistanceExtractor, core::Algorithm, cv_ShapeDistanceExtractor_to_Algorithm }
+	
+	impl std::fmt::Debug for ShapeDistanceExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShapeDistanceExtractor")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::shape::ShapeTransformer]
 	pub trait ShapeTransformerTraitConst: core::AlgorithmTraitConst {
@@ -1231,7 +1329,19 @@ pub mod shape {
 	impl ShapeTransformer {
 	}
 	
+	boxed_cast_descendant! { ShapeTransformer, crate::shape::AffineTransformer, cv_ShapeTransformer_to_AffineTransformer }
+	
+	boxed_cast_descendant! { ShapeTransformer, crate::shape::ThinPlateSplineShapeTransformer, cv_ShapeTransformer_to_ThinPlateSplineShapeTransformer }
+	
 	boxed_cast_base! { ShapeTransformer, core::Algorithm, cv_ShapeTransformer_to_Algorithm }
+	
+	impl std::fmt::Debug for ShapeTransformer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShapeTransformer")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::shape::ThinPlateSplineShapeTransformer]
 	pub trait ThinPlateSplineShapeTransformerTraitConst: crate::shape::ShapeTransformerTraitConst {
@@ -1316,4 +1426,14 @@ pub mod shape {
 	}
 	
 	boxed_cast_base! { ThinPlateSplineShapeTransformer, core::Algorithm, cv_ThinPlateSplineShapeTransformer_to_Algorithm }
+	
+	boxed_cast_base! { ThinPlateSplineShapeTransformer, crate::shape::ShapeTransformer, cv_ThinPlateSplineShapeTransformer_to_ShapeTransformer }
+	
+	impl std::fmt::Debug for ThinPlateSplineShapeTransformer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ThinPlateSplineShapeTransformer")
+				.finish()
+		}
+	}
 }

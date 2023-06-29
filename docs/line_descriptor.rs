@@ -18,8 +18,8 @@ pub mod line_descriptor {
 	//! ---------------------------------
 	//! 
 	//! To obtatin a binary descriptor representing a certain line detected from a certain octave of an
-	//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
-	//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
+	//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
+	//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
 	//! rectangular region centered at it and called *line support region (LSR)*. Such region is divided
 	//! into a set of bands ![inline formula](https://latex.codecogs.com/png.latex?%5C%7BB%5F1%2C%20B%5F2%2C%20%2E%2E%2E%2C%20B%5Fm%5C%7D), whose length equals the one of line.
 	//! 
@@ -498,6 +498,14 @@ pub mod line_descriptor {
 	
 	boxed_cast_base! { BinaryDescriptor, core::Algorithm, cv_BinaryDescriptor_to_Algorithm }
 	
+	impl std::fmt::Debug for BinaryDescriptor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BinaryDescriptor")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::line_descriptor::BinaryDescriptor_Params]
 	pub trait BinaryDescriptor_ParamsTraitConst {
 		fn as_raw_BinaryDescriptor_Params(&self) -> *const c_void;
@@ -620,6 +628,18 @@ pub mod line_descriptor {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for BinaryDescriptor_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BinaryDescriptor_Params")
+				.field("num_of_octave_", &crate::line_descriptor::BinaryDescriptor_ParamsTraitConst::num_of_octave_(self))
+				.field("width_of_band_", &crate::line_descriptor::BinaryDescriptor_ParamsTraitConst::width_of_band_(self))
+				.field("reduction_ratio", &crate::line_descriptor::BinaryDescriptor_ParamsTraitConst::reduction_ratio(self))
+				.field("ksize_", &crate::line_descriptor::BinaryDescriptor_ParamsTraitConst::ksize_(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::line_descriptor::BinaryDescriptorMatcher]
@@ -855,7 +875,7 @@ pub mod line_descriptor {
 	/// Multi-Index Hashing
 	/// -------------------
 	/// 
-	/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
+	/// The theory described in this section is based on [MIH](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
 	/// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
 	/// has been divided into. Thus, given a query code, all the entries close to it at least in one
 	/// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
@@ -938,6 +958,14 @@ pub mod line_descriptor {
 	}
 	
 	boxed_cast_base! { BinaryDescriptorMatcher, core::Algorithm, cv_BinaryDescriptorMatcher_to_Algorithm }
+	
+	impl std::fmt::Debug for BinaryDescriptorMatcher {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BinaryDescriptorMatcher")
+				.finish()
+		}
+	}
 	
 	/// A class to represent a line
 	/// 
@@ -1186,10 +1214,18 @@ pub mod line_descriptor {
 	
 	boxed_cast_base! { LSDDetector, core::Algorithm, cv_LSDDetector_to_Algorithm }
 	
+	impl std::fmt::Debug for LSDDetector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LSDDetector")
+				.finish()
+		}
+	}
+	
 	/// Lines extraction methodology
 	/// ----------------------------
 	/// 
-	/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_EDL) . The
+	/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EDL) . The
 	/// extraction starts with a Gaussian pyramid generated from an original image, downsampled N-1 times,
 	/// blurred N times, to obtain N layers (one for each octave), with layer 0 corresponding to input
 	/// image. Then, from each layer (octave) in the pyramid, lines are extracted using LSD algorithm.

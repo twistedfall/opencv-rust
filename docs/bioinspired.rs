@@ -603,6 +603,14 @@ pub mod bioinspired {
 	
 	boxed_cast_base! { Retina, core::Algorithm, cv_Retina_to_Algorithm }
 	
+	impl std::fmt::Debug for Retina {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Retina")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::bioinspired::RetinaFastToneMapping]
 	pub trait RetinaFastToneMappingTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_RetinaFastToneMapping(&self) -> *const c_void;
@@ -723,6 +731,14 @@ pub mod bioinspired {
 	}
 	
 	boxed_cast_base! { RetinaFastToneMapping, core::Algorithm, cv_RetinaFastToneMapping_to_Algorithm }
+	
+	impl std::fmt::Debug for RetinaFastToneMapping {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RetinaFastToneMapping")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::bioinspired::RetinaParameters]
 	pub trait RetinaParametersTraitConst {
@@ -850,8 +866,8 @@ pub mod bioinspired {
 	
 	impl RetinaParameters {
 		fn default() -> Self {
-			extern "C" { fn cv_RetinaParameters_default_new() -> extern_receive!(RetinaParameters: 'static); }
-			unsafe { Self::from_raw(cv_RetinaParameters_default_new()) }
+			extern "C" { fn cv_RetinaParameters_defaultNew_const() -> extern_receive!(RetinaParameters: 'static); }
+			unsafe { Self::from_raw(cv_RetinaParameters_defaultNew_const()) }
 		}
 		
 	}
@@ -859,8 +875,18 @@ pub mod bioinspired {
 	impl Clone for RetinaParameters {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_RetinaParameters_implicit_clone(val: extern_send!(RetinaParameters)) -> extern_receive!(RetinaParameters: 'static); }
-			unsafe { Self::from_raw(cv_RetinaParameters_implicit_clone(self.as_raw_RetinaParameters())) }
+			extern "C" { fn cv_RetinaParameters_implicitClone_const_RetinaParameters(val: extern_send!(RetinaParameters)) -> extern_receive!(RetinaParameters: 'static); }
+			unsafe { Self::from_raw(cv_RetinaParameters_implicitClone_const_RetinaParameters(self.as_raw_RetinaParameters())) }
+		}
+	}
+	
+	impl std::fmt::Debug for RetinaParameters {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RetinaParameters")
+				.field("op_land_ipl_parvo", &crate::bioinspired::RetinaParametersTraitConst::op_land_ipl_parvo(self))
+				.field("ipl_magno", &crate::bioinspired::RetinaParametersTraitConst::ipl_magno(self))
+				.finish()
 		}
 	}
 	
@@ -1186,4 +1212,12 @@ pub mod bioinspired {
 	}
 	
 	boxed_cast_base! { TransientAreasSegmentationModule, core::Algorithm, cv_TransientAreasSegmentationModule_to_Algorithm }
+	
+	impl std::fmt::Debug for TransientAreasSegmentationModule {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TransientAreasSegmentationModule")
+				.finish()
+		}
+	}
 }

@@ -63,7 +63,7 @@ pub mod videoio {
 	pub const CAP_INTELPERC_UVDEPTH_MAP: i32 = 1;
 	/// Intel MediaSDK
 	pub const CAP_INTEL_MFX: i32 = 2300;
-	/// Microsoft Media Foundation (via videoInput)
+	/// Microsoft Media Foundation (via videoInput). See platform specific notes above.
 	pub const CAP_MSMF: i32 = 1400;
 	/// For Orbbec 3D-Sensor device/module (Astra+, Femto)
 	pub const CAP_OBSENSOR: i32 = 2600;
@@ -757,8 +757,13 @@ pub mod videoio {
 	/// To be used in the VideoCapture::VideoCapture() constructor or VideoCapture::open()
 	/// 
 	/// 
-	/// Note: Backends are available only if they have been built with your OpenCV binaries.
+	/// Note:
+	/// *   Backends are available only if they have been built with your OpenCV binaries.
 	/// See [videoio_overview] for more information.
+	/// *   Microsoft Media Foundation backend tries to use hardware accelerated transformations
+	/// if possible. Environment flag "OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS" set to 0
+	/// disables it and may improve initialization time. More details:
+	/// <https://learn.microsoft.com/en-us/windows/win32/medfound/mf-readwrite-enable-hardware-transforms>
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum VideoCaptureAPIs {
@@ -806,7 +811,7 @@ pub mod videoio {
 		CAP_AVFOUNDATION = 1200,
 		/// Smartek Giganetix GigEVisionSDK
 		CAP_GIGANETIX = 1300,
-		/// Microsoft Media Foundation (via videoInput)
+		/// Microsoft Media Foundation (via videoInput). See platform specific notes above.
 		CAP_MSMF = 1400,
 		/// Microsoft Windows Runtime using Media Foundation
 		CAP_WINRT = 1410,
@@ -1652,6 +1657,14 @@ pub mod videoio {
 		
 	}
 	
+	impl std::fmt::Debug for VideoCapture {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("VideoCapture")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::videoio::VideoWriter]
 	pub trait VideoWriterTraitConst {
 		fn as_raw_VideoWriter(&self) -> *const c_void;
@@ -2009,5 +2022,13 @@ pub mod videoio {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for VideoWriter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("VideoWriter")
+				.finish()
+		}
 	}
 }

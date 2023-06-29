@@ -99,16 +99,16 @@ pub mod bgsegm {
 	
 	/// Creates an instance of BackgroundSubtractorLSBP algorithm.
 	/// 
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 	/// 
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
 	/// * LSBPRadius: LSBP descriptor radius.
-	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
 	/// * Rscale: Scale coefficient for threshold values.
 	/// * Rincdec: Increase/Decrease step for threshold values.
 	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
@@ -357,6 +357,16 @@ pub mod bgsegm {
 	
 	boxed_cast_base! { BackgroundSubtractorCNT, core::Algorithm, cv_BackgroundSubtractorCNT_to_Algorithm }
 	
+	boxed_cast_base! { BackgroundSubtractorCNT, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorCNT_to_BackgroundSubtractor }
+	
+	impl std::fmt::Debug for BackgroundSubtractorCNT {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorCNT")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorGMG]
 	pub trait BackgroundSubtractorGMGTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_BackgroundSubtractorGMG(&self) -> *const c_void;
@@ -576,7 +586,7 @@ pub mod bgsegm {
 		
 	}
 	
-	/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_Gold2012) .
+	/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gold2012) .
 	/// 
 	/// Takes a series of images and returns a sequence of mask (8UC1)
 	/// images of the same size, where 255 indicates Foreground and 0 represents Background.
@@ -627,6 +637,16 @@ pub mod bgsegm {
 	}
 	
 	boxed_cast_base! { BackgroundSubtractorGMG, core::Algorithm, cv_BackgroundSubtractorGMG_to_Algorithm }
+	
+	boxed_cast_base! { BackgroundSubtractorGMG, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorGMG_to_BackgroundSubtractor }
+	
+	impl std::fmt::Debug for BackgroundSubtractorGMG {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorGMG")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorGSOC]
 	pub trait BackgroundSubtractorGSOCTraitConst: crate::video::BackgroundSubtractorTraitConst {
@@ -711,6 +731,16 @@ pub mod bgsegm {
 	
 	boxed_cast_base! { BackgroundSubtractorGSOC, core::Algorithm, cv_BackgroundSubtractorGSOC_to_Algorithm }
 	
+	boxed_cast_base! { BackgroundSubtractorGSOC, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorGSOC_to_BackgroundSubtractor }
+	
+	impl std::fmt::Debug for BackgroundSubtractorGSOC {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorGSOC")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorLSBP]
 	pub trait BackgroundSubtractorLSBPTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_BackgroundSubtractorLSBP(&self) -> *const c_void;
@@ -746,7 +776,7 @@ pub mod bgsegm {
 		
 	}
 	
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 	pub struct BackgroundSubtractorLSBP {
 		ptr: *mut c_void
 	}
@@ -791,6 +821,16 @@ pub mod bgsegm {
 	}
 	
 	boxed_cast_base! { BackgroundSubtractorLSBP, core::Algorithm, cv_BackgroundSubtractorLSBP_to_Algorithm }
+	
+	boxed_cast_base! { BackgroundSubtractorLSBP, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorLSBP_to_BackgroundSubtractor }
+	
+	impl std::fmt::Debug for BackgroundSubtractorLSBP {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorLSBP")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorLSBPDesc]
 	pub trait BackgroundSubtractorLSBPDescTraitConst {
@@ -860,6 +900,14 @@ pub mod bgsegm {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for BackgroundSubtractorLSBPDesc {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorLSBPDesc")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorMOG]
@@ -948,7 +996,7 @@ pub mod bgsegm {
 	
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	/// 
-	/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_KB2001) .
+	/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_KB2001) .
 	pub struct BackgroundSubtractorMOG {
 		ptr: *mut c_void
 	}
@@ -993,6 +1041,16 @@ pub mod bgsegm {
 	}
 	
 	boxed_cast_base! { BackgroundSubtractorMOG, core::Algorithm, cv_BackgroundSubtractorMOG_to_Algorithm }
+	
+	boxed_cast_base! { BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorMOG_to_BackgroundSubtractor }
+	
+	impl std::fmt::Debug for BackgroundSubtractorMOG {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorMOG")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::bgsegm::SyntheticSequenceGenerator]
 	pub trait SyntheticSequenceGeneratorTraitConst: core::AlgorithmTraitConst {
@@ -1083,4 +1141,12 @@ pub mod bgsegm {
 	}
 	
 	boxed_cast_base! { SyntheticSequenceGenerator, core::Algorithm, cv_SyntheticSequenceGenerator_to_Algorithm }
+	
+	impl std::fmt::Debug for SyntheticSequenceGenerator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SyntheticSequenceGenerator")
+				.finish()
+		}
+	}
 }

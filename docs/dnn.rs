@@ -10,7 +10,7 @@ pub mod dnn {
 	//!   A network training is in principle not supported.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::DictValueTraitConst, super::DictValueTrait, super::DictTraitConst, super::DictTrait, super::LayerParamsTraitConst, super::LayerParamsTrait, super::BackendNodeTraitConst, super::BackendNodeTrait, super::BackendWrapperTraitConst, super::BackendWrapperTrait, super::LayerTraitConst, super::LayerTrait, super::NetTraitConst, super::NetTrait, super::ModelTraitConst, super::ModelTrait, super::ClassificationModelTraitConst, super::ClassificationModelTrait, super::KeypointsModelTraitConst, super::KeypointsModelTrait, super::SegmentationModelTraitConst, super::SegmentationModelTrait, super::DetectionModelTraitConst, super::DetectionModelTrait, super::TextRecognitionModelTraitConst, super::TextRecognitionModelTrait, super::TextDetectionModelTraitConst, super::TextDetectionModelTrait, super::TextDetectionModel_EASTTraitConst, super::TextDetectionModel_EASTTrait, super::TextDetectionModel_DBTraitConst, super::TextDetectionModel_DBTrait, super::LayerFactoryTraitConst, super::LayerFactoryTrait, super::BlankLayerTraitConst, super::BlankLayerTrait, super::ConstLayerTraitConst, super::ConstLayerTrait, super::LSTMLayerTraitConst, super::LSTMLayerTrait, super::GRULayerTraitConst, super::GRULayerTrait, super::RNNLayerTraitConst, super::RNNLayerTrait, super::BaseConvolutionLayerTraitConst, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTraitConst, super::ConvolutionLayerTrait, super::ConvolutionLayerInt8TraitConst, super::ConvolutionLayerInt8Trait, super::DeconvolutionLayerTraitConst, super::DeconvolutionLayerTrait, super::LRNLayerTraitConst, super::LRNLayerTrait, super::ArgLayerTraitConst, super::ArgLayerTrait, super::GatherLayerTraitConst, super::GatherLayerTrait, super::PoolingLayerTraitConst, super::PoolingLayerTrait, super::PoolingLayerInt8TraitConst, super::PoolingLayerInt8Trait, super::ReduceLayerTraitConst, super::ReduceLayerTrait, super::ReduceLayerInt8TraitConst, super::ReduceLayerInt8Trait, super::SoftmaxLayerTraitConst, super::SoftmaxLayerTrait, super::SoftmaxLayerInt8TraitConst, super::SoftmaxLayerInt8Trait, super::InnerProductLayerTraitConst, super::InnerProductLayerTrait, super::InnerProductLayerInt8TraitConst, super::InnerProductLayerInt8Trait, super::MVNLayerTraitConst, super::MVNLayerTrait, super::ReshapeLayerTraitConst, super::ReshapeLayerTrait, super::FlattenLayerTraitConst, super::FlattenLayerTrait, super::QuantizeLayerTraitConst, super::QuantizeLayerTrait, super::DequantizeLayerTraitConst, super::DequantizeLayerTrait, super::RequantizeLayerTraitConst, super::RequantizeLayerTrait, super::ConcatLayerTraitConst, super::ConcatLayerTrait, super::SplitLayerTraitConst, super::SplitLayerTrait, super::SliceLayerTraitConst, super::SliceLayerTrait, super::PermuteLayerTraitConst, super::PermuteLayerTrait, super::ShuffleChannelLayerTraitConst, super::ShuffleChannelLayerTrait, super::PaddingLayerTraitConst, super::PaddingLayerTrait, super::ActivationLayerTraitConst, super::ActivationLayerTrait, super::ReLULayerTraitConst, super::ReLULayerTrait, super::ReLU6LayerTraitConst, super::ReLU6LayerTrait, super::ChannelsPReLULayerTraitConst, super::ChannelsPReLULayerTrait, super::ELULayerTraitConst, super::ELULayerTrait, super::TanHLayerTraitConst, super::TanHLayerTrait, super::SwishLayerTraitConst, super::SwishLayerTrait, super::MishLayerTraitConst, super::MishLayerTrait, super::SigmoidLayerTraitConst, super::SigmoidLayerTrait, super::BNLLLayerTraitConst, super::BNLLLayerTrait, super::AbsLayerTraitConst, super::AbsLayerTrait, super::PowerLayerTraitConst, super::PowerLayerTrait, super::ExpLayerTraitConst, super::ExpLayerTrait, super::CeilLayerTraitConst, super::CeilLayerTrait, super::FloorLayerTraitConst, super::FloorLayerTrait, super::LogLayerTraitConst, super::LogLayerTrait, super::RoundLayerTraitConst, super::RoundLayerTrait, super::SqrtLayerTraitConst, super::SqrtLayerTrait, super::NotLayerTraitConst, super::NotLayerTrait, super::AcosLayerTraitConst, super::AcosLayerTrait, super::AcoshLayerTraitConst, super::AcoshLayerTrait, super::AsinLayerTraitConst, super::AsinLayerTrait, super::AsinhLayerTraitConst, super::AsinhLayerTrait, super::AtanLayerTraitConst, super::AtanLayerTrait, super::AtanhLayerTraitConst, super::AtanhLayerTrait, super::CosLayerTraitConst, super::CosLayerTrait, super::CoshLayerTraitConst, super::CoshLayerTrait, super::ErfLayerTraitConst, super::ErfLayerTrait, super::HardSwishLayerTraitConst, super::HardSwishLayerTrait, super::SinLayerTraitConst, super::SinLayerTrait, super::SinhLayerTraitConst, super::SinhLayerTrait, super::SoftplusLayerTraitConst, super::SoftplusLayerTrait, super::SoftsignLayerTraitConst, super::SoftsignLayerTrait, super::TanLayerTraitConst, super::TanLayerTrait, super::CeluLayerTraitConst, super::CeluLayerTrait, super::HardSigmoidLayerTraitConst, super::HardSigmoidLayerTrait, super::SeluLayerTraitConst, super::SeluLayerTrait, super::ThresholdedReluLayerTraitConst, super::ThresholdedReluLayerTrait, super::ActivationLayerInt8TraitConst, super::ActivationLayerInt8Trait, super::SignLayerTraitConst, super::SignLayerTrait, super::ShrinkLayerTraitConst, super::ShrinkLayerTrait, super::ReciprocalLayerTraitConst, super::ReciprocalLayerTrait, super::CropLayerTraitConst, super::CropLayerTrait, super::EltwiseLayerTraitConst, super::EltwiseLayerTrait, super::EltwiseLayerInt8TraitConst, super::EltwiseLayerInt8Trait, super::NaryEltwiseLayerTraitConst, super::NaryEltwiseLayerTrait, super::BatchNormLayerTraitConst, super::BatchNormLayerTrait, super::BatchNormLayerInt8TraitConst, super::BatchNormLayerInt8Trait, super::MaxUnpoolLayerTraitConst, super::MaxUnpoolLayerTrait, super::ScaleLayerTraitConst, super::ScaleLayerTrait, super::ScaleLayerInt8TraitConst, super::ScaleLayerInt8Trait, super::ShiftLayerTraitConst, super::ShiftLayerTrait, super::ShiftLayerInt8TraitConst, super::ShiftLayerInt8Trait, super::CompareLayerTraitConst, super::CompareLayerTrait, super::DataAugmentationLayerTraitConst, super::DataAugmentationLayerTrait, super::CorrelationLayerTraitConst, super::CorrelationLayerTrait, super::AccumLayerTraitConst, super::AccumLayerTrait, super::FlowWarpLayerTraitConst, super::FlowWarpLayerTrait, super::PriorBoxLayerTraitConst, super::PriorBoxLayerTrait, super::ReorgLayerTraitConst, super::ReorgLayerTrait, super::RegionLayerTraitConst, super::RegionLayerTrait, super::DetectionOutputLayerTraitConst, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTraitConst, super::NormalizeBBoxLayerTrait, super::ResizeLayerTraitConst, super::ResizeLayerTrait, super::InterpLayerTraitConst, super::InterpLayerTrait, super::ProposalLayerTraitConst, super::ProposalLayerTrait, super::CropAndResizeLayerTraitConst, super::CropAndResizeLayerTrait, super::CumSumLayerTraitConst, super::CumSumLayerTrait, super::ScatterLayerTraitConst, super::ScatterLayerTrait, super::ScatterNDLayerTraitConst, super::ScatterNDLayerTrait, super::TileLayerTraitConst, super::TileLayerTrait, super::_RangeTraitConst, super::_RangeTrait };
+		pub use { super::DictValueTraitConst, super::DictValueTrait, super::DictTraitConst, super::DictTrait, super::LayerParamsTraitConst, super::LayerParamsTrait, super::BackendNodeTraitConst, super::BackendNodeTrait, super::BackendWrapperTraitConst, super::BackendWrapperTrait, super::LayerTraitConst, super::LayerTrait, super::NetTraitConst, super::NetTrait, super::ModelTraitConst, super::ModelTrait, super::ClassificationModelTraitConst, super::ClassificationModelTrait, super::KeypointsModelTraitConst, super::KeypointsModelTrait, super::SegmentationModelTraitConst, super::SegmentationModelTrait, super::DetectionModelTraitConst, super::DetectionModelTrait, super::TextRecognitionModelTraitConst, super::TextRecognitionModelTrait, super::TextDetectionModelTraitConst, super::TextDetectionModelTrait, super::TextDetectionModel_EASTTraitConst, super::TextDetectionModel_EASTTrait, super::TextDetectionModel_DBTraitConst, super::TextDetectionModel_DBTrait, super::LayerFactoryTraitConst, super::LayerFactoryTrait, super::BlankLayerTraitConst, super::BlankLayerTrait, super::ConstLayerTraitConst, super::ConstLayerTrait, super::LSTMLayerTraitConst, super::LSTMLayerTrait, super::GRULayerTraitConst, super::GRULayerTrait, super::RNNLayerTraitConst, super::RNNLayerTrait, super::BaseConvolutionLayerTraitConst, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTraitConst, super::ConvolutionLayerTrait, super::ConvolutionLayerInt8TraitConst, super::ConvolutionLayerInt8Trait, super::DeconvolutionLayerTraitConst, super::DeconvolutionLayerTrait, super::LRNLayerTraitConst, super::LRNLayerTrait, super::ArgLayerTraitConst, super::ArgLayerTrait, super::GatherLayerTraitConst, super::GatherLayerTrait, super::PoolingLayerTraitConst, super::PoolingLayerTrait, super::PoolingLayerInt8TraitConst, super::PoolingLayerInt8Trait, super::ReduceLayerTraitConst, super::ReduceLayerTrait, super::SoftmaxLayerTraitConst, super::SoftmaxLayerTrait, super::SoftmaxLayerInt8TraitConst, super::SoftmaxLayerInt8Trait, super::InnerProductLayerTraitConst, super::InnerProductLayerTrait, super::InnerProductLayerInt8TraitConst, super::InnerProductLayerInt8Trait, super::MVNLayerTraitConst, super::MVNLayerTrait, super::ReshapeLayerTraitConst, super::ReshapeLayerTrait, super::FlattenLayerTraitConst, super::FlattenLayerTrait, super::QuantizeLayerTraitConst, super::QuantizeLayerTrait, super::DequantizeLayerTraitConst, super::DequantizeLayerTrait, super::RequantizeLayerTraitConst, super::RequantizeLayerTrait, super::ConcatLayerTraitConst, super::ConcatLayerTrait, super::SplitLayerTraitConst, super::SplitLayerTrait, super::SliceLayerTraitConst, super::SliceLayerTrait, super::PermuteLayerTraitConst, super::PermuteLayerTrait, super::ShuffleChannelLayerTraitConst, super::ShuffleChannelLayerTrait, super::PaddingLayerTraitConst, super::PaddingLayerTrait, super::ActivationLayerTraitConst, super::ActivationLayerTrait, super::ReLULayerTraitConst, super::ReLULayerTrait, super::ReLU6LayerTraitConst, super::ReLU6LayerTrait, super::ChannelsPReLULayerTraitConst, super::ChannelsPReLULayerTrait, super::ELULayerTraitConst, super::ELULayerTrait, super::TanHLayerTraitConst, super::TanHLayerTrait, super::SwishLayerTraitConst, super::SwishLayerTrait, super::MishLayerTraitConst, super::MishLayerTrait, super::SigmoidLayerTraitConst, super::SigmoidLayerTrait, super::BNLLLayerTraitConst, super::BNLLLayerTrait, super::AbsLayerTraitConst, super::AbsLayerTrait, super::PowerLayerTraitConst, super::PowerLayerTrait, super::ExpLayerTraitConst, super::ExpLayerTrait, super::CeilLayerTraitConst, super::CeilLayerTrait, super::FloorLayerTraitConst, super::FloorLayerTrait, super::LogLayerTraitConst, super::LogLayerTrait, super::RoundLayerTraitConst, super::RoundLayerTrait, super::SqrtLayerTraitConst, super::SqrtLayerTrait, super::NotLayerTraitConst, super::NotLayerTrait, super::AcosLayerTraitConst, super::AcosLayerTrait, super::AcoshLayerTraitConst, super::AcoshLayerTrait, super::AsinLayerTraitConst, super::AsinLayerTrait, super::AsinhLayerTraitConst, super::AsinhLayerTrait, super::AtanLayerTraitConst, super::AtanLayerTrait, super::AtanhLayerTraitConst, super::AtanhLayerTrait, super::CosLayerTraitConst, super::CosLayerTrait, super::CoshLayerTraitConst, super::CoshLayerTrait, super::ErfLayerTraitConst, super::ErfLayerTrait, super::HardSwishLayerTraitConst, super::HardSwishLayerTrait, super::SinLayerTraitConst, super::SinLayerTrait, super::SinhLayerTraitConst, super::SinhLayerTrait, super::SoftplusLayerTraitConst, super::SoftplusLayerTrait, super::SoftsignLayerTraitConst, super::SoftsignLayerTrait, super::TanLayerTraitConst, super::TanLayerTrait, super::CeluLayerTraitConst, super::CeluLayerTrait, super::HardSigmoidLayerTraitConst, super::HardSigmoidLayerTrait, super::SeluLayerTraitConst, super::SeluLayerTrait, super::GeluLayerTraitConst, super::GeluLayerTrait, super::GeluApproximationLayerTraitConst, super::GeluApproximationLayerTrait, super::ThresholdedReluLayerTraitConst, super::ThresholdedReluLayerTrait, super::ActivationLayerInt8TraitConst, super::ActivationLayerInt8Trait, super::SignLayerTraitConst, super::SignLayerTrait, super::ShrinkLayerTraitConst, super::ShrinkLayerTrait, super::ReciprocalLayerTraitConst, super::ReciprocalLayerTrait, super::CropLayerTraitConst, super::CropLayerTrait, super::EltwiseLayerTraitConst, super::EltwiseLayerTrait, super::EltwiseLayerInt8TraitConst, super::EltwiseLayerInt8Trait, super::NaryEltwiseLayerTraitConst, super::NaryEltwiseLayerTrait, super::BatchNormLayerTraitConst, super::BatchNormLayerTrait, super::BatchNormLayerInt8TraitConst, super::BatchNormLayerInt8Trait, super::MaxUnpoolLayerTraitConst, super::MaxUnpoolLayerTrait, super::ScaleLayerTraitConst, super::ScaleLayerTrait, super::ScaleLayerInt8TraitConst, super::ScaleLayerInt8Trait, super::ShiftLayerTraitConst, super::ShiftLayerTrait, super::ShiftLayerInt8TraitConst, super::ShiftLayerInt8Trait, super::CompareLayerTraitConst, super::CompareLayerTrait, super::DataAugmentationLayerTraitConst, super::DataAugmentationLayerTrait, super::CorrelationLayerTraitConst, super::CorrelationLayerTrait, super::AccumLayerTraitConst, super::AccumLayerTrait, super::FlowWarpLayerTraitConst, super::FlowWarpLayerTrait, super::PriorBoxLayerTraitConst, super::PriorBoxLayerTrait, super::ReorgLayerTraitConst, super::ReorgLayerTrait, super::RegionLayerTraitConst, super::RegionLayerTrait, super::DetectionOutputLayerTraitConst, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTraitConst, super::NormalizeBBoxLayerTrait, super::ResizeLayerTraitConst, super::ResizeLayerTrait, super::InterpLayerTraitConst, super::InterpLayerTrait, super::ProposalLayerTraitConst, super::ProposalLayerTrait, super::CropAndResizeLayerTraitConst, super::CropAndResizeLayerTrait, super::CumSumLayerTraitConst, super::CumSumLayerTrait, super::ScatterLayerTraitConst, super::ScatterLayerTrait, super::ScatterNDLayerTraitConst, super::ScatterNDLayerTrait, super::TileLayerTraitConst, super::TileLayerTrait, super::LayerNormLayerTraitConst, super::LayerNormLayerTrait, super::_RangeTraitConst, super::_RangeTrait };
 	}
 	
 	pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: &str = "NGRAPH";
@@ -38,7 +38,24 @@ pub mod dnn {
 	pub const DNN_BACKEND_TIMVX: i32 = 7;
 	pub const DNN_BACKEND_VKCOM: i32 = 4;
 	pub const DNN_BACKEND_WEBNN: i32 = 6;
+	/// OpenCV data layout for 5D data.
+	pub const DNN_LAYOUT_NCDHW: i32 = 3;
+	/// OpenCV data layout for 4D data.
+	pub const DNN_LAYOUT_NCHW: i32 = 2;
+	/// OpenCV data layout for 2D data.
+	pub const DNN_LAYOUT_ND: i32 = 1;
+	/// Tensorflow-like data layout for 5D data.
+	pub const DNN_LAYOUT_NDHWC: i32 = 5;
+	/// Tensorflow-like data layout for 4D data.
+	pub const DNN_LAYOUT_NHWC: i32 = 4;
+	/// Tensorflow-like data layout, it should only be used at tf or tflite model parsing.
+	pub const DNN_LAYOUT_PLANAR: i32 = 6;
+	pub const DNN_LAYOUT_UNKNOWN: i32 = 0;
+	pub const DNN_PMODE_CROP_CENTER: i32 = 1;
+	pub const DNN_PMODE_LETTERBOX: i32 = 2;
+	pub const DNN_PMODE_NULL: i32 = 0;
 	pub const DNN_TARGET_CPU: i32 = 0;
+	pub const DNN_TARGET_CPU_FP16: i32 = 10;
 	pub const DNN_TARGET_CUDA: i32 = 6;
 	pub const DNN_TARGET_CUDA_FP16: i32 = 7;
 	/// FPGA device with CPU fallbacks using Inference Engine's Heterogeneous plugin.
@@ -49,7 +66,7 @@ pub mod dnn {
 	pub const DNN_TARGET_OPENCL: i32 = 1;
 	pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 	pub const DNN_TARGET_VULKAN: i32 = 4;
-	pub const OPENCV_DNN_API_VERSION: i32 = 20221220;
+	pub const OPENCV_DNN_API_VERSION: i32 = 20230620;
 	pub const SoftNMSMethod_SOFTNMS_GAUSSIAN: i32 = 2;
 	pub const SoftNMSMethod_SOFTNMS_LINEAR: i32 = 1;
 	/// Enum of computation backends supported by layers.
@@ -80,6 +97,44 @@ pub mod dnn {
 	
 	opencv_type_enum! { crate::dnn::Backend }
 	
+	/// Enum of data layout for model inference.
+	/// ## See also
+	/// Image2BlobParams
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum DataLayout {
+		DNN_LAYOUT_UNKNOWN = 0,
+		/// OpenCV data layout for 2D data.
+		DNN_LAYOUT_ND = 1,
+		/// OpenCV data layout for 4D data.
+		DNN_LAYOUT_NCHW = 2,
+		/// OpenCV data layout for 5D data.
+		DNN_LAYOUT_NCDHW = 3,
+		/// Tensorflow-like data layout for 4D data.
+		DNN_LAYOUT_NHWC = 4,
+		/// Tensorflow-like data layout for 5D data.
+		DNN_LAYOUT_NDHWC = 5,
+		/// Tensorflow-like data layout, it should only be used at tf or tflite model parsing.
+		DNN_LAYOUT_PLANAR = 6,
+	}
+	
+	opencv_type_enum! { crate::dnn::DataLayout }
+	
+	/// Enum of image processing mode.
+	/// To facilitate the specialization pre-processing requirements of the dnn model.
+	/// For example, the `letter box` often used in the Yolo series of models.
+	/// ## See also
+	/// Image2BlobParams
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ImagePaddingMode {
+		DNN_PMODE_NULL = 0,
+		DNN_PMODE_CROP_CENTER = 1,
+		DNN_PMODE_LETTERBOX = 2,
+	}
+	
+	opencv_type_enum! { crate::dnn::ImagePaddingMode }
+	
 	/// Enum of Soft NMS methods.
 	/// ## See also
 	/// softNMSBoxes
@@ -109,6 +164,7 @@ pub mod dnn {
 		DNN_TARGET_CUDA_FP16 = 7,
 		DNN_TARGET_HDDL = 8,
 		DNN_TARGET_NPU = 9,
+		DNN_TARGET_CPU_FP16 = 10,
 	}
 	
 	opencv_type_enum! { crate::dnn::Target }
@@ -205,6 +261,56 @@ pub mod dnn {
 		Ok(ret)
 	}
 	
+	/// Creates 4-dimensional blob from image with given params.
+	/// 
+	/// @details This function is an extension of [blobFromImage] to meet more image preprocess needs.
+	/// Given input image and preprocessing parameters, and function outputs the blob.
+	/// 
+	/// ## Parameters
+	/// * image: input image (all with 1-, 3- or 4-channels).
+	/// * param: struct of Image2BlobParams, contains all parameters needed by processing of image to blob.
+	/// ## Returns
+	/// 4-dimensional Mat.
+	/// 
+	/// ## C++ default parameters
+	/// * param: Image2BlobParams()
+	#[inline]
+	pub fn blob_from_image_with_params(image: &impl core::ToInputArray, param: crate::dnn::Image2BlobParams) -> Result<core::Mat> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImageWithParams_const__InputArrayR_const_Image2BlobParamsR(image.as_raw__InputArray(), &param, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates 4-dimensional blob from image with given params.
+	/// 
+	/// @details This function is an extension of [blobFromImage] to meet more image preprocess needs.
+	/// Given input image and preprocessing parameters, and function outputs the blob.
+	/// 
+	/// ## Parameters
+	/// * image: input image (all with 1-, 3- or 4-channels).
+	/// * param: struct of Image2BlobParams, contains all parameters needed by processing of image to blob.
+	/// ## Returns
+	/// 4-dimensional Mat.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## C++ default parameters
+	/// * param: Image2BlobParams()
+	#[inline]
+	pub fn blob_from_image_with_params_1(image: &impl core::ToInputArray, blob: &mut impl core::ToOutputArray, param: crate::dnn::Image2BlobParams) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(blob);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImageWithParams_const__InputArrayR_const__OutputArrayR_const_Image2BlobParamsR(image.as_raw__InputArray(), blob.as_raw__OutputArray(), &param, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Creates 4-dimensional blob from image.
 	/// @details This is an overloaded member function, provided for convenience.
 	///          It differs from the above function only in what argument(s) it accepts.
@@ -228,22 +334,26 @@ pub mod dnn {
 	}
 	
 	/// Creates 4-dimensional blob from image. Optionally resizes and crops @p image from center,
-	/// subtract @p mean values, scales values by @p scalefactor, swap Blue and Red channels.
+	///  subtract @p mean values, scales values by @p scalefactor, swap Blue and Red channels.
 	/// ## Parameters
 	/// * image: input image (with 1-, 3- or 4-channels).
+	/// * scalefactor: multiplier for @p images values.
 	/// * size: spatial size for output image
 	/// * mean: scalar with mean values which are subtracted from channels. Values are intended
-	/// to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.
-	/// * scalefactor: multiplier for @p image values.
+	///  to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.
 	/// * swapRB: flag which indicates that swap first and last channels
-	/// in 3-channel image is necessary.
+	///  in 3-channel image is necessary.
 	/// * crop: flag which indicates whether image will be cropped after resize or not
 	/// * ddepth: Depth of output blob. Choose CV_32F or CV_8U.
-	/// @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
-	/// dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
-	/// If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
+	///  @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
+	///  dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
+	///  If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
 	/// ## Returns
 	/// 4-dimensional Mat with NCHW dimensions order.
+	/// 
+	/// 
+	/// Note:
+	/// The order and usage of `scalefactor` and `mean` are (input - mean) * scalefactor.
 	/// 
 	/// ## C++ default parameters
 	/// * scalefactor: 1.0
@@ -260,6 +370,56 @@ pub mod dnn {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates 4-dimensional blob from series of images with given params.
+	/// 
+	/// @details This function is an extension of [blobFromImages] to meet more image preprocess needs.
+	/// Given input image and preprocessing parameters, and function outputs the blob.
+	/// 
+	/// ## Parameters
+	/// * images: input image (all with 1-, 3- or 4-channels).
+	/// * param: struct of Image2BlobParams, contains all parameters needed by processing of image to blob.
+	/// ## Returns
+	/// 4-dimensional Mat.
+	/// 
+	/// ## C++ default parameters
+	/// * param: Image2BlobParams()
+	#[inline]
+	pub fn blob_from_images_with_params(images: &impl core::ToInputArray, param: crate::dnn::Image2BlobParams) -> Result<core::Mat> {
+		input_array_arg!(images);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImagesWithParams_const__InputArrayR_const_Image2BlobParamsR(images.as_raw__InputArray(), &param, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates 4-dimensional blob from series of images with given params.
+	/// 
+	/// @details This function is an extension of [blobFromImages] to meet more image preprocess needs.
+	/// Given input image and preprocessing parameters, and function outputs the blob.
+	/// 
+	/// ## Parameters
+	/// * images: input image (all with 1-, 3- or 4-channels).
+	/// * param: struct of Image2BlobParams, contains all parameters needed by processing of image to blob.
+	/// ## Returns
+	/// 4-dimensional Mat.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// ## C++ default parameters
+	/// * param: Image2BlobParams()
+	#[inline]
+	pub fn blob_from_images_with_params_1(images: &impl core::ToInputArray, blob: &mut impl core::ToOutputArray, param: crate::dnn::Image2BlobParams) -> Result<()> {
+		input_array_arg!(images);
+		output_array_arg!(blob);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImagesWithParams_const__InputArrayR_const__OutputArrayR_const_Image2BlobParamsR(images.as_raw__InputArray(), blob.as_raw__OutputArray(), &param, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -286,23 +446,27 @@ pub mod dnn {
 	}
 	
 	/// Creates 4-dimensional blob from series of images. Optionally resizes and
-	/// crops @p images from center, subtract @p mean values, scales values by @p scalefactor,
-	/// swap Blue and Red channels.
+	///  crops @p images from center, subtract @p mean values, scales values by @p scalefactor,
+	///  swap Blue and Red channels.
 	/// ## Parameters
 	/// * images: input images (all with 1-, 3- or 4-channels).
 	/// * size: spatial size for output image
 	/// * mean: scalar with mean values which are subtracted from channels. Values are intended
-	/// to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.
+	///  to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.
 	/// * scalefactor: multiplier for @p images values.
 	/// * swapRB: flag which indicates that swap first and last channels
-	/// in 3-channel image is necessary.
+	///  in 3-channel image is necessary.
 	/// * crop: flag which indicates whether image will be cropped after resize or not
 	/// * ddepth: Depth of output blob. Choose CV_32F or CV_8U.
-	/// @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
-	/// dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
-	/// If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
+	///  @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
+	///  dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
+	///  If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
 	/// ## Returns
 	/// 4-dimensional Mat with NCHW dimensions order.
+	/// 
+	/// 
+	/// Note:
+	/// The order and usage of `scalefactor` and `mean` are (input - mean) * scalefactor.
 	/// 
 	/// ## C++ default parameters
 	/// * scalefactor: 1.0
@@ -514,8 +678,6 @@ pub mod dnn {
 	/// * darknetModel: path to the .weights file with learned network.
 	/// ## Returns
 	/// Network object that ready to do forward, throw an exception in failure cases.
-	/// ## Returns
-	/// Net object.
 	/// 
 	/// ## C++ default parameters
 	/// * darknet_model: String()
@@ -678,6 +840,54 @@ pub mod dnn {
 	pub fn read_net_from_onnx_buffer(buffer: &core::Vector<u8>) -> Result<crate::dnn::Net> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_readNetFromONNX_const_vectorLunsigned_charGR(buffer.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="https://www.tensorflow.org/lite">TFLite</a> framework's format.
+	/// ## Parameters
+	/// * model: path to the .tflite file with binary flatbuffers description of the network architecture
+	/// ## Returns
+	/// Net object.
+	#[inline]
+	pub fn read_net_from_tf_lite(model: &str) -> Result<crate::dnn::Net> {
+		extern_container_arg!(model);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromTFLite_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="https://www.tensorflow.org/lite">TFLite</a> framework's format.
+	/// @details This is an overloaded member function, provided for convenience.
+	/// It differs from the above function only in what argument(s) it accepts.
+	/// ## Parameters
+	/// * bufferModel: buffer containing the content of the tflite file
+	/// * lenModel: length of bufferModel
+	#[inline]
+	pub fn read_net_from_tf_lite_2(buffer_model: &str, len_model: size_t) -> Result<crate::dnn::Net> {
+		extern_container_arg!(buffer_model);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromTFLite_const_charX_size_t(buffer_model.opencv_as_extern(), len_model, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="https://www.tensorflow.org/lite">TFLite</a> framework's format.
+	/// ## Parameters
+	/// * bufferModel: buffer containing the content of the tflite file
+	/// ## Returns
+	/// Net object.
+	#[inline]
+	pub fn read_net_from_tf_lite_1(buffer_model: &core::Vector<u8>) -> Result<crate::dnn::Net> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromTFLite_const_vectorLunsigned_charGR(buffer_model.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
@@ -1201,6 +1411,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { AbsLayer, crate::dnn::Layer, cv_AbsLayer_to_Layer }
 	
+	impl std::fmt::Debug for AbsLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AbsLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::AccumLayer]
 	pub trait AccumLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_AccumLayer(&self) -> *const c_void;
@@ -1269,6 +1491,18 @@ pub mod dnn {
 	boxed_cast_base! { AccumLayer, core::Algorithm, cv_AccumLayer_to_Algorithm }
 	
 	boxed_cast_base! { AccumLayer, crate::dnn::Layer, cv_AccumLayer_to_Layer }
+	
+	impl std::fmt::Debug for AccumLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AccumLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::AcosLayer]
 	pub trait AcosLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -1349,6 +1583,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { AcosLayer, crate::dnn::Layer, cv_AcosLayer_to_Layer }
 	
+	impl std::fmt::Debug for AcosLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AcosLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::AcoshLayer]
 	pub trait AcoshLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_AcoshLayer(&self) -> *const c_void;
@@ -1427,6 +1673,18 @@ pub mod dnn {
 	boxed_cast_base! { AcoshLayer, core::Algorithm, cv_AcoshLayer_to_Algorithm }
 	
 	boxed_cast_base! { AcoshLayer, crate::dnn::Layer, cv_AcoshLayer_to_Layer }
+	
+	impl std::fmt::Debug for AcoshLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AcoshLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ActivationLayer]
 	pub trait ActivationLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -1539,6 +1797,10 @@ pub mod dnn {
 	
 	boxed_cast_descendant! { ActivationLayer, crate::dnn::FloorLayer, cv_ActivationLayer_to_FloorLayer }
 	
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::GeluApproximationLayer, cv_ActivationLayer_to_GeluApproximationLayer }
+	
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::GeluLayer, cv_ActivationLayer_to_GeluLayer }
+	
 	boxed_cast_descendant! { ActivationLayer, crate::dnn::HardSigmoidLayer, cv_ActivationLayer_to_HardSigmoidLayer }
 	
 	boxed_cast_descendant! { ActivationLayer, crate::dnn::HardSwishLayer, cv_ActivationLayer_to_HardSwishLayer }
@@ -1588,6 +1850,18 @@ pub mod dnn {
 	boxed_cast_base! { ActivationLayer, core::Algorithm, cv_ActivationLayer_to_Algorithm }
 	
 	boxed_cast_base! { ActivationLayer, crate::dnn::Layer, cv_ActivationLayer_to_Layer }
+	
+	impl std::fmt::Debug for ActivationLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ActivationLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ActivationLayerInt8]
 	pub trait ActivationLayerInt8TraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -1668,6 +1942,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { ActivationLayerInt8, crate::dnn::Layer, cv_ActivationLayerInt8_to_Layer }
 	
+	impl std::fmt::Debug for ActivationLayerInt8 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ActivationLayerInt8")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ArgLayer]
 	pub trait ArgLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ArgLayer(&self) -> *const c_void;
@@ -1739,6 +2025,18 @@ pub mod dnn {
 	boxed_cast_base! { ArgLayer, core::Algorithm, cv_ArgLayer_to_Algorithm }
 	
 	boxed_cast_base! { ArgLayer, crate::dnn::Layer, cv_ArgLayer_to_Layer }
+	
+	impl std::fmt::Debug for ArgLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ArgLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::AsinLayer]
 	pub trait AsinLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -1819,6 +2117,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { AsinLayer, crate::dnn::Layer, cv_AsinLayer_to_Layer }
 	
+	impl std::fmt::Debug for AsinLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AsinLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::AsinhLayer]
 	pub trait AsinhLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_AsinhLayer(&self) -> *const c_void;
@@ -1897,6 +2207,18 @@ pub mod dnn {
 	boxed_cast_base! { AsinhLayer, core::Algorithm, cv_AsinhLayer_to_Algorithm }
 	
 	boxed_cast_base! { AsinhLayer, crate::dnn::Layer, cv_AsinhLayer_to_Layer }
+	
+	impl std::fmt::Debug for AsinhLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AsinhLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::AtanLayer]
 	pub trait AtanLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -1977,6 +2299,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { AtanLayer, crate::dnn::Layer, cv_AtanLayer_to_Layer }
 	
+	impl std::fmt::Debug for AtanLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AtanLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::AtanhLayer]
 	pub trait AtanhLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_AtanhLayer(&self) -> *const c_void;
@@ -2055,6 +2389,18 @@ pub mod dnn {
 	boxed_cast_base! { AtanhLayer, core::Algorithm, cv_AtanhLayer_to_Algorithm }
 	
 	boxed_cast_base! { AtanhLayer, crate::dnn::Layer, cv_AtanhLayer_to_Layer }
+	
+	impl std::fmt::Debug for AtanhLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AtanhLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::BNLLLayer]
 	pub trait BNLLLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -2135,6 +2481,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { BNLLLayer, crate::dnn::Layer, cv_BNLLLayer_to_Layer }
 	
+	impl std::fmt::Debug for BNLLLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BNLLLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::BackendNode]
 	pub trait BackendNodeTraitConst {
 		fn as_raw_BackendNode(&self) -> *const c_void;
@@ -2187,6 +2545,15 @@ pub mod dnn {
 	}
 	
 	impl BackendNode {
+	}
+	
+	impl std::fmt::Debug for BackendNode {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackendNode")
+				.field("backend_id", &crate::dnn::BackendNodeTraitConst::backend_id(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::dnn::BackendWrapper]
@@ -2275,6 +2642,16 @@ pub mod dnn {
 	}
 	
 	impl BackendWrapper {
+	}
+	
+	impl std::fmt::Debug for BackendWrapper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackendWrapper")
+				.field("backend_id", &crate::dnn::BackendWrapperTraitConst::backend_id(self))
+				.field("target_id", &crate::dnn::BackendWrapperTraitConst::target_id(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::dnn::BaseConvolutionLayer]
@@ -2510,6 +2887,31 @@ pub mod dnn {
 	
 	boxed_cast_base! { BaseConvolutionLayer, crate::dnn::Layer, cv_BaseConvolutionLayer_to_Layer }
 	
+	impl std::fmt::Debug for BaseConvolutionLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BaseConvolutionLayer")
+				.field("kernel", &crate::dnn::BaseConvolutionLayerTraitConst::kernel(self))
+				.field("stride", &crate::dnn::BaseConvolutionLayerTraitConst::stride(self))
+				.field("pad", &crate::dnn::BaseConvolutionLayerTraitConst::pad(self))
+				.field("dilation", &crate::dnn::BaseConvolutionLayerTraitConst::dilation(self))
+				.field("adjust_pad", &crate::dnn::BaseConvolutionLayerTraitConst::adjust_pad(self))
+				.field("adjust_pads", &crate::dnn::BaseConvolutionLayerTraitConst::adjust_pads(self))
+				.field("kernel_size", &crate::dnn::BaseConvolutionLayerTraitConst::kernel_size(self))
+				.field("strides", &crate::dnn::BaseConvolutionLayerTraitConst::strides(self))
+				.field("dilations", &crate::dnn::BaseConvolutionLayerTraitConst::dilations(self))
+				.field("pads_begin", &crate::dnn::BaseConvolutionLayerTraitConst::pads_begin(self))
+				.field("pads_end", &crate::dnn::BaseConvolutionLayerTraitConst::pads_end(self))
+				.field("pad_mode", &crate::dnn::BaseConvolutionLayerTraitConst::pad_mode(self))
+				.field("num_output", &crate::dnn::BaseConvolutionLayerTraitConst::num_output(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::BatchNormLayer]
 	pub trait BatchNormLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_BatchNormLayer(&self) -> *const c_void;
@@ -2624,6 +3026,21 @@ pub mod dnn {
 	boxed_cast_base! { BatchNormLayer, core::Algorithm, cv_BatchNormLayer_to_Algorithm }
 	
 	boxed_cast_base! { BatchNormLayer, crate::dnn::Layer, cv_BatchNormLayer_to_Layer }
+	
+	impl std::fmt::Debug for BatchNormLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BatchNormLayer")
+				.field("has_weights", &crate::dnn::BatchNormLayerTraitConst::has_weights(self))
+				.field("has_bias", &crate::dnn::BatchNormLayerTraitConst::has_bias(self))
+				.field("epsilon", &crate::dnn::BatchNormLayerTraitConst::epsilon(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::BatchNormLayerInt8]
 	pub trait BatchNormLayerInt8TraitConst: crate::dnn::BatchNormLayerTraitConst {
@@ -2762,6 +3179,25 @@ pub mod dnn {
 	
 	boxed_cast_base! { BatchNormLayerInt8, crate::dnn::Layer, cv_BatchNormLayerInt8_to_Layer }
 	
+	impl std::fmt::Debug for BatchNormLayerInt8 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BatchNormLayerInt8")
+				.field("input_sc", &crate::dnn::BatchNormLayerInt8TraitConst::input_sc(self))
+				.field("output_sc", &crate::dnn::BatchNormLayerInt8TraitConst::output_sc(self))
+				.field("input_zp", &crate::dnn::BatchNormLayerInt8TraitConst::input_zp(self))
+				.field("output_zp", &crate::dnn::BatchNormLayerInt8TraitConst::output_zp(self))
+				.field("has_weights", &crate::dnn::BatchNormLayerTraitConst::has_weights(self))
+				.field("has_bias", &crate::dnn::BatchNormLayerTraitConst::has_bias(self))
+				.field("epsilon", &crate::dnn::BatchNormLayerTraitConst::epsilon(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::BlankLayer]
 	pub trait BlankLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_BlankLayer(&self) -> *const c_void;
@@ -2850,6 +3286,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { BlankLayer, crate::dnn::Layer, cv_BlankLayer_to_Layer }
 	
+	impl std::fmt::Debug for BlankLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BlankLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::CeilLayer]
 	pub trait CeilLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_CeilLayer(&self) -> *const c_void;
@@ -2928,6 +3376,18 @@ pub mod dnn {
 	boxed_cast_base! { CeilLayer, core::Algorithm, cv_CeilLayer_to_Algorithm }
 	
 	boxed_cast_base! { CeilLayer, crate::dnn::Layer, cv_CeilLayer_to_Layer }
+	
+	impl std::fmt::Debug for CeilLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CeilLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::CeluLayer]
 	pub trait CeluLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -3020,6 +3480,19 @@ pub mod dnn {
 	
 	boxed_cast_base! { CeluLayer, crate::dnn::Layer, cv_CeluLayer_to_Layer }
 	
+	impl std::fmt::Debug for CeluLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CeluLayer")
+				.field("alpha", &crate::dnn::CeluLayerTraitConst::alpha(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ChannelsPReLULayer]
 	pub trait ChannelsPReLULayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_ChannelsPReLULayer(&self) -> *const c_void;
@@ -3098,6 +3571,18 @@ pub mod dnn {
 	boxed_cast_base! { ChannelsPReLULayer, core::Algorithm, cv_ChannelsPReLULayer_to_Algorithm }
 	
 	boxed_cast_base! { ChannelsPReLULayer, crate::dnn::Layer, cv_ChannelsPReLULayer_to_Layer }
+	
+	impl std::fmt::Debug for ChannelsPReLULayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ChannelsPReLULayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ClassificationModel]
 	pub trait ClassificationModelTraitConst: crate::dnn::ModelTraitConst {
@@ -3256,12 +3741,20 @@ pub mod dnn {
 	impl Clone for ClassificationModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_ClassificationModel_implicit_clone(val: extern_send!(ClassificationModel)) -> extern_receive!(ClassificationModel: 'static); }
-			unsafe { Self::from_raw(cv_ClassificationModel_implicit_clone(self.as_raw_ClassificationModel())) }
+			extern "C" { fn cv_ClassificationModel_implicitClone_const_ClassificationModel(val: extern_send!(ClassificationModel)) -> extern_receive!(ClassificationModel: 'static); }
+			unsafe { Self::from_raw(cv_ClassificationModel_implicitClone_const_ClassificationModel(self.as_raw_ClassificationModel())) }
 		}
 	}
 	
 	boxed_cast_base! { ClassificationModel, crate::dnn::Model, cv_ClassificationModel_to_Model }
+	
+	impl std::fmt::Debug for ClassificationModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ClassificationModel")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::CompareLayer]
 	pub trait CompareLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -3331,6 +3824,18 @@ pub mod dnn {
 	boxed_cast_base! { CompareLayer, core::Algorithm, cv_CompareLayer_to_Algorithm }
 	
 	boxed_cast_base! { CompareLayer, crate::dnn::Layer, cv_CompareLayer_to_Layer }
+	
+	impl std::fmt::Debug for CompareLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CompareLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ConcatLayer]
 	pub trait ConcatLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -3445,6 +3950,21 @@ pub mod dnn {
 	
 	boxed_cast_base! { ConcatLayer, crate::dnn::Layer, cv_ConcatLayer_to_Layer }
 	
+	impl std::fmt::Debug for ConcatLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ConcatLayer")
+				.field("axis", &crate::dnn::ConcatLayerTraitConst::axis(self))
+				.field("padding", &crate::dnn::ConcatLayerTraitConst::padding(self))
+				.field("padding_value", &crate::dnn::ConcatLayerTraitConst::padding_value(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ConstLayer]
 	pub trait ConstLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ConstLayer(&self) -> *const c_void;
@@ -3515,6 +4035,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { ConstLayer, crate::dnn::Layer, cv_ConstLayer_to_Layer }
 	
+	impl std::fmt::Debug for ConstLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ConstLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ConvolutionLayer]
 	pub trait ConvolutionLayerTraitConst: crate::dnn::BaseConvolutionLayerTraitConst {
 		fn as_raw_ConvolutionLayer(&self) -> *const c_void;
@@ -3528,12 +4060,6 @@ pub mod dnn {
 		#[inline]
 		fn fused_add(&self) -> bool {
 			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_getPropFusedAdd_const(self.as_raw_ConvolutionLayer()) };
-			ret
-		}
-		
-		#[inline]
-		fn is_conv_2d(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_getPropIsConv2D_const(self.as_raw_ConvolutionLayer()) };
 			ret
 		}
 		
@@ -3562,14 +4088,6 @@ pub mod dnn {
 		#[inline]
 		fn set_fused_add(&mut self, val: bool) {
 			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_setPropFusedAdd_bool(self.as_raw_mut_ConvolutionLayer(), val) };
-			ret
-		}
-		
-		/// ## C++ default parameters
-		/// * val: false
-		#[inline]
-		fn set_is_conv_2d(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_setPropIsConv2D_bool(self.as_raw_mut_ConvolutionLayer(), val) };
 			ret
 		}
 		
@@ -3649,6 +4167,34 @@ pub mod dnn {
 	boxed_cast_base! { ConvolutionLayer, crate::dnn::BaseConvolutionLayer, cv_ConvolutionLayer_to_BaseConvolutionLayer }
 	
 	boxed_cast_base! { ConvolutionLayer, crate::dnn::Layer, cv_ConvolutionLayer_to_Layer }
+	
+	impl std::fmt::Debug for ConvolutionLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ConvolutionLayer")
+				.field("fused_activation", &crate::dnn::ConvolutionLayerTraitConst::fused_activation(self))
+				.field("fused_add", &crate::dnn::ConvolutionLayerTraitConst::fused_add(self))
+				.field("use_winograd", &crate::dnn::ConvolutionLayerTraitConst::use_winograd(self))
+				.field("kernel", &crate::dnn::BaseConvolutionLayerTraitConst::kernel(self))
+				.field("stride", &crate::dnn::BaseConvolutionLayerTraitConst::stride(self))
+				.field("pad", &crate::dnn::BaseConvolutionLayerTraitConst::pad(self))
+				.field("dilation", &crate::dnn::BaseConvolutionLayerTraitConst::dilation(self))
+				.field("adjust_pad", &crate::dnn::BaseConvolutionLayerTraitConst::adjust_pad(self))
+				.field("adjust_pads", &crate::dnn::BaseConvolutionLayerTraitConst::adjust_pads(self))
+				.field("kernel_size", &crate::dnn::BaseConvolutionLayerTraitConst::kernel_size(self))
+				.field("strides", &crate::dnn::BaseConvolutionLayerTraitConst::strides(self))
+				.field("dilations", &crate::dnn::BaseConvolutionLayerTraitConst::dilations(self))
+				.field("pads_begin", &crate::dnn::BaseConvolutionLayerTraitConst::pads_begin(self))
+				.field("pads_end", &crate::dnn::BaseConvolutionLayerTraitConst::pads_end(self))
+				.field("pad_mode", &crate::dnn::BaseConvolutionLayerTraitConst::pad_mode(self))
+				.field("num_output", &crate::dnn::BaseConvolutionLayerTraitConst::num_output(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ConvolutionLayerInt8]
 	pub trait ConvolutionLayerInt8TraitConst: crate::dnn::BaseConvolutionLayerTraitConst {
@@ -3803,6 +4349,37 @@ pub mod dnn {
 	
 	boxed_cast_base! { ConvolutionLayerInt8, crate::dnn::Layer, cv_ConvolutionLayerInt8_to_Layer }
 	
+	impl std::fmt::Debug for ConvolutionLayerInt8 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ConvolutionLayerInt8")
+				.field("input_zp", &crate::dnn::ConvolutionLayerInt8TraitConst::input_zp(self))
+				.field("output_zp", &crate::dnn::ConvolutionLayerInt8TraitConst::output_zp(self))
+				.field("input_sc", &crate::dnn::ConvolutionLayerInt8TraitConst::input_sc(self))
+				.field("output_sc", &crate::dnn::ConvolutionLayerInt8TraitConst::output_sc(self))
+				.field("per_channel", &crate::dnn::ConvolutionLayerInt8TraitConst::per_channel(self))
+				.field("use_winograd", &crate::dnn::ConvolutionLayerInt8TraitConst::use_winograd(self))
+				.field("kernel", &crate::dnn::BaseConvolutionLayerTraitConst::kernel(self))
+				.field("stride", &crate::dnn::BaseConvolutionLayerTraitConst::stride(self))
+				.field("pad", &crate::dnn::BaseConvolutionLayerTraitConst::pad(self))
+				.field("dilation", &crate::dnn::BaseConvolutionLayerTraitConst::dilation(self))
+				.field("adjust_pad", &crate::dnn::BaseConvolutionLayerTraitConst::adjust_pad(self))
+				.field("adjust_pads", &crate::dnn::BaseConvolutionLayerTraitConst::adjust_pads(self))
+				.field("kernel_size", &crate::dnn::BaseConvolutionLayerTraitConst::kernel_size(self))
+				.field("strides", &crate::dnn::BaseConvolutionLayerTraitConst::strides(self))
+				.field("dilations", &crate::dnn::BaseConvolutionLayerTraitConst::dilations(self))
+				.field("pads_begin", &crate::dnn::BaseConvolutionLayerTraitConst::pads_begin(self))
+				.field("pads_end", &crate::dnn::BaseConvolutionLayerTraitConst::pads_end(self))
+				.field("pad_mode", &crate::dnn::BaseConvolutionLayerTraitConst::pad_mode(self))
+				.field("num_output", &crate::dnn::BaseConvolutionLayerTraitConst::num_output(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::CorrelationLayer]
 	pub trait CorrelationLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_CorrelationLayer(&self) -> *const c_void;
@@ -3871,6 +4448,18 @@ pub mod dnn {
 	boxed_cast_base! { CorrelationLayer, core::Algorithm, cv_CorrelationLayer_to_Algorithm }
 	
 	boxed_cast_base! { CorrelationLayer, crate::dnn::Layer, cv_CorrelationLayer_to_Layer }
+	
+	impl std::fmt::Debug for CorrelationLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CorrelationLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::CosLayer]
 	pub trait CosLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -3951,6 +4540,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { CosLayer, crate::dnn::Layer, cv_CosLayer_to_Layer }
 	
+	impl std::fmt::Debug for CosLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CosLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::CoshLayer]
 	pub trait CoshLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_CoshLayer(&self) -> *const c_void;
@@ -4030,6 +4631,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { CoshLayer, crate::dnn::Layer, cv_CoshLayer_to_Layer }
 	
+	impl std::fmt::Debug for CoshLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CoshLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::CropAndResizeLayer]
 	pub trait CropAndResizeLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_CropAndResizeLayer(&self) -> *const c_void;
@@ -4099,6 +4712,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { CropAndResizeLayer, crate::dnn::Layer, cv_CropAndResizeLayer_to_Layer }
 	
+	impl std::fmt::Debug for CropAndResizeLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CropAndResizeLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::CropLayer]
 	pub trait CropLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_CropLayer(&self) -> *const c_void;
@@ -4167,6 +4792,18 @@ pub mod dnn {
 	boxed_cast_base! { CropLayer, core::Algorithm, cv_CropLayer_to_Algorithm }
 	
 	boxed_cast_base! { CropLayer, crate::dnn::Layer, cv_CropLayer_to_Layer }
+	
+	impl std::fmt::Debug for CropLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CropLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::CumSumLayer]
 	pub trait CumSumLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -4261,6 +4898,20 @@ pub mod dnn {
 	
 	boxed_cast_base! { CumSumLayer, crate::dnn::Layer, cv_CumSumLayer_to_Layer }
 	
+	impl std::fmt::Debug for CumSumLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CumSumLayer")
+				.field("exclusive", &crate::dnn::CumSumLayerTraitConst::exclusive(self))
+				.field("reverse", &crate::dnn::CumSumLayerTraitConst::reverse(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::DataAugmentationLayer]
 	pub trait DataAugmentationLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_DataAugmentationLayer(&self) -> *const c_void;
@@ -4329,6 +4980,18 @@ pub mod dnn {
 	boxed_cast_base! { DataAugmentationLayer, core::Algorithm, cv_DataAugmentationLayer_to_Algorithm }
 	
 	boxed_cast_base! { DataAugmentationLayer, crate::dnn::Layer, cv_DataAugmentationLayer_to_Layer }
+	
+	impl std::fmt::Debug for DataAugmentationLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DataAugmentationLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::DeconvolutionLayer]
 	pub trait DeconvolutionLayerTraitConst: crate::dnn::BaseConvolutionLayerTraitConst {
@@ -4408,6 +5071,31 @@ pub mod dnn {
 	boxed_cast_base! { DeconvolutionLayer, crate::dnn::BaseConvolutionLayer, cv_DeconvolutionLayer_to_BaseConvolutionLayer }
 	
 	boxed_cast_base! { DeconvolutionLayer, crate::dnn::Layer, cv_DeconvolutionLayer_to_Layer }
+	
+	impl std::fmt::Debug for DeconvolutionLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DeconvolutionLayer")
+				.field("kernel", &crate::dnn::BaseConvolutionLayerTraitConst::kernel(self))
+				.field("stride", &crate::dnn::BaseConvolutionLayerTraitConst::stride(self))
+				.field("pad", &crate::dnn::BaseConvolutionLayerTraitConst::pad(self))
+				.field("dilation", &crate::dnn::BaseConvolutionLayerTraitConst::dilation(self))
+				.field("adjust_pad", &crate::dnn::BaseConvolutionLayerTraitConst::adjust_pad(self))
+				.field("adjust_pads", &crate::dnn::BaseConvolutionLayerTraitConst::adjust_pads(self))
+				.field("kernel_size", &crate::dnn::BaseConvolutionLayerTraitConst::kernel_size(self))
+				.field("strides", &crate::dnn::BaseConvolutionLayerTraitConst::strides(self))
+				.field("dilations", &crate::dnn::BaseConvolutionLayerTraitConst::dilations(self))
+				.field("pads_begin", &crate::dnn::BaseConvolutionLayerTraitConst::pads_begin(self))
+				.field("pads_end", &crate::dnn::BaseConvolutionLayerTraitConst::pads_end(self))
+				.field("pad_mode", &crate::dnn::BaseConvolutionLayerTraitConst::pad_mode(self))
+				.field("num_output", &crate::dnn::BaseConvolutionLayerTraitConst::num_output(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::DequantizeLayer]
 	pub trait DequantizeLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -4503,6 +5191,20 @@ pub mod dnn {
 	boxed_cast_base! { DequantizeLayer, core::Algorithm, cv_DequantizeLayer_to_Algorithm }
 	
 	boxed_cast_base! { DequantizeLayer, crate::dnn::Layer, cv_DequantizeLayer_to_Layer }
+	
+	impl std::fmt::Debug for DequantizeLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DequantizeLayer")
+				.field("scales", &crate::dnn::DequantizeLayerTraitConst::scales(self))
+				.field("zeropoints", &crate::dnn::DequantizeLayerTraitConst::zeropoints(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::DetectionModel]
 	pub trait DetectionModelTraitConst: crate::dnn::ModelTraitConst {
@@ -4651,12 +5353,20 @@ pub mod dnn {
 	impl Clone for DetectionModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_DetectionModel_implicit_clone(val: extern_send!(DetectionModel)) -> extern_receive!(DetectionModel: 'static); }
-			unsafe { Self::from_raw(cv_DetectionModel_implicit_clone(self.as_raw_DetectionModel())) }
+			extern "C" { fn cv_DetectionModel_implicitClone_const_DetectionModel(val: extern_send!(DetectionModel)) -> extern_receive!(DetectionModel: 'static); }
+			unsafe { Self::from_raw(cv_DetectionModel_implicitClone_const_DetectionModel(self.as_raw_DetectionModel())) }
 		}
 	}
 	
 	boxed_cast_base! { DetectionModel, crate::dnn::Model, cv_DetectionModel_to_Model }
+	
+	impl std::fmt::Debug for DetectionModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DetectionModel")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::DetectionOutputLayer]
 	pub trait DetectionOutputLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -4733,6 +5443,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { DetectionOutputLayer, crate::dnn::Layer, cv_DetectionOutputLayer_to_Layer }
 	
+	impl std::fmt::Debug for DetectionOutputLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DetectionOutputLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::Dict]
 	pub trait DictTraitConst {
 		fn as_raw_Dict(&self) -> *const c_void;
@@ -4798,7 +5520,7 @@ pub mod dnn {
 			extern_container_arg!(key);
 			extern_container_arg!(value);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_Dict_set_cv_String_const_StringR_const_StringR(self.as_raw_mut_Dict(), key.opencv_as_extern(), value.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_Dict_set_const_cv_String_const_StringR_const_StringR(self.as_raw_mut_Dict(), key.opencv_as_extern(), value.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -4810,7 +5532,7 @@ pub mod dnn {
 		fn set(&mut self, key: &str, value: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_Dict_set_cv_dnn_DictValue_const_StringR_const_DictValueR(self.as_raw_mut_Dict(), key.opencv_as_extern(), value.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_Dict_set_const_cv_dnn_DictValue_const_StringR_const_DictValueR(self.as_raw_mut_Dict(), key.opencv_as_extern(), value.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::DictValue::opencv_from_extern(ret) };
@@ -4822,7 +5544,7 @@ pub mod dnn {
 		fn set_f64(&mut self, key: &str, value: &f64) -> Result<f64> {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_Dict_set_double_const_StringR_const_doubleR(self.as_raw_mut_Dict(), key.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_Dict_set_const_double_const_StringR_const_doubleR(self.as_raw_mut_Dict(), key.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4833,7 +5555,7 @@ pub mod dnn {
 		fn set_i64(&mut self, key: &str, value: &i64) -> Result<i64> {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_Dict_set_int64_t_const_StringR_const_int64_tR(self.as_raw_mut_Dict(), key.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_Dict_set_const_int64_t_const_StringR_const_int64_tR(self.as_raw_mut_Dict(), key.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4878,6 +5600,14 @@ pub mod dnn {
 	}
 	
 	impl Dict {
+	}
+	
+	impl std::fmt::Debug for Dict {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Dict")
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::dnn::DictValue]
@@ -5200,6 +5930,19 @@ pub mod dnn {
 	
 	boxed_cast_base! { ELULayer, crate::dnn::Layer, cv_ELULayer_to_Layer }
 	
+	impl std::fmt::Debug for ELULayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ELULayer")
+				.field("alpha", &crate::dnn::ELULayerTraitConst::alpha(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::EltwiseLayer]
 	pub trait EltwiseLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_EltwiseLayer(&self) -> *const c_void;
@@ -5275,6 +6018,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { EltwiseLayer, crate::dnn::Layer, cv_EltwiseLayer_to_Layer }
 	
+	impl std::fmt::Debug for EltwiseLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EltwiseLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::EltwiseLayerInt8]
 	pub trait EltwiseLayerInt8TraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_EltwiseLayerInt8(&self) -> *const c_void;
@@ -5343,6 +6098,18 @@ pub mod dnn {
 	boxed_cast_base! { EltwiseLayerInt8, core::Algorithm, cv_EltwiseLayerInt8_to_Algorithm }
 	
 	boxed_cast_base! { EltwiseLayerInt8, crate::dnn::Layer, cv_EltwiseLayerInt8_to_Layer }
+	
+	impl std::fmt::Debug for EltwiseLayerInt8 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EltwiseLayerInt8")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ErfLayer]
 	pub trait ErfLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -5422,6 +6189,18 @@ pub mod dnn {
 	boxed_cast_base! { ErfLayer, core::Algorithm, cv_ErfLayer_to_Algorithm }
 	
 	boxed_cast_base! { ErfLayer, crate::dnn::Layer, cv_ErfLayer_to_Layer }
+	
+	impl std::fmt::Debug for ErfLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ErfLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ExpLayer]
 	pub trait ExpLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -5538,6 +6317,21 @@ pub mod dnn {
 	
 	boxed_cast_base! { ExpLayer, crate::dnn::Layer, cv_ExpLayer_to_Layer }
 	
+	impl std::fmt::Debug for ExpLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ExpLayer")
+				.field("base", &crate::dnn::ExpLayerTraitConst::base(self))
+				.field("scale", &crate::dnn::ExpLayerTraitConst::scale(self))
+				.field("shift", &crate::dnn::ExpLayerTraitConst::shift(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::FlattenLayer]
 	pub trait FlattenLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_FlattenLayer(&self) -> *const c_void;
@@ -5606,6 +6400,18 @@ pub mod dnn {
 	boxed_cast_base! { FlattenLayer, core::Algorithm, cv_FlattenLayer_to_Algorithm }
 	
 	boxed_cast_base! { FlattenLayer, crate::dnn::Layer, cv_FlattenLayer_to_Layer }
+	
+	impl std::fmt::Debug for FlattenLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FlattenLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::FloorLayer]
 	pub trait FloorLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -5686,6 +6492,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { FloorLayer, crate::dnn::Layer, cv_FloorLayer_to_Layer }
 	
+	impl std::fmt::Debug for FloorLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FloorLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::FlowWarpLayer]
 	pub trait FlowWarpLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_FlowWarpLayer(&self) -> *const c_void;
@@ -5754,6 +6572,18 @@ pub mod dnn {
 	boxed_cast_base! { FlowWarpLayer, core::Algorithm, cv_FlowWarpLayer_to_Algorithm }
 	
 	boxed_cast_base! { FlowWarpLayer, crate::dnn::Layer, cv_FlowWarpLayer_to_Layer }
+	
+	impl std::fmt::Debug for FlowWarpLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FlowWarpLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::GRULayer]
 	pub trait GRULayerTraitConst: crate::dnn::LayerTraitConst {
@@ -5851,6 +6681,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { GRULayer, crate::dnn::Layer, cv_GRULayer_to_Layer }
 	
+	impl std::fmt::Debug for GRULayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GRULayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::GatherLayer]
 	pub trait GatherLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_GatherLayer(&self) -> *const c_void;
@@ -5920,6 +6762,200 @@ pub mod dnn {
 	boxed_cast_base! { GatherLayer, core::Algorithm, cv_GatherLayer_to_Algorithm }
 	
 	boxed_cast_base! { GatherLayer, crate::dnn::Layer, cv_GatherLayer_to_Layer }
+	
+	impl std::fmt::Debug for GatherLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GatherLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::dnn::GeluApproximationLayer]
+	pub trait GeluApproximationLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
+		fn as_raw_GeluApproximationLayer(&self) -> *const c_void;
+	
+	}
+	
+	/// Mutable methods for [crate::dnn::GeluApproximationLayer]
+	pub trait GeluApproximationLayerTrait: crate::dnn::ActivationLayerTrait + crate::dnn::GeluApproximationLayerTraitConst {
+		fn as_raw_mut_GeluApproximationLayer(&mut self) -> *mut c_void;
+	
+	}
+	
+	pub struct GeluApproximationLayer {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GeluApproximationLayer }
+	
+	impl Drop for GeluApproximationLayer {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_GeluApproximationLayer_delete(instance: *mut c_void); }
+			unsafe { cv_GeluApproximationLayer_delete(self.as_raw_mut_GeluApproximationLayer()) };
+		}
+	}
+	
+	unsafe impl Send for GeluApproximationLayer {}
+	
+	impl crate::dnn::ActivationLayerTraitConst for GeluApproximationLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for GeluApproximationLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for GeluApproximationLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for GeluApproximationLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for GeluApproximationLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for GeluApproximationLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::GeluApproximationLayerTraitConst for GeluApproximationLayer {
+		#[inline] fn as_raw_GeluApproximationLayer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::GeluApproximationLayerTrait for GeluApproximationLayer {
+		#[inline] fn as_raw_mut_GeluApproximationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl GeluApproximationLayer {
+		#[inline]
+		pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr<crate::dnn::GeluApproximationLayer>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_GeluApproximationLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dnn::GeluApproximationLayer>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	boxed_cast_base! { GeluApproximationLayer, crate::dnn::ActivationLayer, cv_GeluApproximationLayer_to_ActivationLayer }
+	
+	boxed_cast_base! { GeluApproximationLayer, core::Algorithm, cv_GeluApproximationLayer_to_Algorithm }
+	
+	boxed_cast_base! { GeluApproximationLayer, crate::dnn::Layer, cv_GeluApproximationLayer_to_Layer }
+	
+	impl std::fmt::Debug for GeluApproximationLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GeluApproximationLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::dnn::GeluLayer]
+	pub trait GeluLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
+		fn as_raw_GeluLayer(&self) -> *const c_void;
+	
+	}
+	
+	/// Mutable methods for [crate::dnn::GeluLayer]
+	pub trait GeluLayerTrait: crate::dnn::ActivationLayerTrait + crate::dnn::GeluLayerTraitConst {
+		fn as_raw_mut_GeluLayer(&mut self) -> *mut c_void;
+	
+	}
+	
+	pub struct GeluLayer {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GeluLayer }
+	
+	impl Drop for GeluLayer {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_GeluLayer_delete(instance: *mut c_void); }
+			unsafe { cv_GeluLayer_delete(self.as_raw_mut_GeluLayer()) };
+		}
+	}
+	
+	unsafe impl Send for GeluLayer {}
+	
+	impl crate::dnn::ActivationLayerTraitConst for GeluLayer {
+		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::ActivationLayerTrait for GeluLayer {
+		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for GeluLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for GeluLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for GeluLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for GeluLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::GeluLayerTraitConst for GeluLayer {
+		#[inline] fn as_raw_GeluLayer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::GeluLayerTrait for GeluLayer {
+		#[inline] fn as_raw_mut_GeluLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl GeluLayer {
+		#[inline]
+		pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr<crate::dnn::GeluLayer>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_GeluLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dnn::GeluLayer>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	boxed_cast_base! { GeluLayer, crate::dnn::ActivationLayer, cv_GeluLayer_to_ActivationLayer }
+	
+	boxed_cast_base! { GeluLayer, core::Algorithm, cv_GeluLayer_to_Algorithm }
+	
+	boxed_cast_base! { GeluLayer, crate::dnn::Layer, cv_GeluLayer_to_Layer }
+	
+	impl std::fmt::Debug for GeluLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GeluLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::HardSigmoidLayer]
 	pub trait HardSigmoidLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -6024,6 +7060,20 @@ pub mod dnn {
 	
 	boxed_cast_base! { HardSigmoidLayer, crate::dnn::Layer, cv_HardSigmoidLayer_to_Layer }
 	
+	impl std::fmt::Debug for HardSigmoidLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HardSigmoidLayer")
+				.field("alpha", &crate::dnn::HardSigmoidLayerTraitConst::alpha(self))
+				.field("beta", &crate::dnn::HardSigmoidLayerTraitConst::beta(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::HardSwishLayer]
 	pub trait HardSwishLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_HardSwishLayer(&self) -> *const c_void;
@@ -6103,6 +7153,78 @@ pub mod dnn {
 	
 	boxed_cast_base! { HardSwishLayer, crate::dnn::Layer, cv_HardSwishLayer_to_Layer }
 	
+	impl std::fmt::Debug for HardSwishLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HardSwishLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
+	/// Processing params of image to blob.
+	/// 
+	/// It includes all possible image processing operations and corresponding parameters.
+	/// ## See also
+	/// blobFromImageWithParams
+	/// 
+	/// 
+	/// Note:
+	/// The order and usage of `scalefactor` and `mean` are (input - mean) * scalefactor.
+	/// The order and usage of `scalefactor`, `size`, `mean`, `swapRB`, and `ddepth` are consistent
+	/// with the function of [blobFromImage].
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq)]
+	pub struct Image2BlobParams {
+		/// scalefactor multiplier for input image values.
+		pub scalefactor: core::Scalar,
+		/// Spatial size for output image.
+		pub size: core::Size,
+		/// Scalar with mean values which are subtracted from channels.
+		pub mean: core::Scalar,
+		/// Flag which indicates that swap first and last channels
+		pub swap_rb: bool,
+		/// Depth of output blob. Choose CV_32F or CV_8U.
+		pub ddepth: i32,
+		/// Order of output dimensions. Choose DNN_LAYOUT_NCHW or DNN_LAYOUT_NHWC.
+		pub datalayout: crate::dnn::DataLayout,
+		/// Image padding mode. see also: ImagePaddingMode.
+		pub paddingmode: crate::dnn::ImagePaddingMode,
+	}
+	
+	opencv_type_simple! { crate::dnn::Image2BlobParams }
+	
+	impl Image2BlobParams {
+		#[inline]
+		pub fn default() -> Result<crate::dnn::Image2BlobParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Image2BlobParams_Image2BlobParams(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## C++ default parameters
+		/// * size: Size()
+		/// * mean: Scalar()
+		/// * swap_rb: false
+		/// * ddepth: CV_32F
+		/// * datalayout: DNN_LAYOUT_NCHW
+		/// * mode: DNN_PMODE_NULL
+		#[inline]
+		pub fn new(scalefactor: core::Scalar, size: core::Size, mean: core::Scalar, swap_rb: bool, ddepth: i32, datalayout: crate::dnn::DataLayout, mode: crate::dnn::ImagePaddingMode) -> Result<crate::dnn::Image2BlobParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Image2BlobParams_Image2BlobParams_const_ScalarR_const_SizeR_const_ScalarR_bool_int_DataLayout_ImagePaddingMode(&scalefactor, &size, &mean, swap_rb, ddepth, datalayout, mode, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+	}
+	
 	/// Constant methods for [crate::dnn::InnerProductLayer]
 	pub trait InnerProductLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_InnerProductLayer(&self) -> *const c_void;
@@ -6127,6 +7249,8 @@ pub mod dnn {
 		
 	}
 	
+	/// `InnerProduct`, `MatMul` and `Gemm` operations are all implemented by Fully Connected Layer.
+	/// Parameter `is_matmul` is used to distinguish `MatMul` and `Gemm` from `InnerProduct`.
 	pub struct InnerProductLayer {
 		ptr: *mut c_void
 	}
@@ -6183,6 +7307,19 @@ pub mod dnn {
 	boxed_cast_base! { InnerProductLayer, core::Algorithm, cv_InnerProductLayer_to_Algorithm }
 	
 	boxed_cast_base! { InnerProductLayer, crate::dnn::Layer, cv_InnerProductLayer_to_Layer }
+	
+	impl std::fmt::Debug for InnerProductLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("InnerProductLayer")
+				.field("axis", &crate::dnn::InnerProductLayerTraitConst::axis(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::InnerProductLayerInt8]
 	pub trait InnerProductLayerInt8TraitConst: crate::dnn::InnerProductLayerTraitConst {
@@ -6323,6 +7460,24 @@ pub mod dnn {
 	
 	boxed_cast_base! { InnerProductLayerInt8, crate::dnn::Layer, cv_InnerProductLayerInt8_to_Layer }
 	
+	impl std::fmt::Debug for InnerProductLayerInt8 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("InnerProductLayerInt8")
+				.field("input_zp", &crate::dnn::InnerProductLayerInt8TraitConst::input_zp(self))
+				.field("output_zp", &crate::dnn::InnerProductLayerInt8TraitConst::output_zp(self))
+				.field("input_sc", &crate::dnn::InnerProductLayerInt8TraitConst::input_sc(self))
+				.field("output_sc", &crate::dnn::InnerProductLayerInt8TraitConst::output_sc(self))
+				.field("per_channel", &crate::dnn::InnerProductLayerInt8TraitConst::per_channel(self))
+				.field("axis", &crate::dnn::InnerProductLayerTraitConst::axis(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::InterpLayer]
 	pub trait InterpLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_InterpLayer(&self) -> *const c_void;
@@ -6394,6 +7549,18 @@ pub mod dnn {
 	boxed_cast_base! { InterpLayer, core::Algorithm, cv_InterpLayer_to_Algorithm }
 	
 	boxed_cast_base! { InterpLayer, crate::dnn::Layer, cv_InterpLayer_to_Layer }
+	
+	impl std::fmt::Debug for InterpLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("InterpLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::KeypointsModel]
 	pub trait KeypointsModelTraitConst: crate::dnn::ModelTraitConst {
@@ -6503,12 +7670,20 @@ pub mod dnn {
 	impl Clone for KeypointsModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_KeypointsModel_implicit_clone(val: extern_send!(KeypointsModel)) -> extern_receive!(KeypointsModel: 'static); }
-			unsafe { Self::from_raw(cv_KeypointsModel_implicit_clone(self.as_raw_KeypointsModel())) }
+			extern "C" { fn cv_KeypointsModel_implicitClone_const_KeypointsModel(val: extern_send!(KeypointsModel)) -> extern_receive!(KeypointsModel: 'static); }
+			unsafe { Self::from_raw(cv_KeypointsModel_implicitClone_const_KeypointsModel(self.as_raw_KeypointsModel())) }
 		}
 	}
 	
 	boxed_cast_base! { KeypointsModel, crate::dnn::Model, cv_KeypointsModel_to_Model }
+	
+	impl std::fmt::Debug for KeypointsModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KeypointsModel")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::LRNLayer]
 	pub trait LRNLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -6650,6 +7825,24 @@ pub mod dnn {
 	boxed_cast_base! { LRNLayer, core::Algorithm, cv_LRNLayer_to_Algorithm }
 	
 	boxed_cast_base! { LRNLayer, crate::dnn::Layer, cv_LRNLayer_to_Layer }
+	
+	impl std::fmt::Debug for LRNLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LRNLayer")
+				.field("typ", &crate::dnn::LRNLayerTraitConst::typ(self))
+				.field("size", &crate::dnn::LRNLayerTraitConst::size(self))
+				.field("alpha", &crate::dnn::LRNLayerTraitConst::alpha(self))
+				.field("beta", &crate::dnn::LRNLayerTraitConst::beta(self))
+				.field("bias", &crate::dnn::LRNLayerTraitConst::bias(self))
+				.field("norm_by_size", &crate::dnn::LRNLayerTraitConst::norm_by_size(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::LSTMLayer]
 	pub trait LSTMLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -6838,6 +8031,18 @@ pub mod dnn {
 	boxed_cast_base! { LSTMLayer, core::Algorithm, cv_LSTMLayer_to_Algorithm }
 	
 	boxed_cast_base! { LSTMLayer, crate::dnn::Layer, cv_LSTMLayer_to_Layer }
+	
+	impl std::fmt::Debug for LSTMLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LSTMLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::Layer]
 	pub trait LayerTraitConst: core::AlgorithmTraitConst {
@@ -7203,9 +8408,9 @@ pub mod dnn {
 		}
 		
 		#[inline]
-		fn init_vk_com(&mut self, inputs: &core::Vector<core::Ptr<crate::dnn::BackendWrapper>>) -> Result<core::Ptr<crate::dnn::BackendNode>> {
+		fn init_vk_com(&mut self, inputs: &core::Vector<core::Ptr<crate::dnn::BackendWrapper>>, outputs: &mut core::Vector<core::Ptr<crate::dnn::BackendWrapper>>) -> Result<core::Ptr<crate::dnn::BackendNode>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_Layer_initVkCom_const_vectorLPtrLBackendWrapperGGR(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_Layer_initVkCom_const_vectorLPtrLBackendWrapperGGR_vectorLPtrLBackendWrapperGGR(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper(), outputs.as_raw_mut_VectorOfPtrOfBackendWrapper(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::dnn::BackendNode>::opencv_from_extern(ret) };
@@ -7258,13 +8463,13 @@ pub mod dnn {
 		/// Returns a CANN backend node
 		/// 
 		/// ## Parameters
-		/// * inputsWrapper: layer inputs
-		/// * index: layer id for op name
-		/// * nodes: inputs of this node
+		/// * inputs: input tensors of CANN operator
+		/// * outputs: output tensors of CANN operator
+		/// * nodes: nodes of input tensors
 		#[inline]
-		fn init_cann(&mut self, inputs_wrapper: &core::Vector<core::Ptr<crate::dnn::BackendWrapper>>, index: i32, nodes: &core::Vector<core::Ptr<crate::dnn::BackendNode>>) -> Result<core::Ptr<crate::dnn::BackendNode>> {
+		fn init_cann(&mut self, inputs: &core::Vector<core::Ptr<crate::dnn::BackendWrapper>>, outputs: &core::Vector<core::Ptr<crate::dnn::BackendWrapper>>, nodes: &core::Vector<core::Ptr<crate::dnn::BackendNode>>) -> Result<core::Ptr<crate::dnn::BackendNode>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_Layer_initCann_const_vectorLPtrLBackendWrapperGGR_const_int_const_vectorLPtrLBackendNodeGGR(self.as_raw_mut_Layer(), inputs_wrapper.as_raw_VectorOfPtrOfBackendWrapper(), index, nodes.as_raw_VectorOfPtrOfBackendNode(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_Layer_initCann_const_vectorLPtrLBackendWrapperGGR_const_vectorLPtrLBackendWrapperGGR_const_vectorLPtrLBackendNodeGGR(self.as_raw_mut_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper(), outputs.as_raw_VectorOfPtrOfBackendWrapper(), nodes.as_raw_VectorOfPtrOfBackendNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::dnn::BackendNode>::opencv_from_extern(ret) };
@@ -7455,6 +8660,10 @@ pub mod dnn {
 	
 	boxed_cast_descendant! { Layer, crate::dnn::LRNLayer, cv_Layer_to_LRNLayer }
 	
+	boxed_cast_descendant! { Layer, crate::dnn::LSTMLayer, cv_Layer_to_LSTMLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::LayerNormLayer, cv_Layer_to_LayerNormLayer }
+	
 	boxed_cast_descendant! { Layer, crate::dnn::MVNLayer, cv_Layer_to_MVNLayer }
 	
 	boxed_cast_descendant! { Layer, crate::dnn::MaxUnpoolLayer, cv_Layer_to_MaxUnpoolLayer }
@@ -7474,6 +8683,8 @@ pub mod dnn {
 	boxed_cast_descendant! { Layer, crate::dnn::ProposalLayer, cv_Layer_to_ProposalLayer }
 	
 	boxed_cast_descendant! { Layer, crate::dnn::QuantizeLayer, cv_Layer_to_QuantizeLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::RNNLayer, cv_Layer_to_RNNLayer }
 	
 	boxed_cast_descendant! { Layer, crate::dnn::ReduceLayer, cv_Layer_to_ReduceLayer }
 	
@@ -7508,6 +8719,18 @@ pub mod dnn {
 	boxed_cast_descendant! { Layer, crate::dnn::TileLayer, cv_Layer_to_TileLayer }
 	
 	boxed_cast_base! { Layer, core::Algorithm, cv_Layer_to_Algorithm }
+	
+	impl std::fmt::Debug for Layer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Layer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::LayerFactory]
 	pub trait LayerFactoryTraitConst {
@@ -7597,6 +8820,134 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+	}
+	
+	impl std::fmt::Debug for LayerFactory {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LayerFactory")
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::dnn::LayerNormLayer]
+	pub trait LayerNormLayerTraitConst: crate::dnn::LayerTraitConst {
+		fn as_raw_LayerNormLayer(&self) -> *const c_void;
+	
+		#[inline]
+		fn has_bias(&self) -> bool {
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_getPropHasBias_const(self.as_raw_LayerNormLayer()) };
+			ret
+		}
+		
+		#[inline]
+		fn axis(&self) -> i32 {
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_getPropAxis_const(self.as_raw_LayerNormLayer()) };
+			ret
+		}
+		
+		#[inline]
+		fn epsilon(&self) -> f32 {
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_getPropEpsilon_const(self.as_raw_LayerNormLayer()) };
+			ret
+		}
+		
+	}
+	
+	/// Mutable methods for [crate::dnn::LayerNormLayer]
+	pub trait LayerNormLayerTrait: crate::dnn::LayerNormLayerTraitConst + crate::dnn::LayerTrait {
+		fn as_raw_mut_LayerNormLayer(&mut self) -> *mut c_void;
+	
+		#[inline]
+		fn set_has_bias(&mut self, val: bool) {
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_setPropHasBias_bool(self.as_raw_mut_LayerNormLayer(), val) };
+			ret
+		}
+		
+		#[inline]
+		fn set_axis(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_setPropAxis_int(self.as_raw_mut_LayerNormLayer(), val) };
+			ret
+		}
+		
+		#[inline]
+		fn set_epsilon(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_setPropEpsilon_float(self.as_raw_mut_LayerNormLayer(), val) };
+			ret
+		}
+		
+	}
+	
+	pub struct LayerNormLayer {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { LayerNormLayer }
+	
+	impl Drop for LayerNormLayer {
+		#[inline]
+		fn drop(&mut self) {
+			extern "C" { fn cv_LayerNormLayer_delete(instance: *mut c_void); }
+			unsafe { cv_LayerNormLayer_delete(self.as_raw_mut_LayerNormLayer()) };
+		}
+	}
+	
+	unsafe impl Send for LayerNormLayer {}
+	
+	impl core::AlgorithmTraitConst for LayerNormLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for LayerNormLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerTraitConst for LayerNormLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for LayerNormLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::LayerNormLayerTraitConst for LayerNormLayer {
+		#[inline] fn as_raw_LayerNormLayer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::LayerNormLayerTrait for LayerNormLayer {
+		#[inline] fn as_raw_mut_LayerNormLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	impl LayerNormLayer {
+		#[inline]
+		pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr<crate::dnn::LayerNormLayer>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_LayerNormLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dnn::LayerNormLayer>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	boxed_cast_base! { LayerNormLayer, core::Algorithm, cv_LayerNormLayer_to_Algorithm }
+	
+	boxed_cast_base! { LayerNormLayer, crate::dnn::Layer, cv_LayerNormLayer_to_Layer }
+	
+	impl std::fmt::Debug for LayerNormLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LayerNormLayer")
+				.field("has_bias", &crate::dnn::LayerNormLayerTraitConst::has_bias(self))
+				.field("axis", &crate::dnn::LayerNormLayerTraitConst::axis(self))
+				.field("epsilon", &crate::dnn::LayerNormLayerTraitConst::epsilon(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
 	}
 	
 	/// Constant methods for [crate::dnn::LayerParams]
@@ -7699,6 +9050,17 @@ pub mod dnn {
 	
 	boxed_cast_base! { LayerParams, crate::dnn::Dict, cv_LayerParams_to_Dict }
 	
+	impl std::fmt::Debug for LayerParams {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LayerParams")
+				.field("blobs", &crate::dnn::LayerParamsTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerParamsTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerParamsTraitConst::typ(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::LogLayer]
 	pub trait LogLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_LogLayer(&self) -> *const c_void;
@@ -7777,6 +9139,18 @@ pub mod dnn {
 	boxed_cast_base! { LogLayer, core::Algorithm, cv_LogLayer_to_Algorithm }
 	
 	boxed_cast_base! { LogLayer, crate::dnn::Layer, cv_LogLayer_to_Layer }
+	
+	impl std::fmt::Debug for LogLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LogLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::MVNLayer]
 	pub trait MVNLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -7882,6 +9256,21 @@ pub mod dnn {
 	boxed_cast_base! { MVNLayer, core::Algorithm, cv_MVNLayer_to_Algorithm }
 	
 	boxed_cast_base! { MVNLayer, crate::dnn::Layer, cv_MVNLayer_to_Layer }
+	
+	impl std::fmt::Debug for MVNLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MVNLayer")
+				.field("eps", &crate::dnn::MVNLayerTraitConst::eps(self))
+				.field("norm_variance", &crate::dnn::MVNLayerTraitConst::norm_variance(self))
+				.field("across_channels", &crate::dnn::MVNLayerTraitConst::across_channels(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::MaxUnpoolLayer]
 	pub trait MaxUnpoolLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -7994,6 +9383,21 @@ pub mod dnn {
 	
 	boxed_cast_base! { MaxUnpoolLayer, crate::dnn::Layer, cv_MaxUnpoolLayer_to_Layer }
 	
+	impl std::fmt::Debug for MaxUnpoolLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MaxUnpoolLayer")
+				.field("pool_kernel", &crate::dnn::MaxUnpoolLayerTraitConst::pool_kernel(self))
+				.field("pool_pad", &crate::dnn::MaxUnpoolLayerTraitConst::pool_pad(self))
+				.field("pool_stride", &crate::dnn::MaxUnpoolLayerTraitConst::pool_stride(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::MishLayer]
 	pub trait MishLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_MishLayer(&self) -> *const c_void;
@@ -8072,6 +9476,18 @@ pub mod dnn {
 	boxed_cast_base! { MishLayer, core::Algorithm, cv_MishLayer_to_Algorithm }
 	
 	boxed_cast_base! { MishLayer, crate::dnn::Layer, cv_MishLayer_to_Layer }
+	
+	impl std::fmt::Debug for MishLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MishLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::Model]
 	pub trait ModelTraitConst {
@@ -8160,9 +9576,9 @@ pub mod dnn {
 		/// ## Parameters
 		/// * scale: Multiplier for frame values.
 		#[inline]
-		fn set_input_scale(&mut self, scale: f64) -> Result<crate::dnn::Model> {
+		fn set_input_scale(&mut self, scale: core::Scalar) -> Result<crate::dnn::Model> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_Model_setInputScale_double(self.as_raw_mut_Model(), scale, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_Model_setInputScale_const_ScalarR(self.as_raw_mut_Model(), &scale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::Model::opencv_from_extern(ret) };
@@ -8347,8 +9763,16 @@ pub mod dnn {
 	impl Clone for Model {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Model_implicit_clone(val: extern_send!(Model)) -> extern_receive!(Model: 'static); }
-			unsafe { Self::from_raw(cv_Model_implicit_clone(self.as_raw_Model())) }
+			extern "C" { fn cv_Model_implicitClone_const_Model(val: extern_send!(Model)) -> extern_receive!(Model: 'static); }
+			unsafe { Self::from_raw(cv_Model_implicitClone_const_Model(self.as_raw_Model())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Model {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Model")
+				.finish()
 		}
 	}
 	
@@ -8420,6 +9844,18 @@ pub mod dnn {
 	boxed_cast_base! { NaryEltwiseLayer, core::Algorithm, cv_NaryEltwiseLayer_to_Algorithm }
 	
 	boxed_cast_base! { NaryEltwiseLayer, crate::dnn::Layer, cv_NaryEltwiseLayer_to_Layer }
+	
+	impl std::fmt::Debug for NaryEltwiseLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NaryEltwiseLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::Net]
 	pub trait NetTraitConst {
@@ -9429,8 +10865,16 @@ pub mod dnn {
 	impl Clone for Net {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Net_implicit_clone(val: extern_send!(Net)) -> extern_receive!(Net: 'static); }
-			unsafe { Self::from_raw(cv_Net_implicit_clone(self.as_raw_Net())) }
+			extern "C" { fn cv_Net_implicitClone_const_Net(val: extern_send!(Net)) -> extern_receive!(Net: 'static); }
+			unsafe { Self::from_raw(cv_Net_implicitClone_const_Net(self.as_raw_Net())) }
+		}
+	}
+	
+	impl std::fmt::Debug for Net {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Net")
+				.finish()
 		}
 	}
 	
@@ -9563,6 +11007,21 @@ pub mod dnn {
 	
 	boxed_cast_base! { NormalizeBBoxLayer, crate::dnn::Layer, cv_NormalizeBBoxLayer_to_Layer }
 	
+	impl std::fmt::Debug for NormalizeBBoxLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NormalizeBBoxLayer")
+				.field("pnorm", &crate::dnn::NormalizeBBoxLayerTraitConst::pnorm(self))
+				.field("epsilon", &crate::dnn::NormalizeBBoxLayerTraitConst::epsilon(self))
+				.field("across_spatial", &crate::dnn::NormalizeBBoxLayerTraitConst::across_spatial(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::NotLayer]
 	pub trait NotLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_NotLayer(&self) -> *const c_void;
@@ -9641,6 +11100,18 @@ pub mod dnn {
 	boxed_cast_base! { NotLayer, core::Algorithm, cv_NotLayer_to_Algorithm }
 	
 	boxed_cast_base! { NotLayer, crate::dnn::Layer, cv_NotLayer_to_Layer }
+	
+	impl std::fmt::Debug for NotLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NotLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::PaddingLayer]
 	pub trait PaddingLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -9731,6 +11202,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { PaddingLayer, crate::dnn::Layer, cv_PaddingLayer_to_Layer }
 	
+	impl std::fmt::Debug for PaddingLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PaddingLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::PermuteLayer]
 	pub trait PermuteLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_PermuteLayer(&self) -> *const c_void;
@@ -9799,6 +11282,18 @@ pub mod dnn {
 	boxed_cast_base! { PermuteLayer, core::Algorithm, cv_PermuteLayer_to_Algorithm }
 	
 	boxed_cast_base! { PermuteLayer, crate::dnn::Layer, cv_PermuteLayer_to_Layer }
+	
+	impl std::fmt::Debug for PermuteLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PermuteLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::PoolingLayer]
 	pub trait PoolingLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -10048,6 +11543,32 @@ pub mod dnn {
 	
 	boxed_cast_base! { PoolingLayer, crate::dnn::Layer, cv_PoolingLayer_to_Layer }
 	
+	impl std::fmt::Debug for PoolingLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PoolingLayer")
+				.field("typ", &crate::dnn::PoolingLayerTraitConst::typ(self))
+				.field("kernel_size", &crate::dnn::PoolingLayerTraitConst::kernel_size(self))
+				.field("strides", &crate::dnn::PoolingLayerTraitConst::strides(self))
+				.field("pads_begin", &crate::dnn::PoolingLayerTraitConst::pads_begin(self))
+				.field("pads_end", &crate::dnn::PoolingLayerTraitConst::pads_end(self))
+				.field("global_pooling", &crate::dnn::PoolingLayerTraitConst::global_pooling(self))
+				.field("is_global_pooling", &crate::dnn::PoolingLayerTraitConst::is_global_pooling(self))
+				.field("compute_max_idx", &crate::dnn::PoolingLayerTraitConst::compute_max_idx(self))
+				.field("pad_mode", &crate::dnn::PoolingLayerTraitConst::pad_mode(self))
+				.field("ceil_mode", &crate::dnn::PoolingLayerTraitConst::ceil_mode(self))
+				.field("ave_pool_padded_area", &crate::dnn::PoolingLayerTraitConst::ave_pool_padded_area(self))
+				.field("pooled_size", &crate::dnn::PoolingLayerTraitConst::pooled_size(self))
+				.field("spatial_scale", &crate::dnn::PoolingLayerTraitConst::spatial_scale(self))
+				.field("ps_roi_out_channels", &crate::dnn::PoolingLayerTraitConst::ps_roi_out_channels(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::PoolingLayerInt8]
 	pub trait PoolingLayerInt8TraitConst: crate::dnn::PoolingLayerTraitConst {
 		fn as_raw_PoolingLayerInt8(&self) -> *const c_void;
@@ -10175,6 +11696,36 @@ pub mod dnn {
 	
 	boxed_cast_base! { PoolingLayerInt8, crate::dnn::PoolingLayer, cv_PoolingLayerInt8_to_PoolingLayer }
 	
+	impl std::fmt::Debug for PoolingLayerInt8 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PoolingLayerInt8")
+				.field("input_zp", &crate::dnn::PoolingLayerInt8TraitConst::input_zp(self))
+				.field("output_zp", &crate::dnn::PoolingLayerInt8TraitConst::output_zp(self))
+				.field("input_sc", &crate::dnn::PoolingLayerInt8TraitConst::input_sc(self))
+				.field("output_sc", &crate::dnn::PoolingLayerInt8TraitConst::output_sc(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("typ", &crate::dnn::PoolingLayerTraitConst::typ(self))
+				.field("kernel_size", &crate::dnn::PoolingLayerTraitConst::kernel_size(self))
+				.field("strides", &crate::dnn::PoolingLayerTraitConst::strides(self))
+				.field("pads_begin", &crate::dnn::PoolingLayerTraitConst::pads_begin(self))
+				.field("pads_end", &crate::dnn::PoolingLayerTraitConst::pads_end(self))
+				.field("global_pooling", &crate::dnn::PoolingLayerTraitConst::global_pooling(self))
+				.field("is_global_pooling", &crate::dnn::PoolingLayerTraitConst::is_global_pooling(self))
+				.field("compute_max_idx", &crate::dnn::PoolingLayerTraitConst::compute_max_idx(self))
+				.field("pad_mode", &crate::dnn::PoolingLayerTraitConst::pad_mode(self))
+				.field("ceil_mode", &crate::dnn::PoolingLayerTraitConst::ceil_mode(self))
+				.field("ave_pool_padded_area", &crate::dnn::PoolingLayerTraitConst::ave_pool_padded_area(self))
+				.field("pooled_size", &crate::dnn::PoolingLayerTraitConst::pooled_size(self))
+				.field("spatial_scale", &crate::dnn::PoolingLayerTraitConst::spatial_scale(self))
+				.field("ps_roi_out_channels", &crate::dnn::PoolingLayerTraitConst::ps_roi_out_channels(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::PowerLayer]
 	pub trait PowerLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_PowerLayer(&self) -> *const c_void;
@@ -10290,6 +11841,21 @@ pub mod dnn {
 	
 	boxed_cast_base! { PowerLayer, crate::dnn::Layer, cv_PowerLayer_to_Layer }
 	
+	impl std::fmt::Debug for PowerLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PowerLayer")
+				.field("power", &crate::dnn::PowerLayerTraitConst::power(self))
+				.field("scale", &crate::dnn::PowerLayerTraitConst::scale(self))
+				.field("shift", &crate::dnn::PowerLayerTraitConst::shift(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::PriorBoxLayer]
 	pub trait PriorBoxLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_PriorBoxLayer(&self) -> *const c_void;
@@ -10359,6 +11925,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { PriorBoxLayer, crate::dnn::Layer, cv_PriorBoxLayer_to_Layer }
 	
+	impl std::fmt::Debug for PriorBoxLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PriorBoxLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ProposalLayer]
 	pub trait ProposalLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ProposalLayer(&self) -> *const c_void;
@@ -10427,6 +12005,18 @@ pub mod dnn {
 	boxed_cast_base! { ProposalLayer, core::Algorithm, cv_ProposalLayer_to_Algorithm }
 	
 	boxed_cast_base! { ProposalLayer, crate::dnn::Layer, cv_ProposalLayer_to_Layer }
+	
+	impl std::fmt::Debug for ProposalLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ProposalLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::QuantizeLayer]
 	pub trait QuantizeLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -10522,6 +12112,20 @@ pub mod dnn {
 	boxed_cast_base! { QuantizeLayer, core::Algorithm, cv_QuantizeLayer_to_Algorithm }
 	
 	boxed_cast_base! { QuantizeLayer, crate::dnn::Layer, cv_QuantizeLayer_to_Layer }
+	
+	impl std::fmt::Debug for QuantizeLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QuantizeLayer")
+				.field("scales", &crate::dnn::QuantizeLayerTraitConst::scales(self))
+				.field("zeropoints", &crate::dnn::QuantizeLayerTraitConst::zeropoints(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::RNNLayer]
 	pub trait RNNLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -10642,6 +12246,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { RNNLayer, crate::dnn::Layer, cv_RNNLayer_to_Layer }
 	
+	impl std::fmt::Debug for RNNLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RNNLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ReLU6Layer]
 	pub trait ReLU6LayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_ReLU6Layer(&self) -> *const c_void;
@@ -10745,6 +12361,20 @@ pub mod dnn {
 	
 	boxed_cast_base! { ReLU6Layer, crate::dnn::Layer, cv_ReLU6Layer_to_Layer }
 	
+	impl std::fmt::Debug for ReLU6Layer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ReLU6Layer")
+				.field("min_value", &crate::dnn::ReLU6LayerTraitConst::min_value(self))
+				.field("max_value", &crate::dnn::ReLU6LayerTraitConst::max_value(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ReLULayer]
 	pub trait ReLULayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_ReLULayer(&self) -> *const c_void;
@@ -10836,6 +12466,19 @@ pub mod dnn {
 	
 	boxed_cast_base! { ReLULayer, crate::dnn::Layer, cv_ReLULayer_to_Layer }
 	
+	impl std::fmt::Debug for ReLULayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ReLULayer")
+				.field("negative_slope", &crate::dnn::ReLULayerTraitConst::negative_slope(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ReciprocalLayer]
 	pub trait ReciprocalLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_ReciprocalLayer(&self) -> *const c_void;
@@ -10915,54 +12558,28 @@ pub mod dnn {
 	
 	boxed_cast_base! { ReciprocalLayer, crate::dnn::Layer, cv_ReciprocalLayer_to_Layer }
 	
+	impl std::fmt::Debug for ReciprocalLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ReciprocalLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ReduceLayer]
 	pub trait ReduceLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ReduceLayer(&self) -> *const c_void;
 	
-		#[inline]
-		fn reduce_type(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_ReduceLayer_getPropReduceType_const(self.as_raw_ReduceLayer()) };
-			ret
-		}
-		
-		#[inline]
-		fn reduce_dims(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_ReduceLayer_getPropReduceDims_const(self.as_raw_ReduceLayer()) };
-			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
-			ret
-		}
-		
-		#[inline]
-		fn target_dims(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_ReduceLayer_getPropTargetDims_const(self.as_raw_ReduceLayer()) };
-			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
-			ret
-		}
-		
 	}
 	
 	/// Mutable methods for [crate::dnn::ReduceLayer]
 	pub trait ReduceLayerTrait: crate::dnn::LayerTrait + crate::dnn::ReduceLayerTraitConst {
 		fn as_raw_mut_ReduceLayer(&mut self) -> *mut c_void;
 	
-		#[inline]
-		fn set_reduce_type(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_ReduceLayer_setPropReduceType_int(self.as_raw_mut_ReduceLayer(), val) };
-			ret
-		}
-		
-		#[inline]
-		fn set_reduce_dims(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_ReduceLayer_setPropReduceDims_vectorLsize_tG(self.as_raw_mut_ReduceLayer(), val.as_raw_mut_VectorOfsize_t()) };
-			ret
-		}
-		
-		#[inline]
-		fn set_target_dims(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_ReduceLayer_setPropTargetDims_vectorLsize_tG(self.as_raw_mut_ReduceLayer(), val.as_raw_mut_VectorOfsize_t()) };
-			ret
-		}
-		
 	}
 	
 	pub struct ReduceLayer {
@@ -11022,84 +12639,17 @@ pub mod dnn {
 	
 	boxed_cast_base! { ReduceLayer, crate::dnn::Layer, cv_ReduceLayer_to_Layer }
 	
-	/// Constant methods for [crate::dnn::ReduceLayerInt8]
-	pub trait ReduceLayerInt8TraitConst: crate::dnn::ReduceLayerTraitConst {
-		fn as_raw_ReduceLayerInt8(&self) -> *const c_void;
-	
-	}
-	
-	/// Mutable methods for [crate::dnn::ReduceLayerInt8]
-	pub trait ReduceLayerInt8Trait: crate::dnn::ReduceLayerInt8TraitConst + crate::dnn::ReduceLayerTrait {
-		fn as_raw_mut_ReduceLayerInt8(&mut self) -> *mut c_void;
-	
-	}
-	
-	pub struct ReduceLayerInt8 {
-		ptr: *mut c_void
-	}
-	
-	opencv_type_boxed! { ReduceLayerInt8 }
-	
-	impl Drop for ReduceLayerInt8 {
+	impl std::fmt::Debug for ReduceLayer {
 		#[inline]
-		fn drop(&mut self) {
-			extern "C" { fn cv_ReduceLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_ReduceLayerInt8_delete(self.as_raw_mut_ReduceLayerInt8()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ReduceLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
 		}
 	}
-	
-	unsafe impl Send for ReduceLayerInt8 {}
-	
-	impl core::AlgorithmTraitConst for ReduceLayerInt8 {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-	
-	impl core::AlgorithmTrait for ReduceLayerInt8 {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::LayerTraitConst for ReduceLayerInt8 {
-		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
-	}
-	
-	impl crate::dnn::LayerTrait for ReduceLayerInt8 {
-		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ReduceLayerTraitConst for ReduceLayerInt8 {
-		#[inline] fn as_raw_ReduceLayer(&self) -> *const c_void { self.as_raw() }
-	}
-	
-	impl crate::dnn::ReduceLayerTrait for ReduceLayerInt8 {
-		#[inline] fn as_raw_mut_ReduceLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl crate::dnn::ReduceLayerInt8TraitConst for ReduceLayerInt8 {
-		#[inline] fn as_raw_ReduceLayerInt8(&self) -> *const c_void { self.as_raw() }
-	}
-	
-	impl crate::dnn::ReduceLayerInt8Trait for ReduceLayerInt8 {
-		#[inline] fn as_raw_mut_ReduceLayerInt8(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-	
-	impl ReduceLayerInt8 {
-		#[inline]
-		pub fn create(params: &crate::dnn::LayerParams) -> Result<core::Ptr<crate::dnn::ReduceLayerInt8>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_ReduceLayerInt8_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::dnn::ReduceLayerInt8>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-	}
-	
-	boxed_cast_base! { ReduceLayerInt8, core::Algorithm, cv_ReduceLayerInt8_to_Algorithm }
-	
-	boxed_cast_base! { ReduceLayerInt8, crate::dnn::Layer, cv_ReduceLayerInt8_to_Layer }
-	
-	boxed_cast_base! { ReduceLayerInt8, crate::dnn::ReduceLayer, cv_ReduceLayerInt8_to_ReduceLayer }
 	
 	/// Constant methods for [crate::dnn::RegionLayer]
 	pub trait RegionLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -11182,6 +12732,19 @@ pub mod dnn {
 	
 	boxed_cast_base! { RegionLayer, crate::dnn::Layer, cv_RegionLayer_to_Layer }
 	
+	impl std::fmt::Debug for RegionLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RegionLayer")
+				.field("nms_threshold", &crate::dnn::RegionLayerTraitConst::nms_threshold(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ReorgLayer]
 	pub trait ReorgLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ReorgLayer(&self) -> *const c_void;
@@ -11250,6 +12813,18 @@ pub mod dnn {
 	boxed_cast_base! { ReorgLayer, core::Algorithm, cv_ReorgLayer_to_Algorithm }
 	
 	boxed_cast_base! { ReorgLayer, crate::dnn::Layer, cv_ReorgLayer_to_Layer }
+	
+	impl std::fmt::Debug for ReorgLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ReorgLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::RequantizeLayer]
 	pub trait RequantizeLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -11343,6 +12918,20 @@ pub mod dnn {
 	boxed_cast_base! { RequantizeLayer, core::Algorithm, cv_RequantizeLayer_to_Algorithm }
 	
 	boxed_cast_base! { RequantizeLayer, crate::dnn::Layer, cv_RequantizeLayer_to_Layer }
+	
+	impl std::fmt::Debug for RequantizeLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RequantizeLayer")
+				.field("scale", &crate::dnn::RequantizeLayerTraitConst::scale(self))
+				.field("shift", &crate::dnn::RequantizeLayerTraitConst::shift(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ReshapeLayer]
 	pub trait ReshapeLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -11439,6 +13028,20 @@ pub mod dnn {
 	
 	boxed_cast_base! { ReshapeLayer, crate::dnn::Layer, cv_ReshapeLayer_to_Layer }
 	
+	impl std::fmt::Debug for ReshapeLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ReshapeLayer")
+				.field("new_shape_desc", &crate::dnn::ReshapeLayerTraitConst::new_shape_desc(self))
+				.field("new_shape_range", &crate::dnn::ReshapeLayerTraitConst::new_shape_range(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ResizeLayer]
 	pub trait ResizeLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ResizeLayer(&self) -> *const c_void;
@@ -11510,6 +13113,18 @@ pub mod dnn {
 	boxed_cast_base! { ResizeLayer, core::Algorithm, cv_ResizeLayer_to_Algorithm }
 	
 	boxed_cast_base! { ResizeLayer, crate::dnn::Layer, cv_ResizeLayer_to_Layer }
+	
+	impl std::fmt::Debug for ResizeLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ResizeLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::RoundLayer]
 	pub trait RoundLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -11589,6 +13204,18 @@ pub mod dnn {
 	boxed_cast_base! { RoundLayer, core::Algorithm, cv_RoundLayer_to_Algorithm }
 	
 	boxed_cast_base! { RoundLayer, crate::dnn::Layer, cv_RoundLayer_to_Layer }
+	
+	impl std::fmt::Debug for RoundLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RoundLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ScaleLayer]
 	pub trait ScaleLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -11697,6 +13324,21 @@ pub mod dnn {
 	
 	boxed_cast_base! { ScaleLayer, crate::dnn::Layer, cv_ScaleLayer_to_Layer }
 	
+	impl std::fmt::Debug for ScaleLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ScaleLayer")
+				.field("has_bias", &crate::dnn::ScaleLayerTraitConst::has_bias(self))
+				.field("axis", &crate::dnn::ScaleLayerTraitConst::axis(self))
+				.field("mode", &crate::dnn::ScaleLayerTraitConst::mode(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ScaleLayerInt8]
 	pub trait ScaleLayerInt8TraitConst: crate::dnn::ScaleLayerTraitConst {
 		fn as_raw_ScaleLayerInt8(&self) -> *const c_void;
@@ -11800,6 +13442,23 @@ pub mod dnn {
 	
 	boxed_cast_base! { ScaleLayerInt8, crate::dnn::ScaleLayer, cv_ScaleLayerInt8_to_ScaleLayer }
 	
+	impl std::fmt::Debug for ScaleLayerInt8 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ScaleLayerInt8")
+				.field("output_sc", &crate::dnn::ScaleLayerInt8TraitConst::output_sc(self))
+				.field("output_zp", &crate::dnn::ScaleLayerInt8TraitConst::output_zp(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("has_bias", &crate::dnn::ScaleLayerTraitConst::has_bias(self))
+				.field("axis", &crate::dnn::ScaleLayerTraitConst::axis(self))
+				.field("mode", &crate::dnn::ScaleLayerTraitConst::mode(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ScatterLayer]
 	pub trait ScatterLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ScatterLayer(&self) -> *const c_void;
@@ -11869,6 +13528,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { ScatterLayer, crate::dnn::Layer, cv_ScatterLayer_to_Layer }
 	
+	impl std::fmt::Debug for ScatterLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ScatterLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ScatterNDLayer]
 	pub trait ScatterNDLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ScatterNDLayer(&self) -> *const c_void;
@@ -11937,6 +13608,18 @@ pub mod dnn {
 	boxed_cast_base! { ScatterNDLayer, core::Algorithm, cv_ScatterNDLayer_to_Algorithm }
 	
 	boxed_cast_base! { ScatterNDLayer, crate::dnn::Layer, cv_ScatterNDLayer_to_Layer }
+	
+	impl std::fmt::Debug for ScatterNDLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ScatterNDLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::SegmentationModel]
 	pub trait SegmentationModelTraitConst: crate::dnn::ModelTraitConst {
@@ -12041,12 +13724,20 @@ pub mod dnn {
 	impl Clone for SegmentationModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_SegmentationModel_implicit_clone(val: extern_send!(SegmentationModel)) -> extern_receive!(SegmentationModel: 'static); }
-			unsafe { Self::from_raw(cv_SegmentationModel_implicit_clone(self.as_raw_SegmentationModel())) }
+			extern "C" { fn cv_SegmentationModel_implicitClone_const_SegmentationModel(val: extern_send!(SegmentationModel)) -> extern_receive!(SegmentationModel: 'static); }
+			unsafe { Self::from_raw(cv_SegmentationModel_implicitClone_const_SegmentationModel(self.as_raw_SegmentationModel())) }
 		}
 	}
 	
 	boxed_cast_base! { SegmentationModel, crate::dnn::Model, cv_SegmentationModel_to_Model }
+	
+	impl std::fmt::Debug for SegmentationModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SegmentationModel")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::SeluLayer]
 	pub trait SeluLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -12151,6 +13842,20 @@ pub mod dnn {
 	
 	boxed_cast_base! { SeluLayer, crate::dnn::Layer, cv_SeluLayer_to_Layer }
 	
+	impl std::fmt::Debug for SeluLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SeluLayer")
+				.field("alpha", &crate::dnn::SeluLayerTraitConst::alpha(self))
+				.field("gamma", &crate::dnn::SeluLayerTraitConst::gamma(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ShiftLayer]
 	pub trait ShiftLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ShiftLayer(&self) -> *const c_void;
@@ -12220,6 +13925,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { ShiftLayer, crate::dnn::Layer, cv_ShiftLayer_to_Layer }
 	
+	impl std::fmt::Debug for ShiftLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShiftLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ShiftLayerInt8]
 	pub trait ShiftLayerInt8TraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ShiftLayerInt8(&self) -> *const c_void;
@@ -12288,6 +14005,18 @@ pub mod dnn {
 	boxed_cast_base! { ShiftLayerInt8, core::Algorithm, cv_ShiftLayerInt8_to_Algorithm }
 	
 	boxed_cast_base! { ShiftLayerInt8, crate::dnn::Layer, cv_ShiftLayerInt8_to_Layer }
+	
+	impl std::fmt::Debug for ShiftLayerInt8 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShiftLayerInt8")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ShrinkLayer]
 	pub trait ShrinkLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -12392,6 +14121,20 @@ pub mod dnn {
 	
 	boxed_cast_base! { ShrinkLayer, crate::dnn::Layer, cv_ShrinkLayer_to_Layer }
 	
+	impl std::fmt::Debug for ShrinkLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShrinkLayer")
+				.field("bias", &crate::dnn::ShrinkLayerTraitConst::bias(self))
+				.field("lambd", &crate::dnn::ShrinkLayerTraitConst::lambd(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ShuffleChannelLayer]
 	pub trait ShuffleChannelLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_ShuffleChannelLayer(&self) -> *const c_void;
@@ -12481,6 +14224,19 @@ pub mod dnn {
 	
 	boxed_cast_base! { ShuffleChannelLayer, crate::dnn::Layer, cv_ShuffleChannelLayer_to_Layer }
 	
+	impl std::fmt::Debug for ShuffleChannelLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShuffleChannelLayer")
+				.field("group", &crate::dnn::ShuffleChannelLayerTraitConst::group(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::SigmoidLayer]
 	pub trait SigmoidLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_SigmoidLayer(&self) -> *const c_void;
@@ -12559,6 +14315,18 @@ pub mod dnn {
 	boxed_cast_base! { SigmoidLayer, core::Algorithm, cv_SigmoidLayer_to_Algorithm }
 	
 	boxed_cast_base! { SigmoidLayer, crate::dnn::Layer, cv_SigmoidLayer_to_Layer }
+	
+	impl std::fmt::Debug for SigmoidLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SigmoidLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::SignLayer]
 	pub trait SignLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -12639,6 +14407,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { SignLayer, crate::dnn::Layer, cv_SignLayer_to_Layer }
 	
+	impl std::fmt::Debug for SignLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SignLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::SinLayer]
 	pub trait SinLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_SinLayer(&self) -> *const c_void;
@@ -12718,6 +14498,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { SinLayer, crate::dnn::Layer, cv_SinLayer_to_Layer }
 	
+	impl std::fmt::Debug for SinLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SinLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::SinhLayer]
 	pub trait SinhLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_SinhLayer(&self) -> *const c_void;
@@ -12796,6 +14588,18 @@ pub mod dnn {
 	boxed_cast_base! { SinhLayer, core::Algorithm, cv_SinhLayer_to_Algorithm }
 	
 	boxed_cast_base! { SinhLayer, crate::dnn::Layer, cv_SinhLayer_to_Layer }
+	
+	impl std::fmt::Debug for SinhLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SinhLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::SliceLayer]
 	pub trait SliceLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -12947,6 +14751,22 @@ pub mod dnn {
 	
 	boxed_cast_base! { SliceLayer, crate::dnn::Layer, cv_SliceLayer_to_Layer }
 	
+	impl std::fmt::Debug for SliceLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SliceLayer")
+				.field("slice_ranges", &crate::dnn::SliceLayerTraitConst::slice_ranges(self))
+				.field("slice_steps", &crate::dnn::SliceLayerTraitConst::slice_steps(self))
+				.field("axis", &crate::dnn::SliceLayerTraitConst::axis(self))
+				.field("num_split", &crate::dnn::SliceLayerTraitConst::num_split(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::SoftmaxLayer]
 	pub trait SoftmaxLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_SoftmaxLayer(&self) -> *const c_void;
@@ -13027,6 +14847,19 @@ pub mod dnn {
 	boxed_cast_base! { SoftmaxLayer, core::Algorithm, cv_SoftmaxLayer_to_Algorithm }
 	
 	boxed_cast_base! { SoftmaxLayer, crate::dnn::Layer, cv_SoftmaxLayer_to_Layer }
+	
+	impl std::fmt::Debug for SoftmaxLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SoftmaxLayer")
+				.field("log_soft_max", &crate::dnn::SoftmaxLayerTraitConst::log_soft_max(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::SoftmaxLayerInt8]
 	pub trait SoftmaxLayerInt8TraitConst: crate::dnn::SoftmaxLayerTraitConst {
@@ -13131,6 +14964,21 @@ pub mod dnn {
 	
 	boxed_cast_base! { SoftmaxLayerInt8, crate::dnn::SoftmaxLayer, cv_SoftmaxLayerInt8_to_SoftmaxLayer }
 	
+	impl std::fmt::Debug for SoftmaxLayerInt8 {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SoftmaxLayerInt8")
+				.field("output_sc", &crate::dnn::SoftmaxLayerInt8TraitConst::output_sc(self))
+				.field("output_zp", &crate::dnn::SoftmaxLayerInt8TraitConst::output_zp(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.field("log_soft_max", &crate::dnn::SoftmaxLayerTraitConst::log_soft_max(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::SoftplusLayer]
 	pub trait SoftplusLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_SoftplusLayer(&self) -> *const c_void;
@@ -13210,6 +15058,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { SoftplusLayer, crate::dnn::Layer, cv_SoftplusLayer_to_Layer }
 	
+	impl std::fmt::Debug for SoftplusLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SoftplusLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::SoftsignLayer]
 	pub trait SoftsignLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_SoftsignLayer(&self) -> *const c_void;
@@ -13288,6 +15148,18 @@ pub mod dnn {
 	boxed_cast_base! { SoftsignLayer, core::Algorithm, cv_SoftsignLayer_to_Algorithm }
 	
 	boxed_cast_base! { SoftsignLayer, crate::dnn::Layer, cv_SoftsignLayer_to_Layer }
+	
+	impl std::fmt::Debug for SoftsignLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SoftsignLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::SplitLayer]
 	pub trait SplitLayerTraitConst: crate::dnn::LayerTraitConst {
@@ -13372,6 +15244,19 @@ pub mod dnn {
 	
 	boxed_cast_base! { SplitLayer, crate::dnn::Layer, cv_SplitLayer_to_Layer }
 	
+	impl std::fmt::Debug for SplitLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SplitLayer")
+				.field("outputs_count", &crate::dnn::SplitLayerTraitConst::outputs_count(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::SqrtLayer]
 	pub trait SqrtLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_SqrtLayer(&self) -> *const c_void;
@@ -13450,6 +15335,18 @@ pub mod dnn {
 	boxed_cast_base! { SqrtLayer, core::Algorithm, cv_SqrtLayer_to_Algorithm }
 	
 	boxed_cast_base! { SqrtLayer, crate::dnn::Layer, cv_SqrtLayer_to_Layer }
+	
+	impl std::fmt::Debug for SqrtLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SqrtLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::SwishLayer]
 	pub trait SwishLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -13530,6 +15427,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { SwishLayer, crate::dnn::Layer, cv_SwishLayer_to_Layer }
 	
+	impl std::fmt::Debug for SwishLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SwishLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::TanHLayer]
 	pub trait TanHLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_TanHLayer(&self) -> *const c_void;
@@ -13609,6 +15518,18 @@ pub mod dnn {
 	
 	boxed_cast_base! { TanHLayer, crate::dnn::Layer, cv_TanHLayer_to_Layer }
 	
+	impl std::fmt::Debug for TanHLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TanHLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::TanLayer]
 	pub trait TanLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_TanLayer(&self) -> *const c_void;
@@ -13687,6 +15608,18 @@ pub mod dnn {
 	boxed_cast_base! { TanLayer, core::Algorithm, cv_TanLayer_to_Algorithm }
 	
 	boxed_cast_base! { TanLayer, crate::dnn::Layer, cv_TanLayer_to_Layer }
+	
+	impl std::fmt::Debug for TanLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TanLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::TextDetectionModel]
 	pub trait TextDetectionModelTraitConst: crate::dnn::ModelTraitConst {
@@ -13846,6 +15779,14 @@ pub mod dnn {
 	
 	boxed_cast_base! { TextDetectionModel, crate::dnn::Model, cv_TextDetectionModel_to_Model }
 	
+	impl std::fmt::Debug for TextDetectionModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TextDetectionModel")
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::TextDetectionModel_DB]
 	pub trait TextDetectionModel_DBTraitConst: crate::dnn::TextDetectionModelTraitConst {
 		fn as_raw_TextDetectionModel_DB(&self) -> *const c_void;
@@ -13936,7 +15877,7 @@ pub mod dnn {
 	
 	/// This class represents high-level API for text detection DL networks compatible with DB model.
 	/// 
-	/// Related publications: [liao2020real](https://docs.opencv.org/4.7.0/d0/de3/citelist.html#CITEREF_liao2020real)
+	/// Related publications: [liao2020real](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_liao2020real)
 	/// Paper: <https://arxiv.org/abs/1911.08947>
 	/// For more information about the hyper-parameters setting, please refer to <https://github.com/MhLiao/DB>
 	/// 
@@ -14034,14 +15975,22 @@ pub mod dnn {
 	impl Clone for TextDetectionModel_DB {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TextDetectionModel_DB_implicit_clone(val: extern_send!(TextDetectionModel_DB)) -> extern_receive!(TextDetectionModel_DB: 'static); }
-			unsafe { Self::from_raw(cv_TextDetectionModel_DB_implicit_clone(self.as_raw_TextDetectionModel_DB())) }
+			extern "C" { fn cv_TextDetectionModel_DB_implicitClone_const_TextDetectionModel_DB(val: extern_send!(TextDetectionModel_DB)) -> extern_receive!(TextDetectionModel_DB: 'static); }
+			unsafe { Self::from_raw(cv_TextDetectionModel_DB_implicitClone_const_TextDetectionModel_DB(self.as_raw_TextDetectionModel_DB())) }
 		}
 	}
 	
 	boxed_cast_base! { TextDetectionModel_DB, crate::dnn::Model, cv_TextDetectionModel_DB_to_Model }
 	
 	boxed_cast_base! { TextDetectionModel_DB, crate::dnn::TextDetectionModel, cv_TextDetectionModel_DB_to_TextDetectionModel }
+	
+	impl std::fmt::Debug for TextDetectionModel_DB {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TextDetectionModel_DB")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::TextDetectionModel_EAST]
 	pub trait TextDetectionModel_EASTTraitConst: crate::dnn::TextDetectionModelTraitConst {
@@ -14195,14 +16144,22 @@ pub mod dnn {
 	impl Clone for TextDetectionModel_EAST {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TextDetectionModel_EAST_implicit_clone(val: extern_send!(TextDetectionModel_EAST)) -> extern_receive!(TextDetectionModel_EAST: 'static); }
-			unsafe { Self::from_raw(cv_TextDetectionModel_EAST_implicit_clone(self.as_raw_TextDetectionModel_EAST())) }
+			extern "C" { fn cv_TextDetectionModel_EAST_implicitClone_const_TextDetectionModel_EAST(val: extern_send!(TextDetectionModel_EAST)) -> extern_receive!(TextDetectionModel_EAST: 'static); }
+			unsafe { Self::from_raw(cv_TextDetectionModel_EAST_implicitClone_const_TextDetectionModel_EAST(self.as_raw_TextDetectionModel_EAST())) }
 		}
 	}
 	
 	boxed_cast_base! { TextDetectionModel_EAST, crate::dnn::Model, cv_TextDetectionModel_EAST_to_Model }
 	
 	boxed_cast_base! { TextDetectionModel_EAST, crate::dnn::TextDetectionModel, cv_TextDetectionModel_EAST_to_TextDetectionModel }
+	
+	impl std::fmt::Debug for TextDetectionModel_EAST {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TextDetectionModel_EAST")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::TextRecognitionModel]
 	pub trait TextRecognitionModelTraitConst: crate::dnn::ModelTraitConst {
@@ -14409,12 +16366,20 @@ pub mod dnn {
 	impl Clone for TextRecognitionModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TextRecognitionModel_implicit_clone(val: extern_send!(TextRecognitionModel)) -> extern_receive!(TextRecognitionModel: 'static); }
-			unsafe { Self::from_raw(cv_TextRecognitionModel_implicit_clone(self.as_raw_TextRecognitionModel())) }
+			extern "C" { fn cv_TextRecognitionModel_implicitClone_const_TextRecognitionModel(val: extern_send!(TextRecognitionModel)) -> extern_receive!(TextRecognitionModel: 'static); }
+			unsafe { Self::from_raw(cv_TextRecognitionModel_implicitClone_const_TextRecognitionModel(self.as_raw_TextRecognitionModel())) }
 		}
 	}
 	
 	boxed_cast_base! { TextRecognitionModel, crate::dnn::Model, cv_TextRecognitionModel_to_Model }
+	
+	impl std::fmt::Debug for TextRecognitionModel {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TextRecognitionModel")
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::ThresholdedReluLayer]
 	pub trait ThresholdedReluLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
@@ -14507,6 +16472,19 @@ pub mod dnn {
 	
 	boxed_cast_base! { ThresholdedReluLayer, crate::dnn::Layer, cv_ThresholdedReluLayer_to_Layer }
 	
+	impl std::fmt::Debug for ThresholdedReluLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ThresholdedReluLayer")
+				.field("alpha", &crate::dnn::ThresholdedReluLayerTraitConst::alpha(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::TileLayer]
 	pub trait TileLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_TileLayer(&self) -> *const c_void;
@@ -14575,6 +16553,18 @@ pub mod dnn {
 	boxed_cast_base! { TileLayer, core::Algorithm, cv_TileLayer_to_Algorithm }
 	
 	boxed_cast_base! { TileLayer, crate::dnn::Layer, cv_TileLayer_to_Layer }
+	
+	impl std::fmt::Debug for TileLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TileLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
 	
 	/// Constant methods for [crate::dnn::_Range]
 	pub trait _RangeTraitConst: core::RangeTraitConst {
@@ -14646,5 +16636,15 @@ pub mod dnn {
 	}
 	
 	boxed_cast_base! { _Range, core::Range, cv__Range_to_Range }
+	
+	impl std::fmt::Debug for _Range {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("_Range")
+				.field("start", &core::RangeTraitConst::start(self))
+				.field("end", &core::RangeTraitConst::end(self))
+				.finish()
+		}
+	}
 pub use crate::manual::dnn::*;
 }

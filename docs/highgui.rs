@@ -15,7 +15,7 @@ pub mod highgui {
 	//!    # OpenGL support
 	//!    # Qt New Functions
 	//! 
-	//!    ![image](https://docs.opencv.org/4.7.0/qtgui.png)
+	//!    ![image](https://docs.opencv.org/4.8.0/qtgui.png)
 	//! 
 	//!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 	//!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
@@ -656,7 +656,7 @@ pub mod highgui {
 	/// 
 	/// Note:
 	/// 
-	/// Mouse-wheel events are currently supported only on Windows.
+	/// Mouse-wheel events are currently supported only on Windows and Cocoa
 	/// 
 	/// ## Parameters
 	/// * flags: The mouse callback flags parameter.
@@ -952,6 +952,7 @@ pub mod highgui {
 	/// * showCrosshair: if true crosshair of selection rectangle will be shown.
 	/// * fromCenter: if true center of selection will match initial mouse position. In opposite case a corner of
 	/// selection rectangle will correspont to the initial mouse position.
+	/// * printNotice: if true a notice to select ROI or cancel selection will be printed in console.
 	/// ## Returns
 	/// selected ROI or empty rect if selection canceled.
 	/// 
@@ -962,12 +963,13 @@ pub mod highgui {
 	/// ## C++ default parameters
 	/// * show_crosshair: true
 	/// * from_center: false
+	/// * print_notice: true
 	#[inline]
-	pub fn select_roi_for_window(window_name: &str, img: &impl core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
+	pub fn select_roi(window_name: &str, img: &impl core::ToInputArray, show_crosshair: bool, from_center: bool, print_notice: bool) -> Result<core::Rect> {
 		extern_container_arg!(window_name);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_selectROI_const_StringR_const__InputArrayR_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_selectROI_const_StringR_const__InputArrayR_bool_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), show_crosshair, from_center, print_notice, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -984,6 +986,7 @@ pub mod highgui {
 	/// * showCrosshair: if true crosshair of selection rectangle will be shown.
 	/// * fromCenter: if true center of selection will match initial mouse position. In opposite case a corner of
 	/// selection rectangle will correspont to the initial mouse position.
+	/// * printNotice: if true a notice to select ROI or cancel selection will be printed in console.
 	/// ## Returns
 	/// selected ROI or empty rect if selection canceled.
 	/// 
@@ -996,11 +999,12 @@ pub mod highgui {
 	/// ## C++ default parameters
 	/// * show_crosshair: true
 	/// * from_center: false
+	/// * print_notice: true
 	#[inline]
-	pub fn select_roi(img: &impl core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
+	pub fn select_roi_1(img: &impl core::ToInputArray, show_crosshair: bool, from_center: bool, print_notice: bool) -> Result<core::Rect> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_selectROI_const__InputArrayR_bool_bool(img.as_raw__InputArray(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_selectROI_const__InputArrayR_bool_bool_bool(img.as_raw__InputArray(), show_crosshair, from_center, print_notice, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1019,6 +1023,7 @@ pub mod highgui {
 	/// * showCrosshair: if true crosshair of selection rectangle will be shown.
 	/// * fromCenter: if true center of selection will match initial mouse position. In opposite case a corner of
 	/// selection rectangle will correspont to the initial mouse position.
+	/// * printNotice: if true a notice to select ROI or cancel selection will be printed in console.
 	/// 
 	/// 
 	/// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
@@ -1027,12 +1032,13 @@ pub mod highgui {
 	/// ## C++ default parameters
 	/// * show_crosshair: true
 	/// * from_center: false
+	/// * print_notice: true
 	#[inline]
-	pub fn select_rois(window_name: &str, img: &impl core::ToInputArray, bounding_boxes: &mut core::Vector<core::Rect>, show_crosshair: bool, from_center: bool) -> Result<()> {
+	pub fn select_ro_is(window_name: &str, img: &impl core::ToInputArray, bounding_boxes: &mut core::Vector<core::Rect>, show_crosshair: bool, from_center: bool, print_notice: bool) -> Result<()> {
 		extern_container_arg!(window_name);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_selectROIs_const_StringR_const__InputArrayR_vectorLRectGR_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), bounding_boxes.as_raw_mut_VectorOfRect(), show_crosshair, from_center, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_selectROIs_const_StringR_const__InputArrayR_vectorLRectGR_bool_bool_bool(window_name.opencv_as_extern(), img.as_raw__InputArray(), bounding_boxes.as_raw_mut_VectorOfRect(), show_crosshair, from_center, print_notice, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1507,5 +1513,25 @@ pub mod highgui {
 	}
 	
 	impl QtFont {
+	}
+	
+	impl std::fmt::Debug for QtFont {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QtFont")
+				.field("name_font", &crate::highgui::QtFontTraitConst::name_font(self))
+				.field("color", &crate::highgui::QtFontTraitConst::color(self))
+				.field("font_face", &crate::highgui::QtFontTraitConst::font_face(self))
+				.field("ascii", &crate::highgui::QtFontTraitConst::ascii(self))
+				.field("greek", &crate::highgui::QtFontTraitConst::greek(self))
+				.field("cyrillic", &crate::highgui::QtFontTraitConst::cyrillic(self))
+				.field("hscale", &crate::highgui::QtFontTraitConst::hscale(self))
+				.field("vscale", &crate::highgui::QtFontTraitConst::vscale(self))
+				.field("shear", &crate::highgui::QtFontTraitConst::shear(self))
+				.field("thickness", &crate::highgui::QtFontTraitConst::thickness(self))
+				.field("dx", &crate::highgui::QtFontTraitConst::dx(self))
+				.field("line_type", &crate::highgui::QtFontTraitConst::line_type(self))
+				.finish()
+		}
 	}
 }
