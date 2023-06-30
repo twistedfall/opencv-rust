@@ -19,7 +19,6 @@ fi
 
 all_modules_4="alphamat
 	aruco
-	barcode
 	bgsegm
 	bioinspired
 	calib3d
