@@ -194,10 +194,10 @@ fn simple_struct_return_infallible() -> Result<()> {
 	let bound_rect = imgproc::bounding_rect(&contour)?;
 	assert_eq!(Rect::new(5, 5, 11, 11), bound_rect);
 	let min_area_rect = imgproc::min_area_rect(&contour)?;
-	assert_eq!(Point2f::new(10., 10.), min_area_rect.center());
-	assert_eq!(Size2f::new(10., 10.), min_area_rect.size());
+	assert_eq!(Point2f::new(10., 10.), min_area_rect.center);
+	assert_eq!(Size2f::new(10., 10.), min_area_rect.size);
 	// different versions of OpenCV return -90 and 90
-	assert_eq!(90., min_area_rect.angle().abs());
+	assert_eq!(90., min_area_rect.angle.abs());
 	Ok(())
 }
 

@@ -1,14 +1,9 @@
-use std::{
-	fmt,
-	ops::{Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, Mul, Sub, SubAssign},
-};
+use std::ops::{Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, Mul, Sub, SubAssign};
 
 use num_traits::{NumCast, NumOps, ToPrimitive, Zero};
 
-use crate::{
-	core::{prelude::*, Point_, RotatedRect, Size_},
-	opencv_type_simple_generic,
-};
+use crate::core::{Point_, Size_};
+use crate::opencv_type_simple_generic;
 
 #[inline(always)]
 fn partial_min<T: PartialOrd>(a: T, b: T) -> T {
@@ -271,16 +266,6 @@ where
 		if self.empty() {
 			*self = Self::default();
 		}
-	}
-}
-
-impl fmt::Debug for RotatedRect {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		f.debug_struct("RotatedRect")
-			.field("center", &self.center())
-			.field("size", &self.size())
-			.field("angle", &self.angle())
-			.finish()
 	}
 }
 

@@ -616,6 +616,7 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(&mut ExportConfig)>> = La
 		("cv::Mat_", ExportConfig::export as _),
 		("cv::QtFont", ExportConfig::export as _),
 		("cv::TermCriteria", ExportConfig::simple as _),
+		("cv::RotatedRect", ExportConfig::simple as _), // marked simple since 4.8.0
 		("cv::aruco::DetectorParameters", ExportConfig::force_boxed as _), // used in Ptr
 		("cv::aruco::EstimateParameters", ExportConfig::force_boxed as _), // used in Ptr
 		("cv::bioinspired::RetinaParameters", ExportConfig::force_boxed as _),
@@ -1113,6 +1114,17 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 			FuncId::new(
 				"cv::QRCodeDetector::detectAndDecodeCurved",
 				["img", "points", "straight_qrcode"],
+			),
+			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+		),
+		(
+			FuncId::new("cv::GraphicalCodeDetector::decode", ["img", "points", "straight_code"]),
+			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+		),
+		(
+			FuncId::new(
+				"cv::GraphicalCodeDetector::detectAndDecode",
+				["img", "points", "straight_code"],
 			),
 			HashMap::from([("return", ArgOverride::StringAsBytes)]),
 		),
