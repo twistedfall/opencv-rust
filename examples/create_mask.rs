@@ -89,7 +89,7 @@ fn main() {
 		}
 
 		let (mouse_event, x, y, _) = {
-			if should_handle_mouse_event.load(atomic::Ordering::Relaxed) {
+			if !should_handle_mouse_event.load(atomic::Ordering::Relaxed) {
 				continue;
 			} else {
 				should_handle_mouse_event.store(false, atomic::Ordering::Relaxed);
@@ -210,7 +210,7 @@ fn state_transform(drawing_state: DrawingState, mouse_event: highgui::MouseEvent
 	use self::DrawingState::*;
 	use opencv::highgui::MouseEventTypes::*;
 
-	match (&drawing_state, mouse_event) {
+	match (drawing_state, mouse_event) {
 		(Init, EVENT_LBUTTONDOWN) => DrawingMarkerPoint,
 		(DrawingMarkerPoint, EVENT_LBUTTONUP) => DrawingMarkerPointFinished,
 		(DrawingMarkerPointFinished, EVENT_LBUTTONDOWN) => DrawingMarkerPoint,
