@@ -101,7 +101,7 @@ jobs:
             opencv: 3.4.16
             brew: "@3"
           - branch: 4
-            opencv: 4.6.0
+            opencv: 4.7.0
             brew: "@4"
         include:
           - os-image: ubuntu-22.04

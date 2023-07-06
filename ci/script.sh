@@ -4,20 +4,20 @@ set -xeu
 
 if [[ "$OS_FAMILY" == "Windows" ]]; then
 	export PATH="/C/Program Files/LLVM/bin:$PATH"
-	export LIBCLANG_PATH="/C/Program Files/LLVM/bin"
+	export LIBCLANG_PATH="C:/Program Files/LLVM/bin"
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		export VCPKGRS_DYNAMIC=1
 		export VCPKG_ROOT="$HOME/build/vcpkg"
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list
 	else # chocolatey build
-		export PATH="/C/tools/opencv/build/x64/vc15/bin:$PATH"
-		export OPENCV_LINK_PATHS="/C/tools/opencv/build/x64/vc15/lib"
+		export PATH="/C/tools/opencv/build/x64/vc16/bin:/C/tools/opencv/build/x64/vc15/bin:$PATH"
+		export OPENCV_LINK_PATHS="C:/tools/opencv/build/x64/vc16/lib,C:/tools/opencv/build/x64/vc15/lib"
 		export OPENCV_LINK_LIBS="opencv_world${OPENCV_VERSION//./}"
-		export OPENCV_INCLUDE_PATHS="/C/tools/opencv/build/include"
+		export OPENCV_INCLUDE_PATHS="C:/tools/opencv/build/include"
 	fi
 	echo "=== Installed chocolatey packages:"
-	choco list --local-only
+	choco list
 elif [[ "$OS_FAMILY" == "macOS" ]]; then
 	toolchain_path="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
 	export DYLD_FALLBACK_LIBRARY_PATH="$toolchain_path/usr/lib/"
