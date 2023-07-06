@@ -19,7 +19,7 @@ use std::{
 
 const SOURCE_WINDOW: &str = "Source image";
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug)]
 enum DrawingState {
 	Init,
 	DrawingMarkerPoint,
@@ -143,10 +143,9 @@ fn main() {
 				if !marker_points.is_empty() {
 					next_frame = src.clone();
 
-					let pts_mat = Mat::from_slice(marker_points.as_slice()).unwrap();
 					imgproc::polylines(
 						&mut next_frame,
-						&pts_mat,
+						&Mat::from_slice(marker_points.as_slice()).unwrap(),
 						true,
 						Scalar::new(0., 0., 0., 0.),
 						2,
@@ -198,8 +197,8 @@ fn main() {
 ///
 /// Panics if the argument less than 0 or greater than 11.
 fn mouse_event_from_i32(value: i32) -> opencv::highgui::MouseEventTypes {
-	(value.gt(&(opencv::highgui::MouseEventTypes::EVENT_MOUSEHWHEEL as i32) /* 11 */)
-		|| (value.lt(&(opencv::highgui::MouseEventTypes::EVENT_MOUSEMOVE as i32) /* 0 */)))
+	(value.gt(&(opencv::highgui::MouseEventTypes::EVENT_MOUSEHWHEEL as i32/* 11 */))
+		|| (value.lt(&(opencv::highgui::MouseEventTypes::EVENT_MOUSEMOVE as i32/* 0 */))))
 	.then(|| panic!("Invalid cv::highgui::MouseEventTypes value: {}", value));
 
 	// Safe because of the previous check
@@ -210,7 +209,7 @@ fn state_transform(drawing_state: DrawingState, mouse_event: highgui::MouseEvent
 	use self::DrawingState::*;
 	use opencv::highgui::MouseEventTypes::*;
 
-	match (drawing_state, mouse_event) {
+	match (&drawing_state, mouse_event) {
 		(Init, EVENT_LBUTTONDOWN) => DrawingMarkerPoint,
 		(DrawingMarkerPoint, EVENT_LBUTTONUP) => DrawingMarkerPointFinished,
 		(DrawingMarkerPointFinished, EVENT_LBUTTONDOWN) => DrawingMarkerPoint,
@@ -221,7 +220,7 @@ fn state_transform(drawing_state: DrawingState, mouse_event: highgui::MouseEvent
 		_ => {
 			println!(
 				"Invalid state transition from {:?} with event {:?}",
-				drawing_state, mouse_event
+				&drawing_state, mouse_event
 			);
 			drawing_state
 		}
