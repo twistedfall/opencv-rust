@@ -8,6 +8,7 @@ use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefDesc, TypeRefKind};
+use crate::writer::rust_native::class::rust_generate_debug_fields;
 use crate::writer::rust_native::RustStringExt;
 use crate::{Class, CompiledInterpolation, Element, Func, GeneratorEnv, SmartPtr, StrExt};
 
@@ -70,10 +71,14 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		static BASE_CAST_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/smart_ptr/base_cast.tpl.rs").compile_interpolation());
 
+		static IMPL_DEBUG_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/smart_ptr/impl_debug.rs").compile_interpolation());
+
 		static CTOR_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/smart_ptr/ctor.tpl.rs").compile_interpolation());
 
 		let rust_localalias = self.rust_localalias();
+		let rust_full = self.rust_name(NameStyle::ref_());
 		let pointee_type = self.pointee();
 		let type_ref = self.type_ref();
 		let smartptr_class = smartptr_class(&type_ref);
@@ -91,7 +96,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.clone()),
-			("rust_full", self.rust_name(NameStyle::ref_())),
+			("rust_full", rust_full.clone()),
 			(
 				"inner_rust_full",
 				pointee_type.rust_name(NameStyle::ref_()).into_owned().into(),
@@ -114,6 +119,11 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			);
 			impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 			let gen_env = self.gen_env();
+			let fields = cls.fields();
+			let mut field_const_methods = cls.field_methods(
+				fields.iter().filter(|f| f.exclude_kind().is_included()),
+				Some(Constness::Const),
+			);
 			for base in all_bases(&cls) {
 				inter_vars.insert("base_rust_local", base.rust_name(NameStyle::decl()).into_owned().into());
 				inter_vars.insert(
@@ -129,7 +139,19 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 				if gen_env.is_used_in_smart_ptr(base.cpp_name(CppNameStyle::Reference).as_ref()) {
 					impls += &BASE_CAST_TPL.interpolate(&inter_vars);
 				}
+				let base_fields = base.fields();
+				let base_field_const_methods = base.field_methods(
+					base_fields.iter().filter(|f| f.exclude_kind().is_included()),
+					Some(Constness::Const),
+				);
+				field_const_methods.extend(base_field_const_methods);
 			}
+			let debug_fields = rust_generate_debug_fields(field_const_methods);
+			impls += &IMPL_DEBUG_TPL.interpolate(&HashMap::from([
+				("rust_full", rust_full.as_ref()),
+				("rust_localalias", rust_localalias.as_ref()),
+				("debug_fields", &debug_fields),
+			]));
 		};
 		if gen_ctor(&pointee_type) {
 			let extern_new = method_new(&rust_localalias, type_ref, pointee_type).identifier();

@@ -9,7 +9,7 @@ use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef, TypeRefDesc, TypeRefKind};
 use crate::writer::rust_native::func::cpp_return_map;
-use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
+use crate::{settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
@@ -28,6 +28,9 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 	static IMPL_DEFAULT_TPL: Lazy<CompiledInterpolation> =
 		Lazy::new(|| include_str!("tpl/class/impl_default.tpl.rs").compile_interpolation());
+
+	static IMPL_DEBUG_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| include_str!("tpl/class/impl_debug.rs").compile_interpolation());
 
 	static DEFAULT_CTOR: Lazy<CompiledInterpolation> =
 		Lazy::new(|| include_str!("tpl/class/default_ctor.tpl.rs").compile_interpolation());
@@ -70,6 +73,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			c.field_methods(fields.iter().filter(|f| f.exclude_kind().is_included()), Some(Constness::Mut)),
 		)
 	};
+	let mut field_const_methods = const_methods.clone();
 	const_methods.extend(c.methods(Some(Constness::Const)));
 	mut_methods.extend(c.methods(Some(Constness::Mut)));
 	let method_count = const_methods.len() + mut_methods.len();
@@ -167,6 +171,21 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				("rust_local", rust_local.as_ref()),
 				("base_rust_local", base_local.as_ref()),
 				("base_rust_full", base_full.as_ref()),
+			]));
+		}
+		if !settings::IMPLEMENTED_MANUAL_DEBUG.contains(c.cpp_name(CppNameStyle::Reference).as_ref()) {
+			for b in &bases {
+				let base_fields = b.fields();
+				let base_field_const_methods = b.field_methods(
+					base_fields.iter().filter(|f| f.exclude_kind().is_included()),
+					Some(Constness::Const),
+				);
+				field_const_methods.extend(base_field_const_methods);
+			}
+			let debug_fields = rust_generate_debug_fields(field_const_methods);
+			impls += &IMPL_DEBUG_TPL.interpolate(&HashMap::from([
+				("rust_local", rust_local.as_ref()),
+				("debug_fields", &debug_fields),
 			]));
 		}
 	}
@@ -385,6 +404,22 @@ where
 		func.gen_rust(opencv_version) // fixme
 	})
 	.join("")
+}
+
+pub fn rust_generate_debug_fields(field_const_methods: Vec<Func>) -> String {
+	field_const_methods
+		.into_iter()
+		.filter(|f| f.exclude_kind().is_included() && f.return_type_ref().is_debug())
+		.filter_map(|f| {
+			f.kind().as_field_accessor().map(|(cls, _)| {
+				format!(
+					"\n\t.field(\"{name}\", &{trait_name}::{name}(self))",
+					trait_name = cls.rust_trait_name(NameStyle::ref_fish(), Constness::Const),
+					name = f.rust_leafname(FishStyle::No)
+				)
+			})
+		})
+		.join("")
 }
 
 impl RustElement for Class<'_, '_> {

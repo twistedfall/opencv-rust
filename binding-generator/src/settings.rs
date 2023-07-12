@@ -710,6 +710,10 @@ pub static IMPLEMENTED_FUNCTION_LIKE_MACROS: Lazy<HashSet<&str>> = Lazy::new(|| 
 pub static IMPLEMENTED_SYSTEM_CLASSES: Lazy<HashSet<&str>> =
 	Lazy::new(|| HashSet::from(["std::pair", "std::string", "std::tuple", "std::vector"]));
 
+/// classes that have a manual `Debug` implementation, element is cpp_name(Reference)
+pub static IMPLEMENTED_MANUAL_DEBUG: Lazy<HashSet<&str>> =
+	Lazy::new(|| HashSet::from(["cv::Mat", "cv::MatSize", "cv::MatStep", "cv::dnn::DictValue"]));
+
 // fixme, generalize, make it use constant::ValueKind
 pub static CONST_TYPE_USIZE: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["Mat_AUTO_STEP"]));
 

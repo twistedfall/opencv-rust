@@ -411,6 +411,19 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			}
 	}
 
+	/// True if a `TypeRef` has `std::fmt::Debug` implementation
+	pub fn is_debug(&self) -> bool {
+		match self.kind().as_ref() {
+			TypeRefKind::Primitive(_, _) | TypeRefKind::Class(_) | TypeRefKind::Enum(_) | TypeRefKind::SmartPtr(_) => true,
+			TypeRefKind::Array(elem, _) => elem.is_debug(),
+			TypeRefKind::StdVector(vec) => vec.element_type().is_debug(),
+			TypeRefKind::StdTuple(tuple) => tuple.elements().into_iter().all(|e| e.is_debug()),
+			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.is_debug(),
+			TypeRefKind::Function(_) | TypeRefKind::Generic(_) | TypeRefKind::Ignored => false,
+			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().is_debug(),
+		}
+	}
+
 	pub fn as_char8(&self) -> Option<Signedness> {
 		if matches!(self.type_hint(), TypeRefTypeHint::ArgOverride(ArgOverride::Char8AsChar)) {
 			match self.kind().as_ref() {
@@ -768,6 +781,9 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		}
 		if self.is_clone() {
 			props.push("clone");
+		}
+		if self.is_debug() {
+			props.push("debug");
 		}
 		if self.is_nullable() {
 			props.push("nullable");
