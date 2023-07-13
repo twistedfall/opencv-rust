@@ -197,12 +197,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn has_virtual_destructor(&self) -> bool {
 		match self {
 			Class::Clang { entity, .. } => entity
-				.walk_children_while(|f| {
-					if f.get_kind() == EntityKind::Destructor && f.is_virtual_method() {
-						return WalkAction::Interrupt;
-					}
-					WalkAction::Continue
-				})
+				.walk_children_while(|f| WalkAction::continue_until(f.get_kind() == EntityKind::Destructor && f.is_virtual_method()))
 				.is_interrupted(),
 			Class::Desc(_) => false,
 		}
@@ -212,11 +207,10 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		match self {
 			Class::Clang { entity, .. } => entity
 				.walk_children_while(|f| {
-					if f.get_kind() == EntityKind::Destructor && f.get_accessibility().map_or(true, |acc| acc != Accessibility::Public)
-					{
-						return WalkAction::Interrupt;
-					}
-					WalkAction::Continue
+					WalkAction::continue_until(
+						f.get_kind() == EntityKind::Destructor
+							&& f.get_accessibility().map_or(true, |acc| acc != Accessibility::Public),
+					)
 				})
 				.is_interrupted(),
 			Class::Desc(_) => false,
@@ -262,8 +256,8 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn has_descendants(&self) -> bool {
 		match self {
 			&Self::Clang { gen_env, .. } => gen_env
-				.descendants
-				.contains_key(self.cpp_name(CppNameStyle::Reference).as_ref()),
+				.descendants_of(self.cpp_name(CppNameStyle::Reference).as_ref())
+				.is_some(),
 			Self::Desc(_) => false,
 		}
 	}
@@ -271,8 +265,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn descendants(&self) -> Vec<Class<'tu, 'ge>> {
 		match self {
 			Self::Clang { gen_env, .. } => gen_env
-				.descendants
-				.get(self.cpp_name(CppNameStyle::Reference).as_ref())
+				.descendants_of(self.cpp_name(CppNameStyle::Reference).as_ref())
 				.into_iter()
 				.flat_map(move |desc| desc.iter().map(move |e| Self::new(*e, gen_env)))
 				.collect(),

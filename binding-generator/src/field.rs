@@ -14,18 +14,17 @@ use crate::settings::ArgOverride;
 use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefTypeHint};
 use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 
-#[derive(Clone, Debug)]
-pub enum FieldTypeHint<'tu, 'ge> {
+#[derive(Clone, Copy, Debug)]
+pub enum FieldTypeHint {
 	None,
 	ArgOverride(ArgOverride),
-	Specialized(Rc<TypeRef<'tu, 'ge>>),
 }
 
 #[derive(Clone)]
 pub enum Field<'tu, 'ge> {
 	Clang {
 		entity: Entity<'tu>,
-		type_hint: FieldTypeHint<'tu, 'ge>,
+		type_hint: FieldTypeHint,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	},
 	Desc(Rc<FieldDesc<'tu, 'ge>>),
@@ -36,7 +35,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		Self::new_ext(entity, FieldTypeHint::None, gen_env)
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, type_hint: FieldTypeHint<'tu, 'ge>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(entity: Entity<'tu>, type_hint: FieldTypeHint, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::Clang {
 			entity,
 			type_hint,
@@ -48,17 +47,16 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	pub fn type_hint(&self) -> &FieldTypeHint<'tu, 'ge> {
+	pub fn type_hint(&self) -> FieldTypeHint {
 		match self {
-			Self::Clang { type_hint, .. } => type_hint,
-			Self::Desc(desc) => &desc.type_hint,
+			&Self::Clang { type_hint, .. } => type_hint,
+			Self::Desc(desc) => desc.type_hint,
 		}
 	}
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		let type_hint = match &self.type_hint() {
 			FieldTypeHint::ArgOverride(over) => TypeRefTypeHint::ArgOverride(*over),
-			FieldTypeHint::Specialized(typ) => TypeRefTypeHint::Specialized(typ.clone()),
 			_ => TypeRefTypeHint::None,
 		};
 		match self {
@@ -119,7 +117,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	}
 
 	pub fn as_slice_len(&self) -> Option<(&'static str, usize)> {
-		if let &FieldTypeHint::ArgOverride(ArgOverride::LenForSlice(ptr_arg, len_div)) = self.type_hint() {
+		if let FieldTypeHint::ArgOverride(ArgOverride::LenForSlice(ptr_arg, len_div)) = self.type_hint() {
 			Some((ptr_arg, len_div))
 		} else {
 			None
@@ -195,15 +193,14 @@ impl fmt::Debug for Field<'_, '_> {
 pub struct FieldDesc<'tu, 'ge> {
 	pub cpp_fullname: Rc<str>,
 	pub type_ref: TypeRef<'tu, 'ge>,
-	pub type_hint: FieldTypeHint<'tu, 'ge>,
+	pub type_hint: FieldTypeHint,
 	pub default_value: Option<Rc<str>>,
 }
 
 impl<'tu, 'ge> FieldDesc<'tu, 'ge> {
 	pub fn new(name: impl Into<Rc<str>>, type_ref: TypeRef<'tu, 'ge>) -> Self {
-		let name = name.into();
 		Self {
-			cpp_fullname: Rc::clone(&name),
+			cpp_fullname: name.into(),
 			type_ref,
 			type_hint: FieldTypeHint::None,
 			default_value: None,

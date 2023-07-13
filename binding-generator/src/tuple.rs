@@ -10,9 +10,9 @@ use crate::{DefaultElement, Element, EntityElement, GeneratorEnv, TypeRef};
 #[derive(Clone)]
 pub struct Tuple<'tu, 'ge> {
 	type_ref: Type<'tu>,
-	pub(crate) gen_env: &'ge GeneratorEnv<'tu>,
+	gen_env: &'ge GeneratorEnv<'tu>,
 	/// true for C++ representation as `pair` instead of `tuple`
-	pub(crate) tuple_type: &'static str,
+	tuple_type: &'static str,
 }
 
 impl<'tu, 'ge> Tuple<'tu, 'ge> {

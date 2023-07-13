@@ -42,6 +42,6 @@ pub fn run(mut args: impl Iterator<Item = OsString>) -> Result<()> {
 		.map(Path::new)
 		.collect::<Vec<_>>();
 	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, &version, false);
-	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir).process_opencv_module(module, bindings_writer);
+	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir).generate(module, bindings_writer);
 	Ok(())
 }

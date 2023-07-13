@@ -577,7 +577,7 @@ pub static ELEMENT_EXCLUDE_KIND: Lazy<HashMap<&str, ExcludeKind>> = Lazy::new(||
 	])
 });
 
-/// Manual export config adjustments in form of "cpp_name(Reference)" => fn(&mut ExportConfig). If the export config is not
+/// Manual export config adjustments in form of "cpp_name(Reference)" => tweak function. If the export config is not
 /// detected from the sources an `ExportConfig::default()` is passed to the function.
 #[allow(clippy::type_complexity)]
 pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(ExportConfig) -> Option<ExportConfig>>> = Lazy::new(|| {
@@ -785,8 +785,6 @@ pub static FUNC_MANUAL: Lazy<HashMap<&str, CompiledInterpolation>> = Lazy::new(|
 		),
 	])
 });
-
-pub static TYPES: Lazy<fn() -> TypeRef<'static, 'static>> = Lazy::new(|| TypeRefDesc::void);
 
 pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
 

@@ -22,6 +22,7 @@ impl RustElement for SmartPtr<'_, '_> {
 		self.pointee().rust_module().into_owned().into()
 	}
 
+	// fixme, we shouldn't override the rust_module_reference and rely on rust_module to provide the correct module
 	fn rust_module_reference(&self) -> Cow<str> {
 		"core".into()
 	}
@@ -257,7 +258,11 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 }
 
 fn gen_ctor(pointee_type: &TypeRef) -> bool {
-	pointee_type.is_primitive() || pointee_type.as_class().as_ref().map_or(false, |cls| !cls.is_abstract())
+	match pointee_type.canonical().kind().as_ref() {
+		TypeRefKind::Primitive(_, _) => true,
+		TypeRefKind::Class(cls) => !cls.is_abstract(),
+		_ => false,
+	}
 }
 
 fn all_bases<'tu, 'ge>(cls: &Class<'tu, 'ge>) -> Vec<Class<'tu, 'ge>> {

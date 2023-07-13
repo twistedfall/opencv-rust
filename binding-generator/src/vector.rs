@@ -2,11 +2,15 @@ use std::borrow::Cow;
 use std::fmt;
 use std::rc::Rc;
 
-use clang::{Entity, Type};
+use clang::Type;
+
+pub use desc::VectorDesc;
 
 use crate::element::ExcludeKind;
 use crate::type_ref::{CppNameStyle, TemplateArg, TypeRefDesc, TypeRefKind};
 use crate::{DefaultElement, Element, GeneratedType, GeneratorEnv, StrExt, TypeRef};
+
+mod desc;
 
 #[derive(Clone)]
 pub enum Vector<'tu, 'ge> {
@@ -53,13 +57,6 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
 		self.element_type().generated_types()
 	}
-
-	pub fn entity(&self) -> Option<Entity<'tu>> {
-		match self {
-			Vector::Clang { type_ref, .. } => type_ref.get_declaration(),
-			Vector::Desc(_) => None,
-		}
-	}
 }
 
 impl Element for Vector<'_, '_> {
@@ -76,11 +73,7 @@ impl Element for Vector<'_, '_> {
 	}
 
 	fn doc_comment(&self) -> Cow<str> {
-		if let Some(entity) = self.entity() {
-			entity.get_comment().unwrap_or_default().into()
-		} else {
-			"".into()
-		}
+		"".into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
@@ -103,16 +96,5 @@ impl fmt::Debug for Vector<'_, '_> {
 			.update_debug_struct(&mut debug_struct)
 			.field("element_type", &self.element_type())
 			.finish()
-	}
-}
-
-#[derive(Clone)]
-pub struct VectorDesc<'tu, 'ge> {
-	pub element_type: TypeRef<'tu, 'ge>,
-}
-
-impl<'tu, 'ge> VectorDesc<'tu, 'ge> {
-	pub fn new(element_type: TypeRef<'tu, 'ge>) -> Self {
-		Self { element_type }
 	}
 }

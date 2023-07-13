@@ -39,6 +39,7 @@ mod vector;
 type Entries = Vec<(String, String)>;
 type UniqueEntries = HashMap<String, String>;
 
+/// Writer of the source files used when building OpenCV to run on a native platform (as opposed to for example WASM)
 #[derive(Clone, Debug)]
 pub struct RustNativeBindingWriter<'s> {
 	debug: bool,

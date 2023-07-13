@@ -19,7 +19,7 @@ use crate::{settings, Class, CppNameStyle, Element, Enum, GeneratorEnv, StringEx
 pub struct TypeRefDesc<'tu, 'ge> {
 	pub kind: TypeRefKind<'tu, 'ge>,
 	pub inherent_constness: Constness,
-	pub type_hint: TypeRefTypeHint<'tu, 'ge>,
+	pub type_hint: TypeRefTypeHint,
 	pub template_specialization_args: Rc<[TypeRefTemplateArg<TypeRef<'tu, 'ge>>]>,
 }
 
@@ -102,7 +102,7 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 pub trait ClangTypeExt<'tu> {
 	fn kind<'ge>(
 		self,
-		type_hint: TypeRefTypeHint<'tu, 'ge>,
+		type_hint: TypeRefTypeHint,
 		parent_entity: Option<Entity<'tu>>,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	) -> TypeRefKind<'tu, 'ge>;
@@ -113,7 +113,7 @@ pub trait ClangTypeExt<'tu> {
 impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 	fn kind<'ge>(
 		self,
-		type_hint: TypeRefTypeHint<'tu, 'ge>,
+		type_hint: TypeRefTypeHint,
 		parent_entity: Option<Entity<'tu>>,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	) -> TypeRefKind<'tu, 'ge> {
@@ -142,7 +142,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 
 			TypeKind::Pointer => {
 				let pointee = self.get_pointee_type().expect("No pointee type for pointer");
-				let pointee_typeref = TypeRef::new_ext(pointee, type_hint.clone(), parent_entity, gen_env);
+				let pointee_typeref = TypeRef::new_ext(pointee, type_hint, parent_entity, gen_env);
 				if pointee_typeref.as_function().is_some() {
 					pointee_typeref.kind().into_owned()
 				} else if matches!(
@@ -202,8 +202,6 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					} else {
 						TypeRefKind::Class(Class::new(decl, gen_env))
 					}
-				} else if let TypeRefTypeHint::Specialized(typ) = type_hint {
-					typ.kind().into_owned()
 				} else {
 					let mut generic_type = self.get_display_name();
 					// workaround for clang6, FunctionPrototype is seen as Unexposed

@@ -72,8 +72,8 @@ impl RustElement for Func<'_, '_> {
 				break 'ctor_name "new";
 			}
 			.into()
-		} else if let Some(..) = kind.as_conversion_method() {
-			let mut name: String = self.return_type_ref().rust_name(NameStyle::decl()).into_owned();
+		} else if kind.as_conversion_method().is_some() {
+			let mut name = self.return_type_ref().rust_name(NameStyle::decl()).into_owned();
 			name.cleanup_name();
 			format!("to_{name}").into()
 		} else if let Some((cls, kind)) = kind.as_operator() {

@@ -39,19 +39,18 @@ pub enum TypeRefKind<'tu, 'ge> {
 	Ignored,
 }
 
-#[derive(Clone, Debug, PartialEq)]
-pub enum TypeRefTypeHint<'tu, 'ge> {
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum TypeRefTypeHint {
 	None,
 	ArgOverride(ArgOverride),
 	PrimitiveRefAsPointer,
-	Specialized(Rc<TypeRef<'tu, 'ge>>),
 }
 
 #[derive(Clone)]
 pub enum TypeRef<'tu, 'ge> {
 	Clang {
 		type_ref: Type<'tu>,
-		type_hint: TypeRefTypeHint<'tu, 'ge>,
+		type_hint: TypeRefTypeHint,
 		parent_entity: Option<Entity<'tu>>,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	},
@@ -65,7 +64,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn new_ext(
 		type_ref: Type<'tu>,
-		type_hint: TypeRefTypeHint<'tu, 'ge>,
+		type_hint: TypeRefTypeHint,
 		parent_entity: Option<Entity<'tu>>,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	) -> Self {
@@ -93,14 +92,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		Self::new_desc(TypeRefDesc::new(TypeRefKind::RValueReference(inner)))
 	}
 
-	pub fn type_hint(&self) -> &TypeRefTypeHint<'tu, 'ge> {
+	pub fn type_hint(&self) -> TypeRefTypeHint {
 		match self {
-			Self::Clang { type_hint, .. } => type_hint,
-			Self::Desc(desc) => &desc.type_hint,
+			&Self::Clang { type_hint, .. } => type_hint,
+			Self::Desc(desc) => desc.type_hint,
 		}
 	}
 
-	pub fn with_type_hint(self, type_hint: TypeRefTypeHint<'tu, 'ge>) -> Self {
+	pub fn with_type_hint(self, type_hint: TypeRefTypeHint) -> Self {
 		match self {
 			Self::Clang {
 				type_ref,
@@ -127,15 +126,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn with_constness(&self, constness: Constness) -> Self {
 		match self {
-			Self::Clang {
+			&Self::Clang {
 				type_ref,
 				type_hint,
 				parent_entity,
 				gen_env,
 			} => Self::new_desc(TypeRefDesc {
-				kind: type_ref.kind(type_hint.clone(), *parent_entity, gen_env),
+				kind: type_ref.kind(type_hint, parent_entity, gen_env),
 				inherent_constness: constness,
-				type_hint: type_hint.clone(),
+				type_hint,
 				template_specialization_args: type_ref.template_specialization_args(gen_env).into(),
 			}),
 			Self::Desc(desc) => {
@@ -159,12 +158,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn kind(&self) -> Cow<TypeRefKind<'tu, 'ge>> {
 		match self {
-			Self::Clang {
+			&Self::Clang {
 				type_ref,
 				type_hint,
 				parent_entity,
 				gen_env,
-			} => Cow::Owned(type_ref.kind(type_hint.clone(), *parent_entity, gen_env)),
+			} => Cow::Owned(type_ref.kind(type_hint, parent_entity, gen_env)),
 			Self::Desc(desc) => Cow::Borrowed(&desc.kind),
 		}
 	}
@@ -269,8 +268,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn is_primitive(&self) -> bool {
-		matches!(self.canonical().kind().as_ref(), TypeRefKind::Primitive(..))
+	/// Returns Some((rust_name, cpp_name)) if canonical kind is primitive, None otherwise
+	pub fn as_primitive(&self) -> Option<(&'static str, &'static str)> {
+		match self.canonical().kind().as_ref() {
+			TypeRefKind::Primitive(rust, cpp) => Some((rust, cpp)),
+			_ => None,
+		}
 	}
 
 	pub fn is_enum(&self) -> bool {
@@ -295,20 +298,16 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Pointer(inner) => {
 				if let Some(dir) = inner.as_string().map(|d| d.with_out_dir(inner.clang_constness().is_mut())) {
 					return Some(dir);
-				} else {
-					let inner_cpp_ref = inner.cpp_name(CppNameStyle::Reference);
-					if inner_cpp_ref == "char" || inner_cpp_ref == "const char" {
-						return if inner.clang_constness().is_const() {
-							Some(Dir::In(StrType::CharPtr))
-						} else {
-							Some(Dir::Out(StrType::CharPtr))
-						};
-					}
+				} else if inner.is_char() {
+					return if inner.clang_constness().is_const() {
+						Some(Dir::In(StrType::CharPtr))
+					} else {
+						Some(Dir::Out(StrType::CharPtr))
+					};
 				}
 			}
 			TypeRefKind::Array(inner, ..) => {
-				let inner_cpp_ref = inner.cpp_name(CppNameStyle::Reference);
-				if inner_cpp_ref == "char" || inner_cpp_ref == "const char" {
+				if inner.is_char() {
 					return Some(Dir::In(StrType::CharPtr));
 				}
 			}
@@ -366,11 +365,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_void(&self) -> bool {
-		matches!(self.canonical().kind().as_ref(), TypeRefKind::Primitive(_, "void"))
+		matches!(self.as_primitive(), Some((_, "void")))
 	}
 
 	pub fn is_bool(&self) -> bool {
-		matches!(self.canonical().kind().as_ref(), TypeRefKind::Primitive(_, "bool"))
+		matches!(self.as_primitive(), Some((_, "bool")))
+	}
+
+	pub fn is_char(&self) -> bool {
+		matches!(self.as_primitive(), Some((_, "char")))
 	}
 
 	pub fn is_void_ptr(&self) -> bool {
@@ -399,7 +402,11 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_copy(&self) -> bool {
-		self.is_primitive() || self.is_enum() || self.is_char_ptr_string() || self.canonical().as_simple_class().is_some()
+		match self.canonical().kind().as_ref() {
+			TypeRefKind::Primitive(_, _) | TypeRefKind::Enum(_) => true,
+			TypeRefKind::Class(cls) if cls.kind().is_simple() => true,
+			_ => self.is_char_ptr_string(),
+		}
 	}
 
 	pub fn is_clone(&self) -> bool {
@@ -414,7 +421,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	/// True if a `TypeRef` has `std::fmt::Debug` implementation
 	pub fn is_debug(&self) -> bool {
 		match self.kind().as_ref() {
-			TypeRefKind::Primitive(_, _) | TypeRefKind::Class(_) | TypeRefKind::Enum(_) | TypeRefKind::SmartPtr(_) => true,
+			TypeRefKind::Primitive(..) | TypeRefKind::Class(_) | TypeRefKind::Enum(_) | TypeRefKind::SmartPtr(_) => true,
 			TypeRefKind::Array(elem, _) => elem.is_debug(),
 			TypeRefKind::StdVector(vec) => vec.element_type().is_debug(),
 			TypeRefKind::StdTuple(tuple) => tuple.elements().into_iter().all(|e| e.is_debug()),
@@ -561,6 +568,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		settings::DATA_TYPES.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
 	}
 
+	/// Returns true if self is a data type or it's a vector with the element being a data type
 	pub fn is_element_data_type(&self) -> bool {
 		self
 			.as_vector()
@@ -569,18 +577,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn return_as_naked(&self) -> bool {
 		match self.kind().as_ref() {
-			TypeRefKind::Primitive(_, _) | TypeRefKind::Pointer(_) | TypeRefKind::Array(_, _) => true,
+			TypeRefKind::Primitive(..) | TypeRefKind::Pointer(_) | TypeRefKind::Array(_, _) => true,
 			_ => self.extern_pass_kind().is_by_void_ptr() || self.as_string().is_some(),
 		}
 	}
 
 	fn can_rust_by_ptr(&self) -> bool {
-		if let Some(inner) = self.as_pointer() {
-			if inner.is_primitive() && !self.as_string().is_some() {
-				return true;
-			}
-		}
-		false
+		self
+			.as_pointer()
+			.map_or(false, |inner| inner.as_primitive().is_some() && !self.as_string().is_some())
 	}
 
 	/// True for types that get passed by Rust pointer as opposed to a reference or an owned value
@@ -731,7 +736,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		if self.is_generic() {
 			props.push("generic");
 		}
-		if self.is_primitive() {
+		if self.as_primitive().is_some() {
 			props.push("primitive");
 		}
 		if self.is_enum() {
@@ -805,7 +810,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		dbg.field("cpp_full", &self.cpp_name(CppNameStyle::Reference))
 			.field("props", &props)
 			.field("kind", &self.kind())
-			.field("type_hint", self.type_hint())
+			.field("type_hint", &self.type_hint())
 			.field("exclude_kind", &self.exclude_kind())
 			.field("constness", &self.constness())
 			.field("clang_constness", &self.clang_constness())
@@ -897,4 +902,49 @@ impl Constness {
 			""
 		}
 	}
+}
+
+#[allow(unused)]
+pub fn dbg_clang_type(type_ref: Type) {
+	struct TypeWrapper<'tu>(Type<'tu>);
+
+	impl fmt::Debug for TypeWrapper<'_> {
+		fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+			f.debug_struct("Type")
+				.field("kind", &self.0.get_kind())
+				.field("display_name", &self.0.get_display_name())
+				.field("alignof", &self.0.get_alignof())
+				.field("sizeof", &self.0.get_sizeof())
+				.field("address_space", &self.0.get_address_space())
+				.field("argument_types", &self.0.get_argument_types())
+				.field("calling_convention", &self.0.get_calling_convention())
+				.field("canonical_type", &self.0.get_canonical_type())
+				.field("class_type", &self.0.get_class_type())
+				.field("declaration", &self.0.get_declaration())
+				.field("elaborated_type", &self.0.get_elaborated_type())
+				.field("element_type", &self.0.get_element_type())
+				.field("exception_specification", &self.0.get_exception_specification())
+				.field("fields", &self.0.get_fields())
+//				.field("modified_type", &self.0.get_modified_type())
+//				.field("nullability", &self.0.get_nullability())
+				.field("pointee_type", &self.0.get_pointee_type())
+				.field("ref_qualifier", &self.0.get_ref_qualifier())
+				.field("result_type", &self.0.get_result_type())
+				.field("size", &self.0.get_size())
+				.field("template_argument_types", &self.0.get_template_argument_types())
+				.field("typedef_name", &self.0.get_typedef_name())
+				.field("is_const_qualified", &self.0.is_const_qualified())
+				.field("is_elaborated", &self.0.is_elaborated())
+				.field("is_pod", &self.0.is_pod())
+				.field("is_restrict_qualified", &self.0.is_restrict_qualified())
+				.field("is_transparent_tag", &self.0.is_transparent_tag())
+				.field("is_variadic", &self.0.is_variadic())
+				.field("is_volatile_qualified", &self.0.is_volatile_qualified())
+				.field("is_integer", &self.0.is_integer())
+				.field("is_signed_integer", &self.0.is_signed_integer())
+				.field("is_unsigned_integer", &self.0.is_unsigned_integer())
+				.finish()
+		}
+	}
+	eprintln!("{:#?}", TypeWrapper(type_ref));
 }

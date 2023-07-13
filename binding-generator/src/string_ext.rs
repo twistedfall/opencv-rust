@@ -357,7 +357,7 @@ impl CompiledInterpolation<'_> {
 				}
 			}
 		}
-		if let Some('\n') = out.chars().rev().next() {
+		if let Some('\n') = out.chars().next_back() {
 			out.pop();
 		}
 		out

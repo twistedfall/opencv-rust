@@ -34,24 +34,6 @@ pub unsafe trait DataType: Copy {
 	fn opencv_type() -> i32 {
 		CV_MAKETYPE(Self::opencv_depth(), Self::opencv_channels())
 	}
-
-	#[inline]
-	#[deprecated(note = "Use opencv_depth() instead. Removal in July 2023")]
-	fn depth() -> i32 {
-		Self::opencv_depth()
-	}
-
-	#[inline]
-	#[deprecated(note = "Use opencv_channels() instead. Removal in July 2023")]
-	fn channels() -> i32 {
-		Self::opencv_channels()
-	}
-
-	#[inline]
-	#[deprecated(note = "Use opencv_type() instead. Removal in July 2023")]
-	fn typ() -> i32 {
-		Self::opencv_type()
-	}
 }
 
 macro_rules! data_type {

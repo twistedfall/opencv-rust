@@ -133,6 +133,10 @@ pub trait RustElement: Element {
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str>;
 
+	/// The very last concrete part of the name in Rust
+	///
+	/// This might not match `rust_name(NameStyle::Declaration)` because some classes in Rust are prefixed with their namespace. E.g.
+	/// `Detail_Blender`, in this case the `rust_leafname()` == `Blender` and `rust_name(NameStyle::Declaration)` == `Detail_Blender`.
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		DefaultRustNativeElement::rust_leafname(self)
 	}

@@ -6,8 +6,8 @@ use std::{env, fmt, mem};
 use clang::{Entity, EntityKind};
 
 use opencv_binding_generator::{
-	opencv_module_from_path, settings, Class, CppNameStyle, Element, EntityExt, EntityWalker, EntityWalkerVisitor, Func, FuncId,
-	Generator, GeneratorEnv, WalkAction,
+	opencv_module_from_path, settings, Class, CppNameStyle, Element, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func,
+	FuncId, Generator, GeneratorEnv, WalkAction,
 };
 
 struct FunctionFinder<'tu, 'f> {
@@ -115,11 +115,9 @@ fn main() {
 		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir);
 		for module in modules {
 			println!("  {module}");
-			gen.process_module(&module, false, |root_tu, _hdr| {
-				let root_entity = root_tu.get_entity();
+			gen.pre_process(&module, false, |root_entity, _hdr| {
 				let gen_env = GeneratorEnv::new(root_entity, &module);
-				let walker = EntityWalker::new(root_entity);
-				walker.walk_opencv_entities(FunctionFinder {
+				root_entity.walk_opencv_entities(FunctionFinder {
 					gen_env,
 					func_rename_unused: RefCell::new(&mut func_rename_unused),
 					func_cfg_attr_unused: RefCell::new(&mut func_cfg_attr_unused),

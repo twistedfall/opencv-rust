@@ -10,7 +10,7 @@ use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc
 use crate::writer::rust_native::RustStringExt;
 use crate::{settings, Class, CompiledInterpolation, Func, StrExt, TypeRef, Vector};
 
-use super::element::{DefaultRustNativeElement, RustElement};
+use super::element::RustElement;
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
@@ -20,11 +20,15 @@ impl RustElement for Vector<'_, '_> {
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		format!("{}::{}", self.rust_module(), self.rust_leafname(style.turbo_fish_style()))
-			.as_str()
-			.rust_name_from_fullname(style)
-			.into_owned()
-			.into()
+		format!(
+			"{}::{}",
+			self.rust_module_reference(),
+			self.rust_leafname(style.turbo_fish_style())
+		)
+		.as_str()
+		.rust_name_from_fullname(style)
+		.into_owned()
+		.into()
 	}
 
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
@@ -41,15 +45,8 @@ impl RustElement for Vector<'_, '_> {
 		.into()
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		match self {
-			Vector::Clang { .. } => DefaultRustNativeElement::rendered_doc_comment_with_prefix(
-				self.entity().expect("Can't get entity"),
-				prefix,
-				opencv_version,
-			),
-			Vector::Desc(_) => "".to_string(),
-		}
+	fn rendered_doc_comment_with_prefix(&self, _prefix: &str, _opencv_version: &str) -> String {
+		"".to_string()
 	}
 }
 

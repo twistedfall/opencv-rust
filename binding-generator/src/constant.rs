@@ -23,15 +23,11 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> 
 			TokenKind::Identifier => {
 				let spelling = t.get_spelling();
 				if let Some(entity) = t.get_location().get_entity() {
-					#[allow(clippy::single_match)] // using the single pattern for future extensibility
-					match entity.get_kind() {
-						EntityKind::MacroExpansion => {
-							let cnst = Const::new(entity);
-							if cnst.exclude_kind().is_excluded() {
-								return None;
-							}
+					if let EntityKind::MacroExpansion = entity.get_kind() {
+						let cnst = Const::new(entity);
+						if cnst.exclude_kind().is_excluded() {
+							return None;
 						}
-						_ => {}
 					}
 				}
 				if spelling.starts_with("CV_") {
@@ -45,7 +41,7 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> 
 			}
 			TokenKind::Literal => {
 				let spelling = t.get_spelling();
-				if spelling.contains('"') {
+				if spelling.contains(|c| c == '"' || c == '\'') {
 					out.kind = ValueKind::String;
 				} else if spelling.contains('.') {
 					out.kind = ValueKind::Float;

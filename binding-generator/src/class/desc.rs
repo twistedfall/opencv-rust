@@ -19,7 +19,6 @@ pub struct ClassDesc<'tu, 'ge> {
 
 impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 	pub fn boxed(cpp_fullname: impl Into<Rc<str>>, rust_fullname: impl Into<Rc<str>>) -> Self {
-		let cpp_fullname = cpp_fullname.into();
 		Self {
 			kind: ClassKind::Boxed,
 			is_abstract: false,
@@ -28,7 +27,7 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 			exclude_kind: ExcludeKind::Included,
 			template_kind: TemplateKind::No,
 			bases: Rc::new([]),
-			cpp_fullname,
+			cpp_fullname: cpp_fullname.into(),
 			rust_fullname: rust_fullname.into(),
 		}
 	}

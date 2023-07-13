@@ -1,7 +1,10 @@
 * 0.83.0
   * Add support for OpenCV 4.8.
-  * Tune naming for classes in `rapid` and CURA modules.
+  * Tune naming for classes in `rapid` and CUDA modules.
   * Add a `Debug` implementation for all classes and smart pointers.
+
+* 0.82.1
+  * Fix generation issue with specific module setup involving `dnn` module.
 
 * 0.82.0
   * Change the handling of abstract C++ classes, they are no longer exposed as `dyn Class` but a struct is generated for

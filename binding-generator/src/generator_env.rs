@@ -10,7 +10,7 @@ use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
 use crate::class::ClassKind;
 use crate::type_ref::CppNameStyle;
 use crate::{
-	comment, is_ephemeral_header, is_opencv_path, opencv_module_from_path, settings, Class, Const, Element, EntityWalker,
+	comment, is_ephemeral_header, is_opencv_path, opencv_module_from_path, settings, Class, Const, Element, EntityWalkerExt,
 	EntityWalkerVisitor, Func, MemoizeMap, MemoizeMapExt, NamePool, WalkAction,
 };
 
@@ -82,14 +82,19 @@ struct ExportIdx {
 	line_offset: usize,
 }
 
-struct DbPopulator<'tu, 'ge> {
+/// Populates different fields of [GeneratorEnv] to be used later for binding generation.
+///
+/// This is 2nd pass of the analysis. It performs some of the same actions as [crate::generator::EphemeralGenerator], but we can't
+/// share the collected data between them because after generating an ephemeral header we do a re-parse and that invalidates any
+/// [Entity] we might've stored in the pre-collected data
+struct GeneratorEnvPopulator<'tu, 'ge> {
 	gen_env: &'ge mut GeneratorEnv<'tu>,
 }
 
-impl<'tu> DbPopulator<'tu, '_> {
+impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 	fn add_func_comment(&mut self, entity: Entity) {
 		let raw_comment = entity.doc_comment();
-		if !raw_comment.is_empty() && !raw_comment.contains("@overload") {
+		if !raw_comment.is_empty() && !raw_comment.contains("@overload") && !raw_comment.contains("@copybrief") {
 			let name = entity.cpp_name(CppNameStyle::Reference).into_owned();
 			let line = entity.get_location().map_or(0, |l| l.get_file_location().line);
 			let defs = self.gen_env.func_comments.entry(name).or_insert_with(Vec::new);
@@ -123,11 +128,11 @@ impl<'tu> DbPopulator<'tu, '_> {
 	}
 }
 
-impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
+impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		is_opencv_path(path)
 			|| is_ephemeral_header(path)
-			|| opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module)
+			|| opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
 	}
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
@@ -173,16 +178,23 @@ impl<'tu> EntityWalkerVisitor<'tu> for DbPopulator<'tu, '_> {
 	}
 }
 
+/// Generator environment or context, contains a global data (passed by immutable reference) for the binding generation
+///
+/// This is partially pre-populated in an additional pass before the generation to provide some necessary data that's not available
+/// at the generation moment. E.g. list of descendants of a particular class.
 pub struct GeneratorEnv<'tu> {
+	/// The name of the module that's currently being generated
 	module: &'tu str,
 	export_map: HashMap<ExportIdx, ExportConfig>,
 	rename_map: HashMap<ExportIdx, RenameConfig>,
 	pub func_names: NamePool,
+	/// Collection of function comments to be able to replace `@overload` and `@copybrief` comment markers
 	func_comments: HashMap<String, Vec<(u32, String)>>,
+	/// Cache of the calculated [ClassKind]s
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
 	class_constants: HashMap<String, Const<'tu>>,
 	used_in_smart_ptr: HashSet<String>,
-	pub descendants: HashMap<String, HashSet<Entity<'tu>>>,
+	descendants: HashMap<String, HashSet<Entity<'tu>>>,
 }
 
 impl<'tu> GeneratorEnv<'tu> {
@@ -198,11 +210,11 @@ impl<'tu> GeneratorEnv<'tu> {
 			used_in_smart_ptr: HashSet::with_capacity(32),
 			descendants: HashMap::with_capacity(16),
 		};
-		let walker = EntityWalker::new(root_entity);
-		walker.walk_opencv_entities(DbPopulator { gen_env: &mut out });
+		root_entity.walk_opencv_entities(GeneratorEnvPopulator { gen_env: &mut out });
 		out
 	}
 
+	/// The name of the module that's currently being generated
 	pub fn module(&self) -> &str {
 		self.module
 	}
@@ -320,6 +332,8 @@ impl<'tu> GeneratorEnv<'tu> {
 			.map(|(_, comment)| comment.as_str())
 	}
 
+	/// Calculates the [ClassKind] of the class `entity` based on the macros connected to its declaration and whether it can be
+	/// expressed as simple in Rust
 	pub fn get_class_kind(&self, entity: Entity<'tu>) -> Option<ClassKind> {
 		let id = entity.cpp_name(CppNameStyle::Reference);
 		self.class_kind_cache.memo_get(id.as_ref(), || {
@@ -364,6 +378,11 @@ impl<'tu> GeneratorEnv<'tu> {
 
 	pub fn is_used_in_smart_ptr(&self, cpp_refname: &str) -> bool {
 		self.used_in_smart_ptr.contains(cpp_refname)
+	}
+
+	/// Returns the descendants of the specified class
+	pub fn descendants_of(&self, cpp_refname: &str) -> Option<&HashSet<Entity<'tu>>> {
+		self.descendants.get(cpp_refname)
 	}
 }
 

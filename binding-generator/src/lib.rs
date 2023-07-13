@@ -20,17 +20,16 @@ use std::io::{BufRead, Read, Seek, SeekFrom};
 
 use clang::Entity;
 
-use crate::debug::NameDebug;
 pub use class::Class;
 pub use constant::Const;
 pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Element, EntityElement};
+#[allow(unused)]
+use entity::dbg_clang_entity;
 pub use entity::{EntityExt, WalkAction, WalkResult};
 pub use enumeration::Enum;
 use field::{Field, FieldTypeHint};
 pub use func::{Func, FuncId, FuncTypeHint};
 use function::Function;
-#[allow(unused)]
-use generator::{dbg_clang_entity, dbg_clang_type};
 pub use generator::{is_ephemeral_header, GeneratedType, Generator, GeneratorVisitor};
 pub use generator_env::{ClassSimplicity, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
@@ -39,11 +38,15 @@ use name_pool::NamePool;
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
 use tuple::Tuple;
+#[allow(unused)]
+use type_ref::dbg_clang_type;
 use type_ref::TypeRef;
 pub use type_ref::{CppNameStyle, NameStyle};
 pub use typedef::Typedef;
 use vector::Vector;
-pub use walker::{EntityWalker, EntityWalkerVisitor};
+pub use walker::{EntityWalkerExt, EntityWalkerVisitor};
+
+use crate::debug::NameDebug;
 
 mod class;
 pub mod comment;

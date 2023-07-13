@@ -60,9 +60,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn set_custom_rust_leafname(&mut self, custom_rust_leafname: Option<Rc<str>>) {
 		match self {
 			Self::Clang {
-				custom_rust_leafname: old_name_hint,
+				custom_rust_leafname: old_custom_rust_leafname,
 				..
-			} => *old_name_hint = custom_rust_leafname,
+			} => *old_custom_rust_leafname = custom_rust_leafname,
 			Self::Desc(desc) => {
 				if desc.custom_rust_leafname != custom_rust_leafname {
 					if let Some(desc_mut) = Rc::get_mut(desc) {
@@ -125,7 +125,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			.values()
 			.map(|s| s().cpp_name(CppNameStyle::Reference).into_owned())
 			.join(", ");
-		let out = Self::new_desc(FuncDesc {
+		Self::new_desc(FuncDesc {
 			kind,
 			type_hint: FuncTypeHint::Specialized,
 			constness: self.constness(),
@@ -138,10 +138,13 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			arguments,
 			return_type_ref: specialized(&return_type_ref).unwrap_or(return_type_ref),
 			cpp_body: FuncCppBody::ManualCall(format!("{{{{name}}}}<{generic}>({{{{args}}}})").into()),
-		});
-		out
+		})
 	}
 
+	/// Returns true if function was specialized
+	///
+	/// It's used to add the return type to function identifier because otherwise it will generate identical function names when
+	/// we specialize only on the return type.
 	pub fn is_specialized(&self) -> bool {
 		match self {
 			&Self::Clang { .. } => false,
@@ -396,6 +399,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			self.cpp_name(CppNameStyle::Reference).into_owned()
 		};
 		out.cleanup_name();
+		// add return type to function id for cases when we specialize on the return type, in theory we should be able to apply
+		// this to all of the functions, but it's too much work to rename all those entries in FUNC_RENAME
 		if self.is_specialized() {
 			out.push('_');
 			let mut typ = self.return_type_ref().cpp_name(CppNameStyle::Reference).into_owned();
@@ -898,7 +903,7 @@ impl<'f> FuncId<'f> {
 	pub fn new<const ARGS: usize>(name: &'static str, args: [&'static str; ARGS]) -> FuncId<'static> {
 		FuncId {
 			name: name.into(),
-			args: IntoIterator::into_iter(args).map(|a| a.into()).collect(),
+			args: args.into_iter().map(|a| a.into()).collect(),
 		}
 	}
 
