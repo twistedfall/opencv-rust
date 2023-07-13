@@ -103,11 +103,7 @@ macro_rules! boxed_cast_base {
 		impl ::std::convert::From<$type> for $base {
 			#[inline]
 			fn from(s: $type) -> Self {
-				extern "C" {
-					fn $extern_convert(val: *mut ::std::ffi::c_void) -> *mut ::std::ffi::c_void;
-				}
-
-				unsafe { Self::from_raw($extern_convert(s.into_raw())) }
+				unsafe { Self::from_raw(sys::$extern_convert(s.into_raw())) }
 			}
 		}
 	};
@@ -122,11 +118,7 @@ macro_rules! boxed_cast_descendant {
 
 			#[inline]
 			fn try_from(s: $type) -> $crate::Result<Self> {
-				extern "C" {
-					fn $extern_convert(val: *mut ::std::ffi::c_void) -> *mut ::std::ffi::c_void;
-				}
-
-				let ret = unsafe { $extern_convert(s.into_raw()) };
+				let ret = unsafe { sys::$extern_convert(s.into_raw()) };
 				if ret.is_null() {
 					Err($crate::Error::new(
 						$crate::core::StsBadArg,

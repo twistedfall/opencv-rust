@@ -9,3 +9,4 @@ vector_extern! { {{inner_rust_full}},
 	{{extern_get}}, {{extern_set}},
 	{{extern_push}}, {{extern_insert}},
 }
+

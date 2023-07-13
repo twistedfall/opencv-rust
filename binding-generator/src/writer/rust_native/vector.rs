@@ -6,7 +6,8 @@ use once_cell::sync::Lazy;
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
-use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc};
+use crate::settings::ArgOverride;
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::RustStringExt;
 use crate::{settings, Class, CompiledInterpolation, Func, StrExt, TypeRef, Vector};
 
@@ -115,23 +116,25 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			("extern_insert", extern_insert.into()),
 		]);
 
+		let mut impls = String::new();
 		if settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref()) {
 			inter_vars.insert("extern", "".into());
 			inter_vars.insert("additional_methods", "".into());
-			inter_vars.insert("impls", "".into());
 		} else {
-			inter_vars.insert("extern", EXTERN_TPL.interpolate(&inter_vars).into());
+			impls += &EXTERN_TPL.interpolate(&inter_vars);
 
-			let mut impls = String::new();
-			let mut additional_methods = String::new();
 			if element_type.is_copy() && !element_type.is_bool() {
 				let extern_clone = method_clone(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).identifier();
+				let extern_data = method_data(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
+				let extern_data_mut = method_data_mut(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
 				let extern_from_slice = method_from_slice(&rust_localalias, vec_type_ref, element_type.clone()).identifier();
 				inter_vars.extend([
 					("extern_clone", extern_clone.into()),
+					("extern_data", extern_data.into()),
+					("extern_data_mut", extern_data_mut.into()),
 					("extern_from_slice", extern_from_slice.into()),
 				]);
-				additional_methods += &ADD_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
+				impls += &ADD_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 			} else {
 				inter_vars.insert(
 					"clone",
@@ -142,7 +145,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 					}
 					.into(),
 				);
-				additional_methods += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
+				impls += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 			}
 			if element_type.is_element_data_type() {
 				let input_array = method_input_array(&rust_localalias, vector_class.clone()).gen_rust(opencv_version);
@@ -155,10 +158,8 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 				]);
 				impls += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
 			}
-
-			inter_vars.insert("additional_methods", additional_methods.into());
-			inter_vars.insert("impls", impls.into());
 		}
+		inter_vars.insert("impls", impls.into());
 
 		RUST_TPL.interpolate(&inter_vars)
 	}
@@ -170,14 +171,16 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
 
 		let mut out = String::new();
+		if element_type.is_copy() && !element_type.is_bool() {
+			out.push_str(&method_clone(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).gen_rust_exports());
+			out.push_str(&method_data(&rust_localalias, vector_class.clone(), element_type.clone()).gen_rust_exports());
+			out.push_str(&method_data_mut(&rust_localalias, vector_class.clone(), element_type.clone()).gen_rust_exports());
+			out.push_str(&method_from_slice(&rust_localalias, vec_type_ref, element_type.clone()).gen_rust_exports());
+		}
 		if element_type.is_element_data_type() {
 			out.push_str(&method_input_array(&rust_localalias, vector_class.clone()).gen_rust_exports());
 			out.push_str(&method_output_array(&rust_localalias, vector_class.clone()).gen_rust_exports());
-			out.push_str(&method_input_output_array(&rust_localalias, vector_class.clone()).gen_rust_exports());
-		}
-		if element_type.is_copy() && !element_type.is_bool() {
-			out.push_str(&method_clone(&rust_localalias, vector_class, vec_type_ref.clone()).gen_rust_exports());
-			out.push_str(&method_from_slice(&rust_localalias, vec_type_ref, element_type.clone()).gen_rust_exports());
+			out.push_str(&method_input_output_array(&rust_localalias, vector_class).gen_rust_exports());
 		}
 		out
 	}
@@ -186,9 +189,6 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		static COMMON_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/cpp.tpl.cpp").compile_interpolation());
 
-		static METHODS_COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/cpp_methods_copy_non_bool.tpl.cpp").compile_interpolation());
-
 		let vec_type_ref = self.type_ref();
 		if vec_type_ref.constness().is_const() {
 			// todo we should generate smth like VectorRef in this case
@@ -196,7 +196,6 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		}
 		let element_type = self.element_type();
 		let element_is_bool = element_type.is_bool();
-		let inner_cpp_full = element_type.cpp_name(CppNameStyle::Reference);
 		let rust_localalias = self.rust_localalias();
 		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
 		let mut methods = vec![
@@ -217,27 +216,16 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		];
 		if element_type.is_copy() && !element_is_bool {
 			methods.push(method_clone(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).gen_cpp());
+			methods.push(method_data(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp());
+			methods.push(method_data_mut(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp());
+			methods.push(method_from_slice(&rust_localalias, vec_type_ref.clone(), element_type.clone()).gen_cpp());
 		}
 		if element_type.is_element_data_type() {
 			methods.push(method_input_array(&rust_localalias, vector_class.clone()).gen_cpp());
 			methods.push(method_output_array(&rust_localalias, vector_class.clone()).gen_cpp());
 			methods.push(method_input_output_array(&rust_localalias, vector_class).gen_cpp());
 		}
-		let mut inter_vars = HashMap::from([
-			("rust_localalias", rust_localalias.as_ref().into()),
-			("cpp_full", vec_type_ref.cpp_name(CppNameStyle::Reference)),
-			("cpp_extern_return", vec_type_ref.cpp_extern_return()),
-			("inner_cpp_full", inner_cpp_full.as_ref().into()),
-			("inner_cpp_extern_return", element_type.cpp_extern_return()),
-		]);
-
-		if element_type.is_copy() && !element_is_bool {
-			methods.push(METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars));
-			methods.push(method_from_slice(&rust_localalias, vec_type_ref.clone(), element_type.clone()).gen_cpp());
-		}
-		inter_vars.insert("methods", methods.join("").into());
-
-		COMMON_TPL.interpolate(&inter_vars)
+		COMMON_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
 	}
 }
 
@@ -384,7 +372,7 @@ fn method_clear<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) 
 		format!("cv::{rust_localalias}::clear"),
 		"core",
 		vec![],
-		FuncCppBody::ManualCall("instance->clear()".into()),
+		FuncCppBody::Auto,
 		TypeRefDesc::void(),
 	))
 }
@@ -469,6 +457,42 @@ fn method_clone<'tu, 'ge>(
 		vec![],
 		FuncCppBody::ManualCall("{{ret_type}}(*instance)".into()),
 		vec_type_ref,
+	))
+}
+
+fn method_data<'tu, 'ge>(
+	rust_localalias: &str,
+	vector_class: Class<'tu, 'ge>,
+	element_type: TypeRef<'tu, 'ge>,
+) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Const,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::data"),
+		"core",
+		vec![],
+		FuncCppBody::Auto,
+		TypeRef::new_pointer(element_type.with_constness(Constness::Const))
+			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
+	))
+}
+
+fn method_data_mut<'tu, 'ge>(
+	rust_localalias: &str,
+	vector_class: Class<'tu, 'ge>,
+	element_type: TypeRef<'tu, 'ge>,
+) -> Func<'tu, 'ge> {
+	Func::new_desc(FuncDesc::new(
+		FuncKind::InstanceMethod(vector_class),
+		Constness::Mut,
+		ReturnKind::InfallibleNaked,
+		format!("cv::{rust_localalias}::dataMut"),
+		"core",
+		vec![],
+		FuncCppBody::ManualCall("instance->data()".into()),
+		TypeRef::new_pointer(element_type.with_constness(Constness::Mut))
+			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
 	))
 }
 

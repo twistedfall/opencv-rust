@@ -138,6 +138,9 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 				inter_vars.insert("base_rust_full_ref", base.rust_name(NameStyle::ref_()).into_owned().into());
 				impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 				if gen_env.is_used_in_smart_ptr(base.cpp_name(CppNameStyle::Reference).as_ref()) {
+					let extern_cast_to_base =
+						method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base_rust_local, gen_env).identifier();
+					inter_vars.insert("extern_cast_to_base", extern_cast_to_base.into());
 					impls += &BASE_CAST_TPL.interpolate(&inter_vars);
 				}
 				let base_fields = base.fields();
@@ -325,13 +328,6 @@ fn method_cast_to_base<'tu, 'ge>(
 	base_rust_local: &str,
 	gen_env: &'ge GeneratorEnv<'tu>,
 ) -> Func<'tu, 'ge> {
-	let cpp_body = FuncCppBody::ManualFull(
-		format!(
-			"return new {{{{ret_type}}}}(instance->dynamicCast<{base_type}>());",
-			base_type = base_type_ref.cpp_name(CppNameStyle::Reference)
-		)
-		.into(),
-	);
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(smartptr_class),
 		Constness::Mut,
@@ -339,7 +335,13 @@ fn method_cast_to_base<'tu, 'ge>(
 		format!("cv::{rust_localalias}::to_PtrOf{base_rust_local}"),
 		"<unused>",
 		vec![],
-		cpp_body,
+		FuncCppBody::ManualFull(
+			format!(
+				"return new {{{{ret_type}}}}(instance->dynamicCast<{base_type}>());",
+				base_type = base_type_ref.cpp_name(CppNameStyle::Reference)
+			)
+			.into(),
+		),
 		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(SmartPtr::new_desc(SmartPtrDesc {
 			pointee_type_ref: base_type_ref,
 			gen_env,

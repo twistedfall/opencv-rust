@@ -92,6 +92,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		Self::new_desc(TypeRefDesc::new(TypeRefKind::RValueReference(inner)))
 	}
 
+	pub fn new_class(cls: Class<'tu, 'ge>) -> Self {
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::Class(cls)))
+	}
+
 	pub fn type_hint(&self) -> TypeRefTypeHint {
 		match self {
 			&Self::Clang { type_hint, .. } => type_hint,
@@ -298,7 +302,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Pointer(inner) => {
 				if let Some(dir) = inner.as_string().map(|d| d.with_out_dir(inner.clang_constness().is_mut())) {
 					return Some(dir);
-				} else if inner.is_char() {
+				} else if self.type_hint() != TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString) && inner.is_char() {
 					return if inner.clang_constness().is_const() {
 						Some(Dir::In(StrType::CharPtr))
 					} else {

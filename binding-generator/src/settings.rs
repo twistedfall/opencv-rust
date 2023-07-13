@@ -970,9 +970,12 @@ pub enum ArgOverride {
 	NullableSlice,
 	Slice,
 	LenForSlice(&'static str, usize),
+	/// Treat C++ string as a byte buffer (`Vec<u8>`) instead of an actual string
 	StringAsBytes,
-	// when C++ char needs to be represented as Rust char
+	/// when C++ char needs to be represented as Rust char
 	Char8AsChar,
+	/// for the cases when `char *` should not be treated as string, but as a pointer to a single char
+	CharPtrNotString,
 }
 
 pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> = Lazy::new(|| {

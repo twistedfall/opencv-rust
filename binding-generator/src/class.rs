@@ -13,7 +13,7 @@ use crate::element::ExcludeKind;
 use crate::entity::{WalkAction, WalkResult};
 use crate::field::{FieldDesc, FieldTypeHint};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
-use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefKind, TypeRefTypeHint};
+use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
 	settings, ClassSimplicity, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, FuncTypeHint, GeneratedType,
@@ -107,7 +107,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => TypeRef::new(entity.get_type().expect("Can't get class type"), gen_env),
-			Self::Desc(desc) => TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Class(Self::new_desc(desc.as_ref().clone())))),
+			Self::Desc(desc) => TypeRef::new_class(Self::new_desc(desc.as_ref().clone())),
 		}
 	}
 

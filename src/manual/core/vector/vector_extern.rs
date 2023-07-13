@@ -193,11 +193,6 @@ macro_rules! vector_copy_non_bool {
 		$extern_from_slice: ident,
 		$extern_clone: ident $(,)?
 	) => {
-		extern "C" {
-			fn $extern_data_const(instance: extern_send!($crate::core::Vector<$type>)) -> *const $type;
-	fn $extern_data_mut(instance: extern_send!(mut $crate::core::Vector<$type>)) -> *mut $type;
-		}
-
 		impl $crate::core::Vector<$type>
 		where
 			$crate::core::Vector<$type>: $crate::core::VectorExtern<$type>,
@@ -231,12 +226,12 @@ macro_rules! vector_copy_non_bool {
 		impl $crate::core::VectorExternCopyNonBool<$type> for $crate::core::Vector<$type> {
 			#[inline]
 			unsafe fn extern_data(&self) -> *const $type {
-				$extern_data_const(self.as_raw())
+				sys::$extern_data_const(self.as_raw())
 			}
 
 			#[inline]
 			unsafe fn extern_data_mut(&mut self) -> *mut $type {
-				$extern_data_mut(self.as_raw_mut())
+				sys::$extern_data_mut(self.as_raw_mut())
 			}
 
 			#[inline]

@@ -58,31 +58,22 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 	}
 
 	pub fn input_array() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Class(Class::new_desc(ClassDesc::boxed(
-			"cv::_InputArray",
-			"core::_InputArray",
-		)))))
+		TypeRef::new_class(Class::new_desc(ClassDesc::boxed("cv::_InputArray", "core::_InputArray")))
 	}
 
 	pub fn output_array() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Class(Class::new_desc(ClassDesc::boxed(
-			"cv::_OutputArray",
-			"core::_OutputArray",
-		)))))
+		TypeRef::new_class(Class::new_desc(ClassDesc::boxed("cv::_OutputArray", "core::_OutputArray")))
 	}
 
 	pub fn input_output_array() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Class(Class::new_desc(ClassDesc::boxed(
+		TypeRef::new_class(Class::new_desc(ClassDesc::boxed(
 			"cv::_InputOutputArray",
 			"core::_InputOutputArray",
-		)))))
+		)))
 	}
 
 	pub fn string() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Class(Class::new_desc(ClassDesc::boxed(
-			"cv::String",
-			"core::String",
-		)))))
+		TypeRef::new_class(Class::new_desc(ClassDesc::boxed("cv::String", "core::String")))
 	}
 
 	pub fn vector_of_string() -> TypeRef<'tu, 'ge> {
@@ -92,10 +83,10 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 	}
 
 	pub fn dict_value() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Class(Class::new_desc(ClassDesc::boxed(
+		TypeRef::new_class(Class::new_desc(ClassDesc::boxed(
 			"cv::dnn::DictValue",
 			"crate::dnn::DictValue",
-		)))))
+		)))
 	}
 }
 
