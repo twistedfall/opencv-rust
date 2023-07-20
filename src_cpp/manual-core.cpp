@@ -40,43 +40,8 @@ template<typename T> inline void ocvrs_input_output_array(T* instance, Result<vo
 	ocvrs_ioa(base##w)
 
 extern "C" {
-	void cv_manual_Mat_size(const cv::Mat* instance, Result<cv::Size>* ocvrs_return) {
-		try {
-			Ok<cv::Size>(instance->size(), ocvrs_return);
-		} OCVRS_CATCH(Result<cv::Size>, ocvrs_return)
-	}
-
-	void cv_manual_Mat_set(cv::Mat* instance, cv::Scalar s, Result_void* ocvrs_return) {
-		try {
-			*instance = s;
-			Ok(ocvrs_return);
-		} OCVRS_CATCH(Result_void, ocvrs_return)
-	}
-
-	const unsigned char* cv_manual_Mat_data(const cv::Mat* instance) {
-		return instance->data;
-	}
-
-	void cv_manual_UMat_size(const cv::UMat* instance, Result<cv::Size>* ocvrs_return) {
-		try {
-			Ok<cv::Size>(instance->size(), ocvrs_return);
-		} OCVRS_CATCH(Result<cv::Size>, ocvrs_return)
-	}
-
-	int cv_manual_MatSize_dims(const cv::MatSize* instance) {
-		return *(instance->p - 1);
-	}
-
 	const size_t* cv_manual_MatStep_deref(const cv::MatStep* instance) {
 		return instance->p;
-	}
-
-	int cv_manual_MatConstIterator_type(const cv::MatConstIterator* instance) {
-		return instance->m->type();
-	}
-
-	bool cv_manual_MatConstIterator_has_elements(const cv::MatConstIterator* instance) {
-		return instance->ptr != instance->sliceEnd;
 	}
 
 	void cv_InputArray_input_array(cv::_InputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_input_array(instance, ocvrs_return); }

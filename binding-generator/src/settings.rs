@@ -4,9 +4,13 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 
 use once_cell::sync::Lazy;
 
+pub use func_inject::{FuncFactory, FUNC_INJECT_MANUAL};
+
 use crate::element::ExcludeKind;
 use crate::type_ref::{TypeRef, TypeRefDesc};
 use crate::{CompiledInterpolation, ExportConfig, FuncId, StrExt};
+
+mod func_inject;
 
 /// map of functions to rename or skip, key is Func.identifier(), value is new name ("+" will be replaced by old name) or "-" to skip
 pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
@@ -370,6 +374,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_Feature2D_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR", "+_multiple"),
 		("cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR_const__InputArrayR", "+_multiple"),
 		("cv_GFTTDetector_create_int_double_double_int_int_bool_double", "+_with_gradient"),
+		("cv_ORB_create_const", "default"),
 
 		// ### gapi ###
 		("cv_MediaFrame_IAdapter_access_Access", "-"), // use of deleted function ‘cv::MediaFrame::View::View(const cv::MediaFrame::View&)’
@@ -794,8 +799,8 @@ pub static FUNC_SPECIALIZE: Lazy<HashMap<&str, Vec<HashMap<&str, TypeRefFactory>
 		(
 			"cv_dnn_Dict_set_const_StringR_const_TR",
 			vec![
-				HashMap::from([("const T", TypeRefDesc::string as _)]),
-				HashMap::from([("const T", TypeRefDesc::dict_value as _)]),
+				HashMap::from([("const T", TypeRefDesc::cv_string as _)]),
+				HashMap::from([("const T", TypeRefDesc::cv_dnn_dict_value as _)]),
 				HashMap::from([("const T", TypeRefDesc::double as _)]),
 				HashMap::from([("const T", TypeRefDesc::int64_t as _)]),
 			],
@@ -803,7 +808,7 @@ pub static FUNC_SPECIALIZE: Lazy<HashMap<&str, Vec<HashMap<&str, TypeRefFactory>
 		(
 			"cv_dnn_DictValue_get_const_int",
 			vec![
-				HashMap::from([("T", TypeRefDesc::string as _)]),
+				HashMap::from([("T", TypeRefDesc::cv_string as _)]),
 				HashMap::from([("T", TypeRefDesc::double as _)]),
 				HashMap::from([("T", TypeRefDesc::int as _)]),
 				HashMap::from([("T", TypeRefDesc::int64_t as _)]),
@@ -973,7 +978,7 @@ pub enum ArgOverride {
 	/// Treat C++ string as a byte buffer (`Vec<u8>`) instead of an actual string
 	StringAsBytes,
 	/// when C++ char needs to be represented as Rust char
-	Char8AsChar,
+	CharAsRustChar,
 	/// for the cases when `char *` should not be treated as string, but as a pointer to a single char
 	CharPtrNotString,
 }
@@ -1157,10 +1162,10 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 		(
 			FuncId::new("cv::VideoWriter::fourcc", ["c1", "c2", "c3", "c4"]),
 			HashMap::from([
-				("c1", ArgOverride::Char8AsChar),
-				("c2", ArgOverride::Char8AsChar),
-				("c3", ArgOverride::Char8AsChar),
-				("c4", ArgOverride::Char8AsChar),
+				("c1", ArgOverride::CharAsRustChar),
+				("c2", ArgOverride::CharAsRustChar),
+				("c3", ArgOverride::CharAsRustChar),
+				("c4", ArgOverride::CharAsRustChar),
 			]),
 		),
 		(

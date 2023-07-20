@@ -5,7 +5,7 @@ use once_cell::sync::Lazy;
 
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefDesc, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
@@ -63,7 +63,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, _opencv_version: &str, gen_env: &GeneratorEnv) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/rust.tpl.rs").compile_interpolation());
 
 		static TRAIT_RAW_TPL: Lazy<CompiledInterpolation> =
@@ -114,7 +114,6 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 				cls.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned().into(),
 			);
 			impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
-			let gen_env = self.gen_env();
 			let fields = cls.fields();
 			let mut field_const_methods = cls.field_methods(
 				fields.iter().filter(|f| f.exclude_kind().is_included()),
@@ -135,7 +134,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 				impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 				if gen_env.is_used_in_smart_ptr(base.cpp_name(CppNameStyle::Reference).as_ref()) {
 					let extern_cast_to_base =
-						method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base_rust_local, gen_env).identifier();
+						method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base_rust_local).identifier();
 					inter_vars.insert("extern_cast_to_base", extern_cast_to_base.into());
 					impls += &BASE_CAST_TPL.interpolate(&inter_vars);
 				}
@@ -165,39 +164,35 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 	}
 
 	// todo: move the common logic for gen_rust_exports() and gen_cpp() out as with extern_functions() in Class
-	fn gen_rust_exports(&self) -> String {
+	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
 		let type_ref = self.type_ref();
 		let pointee_type = self.pointee();
 		let smartptr_class = smartptr_class(&type_ref);
 
 		let mut out = String::new();
-		out.push_str(&method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).gen_rust_exports());
-		out.push_str(&method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_rust_exports());
-		out.push_str(&FuncDesc::method_delete(smartptr_class.clone()).gen_rust_exports());
+		out.push_str(
+			&method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).gen_rust_exports(gen_env),
+		);
+		out.push_str(&method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_rust_exports(gen_env));
+		out.push_str(&FuncDesc::method_delete(smartptr_class.clone()).gen_rust_exports(gen_env));
 		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
-			let gen_env = self.gen_env();
 			for base in all_bases(&cls)
 				.into_iter()
 				.filter(|base| gen_env.is_used_in_smart_ptr(base.cpp_name(CppNameStyle::Reference).as_ref()))
 			{
 				out.push_str(
-					&method_cast_to_base(
-						smartptr_class.clone(),
-						base.type_ref(),
-						&base.rust_name(NameStyle::decl()),
-						self.gen_env(),
-					)
-					.gen_rust_exports(),
+					&method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base.rust_name(NameStyle::decl()))
+						.gen_rust_exports(gen_env),
 				);
 			}
 		}
 		if gen_ctor(&pointee_type) {
-			out.push_str(&method_new(smartptr_class, type_ref, pointee_type).gen_rust_exports());
+			out.push_str(&method_new(smartptr_class, type_ref, pointee_type).gen_rust_exports(gen_env));
 		}
 		out
 	}
 
-	fn gen_cpp(&self) -> String {
+	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation());
 
 		let type_ref = self.type_ref();
@@ -205,29 +200,22 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let smartptr_class = smartptr_class(&type_ref);
 
 		let mut methods = Vec::with_capacity(8);
-		methods.push(method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).gen_cpp());
-		methods.push(method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_cpp());
-		methods.push(FuncDesc::method_delete(smartptr_class.clone()).gen_cpp());
+		methods.push(method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).gen_cpp(gen_env));
+		methods.push(method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_cpp(gen_env));
+		methods.push(FuncDesc::method_delete(smartptr_class.clone()).gen_cpp(gen_env));
 		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
-			let gen_env = self.gen_env();
 			for base in all_bases(&cls)
 				.into_iter()
 				.filter(|base| gen_env.is_used_in_smart_ptr(base.cpp_name(CppNameStyle::Reference).as_ref()))
 			{
 				methods.push(
-					method_cast_to_base(
-						smartptr_class.clone(),
-						base.type_ref(),
-						&base.rust_name(NameStyle::decl()),
-						self.gen_env(),
-					)
-					.gen_cpp(),
+					method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base.rust_name(NameStyle::decl())).gen_cpp(gen_env),
 				);
 			}
 		}
 
 		if gen_ctor(&pointee_type) {
-			methods.push(method_new(smartptr_class, type_ref, pointee_type).gen_cpp());
+			methods.push(method_new(smartptr_class, type_ref, pointee_type).gen_cpp(gen_env));
 		};
 
 		TPL.interpolate(&[("methods", methods.join(""))].into())
@@ -291,6 +279,7 @@ fn method_new<'tu, 'ge>(
 		"<unused>",
 		vec![Field::new_desc(FieldDesc::new("val", pointee_type))],
 		FuncCppBody::ManualFull(format!("return new {{{{ret_type}}}}({val});").into()),
+		FuncRustBody::Auto,
 		smartptr_type_ref,
 	))
 }
@@ -299,7 +288,6 @@ fn method_cast_to_base<'tu, 'ge>(
 	smartptr_class: Class<'tu, 'ge>,
 	base_type_ref: TypeRef<'tu, 'ge>,
 	base_rust_local: &str,
-	gen_env: &'ge GeneratorEnv<'tu>,
 ) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(smartptr_class),
@@ -315,9 +303,9 @@ fn method_cast_to_base<'tu, 'ge>(
 			)
 			.into(),
 		),
+		FuncRustBody::Auto,
 		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(SmartPtr::new_desc(SmartPtrDesc {
 			pointee_type_ref: base_type_ref,
-			gen_env,
 		})))),
 	))
 }
@@ -353,6 +341,7 @@ fn method_get_inner_ptr<'tu, 'ge>(
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualFull("return instance->get();".into()),
+		FuncRustBody::Auto,
 		return_type_ref,
 	))
 }

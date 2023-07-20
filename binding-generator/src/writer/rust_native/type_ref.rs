@@ -2,7 +2,7 @@ use std::borrow::Cow;
 use std::fmt;
 use std::fmt::Write;
 
-use crate::type_ref::{Constness, Dir, ExternDir, FishStyle, NameStyle, Signedness, StrEnc, StrType, TypeRef, TypeRefKind};
+use crate::type_ref::{Constness, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefKind};
 use crate::{IteratorExt, StringExt};
 
 use super::element::RustElement;
@@ -160,7 +160,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				break 'decl_type "&mut impl core::ToInputOutputArray".into();
 			} else if let Some((_, size)) = self.as_string_array() {
 				break 'decl_type self.format_as_array("&str", size).into();
-			} else if self.as_char8().is_some() {
+			} else if self.is_rust_char() {
 				break 'decl_type "char".into();
 			}
 			break 'decl_type self.rust_name(NameStyle::ref_());
@@ -327,14 +327,8 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				null_ptr = constness.rust_null_ptr(),
 			);
 		}
-		match self.as_char8() {
-			Some(Signedness::Unsigned) => {
-				return format!("u8::try_from({name})?");
-			}
-			Some(Signedness::Signed) => {
-				return format!("u8::try_from({name})? as i8");
-			}
-			None => {}
+		if self.is_rust_char() {
+			return format!("u8::try_from({name})? as c_char");
 		}
 		name.to_string()
 	}

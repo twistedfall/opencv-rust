@@ -9,7 +9,9 @@ use crate::field::Field;
 use crate::func::{cpp_disambiguate_names, OperatorKind, ReturnKind, Safety};
 use crate::type_ref::{Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef};
 use crate::writer::rust_native::disambiguate_single_name;
-use crate::{reserved_rename, settings, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
+use crate::{
+	reserved_rename, settings, CompiledInterpolation, Element, Func, GeneratorEnv, IteratorExt, NameDebug, StrExt, StringExt,
+};
 
 use super::comment;
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -20,14 +22,22 @@ impl RustElement for Func<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_module(entity),
-			Self::Desc(desc) => desc.rust_module.module().into(),
+			Self::Desc(desc) => desc.rust_module.as_ref().into(),
 		}
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_name(self, entity, style).into(),
-			Self::Desc(desc) => format!("{}::{}", desc.rust_module, self.rust_leafname(style.turbo_fish_style())).into(),
+			Self::Desc(_) => match style {
+				NameStyle::Declaration => self.rust_leafname(FishStyle::No),
+				NameStyle::Reference(fish_style) => format!(
+					"{}::{}",
+					DefaultRustNativeElement::rust_module_reference(self),
+					self.rust_leafname(fish_style)
+				)
+				.into(),
+			},
 		}
 	}
 
@@ -211,7 +221,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
 
 		let name = if self.is_clone() {
@@ -286,7 +296,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			call_args.push("ocvrs_return.as_mut_ptr()".to_string());
 		}
 
-		let doc_comment = self.rendered_doc_comment_with_prefix("///", opencv_version);
+		let doc_comment = self.rendered_doc_comment_with_prefix("///", _opencv_version);
 		let visibility = if let Some(cls) = as_instance_method {
 			if cls.is_trait() {
 				""
@@ -386,7 +396,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		]))
 	}
 
-	fn gen_rust_exports(&self) -> String {
+	fn gen_rust_exports(&self, _gen_env: &GeneratorEnv) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust_extern.tpl.rs").compile_interpolation());
 
 		let identifier = self.identifier();
@@ -434,7 +444,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		]))
 	}
 
-	fn gen_cpp(&self) -> String {
+	fn gen_cpp(&self, _gen_env: &GeneratorEnv) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation());
 
 		let identifier = self.identifier();

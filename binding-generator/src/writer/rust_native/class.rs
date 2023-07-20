@@ -5,16 +5,16 @@ use once_cell::sync::Lazy;
 
 use crate::class::ClassKind;
 use crate::debug::NameDebug;
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef};
 use crate::writer::rust_native::func::cpp_return_map;
-use crate::{settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
+use crate::{settings, Class, CompiledInterpolation, Element, Func, GeneratorEnv, IteratorExt, NamePool, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
-fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
+fn gen_rust_class(c: &Class, opencv_version: &str, gen_env: &GeneratorEnv) -> String {
 	static BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/boxed.tpl.rs").compile_interpolation());
 
 	static IMPL_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/impl.tpl.rs").compile_interpolation());
@@ -104,11 +104,13 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			const_methods.iter().filter(|m| m.kind().as_instance_method().is_some()),
 			&mut trait_methods_pool,
 			opencv_version,
+			gen_env,
 		);
 		let trait_mut_methods = rust_generate_funcs(
 			mut_methods.iter().filter(|m| m.kind().as_instance_method().is_some()),
 			&mut trait_methods_pool,
 			opencv_version,
+			gen_env,
 		);
 
 		let rust_local = type_ref.rust_name(NameStyle::ref_());
@@ -281,12 +283,14 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			}),
 			&mut inherent_methods_pool,
 			opencv_version,
+			gen_env,
 		)
 	} else {
 		rust_generate_funcs(
 			const_methods.iter().chain(mut_methods.iter()),
 			&mut inherent_methods_pool,
 			opencv_version,
+			gen_env,
 		)
 	});
 
@@ -296,7 +300,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		&BOXED_TPL
 	};
 
-	let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
+	let consts = consts.iter().map(|c| c.gen_rust(opencv_version, gen_env)).join("");
 
 	let extern_delete = FuncDesc::method_delete(c.clone()).identifier();
 
@@ -335,6 +339,7 @@ fn rust_generate_funcs<'f, 'tu, 'ge>(
 	fns: impl Iterator<Item = &'f Func<'tu, 'ge>>,
 	name_pool: &mut NamePool,
 	opencv_version: &str,
+	gen_env: &GeneratorEnv,
 ) -> String
 where
 	'tu: 'ge,
@@ -348,7 +353,7 @@ where
 			let name = name.into();
 			func.to_mut().set_custom_rust_leafname(Some(name));
 		}
-		func.gen_rust(opencv_version) // fixme
+		func.gen_rust(opencv_version, gen_env) // fixme
 	})
 	.join("")
 }
@@ -373,16 +378,21 @@ impl RustElement for Class<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_module(entity),
-			Self::Desc(desc) => desc.rust_fullname.module().into(),
+			Self::Desc(desc) => desc.rust_module.as_ref().into(),
 		}
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultRustNativeElement::rust_name(self, entity, style).into(),
-			Self::Desc(desc) => match style {
-				NameStyle::Declaration => desc.rust_fullname.localname().into(),
-				NameStyle::Reference(fish) => fish.apply(desc.rust_fullname.as_ref()),
+			Self::Desc(_) => match style {
+				NameStyle::Declaration => self.rust_leafname(FishStyle::No),
+				NameStyle::Reference(fish_style) => format!(
+					"{}::{}",
+					DefaultRustNativeElement::rust_module_reference(self),
+					self.rust_leafname(fish_style)
+				)
+				.into(),
 			},
 		}
 	}
@@ -415,19 +425,22 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, _opencv_version: &str, gen_env: &GeneratorEnv) -> String {
 		match self.kind() {
-			ClassKind::Simple | ClassKind::Boxed | ClassKind::BoxedForced => gen_rust_class(self, opencv_version),
+			ClassKind::Simple | ClassKind::Boxed | ClassKind::BoxedForced => gen_rust_class(self, _opencv_version, gen_env),
 			ClassKind::System | ClassKind::Other => "".to_string(),
 		}
 	}
 
-	fn gen_rust_exports(&self) -> String {
-		extern_functions(self).into_iter().map(|f| f.gen_rust_exports()).join("")
+	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
+		extern_functions(self)
+			.into_iter()
+			.map(|f| f.gen_rust_exports(gen_env))
+			.join("")
 	}
 
-	fn gen_cpp(&self) -> String {
-		extern_functions(self).into_iter().map(|f| f.gen_cpp()).join("")
+	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
+		extern_functions(self).into_iter().map(|f| f.gen_cpp(gen_env)).join("")
 	}
 }
 
@@ -509,6 +522,7 @@ fn method_default_new<'tu, 'ge>(class: Class<'tu, 'ge>, type_ref: TypeRef<'tu, '
 		"<unused>",
 		vec![],
 		FuncCppBody::Auto,
+		FuncRustBody::Auto,
 		type_ref,
 	))
 }
@@ -522,6 +536,7 @@ fn method_implicit_clone<'tu, 'ge>(class: Class<'tu, 'ge>, type_ref: TypeRef<'tu
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualFull(format!("return {};", cpp_return_map(&type_ref, "*instance", false).0).into()),
+		FuncRustBody::Auto,
 		type_ref,
 	))
 }
@@ -536,6 +551,7 @@ fn method_cast_to_base<'tu, 'ge>(class: Class<'tu, 'ge>, base_class: Class<'tu, 
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualFull("return dynamic_cast<{{ret_type}}*>(instance);".into()),
+		FuncRustBody::Auto,
 		TypeRef::new_class(base_class),
 	))
 }
@@ -550,6 +566,7 @@ fn method_cast_to_descendant<'tu, 'ge>(class: Class<'tu, 'ge>, descendant_class:
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualFull("return dynamic_cast<{{ret_type}}*>(instance);".into()),
+		FuncRustBody::Auto,
 		TypeRef::new_class(descendant_class),
 	))
 }

@@ -14,11 +14,20 @@ use crate::{
 	EntityWalkerVisitor, Func, MemoizeMap, MemoizeMapExt, NamePool, WalkAction,
 };
 
-#[derive(Clone, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub enum ClassSimplicity {
 	Boxed,
 	Simple,
 	BoxedForced,
+}
+
+impl ClassSimplicity {
+	pub fn is_boxed(self) -> bool {
+		match self {
+			ClassSimplicity::Boxed | ClassSimplicity::BoxedForced => true,
+			ClassSimplicity::Simple => false,
+		}
+	}
 }
 
 #[derive(Clone, Debug)]

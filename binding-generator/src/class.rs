@@ -12,7 +12,7 @@ use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::{WalkAction, WalkResult};
 use crate::field::{FieldDesc, FieldTypeHint};
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
@@ -107,7 +107,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => TypeRef::new(entity.get_type().expect("Can't get class type"), gen_env),
-			Self::Desc(desc) => TypeRef::new_class(Self::new_desc(desc.as_ref().clone())),
+			Self::Desc(desc) => TypeRef::guess(desc.cpp_fullname.as_ref(), Rc::clone(&desc.rust_module)),
 		}
 	}
 
@@ -301,6 +301,23 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			}
 			WalkAction::Continue
 		});
+		match self {
+			&Class::Clang { gen_env, .. } => {
+				for inject_func_fact in settings::FUNC_INJECT_MANUAL.get(gen_env.module()).into_iter().flatten() {
+					let inject_func: Func = inject_func_fact();
+					if constness_filter.map_or(true, |c| c == inject_func.constness()) {
+						if let Some(cls) = inject_func.kind().as_class_method() {
+							if cls == self {
+								out.push(inject_func);
+							}
+						}
+					}
+				}
+			}
+			Class::Desc(_) => {
+				// todo, if we drop the GeneratorEnv dependency for FuncFactory then it should be possible to use here too
+			}
+		}
 		out
 	}
 
@@ -372,6 +389,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								arguments: Rc::new([]),
 								return_type_ref: fld_type_ref.clone(),
 								cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
+								rust_body: FuncRustBody::Auto,
 							});
 							Some(read_func)
 						} else {
@@ -401,6 +419,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								return_kind: ReturnKind::InfallibleNaked,
 								return_type_ref: TypeRefDesc::void(),
 								cpp_body: FuncCppBody::ManualCall("{{name}} = {{args}}".into()),
+								rust_body: FuncRustBody::Auto,
 							});
 							Some(write_func)
 						} else {

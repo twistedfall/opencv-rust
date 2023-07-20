@@ -5,9 +5,11 @@ use once_cell::sync::Lazy;
 
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, FishStyle};
-use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
+use crate::{
+	Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, GeneratorEnv, IteratorExt, NameStyle, StrExt, Tuple, TypeRef,
+};
 
 use super::disambiguate_single_name;
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -42,7 +44,7 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		format!("{}-{}", self.rust_element_module(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/rust.tpl.rs").compile_interpolation());
 
 		let type_ref = self.type_ref();
@@ -77,7 +79,7 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		]))
 	}
 
-	fn gen_cpp(&self) -> String {
+	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
 		static CPP_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/cpp.tpl.cpp").compile_interpolation());
 
 		let type_ref = self.type_ref();
@@ -85,11 +87,11 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		let tuple_desc = tuple_class(&type_ref);
 
 		let mut methods = Vec::with_capacity(elements.len() + 2);
-		methods.push(method_new(type_ref, &elements).gen_cpp());
+		methods.push(method_new(type_ref, &elements).gen_cpp(gen_env));
 		for (i, typ) in elements.into_iter().enumerate() {
-			methods.push(method_get(tuple_desc.clone(), typ, i).gen_cpp());
+			methods.push(method_get(tuple_desc.clone(), typ, i).gen_cpp(gen_env));
 		}
-		methods.push(FuncDesc::method_delete(tuple_desc).gen_cpp());
+		methods.push(FuncDesc::method_delete(tuple_desc).gen_cpp(gen_env));
 
 		CPP_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
 	}
@@ -165,6 +167,7 @@ fn method_new<'tu, 'ge>(tuple_typeref: TypeRef<'tu, 'ge>, elements: &[TypeRef<'t
 		"<unused>",
 		arguments,
 		FuncCppBody::Auto,
+		FuncRustBody::Auto,
 		tuple_typeref,
 	))
 }
@@ -178,6 +181,7 @@ fn method_get<'tu, 'ge>(tuple_class: Class<'tu, 'ge>, element_type: TypeRef<'tu,
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualCall(format!("std::get<{num}>(*instance)").into()),
+		FuncRustBody::Auto,
 		element_type.clone(),
 	))
 }

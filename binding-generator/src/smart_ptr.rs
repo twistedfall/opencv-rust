@@ -30,13 +30,6 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	pub fn gen_env(&self) -> &'ge GeneratorEnv<'tu> {
-		match self {
-			&Self::Clang { gen_env, .. } => gen_env,
-			Self::Desc(desc) => desc.gen_env,
-		}
-	}
-
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => TypeRef::new(entity.get_type().expect("Can't get smart pointer type"), gen_env),
@@ -81,7 +74,7 @@ impl Element for SmartPtr<'_, '_> {
 	fn is_public(&self) -> bool {
 		match self {
 			&Self::Clang { entity, .. } => DefaultElement::is_public(entity),
-			Self::Desc(_) => false,
+			Self::Desc(_) => true,
 		}
 	}
 

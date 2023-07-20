@@ -7,7 +7,7 @@ use once_cell::sync::Lazy;
 use crate::constant::ValueKind;
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{settings, CompiledInterpolation, Const, CppNameStyle, Element, EntityElement, StrExt};
+use crate::{settings, CompiledInterpolation, Const, CppNameStyle, Element, EntityElement, GeneratorEnv, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
@@ -40,7 +40,7 @@ impl RustNativeGeneratedElement for Const<'_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/const/rust.tpl.rs").compile_interpolation());
 
 		let parent_is_class = self.entity().get_lexical_parent().map_or(false, |p| {

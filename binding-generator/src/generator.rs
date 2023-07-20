@@ -39,22 +39,22 @@ pub trait GeneratorVisitor {
 	fn visit_module_comment(&mut self, comment: String) {}
 
 	/// Top-level constant
-	fn visit_const(&mut self, cnst: Const) {}
+	fn visit_const(&mut self, cnst: Const, gen_env: &GeneratorEnv) {}
 
 	/// Top-level enum
-	fn visit_enum(&mut self, enm: Enum) {}
+	fn visit_enum(&mut self, enm: Enum, gen_env: &GeneratorEnv) {}
 
 	/// Top-level function
-	fn visit_func(&mut self, func: Func) {}
+	fn visit_func(&mut self, func: Func, gen_env: &GeneratorEnv) {}
 
 	/// Top-level type alias
-	fn visit_typedef(&mut self, typedef: Typedef) {}
+	fn visit_typedef(&mut self, typedef: Typedef, gen_env: &GeneratorEnv) {}
 
 	/// Top-level class or an internal class of another class
-	fn visit_class(&mut self, class: Class) {}
+	fn visit_class(&mut self, class: Class, gen_env: &GeneratorEnv) {}
 
 	/// Dependent generated type like `std::vector<Mat>` or `std::tuple<1, 2, 3>`
-	fn visit_generated_type(&mut self, typ: GeneratedType) {}
+	fn visit_generated_type(&mut self, typ: GeneratedType, gen_env: &GeneratorEnv) {}
 
 	/// Contents of the generated ephemeral header
 	fn visit_ephemeral_header(&mut self, contents: &str) {}
@@ -208,7 +208,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
 		match entity.get_kind() {
-			EntityKind::MacroDefinition => self.process_const(entity),
+			EntityKind::MacroDefinition => Self::process_const(&mut self.visitor, &mut self.gen_env, entity),
 			EntityKind::MacroExpansion => {
 				if let Some(name) = entity.get_name() {
 					const BOXED: [&str; 6] = [
@@ -250,14 +250,14 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 			| EntityKind::ClassTemplate
 			| EntityKind::ClassTemplatePartialSpecialization
 			| EntityKind::StructDecl => Self::process_class(&mut self.visitor, &mut self.gen_env, entity),
-			EntityKind::EnumDecl => Self::process_enum(&mut self.visitor, entity),
+			EntityKind::EnumDecl => Self::process_enum(&mut self.visitor, &mut self.gen_env, entity),
 			EntityKind::FunctionDecl => Self::process_func(&mut self.visitor, &mut self.gen_env, entity),
 			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
 				Self::process_typedef(&mut self.visitor, &mut self.gen_env, entity)
 			}
 			EntityKind::VarDecl => {
 				if !entity.is_mutable() {
-					self.process_const(entity);
+					Self::process_const(&mut self.visitor, &mut self.gen_env, entity);
 				} else {
 					unreachable!("Unsupported VarDecl: {:#?}", entity)
 				}
@@ -279,10 +279,10 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 		}
 	}
 
-	fn process_const(&mut self, const_decl: Entity) {
+	fn process_const(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, const_decl: Entity) {
 		let cnst = Const::new(const_decl);
 		if cnst.exclude_kind().is_included() {
-			self.visitor.visit_const(cnst);
+			visitor.visit_const(cnst, gen_env);
 		}
 	}
 
@@ -291,10 +291,10 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 			let cls = Class::new(class_decl, gen_env);
 			if cls.exclude_kind().is_included() {
 				cls.generated_types().into_iter().for_each(|dep| {
-					visitor.visit_generated_type(dep);
+					visitor.visit_generated_type(dep, gen_env);
 				});
 				class_decl.walk_enums_while(|enm| {
-					Self::process_enum(visitor, enm);
+					Self::process_enum(visitor, gen_env, enm);
 					WalkAction::Continue
 				});
 				class_decl.walk_classes_while(|sub_cls| {
@@ -313,21 +313,21 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 					WalkAction::Continue
 				});
 				let cls = Class::new(class_decl, gen_env);
-				visitor.visit_class(cls)
+				visitor.visit_class(cls, gen_env)
 			}
 		}
 	}
 
-	fn process_enum(visitor: &mut V, enum_decl: Entity) {
+	fn process_enum(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, enum_decl: Entity) {
 		let enm = Enum::new(enum_decl);
 		if enm.exclude_kind().is_included() {
 			for cnst in enm.consts() {
 				if cnst.exclude_kind().is_included() {
-					visitor.visit_const(cnst);
+					visitor.visit_const(cnst, gen_env);
 				}
 			}
 			if !enm.is_anonymous() {
-				visitor.visit_enum(enm);
+				visitor.visit_enum(enm, gen_env);
 			}
 		}
 	}
@@ -354,10 +354,10 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						func
 					};
 					func.generated_types().into_iter().for_each(|dep| {
-						visitor.visit_generated_type(dep);
+						visitor.visit_generated_type(dep, gen_env);
 					});
 					if !e.only_generated_types {
-						visitor.visit_func(func);
+						visitor.visit_func(func, gen_env);
 					}
 				};
 				if let Some(specs) = settings::FUNC_SPECIALIZE.get(identifier.as_str()) {
@@ -393,8 +393,8 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						typedef
 							.generated_types()
 							.into_iter()
-							.for_each(|dep| visitor.visit_generated_type(dep));
-						visitor.visit_typedef(typedef)
+							.for_each(|dep| visitor.visit_generated_type(dep, gen_env));
+						visitor.visit_typedef(typedef, gen_env)
 					}
 				}
 				NewTypedefResult::Class(_) | NewTypedefResult::Enum(_) => {
@@ -439,6 +439,12 @@ impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 		});
 		if found_module_comment {
 			self.visitor.visit_module_comment(comment);
+		}
+		for inject_func_fact in settings::FUNC_INJECT_MANUAL.get(self.gen_env.module()).into_iter().flatten() {
+			let inject_func: Func = inject_func_fact();
+			if !inject_func.kind().as_class_method().is_some() {
+				self.visitor.visit_func(inject_func, &self.gen_env);
+			}
 		}
 	}
 }

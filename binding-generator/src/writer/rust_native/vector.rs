@@ -5,11 +5,11 @@ use once_cell::sync::Lazy;
 
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::settings::ArgOverride;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::RustStringExt;
-use crate::{settings, Class, CompiledInterpolation, Func, StrExt, TypeRef, Vector};
+use crate::{settings, Class, CompiledInterpolation, Func, GeneratorEnv, StrExt, TypeRef, Vector};
 
 use super::element::RustElement;
 use super::type_ref::TypeRefExt;
@@ -56,7 +56,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		format!("{}-{}", self.rust_element_module(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, opencv_version: &str) -> String {
+	fn gen_rust(&self, _opencv_version: &str, gen_env: &GeneratorEnv) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/vector/rust.tpl.rs").compile_interpolation());
 
 		static EXTERN_TPL: Lazy<CompiledInterpolation> =
@@ -79,7 +79,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		}
 		let rust_localalias = self.rust_localalias();
 		let element_type = self.element_type();
-		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
+		let vector_class = vector_class(&vec_type_ref);
 
 		let extern_new = method_new(vector_class.clone(), vec_type_ref.clone()).identifier();
 		let extern_delete = FuncDesc::method_delete(vector_class.clone()).identifier();
@@ -148,9 +148,9 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 				impls += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 			}
 			if element_type.is_element_data_type() {
-				let input_array = method_input_array(vector_class.clone()).gen_rust(opencv_version);
-				let output_array = method_output_array(vector_class.clone()).gen_rust(opencv_version);
-				let input_output_array = method_input_output_array(vector_class).gen_rust(opencv_version);
+				let input_array = method_input_array(vector_class.clone()).gen_rust(_opencv_version, gen_env);
+				let output_array = method_output_array(vector_class.clone()).gen_rust(_opencv_version, gen_env);
+				let input_output_array = method_input_output_array(vector_class).gen_rust(_opencv_version, gen_env);
 				inter_vars.extend([
 					("input_array_impl", input_array.into()),
 					("output_array_impl", output_array.into()),
@@ -164,28 +164,27 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		RUST_TPL.interpolate(&inter_vars)
 	}
 
-	fn gen_rust_exports(&self) -> String {
+	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
 		let vec_type_ref = self.type_ref();
-		let rust_localalias = self.rust_localalias();
 		let element_type = self.element_type();
-		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
+		let vector_class = vector_class(&vec_type_ref);
 
 		let mut out = String::new();
 		if element_type.is_copy() && !element_type.is_bool() {
-			out.push_str(&method_clone(vector_class.clone(), vec_type_ref.clone()).gen_rust_exports());
-			out.push_str(&method_data(vector_class.clone(), element_type.clone()).gen_rust_exports());
-			out.push_str(&method_data_mut(vector_class.clone(), element_type.clone()).gen_rust_exports());
-			out.push_str(&method_from_slice(vec_type_ref, element_type.clone()).gen_rust_exports());
+			out.push_str(&method_clone(vector_class.clone(), vec_type_ref.clone()).gen_rust_exports(gen_env));
+			out.push_str(&method_data(vector_class.clone(), element_type.clone()).gen_rust_exports(gen_env));
+			out.push_str(&method_data_mut(vector_class.clone(), element_type.clone()).gen_rust_exports(gen_env));
+			out.push_str(&method_from_slice(vec_type_ref, element_type.clone()).gen_rust_exports(gen_env));
 		}
 		if element_type.is_element_data_type() {
-			out.push_str(&method_input_array(vector_class.clone()).gen_rust_exports());
-			out.push_str(&method_output_array(vector_class.clone()).gen_rust_exports());
-			out.push_str(&method_input_output_array(vector_class).gen_rust_exports());
+			out.push_str(&method_input_array(vector_class.clone()).gen_rust_exports(gen_env));
+			out.push_str(&method_output_array(vector_class.clone()).gen_rust_exports(gen_env));
+			out.push_str(&method_input_output_array(vector_class).gen_rust_exports(gen_env));
 		}
 		out
 	}
 
-	fn gen_cpp(&self) -> String {
+	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
 		static COMMON_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/cpp.tpl.cpp").compile_interpolation());
 
@@ -196,34 +195,33 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		}
 		let element_type = self.element_type();
 		let element_is_bool = element_type.is_bool();
-		let rust_localalias = self.rust_localalias();
-		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
+		let vector_class = vector_class(&vec_type_ref);
 		let mut methods = vec![
-			method_new(vector_class.clone(), vec_type_ref.clone()).gen_cpp(),
-			FuncDesc::method_delete(vector_class.clone()).gen_cpp(),
-			method_len(vector_class.clone()).gen_cpp(),
-			method_is_empty(vector_class.clone()).gen_cpp(),
-			method_capacity(vector_class.clone()).gen_cpp(),
-			method_shrink_to_fit(vector_class.clone()).gen_cpp(),
-			method_reserve(vector_class.clone()).gen_cpp(),
-			method_remove(vector_class.clone()).gen_cpp(),
-			method_swap(vector_class.clone(), element_is_bool).gen_cpp(),
-			method_clear(vector_class.clone()).gen_cpp(),
-			method_push(vector_class.clone(), element_type.clone()).gen_cpp(),
-			method_insert(vector_class.clone(), element_type.clone()).gen_cpp(),
-			method_get(vector_class.clone(), element_type.clone()).gen_cpp(),
-			method_set(vector_class.clone(), element_type.clone()).gen_cpp(),
+			method_new(vector_class.clone(), vec_type_ref.clone()).gen_cpp(gen_env),
+			FuncDesc::method_delete(vector_class.clone()).gen_cpp(gen_env),
+			method_len(vector_class.clone()).gen_cpp(gen_env),
+			method_is_empty(vector_class.clone()).gen_cpp(gen_env),
+			method_capacity(vector_class.clone()).gen_cpp(gen_env),
+			method_shrink_to_fit(vector_class.clone()).gen_cpp(gen_env),
+			method_reserve(vector_class.clone()).gen_cpp(gen_env),
+			method_remove(vector_class.clone()).gen_cpp(gen_env),
+			method_swap(vector_class.clone(), element_is_bool).gen_cpp(gen_env),
+			method_clear(vector_class.clone()).gen_cpp(gen_env),
+			method_push(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
+			method_insert(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
+			method_get(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
+			method_set(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
 		];
 		if element_type.is_copy() && !element_is_bool {
-			methods.push(method_clone(vector_class.clone(), vec_type_ref.clone()).gen_cpp());
-			methods.push(method_data(vector_class.clone(), element_type.clone()).gen_cpp());
-			methods.push(method_data_mut(vector_class.clone(), element_type.clone()).gen_cpp());
-			methods.push(method_from_slice(vec_type_ref.clone(), element_type.clone()).gen_cpp());
+			methods.push(method_clone(vector_class.clone(), vec_type_ref.clone()).gen_cpp(gen_env));
+			methods.push(method_data(vector_class.clone(), element_type.clone()).gen_cpp(gen_env));
+			methods.push(method_data_mut(vector_class.clone(), element_type.clone()).gen_cpp(gen_env));
+			methods.push(method_from_slice(vec_type_ref.clone(), element_type.clone()).gen_cpp(gen_env));
 		}
 		if element_type.is_element_data_type() {
-			methods.push(method_input_array(vector_class.clone()).gen_cpp());
-			methods.push(method_output_array(vector_class.clone()).gen_cpp());
-			methods.push(method_input_output_array(vector_class).gen_cpp());
+			methods.push(method_input_array(vector_class.clone()).gen_cpp(gen_env));
+			methods.push(method_output_array(vector_class.clone()).gen_cpp(gen_env));
+			methods.push(method_input_output_array(vector_class).gen_cpp(gen_env));
 		}
 		COMMON_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
 	}
@@ -244,11 +242,8 @@ impl VectorExt for Vector<'_, '_> {
 	}
 }
 
-fn vector_class<'tu, 'ge>(vec_type_ref: &TypeRef, rust_localalias: &str) -> Class<'tu, 'ge> {
-	Class::new_desc(ClassDesc::boxed(
-		vec_type_ref.cpp_name(CppNameStyle::Reference),
-		format!("core::{rust_localalias}"),
-	))
+fn vector_class<'tu, 'ge>(vec_type_ref: &TypeRef) -> Class<'tu, 'ge> {
+	Class::new_desc(ClassDesc::boxed(vec_type_ref.cpp_name(CppNameStyle::Reference), "core"))
 }
 
 fn method_new<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
@@ -260,6 +255,7 @@ fn method_new<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu
 		"core",
 		vec![],
 		FuncCppBody::Auto,
+		FuncRustBody::Auto,
 		vec_type_ref,
 	))
 }
@@ -273,6 +269,7 @@ fn method_len<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->size()".into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::size_t(),
 	))
 }
@@ -286,6 +283,7 @@ fn method_is_empty<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->empty()".into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::bool(),
 	))
 }
@@ -299,6 +297,7 @@ fn method_capacity<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->capacity()".into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::size_t(),
 	))
 }
@@ -312,6 +311,7 @@ fn method_shrink_to_fit<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'g
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->shrink_to_fit()".into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
 }
@@ -325,6 +325,7 @@ fn method_reserve<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		"core",
 		vec![Field::new_desc(FieldDesc::new("additional", TypeRefDesc::size_t()))],
 		FuncCppBody::ManualCall("instance->reserve(instance->size() + {{args}})".into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
 }
@@ -338,6 +339,7 @@ fn method_remove<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		"core",
 		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
 		FuncCppBody::ManualCall("instance->erase(instance->begin() + {{args}})".into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
 }
@@ -360,6 +362,7 @@ fn method_swap<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_is_bool: bool) -
 			Field::new_desc(FieldDesc::new("index2", TypeRefDesc::size_t())),
 		],
 		FuncCppBody::ManualCall(format!("{swap_func}((*instance)[index1], (*instance)[index2])").into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
 }
@@ -373,6 +376,7 @@ fn method_clear<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		"core",
 		vec![],
 		FuncCppBody::Auto,
+		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
 }
@@ -386,6 +390,7 @@ fn method_push<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		"core",
 		vec![Field::new_desc(FieldDesc::new("val", element_type))],
 		FuncCppBody::ManualCall("instance->push_back({{args}})".into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
 }
@@ -402,6 +407,7 @@ fn method_insert<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<
 			Field::new_desc(FieldDesc::new("val", element_type)),
 		],
 		FuncCppBody::ManualCall("instance->insert(instance->begin() + {{args}})".into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
 }
@@ -415,6 +421,7 @@ fn method_get<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu
 		"core",
 		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
 		FuncCppBody::ManualCall("(*instance)[{{args}}]".into()),
+		FuncRustBody::Auto,
 		element_type,
 	))
 }
@@ -431,6 +438,7 @@ fn method_set<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu
 			Field::new_desc(FieldDesc::new("val", element_type.clone())),
 		],
 		FuncCppBody::ManualCall(format!("(*instance)[index] = {}", element_type.cpp_arg_func_call("val")).into()),
+		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
 }
@@ -444,6 +452,7 @@ fn method_clone<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("{{ret_type}}(*instance)".into()),
+		FuncRustBody::Auto,
 		vec_type_ref,
 	))
 }
@@ -457,6 +466,7 @@ fn method_data<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		"core",
 		vec![],
 		FuncCppBody::Auto,
+		FuncRustBody::Auto,
 		TypeRef::new_pointer(element_type.with_constness(Constness::Const))
 			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
 	))
@@ -471,6 +481,7 @@ fn method_data_mut<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRe
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->data()".into()),
+		FuncRustBody::Auto,
 		TypeRef::new_pointer(element_type.with_constness(Constness::Mut))
 			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
 	))
@@ -491,6 +502,7 @@ fn method_from_slice<'tu, 'ge>(vec_type_ref: TypeRef<'tu, 'ge>, element_type: Ty
 			Field::new_desc(FieldDesc::new("len", TypeRefDesc::size_t())),
 		],
 		FuncCppBody::ManualFull("return new {{ret_type}}(data, data + len);".into()),
+		FuncRustBody::Auto,
 		vec_type_ref,
 	))
 }
@@ -504,7 +516,8 @@ fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge>
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("cv::_InputArray(*instance)".into()),
-		TypeRefDesc::input_array(),
+		FuncRustBody::Auto,
+		TypeRefDesc::cv_input_array(),
 	))
 }
 
@@ -517,7 +530,8 @@ fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("cv::_OutputArray(*instance)".into()),
-		TypeRefDesc::output_array(),
+		FuncRustBody::Auto,
+		TypeRefDesc::cv_output_array(),
 	))
 }
 
@@ -530,6 +544,7 @@ fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'t
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("cv::_InputOutputArray(*instance)".into()),
-		TypeRefDesc::input_output_array(),
+		FuncRustBody::Auto,
+		TypeRefDesc::cv_input_output_array(),
 	))
 }

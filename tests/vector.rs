@@ -5,7 +5,7 @@ use opencv::prelude::*;
 use opencv::types::VectorOfKeyPoint;
 use opencv::types::{
 	VectorOfDMatch, VectorOfMat, VectorOfPoint2d, VectorOfPoint2f, VectorOfRange, VectorOfString, VectorOfVec4i,
-	VectorOfVectorOfPoint2f, VectorOfbool, VectorOff64, VectorOfi32, VectorOfi8, VectorOfu8,
+	VectorOfVectorOfPoint2f, VectorOfbool, VectorOfc_char, VectorOff64, VectorOfi32, VectorOfu8,
 };
 use opencv::{core, Error, Result};
 
@@ -427,7 +427,7 @@ fn out_of_bounds() -> Result<()> {
 #[test]
 fn from_iter() -> Result<()> {
 	{
-		let vec = VectorOfi8::from_iter(vec![1, 2, 3]);
+		let vec = VectorOfc_char::from_iter(vec![1, 2, 3]);
 		assert_eq!(3, vec.len());
 		assert_eq!(1, vec.get(0)?);
 		assert_eq!(2, vec.get(1)?);
@@ -435,7 +435,7 @@ fn from_iter() -> Result<()> {
 	}
 
 	{
-		let vec = VectorOfi8::from_iter([1, 2, 3].iter().copied());
+		let vec = VectorOfc_char::from_iter([1, 2, 3].iter().copied());
 		assert_eq!(3, vec.len());
 		assert_eq!(1, vec.get(0)?);
 		assert_eq!(2, vec.get(1)?);
@@ -443,7 +443,7 @@ fn from_iter() -> Result<()> {
 	}
 
 	{
-		let vec = VectorOfi8::from_iter(1..=3);
+		let vec = VectorOfc_char::from_iter(1..=3);
 		assert_eq!(3, vec.len());
 		assert_eq!(1, vec.get(0)?);
 		assert_eq!(2, vec.get(1)?);

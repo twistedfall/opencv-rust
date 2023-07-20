@@ -164,12 +164,6 @@ impl<T> Dir<T> {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Signedness {
-	Unsigned,
-	Signed,
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ExternDir {
 	/// used for inner type (e.g. for Point*) and for callbacks
 	Pure,

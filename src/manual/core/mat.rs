@@ -9,7 +9,7 @@ pub use mat_::*;
 use crate::core::{MatConstIterator, MatExpr, MatSize, MatStep, Point, Scalar, UMat};
 use crate::platform_types::size_t;
 use crate::prelude::*;
-use crate::{core, input_output_array, sys, Error, Result};
+use crate::{core, input_output_array, Error, Result};
 
 mod mat_;
 
@@ -385,28 +385,8 @@ pub trait MatTraitConstManual: MatTraitConst {
 	}
 
 	#[inline]
-	fn size(&self) -> Result<core::Size> {
-		extern "C" {
-			fn cv_manual_Mat_size(instance: *const c_void, ocvrs_return: *mut sys::Result<core::Size>);
-		}
-		return_send!(via ocvrs_return);
-		unsafe { cv_manual_Mat_size(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-		return_receive!(unsafe ocvrs_return => ret);
-		ret.into_result()
-	}
-
-	#[inline]
 	fn is_allocated(&self) -> bool {
 		!self.data().is_null()
-	}
-
-	/// Raw pointer to the underlying data array, can be NULL
-	#[inline]
-	fn data(&self) -> *const u8 {
-		extern "C" {
-			fn cv_manual_Mat_data(instance: *const c_void) -> *const u8;
-		}
-		unsafe { cv_manual_Mat_data(self.as_raw_Mat()) }
 	}
 
 	/// Returns underlying data array as byte slice, Mat must be continuous.
@@ -530,21 +510,6 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 			.map(|x| slice::from_raw_parts_mut(convert_ptr_mut(x), width))
 	}
 
-	/// Sets all or some of the array elements to the specified value.
-	///
-	/// ## Parameters
-	/// * s: Assigned scalar converted to the actual array type.
-	#[inline]
-	fn set(&mut self, s: Scalar) -> Result<()> {
-		extern "C" {
-			fn cv_manual_Mat_set(instance: *mut c_void, s: *const Scalar, ocvrs_returl: *mut sys::Result_void);
-		}
-		return_send!(via ocvrs_return);
-		unsafe { cv_manual_Mat_set(self.as_raw_mut_Mat(), &s, ocvrs_return.as_mut_ptr()) }
-		return_receive!(unsafe ocvrs_return => ret);
-		ret.into_result()
-	}
-
 	/// Returns underlying data array as mutable byte slice, Mat must be continuous.
 	#[inline]
 	fn data_bytes_mut(&mut self) -> Result<&mut [u8]> {
@@ -599,36 +564,7 @@ impl fmt::Debug for Mat {
 	}
 }
 
-pub trait UMatTraitConstManual: UMatTraitConst {
-	#[inline]
-	fn size(&self) -> Result<core::Size> {
-		extern "C" {
-			fn cv_manual_UMat_size(instance: *const c_void, ocvrs_return: *mut sys::Result<core::Size>);
-		}
-		return_send!(via ocvrs_return);
-		unsafe { cv_manual_UMat_size(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) }
-		return_receive!(unsafe ocvrs_return => ret);
-		ret.into_result()
-	}
-}
-
-impl<T: UMatTraitConst> UMatTraitConstManual for T {}
-
 input_output_array! { UMat, from_umat, from_umat_mut }
-
-#[cfg(ocvrs_opencv_branch_32)]
-pub trait MatSizeTraitConstManual: MatSizeTraitConst {
-	#[inline]
-	fn dims(&self) -> i32 {
-		extern "C" {
-			fn cv_manual_MatSize_dims(instance: *const c_void) -> i32;
-		}
-		unsafe { cv_manual_MatSize_dims(self.as_raw_MatSize()) }
-	}
-}
-
-#[cfg(ocvrs_opencv_branch_32)]
-impl<T: MatSizeTraitConst> MatSizeTraitConstManual for T {}
 
 impl Deref for MatSize {
 	type Target = [i32];
@@ -665,22 +601,6 @@ impl fmt::Debug for MatStep {
 }
 
 pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
-	#[inline]
-	fn typ(&self) -> i32 {
-		extern "C" {
-			fn cv_manual_MatConstIterator_type(instance: *const c_void) -> i32;
-		}
-		unsafe { cv_manual_MatConstIterator_type(self.as_raw_MatConstIterator()) }
-	}
-
-	#[inline]
-	fn has_elements(&self) -> bool {
-		extern "C" {
-			fn cv_manual_MatConstIterator_has_elements(instance: *const c_void) -> bool;
-		}
-		unsafe { cv_manual_MatConstIterator_has_elements(self.as_raw_MatConstIterator()) }
-	}
-
 	#[inline]
 	fn current<T: DataType>(&self) -> Result<&T> {
 		match_format::<T>(self.typ())?;

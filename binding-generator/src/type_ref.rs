@@ -5,13 +5,14 @@ use std::rc::Rc;
 use clang::{Entity, Type};
 
 pub use desc::TypeRefDesc;
-pub use style::{CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, Signedness, StrEnc, StrType};
+pub use style::{CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType};
 
-use crate::class::TemplateKind;
+use crate::class::{ClassDesc, TemplateKind};
 use crate::element::ExcludeKind;
 use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
-use crate::settings;
 use crate::settings::ArgOverride;
+use crate::vector::VectorDesc;
+use crate::{settings, ClassSimplicity, ExportConfig};
 use crate::{Class, Element, Enum, Function, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Tuple, Typedef, Vector};
 use desc::ClangTypeExt;
 use style::ExternPassKind;
@@ -94,6 +95,34 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn new_class(cls: Class<'tu, 'ge>) -> Self {
 		Self::new_desc(TypeRefDesc::new(TypeRefKind::Class(cls)))
+	}
+
+	pub fn new_vector(vector: Vector<'tu, 'ge>) -> Self {
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::StdVector(vector)))
+	}
+
+	/// Create a [TypeRef] from a textual C++ representation
+	///
+	/// Correctness may vary, very few [TypeRefKind]s are supported.
+	pub fn guess(cpp_refname: &str, rust_module: impl Into<Rc<str>>) -> Self {
+		if let Some(element_cpprefname) = cpp_refname.strip_prefix("std::vector<").and_then(|s| s.strip_suffix('>')) {
+			TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::StdVector(Vector::new_desc(VectorDesc::new(
+				Self::guess(element_cpprefname, rust_module),
+			)))))
+		} else if let Some(primitive_typeref) = TypeRefDesc::try_primitive(cpp_refname) {
+			primitive_typeref
+		} else {
+			let simplicity = settings::ELEMENT_EXPORT_TWEAK
+				.get(cpp_refname)
+				.and_then(|export_tweak| export_tweak(ExportConfig::default()))
+				.map_or(ClassSimplicity::Boxed, |e| e.simplicity);
+			let cls = if simplicity.is_boxed() {
+				ClassDesc::boxed(cpp_refname, rust_module)
+			} else {
+				ClassDesc::simple(cpp_refname, rust_module)
+			};
+			Self::new_class(Class::new_desc(cls))
+		}
 	}
 
 	pub fn type_hint(&self) -> TypeRefTypeHint {
@@ -380,6 +409,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		matches!(self.as_primitive(), Some((_, "char")))
 	}
 
+	pub fn is_rust_char(&self) -> bool {
+		matches!(self.type_hint(), TypeRefTypeHint::ArgOverride(ArgOverride::CharAsRustChar)) && self.is_char()
+	}
+
 	pub fn is_void_ptr(&self) -> bool {
 		self.as_pointer().map_or(false, |inner| inner.is_void())
 	}
@@ -432,18 +465,6 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.is_debug(),
 			TypeRefKind::Function(_) | TypeRefKind::Generic(_) | TypeRefKind::Ignored => false,
 			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().is_debug(),
-		}
-	}
-
-	pub fn as_char8(&self) -> Option<Signedness> {
-		if matches!(self.type_hint(), TypeRefTypeHint::ArgOverride(ArgOverride::Char8AsChar)) {
-			match self.kind().as_ref() {
-				TypeRefKind::Primitive("i8", "char") => Some(Signedness::Signed),
-				TypeRefKind::Primitive("u8", "char") => Some(Signedness::Unsigned),
-				_ => None,
-			}
-		} else {
-			None
 		}
 	}
 
@@ -623,7 +644,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 								// That's why we try to resolve both types and check if they are the same, if they are we only generate
 								// vector<std::string> if not - both.
 								out.push(GeneratedType::Vector(
-									TypeRefDesc::vector_of_string()
+									TypeRefDesc::vector_of_cv_string()
 										.as_vector()
 										.expect("Not possible unless something is terribly broken"),
 								));

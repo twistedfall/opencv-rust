@@ -33,60 +33,99 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		}
 	}
 
+	pub fn try_primitive(cpp_name: &str) -> Option<TypeRef<'tu, 'ge>> {
+		let rust_name = match cpp_name {
+			"void" => Some(("()", "void")),
+			"bool" => Some(("bool", "bool")),
+			"char" => Some(("c_char", "char")),
+			"signed char" => Some(("i8", "signed char")),
+			"unsigned char" => Some(("u8", "unsigned char")),
+			"wchar_t" => Some(("u16", "wchar_t")),
+			"char16_t" => Some(("u16", "char16_t")),
+			"char32_t" => Some(("u16", "char32_t")),
+			"short" => Some(("i16", "short")),
+			"unsigned short" => Some(("u16", "unsigned short")),
+			"int" => Some(("i32", "int")),
+			"unsigned int" => Some(("u32", "unsigned int")),
+			"long" => Some(("i32", "long")),
+			"unsigned long" => Some(("u32", "unsigned long")),
+			"long long" => Some(("i64", "long long")),
+			"unsigned long long" => Some(("u64", "unsigned long long")),
+			"__int128_t" => Some(("i128", "__int128_t")),
+			"__uint128_t" => Some(("u128", "__uint128_t")),
+			"float" => Some(("f32", "float")),
+			"double" => Some(("f64", "double")),
+			_ => settings::PRIMITIVE_TYPEDEFS.get(cpp_name).copied(),
+		};
+		rust_name.map(|(rust, cpp)| TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Primitive(rust, cpp))))
+	}
+
 	pub fn void() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Primitive("()", "void")))
+		Self::try_primitive("void").expect("Static primitive type")
 	}
 
 	pub fn bool() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Primitive("bool", "bool")))
+		Self::try_primitive("bool").expect("Static primitive type")
+	}
+
+	pub fn uchar() -> TypeRef<'tu, 'ge> {
+		Self::try_primitive("unsigned char").expect("Static primitive type")
 	}
 
 	pub fn double() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Primitive("f64", "double")))
+		Self::try_primitive("double").expect("Static primitive type")
 	}
 
 	pub fn int() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Primitive("i32", "int")))
+		Self::try_primitive("int").expect("Static primitive type")
 	}
 
 	pub fn int64_t() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Primitive("i64", "int64_t")))
+		Self::try_primitive("int64_t").expect("Static primitive type")
 	}
 
 	pub fn size_t() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Primitive("size_t", "size_t")))
+		Self::try_primitive("size_t").expect("Static primitive type")
 	}
 
-	pub fn input_array() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(Class::new_desc(ClassDesc::boxed("cv::_InputArray", "core::_InputArray")))
+	/// `cv::Size`
+	pub fn cv_size() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_size())
 	}
 
-	pub fn output_array() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(Class::new_desc(ClassDesc::boxed("cv::_OutputArray", "core::_OutputArray")))
+	/// `cv::Scalar`
+	pub fn cv_scalar() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_scalar())
 	}
 
-	pub fn input_output_array() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(Class::new_desc(ClassDesc::boxed(
-			"cv::_InputOutputArray",
-			"core::_InputOutputArray",
-		)))
+	/// `cv::_InputArray`
+	pub fn cv_input_array() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_input_array())
 	}
 
-	pub fn string() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(Class::new_desc(ClassDesc::boxed("cv::String", "core::String")))
+	/// `cv::_OutputArray`
+	pub fn cv_output_array() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_output_array())
 	}
 
-	pub fn vector_of_string() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::StdVector(Vector::new_desc(VectorDesc::new(
-			TypeRefDesc::string(),
-		)))))
+	/// `cv::_InputOutputArray`
+	pub fn cv_input_output_array() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_input_output_array())
 	}
 
-	pub fn dict_value() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(Class::new_desc(ClassDesc::boxed(
-			"cv::dnn::DictValue",
-			"crate::dnn::DictValue",
-		)))
+	/// `cv::String`
+	pub fn cv_string() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_string())
+	}
+
+	/// `Vector<cv::String>`
+	pub fn vector_of_cv_string() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_string())))
+	}
+
+	/// `cv::dnn::DictValue`
+	pub fn cv_dnn_dict_value() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_dnn_dict_value())
 	}
 }
 
@@ -111,8 +150,8 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 		match self.get_kind() {
 			TypeKind::Void => TypeRefKind::Primitive("()", "void"),
 			TypeKind::Bool => TypeRefKind::Primitive("bool", "bool"),
-			TypeKind::CharS => TypeRefKind::Primitive("i8", "char"),
-			TypeKind::CharU => TypeRefKind::Primitive("u8", "char"),
+			TypeKind::CharS => TypeRefKind::Primitive("c_char", "char"),
+			TypeKind::CharU => TypeRefKind::Primitive("c_char", "char"),
 			TypeKind::SChar => TypeRefKind::Primitive("i8", "signed char"),
 			TypeKind::UChar => TypeRefKind::Primitive("u8", "unsigned char"),
 			TypeKind::WChar => TypeRefKind::Primitive("u16", "wchar_t"),

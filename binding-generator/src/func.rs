@@ -7,7 +7,7 @@ use std::rc::Rc;
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 use once_cell::sync::Lazy;
 
-pub use desc::{FuncCppBody, FuncDesc};
+pub use desc::{FuncCppBody, FuncDesc, FuncRustBody};
 
 use crate::debug::LocationName;
 use crate::element::{ExcludeKind, UNNAMED};
@@ -138,6 +138,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			arguments,
 			return_type_ref: specialized(&return_type_ref).unwrap_or(return_type_ref),
 			cpp_body: FuncCppBody::ManualCall(format!("{{{{name}}}}<{generic}>({{{{args}}}})").into()),
+			rust_body: FuncRustBody::Auto,
 		})
 	}
 
@@ -424,6 +425,13 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		match self {
 			Self::Clang { .. } => &FuncCppBody::Auto,
 			Self::Desc(desc) => &desc.cpp_body,
+		}
+	}
+
+	pub fn rust_body(&self) -> &FuncRustBody {
+		match self {
+			Self::Clang { .. } => &FuncRustBody::Auto,
+			Self::Desc(desc) => &desc.rust_body,
 		}
 	}
 
@@ -867,6 +875,19 @@ impl<'tu, 'ge> FuncKind<'tu, 'ge> {
 
 	pub fn as_conversion_method(&self) -> Option<&Class<'tu, 'ge>> {
 		if let Self::ConversionMethod(out) = self {
+			Some(out)
+		} else {
+			None
+		}
+	}
+
+	/// Any function with a connection to a class: instance method, static method or a constructor
+	pub fn as_class_method(&self) -> Option<&Class<'tu, 'ge>> {
+		if let Some(out) = self.as_instance_method() {
+			Some(out)
+		} else if let Some(out) = self.as_constructor() {
+			Some(out)
+		} else if let Some(out) = self.as_static_method() {
 			Some(out)
 		} else {
 			None

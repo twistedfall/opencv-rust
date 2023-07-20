@@ -24,6 +24,7 @@ pub struct FuncDesc<'tu, 'ge> {
 	pub arguments: Rc<[Field<'tu, 'ge>]>,
 	pub return_type_ref: TypeRef<'tu, 'ge>,
 	pub cpp_body: FuncCppBody,
+	pub rust_body: FuncRustBody,
 }
 
 impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
@@ -35,6 +36,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 		rust_module: impl Into<Rc<str>>,
 		arguments: impl Into<Rc<[Field<'tu, 'ge>]>>,
 		cpp_body: FuncCppBody,
+		rust_body: FuncRustBody,
 		return_type_ref: TypeRef<'tu, 'ge>,
 	) -> Self {
 		#![allow(clippy::too_many_arguments)]
@@ -51,6 +53,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 			arguments: arguments.into(),
 			return_type_ref,
 			cpp_body,
+			rust_body,
 		}
 	}
 
@@ -63,6 +66,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 			"<unused>",
 			vec![],
 			FuncCppBody::ManualCall("delete instance".into()),
+			FuncRustBody::Auto,
 			TypeRefDesc::void(),
 		))
 	}
@@ -75,5 +79,13 @@ pub enum FuncCppBody {
 	/// Specify manual call, use the automatic return handling (e.g. `Mat ret = <manual_call>`)
 	ManualCall(Cow<'static, str>),
 	/// Specify full manual function body including the return
+	ManualFull(Cow<'static, str>),
+}
+
+#[derive(Clone, Debug)]
+pub enum FuncRustBody {
+	/// Handle the call automatically based on the function context, usually just calls the corresponding OpenCV function
+	Auto,
+	/// Specify full manual function body
 	ManualFull(Cow<'static, str>),
 }
