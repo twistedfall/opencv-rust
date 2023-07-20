@@ -130,7 +130,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			type_hint: FuncTypeHint::Specialized,
 			constness: self.constness(),
 			return_kind: self.return_kind(),
-			cpp_fullname: self.cpp_name(CppNameStyle::Reference).into(),
+			cpp_name: self.cpp_name(CppNameStyle::Reference).into(),
 			custom_rust_leafname: None,
 			rust_module: self.rust_module().into(),
 			doc_comment: self.doc_comment().into(),
@@ -486,34 +486,36 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			("name", call_name),
 		]);
 
-		let tpl = if let Some(cls) = kind.as_constructor() {
-			if cls.kind().is_boxed() {
-				Cow::Borrowed(&*BOXED_CONSTRUCTOR_TPL)
-			} else if args.is_empty() {
-				Cow::Borrowed(&*CONSTRUCTOR_NO_ARGS_TPL)
-			} else {
-				Cow::Borrowed(&*CONSTRUCTOR_TPL)
+		let (call_tpl, full_tpl) = match cpp_body {
+			FuncCppBody::Auto { .. } => {
+				if let Some(cls) = kind.as_constructor() {
+					if cls.kind().is_boxed() {
+						(None, Some(Cow::Borrowed(&*BOXED_CONSTRUCTOR_TPL)))
+					} else if args.is_empty() {
+						(None, Some(Cow::Borrowed(&*CONSTRUCTOR_NO_ARGS_TPL)))
+					} else {
+						(None, Some(Cow::Borrowed(&*CONSTRUCTOR_TPL)))
+					}
+				} else {
+					(Some(Cow::Borrowed(&*CALL_TPL)), None)
+				}
 			}
-		} else {
-			let (call_tpl, full_tpl) = match cpp_body {
-				FuncCppBody::Auto { .. } => (Some(Cow::Borrowed(&*CALL_TPL)), None),
-				FuncCppBody::ManualCall(call) => (Some(Cow::Owned(call.compile_interpolation())), None),
-				FuncCppBody::ManualFull(full_tpl) => (None, Some(Cow::Owned(full_tpl.compile_interpolation()))),
-			};
-			full_tpl
-				.or_else(|| {
-					call_tpl.map(|call_tpl| {
-						let call = call_tpl.interpolate(&inter_vars);
-						inter_vars.insert("call", call.into());
-						if return_type_ref.is_void() {
-							Cow::Borrowed(&*VOID_TPL)
-						} else {
-							Cow::Borrowed(&*RETURN_TPL)
-						}
-					})
-				})
-				.expect("Impossible")
+			FuncCppBody::ManualCall(call) => (Some(Cow::Owned(call.compile_interpolation())), None),
+			FuncCppBody::ManualFull(full_tpl) => (None, Some(Cow::Owned(full_tpl.compile_interpolation()))),
 		};
+		let tpl = full_tpl
+			.or_else(|| {
+				call_tpl.map(|call_tpl| {
+					let call = call_tpl.interpolate(&inter_vars);
+					inter_vars.insert("call", call.into());
+					if return_type_ref.is_void() {
+						Cow::Borrowed(&*VOID_TPL)
+					} else {
+						Cow::Borrowed(&*RETURN_TPL)
+					}
+				})
+			})
+			.expect("Impossible");
 
 		tpl.interpolate(&inter_vars)
 	}
@@ -618,7 +620,16 @@ impl Element for Func<'_, '_> {
 	fn cpp_namespace(&self) -> Cow<str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultElement::cpp_namespace(entity).into(),
-			Self::Desc(desc) => desc.cpp_fullname.namespace().into(),
+			Self::Desc(_) => match self.kind().as_ref() {
+				FuncKind::Function | FuncKind::FunctionOperator(_) | FuncKind::GenericFunction => "cv".into(),
+				FuncKind::Constructor(cls)
+				| FuncKind::InstanceMethod(cls)
+				| FuncKind::StaticMethod(cls)
+				| FuncKind::FieldAccessor(cls, _)
+				| FuncKind::ConversionMethod(cls)
+				| FuncKind::InstanceOperator(cls, _)
+				| FuncKind::GenericInstanceMethod(cls) => cls.cpp_name(CppNameStyle::Reference).into_owned().into(),
+			},
 		}
 	}
 
@@ -628,7 +639,7 @@ impl Element for Func<'_, '_> {
 		} else {
 			match self {
 				&Self::Clang { entity, .. } => DefaultElement::cpp_name(self, entity, CppNameStyle::Declaration),
-				Self::Desc(desc) => desc.cpp_fullname.cpp_name_from_fullname(CppNameStyle::Declaration).into(),
+				Self::Desc(desc) => desc.cpp_name.cpp_name_from_fullname(CppNameStyle::Declaration).into(),
 			}
 		};
 		match style {
@@ -925,7 +936,7 @@ impl<'f> FuncId<'f> {
 	}
 
 	pub fn from_desc(desc: &'f FuncDesc) -> Self {
-		let name = desc.cpp_fullname.as_ref().into();
+		let name = desc.cpp_name.as_ref().into();
 		let args = desc
 			.arguments
 			.iter()

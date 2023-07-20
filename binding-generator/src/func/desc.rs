@@ -16,7 +16,7 @@ pub struct FuncDesc<'tu, 'ge> {
 	pub constness: Constness,
 	// fixme, this should be just a `is_infallible` property, but `method_get` in `Vector` forces `InfallibleViaArg`
 	pub return_kind: ReturnKind,
-	pub cpp_fullname: Rc<str>,
+	pub cpp_name: Rc<str>,
 	pub custom_rust_leafname: Option<Rc<str>>,
 	pub rust_module: Rc<str>,
 	pub doc_comment: Rc<str>,
@@ -31,7 +31,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 		kind: FuncKind<'tu, 'ge>,
 		constness: Constness,
 		return_kind: ReturnKind,
-		cpp_fullname: impl Into<Rc<str>>,
+		cpp_name: impl Into<Rc<str>>,
 		rust_module: impl Into<Rc<str>>,
 		arguments: impl Into<Rc<[Field<'tu, 'ge>]>>,
 		cpp_body: FuncCppBody,
@@ -43,7 +43,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 			type_hint: FuncTypeHint::None,
 			constness,
 			return_kind,
-			cpp_fullname: cpp_fullname.into(),
+			cpp_name: cpp_name.into(),
 			custom_rust_leafname: None,
 			rust_module: rust_module.into(),
 			doc_comment: "".into(),
@@ -54,12 +54,12 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 		}
 	}
 
-	pub fn method_delete(rust_local: &str, class_desc: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+	pub fn method_delete(class_desc: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		Func::new_desc(FuncDesc::new(
 			FuncKind::InstanceMethod(class_desc),
 			Constness::Mut,
 			ReturnKind::InfallibleNaked,
-			format!("cv::{rust_local}::delete"),
+			"delete",
 			"<unused>",
 			vec![],
 			FuncCppBody::ManualCall("delete instance".into()),

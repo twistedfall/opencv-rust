@@ -5,7 +5,6 @@ use once_cell::sync::Lazy;
 
 use crate::class::ClassKind;
 use crate::debug::NameDebug;
-use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef};
 use crate::writer::rust_native::func::cpp_return_map;
@@ -145,7 +144,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	let mut impls = if c.has_explicit_clone() {
 		IMPL_EXPLICIT_CLONE_TPL.interpolate(&HashMap::from([("rust_local", rust_local.as_ref())]))
 	} else if c.has_implicit_clone() {
-		let extern_implicit_clone = method_implicit_clone(&rust_local, type_ref.clone()).identifier();
+		let extern_implicit_clone = method_implicit_clone(c.clone(), type_ref.clone()).identifier();
 		IMPL_IMPLICIT_CLONE_TPL.interpolate(&HashMap::from([
 			("rust_local", rust_local.as_ref()),
 			("extern_implicit_clone", &extern_implicit_clone),
@@ -160,7 +159,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			let descendants = descendants(c);
 			for d in descendants {
 				let desc_full = d.rust_name(NameStyle::ref_());
-				let extern_cast_to_descendant = method_cast_to_descendant(&rust_local, c.clone(), d.clone()).identifier();
+				let extern_cast_to_descendant = method_cast_to_descendant(c.clone(), d.clone()).identifier();
 				impls += &DESCENDANT_CAST_TPL.interpolate(&HashMap::from([
 					("rust_local", rust_local.as_ref()),
 					("descendant_rust_full", desc_full.as_ref()),
@@ -170,7 +169,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		}
 		for b in &bases {
 			let base_full = b.rust_name(NameStyle::ref_());
-			let extern_cast_to_base = method_cast_to_base(&rust_local, c.clone(), b.clone()).identifier();
+			let extern_cast_to_base = method_cast_to_base(c.clone(), b.clone()).identifier();
 			impls += &BASE_CAST_TPL.interpolate(&HashMap::from([
 				("rust_local", rust_local.as_ref()),
 				("base_rust_full", base_full.as_ref()),
@@ -264,7 +263,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	}
 	let needs_default_ctor = needs_default_ctor(class_kind, c, const_methods.iter().chain(mut_methods.iter()));
 	if needs_default_ctor {
-		let extern_default_new = method_default_new(&rust_local, type_ref.clone()).identifier();
+		let extern_default_new = method_default_new(c.clone(), type_ref.clone()).identifier();
 		inherent_methods.push_str(&DEFAULT_CTOR.interpolate(&HashMap::from([("extern_default_new", extern_default_new)])));
 		inherent_methods_pool.add_name("default");
 		needs_default_impl = true;
@@ -299,7 +298,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 	let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
 
-	let extern_delete = FuncDesc::method_delete(&rust_local, c.clone()).identifier();
+	let extern_delete = FuncDesc::method_delete(c.clone()).identifier();
 
 	out += &tpl.interpolate(&HashMap::from([
 		("doc_comment", Cow::Owned(doc_comment)),
@@ -434,8 +433,6 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 
 #[inline]
 fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
-	let rust_local = c.rust_name(NameStyle::decl());
-
 	let methods = c.methods(None);
 
 	let needs_default_ctor = needs_default_ctor(c.kind(), c, methods.iter());
@@ -446,10 +443,10 @@ fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 		.collect::<Vec<_>>();
 
 	if c.has_implicit_clone() {
-		out.push(method_implicit_clone(&rust_local, c.type_ref()));
+		out.push(method_implicit_clone(c.clone(), c.type_ref()));
 	}
 	if needs_default_ctor {
-		out.push(method_default_new(&rust_local, c.type_ref()));
+		out.push(method_default_new(c.clone(), c.type_ref()));
 	}
 	if c.kind().is_boxed() {
 		let fields = c.fields();
@@ -461,14 +458,14 @@ fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 
 		if c.is_polymorphic() {
 			for d in descendants(c) {
-				out.push(method_cast_to_descendant(&rust_local, c.clone(), d));
+				out.push(method_cast_to_descendant(c.clone(), d));
 			}
 		}
 		for b in all_bases(c) {
-			out.push(method_cast_to_base(&rust_local, c.clone(), b));
+			out.push(method_cast_to_base(c.clone(), b));
 		}
 
-		out.push(FuncDesc::method_delete(&rust_local, c.clone()));
+		out.push(FuncDesc::method_delete(c.clone()));
 	}
 	out
 }
@@ -503,12 +500,12 @@ fn descendants<'tu, 'ge>(cls: &Class<'tu, 'ge>) -> Vec<Class<'tu, 'ge>> {
 	out
 }
 
-fn method_default_new<'tu, 'ge>(rust_local: &str, type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_default_new<'tu, 'ge>(class: Class<'tu, 'ge>, type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
-		FuncKind::Function,
+		FuncKind::Constructor(class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_local}::defaultNew"),
+		"defaultNew",
 		"<unused>",
 		vec![],
 		FuncCppBody::Auto,
@@ -516,29 +513,26 @@ fn method_default_new<'tu, 'ge>(rust_local: &str, type_ref: TypeRef<'tu, 'ge>) -
 	))
 }
 
-fn method_implicit_clone<'tu, 'ge>(rust_local: &str, type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_implicit_clone<'tu, 'ge>(class: Class<'tu, 'ge>, type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
-		FuncKind::Function,
+		FuncKind::InstanceMethod(class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_local}::implicitClone"),
+		"implicitClone",
 		"<unused>",
-		vec![Field::new_desc(FieldDesc::new(
-			"val",
-			type_ref.clone().with_constness(Constness::Const),
-		))],
-		FuncCppBody::ManualFull(format!("return {};", cpp_return_map(&type_ref, "*val", false).0).into()),
+		vec![],
+		FuncCppBody::ManualFull(format!("return {};", cpp_return_map(&type_ref, "*instance", false).0).into()),
 		type_ref,
 	))
 }
 
-fn method_cast_to_base<'tu, 'ge>(rust_local: &str, class: Class<'tu, 'ge>, base_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_cast_to_base<'tu, 'ge>(class: Class<'tu, 'ge>, base_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	let base_rust_local = base_class.rust_name(NameStyle::decl());
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_local}::to_{base_rust_local}"),
+		format!("to_{base_rust_local}"),
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualFull("return dynamic_cast<{{ret_type}}*>(instance);".into()),
@@ -546,17 +540,13 @@ fn method_cast_to_base<'tu, 'ge>(rust_local: &str, class: Class<'tu, 'ge>, base_
 	))
 }
 
-fn method_cast_to_descendant<'tu, 'ge>(
-	rust_local: &str,
-	class: Class<'tu, 'ge>,
-	descendant_class: Class<'tu, 'ge>,
-) -> Func<'tu, 'ge> {
+fn method_cast_to_descendant<'tu, 'ge>(class: Class<'tu, 'ge>, descendant_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	let descendant_rust_local = descendant_class.rust_name(NameStyle::decl());
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_local}::to_{descendant_rust_local}"),
+		format!("to_{descendant_rust_local}"),
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualFull("return dynamic_cast<{{ret_type}}*>(instance);".into()),

@@ -81,20 +81,20 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let element_type = self.element_type();
 		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
 
-		let extern_new = method_new(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).identifier();
-		let extern_delete = FuncDesc::method_delete(&rust_localalias, vector_class.clone()).identifier();
-		let extern_len = method_len(&rust_localalias, vector_class.clone()).identifier();
-		let extern_is_empty = method_is_empty(&rust_localalias, vector_class.clone()).identifier();
-		let extern_capacity = method_capacity(&rust_localalias, vector_class.clone()).identifier();
-		let extern_shrink_to_fit = method_shrink_to_fit(&rust_localalias, vector_class.clone()).identifier();
-		let extern_reserve = method_reserve(&rust_localalias, vector_class.clone()).identifier();
-		let extern_remove = method_remove(&rust_localalias, vector_class.clone()).identifier();
-		let extern_swap = method_swap(&rust_localalias, vector_class.clone(), element_type.is_bool()).identifier();
-		let extern_clear = method_clear(&rust_localalias, vector_class.clone()).identifier();
-		let extern_get = method_get(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
-		let extern_set = method_set(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
-		let extern_push = method_push(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
-		let extern_insert = method_insert(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
+		let extern_new = method_new(vector_class.clone(), vec_type_ref.clone()).identifier();
+		let extern_delete = FuncDesc::method_delete(vector_class.clone()).identifier();
+		let extern_len = method_len(vector_class.clone()).identifier();
+		let extern_is_empty = method_is_empty(vector_class.clone()).identifier();
+		let extern_capacity = method_capacity(vector_class.clone()).identifier();
+		let extern_shrink_to_fit = method_shrink_to_fit(vector_class.clone()).identifier();
+		let extern_reserve = method_reserve(vector_class.clone()).identifier();
+		let extern_remove = method_remove(vector_class.clone()).identifier();
+		let extern_swap = method_swap(vector_class.clone(), element_type.is_bool()).identifier();
+		let extern_clear = method_clear(vector_class.clone()).identifier();
+		let extern_get = method_get(vector_class.clone(), element_type.clone()).identifier();
+		let extern_set = method_set(vector_class.clone(), element_type.clone()).identifier();
+		let extern_push = method_push(vector_class.clone(), element_type.clone()).identifier();
+		let extern_insert = method_insert(vector_class.clone(), element_type.clone()).identifier();
 
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.clone()),
@@ -124,10 +124,10 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			impls += &EXTERN_TPL.interpolate(&inter_vars);
 
 			if element_type.is_copy() && !element_type.is_bool() {
-				let extern_clone = method_clone(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).identifier();
-				let extern_data = method_data(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
-				let extern_data_mut = method_data_mut(&rust_localalias, vector_class.clone(), element_type.clone()).identifier();
-				let extern_from_slice = method_from_slice(&rust_localalias, vec_type_ref, element_type.clone()).identifier();
+				let extern_clone = method_clone(vector_class.clone(), vec_type_ref.clone()).identifier();
+				let extern_data = method_data(vector_class.clone(), element_type.clone()).identifier();
+				let extern_data_mut = method_data_mut(vector_class.clone(), element_type.clone()).identifier();
+				let extern_from_slice = method_from_slice(vec_type_ref, element_type.clone()).identifier();
 				inter_vars.extend([
 					("extern_clone", extern_clone.into()),
 					("extern_data", extern_data.into()),
@@ -148,9 +148,9 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 				impls += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 			}
 			if element_type.is_element_data_type() {
-				let input_array = method_input_array(&rust_localalias, vector_class.clone()).gen_rust(opencv_version);
-				let output_array = method_output_array(&rust_localalias, vector_class.clone()).gen_rust(opencv_version);
-				let input_output_array = method_input_output_array(&rust_localalias, vector_class).gen_rust(opencv_version);
+				let input_array = method_input_array(vector_class.clone()).gen_rust(opencv_version);
+				let output_array = method_output_array(vector_class.clone()).gen_rust(opencv_version);
+				let input_output_array = method_input_output_array(vector_class).gen_rust(opencv_version);
 				inter_vars.extend([
 					("input_array_impl", input_array.into()),
 					("output_array_impl", output_array.into()),
@@ -172,15 +172,15 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 
 		let mut out = String::new();
 		if element_type.is_copy() && !element_type.is_bool() {
-			out.push_str(&method_clone(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).gen_rust_exports());
-			out.push_str(&method_data(&rust_localalias, vector_class.clone(), element_type.clone()).gen_rust_exports());
-			out.push_str(&method_data_mut(&rust_localalias, vector_class.clone(), element_type.clone()).gen_rust_exports());
-			out.push_str(&method_from_slice(&rust_localalias, vec_type_ref, element_type.clone()).gen_rust_exports());
+			out.push_str(&method_clone(vector_class.clone(), vec_type_ref.clone()).gen_rust_exports());
+			out.push_str(&method_data(vector_class.clone(), element_type.clone()).gen_rust_exports());
+			out.push_str(&method_data_mut(vector_class.clone(), element_type.clone()).gen_rust_exports());
+			out.push_str(&method_from_slice(vec_type_ref, element_type.clone()).gen_rust_exports());
 		}
 		if element_type.is_element_data_type() {
-			out.push_str(&method_input_array(&rust_localalias, vector_class.clone()).gen_rust_exports());
-			out.push_str(&method_output_array(&rust_localalias, vector_class.clone()).gen_rust_exports());
-			out.push_str(&method_input_output_array(&rust_localalias, vector_class).gen_rust_exports());
+			out.push_str(&method_input_array(vector_class.clone()).gen_rust_exports());
+			out.push_str(&method_output_array(vector_class.clone()).gen_rust_exports());
+			out.push_str(&method_input_output_array(vector_class).gen_rust_exports());
 		}
 		out
 	}
@@ -199,31 +199,31 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		let rust_localalias = self.rust_localalias();
 		let vector_class = vector_class(&vec_type_ref, &rust_localalias);
 		let mut methods = vec![
-			method_new(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).gen_cpp(),
-			FuncDesc::method_delete(&rust_localalias, vector_class.clone()).gen_cpp(),
-			method_len(&rust_localalias, vector_class.clone()).gen_cpp(),
-			method_is_empty(&rust_localalias, vector_class.clone()).gen_cpp(),
-			method_capacity(&rust_localalias, vector_class.clone()).gen_cpp(),
-			method_shrink_to_fit(&rust_localalias, vector_class.clone()).gen_cpp(),
-			method_reserve(&rust_localalias, vector_class.clone()).gen_cpp(),
-			method_remove(&rust_localalias, vector_class.clone()).gen_cpp(),
-			method_swap(&rust_localalias, vector_class.clone(), element_is_bool).gen_cpp(),
-			method_clear(&rust_localalias, vector_class.clone()).gen_cpp(),
-			method_push(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp(),
-			method_insert(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp(),
-			method_get(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp(),
-			method_set(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp(),
+			method_new(vector_class.clone(), vec_type_ref.clone()).gen_cpp(),
+			FuncDesc::method_delete(vector_class.clone()).gen_cpp(),
+			method_len(vector_class.clone()).gen_cpp(),
+			method_is_empty(vector_class.clone()).gen_cpp(),
+			method_capacity(vector_class.clone()).gen_cpp(),
+			method_shrink_to_fit(vector_class.clone()).gen_cpp(),
+			method_reserve(vector_class.clone()).gen_cpp(),
+			method_remove(vector_class.clone()).gen_cpp(),
+			method_swap(vector_class.clone(), element_is_bool).gen_cpp(),
+			method_clear(vector_class.clone()).gen_cpp(),
+			method_push(vector_class.clone(), element_type.clone()).gen_cpp(),
+			method_insert(vector_class.clone(), element_type.clone()).gen_cpp(),
+			method_get(vector_class.clone(), element_type.clone()).gen_cpp(),
+			method_set(vector_class.clone(), element_type.clone()).gen_cpp(),
 		];
 		if element_type.is_copy() && !element_is_bool {
-			methods.push(method_clone(&rust_localalias, vector_class.clone(), vec_type_ref.clone()).gen_cpp());
-			methods.push(method_data(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp());
-			methods.push(method_data_mut(&rust_localalias, vector_class.clone(), element_type.clone()).gen_cpp());
-			methods.push(method_from_slice(&rust_localalias, vec_type_ref.clone(), element_type.clone()).gen_cpp());
+			methods.push(method_clone(vector_class.clone(), vec_type_ref.clone()).gen_cpp());
+			methods.push(method_data(vector_class.clone(), element_type.clone()).gen_cpp());
+			methods.push(method_data_mut(vector_class.clone(), element_type.clone()).gen_cpp());
+			methods.push(method_from_slice(vec_type_ref.clone(), element_type.clone()).gen_cpp());
 		}
 		if element_type.is_element_data_type() {
-			methods.push(method_input_array(&rust_localalias, vector_class.clone()).gen_cpp());
-			methods.push(method_output_array(&rust_localalias, vector_class.clone()).gen_cpp());
-			methods.push(method_input_output_array(&rust_localalias, vector_class).gen_cpp());
+			methods.push(method_input_array(vector_class.clone()).gen_cpp());
+			methods.push(method_output_array(vector_class.clone()).gen_cpp());
+			methods.push(method_input_output_array(vector_class).gen_cpp());
 		}
 		COMMON_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
 	}
@@ -251,12 +251,12 @@ fn vector_class<'tu, 'ge>(vec_type_ref: &TypeRef, rust_localalias: &str) -> Clas
 	))
 }
 
-fn method_new<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_new<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::Constructor(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::new"),
+		"new",
 		"core",
 		vec![],
 		FuncCppBody::Auto,
@@ -264,12 +264,12 @@ fn method_new<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, ve
 	))
 }
 
-fn method_len<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_len<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::len"),
+		"len",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->size()".into()),
@@ -277,12 +277,12 @@ fn method_len<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) ->
 	))
 }
 
-fn method_is_empty<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_is_empty<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::isEmpty"),
+		"isEmpty",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->empty()".into()),
@@ -290,12 +290,12 @@ fn method_is_empty<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge
 	))
 }
 
-fn method_capacity<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_capacity<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::capacity"),
+		"capacity",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->capacity()".into()),
@@ -303,12 +303,12 @@ fn method_capacity<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge
 	))
 }
 
-fn method_shrink_to_fit<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_shrink_to_fit<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::shrinkToFit"),
+		"shrinkToFit",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->shrink_to_fit()".into()),
@@ -316,12 +316,12 @@ fn method_shrink_to_fit<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu
 	))
 }
 
-fn method_reserve<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_reserve<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::reserve"),
+		"reserve",
 		"core",
 		vec![Field::new_desc(FieldDesc::new("additional", TypeRefDesc::size_t()))],
 		FuncCppBody::ManualCall("instance->reserve(instance->size() + {{args}})".into()),
@@ -329,12 +329,12 @@ fn method_reserve<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>
 	))
 }
 
-fn method_remove<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_remove<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::remove"),
+		"remove",
 		"core",
 		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
 		FuncCppBody::ManualCall("instance->erase(instance->begin() + {{args}})".into()),
@@ -342,7 +342,7 @@ fn method_remove<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>)
 	))
 }
 
-fn method_swap<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, element_is_bool: bool) -> Func<'tu, 'ge> {
+fn method_swap<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_is_bool: bool) -> Func<'tu, 'ge> {
 	// https://stackoverflow.com/questions/58660207/why-doesnt-stdswap-work-on-vectorbool-elements-under-clang-win
 	let swap_func = if element_is_bool {
 		"instance->swap"
@@ -353,7 +353,7 @@ fn method_swap<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, e
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::swap"),
+		"swap",
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index1", TypeRefDesc::size_t())),
@@ -364,12 +364,12 @@ fn method_swap<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, e
 	))
 }
 
-fn method_clear<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_clear<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::clear"),
+		"clear",
 		"core",
 		vec![],
 		FuncCppBody::Auto,
@@ -377,16 +377,12 @@ fn method_clear<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) 
 	))
 }
 
-fn method_push<'tu, 'ge>(
-	rust_localalias: &str,
-	vector_class: Class<'tu, 'ge>,
-	element_type: TypeRef<'tu, 'ge>,
-) -> Func<'tu, 'ge> {
+fn method_push<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::push"),
+		"push",
 		"core",
 		vec![Field::new_desc(FieldDesc::new("val", element_type))],
 		FuncCppBody::ManualCall("instance->push_back({{args}})".into()),
@@ -394,16 +390,12 @@ fn method_push<'tu, 'ge>(
 	))
 }
 
-fn method_insert<'tu, 'ge>(
-	rust_localalias: &str,
-	vector_class: Class<'tu, 'ge>,
-	element_type: TypeRef<'tu, 'ge>,
-) -> Func<'tu, 'ge> {
+fn method_insert<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::insert"),
+		"insert",
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
@@ -414,12 +406,12 @@ fn method_insert<'tu, 'ge>(
 	))
 }
 
-fn method_get<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_get<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleViaArg,
-		format!("cv::{rust_localalias}::get"),
+		"get",
 		"core",
 		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
 		FuncCppBody::ManualCall("(*instance)[{{args}}]".into()),
@@ -427,12 +419,12 @@ fn method_get<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, el
 	))
 }
 
-fn method_set<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_set<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::set"),
+		"set",
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
@@ -443,16 +435,12 @@ fn method_set<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>, el
 	))
 }
 
-fn method_clone<'tu, 'ge>(
-	rust_localalias: &str,
-	vector_class: Class<'tu, 'ge>,
-	vec_type_ref: TypeRef<'tu, 'ge>,
-) -> Func<'tu, 'ge> {
+fn method_clone<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::clone"),
+		"clone",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("{{ret_type}}(*instance)".into()),
@@ -460,16 +448,12 @@ fn method_clone<'tu, 'ge>(
 	))
 }
 
-fn method_data<'tu, 'ge>(
-	rust_localalias: &str,
-	vector_class: Class<'tu, 'ge>,
-	element_type: TypeRef<'tu, 'ge>,
-) -> Func<'tu, 'ge> {
+fn method_data<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::data"),
+		"data",
 		"core",
 		vec![],
 		FuncCppBody::Auto,
@@ -478,16 +462,12 @@ fn method_data<'tu, 'ge>(
 	))
 }
 
-fn method_data_mut<'tu, 'ge>(
-	rust_localalias: &str,
-	vector_class: Class<'tu, 'ge>,
-	element_type: TypeRef<'tu, 'ge>,
-) -> Func<'tu, 'ge> {
+fn method_data_mut<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::dataMut"),
+		"dataMut",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->data()".into()),
@@ -496,16 +476,12 @@ fn method_data_mut<'tu, 'ge>(
 	))
 }
 
-fn method_from_slice<'tu, 'ge>(
-	rust_localalias: &str,
-	vec_type_ref: TypeRef<'tu, 'ge>,
-	element_type: TypeRef<'tu, 'ge>,
-) -> Func<'tu, 'ge> {
+fn method_from_slice<'tu, 'ge>(vec_type_ref: TypeRef<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::Function,
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::fromSlice"),
+		"fromSlice",
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new(
@@ -519,12 +495,12 @@ fn method_from_slice<'tu, 'ge>(
 	))
 }
 
-fn method_input_array<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::Fallible,
-		format!("cv::{rust_localalias}::inputArray"),
+		"inputArray",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("cv::_InputArray(*instance)".into()),
@@ -532,12 +508,12 @@ fn method_input_array<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 
 	))
 }
 
-fn method_output_array<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::Fallible,
-		format!("cv::{rust_localalias}::outputArray"),
+		"outputArray",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("cv::_OutputArray(*instance)".into()),
@@ -545,12 +521,12 @@ fn method_output_array<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu,
 	))
 }
 
-fn method_input_output_array<'tu, 'ge>(rust_localalias: &str, vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::Fallible,
-		format!("cv::{rust_localalias}::inputOutputArray"),
+		"inputOutputArray",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("cv::_InputOutputArray(*instance)".into()),

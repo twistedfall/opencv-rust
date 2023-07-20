@@ -84,16 +84,11 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let type_ref = self.type_ref();
 		let smartptr_class = smartptr_class(&type_ref);
 
-		let extern_delete = FuncDesc::method_delete(&rust_localalias, smartptr_class.clone()).identifier();
-		let extern_get_inner_ptr = method_get_inner_ptr(
-			smartptr_class.clone(),
-			&rust_localalias,
-			pointee_type.clone(),
-			Constness::Const,
-		)
-		.identifier();
+		let extern_delete = FuncDesc::method_delete(smartptr_class.clone()).identifier();
+		let extern_get_inner_ptr =
+			method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).identifier();
 		let extern_get_inner_ptr_mut =
-			method_get_inner_ptr(smartptr_class, &rust_localalias, pointee_type.clone(), Constness::Mut).identifier();
+			method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).identifier();
 
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.clone()),
@@ -126,7 +121,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 				Some(Constness::Const),
 			);
 			for base in all_bases(&cls) {
-				inter_vars.insert("base_rust_local", base.rust_name(NameStyle::decl()).into_owned().into());
+				let base_rust_local = base.rust_name(NameStyle::decl());
+				inter_vars.insert("base_rust_local", base_rust_local.clone().into_owned().into());
 				inter_vars.insert(
 					"base_rust_full",
 					base.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
@@ -158,7 +154,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			]));
 		};
 		if gen_ctor(&pointee_type) {
-			let extern_new = method_new(&rust_localalias, type_ref, pointee_type).identifier();
+			let extern_new = method_new(smartptr_class, type_ref, pointee_type).identifier();
 			inter_vars.insert("extern_new", extern_new.into());
 			inter_vars.insert("ctor", CTOR_TPL.interpolate(&inter_vars).into());
 		} else {
@@ -168,26 +164,16 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		TPL.interpolate(&inter_vars)
 	}
 
+	// todo: move the common logic for gen_rust_exports() and gen_cpp() out as with extern_functions() in Class
 	fn gen_rust_exports(&self) -> String {
 		let type_ref = self.type_ref();
 		let pointee_type = self.pointee();
-		let rust_localalias = self.rust_localalias();
 		let smartptr_class = smartptr_class(&type_ref);
 
 		let mut out = String::new();
-		out.push_str(
-			&method_get_inner_ptr(
-				smartptr_class.clone(),
-				&rust_localalias,
-				pointee_type.clone(),
-				Constness::Const,
-			)
-			.gen_rust_exports(),
-		);
-		out.push_str(
-			&method_get_inner_ptr(smartptr_class.clone(), &rust_localalias, pointee_type.clone(), Constness::Mut).gen_rust_exports(),
-		);
-		out.push_str(&FuncDesc::method_delete(&rust_localalias, smartptr_class.clone()).gen_rust_exports());
+		out.push_str(&method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).gen_rust_exports());
+		out.push_str(&method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_rust_exports());
+		out.push_str(&FuncDesc::method_delete(smartptr_class.clone()).gen_rust_exports());
 		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
 			let gen_env = self.gen_env();
 			for base in all_bases(&cls)
@@ -198,7 +184,6 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 					&method_cast_to_base(
 						smartptr_class.clone(),
 						base.type_ref(),
-						&rust_localalias,
 						&base.rust_name(NameStyle::decl()),
 						self.gen_env(),
 					)
@@ -207,7 +192,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			}
 		}
 		if gen_ctor(&pointee_type) {
-			out.push_str(&method_new(&rust_localalias, type_ref, pointee_type).gen_rust_exports());
+			out.push_str(&method_new(smartptr_class, type_ref, pointee_type).gen_rust_exports());
 		}
 		out
 	}
@@ -218,21 +203,11 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let type_ref = self.type_ref();
 		let pointee_type = self.pointee();
 		let smartptr_class = smartptr_class(&type_ref);
-		let rust_localalias = self.rust_localalias();
 
 		let mut methods = Vec::with_capacity(8);
-		methods.push(
-			method_get_inner_ptr(
-				smartptr_class.clone(),
-				&rust_localalias,
-				pointee_type.clone(),
-				Constness::Const,
-			)
-			.gen_cpp(),
-		);
-		methods
-			.push(method_get_inner_ptr(smartptr_class.clone(), &rust_localalias, pointee_type.clone(), Constness::Mut).gen_cpp());
-		methods.push(FuncDesc::method_delete(&rust_localalias, smartptr_class.clone()).gen_cpp());
+		methods.push(method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).gen_cpp());
+		methods.push(method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_cpp());
+		methods.push(FuncDesc::method_delete(smartptr_class.clone()).gen_cpp());
 		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
 			let gen_env = self.gen_env();
 			for base in all_bases(&cls)
@@ -243,7 +218,6 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 					method_cast_to_base(
 						smartptr_class.clone(),
 						base.type_ref(),
-						&rust_localalias,
 						&base.rust_name(NameStyle::decl()),
 						self.gen_env(),
 					)
@@ -253,7 +227,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		}
 
 		if gen_ctor(&pointee_type) {
-			methods.push(method_new(&rust_localalias, type_ref, pointee_type).gen_cpp());
+			methods.push(method_new(smartptr_class, type_ref, pointee_type).gen_cpp());
 		};
 
 		TPL.interpolate(&[("methods", methods.join(""))].into())
@@ -296,7 +270,7 @@ fn smartptr_class<'tu, 'ge>(smart_ptr_type_ref: &TypeRef<'tu, 'ge>) -> Class<'tu
 }
 
 fn method_new<'tu, 'ge>(
-	rust_localalias: &str,
+	smartptr_class: Class<'tu, 'ge>,
 	smartptr_type_ref: TypeRef<'tu, 'ge>,
 	pointee_type: TypeRef<'tu, 'ge>,
 ) -> Func<'tu, 'ge> {
@@ -310,13 +284,13 @@ fn method_new<'tu, 'ge>(
 		Cow::Borrowed("val")
 	};
 	Func::new_desc(FuncDesc::new(
-		FuncKind::Function,
+		FuncKind::Constructor(smartptr_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::new"),
+		"new",
 		"<unused>",
 		vec![Field::new_desc(FieldDesc::new("val", pointee_type))],
-		FuncCppBody::ManualCall(format!("{{{{ret_type}}}}({val})").into()),
+		FuncCppBody::ManualFull(format!("return new {{{{ret_type}}}}({val});").into()),
 		smartptr_type_ref,
 	))
 }
@@ -324,7 +298,6 @@ fn method_new<'tu, 'ge>(
 fn method_cast_to_base<'tu, 'ge>(
 	smartptr_class: Class<'tu, 'ge>,
 	base_type_ref: TypeRef<'tu, 'ge>,
-	rust_localalias: &str,
 	base_rust_local: &str,
 	gen_env: &'ge GeneratorEnv<'tu>,
 ) -> Func<'tu, 'ge> {
@@ -332,7 +305,7 @@ fn method_cast_to_base<'tu, 'ge>(
 		FuncKind::InstanceMethod(smartptr_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::to_PtrOf{base_rust_local}"),
+		format!("to_PtrOf{base_rust_local}"),
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualFull(
@@ -351,7 +324,6 @@ fn method_cast_to_base<'tu, 'ge>(
 
 fn method_get_inner_ptr<'tu, 'ge>(
 	smartptr_class: Class<'tu, 'ge>,
-	rust_localalias: &str,
 	pointee_type: TypeRef<'tu, 'ge>,
 	constness: Constness,
 ) -> Func<'tu, 'ge> {
@@ -377,7 +349,7 @@ fn method_get_inner_ptr<'tu, 'ge>(
 		FuncKind::InstanceMethod(smartptr_class),
 		pointee_type_constness,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::getInnerPtr{name_suffix}"),
+		format!("getInnerPtr{name_suffix}"),
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualFull("return instance->get();".into()),

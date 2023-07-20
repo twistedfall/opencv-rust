@@ -57,15 +57,15 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 			.enumerate()
 			.map(|(num, typ)| {
 				let ret_name = rets.next().expect("Endless iterator");
-				let get_extern = method_get(&rust_localalias, tuple_desc.clone(), typ.clone(), num).identifier();
+				let get_extern = method_get(tuple_desc.clone(), typ.clone(), num).identifier();
 				format!(
 					"{num} = {ret_name}: {typ}, get_{num} via {get_extern}",
 					typ = typ.rust_name(NameStyle::ref_()),
 				)
 			})
 			.join(",\n");
-		let new_extern = method_new(&rust_localalias, type_ref, &elements).identifier();
-		let delete_extern = FuncDesc::method_delete(&rust_localalias, tuple_desc).identifier();
+		let new_extern = method_new(type_ref, &elements).identifier();
+		let delete_extern = FuncDesc::method_delete(tuple_desc).identifier();
 
 		RUST_TPL.interpolate(&HashMap::from([
 			("rust_localalias", rust_localalias),
@@ -81,16 +81,15 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		static CPP_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/cpp.tpl.cpp").compile_interpolation());
 
 		let type_ref = self.type_ref();
-		let rust_localalias = self.rust_localalias();
 		let elements = self.elements();
 		let tuple_desc = tuple_class(&type_ref);
 
 		let mut methods = Vec::with_capacity(elements.len() + 2);
-		methods.push(method_new(&rust_localalias, type_ref, &elements).gen_cpp());
+		methods.push(method_new(type_ref, &elements).gen_cpp());
 		for (i, typ) in elements.into_iter().enumerate() {
-			methods.push(method_get(&rust_localalias, tuple_desc.clone(), typ, i).gen_cpp());
+			methods.push(method_get(tuple_desc.clone(), typ, i).gen_cpp());
 		}
-		methods.push(FuncDesc::method_delete(&rust_localalias, tuple_desc).gen_cpp());
+		methods.push(FuncDesc::method_delete(tuple_desc).gen_cpp());
 
 		CPP_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
 	}
@@ -153,11 +152,7 @@ fn tuple_class<'tu, 'ge>(typle_type_ref: &TypeRef<'tu, 'ge>) -> Class<'tu, 'ge> 
 	Class::new_desc(ClassDesc::boxed(typle_type_ref.cpp_name(CppNameStyle::Reference), "<unused>"))
 }
 
-fn method_new<'tu, 'ge>(
-	rust_localalias: &str,
-	tuple_typeref: TypeRef<'tu, 'ge>,
-	elements: &[TypeRef<'tu, 'ge>],
-) -> Func<'tu, 'ge> {
+fn method_new<'tu, 'ge>(tuple_typeref: TypeRef<'tu, 'ge>, elements: &[TypeRef<'tu, 'ge>]) -> Func<'tu, 'ge> {
 	let arguments = disambiguate_single_name("arg")
 		.zip(elements.iter())
 		.map(|(arg_name, type_ref)| Field::new_desc(FieldDesc::new(arg_name, type_ref.clone())))
@@ -166,7 +161,7 @@ fn method_new<'tu, 'ge>(
 		FuncKind::Constructor(tuple_class(&tuple_typeref)),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		format!("cv::{rust_localalias}::new"),
+		"new",
 		"<unused>",
 		arguments,
 		FuncCppBody::Auto,
@@ -174,17 +169,12 @@ fn method_new<'tu, 'ge>(
 	))
 }
 
-fn method_get<'tu, 'ge>(
-	rust_localalias: &str,
-	tuple_desc: Class<'tu, 'ge>,
-	element_type: TypeRef<'tu, 'ge>,
-	num: usize,
-) -> Func<'tu, 'ge> {
+fn method_get<'tu, 'ge>(tuple_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>, num: usize) -> Func<'tu, 'ge> {
 	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(tuple_desc),
+		FuncKind::InstanceMethod(tuple_class),
 		Constness::Const,
 		ReturnKind::InfallibleViaArg,
-		format!("cv::{rust_localalias}::get_{num}"),
+		format!("get_{num}"),
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualCall(format!("std::get<{num}>(*instance)").into()),

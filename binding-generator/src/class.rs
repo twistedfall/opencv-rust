@@ -362,7 +362,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							let read_func = Func::new_desc(FuncDesc {
 								type_hint: FuncTypeHint::None,
 								kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
-								cpp_fullname: fld.cpp_name(CppNameStyle::Reference).into(),
+								cpp_name: fld.cpp_name(CppNameStyle::Reference).into(),
 								custom_rust_leafname: None,
 								rust_module: fld.rust_module().into(),
 								constness: fld.constness(),
@@ -386,7 +386,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							let write_func = Func::new_desc(FuncDesc {
 								type_hint: FuncTypeHint::None,
 								kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
-								cpp_fullname: format!("{}::set{}{rest}", fld.cpp_namespace(), first_letter.to_uppercase()).into(),
+								cpp_name: format!("{}::set{}{rest}", fld.cpp_namespace(), first_letter.to_uppercase()).into(),
 								custom_rust_leafname: None,
 								rust_module: fld.rust_module().into(),
 								constness: Constness::Mut,
