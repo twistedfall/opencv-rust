@@ -393,8 +393,7 @@ pub mod stitching {
 	impl Drop for AffineWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AffineWarper_delete(instance: *mut c_void); }
-			unsafe { cv_AffineWarper_delete(self.as_raw_mut_AffineWarper()) };
+			unsafe { sys::cv_AffineWarper_delete(self.as_raw_mut_AffineWarper()) };
 		}
 	}
 	
@@ -460,8 +459,7 @@ pub mod stitching {
 	impl Drop for CompressedRectilinearPortraitWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CompressedRectilinearPortraitWarper_delete(instance: *mut c_void); }
-			unsafe { cv_CompressedRectilinearPortraitWarper_delete(self.as_raw_mut_CompressedRectilinearPortraitWarper()) };
+			unsafe { sys::cv_CompressedRectilinearPortraitWarper_delete(self.as_raw_mut_CompressedRectilinearPortraitWarper()) };
 		}
 	}
 	
@@ -540,8 +538,7 @@ pub mod stitching {
 	impl Drop for CompressedRectilinearWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CompressedRectilinearWarper_delete(instance: *mut c_void); }
-			unsafe { cv_CompressedRectilinearWarper_delete(self.as_raw_mut_CompressedRectilinearWarper()) };
+			unsafe { sys::cv_CompressedRectilinearWarper_delete(self.as_raw_mut_CompressedRectilinearWarper()) };
 		}
 	}
 	
@@ -623,8 +620,7 @@ pub mod stitching {
 	impl Drop for CylindricalWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CylindricalWarper_delete(instance: *mut c_void); }
-			unsafe { cv_CylindricalWarper_delete(self.as_raw_mut_CylindricalWarper()) };
+			unsafe { sys::cv_CylindricalWarper_delete(self.as_raw_mut_CylindricalWarper()) };
 		}
 	}
 	
@@ -690,8 +686,7 @@ pub mod stitching {
 	impl Drop for CylindricalWarperGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CylindricalWarperGpu_delete(instance: *mut c_void); }
-			unsafe { cv_CylindricalWarperGpu_delete(self.as_raw_mut_CylindricalWarperGpu()) };
+			unsafe { sys::cv_CylindricalWarperGpu_delete(self.as_raw_mut_CylindricalWarperGpu()) };
 		}
 	}
 	
@@ -757,8 +752,7 @@ pub mod stitching {
 	impl Drop for FisheyeWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FisheyeWarper_delete(instance: *mut c_void); }
-			unsafe { cv_FisheyeWarper_delete(self.as_raw_mut_FisheyeWarper()) };
+			unsafe { sys::cv_FisheyeWarper_delete(self.as_raw_mut_FisheyeWarper()) };
 		}
 	}
 	
@@ -824,8 +818,7 @@ pub mod stitching {
 	impl Drop for MercatorWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MercatorWarper_delete(instance: *mut c_void); }
-			unsafe { cv_MercatorWarper_delete(self.as_raw_mut_MercatorWarper()) };
+			unsafe { sys::cv_MercatorWarper_delete(self.as_raw_mut_MercatorWarper()) };
 		}
 	}
 	
@@ -891,8 +884,7 @@ pub mod stitching {
 	impl Drop for PaniniPortraitWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PaniniPortraitWarper_delete(instance: *mut c_void); }
-			unsafe { cv_PaniniPortraitWarper_delete(self.as_raw_mut_PaniniPortraitWarper()) };
+			unsafe { sys::cv_PaniniPortraitWarper_delete(self.as_raw_mut_PaniniPortraitWarper()) };
 		}
 	}
 	
@@ -971,8 +963,7 @@ pub mod stitching {
 	impl Drop for PaniniWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PaniniWarper_delete(instance: *mut c_void); }
-			unsafe { cv_PaniniWarper_delete(self.as_raw_mut_PaniniWarper()) };
+			unsafe { sys::cv_PaniniWarper_delete(self.as_raw_mut_PaniniWarper()) };
 		}
 	}
 	
@@ -1054,8 +1045,7 @@ pub mod stitching {
 	impl Drop for PlaneWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PlaneWarper_delete(instance: *mut c_void); }
-			unsafe { cv_PlaneWarper_delete(self.as_raw_mut_PlaneWarper()) };
+			unsafe { sys::cv_PlaneWarper_delete(self.as_raw_mut_PlaneWarper()) };
 		}
 	}
 	
@@ -1121,8 +1111,7 @@ pub mod stitching {
 	impl Drop for PlaneWarperGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PlaneWarperGpu_delete(instance: *mut c_void); }
-			unsafe { cv_PlaneWarperGpu_delete(self.as_raw_mut_PlaneWarperGpu()) };
+			unsafe { sys::cv_PlaneWarperGpu_delete(self.as_raw_mut_PlaneWarperGpu()) };
 		}
 	}
 	
@@ -1313,8 +1302,7 @@ pub mod stitching {
 	impl Drop for PyRotationWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PyRotationWarper_delete(instance: *mut c_void); }
-			unsafe { cv_PyRotationWarper_delete(self.as_raw_mut_PyRotationWarper()) };
+			unsafe { sys::cv_PyRotationWarper_delete(self.as_raw_mut_PyRotationWarper()) };
 		}
 	}
 	
@@ -1392,8 +1380,7 @@ pub mod stitching {
 	impl Drop for SphericalWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SphericalWarper_delete(instance: *mut c_void); }
-			unsafe { cv_SphericalWarper_delete(self.as_raw_mut_SphericalWarper()) };
+			unsafe { sys::cv_SphericalWarper_delete(self.as_raw_mut_SphericalWarper()) };
 		}
 	}
 	
@@ -1459,8 +1446,7 @@ pub mod stitching {
 	impl Drop for SphericalWarperGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SphericalWarperGpu_delete(instance: *mut c_void); }
-			unsafe { cv_SphericalWarperGpu_delete(self.as_raw_mut_SphericalWarperGpu()) };
+			unsafe { sys::cv_SphericalWarperGpu_delete(self.as_raw_mut_SphericalWarperGpu()) };
 		}
 	}
 	
@@ -1526,8 +1512,7 @@ pub mod stitching {
 	impl Drop for StereographicWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_StereographicWarper_delete(instance: *mut c_void); }
-			unsafe { cv_StereographicWarper_delete(self.as_raw_mut_StereographicWarper()) };
+			unsafe { sys::cv_StereographicWarper_delete(self.as_raw_mut_StereographicWarper()) };
 		}
 	}
 	
@@ -2175,8 +2160,7 @@ pub mod stitching {
 	impl Drop for Stitcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Stitcher_delete(instance: *mut c_void); }
-			unsafe { cv_Stitcher_delete(self.as_raw_mut_Stitcher()) };
+			unsafe { sys::cv_Stitcher_delete(self.as_raw_mut_Stitcher()) };
 		}
 	}
 	
@@ -2254,8 +2238,7 @@ pub mod stitching {
 	impl Drop for TransverseMercatorWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TransverseMercatorWarper_delete(instance: *mut c_void); }
-			unsafe { cv_TransverseMercatorWarper_delete(self.as_raw_mut_TransverseMercatorWarper()) };
+			unsafe { sys::cv_TransverseMercatorWarper_delete(self.as_raw_mut_TransverseMercatorWarper()) };
 		}
 	}
 	
@@ -2322,8 +2305,7 @@ pub mod stitching {
 	impl Drop for WarperCreator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WarperCreator_delete(instance: *mut c_void); }
-			unsafe { cv_WarperCreator_delete(self.as_raw_mut_WarperCreator()) };
+			unsafe { sys::cv_WarperCreator_delete(self.as_raw_mut_WarperCreator()) };
 		}
 	}
 	
@@ -2405,8 +2387,7 @@ pub mod stitching {
 	impl Drop for Detail_AffineBasedEstimator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_AffineBasedEstimator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_AffineBasedEstimator_delete(self.as_raw_mut_Detail_AffineBasedEstimator()) };
+			unsafe { sys::cv_detail_AffineBasedEstimator_delete(self.as_raw_mut_Detail_AffineBasedEstimator()) };
 		}
 	}
 	
@@ -2441,7 +2422,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_AffineBasedEstimator, crate::stitching::Detail_Estimator, cv_Detail_AffineBasedEstimator_to_Detail_Estimator }
+	boxed_cast_base! { Detail_AffineBasedEstimator, crate::stitching::Detail_Estimator, cv_detail_AffineBasedEstimator_to_Detail_Estimator }
 	
 	impl std::fmt::Debug for Detail_AffineBasedEstimator {
 		#[inline]
@@ -2480,8 +2461,7 @@ pub mod stitching {
 	impl Drop for Detail_AffineBestOf2NearestMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_AffineBestOf2NearestMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_AffineBestOf2NearestMatcher_delete(self.as_raw_mut_Detail_AffineBestOf2NearestMatcher()) };
+			unsafe { sys::cv_detail_AffineBestOf2NearestMatcher_delete(self.as_raw_mut_Detail_AffineBestOf2NearestMatcher()) };
 		}
 	}
 	
@@ -2542,9 +2522,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_Detail_AffineBestOf2NearestMatcher_to_Detail_BestOf2NearestMatcher }
+	boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_AffineBestOf2NearestMatcher_to_Detail_BestOf2NearestMatcher }
 	
-	boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcher, cv_Detail_AffineBestOf2NearestMatcher_to_Detail_FeaturesMatcher }
+	boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_AffineBestOf2NearestMatcher_to_Detail_FeaturesMatcher }
 	
 	impl std::fmt::Debug for Detail_AffineBestOf2NearestMatcher {
 		#[inline]
@@ -2681,8 +2661,7 @@ pub mod stitching {
 	impl Drop for Detail_AffineWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_AffineWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_AffineWarper_delete(self.as_raw_mut_Detail_AffineWarper()) };
+			unsafe { sys::cv_detail_AffineWarper_delete(self.as_raw_mut_Detail_AffineWarper()) };
 		}
 	}
 	
@@ -2732,9 +2711,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_PlaneWarper, cv_Detail_AffineWarper_to_Detail_PlaneWarper }
+	boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_PlaneWarper, cv_detail_AffineWarper_to_Detail_PlaneWarper }
 	
-	boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_RotationWarper, cv_Detail_AffineWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_RotationWarper, cv_detail_AffineWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_AffineWarper {
 		#[inline]
@@ -2778,8 +2757,7 @@ pub mod stitching {
 	impl Drop for Detail_BestOf2NearestMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BestOf2NearestMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BestOf2NearestMatcher_delete(self.as_raw_mut_Detail_BestOf2NearestMatcher()) };
+			unsafe { sys::cv_detail_BestOf2NearestMatcher_delete(self.as_raw_mut_Detail_BestOf2NearestMatcher()) };
 		}
 	}
 	
@@ -2848,11 +2826,11 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcher, cv_Detail_BestOf2NearestMatcher_to_Detail_AffineBestOf2NearestMatcher }
+	boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcher, cv_detail_BestOf2NearestMatcher_to_Detail_AffineBestOf2NearestMatcher }
 	
-	boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcher, cv_Detail_BestOf2NearestMatcher_to_Detail_BestOf2NearestRangeMatcher }
+	boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcher, cv_detail_BestOf2NearestMatcher_to_Detail_BestOf2NearestRangeMatcher }
 	
-	boxed_cast_base! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcher, cv_Detail_BestOf2NearestMatcher_to_Detail_FeaturesMatcher }
+	boxed_cast_base! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_BestOf2NearestMatcher_to_Detail_FeaturesMatcher }
 	
 	impl std::fmt::Debug for Detail_BestOf2NearestMatcher {
 		#[inline]
@@ -2883,8 +2861,7 @@ pub mod stitching {
 	impl Drop for Detail_BestOf2NearestRangeMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BestOf2NearestRangeMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BestOf2NearestRangeMatcher_delete(self.as_raw_mut_Detail_BestOf2NearestRangeMatcher()) };
+			unsafe { sys::cv_detail_BestOf2NearestRangeMatcher_delete(self.as_raw_mut_Detail_BestOf2NearestRangeMatcher()) };
 		}
 	}
 	
@@ -2933,9 +2910,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_Detail_BestOf2NearestRangeMatcher_to_Detail_BestOf2NearestMatcher }
+	boxed_cast_base! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_BestOf2NearestRangeMatcher_to_Detail_BestOf2NearestMatcher }
 	
-	boxed_cast_base! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_FeaturesMatcher, cv_Detail_BestOf2NearestRangeMatcher_to_Detail_FeaturesMatcher }
+	boxed_cast_base! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_BestOf2NearestRangeMatcher_to_Detail_FeaturesMatcher }
 	
 	impl std::fmt::Debug for Detail_BestOf2NearestRangeMatcher {
 		#[inline]
@@ -3032,8 +3009,7 @@ pub mod stitching {
 	impl Drop for Detail_Blender {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_Blender_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_Blender_delete(self.as_raw_mut_Detail_Blender()) };
+			unsafe { sys::cv_detail_Blender_delete(self.as_raw_mut_Detail_Blender()) };
 		}
 	}
 	
@@ -3062,9 +3038,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_FeatherBlender, cv_Detail_Blender_to_Detail_FeatherBlender }
+	boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_FeatherBlender, cv_detail_Blender_to_Detail_FeatherBlender }
 	
-	boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_MultiBandBlender, cv_Detail_Blender_to_Detail_MultiBandBlender }
+	boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_MultiBandBlender, cv_detail_Blender_to_Detail_MultiBandBlender }
 	
 	impl std::fmt::Debug for Detail_Blender {
 		#[inline]
@@ -3106,8 +3082,7 @@ pub mod stitching {
 	impl Drop for Detail_BlocksChannelsCompensator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BlocksChannelsCompensator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BlocksChannelsCompensator_delete(self.as_raw_mut_Detail_BlocksChannelsCompensator()) };
+			unsafe { sys::cv_detail_BlocksChannelsCompensator_delete(self.as_raw_mut_Detail_BlocksChannelsCompensator()) };
 		}
 	}
 	
@@ -3154,9 +3129,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksCompensator, cv_Detail_BlocksChannelsCompensator_to_Detail_BlocksCompensator }
+	boxed_cast_base! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksCompensator, cv_detail_BlocksChannelsCompensator_to_Detail_BlocksCompensator }
 	
-	boxed_cast_base! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_ExposureCompensator, cv_Detail_BlocksChannelsCompensator_to_Detail_ExposureCompensator }
+	boxed_cast_base! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_BlocksChannelsCompensator_to_Detail_ExposureCompensator }
 	
 	impl std::fmt::Debug for Detail_BlocksChannelsCompensator {
 		#[inline]
@@ -3298,8 +3273,7 @@ pub mod stitching {
 	impl Drop for Detail_BlocksCompensator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BlocksCompensator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BlocksCompensator_delete(self.as_raw_mut_Detail_BlocksCompensator()) };
+			unsafe { sys::cv_detail_BlocksCompensator_delete(self.as_raw_mut_Detail_BlocksCompensator()) };
 		}
 	}
 	
@@ -3324,11 +3298,11 @@ pub mod stitching {
 	impl Detail_BlocksCompensator {
 	}
 	
-	boxed_cast_descendant! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksChannelsCompensator, cv_Detail_BlocksCompensator_to_Detail_BlocksChannelsCompensator }
+	boxed_cast_descendant! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksChannelsCompensator, cv_detail_BlocksCompensator_to_Detail_BlocksChannelsCompensator }
 	
-	boxed_cast_descendant! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksGainCompensator, cv_Detail_BlocksCompensator_to_Detail_BlocksGainCompensator }
+	boxed_cast_descendant! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksGainCompensator, cv_detail_BlocksCompensator_to_Detail_BlocksGainCompensator }
 	
-	boxed_cast_base! { Detail_BlocksCompensator, crate::stitching::Detail_ExposureCompensator, cv_Detail_BlocksCompensator_to_Detail_ExposureCompensator }
+	boxed_cast_base! { Detail_BlocksCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_BlocksCompensator_to_Detail_ExposureCompensator }
 	
 	impl std::fmt::Debug for Detail_BlocksCompensator {
 		#[inline]
@@ -3399,8 +3373,7 @@ pub mod stitching {
 	impl Drop for Detail_BlocksGainCompensator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BlocksGainCompensator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BlocksGainCompensator_delete(self.as_raw_mut_Detail_BlocksGainCompensator()) };
+			unsafe { sys::cv_detail_BlocksGainCompensator_delete(self.as_raw_mut_Detail_BlocksGainCompensator()) };
 		}
 	}
 	
@@ -3456,9 +3429,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_BlocksGainCompensator, crate::stitching::Detail_BlocksCompensator, cv_Detail_BlocksGainCompensator_to_Detail_BlocksCompensator }
+	boxed_cast_base! { Detail_BlocksGainCompensator, crate::stitching::Detail_BlocksCompensator, cv_detail_BlocksGainCompensator_to_Detail_BlocksCompensator }
 	
-	boxed_cast_base! { Detail_BlocksGainCompensator, crate::stitching::Detail_ExposureCompensator, cv_Detail_BlocksGainCompensator_to_Detail_ExposureCompensator }
+	boxed_cast_base! { Detail_BlocksGainCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_BlocksGainCompensator_to_Detail_ExposureCompensator }
 	
 	impl std::fmt::Debug for Detail_BlocksGainCompensator {
 		#[inline]
@@ -3497,8 +3470,7 @@ pub mod stitching {
 	impl Drop for Detail_BundleAdjusterAffine {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BundleAdjusterAffine_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BundleAdjusterAffine_delete(self.as_raw_mut_Detail_BundleAdjusterAffine()) };
+			unsafe { sys::cv_detail_BundleAdjusterAffine_delete(self.as_raw_mut_Detail_BundleAdjusterAffine()) };
 		}
 	}
 	
@@ -3541,9 +3513,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_BundleAdjusterAffine, crate::stitching::Detail_BundleAdjusterBase, cv_Detail_BundleAdjusterAffine_to_Detail_BundleAdjusterBase }
+	boxed_cast_base! { Detail_BundleAdjusterAffine, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterAffine_to_Detail_BundleAdjusterBase }
 	
-	boxed_cast_base! { Detail_BundleAdjusterAffine, crate::stitching::Detail_Estimator, cv_Detail_BundleAdjusterAffine_to_Detail_Estimator }
+	boxed_cast_base! { Detail_BundleAdjusterAffine, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterAffine_to_Detail_Estimator }
 	
 	impl std::fmt::Debug for Detail_BundleAdjusterAffine {
 		#[inline]
@@ -3582,8 +3554,7 @@ pub mod stitching {
 	impl Drop for Detail_BundleAdjusterAffinePartial {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BundleAdjusterAffinePartial_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BundleAdjusterAffinePartial_delete(self.as_raw_mut_Detail_BundleAdjusterAffinePartial()) };
+			unsafe { sys::cv_detail_BundleAdjusterAffinePartial_delete(self.as_raw_mut_Detail_BundleAdjusterAffinePartial()) };
 		}
 	}
 	
@@ -3626,9 +3597,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_BundleAdjusterBase, cv_Detail_BundleAdjusterAffinePartial_to_Detail_BundleAdjusterBase }
+	boxed_cast_base! { Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterAffinePartial_to_Detail_BundleAdjusterBase }
 	
-	boxed_cast_base! { Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_Estimator, cv_Detail_BundleAdjusterAffinePartial_to_Detail_Estimator }
+	boxed_cast_base! { Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterAffinePartial_to_Detail_Estimator }
 	
 	impl std::fmt::Debug for Detail_BundleAdjusterAffinePartial {
 		#[inline]
@@ -3715,8 +3686,7 @@ pub mod stitching {
 	impl Drop for Detail_BundleAdjusterBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BundleAdjusterBase_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BundleAdjusterBase_delete(self.as_raw_mut_Detail_BundleAdjusterBase()) };
+			unsafe { sys::cv_detail_BundleAdjusterBase_delete(self.as_raw_mut_Detail_BundleAdjusterBase()) };
 		}
 	}
 	
@@ -3741,17 +3711,17 @@ pub mod stitching {
 	impl Detail_BundleAdjusterBase {
 	}
 	
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterAffine, cv_Detail_BundleAdjusterBase_to_Detail_BundleAdjusterAffine }
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterAffine, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterAffine }
 	
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterAffinePartial, cv_Detail_BundleAdjusterBase_to_Detail_BundleAdjusterAffinePartial }
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterAffinePartial, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterAffinePartial }
 	
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterRay, cv_Detail_BundleAdjusterBase_to_Detail_BundleAdjusterRay }
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterRay, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterRay }
 	
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterReproj, cv_Detail_BundleAdjusterBase_to_Detail_BundleAdjusterReproj }
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterReproj, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterReproj }
 	
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_NoBundleAdjuster, cv_Detail_BundleAdjusterBase_to_Detail_NoBundleAdjuster }
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_NoBundleAdjuster, cv_detail_BundleAdjusterBase_to_Detail_NoBundleAdjuster }
 	
-	boxed_cast_base! { Detail_BundleAdjusterBase, crate::stitching::Detail_Estimator, cv_Detail_BundleAdjusterBase_to_Detail_Estimator }
+	boxed_cast_base! { Detail_BundleAdjusterBase, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterBase_to_Detail_Estimator }
 	
 	impl std::fmt::Debug for Detail_BundleAdjusterBase {
 		#[inline]
@@ -3786,8 +3756,7 @@ pub mod stitching {
 	impl Drop for Detail_BundleAdjusterRay {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BundleAdjusterRay_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BundleAdjusterRay_delete(self.as_raw_mut_Detail_BundleAdjusterRay()) };
+			unsafe { sys::cv_detail_BundleAdjusterRay_delete(self.as_raw_mut_Detail_BundleAdjusterRay()) };
 		}
 	}
 	
@@ -3830,9 +3799,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_BundleAdjusterRay, crate::stitching::Detail_BundleAdjusterBase, cv_Detail_BundleAdjusterRay_to_Detail_BundleAdjusterBase }
+	boxed_cast_base! { Detail_BundleAdjusterRay, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterRay_to_Detail_BundleAdjusterBase }
 	
-	boxed_cast_base! { Detail_BundleAdjusterRay, crate::stitching::Detail_Estimator, cv_Detail_BundleAdjusterRay_to_Detail_Estimator }
+	boxed_cast_base! { Detail_BundleAdjusterRay, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterRay_to_Detail_Estimator }
 	
 	impl std::fmt::Debug for Detail_BundleAdjusterRay {
 		#[inline]
@@ -3868,8 +3837,7 @@ pub mod stitching {
 	impl Drop for Detail_BundleAdjusterReproj {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_BundleAdjusterReproj_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_BundleAdjusterReproj_delete(self.as_raw_mut_Detail_BundleAdjusterReproj()) };
+			unsafe { sys::cv_detail_BundleAdjusterReproj_delete(self.as_raw_mut_Detail_BundleAdjusterReproj()) };
 		}
 	}
 	
@@ -3912,9 +3880,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_BundleAdjusterReproj, crate::stitching::Detail_BundleAdjusterBase, cv_Detail_BundleAdjusterReproj_to_Detail_BundleAdjusterBase }
+	boxed_cast_base! { Detail_BundleAdjusterReproj, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterReproj_to_Detail_BundleAdjusterBase }
 	
-	boxed_cast_base! { Detail_BundleAdjusterReproj, crate::stitching::Detail_Estimator, cv_Detail_BundleAdjusterReproj_to_Detail_Estimator }
+	boxed_cast_base! { Detail_BundleAdjusterReproj, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterReproj_to_Detail_Estimator }
 	
 	impl std::fmt::Debug for Detail_BundleAdjusterReproj {
 		#[inline]
@@ -3930,38 +3898,38 @@ pub mod stitching {
 	
 		#[inline]
 		fn focal(&self) -> f64 {
-			let ret = unsafe { sys::cv_detail_CameraParams_getPropFocal_const(self.as_raw_Detail_CameraParams()) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propFocal_const(self.as_raw_Detail_CameraParams()) };
 			ret
 		}
 		
 		#[inline]
 		fn aspect(&self) -> f64 {
-			let ret = unsafe { sys::cv_detail_CameraParams_getPropAspect_const(self.as_raw_Detail_CameraParams()) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propAspect_const(self.as_raw_Detail_CameraParams()) };
 			ret
 		}
 		
 		#[inline]
 		fn ppx(&self) -> f64 {
-			let ret = unsafe { sys::cv_detail_CameraParams_getPropPpx_const(self.as_raw_Detail_CameraParams()) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propPpx_const(self.as_raw_Detail_CameraParams()) };
 			ret
 		}
 		
 		#[inline]
 		fn ppy(&self) -> f64 {
-			let ret = unsafe { sys::cv_detail_CameraParams_getPropPpy_const(self.as_raw_Detail_CameraParams()) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propPpy_const(self.as_raw_Detail_CameraParams()) };
 			ret
 		}
 		
 		#[inline]
 		fn r(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_detail_CameraParams_getPropR_const(self.as_raw_Detail_CameraParams()) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propR_const(self.as_raw_Detail_CameraParams()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn t(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_detail_CameraParams_getPropT_const(self.as_raw_Detail_CameraParams()) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propT_const(self.as_raw_Detail_CameraParams()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -3984,37 +3952,37 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_focal(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_setPropFocal_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propFocal_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_aspect(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_setPropAspect_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propAspect_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ppx(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_setPropPpx_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propPpx_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ppy(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_setPropPpy_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propPpy_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_r(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_detail_CameraParams_setPropR_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propR_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_t(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_detail_CameraParams_setPropT_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propT_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
@@ -4033,8 +4001,7 @@ pub mod stitching {
 	impl Drop for Detail_CameraParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CameraParams_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CameraParams_delete(self.as_raw_mut_Detail_CameraParams()) };
+			unsafe { sys::cv_detail_CameraParams_delete(self.as_raw_mut_Detail_CameraParams()) };
 		}
 	}
 	
@@ -4074,8 +4041,7 @@ pub mod stitching {
 	impl Clone for Detail_CameraParams {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Detail_CameraParams_implicitClone_const_Detail_CameraParams(val: extern_send!(Detail_CameraParams)) -> extern_receive!(Detail_CameraParams: 'static); }
-			unsafe { Self::from_raw(cv_Detail_CameraParams_implicitClone_const_Detail_CameraParams(self.as_raw_Detail_CameraParams())) }
+			unsafe { Self::from_raw(sys::cv_detail_CameraParams_implicitClone_const(self.as_raw_Detail_CameraParams())) }
 		}
 	}
 	
@@ -4200,8 +4166,7 @@ pub mod stitching {
 	impl Drop for Detail_ChannelsCompensator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_ChannelsCompensator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_ChannelsCompensator_delete(self.as_raw_mut_Detail_ChannelsCompensator()) };
+			unsafe { sys::cv_detail_ChannelsCompensator_delete(self.as_raw_mut_Detail_ChannelsCompensator()) };
 		}
 	}
 	
@@ -4238,7 +4203,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_ChannelsCompensator, crate::stitching::Detail_ExposureCompensator, cv_Detail_ChannelsCompensator_to_Detail_ExposureCompensator }
+	boxed_cast_base! { Detail_ChannelsCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_ChannelsCompensator_to_Detail_ExposureCompensator }
 	
 	impl std::fmt::Debug for Detail_ChannelsCompensator {
 		#[inline]
@@ -4254,13 +4219,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn a(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_getPropA_const(self.as_raw_Detail_CompressedRectilinearPortraitProjector()) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propA_const(self.as_raw_Detail_CompressedRectilinearPortraitProjector()) };
 			ret
 		}
 		
 		#[inline]
 		fn b(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_getPropB_const(self.as_raw_Detail_CompressedRectilinearPortraitProjector()) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propB_const(self.as_raw_Detail_CompressedRectilinearPortraitProjector()) };
 			ret
 		}
 		
@@ -4272,13 +4237,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_setPropA_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propA_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_setPropB_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propB_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
 			ret
 		}
 		
@@ -4311,8 +4276,7 @@ pub mod stitching {
 	impl Drop for Detail_CompressedRectilinearPortraitProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CompressedRectilinearPortraitProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CompressedRectilinearPortraitProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector()) };
+			unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector()) };
 		}
 	}
 	
@@ -4337,7 +4301,7 @@ pub mod stitching {
 	impl Detail_CompressedRectilinearPortraitProjector {
 	}
 	
-	boxed_cast_base! { Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_CompressedRectilinearPortraitProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CompressedRectilinearPortraitProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_CompressedRectilinearPortraitProjector {
 		#[inline]
@@ -4371,8 +4335,7 @@ pub mod stitching {
 	impl Drop for Detail_CompressedRectilinearPortraitWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CompressedRectilinearPortraitWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CompressedRectilinearPortraitWarper_delete(self.as_raw_mut_Detail_CompressedRectilinearPortraitWarper()) };
+			unsafe { sys::cv_detail_CompressedRectilinearPortraitWarper_delete(self.as_raw_mut_Detail_CompressedRectilinearPortraitWarper()) };
 		}
 	}
 	
@@ -4410,7 +4373,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_RotationWarper, cv_Detail_CompressedRectilinearPortraitWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_CompressedRectilinearPortraitWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_CompressedRectilinearPortraitWarper {
 		#[inline]
@@ -4426,13 +4389,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn a(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_getPropA_const(self.as_raw_Detail_CompressedRectilinearProjector()) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propA_const(self.as_raw_Detail_CompressedRectilinearProjector()) };
 			ret
 		}
 		
 		#[inline]
 		fn b(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_getPropB_const(self.as_raw_Detail_CompressedRectilinearProjector()) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propB_const(self.as_raw_Detail_CompressedRectilinearProjector()) };
 			ret
 		}
 		
@@ -4444,13 +4407,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_setPropA_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propA_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_setPropB_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propB_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
 			ret
 		}
 		
@@ -4483,8 +4446,7 @@ pub mod stitching {
 	impl Drop for Detail_CompressedRectilinearProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CompressedRectilinearProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CompressedRectilinearProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearProjector()) };
+			unsafe { sys::cv_detail_CompressedRectilinearProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearProjector()) };
 		}
 	}
 	
@@ -4509,7 +4471,7 @@ pub mod stitching {
 	impl Detail_CompressedRectilinearProjector {
 	}
 	
-	boxed_cast_base! { Detail_CompressedRectilinearProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_CompressedRectilinearProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_CompressedRectilinearProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CompressedRectilinearProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_CompressedRectilinearProjector {
 		#[inline]
@@ -4543,8 +4505,7 @@ pub mod stitching {
 	impl Drop for Detail_CompressedRectilinearWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CompressedRectilinearWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CompressedRectilinearWarper_delete(self.as_raw_mut_Detail_CompressedRectilinearWarper()) };
+			unsafe { sys::cv_detail_CompressedRectilinearWarper_delete(self.as_raw_mut_Detail_CompressedRectilinearWarper()) };
 		}
 	}
 	
@@ -4582,7 +4543,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_CompressedRectilinearWarper, crate::stitching::Detail_RotationWarper, cv_Detail_CompressedRectilinearWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_CompressedRectilinearWarper, crate::stitching::Detail_RotationWarper, cv_detail_CompressedRectilinearWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_CompressedRectilinearWarper {
 		#[inline]
@@ -4631,8 +4592,7 @@ pub mod stitching {
 	impl Drop for Detail_CylindricalPortraitProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CylindricalPortraitProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CylindricalPortraitProjector_delete(self.as_raw_mut_Detail_CylindricalPortraitProjector()) };
+			unsafe { sys::cv_detail_CylindricalPortraitProjector_delete(self.as_raw_mut_Detail_CylindricalPortraitProjector()) };
 		}
 	}
 	
@@ -4657,7 +4617,7 @@ pub mod stitching {
 	impl Detail_CylindricalPortraitProjector {
 	}
 	
-	boxed_cast_base! { Detail_CylindricalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_CylindricalPortraitProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_CylindricalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CylindricalPortraitProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_CylindricalPortraitProjector {
 		#[inline]
@@ -4689,8 +4649,7 @@ pub mod stitching {
 	impl Drop for Detail_CylindricalPortraitWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CylindricalPortraitWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CylindricalPortraitWarper_delete(self.as_raw_mut_Detail_CylindricalPortraitWarper()) };
+			unsafe { sys::cv_detail_CylindricalPortraitWarper_delete(self.as_raw_mut_Detail_CylindricalPortraitWarper()) };
 		}
 	}
 	
@@ -4725,7 +4684,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_CylindricalPortraitWarper, crate::stitching::Detail_RotationWarper, cv_Detail_CylindricalPortraitWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_CylindricalPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_CylindricalPortraitWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_CylindricalPortraitWarper {
 		#[inline]
@@ -4774,8 +4733,7 @@ pub mod stitching {
 	impl Drop for Detail_CylindricalProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CylindricalProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CylindricalProjector_delete(self.as_raw_mut_Detail_CylindricalProjector()) };
+			unsafe { sys::cv_detail_CylindricalProjector_delete(self.as_raw_mut_Detail_CylindricalProjector()) };
 		}
 	}
 	
@@ -4800,7 +4758,7 @@ pub mod stitching {
 	impl Detail_CylindricalProjector {
 	}
 	
-	boxed_cast_base! { Detail_CylindricalProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_CylindricalProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_CylindricalProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CylindricalProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_CylindricalProjector {
 		#[inline]
@@ -4859,8 +4817,7 @@ pub mod stitching {
 	impl Drop for Detail_CylindricalWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CylindricalWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CylindricalWarper_delete(self.as_raw_mut_Detail_CylindricalWarper()) };
+			unsafe { sys::cv_detail_CylindricalWarper_delete(self.as_raw_mut_Detail_CylindricalWarper()) };
 		}
 	}
 	
@@ -4899,9 +4856,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_descendant! { Detail_CylindricalWarper, crate::stitching::Detail_CylindricalWarperGpu, cv_Detail_CylindricalWarper_to_Detail_CylindricalWarperGpu }
+	boxed_cast_descendant! { Detail_CylindricalWarper, crate::stitching::Detail_CylindricalWarperGpu, cv_detail_CylindricalWarper_to_Detail_CylindricalWarperGpu }
 	
-	boxed_cast_base! { Detail_CylindricalWarper, crate::stitching::Detail_RotationWarper, cv_Detail_CylindricalWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_CylindricalWarper, crate::stitching::Detail_RotationWarper, cv_detail_CylindricalWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_CylindricalWarper {
 		#[inline]
@@ -4980,8 +4937,7 @@ pub mod stitching {
 	impl Drop for Detail_CylindricalWarperGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CylindricalWarperGpu_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CylindricalWarperGpu_delete(self.as_raw_mut_Detail_CylindricalWarperGpu()) };
+			unsafe { sys::cv_detail_CylindricalWarperGpu_delete(self.as_raw_mut_Detail_CylindricalWarperGpu()) };
 		}
 	}
 	
@@ -5024,9 +4980,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_CylindricalWarperGpu, crate::stitching::Detail_CylindricalWarper, cv_Detail_CylindricalWarperGpu_to_Detail_CylindricalWarper }
+	boxed_cast_base! { Detail_CylindricalWarperGpu, crate::stitching::Detail_CylindricalWarper, cv_detail_CylindricalWarperGpu_to_Detail_CylindricalWarper }
 	
-	boxed_cast_base! { Detail_CylindricalWarperGpu, crate::stitching::Detail_RotationWarper, cv_Detail_CylindricalWarperGpu_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_CylindricalWarperGpu, crate::stitching::Detail_RotationWarper, cv_detail_CylindricalWarperGpu_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_CylindricalWarperGpu {
 		#[inline]
@@ -5042,14 +4998,14 @@ pub mod stitching {
 	
 		#[inline]
 		fn parent(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_detail_DisjointSets_getPropParent_const(self.as_raw_Detail_DisjointSets()) };
+			let ret = unsafe { sys::cv_detail_DisjointSets_propParent_const(self.as_raw_Detail_DisjointSets()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn size(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_detail_DisjointSets_getPropSize_const(self.as_raw_Detail_DisjointSets()) };
+			let ret = unsafe { sys::cv_detail_DisjointSets_propSize_const(self.as_raw_Detail_DisjointSets()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
@@ -5062,13 +5018,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_parent(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_detail_DisjointSets_setPropParent_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_detail_DisjointSets_propParent_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_detail_DisjointSets_setPropSize_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_detail_DisjointSets_propSize_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
@@ -5110,8 +5066,7 @@ pub mod stitching {
 	impl Drop for Detail_DisjointSets {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_DisjointSets_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_DisjointSets_delete(self.as_raw_mut_Detail_DisjointSets()) };
+			unsafe { sys::cv_detail_DisjointSets_delete(self.as_raw_mut_Detail_DisjointSets()) };
 		}
 	}
 	
@@ -5208,8 +5163,7 @@ pub mod stitching {
 	impl Drop for Detail_DpSeamFinder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_DpSeamFinder_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_DpSeamFinder_delete(self.as_raw_mut_Detail_DpSeamFinder()) };
+			unsafe { sys::cv_detail_DpSeamFinder_delete(self.as_raw_mut_Detail_DpSeamFinder()) };
 		}
 	}
 	
@@ -5257,7 +5211,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_DpSeamFinder, crate::stitching::Detail_SeamFinder, cv_Detail_DpSeamFinder_to_Detail_SeamFinder }
+	boxed_cast_base! { Detail_DpSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_DpSeamFinder_to_Detail_SeamFinder }
 	
 	impl std::fmt::Debug for Detail_DpSeamFinder {
 		#[inline]
@@ -5313,8 +5267,7 @@ pub mod stitching {
 	impl Drop for Detail_Estimator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_Estimator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_Estimator_delete(self.as_raw_mut_Detail_Estimator()) };
+			unsafe { sys::cv_detail_Estimator_delete(self.as_raw_mut_Detail_Estimator()) };
 		}
 	}
 	
@@ -5331,11 +5284,21 @@ pub mod stitching {
 	impl Detail_Estimator {
 	}
 	
-	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_AffineBasedEstimator, cv_Detail_Estimator_to_Detail_AffineBasedEstimator }
+	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_AffineBasedEstimator, cv_detail_Estimator_to_Detail_AffineBasedEstimator }
 	
-	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_BundleAdjusterBase, cv_Detail_Estimator_to_Detail_BundleAdjusterBase }
+	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_BundleAdjusterAffine, cv_detail_Estimator_to_Detail_BundleAdjusterAffine }
 	
-	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_HomographyBasedEstimator, cv_Detail_Estimator_to_Detail_HomographyBasedEstimator }
+	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_BundleAdjusterAffinePartial, cv_detail_Estimator_to_Detail_BundleAdjusterAffinePartial }
+	
+	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_BundleAdjusterBase, cv_detail_Estimator_to_Detail_BundleAdjusterBase }
+	
+	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_BundleAdjusterRay, cv_detail_Estimator_to_Detail_BundleAdjusterRay }
+	
+	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_BundleAdjusterReproj, cv_detail_Estimator_to_Detail_BundleAdjusterReproj }
+	
+	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_HomographyBasedEstimator, cv_detail_Estimator_to_Detail_HomographyBasedEstimator }
+	
+	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_NoBundleAdjuster, cv_detail_Estimator_to_Detail_NoBundleAdjuster }
 	
 	impl std::fmt::Debug for Detail_Estimator {
 		#[inline]
@@ -5451,8 +5414,7 @@ pub mod stitching {
 	impl Drop for Detail_ExposureCompensator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_ExposureCompensator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_ExposureCompensator_delete(self.as_raw_mut_Detail_ExposureCompensator()) };
+			unsafe { sys::cv_detail_ExposureCompensator_delete(self.as_raw_mut_Detail_ExposureCompensator()) };
 		}
 	}
 	
@@ -5479,13 +5441,17 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_BlocksCompensator, cv_Detail_ExposureCompensator_to_Detail_BlocksCompensator }
+	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_BlocksChannelsCompensator, cv_detail_ExposureCompensator_to_Detail_BlocksChannelsCompensator }
 	
-	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_ChannelsCompensator, cv_Detail_ExposureCompensator_to_Detail_ChannelsCompensator }
+	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_BlocksCompensator, cv_detail_ExposureCompensator_to_Detail_BlocksCompensator }
 	
-	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_GainCompensator, cv_Detail_ExposureCompensator_to_Detail_GainCompensator }
+	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_BlocksGainCompensator, cv_detail_ExposureCompensator_to_Detail_BlocksGainCompensator }
 	
-	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_NoExposureCompensator, cv_Detail_ExposureCompensator_to_Detail_NoExposureCompensator }
+	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_ChannelsCompensator, cv_detail_ExposureCompensator_to_Detail_ChannelsCompensator }
+	
+	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_GainCompensator, cv_detail_ExposureCompensator_to_Detail_GainCompensator }
+	
+	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_NoExposureCompensator, cv_detail_ExposureCompensator_to_Detail_NoExposureCompensator }
 	
 	impl std::fmt::Debug for Detail_ExposureCompensator {
 		#[inline]
@@ -5577,8 +5543,7 @@ pub mod stitching {
 	impl Drop for Detail_FeatherBlender {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_FeatherBlender_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_FeatherBlender_delete(self.as_raw_mut_Detail_FeatherBlender()) };
+			unsafe { sys::cv_detail_FeatherBlender_delete(self.as_raw_mut_Detail_FeatherBlender()) };
 		}
 	}
 	
@@ -5615,7 +5580,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_FeatherBlender, crate::stitching::Detail_Blender, cv_Detail_FeatherBlender_to_Detail_Blender }
+	boxed_cast_base! { Detail_FeatherBlender, crate::stitching::Detail_Blender, cv_detail_FeatherBlender_to_Detail_Blender }
 	
 	impl std::fmt::Debug for Detail_FeatherBlender {
 		#[inline]
@@ -5715,8 +5680,7 @@ pub mod stitching {
 	impl Drop for Detail_FeaturesMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_FeaturesMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_FeaturesMatcher_delete(self.as_raw_mut_Detail_FeaturesMatcher()) };
+			unsafe { sys::cv_detail_FeaturesMatcher_delete(self.as_raw_mut_Detail_FeaturesMatcher()) };
 		}
 	}
 	
@@ -5733,7 +5697,11 @@ pub mod stitching {
 	impl Detail_FeaturesMatcher {
 	}
 	
-	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_Detail_FeaturesMatcher_to_Detail_BestOf2NearestMatcher }
+	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcher, cv_detail_FeaturesMatcher_to_Detail_AffineBestOf2NearestMatcher }
+	
+	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_FeaturesMatcher_to_Detail_BestOf2NearestMatcher }
+	
+	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcher, cv_detail_FeaturesMatcher_to_Detail_BestOf2NearestRangeMatcher }
 	
 	impl std::fmt::Debug for Detail_FeaturesMatcher {
 		#[inline]
@@ -5782,8 +5750,7 @@ pub mod stitching {
 	impl Drop for Detail_FisheyeProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_FisheyeProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_FisheyeProjector_delete(self.as_raw_mut_Detail_FisheyeProjector()) };
+			unsafe { sys::cv_detail_FisheyeProjector_delete(self.as_raw_mut_Detail_FisheyeProjector()) };
 		}
 	}
 	
@@ -5808,7 +5775,7 @@ pub mod stitching {
 	impl Detail_FisheyeProjector {
 	}
 	
-	boxed_cast_base! { Detail_FisheyeProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_FisheyeProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_FisheyeProjector, crate::stitching::Detail_ProjectorBase, cv_detail_FisheyeProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_FisheyeProjector {
 		#[inline]
@@ -5840,8 +5807,7 @@ pub mod stitching {
 	impl Drop for Detail_FisheyeWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_FisheyeWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_FisheyeWarper_delete(self.as_raw_mut_Detail_FisheyeWarper()) };
+			unsafe { sys::cv_detail_FisheyeWarper_delete(self.as_raw_mut_Detail_FisheyeWarper()) };
 		}
 	}
 	
@@ -5876,7 +5842,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_FisheyeWarper, crate::stitching::Detail_RotationWarper, cv_Detail_FisheyeWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_FisheyeWarper, crate::stitching::Detail_RotationWarper, cv_detail_FisheyeWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_FisheyeWarper {
 		#[inline]
@@ -6011,8 +5977,7 @@ pub mod stitching {
 	impl Drop for Detail_GainCompensator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_GainCompensator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_GainCompensator_delete(self.as_raw_mut_Detail_GainCompensator()) };
+			unsafe { sys::cv_detail_GainCompensator_delete(self.as_raw_mut_Detail_GainCompensator()) };
 		}
 	}
 	
@@ -6057,7 +6022,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_GainCompensator, crate::stitching::Detail_ExposureCompensator, cv_Detail_GainCompensator_to_Detail_ExposureCompensator }
+	boxed_cast_base! { Detail_GainCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_GainCompensator_to_Detail_ExposureCompensator }
 	
 	impl std::fmt::Debug for Detail_GainCompensator {
 		#[inline]
@@ -6115,8 +6080,7 @@ pub mod stitching {
 	impl Drop for Detail_Graph {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_Graph_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_Graph_delete(self.as_raw_mut_Detail_Graph()) };
+			unsafe { sys::cv_detail_Graph_delete(self.as_raw_mut_Detail_Graph()) };
 		}
 	}
 	
@@ -6184,8 +6148,7 @@ pub mod stitching {
 	impl Drop for Detail_GraphCutSeamFinder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_GraphCutSeamFinder_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_GraphCutSeamFinder_delete(self.as_raw_mut_Detail_GraphCutSeamFinder()) };
+			unsafe { sys::cv_detail_GraphCutSeamFinder_delete(self.as_raw_mut_Detail_GraphCutSeamFinder()) };
 		}
 	}
 	
@@ -6246,9 +6209,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderBase, cv_Detail_GraphCutSeamFinder_to_Detail_GraphCutSeamFinderBase }
+	boxed_cast_base! { Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderBase, cv_detail_GraphCutSeamFinder_to_Detail_GraphCutSeamFinderBase }
 	
-	boxed_cast_base! { Detail_GraphCutSeamFinder, crate::stitching::Detail_SeamFinder, cv_Detail_GraphCutSeamFinder_to_Detail_SeamFinder }
+	boxed_cast_base! { Detail_GraphCutSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_GraphCutSeamFinder_to_Detail_SeamFinder }
 	
 	impl std::fmt::Debug for Detail_GraphCutSeamFinder {
 		#[inline]
@@ -6280,8 +6243,7 @@ pub mod stitching {
 	impl Drop for Detail_GraphCutSeamFinderBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_GraphCutSeamFinderBase_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_GraphCutSeamFinderBase_delete(self.as_raw_mut_Detail_GraphCutSeamFinderBase()) };
+			unsafe { sys::cv_detail_GraphCutSeamFinderBase_delete(self.as_raw_mut_Detail_GraphCutSeamFinderBase()) };
 		}
 	}
 	
@@ -6345,8 +6307,7 @@ pub mod stitching {
 	impl Drop for Detail_GraphCutSeamFinderGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_GraphCutSeamFinderGpu_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_GraphCutSeamFinderGpu_delete(self.as_raw_mut_Detail_GraphCutSeamFinderGpu()) };
+			unsafe { sys::cv_detail_GraphCutSeamFinderGpu_delete(self.as_raw_mut_Detail_GraphCutSeamFinderGpu()) };
 		}
 	}
 	
@@ -6401,11 +6362,11 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_GraphCutSeamFinderBase, cv_Detail_GraphCutSeamFinderGpu_to_Detail_GraphCutSeamFinderBase }
+	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_GraphCutSeamFinderBase, cv_detail_GraphCutSeamFinderGpu_to_Detail_GraphCutSeamFinderBase }
 	
-	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_PairwiseSeamFinder, cv_Detail_GraphCutSeamFinderGpu_to_Detail_PairwiseSeamFinder }
+	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_PairwiseSeamFinder, cv_detail_GraphCutSeamFinderGpu_to_Detail_PairwiseSeamFinder }
 	
-	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_SeamFinder, cv_Detail_GraphCutSeamFinderGpu_to_Detail_SeamFinder }
+	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_SeamFinder, cv_detail_GraphCutSeamFinderGpu_to_Detail_SeamFinder }
 	
 	impl std::fmt::Debug for Detail_GraphCutSeamFinderGpu {
 		#[inline]
@@ -6421,19 +6382,19 @@ pub mod stitching {
 	
 		#[inline]
 		fn from(&self) -> i32 {
-			let ret = unsafe { sys::cv_detail_GraphEdge_getPropFrom_const(self.as_raw_Detail_GraphEdge()) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propFrom_const(self.as_raw_Detail_GraphEdge()) };
 			ret
 		}
 		
 		#[inline]
 		fn to(&self) -> i32 {
-			let ret = unsafe { sys::cv_detail_GraphEdge_getPropTo_const(self.as_raw_Detail_GraphEdge()) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propTo_const(self.as_raw_Detail_GraphEdge()) };
 			ret
 		}
 		
 		#[inline]
 		fn weight(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_GraphEdge_getPropWeight_const(self.as_raw_Detail_GraphEdge()) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propWeight_const(self.as_raw_Detail_GraphEdge()) };
 			ret
 		}
 		
@@ -6463,19 +6424,19 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_from(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_GraphEdge_setPropFrom_int(self.as_raw_mut_Detail_GraphEdge(), val) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propFrom_int(self.as_raw_mut_Detail_GraphEdge(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_to(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_GraphEdge_setPropTo_int(self.as_raw_mut_Detail_GraphEdge(), val) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propTo_int(self.as_raw_mut_Detail_GraphEdge(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_weight(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_GraphEdge_setPropWeight_float(self.as_raw_mut_Detail_GraphEdge(), val) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propWeight_float(self.as_raw_mut_Detail_GraphEdge(), val) };
 			ret
 		}
 		
@@ -6490,8 +6451,7 @@ pub mod stitching {
 	impl Drop for Detail_GraphEdge {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_GraphEdge_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_GraphEdge_delete(self.as_raw_mut_Detail_GraphEdge()) };
+			unsafe { sys::cv_detail_GraphEdge_delete(self.as_raw_mut_Detail_GraphEdge()) };
 		}
 	}
 	
@@ -6551,8 +6511,7 @@ pub mod stitching {
 	impl Drop for Detail_HomographyBasedEstimator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_HomographyBasedEstimator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_HomographyBasedEstimator_delete(self.as_raw_mut_Detail_HomographyBasedEstimator()) };
+			unsafe { sys::cv_detail_HomographyBasedEstimator_delete(self.as_raw_mut_Detail_HomographyBasedEstimator()) };
 		}
 	}
 	
@@ -6589,7 +6548,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_HomographyBasedEstimator, crate::stitching::Detail_Estimator, cv_Detail_HomographyBasedEstimator_to_Detail_Estimator }
+	boxed_cast_base! { Detail_HomographyBasedEstimator, crate::stitching::Detail_Estimator, cv_detail_HomographyBasedEstimator_to_Detail_Estimator }
 	
 	impl std::fmt::Debug for Detail_HomographyBasedEstimator {
 		#[inline]
@@ -6605,28 +6564,28 @@ pub mod stitching {
 	
 		#[inline]
 		fn img_idx(&self) -> i32 {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_getPropImg_idx_const(self.as_raw_Detail_ImageFeatures()) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_idx_const(self.as_raw_Detail_ImageFeatures()) };
 			ret
 		}
 		
 		#[inline]
 		fn img_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_ImageFeatures_getPropImg_size_const(self.as_raw_Detail_ImageFeatures(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_ImageFeatures_propImg_size_const(self.as_raw_Detail_ImageFeatures(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn keypoints(&self) -> core::Vector<core::KeyPoint> {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_getPropKeypoints_const(self.as_raw_Detail_ImageFeatures()) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propKeypoints_const(self.as_raw_Detail_ImageFeatures()) };
 			let ret = unsafe { core::Vector::<core::KeyPoint>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn descriptors(&self) -> core::UMat {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_getPropDescriptors_const(self.as_raw_Detail_ImageFeatures()) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propDescriptors_const(self.as_raw_Detail_ImageFeatures()) };
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			ret
 		}
@@ -6639,25 +6598,25 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_img_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_setPropImg_idx_int(self.as_raw_mut_Detail_ImageFeatures(), val) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_idx_int(self.as_raw_mut_Detail_ImageFeatures(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_img_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_setPropImg_size_Size(self.as_raw_mut_Detail_ImageFeatures(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_size_Size(self.as_raw_mut_Detail_ImageFeatures(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_keypoints(&mut self, mut val: core::Vector<core::KeyPoint>) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_setPropKeypoints_vectorLKeyPointG(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_VectorOfKeyPoint()) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propKeypoints_vectorLKeyPointG(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_VectorOfKeyPoint()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_descriptors(&mut self, mut val: core::UMat) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_setPropDescriptors_UMat(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_UMat()) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propDescriptors_UMat(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_UMat()) };
 			ret
 		}
 		
@@ -6683,8 +6642,7 @@ pub mod stitching {
 	impl Drop for Detail_ImageFeatures {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_ImageFeatures_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_ImageFeatures_delete(self.as_raw_mut_Detail_ImageFeatures()) };
+			unsafe { sys::cv_detail_ImageFeatures_delete(self.as_raw_mut_Detail_ImageFeatures()) };
 		}
 	}
 	
@@ -6700,8 +6658,7 @@ pub mod stitching {
 	
 	impl Detail_ImageFeatures {
 		fn default() -> Self {
-			extern "C" { fn cv_Detail_ImageFeatures_defaultNew_const() -> extern_receive!(Detail_ImageFeatures: 'static); }
-			unsafe { Self::from_raw(cv_Detail_ImageFeatures_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_detail_ImageFeatures_defaultNew_const()) }
 		}
 		
 	}
@@ -6709,8 +6666,7 @@ pub mod stitching {
 	impl Clone for Detail_ImageFeatures {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Detail_ImageFeatures_implicitClone_const_Detail_ImageFeatures(val: extern_send!(Detail_ImageFeatures)) -> extern_receive!(Detail_ImageFeatures: 'static); }
-			unsafe { Self::from_raw(cv_Detail_ImageFeatures_implicitClone_const_Detail_ImageFeatures(self.as_raw_Detail_ImageFeatures())) }
+			unsafe { Self::from_raw(sys::cv_detail_ImageFeatures_implicitClone_const(self.as_raw_Detail_ImageFeatures())) }
 		}
 	}
 	
@@ -6740,20 +6696,20 @@ pub mod stitching {
 	
 		#[inline]
 		fn src_img_idx(&self) -> i32 {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_getPropSrc_img_idx_const(self.as_raw_Detail_MatchesInfo()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propSrc_img_idx_const(self.as_raw_Detail_MatchesInfo()) };
 			ret
 		}
 		
 		/// Images indices (optional)
 		#[inline]
 		fn dst_img_idx(&self) -> i32 {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_getPropDst_img_idx_const(self.as_raw_Detail_MatchesInfo()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propDst_img_idx_const(self.as_raw_Detail_MatchesInfo()) };
 			ret
 		}
 		
 		#[inline]
 		fn matches(&self) -> core::Vector<core::DMatch> {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_getPropMatches_const(self.as_raw_Detail_MatchesInfo()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propMatches_const(self.as_raw_Detail_MatchesInfo()) };
 			let ret = unsafe { core::Vector::<core::DMatch>::opencv_from_extern(ret) };
 			ret
 		}
@@ -6761,7 +6717,7 @@ pub mod stitching {
 		/// Geometrically consistent matches mask
 		#[inline]
 		fn inliers_mask(&self) -> core::Vector<u8> {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_getPropInliers_mask_const(self.as_raw_Detail_MatchesInfo()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propInliers_mask_const(self.as_raw_Detail_MatchesInfo()) };
 			let ret = unsafe { core::Vector::<u8>::opencv_from_extern(ret) };
 			ret
 		}
@@ -6769,14 +6725,14 @@ pub mod stitching {
 		/// Number of geometrically consistent matches
 		#[inline]
 		fn num_inliers(&self) -> i32 {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_getPropNum_inliers_const(self.as_raw_Detail_MatchesInfo()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propNum_inliers_const(self.as_raw_Detail_MatchesInfo()) };
 			ret
 		}
 		
 		/// Estimated transformation
 		#[inline]
 		fn h(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_getPropH_const(self.as_raw_Detail_MatchesInfo()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propH_const(self.as_raw_Detail_MatchesInfo()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -6784,7 +6740,7 @@ pub mod stitching {
 		/// Confidence two images are from the same panorama
 		#[inline]
 		fn confidence(&self) -> f64 {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_getPropConfidence_const(self.as_raw_Detail_MatchesInfo()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propConfidence_const(self.as_raw_Detail_MatchesInfo()) };
 			ret
 		}
 		
@@ -6796,48 +6752,48 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_src_img_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_setPropSrc_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propSrc_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 		
 		/// Images indices (optional)
 		#[inline]
 		fn set_dst_img_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_setPropDst_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propDst_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_matches(&mut self, mut val: core::Vector<core::DMatch>) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_setPropMatches_vectorLDMatchG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfDMatch()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propMatches_vectorLDMatchG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfDMatch()) };
 			ret
 		}
 		
 		/// Geometrically consistent matches mask
 		#[inline]
 		fn set_inliers_mask(&mut self, mut val: core::Vector<u8>) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_setPropInliers_mask_vectorLunsigned_charG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfu8()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propInliers_mask_vectorLunsigned_charG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfu8()) };
 			ret
 		}
 		
 		/// Number of geometrically consistent matches
 		#[inline]
 		fn set_num_inliers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_setPropNum_inliers_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propNum_inliers_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 		
 		/// Estimated transformation
 		#[inline]
 		fn set_h(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_setPropH_Mat(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propH_Mat(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		/// Confidence two images are from the same panorama
 		#[inline]
 		fn set_confidence(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_setPropConfidence_double(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propConfidence_double(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 		
@@ -6878,8 +6834,7 @@ pub mod stitching {
 	impl Drop for Detail_MatchesInfo {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_MatchesInfo_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_MatchesInfo_delete(self.as_raw_mut_Detail_MatchesInfo()) };
+			unsafe { sys::cv_detail_MatchesInfo_delete(self.as_raw_mut_Detail_MatchesInfo()) };
 		}
 	}
 	
@@ -6919,8 +6874,7 @@ pub mod stitching {
 	impl Clone for Detail_MatchesInfo {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Detail_MatchesInfo_implicitClone_const_Detail_MatchesInfo(val: extern_send!(Detail_MatchesInfo)) -> extern_receive!(Detail_MatchesInfo: 'static); }
-			unsafe { Self::from_raw(cv_Detail_MatchesInfo_implicitClone_const_Detail_MatchesInfo(self.as_raw_Detail_MatchesInfo())) }
+			unsafe { Self::from_raw(sys::cv_detail_MatchesInfo_implicitClone_const(self.as_raw_Detail_MatchesInfo())) }
 		}
 	}
 	
@@ -6978,8 +6932,7 @@ pub mod stitching {
 	impl Drop for Detail_MercatorProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_MercatorProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_MercatorProjector_delete(self.as_raw_mut_Detail_MercatorProjector()) };
+			unsafe { sys::cv_detail_MercatorProjector_delete(self.as_raw_mut_Detail_MercatorProjector()) };
 		}
 	}
 	
@@ -7004,7 +6957,7 @@ pub mod stitching {
 	impl Detail_MercatorProjector {
 	}
 	
-	boxed_cast_base! { Detail_MercatorProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_MercatorProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_MercatorProjector, crate::stitching::Detail_ProjectorBase, cv_detail_MercatorProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_MercatorProjector {
 		#[inline]
@@ -7036,8 +6989,7 @@ pub mod stitching {
 	impl Drop for Detail_MercatorWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_MercatorWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_MercatorWarper_delete(self.as_raw_mut_Detail_MercatorWarper()) };
+			unsafe { sys::cv_detail_MercatorWarper_delete(self.as_raw_mut_Detail_MercatorWarper()) };
 		}
 	}
 	
@@ -7072,7 +7024,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_MercatorWarper, crate::stitching::Detail_RotationWarper, cv_Detail_MercatorWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_MercatorWarper, crate::stitching::Detail_RotationWarper, cv_detail_MercatorWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_MercatorWarper {
 		#[inline]
@@ -7153,8 +7105,7 @@ pub mod stitching {
 	impl Drop for Detail_MultiBandBlender {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_MultiBandBlender_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_MultiBandBlender_delete(self.as_raw_mut_Detail_MultiBandBlender()) };
+			unsafe { sys::cv_detail_MultiBandBlender_delete(self.as_raw_mut_Detail_MultiBandBlender()) };
 		}
 	}
 	
@@ -7193,7 +7144,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_MultiBandBlender, crate::stitching::Detail_Blender, cv_Detail_MultiBandBlender_to_Detail_Blender }
+	boxed_cast_base! { Detail_MultiBandBlender, crate::stitching::Detail_Blender, cv_detail_MultiBandBlender_to_Detail_Blender }
 	
 	impl std::fmt::Debug for Detail_MultiBandBlender {
 		#[inline]
@@ -7225,8 +7176,7 @@ pub mod stitching {
 	impl Drop for Detail_NoBundleAdjuster {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_NoBundleAdjuster_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_NoBundleAdjuster_delete(self.as_raw_mut_Detail_NoBundleAdjuster()) };
+			unsafe { sys::cv_detail_NoBundleAdjuster_delete(self.as_raw_mut_Detail_NoBundleAdjuster()) };
 		}
 	}
 	
@@ -7269,9 +7219,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_NoBundleAdjuster, crate::stitching::Detail_BundleAdjusterBase, cv_Detail_NoBundleAdjuster_to_Detail_BundleAdjusterBase }
+	boxed_cast_base! { Detail_NoBundleAdjuster, crate::stitching::Detail_BundleAdjusterBase, cv_detail_NoBundleAdjuster_to_Detail_BundleAdjusterBase }
 	
-	boxed_cast_base! { Detail_NoBundleAdjuster, crate::stitching::Detail_Estimator, cv_Detail_NoBundleAdjuster_to_Detail_Estimator }
+	boxed_cast_base! { Detail_NoBundleAdjuster, crate::stitching::Detail_Estimator, cv_detail_NoBundleAdjuster_to_Detail_Estimator }
 	
 	impl std::fmt::Debug for Detail_NoBundleAdjuster {
 		#[inline]
@@ -7341,8 +7291,7 @@ pub mod stitching {
 	impl Drop for Detail_NoExposureCompensator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_NoExposureCompensator_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_NoExposureCompensator_delete(self.as_raw_mut_Detail_NoExposureCompensator()) };
+			unsafe { sys::cv_detail_NoExposureCompensator_delete(self.as_raw_mut_Detail_NoExposureCompensator()) };
 		}
 	}
 	
@@ -7367,7 +7316,7 @@ pub mod stitching {
 	impl Detail_NoExposureCompensator {
 	}
 	
-	boxed_cast_base! { Detail_NoExposureCompensator, crate::stitching::Detail_ExposureCompensator, cv_Detail_NoExposureCompensator_to_Detail_ExposureCompensator }
+	boxed_cast_base! { Detail_NoExposureCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_NoExposureCompensator_to_Detail_ExposureCompensator }
 	
 	impl std::fmt::Debug for Detail_NoExposureCompensator {
 		#[inline]
@@ -7408,8 +7357,7 @@ pub mod stitching {
 	impl Drop for Detail_NoSeamFinder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_NoSeamFinder_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_NoSeamFinder_delete(self.as_raw_mut_Detail_NoSeamFinder()) };
+			unsafe { sys::cv_detail_NoSeamFinder_delete(self.as_raw_mut_Detail_NoSeamFinder()) };
 		}
 	}
 	
@@ -7434,7 +7382,7 @@ pub mod stitching {
 	impl Detail_NoSeamFinder {
 	}
 	
-	boxed_cast_base! { Detail_NoSeamFinder, crate::stitching::Detail_SeamFinder, cv_Detail_NoSeamFinder_to_Detail_SeamFinder }
+	boxed_cast_base! { Detail_NoSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_NoSeamFinder_to_Detail_SeamFinder }
 	
 	impl std::fmt::Debug for Detail_NoSeamFinder {
 		#[inline]
@@ -7475,8 +7423,7 @@ pub mod stitching {
 	impl Drop for Detail_PairwiseSeamFinder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PairwiseSeamFinder_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PairwiseSeamFinder_delete(self.as_raw_mut_Detail_PairwiseSeamFinder()) };
+			unsafe { sys::cv_detail_PairwiseSeamFinder_delete(self.as_raw_mut_Detail_PairwiseSeamFinder()) };
 		}
 	}
 	
@@ -7501,11 +7448,11 @@ pub mod stitching {
 	impl Detail_PairwiseSeamFinder {
 	}
 	
-	boxed_cast_descendant! { Detail_PairwiseSeamFinder, crate::stitching::Detail_GraphCutSeamFinderGpu, cv_Detail_PairwiseSeamFinder_to_Detail_GraphCutSeamFinderGpu }
+	boxed_cast_descendant! { Detail_PairwiseSeamFinder, crate::stitching::Detail_GraphCutSeamFinderGpu, cv_detail_PairwiseSeamFinder_to_Detail_GraphCutSeamFinderGpu }
 	
-	boxed_cast_descendant! { Detail_PairwiseSeamFinder, crate::stitching::Detail_VoronoiSeamFinder, cv_Detail_PairwiseSeamFinder_to_Detail_VoronoiSeamFinder }
+	boxed_cast_descendant! { Detail_PairwiseSeamFinder, crate::stitching::Detail_VoronoiSeamFinder, cv_detail_PairwiseSeamFinder_to_Detail_VoronoiSeamFinder }
 	
-	boxed_cast_base! { Detail_PairwiseSeamFinder, crate::stitching::Detail_SeamFinder, cv_Detail_PairwiseSeamFinder_to_Detail_SeamFinder }
+	boxed_cast_base! { Detail_PairwiseSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_PairwiseSeamFinder_to_Detail_SeamFinder }
 	
 	impl std::fmt::Debug for Detail_PairwiseSeamFinder {
 		#[inline]
@@ -7521,13 +7468,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn a(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_getPropA_const(self.as_raw_Detail_PaniniPortraitProjector()) };
+			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propA_const(self.as_raw_Detail_PaniniPortraitProjector()) };
 			ret
 		}
 		
 		#[inline]
 		fn b(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_getPropB_const(self.as_raw_Detail_PaniniPortraitProjector()) };
+			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propB_const(self.as_raw_Detail_PaniniPortraitProjector()) };
 			ret
 		}
 		
@@ -7539,13 +7486,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_setPropA_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propA_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_setPropB_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propB_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
 			ret
 		}
 		
@@ -7578,8 +7525,7 @@ pub mod stitching {
 	impl Drop for Detail_PaniniPortraitProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PaniniPortraitProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PaniniPortraitProjector_delete(self.as_raw_mut_Detail_PaniniPortraitProjector()) };
+			unsafe { sys::cv_detail_PaniniPortraitProjector_delete(self.as_raw_mut_Detail_PaniniPortraitProjector()) };
 		}
 	}
 	
@@ -7604,7 +7550,7 @@ pub mod stitching {
 	impl Detail_PaniniPortraitProjector {
 	}
 	
-	boxed_cast_base! { Detail_PaniniPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_PaniniPortraitProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_PaniniPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PaniniPortraitProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_PaniniPortraitProjector {
 		#[inline]
@@ -7638,8 +7584,7 @@ pub mod stitching {
 	impl Drop for Detail_PaniniPortraitWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PaniniPortraitWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PaniniPortraitWarper_delete(self.as_raw_mut_Detail_PaniniPortraitWarper()) };
+			unsafe { sys::cv_detail_PaniniPortraitWarper_delete(self.as_raw_mut_Detail_PaniniPortraitWarper()) };
 		}
 	}
 	
@@ -7677,7 +7622,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_PaniniPortraitWarper, crate::stitching::Detail_RotationWarper, cv_Detail_PaniniPortraitWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_PaniniPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_PaniniPortraitWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_PaniniPortraitWarper {
 		#[inline]
@@ -7693,13 +7638,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn a(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_PaniniProjector_getPropA_const(self.as_raw_Detail_PaniniProjector()) };
+			let ret = unsafe { sys::cv_detail_PaniniProjector_propA_const(self.as_raw_Detail_PaniniProjector()) };
 			ret
 		}
 		
 		#[inline]
 		fn b(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_PaniniProjector_getPropB_const(self.as_raw_Detail_PaniniProjector()) };
+			let ret = unsafe { sys::cv_detail_PaniniProjector_propB_const(self.as_raw_Detail_PaniniProjector()) };
 			ret
 		}
 		
@@ -7711,13 +7656,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniProjector_setPropA_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniProjector_propA_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniProjector_setPropB_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniProjector_propB_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
 			ret
 		}
 		
@@ -7750,8 +7695,7 @@ pub mod stitching {
 	impl Drop for Detail_PaniniProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PaniniProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PaniniProjector_delete(self.as_raw_mut_Detail_PaniniProjector()) };
+			unsafe { sys::cv_detail_PaniniProjector_delete(self.as_raw_mut_Detail_PaniniProjector()) };
 		}
 	}
 	
@@ -7776,7 +7720,7 @@ pub mod stitching {
 	impl Detail_PaniniProjector {
 	}
 	
-	boxed_cast_base! { Detail_PaniniProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_PaniniProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_PaniniProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PaniniProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_PaniniProjector {
 		#[inline]
@@ -7810,8 +7754,7 @@ pub mod stitching {
 	impl Drop for Detail_PaniniWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PaniniWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PaniniWarper_delete(self.as_raw_mut_Detail_PaniniWarper()) };
+			unsafe { sys::cv_detail_PaniniWarper_delete(self.as_raw_mut_Detail_PaniniWarper()) };
 		}
 	}
 	
@@ -7849,7 +7792,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_PaniniWarper, crate::stitching::Detail_RotationWarper, cv_Detail_PaniniWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_PaniniWarper, crate::stitching::Detail_RotationWarper, cv_detail_PaniniWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_PaniniWarper {
 		#[inline]
@@ -7898,8 +7841,7 @@ pub mod stitching {
 	impl Drop for Detail_PlanePortraitProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PlanePortraitProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PlanePortraitProjector_delete(self.as_raw_mut_Detail_PlanePortraitProjector()) };
+			unsafe { sys::cv_detail_PlanePortraitProjector_delete(self.as_raw_mut_Detail_PlanePortraitProjector()) };
 		}
 	}
 	
@@ -7924,7 +7866,7 @@ pub mod stitching {
 	impl Detail_PlanePortraitProjector {
 	}
 	
-	boxed_cast_base! { Detail_PlanePortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_PlanePortraitProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_PlanePortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PlanePortraitProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_PlanePortraitProjector {
 		#[inline]
@@ -7956,8 +7898,7 @@ pub mod stitching {
 	impl Drop for Detail_PlanePortraitWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PlanePortraitWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PlanePortraitWarper_delete(self.as_raw_mut_Detail_PlanePortraitWarper()) };
+			unsafe { sys::cv_detail_PlanePortraitWarper_delete(self.as_raw_mut_Detail_PlanePortraitWarper()) };
 		}
 	}
 	
@@ -7992,7 +7933,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_PlanePortraitWarper, crate::stitching::Detail_RotationWarper, cv_Detail_PlanePortraitWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_PlanePortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_PlanePortraitWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_PlanePortraitWarper {
 		#[inline]
@@ -8041,8 +7982,7 @@ pub mod stitching {
 	impl Drop for Detail_PlaneProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PlaneProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PlaneProjector_delete(self.as_raw_mut_Detail_PlaneProjector()) };
+			unsafe { sys::cv_detail_PlaneProjector_delete(self.as_raw_mut_Detail_PlaneProjector()) };
 		}
 	}
 	
@@ -8067,7 +8007,7 @@ pub mod stitching {
 	impl Detail_PlaneProjector {
 	}
 	
-	boxed_cast_base! { Detail_PlaneProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_PlaneProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_PlaneProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PlaneProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_PlaneProjector {
 		#[inline]
@@ -8223,8 +8163,7 @@ pub mod stitching {
 	impl Drop for Detail_PlaneWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PlaneWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PlaneWarper_delete(self.as_raw_mut_Detail_PlaneWarper()) };
+			unsafe { sys::cv_detail_PlaneWarper_delete(self.as_raw_mut_Detail_PlaneWarper()) };
 		}
 	}
 	
@@ -8266,11 +8205,11 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_AffineWarper, cv_Detail_PlaneWarper_to_Detail_AffineWarper }
+	boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_AffineWarper, cv_detail_PlaneWarper_to_Detail_AffineWarper }
 	
-	boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_PlaneWarperGpu, cv_Detail_PlaneWarper_to_Detail_PlaneWarperGpu }
+	boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_PlaneWarperGpu, cv_detail_PlaneWarper_to_Detail_PlaneWarperGpu }
 	
-	boxed_cast_base! { Detail_PlaneWarper, crate::stitching::Detail_RotationWarper, cv_Detail_PlaneWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_PlaneWarper, crate::stitching::Detail_RotationWarper, cv_detail_PlaneWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_PlaneWarper {
 		#[inline]
@@ -8401,8 +8340,7 @@ pub mod stitching {
 	impl Drop for Detail_PlaneWarperGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_PlaneWarperGpu_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_PlaneWarperGpu_delete(self.as_raw_mut_Detail_PlaneWarperGpu()) };
+			unsafe { sys::cv_detail_PlaneWarperGpu_delete(self.as_raw_mut_Detail_PlaneWarperGpu()) };
 		}
 	}
 	
@@ -8447,9 +8385,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_PlaneWarper, cv_Detail_PlaneWarperGpu_to_Detail_PlaneWarper }
+	boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_PlaneWarper, cv_detail_PlaneWarperGpu_to_Detail_PlaneWarper }
 	
-	boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_RotationWarper, cv_Detail_PlaneWarperGpu_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_RotationWarper, cv_detail_PlaneWarperGpu_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_PlaneWarperGpu {
 		#[inline]
@@ -8465,7 +8403,7 @@ pub mod stitching {
 	
 		#[inline]
 		fn scale(&self) -> f32 {
-			let ret = unsafe { sys::cv_detail_ProjectorBase_getPropScale_const(self.as_raw_Detail_ProjectorBase()) };
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propScale_const(self.as_raw_Detail_ProjectorBase()) };
 			ret
 		}
 		
@@ -8477,41 +8415,41 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_scale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_ProjectorBase_setPropScale_float(self.as_raw_mut_Detail_ProjectorBase(), val) };
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propScale_float(self.as_raw_mut_Detail_ProjectorBase(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn k(&mut self) -> &mut [f32; 9] {
-			let ret = unsafe { sys::cv_detail_ProjectorBase_getPropK(self.as_raw_mut_Detail_ProjectorBase()) };
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propK(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
 		
 		#[inline]
 		fn rinv(&mut self) -> &mut [f32; 9] {
-			let ret = unsafe { sys::cv_detail_ProjectorBase_getPropRinv(self.as_raw_mut_Detail_ProjectorBase()) };
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propRinv(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
 		
 		#[inline]
 		fn r_kinv(&mut self) -> &mut [f32; 9] {
-			let ret = unsafe { sys::cv_detail_ProjectorBase_getPropR_kinv(self.as_raw_mut_Detail_ProjectorBase()) };
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propR_kinv(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
 		
 		#[inline]
 		fn k_rinv(&mut self) -> &mut [f32; 9] {
-			let ret = unsafe { sys::cv_detail_ProjectorBase_getPropK_rinv(self.as_raw_mut_Detail_ProjectorBase()) };
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propK_rinv(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
 		
 		#[inline]
 		fn t(&mut self) -> &mut [f32; 3] {
-			let ret = unsafe { sys::cv_detail_ProjectorBase_getPropT(self.as_raw_mut_Detail_ProjectorBase()) };
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propT(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
@@ -8544,8 +8482,7 @@ pub mod stitching {
 	impl Drop for Detail_ProjectorBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_ProjectorBase_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_ProjectorBase_delete(self.as_raw_mut_Detail_ProjectorBase()) };
+			unsafe { sys::cv_detail_ProjectorBase_delete(self.as_raw_mut_Detail_ProjectorBase()) };
 		}
 	}
 	
@@ -8561,8 +8498,7 @@ pub mod stitching {
 	
 	impl Detail_ProjectorBase {
 		fn default() -> Self {
-			extern "C" { fn cv_Detail_ProjectorBase_defaultNew_const() -> extern_receive!(Detail_ProjectorBase: 'static); }
-			unsafe { Self::from_raw(cv_Detail_ProjectorBase_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_detail_ProjectorBase_defaultNew_const()) }
 		}
 		
 	}
@@ -8570,8 +8506,7 @@ pub mod stitching {
 	impl Clone for Detail_ProjectorBase {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Detail_ProjectorBase_implicitClone_const_Detail_ProjectorBase(val: extern_send!(Detail_ProjectorBase)) -> extern_receive!(Detail_ProjectorBase: 'static); }
-			unsafe { Self::from_raw(cv_Detail_ProjectorBase_implicitClone_const_Detail_ProjectorBase(self.as_raw_Detail_ProjectorBase())) }
+			unsafe { Self::from_raw(sys::cv_detail_ProjectorBase_implicitClone_const(self.as_raw_Detail_ProjectorBase())) }
 		}
 	}
 	
@@ -8749,8 +8684,7 @@ pub mod stitching {
 	impl Drop for Detail_RotationWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_RotationWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_RotationWarper_delete(self.as_raw_mut_Detail_RotationWarper()) };
+			unsafe { sys::cv_detail_RotationWarper_delete(self.as_raw_mut_Detail_RotationWarper()) };
 		}
 	}
 	
@@ -8812,8 +8746,7 @@ pub mod stitching {
 	impl Drop for Detail_SeamFinder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_SeamFinder_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_SeamFinder_delete(self.as_raw_mut_Detail_SeamFinder()) };
+			unsafe { sys::cv_detail_SeamFinder_delete(self.as_raw_mut_Detail_SeamFinder()) };
 		}
 	}
 	
@@ -8840,13 +8773,17 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_DpSeamFinder, cv_Detail_SeamFinder_to_Detail_DpSeamFinder }
+	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_DpSeamFinder, cv_detail_SeamFinder_to_Detail_DpSeamFinder }
 	
-	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_GraphCutSeamFinder, cv_Detail_SeamFinder_to_Detail_GraphCutSeamFinder }
+	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_GraphCutSeamFinder, cv_detail_SeamFinder_to_Detail_GraphCutSeamFinder }
 	
-	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_NoSeamFinder, cv_Detail_SeamFinder_to_Detail_NoSeamFinder }
+	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_GraphCutSeamFinderGpu, cv_detail_SeamFinder_to_Detail_GraphCutSeamFinderGpu }
 	
-	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_PairwiseSeamFinder, cv_Detail_SeamFinder_to_Detail_PairwiseSeamFinder }
+	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_NoSeamFinder, cv_detail_SeamFinder_to_Detail_NoSeamFinder }
+	
+	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_PairwiseSeamFinder, cv_detail_SeamFinder_to_Detail_PairwiseSeamFinder }
+	
+	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_VoronoiSeamFinder, cv_detail_SeamFinder_to_Detail_VoronoiSeamFinder }
 	
 	impl std::fmt::Debug for Detail_SeamFinder {
 		#[inline]
@@ -8895,8 +8832,7 @@ pub mod stitching {
 	impl Drop for Detail_SphericalPortraitProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_SphericalPortraitProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_SphericalPortraitProjector_delete(self.as_raw_mut_Detail_SphericalPortraitProjector()) };
+			unsafe { sys::cv_detail_SphericalPortraitProjector_delete(self.as_raw_mut_Detail_SphericalPortraitProjector()) };
 		}
 	}
 	
@@ -8921,7 +8857,7 @@ pub mod stitching {
 	impl Detail_SphericalPortraitProjector {
 	}
 	
-	boxed_cast_base! { Detail_SphericalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_SphericalPortraitProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_SphericalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_SphericalPortraitProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_SphericalPortraitProjector {
 		#[inline]
@@ -8953,8 +8889,7 @@ pub mod stitching {
 	impl Drop for Detail_SphericalPortraitWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_SphericalPortraitWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_SphericalPortraitWarper_delete(self.as_raw_mut_Detail_SphericalPortraitWarper()) };
+			unsafe { sys::cv_detail_SphericalPortraitWarper_delete(self.as_raw_mut_Detail_SphericalPortraitWarper()) };
 		}
 	}
 	
@@ -8989,7 +8924,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_SphericalPortraitWarper, crate::stitching::Detail_RotationWarper, cv_Detail_SphericalPortraitWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_SphericalPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_SphericalPortraitWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_SphericalPortraitWarper {
 		#[inline]
@@ -9038,8 +8973,7 @@ pub mod stitching {
 	impl Drop for Detail_SphericalProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_SphericalProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_SphericalProjector_delete(self.as_raw_mut_Detail_SphericalProjector()) };
+			unsafe { sys::cv_detail_SphericalProjector_delete(self.as_raw_mut_Detail_SphericalProjector()) };
 		}
 	}
 	
@@ -9063,8 +8997,7 @@ pub mod stitching {
 	
 	impl Detail_SphericalProjector {
 		fn default() -> Self {
-			extern "C" { fn cv_Detail_SphericalProjector_defaultNew_const() -> extern_receive!(Detail_SphericalProjector: 'static); }
-			unsafe { Self::from_raw(cv_Detail_SphericalProjector_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_detail_SphericalProjector_defaultNew_const()) }
 		}
 		
 	}
@@ -9072,12 +9005,11 @@ pub mod stitching {
 	impl Clone for Detail_SphericalProjector {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Detail_SphericalProjector_implicitClone_const_Detail_SphericalProjector(val: extern_send!(Detail_SphericalProjector)) -> extern_receive!(Detail_SphericalProjector: 'static); }
-			unsafe { Self::from_raw(cv_Detail_SphericalProjector_implicitClone_const_Detail_SphericalProjector(self.as_raw_Detail_SphericalProjector())) }
+			unsafe { Self::from_raw(sys::cv_detail_SphericalProjector_implicitClone_const(self.as_raw_Detail_SphericalProjector())) }
 		}
 	}
 	
-	boxed_cast_base! { Detail_SphericalProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_SphericalProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_SphericalProjector, crate::stitching::Detail_ProjectorBase, cv_detail_SphericalProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_SphericalProjector {
 		#[inline]
@@ -9148,8 +9080,7 @@ pub mod stitching {
 	impl Drop for Detail_SphericalWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_SphericalWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_SphericalWarper_delete(self.as_raw_mut_Detail_SphericalWarper()) };
+			unsafe { sys::cv_detail_SphericalWarper_delete(self.as_raw_mut_Detail_SphericalWarper()) };
 		}
 	}
 	
@@ -9189,9 +9120,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_descendant! { Detail_SphericalWarper, crate::stitching::Detail_SphericalWarperGpu, cv_Detail_SphericalWarper_to_Detail_SphericalWarperGpu }
+	boxed_cast_descendant! { Detail_SphericalWarper, crate::stitching::Detail_SphericalWarperGpu, cv_detail_SphericalWarper_to_Detail_SphericalWarperGpu }
 	
-	boxed_cast_base! { Detail_SphericalWarper, crate::stitching::Detail_RotationWarper, cv_Detail_SphericalWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_SphericalWarper, crate::stitching::Detail_RotationWarper, cv_detail_SphericalWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_SphericalWarper {
 		#[inline]
@@ -9270,8 +9201,7 @@ pub mod stitching {
 	impl Drop for Detail_SphericalWarperGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_SphericalWarperGpu_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_SphericalWarperGpu_delete(self.as_raw_mut_Detail_SphericalWarperGpu()) };
+			unsafe { sys::cv_detail_SphericalWarperGpu_delete(self.as_raw_mut_Detail_SphericalWarperGpu()) };
 		}
 	}
 	
@@ -9314,9 +9244,9 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_SphericalWarperGpu, crate::stitching::Detail_RotationWarper, cv_Detail_SphericalWarperGpu_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_SphericalWarperGpu, crate::stitching::Detail_RotationWarper, cv_detail_SphericalWarperGpu_to_Detail_RotationWarper }
 	
-	boxed_cast_base! { Detail_SphericalWarperGpu, crate::stitching::Detail_SphericalWarper, cv_Detail_SphericalWarperGpu_to_Detail_SphericalWarper }
+	boxed_cast_base! { Detail_SphericalWarperGpu, crate::stitching::Detail_SphericalWarper, cv_detail_SphericalWarperGpu_to_Detail_SphericalWarper }
 	
 	impl std::fmt::Debug for Detail_SphericalWarperGpu {
 		#[inline]
@@ -9365,8 +9295,7 @@ pub mod stitching {
 	impl Drop for Detail_StereographicProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_StereographicProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_StereographicProjector_delete(self.as_raw_mut_Detail_StereographicProjector()) };
+			unsafe { sys::cv_detail_StereographicProjector_delete(self.as_raw_mut_Detail_StereographicProjector()) };
 		}
 	}
 	
@@ -9391,7 +9320,7 @@ pub mod stitching {
 	impl Detail_StereographicProjector {
 	}
 	
-	boxed_cast_base! { Detail_StereographicProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_StereographicProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_StereographicProjector, crate::stitching::Detail_ProjectorBase, cv_detail_StereographicProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_StereographicProjector {
 		#[inline]
@@ -9423,8 +9352,7 @@ pub mod stitching {
 	impl Drop for Detail_StereographicWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_StereographicWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_StereographicWarper_delete(self.as_raw_mut_Detail_StereographicWarper()) };
+			unsafe { sys::cv_detail_StereographicWarper_delete(self.as_raw_mut_Detail_StereographicWarper()) };
 		}
 	}
 	
@@ -9459,7 +9387,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_StereographicWarper, crate::stitching::Detail_RotationWarper, cv_Detail_StereographicWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_StereographicWarper, crate::stitching::Detail_RotationWarper, cv_detail_StereographicWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_StereographicWarper {
 		#[inline]
@@ -9508,8 +9436,7 @@ pub mod stitching {
 	impl Drop for Detail_TransverseMercatorProjector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_TransverseMercatorProjector_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_TransverseMercatorProjector_delete(self.as_raw_mut_Detail_TransverseMercatorProjector()) };
+			unsafe { sys::cv_detail_TransverseMercatorProjector_delete(self.as_raw_mut_Detail_TransverseMercatorProjector()) };
 		}
 	}
 	
@@ -9534,7 +9461,7 @@ pub mod stitching {
 	impl Detail_TransverseMercatorProjector {
 	}
 	
-	boxed_cast_base! { Detail_TransverseMercatorProjector, crate::stitching::Detail_ProjectorBase, cv_Detail_TransverseMercatorProjector_to_Detail_ProjectorBase }
+	boxed_cast_base! { Detail_TransverseMercatorProjector, crate::stitching::Detail_ProjectorBase, cv_detail_TransverseMercatorProjector_to_Detail_ProjectorBase }
 	
 	impl std::fmt::Debug for Detail_TransverseMercatorProjector {
 		#[inline]
@@ -9566,8 +9493,7 @@ pub mod stitching {
 	impl Drop for Detail_TransverseMercatorWarper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_TransverseMercatorWarper_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_TransverseMercatorWarper_delete(self.as_raw_mut_Detail_TransverseMercatorWarper()) };
+			unsafe { sys::cv_detail_TransverseMercatorWarper_delete(self.as_raw_mut_Detail_TransverseMercatorWarper()) };
 		}
 	}
 	
@@ -9602,7 +9528,7 @@ pub mod stitching {
 		
 	}
 	
-	boxed_cast_base! { Detail_TransverseMercatorWarper, crate::stitching::Detail_RotationWarper, cv_Detail_TransverseMercatorWarper_to_Detail_RotationWarper }
+	boxed_cast_base! { Detail_TransverseMercatorWarper, crate::stitching::Detail_RotationWarper, cv_detail_TransverseMercatorWarper_to_Detail_RotationWarper }
 	
 	impl std::fmt::Debug for Detail_TransverseMercatorWarper {
 		#[inline]
@@ -9652,8 +9578,7 @@ pub mod stitching {
 	impl Drop for Detail_VoronoiSeamFinder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_VoronoiSeamFinder_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_VoronoiSeamFinder_delete(self.as_raw_mut_Detail_VoronoiSeamFinder()) };
+			unsafe { sys::cv_detail_VoronoiSeamFinder_delete(self.as_raw_mut_Detail_VoronoiSeamFinder()) };
 		}
 	}
 	
@@ -9686,9 +9611,9 @@ pub mod stitching {
 	impl Detail_VoronoiSeamFinder {
 	}
 	
-	boxed_cast_base! { Detail_VoronoiSeamFinder, crate::stitching::Detail_PairwiseSeamFinder, cv_Detail_VoronoiSeamFinder_to_Detail_PairwiseSeamFinder }
+	boxed_cast_base! { Detail_VoronoiSeamFinder, crate::stitching::Detail_PairwiseSeamFinder, cv_detail_VoronoiSeamFinder_to_Detail_PairwiseSeamFinder }
 	
-	boxed_cast_base! { Detail_VoronoiSeamFinder, crate::stitching::Detail_SeamFinder, cv_Detail_VoronoiSeamFinder_to_Detail_SeamFinder }
+	boxed_cast_base! { Detail_VoronoiSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_VoronoiSeamFinder_to_Detail_SeamFinder }
 	
 	impl std::fmt::Debug for Detail_VoronoiSeamFinder {
 		#[inline]

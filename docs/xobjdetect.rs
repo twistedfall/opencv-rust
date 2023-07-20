@@ -80,8 +80,7 @@ pub mod xobjdetect {
 	impl Drop for WBDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WBDetector_delete(instance: *mut c_void); }
-			unsafe { cv_WBDetector_delete(self.as_raw_mut_WBDetector()) };
+			unsafe { sys::cv_xobjdetect_WBDetector_delete(self.as_raw_mut_WBDetector()) };
 		}
 	}
 	

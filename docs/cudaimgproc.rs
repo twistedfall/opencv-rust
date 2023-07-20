@@ -925,8 +925,7 @@ pub mod cudaimgproc {
 	impl Drop for CUDA_CLAHE {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_CLAHE_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_CLAHE_delete(self.as_raw_mut_CUDA_CLAHE()) };
+			unsafe { sys::cv_cuda_CLAHE_delete(self.as_raw_mut_CUDA_CLAHE()) };
 		}
 	}
 	
@@ -959,9 +958,9 @@ pub mod cudaimgproc {
 	impl CUDA_CLAHE {
 	}
 	
-	boxed_cast_base! { CUDA_CLAHE, core::Algorithm, cv_CUDA_CLAHE_to_Algorithm }
+	boxed_cast_base! { CUDA_CLAHE, core::Algorithm, cv_cuda_CLAHE_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_CLAHE, crate::imgproc::CLAHE, cv_CUDA_CLAHE_to_CLAHE }
+	boxed_cast_base! { CUDA_CLAHE, crate::imgproc::CLAHE, cv_cuda_CLAHE_to_CLAHE }
 	
 	impl std::fmt::Debug for CUDA_CLAHE {
 		#[inline]
@@ -1113,8 +1112,7 @@ pub mod cudaimgproc {
 	impl Drop for CUDA_CannyEdgeDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_CannyEdgeDetector_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_CannyEdgeDetector_delete(self.as_raw_mut_CUDA_CannyEdgeDetector()) };
+			unsafe { sys::cv_cuda_CannyEdgeDetector_delete(self.as_raw_mut_CUDA_CannyEdgeDetector()) };
 		}
 	}
 	
@@ -1139,7 +1137,7 @@ pub mod cudaimgproc {
 	impl CUDA_CannyEdgeDetector {
 	}
 	
-	boxed_cast_base! { CUDA_CannyEdgeDetector, core::Algorithm, cv_CUDA_CannyEdgeDetector_to_Algorithm }
+	boxed_cast_base! { CUDA_CannyEdgeDetector, core::Algorithm, cv_cuda_CannyEdgeDetector_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_CannyEdgeDetector {
 		#[inline]
@@ -1192,8 +1190,7 @@ pub mod cudaimgproc {
 	impl Drop for CUDA_CornernessCriteria {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_CornernessCriteria_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_CornernessCriteria_delete(self.as_raw_mut_CUDA_CornernessCriteria()) };
+			unsafe { sys::cv_cuda_CornernessCriteria_delete(self.as_raw_mut_CUDA_CornernessCriteria()) };
 		}
 	}
 	
@@ -1218,7 +1215,7 @@ pub mod cudaimgproc {
 	impl CUDA_CornernessCriteria {
 	}
 	
-	boxed_cast_base! { CUDA_CornernessCriteria, core::Algorithm, cv_CUDA_CornernessCriteria_to_Algorithm }
+	boxed_cast_base! { CUDA_CornernessCriteria, core::Algorithm, cv_cuda_CornernessCriteria_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_CornernessCriteria {
 		#[inline]
@@ -1275,8 +1272,7 @@ pub mod cudaimgproc {
 	impl Drop for CUDA_CornersDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_CornersDetector_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_CornersDetector_delete(self.as_raw_mut_CUDA_CornersDetector()) };
+			unsafe { sys::cv_cuda_CornersDetector_delete(self.as_raw_mut_CUDA_CornersDetector()) };
 		}
 	}
 	
@@ -1301,7 +1297,7 @@ pub mod cudaimgproc {
 	impl CUDA_CornersDetector {
 	}
 	
-	boxed_cast_base! { CUDA_CornersDetector, core::Algorithm, cv_CUDA_CornersDetector_to_Algorithm }
+	boxed_cast_base! { CUDA_CornersDetector, core::Algorithm, cv_cuda_CornersDetector_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_CornersDetector {
 		#[inline]
@@ -1482,8 +1478,7 @@ pub mod cudaimgproc {
 	impl Drop for CUDA_HoughCirclesDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_HoughCirclesDetector_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_HoughCirclesDetector_delete(self.as_raw_mut_CUDA_HoughCirclesDetector()) };
+			unsafe { sys::cv_cuda_HoughCirclesDetector_delete(self.as_raw_mut_CUDA_HoughCirclesDetector()) };
 		}
 	}
 	
@@ -1508,7 +1503,7 @@ pub mod cudaimgproc {
 	impl CUDA_HoughCirclesDetector {
 	}
 	
-	boxed_cast_base! { CUDA_HoughCirclesDetector, core::Algorithm, cv_CUDA_HoughCirclesDetector_to_Algorithm }
+	boxed_cast_base! { CUDA_HoughCirclesDetector, core::Algorithm, cv_cuda_HoughCirclesDetector_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_HoughCirclesDetector {
 		#[inline]
@@ -1678,8 +1673,7 @@ pub mod cudaimgproc {
 	impl Drop for CUDA_HoughLinesDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_HoughLinesDetector_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_HoughLinesDetector_delete(self.as_raw_mut_CUDA_HoughLinesDetector()) };
+			unsafe { sys::cv_cuda_HoughLinesDetector_delete(self.as_raw_mut_CUDA_HoughLinesDetector()) };
 		}
 	}
 	
@@ -1704,7 +1698,7 @@ pub mod cudaimgproc {
 	impl CUDA_HoughLinesDetector {
 	}
 	
-	boxed_cast_base! { CUDA_HoughLinesDetector, core::Algorithm, cv_CUDA_HoughLinesDetector_to_Algorithm }
+	boxed_cast_base! { CUDA_HoughLinesDetector, core::Algorithm, cv_cuda_HoughLinesDetector_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_HoughLinesDetector {
 		#[inline]
@@ -1868,8 +1862,7 @@ pub mod cudaimgproc {
 	impl Drop for CUDA_HoughSegmentDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_HoughSegmentDetector_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_HoughSegmentDetector_delete(self.as_raw_mut_CUDA_HoughSegmentDetector()) };
+			unsafe { sys::cv_cuda_HoughSegmentDetector_delete(self.as_raw_mut_CUDA_HoughSegmentDetector()) };
 		}
 	}
 	
@@ -1894,7 +1887,7 @@ pub mod cudaimgproc {
 	impl CUDA_HoughSegmentDetector {
 	}
 	
-	boxed_cast_base! { CUDA_HoughSegmentDetector, core::Algorithm, cv_CUDA_HoughSegmentDetector_to_Algorithm }
+	boxed_cast_base! { CUDA_HoughSegmentDetector, core::Algorithm, cv_cuda_HoughSegmentDetector_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_HoughSegmentDetector {
 		#[inline]
@@ -1949,8 +1942,7 @@ pub mod cudaimgproc {
 	impl Drop for CUDA_TemplateMatching {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_TemplateMatching_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_TemplateMatching_delete(self.as_raw_mut_CUDA_TemplateMatching()) };
+			unsafe { sys::cv_cuda_TemplateMatching_delete(self.as_raw_mut_CUDA_TemplateMatching()) };
 		}
 	}
 	
@@ -1975,7 +1967,7 @@ pub mod cudaimgproc {
 	impl CUDA_TemplateMatching {
 	}
 	
-	boxed_cast_base! { CUDA_TemplateMatching, core::Algorithm, cv_CUDA_TemplateMatching_to_Algorithm }
+	boxed_cast_base! { CUDA_TemplateMatching, core::Algorithm, cv_cuda_TemplateMatching_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_TemplateMatching {
 		#[inline]

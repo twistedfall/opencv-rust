@@ -986,8 +986,7 @@ pub mod photo {
 	impl Drop for AlignExposures {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AlignExposures_delete(instance: *mut c_void); }
-			unsafe { cv_AlignExposures_delete(self.as_raw_mut_AlignExposures()) };
+			unsafe { sys::cv_AlignExposures_delete(self.as_raw_mut_AlignExposures()) };
 		}
 	}
 	
@@ -1186,8 +1185,7 @@ pub mod photo {
 	impl Drop for AlignMTB {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AlignMTB_delete(instance: *mut c_void); }
-			unsafe { cv_AlignMTB_delete(self.as_raw_mut_AlignMTB()) };
+			unsafe { sys::cv_AlignMTB_delete(self.as_raw_mut_AlignMTB()) };
 		}
 	}
 	
@@ -1272,8 +1270,7 @@ pub mod photo {
 	impl Drop for CalibrateCRF {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CalibrateCRF_delete(instance: *mut c_void); }
-			unsafe { cv_CalibrateCRF_delete(self.as_raw_mut_CalibrateCRF()) };
+			unsafe { sys::cv_CalibrateCRF_delete(self.as_raw_mut_CalibrateCRF()) };
 		}
 	}
 	
@@ -1392,8 +1389,7 @@ pub mod photo {
 	impl Drop for CalibrateDebevec {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CalibrateDebevec_delete(instance: *mut c_void); }
-			unsafe { cv_CalibrateDebevec_delete(self.as_raw_mut_CalibrateDebevec()) };
+			unsafe { sys::cv_CalibrateDebevec_delete(self.as_raw_mut_CalibrateDebevec()) };
 		}
 	}
 	
@@ -1509,8 +1505,7 @@ pub mod photo {
 	impl Drop for CalibrateRobertson {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CalibrateRobertson_delete(instance: *mut c_void); }
-			unsafe { cv_CalibrateRobertson_delete(self.as_raw_mut_CalibrateRobertson()) };
+			unsafe { sys::cv_CalibrateRobertson_delete(self.as_raw_mut_CalibrateRobertson()) };
 		}
 	}
 	
@@ -1605,8 +1600,7 @@ pub mod photo {
 	impl Drop for MergeDebevec {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MergeDebevec_delete(instance: *mut c_void); }
-			unsafe { cv_MergeDebevec_delete(self.as_raw_mut_MergeDebevec()) };
+			unsafe { sys::cv_MergeDebevec_delete(self.as_raw_mut_MergeDebevec()) };
 		}
 	}
 	
@@ -1694,8 +1688,7 @@ pub mod photo {
 	impl Drop for MergeExposures {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MergeExposures_delete(instance: *mut c_void); }
-			unsafe { cv_MergeExposures_delete(self.as_raw_mut_MergeExposures()) };
+			unsafe { sys::cv_MergeExposures_delete(self.as_raw_mut_MergeExposures()) };
 		}
 	}
 	
@@ -1850,8 +1843,7 @@ pub mod photo {
 	impl Drop for MergeMertens {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MergeMertens_delete(instance: *mut c_void); }
-			unsafe { cv_MergeMertens_delete(self.as_raw_mut_MergeMertens()) };
+			unsafe { sys::cv_MergeMertens_delete(self.as_raw_mut_MergeMertens()) };
 		}
 	}
 	
@@ -1946,8 +1938,7 @@ pub mod photo {
 	impl Drop for MergeRobertson {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MergeRobertson_delete(instance: *mut c_void); }
-			unsafe { cv_MergeRobertson_delete(self.as_raw_mut_MergeRobertson()) };
+			unsafe { sys::cv_MergeRobertson_delete(self.as_raw_mut_MergeRobertson()) };
 		}
 	}
 	
@@ -2048,8 +2039,7 @@ pub mod photo {
 	impl Drop for Tonemap {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Tonemap_delete(instance: *mut c_void); }
-			unsafe { cv_Tonemap_delete(self.as_raw_mut_Tonemap()) };
+			unsafe { sys::cv_Tonemap_delete(self.as_raw_mut_Tonemap()) };
 		}
 	}
 	
@@ -2156,8 +2146,7 @@ pub mod photo {
 	impl Drop for TonemapDrago {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TonemapDrago_delete(instance: *mut c_void); }
-			unsafe { cv_TonemapDrago_delete(self.as_raw_mut_TonemapDrago()) };
+			unsafe { sys::cv_TonemapDrago_delete(self.as_raw_mut_TonemapDrago()) };
 		}
 	}
 	
@@ -2264,8 +2253,7 @@ pub mod photo {
 	impl Drop for TonemapMantiuk {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TonemapMantiuk_delete(instance: *mut c_void); }
-			unsafe { cv_TonemapMantiuk_delete(self.as_raw_mut_TonemapMantiuk()) };
+			unsafe { sys::cv_TonemapMantiuk_delete(self.as_raw_mut_TonemapMantiuk()) };
 		}
 	}
 	
@@ -2391,8 +2379,7 @@ pub mod photo {
 	impl Drop for TonemapReinhard {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TonemapReinhard_delete(instance: *mut c_void); }
-			unsafe { cv_TonemapReinhard_delete(self.as_raw_mut_TonemapReinhard()) };
+			unsafe { sys::cv_TonemapReinhard_delete(self.as_raw_mut_TonemapReinhard()) };
 		}
 	}
 	

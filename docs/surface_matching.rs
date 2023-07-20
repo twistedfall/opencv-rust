@@ -439,8 +439,7 @@ pub mod surface_matching {
 	impl Drop for ICP {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ICP_delete(instance: *mut c_void); }
-			unsafe { cv_ICP_delete(self.as_raw_mut_ICP()) };
+			unsafe { sys::cv_ppf_match_3d_ICP_delete(self.as_raw_mut_ICP()) };
 		}
 	}
 	
@@ -592,8 +591,7 @@ pub mod surface_matching {
 	impl Drop for PPF3DDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PPF3DDetector_delete(instance: *mut c_void); }
-			unsafe { cv_PPF3DDetector_delete(self.as_raw_mut_PPF3DDetector()) };
+			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_delete(self.as_raw_mut_PPF3DDetector()) };
 		}
 	}
 	
@@ -654,46 +652,46 @@ pub mod surface_matching {
 	
 		#[inline]
 		fn alpha(&self) -> f64 {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_getPropAlpha_const(self.as_raw_Pose3D()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAlpha_const(self.as_raw_Pose3D()) };
 			ret
 		}
 		
 		#[inline]
 		fn residual(&self) -> f64 {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_getPropResidual_const(self.as_raw_Pose3D()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propResidual_const(self.as_raw_Pose3D()) };
 			ret
 		}
 		
 		#[inline]
 		fn model_index(&self) -> size_t {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_getPropModelIndex_const(self.as_raw_Pose3D()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propModelIndex_const(self.as_raw_Pose3D()) };
 			ret
 		}
 		
 		#[inline]
 		fn num_votes(&self) -> size_t {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_getPropNumVotes_const(self.as_raw_Pose3D()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propNumVotes_const(self.as_raw_Pose3D()) };
 			ret
 		}
 		
 		#[inline]
 		fn pose(&self) -> core::Matx44d {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_Pose3D_getPropPose_const(self.as_raw_Pose3D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ppf_match_3d_Pose3D_propPose_const(self.as_raw_Pose3D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn angle(&self) -> f64 {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_getPropAngle_const(self.as_raw_Pose3D()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAngle_const(self.as_raw_Pose3D()) };
 			ret
 		}
 		
 		#[inline]
 		fn t(&self) -> core::Vec3d {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_Pose3D_getPropT_const(self.as_raw_Pose3D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ppf_match_3d_Pose3D_propT_const(self.as_raw_Pose3D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -701,7 +699,7 @@ pub mod surface_matching {
 		#[inline]
 		fn q(&self) -> core::Vec4d {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_Pose3D_getPropQ_const(self.as_raw_Pose3D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ppf_match_3d_Pose3D_propQ_const(self.as_raw_Pose3D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -714,49 +712,49 @@ pub mod surface_matching {
 	
 		#[inline]
 		fn set_alpha(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_setPropAlpha_double(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAlpha_double(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_residual(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_setPropResidual_double(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propResidual_double(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_model_index(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_setPropModelIndex_size_t(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propModelIndex_size_t(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_votes(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_setPropNumVotes_size_t(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propNumVotes_size_t(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pose(&mut self, val: core::Matx44d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_setPropPose_Matx44d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propPose_Matx44d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_angle(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_setPropAngle_double(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAngle_double(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_t(&mut self, val: core::Vec3d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_setPropT_Vec3d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propT_Vec3d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_q(&mut self, val: core::Vec4d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_setPropQ_Vec4d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propQ_Vec4d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -855,8 +853,7 @@ pub mod surface_matching {
 	impl Drop for Pose3D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Pose3D_delete(instance: *mut c_void); }
-			unsafe { cv_Pose3D_delete(self.as_raw_mut_Pose3D()) };
+			unsafe { sys::cv_ppf_match_3d_Pose3D_delete(self.as_raw_mut_Pose3D()) };
 		}
 	}
 	
@@ -918,20 +915,20 @@ pub mod surface_matching {
 	
 		#[inline]
 		fn pose_list(&self) -> core::Vector<crate::surface_matching::Pose3DPtr> {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_getPropPoseList_const(self.as_raw_PoseCluster3D()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propPoseList_const(self.as_raw_PoseCluster3D()) };
 			let ret = unsafe { core::Vector::<crate::surface_matching::Pose3DPtr>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn num_votes(&self) -> size_t {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_getPropNumVotes_const(self.as_raw_PoseCluster3D()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propNumVotes_const(self.as_raw_PoseCluster3D()) };
 			ret
 		}
 		
 		#[inline]
 		fn id(&self) -> i32 {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_getPropId_const(self.as_raw_PoseCluster3D()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propId_const(self.as_raw_PoseCluster3D()) };
 			ret
 		}
 		
@@ -943,19 +940,19 @@ pub mod surface_matching {
 	
 		#[inline]
 		fn set_pose_list(&mut self, mut val: core::Vector<crate::surface_matching::Pose3DPtr>) {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setPropPoseList_vectorLPose3DPtrG(self.as_raw_mut_PoseCluster3D(), val.as_raw_mut_VectorOfPose3DPtr()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propPoseList_vectorLPose3DPtrG(self.as_raw_mut_PoseCluster3D(), val.as_raw_mut_VectorOfPose3DPtr()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_votes(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setPropNumVotes_size_t(self.as_raw_mut_PoseCluster3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propNumVotes_size_t(self.as_raw_mut_PoseCluster3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setPropId_int(self.as_raw_mut_PoseCluster3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propId_int(self.as_raw_mut_PoseCluster3D(), val) };
 			ret
 		}
 		
@@ -1005,8 +1002,7 @@ pub mod surface_matching {
 	impl Drop for PoseCluster3D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PoseCluster3D_delete(instance: *mut c_void); }
-			unsafe { cv_PoseCluster3D_delete(self.as_raw_mut_PoseCluster3D()) };
+			unsafe { sys::cv_ppf_match_3d_PoseCluster3D_delete(self.as_raw_mut_PoseCluster3D()) };
 		}
 	}
 	

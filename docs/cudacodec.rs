@@ -500,8 +500,7 @@ pub mod cudacodec {
 	impl Drop for CUDA_EncoderCallback {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_EncoderCallback_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_EncoderCallback_delete(self.as_raw_mut_CUDA_EncoderCallback()) };
+			unsafe { sys::cv_cudacodec_EncoderCallback_delete(self.as_raw_mut_CUDA_EncoderCallback()) };
 		}
 	}
 	
@@ -708,8 +707,7 @@ pub mod cudacodec {
 	impl Drop for CUDA_RawVideoSource {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_RawVideoSource_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_RawVideoSource_delete(self.as_raw_mut_CUDA_RawVideoSource()) };
+			unsafe { sys::cv_cudacodec_RawVideoSource_delete(self.as_raw_mut_CUDA_RawVideoSource()) };
 		}
 	}
 	
@@ -975,8 +973,7 @@ pub mod cudacodec {
 	impl Drop for CUDA_VideoReader {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_VideoReader_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_VideoReader_delete(self.as_raw_mut_CUDA_VideoReader()) };
+			unsafe { sys::cv_cudacodec_VideoReader_delete(self.as_raw_mut_CUDA_VideoReader()) };
 		}
 	}
 	
@@ -1110,8 +1107,7 @@ pub mod cudacodec {
 	impl Drop for CUDA_VideoWriter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_VideoWriter_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_VideoWriter_delete(self.as_raw_mut_CUDA_VideoWriter()) };
+			unsafe { sys::cv_cudacodec_VideoWriter_delete(self.as_raw_mut_CUDA_VideoWriter()) };
 		}
 	}
 	

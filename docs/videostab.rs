@@ -201,8 +201,7 @@ pub mod videostab {
 	impl Drop for ColorAverageInpainter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ColorAverageInpainter_delete(instance: *mut c_void); }
-			unsafe { cv_ColorAverageInpainter_delete(self.as_raw_mut_ColorAverageInpainter()) };
+			unsafe { sys::cv_videostab_ColorAverageInpainter_delete(self.as_raw_mut_ColorAverageInpainter()) };
 		}
 	}
 	
@@ -227,7 +226,7 @@ pub mod videostab {
 	impl ColorAverageInpainter {
 	}
 	
-	boxed_cast_base! { ColorAverageInpainter, crate::videostab::InpainterBase, cv_ColorAverageInpainter_to_InpainterBase }
+	boxed_cast_base! { ColorAverageInpainter, crate::videostab::InpainterBase, cv_videostab_ColorAverageInpainter_to_InpainterBase }
 	
 	impl std::fmt::Debug for ColorAverageInpainter {
 		#[inline]
@@ -267,8 +266,7 @@ pub mod videostab {
 	impl Drop for ColorInpainter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ColorInpainter_delete(instance: *mut c_void); }
-			unsafe { cv_ColorInpainter_delete(self.as_raw_mut_ColorInpainter()) };
+			unsafe { sys::cv_videostab_ColorInpainter_delete(self.as_raw_mut_ColorInpainter()) };
 		}
 	}
 	
@@ -306,7 +304,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { ColorInpainter, crate::videostab::InpainterBase, cv_ColorInpainter_to_InpainterBase }
+	boxed_cast_base! { ColorInpainter, crate::videostab::InpainterBase, cv_videostab_ColorInpainter_to_InpainterBase }
 	
 	impl std::fmt::Debug for ColorInpainter {
 		#[inline]
@@ -364,8 +362,7 @@ pub mod videostab {
 	impl Drop for ConsistentMosaicInpainter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ConsistentMosaicInpainter_delete(instance: *mut c_void); }
-			unsafe { cv_ConsistentMosaicInpainter_delete(self.as_raw_mut_ConsistentMosaicInpainter()) };
+			unsafe { sys::cv_videostab_ConsistentMosaicInpainter_delete(self.as_raw_mut_ConsistentMosaicInpainter()) };
 		}
 	}
 	
@@ -400,7 +397,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { ConsistentMosaicInpainter, crate::videostab::InpainterBase, cv_ConsistentMosaicInpainter_to_InpainterBase }
+	boxed_cast_base! { ConsistentMosaicInpainter, crate::videostab::InpainterBase, cv_videostab_ConsistentMosaicInpainter_to_InpainterBase }
 	
 	impl std::fmt::Debug for ConsistentMosaicInpainter {
 		#[inline]
@@ -515,8 +512,7 @@ pub mod videostab {
 	impl Drop for DeblurerBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DeblurerBase_delete(instance: *mut c_void); }
-			unsafe { cv_DeblurerBase_delete(self.as_raw_mut_DeblurerBase()) };
+			unsafe { sys::cv_videostab_DeblurerBase_delete(self.as_raw_mut_DeblurerBase()) };
 		}
 	}
 	
@@ -533,9 +529,9 @@ pub mod videostab {
 	impl DeblurerBase {
 	}
 	
-	boxed_cast_descendant! { DeblurerBase, crate::videostab::NullDeblurer, cv_DeblurerBase_to_NullDeblurer }
+	boxed_cast_descendant! { DeblurerBase, crate::videostab::NullDeblurer, cv_videostab_DeblurerBase_to_NullDeblurer }
 	
-	boxed_cast_descendant! { DeblurerBase, crate::videostab::WeightingDeblurer, cv_DeblurerBase_to_WeightingDeblurer }
+	boxed_cast_descendant! { DeblurerBase, crate::videostab::WeightingDeblurer, cv_videostab_DeblurerBase_to_WeightingDeblurer }
 	
 	impl std::fmt::Debug for DeblurerBase {
 		#[inline]
@@ -580,8 +576,7 @@ pub mod videostab {
 	impl Drop for DensePyrLkOptFlowEstimatorGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DensePyrLkOptFlowEstimatorGpu_delete(instance: *mut c_void); }
-			unsafe { cv_DensePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_DensePyrLkOptFlowEstimatorGpu()) };
+			unsafe { sys::cv_videostab_DensePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_DensePyrLkOptFlowEstimatorGpu()) };
 		}
 	}
 	
@@ -624,9 +619,9 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::IDenseOptFlowEstimator, cv_DensePyrLkOptFlowEstimatorGpu_to_IDenseOptFlowEstimator }
+	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::IDenseOptFlowEstimator, cv_videostab_DensePyrLkOptFlowEstimatorGpu_to_IDenseOptFlowEstimator }
 	
-	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_DensePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
+	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_videostab_DensePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
 	
 	impl std::fmt::Debug for DensePyrLkOptFlowEstimatorGpu {
 		#[inline]
@@ -672,8 +667,7 @@ pub mod videostab {
 	impl Drop for FastMarchingMethod {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FastMarchingMethod_delete(instance: *mut c_void); }
-			unsafe { cv_FastMarchingMethod_delete(self.as_raw_mut_FastMarchingMethod()) };
+			unsafe { sys::cv_videostab_FastMarchingMethod_delete(self.as_raw_mut_FastMarchingMethod()) };
 		}
 	}
 	
@@ -741,8 +735,7 @@ pub mod videostab {
 	impl Drop for FromFileMotionReader {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FromFileMotionReader_delete(instance: *mut c_void); }
-			unsafe { cv_FromFileMotionReader_delete(self.as_raw_mut_FromFileMotionReader()) };
+			unsafe { sys::cv_videostab_FromFileMotionReader_delete(self.as_raw_mut_FromFileMotionReader()) };
 		}
 	}
 	
@@ -778,7 +771,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { FromFileMotionReader, crate::videostab::ImageMotionEstimatorBase, cv_FromFileMotionReader_to_ImageMotionEstimatorBase }
+	boxed_cast_base! { FromFileMotionReader, crate::videostab::ImageMotionEstimatorBase, cv_videostab_FromFileMotionReader_to_ImageMotionEstimatorBase }
 	
 	impl std::fmt::Debug for FromFileMotionReader {
 		#[inline]
@@ -848,8 +841,7 @@ pub mod videostab {
 	impl Drop for GaussianMotionFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GaussianMotionFilter_delete(instance: *mut c_void); }
-			unsafe { cv_GaussianMotionFilter_delete(self.as_raw_mut_GaussianMotionFilter()) };
+			unsafe { sys::cv_videostab_GaussianMotionFilter_delete(self.as_raw_mut_GaussianMotionFilter()) };
 		}
 	}
 	
@@ -895,9 +887,9 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { GaussianMotionFilter, crate::videostab::IMotionStabilizer, cv_GaussianMotionFilter_to_IMotionStabilizer }
+	boxed_cast_base! { GaussianMotionFilter, crate::videostab::IMotionStabilizer, cv_videostab_GaussianMotionFilter_to_IMotionStabilizer }
 	
-	boxed_cast_base! { GaussianMotionFilter, crate::videostab::MotionFilterBase, cv_GaussianMotionFilter_to_MotionFilterBase }
+	boxed_cast_base! { GaussianMotionFilter, crate::videostab::MotionFilterBase, cv_videostab_GaussianMotionFilter_to_MotionFilterBase }
 	
 	impl std::fmt::Debug for GaussianMotionFilter {
 		#[inline]
@@ -942,8 +934,7 @@ pub mod videostab {
 	impl Drop for IDenseOptFlowEstimator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_IDenseOptFlowEstimator_delete(instance: *mut c_void); }
-			unsafe { cv_IDenseOptFlowEstimator_delete(self.as_raw_mut_IDenseOptFlowEstimator()) };
+			unsafe { sys::cv_videostab_IDenseOptFlowEstimator_delete(self.as_raw_mut_IDenseOptFlowEstimator()) };
 		}
 	}
 	
@@ -960,7 +951,7 @@ pub mod videostab {
 	impl IDenseOptFlowEstimator {
 	}
 	
-	boxed_cast_descendant! { IDenseOptFlowEstimator, crate::videostab::DensePyrLkOptFlowEstimatorGpu, cv_IDenseOptFlowEstimator_to_DensePyrLkOptFlowEstimatorGpu }
+	boxed_cast_descendant! { IDenseOptFlowEstimator, crate::videostab::DensePyrLkOptFlowEstimatorGpu, cv_videostab_IDenseOptFlowEstimator_to_DensePyrLkOptFlowEstimatorGpu }
 	
 	impl std::fmt::Debug for IDenseOptFlowEstimator {
 		#[inline]
@@ -1010,8 +1001,7 @@ pub mod videostab {
 	impl Drop for IFrameSource {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_IFrameSource_delete(instance: *mut c_void); }
-			unsafe { cv_IFrameSource_delete(self.as_raw_mut_IFrameSource()) };
+			unsafe { sys::cv_videostab_IFrameSource_delete(self.as_raw_mut_IFrameSource()) };
 		}
 	}
 	
@@ -1028,15 +1018,15 @@ pub mod videostab {
 	impl IFrameSource {
 	}
 	
-	boxed_cast_descendant! { IFrameSource, crate::videostab::MaskFrameSource, cv_IFrameSource_to_MaskFrameSource }
+	boxed_cast_descendant! { IFrameSource, crate::videostab::MaskFrameSource, cv_videostab_IFrameSource_to_MaskFrameSource }
 	
-	boxed_cast_descendant! { IFrameSource, crate::videostab::NullFrameSource, cv_IFrameSource_to_NullFrameSource }
+	boxed_cast_descendant! { IFrameSource, crate::videostab::NullFrameSource, cv_videostab_IFrameSource_to_NullFrameSource }
 	
-	boxed_cast_descendant! { IFrameSource, crate::videostab::OnePassStabilizer, cv_IFrameSource_to_OnePassStabilizer }
+	boxed_cast_descendant! { IFrameSource, crate::videostab::OnePassStabilizer, cv_videostab_IFrameSource_to_OnePassStabilizer }
 	
-	boxed_cast_descendant! { IFrameSource, crate::videostab::TwoPassStabilizer, cv_IFrameSource_to_TwoPassStabilizer }
+	boxed_cast_descendant! { IFrameSource, crate::videostab::TwoPassStabilizer, cv_videostab_IFrameSource_to_TwoPassStabilizer }
 	
-	boxed_cast_descendant! { IFrameSource, crate::videostab::VideoFileSource, cv_IFrameSource_to_VideoFileSource }
+	boxed_cast_descendant! { IFrameSource, crate::videostab::VideoFileSource, cv_videostab_IFrameSource_to_VideoFileSource }
 	
 	impl std::fmt::Debug for IFrameSource {
 		#[inline]
@@ -1077,8 +1067,7 @@ pub mod videostab {
 	impl Drop for ILog {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ILog_delete(instance: *mut c_void); }
-			unsafe { cv_ILog_delete(self.as_raw_mut_ILog()) };
+			unsafe { sys::cv_videostab_ILog_delete(self.as_raw_mut_ILog()) };
 		}
 	}
 	
@@ -1095,9 +1084,9 @@ pub mod videostab {
 	impl ILog {
 	}
 	
-	boxed_cast_descendant! { ILog, crate::videostab::LogToStdout, cv_ILog_to_LogToStdout }
+	boxed_cast_descendant! { ILog, crate::videostab::LogToStdout, cv_videostab_ILog_to_LogToStdout }
 	
-	boxed_cast_descendant! { ILog, crate::videostab::NullLog, cv_ILog_to_NullLog }
+	boxed_cast_descendant! { ILog, crate::videostab::NullLog, cv_videostab_ILog_to_NullLog }
 	
 	impl std::fmt::Debug for ILog {
 		#[inline]
@@ -1138,8 +1127,7 @@ pub mod videostab {
 	impl Drop for IMotionStabilizer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_IMotionStabilizer_delete(instance: *mut c_void); }
-			unsafe { cv_IMotionStabilizer_delete(self.as_raw_mut_IMotionStabilizer()) };
+			unsafe { sys::cv_videostab_IMotionStabilizer_delete(self.as_raw_mut_IMotionStabilizer()) };
 		}
 	}
 	
@@ -1156,11 +1144,13 @@ pub mod videostab {
 	impl IMotionStabilizer {
 	}
 	
-	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::LpMotionStabilizer, cv_IMotionStabilizer_to_LpMotionStabilizer }
+	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::GaussianMotionFilter, cv_videostab_IMotionStabilizer_to_GaussianMotionFilter }
 	
-	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionFilterBase, cv_IMotionStabilizer_to_MotionFilterBase }
+	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::LpMotionStabilizer, cv_videostab_IMotionStabilizer_to_LpMotionStabilizer }
 	
-	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionStabilizationPipeline, cv_IMotionStabilizer_to_MotionStabilizationPipeline }
+	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionFilterBase, cv_videostab_IMotionStabilizer_to_MotionFilterBase }
+	
+	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionStabilizationPipeline, cv_videostab_IMotionStabilizer_to_MotionStabilizationPipeline }
 	
 	impl std::fmt::Debug for IMotionStabilizer {
 		#[inline]
@@ -1203,8 +1193,7 @@ pub mod videostab {
 	impl Drop for IOutlierRejector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_IOutlierRejector_delete(instance: *mut c_void); }
-			unsafe { cv_IOutlierRejector_delete(self.as_raw_mut_IOutlierRejector()) };
+			unsafe { sys::cv_videostab_IOutlierRejector_delete(self.as_raw_mut_IOutlierRejector()) };
 		}
 	}
 	
@@ -1221,9 +1210,9 @@ pub mod videostab {
 	impl IOutlierRejector {
 	}
 	
-	boxed_cast_descendant! { IOutlierRejector, crate::videostab::NullOutlierRejector, cv_IOutlierRejector_to_NullOutlierRejector }
+	boxed_cast_descendant! { IOutlierRejector, crate::videostab::NullOutlierRejector, cv_videostab_IOutlierRejector_to_NullOutlierRejector }
 	
-	boxed_cast_descendant! { IOutlierRejector, crate::videostab::TranslationBasedLocalOutlierRejector, cv_IOutlierRejector_to_TranslationBasedLocalOutlierRejector }
+	boxed_cast_descendant! { IOutlierRejector, crate::videostab::TranslationBasedLocalOutlierRejector, cv_videostab_IOutlierRejector_to_TranslationBasedLocalOutlierRejector }
 	
 	impl std::fmt::Debug for IOutlierRejector {
 		#[inline]
@@ -1269,8 +1258,7 @@ pub mod videostab {
 	impl Drop for ISparseOptFlowEstimator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ISparseOptFlowEstimator_delete(instance: *mut c_void); }
-			unsafe { cv_ISparseOptFlowEstimator_delete(self.as_raw_mut_ISparseOptFlowEstimator()) };
+			unsafe { sys::cv_videostab_ISparseOptFlowEstimator_delete(self.as_raw_mut_ISparseOptFlowEstimator()) };
 		}
 	}
 	
@@ -1287,9 +1275,9 @@ pub mod videostab {
 	impl ISparseOptFlowEstimator {
 	}
 	
-	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimator, cv_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimator }
+	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimator, cv_videostab_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimator }
 	
-	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimatorGpu }
+	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_videostab_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimatorGpu }
 	
 	impl std::fmt::Debug for ISparseOptFlowEstimator {
 		#[inline]
@@ -1361,8 +1349,7 @@ pub mod videostab {
 	impl Drop for ImageMotionEstimatorBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ImageMotionEstimatorBase_delete(instance: *mut c_void); }
-			unsafe { cv_ImageMotionEstimatorBase_delete(self.as_raw_mut_ImageMotionEstimatorBase()) };
+			unsafe { sys::cv_videostab_ImageMotionEstimatorBase_delete(self.as_raw_mut_ImageMotionEstimatorBase()) };
 		}
 	}
 	
@@ -1379,13 +1366,13 @@ pub mod videostab {
 	impl ImageMotionEstimatorBase {
 	}
 	
-	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::FromFileMotionReader, cv_ImageMotionEstimatorBase_to_FromFileMotionReader }
+	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::FromFileMotionReader, cv_videostab_ImageMotionEstimatorBase_to_FromFileMotionReader }
 	
-	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::KeypointBasedMotionEstimator, cv_ImageMotionEstimatorBase_to_KeypointBasedMotionEstimator }
+	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::KeypointBasedMotionEstimator, cv_videostab_ImageMotionEstimatorBase_to_KeypointBasedMotionEstimator }
 	
-	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::KeypointBasedMotionEstimatorGpu, cv_ImageMotionEstimatorBase_to_KeypointBasedMotionEstimatorGpu }
+	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::KeypointBasedMotionEstimatorGpu, cv_videostab_ImageMotionEstimatorBase_to_KeypointBasedMotionEstimatorGpu }
 	
-	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::ToFileMotionWriter, cv_ImageMotionEstimatorBase_to_ToFileMotionWriter }
+	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::ToFileMotionWriter, cv_videostab_ImageMotionEstimatorBase_to_ToFileMotionWriter }
 	
 	impl std::fmt::Debug for ImageMotionEstimatorBase {
 		#[inline]
@@ -1537,8 +1524,7 @@ pub mod videostab {
 	impl Drop for InpainterBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_InpainterBase_delete(instance: *mut c_void); }
-			unsafe { cv_InpainterBase_delete(self.as_raw_mut_InpainterBase()) };
+			unsafe { sys::cv_videostab_InpainterBase_delete(self.as_raw_mut_InpainterBase()) };
 		}
 	}
 	
@@ -1555,17 +1541,17 @@ pub mod videostab {
 	impl InpainterBase {
 	}
 	
-	boxed_cast_descendant! { InpainterBase, crate::videostab::ColorAverageInpainter, cv_InpainterBase_to_ColorAverageInpainter }
+	boxed_cast_descendant! { InpainterBase, crate::videostab::ColorAverageInpainter, cv_videostab_InpainterBase_to_ColorAverageInpainter }
 	
-	boxed_cast_descendant! { InpainterBase, crate::videostab::ColorInpainter, cv_InpainterBase_to_ColorInpainter }
+	boxed_cast_descendant! { InpainterBase, crate::videostab::ColorInpainter, cv_videostab_InpainterBase_to_ColorInpainter }
 	
-	boxed_cast_descendant! { InpainterBase, crate::videostab::ConsistentMosaicInpainter, cv_InpainterBase_to_ConsistentMosaicInpainter }
+	boxed_cast_descendant! { InpainterBase, crate::videostab::ConsistentMosaicInpainter, cv_videostab_InpainterBase_to_ConsistentMosaicInpainter }
 	
-	boxed_cast_descendant! { InpainterBase, crate::videostab::InpaintingPipeline, cv_InpainterBase_to_InpaintingPipeline }
+	boxed_cast_descendant! { InpainterBase, crate::videostab::InpaintingPipeline, cv_videostab_InpainterBase_to_InpaintingPipeline }
 	
-	boxed_cast_descendant! { InpainterBase, crate::videostab::MotionInpainter, cv_InpainterBase_to_MotionInpainter }
+	boxed_cast_descendant! { InpainterBase, crate::videostab::MotionInpainter, cv_videostab_InpainterBase_to_MotionInpainter }
 	
-	boxed_cast_descendant! { InpainterBase, crate::videostab::NullInpainter, cv_InpainterBase_to_NullInpainter }
+	boxed_cast_descendant! { InpainterBase, crate::videostab::NullInpainter, cv_videostab_InpainterBase_to_NullInpainter }
 	
 	impl std::fmt::Debug for InpainterBase {
 		#[inline]
@@ -1677,8 +1663,7 @@ pub mod videostab {
 	impl Drop for InpaintingPipeline {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_InpaintingPipeline_delete(instance: *mut c_void); }
-			unsafe { cv_InpaintingPipeline_delete(self.as_raw_mut_InpaintingPipeline()) };
+			unsafe { sys::cv_videostab_InpaintingPipeline_delete(self.as_raw_mut_InpaintingPipeline()) };
 		}
 	}
 	
@@ -1703,7 +1688,7 @@ pub mod videostab {
 	impl InpaintingPipeline {
 	}
 	
-	boxed_cast_base! { InpaintingPipeline, crate::videostab::InpainterBase, cv_InpaintingPipeline_to_InpainterBase }
+	boxed_cast_base! { InpaintingPipeline, crate::videostab::InpainterBase, cv_videostab_InpaintingPipeline_to_InpainterBase }
 	
 	impl std::fmt::Debug for InpaintingPipeline {
 		#[inline]
@@ -1847,8 +1832,7 @@ pub mod videostab {
 	impl Drop for KeypointBasedMotionEstimator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KeypointBasedMotionEstimator_delete(instance: *mut c_void); }
-			unsafe { cv_KeypointBasedMotionEstimator_delete(self.as_raw_mut_KeypointBasedMotionEstimator()) };
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_delete(self.as_raw_mut_KeypointBasedMotionEstimator()) };
 		}
 	}
 	
@@ -1883,7 +1867,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { KeypointBasedMotionEstimator, crate::videostab::ImageMotionEstimatorBase, cv_KeypointBasedMotionEstimator_to_ImageMotionEstimatorBase }
+	boxed_cast_base! { KeypointBasedMotionEstimator, crate::videostab::ImageMotionEstimatorBase, cv_videostab_KeypointBasedMotionEstimator_to_ImageMotionEstimatorBase }
 	
 	impl std::fmt::Debug for KeypointBasedMotionEstimator {
 		#[inline]
@@ -1975,8 +1959,7 @@ pub mod videostab {
 	impl Drop for KeypointBasedMotionEstimatorGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KeypointBasedMotionEstimatorGpu_delete(instance: *mut c_void); }
-			unsafe { cv_KeypointBasedMotionEstimatorGpu_delete(self.as_raw_mut_KeypointBasedMotionEstimatorGpu()) };
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_delete(self.as_raw_mut_KeypointBasedMotionEstimatorGpu()) };
 		}
 	}
 	
@@ -2011,7 +1994,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { KeypointBasedMotionEstimatorGpu, crate::videostab::ImageMotionEstimatorBase, cv_KeypointBasedMotionEstimatorGpu_to_ImageMotionEstimatorBase }
+	boxed_cast_base! { KeypointBasedMotionEstimatorGpu, crate::videostab::ImageMotionEstimatorBase, cv_videostab_KeypointBasedMotionEstimatorGpu_to_ImageMotionEstimatorBase }
 	
 	impl std::fmt::Debug for KeypointBasedMotionEstimatorGpu {
 		#[inline]
@@ -2052,8 +2035,7 @@ pub mod videostab {
 	impl Drop for LogToStdout {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LogToStdout_delete(instance: *mut c_void); }
-			unsafe { cv_LogToStdout_delete(self.as_raw_mut_LogToStdout()) };
+			unsafe { sys::cv_videostab_LogToStdout_delete(self.as_raw_mut_LogToStdout()) };
 		}
 	}
 	
@@ -2078,7 +2060,7 @@ pub mod videostab {
 	impl LogToStdout {
 	}
 	
-	boxed_cast_base! { LogToStdout, crate::videostab::ILog, cv_LogToStdout_to_ILog }
+	boxed_cast_base! { LogToStdout, crate::videostab::ILog, cv_videostab_LogToStdout_to_ILog }
 	
 	impl std::fmt::Debug for LogToStdout {
 		#[inline]
@@ -2244,8 +2226,7 @@ pub mod videostab {
 	impl Drop for LpMotionStabilizer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LpMotionStabilizer_delete(instance: *mut c_void); }
-			unsafe { cv_LpMotionStabilizer_delete(self.as_raw_mut_LpMotionStabilizer()) };
+			unsafe { sys::cv_videostab_LpMotionStabilizer_delete(self.as_raw_mut_LpMotionStabilizer()) };
 		}
 	}
 	
@@ -2282,7 +2263,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { LpMotionStabilizer, crate::videostab::IMotionStabilizer, cv_LpMotionStabilizer_to_IMotionStabilizer }
+	boxed_cast_base! { LpMotionStabilizer, crate::videostab::IMotionStabilizer, cv_videostab_LpMotionStabilizer_to_IMotionStabilizer }
 	
 	impl std::fmt::Debug for LpMotionStabilizer {
 		#[inline]
@@ -2332,8 +2313,7 @@ pub mod videostab {
 	impl Drop for MaskFrameSource {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MaskFrameSource_delete(instance: *mut c_void); }
-			unsafe { cv_MaskFrameSource_delete(self.as_raw_mut_MaskFrameSource()) };
+			unsafe { sys::cv_videostab_MaskFrameSource_delete(self.as_raw_mut_MaskFrameSource()) };
 		}
 	}
 	
@@ -2368,7 +2348,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { MaskFrameSource, crate::videostab::IFrameSource, cv_MaskFrameSource_to_IFrameSource }
+	boxed_cast_base! { MaskFrameSource, crate::videostab::IFrameSource, cv_videostab_MaskFrameSource_to_IFrameSource }
 	
 	impl std::fmt::Debug for MaskFrameSource {
 		#[inline]
@@ -2408,8 +2388,7 @@ pub mod videostab {
 	impl Drop for MoreAccurateMotionWobbleSuppressor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MoreAccurateMotionWobbleSuppressor_delete(instance: *mut c_void); }
-			unsafe { cv_MoreAccurateMotionWobbleSuppressor_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressor()) };
+			unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressor_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressor()) };
 		}
 	}
 	
@@ -2442,9 +2421,9 @@ pub mod videostab {
 	impl MoreAccurateMotionWobbleSuppressor {
 	}
 	
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressor_to_MoreAccurateMotionWobbleSuppressorBase }
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressor_to_MoreAccurateMotionWobbleSuppressorBase }
 	
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressor_to_WobbleSuppressorBase }
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressor_to_WobbleSuppressorBase }
 	
 	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressor {
 		#[inline]
@@ -2493,8 +2472,7 @@ pub mod videostab {
 	impl Drop for MoreAccurateMotionWobbleSuppressorBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MoreAccurateMotionWobbleSuppressorBase_delete(instance: *mut c_void); }
-			unsafe { cv_MoreAccurateMotionWobbleSuppressorBase_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorBase()) };
+			unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorBase_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorBase()) };
 		}
 	}
 	
@@ -2519,11 +2497,11 @@ pub mod videostab {
 	impl MoreAccurateMotionWobbleSuppressorBase {
 	}
 	
-	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressor, cv_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressor }
+	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressor, cv_videostab_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressor }
 	
-	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorGpu, cv_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorGpu }
+	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorGpu, cv_videostab_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorGpu }
 	
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::WobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressorBase_to_WobbleSuppressorBase }
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::WobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorBase_to_WobbleSuppressorBase }
 	
 	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorBase {
 		#[inline]
@@ -2572,8 +2550,7 @@ pub mod videostab {
 	impl Drop for MoreAccurateMotionWobbleSuppressorGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MoreAccurateMotionWobbleSuppressorGpu_delete(instance: *mut c_void); }
-			unsafe { cv_MoreAccurateMotionWobbleSuppressorGpu_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu()) };
+			unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu()) };
 		}
 	}
 	
@@ -2606,9 +2583,9 @@ pub mod videostab {
 	impl MoreAccurateMotionWobbleSuppressorGpu {
 	}
 	
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressorGpu_to_MoreAccurateMotionWobbleSuppressorBase }
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_to_MoreAccurateMotionWobbleSuppressorBase }
 	
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::WobbleSuppressorBase, cv_MoreAccurateMotionWobbleSuppressorGpu_to_WobbleSuppressorBase }
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::WobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_to_WobbleSuppressorBase }
 	
 	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorGpu {
 		#[inline]
@@ -2687,8 +2664,7 @@ pub mod videostab {
 	impl Drop for MotionEstimatorBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MotionEstimatorBase_delete(instance: *mut c_void); }
-			unsafe { cv_MotionEstimatorBase_delete(self.as_raw_mut_MotionEstimatorBase()) };
+			unsafe { sys::cv_videostab_MotionEstimatorBase_delete(self.as_raw_mut_MotionEstimatorBase()) };
 		}
 	}
 	
@@ -2705,9 +2681,9 @@ pub mod videostab {
 	impl MotionEstimatorBase {
 	}
 	
-	boxed_cast_descendant! { MotionEstimatorBase, crate::videostab::MotionEstimatorL1, cv_MotionEstimatorBase_to_MotionEstimatorL1 }
+	boxed_cast_descendant! { MotionEstimatorBase, crate::videostab::MotionEstimatorL1, cv_videostab_MotionEstimatorBase_to_MotionEstimatorL1 }
 	
-	boxed_cast_descendant! { MotionEstimatorBase, crate::videostab::MotionEstimatorRansacL2, cv_MotionEstimatorBase_to_MotionEstimatorRansacL2 }
+	boxed_cast_descendant! { MotionEstimatorBase, crate::videostab::MotionEstimatorRansacL2, cv_videostab_MotionEstimatorBase_to_MotionEstimatorRansacL2 }
 	
 	impl std::fmt::Debug for MotionEstimatorBase {
 		#[inline]
@@ -2756,8 +2732,7 @@ pub mod videostab {
 	impl Drop for MotionEstimatorL1 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MotionEstimatorL1_delete(instance: *mut c_void); }
-			unsafe { cv_MotionEstimatorL1_delete(self.as_raw_mut_MotionEstimatorL1()) };
+			unsafe { sys::cv_videostab_MotionEstimatorL1_delete(self.as_raw_mut_MotionEstimatorL1()) };
 		}
 	}
 	
@@ -2794,7 +2769,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { MotionEstimatorL1, crate::videostab::MotionEstimatorBase, cv_MotionEstimatorL1_to_MotionEstimatorBase }
+	boxed_cast_base! { MotionEstimatorL1, crate::videostab::MotionEstimatorBase, cv_videostab_MotionEstimatorL1_to_MotionEstimatorBase }
 	
 	impl std::fmt::Debug for MotionEstimatorL1 {
 		#[inline]
@@ -2877,8 +2852,7 @@ pub mod videostab {
 	impl Drop for MotionEstimatorRansacL2 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MotionEstimatorRansacL2_delete(instance: *mut c_void); }
-			unsafe { cv_MotionEstimatorRansacL2_delete(self.as_raw_mut_MotionEstimatorRansacL2()) };
+			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_delete(self.as_raw_mut_MotionEstimatorRansacL2()) };
 		}
 	}
 	
@@ -2915,7 +2889,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { MotionEstimatorRansacL2, crate::videostab::MotionEstimatorBase, cv_MotionEstimatorRansacL2_to_MotionEstimatorBase }
+	boxed_cast_base! { MotionEstimatorRansacL2, crate::videostab::MotionEstimatorBase, cv_videostab_MotionEstimatorRansacL2_to_MotionEstimatorBase }
 	
 	impl std::fmt::Debug for MotionEstimatorRansacL2 {
 		#[inline]
@@ -2965,8 +2939,7 @@ pub mod videostab {
 	impl Drop for MotionFilterBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MotionFilterBase_delete(instance: *mut c_void); }
-			unsafe { cv_MotionFilterBase_delete(self.as_raw_mut_MotionFilterBase()) };
+			unsafe { sys::cv_videostab_MotionFilterBase_delete(self.as_raw_mut_MotionFilterBase()) };
 		}
 	}
 	
@@ -2991,9 +2964,9 @@ pub mod videostab {
 	impl MotionFilterBase {
 	}
 	
-	boxed_cast_descendant! { MotionFilterBase, crate::videostab::GaussianMotionFilter, cv_MotionFilterBase_to_GaussianMotionFilter }
+	boxed_cast_descendant! { MotionFilterBase, crate::videostab::GaussianMotionFilter, cv_videostab_MotionFilterBase_to_GaussianMotionFilter }
 	
-	boxed_cast_base! { MotionFilterBase, crate::videostab::IMotionStabilizer, cv_MotionFilterBase_to_IMotionStabilizer }
+	boxed_cast_base! { MotionFilterBase, crate::videostab::IMotionStabilizer, cv_videostab_MotionFilterBase_to_IMotionStabilizer }
 	
 	impl std::fmt::Debug for MotionFilterBase {
 		#[inline]
@@ -3106,8 +3079,7 @@ pub mod videostab {
 	impl Drop for MotionInpainter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MotionInpainter_delete(instance: *mut c_void); }
-			unsafe { cv_MotionInpainter_delete(self.as_raw_mut_MotionInpainter()) };
+			unsafe { sys::cv_videostab_MotionInpainter_delete(self.as_raw_mut_MotionInpainter()) };
 		}
 	}
 	
@@ -3142,7 +3114,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { MotionInpainter, crate::videostab::InpainterBase, cv_MotionInpainter_to_InpainterBase }
+	boxed_cast_base! { MotionInpainter, crate::videostab::InpainterBase, cv_videostab_MotionInpainter_to_InpainterBase }
 	
 	impl std::fmt::Debug for MotionInpainter {
 		#[inline]
@@ -3200,8 +3172,7 @@ pub mod videostab {
 	impl Drop for MotionStabilizationPipeline {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MotionStabilizationPipeline_delete(instance: *mut c_void); }
-			unsafe { cv_MotionStabilizationPipeline_delete(self.as_raw_mut_MotionStabilizationPipeline()) };
+			unsafe { sys::cv_videostab_MotionStabilizationPipeline_delete(self.as_raw_mut_MotionStabilizationPipeline()) };
 		}
 	}
 	
@@ -3226,7 +3197,7 @@ pub mod videostab {
 	impl MotionStabilizationPipeline {
 	}
 	
-	boxed_cast_base! { MotionStabilizationPipeline, crate::videostab::IMotionStabilizer, cv_MotionStabilizationPipeline_to_IMotionStabilizer }
+	boxed_cast_base! { MotionStabilizationPipeline, crate::videostab::IMotionStabilizer, cv_videostab_MotionStabilizationPipeline_to_IMotionStabilizer }
 	
 	impl std::fmt::Debug for MotionStabilizationPipeline {
 		#[inline]
@@ -3266,8 +3237,7 @@ pub mod videostab {
 	impl Drop for NullDeblurer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NullDeblurer_delete(instance: *mut c_void); }
-			unsafe { cv_NullDeblurer_delete(self.as_raw_mut_NullDeblurer()) };
+			unsafe { sys::cv_videostab_NullDeblurer_delete(self.as_raw_mut_NullDeblurer()) };
 		}
 	}
 	
@@ -3292,7 +3262,7 @@ pub mod videostab {
 	impl NullDeblurer {
 	}
 	
-	boxed_cast_base! { NullDeblurer, crate::videostab::DeblurerBase, cv_NullDeblurer_to_DeblurerBase }
+	boxed_cast_base! { NullDeblurer, crate::videostab::DeblurerBase, cv_videostab_NullDeblurer_to_DeblurerBase }
 	
 	impl std::fmt::Debug for NullDeblurer {
 		#[inline]
@@ -3342,8 +3312,7 @@ pub mod videostab {
 	impl Drop for NullFrameSource {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NullFrameSource_delete(instance: *mut c_void); }
-			unsafe { cv_NullFrameSource_delete(self.as_raw_mut_NullFrameSource()) };
+			unsafe { sys::cv_videostab_NullFrameSource_delete(self.as_raw_mut_NullFrameSource()) };
 		}
 	}
 	
@@ -3368,7 +3337,7 @@ pub mod videostab {
 	impl NullFrameSource {
 	}
 	
-	boxed_cast_base! { NullFrameSource, crate::videostab::IFrameSource, cv_NullFrameSource_to_IFrameSource }
+	boxed_cast_base! { NullFrameSource, crate::videostab::IFrameSource, cv_videostab_NullFrameSource_to_IFrameSource }
 	
 	impl std::fmt::Debug for NullFrameSource {
 		#[inline]
@@ -3408,8 +3377,7 @@ pub mod videostab {
 	impl Drop for NullInpainter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NullInpainter_delete(instance: *mut c_void); }
-			unsafe { cv_NullInpainter_delete(self.as_raw_mut_NullInpainter()) };
+			unsafe { sys::cv_videostab_NullInpainter_delete(self.as_raw_mut_NullInpainter()) };
 		}
 	}
 	
@@ -3434,7 +3402,7 @@ pub mod videostab {
 	impl NullInpainter {
 	}
 	
-	boxed_cast_base! { NullInpainter, crate::videostab::InpainterBase, cv_NullInpainter_to_InpainterBase }
+	boxed_cast_base! { NullInpainter, crate::videostab::InpainterBase, cv_videostab_NullInpainter_to_InpainterBase }
 	
 	impl std::fmt::Debug for NullInpainter {
 		#[inline]
@@ -3475,8 +3443,7 @@ pub mod videostab {
 	impl Drop for NullLog {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NullLog_delete(instance: *mut c_void); }
-			unsafe { cv_NullLog_delete(self.as_raw_mut_NullLog()) };
+			unsafe { sys::cv_videostab_NullLog_delete(self.as_raw_mut_NullLog()) };
 		}
 	}
 	
@@ -3501,7 +3468,7 @@ pub mod videostab {
 	impl NullLog {
 	}
 	
-	boxed_cast_base! { NullLog, crate::videostab::ILog, cv_NullLog_to_ILog }
+	boxed_cast_base! { NullLog, crate::videostab::ILog, cv_videostab_NullLog_to_ILog }
 	
 	impl std::fmt::Debug for NullLog {
 		#[inline]
@@ -3544,8 +3511,7 @@ pub mod videostab {
 	impl Drop for NullOutlierRejector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NullOutlierRejector_delete(instance: *mut c_void); }
-			unsafe { cv_NullOutlierRejector_delete(self.as_raw_mut_NullOutlierRejector()) };
+			unsafe { sys::cv_videostab_NullOutlierRejector_delete(self.as_raw_mut_NullOutlierRejector()) };
 		}
 	}
 	
@@ -3570,7 +3536,7 @@ pub mod videostab {
 	impl NullOutlierRejector {
 	}
 	
-	boxed_cast_base! { NullOutlierRejector, crate::videostab::IOutlierRejector, cv_NullOutlierRejector_to_IOutlierRejector }
+	boxed_cast_base! { NullOutlierRejector, crate::videostab::IOutlierRejector, cv_videostab_NullOutlierRejector_to_IOutlierRejector }
 	
 	impl std::fmt::Debug for NullOutlierRejector {
 		#[inline]
@@ -3610,8 +3576,7 @@ pub mod videostab {
 	impl Drop for NullWobbleSuppressor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NullWobbleSuppressor_delete(instance: *mut c_void); }
-			unsafe { cv_NullWobbleSuppressor_delete(self.as_raw_mut_NullWobbleSuppressor()) };
+			unsafe { sys::cv_videostab_NullWobbleSuppressor_delete(self.as_raw_mut_NullWobbleSuppressor()) };
 		}
 	}
 	
@@ -3636,7 +3601,7 @@ pub mod videostab {
 	impl NullWobbleSuppressor {
 	}
 	
-	boxed_cast_base! { NullWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_NullWobbleSuppressor_to_WobbleSuppressorBase }
+	boxed_cast_base! { NullWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_videostab_NullWobbleSuppressor_to_WobbleSuppressorBase }
 	
 	impl std::fmt::Debug for NullWobbleSuppressor {
 		#[inline]
@@ -3705,8 +3670,7 @@ pub mod videostab {
 	impl Drop for OnePassStabilizer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OnePassStabilizer_delete(instance: *mut c_void); }
-			unsafe { cv_OnePassStabilizer_delete(self.as_raw_mut_OnePassStabilizer()) };
+			unsafe { sys::cv_videostab_OnePassStabilizer_delete(self.as_raw_mut_OnePassStabilizer()) };
 		}
 	}
 	
@@ -3749,9 +3713,9 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { OnePassStabilizer, crate::videostab::IFrameSource, cv_OnePassStabilizer_to_IFrameSource }
+	boxed_cast_base! { OnePassStabilizer, crate::videostab::IFrameSource, cv_videostab_OnePassStabilizer_to_IFrameSource }
 	
-	boxed_cast_base! { OnePassStabilizer, crate::videostab::StabilizerBase, cv_OnePassStabilizer_to_StabilizerBase }
+	boxed_cast_base! { OnePassStabilizer, crate::videostab::StabilizerBase, cv_videostab_OnePassStabilizer_to_StabilizerBase }
 	
 	impl std::fmt::Debug for OnePassStabilizer {
 		#[inline]
@@ -3818,8 +3782,7 @@ pub mod videostab {
 	impl Drop for PyrLkOptFlowEstimatorBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PyrLkOptFlowEstimatorBase_delete(instance: *mut c_void); }
-			unsafe { cv_PyrLkOptFlowEstimatorBase_delete(self.as_raw_mut_PyrLkOptFlowEstimatorBase()) };
+			unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_delete(self.as_raw_mut_PyrLkOptFlowEstimatorBase()) };
 		}
 	}
 	
@@ -3846,11 +3809,11 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::DensePyrLkOptFlowEstimatorGpu, cv_PyrLkOptFlowEstimatorBase_to_DensePyrLkOptFlowEstimatorGpu }
+	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::DensePyrLkOptFlowEstimatorGpu, cv_videostab_PyrLkOptFlowEstimatorBase_to_DensePyrLkOptFlowEstimatorGpu }
 	
-	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimator, cv_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimator }
+	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimator, cv_videostab_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimator }
 	
-	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimatorGpu }
+	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_videostab_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimatorGpu }
 	
 	impl std::fmt::Debug for PyrLkOptFlowEstimatorBase {
 		#[inline]
@@ -3867,28 +3830,28 @@ pub mod videostab {
 		/// subset size
 		#[inline]
 		fn size(&self) -> i32 {
-			let ret = unsafe { sys::cv_videostab_RansacParams_getPropSize_const(self.as_raw_RansacParams()) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propSize_const(self.as_raw_RansacParams()) };
 			ret
 		}
 		
 		/// max error to classify as inlier
 		#[inline]
 		fn thresh(&self) -> f32 {
-			let ret = unsafe { sys::cv_videostab_RansacParams_getPropThresh_const(self.as_raw_RansacParams()) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propThresh_const(self.as_raw_RansacParams()) };
 			ret
 		}
 		
 		/// max outliers ratio
 		#[inline]
 		fn eps(&self) -> f32 {
-			let ret = unsafe { sys::cv_videostab_RansacParams_getPropEps_const(self.as_raw_RansacParams()) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propEps_const(self.as_raw_RansacParams()) };
 			ret
 		}
 		
 		/// probability of success
 		#[inline]
 		fn prob(&self) -> f32 {
-			let ret = unsafe { sys::cv_videostab_RansacParams_getPropProb_const(self.as_raw_RansacParams()) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propProb_const(self.as_raw_RansacParams()) };
 			ret
 		}
 		
@@ -3912,28 +3875,28 @@ pub mod videostab {
 		/// subset size
 		#[inline]
 		fn set_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_setPropSize_int(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propSize_int(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
 		/// max error to classify as inlier
 		#[inline]
 		fn set_thresh(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_setPropThresh_float(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propThresh_float(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
 		/// max outliers ratio
 		#[inline]
 		fn set_eps(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_setPropEps_float(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propEps_float(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
 		/// probability of success
 		#[inline]
 		fn set_prob(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_setPropProb_float(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propProb_float(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
@@ -3949,8 +3912,7 @@ pub mod videostab {
 	impl Drop for RansacParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RansacParams_delete(instance: *mut c_void); }
-			unsafe { cv_RansacParams_delete(self.as_raw_mut_RansacParams()) };
+			unsafe { sys::cv_videostab_RansacParams_delete(self.as_raw_mut_RansacParams()) };
 		}
 	}
 	
@@ -4055,8 +4017,7 @@ pub mod videostab {
 	impl Drop for SparsePyrLkOptFlowEstimator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SparsePyrLkOptFlowEstimator_delete(instance: *mut c_void); }
-			unsafe { cv_SparsePyrLkOptFlowEstimator_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimator()) };
+			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimator_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimator()) };
 		}
 	}
 	
@@ -4089,9 +4050,9 @@ pub mod videostab {
 	impl SparsePyrLkOptFlowEstimator {
 	}
 	
-	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::ISparseOptFlowEstimator, cv_SparsePyrLkOptFlowEstimator_to_ISparseOptFlowEstimator }
+	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::ISparseOptFlowEstimator, cv_videostab_SparsePyrLkOptFlowEstimator_to_ISparseOptFlowEstimator }
 	
-	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::PyrLkOptFlowEstimatorBase, cv_SparsePyrLkOptFlowEstimator_to_PyrLkOptFlowEstimatorBase }
+	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::PyrLkOptFlowEstimatorBase, cv_videostab_SparsePyrLkOptFlowEstimator_to_PyrLkOptFlowEstimatorBase }
 	
 	impl std::fmt::Debug for SparsePyrLkOptFlowEstimator {
 		#[inline]
@@ -4155,8 +4116,7 @@ pub mod videostab {
 	impl Drop for SparsePyrLkOptFlowEstimatorGpu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SparsePyrLkOptFlowEstimatorGpu_delete(instance: *mut c_void); }
-			unsafe { cv_SparsePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimatorGpu()) };
+			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimatorGpu()) };
 		}
 	}
 	
@@ -4199,9 +4159,9 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::ISparseOptFlowEstimator, cv_SparsePyrLkOptFlowEstimatorGpu_to_ISparseOptFlowEstimator }
+	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::ISparseOptFlowEstimator, cv_videostab_SparsePyrLkOptFlowEstimatorGpu_to_ISparseOptFlowEstimator }
 	
-	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_SparsePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
+	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_videostab_SparsePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
 	
 	impl std::fmt::Debug for SparsePyrLkOptFlowEstimatorGpu {
 		#[inline]
@@ -4418,8 +4378,7 @@ pub mod videostab {
 	impl Drop for StabilizerBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_StabilizerBase_delete(instance: *mut c_void); }
-			unsafe { cv_StabilizerBase_delete(self.as_raw_mut_StabilizerBase()) };
+			unsafe { sys::cv_videostab_StabilizerBase_delete(self.as_raw_mut_StabilizerBase()) };
 		}
 	}
 	
@@ -4436,9 +4395,9 @@ pub mod videostab {
 	impl StabilizerBase {
 	}
 	
-	boxed_cast_descendant! { StabilizerBase, crate::videostab::OnePassStabilizer, cv_StabilizerBase_to_OnePassStabilizer }
+	boxed_cast_descendant! { StabilizerBase, crate::videostab::OnePassStabilizer, cv_videostab_StabilizerBase_to_OnePassStabilizer }
 	
-	boxed_cast_descendant! { StabilizerBase, crate::videostab::TwoPassStabilizer, cv_StabilizerBase_to_TwoPassStabilizer }
+	boxed_cast_descendant! { StabilizerBase, crate::videostab::TwoPassStabilizer, cv_videostab_StabilizerBase_to_TwoPassStabilizer }
 	
 	impl std::fmt::Debug for StabilizerBase {
 		#[inline]
@@ -4509,8 +4468,7 @@ pub mod videostab {
 	impl Drop for ToFileMotionWriter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ToFileMotionWriter_delete(instance: *mut c_void); }
-			unsafe { cv_ToFileMotionWriter_delete(self.as_raw_mut_ToFileMotionWriter()) };
+			unsafe { sys::cv_videostab_ToFileMotionWriter_delete(self.as_raw_mut_ToFileMotionWriter()) };
 		}
 	}
 	
@@ -4546,7 +4504,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { ToFileMotionWriter, crate::videostab::ImageMotionEstimatorBase, cv_ToFileMotionWriter_to_ImageMotionEstimatorBase }
+	boxed_cast_base! { ToFileMotionWriter, crate::videostab::ImageMotionEstimatorBase, cv_videostab_ToFileMotionWriter_to_ImageMotionEstimatorBase }
 	
 	impl std::fmt::Debug for ToFileMotionWriter {
 		#[inline]
@@ -4626,8 +4584,7 @@ pub mod videostab {
 	impl Drop for TranslationBasedLocalOutlierRejector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TranslationBasedLocalOutlierRejector_delete(instance: *mut c_void); }
-			unsafe { cv_TranslationBasedLocalOutlierRejector_delete(self.as_raw_mut_TranslationBasedLocalOutlierRejector()) };
+			unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_delete(self.as_raw_mut_TranslationBasedLocalOutlierRejector()) };
 		}
 	}
 	
@@ -4662,7 +4619,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { TranslationBasedLocalOutlierRejector, crate::videostab::IOutlierRejector, cv_TranslationBasedLocalOutlierRejector_to_IOutlierRejector }
+	boxed_cast_base! { TranslationBasedLocalOutlierRejector, crate::videostab::IOutlierRejector, cv_videostab_TranslationBasedLocalOutlierRejector_to_IOutlierRejector }
 	
 	impl std::fmt::Debug for TranslationBasedLocalOutlierRejector {
 		#[inline]
@@ -4768,8 +4725,7 @@ pub mod videostab {
 	impl Drop for TwoPassStabilizer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TwoPassStabilizer_delete(instance: *mut c_void); }
-			unsafe { cv_TwoPassStabilizer_delete(self.as_raw_mut_TwoPassStabilizer()) };
+			unsafe { sys::cv_videostab_TwoPassStabilizer_delete(self.as_raw_mut_TwoPassStabilizer()) };
 		}
 	}
 	
@@ -4812,9 +4768,9 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { TwoPassStabilizer, crate::videostab::IFrameSource, cv_TwoPassStabilizer_to_IFrameSource }
+	boxed_cast_base! { TwoPassStabilizer, crate::videostab::IFrameSource, cv_videostab_TwoPassStabilizer_to_IFrameSource }
 	
-	boxed_cast_base! { TwoPassStabilizer, crate::videostab::StabilizerBase, cv_TwoPassStabilizer_to_StabilizerBase }
+	boxed_cast_base! { TwoPassStabilizer, crate::videostab::StabilizerBase, cv_videostab_TwoPassStabilizer_to_StabilizerBase }
 	
 	impl std::fmt::Debug for TwoPassStabilizer {
 		#[inline]
@@ -4900,8 +4856,7 @@ pub mod videostab {
 	impl Drop for VideoFileSource {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_VideoFileSource_delete(instance: *mut c_void); }
-			unsafe { cv_VideoFileSource_delete(self.as_raw_mut_VideoFileSource()) };
+			unsafe { sys::cv_videostab_VideoFileSource_delete(self.as_raw_mut_VideoFileSource()) };
 		}
 	}
 	
@@ -4939,7 +4894,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { VideoFileSource, crate::videostab::IFrameSource, cv_VideoFileSource_to_IFrameSource }
+	boxed_cast_base! { VideoFileSource, crate::videostab::IFrameSource, cv_videostab_VideoFileSource_to_IFrameSource }
 	
 	impl std::fmt::Debug for VideoFileSource {
 		#[inline]
@@ -4997,8 +4952,7 @@ pub mod videostab {
 	impl Drop for WeightingDeblurer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WeightingDeblurer_delete(instance: *mut c_void); }
-			unsafe { cv_WeightingDeblurer_delete(self.as_raw_mut_WeightingDeblurer()) };
+			unsafe { sys::cv_videostab_WeightingDeblurer_delete(self.as_raw_mut_WeightingDeblurer()) };
 		}
 	}
 	
@@ -5033,7 +4987,7 @@ pub mod videostab {
 		
 	}
 	
-	boxed_cast_base! { WeightingDeblurer, crate::videostab::DeblurerBase, cv_WeightingDeblurer_to_DeblurerBase }
+	boxed_cast_base! { WeightingDeblurer, crate::videostab::DeblurerBase, cv_videostab_WeightingDeblurer_to_DeblurerBase }
 	
 	impl std::fmt::Debug for WeightingDeblurer {
 		#[inline]
@@ -5167,8 +5121,7 @@ pub mod videostab {
 	impl Drop for WobbleSuppressorBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WobbleSuppressorBase_delete(instance: *mut c_void); }
-			unsafe { cv_WobbleSuppressorBase_delete(self.as_raw_mut_WobbleSuppressorBase()) };
+			unsafe { sys::cv_videostab_WobbleSuppressorBase_delete(self.as_raw_mut_WobbleSuppressorBase()) };
 		}
 	}
 	
@@ -5185,9 +5138,13 @@ pub mod videostab {
 	impl WobbleSuppressorBase {
 	}
 	
-	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorBase }
+	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressor, cv_videostab_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressor }
 	
-	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::NullWobbleSuppressor, cv_WobbleSuppressorBase_to_NullWobbleSuppressor }
+	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorBase }
+	
+	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorGpu, cv_videostab_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorGpu }
+	
+	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::NullWobbleSuppressor, cv_videostab_WobbleSuppressorBase_to_NullWobbleSuppressor }
 	
 	impl std::fmt::Debug for WobbleSuppressorBase {
 		#[inline]

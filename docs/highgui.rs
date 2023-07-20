@@ -1345,7 +1345,7 @@ pub mod highgui {
 		/// Name of the font
 		#[inline]
 		fn name_font(&self) -> String {
-			let ret = unsafe { sys::cv_QtFont_getPropNameFont_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propNameFont_const(self.as_raw_QtFont()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -1354,7 +1354,7 @@ pub mod highgui {
 		#[inline]
 		fn color(&self) -> core::Scalar {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_QtFont_getPropColor_const(self.as_raw_QtFont(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_QtFont_propColor_const(self.as_raw_QtFont(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1362,66 +1362,66 @@ pub mod highgui {
 		/// See cv::QtFontStyles
 		#[inline]
 		fn font_face(&self) -> i32 {
-			let ret = unsafe { sys::cv_QtFont_getPropFont_face_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propFont_face_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
 		/// font data and metrics
 		#[inline]
 		fn ascii(&self) -> *const i32 {
-			let ret = unsafe { sys::cv_QtFont_getPropAscii_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propAscii_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
 		#[inline]
 		fn greek(&self) -> *const i32 {
-			let ret = unsafe { sys::cv_QtFont_getPropGreek_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propGreek_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
 		#[inline]
 		fn cyrillic(&self) -> *const i32 {
-			let ret = unsafe { sys::cv_QtFont_getPropCyrillic_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propCyrillic_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
 		#[inline]
 		fn hscale(&self) -> f32 {
-			let ret = unsafe { sys::cv_QtFont_getPropHscale_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propHscale_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
 		#[inline]
 		fn vscale(&self) -> f32 {
-			let ret = unsafe { sys::cv_QtFont_getPropVscale_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propVscale_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
 		/// slope coefficient: 0 - normal, >0 - italic
 		#[inline]
 		fn shear(&self) -> f32 {
-			let ret = unsafe { sys::cv_QtFont_getPropShear_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propShear_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
 		/// See cv::QtFontWeights
 		#[inline]
 		fn thickness(&self) -> i32 {
-			let ret = unsafe { sys::cv_QtFont_getPropThickness_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propThickness_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
 		/// horizontal interval between letters
 		#[inline]
 		fn dx(&self) -> f32 {
-			let ret = unsafe { sys::cv_QtFont_getPropDx_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propDx_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
 		/// PointSize
 		#[inline]
 		fn line_type(&self) -> i32 {
-			let ret = unsafe { sys::cv_QtFont_getPropLine_type_const(self.as_raw_QtFont()) };
+			let ret = unsafe { sys::cv_QtFont_propLine_type_const(self.as_raw_QtFont()) };
 			ret
 		}
 		
@@ -1434,54 +1434,54 @@ pub mod highgui {
 		/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_QtFont_setPropColor_Scalar(self.as_raw_mut_QtFont(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_QtFont_propColor_Scalar(self.as_raw_mut_QtFont(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// See cv::QtFontStyles
 		#[inline]
 		fn set_font_face(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_setPropFont_face_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propFont_face_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_hscale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_setPropHscale_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propHscale_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_vscale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_setPropVscale_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propVscale_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// slope coefficient: 0 - normal, >0 - italic
 		#[inline]
 		fn set_shear(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_setPropShear_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propShear_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// See cv::QtFontWeights
 		#[inline]
 		fn set_thickness(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_setPropThickness_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propThickness_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// horizontal interval between letters
 		#[inline]
 		fn set_dx(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_setPropDx_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propDx_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// PointSize
 		#[inline]
 		fn set_line_type(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_setPropLine_type_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propLine_type_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
@@ -1497,8 +1497,7 @@ pub mod highgui {
 	impl Drop for QtFont {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_QtFont_delete(instance: *mut c_void); }
-			unsafe { cv_QtFont_delete(self.as_raw_mut_QtFont()) };
+			unsafe { sys::cv_QtFont_delete(self.as_raw_mut_QtFont()) };
 		}
 	}
 	

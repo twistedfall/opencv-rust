@@ -48,8 +48,7 @@ pub mod quality {
 	impl Drop for QualityBRISQUE {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_QualityBRISQUE_delete(instance: *mut c_void); }
-			unsafe { cv_QualityBRISQUE_delete(self.as_raw_mut_QualityBRISQUE()) };
+			unsafe { sys::cv_quality_QualityBRISQUE_delete(self.as_raw_mut_QualityBRISQUE()) };
 		}
 	}
 	
@@ -146,9 +145,9 @@ pub mod quality {
 		
 	}
 	
-	boxed_cast_base! { QualityBRISQUE, core::Algorithm, cv_QualityBRISQUE_to_Algorithm }
+	boxed_cast_base! { QualityBRISQUE, core::Algorithm, cv_quality_QualityBRISQUE_to_Algorithm }
 	
-	boxed_cast_base! { QualityBRISQUE, crate::quality::QualityBase, cv_QualityBRISQUE_to_QualityBase }
+	boxed_cast_base! { QualityBRISQUE, crate::quality::QualityBase, cv_quality_QualityBRISQUE_to_QualityBase }
 	
 	impl std::fmt::Debug for QualityBRISQUE {
 		#[inline]
@@ -224,8 +223,7 @@ pub mod quality {
 	impl Drop for QualityBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_QualityBase_delete(instance: *mut c_void); }
-			unsafe { cv_QualityBase_delete(self.as_raw_mut_QualityBase()) };
+			unsafe { sys::cv_quality_QualityBase_delete(self.as_raw_mut_QualityBase()) };
 		}
 	}
 	
@@ -250,17 +248,17 @@ pub mod quality {
 	impl QualityBase {
 	}
 	
-	boxed_cast_descendant! { QualityBase, crate::quality::QualityBRISQUE, cv_QualityBase_to_QualityBRISQUE }
+	boxed_cast_descendant! { QualityBase, crate::quality::QualityBRISQUE, cv_quality_QualityBase_to_QualityBRISQUE }
 	
-	boxed_cast_descendant! { QualityBase, crate::quality::QualityGMSD, cv_QualityBase_to_QualityGMSD }
+	boxed_cast_descendant! { QualityBase, crate::quality::QualityGMSD, cv_quality_QualityBase_to_QualityGMSD }
 	
-	boxed_cast_descendant! { QualityBase, crate::quality::QualityMSE, cv_QualityBase_to_QualityMSE }
+	boxed_cast_descendant! { QualityBase, crate::quality::QualityMSE, cv_quality_QualityBase_to_QualityMSE }
 	
-	boxed_cast_descendant! { QualityBase, crate::quality::QualityPSNR, cv_QualityBase_to_QualityPSNR }
+	boxed_cast_descendant! { QualityBase, crate::quality::QualityPSNR, cv_quality_QualityBase_to_QualityPSNR }
 	
-	boxed_cast_descendant! { QualityBase, crate::quality::QualitySSIM, cv_QualityBase_to_QualitySSIM }
+	boxed_cast_descendant! { QualityBase, crate::quality::QualitySSIM, cv_quality_QualityBase_to_QualitySSIM }
 	
-	boxed_cast_base! { QualityBase, core::Algorithm, cv_QualityBase_to_Algorithm }
+	boxed_cast_base! { QualityBase, core::Algorithm, cv_quality_QualityBase_to_Algorithm }
 	
 	impl std::fmt::Debug for QualityBase {
 		#[inline]
@@ -328,8 +326,7 @@ pub mod quality {
 	impl Drop for QualityGMSD {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_QualityGMSD_delete(instance: *mut c_void); }
-			unsafe { cv_QualityGMSD_delete(self.as_raw_mut_QualityGMSD()) };
+			unsafe { sys::cv_quality_QualityGMSD_delete(self.as_raw_mut_QualityGMSD()) };
 		}
 	}
 	
@@ -395,9 +392,9 @@ pub mod quality {
 		
 	}
 	
-	boxed_cast_base! { QualityGMSD, core::Algorithm, cv_QualityGMSD_to_Algorithm }
+	boxed_cast_base! { QualityGMSD, core::Algorithm, cv_quality_QualityGMSD_to_Algorithm }
 	
-	boxed_cast_base! { QualityGMSD, crate::quality::QualityBase, cv_QualityGMSD_to_QualityBase }
+	boxed_cast_base! { QualityGMSD, crate::quality::QualityBase, cv_quality_QualityGMSD_to_QualityBase }
 	
 	impl std::fmt::Debug for QualityGMSD {
 		#[inline]
@@ -464,8 +461,7 @@ pub mod quality {
 	impl Drop for QualityMSE {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_QualityMSE_delete(instance: *mut c_void); }
-			unsafe { cv_QualityMSE_delete(self.as_raw_mut_QualityMSE()) };
+			unsafe { sys::cv_quality_QualityMSE_delete(self.as_raw_mut_QualityMSE()) };
 		}
 	}
 	
@@ -531,9 +527,9 @@ pub mod quality {
 		
 	}
 	
-	boxed_cast_base! { QualityMSE, core::Algorithm, cv_QualityMSE_to_Algorithm }
+	boxed_cast_base! { QualityMSE, core::Algorithm, cv_quality_QualityMSE_to_Algorithm }
 	
-	boxed_cast_base! { QualityMSE, crate::quality::QualityBase, cv_QualityMSE_to_QualityBase }
+	boxed_cast_base! { QualityMSE, crate::quality::QualityBase, cv_quality_QualityMSE_to_QualityBase }
 	
 	impl std::fmt::Debug for QualityMSE {
 		#[inline]
@@ -622,8 +618,7 @@ pub mod quality {
 	impl Drop for QualityPSNR {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_QualityPSNR_delete(instance: *mut c_void); }
-			unsafe { cv_QualityPSNR_delete(self.as_raw_mut_QualityPSNR()) };
+			unsafe { sys::cv_quality_QualityPSNR_delete(self.as_raw_mut_QualityPSNR()) };
 		}
 	}
 	
@@ -698,9 +693,9 @@ pub mod quality {
 		
 	}
 	
-	boxed_cast_base! { QualityPSNR, core::Algorithm, cv_QualityPSNR_to_Algorithm }
+	boxed_cast_base! { QualityPSNR, core::Algorithm, cv_quality_QualityPSNR_to_Algorithm }
 	
-	boxed_cast_base! { QualityPSNR, crate::quality::QualityBase, cv_QualityPSNR_to_QualityBase }
+	boxed_cast_base! { QualityPSNR, crate::quality::QualityBase, cv_quality_QualityPSNR_to_QualityBase }
 	
 	impl std::fmt::Debug for QualityPSNR {
 		#[inline]
@@ -767,8 +762,7 @@ pub mod quality {
 	impl Drop for QualitySSIM {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_QualitySSIM_delete(instance: *mut c_void); }
-			unsafe { cv_QualitySSIM_delete(self.as_raw_mut_QualitySSIM()) };
+			unsafe { sys::cv_quality_QualitySSIM_delete(self.as_raw_mut_QualitySSIM()) };
 		}
 	}
 	
@@ -834,9 +828,9 @@ pub mod quality {
 		
 	}
 	
-	boxed_cast_base! { QualitySSIM, core::Algorithm, cv_QualitySSIM_to_Algorithm }
+	boxed_cast_base! { QualitySSIM, core::Algorithm, cv_quality_QualitySSIM_to_Algorithm }
 	
-	boxed_cast_base! { QualitySSIM, crate::quality::QualityBase, cv_QualitySSIM_to_QualityBase }
+	boxed_cast_base! { QualitySSIM, crate::quality::QualityBase, cv_quality_QualitySSIM_to_QualityBase }
 	
 	impl std::fmt::Debug for QualitySSIM {
 		#[inline]

@@ -286,8 +286,7 @@ pub mod flann {
 	impl Drop for AutotunedIndexParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AutotunedIndexParams_delete(instance: *mut c_void); }
-			unsafe { cv_AutotunedIndexParams_delete(self.as_raw_mut_AutotunedIndexParams()) };
+			unsafe { sys::cv_flann_AutotunedIndexParams_delete(self.as_raw_mut_AutotunedIndexParams()) };
 		}
 	}
 	
@@ -327,7 +326,7 @@ pub mod flann {
 		
 	}
 	
-	boxed_cast_base! { AutotunedIndexParams, crate::flann::IndexParams, cv_AutotunedIndexParams_to_IndexParams }
+	boxed_cast_base! { AutotunedIndexParams, crate::flann::IndexParams, cv_flann_AutotunedIndexParams_to_IndexParams }
 	
 	impl std::fmt::Debug for AutotunedIndexParams {
 		#[inline]
@@ -358,8 +357,7 @@ pub mod flann {
 	impl Drop for CompositeIndexParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CompositeIndexParams_delete(instance: *mut c_void); }
-			unsafe { cv_CompositeIndexParams_delete(self.as_raw_mut_CompositeIndexParams()) };
+			unsafe { sys::cv_flann_CompositeIndexParams_delete(self.as_raw_mut_CompositeIndexParams()) };
 		}
 	}
 	
@@ -400,7 +398,7 @@ pub mod flann {
 		
 	}
 	
-	boxed_cast_base! { CompositeIndexParams, crate::flann::IndexParams, cv_CompositeIndexParams_to_IndexParams }
+	boxed_cast_base! { CompositeIndexParams, crate::flann::IndexParams, cv_flann_CompositeIndexParams_to_IndexParams }
 	
 	impl std::fmt::Debug for CompositeIndexParams {
 		#[inline]
@@ -431,8 +429,7 @@ pub mod flann {
 	impl Drop for HierarchicalClusteringIndexParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HierarchicalClusteringIndexParams_delete(instance: *mut c_void); }
-			unsafe { cv_HierarchicalClusteringIndexParams_delete(self.as_raw_mut_HierarchicalClusteringIndexParams()) };
+			unsafe { sys::cv_flann_HierarchicalClusteringIndexParams_delete(self.as_raw_mut_HierarchicalClusteringIndexParams()) };
 		}
 	}
 	
@@ -472,7 +469,7 @@ pub mod flann {
 		
 	}
 	
-	boxed_cast_base! { HierarchicalClusteringIndexParams, crate::flann::IndexParams, cv_HierarchicalClusteringIndexParams_to_IndexParams }
+	boxed_cast_base! { HierarchicalClusteringIndexParams, crate::flann::IndexParams, cv_flann_HierarchicalClusteringIndexParams_to_IndexParams }
 	
 	impl std::fmt::Debug for HierarchicalClusteringIndexParams {
 		#[inline]
@@ -591,8 +588,7 @@ pub mod flann {
 	impl Drop for Index {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Index_delete(instance: *mut c_void); }
-			unsafe { cv_Index_delete(self.as_raw_mut_Index()) };
+			unsafe { sys::cv_flann_Index_delete(self.as_raw_mut_Index()) };
 		}
 	}
 	
@@ -699,13 +695,13 @@ pub mod flann {
 	
 		#[inline]
 		fn params(&mut self) -> *mut c_void {
-			let ret = unsafe { sys::cv_flann_IndexParams_getPropParams(self.as_raw_mut_IndexParams()) };
+			let ret = unsafe { sys::cv_flann_IndexParams_propParams(self.as_raw_mut_IndexParams()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_params(&mut self, val: *mut c_void) {
-			let ret = { sys::cv_flann_IndexParams_setPropParams_voidX(self.as_raw_mut_IndexParams(), val) };
+			let ret = { sys::cv_flann_IndexParams_propParams_voidX(self.as_raw_mut_IndexParams(), val) };
 			ret
 		}
 		
@@ -780,8 +776,7 @@ pub mod flann {
 	impl Drop for IndexParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_IndexParams_delete(instance: *mut c_void); }
-			unsafe { cv_IndexParams_delete(self.as_raw_mut_IndexParams()) };
+			unsafe { sys::cv_flann_IndexParams_delete(self.as_raw_mut_IndexParams()) };
 		}
 	}
 	
@@ -837,8 +832,7 @@ pub mod flann {
 	impl Drop for KDTreeIndexParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KDTreeIndexParams_delete(instance: *mut c_void); }
-			unsafe { cv_KDTreeIndexParams_delete(self.as_raw_mut_KDTreeIndexParams()) };
+			unsafe { sys::cv_flann_KDTreeIndexParams_delete(self.as_raw_mut_KDTreeIndexParams()) };
 		}
 	}
 	
@@ -875,7 +869,7 @@ pub mod flann {
 		
 	}
 	
-	boxed_cast_base! { KDTreeIndexParams, crate::flann::IndexParams, cv_KDTreeIndexParams_to_IndexParams }
+	boxed_cast_base! { KDTreeIndexParams, crate::flann::IndexParams, cv_flann_KDTreeIndexParams_to_IndexParams }
 	
 	impl std::fmt::Debug for KDTreeIndexParams {
 		#[inline]
@@ -906,8 +900,7 @@ pub mod flann {
 	impl Drop for KMeansIndexParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KMeansIndexParams_delete(instance: *mut c_void); }
-			unsafe { cv_KMeansIndexParams_delete(self.as_raw_mut_KMeansIndexParams()) };
+			unsafe { sys::cv_flann_KMeansIndexParams_delete(self.as_raw_mut_KMeansIndexParams()) };
 		}
 	}
 	
@@ -947,7 +940,7 @@ pub mod flann {
 		
 	}
 	
-	boxed_cast_base! { KMeansIndexParams, crate::flann::IndexParams, cv_KMeansIndexParams_to_IndexParams }
+	boxed_cast_base! { KMeansIndexParams, crate::flann::IndexParams, cv_flann_KMeansIndexParams_to_IndexParams }
 	
 	impl std::fmt::Debug for KMeansIndexParams {
 		#[inline]
@@ -978,8 +971,7 @@ pub mod flann {
 	impl Drop for LinearIndexParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LinearIndexParams_delete(instance: *mut c_void); }
-			unsafe { cv_LinearIndexParams_delete(self.as_raw_mut_LinearIndexParams()) };
+			unsafe { sys::cv_flann_LinearIndexParams_delete(self.as_raw_mut_LinearIndexParams()) };
 		}
 	}
 	
@@ -1014,7 +1006,7 @@ pub mod flann {
 		
 	}
 	
-	boxed_cast_base! { LinearIndexParams, crate::flann::IndexParams, cv_LinearIndexParams_to_IndexParams }
+	boxed_cast_base! { LinearIndexParams, crate::flann::IndexParams, cv_flann_LinearIndexParams_to_IndexParams }
 	
 	impl std::fmt::Debug for LinearIndexParams {
 		#[inline]
@@ -1045,8 +1037,7 @@ pub mod flann {
 	impl Drop for LshIndexParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LshIndexParams_delete(instance: *mut c_void); }
-			unsafe { cv_LshIndexParams_delete(self.as_raw_mut_LshIndexParams()) };
+			unsafe { sys::cv_flann_LshIndexParams_delete(self.as_raw_mut_LshIndexParams()) };
 		}
 	}
 	
@@ -1081,7 +1072,7 @@ pub mod flann {
 		
 	}
 	
-	boxed_cast_base! { LshIndexParams, crate::flann::IndexParams, cv_LshIndexParams_to_IndexParams }
+	boxed_cast_base! { LshIndexParams, crate::flann::IndexParams, cv_flann_LshIndexParams_to_IndexParams }
 	
 	impl std::fmt::Debug for LshIndexParams {
 		#[inline]
@@ -1112,8 +1103,7 @@ pub mod flann {
 	impl Drop for SavedIndexParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SavedIndexParams_delete(instance: *mut c_void); }
-			unsafe { cv_SavedIndexParams_delete(self.as_raw_mut_SavedIndexParams()) };
+			unsafe { sys::cv_flann_SavedIndexParams_delete(self.as_raw_mut_SavedIndexParams()) };
 		}
 	}
 	
@@ -1149,7 +1139,7 @@ pub mod flann {
 		
 	}
 	
-	boxed_cast_base! { SavedIndexParams, crate::flann::IndexParams, cv_SavedIndexParams_to_IndexParams }
+	boxed_cast_base! { SavedIndexParams, crate::flann::IndexParams, cv_flann_SavedIndexParams_to_IndexParams }
 	
 	impl std::fmt::Debug for SavedIndexParams {
 		#[inline]
@@ -1180,8 +1170,7 @@ pub mod flann {
 	impl Drop for SearchParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SearchParams_delete(instance: *mut c_void); }
-			unsafe { cv_SearchParams_delete(self.as_raw_mut_SearchParams()) };
+			unsafe { sys::cv_flann_SearchParams_delete(self.as_raw_mut_SearchParams()) };
 		}
 	}
 	
@@ -1230,7 +1219,7 @@ pub mod flann {
 		
 	}
 	
-	boxed_cast_base! { SearchParams, crate::flann::IndexParams, cv_SearchParams_to_IndexParams }
+	boxed_cast_base! { SearchParams, crate::flann::IndexParams, cv_flann_SearchParams_to_IndexParams }
 	
 	impl std::fmt::Debug for SearchParams {
 		#[inline]

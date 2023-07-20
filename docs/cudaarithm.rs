@@ -1813,8 +1813,7 @@ pub mod cudaarithm {
 	impl Drop for Convolution {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Convolution_delete(instance: *mut c_void); }
-			unsafe { cv_Convolution_delete(self.as_raw_mut_Convolution()) };
+			unsafe { sys::cv_cuda_Convolution_delete(self.as_raw_mut_Convolution()) };
 		}
 	}
 	
@@ -1839,7 +1838,7 @@ pub mod cudaarithm {
 	impl Convolution {
 	}
 	
-	boxed_cast_base! { Convolution, core::Algorithm, cv_Convolution_to_Algorithm }
+	boxed_cast_base! { Convolution, core::Algorithm, cv_cuda_Convolution_to_Algorithm }
 	
 	impl std::fmt::Debug for Convolution {
 		#[inline]
@@ -1891,8 +1890,7 @@ pub mod cudaarithm {
 	impl Drop for DFT {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DFT_delete(instance: *mut c_void); }
-			unsafe { cv_DFT_delete(self.as_raw_mut_DFT()) };
+			unsafe { sys::cv_cuda_DFT_delete(self.as_raw_mut_DFT()) };
 		}
 	}
 	
@@ -1917,7 +1915,7 @@ pub mod cudaarithm {
 	impl DFT {
 	}
 	
-	boxed_cast_base! { DFT, core::Algorithm, cv_DFT_to_Algorithm }
+	boxed_cast_base! { DFT, core::Algorithm, cv_cuda_DFT_to_Algorithm }
 	
 	impl std::fmt::Debug for DFT {
 		#[inline]
@@ -1970,8 +1968,7 @@ pub mod cudaarithm {
 	impl Drop for LookUpTable {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LookUpTable_delete(instance: *mut c_void); }
-			unsafe { cv_LookUpTable_delete(self.as_raw_mut_LookUpTable()) };
+			unsafe { sys::cv_cuda_LookUpTable_delete(self.as_raw_mut_LookUpTable()) };
 		}
 	}
 	
@@ -1996,7 +1993,7 @@ pub mod cudaarithm {
 	impl LookUpTable {
 	}
 	
-	boxed_cast_base! { LookUpTable, core::Algorithm, cv_LookUpTable_to_Algorithm }
+	boxed_cast_base! { LookUpTable, core::Algorithm, cv_cuda_LookUpTable_to_Algorithm }
 	
 	impl std::fmt::Debug for LookUpTable {
 		#[inline]

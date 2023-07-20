@@ -503,8 +503,7 @@ pub mod rgbd {
 	impl Drop for ColoredKinfu_ColoredKinFu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ColoredKinfu_ColoredKinFu_delete(instance: *mut c_void); }
-			unsafe { cv_ColoredKinfu_ColoredKinFu_delete(self.as_raw_mut_ColoredKinfu_ColoredKinFu()) };
+			unsafe { sys::cv_colored_kinfu_ColoredKinFu_delete(self.as_raw_mut_ColoredKinfu_ColoredKinFu()) };
 		}
 	}
 	
@@ -547,7 +546,7 @@ pub mod rgbd {
 		#[inline]
 		fn frame_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_colored_kinfu_Params_getPropFrameSize_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_colored_kinfu_Params_propFrameSize_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -556,7 +555,7 @@ pub mod rgbd {
 		#[inline]
 		fn rgb_frame_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_colored_kinfu_Params_getPropRgb_frameSize_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_colored_kinfu_Params_propRgb_frameSize_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -564,7 +563,7 @@ pub mod rgbd {
 		#[inline]
 		fn volume_type(&self) -> crate::rgbd::Kinfu_VolumeType {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_colored_kinfu_Params_getPropVolumeType_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_colored_kinfu_Params_propVolumeType_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -573,7 +572,7 @@ pub mod rgbd {
 		#[inline]
 		fn intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_colored_kinfu_Params_getPropIntr_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_colored_kinfu_Params_propIntr_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -582,7 +581,7 @@ pub mod rgbd {
 		#[inline]
 		fn rgb_intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_colored_kinfu_Params_getPropRgb_intr_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_colored_kinfu_Params_propRgb_intr_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -595,35 +594,35 @@ pub mod rgbd {
 		///      * 1 per 1 meter for the 32-bit float images in the ROS bag files
 		#[inline]
 		fn depth_factor(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropDepthFactor_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propDepthFactor_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
 		/// Depth sigma in meters for bilateral smooth
 		#[inline]
 		fn bilateral_sigma_depth(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropBilateral_sigma_depth_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propBilateral_sigma_depth_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
 		/// Spatial sigma in pixels for bilateral smooth
 		#[inline]
 		fn bilateral_sigma_spatial(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropBilateral_sigma_spatial_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propBilateral_sigma_spatial_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
 		/// Kernel size in pixels for bilateral smooth
 		#[inline]
 		fn bilateral_kernel_size(&self) -> i32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropBilateral_kernel_size_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propBilateral_kernel_size_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
 		/// Number of pyramid levels for ICP
 		#[inline]
 		fn pyramid_levels(&self) -> i32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropPyramidLevels_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propPyramidLevels_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
@@ -633,7 +632,7 @@ pub mod rgbd {
 		#[inline]
 		fn volume_dims(&self) -> core::Vec3i {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_colored_kinfu_Params_getPropVolumeDims_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_colored_kinfu_Params_propVolumeDims_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -641,7 +640,7 @@ pub mod rgbd {
 		/// Size of voxel in meters
 		#[inline]
 		fn voxel_size(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropVoxelSize_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propVoxelSize_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
@@ -650,7 +649,7 @@ pub mod rgbd {
 		/// Integrate new depth frame only if camera movement exceeds this value.
 		#[inline]
 		fn tsdf_min_camera_movement(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropTsdf_min_camera_movement_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propTsdf_min_camera_movement_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
@@ -658,7 +657,7 @@ pub mod rgbd {
 		#[inline]
 		fn volume_pose(&self) -> core::Affine3f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_colored_kinfu_Params_getPropVolumePose_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_colored_kinfu_Params_propVolumePose_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -668,7 +667,7 @@ pub mod rgbd {
 		/// Distances to surface that exceed this value will be truncated to 1.0.
 		#[inline]
 		fn tsdf_trunc_dist(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropTsdf_trunc_dist_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propTsdf_trunc_dist_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
@@ -677,7 +676,7 @@ pub mod rgbd {
 		/// Each voxel keeps running average of distances no longer than this value.
 		#[inline]
 		fn tsdf_max_weight(&self) -> i32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropTsdf_max_weight_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propTsdf_max_weight_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
@@ -686,7 +685,7 @@ pub mod rgbd {
 		/// How much voxel sizes we skip each raycast step
 		#[inline]
 		fn raycast_step_factor(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropRaycast_step_factor_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propRaycast_step_factor_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
@@ -694,7 +693,7 @@ pub mod rgbd {
 		#[inline]
 		fn light_pose(&self) -> core::Vec3f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_colored_kinfu_Params_getPropLightPose_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_colored_kinfu_Params_propLightPose_const(self.as_raw_ColoredKinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -702,21 +701,21 @@ pub mod rgbd {
 		/// distance theshold for ICP in meters
 		#[inline]
 		fn icp_dist_thresh(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropIcpDistThresh_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propIcpDistThresh_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
 		/// angle threshold for ICP in radians
 		#[inline]
 		fn icp_angle_thresh(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropIcpAngleThresh_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propIcpAngleThresh_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
 		/// number of ICP iterations for each pyramid level
 		#[inline]
 		fn icp_iterations(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropIcpIterations_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propIcpIterations_const(self.as_raw_ColoredKinfu_Params()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
@@ -726,7 +725,7 @@ pub mod rgbd {
 		/// All depth values beyond this threshold will be set to zero
 		#[inline]
 		fn truncate_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_getPropTruncateThreshold_const(self.as_raw_ColoredKinfu_Params()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propTruncateThreshold_const(self.as_raw_ColoredKinfu_Params()) };
 			ret
 		}
 		
@@ -739,34 +738,34 @@ pub mod rgbd {
 		/// frame size in pixels
 		#[inline]
 		fn set_frame_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropFrameSize_Size(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propFrameSize_Size(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// rgb frame size in pixels
 		#[inline]
 		fn set_rgb_frame_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropRgb_frameSize_Size(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propRgb_frameSize_Size(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_volume_type(&mut self, val: crate::rgbd::Kinfu_VolumeType) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropVolumeType_VolumeType(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propVolumeType_VolumeType(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
 		/// camera intrinsics
 		#[inline]
 		fn set_intr(&mut self, val: core::Matx33f) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropIntr_Matx33f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propIntr_Matx33f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// rgb camera intrinsics
 		#[inline]
 		fn set_rgb_intr(&mut self, val: core::Matx33f) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropRgb_intr_Matx33f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propRgb_intr_Matx33f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -778,35 +777,35 @@ pub mod rgbd {
 		///      * 1 per 1 meter for the 32-bit float images in the ROS bag files
 		#[inline]
 		fn set_depth_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropDepthFactor_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propDepthFactor_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
 		/// Depth sigma in meters for bilateral smooth
 		#[inline]
 		fn set_bilateral_sigma_depth(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropBilateral_sigma_depth_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propBilateral_sigma_depth_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
 		/// Spatial sigma in pixels for bilateral smooth
 		#[inline]
 		fn set_bilateral_sigma_spatial(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropBilateral_sigma_spatial_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propBilateral_sigma_spatial_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
 		/// Kernel size in pixels for bilateral smooth
 		#[inline]
 		fn set_bilateral_kernel_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropBilateral_kernel_size_int(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propBilateral_kernel_size_int(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
 		/// Number of pyramid levels for ICP
 		#[inline]
 		fn set_pyramid_levels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropPyramidLevels_int(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propPyramidLevels_int(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
@@ -815,14 +814,14 @@ pub mod rgbd {
 		/// Number of voxels in each dimension.
 		#[inline]
 		fn set_volume_dims(&mut self, val: core::Vec3i) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropVolumeDims_Vec3i(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propVolumeDims_Vec3i(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Size of voxel in meters
 		#[inline]
 		fn set_voxel_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropVoxelSize_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propVoxelSize_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
@@ -831,14 +830,14 @@ pub mod rgbd {
 		/// Integrate new depth frame only if camera movement exceeds this value.
 		#[inline]
 		fn set_tsdf_min_camera_movement(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropTsdf_min_camera_movement_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propTsdf_min_camera_movement_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
 		/// initial volume pose in meters
 		#[inline]
 		fn set_volume_pose(&mut self, val: core::Affine3f) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropVolumePose_Affine3f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propVolumePose_Affine3f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -847,7 +846,7 @@ pub mod rgbd {
 		/// Distances to surface that exceed this value will be truncated to 1.0.
 		#[inline]
 		fn set_tsdf_trunc_dist(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropTsdf_trunc_dist_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propTsdf_trunc_dist_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
@@ -856,7 +855,7 @@ pub mod rgbd {
 		/// Each voxel keeps running average of distances no longer than this value.
 		#[inline]
 		fn set_tsdf_max_weight(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropTsdf_max_weight_int(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propTsdf_max_weight_int(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
@@ -865,35 +864,35 @@ pub mod rgbd {
 		/// How much voxel sizes we skip each raycast step
 		#[inline]
 		fn set_raycast_step_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropRaycast_step_factor_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propRaycast_step_factor_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
 		/// light pose for rendering in meters
 		#[inline]
 		fn set_light_pose(&mut self, val: core::Vec3f) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropLightPose_Vec3f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propLightPose_Vec3f(self.as_raw_mut_ColoredKinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// distance theshold for ICP in meters
 		#[inline]
 		fn set_icp_dist_thresh(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropIcpDistThresh_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propIcpDistThresh_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
 		/// angle threshold for ICP in radians
 		#[inline]
 		fn set_icp_angle_thresh(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropIcpAngleThresh_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propIcpAngleThresh_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
 		/// number of ICP iterations for each pyramid level
 		#[inline]
 		fn set_icp_iterations(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropIcpIterations_vectorLintG(self.as_raw_mut_ColoredKinfu_Params(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propIcpIterations_vectorLintG(self.as_raw_mut_ColoredKinfu_Params(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
@@ -902,7 +901,7 @@ pub mod rgbd {
 		/// All depth values beyond this threshold will be set to zero
 		#[inline]
 		fn set_truncate_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_colored_kinfu_Params_setPropTruncateThreshold_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
+			let ret = unsafe { sys::cv_colored_kinfu_Params_propTruncateThreshold_float(self.as_raw_mut_ColoredKinfu_Params(), val) };
 			ret
 		}
 		
@@ -944,8 +943,7 @@ pub mod rgbd {
 	impl Drop for ColoredKinfu_Params {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ColoredKinfu_Params_delete(instance: *mut c_void); }
-			unsafe { cv_ColoredKinfu_Params_delete(self.as_raw_mut_ColoredKinfu_Params()) };
+			unsafe { sys::cv_colored_kinfu_Params_delete(self.as_raw_mut_ColoredKinfu_Params()) };
 		}
 	}
 	
@@ -1260,8 +1258,7 @@ pub mod rgbd {
 	impl Drop for Dynafu_DynaFu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Dynafu_DynaFu_delete(instance: *mut c_void); }
-			unsafe { cv_Dynafu_DynaFu_delete(self.as_raw_mut_Dynafu_DynaFu()) };
+			unsafe { sys::cv_dynafu_DynaFu_delete(self.as_raw_mut_Dynafu_DynaFu()) };
 		}
 	}
 	
@@ -1613,8 +1610,7 @@ pub mod rgbd {
 	impl Drop for Kinfu_KinFu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Kinfu_KinFu_delete(instance: *mut c_void); }
-			unsafe { cv_Kinfu_KinFu_delete(self.as_raw_mut_Kinfu_KinFu()) };
+			unsafe { sys::cv_kinfu_KinFu_delete(self.as_raw_mut_Kinfu_KinFu()) };
 		}
 	}
 	
@@ -1657,7 +1653,7 @@ pub mod rgbd {
 		#[inline]
 		fn frame_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_Params_getPropFrameSize_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_Params_propFrameSize_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1666,7 +1662,7 @@ pub mod rgbd {
 		#[inline]
 		fn volume_type(&self) -> crate::rgbd::Kinfu_VolumeType {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_Params_getPropVolumeType_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_Params_propVolumeType_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1675,7 +1671,7 @@ pub mod rgbd {
 		#[inline]
 		fn intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_Params_getPropIntr_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_Params_propIntr_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1684,7 +1680,7 @@ pub mod rgbd {
 		#[inline]
 		fn rgb_intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_Params_getPropRgb_intr_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_Params_propRgb_intr_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1697,35 +1693,35 @@ pub mod rgbd {
 		///      * 1 per 1 meter for the 32-bit float images in the ROS bag files
 		#[inline]
 		fn depth_factor(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropDepthFactor_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propDepthFactor_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
 		/// Depth sigma in meters for bilateral smooth
 		#[inline]
 		fn bilateral_sigma_depth(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropBilateral_sigma_depth_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propBilateral_sigma_depth_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
 		/// Spatial sigma in pixels for bilateral smooth
 		#[inline]
 		fn bilateral_sigma_spatial(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropBilateral_sigma_spatial_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propBilateral_sigma_spatial_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
 		/// Kernel size in pixels for bilateral smooth
 		#[inline]
 		fn bilateral_kernel_size(&self) -> i32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropBilateral_kernel_size_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propBilateral_kernel_size_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
 		/// Number of pyramid levels for ICP
 		#[inline]
 		fn pyramid_levels(&self) -> i32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropPyramidLevels_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propPyramidLevels_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
@@ -1735,7 +1731,7 @@ pub mod rgbd {
 		#[inline]
 		fn volume_dims(&self) -> core::Vec3i {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_Params_getPropVolumeDims_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_Params_propVolumeDims_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1743,7 +1739,7 @@ pub mod rgbd {
 		/// Size of voxel in meters
 		#[inline]
 		fn voxel_size(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropVoxelSize_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propVoxelSize_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
@@ -1752,7 +1748,7 @@ pub mod rgbd {
 		/// Integrate new depth frame only if camera movement exceeds this value.
 		#[inline]
 		fn tsdf_min_camera_movement(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropTsdf_min_camera_movement_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propTsdf_min_camera_movement_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
@@ -1760,7 +1756,7 @@ pub mod rgbd {
 		#[inline]
 		fn volume_pose(&self) -> core::Affine3f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_Params_getPropVolumePose_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_Params_propVolumePose_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1770,7 +1766,7 @@ pub mod rgbd {
 		/// Distances to surface that exceed this value will be truncated to 1.0.
 		#[inline]
 		fn tsdf_trunc_dist(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropTsdf_trunc_dist_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propTsdf_trunc_dist_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
@@ -1779,7 +1775,7 @@ pub mod rgbd {
 		/// Each voxel keeps running average of distances no longer than this value.
 		#[inline]
 		fn tsdf_max_weight(&self) -> i32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropTsdf_max_weight_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propTsdf_max_weight_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
@@ -1788,7 +1784,7 @@ pub mod rgbd {
 		/// How much voxel sizes we skip each raycast step
 		#[inline]
 		fn raycast_step_factor(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropRaycast_step_factor_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propRaycast_step_factor_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
@@ -1796,7 +1792,7 @@ pub mod rgbd {
 		#[inline]
 		fn light_pose(&self) -> core::Vec3f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_Params_getPropLightPose_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_Params_propLightPose_const(self.as_raw_Kinfu_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1804,21 +1800,21 @@ pub mod rgbd {
 		/// distance theshold for ICP in meters
 		#[inline]
 		fn icp_dist_thresh(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropIcpDistThresh_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propIcpDistThresh_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
 		/// angle threshold for ICP in radians
 		#[inline]
 		fn icp_angle_thresh(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropIcpAngleThresh_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propIcpAngleThresh_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
 		/// number of ICP iterations for each pyramid level
 		#[inline]
 		fn icp_iterations(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropIcpIterations_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propIcpIterations_const(self.as_raw_Kinfu_Params()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
@@ -1828,7 +1824,7 @@ pub mod rgbd {
 		/// All depth values beyond this threshold will be set to zero
 		#[inline]
 		fn truncate_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Params_getPropTruncateThreshold_const(self.as_raw_Kinfu_Params()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propTruncateThreshold_const(self.as_raw_Kinfu_Params()) };
 			ret
 		}
 		
@@ -1841,28 +1837,28 @@ pub mod rgbd {
 		/// frame size in pixels
 		#[inline]
 		fn set_frame_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropFrameSize_Size(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propFrameSize_Size(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// rgb frame size in pixels
 		#[inline]
 		fn set_volume_type(&mut self, val: crate::rgbd::Kinfu_VolumeType) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropVolumeType_VolumeType(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propVolumeType_VolumeType(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
 		/// camera intrinsics
 		#[inline]
 		fn set_intr(&mut self, val: core::Matx33f) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropIntr_Matx33f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propIntr_Matx33f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// rgb camera intrinsics
 		#[inline]
 		fn set_rgb_intr(&mut self, val: core::Matx33f) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropRgb_intr_Matx33f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propRgb_intr_Matx33f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -1874,35 +1870,35 @@ pub mod rgbd {
 		///      * 1 per 1 meter for the 32-bit float images in the ROS bag files
 		#[inline]
 		fn set_depth_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropDepthFactor_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propDepthFactor_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
 		/// Depth sigma in meters for bilateral smooth
 		#[inline]
 		fn set_bilateral_sigma_depth(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropBilateral_sigma_depth_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propBilateral_sigma_depth_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
 		/// Spatial sigma in pixels for bilateral smooth
 		#[inline]
 		fn set_bilateral_sigma_spatial(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropBilateral_sigma_spatial_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propBilateral_sigma_spatial_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
 		/// Kernel size in pixels for bilateral smooth
 		#[inline]
 		fn set_bilateral_kernel_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropBilateral_kernel_size_int(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propBilateral_kernel_size_int(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
 		/// Number of pyramid levels for ICP
 		#[inline]
 		fn set_pyramid_levels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropPyramidLevels_int(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propPyramidLevels_int(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
@@ -1911,14 +1907,14 @@ pub mod rgbd {
 		/// Number of voxels in each dimension.
 		#[inline]
 		fn set_volume_dims(&mut self, val: core::Vec3i) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropVolumeDims_Vec3i(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propVolumeDims_Vec3i(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Size of voxel in meters
 		#[inline]
 		fn set_voxel_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropVoxelSize_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propVoxelSize_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
@@ -1927,14 +1923,14 @@ pub mod rgbd {
 		/// Integrate new depth frame only if camera movement exceeds this value.
 		#[inline]
 		fn set_tsdf_min_camera_movement(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropTsdf_min_camera_movement_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propTsdf_min_camera_movement_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
 		/// initial volume pose in meters
 		#[inline]
 		fn set_volume_pose(&mut self, val: core::Affine3f) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropVolumePose_Affine3f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propVolumePose_Affine3f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -1943,7 +1939,7 @@ pub mod rgbd {
 		/// Distances to surface that exceed this value will be truncated to 1.0.
 		#[inline]
 		fn set_tsdf_trunc_dist(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropTsdf_trunc_dist_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propTsdf_trunc_dist_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
@@ -1952,7 +1948,7 @@ pub mod rgbd {
 		/// Each voxel keeps running average of distances no longer than this value.
 		#[inline]
 		fn set_tsdf_max_weight(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropTsdf_max_weight_int(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propTsdf_max_weight_int(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
@@ -1961,35 +1957,35 @@ pub mod rgbd {
 		/// How much voxel sizes we skip each raycast step
 		#[inline]
 		fn set_raycast_step_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropRaycast_step_factor_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propRaycast_step_factor_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
 		/// light pose for rendering in meters
 		#[inline]
 		fn set_light_pose(&mut self, val: core::Vec3f) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropLightPose_Vec3f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propLightPose_Vec3f(self.as_raw_mut_Kinfu_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// distance theshold for ICP in meters
 		#[inline]
 		fn set_icp_dist_thresh(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropIcpDistThresh_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propIcpDistThresh_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
 		/// angle threshold for ICP in radians
 		#[inline]
 		fn set_icp_angle_thresh(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropIcpAngleThresh_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propIcpAngleThresh_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
 		/// number of ICP iterations for each pyramid level
 		#[inline]
 		fn set_icp_iterations(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropIcpIterations_vectorLintG(self.as_raw_mut_Kinfu_Params(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_kinfu_Params_propIcpIterations_vectorLintG(self.as_raw_mut_Kinfu_Params(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
@@ -1998,7 +1994,7 @@ pub mod rgbd {
 		/// All depth values beyond this threshold will be set to zero
 		#[inline]
 		fn set_truncate_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_Params_setPropTruncateThreshold_float(self.as_raw_mut_Kinfu_Params(), val) };
+			let ret = unsafe { sys::cv_kinfu_Params_propTruncateThreshold_float(self.as_raw_mut_Kinfu_Params(), val) };
 			ret
 		}
 		
@@ -2040,8 +2036,7 @@ pub mod rgbd {
 	impl Drop for Kinfu_Params {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Kinfu_Params_delete(instance: *mut c_void); }
-			unsafe { cv_Kinfu_Params_delete(self.as_raw_mut_Kinfu_Params()) };
+			unsafe { sys::cv_kinfu_Params_delete(self.as_raw_mut_Kinfu_Params()) };
 		}
 	}
 	
@@ -2181,27 +2176,27 @@ pub mod rgbd {
 	
 		#[inline]
 		fn voxel_size(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Volume_getPropVoxelSize_const(self.as_raw_Kinfu_Volume()) };
+			let ret = unsafe { sys::cv_kinfu_Volume_propVoxelSize_const(self.as_raw_Kinfu_Volume()) };
 			ret
 		}
 		
 		#[inline]
 		fn voxel_size_inv(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Volume_getPropVoxelSizeInv_const(self.as_raw_Kinfu_Volume()) };
+			let ret = unsafe { sys::cv_kinfu_Volume_propVoxelSizeInv_const(self.as_raw_Kinfu_Volume()) };
 			ret
 		}
 		
 		#[inline]
 		fn pose(&self) -> core::Affine3f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_Volume_getPropPose_const(self.as_raw_Kinfu_Volume(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_Volume_propPose_const(self.as_raw_Kinfu_Volume(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn raycast_step_factor(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_Volume_getPropRaycastStepFactor_const(self.as_raw_Kinfu_Volume()) };
+			let ret = unsafe { sys::cv_kinfu_Volume_propRaycastStepFactor_const(self.as_raw_Kinfu_Volume()) };
 			ret
 		}
 		
@@ -2313,8 +2308,7 @@ pub mod rgbd {
 	impl Drop for Kinfu_Volume {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Kinfu_Volume_delete(instance: *mut c_void); }
-			unsafe { cv_Kinfu_Volume_delete(self.as_raw_mut_Kinfu_Volume()) };
+			unsafe { sys::cv_kinfu_Volume_delete(self.as_raw_mut_Kinfu_Volume()) };
 		}
 	}
 	
@@ -2352,7 +2346,7 @@ pub mod rgbd {
 		#[inline]
 		fn typ(&self) -> crate::rgbd::Kinfu_VolumeType {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_VolumeParams_getPropType_const(self.as_raw_Kinfu_VolumeParams(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_VolumeParams_propType_const(self.as_raw_Kinfu_VolumeParams(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2364,7 +2358,7 @@ pub mod rgbd {
 		#[inline]
 		fn resolution(&self) -> core::Vec3i {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_VolumeParams_getPropResolution_const(self.as_raw_Kinfu_VolumeParams(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_VolumeParams_propResolution_const(self.as_raw_Kinfu_VolumeParams(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2374,7 +2368,7 @@ pub mod rgbd {
 		/// Applicable only for hashTSDF.
 		#[inline]
 		fn unit_resolution(&self) -> i32 {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_getPropUnitResolution_const(self.as_raw_Kinfu_VolumeParams()) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propUnitResolution_const(self.as_raw_Kinfu_VolumeParams()) };
 			ret
 		}
 		
@@ -2382,7 +2376,7 @@ pub mod rgbd {
 		#[inline]
 		fn pose(&self) -> core::Affine3f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_kinfu_VolumeParams_getPropPose_const(self.as_raw_Kinfu_VolumeParams(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_kinfu_VolumeParams_propPose_const(self.as_raw_Kinfu_VolumeParams(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2390,7 +2384,7 @@ pub mod rgbd {
 		/// Length of voxels in meters
 		#[inline]
 		fn voxel_size(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_getPropVoxelSize_const(self.as_raw_Kinfu_VolumeParams()) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propVoxelSize_const(self.as_raw_Kinfu_VolumeParams()) };
 			ret
 		}
 		
@@ -2398,7 +2392,7 @@ pub mod rgbd {
 		/// Distances greater than value from surface will be truncated to 1.0
 		#[inline]
 		fn tsdf_trunc_dist(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_getPropTsdfTruncDist_const(self.as_raw_Kinfu_VolumeParams()) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propTsdfTruncDist_const(self.as_raw_Kinfu_VolumeParams()) };
 			ret
 		}
 		
@@ -2407,7 +2401,7 @@ pub mod rgbd {
 		/// of the TSDF is calculated for a voxel
 		#[inline]
 		fn max_weight(&self) -> i32 {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_getPropMaxWeight_const(self.as_raw_Kinfu_VolumeParams()) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propMaxWeight_const(self.as_raw_Kinfu_VolumeParams()) };
 			ret
 		}
 		
@@ -2415,7 +2409,7 @@ pub mod rgbd {
 		/// Truncates the depth greater than threshold to 0
 		#[inline]
 		fn depth_trunc_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_getPropDepthTruncThreshold_const(self.as_raw_Kinfu_VolumeParams()) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propDepthTruncThreshold_const(self.as_raw_Kinfu_VolumeParams()) };
 			ret
 		}
 		
@@ -2423,7 +2417,7 @@ pub mod rgbd {
 		/// Describes the percentage of voxel length that is skipped per march
 		#[inline]
 		fn raycast_step_factor(&self) -> f32 {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_getPropRaycastStepFactor_const(self.as_raw_Kinfu_VolumeParams()) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propRaycastStepFactor_const(self.as_raw_Kinfu_VolumeParams()) };
 			ret
 		}
 		
@@ -2437,7 +2431,7 @@ pub mod rgbd {
 		/// Values can be TSDF (single volume) or HASHTSDF (hashtable of volume units)
 		#[inline]
 		fn set_type(&mut self, val: crate::rgbd::Kinfu_VolumeType) {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_setPropType_VolumeType(self.as_raw_mut_Kinfu_VolumeParams(), val) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propType_VolumeType(self.as_raw_mut_Kinfu_VolumeParams(), val) };
 			ret
 		}
 		
@@ -2447,7 +2441,7 @@ pub mod rgbd {
 		/// HashTSDF volume only supports equal resolution in all three dimensions
 		#[inline]
 		fn set_resolution(&mut self, val: core::Vec3i) {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_setPropResolution_Vec3i(self.as_raw_mut_Kinfu_VolumeParams(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propResolution_Vec3i(self.as_raw_mut_Kinfu_VolumeParams(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -2459,21 +2453,21 @@ pub mod rgbd {
 		/// * val: {0}
 		#[inline]
 		fn set_unit_resolution(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_setPropUnitResolution_int(self.as_raw_mut_Kinfu_VolumeParams(), val) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propUnitResolution_int(self.as_raw_mut_Kinfu_VolumeParams(), val) };
 			ret
 		}
 		
 		/// Initial pose of the volume in meters
 		#[inline]
 		fn set_pose(&mut self, val: core::Affine3f) {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_setPropPose_Affine3f(self.as_raw_mut_Kinfu_VolumeParams(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propPose_Affine3f(self.as_raw_mut_Kinfu_VolumeParams(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Length of voxels in meters
 		#[inline]
 		fn set_voxel_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_setPropVoxelSize_float(self.as_raw_mut_Kinfu_VolumeParams(), val) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propVoxelSize_float(self.as_raw_mut_Kinfu_VolumeParams(), val) };
 			ret
 		}
 		
@@ -2481,7 +2475,7 @@ pub mod rgbd {
 		/// Distances greater than value from surface will be truncated to 1.0
 		#[inline]
 		fn set_tsdf_trunc_dist(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_setPropTsdfTruncDist_float(self.as_raw_mut_Kinfu_VolumeParams(), val) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propTsdfTruncDist_float(self.as_raw_mut_Kinfu_VolumeParams(), val) };
 			ret
 		}
 		
@@ -2490,7 +2484,7 @@ pub mod rgbd {
 		/// of the TSDF is calculated for a voxel
 		#[inline]
 		fn set_max_weight(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_setPropMaxWeight_int(self.as_raw_mut_Kinfu_VolumeParams(), val) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propMaxWeight_int(self.as_raw_mut_Kinfu_VolumeParams(), val) };
 			ret
 		}
 		
@@ -2498,7 +2492,7 @@ pub mod rgbd {
 		/// Truncates the depth greater than threshold to 0
 		#[inline]
 		fn set_depth_trunc_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_setPropDepthTruncThreshold_float(self.as_raw_mut_Kinfu_VolumeParams(), val) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propDepthTruncThreshold_float(self.as_raw_mut_Kinfu_VolumeParams(), val) };
 			ret
 		}
 		
@@ -2506,7 +2500,7 @@ pub mod rgbd {
 		/// Describes the percentage of voxel length that is skipped per march
 		#[inline]
 		fn set_raycast_step_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_kinfu_VolumeParams_setPropRaycastStepFactor_float(self.as_raw_mut_Kinfu_VolumeParams(), val) };
+			let ret = unsafe { sys::cv_kinfu_VolumeParams_propRaycastStepFactor_float(self.as_raw_mut_Kinfu_VolumeParams(), val) };
 			ret
 		}
 		
@@ -2521,8 +2515,7 @@ pub mod rgbd {
 	impl Drop for Kinfu_VolumeParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Kinfu_VolumeParams_delete(instance: *mut c_void); }
-			unsafe { cv_Kinfu_VolumeParams_delete(self.as_raw_mut_Kinfu_VolumeParams()) };
+			unsafe { sys::cv_kinfu_VolumeParams_delete(self.as_raw_mut_Kinfu_VolumeParams()) };
 		}
 	}
 	
@@ -2732,8 +2725,7 @@ pub mod rgbd {
 	impl Drop for Kinfu_Detail_PoseGraph {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Kinfu_Detail_PoseGraph_delete(instance: *mut c_void); }
-			unsafe { cv_Kinfu_Detail_PoseGraph_delete(self.as_raw_mut_Kinfu_Detail_PoseGraph()) };
+			unsafe { sys::cv_kinfu_detail_PoseGraph_delete(self.as_raw_mut_Kinfu_Detail_PoseGraph()) };
 		}
 	}
 	
@@ -2908,8 +2900,7 @@ pub mod rgbd {
 	impl Drop for LargeKinfu {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LargeKinfu_delete(instance: *mut c_void); }
-			unsafe { cv_LargeKinfu_delete(self.as_raw_mut_LargeKinfu()) };
+			unsafe { sys::cv_large_kinfu_LargeKinfu_delete(self.as_raw_mut_LargeKinfu()) };
 		}
 	}
 	
@@ -2952,7 +2943,7 @@ pub mod rgbd {
 		#[inline]
 		fn frame_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_large_kinfu_Params_getPropFrameSize_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_large_kinfu_Params_propFrameSize_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2961,7 +2952,7 @@ pub mod rgbd {
 		#[inline]
 		fn intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_large_kinfu_Params_getPropIntr_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_large_kinfu_Params_propIntr_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2970,7 +2961,7 @@ pub mod rgbd {
 		#[inline]
 		fn rgb_intr(&self) -> core::Matx33f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_large_kinfu_Params_getPropRgb_intr_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_large_kinfu_Params_propRgb_intr_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2982,35 +2973,35 @@ pub mod rgbd {
 		///      * 1 per 1 meter for the 32-bit float images in the ROS bag files
 		#[inline]
 		fn depth_factor(&self) -> f32 {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropDepthFactor_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propDepthFactor_const(self.as_raw_Params()) };
 			ret
 		}
 		
 		/// Depth sigma in meters for bilateral smooth
 		#[inline]
 		fn bilateral_sigma_depth(&self) -> f32 {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropBilateral_sigma_depth_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propBilateral_sigma_depth_const(self.as_raw_Params()) };
 			ret
 		}
 		
 		/// Spatial sigma in pixels for bilateral smooth
 		#[inline]
 		fn bilateral_sigma_spatial(&self) -> f32 {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropBilateral_sigma_spatial_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propBilateral_sigma_spatial_const(self.as_raw_Params()) };
 			ret
 		}
 		
 		/// Kernel size in pixels for bilateral smooth
 		#[inline]
 		fn bilateral_kernel_size(&self) -> i32 {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropBilateral_kernel_size_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propBilateral_kernel_size_const(self.as_raw_Params()) };
 			ret
 		}
 		
 		/// Number of pyramid levels for ICP
 		#[inline]
 		fn pyramid_levels(&self) -> i32 {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropPyramidLevels_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propPyramidLevels_const(self.as_raw_Params()) };
 			ret
 		}
 		
@@ -3018,7 +3009,7 @@ pub mod rgbd {
 		/// Integrate new depth frame only if camera movement exceeds this value.
 		#[inline]
 		fn tsdf_min_camera_movement(&self) -> f32 {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropTsdf_min_camera_movement_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propTsdf_min_camera_movement_const(self.as_raw_Params()) };
 			ret
 		}
 		
@@ -3026,7 +3017,7 @@ pub mod rgbd {
 		#[inline]
 		fn light_pose(&self) -> core::Vec3f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_large_kinfu_Params_getPropLightPose_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_large_kinfu_Params_propLightPose_const(self.as_raw_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -3034,21 +3025,21 @@ pub mod rgbd {
 		/// distance theshold for ICP in meters
 		#[inline]
 		fn icp_dist_thresh(&self) -> f32 {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropIcpDistThresh_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propIcpDistThresh_const(self.as_raw_Params()) };
 			ret
 		}
 		
 		/// angle threshold for ICP in radians
 		#[inline]
 		fn icp_angle_thresh(&self) -> f32 {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropIcpAngleThresh_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propIcpAngleThresh_const(self.as_raw_Params()) };
 			ret
 		}
 		
 		/// number of ICP iterations for each pyramid level
 		#[inline]
 		fn icp_iterations(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropIcpIterations_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propIcpIterations_const(self.as_raw_Params()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
@@ -3057,14 +3048,14 @@ pub mod rgbd {
 		/// All depth values beyond this threshold will be set to zero
 		#[inline]
 		fn truncate_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropTruncateThreshold_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propTruncateThreshold_const(self.as_raw_Params()) };
 			ret
 		}
 		
 		/// Volume parameters
 		#[inline]
 		fn volume_params(&self) -> crate::rgbd::Kinfu_VolumeParams {
-			let ret = unsafe { sys::cv_large_kinfu_Params_getPropVolumeParams_const(self.as_raw_Params()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propVolumeParams_const(self.as_raw_Params()) };
 			let ret = unsafe { crate::rgbd::Kinfu_VolumeParams::opencv_from_extern(ret) };
 			ret
 		}
@@ -3078,21 +3069,21 @@ pub mod rgbd {
 		/// frame size in pixels
 		#[inline]
 		fn set_frame_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropFrameSize_Size(self.as_raw_mut_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propFrameSize_Size(self.as_raw_mut_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// camera intrinsics
 		#[inline]
 		fn set_intr(&mut self, val: core::Matx33f) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropIntr_Matx33f(self.as_raw_mut_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propIntr_Matx33f(self.as_raw_mut_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// rgb camera intrinsics
 		#[inline]
 		fn set_rgb_intr(&mut self, val: core::Matx33f) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropRgb_intr_Matx33f(self.as_raw_mut_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propRgb_intr_Matx33f(self.as_raw_mut_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -3103,35 +3094,35 @@ pub mod rgbd {
 		///      * 1 per 1 meter for the 32-bit float images in the ROS bag files
 		#[inline]
 		fn set_depth_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropDepthFactor_float(self.as_raw_mut_Params(), val) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propDepthFactor_float(self.as_raw_mut_Params(), val) };
 			ret
 		}
 		
 		/// Depth sigma in meters for bilateral smooth
 		#[inline]
 		fn set_bilateral_sigma_depth(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropBilateral_sigma_depth_float(self.as_raw_mut_Params(), val) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propBilateral_sigma_depth_float(self.as_raw_mut_Params(), val) };
 			ret
 		}
 		
 		/// Spatial sigma in pixels for bilateral smooth
 		#[inline]
 		fn set_bilateral_sigma_spatial(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropBilateral_sigma_spatial_float(self.as_raw_mut_Params(), val) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propBilateral_sigma_spatial_float(self.as_raw_mut_Params(), val) };
 			ret
 		}
 		
 		/// Kernel size in pixels for bilateral smooth
 		#[inline]
 		fn set_bilateral_kernel_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropBilateral_kernel_size_int(self.as_raw_mut_Params(), val) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propBilateral_kernel_size_int(self.as_raw_mut_Params(), val) };
 			ret
 		}
 		
 		/// Number of pyramid levels for ICP
 		#[inline]
 		fn set_pyramid_levels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropPyramidLevels_int(self.as_raw_mut_Params(), val) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propPyramidLevels_int(self.as_raw_mut_Params(), val) };
 			ret
 		}
 		
@@ -3139,35 +3130,35 @@ pub mod rgbd {
 		/// Integrate new depth frame only if camera movement exceeds this value.
 		#[inline]
 		fn set_tsdf_min_camera_movement(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropTsdf_min_camera_movement_float(self.as_raw_mut_Params(), val) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propTsdf_min_camera_movement_float(self.as_raw_mut_Params(), val) };
 			ret
 		}
 		
 		/// light pose for rendering in meters
 		#[inline]
 		fn set_light_pose(&mut self, val: core::Vec3f) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropLightPose_Vec3f(self.as_raw_mut_Params(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propLightPose_Vec3f(self.as_raw_mut_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// distance theshold for ICP in meters
 		#[inline]
 		fn set_icp_dist_thresh(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropIcpDistThresh_float(self.as_raw_mut_Params(), val) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propIcpDistThresh_float(self.as_raw_mut_Params(), val) };
 			ret
 		}
 		
 		/// angle threshold for ICP in radians
 		#[inline]
 		fn set_icp_angle_thresh(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropIcpAngleThresh_float(self.as_raw_mut_Params(), val) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propIcpAngleThresh_float(self.as_raw_mut_Params(), val) };
 			ret
 		}
 		
 		/// number of ICP iterations for each pyramid level
 		#[inline]
 		fn set_icp_iterations(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropIcpIterations_vectorLintG(self.as_raw_mut_Params(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propIcpIterations_vectorLintG(self.as_raw_mut_Params(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
@@ -3175,14 +3166,14 @@ pub mod rgbd {
 		/// All depth values beyond this threshold will be set to zero
 		#[inline]
 		fn set_truncate_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropTruncateThreshold_float(self.as_raw_mut_Params(), val) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propTruncateThreshold_float(self.as_raw_mut_Params(), val) };
 			ret
 		}
 		
 		/// Volume parameters
 		#[inline]
 		fn set_volume_params(&mut self, mut val: crate::rgbd::Kinfu_VolumeParams) {
-			let ret = unsafe { sys::cv_large_kinfu_Params_setPropVolumeParams_VolumeParams(self.as_raw_mut_Params(), val.as_raw_mut_Kinfu_VolumeParams()) };
+			let ret = unsafe { sys::cv_large_kinfu_Params_propVolumeParams_VolumeParams(self.as_raw_mut_Params(), val.as_raw_mut_Kinfu_VolumeParams()) };
 			ret
 		}
 		
@@ -3197,8 +3188,7 @@ pub mod rgbd {
 	impl Drop for Params {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Params_delete(instance: *mut c_void); }
-			unsafe { cv_Params_delete(self.as_raw_mut_Params()) };
+			unsafe { sys::cv_large_kinfu_Params_delete(self.as_raw_mut_Params()) };
 		}
 	}
 	
@@ -3281,19 +3271,19 @@ pub mod rgbd {
 	
 		#[inline]
 		fn weak_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_getPropWeak_threshold_const(self.as_raw_LineMod_ColorGradient()) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_propWeak_threshold_const(self.as_raw_LineMod_ColorGradient()) };
 			ret
 		}
 		
 		#[inline]
 		fn num_features(&self) -> size_t {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_getPropNum_features_const(self.as_raw_LineMod_ColorGradient()) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_propNum_features_const(self.as_raw_LineMod_ColorGradient()) };
 			ret
 		}
 		
 		#[inline]
 		fn strong_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_getPropStrong_threshold_const(self.as_raw_LineMod_ColorGradient()) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_propStrong_threshold_const(self.as_raw_LineMod_ColorGradient()) };
 			ret
 		}
 		
@@ -3324,19 +3314,19 @@ pub mod rgbd {
 	
 		#[inline]
 		fn set_weak_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_setPropWeak_threshold_float(self.as_raw_mut_LineMod_ColorGradient(), val) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_propWeak_threshold_float(self.as_raw_mut_LineMod_ColorGradient(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_features(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_setPropNum_features_size_t(self.as_raw_mut_LineMod_ColorGradient(), val) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_propNum_features_size_t(self.as_raw_mut_LineMod_ColorGradient(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_strong_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_linemod_ColorGradient_setPropStrong_threshold_float(self.as_raw_mut_LineMod_ColorGradient(), val) };
+			let ret = unsafe { sys::cv_linemod_ColorGradient_propStrong_threshold_float(self.as_raw_mut_LineMod_ColorGradient(), val) };
 			ret
 		}
 		
@@ -3361,8 +3351,7 @@ pub mod rgbd {
 	impl Drop for LineMod_ColorGradient {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LineMod_ColorGradient_delete(instance: *mut c_void); }
-			unsafe { cv_LineMod_ColorGradient_delete(self.as_raw_mut_LineMod_ColorGradient()) };
+			unsafe { sys::cv_linemod_ColorGradient_delete(self.as_raw_mut_LineMod_ColorGradient()) };
 		}
 	}
 	
@@ -3424,7 +3413,7 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { LineMod_ColorGradient, crate::rgbd::LineMod_Modality, cv_LineMod_ColorGradient_to_LineMod_Modality }
+	boxed_cast_base! { LineMod_ColorGradient, crate::rgbd::LineMod_Modality, cv_linemod_ColorGradient_to_LineMod_Modality }
 	
 	impl std::fmt::Debug for LineMod_ColorGradient {
 		#[inline]
@@ -3443,25 +3432,25 @@ pub mod rgbd {
 	
 		#[inline]
 		fn distance_threshold(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropDistance_threshold_const(self.as_raw_LineMod_DepthNormal()) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_propDistance_threshold_const(self.as_raw_LineMod_DepthNormal()) };
 			ret
 		}
 		
 		#[inline]
 		fn difference_threshold(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropDifference_threshold_const(self.as_raw_LineMod_DepthNormal()) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_propDifference_threshold_const(self.as_raw_LineMod_DepthNormal()) };
 			ret
 		}
 		
 		#[inline]
 		fn num_features(&self) -> size_t {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropNum_features_const(self.as_raw_LineMod_DepthNormal()) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_propNum_features_const(self.as_raw_LineMod_DepthNormal()) };
 			ret
 		}
 		
 		#[inline]
 		fn extract_threshold(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_getPropExtract_threshold_const(self.as_raw_LineMod_DepthNormal()) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_propExtract_threshold_const(self.as_raw_LineMod_DepthNormal()) };
 			ret
 		}
 		
@@ -3492,25 +3481,25 @@ pub mod rgbd {
 	
 		#[inline]
 		fn set_distance_threshold(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropDistance_threshold_int(self.as_raw_mut_LineMod_DepthNormal(), val) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_propDistance_threshold_int(self.as_raw_mut_LineMod_DepthNormal(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_difference_threshold(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropDifference_threshold_int(self.as_raw_mut_LineMod_DepthNormal(), val) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_propDifference_threshold_int(self.as_raw_mut_LineMod_DepthNormal(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_features(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropNum_features_size_t(self.as_raw_mut_LineMod_DepthNormal(), val) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_propNum_features_size_t(self.as_raw_mut_LineMod_DepthNormal(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_extract_threshold(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_DepthNormal_setPropExtract_threshold_int(self.as_raw_mut_LineMod_DepthNormal(), val) };
+			let ret = unsafe { sys::cv_linemod_DepthNormal_propExtract_threshold_int(self.as_raw_mut_LineMod_DepthNormal(), val) };
 			ret
 		}
 		
@@ -3535,8 +3524,7 @@ pub mod rgbd {
 	impl Drop for LineMod_DepthNormal {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LineMod_DepthNormal_delete(instance: *mut c_void); }
-			unsafe { cv_LineMod_DepthNormal_delete(self.as_raw_mut_LineMod_DepthNormal()) };
+			unsafe { sys::cv_linemod_DepthNormal_delete(self.as_raw_mut_LineMod_DepthNormal()) };
 		}
 	}
 	
@@ -3600,7 +3588,7 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { LineMod_DepthNormal, crate::rgbd::LineMod_Modality, cv_LineMod_DepthNormal_to_LineMod_Modality }
+	boxed_cast_base! { LineMod_DepthNormal, crate::rgbd::LineMod_Modality, cv_linemod_DepthNormal_to_LineMod_Modality }
 	
 	impl std::fmt::Debug for LineMod_DepthNormal {
 		#[inline]
@@ -3849,8 +3837,7 @@ pub mod rgbd {
 	impl Drop for LineMod_Detector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LineMod_Detector_delete(instance: *mut c_void); }
-			unsafe { cv_LineMod_Detector_delete(self.as_raw_mut_LineMod_Detector()) };
+			unsafe { sys::cv_linemod_Detector_delete(self.as_raw_mut_LineMod_Detector()) };
 		}
 	}
 	
@@ -3960,32 +3947,32 @@ pub mod rgbd {
 	
 		#[inline]
 		fn x(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Match_getPropX_const(self.as_raw_LineMod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_propX_const(self.as_raw_LineMod_Match()) };
 			ret
 		}
 		
 		#[inline]
 		fn y(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Match_getPropY_const(self.as_raw_LineMod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_propY_const(self.as_raw_LineMod_Match()) };
 			ret
 		}
 		
 		#[inline]
 		fn similarity(&self) -> f32 {
-			let ret = unsafe { sys::cv_linemod_Match_getPropSimilarity_const(self.as_raw_LineMod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_propSimilarity_const(self.as_raw_LineMod_Match()) };
 			ret
 		}
 		
 		#[inline]
 		fn class_id(&self) -> String {
-			let ret = unsafe { sys::cv_linemod_Match_getPropClass_id_const(self.as_raw_LineMod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_propClass_id_const(self.as_raw_LineMod_Match()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn template_id(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Match_getPropTemplate_id_const(self.as_raw_LineMod_Match()) };
+			let ret = unsafe { sys::cv_linemod_Match_propTemplate_id_const(self.as_raw_LineMod_Match()) };
 			ret
 		}
 		
@@ -4016,32 +4003,32 @@ pub mod rgbd {
 	
 		#[inline]
 		fn set_x(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Match_setPropX_int(self.as_raw_mut_LineMod_Match(), val) };
+			let ret = unsafe { sys::cv_linemod_Match_propX_int(self.as_raw_mut_LineMod_Match(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_y(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Match_setPropY_int(self.as_raw_mut_LineMod_Match(), val) };
+			let ret = unsafe { sys::cv_linemod_Match_propY_int(self.as_raw_mut_LineMod_Match(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_similarity(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_linemod_Match_setPropSimilarity_float(self.as_raw_mut_LineMod_Match(), val) };
+			let ret = unsafe { sys::cv_linemod_Match_propSimilarity_float(self.as_raw_mut_LineMod_Match(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_class_id(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_linemod_Match_setPropClass_id_String(self.as_raw_mut_LineMod_Match(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_linemod_Match_propClass_id_String(self.as_raw_mut_LineMod_Match(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_template_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Match_setPropTemplate_id_int(self.as_raw_mut_LineMod_Match(), val) };
+			let ret = unsafe { sys::cv_linemod_Match_propTemplate_id_int(self.as_raw_mut_LineMod_Match(), val) };
 			ret
 		}
 		
@@ -4057,8 +4044,7 @@ pub mod rgbd {
 	impl Drop for LineMod_Match {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LineMod_Match_delete(instance: *mut c_void); }
-			unsafe { cv_LineMod_Match_delete(self.as_raw_mut_LineMod_Match()) };
+			unsafe { sys::cv_linemod_Match_delete(self.as_raw_mut_LineMod_Match()) };
 		}
 	}
 	
@@ -4099,8 +4085,7 @@ pub mod rgbd {
 	impl Clone for LineMod_Match {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_LineMod_Match_implicitClone_const_LineMod_Match(val: extern_send!(LineMod_Match)) -> extern_receive!(LineMod_Match: 'static); }
-			unsafe { Self::from_raw(cv_LineMod_Match_implicitClone_const_LineMod_Match(self.as_raw_LineMod_Match())) }
+			unsafe { Self::from_raw(sys::cv_linemod_Match_implicitClone_const(self.as_raw_LineMod_Match())) }
 		}
 	}
 	
@@ -4187,8 +4172,7 @@ pub mod rgbd {
 	impl Drop for LineMod_Modality {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LineMod_Modality_delete(instance: *mut c_void); }
-			unsafe { cv_LineMod_Modality_delete(self.as_raw_mut_LineMod_Modality()) };
+			unsafe { sys::cv_linemod_Modality_delete(self.as_raw_mut_LineMod_Modality()) };
 		}
 	}
 	
@@ -4232,9 +4216,9 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_descendant! { LineMod_Modality, crate::rgbd::LineMod_ColorGradient, cv_LineMod_Modality_to_LineMod_ColorGradient }
+	boxed_cast_descendant! { LineMod_Modality, crate::rgbd::LineMod_ColorGradient, cv_linemod_Modality_to_LineMod_ColorGradient }
 	
-	boxed_cast_descendant! { LineMod_Modality, crate::rgbd::LineMod_DepthNormal, cv_LineMod_Modality_to_LineMod_DepthNormal }
+	boxed_cast_descendant! { LineMod_Modality, crate::rgbd::LineMod_DepthNormal, cv_linemod_Modality_to_LineMod_DepthNormal }
 	
 	impl std::fmt::Debug for LineMod_Modality {
 		#[inline]
@@ -4303,8 +4287,7 @@ pub mod rgbd {
 	impl Drop for LineMod_QuantizedPyramid {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LineMod_QuantizedPyramid_delete(instance: *mut c_void); }
-			unsafe { cv_LineMod_QuantizedPyramid_delete(self.as_raw_mut_LineMod_QuantizedPyramid()) };
+			unsafe { sys::cv_linemod_QuantizedPyramid_delete(self.as_raw_mut_LineMod_QuantizedPyramid()) };
 		}
 	}
 	
@@ -4335,25 +4318,25 @@ pub mod rgbd {
 	
 		#[inline]
 		fn width(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Template_getPropWidth_const(self.as_raw_LineMod_Template()) };
+			let ret = unsafe { sys::cv_linemod_Template_propWidth_const(self.as_raw_LineMod_Template()) };
 			ret
 		}
 		
 		#[inline]
 		fn height(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Template_getPropHeight_const(self.as_raw_LineMod_Template()) };
+			let ret = unsafe { sys::cv_linemod_Template_propHeight_const(self.as_raw_LineMod_Template()) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_level(&self) -> i32 {
-			let ret = unsafe { sys::cv_linemod_Template_getPropPyramid_level_const(self.as_raw_LineMod_Template()) };
+			let ret = unsafe { sys::cv_linemod_Template_propPyramid_level_const(self.as_raw_LineMod_Template()) };
 			ret
 		}
 		
 		#[inline]
 		fn features(&self) -> core::Vector<crate::rgbd::LineMod_Feature> {
-			let ret = unsafe { sys::cv_linemod_Template_getPropFeatures_const(self.as_raw_LineMod_Template()) };
+			let ret = unsafe { sys::cv_linemod_Template_propFeatures_const(self.as_raw_LineMod_Template()) };
 			let ret = unsafe { core::Vector::<crate::rgbd::LineMod_Feature>::opencv_from_extern(ret) };
 			ret
 		}
@@ -4375,25 +4358,25 @@ pub mod rgbd {
 	
 		#[inline]
 		fn set_width(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Template_setPropWidth_int(self.as_raw_mut_LineMod_Template(), val) };
+			let ret = unsafe { sys::cv_linemod_Template_propWidth_int(self.as_raw_mut_LineMod_Template(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_height(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Template_setPropHeight_int(self.as_raw_mut_LineMod_Template(), val) };
+			let ret = unsafe { sys::cv_linemod_Template_propHeight_int(self.as_raw_mut_LineMod_Template(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_level(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_linemod_Template_setPropPyramid_level_int(self.as_raw_mut_LineMod_Template(), val) };
+			let ret = unsafe { sys::cv_linemod_Template_propPyramid_level_int(self.as_raw_mut_LineMod_Template(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_features(&mut self, mut val: core::Vector<crate::rgbd::LineMod_Feature>) {
-			let ret = unsafe { sys::cv_linemod_Template_setPropFeatures_vectorLFeatureG(self.as_raw_mut_LineMod_Template(), val.as_raw_mut_VectorOfLineMod_Feature()) };
+			let ret = unsafe { sys::cv_linemod_Template_propFeatures_vectorLFeatureG(self.as_raw_mut_LineMod_Template(), val.as_raw_mut_VectorOfLineMod_Feature()) };
 			ret
 		}
 		
@@ -4417,8 +4400,7 @@ pub mod rgbd {
 	impl Drop for LineMod_Template {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LineMod_Template_delete(instance: *mut c_void); }
-			unsafe { cv_LineMod_Template_delete(self.as_raw_mut_LineMod_Template()) };
+			unsafe { sys::cv_linemod_Template_delete(self.as_raw_mut_LineMod_Template()) };
 		}
 	}
 	
@@ -4434,8 +4416,7 @@ pub mod rgbd {
 	
 	impl LineMod_Template {
 		fn default() -> Self {
-			extern "C" { fn cv_LineMod_Template_defaultNew_const() -> extern_receive!(LineMod_Template: 'static); }
-			unsafe { Self::from_raw(cv_LineMod_Template_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_linemod_Template_defaultNew_const()) }
 		}
 		
 	}
@@ -4443,8 +4424,7 @@ pub mod rgbd {
 	impl Clone for LineMod_Template {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_LineMod_Template_implicitClone_const_LineMod_Template(val: extern_send!(LineMod_Template)) -> extern_receive!(LineMod_Template: 'static); }
-			unsafe { Self::from_raw(cv_LineMod_Template_implicitClone_const_LineMod_Template(self.as_raw_LineMod_Template())) }
+			unsafe { Self::from_raw(sys::cv_linemod_Template_implicitClone_const(self.as_raw_LineMod_Template())) }
 		}
 	}
 	
@@ -4570,8 +4550,7 @@ pub mod rgbd {
 	impl Drop for DepthCleaner {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DepthCleaner_delete(instance: *mut c_void); }
-			unsafe { cv_DepthCleaner_delete(self.as_raw_mut_DepthCleaner()) };
+			unsafe { sys::cv_rgbd_DepthCleaner_delete(self.as_raw_mut_DepthCleaner()) };
 		}
 	}
 	
@@ -4638,7 +4617,7 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { DepthCleaner, core::Algorithm, cv_DepthCleaner_to_Algorithm }
+	boxed_cast_base! { DepthCleaner, core::Algorithm, cv_rgbd_DepthCleaner_to_Algorithm }
 	
 	impl std::fmt::Debug for DepthCleaner {
 		#[inline]
@@ -4834,8 +4813,7 @@ pub mod rgbd {
 	impl Drop for FastICPOdometry {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FastICPOdometry_delete(instance: *mut c_void); }
-			unsafe { cv_FastICPOdometry_delete(self.as_raw_mut_FastICPOdometry()) };
+			unsafe { sys::cv_rgbd_FastICPOdometry_delete(self.as_raw_mut_FastICPOdometry()) };
 		}
 	}
 	
@@ -4924,9 +4902,9 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { FastICPOdometry, core::Algorithm, cv_FastICPOdometry_to_Algorithm }
+	boxed_cast_base! { FastICPOdometry, core::Algorithm, cv_rgbd_FastICPOdometry_to_Algorithm }
 	
-	boxed_cast_base! { FastICPOdometry, crate::rgbd::Odometry, cv_FastICPOdometry_to_Odometry }
+	boxed_cast_base! { FastICPOdometry, crate::rgbd::Odometry, cv_rgbd_FastICPOdometry_to_Odometry }
 	
 	impl std::fmt::Debug for FastICPOdometry {
 		#[inline]
@@ -5142,8 +5120,7 @@ pub mod rgbd {
 	impl Drop for ICPOdometry {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ICPOdometry_delete(instance: *mut c_void); }
-			unsafe { cv_ICPOdometry_delete(self.as_raw_mut_ICPOdometry()) };
+			unsafe { sys::cv_rgbd_ICPOdometry_delete(self.as_raw_mut_ICPOdometry()) };
 		}
 	}
 	
@@ -5232,9 +5209,9 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { ICPOdometry, core::Algorithm, cv_ICPOdometry_to_Algorithm }
+	boxed_cast_base! { ICPOdometry, core::Algorithm, cv_rgbd_ICPOdometry_to_Algorithm }
 	
-	boxed_cast_base! { ICPOdometry, crate::rgbd::Odometry, cv_ICPOdometry_to_Odometry }
+	boxed_cast_base! { ICPOdometry, crate::rgbd::Odometry, cv_rgbd_ICPOdometry_to_Odometry }
 	
 	impl std::fmt::Debug for ICPOdometry {
 		#[inline]
@@ -5372,8 +5349,7 @@ pub mod rgbd {
 	impl Drop for Odometry {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Odometry_delete(instance: *mut c_void); }
-			unsafe { cv_Odometry_delete(self.as_raw_mut_Odometry()) };
+			unsafe { sys::cv_rgbd_Odometry_delete(self.as_raw_mut_Odometry()) };
 		}
 	}
 	
@@ -5463,15 +5439,15 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_descendant! { Odometry, crate::rgbd::FastICPOdometry, cv_Odometry_to_FastICPOdometry }
+	boxed_cast_descendant! { Odometry, crate::rgbd::FastICPOdometry, cv_rgbd_Odometry_to_FastICPOdometry }
 	
-	boxed_cast_descendant! { Odometry, crate::rgbd::ICPOdometry, cv_Odometry_to_ICPOdometry }
+	boxed_cast_descendant! { Odometry, crate::rgbd::ICPOdometry, cv_rgbd_Odometry_to_ICPOdometry }
 	
-	boxed_cast_descendant! { Odometry, crate::rgbd::RgbdICPOdometry, cv_Odometry_to_RgbdICPOdometry }
+	boxed_cast_descendant! { Odometry, crate::rgbd::RgbdICPOdometry, cv_rgbd_Odometry_to_RgbdICPOdometry }
 	
-	boxed_cast_descendant! { Odometry, crate::rgbd::RgbdOdometry, cv_Odometry_to_RgbdOdometry }
+	boxed_cast_descendant! { Odometry, crate::rgbd::RgbdOdometry, cv_rgbd_Odometry_to_RgbdOdometry }
 	
-	boxed_cast_base! { Odometry, core::Algorithm, cv_Odometry_to_Algorithm }
+	boxed_cast_base! { Odometry, core::Algorithm, cv_rgbd_Odometry_to_Algorithm }
 	
 	impl std::fmt::Debug for Odometry {
 		#[inline]
@@ -5487,63 +5463,63 @@ pub mod rgbd {
 	
 		#[inline]
 		fn pyramid_image(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_getPropPyramidImage_const(self.as_raw_OdometryFrame()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidImage_const(self.as_raw_OdometryFrame()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_depth(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_getPropPyramidDepth_const(self.as_raw_OdometryFrame()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidDepth_const(self.as_raw_OdometryFrame()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_mask(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_getPropPyramidMask_const(self.as_raw_OdometryFrame()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidMask_const(self.as_raw_OdometryFrame()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_cloud(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_getPropPyramidCloud_const(self.as_raw_OdometryFrame()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidCloud_const(self.as_raw_OdometryFrame()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_d_i_dx(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_getPropPyramid_dI_dx_const(self.as_raw_OdometryFrame()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramid_dI_dx_const(self.as_raw_OdometryFrame()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_d_i_dy(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_getPropPyramid_dI_dy_const(self.as_raw_OdometryFrame()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramid_dI_dy_const(self.as_raw_OdometryFrame()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_textured_mask(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_getPropPyramidTexturedMask_const(self.as_raw_OdometryFrame()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidTexturedMask_const(self.as_raw_OdometryFrame()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_normals(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_getPropPyramidNormals_const(self.as_raw_OdometryFrame()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidNormals_const(self.as_raw_OdometryFrame()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pyramid_normals_mask(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_getPropPyramidNormalsMask_const(self.as_raw_OdometryFrame()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidNormalsMask_const(self.as_raw_OdometryFrame()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
@@ -5556,55 +5532,55 @@ pub mod rgbd {
 	
 		#[inline]
 		fn set_pyramid_image(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidImage_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidImage_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_depth(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidDepth_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidDepth_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_mask(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidMask_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidMask_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_cloud(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidCloud_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidCloud_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_d_i_dx(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramid_dI_dx_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramid_dI_dx_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_d_i_dy(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramid_dI_dy_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramid_dI_dy_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_textured_mask(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidTexturedMask_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidTexturedMask_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_normals(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidNormals_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidNormals_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pyramid_normals_mask(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_rgbd_OdometryFrame_setPropPyramidNormalsMask_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_rgbd_OdometryFrame_propPyramidNormalsMask_vectorLMatG(self.as_raw_mut_OdometryFrame(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
@@ -5640,8 +5616,7 @@ pub mod rgbd {
 	impl Drop for OdometryFrame {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OdometryFrame_delete(instance: *mut c_void); }
-			unsafe { cv_OdometryFrame_delete(self.as_raw_mut_OdometryFrame()) };
+			unsafe { sys::cv_rgbd_OdometryFrame_delete(self.as_raw_mut_OdometryFrame()) };
 		}
 	}
 	
@@ -5706,7 +5681,7 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { OdometryFrame, crate::rgbd::RgbdFrame, cv_OdometryFrame_to_RgbdFrame }
+	boxed_cast_base! { OdometryFrame, crate::rgbd::RgbdFrame, cv_rgbd_OdometryFrame_to_RgbdFrame }
 	
 	impl std::fmt::Debug for OdometryFrame {
 		#[inline]
@@ -5736,34 +5711,34 @@ pub mod rgbd {
 	
 		#[inline]
 		fn id(&self) -> i32 {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_getPropID_const(self.as_raw_RgbdFrame()) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propID_const(self.as_raw_RgbdFrame()) };
 			ret
 		}
 		
 		#[inline]
 		fn image(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_getPropImage_const(self.as_raw_RgbdFrame()) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propImage_const(self.as_raw_RgbdFrame()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn depth(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_getPropDepth_const(self.as_raw_RgbdFrame()) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propDepth_const(self.as_raw_RgbdFrame()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn mask(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_getPropMask_const(self.as_raw_RgbdFrame()) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propMask_const(self.as_raw_RgbdFrame()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn normals(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_getPropNormals_const(self.as_raw_RgbdFrame()) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propNormals_const(self.as_raw_RgbdFrame()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -5776,31 +5751,31 @@ pub mod rgbd {
 	
 		#[inline]
 		fn set_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_setPropID_int(self.as_raw_mut_RgbdFrame(), val) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propID_int(self.as_raw_mut_RgbdFrame(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_image(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_setPropImage_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propImage_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_depth(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_setPropDepth_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propDepth_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_mask(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_setPropMask_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propMask_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_normals(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_rgbd_RgbdFrame_setPropNormals_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propNormals_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
@@ -5825,8 +5800,7 @@ pub mod rgbd {
 	impl Drop for RgbdFrame {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RgbdFrame_delete(instance: *mut c_void); }
-			unsafe { cv_RgbdFrame_delete(self.as_raw_mut_RgbdFrame()) };
+			unsafe { sys::cv_rgbd_RgbdFrame_delete(self.as_raw_mut_RgbdFrame()) };
 		}
 	}
 	
@@ -5883,7 +5857,7 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_descendant! { RgbdFrame, crate::rgbd::OdometryFrame, cv_RgbdFrame_to_OdometryFrame }
+	boxed_cast_descendant! { RgbdFrame, crate::rgbd::OdometryFrame, cv_rgbd_RgbdFrame_to_OdometryFrame }
 	
 	impl std::fmt::Debug for RgbdFrame {
 		#[inline]
@@ -6122,8 +6096,7 @@ pub mod rgbd {
 	impl Drop for RgbdICPOdometry {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RgbdICPOdometry_delete(instance: *mut c_void); }
-			unsafe { cv_RgbdICPOdometry_delete(self.as_raw_mut_RgbdICPOdometry()) };
+			unsafe { sys::cv_rgbd_RgbdICPOdometry_delete(self.as_raw_mut_RgbdICPOdometry()) };
 		}
 	}
 	
@@ -6216,9 +6189,9 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { RgbdICPOdometry, core::Algorithm, cv_RgbdICPOdometry_to_Algorithm }
+	boxed_cast_base! { RgbdICPOdometry, core::Algorithm, cv_rgbd_RgbdICPOdometry_to_Algorithm }
 	
-	boxed_cast_base! { RgbdICPOdometry, crate::rgbd::Odometry, cv_RgbdICPOdometry_to_Odometry }
+	boxed_cast_base! { RgbdICPOdometry, crate::rgbd::Odometry, cv_rgbd_RgbdICPOdometry_to_Odometry }
 	
 	impl std::fmt::Debug for RgbdICPOdometry {
 		#[inline]
@@ -6393,8 +6366,7 @@ pub mod rgbd {
 	impl Drop for RgbdNormals {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RgbdNormals_delete(instance: *mut c_void); }
-			unsafe { cv_RgbdNormals_delete(self.as_raw_mut_RgbdNormals()) };
+			unsafe { sys::cv_rgbd_RgbdNormals_delete(self.as_raw_mut_RgbdNormals()) };
 		}
 	}
 	
@@ -6466,7 +6438,7 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { RgbdNormals, core::Algorithm, cv_RgbdNormals_to_Algorithm }
+	boxed_cast_base! { RgbdNormals, core::Algorithm, cv_rgbd_RgbdNormals_to_Algorithm }
 	
 	impl std::fmt::Debug for RgbdNormals {
 		#[inline]
@@ -6691,8 +6663,7 @@ pub mod rgbd {
 	impl Drop for RgbdOdometry {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RgbdOdometry_delete(instance: *mut c_void); }
-			unsafe { cv_RgbdOdometry_delete(self.as_raw_mut_RgbdOdometry()) };
+			unsafe { sys::cv_rgbd_RgbdOdometry_delete(self.as_raw_mut_RgbdOdometry()) };
 		}
 	}
 	
@@ -6785,9 +6756,9 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { RgbdOdometry, core::Algorithm, cv_RgbdOdometry_to_Algorithm }
+	boxed_cast_base! { RgbdOdometry, core::Algorithm, cv_rgbd_RgbdOdometry_to_Algorithm }
 	
-	boxed_cast_base! { RgbdOdometry, crate::rgbd::Odometry, cv_RgbdOdometry_to_Odometry }
+	boxed_cast_base! { RgbdOdometry, crate::rgbd::Odometry, cv_rgbd_RgbdOdometry_to_Odometry }
 	
 	impl std::fmt::Debug for RgbdOdometry {
 		#[inline]
@@ -6984,8 +6955,7 @@ pub mod rgbd {
 	impl Drop for RgbdPlane {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RgbdPlane_delete(instance: *mut c_void); }
-			unsafe { cv_RgbdPlane_delete(self.as_raw_mut_RgbdPlane()) };
+			unsafe { sys::cv_rgbd_RgbdPlane_delete(self.as_raw_mut_RgbdPlane()) };
 		}
 	}
 	
@@ -7060,7 +7030,7 @@ pub mod rgbd {
 		
 	}
 	
-	boxed_cast_base! { RgbdPlane, core::Algorithm, cv_RgbdPlane_to_Algorithm }
+	boxed_cast_base! { RgbdPlane, core::Algorithm, cv_rgbd_RgbdPlane_to_Algorithm }
 	
 	impl std::fmt::Debug for RgbdPlane {
 		#[inline]

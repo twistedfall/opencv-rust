@@ -691,8 +691,7 @@ pub mod text {
 	impl Drop for BaseOCR {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BaseOCR_delete(instance: *mut c_void); }
-			unsafe { cv_BaseOCR_delete(self.as_raw_mut_BaseOCR()) };
+			unsafe { sys::cv_text_BaseOCR_delete(self.as_raw_mut_BaseOCR()) };
 		}
 	}
 	
@@ -709,13 +708,13 @@ pub mod text {
 	impl BaseOCR {
 	}
 	
-	boxed_cast_descendant! { BaseOCR, crate::text::OCRBeamSearchDecoder, cv_BaseOCR_to_OCRBeamSearchDecoder }
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRBeamSearchDecoder, cv_text_BaseOCR_to_OCRBeamSearchDecoder }
 	
-	boxed_cast_descendant! { BaseOCR, crate::text::OCRHMMDecoder, cv_BaseOCR_to_OCRHMMDecoder }
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRHMMDecoder, cv_text_BaseOCR_to_OCRHMMDecoder }
 	
-	boxed_cast_descendant! { BaseOCR, crate::text::OCRHolisticWordRecognizer, cv_BaseOCR_to_OCRHolisticWordRecognizer }
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRHolisticWordRecognizer, cv_text_BaseOCR_to_OCRHolisticWordRecognizer }
 	
-	boxed_cast_descendant! { BaseOCR, crate::text::OCRTesseract, cv_BaseOCR_to_OCRTesseract }
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRTesseract, cv_text_BaseOCR_to_OCRTesseract }
 	
 	impl std::fmt::Debug for BaseOCR {
 		#[inline]
@@ -845,8 +844,7 @@ pub mod text {
 	impl Drop for ERFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ERFilter_delete(instance: *mut c_void); }
-			unsafe { cv_ERFilter_delete(self.as_raw_mut_ERFilter()) };
+			unsafe { sys::cv_text_ERFilter_delete(self.as_raw_mut_ERFilter()) };
 		}
 	}
 	
@@ -871,7 +869,7 @@ pub mod text {
 	impl ERFilter {
 	}
 	
-	boxed_cast_base! { ERFilter, core::Algorithm, cv_ERFilter_to_Algorithm }
+	boxed_cast_base! { ERFilter, core::Algorithm, cv_text_ERFilter_to_Algorithm }
 	
 	impl std::fmt::Debug for ERFilter {
 		#[inline]
@@ -919,8 +917,7 @@ pub mod text {
 	impl Drop for ERFilter_Callback {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ERFilter_Callback_delete(instance: *mut c_void); }
-			unsafe { cv_ERFilter_Callback_delete(self.as_raw_mut_ERFilter_Callback()) };
+			unsafe { sys::cv_text_ERFilter_Callback_delete(self.as_raw_mut_ERFilter_Callback()) };
 		}
 	}
 	
@@ -952,40 +949,40 @@ pub mod text {
 		/// seed point and the threshold (max grey-level value)
 		#[inline]
 		fn pixel(&self) -> i32 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropPixel_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propPixel_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		#[inline]
 		fn level(&self) -> i32 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropLevel_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propLevel_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		/// incrementally computable features
 		#[inline]
 		fn area(&self) -> i32 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropArea_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propArea_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		#[inline]
 		fn perimeter(&self) -> i32 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropPerimeter_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propPerimeter_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		/// Euler's number
 		#[inline]
 		fn euler(&self) -> i32 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropEuler_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propEuler_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		#[inline]
 		fn rect(&self) -> core::Rect {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_ERStat_getPropRect_const(self.as_raw_ERStat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_ERStat_propRect_const(self.as_raw_ERStat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -993,40 +990,40 @@ pub mod text {
 		/// median of the crossings at three different height levels
 		#[inline]
 		fn med_crossings(&self) -> f32 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropMed_crossings_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propMed_crossings_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		/// 2nd stage features
 		#[inline]
 		fn hole_area_ratio(&self) -> f32 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropHole_area_ratio_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propHole_area_ratio_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		#[inline]
 		fn convex_hull_ratio(&self) -> f32 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropConvex_hull_ratio_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propConvex_hull_ratio_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		#[inline]
 		fn num_inflexion_points(&self) -> f32 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropNum_inflexion_points_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propNum_inflexion_points_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		/// probability that the ER belongs to the class we are looking for
 		#[inline]
 		fn probability(&self) -> f64 {
-			let ret = unsafe { sys::cv_text_ERStat_getPropProbability_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propProbability_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
 		/// whenever the regions is a local maxima of the probability
 		#[inline]
 		fn local_maxima(&self) -> bool {
-			let ret = unsafe { sys::cv_text_ERStat_getPropLocal_maxima_const(self.as_raw_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propLocal_maxima_const(self.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1039,46 +1036,46 @@ pub mod text {
 		/// seed point and the threshold (max grey-level value)
 		#[inline]
 		fn set_pixel(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropPixel_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propPixel_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_level(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropLevel_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propLevel_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// incrementally computable features
 		#[inline]
 		fn set_area(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropArea_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propArea_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_perimeter(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropPerimeter_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propPerimeter_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// Euler's number
 		#[inline]
 		fn set_euler(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropEuler_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propEuler_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_rect(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropRect_Rect(self.as_raw_mut_ERStat(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_text_ERStat_propRect_Rect(self.as_raw_mut_ERStat(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// order 1 raw moments to derive the centroid
 		#[inline]
 		fn raw_moments(&mut self) -> &mut [f64; 2] {
-			let ret = unsafe { sys::cv_text_ERStat_getPropRaw_moments(self.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propRaw_moments(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
@@ -1086,7 +1083,7 @@ pub mod text {
 		/// order 2 central moments to construct the covariance matrix
 		#[inline]
 		fn central_moments(&mut self) -> &mut [f64; 3] {
-			let ret = unsafe { sys::cv_text_ERStat_getPropCentral_moments(self.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propCentral_moments(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
@@ -1094,40 +1091,40 @@ pub mod text {
 		/// median of the crossings at three different height levels
 		#[inline]
 		fn set_med_crossings(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropMed_crossings_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propMed_crossings_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// 2nd stage features
 		#[inline]
 		fn set_hole_area_ratio(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropHole_area_ratio_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propHole_area_ratio_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_convex_hull_ratio(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropConvex_hull_ratio_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propConvex_hull_ratio_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_inflexion_points(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropNum_inflexion_points_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propNum_inflexion_points_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// probability that the ER belongs to the class we are looking for
 		#[inline]
 		fn set_probability(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropProbability_double(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propProbability_double(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// pointers preserving the tree structure of the component tree
 		#[inline]
 		fn parent(&mut self) -> crate::text::ERStat {
-			let ret = unsafe { sys::cv_text_ERStat_getPropParent(self.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propParent(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
 			ret
 		}
@@ -1135,79 +1132,79 @@ pub mod text {
 		/// pointers preserving the tree structure of the component tree
 		#[inline]
 		fn set_parent(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropParent_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propParent_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
 			ret
 		}
 		
 		#[inline]
 		fn child(&mut self) -> crate::text::ERStat {
-			let ret = unsafe { sys::cv_text_ERStat_getPropChild(self.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propChild(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn set_child(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropChild_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propChild_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
 			ret
 		}
 		
 		#[inline]
 		fn next(&mut self) -> crate::text::ERStat {
-			let ret = unsafe { sys::cv_text_ERStat_getPropNext(self.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propNext(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn set_next(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropNext_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propNext_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
 			ret
 		}
 		
 		#[inline]
 		fn prev(&mut self) -> crate::text::ERStat {
-			let ret = unsafe { sys::cv_text_ERStat_getPropPrev(self.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propPrev(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn set_prev(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropPrev_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propPrev_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
 			ret
 		}
 		
 		/// whenever the regions is a local maxima of the probability
 		#[inline]
 		fn set_local_maxima(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropLocal_maxima_bool(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propLocal_maxima_bool(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn max_probability_ancestor(&mut self) -> crate::text::ERStat {
-			let ret = unsafe { sys::cv_text_ERStat_getPropMax_probability_ancestor(self.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propMax_probability_ancestor(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn set_max_probability_ancestor(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropMax_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propMax_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_probability_ancestor(&mut self) -> crate::text::ERStat {
-			let ret = unsafe { sys::cv_text_ERStat_getPropMin_probability_ancestor(self.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propMin_probability_ancestor(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_probability_ancestor(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_setPropMin_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+			let ret = unsafe { sys::cv_text_ERStat_propMin_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
 			ret
 		}
 		
@@ -1227,8 +1224,7 @@ pub mod text {
 	impl Drop for ERStat {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ERStat_delete(instance: *mut c_void); }
-			unsafe { cv_ERStat_delete(self.as_raw_mut_ERStat()) };
+			unsafe { sys::cv_text_ERStat_delete(self.as_raw_mut_ERStat()) };
 		}
 	}
 	
@@ -1391,8 +1387,7 @@ pub mod text {
 	impl Drop for OCRBeamSearchDecoder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OCRBeamSearchDecoder_delete(instance: *mut c_void); }
-			unsafe { cv_OCRBeamSearchDecoder_delete(self.as_raw_mut_OCRBeamSearchDecoder()) };
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_delete(self.as_raw_mut_OCRBeamSearchDecoder()) };
 		}
 	}
 	
@@ -1492,7 +1487,7 @@ pub mod text {
 		
 	}
 	
-	boxed_cast_base! { OCRBeamSearchDecoder, crate::text::BaseOCR, cv_OCRBeamSearchDecoder_to_BaseOCR }
+	boxed_cast_base! { OCRBeamSearchDecoder, crate::text::BaseOCR, cv_text_OCRBeamSearchDecoder_to_BaseOCR }
 	
 	impl std::fmt::Debug for OCRBeamSearchDecoder {
 		#[inline]
@@ -1567,8 +1562,7 @@ pub mod text {
 	impl Drop for OCRBeamSearchDecoder_ClassifierCallback {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OCRBeamSearchDecoder_ClassifierCallback_delete(instance: *mut c_void); }
-			unsafe { cv_OCRBeamSearchDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback()) };
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback()) };
 		}
 	}
 	
@@ -1726,8 +1720,7 @@ pub mod text {
 	impl Drop for OCRHMMDecoder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OCRHMMDecoder_delete(instance: *mut c_void); }
-			unsafe { cv_OCRHMMDecoder_delete(self.as_raw_mut_OCRHMMDecoder()) };
+			unsafe { sys::cv_text_OCRHMMDecoder_delete(self.as_raw_mut_OCRHMMDecoder()) };
 		}
 	}
 	
@@ -1822,7 +1815,7 @@ pub mod text {
 		
 	}
 	
-	boxed_cast_base! { OCRHMMDecoder, crate::text::BaseOCR, cv_OCRHMMDecoder_to_BaseOCR }
+	boxed_cast_base! { OCRHMMDecoder, crate::text::BaseOCR, cv_text_OCRHMMDecoder_to_BaseOCR }
 	
 	impl std::fmt::Debug for OCRHMMDecoder {
 		#[inline]
@@ -1879,8 +1872,7 @@ pub mod text {
 	impl Drop for OCRHMMDecoder_ClassifierCallback {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OCRHMMDecoder_ClassifierCallback_delete(instance: *mut c_void); }
-			unsafe { cv_OCRHMMDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback()) };
+			unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback()) };
 		}
 	}
 	
@@ -1989,8 +1981,7 @@ pub mod text {
 	impl Drop for OCRHolisticWordRecognizer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OCRHolisticWordRecognizer_delete(instance: *mut c_void); }
-			unsafe { cv_OCRHolisticWordRecognizer_delete(self.as_raw_mut_OCRHolisticWordRecognizer()) };
+			unsafe { sys::cv_text_OCRHolisticWordRecognizer_delete(self.as_raw_mut_OCRHolisticWordRecognizer()) };
 		}
 	}
 	
@@ -2029,7 +2020,7 @@ pub mod text {
 		
 	}
 	
-	boxed_cast_base! { OCRHolisticWordRecognizer, crate::text::BaseOCR, cv_OCRHolisticWordRecognizer_to_BaseOCR }
+	boxed_cast_base! { OCRHolisticWordRecognizer, crate::text::BaseOCR, cv_text_OCRHolisticWordRecognizer_to_BaseOCR }
 	
 	impl std::fmt::Debug for OCRHolisticWordRecognizer {
 		#[inline]
@@ -2158,8 +2149,7 @@ pub mod text {
 	impl Drop for OCRTesseract {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OCRTesseract_delete(instance: *mut c_void); }
-			unsafe { cv_OCRTesseract_delete(self.as_raw_mut_OCRTesseract()) };
+			unsafe { sys::cv_text_OCRTesseract_delete(self.as_raw_mut_OCRTesseract()) };
 		}
 	}
 	
@@ -2221,7 +2211,7 @@ pub mod text {
 		
 	}
 	
-	boxed_cast_base! { OCRTesseract, crate::text::BaseOCR, cv_OCRTesseract_to_BaseOCR }
+	boxed_cast_base! { OCRTesseract, crate::text::BaseOCR, cv_text_OCRTesseract_to_BaseOCR }
 	
 	impl std::fmt::Debug for OCRTesseract {
 		#[inline]
@@ -2269,8 +2259,7 @@ pub mod text {
 	impl Drop for TextDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TextDetector_delete(instance: *mut c_void); }
-			unsafe { cv_TextDetector_delete(self.as_raw_mut_TextDetector()) };
+			unsafe { sys::cv_text_TextDetector_delete(self.as_raw_mut_TextDetector()) };
 		}
 	}
 	
@@ -2287,7 +2276,7 @@ pub mod text {
 	impl TextDetector {
 	}
 	
-	boxed_cast_descendant! { TextDetector, crate::text::TextDetectorCNN, cv_TextDetector_to_TextDetectorCNN }
+	boxed_cast_descendant! { TextDetector, crate::text::TextDetectorCNN, cv_text_TextDetector_to_TextDetectorCNN }
 	
 	impl std::fmt::Debug for TextDetector {
 		#[inline]
@@ -2340,8 +2329,7 @@ pub mod text {
 	impl Drop for TextDetectorCNN {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TextDetectorCNN_delete(instance: *mut c_void); }
-			unsafe { cv_TextDetectorCNN_delete(self.as_raw_mut_TextDetectorCNN()) };
+			unsafe { sys::cv_text_TextDetectorCNN_delete(self.as_raw_mut_TextDetectorCNN()) };
 		}
 	}
 	
@@ -2406,7 +2394,7 @@ pub mod text {
 		
 	}
 	
-	boxed_cast_base! { TextDetectorCNN, crate::text::TextDetector, cv_TextDetectorCNN_to_TextDetector }
+	boxed_cast_base! { TextDetectorCNN, crate::text::TextDetector, cv_text_TextDetectorCNN_to_TextDetector }
 	
 	impl std::fmt::Debug for TextDetectorCNN {
 		#[inline]

@@ -5610,8 +5610,7 @@ pub mod calib3d {
 	impl Drop for LMSolver {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LMSolver_delete(instance: *mut c_void); }
-			unsafe { cv_LMSolver_delete(self.as_raw_mut_LMSolver()) };
+			unsafe { sys::cv_LMSolver_delete(self.as_raw_mut_LMSolver()) };
 		}
 	}
 	
@@ -5716,8 +5715,7 @@ pub mod calib3d {
 	impl Drop for LMSolver_Callback {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LMSolver_Callback_delete(instance: *mut c_void); }
-			unsafe { cv_LMSolver_Callback_delete(self.as_raw_mut_LMSolver_Callback()) };
+			unsafe { sys::cv_LMSolver_Callback_delete(self.as_raw_mut_LMSolver_Callback()) };
 		}
 	}
 	
@@ -5909,8 +5907,7 @@ pub mod calib3d {
 	impl Drop for StereoBM {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_StereoBM_delete(instance: *mut c_void); }
-			unsafe { cv_StereoBM_delete(self.as_raw_mut_StereoBM()) };
+			unsafe { sys::cv_StereoBM_delete(self.as_raw_mut_StereoBM()) };
 		}
 	}
 	
@@ -6132,8 +6129,7 @@ pub mod calib3d {
 	impl Drop for StereoMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_StereoMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_StereoMatcher_delete(self.as_raw_mut_StereoMatcher()) };
+			unsafe { sys::cv_StereoMatcher_delete(self.as_raw_mut_StereoMatcher()) };
 		}
 	}
 	
@@ -6301,8 +6297,7 @@ pub mod calib3d {
 	impl Drop for StereoSGBM {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_StereoSGBM_delete(instance: *mut c_void); }
-			unsafe { cv_StereoSGBM_delete(self.as_raw_mut_StereoSGBM()) };
+			unsafe { sys::cv_StereoSGBM_delete(self.as_raw_mut_StereoSGBM()) };
 		}
 	}
 	

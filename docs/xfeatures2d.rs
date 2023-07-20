@@ -252,79 +252,79 @@ pub mod xfeatures2d {
 	
 		#[inline]
 		fn hessian_threshold(&self) -> f64 {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropHessianThreshold_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propHessianThreshold_const(self.as_raw_SURF_CUDA()) };
 			ret
 		}
 		
 		#[inline]
 		fn n_octaves(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropNOctaves_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaves_const(self.as_raw_SURF_CUDA()) };
 			ret
 		}
 		
 		#[inline]
 		fn n_octave_layers(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropNOctaveLayers_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaveLayers_const(self.as_raw_SURF_CUDA()) };
 			ret
 		}
 		
 		#[inline]
 		fn extended(&self) -> bool {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropExtended_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propExtended_const(self.as_raw_SURF_CUDA()) };
 			ret
 		}
 		
 		#[inline]
 		fn upright(&self) -> bool {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropUpright_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propUpright_const(self.as_raw_SURF_CUDA()) };
 			ret
 		}
 		
 		/// max keypoints = min(keypointsRatio * img.size().area(), 65535)
 		#[inline]
 		fn keypoints_ratio(&self) -> f32 {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropKeypointsRatio_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propKeypointsRatio_const(self.as_raw_SURF_CUDA()) };
 			ret
 		}
 		
 		#[inline]
 		fn sum(&self) -> core::GpuMat {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropSum_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propSum_const(self.as_raw_SURF_CUDA()) };
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn mask1(&self) -> core::GpuMat {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropMask1_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMask1_const(self.as_raw_SURF_CUDA()) };
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn mask_sum(&self) -> core::GpuMat {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropMaskSum_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaskSum_const(self.as_raw_SURF_CUDA()) };
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn det(&self) -> core::GpuMat {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropDet_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propDet_const(self.as_raw_SURF_CUDA()) };
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn trace(&self) -> core::GpuMat {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropTrace_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propTrace_const(self.as_raw_SURF_CUDA()) };
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn max_pos_buffer(&self) -> core::GpuMat {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_getPropMaxPosBuffer_const(self.as_raw_SURF_CUDA()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaxPosBuffer_const(self.as_raw_SURF_CUDA()) };
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			ret
 		}
@@ -357,74 +357,74 @@ pub mod xfeatures2d {
 	
 		#[inline]
 		fn set_hessian_threshold(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropHessianThreshold_double(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propHessianThreshold_double(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_n_octaves(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropNOctaves_int(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaves_int(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_n_octave_layers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropNOctaveLayers_int(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaveLayers_int(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_extended(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropExtended_bool(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propExtended_bool(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_upright(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropUpright_bool(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propUpright_bool(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		/// max keypoints = min(keypointsRatio * img.size().area(), 65535)
 		#[inline]
 		fn set_keypoints_ratio(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropKeypointsRatio_float(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propKeypointsRatio_float(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_sum(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_mask1(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropMask1_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMask1_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_mask_sum(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropMaskSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaskSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_det(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropDet_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propDet_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_trace(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropTrace_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propTrace_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_max_pos_buffer(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_setPropMaxPosBuffer_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaxPosBuffer_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
@@ -609,8 +609,7 @@ pub mod xfeatures2d {
 	impl Drop for SURF_CUDA {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SURF_CUDA_delete(instance: *mut c_void); }
-			unsafe { cv_SURF_CUDA_delete(self.as_raw_mut_SURF_CUDA()) };
+			unsafe { sys::cv_cuda_SURF_CUDA_delete(self.as_raw_mut_SURF_CUDA()) };
 		}
 	}
 	
@@ -764,8 +763,7 @@ pub mod xfeatures2d {
 	impl Drop for AffineFeature2D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AffineFeature2D_delete(instance: *mut c_void); }
-			unsafe { cv_AffineFeature2D_delete(self.as_raw_mut_AffineFeature2D()) };
+			unsafe { sys::cv_xfeatures2d_AffineFeature2D_delete(self.as_raw_mut_AffineFeature2D()) };
 		}
 	}
 	
@@ -822,11 +820,11 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_descendant! { AffineFeature2D, crate::xfeatures2d::TBMR, cv_AffineFeature2D_to_TBMR }
+	boxed_cast_descendant! { AffineFeature2D, crate::xfeatures2d::TBMR, cv_xfeatures2d_AffineFeature2D_to_TBMR }
 	
-	boxed_cast_base! { AffineFeature2D, core::Algorithm, cv_AffineFeature2D_to_Algorithm }
+	boxed_cast_base! { AffineFeature2D, core::Algorithm, cv_xfeatures2d_AffineFeature2D_to_Algorithm }
 	
-	boxed_cast_base! { AffineFeature2D, crate::features2d::Feature2D, cv_AffineFeature2D_to_Feature2D }
+	boxed_cast_base! { AffineFeature2D, crate::features2d::Feature2D, cv_xfeatures2d_AffineFeature2D_to_Feature2D }
 	
 	impl std::fmt::Debug for AffineFeature2D {
 		#[inline]
@@ -906,8 +904,7 @@ pub mod xfeatures2d {
 	impl Drop for BEBLID {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BEBLID_delete(instance: *mut c_void); }
-			unsafe { cv_BEBLID_delete(self.as_raw_mut_BEBLID()) };
+			unsafe { sys::cv_xfeatures2d_BEBLID_delete(self.as_raw_mut_BEBLID()) };
 		}
 	}
 	
@@ -962,9 +959,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { BEBLID, core::Algorithm, cv_BEBLID_to_Algorithm }
+	boxed_cast_base! { BEBLID, core::Algorithm, cv_xfeatures2d_BEBLID_to_Algorithm }
 	
-	boxed_cast_base! { BEBLID, crate::features2d::Feature2D, cv_BEBLID_to_Feature2D }
+	boxed_cast_base! { BEBLID, crate::features2d::Feature2D, cv_xfeatures2d_BEBLID_to_Feature2D }
 	
 	impl std::fmt::Debug for BEBLID {
 		#[inline]
@@ -1067,8 +1064,7 @@ pub mod xfeatures2d {
 	impl Drop for BoostDesc {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BoostDesc_delete(instance: *mut c_void); }
-			unsafe { cv_BoostDesc_delete(self.as_raw_mut_BoostDesc()) };
+			unsafe { sys::cv_xfeatures2d_BoostDesc_delete(self.as_raw_mut_BoostDesc()) };
 		}
 	}
 	
@@ -1115,9 +1111,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { BoostDesc, core::Algorithm, cv_BoostDesc_to_Algorithm }
+	boxed_cast_base! { BoostDesc, core::Algorithm, cv_xfeatures2d_BoostDesc_to_Algorithm }
 	
-	boxed_cast_base! { BoostDesc, crate::features2d::Feature2D, cv_BoostDesc_to_Feature2D }
+	boxed_cast_base! { BoostDesc, crate::features2d::Feature2D, cv_xfeatures2d_BoostDesc_to_Feature2D }
 	
 	impl std::fmt::Debug for BoostDesc {
 		#[inline]
@@ -1199,8 +1195,7 @@ pub mod xfeatures2d {
 	impl Drop for BriefDescriptorExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BriefDescriptorExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_BriefDescriptorExtractor_delete(self.as_raw_mut_BriefDescriptorExtractor()) };
+			unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_delete(self.as_raw_mut_BriefDescriptorExtractor()) };
 		}
 	}
 	
@@ -1246,9 +1241,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { BriefDescriptorExtractor, core::Algorithm, cv_BriefDescriptorExtractor_to_Algorithm }
+	boxed_cast_base! { BriefDescriptorExtractor, core::Algorithm, cv_xfeatures2d_BriefDescriptorExtractor_to_Algorithm }
 	
-	boxed_cast_base! { BriefDescriptorExtractor, crate::features2d::Feature2D, cv_BriefDescriptorExtractor_to_Feature2D }
+	boxed_cast_base! { BriefDescriptorExtractor, crate::features2d::Feature2D, cv_xfeatures2d_BriefDescriptorExtractor_to_Feature2D }
 	
 	impl std::fmt::Debug for BriefDescriptorExtractor {
 		#[inline]
@@ -1566,8 +1561,7 @@ pub mod xfeatures2d {
 	impl Drop for DAISY {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DAISY_delete(instance: *mut c_void); }
-			unsafe { cv_DAISY_delete(self.as_raw_mut_DAISY()) };
+			unsafe { sys::cv_xfeatures2d_DAISY_delete(self.as_raw_mut_DAISY()) };
 		}
 	}
 	
@@ -1620,9 +1614,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { DAISY, core::Algorithm, cv_DAISY_to_Algorithm }
+	boxed_cast_base! { DAISY, core::Algorithm, cv_xfeatures2d_DAISY_to_Algorithm }
 	
-	boxed_cast_base! { DAISY, crate::features2d::Feature2D, cv_DAISY_to_Feature2D }
+	boxed_cast_base! { DAISY, crate::features2d::Feature2D, cv_xfeatures2d_DAISY_to_Feature2D }
 	
 	impl std::fmt::Debug for DAISY {
 		#[inline]
@@ -1640,7 +1634,7 @@ pub mod xfeatures2d {
 		#[inline]
 		fn axes(&self) -> core::Size_<f32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_getPropAxes_const(self.as_raw_Elliptic_KeyPoint(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propAxes_const(self.as_raw_Elliptic_KeyPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1648,7 +1642,7 @@ pub mod xfeatures2d {
 		/// the integration scale at which the parameters were estimated
 		#[inline]
 		fn si(&self) -> f32 {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_getPropSi_const(self.as_raw_Elliptic_KeyPoint()) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propSi_const(self.as_raw_Elliptic_KeyPoint()) };
 			ret
 		}
 		
@@ -1656,7 +1650,7 @@ pub mod xfeatures2d {
 		#[inline]
 		fn transf(&self) -> core::Matx23f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_getPropTransf_const(self.as_raw_Elliptic_KeyPoint(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propTransf_const(self.as_raw_Elliptic_KeyPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1670,21 +1664,21 @@ pub mod xfeatures2d {
 		/// the lengths of the major and minor ellipse axes
 		#[inline]
 		fn set_axes(&mut self, val: core::Size_<f32>) {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropAxes_Size_LfloatG(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propAxes_Size_LfloatG(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// the integration scale at which the parameters were estimated
 		#[inline]
 		fn set_si(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropSi_float(self.as_raw_mut_Elliptic_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propSi_float(self.as_raw_mut_Elliptic_KeyPoint(), val) };
 			ret
 		}
 		
 		/// the transformation between image space and local patch space
 		#[inline]
 		fn set_transf(&mut self, val: core::Matx23f) {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setPropTransf_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propTransf_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -1700,8 +1694,7 @@ pub mod xfeatures2d {
 	impl Drop for Elliptic_KeyPoint {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Elliptic_KeyPoint_delete(instance: *mut c_void); }
-			unsafe { cv_Elliptic_KeyPoint_delete(self.as_raw_mut_Elliptic_KeyPoint()) };
+			unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_delete(self.as_raw_mut_Elliptic_KeyPoint()) };
 		}
 	}
 	
@@ -1746,7 +1739,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { Elliptic_KeyPoint, core::KeyPoint, cv_Elliptic_KeyPoint_to_KeyPoint }
+	boxed_cast_base! { Elliptic_KeyPoint, core::KeyPoint, cv_xfeatures2d_Elliptic_KeyPoint_to_KeyPoint }
 	
 	impl std::fmt::Debug for Elliptic_KeyPoint {
 		#[inline]
@@ -1880,8 +1873,7 @@ pub mod xfeatures2d {
 	impl Drop for FREAK {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FREAK_delete(instance: *mut c_void); }
-			unsafe { cv_FREAK_delete(self.as_raw_mut_FREAK()) };
+			unsafe { sys::cv_xfeatures2d_FREAK_delete(self.as_raw_mut_FREAK()) };
 		}
 	}
 	
@@ -1940,9 +1932,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { FREAK, core::Algorithm, cv_FREAK_to_Algorithm }
+	boxed_cast_base! { FREAK, core::Algorithm, cv_xfeatures2d_FREAK_to_Algorithm }
 	
-	boxed_cast_base! { FREAK, crate::features2d::Feature2D, cv_FREAK_to_Feature2D }
+	boxed_cast_base! { FREAK, crate::features2d::Feature2D, cv_xfeatures2d_FREAK_to_Feature2D }
 	
 	impl std::fmt::Debug for FREAK {
 		#[inline]
@@ -2074,8 +2066,7 @@ pub mod xfeatures2d {
 	impl Drop for HarrisLaplaceFeatureDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HarrisLaplaceFeatureDetector_delete(instance: *mut c_void); }
-			unsafe { cv_HarrisLaplaceFeatureDetector_delete(self.as_raw_mut_HarrisLaplaceFeatureDetector()) };
+			unsafe { sys::cv_xfeatures2d_HarrisLaplaceFeatureDetector_delete(self.as_raw_mut_HarrisLaplaceFeatureDetector()) };
 		}
 	}
 	
@@ -2133,9 +2124,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { HarrisLaplaceFeatureDetector, core::Algorithm, cv_HarrisLaplaceFeatureDetector_to_Algorithm }
+	boxed_cast_base! { HarrisLaplaceFeatureDetector, core::Algorithm, cv_xfeatures2d_HarrisLaplaceFeatureDetector_to_Algorithm }
 	
-	boxed_cast_base! { HarrisLaplaceFeatureDetector, crate::features2d::Feature2D, cv_HarrisLaplaceFeatureDetector_to_Feature2D }
+	boxed_cast_base! { HarrisLaplaceFeatureDetector, crate::features2d::Feature2D, cv_xfeatures2d_HarrisLaplaceFeatureDetector_to_Feature2D }
 	
 	impl std::fmt::Debug for HarrisLaplaceFeatureDetector {
 		#[inline]
@@ -2264,8 +2255,7 @@ pub mod xfeatures2d {
 	impl Drop for LATCH {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LATCH_delete(instance: *mut c_void); }
-			unsafe { cv_LATCH_delete(self.as_raw_mut_LATCH()) };
+			unsafe { sys::cv_xfeatures2d_LATCH_delete(self.as_raw_mut_LATCH()) };
 		}
 	}
 	
@@ -2313,9 +2303,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { LATCH, core::Algorithm, cv_LATCH_to_Algorithm }
+	boxed_cast_base! { LATCH, core::Algorithm, cv_xfeatures2d_LATCH_to_Algorithm }
 	
-	boxed_cast_base! { LATCH, crate::features2d::Feature2D, cv_LATCH_to_Feature2D }
+	boxed_cast_base! { LATCH, crate::features2d::Feature2D, cv_xfeatures2d_LATCH_to_Feature2D }
 	
 	impl std::fmt::Debug for LATCH {
 		#[inline]
@@ -2399,8 +2389,7 @@ pub mod xfeatures2d {
 	impl Drop for LUCID {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LUCID_delete(instance: *mut c_void); }
-			unsafe { cv_LUCID_delete(self.as_raw_mut_LUCID()) };
+			unsafe { sys::cv_xfeatures2d_LUCID_delete(self.as_raw_mut_LUCID()) };
 		}
 	}
 	
@@ -2450,9 +2439,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { LUCID, core::Algorithm, cv_LUCID_to_Algorithm }
+	boxed_cast_base! { LUCID, core::Algorithm, cv_xfeatures2d_LUCID_to_Algorithm }
 	
-	boxed_cast_base! { LUCID, crate::features2d::Feature2D, cv_LUCID_to_Feature2D }
+	boxed_cast_base! { LUCID, crate::features2d::Feature2D, cv_xfeatures2d_LUCID_to_Feature2D }
 	
 	impl std::fmt::Debug for LUCID {
 		#[inline]
@@ -2665,8 +2654,7 @@ pub mod xfeatures2d {
 	impl Drop for MSDDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MSDDetector_delete(instance: *mut c_void); }
-			unsafe { cv_MSDDetector_delete(self.as_raw_mut_MSDDetector()) };
+			unsafe { sys::cv_xfeatures2d_MSDDetector_delete(self.as_raw_mut_MSDDetector()) };
 		}
 	}
 	
@@ -2719,9 +2707,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { MSDDetector, core::Algorithm, cv_MSDDetector_to_Algorithm }
+	boxed_cast_base! { MSDDetector, core::Algorithm, cv_xfeatures2d_MSDDetector_to_Algorithm }
 	
-	boxed_cast_base! { MSDDetector, crate::features2d::Feature2D, cv_MSDDetector_to_Feature2D }
+	boxed_cast_base! { MSDDetector, crate::features2d::Feature2D, cv_xfeatures2d_MSDDetector_to_Feature2D }
 	
 	impl std::fmt::Debug for MSDDetector {
 		#[inline]
@@ -3288,8 +3276,7 @@ pub mod xfeatures2d {
 	impl Drop for PCTSignatures {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PCTSignatures_delete(instance: *mut c_void); }
-			unsafe { cv_PCTSignatures_delete(self.as_raw_mut_PCTSignatures()) };
+			unsafe { sys::cv_xfeatures2d_PCTSignatures_delete(self.as_raw_mut_PCTSignatures()) };
 		}
 	}
 	
@@ -3420,7 +3407,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { PCTSignatures, core::Algorithm, cv_PCTSignatures_to_Algorithm }
+	boxed_cast_base! { PCTSignatures, core::Algorithm, cv_xfeatures2d_PCTSignatures_to_Algorithm }
 	
 	impl std::fmt::Debug for PCTSignatures {
 		#[inline]
@@ -3488,8 +3475,7 @@ pub mod xfeatures2d {
 	impl Drop for PCTSignaturesSQFD {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PCTSignaturesSQFD_delete(instance: *mut c_void); }
-			unsafe { cv_PCTSignaturesSQFD_delete(self.as_raw_mut_PCTSignaturesSQFD()) };
+			unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_delete(self.as_raw_mut_PCTSignaturesSQFD()) };
 		}
 	}
 	
@@ -3537,7 +3523,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { PCTSignaturesSQFD, core::Algorithm, cv_PCTSignaturesSQFD_to_Algorithm }
+	boxed_cast_base! { PCTSignaturesSQFD, core::Algorithm, cv_xfeatures2d_PCTSignaturesSQFD_to_Algorithm }
 	
 	impl std::fmt::Debug for PCTSignaturesSQFD {
 		#[inline]
@@ -3697,8 +3683,7 @@ pub mod xfeatures2d {
 	impl Drop for SURF {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SURF_delete(instance: *mut c_void); }
-			unsafe { cv_SURF_delete(self.as_raw_mut_SURF()) };
+			unsafe { sys::cv_xfeatures2d_SURF_delete(self.as_raw_mut_SURF()) };
 		}
 	}
 	
@@ -3756,9 +3741,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { SURF, core::Algorithm, cv_SURF_to_Algorithm }
+	boxed_cast_base! { SURF, core::Algorithm, cv_xfeatures2d_SURF_to_Algorithm }
 	
-	boxed_cast_base! { SURF, crate::features2d::Feature2D, cv_SURF_to_Feature2D }
+	boxed_cast_base! { SURF, crate::features2d::Feature2D, cv_xfeatures2d_SURF_to_Feature2D }
 	
 	impl std::fmt::Debug for SURF {
 		#[inline]
@@ -3890,8 +3875,7 @@ pub mod xfeatures2d {
 	impl Drop for StarDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_StarDetector_delete(instance: *mut c_void); }
-			unsafe { cv_StarDetector_delete(self.as_raw_mut_StarDetector()) };
+			unsafe { sys::cv_xfeatures2d_StarDetector_delete(self.as_raw_mut_StarDetector()) };
 		}
 	}
 	
@@ -3942,9 +3926,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { StarDetector, core::Algorithm, cv_StarDetector_to_Algorithm }
+	boxed_cast_base! { StarDetector, core::Algorithm, cv_xfeatures2d_StarDetector_to_Algorithm }
 	
-	boxed_cast_base! { StarDetector, crate::features2d::Feature2D, cv_StarDetector_to_Feature2D }
+	boxed_cast_base! { StarDetector, crate::features2d::Feature2D, cv_xfeatures2d_StarDetector_to_Feature2D }
 	
 	impl std::fmt::Debug for StarDetector {
 		#[inline]
@@ -4063,8 +4047,7 @@ pub mod xfeatures2d {
 	impl Drop for TBMR {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TBMR_delete(instance: *mut c_void); }
-			unsafe { cv_TBMR_delete(self.as_raw_mut_TBMR()) };
+			unsafe { sys::cv_xfeatures2d_TBMR_delete(self.as_raw_mut_TBMR()) };
 		}
 	}
 	
@@ -4120,11 +4103,11 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { TBMR, crate::xfeatures2d::AffineFeature2D, cv_TBMR_to_AffineFeature2D }
+	boxed_cast_base! { TBMR, crate::xfeatures2d::AffineFeature2D, cv_xfeatures2d_TBMR_to_AffineFeature2D }
 	
-	boxed_cast_base! { TBMR, core::Algorithm, cv_TBMR_to_Algorithm }
+	boxed_cast_base! { TBMR, core::Algorithm, cv_xfeatures2d_TBMR_to_Algorithm }
 	
-	boxed_cast_base! { TBMR, crate::features2d::Feature2D, cv_TBMR_to_Feature2D }
+	boxed_cast_base! { TBMR, crate::features2d::Feature2D, cv_xfeatures2d_TBMR_to_Feature2D }
 	
 	impl std::fmt::Debug for TBMR {
 		#[inline]
@@ -4184,8 +4167,7 @@ pub mod xfeatures2d {
 	impl Drop for TEBLID {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TEBLID_delete(instance: *mut c_void); }
-			unsafe { cv_TEBLID_delete(self.as_raw_mut_TEBLID()) };
+			unsafe { sys::cv_xfeatures2d_TEBLID_delete(self.as_raw_mut_TEBLID()) };
 		}
 	}
 	
@@ -4240,9 +4222,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { TEBLID, core::Algorithm, cv_TEBLID_to_Algorithm }
+	boxed_cast_base! { TEBLID, core::Algorithm, cv_xfeatures2d_TEBLID_to_Algorithm }
 	
-	boxed_cast_base! { TEBLID, crate::features2d::Feature2D, cv_TEBLID_to_Feature2D }
+	boxed_cast_base! { TEBLID, crate::features2d::Feature2D, cv_xfeatures2d_TEBLID_to_Feature2D }
 	
 	impl std::fmt::Debug for TEBLID {
 		#[inline]
@@ -4389,8 +4371,7 @@ pub mod xfeatures2d {
 	impl Drop for VGG {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_VGG_delete(instance: *mut c_void); }
-			unsafe { cv_VGG_delete(self.as_raw_mut_VGG()) };
+			unsafe { sys::cv_xfeatures2d_VGG_delete(self.as_raw_mut_VGG()) };
 		}
 	}
 	
@@ -4440,9 +4421,9 @@ pub mod xfeatures2d {
 		
 	}
 	
-	boxed_cast_base! { VGG, core::Algorithm, cv_VGG_to_Algorithm }
+	boxed_cast_base! { VGG, core::Algorithm, cv_xfeatures2d_VGG_to_Algorithm }
 	
-	boxed_cast_base! { VGG, crate::features2d::Feature2D, cv_VGG_to_Feature2D }
+	boxed_cast_base! { VGG, crate::features2d::Feature2D, cv_xfeatures2d_VGG_to_Feature2D }
 	
 	impl std::fmt::Debug for VGG {
 		#[inline]

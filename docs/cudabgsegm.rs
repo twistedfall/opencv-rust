@@ -188,8 +188,7 @@ pub mod cudabgsegm {
 	impl Drop for CUDA_BackgroundSubtractorMOG {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_BackgroundSubtractorMOG_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_BackgroundSubtractorMOG_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG()) };
+			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG()) };
 		}
 	}
 	
@@ -222,9 +221,9 @@ pub mod cudabgsegm {
 	impl CUDA_BackgroundSubtractorMOG {
 	}
 	
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, core::Algorithm, cv_CUDA_BackgroundSubtractorMOG_to_Algorithm }
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, core::Algorithm, cv_cuda_BackgroundSubtractorMOG_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_CUDA_BackgroundSubtractorMOG_to_BackgroundSubtractor }
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorMOG_to_BackgroundSubtractor }
 	
 	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG {
 		#[inline]
@@ -292,8 +291,7 @@ pub mod cudabgsegm {
 	impl Drop for CUDA_BackgroundSubtractorMOG2 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_BackgroundSubtractorMOG2_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_BackgroundSubtractorMOG2_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG2()) };
+			unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG2()) };
 		}
 	}
 	
@@ -334,11 +332,11 @@ pub mod cudabgsegm {
 	impl CUDA_BackgroundSubtractorMOG2 {
 	}
 	
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, core::Algorithm, cv_CUDA_BackgroundSubtractorMOG2_to_Algorithm }
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, core::Algorithm, cv_cuda_BackgroundSubtractorMOG2_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractor, cv_CUDA_BackgroundSubtractorMOG2_to_BackgroundSubtractor }
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorMOG2_to_BackgroundSubtractor }
 	
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2, cv_CUDA_BackgroundSubtractorMOG2_to_BackgroundSubtractorMOG2 }
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2, cv_cuda_BackgroundSubtractorMOG2_to_BackgroundSubtractorMOG2 }
 	
 	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG2 {
 		#[inline]

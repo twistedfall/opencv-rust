@@ -143,8 +143,7 @@ pub mod structured_light {
 	impl Drop for GrayCodePattern {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GrayCodePattern_delete(instance: *mut c_void); }
-			unsafe { cv_GrayCodePattern_delete(self.as_raw_mut_GrayCodePattern()) };
+			unsafe { sys::cv_structured_light_GrayCodePattern_delete(self.as_raw_mut_GrayCodePattern()) };
 		}
 	}
 	
@@ -203,9 +202,9 @@ pub mod structured_light {
 		
 	}
 	
-	boxed_cast_base! { GrayCodePattern, core::Algorithm, cv_GrayCodePattern_to_Algorithm }
+	boxed_cast_base! { GrayCodePattern, core::Algorithm, cv_structured_light_GrayCodePattern_to_Algorithm }
 	
-	boxed_cast_base! { GrayCodePattern, crate::structured_light::StructuredLightPattern, cv_GrayCodePattern_to_StructuredLightPattern }
+	boxed_cast_base! { GrayCodePattern, crate::structured_light::StructuredLightPattern, cv_structured_light_GrayCodePattern_to_StructuredLightPattern }
 	
 	impl std::fmt::Debug for GrayCodePattern {
 		#[inline]
@@ -221,13 +220,13 @@ pub mod structured_light {
 	
 		#[inline]
 		fn width(&self) -> i32 {
-			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_getPropWidth_const(self.as_raw_GrayCodePattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propWidth_const(self.as_raw_GrayCodePattern_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn height(&self) -> i32 {
-			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_getPropHeight_const(self.as_raw_GrayCodePattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propHeight_const(self.as_raw_GrayCodePattern_Params()) };
 			ret
 		}
 		
@@ -239,13 +238,13 @@ pub mod structured_light {
 	
 		#[inline]
 		fn set_width(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_setPropWidth_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propWidth_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_height(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_setPropHeight_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propHeight_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
 			ret
 		}
 		
@@ -264,8 +263,7 @@ pub mod structured_light {
 	impl Drop for GrayCodePattern_Params {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GrayCodePattern_Params_delete(instance: *mut c_void); }
-			unsafe { cv_GrayCodePattern_Params_delete(self.as_raw_mut_GrayCodePattern_Params()) };
+			unsafe { sys::cv_structured_light_GrayCodePattern_Params_delete(self.as_raw_mut_GrayCodePattern_Params()) };
 		}
 	}
 	
@@ -405,8 +403,7 @@ pub mod structured_light {
 	impl Drop for SinusoidalPattern {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SinusoidalPattern_delete(instance: *mut c_void); }
-			unsafe { cv_SinusoidalPattern_delete(self.as_raw_mut_SinusoidalPattern()) };
+			unsafe { sys::cv_structured_light_SinusoidalPattern_delete(self.as_raw_mut_SinusoidalPattern()) };
 		}
 	}
 	
@@ -455,9 +452,9 @@ pub mod structured_light {
 		
 	}
 	
-	boxed_cast_base! { SinusoidalPattern, core::Algorithm, cv_SinusoidalPattern_to_Algorithm }
+	boxed_cast_base! { SinusoidalPattern, core::Algorithm, cv_structured_light_SinusoidalPattern_to_Algorithm }
 	
-	boxed_cast_base! { SinusoidalPattern, crate::structured_light::StructuredLightPattern, cv_SinusoidalPattern_to_StructuredLightPattern }
+	boxed_cast_base! { SinusoidalPattern, crate::structured_light::StructuredLightPattern, cv_structured_light_SinusoidalPattern_to_StructuredLightPattern }
 	
 	impl std::fmt::Debug for SinusoidalPattern {
 		#[inline]
@@ -473,55 +470,55 @@ pub mod structured_light {
 	
 		#[inline]
 		fn width(&self) -> i32 {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropWidth_const(self.as_raw_SinusoidalPattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propWidth_const(self.as_raw_SinusoidalPattern_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn height(&self) -> i32 {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropHeight_const(self.as_raw_SinusoidalPattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHeight_const(self.as_raw_SinusoidalPattern_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn nbr_of_periods(&self) -> i32 {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropNbrOfPeriods_const(self.as_raw_SinusoidalPattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPeriods_const(self.as_raw_SinusoidalPattern_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn shift_value(&self) -> f32 {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropShiftValue_const(self.as_raw_SinusoidalPattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propShiftValue_const(self.as_raw_SinusoidalPattern_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn method_id(&self) -> i32 {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropMethodId_const(self.as_raw_SinusoidalPattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMethodId_const(self.as_raw_SinusoidalPattern_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn nbr_of_pixels_between_markers(&self) -> i32 {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropNbrOfPixelsBetweenMarkers_const(self.as_raw_SinusoidalPattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPixelsBetweenMarkers_const(self.as_raw_SinusoidalPattern_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn horizontal(&self) -> bool {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropHorizontal_const(self.as_raw_SinusoidalPattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHorizontal_const(self.as_raw_SinusoidalPattern_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_markers(&self) -> bool {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropSetMarkers_const(self.as_raw_SinusoidalPattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propSetMarkers_const(self.as_raw_SinusoidalPattern_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn markers_location(&self) -> core::Vector<core::Point2f> {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_getPropMarkersLocation_const(self.as_raw_SinusoidalPattern_Params()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMarkersLocation_const(self.as_raw_SinusoidalPattern_Params()) };
 			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
 			ret
 		}
@@ -534,55 +531,55 @@ pub mod structured_light {
 	
 		#[inline]
 		fn set_width(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropWidth_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propWidth_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_height(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropHeight_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHeight_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_nbr_of_periods(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropNbrOfPeriods_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPeriods_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_shift_value(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropShiftValue_float(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propShiftValue_float(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_method_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropMethodId_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMethodId_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_nbr_of_pixels_between_markers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropNbrOfPixelsBetweenMarkers_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPixelsBetweenMarkers_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_horizontal(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropHorizontal_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHorizontal_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_set_markers(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropSetMarkers_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propSetMarkers_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_markers_location(&mut self, mut val: core::Vector<core::Point2f>) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setPropMarkersLocation_vectorLPoint2fG(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_mut_VectorOfPoint2f()) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMarkersLocation_vectorLPoint2fG(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_mut_VectorOfPoint2f()) };
 			ret
 		}
 		
@@ -607,8 +604,7 @@ pub mod structured_light {
 	impl Drop for SinusoidalPattern_Params {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SinusoidalPattern_Params_delete(instance: *mut c_void); }
-			unsafe { cv_SinusoidalPattern_Params_delete(self.as_raw_mut_SinusoidalPattern_Params()) };
+			unsafe { sys::cv_structured_light_SinusoidalPattern_Params_delete(self.as_raw_mut_SinusoidalPattern_Params()) };
 		}
 	}
 	
@@ -715,8 +711,7 @@ pub mod structured_light {
 	impl Drop for StructuredLightPattern {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_StructuredLightPattern_delete(instance: *mut c_void); }
-			unsafe { cv_StructuredLightPattern_delete(self.as_raw_mut_StructuredLightPattern()) };
+			unsafe { sys::cv_structured_light_StructuredLightPattern_delete(self.as_raw_mut_StructuredLightPattern()) };
 		}
 	}
 	
@@ -741,11 +736,11 @@ pub mod structured_light {
 	impl StructuredLightPattern {
 	}
 	
-	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::GrayCodePattern, cv_StructuredLightPattern_to_GrayCodePattern }
+	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::GrayCodePattern, cv_structured_light_StructuredLightPattern_to_GrayCodePattern }
 	
-	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::SinusoidalPattern, cv_StructuredLightPattern_to_SinusoidalPattern }
+	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::SinusoidalPattern, cv_structured_light_StructuredLightPattern_to_SinusoidalPattern }
 	
-	boxed_cast_base! { StructuredLightPattern, core::Algorithm, cv_StructuredLightPattern_to_Algorithm }
+	boxed_cast_base! { StructuredLightPattern, core::Algorithm, cv_structured_light_StructuredLightPattern_to_Algorithm }
 	
 	impl std::fmt::Debug for StructuredLightPattern {
 		#[inline]

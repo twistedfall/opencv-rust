@@ -9010,8 +9010,7 @@ pub mod core {
 	impl Drop for Algorithm {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Algorithm_delete(instance: *mut c_void); }
-			unsafe { cv_Algorithm_delete(self.as_raw_mut_Algorithm()) };
+			unsafe { sys::cv_Algorithm_delete(self.as_raw_mut_Algorithm()) };
 		}
 	}
 	
@@ -9037,6 +9036,10 @@ pub mod core {
 		}
 		
 	}
+	
+	boxed_cast_descendant! { Algorithm, core::ConjGradSolver, cv_Algorithm_to_ConjGradSolver }
+	
+	boxed_cast_descendant! { Algorithm, core::DownhillSolver, cv_Algorithm_to_DownhillSolver }
 	
 	boxed_cast_descendant! { Algorithm, core::MinProblemSolver, cv_Algorithm_to_MinProblemSolver }
 	
@@ -9156,8 +9159,7 @@ pub mod core {
 	impl Drop for AsyncArray {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AsyncArray_delete(instance: *mut c_void); }
-			unsafe { cv_AsyncArray_delete(self.as_raw_mut_AsyncArray()) };
+			unsafe { sys::cv_AsyncArray_delete(self.as_raw_mut_AsyncArray()) };
 		}
 	}
 	
@@ -9286,8 +9288,7 @@ pub mod core {
 	impl Drop for AsyncPromise {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AsyncPromise_delete(instance: *mut c_void); }
-			unsafe { cv_AsyncPromise_delete(self.as_raw_mut_AsyncPromise()) };
+			unsafe { sys::cv_AsyncPromise_delete(self.as_raw_mut_AsyncPromise()) };
 		}
 	}
 	
@@ -9530,8 +9531,7 @@ pub mod core {
 	impl Drop for CommandLineParser {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CommandLineParser_delete(instance: *mut c_void); }
-			unsafe { cv_CommandLineParser_delete(self.as_raw_mut_CommandLineParser()) };
+			unsafe { sys::cv_CommandLineParser_delete(self.as_raw_mut_CommandLineParser()) };
 		}
 	}
 	
@@ -9643,8 +9643,7 @@ pub mod core {
 	impl Drop for ConjGradSolver {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ConjGradSolver_delete(instance: *mut c_void); }
-			unsafe { cv_ConjGradSolver_delete(self.as_raw_mut_ConjGradSolver()) };
+			unsafe { sys::cv_ConjGradSolver_delete(self.as_raw_mut_ConjGradSolver()) };
 		}
 	}
 	
@@ -9868,8 +9867,7 @@ pub mod core {
 	impl Drop for DownhillSolver {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DownhillSolver_delete(instance: *mut c_void); }
-			unsafe { cv_DownhillSolver_delete(self.as_raw_mut_DownhillSolver()) };
+			unsafe { sys::cv_DownhillSolver_delete(self.as_raw_mut_DownhillSolver()) };
 		}
 	}
 	
@@ -9953,7 +9951,7 @@ pub mod core {
 		/// the formatted error message
 		#[inline]
 		fn msg(&self) -> String {
-			let ret = unsafe { sys::cv_Exception_getPropMsg_const(self.as_raw_Exception()) };
+			let ret = unsafe { sys::cv_Exception_propMsg_const(self.as_raw_Exception()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -9961,14 +9959,14 @@ pub mod core {
 		/// error code see also: CVStatus
 		#[inline]
 		fn code(&self) -> i32 {
-			let ret = unsafe { sys::cv_Exception_getPropCode_const(self.as_raw_Exception()) };
+			let ret = unsafe { sys::cv_Exception_propCode_const(self.as_raw_Exception()) };
 			ret
 		}
 		
 		/// error description
 		#[inline]
 		fn err(&self) -> String {
-			let ret = unsafe { sys::cv_Exception_getPropErr_const(self.as_raw_Exception()) };
+			let ret = unsafe { sys::cv_Exception_propErr_const(self.as_raw_Exception()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -9976,7 +9974,7 @@ pub mod core {
 		/// function name. Available only when the compiler supports getting it
 		#[inline]
 		fn func(&self) -> String {
-			let ret = unsafe { sys::cv_Exception_getPropFunc_const(self.as_raw_Exception()) };
+			let ret = unsafe { sys::cv_Exception_propFunc_const(self.as_raw_Exception()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -9984,7 +9982,7 @@ pub mod core {
 		/// source file name where the error has occurred
 		#[inline]
 		fn file(&self) -> String {
-			let ret = unsafe { sys::cv_Exception_getPropFile_const(self.as_raw_Exception()) };
+			let ret = unsafe { sys::cv_Exception_propFile_const(self.as_raw_Exception()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -9992,7 +9990,7 @@ pub mod core {
 		/// line number in the source file where the error has occurred
 		#[inline]
 		fn line(&self) -> i32 {
-			let ret = unsafe { sys::cv_Exception_getPropLine_const(self.as_raw_Exception()) };
+			let ret = unsafe { sys::cv_Exception_propLine_const(self.as_raw_Exception()) };
 			ret
 		}
 		
@@ -10018,14 +10016,14 @@ pub mod core {
 		#[inline]
 		fn set_msg(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_Exception_setPropMsg_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_Exception_propMsg_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		/// error code see also: CVStatus
 		#[inline]
 		fn set_code(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Exception_setPropCode_int(self.as_raw_mut_Exception(), val) };
+			let ret = unsafe { sys::cv_Exception_propCode_int(self.as_raw_mut_Exception(), val) };
 			ret
 		}
 		
@@ -10033,7 +10031,7 @@ pub mod core {
 		#[inline]
 		fn set_err(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_Exception_setPropErr_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_Exception_propErr_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
@@ -10041,7 +10039,7 @@ pub mod core {
 		#[inline]
 		fn set_func(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_Exception_setPropFunc_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_Exception_propFunc_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
@@ -10049,14 +10047,14 @@ pub mod core {
 		#[inline]
 		fn set_file(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_Exception_setPropFile_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_Exception_propFile_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		/// line number in the source file where the error has occurred
 		#[inline]
 		fn set_line(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Exception_setPropLine_int(self.as_raw_mut_Exception(), val) };
+			let ret = unsafe { sys::cv_Exception_propLine_int(self.as_raw_mut_Exception(), val) };
 			ret
 		}
 		
@@ -10087,8 +10085,7 @@ pub mod core {
 	impl Drop for Exception {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Exception_delete(instance: *mut c_void); }
-			unsafe { cv_Exception_delete(self.as_raw_mut_Exception()) };
+			unsafe { sys::cv_Exception_delete(self.as_raw_mut_Exception()) };
 		}
 	}
 	
@@ -10153,13 +10150,13 @@ pub mod core {
 	
 		#[inline]
 		fn block_idx(&self) -> size_t {
-			let ret = unsafe { sys::cv_FileNode_getPropBlockIdx_const(self.as_raw_FileNode()) };
+			let ret = unsafe { sys::cv_FileNode_propBlockIdx_const(self.as_raw_FileNode()) };
 			ret
 		}
 		
 		#[inline]
 		fn ofs(&self) -> size_t {
-			let ret = unsafe { sys::cv_FileNode_getPropOfs_const(self.as_raw_FileNode()) };
+			let ret = unsafe { sys::cv_FileNode_propOfs_const(self.as_raw_FileNode()) };
 			ret
 		}
 		
@@ -10484,13 +10481,13 @@ pub mod core {
 	
 		#[inline]
 		fn set_block_idx(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_FileNode_setPropBlockIdx_size_t(self.as_raw_mut_FileNode(), val) };
+			let ret = unsafe { sys::cv_FileNode_propBlockIdx_size_t(self.as_raw_mut_FileNode(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ofs(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_FileNode_setPropOfs_size_t(self.as_raw_mut_FileNode(), val) };
+			let ret = unsafe { sys::cv_FileNode_propOfs_size_t(self.as_raw_mut_FileNode(), val) };
 			ret
 		}
 		
@@ -10539,8 +10536,7 @@ pub mod core {
 	impl Drop for FileNode {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FileNode_delete(instance: *mut c_void); }
-			unsafe { cv_FileNode_delete(self.as_raw_mut_FileNode()) };
+			unsafe { sys::cv_FileNode_delete(self.as_raw_mut_FileNode()) };
 		}
 	}
 	
@@ -10661,8 +10657,7 @@ pub mod core {
 	impl Clone for FileNode {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_FileNode_implicitClone_const_FileNode(val: extern_send!(FileNode)) -> extern_receive!(FileNode: 'static); }
-			unsafe { Self::from_raw(cv_FileNode_implicitClone_const_FileNode(self.as_raw_FileNode())) }
+			unsafe { Self::from_raw(sys::cv_FileNode_implicitClone_const(self.as_raw_FileNode())) }
 		}
 	}
 	
@@ -10764,8 +10759,7 @@ pub mod core {
 	impl Drop for FileNodeIterator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FileNodeIterator_delete(instance: *mut c_void); }
-			unsafe { cv_FileNodeIterator_delete(self.as_raw_mut_FileNodeIterator()) };
+			unsafe { sys::cv_FileNodeIterator_delete(self.as_raw_mut_FileNodeIterator()) };
 		}
 	}
 	
@@ -10853,13 +10847,13 @@ pub mod core {
 	
 		#[inline]
 		fn state(&self) -> i32 {
-			let ret = unsafe { sys::cv_FileStorage_getPropState_const(self.as_raw_FileStorage()) };
+			let ret = unsafe { sys::cv_FileStorage_propState_const(self.as_raw_FileStorage()) };
 			ret
 		}
 		
 		#[inline]
 		fn elname(&self) -> String {
-			let ret = unsafe { sys::cv_FileStorage_getPropElname_const(self.as_raw_FileStorage()) };
+			let ret = unsafe { sys::cv_FileStorage_propElname_const(self.as_raw_FileStorage()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -10964,14 +10958,14 @@ pub mod core {
 	
 		#[inline]
 		fn set_state(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_FileStorage_setPropState_int(self.as_raw_mut_FileStorage(), val) };
+			let ret = unsafe { sys::cv_FileStorage_propState_int(self.as_raw_mut_FileStorage(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_elname(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_FileStorage_setPropElname_string(self.as_raw_mut_FileStorage(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_FileStorage_propElname_string(self.as_raw_mut_FileStorage(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
@@ -11191,8 +11185,7 @@ pub mod core {
 	impl Drop for FileStorage {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FileStorage_delete(instance: *mut c_void); }
-			unsafe { cv_FileStorage_delete(self.as_raw_mut_FileStorage()) };
+			unsafe { sys::cv_FileStorage_delete(self.as_raw_mut_FileStorage()) };
 		}
 	}
 	
@@ -11313,8 +11306,7 @@ pub mod core {
 	impl Drop for Formatted {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Formatted_delete(instance: *mut c_void); }
-			unsafe { cv_Formatted_delete(self.as_raw_mut_Formatted()) };
+			unsafe { sys::cv_Formatted_delete(self.as_raw_mut_Formatted()) };
 		}
 	}
 	
@@ -11415,8 +11407,7 @@ pub mod core {
 	impl Drop for Formatter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Formatter_delete(instance: *mut c_void); }
-			unsafe { cv_Formatter_delete(self.as_raw_mut_Formatter()) };
+			unsafe { sys::cv_Formatter_delete(self.as_raw_mut_Formatter()) };
 		}
 	}
 	
@@ -11484,8 +11475,7 @@ pub mod core {
 	impl Drop for Hamming {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Hamming_delete(instance: *mut c_void); }
-			unsafe { cv_Hamming_delete(self.as_raw_mut_Hamming()) };
+			unsafe { sys::cv_Hamming_delete(self.as_raw_mut_Hamming()) };
 		}
 	}
 	
@@ -11519,7 +11509,7 @@ pub mod core {
 		#[inline]
 		fn pt(&self) -> core::Point2f {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_KeyPoint_getPropPt_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_KeyPoint_propPt_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -11527,7 +11517,7 @@ pub mod core {
 		/// diameter of the meaningful keypoint neighborhood
 		#[inline]
 		fn size(&self) -> f32 {
-			let ret = unsafe { sys::cv_KeyPoint_getPropSize_const(self.as_raw_KeyPoint()) };
+			let ret = unsafe { sys::cv_KeyPoint_propSize_const(self.as_raw_KeyPoint()) };
 			ret
 		}
 		
@@ -11536,28 +11526,28 @@ pub mod core {
 		/// image coordinate system, ie in clockwise.
 		#[inline]
 		fn angle(&self) -> f32 {
-			let ret = unsafe { sys::cv_KeyPoint_getPropAngle_const(self.as_raw_KeyPoint()) };
+			let ret = unsafe { sys::cv_KeyPoint_propAngle_const(self.as_raw_KeyPoint()) };
 			ret
 		}
 		
 		/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
 		#[inline]
 		fn response(&self) -> f32 {
-			let ret = unsafe { sys::cv_KeyPoint_getPropResponse_const(self.as_raw_KeyPoint()) };
+			let ret = unsafe { sys::cv_KeyPoint_propResponse_const(self.as_raw_KeyPoint()) };
 			ret
 		}
 		
 		/// octave (pyramid layer) from which the keypoint has been extracted
 		#[inline]
 		fn octave(&self) -> i32 {
-			let ret = unsafe { sys::cv_KeyPoint_getPropOctave_const(self.as_raw_KeyPoint()) };
+			let ret = unsafe { sys::cv_KeyPoint_propOctave_const(self.as_raw_KeyPoint()) };
 			ret
 		}
 		
 		/// object class (if the keypoints need to be clustered by an object they belong to)
 		#[inline]
 		fn class_id(&self) -> i32 {
-			let ret = unsafe { sys::cv_KeyPoint_getPropClass_id_const(self.as_raw_KeyPoint()) };
+			let ret = unsafe { sys::cv_KeyPoint_propClass_id_const(self.as_raw_KeyPoint()) };
 			ret
 		}
 		
@@ -11579,14 +11569,14 @@ pub mod core {
 		/// coordinates of the keypoints
 		#[inline]
 		fn set_pt(&mut self, val: core::Point2f) {
-			let ret = unsafe { sys::cv_KeyPoint_setPropPt_Point2f(self.as_raw_mut_KeyPoint(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_KeyPoint_propPt_Point2f(self.as_raw_mut_KeyPoint(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// diameter of the meaningful keypoint neighborhood
 		#[inline]
 		fn set_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_setPropSize_float(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propSize_float(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
@@ -11595,28 +11585,28 @@ pub mod core {
 		/// image coordinate system, ie in clockwise.
 		#[inline]
 		fn set_angle(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_setPropAngle_float(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propAngle_float(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
 		/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
 		#[inline]
 		fn set_response(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_setPropResponse_float(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propResponse_float(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
 		/// octave (pyramid layer) from which the keypoint has been extracted
 		#[inline]
 		fn set_octave(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_KeyPoint_setPropOctave_int(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propOctave_int(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
 		/// object class (if the keypoints need to be clustered by an object they belong to)
 		#[inline]
 		fn set_class_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_KeyPoint_setPropClass_id_int(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propClass_id_int(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
@@ -11641,8 +11631,7 @@ pub mod core {
 	impl Drop for KeyPoint {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KeyPoint_delete(instance: *mut c_void); }
-			unsafe { cv_KeyPoint_delete(self.as_raw_mut_KeyPoint()) };
+			unsafe { sys::cv_KeyPoint_delete(self.as_raw_mut_KeyPoint()) };
 		}
 	}
 	
@@ -11787,8 +11776,7 @@ pub mod core {
 	impl Clone for KeyPoint {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_KeyPoint_implicitClone_const_KeyPoint(val: extern_send!(KeyPoint)) -> extern_receive!(KeyPoint: 'static); }
-			unsafe { Self::from_raw(cv_KeyPoint_implicitClone_const_KeyPoint(self.as_raw_KeyPoint())) }
+			unsafe { Self::from_raw(sys::cv_KeyPoint_implicitClone_const(self.as_raw_KeyPoint())) }
 		}
 	}
 	
@@ -11931,8 +11919,7 @@ pub mod core {
 	impl Drop for LDA {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LDA_delete(instance: *mut c_void); }
-			unsafe { cv_LDA_delete(self.as_raw_mut_LDA()) };
+			unsafe { sys::cv_LDA_delete(self.as_raw_mut_LDA()) };
 		}
 	}
 	
@@ -12028,60 +12015,60 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn flags(&self) -> i32 {
-			let ret = unsafe { sys::cv_Mat_getPropFlags_const(self.as_raw_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propFlags_const(self.as_raw_Mat()) };
 			ret
 		}
 		
 		/// the matrix dimensionality, >= 2
 		#[inline]
 		fn dims(&self) -> i32 {
-			let ret = unsafe { sys::cv_Mat_getPropDims_const(self.as_raw_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propDims_const(self.as_raw_Mat()) };
 			ret
 		}
 		
 		/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 		#[inline]
 		fn rows(&self) -> i32 {
-			let ret = unsafe { sys::cv_Mat_getPropRows_const(self.as_raw_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propRows_const(self.as_raw_Mat()) };
 			ret
 		}
 		
 		/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 		#[inline]
 		fn cols(&self) -> i32 {
-			let ret = unsafe { sys::cv_Mat_getPropCols_const(self.as_raw_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propCols_const(self.as_raw_Mat()) };
 			ret
 		}
 		
 		/// helper fields used in locateROI and adjustROI
 		#[inline]
 		fn datastart(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_Mat_getPropDatastart_const(self.as_raw_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propDatastart_const(self.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn dataend(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_Mat_getPropDataend_const(self.as_raw_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propDataend_const(self.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn datalimit(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_Mat_getPropDatalimit_const(self.as_raw_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propDatalimit_const(self.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn mat_size(&self) -> core::MatSize {
-			let ret = unsafe { sys::cv_Mat_getPropSize_const(self.as_raw_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propSize_const(self.as_raw_Mat()) };
 			let ret = unsafe { core::MatSize::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn mat_step(&self) -> core::MatStep {
-			let ret = unsafe { sys::cv_Mat_getPropStep_const(self.as_raw_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propStep_const(self.as_raw_Mat()) };
 			let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
 			ret
 		}
@@ -13290,6 +13277,21 @@ pub mod core {
 		/// * pt: Element position specified as Point(j,i) .
 		fn at_pt<T: core::DataType>(&self, pt: core::Point) -> Result<&T> { core::mat_forward::at_pt(self, pt) }
 		
+		#[inline]
+		fn size(&self) -> Result<core::Size> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_size_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn data(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_Mat_data_const(self.as_raw_Mat()) };
+			ret
+		}
+		
 	}
 	
 	/// Mutable methods for [core::Mat]
@@ -13303,49 +13305,49 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_setPropFlags_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propFlags_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 		
 		/// the matrix dimensionality, >= 2
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_setPropDims_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propDims_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 		
 		/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_setPropRows_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propRows_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 		
 		/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_setPropCols_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propCols_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 		
 		/// pointer to the data
 		#[inline]
 		fn data_mut(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_Mat_getPropData(self.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propData(self.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		/// pointer to the data
 		#[inline]
 		unsafe fn set_data(&mut self, val: *mut u8) {
-			let ret = { sys::cv_Mat_setPropData_unsigned_charX(self.as_raw_mut_Mat(), val) };
+			let ret = { sys::cv_Mat_propData_unsigned_charX(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 		
 		/// interaction with UMat
 		#[inline]
 		fn u(&mut self) -> core::UMatData {
-			let ret = unsafe { sys::cv_Mat_getPropU(self.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_Mat_propU(self.as_raw_mut_Mat()) };
 			let ret = unsafe { core::UMatData::opencv_from_extern(ret) };
 			ret
 		}
@@ -13353,7 +13355,7 @@ pub mod core {
 		/// interaction with UMat
 		#[inline]
 		fn set_u(&mut self, val: &mut core::UMatData) {
-			let ret = unsafe { sys::cv_Mat_setPropU_UMatDataX(self.as_raw_mut_Mat(), val.as_raw_mut_UMatData()) };
+			let ret = unsafe { sys::cv_Mat_propU_UMatDataX(self.as_raw_mut_Mat(), val.as_raw_mut_UMatData()) };
 			ret
 		}
 		
@@ -14034,6 +14036,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Sets all or some of the array elements to the specified value.
+		/// 
+		/// ## Parameters
+		/// * s: Assigned scalar converted to the actual array type.
+		#[inline]
+		fn set(&mut self, s: core::Scalar) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_set_Scalar(self.as_raw_mut_Mat(), s.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// n-dimensional dense array class \anchor CVMat_Details
@@ -14248,8 +14263,7 @@ pub mod core {
 	impl Drop for Mat {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Mat_delete(instance: *mut c_void); }
-			unsafe { cv_Mat_delete(self.as_raw_mut_Mat()) };
+			unsafe { sys::cv_Mat_delete(self.as_raw_mut_Mat()) };
 		}
 	}
 	
@@ -14997,32 +15011,32 @@ pub mod core {
 	
 		#[inline]
 		fn m(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_MatConstIterator_getPropM_const(self.as_raw_MatConstIterator()) };
+			let ret = unsafe { sys::cv_MatConstIterator_propM_const(self.as_raw_MatConstIterator()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn elem_size(&self) -> size_t {
-			let ret = unsafe { sys::cv_MatConstIterator_getPropElemSize_const(self.as_raw_MatConstIterator()) };
+			let ret = unsafe { sys::cv_MatConstIterator_propElemSize_const(self.as_raw_MatConstIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn ptr(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_MatConstIterator_getPropPtr_const(self.as_raw_MatConstIterator()) };
+			let ret = unsafe { sys::cv_MatConstIterator_propPtr_const(self.as_raw_MatConstIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn slice_start(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_MatConstIterator_getPropSliceStart_const(self.as_raw_MatConstIterator()) };
+			let ret = unsafe { sys::cv_MatConstIterator_propSliceStart_const(self.as_raw_MatConstIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn slice_end(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_MatConstIterator_getPropSliceEnd_const(self.as_raw_MatConstIterator()) };
+			let ret = unsafe { sys::cv_MatConstIterator_propSliceEnd_const(self.as_raw_MatConstIterator()) };
 			ret
 		}
 		
@@ -15075,6 +15089,18 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		#[inline]
+		fn has_elements(&self) -> bool {
+			let ret = unsafe { sys::cv_MatConstIterator_hasElements_const(self.as_raw_MatConstIterator()) };
+			ret
+		}
+		
+		#[inline]
+		fn typ(&self) -> i32 {
+			let ret = unsafe { sys::cv_MatConstIterator_type_const(self.as_raw_MatConstIterator()) };
+			ret
+		}
+		
 	}
 	
 	/// Mutable methods for [core::MatConstIterator]
@@ -15083,7 +15109,7 @@ pub mod core {
 	
 		#[inline]
 		fn set_elem_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_MatConstIterator_setPropElemSize_size_t(self.as_raw_mut_MatConstIterator(), val) };
+			let ret = unsafe { sys::cv_MatConstIterator_propElemSize_size_t(self.as_raw_mut_MatConstIterator(), val) };
 			ret
 		}
 		
@@ -15143,8 +15169,7 @@ pub mod core {
 	impl Drop for MatConstIterator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MatConstIterator_delete(instance: *mut c_void); }
-			unsafe { cv_MatConstIterator_delete(self.as_raw_mut_MatConstIterator()) };
+			unsafe { sys::cv_MatConstIterator_delete(self.as_raw_mut_MatConstIterator()) };
 		}
 	}
 	
@@ -15238,47 +15263,47 @@ pub mod core {
 	
 		#[inline]
 		fn flags(&self) -> i32 {
-			let ret = unsafe { sys::cv_MatExpr_getPropFlags_const(self.as_raw_MatExpr()) };
+			let ret = unsafe { sys::cv_MatExpr_propFlags_const(self.as_raw_MatExpr()) };
 			ret
 		}
 		
 		#[inline]
 		fn a(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_MatExpr_getPropA_const(self.as_raw_MatExpr()) };
+			let ret = unsafe { sys::cv_MatExpr_propA_const(self.as_raw_MatExpr()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn b(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_MatExpr_getPropB_const(self.as_raw_MatExpr()) };
+			let ret = unsafe { sys::cv_MatExpr_propB_const(self.as_raw_MatExpr()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn c(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_MatExpr_getPropC_const(self.as_raw_MatExpr()) };
+			let ret = unsafe { sys::cv_MatExpr_propC_const(self.as_raw_MatExpr()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn alpha(&self) -> f64 {
-			let ret = unsafe { sys::cv_MatExpr_getPropAlpha_const(self.as_raw_MatExpr()) };
+			let ret = unsafe { sys::cv_MatExpr_propAlpha_const(self.as_raw_MatExpr()) };
 			ret
 		}
 		
 		#[inline]
 		fn beta(&self) -> f64 {
-			let ret = unsafe { sys::cv_MatExpr_getPropBeta_const(self.as_raw_MatExpr()) };
+			let ret = unsafe { sys::cv_MatExpr_propBeta_const(self.as_raw_MatExpr()) };
 			ret
 		}
 		
 		#[inline]
 		fn s(&self) -> core::Scalar {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatExpr_getPropS_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_MatExpr_propS_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -15436,43 +15461,43 @@ pub mod core {
 	
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_MatExpr_setPropFlags_int(self.as_raw_mut_MatExpr(), val) };
+			let ret = unsafe { sys::cv_MatExpr_propFlags_int(self.as_raw_mut_MatExpr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_a(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_MatExpr_setPropA_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_MatExpr_propA_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_MatExpr_setPropB_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_MatExpr_propB_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_c(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_MatExpr_setPropC_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_MatExpr_propC_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_alpha(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_MatExpr_setPropAlpha_double(self.as_raw_mut_MatExpr(), val) };
+			let ret = unsafe { sys::cv_MatExpr_propAlpha_double(self.as_raw_mut_MatExpr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_beta(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_MatExpr_setPropBeta_double(self.as_raw_mut_MatExpr(), val) };
+			let ret = unsafe { sys::cv_MatExpr_propBeta_double(self.as_raw_mut_MatExpr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_s(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_MatExpr_setPropS_Scalar(self.as_raw_mut_MatExpr(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_MatExpr_propS_Scalar(self.as_raw_mut_MatExpr(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -15543,8 +15568,7 @@ pub mod core {
 	impl Drop for MatExpr {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MatExpr_delete(instance: *mut c_void); }
-			unsafe { cv_MatExpr_delete(self.as_raw_mut_MatExpr()) };
+			unsafe { sys::cv_MatExpr_delete(self.as_raw_mut_MatExpr()) };
 		}
 	}
 	
@@ -15866,8 +15890,7 @@ pub mod core {
 	impl Drop for MatOp {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MatOp_delete(instance: *mut c_void); }
-			unsafe { cv_MatOp_delete(self.as_raw_mut_MatOp()) };
+			unsafe { sys::cv_MatOp_delete(self.as_raw_mut_MatOp()) };
 		}
 	}
 	
@@ -15946,13 +15969,13 @@ pub mod core {
 	
 		#[inline]
 		fn p(&mut self) -> *mut i32 {
-			let ret = unsafe { sys::cv_MatSize_getPropP(self.as_raw_mut_MatSize()) };
+			let ret = unsafe { sys::cv_MatSize_propP(self.as_raw_mut_MatSize()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_p(&mut self, val: *mut i32) {
-			let ret = { sys::cv_MatSize_setPropP_intX(self.as_raw_mut_MatSize(), val) };
+			let ret = { sys::cv_MatSize_propP_intX(self.as_raw_mut_MatSize(), val) };
 			ret
 		}
 		
@@ -15976,8 +15999,7 @@ pub mod core {
 	impl Drop for MatSize {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MatSize_delete(instance: *mut c_void); }
-			unsafe { cv_MatSize_delete(self.as_raw_mut_MatSize()) };
+			unsafe { sys::cv_MatSize_delete(self.as_raw_mut_MatSize()) };
 		}
 	}
 	
@@ -16029,19 +16051,19 @@ pub mod core {
 	
 		#[inline]
 		fn p(&mut self) -> *mut size_t {
-			let ret = unsafe { sys::cv_MatStep_getPropP(self.as_raw_mut_MatStep()) };
+			let ret = unsafe { sys::cv_MatStep_propP(self.as_raw_mut_MatStep()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_p(&mut self, val: *mut size_t) {
-			let ret = { sys::cv_MatStep_setPropP_size_tX(self.as_raw_mut_MatStep(), val) };
+			let ret = { sys::cv_MatStep_propP_size_tX(self.as_raw_mut_MatStep(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn buf(&mut self) -> &mut [size_t; 2] {
-			let ret = unsafe { sys::cv_MatStep_getPropBuf(self.as_raw_mut_MatStep()) };
+			let ret = unsafe { sys::cv_MatStep_propBuf(self.as_raw_mut_MatStep()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
@@ -16063,8 +16085,7 @@ pub mod core {
 	impl Drop for MatStep {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MatStep_delete(instance: *mut c_void); }
-			unsafe { cv_MatStep_delete(self.as_raw_mut_MatStep()) };
+			unsafe { sys::cv_MatStep_delete(self.as_raw_mut_MatStep()) };
 		}
 	}
 	
@@ -16126,8 +16147,7 @@ pub mod core {
 	impl Drop for Matx_AddOp {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Matx_AddOp_delete(instance: *mut c_void); }
-			unsafe { cv_Matx_AddOp_delete(self.as_raw_mut_Matx_AddOp()) };
+			unsafe { sys::cv_Matx_AddOp_delete(self.as_raw_mut_Matx_AddOp()) };
 		}
 	}
 	
@@ -16193,8 +16213,7 @@ pub mod core {
 	impl Drop for Matx_DivOp {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Matx_DivOp_delete(instance: *mut c_void); }
-			unsafe { cv_Matx_DivOp_delete(self.as_raw_mut_Matx_DivOp()) };
+			unsafe { sys::cv_Matx_DivOp_delete(self.as_raw_mut_Matx_DivOp()) };
 		}
 	}
 	
@@ -16260,8 +16279,7 @@ pub mod core {
 	impl Drop for Matx_MatMulOp {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Matx_MatMulOp_delete(instance: *mut c_void); }
-			unsafe { cv_Matx_MatMulOp_delete(self.as_raw_mut_Matx_MatMulOp()) };
+			unsafe { sys::cv_Matx_MatMulOp_delete(self.as_raw_mut_Matx_MatMulOp()) };
 		}
 	}
 	
@@ -16327,8 +16345,7 @@ pub mod core {
 	impl Drop for Matx_MulOp {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Matx_MulOp_delete(instance: *mut c_void); }
-			unsafe { cv_Matx_MulOp_delete(self.as_raw_mut_Matx_MulOp()) };
+			unsafe { sys::cv_Matx_MulOp_delete(self.as_raw_mut_Matx_MulOp()) };
 		}
 	}
 	
@@ -16394,8 +16411,7 @@ pub mod core {
 	impl Drop for Matx_ScaleOp {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Matx_ScaleOp_delete(instance: *mut c_void); }
-			unsafe { cv_Matx_ScaleOp_delete(self.as_raw_mut_Matx_ScaleOp()) };
+			unsafe { sys::cv_Matx_ScaleOp_delete(self.as_raw_mut_Matx_ScaleOp()) };
 		}
 	}
 	
@@ -16461,8 +16477,7 @@ pub mod core {
 	impl Drop for Matx_SubOp {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Matx_SubOp_delete(instance: *mut c_void); }
-			unsafe { cv_Matx_SubOp_delete(self.as_raw_mut_Matx_SubOp()) };
+			unsafe { sys::cv_Matx_SubOp_delete(self.as_raw_mut_Matx_SubOp()) };
 		}
 	}
 	
@@ -16528,8 +16543,7 @@ pub mod core {
 	impl Drop for Matx_TOp {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Matx_TOp_delete(instance: *mut c_void); }
-			unsafe { cv_Matx_TOp_delete(self.as_raw_mut_Matx_TOp()) };
+			unsafe { sys::cv_Matx_TOp_delete(self.as_raw_mut_Matx_TOp()) };
 		}
 	}
 	
@@ -16685,8 +16699,7 @@ pub mod core {
 	impl Drop for MinProblemSolver {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MinProblemSolver_delete(instance: *mut c_void); }
-			unsafe { cv_MinProblemSolver_delete(self.as_raw_mut_MinProblemSolver()) };
+			unsafe { sys::cv_MinProblemSolver_delete(self.as_raw_mut_MinProblemSolver()) };
 		}
 	}
 	
@@ -16783,8 +16796,7 @@ pub mod core {
 	impl Drop for MinProblemSolver_Function {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MinProblemSolver_Function_delete(instance: *mut c_void); }
-			unsafe { cv_MinProblemSolver_Function_delete(self.as_raw_mut_MinProblemSolver_Function()) };
+			unsafe { sys::cv_MinProblemSolver_Function_delete(self.as_raw_mut_MinProblemSolver_Function()) };
 		}
 	}
 	
@@ -16927,7 +16939,7 @@ pub mod core {
 		/// eigenvectors of the covariation matrix
 		#[inline]
 		fn eigenvectors(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_PCA_getPropEigenvectors_const(self.as_raw_PCA()) };
+			let ret = unsafe { sys::cv_PCA_propEigenvectors_const(self.as_raw_PCA()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -16935,7 +16947,7 @@ pub mod core {
 		/// eigenvalues of the covariation matrix
 		#[inline]
 		fn eigenvalues(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_PCA_getPropEigenvalues_const(self.as_raw_PCA()) };
+			let ret = unsafe { sys::cv_PCA_propEigenvalues_const(self.as_raw_PCA()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -16943,7 +16955,7 @@ pub mod core {
 		/// mean value subtracted before the projection and added after the back projection
 		#[inline]
 		fn mean(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_PCA_getPropMean_const(self.as_raw_PCA()) };
+			let ret = unsafe { sys::cv_PCA_propMean_const(self.as_raw_PCA()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -17088,21 +17100,21 @@ pub mod core {
 		/// eigenvectors of the covariation matrix
 		#[inline]
 		fn set_eigenvectors(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_PCA_setPropEigenvectors_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_PCA_propEigenvectors_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		/// eigenvalues of the covariation matrix
 		#[inline]
 		fn set_eigenvalues(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_PCA_setPropEigenvalues_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_PCA_propEigenvalues_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		/// mean value subtracted before the projection and added after the back projection
 		#[inline]
 		fn set_mean(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_PCA_setPropMean_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_PCA_propMean_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
@@ -17271,8 +17283,7 @@ pub mod core {
 	impl Drop for PCA {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PCA_delete(instance: *mut c_void); }
-			unsafe { cv_PCA_delete(self.as_raw_mut_PCA()) };
+			unsafe { sys::cv_PCA_delete(self.as_raw_mut_PCA()) };
 		}
 	}
 	
@@ -17405,8 +17416,7 @@ pub mod core {
 	impl Drop for ParallelLoopBody {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ParallelLoopBody_delete(instance: *mut c_void); }
-			unsafe { cv_ParallelLoopBody_delete(self.as_raw_mut_ParallelLoopBody()) };
+			unsafe { sys::cv_ParallelLoopBody_delete(self.as_raw_mut_ParallelLoopBody()) };
 		}
 	}
 	
@@ -17437,7 +17447,7 @@ pub mod core {
 	
 		#[inline]
 		fn state(&self) -> u64 {
-			let ret = unsafe { sys::cv_RNG_getPropState_const(self.as_raw_RNG()) };
+			let ret = unsafe { sys::cv_RNG_propState_const(self.as_raw_RNG()) };
 			ret
 		}
 		
@@ -17458,7 +17468,7 @@ pub mod core {
 	
 		#[inline]
 		fn set_state(&mut self, val: u64) {
-			let ret = unsafe { sys::cv_RNG_setPropState_uint64_t(self.as_raw_mut_RNG(), val) };
+			let ret = unsafe { sys::cv_RNG_propState_uint64_t(self.as_raw_mut_RNG(), val) };
 			ret
 		}
 		
@@ -17822,8 +17832,7 @@ pub mod core {
 	impl Drop for RNG {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RNG_delete(instance: *mut c_void); }
-			unsafe { cv_RNG_delete(self.as_raw_mut_RNG()) };
+			unsafe { sys::cv_RNG_delete(self.as_raw_mut_RNG()) };
 		}
 	}
 	
@@ -18015,8 +18024,7 @@ pub mod core {
 	impl Drop for RNG_MT19937 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RNG_MT19937_delete(instance: *mut c_void); }
-			unsafe { cv_RNG_MT19937_delete(self.as_raw_mut_RNG_MT19937()) };
+			unsafe { sys::cv_RNG_MT19937_delete(self.as_raw_mut_RNG_MT19937()) };
 		}
 	}
 	
@@ -18067,13 +18075,13 @@ pub mod core {
 	
 		#[inline]
 		fn start(&self) -> i32 {
-			let ret = unsafe { sys::cv_Range_getPropStart_const(self.as_raw_Range()) };
+			let ret = unsafe { sys::cv_Range_propStart_const(self.as_raw_Range()) };
 			ret
 		}
 		
 		#[inline]
 		fn end(&self) -> i32 {
-			let ret = unsafe { sys::cv_Range_getPropEnd_const(self.as_raw_Range()) };
+			let ret = unsafe { sys::cv_Range_propEnd_const(self.as_raw_Range()) };
 			ret
 		}
 		
@@ -18103,13 +18111,13 @@ pub mod core {
 	
 		#[inline]
 		fn set_start(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Range_setPropStart_int(self.as_raw_mut_Range(), val) };
+			let ret = unsafe { sys::cv_Range_propStart_int(self.as_raw_mut_Range(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_end(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Range_setPropEnd_int(self.as_raw_mut_Range(), val) };
+			let ret = unsafe { sys::cv_Range_propEnd_int(self.as_raw_mut_Range(), val) };
 			ret
 		}
 		
@@ -18147,8 +18155,7 @@ pub mod core {
 	impl Drop for Range {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Range_delete(instance: *mut c_void); }
-			unsafe { cv_Range_delete(self.as_raw_mut_Range()) };
+			unsafe { sys::cv_Range_delete(self.as_raw_mut_Range()) };
 		}
 	}
 	
@@ -18319,21 +18326,21 @@ pub mod core {
 	
 		#[inline]
 		fn u(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_SVD_getPropU_const(self.as_raw_SVD()) };
+			let ret = unsafe { sys::cv_SVD_propU_const(self.as_raw_SVD()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn w(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_SVD_getPropW_const(self.as_raw_SVD()) };
+			let ret = unsafe { sys::cv_SVD_propW_const(self.as_raw_SVD()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn vt(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_SVD_getPropVt_const(self.as_raw_SVD()) };
+			let ret = unsafe { sys::cv_SVD_propVt_const(self.as_raw_SVD()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -18380,19 +18387,19 @@ pub mod core {
 	
 		#[inline]
 		fn set_u(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_setPropU_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_SVD_propU_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_w(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_setPropW_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_SVD_propW_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_vt(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_setPropVt_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_SVD_propVt_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
@@ -18445,8 +18452,7 @@ pub mod core {
 	impl Drop for SVD {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SVD_delete(instance: *mut c_void); }
-			unsafe { cv_SVD_delete(self.as_raw_mut_SVD()) };
+			unsafe { sys::cv_SVD_delete(self.as_raw_mut_SVD()) };
 		}
 	}
 	
@@ -18626,7 +18632,7 @@ pub mod core {
 	
 		#[inline]
 		fn flags(&self) -> i32 {
-			let ret = unsafe { sys::cv_SparseMat_getPropFlags_const(self.as_raw_SparseMat()) };
+			let ret = unsafe { sys::cv_SparseMat_propFlags_const(self.as_raw_SparseMat()) };
 			ret
 		}
 		
@@ -18864,20 +18870,20 @@ pub mod core {
 	
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_setPropFlags_int(self.as_raw_mut_SparseMat(), val) };
+			let ret = unsafe { sys::cv_SparseMat_propFlags_int(self.as_raw_mut_SparseMat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn hdr(&mut self) -> core::SparseMat_Hdr {
-			let ret = unsafe { sys::cv_SparseMat_getPropHdr(self.as_raw_mut_SparseMat()) };
+			let ret = unsafe { sys::cv_SparseMat_propHdr(self.as_raw_mut_SparseMat()) };
 			let ret = unsafe { core::SparseMat_Hdr::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn set_hdr(&mut self, val: &mut core::SparseMat_Hdr) {
-			let ret = unsafe { sys::cv_SparseMat_setPropHdr_HdrX(self.as_raw_mut_SparseMat(), val.as_raw_mut_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_propHdr_HdrX(self.as_raw_mut_SparseMat(), val.as_raw_mut_SparseMat_Hdr()) };
 			ret
 		}
 		
@@ -19180,8 +19186,7 @@ pub mod core {
 	impl Drop for SparseMat {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SparseMat_delete(instance: *mut c_void); }
-			unsafe { cv_SparseMat_delete(self.as_raw_mut_SparseMat()) };
+			unsafe { sys::cv_SparseMat_delete(self.as_raw_mut_SparseMat()) };
 		}
 	}
 	
@@ -19284,50 +19289,50 @@ pub mod core {
 	
 		#[inline]
 		fn refcount(&self) -> i32 {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_getPropRefcount_const(self.as_raw_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propRefcount_const(self.as_raw_SparseMat_Hdr()) };
 			ret
 		}
 		
 		#[inline]
 		fn dims(&self) -> i32 {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_getPropDims_const(self.as_raw_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propDims_const(self.as_raw_SparseMat_Hdr()) };
 			ret
 		}
 		
 		#[inline]
 		fn value_offset(&self) -> i32 {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_getPropValueOffset_const(self.as_raw_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propValueOffset_const(self.as_raw_SparseMat_Hdr()) };
 			ret
 		}
 		
 		#[inline]
 		fn node_size(&self) -> size_t {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_getPropNodeSize_const(self.as_raw_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeSize_const(self.as_raw_SparseMat_Hdr()) };
 			ret
 		}
 		
 		#[inline]
 		fn node_count(&self) -> size_t {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_getPropNodeCount_const(self.as_raw_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeCount_const(self.as_raw_SparseMat_Hdr()) };
 			ret
 		}
 		
 		#[inline]
 		fn free_list(&self) -> size_t {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_getPropFreeList_const(self.as_raw_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propFreeList_const(self.as_raw_SparseMat_Hdr()) };
 			ret
 		}
 		
 		#[inline]
 		fn pool(&self) -> core::Vector<u8> {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_getPropPool_const(self.as_raw_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propPool_const(self.as_raw_SparseMat_Hdr()) };
 			let ret = unsafe { core::Vector::<u8>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn hashtab(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_getPropHashtab_const(self.as_raw_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propHashtab_const(self.as_raw_SparseMat_Hdr()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
@@ -19340,55 +19345,55 @@ pub mod core {
 	
 		#[inline]
 		fn set_refcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_setPropRefcount_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propRefcount_int(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_setPropDims_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propDims_int(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_value_offset(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_setPropValueOffset_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propValueOffset_int(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_node_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_setPropNodeSize_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeSize_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_node_count(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_setPropNodeCount_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeCount_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_free_list(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_setPropFreeList_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propFreeList_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pool(&mut self, mut val: core::Vector<u8>) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_setPropPool_vectorLunsigned_charG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfu8()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propPool_vectorLunsigned_charG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfu8()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_hashtab(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_setPropHashtab_vectorLsize_tG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propHashtab_vectorLsize_tG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn size(&mut self) -> &mut [i32; 32] {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_getPropSize(self.as_raw_mut_SparseMat_Hdr()) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propSize(self.as_raw_mut_SparseMat_Hdr()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
@@ -19414,8 +19419,7 @@ pub mod core {
 	impl Drop for SparseMat_Hdr {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SparseMat_Hdr_delete(instance: *mut c_void); }
-			unsafe { cv_SparseMat_Hdr_delete(self.as_raw_mut_SparseMat_Hdr()) };
+			unsafe { sys::cv_SparseMat_Hdr_delete(self.as_raw_mut_SparseMat_Hdr()) };
 		}
 	}
 	
@@ -19465,14 +19469,14 @@ pub mod core {
 		/// hash value
 		#[inline]
 		fn hashval(&self) -> size_t {
-			let ret = unsafe { sys::cv_SparseMat_Node_getPropHashval_const(self.as_raw_SparseMat_Node()) };
+			let ret = unsafe { sys::cv_SparseMat_Node_propHashval_const(self.as_raw_SparseMat_Node()) };
 			ret
 		}
 		
 		/// index of the next node in the same hash table entry
 		#[inline]
 		fn next(&self) -> size_t {
-			let ret = unsafe { sys::cv_SparseMat_Node_getPropNext_const(self.as_raw_SparseMat_Node()) };
+			let ret = unsafe { sys::cv_SparseMat_Node_propNext_const(self.as_raw_SparseMat_Node()) };
 			ret
 		}
 		
@@ -19485,21 +19489,21 @@ pub mod core {
 		/// hash value
 		#[inline]
 		fn set_hashval(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Node_setPropHashval_size_t(self.as_raw_mut_SparseMat_Node(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Node_propHashval_size_t(self.as_raw_mut_SparseMat_Node(), val) };
 			ret
 		}
 		
 		/// index of the next node in the same hash table entry
 		#[inline]
 		fn set_next(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Node_setPropNext_size_t(self.as_raw_mut_SparseMat_Node(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Node_propNext_size_t(self.as_raw_mut_SparseMat_Node(), val) };
 			ret
 		}
 		
 		/// index of the matrix element
 		#[inline]
 		fn idx(&mut self) -> &mut [i32; 32] {
-			let ret = unsafe { sys::cv_SparseMat_Node_getPropIdx(self.as_raw_mut_SparseMat_Node()) };
+			let ret = unsafe { sys::cv_SparseMat_Node_propIdx(self.as_raw_mut_SparseMat_Node()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
@@ -19516,8 +19520,7 @@ pub mod core {
 	impl Drop for SparseMat_Node {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SparseMat_Node_delete(instance: *mut c_void); }
-			unsafe { cv_SparseMat_Node_delete(self.as_raw_mut_SparseMat_Node()) };
+			unsafe { sys::cv_SparseMat_Node_delete(self.as_raw_mut_SparseMat_Node()) };
 		}
 	}
 	
@@ -19550,14 +19553,14 @@ pub mod core {
 	
 		#[inline]
 		fn m(&self) -> core::SparseMat {
-			let ret = unsafe { sys::cv_SparseMatConstIterator_getPropM_const(self.as_raw_SparseMatConstIterator()) };
+			let ret = unsafe { sys::cv_SparseMatConstIterator_propM_const(self.as_raw_SparseMatConstIterator()) };
 			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn hashidx(&self) -> size_t {
-			let ret = unsafe { sys::cv_SparseMatConstIterator_getPropHashidx_const(self.as_raw_SparseMatConstIterator()) };
+			let ret = unsafe { sys::cv_SparseMatConstIterator_propHashidx_const(self.as_raw_SparseMatConstIterator()) };
 			ret
 		}
 		
@@ -19580,19 +19583,19 @@ pub mod core {
 	
 		#[inline]
 		fn set_hashidx(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMatConstIterator_setPropHashidx_size_t(self.as_raw_mut_SparseMatConstIterator(), val) };
+			let ret = unsafe { sys::cv_SparseMatConstIterator_propHashidx_size_t(self.as_raw_mut_SparseMatConstIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn ptr(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_SparseMatConstIterator_getPropPtr(self.as_raw_mut_SparseMatConstIterator()) };
+			let ret = unsafe { sys::cv_SparseMatConstIterator_propPtr(self.as_raw_mut_SparseMatConstIterator()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_ptr(&mut self, val: *mut u8) {
-			let ret = { sys::cv_SparseMatConstIterator_setPropPtr_unsigned_charX(self.as_raw_mut_SparseMatConstIterator(), val) };
+			let ret = { sys::cv_SparseMatConstIterator_propPtr_unsigned_charX(self.as_raw_mut_SparseMatConstIterator(), val) };
 			ret
 		}
 		
@@ -19651,8 +19654,7 @@ pub mod core {
 	impl Drop for SparseMatConstIterator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SparseMatConstIterator_delete(instance: *mut c_void); }
-			unsafe { cv_SparseMatConstIterator_delete(self.as_raw_mut_SparseMatConstIterator()) };
+			unsafe { sys::cv_SparseMatConstIterator_delete(self.as_raw_mut_SparseMatConstIterator()) };
 		}
 	}
 	
@@ -19759,8 +19761,7 @@ pub mod core {
 	impl Drop for SparseMatIterator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SparseMatIterator_delete(instance: *mut c_void); }
-			unsafe { cv_SparseMatIterator_delete(self.as_raw_mut_SparseMatIterator()) };
+			unsafe { sys::cv_SparseMatIterator_delete(self.as_raw_mut_SparseMatIterator()) };
 		}
 	}
 	
@@ -20023,8 +20024,7 @@ pub mod core {
 	impl Drop for TickMeter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TickMeter_delete(instance: *mut c_void); }
-			unsafe { cv_TickMeter_delete(self.as_raw_mut_TickMeter()) };
+			unsafe { sys::cv_TickMeter_delete(self.as_raw_mut_TickMeter()) };
 		}
 	}
 	
@@ -20071,28 +20071,28 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn flags(&self) -> i32 {
-			let ret = unsafe { sys::cv_UMat_getPropFlags_const(self.as_raw_UMat()) };
+			let ret = unsafe { sys::cv_UMat_propFlags_const(self.as_raw_UMat()) };
 			ret
 		}
 		
 		/// the matrix dimensionality, >= 2
 		#[inline]
 		fn dims(&self) -> i32 {
-			let ret = unsafe { sys::cv_UMat_getPropDims_const(self.as_raw_UMat()) };
+			let ret = unsafe { sys::cv_UMat_propDims_const(self.as_raw_UMat()) };
 			ret
 		}
 		
 		/// number of rows in the matrix; -1 when the matrix has more than 2 dimensions
 		#[inline]
 		fn rows(&self) -> i32 {
-			let ret = unsafe { sys::cv_UMat_getPropRows_const(self.as_raw_UMat()) };
+			let ret = unsafe { sys::cv_UMat_propRows_const(self.as_raw_UMat()) };
 			ret
 		}
 		
 		/// number of columns in the matrix; -1 when the matrix has more than 2 dimensions
 		#[inline]
 		fn cols(&self) -> i32 {
-			let ret = unsafe { sys::cv_UMat_getPropCols_const(self.as_raw_UMat()) };
+			let ret = unsafe { sys::cv_UMat_propCols_const(self.as_raw_UMat()) };
 			ret
 		}
 		
@@ -20100,7 +20100,7 @@ pub mod core {
 		#[inline]
 		fn usage_flags(&self) -> core::UMatUsageFlags {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_getPropUsageFlags_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_propUsageFlags_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -20108,14 +20108,14 @@ pub mod core {
 		/// offset of the submatrix (or 0)
 		#[inline]
 		fn offset(&self) -> size_t {
-			let ret = unsafe { sys::cv_UMat_getPropOffset_const(self.as_raw_UMat()) };
+			let ret = unsafe { sys::cv_UMat_propOffset_const(self.as_raw_UMat()) };
 			ret
 		}
 		
 		/// dimensional size of the matrix; accessible in various formats
 		#[inline]
 		fn mat_size(&self) -> core::MatSize {
-			let ret = unsafe { sys::cv_UMat_getPropSize_const(self.as_raw_UMat()) };
+			let ret = unsafe { sys::cv_UMat_propSize_const(self.as_raw_UMat()) };
 			let ret = unsafe { core::MatSize::opencv_from_extern(ret) };
 			ret
 		}
@@ -20123,7 +20123,7 @@ pub mod core {
 		/// number of bytes each matrix element/row/plane/dimension occupies
 		#[inline]
 		fn mat_step(&self) -> core::MatStep {
-			let ret = unsafe { sys::cv_UMat_getPropStep_const(self.as_raw_UMat()) };
+			let ret = unsafe { sys::cv_UMat_propStep_const(self.as_raw_UMat()) };
 			let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
 			ret
 		}
@@ -20520,6 +20520,15 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		#[inline]
+		fn size(&self) -> Result<core::Size> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_size_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [core::UMat]
@@ -20533,42 +20542,42 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_setPropFlags_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propFlags_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
 		/// the matrix dimensionality, >= 2
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_setPropDims_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propDims_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
 		/// number of rows in the matrix; -1 when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_setPropRows_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propRows_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
 		/// number of columns in the matrix; -1 when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_setPropCols_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propCols_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
 		/// usage flags for allocator; recommend do not set directly, instead set during construct/create/getUMat
 		#[inline]
 		fn set_usage_flags(&mut self, val: core::UMatUsageFlags) {
-			let ret = unsafe { sys::cv_UMat_setPropUsageFlags_UMatUsageFlags(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propUsageFlags_UMatUsageFlags(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
 		/// black-box container of UMat data
 		#[inline]
 		fn u(&mut self) -> core::UMatData {
-			let ret = unsafe { sys::cv_UMat_getPropU(self.as_raw_mut_UMat()) };
+			let ret = unsafe { sys::cv_UMat_propU(self.as_raw_mut_UMat()) };
 			let ret = unsafe { core::UMatData::opencv_from_extern(ret) };
 			ret
 		}
@@ -20576,14 +20585,14 @@ pub mod core {
 		/// black-box container of UMat data
 		#[inline]
 		fn set_u(&mut self, val: &mut core::UMatData) {
-			let ret = unsafe { sys::cv_UMat_setPropU_UMatDataX(self.as_raw_mut_UMat(), val.as_raw_mut_UMatData()) };
+			let ret = unsafe { sys::cv_UMat_propU_UMatDataX(self.as_raw_mut_UMat(), val.as_raw_mut_UMatData()) };
 			ret
 		}
 		
 		/// offset of the submatrix (or 0)
 		#[inline]
 		fn set_offset(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_UMat_setPropOffset_size_t(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propOffset_size_t(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
@@ -20712,8 +20721,7 @@ pub mod core {
 	impl Drop for UMat {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_UMat_delete(instance: *mut c_void); }
-			unsafe { cv_UMat_delete(self.as_raw_mut_UMat()) };
+			unsafe { sys::cv_UMat_delete(self.as_raw_mut_UMat()) };
 		}
 	}
 	
@@ -21104,39 +21112,39 @@ pub mod core {
 	
 		#[inline]
 		fn urefcount(&self) -> i32 {
-			let ret = unsafe { sys::cv_UMatData_getPropUrefcount_const(self.as_raw_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propUrefcount_const(self.as_raw_UMatData()) };
 			ret
 		}
 		
 		#[inline]
 		fn refcount(&self) -> i32 {
-			let ret = unsafe { sys::cv_UMatData_getPropRefcount_const(self.as_raw_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propRefcount_const(self.as_raw_UMatData()) };
 			ret
 		}
 		
 		#[inline]
 		fn size(&self) -> size_t {
-			let ret = unsafe { sys::cv_UMatData_getPropSize_const(self.as_raw_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propSize_const(self.as_raw_UMatData()) };
 			ret
 		}
 		
 		#[inline]
 		fn flags(&self) -> core::UMatData_MemoryFlag {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMatData_getPropFlags_const(self.as_raw_UMatData(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMatData_propFlags_const(self.as_raw_UMatData(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn allocator_flags_(&self) -> i32 {
-			let ret = unsafe { sys::cv_UMatData_getPropAllocatorFlags__const(self.as_raw_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propAllocatorFlags__const(self.as_raw_UMatData()) };
 			ret
 		}
 		
 		#[inline]
 		fn mapcount(&self) -> i32 {
-			let ret = unsafe { sys::cv_UMatData_getPropMapcount_const(self.as_raw_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propMapcount_const(self.as_raw_UMatData()) };
 			ret
 		}
 		
@@ -21202,98 +21210,98 @@ pub mod core {
 	
 		#[inline]
 		fn set_urefcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_setPropUrefcount_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propUrefcount_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_refcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_setPropRefcount_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propRefcount_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn data(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_UMatData_getPropData(self.as_raw_mut_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propData(self.as_raw_mut_UMatData()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_data(&mut self, val: *mut u8) {
-			let ret = { sys::cv_UMatData_setPropData_unsigned_charX(self.as_raw_mut_UMatData(), val) };
+			let ret = { sys::cv_UMatData_propData_unsigned_charX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn origdata(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_UMatData_getPropOrigdata(self.as_raw_mut_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propOrigdata(self.as_raw_mut_UMatData()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_origdata(&mut self, val: *mut u8) {
-			let ret = { sys::cv_UMatData_setPropOrigdata_unsigned_charX(self.as_raw_mut_UMatData(), val) };
+			let ret = { sys::cv_UMatData_propOrigdata_unsigned_charX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_UMatData_setPropSize_size_t(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propSize_size_t(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_flags(&mut self, val: core::UMatData_MemoryFlag) {
-			let ret = unsafe { sys::cv_UMatData_setPropFlags_MemoryFlag(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propFlags_MemoryFlag(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn handle(&mut self) -> *mut c_void {
-			let ret = unsafe { sys::cv_UMatData_getPropHandle(self.as_raw_mut_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propHandle(self.as_raw_mut_UMatData()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_handle(&mut self, val: *mut c_void) {
-			let ret = { sys::cv_UMatData_setPropHandle_voidX(self.as_raw_mut_UMatData(), val) };
+			let ret = { sys::cv_UMatData_propHandle_voidX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn userdata(&mut self) -> *mut c_void {
-			let ret = unsafe { sys::cv_UMatData_getPropUserdata(self.as_raw_mut_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propUserdata(self.as_raw_mut_UMatData()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_userdata(&mut self, val: *mut c_void) {
-			let ret = { sys::cv_UMatData_setPropUserdata_voidX(self.as_raw_mut_UMatData(), val) };
+			let ret = { sys::cv_UMatData_propUserdata_voidX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_allocator_flags_(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_setPropAllocatorFlags__int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propAllocatorFlags__int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_mapcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_setPropMapcount_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propMapcount_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn original_umat_data(&mut self) -> core::UMatData {
-			let ret = unsafe { sys::cv_UMatData_getPropOriginalUMatData(self.as_raw_mut_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propOriginalUMatData(self.as_raw_mut_UMatData()) };
 			let ret = unsafe { core::UMatData::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn set_original_umat_data(&mut self, val: &mut core::UMatData) {
-			let ret = unsafe { sys::cv_UMatData_setPropOriginalUMatData_UMatDataX(self.as_raw_mut_UMatData(), val.as_raw_mut_UMatData()) };
+			let ret = unsafe { sys::cv_UMatData_propOriginalUMatData_UMatDataX(self.as_raw_mut_UMatData(), val.as_raw_mut_UMatData()) };
 			ret
 		}
 		
@@ -21353,8 +21361,7 @@ pub mod core {
 	impl Drop for UMatData {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_UMatData_delete(instance: *mut c_void); }
-			unsafe { cv_UMatData_delete(self.as_raw_mut_UMatData()) };
+			unsafe { sys::cv_UMatData_delete(self.as_raw_mut_UMatData()) };
 		}
 	}
 	
@@ -21866,8 +21873,7 @@ pub mod core {
 	impl Drop for _InputArray {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv__InputArray_delete(instance: *mut c_void); }
-			unsafe { cv__InputArray_delete(self.as_raw_mut__InputArray()) };
+			unsafe { sys::cv__InputArray_delete(self.as_raw_mut__InputArray()) };
 		}
 	}
 	
@@ -22043,8 +22049,7 @@ pub mod core {
 	impl Drop for _InputOutputArray {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv__InputOutputArray_delete(instance: *mut c_void); }
-			unsafe { cv__InputOutputArray_delete(self.as_raw_mut__InputOutputArray()) };
+			unsafe { sys::cv__InputOutputArray_delete(self.as_raw_mut__InputOutputArray()) };
 		}
 	}
 	
@@ -22531,8 +22536,7 @@ pub mod core {
 	impl Drop for _OutputArray {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv__OutputArray_delete(instance: *mut c_void); }
-			unsafe { cv__OutputArray_delete(self.as_raw_mut__OutputArray()) };
+			unsafe { sys::cv__OutputArray_delete(self.as_raw_mut__OutputArray()) };
 		}
 	}
 	
@@ -22926,8 +22930,7 @@ pub mod core {
 	impl Drop for BufferPool {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BufferPool_delete(instance: *mut c_void); }
-			unsafe { cv_BufferPool_delete(self.as_raw_mut_BufferPool()) };
+			unsafe { sys::cv_cuda_BufferPool_delete(self.as_raw_mut_BufferPool()) };
 		}
 	}
 	
@@ -23572,8 +23575,7 @@ pub mod core {
 	impl Drop for DeviceInfo {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DeviceInfo_delete(instance: *mut c_void); }
-			unsafe { cv_DeviceInfo_delete(self.as_raw_mut_DeviceInfo()) };
+			unsafe { sys::cv_cuda_DeviceInfo_delete(self.as_raw_mut_DeviceInfo()) };
 		}
 	}
 	
@@ -23680,8 +23682,7 @@ pub mod core {
 	impl Drop for Event {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Event_delete(instance: *mut c_void); }
-			unsafe { cv_Event_delete(self.as_raw_mut_Event()) };
+			unsafe { sys::cv_cuda_Event_delete(self.as_raw_mut_Event()) };
 		}
 	}
 	
@@ -23734,7 +23735,7 @@ pub mod core {
 	
 		#[inline]
 		fn size(&self) -> size_t {
-			let ret = unsafe { sys::cv_cuda_GpuData_getPropSize_const(self.as_raw_GpuData()) };
+			let ret = unsafe { sys::cv_cuda_GpuData_propSize_const(self.as_raw_GpuData()) };
 			ret
 		}
 		
@@ -23746,19 +23747,19 @@ pub mod core {
 	
 		#[inline]
 		fn data(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_cuda_GpuData_getPropData(self.as_raw_mut_GpuData()) };
+			let ret = unsafe { sys::cv_cuda_GpuData_propData(self.as_raw_mut_GpuData()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_data(&mut self, val: *mut u8) {
-			let ret = { sys::cv_cuda_GpuData_setPropData_unsigned_charX(self.as_raw_mut_GpuData(), val) };
+			let ret = { sys::cv_cuda_GpuData_propData_unsigned_charX(self.as_raw_mut_GpuData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_cuda_GpuData_setPropSize_size_t(self.as_raw_mut_GpuData(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuData_propSize_size_t(self.as_raw_mut_GpuData(), val) };
 			ret
 		}
 		
@@ -23773,8 +23774,7 @@ pub mod core {
 	impl Drop for GpuData {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GpuData_delete(instance: *mut c_void); }
-			unsafe { cv_GpuData_delete(self.as_raw_mut_GpuData()) };
+			unsafe { sys::cv_cuda_GpuData_delete(self.as_raw_mut_GpuData()) };
 		}
 	}
 	
@@ -23821,34 +23821,34 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn flags(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_GpuMat_getPropFlags_const(self.as_raw_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propFlags_const(self.as_raw_GpuMat()) };
 			ret
 		}
 		
 		/// the number of rows and columns
 		#[inline]
 		fn rows(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_GpuMat_getPropRows_const(self.as_raw_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propRows_const(self.as_raw_GpuMat()) };
 			ret
 		}
 		
 		/// the number of rows and columns
 		#[inline]
 		fn cols(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_GpuMat_getPropCols_const(self.as_raw_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propCols_const(self.as_raw_GpuMat()) };
 			ret
 		}
 		
 		/// a distance between successive rows in bytes; includes the gap if any
 		#[inline]
 		fn step(&self) -> size_t {
-			let ret = unsafe { sys::cv_cuda_GpuMat_getPropStep_const(self.as_raw_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propStep_const(self.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn dataend(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_cuda_GpuMat_getPropDataend_const(self.as_raw_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propDataend_const(self.as_raw_GpuMat()) };
 			ret
 		}
 		
@@ -24243,42 +24243,42 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_setPropFlags_int(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propFlags_int(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// the number of rows and columns
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_setPropRows_int(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propRows_int(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// the number of rows and columns
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_setPropCols_int(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propCols_int(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// a distance between successive rows in bytes; includes the gap if any
 		#[inline]
 		fn set_step(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_setPropStep_size_t(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propStep_size_t(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// pointer to the data
 		#[inline]
 		fn data(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_cuda_GpuMat_getPropData(self.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propData(self.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
 		/// pointer to the data
 		#[inline]
 		unsafe fn set_data(&mut self, val: *mut u8) {
-			let ret = { sys::cv_cuda_GpuMat_setPropData_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
+			let ret = { sys::cv_cuda_GpuMat_propData_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
@@ -24286,7 +24286,7 @@ pub mod core {
 		/// when GpuMat points to user-allocated data, the pointer is NULL
 		#[inline]
 		fn refcount(&mut self) -> *mut i32 {
-			let ret = unsafe { sys::cv_cuda_GpuMat_getPropRefcount(self.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propRefcount(self.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
@@ -24294,28 +24294,28 @@ pub mod core {
 		/// when GpuMat points to user-allocated data, the pointer is NULL
 		#[inline]
 		unsafe fn set_refcount(&mut self, val: *mut i32) {
-			let ret = { sys::cv_cuda_GpuMat_setPropRefcount_intX(self.as_raw_mut_GpuMat(), val) };
+			let ret = { sys::cv_cuda_GpuMat_propRefcount_intX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// helper fields used in locateROI and adjustROI
 		#[inline]
 		fn datastart(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_cuda_GpuMat_getPropDatastart(self.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propDatastart(self.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
 		/// helper fields used in locateROI and adjustROI
 		#[inline]
 		unsafe fn set_datastart(&mut self, val: *mut u8) {
-			let ret = { sys::cv_cuda_GpuMat_setPropDatastart_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
+			let ret = { sys::cv_cuda_GpuMat_propDatastart_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// allocator
 		#[inline]
 		fn allocator(&mut self) -> core::GpuMat_Allocator {
-			let ret = unsafe { sys::cv_cuda_GpuMat_getPropAllocator(self.as_raw_mut_GpuMat()) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propAllocator(self.as_raw_mut_GpuMat()) };
 			let ret = unsafe { core::GpuMat_Allocator::opencv_from_extern(ret) };
 			ret
 		}
@@ -24323,7 +24323,7 @@ pub mod core {
 		/// allocator
 		#[inline]
 		unsafe fn set_allocator(&mut self, val: &mut core::GpuMat_Allocator) {
-			let ret = { sys::cv_cuda_GpuMat_setPropAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_mut_GpuMat_Allocator()) };
+			let ret = { sys::cv_cuda_GpuMat_propAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_mut_GpuMat_Allocator()) };
 			ret
 		}
 		
@@ -24520,8 +24520,7 @@ pub mod core {
 	impl Drop for GpuMat {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GpuMat_delete(instance: *mut c_void); }
-			unsafe { cv_GpuMat_delete(self.as_raw_mut_GpuMat()) };
+			unsafe { sys::cv_cuda_GpuMat_delete(self.as_raw_mut_GpuMat()) };
 		}
 	}
 	
@@ -24757,8 +24756,7 @@ pub mod core {
 	impl Drop for GpuMat_Allocator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GpuMat_Allocator_delete(instance: *mut c_void); }
-			unsafe { cv_GpuMat_Allocator_delete(self.as_raw_mut_GpuMat_Allocator()) };
+			unsafe { sys::cv_cuda_GpuMat_Allocator_delete(self.as_raw_mut_GpuMat_Allocator()) };
 		}
 	}
 	
@@ -24794,21 +24792,21 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn flags(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_getPropFlags_const(self.as_raw_GpuMatND()) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propFlags_const(self.as_raw_GpuMatND()) };
 			ret
 		}
 		
 		/// matrix dimensionality
 		#[inline]
 		fn dims(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_getPropDims_const(self.as_raw_GpuMatND()) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propDims_const(self.as_raw_GpuMatND()) };
 			ret
 		}
 		
 		/// shape of this array
 		#[inline]
 		fn size(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_getPropSize_const(self.as_raw_GpuMatND()) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propSize_const(self.as_raw_GpuMatND()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
@@ -24817,7 +24815,7 @@ pub mod core {
 		/// Their semantics is identical to the semantics of step for Mat.
 		#[inline]
 		fn step(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_getPropStep_const(self.as_raw_GpuMatND()) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propStep_const(self.as_raw_GpuMatND()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
@@ -25073,21 +25071,21 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_setPropFlags_int(self.as_raw_mut_GpuMatND(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propFlags_int(self.as_raw_mut_GpuMatND(), val) };
 			ret
 		}
 		
 		/// matrix dimensionality
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_setPropDims_int(self.as_raw_mut_GpuMatND(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propDims_int(self.as_raw_mut_GpuMatND(), val) };
 			ret
 		}
 		
 		/// shape of this array
 		#[inline]
 		fn set_size(&mut self, mut val: core::GpuMatND_SizeArray) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_setPropSize_SizeArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propSize_SizeArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
@@ -25095,7 +25093,7 @@ pub mod core {
 		/// Their semantics is identical to the semantics of step for Mat.
 		#[inline]
 		fn set_step(&mut self, mut val: core::GpuMatND_StepArray) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_setPropStep_StepArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propStep_StepArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
@@ -25160,8 +25158,7 @@ pub mod core {
 	impl Drop for GpuMatND {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GpuMatND_delete(instance: *mut c_void); }
-			unsafe { cv_GpuMatND_delete(self.as_raw_mut_GpuMatND()) };
+			unsafe { sys::cv_cuda_GpuMatND_delete(self.as_raw_mut_GpuMatND()) };
 		}
 	}
 	
@@ -25275,38 +25272,38 @@ pub mod core {
 	
 		#[inline]
 		fn flags(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_HostMem_getPropFlags_const(self.as_raw_HostMem()) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propFlags_const(self.as_raw_HostMem()) };
 			ret
 		}
 		
 		#[inline]
 		fn rows(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_HostMem_getPropRows_const(self.as_raw_HostMem()) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propRows_const(self.as_raw_HostMem()) };
 			ret
 		}
 		
 		#[inline]
 		fn cols(&self) -> i32 {
-			let ret = unsafe { sys::cv_cuda_HostMem_getPropCols_const(self.as_raw_HostMem()) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propCols_const(self.as_raw_HostMem()) };
 			ret
 		}
 		
 		#[inline]
 		fn step(&self) -> size_t {
-			let ret = unsafe { sys::cv_cuda_HostMem_getPropStep_const(self.as_raw_HostMem()) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propStep_const(self.as_raw_HostMem()) };
 			ret
 		}
 		
 		#[inline]
 		fn dataend(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_cuda_HostMem_getPropDataend_const(self.as_raw_HostMem()) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propDataend_const(self.as_raw_HostMem()) };
 			ret
 		}
 		
 		#[inline]
 		fn alloc_type(&self) -> core::HostMem_AllocType {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_getPropAlloc_type_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_HostMem_propAlloc_type_const(self.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -25453,67 +25450,67 @@ pub mod core {
 	
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_HostMem_setPropFlags_int(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propFlags_int(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_HostMem_setPropRows_int(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propRows_int(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_HostMem_setPropCols_int(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propCols_int(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_step(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_cuda_HostMem_setPropStep_size_t(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propStep_size_t(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn data(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_cuda_HostMem_getPropData(self.as_raw_mut_HostMem()) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propData(self.as_raw_mut_HostMem()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_data(&mut self, val: *mut u8) {
-			let ret = { sys::cv_cuda_HostMem_setPropData_unsigned_charX(self.as_raw_mut_HostMem(), val) };
+			let ret = { sys::cv_cuda_HostMem_propData_unsigned_charX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn refcount(&mut self) -> *mut i32 {
-			let ret = unsafe { sys::cv_cuda_HostMem_getPropRefcount(self.as_raw_mut_HostMem()) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propRefcount(self.as_raw_mut_HostMem()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_refcount(&mut self, val: *mut i32) {
-			let ret = { sys::cv_cuda_HostMem_setPropRefcount_intX(self.as_raw_mut_HostMem(), val) };
+			let ret = { sys::cv_cuda_HostMem_propRefcount_intX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn datastart(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_cuda_HostMem_getPropDatastart(self.as_raw_mut_HostMem()) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propDatastart(self.as_raw_mut_HostMem()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_datastart(&mut self, val: *mut u8) {
-			let ret = { sys::cv_cuda_HostMem_setPropDatastart_unsigned_charX(self.as_raw_mut_HostMem(), val) };
+			let ret = { sys::cv_cuda_HostMem_propDatastart_unsigned_charX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_alloc_type(&mut self, val: core::HostMem_AllocType) {
-			let ret = unsafe { sys::cv_cuda_HostMem_setPropAlloc_type_AllocType(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propAlloc_type_AllocType(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
@@ -25582,8 +25579,7 @@ pub mod core {
 	impl Drop for HostMem {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HostMem_delete(instance: *mut c_void); }
-			unsafe { cv_HostMem_delete(self.as_raw_mut_HostMem()) };
+			unsafe { sys::cv_cuda_HostMem_delete(self.as_raw_mut_HostMem()) };
 		}
 	}
 	
@@ -25793,8 +25789,7 @@ pub mod core {
 	impl Drop for Stream {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Stream_delete(instance: *mut c_void); }
-			unsafe { cv_Stream_delete(self.as_raw_mut_Stream()) };
+			unsafe { sys::cv_cuda_Stream_delete(self.as_raw_mut_Stream()) };
 		}
 	}
 	
@@ -25899,8 +25894,7 @@ pub mod core {
 	impl Drop for TargetArchs {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TargetArchs_delete(instance: *mut c_void); }
-			unsafe { cv_TargetArchs_delete(self.as_raw_mut_TargetArchs()) };
+			unsafe { sys::cv_cuda_TargetArchs_delete(self.as_raw_mut_TargetArchs()) };
 		}
 	}
 	
@@ -26013,49 +26007,49 @@ pub mod core {
 	
 		#[inline]
 		fn func(&self) -> String {
-			let ret = unsafe { sys::cv_detail_CheckContext_getPropFunc_const(self.as_raw_Detail_CheckContext()) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propFunc_const(self.as_raw_Detail_CheckContext()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn file(&self) -> String {
-			let ret = unsafe { sys::cv_detail_CheckContext_getPropFile_const(self.as_raw_Detail_CheckContext()) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propFile_const(self.as_raw_Detail_CheckContext()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn line(&self) -> i32 {
-			let ret = unsafe { sys::cv_detail_CheckContext_getPropLine_const(self.as_raw_Detail_CheckContext()) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propLine_const(self.as_raw_Detail_CheckContext()) };
 			ret
 		}
 		
 		#[inline]
 		fn test_op(&self) -> core::Detail_TestOp {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_CheckContext_getPropTestOp_const(self.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_CheckContext_propTestOp_const(self.as_raw_Detail_CheckContext(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn message(&self) -> String {
-			let ret = unsafe { sys::cv_detail_CheckContext_getPropMessage_const(self.as_raw_Detail_CheckContext()) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propMessage_const(self.as_raw_Detail_CheckContext()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn p1_str(&self) -> String {
-			let ret = unsafe { sys::cv_detail_CheckContext_getPropP1_str_const(self.as_raw_Detail_CheckContext()) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propP1_str_const(self.as_raw_Detail_CheckContext()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn p2_str(&self) -> String {
-			let ret = unsafe { sys::cv_detail_CheckContext_getPropP2_str_const(self.as_raw_Detail_CheckContext()) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propP2_str_const(self.as_raw_Detail_CheckContext()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -26068,13 +26062,13 @@ pub mod core {
 	
 		#[inline]
 		fn set_line(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_CheckContext_setPropLine_int(self.as_raw_mut_Detail_CheckContext(), val) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propLine_int(self.as_raw_mut_Detail_CheckContext(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_test_op(&mut self, val: core::Detail_TestOp) {
-			let ret = unsafe { sys::cv_detail_CheckContext_setPropTestOp_TestOp(self.as_raw_mut_Detail_CheckContext(), val) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propTestOp_TestOp(self.as_raw_mut_Detail_CheckContext(), val) };
 			ret
 		}
 		
@@ -26089,8 +26083,7 @@ pub mod core {
 	impl Drop for Detail_CheckContext {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_CheckContext_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_CheckContext_delete(self.as_raw_mut_Detail_CheckContext()) };
+			unsafe { sys::cv_detail_CheckContext_delete(self.as_raw_mut_Detail_CheckContext()) };
 		}
 	}
 	
@@ -26106,8 +26099,7 @@ pub mod core {
 	
 	impl Detail_CheckContext {
 		fn default() -> Self {
-			extern "C" { fn cv_Detail_CheckContext_defaultNew_const() -> extern_receive!(Detail_CheckContext: 'static); }
-			unsafe { Self::from_raw(cv_Detail_CheckContext_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_detail_CheckContext_defaultNew_const()) }
 		}
 		
 	}
@@ -26115,8 +26107,7 @@ pub mod core {
 	impl Clone for Detail_CheckContext {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Detail_CheckContext_implicitClone_const_Detail_CheckContext(val: extern_send!(Detail_CheckContext)) -> extern_receive!(Detail_CheckContext: 'static); }
-			unsafe { Self::from_raw(cv_Detail_CheckContext_implicitClone_const_Detail_CheckContext(self.as_raw_Detail_CheckContext())) }
+			unsafe { Self::from_raw(sys::cv_detail_CheckContext_implicitClone_const(self.as_raw_Detail_CheckContext())) }
 		}
 	}
 	
@@ -26149,7 +26140,7 @@ pub mod core {
 	
 		#[inline]
 		fn m_fun_name(&self) -> String {
-			let ret = unsafe { sys::cv_instr_NodeData_getPropM_funName_const(self.as_raw_NodeData()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_funName_const(self.as_raw_NodeData()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -26157,7 +26148,7 @@ pub mod core {
 		#[inline]
 		fn m_instr_type(&self) -> core::TYPE {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_instr_NodeData_getPropM_instrType_const(self.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_instr_NodeData_propM_instrType_const(self.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -26165,51 +26156,51 @@ pub mod core {
 		#[inline]
 		fn m_impl_type(&self) -> core::IMPL {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_instr_NodeData_getPropM_implType_const(self.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_instr_NodeData_propM_implType_const(self.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn m_file_name(&self) -> String {
-			let ret = unsafe { sys::cv_instr_NodeData_getPropM_fileName_const(self.as_raw_NodeData()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_fileName_const(self.as_raw_NodeData()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn m_line_num(&self) -> i32 {
-			let ret = unsafe { sys::cv_instr_NodeData_getPropM_lineNum_const(self.as_raw_NodeData()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_lineNum_const(self.as_raw_NodeData()) };
 			ret
 		}
 		
 		#[inline]
 		fn m_always_expand(&self) -> bool {
-			let ret = unsafe { sys::cv_instr_NodeData_getPropM_alwaysExpand_const(self.as_raw_NodeData()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_alwaysExpand_const(self.as_raw_NodeData()) };
 			ret
 		}
 		
 		#[inline]
 		fn m_fun_error(&self) -> bool {
-			let ret = unsafe { sys::cv_instr_NodeData_getPropM_funError_const(self.as_raw_NodeData()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_funError_const(self.as_raw_NodeData()) };
 			ret
 		}
 		
 		#[inline]
 		fn m_counter(&self) -> i32 {
-			let ret = unsafe { sys::cv_instr_NodeData_getPropM_counter_const(self.as_raw_NodeData()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_counter_const(self.as_raw_NodeData()) };
 			ret
 		}
 		
 		#[inline]
 		fn m_ticks_total(&self) -> u64 {
-			let ret = unsafe { sys::cv_instr_NodeData_getPropM_ticksTotal_const(self.as_raw_NodeData()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_ticksTotal_const(self.as_raw_NodeData()) };
 			ret
 		}
 		
 		#[inline]
 		fn m_threads(&self) -> i32 {
-			let ret = unsafe { sys::cv_instr_NodeData_getPropM_threads_const(self.as_raw_NodeData()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_threads_const(self.as_raw_NodeData()) };
 			ret
 		}
 		
@@ -26240,67 +26231,67 @@ pub mod core {
 		#[inline]
 		fn set_m_fun_name(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_instr_NodeData_setPropM_funName_String(self.as_raw_mut_NodeData(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_funName_String(self.as_raw_mut_NodeData(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_instr_type(&mut self, val: core::TYPE) {
-			let ret = unsafe { sys::cv_instr_NodeData_setPropM_instrType_TYPE(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_instrType_TYPE(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_impl_type(&mut self, val: core::IMPL) {
-			let ret = unsafe { sys::cv_instr_NodeData_setPropM_implType_IMPL(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_implType_IMPL(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_line_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_instr_NodeData_setPropM_lineNum_int(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_lineNum_int(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn m_ret_address(&mut self) -> *mut c_void {
-			let ret = unsafe { sys::cv_instr_NodeData_getPropM_retAddress(self.as_raw_mut_NodeData()) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_retAddress(self.as_raw_mut_NodeData()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_m_ret_address(&mut self, val: *mut c_void) {
-			let ret = { sys::cv_instr_NodeData_setPropM_retAddress_voidX(self.as_raw_mut_NodeData(), val) };
+			let ret = { sys::cv_instr_NodeData_propM_retAddress_voidX(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_always_expand(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_instr_NodeData_setPropM_alwaysExpand_bool(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_alwaysExpand_bool(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_fun_error(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_instr_NodeData_setPropM_funError_bool(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_funError_bool(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_counter(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_instr_NodeData_setPropM_counter_int(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_counter_int(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_ticks_total(&mut self, val: u64) {
-			let ret = unsafe { sys::cv_instr_NodeData_setPropM_ticksTotal_uint64_t(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_ticksTotal_uint64_t(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_threads(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_instr_NodeData_setPropM_threads_int(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_threads_int(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
@@ -26315,8 +26306,7 @@ pub mod core {
 	impl Drop for NodeData {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NodeData_delete(instance: *mut c_void); }
-			unsafe { cv_NodeData_delete(self.as_raw_mut_NodeData()) };
+			unsafe { sys::cv_instr_NodeData_delete(self.as_raw_mut_NodeData()) };
 		}
 	}
 	
@@ -26402,8 +26392,7 @@ pub mod core {
 	impl Drop for WriteStructContext {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WriteStructContext_delete(instance: *mut c_void); }
-			unsafe { cv_WriteStructContext_delete(self.as_raw_mut_WriteStructContext()) };
+			unsafe { sys::cv_internal_WriteStructContext_delete(self.as_raw_mut_WriteStructContext()) };
 		}
 	}
 	
@@ -26585,8 +26574,7 @@ pub mod core {
 	impl Drop for Context {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Context_delete(instance: *mut c_void); }
-			unsafe { cv_Context_delete(self.as_raw_mut_Context()) };
+			unsafe { sys::cv_ocl_Context_delete(self.as_raw_mut_Context()) };
 		}
 	}
 	
@@ -26719,8 +26707,7 @@ pub mod core {
 	impl Drop for Context_UserContext {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Context_UserContext_delete(instance: *mut c_void); }
-			unsafe { cv_Context_UserContext_delete(self.as_raw_mut_Context_UserContext()) };
+			unsafe { sys::cv_ocl_Context_UserContext_delete(self.as_raw_mut_Context_UserContext()) };
 		}
 	}
 	
@@ -27459,8 +27446,7 @@ pub mod core {
 	impl Drop for Device {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Device_delete(instance: *mut c_void); }
-			unsafe { cv_Device_delete(self.as_raw_mut_Device()) };
+			unsafe { sys::cv_ocl_Device_delete(self.as_raw_mut_Device()) };
 		}
 	}
 	
@@ -27541,8 +27527,7 @@ pub mod core {
 	impl Clone for Device {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Device_implicitClone_const_Device(val: extern_send!(Device)) -> extern_receive!(Device: 'static); }
-			unsafe { Self::from_raw(cv_Device_implicitClone_const_Device(self.as_raw_Device())) }
+			unsafe { Self::from_raw(sys::cv_ocl_Device_implicitClone_const(self.as_raw_Device())) }
 		}
 	}
 	
@@ -27592,8 +27577,7 @@ pub mod core {
 	impl Drop for Image2D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Image2D_delete(instance: *mut c_void); }
-			unsafe { cv_Image2D_delete(self.as_raw_mut_Image2D()) };
+			unsafe { sys::cv_ocl_Image2D_delete(self.as_raw_mut_Image2D()) };
 		}
 	}
 	
@@ -27900,8 +27884,7 @@ pub mod core {
 	impl Drop for Kernel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Kernel_delete(instance: *mut c_void); }
-			unsafe { cv_Kernel_delete(self.as_raw_mut_Kernel()) };
+			unsafe { sys::cv_ocl_Kernel_delete(self.as_raw_mut_Kernel()) };
 		}
 	}
 	
@@ -27992,31 +27975,31 @@ pub mod core {
 	
 		#[inline]
 		fn flags(&self) -> i32 {
-			let ret = unsafe { sys::cv_ocl_KernelArg_getPropFlags_const(self.as_raw_KernelArg()) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_const(self.as_raw_KernelArg()) };
 			ret
 		}
 		
 		#[inline]
 		fn obj(&self) -> *const c_void {
-			let ret = unsafe { sys::cv_ocl_KernelArg_getPropObj_const(self.as_raw_KernelArg()) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propObj_const(self.as_raw_KernelArg()) };
 			ret
 		}
 		
 		#[inline]
 		fn sz(&self) -> size_t {
-			let ret = unsafe { sys::cv_ocl_KernelArg_getPropSz_const(self.as_raw_KernelArg()) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_const(self.as_raw_KernelArg()) };
 			ret
 		}
 		
 		#[inline]
 		fn wscale(&self) -> i32 {
-			let ret = unsafe { sys::cv_ocl_KernelArg_getPropWscale_const(self.as_raw_KernelArg()) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_const(self.as_raw_KernelArg()) };
 			ret
 		}
 		
 		#[inline]
 		fn iwscale(&self) -> i32 {
-			let ret = unsafe { sys::cv_ocl_KernelArg_getPropIwscale_const(self.as_raw_KernelArg()) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_const(self.as_raw_KernelArg()) };
 			ret
 		}
 		
@@ -28028,38 +28011,38 @@ pub mod core {
 	
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_setPropFlags_int(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_int(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn m(&mut self) -> core::UMat {
-			let ret = unsafe { sys::cv_ocl_KernelArg_getPropM(self.as_raw_mut_KernelArg()) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propM(self.as_raw_mut_KernelArg()) };
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m(&mut self, val: &mut core::UMat) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_setPropM_UMatX(self.as_raw_mut_KernelArg(), val.as_raw_mut_UMat()) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propM_UMatX(self.as_raw_mut_KernelArg(), val.as_raw_mut_UMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_sz(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_setPropSz_size_t(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_size_t(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_wscale(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_setPropWscale_int(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_int(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_iwscale(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_setPropIwscale_int(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_int(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 		
@@ -28074,8 +28057,7 @@ pub mod core {
 	impl Drop for KernelArg {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KernelArg_delete(instance: *mut c_void); }
-			unsafe { cv_KernelArg_delete(self.as_raw_mut_KernelArg()) };
+			unsafe { sys::cv_ocl_KernelArg_delete(self.as_raw_mut_KernelArg()) };
 		}
 	}
 	
@@ -28399,8 +28381,7 @@ pub mod core {
 	impl Drop for OpenCLExecutionContext {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OpenCLExecutionContext_delete(instance: *mut c_void); }
-			unsafe { cv_OpenCLExecutionContext_delete(self.as_raw_mut_OpenCLExecutionContext()) };
+			unsafe { sys::cv_ocl_OpenCLExecutionContext_delete(self.as_raw_mut_OpenCLExecutionContext()) };
 		}
 	}
 	
@@ -28580,8 +28561,7 @@ pub mod core {
 	impl Drop for Platform {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Platform_delete(instance: *mut c_void); }
-			unsafe { cv_Platform_delete(self.as_raw_mut_Platform()) };
+			unsafe { sys::cv_ocl_Platform_delete(self.as_raw_mut_Platform()) };
 		}
 	}
 	
@@ -28746,8 +28726,7 @@ pub mod core {
 	impl Drop for PlatformInfo {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PlatformInfo_delete(instance: *mut c_void); }
-			unsafe { cv_PlatformInfo_delete(self.as_raw_mut_PlatformInfo()) };
+			unsafe { sys::cv_ocl_PlatformInfo_delete(self.as_raw_mut_PlatformInfo()) };
 		}
 	}
 	
@@ -28838,9 +28817,9 @@ pub mod core {
 		/// ## Parameters
 		/// * binary:[out] output buffer
 		#[inline]
-		fn get_binary(&self, binary: &mut core::Vector<i8>) -> Result<()> {
+		fn get_binary(&self, binary: &mut core::Vector<c_char>) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Program_getBinary_const_vectorLcharGR(self.as_raw_Program(), binary.as_raw_mut_VectorOfi8(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Program_getBinary_const_vectorLcharGR(self.as_raw_Program(), binary.as_raw_mut_VectorOfc_char(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -28926,8 +28905,7 @@ pub mod core {
 	impl Drop for Program {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Program_delete(instance: *mut c_void); }
-			unsafe { cv_Program_delete(self.as_raw_mut_Program()) };
+			unsafe { sys::cv_ocl_Program_delete(self.as_raw_mut_Program()) };
 		}
 	}
 	
@@ -29057,8 +29035,7 @@ pub mod core {
 	impl Drop for ProgramSource {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ProgramSource_delete(instance: *mut c_void); }
-			unsafe { cv_ProgramSource_delete(self.as_raw_mut_ProgramSource()) };
+			unsafe { sys::cv_ocl_ProgramSource_delete(self.as_raw_mut_ProgramSource()) };
 		}
 	}
 	
@@ -29280,8 +29257,7 @@ pub mod core {
 	impl Drop for Queue {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Queue_delete(instance: *mut c_void); }
-			unsafe { cv_Queue_delete(self.as_raw_mut_Queue()) };
+			unsafe { sys::cv_ocl_Queue_delete(self.as_raw_mut_Queue()) };
 		}
 	}
 	
@@ -29408,8 +29384,7 @@ pub mod core {
 	impl Drop for Timer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Timer_delete(instance: *mut c_void); }
-			unsafe { cv_Timer_delete(self.as_raw_mut_Timer()) };
+			unsafe { sys::cv_ocl_Timer_delete(self.as_raw_mut_Timer()) };
 		}
 	}
 	
@@ -29611,8 +29586,7 @@ pub mod core {
 	impl Drop for Arrays {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Arrays_delete(instance: *mut c_void); }
-			unsafe { cv_Arrays_delete(self.as_raw_mut_Arrays()) };
+			unsafe { sys::cv_ogl_Arrays_delete(self.as_raw_mut_Arrays()) };
 		}
 	}
 	
@@ -30032,8 +30006,7 @@ pub mod core {
 	impl Drop for Buffer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Buffer_delete(instance: *mut c_void); }
-			unsafe { cv_Buffer_delete(self.as_raw_mut_Buffer()) };
+			unsafe { sys::cv_ogl_Buffer_delete(self.as_raw_mut_Buffer()) };
 		}
 	}
 	
@@ -30416,8 +30389,7 @@ pub mod core {
 	impl Drop for Texture2D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Texture2D_delete(instance: *mut c_void); }
-			unsafe { cv_Texture2D_delete(self.as_raw_mut_Texture2D()) };
+			unsafe { sys::cv_ogl_Texture2D_delete(self.as_raw_mut_Texture2D()) };
 		}
 	}
 	
@@ -30597,13 +30569,13 @@ pub mod core {
 	
 		#[inline]
 		fn lambda(&self) -> i32 {
-			let ret = unsafe { sys::cv_utils_FunctionParams_getPropLambda_const(self.as_raw_FunctionParams()) };
+			let ret = unsafe { sys::cv_utils_FunctionParams_propLambda_const(self.as_raw_FunctionParams()) };
 			ret
 		}
 		
 		#[inline]
 		fn sigma(&self) -> f32 {
-			let ret = unsafe { sys::cv_utils_FunctionParams_getPropSigma_const(self.as_raw_FunctionParams()) };
+			let ret = unsafe { sys::cv_utils_FunctionParams_propSigma_const(self.as_raw_FunctionParams()) };
 			ret
 		}
 		
@@ -30617,7 +30589,7 @@ pub mod core {
 		/// * val: -1
 		#[inline]
 		fn set_lambda(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_utils_FunctionParams_setPropLambda_int(self.as_raw_mut_FunctionParams(), val) };
+			let ret = unsafe { sys::cv_utils_FunctionParams_propLambda_int(self.as_raw_mut_FunctionParams(), val) };
 			ret
 		}
 		
@@ -30625,7 +30597,7 @@ pub mod core {
 		/// * val: 0.0f
 		#[inline]
 		fn set_sigma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_utils_FunctionParams_setPropSigma_float(self.as_raw_mut_FunctionParams(), val) };
+			let ret = unsafe { sys::cv_utils_FunctionParams_propSigma_float(self.as_raw_mut_FunctionParams(), val) };
 			ret
 		}
 		
@@ -30654,8 +30626,7 @@ pub mod core {
 	impl Drop for FunctionParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FunctionParams_delete(instance: *mut c_void); }
-			unsafe { cv_FunctionParams_delete(self.as_raw_mut_FunctionParams()) };
+			unsafe { sys::cv_utils_FunctionParams_delete(self.as_raw_mut_FunctionParams()) };
 		}
 	}
 	
@@ -30688,7 +30659,7 @@ pub mod core {
 	
 		#[inline]
 		fn name(&self) -> String {
-			let ret = unsafe { sys::cv_utils_logging_LogTag_getPropName_const(self.as_raw_LogTag()) };
+			let ret = unsafe { sys::cv_utils_logging_LogTag_propName_const(self.as_raw_LogTag()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -30696,7 +30667,7 @@ pub mod core {
 		#[inline]
 		fn level(&self) -> core::LogLevel {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_utils_logging_LogTag_getPropLevel_const(self.as_raw_LogTag(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_utils_logging_LogTag_propLevel_const(self.as_raw_LogTag(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -30709,7 +30680,7 @@ pub mod core {
 	
 		#[inline]
 		fn set_level(&mut self, val: core::LogLevel) {
-			let ret = unsafe { sys::cv_utils_logging_LogTag_setPropLevel_LogLevel(self.as_raw_mut_LogTag(), val) };
+			let ret = unsafe { sys::cv_utils_logging_LogTag_propLevel_LogLevel(self.as_raw_mut_LogTag(), val) };
 			ret
 		}
 		
@@ -30724,8 +30695,7 @@ pub mod core {
 	impl Drop for LogTag {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LogTag_delete(instance: *mut c_void); }
-			unsafe { cv_LogTag_delete(self.as_raw_mut_LogTag()) };
+			unsafe { sys::cv_utils_logging_LogTag_delete(self.as_raw_mut_LogTag()) };
 		}
 	}
 	
@@ -30802,8 +30772,7 @@ pub mod core {
 	impl Drop for OriginalClassName {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OriginalClassName_delete(instance: *mut c_void); }
-			unsafe { cv_OriginalClassName_delete(self.as_raw_mut_OriginalClassName()) };
+			unsafe { sys::cv_utils_nested_OriginalClassName_delete(self.as_raw_mut_OriginalClassName()) };
 		}
 	}
 	

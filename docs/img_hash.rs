@@ -216,8 +216,7 @@ pub mod img_hash {
 	impl Drop for AverageHash {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AverageHash_delete(instance: *mut c_void); }
-			unsafe { cv_AverageHash_delete(self.as_raw_mut_AverageHash()) };
+			unsafe { sys::cv_img_hash_AverageHash_delete(self.as_raw_mut_AverageHash()) };
 		}
 	}
 	
@@ -260,9 +259,9 @@ pub mod img_hash {
 		
 	}
 	
-	boxed_cast_base! { AverageHash, core::Algorithm, cv_AverageHash_to_Algorithm }
+	boxed_cast_base! { AverageHash, core::Algorithm, cv_img_hash_AverageHash_to_Algorithm }
 	
-	boxed_cast_base! { AverageHash, crate::img_hash::ImgHashBase, cv_AverageHash_to_ImgHashBase }
+	boxed_cast_base! { AverageHash, crate::img_hash::ImgHashBase, cv_img_hash_AverageHash_to_ImgHashBase }
 	
 	impl std::fmt::Debug for AverageHash {
 		#[inline]
@@ -318,8 +317,7 @@ pub mod img_hash {
 	impl Drop for BlockMeanHash {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BlockMeanHash_delete(instance: *mut c_void); }
-			unsafe { cv_BlockMeanHash_delete(self.as_raw_mut_BlockMeanHash()) };
+			unsafe { sys::cv_img_hash_BlockMeanHash_delete(self.as_raw_mut_BlockMeanHash()) };
 		}
 	}
 	
@@ -364,9 +362,9 @@ pub mod img_hash {
 		
 	}
 	
-	boxed_cast_base! { BlockMeanHash, core::Algorithm, cv_BlockMeanHash_to_Algorithm }
+	boxed_cast_base! { BlockMeanHash, core::Algorithm, cv_img_hash_BlockMeanHash_to_Algorithm }
 	
-	boxed_cast_base! { BlockMeanHash, crate::img_hash::ImgHashBase, cv_BlockMeanHash_to_ImgHashBase }
+	boxed_cast_base! { BlockMeanHash, crate::img_hash::ImgHashBase, cv_img_hash_BlockMeanHash_to_ImgHashBase }
 	
 	impl std::fmt::Debug for BlockMeanHash {
 		#[inline]
@@ -400,8 +398,7 @@ pub mod img_hash {
 	impl Drop for ColorMomentHash {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ColorMomentHash_delete(instance: *mut c_void); }
-			unsafe { cv_ColorMomentHash_delete(self.as_raw_mut_ColorMomentHash()) };
+			unsafe { sys::cv_img_hash_ColorMomentHash_delete(self.as_raw_mut_ColorMomentHash()) };
 		}
 	}
 	
@@ -444,9 +441,9 @@ pub mod img_hash {
 		
 	}
 	
-	boxed_cast_base! { ColorMomentHash, core::Algorithm, cv_ColorMomentHash_to_Algorithm }
+	boxed_cast_base! { ColorMomentHash, core::Algorithm, cv_img_hash_ColorMomentHash_to_Algorithm }
 	
-	boxed_cast_base! { ColorMomentHash, crate::img_hash::ImgHashBase, cv_ColorMomentHash_to_ImgHashBase }
+	boxed_cast_base! { ColorMomentHash, crate::img_hash::ImgHashBase, cv_img_hash_ColorMomentHash_to_ImgHashBase }
 	
 	impl std::fmt::Debug for ColorMomentHash {
 		#[inline]
@@ -511,8 +508,7 @@ pub mod img_hash {
 	impl Drop for ImgHashBase {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ImgHashBase_delete(instance: *mut c_void); }
-			unsafe { cv_ImgHashBase_delete(self.as_raw_mut_ImgHashBase()) };
+			unsafe { sys::cv_img_hash_ImgHashBase_delete(self.as_raw_mut_ImgHashBase()) };
 		}
 	}
 	
@@ -537,7 +533,7 @@ pub mod img_hash {
 	impl ImgHashBase {
 	}
 	
-	boxed_cast_base! { ImgHashBase, core::Algorithm, cv_ImgHashBase_to_Algorithm }
+	boxed_cast_base! { ImgHashBase, core::Algorithm, cv_img_hash_ImgHashBase_to_Algorithm }
 	
 	impl std::fmt::Debug for ImgHashBase {
 		#[inline]
@@ -604,8 +600,7 @@ pub mod img_hash {
 	impl Drop for MarrHildrethHash {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MarrHildrethHash_delete(instance: *mut c_void); }
-			unsafe { cv_MarrHildrethHash_delete(self.as_raw_mut_MarrHildrethHash()) };
+			unsafe { sys::cv_img_hash_MarrHildrethHash_delete(self.as_raw_mut_MarrHildrethHash()) };
 		}
 	}
 	
@@ -655,9 +650,9 @@ pub mod img_hash {
 		
 	}
 	
-	boxed_cast_base! { MarrHildrethHash, core::Algorithm, cv_MarrHildrethHash_to_Algorithm }
+	boxed_cast_base! { MarrHildrethHash, core::Algorithm, cv_img_hash_MarrHildrethHash_to_Algorithm }
 	
-	boxed_cast_base! { MarrHildrethHash, crate::img_hash::ImgHashBase, cv_MarrHildrethHash_to_ImgHashBase }
+	boxed_cast_base! { MarrHildrethHash, crate::img_hash::ImgHashBase, cv_img_hash_MarrHildrethHash_to_ImgHashBase }
 	
 	impl std::fmt::Debug for MarrHildrethHash {
 		#[inline]
@@ -693,8 +688,7 @@ pub mod img_hash {
 	impl Drop for PHash {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PHash_delete(instance: *mut c_void); }
-			unsafe { cv_PHash_delete(self.as_raw_mut_PHash()) };
+			unsafe { sys::cv_img_hash_PHash_delete(self.as_raw_mut_PHash()) };
 		}
 	}
 	
@@ -737,9 +731,9 @@ pub mod img_hash {
 		
 	}
 	
-	boxed_cast_base! { PHash, core::Algorithm, cv_PHash_to_Algorithm }
+	boxed_cast_base! { PHash, core::Algorithm, cv_img_hash_PHash_to_Algorithm }
 	
-	boxed_cast_base! { PHash, crate::img_hash::ImgHashBase, cv_PHash_to_ImgHashBase }
+	boxed_cast_base! { PHash, crate::img_hash::ImgHashBase, cv_img_hash_PHash_to_ImgHashBase }
 	
 	impl std::fmt::Debug for PHash {
 		#[inline]
@@ -849,8 +843,7 @@ pub mod img_hash {
 	impl Drop for RadialVarianceHash {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RadialVarianceHash_delete(instance: *mut c_void); }
-			unsafe { cv_RadialVarianceHash_delete(self.as_raw_mut_RadialVarianceHash()) };
+			unsafe { sys::cv_img_hash_RadialVarianceHash_delete(self.as_raw_mut_RadialVarianceHash()) };
 		}
 	}
 	
@@ -896,9 +889,9 @@ pub mod img_hash {
 		
 	}
 	
-	boxed_cast_base! { RadialVarianceHash, core::Algorithm, cv_RadialVarianceHash_to_Algorithm }
+	boxed_cast_base! { RadialVarianceHash, core::Algorithm, cv_img_hash_RadialVarianceHash_to_Algorithm }
 	
-	boxed_cast_base! { RadialVarianceHash, crate::img_hash::ImgHashBase, cv_RadialVarianceHash_to_ImgHashBase }
+	boxed_cast_base! { RadialVarianceHash, crate::img_hash::ImgHashBase, cv_img_hash_RadialVarianceHash_to_ImgHashBase }
 	
 	impl std::fmt::Debug for RadialVarianceHash {
 		#[inline]

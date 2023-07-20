@@ -1001,8 +1001,7 @@ pub mod optflow {
 	impl Drop for DenseRLOFOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DenseRLOFOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_DenseRLOFOpticalFlow_delete(self.as_raw_mut_DenseRLOFOpticalFlow()) };
+			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_delete(self.as_raw_mut_DenseRLOFOpticalFlow()) };
 		}
 	}
 	
@@ -1076,9 +1075,9 @@ pub mod optflow {
 		
 	}
 	
-	boxed_cast_base! { DenseRLOFOpticalFlow, core::Algorithm, cv_DenseRLOFOpticalFlow_to_Algorithm }
+	boxed_cast_base! { DenseRLOFOpticalFlow, core::Algorithm, cv_optflow_DenseRLOFOpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { DenseRLOFOpticalFlow, crate::video::DenseOpticalFlow, cv_DenseRLOFOpticalFlow_to_DenseOpticalFlow }
+	boxed_cast_base! { DenseRLOFOpticalFlow, crate::video::DenseOpticalFlow, cv_optflow_DenseRLOFOpticalFlow_to_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for DenseRLOFOpticalFlow {
 		#[inline]
@@ -1438,8 +1437,7 @@ pub mod optflow {
 	impl Drop for DualTVL1OpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DualTVL1OpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_DualTVL1OpticalFlow_delete(self.as_raw_mut_DualTVL1OpticalFlow()) };
+			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_delete(self.as_raw_mut_DualTVL1OpticalFlow()) };
 		}
 	}
 	
@@ -1497,9 +1495,9 @@ pub mod optflow {
 		
 	}
 	
-	boxed_cast_base! { DualTVL1OpticalFlow, core::Algorithm, cv_DualTVL1OpticalFlow_to_Algorithm }
+	boxed_cast_base! { DualTVL1OpticalFlow, core::Algorithm, cv_optflow_DualTVL1OpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { DualTVL1OpticalFlow, crate::video::DenseOpticalFlow, cv_DualTVL1OpticalFlow_to_DenseOpticalFlow }
+	boxed_cast_base! { DualTVL1OpticalFlow, crate::video::DenseOpticalFlow, cv_optflow_DualTVL1OpticalFlow_to_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for DualTVL1OpticalFlow {
 		#[inline]
@@ -1530,8 +1528,7 @@ pub mod optflow {
 	impl Drop for GPCDetails {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GPCDetails_delete(instance: *mut c_void); }
-			unsafe { cv_GPCDetails_delete(self.as_raw_mut_GPCDetails()) };
+			unsafe { sys::cv_optflow_GPCDetails_delete(self.as_raw_mut_GPCDetails()) };
 		}
 	}
 	
@@ -1623,7 +1620,7 @@ pub mod optflow {
 		#[inline]
 		fn feature(&self) -> core::VecN<f64, 18> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_GPCPatchDescriptor_getPropFeature_const(self.as_raw_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_GPCPatchDescriptor_propFeature_const(self.as_raw_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1654,7 +1651,7 @@ pub mod optflow {
 	
 		#[inline]
 		fn set_feature(&mut self, val: core::VecN<f64, 18>) {
-			let ret = unsafe { sys::cv_optflow_GPCPatchDescriptor_setPropFeature_VecLdouble__18G(self.as_raw_mut_GPCPatchDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_optflow_GPCPatchDescriptor_propFeature_VecLdouble__18G(self.as_raw_mut_GPCPatchDescriptor(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -1678,8 +1675,7 @@ pub mod optflow {
 	impl Drop for GPCPatchDescriptor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GPCPatchDescriptor_delete(instance: *mut c_void); }
-			unsafe { cv_GPCPatchDescriptor_delete(self.as_raw_mut_GPCPatchDescriptor()) };
+			unsafe { sys::cv_optflow_GPCPatchDescriptor_delete(self.as_raw_mut_GPCPatchDescriptor()) };
 		}
 	}
 	
@@ -1713,21 +1709,21 @@ pub mod optflow {
 	
 		#[inline]
 		fn ref_(&self) -> crate::optflow::GPCPatchDescriptor {
-			let ret = unsafe { sys::cv_optflow_GPCPatchSample_getPropRef_const(self.as_raw_GPCPatchSample()) };
+			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propRef_const(self.as_raw_GPCPatchSample()) };
 			let ret = unsafe { crate::optflow::GPCPatchDescriptor::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pos(&self) -> crate::optflow::GPCPatchDescriptor {
-			let ret = unsafe { sys::cv_optflow_GPCPatchSample_getPropPos_const(self.as_raw_GPCPatchSample()) };
+			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propPos_const(self.as_raw_GPCPatchSample()) };
 			let ret = unsafe { crate::optflow::GPCPatchDescriptor::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn neg(&self) -> crate::optflow::GPCPatchDescriptor {
-			let ret = unsafe { sys::cv_optflow_GPCPatchSample_getPropNeg_const(self.as_raw_GPCPatchSample()) };
+			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propNeg_const(self.as_raw_GPCPatchSample()) };
 			let ret = unsafe { crate::optflow::GPCPatchDescriptor::opencv_from_extern(ret) };
 			ret
 		}
@@ -1749,19 +1745,19 @@ pub mod optflow {
 	
 		#[inline]
 		fn set_ref(&mut self, mut val: crate::optflow::GPCPatchDescriptor) {
-			let ret = unsafe { sys::cv_optflow_GPCPatchSample_setPropRef_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_mut_GPCPatchDescriptor()) };
+			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propRef_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_mut_GPCPatchDescriptor()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pos(&mut self, mut val: crate::optflow::GPCPatchDescriptor) {
-			let ret = unsafe { sys::cv_optflow_GPCPatchSample_setPropPos_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_mut_GPCPatchDescriptor()) };
+			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propPos_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_mut_GPCPatchDescriptor()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_neg(&mut self, mut val: crate::optflow::GPCPatchDescriptor) {
-			let ret = unsafe { sys::cv_optflow_GPCPatchSample_setPropNeg_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_mut_GPCPatchDescriptor()) };
+			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propNeg_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_mut_GPCPatchDescriptor()) };
 			ret
 		}
 		
@@ -1776,8 +1772,7 @@ pub mod optflow {
 	impl Drop for GPCPatchSample {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GPCPatchSample_delete(instance: *mut c_void); }
-			unsafe { cv_GPCPatchSample_delete(self.as_raw_mut_GPCPatchSample()) };
+			unsafe { sys::cv_optflow_GPCPatchSample_delete(self.as_raw_mut_GPCPatchSample()) };
 		}
 	}
 	
@@ -1887,8 +1882,7 @@ pub mod optflow {
 	impl Drop for GPCTrainingSamples {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GPCTrainingSamples_delete(instance: *mut c_void); }
-			unsafe { cv_GPCTrainingSamples_delete(self.as_raw_mut_GPCTrainingSamples()) };
+			unsafe { sys::cv_optflow_GPCTrainingSamples_delete(self.as_raw_mut_GPCTrainingSamples()) };
 		}
 	}
 	
@@ -2016,8 +2010,7 @@ pub mod optflow {
 	impl Drop for GPCTree {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GPCTree_delete(instance: *mut c_void); }
-			unsafe { cv_GPCTree_delete(self.as_raw_mut_GPCTree()) };
+			unsafe { sys::cv_optflow_GPCTree_delete(self.as_raw_mut_GPCTree()) };
 		}
 	}
 	
@@ -2052,7 +2045,7 @@ pub mod optflow {
 		
 	}
 	
-	boxed_cast_base! { GPCTree, core::Algorithm, cv_GPCTree_to_Algorithm }
+	boxed_cast_base! { GPCTree, core::Algorithm, cv_optflow_GPCTree_to_Algorithm }
 	
 	impl std::fmt::Debug for GPCTree {
 		#[inline]
@@ -2130,8 +2123,7 @@ pub mod optflow {
 	impl Drop for OpticalFlowPCAFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_OpticalFlowPCAFlow_delete(instance: *mut c_void); }
-			unsafe { cv_OpticalFlowPCAFlow_delete(self.as_raw_mut_OpticalFlowPCAFlow()) };
+			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_delete(self.as_raw_mut_OpticalFlowPCAFlow()) };
 		}
 	}
 	
@@ -2192,9 +2184,9 @@ pub mod optflow {
 		
 	}
 	
-	boxed_cast_base! { OpticalFlowPCAFlow, core::Algorithm, cv_OpticalFlowPCAFlow_to_Algorithm }
+	boxed_cast_base! { OpticalFlowPCAFlow, core::Algorithm, cv_optflow_OpticalFlowPCAFlow_to_Algorithm }
 	
-	boxed_cast_base! { OpticalFlowPCAFlow, crate::video::DenseOpticalFlow, cv_OpticalFlowPCAFlow_to_DenseOpticalFlow }
+	boxed_cast_base! { OpticalFlowPCAFlow, crate::video::DenseOpticalFlow, cv_optflow_OpticalFlowPCAFlow_to_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for OpticalFlowPCAFlow {
 		#[inline]
@@ -2256,8 +2248,7 @@ pub mod optflow {
 	impl Drop for PCAPrior {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PCAPrior_delete(instance: *mut c_void); }
-			unsafe { cv_PCAPrior_delete(self.as_raw_mut_PCAPrior()) };
+			unsafe { sys::cv_optflow_PCAPrior_delete(self.as_raw_mut_PCAPrior()) };
 		}
 	}
 	
@@ -2300,7 +2291,7 @@ pub mod optflow {
 		#[inline]
 		fn solver_type(&self) -> crate::optflow::SolverType {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropSolverType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propSolverType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2308,80 +2299,80 @@ pub mod optflow {
 		#[inline]
 		fn support_region_type(&self) -> crate::optflow::SupportRegionType {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropSupportRegionType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propSupportRegionType_const(self.as_raw_RLOFOpticalFlowParameter(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn norm_sigma0(&self) -> f32 {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropNormSigma0_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propNormSigma0_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn norm_sigma1(&self) -> f32 {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropNormSigma1_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propNormSigma1_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn small_win_size(&self) -> i32 {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropSmallWinSize_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propSmallWinSize_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn large_win_size(&self) -> i32 {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropLargeWinSize_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propLargeWinSize_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn cross_segmentation_threshold(&self) -> i32 {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropCrossSegmentationThreshold_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propCrossSegmentationThreshold_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn max_level(&self) -> i32 {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropMaxLevel_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propMaxLevel_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_initial_flow(&self) -> bool {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropUseInitialFlow_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propUseInitialFlow_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_illumination_model(&self) -> bool {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropUseIlluminationModel_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propUseIlluminationModel_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_global_motion_prior(&self) -> bool {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropUseGlobalMotionPrior_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propUseGlobalMotionPrior_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn max_iteration(&self) -> i32 {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropMaxIteration_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propMaxIteration_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_eigen_value(&self) -> f32 {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropMinEigenValue_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propMinEigenValue_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
 		#[inline]
 		fn global_motion_ransac_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_getPropGlobalMotionRansacThreshold_const(self.as_raw_RLOFOpticalFlowParameter()) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propGlobalMotionRansacThreshold_const(self.as_raw_RLOFOpticalFlowParameter()) };
 			ret
 		}
 		
@@ -2519,85 +2510,85 @@ pub mod optflow {
 	
 		#[inline]
 		fn set_solver_type(&mut self, val: crate::optflow::SolverType) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropSolverType_SolverType(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propSolverType_SolverType(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_support_region_type(&mut self, val: crate::optflow::SupportRegionType) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropSupportRegionType_SupportRegionType(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propSupportRegionType_SupportRegionType(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_norm_sigma0(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropNormSigma0_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propNormSigma0_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_norm_sigma1(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropNormSigma1_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propNormSigma1_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_small_win_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropSmallWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propSmallWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_large_win_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropLargeWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propLargeWinSize_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_cross_segmentation_threshold(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropCrossSegmentationThreshold_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propCrossSegmentationThreshold_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_max_level(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropMaxLevel_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propMaxLevel_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_initial_flow(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropUseInitialFlow_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propUseInitialFlow_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_illumination_model(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropUseIlluminationModel_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propUseIlluminationModel_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_global_motion_prior(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropUseGlobalMotionPrior_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propUseGlobalMotionPrior_bool(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_max_iteration(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropMaxIteration_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propMaxIteration_int(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_eigen_value(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropMinEigenValue_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propMinEigenValue_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_global_motion_ransac_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_setPropGlobalMotionRansacThreshold_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
+			let ret = unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_propGlobalMotionRansacThreshold_float(self.as_raw_mut_RLOFOpticalFlowParameter(), val) };
 			ret
 		}
 		
@@ -2779,8 +2770,7 @@ pub mod optflow {
 	impl Drop for RLOFOpticalFlowParameter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RLOFOpticalFlowParameter_delete(instance: *mut c_void); }
-			unsafe { cv_RLOFOpticalFlowParameter_delete(self.as_raw_mut_RLOFOpticalFlowParameter()) };
+			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_delete(self.as_raw_mut_RLOFOpticalFlowParameter()) };
 		}
 	}
 	
@@ -2931,8 +2921,7 @@ pub mod optflow {
 	impl Drop for SparseRLOFOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SparseRLOFOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_SparseRLOFOpticalFlow_delete(self.as_raw_mut_SparseRLOFOpticalFlow()) };
+			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_delete(self.as_raw_mut_SparseRLOFOpticalFlow()) };
 		}
 	}
 	
@@ -2984,9 +2973,9 @@ pub mod optflow {
 		
 	}
 	
-	boxed_cast_base! { SparseRLOFOpticalFlow, core::Algorithm, cv_SparseRLOFOpticalFlow_to_Algorithm }
+	boxed_cast_base! { SparseRLOFOpticalFlow, core::Algorithm, cv_optflow_SparseRLOFOpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { SparseRLOFOpticalFlow, crate::video::SparseOpticalFlow, cv_SparseRLOFOpticalFlow_to_SparseOpticalFlow }
+	boxed_cast_base! { SparseRLOFOpticalFlow, crate::video::SparseOpticalFlow, cv_optflow_SparseRLOFOpticalFlow_to_SparseOpticalFlow }
 	
 	impl std::fmt::Debug for SparseRLOFOpticalFlow {
 		#[inline]

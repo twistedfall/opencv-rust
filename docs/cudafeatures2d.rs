@@ -572,8 +572,7 @@ pub mod cudafeatures2d {
 	impl Drop for CUDA_DescriptorMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_DescriptorMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_DescriptorMatcher_delete(self.as_raw_mut_CUDA_DescriptorMatcher()) };
+			unsafe { sys::cv_cuda_DescriptorMatcher_delete(self.as_raw_mut_CUDA_DescriptorMatcher()) };
 		}
 	}
 	
@@ -621,7 +620,7 @@ pub mod cudafeatures2d {
 		
 	}
 	
-	boxed_cast_base! { CUDA_DescriptorMatcher, core::Algorithm, cv_CUDA_DescriptorMatcher_to_Algorithm }
+	boxed_cast_base! { CUDA_DescriptorMatcher, core::Algorithm, cv_cuda_DescriptorMatcher_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_DescriptorMatcher {
 		#[inline]
@@ -680,8 +679,7 @@ pub mod cudafeatures2d {
 	impl Drop for CUDA_FastFeatureDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_FastFeatureDetector_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_FastFeatureDetector_delete(self.as_raw_mut_CUDA_FastFeatureDetector()) };
+			unsafe { sys::cv_cuda_FastFeatureDetector_delete(self.as_raw_mut_CUDA_FastFeatureDetector()) };
 		}
 	}
 	
@@ -741,11 +739,11 @@ pub mod cudafeatures2d {
 		
 	}
 	
-	boxed_cast_base! { CUDA_FastFeatureDetector, core::Algorithm, cv_CUDA_FastFeatureDetector_to_Algorithm }
+	boxed_cast_base! { CUDA_FastFeatureDetector, core::Algorithm, cv_cuda_FastFeatureDetector_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_FastFeatureDetector, crate::features2d::Feature2D, cv_CUDA_FastFeatureDetector_to_Feature2D }
+	boxed_cast_base! { CUDA_FastFeatureDetector, crate::features2d::Feature2D, cv_cuda_FastFeatureDetector_to_Feature2D }
 	
-	boxed_cast_base! { CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_CUDA_FastFeatureDetector_to_CUDA_Feature2DAsync }
+	boxed_cast_base! { CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_cuda_FastFeatureDetector_to_CUDA_Feature2DAsync }
 	
 	impl std::fmt::Debug for CUDA_FastFeatureDetector {
 		#[inline]
@@ -852,8 +850,7 @@ pub mod cudafeatures2d {
 	impl Drop for CUDA_Feature2DAsync {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_Feature2DAsync_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_Feature2DAsync_delete(self.as_raw_mut_CUDA_Feature2DAsync()) };
+			unsafe { sys::cv_cuda_Feature2DAsync_delete(self.as_raw_mut_CUDA_Feature2DAsync()) };
 		}
 	}
 	
@@ -886,13 +883,13 @@ pub mod cudafeatures2d {
 	impl CUDA_Feature2DAsync {
 	}
 	
-	boxed_cast_descendant! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_FastFeatureDetector, cv_CUDA_Feature2DAsync_to_CUDA_FastFeatureDetector }
+	boxed_cast_descendant! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_FastFeatureDetector, cv_cuda_Feature2DAsync_to_CUDA_FastFeatureDetector }
 	
-	boxed_cast_descendant! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_ORB, cv_CUDA_Feature2DAsync_to_CUDA_ORB }
+	boxed_cast_descendant! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_ORB, cv_cuda_Feature2DAsync_to_CUDA_ORB }
 	
-	boxed_cast_base! { CUDA_Feature2DAsync, core::Algorithm, cv_CUDA_Feature2DAsync_to_Algorithm }
+	boxed_cast_base! { CUDA_Feature2DAsync, core::Algorithm, cv_cuda_Feature2DAsync_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_Feature2DAsync, crate::features2d::Feature2D, cv_CUDA_Feature2DAsync_to_Feature2D }
+	boxed_cast_base! { CUDA_Feature2DAsync, crate::features2d::Feature2D, cv_cuda_Feature2DAsync_to_Feature2D }
 	
 	impl std::fmt::Debug for CUDA_Feature2DAsync {
 		#[inline]
@@ -1107,8 +1104,7 @@ pub mod cudafeatures2d {
 	impl Drop for CUDA_ORB {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_ORB_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_ORB_delete(self.as_raw_mut_CUDA_ORB()) };
+			unsafe { sys::cv_cuda_ORB_delete(self.as_raw_mut_CUDA_ORB()) };
 		}
 	}
 	
@@ -1177,11 +1173,11 @@ pub mod cudafeatures2d {
 		
 	}
 	
-	boxed_cast_base! { CUDA_ORB, core::Algorithm, cv_CUDA_ORB_to_Algorithm }
+	boxed_cast_base! { CUDA_ORB, core::Algorithm, cv_cuda_ORB_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_ORB, crate::features2d::Feature2D, cv_CUDA_ORB_to_Feature2D }
+	boxed_cast_base! { CUDA_ORB, crate::features2d::Feature2D, cv_cuda_ORB_to_Feature2D }
 	
-	boxed_cast_base! { CUDA_ORB, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_CUDA_ORB_to_CUDA_Feature2DAsync }
+	boxed_cast_base! { CUDA_ORB, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_cuda_ORB_to_CUDA_Feature2DAsync }
 	
 	impl std::fmt::Debug for CUDA_ORB {
 		#[inline]

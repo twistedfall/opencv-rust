@@ -950,8 +950,7 @@ pub mod ml {
 	impl Drop for ANN_MLP {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ANN_MLP_delete(instance: *mut c_void); }
-			unsafe { cv_ANN_MLP_delete(self.as_raw_mut_ANN_MLP()) };
+			unsafe { sys::cv_ml_ANN_MLP_delete(self.as_raw_mut_ANN_MLP()) };
 		}
 	}
 	
@@ -1016,9 +1015,9 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_base! { ANN_MLP, core::Algorithm, cv_ANN_MLP_to_Algorithm }
+	boxed_cast_base! { ANN_MLP, core::Algorithm, cv_ml_ANN_MLP_to_Algorithm }
 	
-	boxed_cast_base! { ANN_MLP, crate::ml::StatModel, cv_ANN_MLP_to_StatModel }
+	boxed_cast_base! { ANN_MLP, crate::ml::StatModel, cv_ml_ANN_MLP_to_StatModel }
 	
 	impl std::fmt::Debug for ANN_MLP {
 		#[inline]
@@ -1132,8 +1131,7 @@ pub mod ml {
 	impl Drop for Boost {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Boost_delete(instance: *mut c_void); }
-			unsafe { cv_Boost_delete(self.as_raw_mut_Boost()) };
+			unsafe { sys::cv_ml_Boost_delete(self.as_raw_mut_Boost()) };
 		}
 	}
 	
@@ -1210,11 +1208,11 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_base! { Boost, core::Algorithm, cv_Boost_to_Algorithm }
+	boxed_cast_base! { Boost, core::Algorithm, cv_ml_Boost_to_Algorithm }
 	
-	boxed_cast_base! { Boost, crate::ml::DTrees, cv_Boost_to_DTrees }
+	boxed_cast_base! { Boost, crate::ml::DTrees, cv_ml_Boost_to_DTrees }
 	
-	boxed_cast_base! { Boost, crate::ml::StatModel, cv_Boost_to_StatModel }
+	boxed_cast_base! { Boost, crate::ml::StatModel, cv_ml_Boost_to_StatModel }
 	
 	impl std::fmt::Debug for Boost {
 		#[inline]
@@ -1606,8 +1604,7 @@ pub mod ml {
 	impl Drop for DTrees {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DTrees_delete(instance: *mut c_void); }
-			unsafe { cv_DTrees_delete(self.as_raw_mut_DTrees()) };
+			unsafe { sys::cv_ml_DTrees_delete(self.as_raw_mut_DTrees()) };
 		}
 	}
 	
@@ -1679,13 +1676,13 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_descendant! { DTrees, crate::ml::Boost, cv_DTrees_to_Boost }
+	boxed_cast_descendant! { DTrees, crate::ml::Boost, cv_ml_DTrees_to_Boost }
 	
-	boxed_cast_descendant! { DTrees, crate::ml::RTrees, cv_DTrees_to_RTrees }
+	boxed_cast_descendant! { DTrees, crate::ml::RTrees, cv_ml_DTrees_to_RTrees }
 	
-	boxed_cast_base! { DTrees, core::Algorithm, cv_DTrees_to_Algorithm }
+	boxed_cast_base! { DTrees, core::Algorithm, cv_ml_DTrees_to_Algorithm }
 	
-	boxed_cast_base! { DTrees, crate::ml::StatModel, cv_DTrees_to_StatModel }
+	boxed_cast_base! { DTrees, crate::ml::StatModel, cv_ml_DTrees_to_StatModel }
 	
 	impl std::fmt::Debug for DTrees {
 		#[inline]
@@ -1703,7 +1700,7 @@ pub mod ml {
 		/// function value in case of regression.
 		#[inline]
 		fn value(&self) -> f64 {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_getPropValue_const(self.as_raw_DTrees_Node()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propValue_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
 		
@@ -1711,28 +1708,28 @@ pub mod ml {
 		/// node. It is used internally in classification trees and tree ensembles.
 		#[inline]
 		fn class_idx(&self) -> i32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_getPropClassIdx_const(self.as_raw_DTrees_Node()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propClassIdx_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
 		
 		/// Index of the parent node
 		#[inline]
 		fn parent(&self) -> i32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_getPropParent_const(self.as_raw_DTrees_Node()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propParent_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
 		
 		/// Index of the left child node
 		#[inline]
 		fn left(&self) -> i32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_getPropLeft_const(self.as_raw_DTrees_Node()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propLeft_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
 		
 		/// Index of right child node
 		#[inline]
 		fn right(&self) -> i32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_getPropRight_const(self.as_raw_DTrees_Node()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propRight_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
 		
@@ -1740,14 +1737,14 @@ pub mod ml {
 		/// case of missing values.
 		#[inline]
 		fn default_dir(&self) -> i32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_getPropDefaultDir_const(self.as_raw_DTrees_Node()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propDefaultDir_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
 		
 		/// Index of the first split
 		#[inline]
 		fn split(&self) -> i32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_getPropSplit_const(self.as_raw_DTrees_Node()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propSplit_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
 		
@@ -1761,7 +1758,7 @@ pub mod ml {
 		/// function value in case of regression.
 		#[inline]
 		fn set_value(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_setPropValue_double(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propValue_double(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
@@ -1769,28 +1766,28 @@ pub mod ml {
 		/// node. It is used internally in classification trees and tree ensembles.
 		#[inline]
 		fn set_class_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_setPropClassIdx_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propClassIdx_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of the parent node
 		#[inline]
 		fn set_parent(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_setPropParent_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propParent_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of the left child node
 		#[inline]
 		fn set_left(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_setPropLeft_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propLeft_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of right child node
 		#[inline]
 		fn set_right(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_setPropRight_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propRight_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
@@ -1798,14 +1795,14 @@ pub mod ml {
 		/// case of missing values.
 		#[inline]
 		fn set_default_dir(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_setPropDefaultDir_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propDefaultDir_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of the first split
 		#[inline]
 		fn set_split(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_setPropSplit_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propSplit_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
@@ -1821,8 +1818,7 @@ pub mod ml {
 	impl Drop for DTrees_Node {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DTrees_Node_delete(instance: *mut c_void); }
-			unsafe { cv_DTrees_Node_delete(self.as_raw_mut_DTrees_Node()) };
+			unsafe { sys::cv_ml_DTrees_Node_delete(self.as_raw_mut_DTrees_Node()) };
 		}
 	}
 	
@@ -1871,7 +1867,7 @@ pub mod ml {
 		/// Index of variable on which the split is created.
 		#[inline]
 		fn var_idx(&self) -> i32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_getPropVarIdx_const(self.as_raw_DTrees_Split()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propVarIdx_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
 		
@@ -1879,21 +1875,21 @@ pub mod ml {
 		/// branches are exchanged in the rule expressions below).
 		#[inline]
 		fn inversed(&self) -> bool {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_getPropInversed_const(self.as_raw_DTrees_Split()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propInversed_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
 		
 		/// The split quality, a positive number. It is used to choose the best split.
 		#[inline]
 		fn quality(&self) -> f32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_getPropQuality_const(self.as_raw_DTrees_Split()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propQuality_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
 		
 		/// Index of the next split in the list of splits for the node
 		#[inline]
 		fn next(&self) -> i32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_getPropNext_const(self.as_raw_DTrees_Split()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propNext_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
 		
@@ -1907,7 +1903,7 @@ pub mod ml {
 		/// 
 		#[inline]
 		fn c(&self) -> f32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_getPropC_const(self.as_raw_DTrees_Split()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propC_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
 		
@@ -1921,7 +1917,7 @@ pub mod ml {
 		/// 
 		#[inline]
 		fn subset_ofs(&self) -> i32 {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_getPropSubsetOfs_const(self.as_raw_DTrees_Split()) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propSubsetOfs_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
 		
@@ -1934,7 +1930,7 @@ pub mod ml {
 		/// Index of variable on which the split is created.
 		#[inline]
 		fn set_var_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_setPropVarIdx_int(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propVarIdx_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -1942,21 +1938,21 @@ pub mod ml {
 		/// branches are exchanged in the rule expressions below).
 		#[inline]
 		fn set_inversed(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_setPropInversed_bool(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propInversed_bool(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
 		/// The split quality, a positive number. It is used to choose the best split.
 		#[inline]
 		fn set_quality(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_setPropQuality_float(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propQuality_float(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
 		/// Index of the next split in the list of splits for the node
 		#[inline]
 		fn set_next(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_setPropNext_int(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propNext_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -1970,7 +1966,7 @@ pub mod ml {
 		/// 
 		#[inline]
 		fn set_c(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_setPropC_float(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propC_float(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -1984,7 +1980,7 @@ pub mod ml {
 		/// 
 		#[inline]
 		fn set_subset_ofs(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_setPropSubsetOfs_int(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propSubsetOfs_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -2000,8 +1996,7 @@ pub mod ml {
 	impl Drop for DTrees_Split {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DTrees_Split_delete(instance: *mut c_void); }
-			unsafe { cv_DTrees_Split_delete(self.as_raw_mut_DTrees_Split()) };
+			unsafe { sys::cv_ml_DTrees_Split_delete(self.as_raw_mut_DTrees_Split()) };
 		}
 	}
 	
@@ -2370,8 +2365,7 @@ pub mod ml {
 	impl Drop for EM {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_EM_delete(instance: *mut c_void); }
-			unsafe { cv_EM_delete(self.as_raw_mut_EM()) };
+			unsafe { sys::cv_ml_EM_delete(self.as_raw_mut_EM()) };
 		}
 	}
 	
@@ -2441,9 +2435,9 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_base! { EM, core::Algorithm, cv_EM_to_Algorithm }
+	boxed_cast_base! { EM, core::Algorithm, cv_ml_EM_to_Algorithm }
 	
-	boxed_cast_base! { EM, crate::ml::StatModel, cv_EM_to_StatModel }
+	boxed_cast_base! { EM, crate::ml::StatModel, cv_ml_EM_to_StatModel }
 	
 	impl std::fmt::Debug for EM {
 		#[inline]
@@ -2616,8 +2610,7 @@ pub mod ml {
 	impl Drop for KNearest {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KNearest_delete(instance: *mut c_void); }
-			unsafe { cv_KNearest_delete(self.as_raw_mut_KNearest()) };
+			unsafe { sys::cv_ml_KNearest_delete(self.as_raw_mut_KNearest()) };
 		}
 	}
 	
@@ -2681,9 +2674,9 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_base! { KNearest, core::Algorithm, cv_KNearest_to_Algorithm }
+	boxed_cast_base! { KNearest, core::Algorithm, cv_ml_KNearest_to_Algorithm }
 	
-	boxed_cast_base! { KNearest, crate::ml::StatModel, cv_KNearest_to_StatModel }
+	boxed_cast_base! { KNearest, crate::ml::StatModel, cv_ml_KNearest_to_StatModel }
 	
 	impl std::fmt::Debug for KNearest {
 		#[inline]
@@ -2901,8 +2894,7 @@ pub mod ml {
 	impl Drop for LogisticRegression {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LogisticRegression_delete(instance: *mut c_void); }
-			unsafe { cv_LogisticRegression_delete(self.as_raw_mut_LogisticRegression()) };
+			unsafe { sys::cv_ml_LogisticRegression_delete(self.as_raw_mut_LogisticRegression()) };
 		}
 	}
 	
@@ -2972,9 +2964,9 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_base! { LogisticRegression, core::Algorithm, cv_LogisticRegression_to_Algorithm }
+	boxed_cast_base! { LogisticRegression, core::Algorithm, cv_ml_LogisticRegression_to_Algorithm }
 	
-	boxed_cast_base! { LogisticRegression, crate::ml::StatModel, cv_LogisticRegression_to_StatModel }
+	boxed_cast_base! { LogisticRegression, crate::ml::StatModel, cv_ml_LogisticRegression_to_StatModel }
 	
 	impl std::fmt::Debug for LogisticRegression {
 		#[inline]
@@ -3030,8 +3022,7 @@ pub mod ml {
 	impl Drop for NormalBayesClassifier {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NormalBayesClassifier_delete(instance: *mut c_void); }
-			unsafe { cv_NormalBayesClassifier_delete(self.as_raw_mut_NormalBayesClassifier()) };
+			unsafe { sys::cv_ml_NormalBayesClassifier_delete(self.as_raw_mut_NormalBayesClassifier()) };
 		}
 	}
 	
@@ -3100,9 +3091,9 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_base! { NormalBayesClassifier, core::Algorithm, cv_NormalBayesClassifier_to_Algorithm }
+	boxed_cast_base! { NormalBayesClassifier, core::Algorithm, cv_ml_NormalBayesClassifier_to_Algorithm }
 	
-	boxed_cast_base! { NormalBayesClassifier, crate::ml::StatModel, cv_NormalBayesClassifier_to_StatModel }
+	boxed_cast_base! { NormalBayesClassifier, crate::ml::StatModel, cv_ml_NormalBayesClassifier_to_StatModel }
 	
 	impl std::fmt::Debug for NormalBayesClassifier {
 		#[inline]
@@ -3119,14 +3110,14 @@ pub mod ml {
 		/// Minimum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn min_val(&self) -> f64 {
-			let ret = unsafe { sys::cv_ml_ParamGrid_getPropMinVal_const(self.as_raw_ParamGrid()) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propMinVal_const(self.as_raw_ParamGrid()) };
 			ret
 		}
 		
 		/// Maximum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn max_val(&self) -> f64 {
-			let ret = unsafe { sys::cv_ml_ParamGrid_getPropMaxVal_const(self.as_raw_ParamGrid()) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propMaxVal_const(self.as_raw_ParamGrid()) };
 			ret
 		}
 		
@@ -3139,7 +3130,7 @@ pub mod ml {
 		/// The grid is logarithmic, so logStep must always be greater than 1. Default value is 1.
 		#[inline]
 		fn log_step(&self) -> f64 {
-			let ret = unsafe { sys::cv_ml_ParamGrid_getPropLogStep_const(self.as_raw_ParamGrid()) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propLogStep_const(self.as_raw_ParamGrid()) };
 			ret
 		}
 		
@@ -3152,14 +3143,14 @@ pub mod ml {
 		/// Minimum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn set_min_val(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_ParamGrid_setPropMinVal_double(self.as_raw_mut_ParamGrid(), val) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propMinVal_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
 		
 		/// Maximum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn set_max_val(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_ParamGrid_setPropMaxVal_double(self.as_raw_mut_ParamGrid(), val) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propMaxVal_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
 		
@@ -3172,7 +3163,7 @@ pub mod ml {
 		/// The grid is logarithmic, so logStep must always be greater than 1. Default value is 1.
 		#[inline]
 		fn set_log_step(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_ParamGrid_setPropLogStep_double(self.as_raw_mut_ParamGrid(), val) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propLogStep_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
 		
@@ -3191,8 +3182,7 @@ pub mod ml {
 	impl Drop for ParamGrid {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ParamGrid_delete(instance: *mut c_void); }
-			unsafe { cv_ParamGrid_delete(self.as_raw_mut_ParamGrid()) };
+			unsafe { sys::cv_ml_ParamGrid_delete(self.as_raw_mut_ParamGrid()) };
 		}
 	}
 	
@@ -3422,8 +3412,7 @@ pub mod ml {
 	impl Drop for RTrees {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RTrees_delete(instance: *mut c_void); }
-			unsafe { cv_RTrees_delete(self.as_raw_mut_RTrees()) };
+			unsafe { sys::cv_ml_RTrees_delete(self.as_raw_mut_RTrees()) };
 		}
 	}
 	
@@ -3501,11 +3490,11 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_base! { RTrees, core::Algorithm, cv_RTrees_to_Algorithm }
+	boxed_cast_base! { RTrees, core::Algorithm, cv_ml_RTrees_to_Algorithm }
 	
-	boxed_cast_base! { RTrees, crate::ml::DTrees, cv_RTrees_to_DTrees }
+	boxed_cast_base! { RTrees, crate::ml::DTrees, cv_ml_RTrees_to_DTrees }
 	
-	boxed_cast_base! { RTrees, crate::ml::StatModel, cv_RTrees_to_StatModel }
+	boxed_cast_base! { RTrees, crate::ml::StatModel, cv_ml_RTrees_to_StatModel }
 	
 	impl std::fmt::Debug for RTrees {
 		#[inline]
@@ -3974,8 +3963,7 @@ pub mod ml {
 	impl Drop for SVM {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SVM_delete(instance: *mut c_void); }
-			unsafe { cv_SVM_delete(self.as_raw_mut_SVM()) };
+			unsafe { sys::cv_ml_SVM_delete(self.as_raw_mut_SVM()) };
 		}
 	}
 	
@@ -4075,9 +4063,9 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_base! { SVM, core::Algorithm, cv_SVM_to_Algorithm }
+	boxed_cast_base! { SVM, core::Algorithm, cv_ml_SVM_to_Algorithm }
 	
-	boxed_cast_base! { SVM, crate::ml::StatModel, cv_SVM_to_StatModel }
+	boxed_cast_base! { SVM, crate::ml::StatModel, cv_ml_SVM_to_StatModel }
 	
 	impl std::fmt::Debug for SVM {
 		#[inline]
@@ -4126,8 +4114,7 @@ pub mod ml {
 	impl Drop for SVM_Kernel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SVM_Kernel_delete(instance: *mut c_void); }
-			unsafe { cv_SVM_Kernel_delete(self.as_raw_mut_SVM_Kernel()) };
+			unsafe { sys::cv_ml_SVM_Kernel_delete(self.as_raw_mut_SVM_Kernel()) };
 		}
 	}
 	
@@ -4152,7 +4139,7 @@ pub mod ml {
 	impl SVM_Kernel {
 	}
 	
-	boxed_cast_base! { SVM_Kernel, core::Algorithm, cv_SVM_Kernel_to_Algorithm }
+	boxed_cast_base! { SVM_Kernel, core::Algorithm, cv_ml_SVM_Kernel_to_Algorithm }
 	
 	impl std::fmt::Debug for SVM_Kernel {
 		#[inline]
@@ -4442,8 +4429,7 @@ pub mod ml {
 	impl Drop for SVMSGD {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SVMSGD_delete(instance: *mut c_void); }
-			unsafe { cv_SVMSGD_delete(self.as_raw_mut_SVMSGD()) };
+			unsafe { sys::cv_ml_SVMSGD_delete(self.as_raw_mut_SVMSGD()) };
 		}
 	}
 	
@@ -4513,9 +4499,9 @@ pub mod ml {
 		
 	}
 	
-	boxed_cast_base! { SVMSGD, core::Algorithm, cv_SVMSGD_to_Algorithm }
+	boxed_cast_base! { SVMSGD, core::Algorithm, cv_ml_SVMSGD_to_Algorithm }
 	
-	boxed_cast_base! { SVMSGD, crate::ml::StatModel, cv_SVMSGD_to_StatModel }
+	boxed_cast_base! { SVMSGD, crate::ml::StatModel, cv_ml_SVMSGD_to_StatModel }
 	
 	impl std::fmt::Debug for SVMSGD {
 		#[inline]
@@ -4666,8 +4652,7 @@ pub mod ml {
 	impl Drop for StatModel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_StatModel_delete(instance: *mut c_void); }
-			unsafe { cv_StatModel_delete(self.as_raw_mut_StatModel()) };
+			unsafe { sys::cv_ml_StatModel_delete(self.as_raw_mut_StatModel()) };
 		}
 	}
 	
@@ -4692,23 +4677,27 @@ pub mod ml {
 	impl StatModel {
 	}
 	
-	boxed_cast_descendant! { StatModel, crate::ml::ANN_MLP, cv_StatModel_to_ANN_MLP }
+	boxed_cast_descendant! { StatModel, crate::ml::ANN_MLP, cv_ml_StatModel_to_ANN_MLP }
 	
-	boxed_cast_descendant! { StatModel, crate::ml::DTrees, cv_StatModel_to_DTrees }
+	boxed_cast_descendant! { StatModel, crate::ml::Boost, cv_ml_StatModel_to_Boost }
 	
-	boxed_cast_descendant! { StatModel, crate::ml::EM, cv_StatModel_to_EM }
+	boxed_cast_descendant! { StatModel, crate::ml::DTrees, cv_ml_StatModel_to_DTrees }
 	
-	boxed_cast_descendant! { StatModel, crate::ml::KNearest, cv_StatModel_to_KNearest }
+	boxed_cast_descendant! { StatModel, crate::ml::EM, cv_ml_StatModel_to_EM }
 	
-	boxed_cast_descendant! { StatModel, crate::ml::LogisticRegression, cv_StatModel_to_LogisticRegression }
+	boxed_cast_descendant! { StatModel, crate::ml::KNearest, cv_ml_StatModel_to_KNearest }
 	
-	boxed_cast_descendant! { StatModel, crate::ml::NormalBayesClassifier, cv_StatModel_to_NormalBayesClassifier }
+	boxed_cast_descendant! { StatModel, crate::ml::LogisticRegression, cv_ml_StatModel_to_LogisticRegression }
 	
-	boxed_cast_descendant! { StatModel, crate::ml::SVM, cv_StatModel_to_SVM }
+	boxed_cast_descendant! { StatModel, crate::ml::NormalBayesClassifier, cv_ml_StatModel_to_NormalBayesClassifier }
 	
-	boxed_cast_descendant! { StatModel, crate::ml::SVMSGD, cv_StatModel_to_SVMSGD }
+	boxed_cast_descendant! { StatModel, crate::ml::RTrees, cv_ml_StatModel_to_RTrees }
 	
-	boxed_cast_base! { StatModel, core::Algorithm, cv_StatModel_to_Algorithm }
+	boxed_cast_descendant! { StatModel, crate::ml::SVM, cv_ml_StatModel_to_SVM }
+	
+	boxed_cast_descendant! { StatModel, crate::ml::SVMSGD, cv_ml_StatModel_to_SVMSGD }
+	
+	boxed_cast_base! { StatModel, core::Algorithm, cv_ml_StatModel_to_Algorithm }
 	
 	impl std::fmt::Debug for StatModel {
 		#[inline]
@@ -5153,8 +5142,7 @@ pub mod ml {
 	impl Drop for TrainData {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TrainData_delete(instance: *mut c_void); }
-			unsafe { cv_TrainData_delete(self.as_raw_mut_TrainData()) };
+			unsafe { sys::cv_ml_TrainData_delete(self.as_raw_mut_TrainData()) };
 		}
 	}
 	
@@ -5245,11 +5233,11 @@ pub mod ml {
 		/// * delimiter: ','
 		/// * missch: '?'
 		#[inline]
-		pub fn load_from_csv(filename: &str, header_line_count: i32, response_start_idx: i32, response_end_idx: i32, var_type_spec: &str, delimiter: i8, missch: i8) -> Result<core::Ptr<crate::ml::TrainData>> {
+		pub fn load_from_csv(filename: &str, header_line_count: i32, response_start_idx: i32, response_end_idx: i32, var_type_spec: &str, delimiter: char, missch: char) -> Result<core::Ptr<crate::ml::TrainData>> {
 			extern_container_arg!(filename);
 			extern_container_arg!(var_type_spec);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ml_TrainData_loadFromCSV_const_StringR_int_int_int_const_StringR_char_char(filename.opencv_as_extern(), header_line_count, response_start_idx, response_end_idx, var_type_spec.opencv_as_extern(), delimiter, missch, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ml_TrainData_loadFromCSV_const_StringR_int_int_int_const_StringR_char_char(filename.opencv_as_extern(), header_line_count, response_start_idx, response_end_idx, var_type_spec.opencv_as_extern(), u8::try_from(delimiter)? as c_char, u8::try_from(missch)? as c_char, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };

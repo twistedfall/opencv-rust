@@ -766,8 +766,7 @@ pub mod mcc {
 	impl Drop for ColorCorrectionModel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ColorCorrectionModel_delete(instance: *mut c_void); }
-			unsafe { cv_ColorCorrectionModel_delete(self.as_raw_mut_ColorCorrectionModel()) };
+			unsafe { sys::cv_ccm_ColorCorrectionModel_delete(self.as_raw_mut_ColorCorrectionModel()) };
 		}
 	}
 	
@@ -992,8 +991,7 @@ pub mod mcc {
 	impl Drop for MCC_CChecker {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MCC_CChecker_delete(instance: *mut c_void); }
-			unsafe { cv_MCC_CChecker_delete(self.as_raw_mut_MCC_CChecker()) };
+			unsafe { sys::cv_mcc_CChecker_delete(self.as_raw_mut_MCC_CChecker()) };
 		}
 	}
 	
@@ -1164,8 +1162,7 @@ pub mod mcc {
 	impl Drop for MCC_CCheckerDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MCC_CCheckerDetector_delete(instance: *mut c_void); }
-			unsafe { cv_MCC_CCheckerDetector_delete(self.as_raw_mut_MCC_CCheckerDetector()) };
+			unsafe { sys::cv_mcc_CCheckerDetector_delete(self.as_raw_mut_MCC_CCheckerDetector()) };
 		}
 	}
 	
@@ -1201,7 +1198,7 @@ pub mod mcc {
 		
 	}
 	
-	boxed_cast_base! { MCC_CCheckerDetector, core::Algorithm, cv_MCC_CCheckerDetector_to_Algorithm }
+	boxed_cast_base! { MCC_CCheckerDetector, core::Algorithm, cv_mcc_CCheckerDetector_to_Algorithm }
 	
 	impl std::fmt::Debug for MCC_CCheckerDetector {
 		#[inline]
@@ -1258,8 +1255,7 @@ pub mod mcc {
 	impl Drop for MCC_CCheckerDraw {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MCC_CCheckerDraw_delete(instance: *mut c_void); }
-			unsafe { cv_MCC_CCheckerDraw_delete(self.as_raw_mut_MCC_CCheckerDraw()) };
+			unsafe { sys::cv_mcc_CCheckerDraw_delete(self.as_raw_mut_MCC_CCheckerDraw()) };
 		}
 	}
 	
@@ -1311,109 +1307,109 @@ pub mod mcc {
 	
 		#[inline]
 		fn adaptive_thresh_win_size_min(&self) -> i32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropAdaptiveThreshWinSizeMin_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeMin_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn adaptive_thresh_win_size_max(&self) -> i32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropAdaptiveThreshWinSizeMax_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeMax_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn adaptive_thresh_win_size_step(&self) -> i32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropAdaptiveThreshWinSizeStep_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeStep_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn adaptive_thresh_constant(&self) -> f64 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropAdaptiveThreshConstant_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshConstant_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_contours_area_rate(&self) -> f64 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMinContoursAreaRate_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContoursAreaRate_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_contours_area(&self) -> f64 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMinContoursArea_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContoursArea_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn confidence_threshold(&self) -> f64 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropConfidenceThreshold_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propConfidenceThreshold_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_contour_solidity(&self) -> f64 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMinContourSolidity_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourSolidity_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn find_candidates_approx_poly_dp_eps_multiplier(&self) -> f64 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropFindCandidatesApproxPolyDPEpsMultiplier_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propFindCandidatesApproxPolyDPEpsMultiplier_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn border_width(&self) -> i32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropBorderWidth_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propBorderWidth_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn b0factor(&self) -> f32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropB0factor_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propB0factor_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn max_error(&self) -> f32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMaxError_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMaxError_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_contour_points_allowed(&self) -> i32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMinContourPointsAllowed_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourPointsAllowed_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_contour_length_allowed(&self) -> i32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMinContourLengthAllowed_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourLengthAllowed_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_inter_contour_distance(&self) -> i32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMinInterContourDistance_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinInterContourDistance_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_inter_checker_distance(&self) -> i32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMinInterCheckerDistance_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinInterCheckerDistance_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_image_size(&self) -> i32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMinImageSize_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinImageSize_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn min_group_size(&self) -> u32 {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_getPropMinGroupSize_const(self.as_raw_MCC_DetectorParameters()) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinGroupSize_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
 		
@@ -1425,109 +1421,109 @@ pub mod mcc {
 	
 		#[inline]
 		fn set_adaptive_thresh_win_size_min(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeMin_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeMin_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_adaptive_thresh_win_size_max(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeMax_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeMax_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_adaptive_thresh_win_size_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshWinSizeStep_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeStep_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_adaptive_thresh_constant(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropAdaptiveThreshConstant_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshConstant_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_contours_area_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMinContoursAreaRate_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContoursAreaRate_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_contours_area(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMinContoursArea_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContoursArea_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_confidence_threshold(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropConfidenceThreshold_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propConfidenceThreshold_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_contour_solidity(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMinContourSolidity_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourSolidity_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_find_candidates_approx_poly_dp_eps_multiplier(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropFindCandidatesApproxPolyDPEpsMultiplier_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propFindCandidatesApproxPolyDPEpsMultiplier_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_border_width(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropBorderWidth_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propBorderWidth_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b0factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropB0factor_float(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propB0factor_float(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_max_error(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMaxError_float(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMaxError_float(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_contour_points_allowed(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMinContourPointsAllowed_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourPointsAllowed_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_contour_length_allowed(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMinContourLengthAllowed_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourLengthAllowed_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_inter_contour_distance(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMinInterContourDistance_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinInterContourDistance_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_inter_checker_distance(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMinInterCheckerDistance_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinInterCheckerDistance_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_image_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMinImageSize_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinImageSize_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_group_size(&mut self, val: u32) {
-			let ret = unsafe { sys::cv_mcc_DetectorParameters_setPropMinGroupSize_unsigned_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinGroupSize_unsigned_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -1589,8 +1585,7 @@ pub mod mcc {
 	impl Drop for MCC_DetectorParameters {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MCC_DetectorParameters_delete(instance: *mut c_void); }
-			unsafe { cv_MCC_DetectorParameters_delete(self.as_raw_mut_MCC_DetectorParameters()) };
+			unsafe { sys::cv_mcc_DetectorParameters_delete(self.as_raw_mut_MCC_DetectorParameters()) };
 		}
 	}
 	

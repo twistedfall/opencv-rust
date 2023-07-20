@@ -356,12 +356,12 @@ pub mod features2d {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+	pub fn draw_matches(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -398,12 +398,12 @@ pub mod features2d {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_1(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, matches_thickness: i32, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+	pub fn draw_matches_1(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, matches_thickness: i32, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), matches_thickness, &match_color, &single_point_color, matches_mask.as_raw_VectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), matches_thickness, &match_color, &single_point_color, matches_mask.as_raw_VectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -415,12 +415,12 @@ pub mod features2d {
 	/// * matches_mask: std::vector<std::vector<char>>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_knn(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut impl core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<core::Vector<i8>>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+	pub fn draw_matches_knn(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut impl core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<core::Vector<c_char>>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLvectorLDMatchGGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLvectorLcharGGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfVectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLvectorLDMatchGGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLvectorLcharGGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfVectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -633,8 +633,7 @@ pub mod features2d {
 	impl Drop for AKAZE {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AKAZE_delete(instance: *mut c_void); }
-			unsafe { cv_AKAZE_delete(self.as_raw_mut_AKAZE()) };
+			unsafe { sys::cv_AKAZE_delete(self.as_raw_mut_AKAZE()) };
 		}
 	}
 	
@@ -761,8 +760,7 @@ pub mod features2d {
 	impl Drop for AffineFeature {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AffineFeature_delete(instance: *mut c_void); }
-			unsafe { cv_AffineFeature_delete(self.as_raw_mut_AffineFeature()) };
+			unsafe { sys::cv_AffineFeature_delete(self.as_raw_mut_AffineFeature()) };
 		}
 	}
 	
@@ -915,8 +913,7 @@ pub mod features2d {
 	impl Drop for AgastFeatureDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AgastFeatureDetector_delete(instance: *mut c_void); }
-			unsafe { cv_AgastFeatureDetector_delete(self.as_raw_mut_AgastFeatureDetector()) };
+			unsafe { sys::cv_AgastFeatureDetector_delete(self.as_raw_mut_AgastFeatureDetector()) };
 		}
 	}
 	
@@ -1023,8 +1020,7 @@ pub mod features2d {
 	impl Drop for BFMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BFMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_BFMatcher_delete(self.as_raw_mut_BFMatcher()) };
+			unsafe { sys::cv_BFMatcher_delete(self.as_raw_mut_BFMatcher()) };
 		}
 	}
 	
@@ -1251,8 +1247,7 @@ pub mod features2d {
 	impl Drop for BOWImgDescriptorExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BOWImgDescriptorExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_BOWImgDescriptorExtractor_delete(self.as_raw_mut_BOWImgDescriptorExtractor()) };
+			unsafe { sys::cv_BOWImgDescriptorExtractor_delete(self.as_raw_mut_BOWImgDescriptorExtractor()) };
 		}
 	}
 	
@@ -1355,8 +1350,7 @@ pub mod features2d {
 	impl Drop for BOWKMeansTrainer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BOWKMeansTrainer_delete(instance: *mut c_void); }
-			unsafe { cv_BOWKMeansTrainer_delete(self.as_raw_mut_BOWKMeansTrainer()) };
+			unsafe { sys::cv_BOWKMeansTrainer_delete(self.as_raw_mut_BOWKMeansTrainer()) };
 		}
 	}
 	
@@ -1520,8 +1514,7 @@ pub mod features2d {
 	impl Drop for BOWTrainer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BOWTrainer_delete(instance: *mut c_void); }
-			unsafe { cv_BOWTrainer_delete(self.as_raw_mut_BOWTrainer()) };
+			unsafe { sys::cv_BOWTrainer_delete(self.as_raw_mut_BOWTrainer()) };
 		}
 	}
 	
@@ -1644,8 +1637,7 @@ pub mod features2d {
 	impl Drop for BRISK {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BRISK_delete(instance: *mut c_void); }
-			unsafe { cv_BRISK_delete(self.as_raw_mut_BRISK()) };
+			unsafe { sys::cv_BRISK_delete(self.as_raw_mut_BRISK()) };
 		}
 	}
 	
@@ -2175,8 +2167,7 @@ pub mod features2d {
 	impl Drop for DescriptorMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DescriptorMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_DescriptorMatcher_delete(self.as_raw_mut_DescriptorMatcher()) };
+			unsafe { sys::cv_DescriptorMatcher_delete(self.as_raw_mut_DescriptorMatcher()) };
 		}
 	}
 	
@@ -2333,8 +2324,7 @@ pub mod features2d {
 	impl Drop for FastFeatureDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FastFeatureDetector_delete(instance: *mut c_void); }
-			unsafe { cv_FastFeatureDetector_delete(self.as_raw_mut_FastFeatureDetector()) };
+			unsafe { sys::cv_FastFeatureDetector_delete(self.as_raw_mut_FastFeatureDetector()) };
 		}
 	}
 	
@@ -2642,8 +2632,7 @@ pub mod features2d {
 	impl Drop for Feature2D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Feature2D_delete(instance: *mut c_void); }
-			unsafe { cv_Feature2D_delete(self.as_raw_mut_Feature2D()) };
+			unsafe { sys::cv_Feature2D_delete(self.as_raw_mut_Feature2D()) };
 		}
 	}
 	
@@ -2795,8 +2784,7 @@ pub mod features2d {
 	impl Drop for FlannBasedMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FlannBasedMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_FlannBasedMatcher_delete(self.as_raw_mut_FlannBasedMatcher()) };
+			unsafe { sys::cv_FlannBasedMatcher_delete(self.as_raw_mut_FlannBasedMatcher()) };
 		}
 	}
 	
@@ -3022,8 +3010,7 @@ pub mod features2d {
 	impl Drop for GFTTDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GFTTDetector_delete(instance: *mut c_void); }
-			unsafe { cv_GFTTDetector_delete(self.as_raw_mut_GFTTDetector()) };
+			unsafe { sys::cv_GFTTDetector_delete(self.as_raw_mut_GFTTDetector()) };
 		}
 	}
 	
@@ -3243,8 +3230,7 @@ pub mod features2d {
 	impl Drop for KAZE {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KAZE_delete(instance: *mut c_void); }
-			unsafe { cv_KAZE_delete(self.as_raw_mut_KAZE()) };
+			unsafe { sys::cv_KAZE_delete(self.as_raw_mut_KAZE()) };
 		}
 	}
 	
@@ -3342,8 +3328,7 @@ pub mod features2d {
 	impl Drop for KeyPointsFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KeyPointsFilter_delete(instance: *mut c_void); }
-			unsafe { cv_KeyPointsFilter_delete(self.as_raw_mut_KeyPointsFilter()) };
+			unsafe { sys::cv_KeyPointsFilter_delete(self.as_raw_mut_KeyPointsFilter()) };
 		}
 	}
 	
@@ -3684,8 +3669,7 @@ pub mod features2d {
 	impl Drop for MSER {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MSER_delete(instance: *mut c_void); }
-			unsafe { cv_MSER_delete(self.as_raw_mut_MSER()) };
+			unsafe { sys::cv_MSER_delete(self.as_raw_mut_MSER()) };
 		}
 	}
 	
@@ -3962,8 +3946,7 @@ pub mod features2d {
 	impl Drop for ORB {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ORB_delete(instance: *mut c_void); }
-			unsafe { cv_ORB_delete(self.as_raw_mut_ORB()) };
+			unsafe { sys::cv_ORB_delete(self.as_raw_mut_ORB()) };
 		}
 	}
 	
@@ -3995,6 +3978,16 @@ pub mod features2d {
 	
 	impl ORB {
 		pub const kBytes: i32 = 32;
+		#[inline]
+		pub fn default() -> Result<core::Ptr<crate::features2d::ORB>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ORB_create_const(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// The ORB constructor
 		/// 
 		/// ## Parameters
@@ -4184,8 +4177,7 @@ pub mod features2d {
 	impl Drop for SIFT {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SIFT_delete(instance: *mut c_void); }
-			unsafe { cv_SIFT_delete(self.as_raw_mut_SIFT()) };
+			unsafe { sys::cv_SIFT_delete(self.as_raw_mut_SIFT()) };
 		}
 	}
 	
@@ -4403,8 +4395,7 @@ pub mod features2d {
 	impl Drop for SimpleBlobDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SimpleBlobDetector_delete(instance: *mut c_void); }
-			unsafe { cv_SimpleBlobDetector_delete(self.as_raw_mut_SimpleBlobDetector()) };
+			unsafe { sys::cv_SimpleBlobDetector_delete(self.as_raw_mut_SimpleBlobDetector()) };
 		}
 	}
 	
@@ -4517,5 +4508,4 @@ pub mod features2d {
 		}
 		
 	}
-pub use crate::manual::features2d::*;
 }

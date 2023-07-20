@@ -515,8 +515,7 @@ pub mod bioinspired {
 	impl Drop for Retina {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Retina_delete(instance: *mut c_void); }
-			unsafe { cv_Retina_delete(self.as_raw_mut_Retina()) };
+			unsafe { sys::cv_bioinspired_Retina_delete(self.as_raw_mut_Retina()) };
 		}
 	}
 	
@@ -601,7 +600,7 @@ pub mod bioinspired {
 		
 	}
 	
-	boxed_cast_base! { Retina, core::Algorithm, cv_Retina_to_Algorithm }
+	boxed_cast_base! { Retina, core::Algorithm, cv_bioinspired_Retina_to_Algorithm }
 	
 	impl std::fmt::Debug for Retina {
 		#[inline]
@@ -694,8 +693,7 @@ pub mod bioinspired {
 	impl Drop for RetinaFastToneMapping {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RetinaFastToneMapping_delete(instance: *mut c_void); }
-			unsafe { cv_RetinaFastToneMapping_delete(self.as_raw_mut_RetinaFastToneMapping()) };
+			unsafe { sys::cv_bioinspired_RetinaFastToneMapping_delete(self.as_raw_mut_RetinaFastToneMapping()) };
 		}
 	}
 	
@@ -730,7 +728,7 @@ pub mod bioinspired {
 		
 	}
 	
-	boxed_cast_base! { RetinaFastToneMapping, core::Algorithm, cv_RetinaFastToneMapping_to_Algorithm }
+	boxed_cast_base! { RetinaFastToneMapping, core::Algorithm, cv_bioinspired_RetinaFastToneMapping_to_Algorithm }
 	
 	impl std::fmt::Debug for RetinaFastToneMapping {
 		#[inline]
@@ -747,7 +745,7 @@ pub mod bioinspired {
 		#[inline]
 		fn op_land_ipl_parvo(&self) -> crate::bioinspired::RetinaParameters_OPLandIplParvoParameters {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_RetinaParameters_getPropOPLandIplParvo_const(self.as_raw_RetinaParameters(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_RetinaParameters_propOPLandIplParvo_const(self.as_raw_RetinaParameters(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -755,7 +753,7 @@ pub mod bioinspired {
 		#[inline]
 		fn ipl_magno(&self) -> crate::bioinspired::RetinaParameters_IplMagnoParameters {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_RetinaParameters_getPropIplMagno_const(self.as_raw_RetinaParameters(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_RetinaParameters_propIplMagno_const(self.as_raw_RetinaParameters(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -768,13 +766,13 @@ pub mod bioinspired {
 	
 		#[inline]
 		fn set_op_land_ipl_parvo(&mut self, val: crate::bioinspired::RetinaParameters_OPLandIplParvoParameters) {
-			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_setPropOPLandIplParvo_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propOPLandIplParvo_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ipl_magno(&mut self, val: crate::bioinspired::RetinaParameters_IplMagnoParameters) {
-			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_setPropIplMagno_IplMagnoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propIplMagno_IplMagnoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -849,8 +847,7 @@ pub mod bioinspired {
 	impl Drop for RetinaParameters {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RetinaParameters_delete(instance: *mut c_void); }
-			unsafe { cv_RetinaParameters_delete(self.as_raw_mut_RetinaParameters()) };
+			unsafe { sys::cv_bioinspired_RetinaParameters_delete(self.as_raw_mut_RetinaParameters()) };
 		}
 	}
 	
@@ -866,8 +863,7 @@ pub mod bioinspired {
 	
 	impl RetinaParameters {
 		fn default() -> Self {
-			extern "C" { fn cv_RetinaParameters_defaultNew_const() -> extern_receive!(RetinaParameters: 'static); }
-			unsafe { Self::from_raw(cv_RetinaParameters_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_bioinspired_RetinaParameters_defaultNew_const()) }
 		}
 		
 	}
@@ -875,8 +871,7 @@ pub mod bioinspired {
 	impl Clone for RetinaParameters {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_RetinaParameters_implicitClone_const_RetinaParameters(val: extern_send!(RetinaParameters)) -> extern_receive!(RetinaParameters: 'static); }
-			unsafe { Self::from_raw(cv_RetinaParameters_implicitClone_const_RetinaParameters(self.as_raw_RetinaParameters())) }
+			unsafe { Self::from_raw(sys::cv_bioinspired_RetinaParameters_implicitClone_const(self.as_raw_RetinaParameters())) }
 		}
 	}
 	
@@ -1172,8 +1167,7 @@ pub mod bioinspired {
 	impl Drop for TransientAreasSegmentationModule {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TransientAreasSegmentationModule_delete(instance: *mut c_void); }
-			unsafe { cv_TransientAreasSegmentationModule_delete(self.as_raw_mut_TransientAreasSegmentationModule()) };
+			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_delete(self.as_raw_mut_TransientAreasSegmentationModule()) };
 		}
 	}
 	
@@ -1211,7 +1205,7 @@ pub mod bioinspired {
 		
 	}
 	
-	boxed_cast_base! { TransientAreasSegmentationModule, core::Algorithm, cv_TransientAreasSegmentationModule_to_Algorithm }
+	boxed_cast_base! { TransientAreasSegmentationModule, core::Algorithm, cv_bioinspired_TransientAreasSegmentationModule_to_Algorithm }
 	
 	impl std::fmt::Debug for TransientAreasSegmentationModule {
 		#[inline]

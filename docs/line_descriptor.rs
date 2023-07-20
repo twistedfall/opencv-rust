@@ -154,9 +154,9 @@ pub mod line_descriptor {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawLinesMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_line_matches(img1: &core::Mat, keylines1: &core::Vector<crate::line_descriptor::KeyLine>, img2: &core::Mat, keylines2: &core::Vector<crate::line_descriptor::KeyLine>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut core::Mat, match_color: core::Scalar, single_line_color: core::Scalar, matches_mask: &core::Vector<i8>, flags: i32) -> Result<()> {
+	pub fn draw_line_matches(img1: &core::Mat, keylines1: &core::Vector<crate::line_descriptor::KeyLine>, img2: &core::Mat, keylines2: &core::Vector<crate::line_descriptor::KeyLine>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut core::Mat, match_color: core::Scalar, single_line_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_line_descriptor_drawLineMatches_const_MatR_const_vectorLKeyLineGR_const_MatR_const_vectorLKeyLineGR_const_vectorLDMatchGR_MatR_const_ScalarR_const_ScalarR_const_vectorLcharGR_int(img1.as_raw_Mat(), keylines1.as_raw_VectorOfKeyLine(), img2.as_raw_Mat(), keylines2.as_raw_VectorOfKeyLine(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw_mut_Mat(), &match_color, &single_line_color, matches_mask.as_raw_VectorOfi8(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_line_descriptor_drawLineMatches_const_MatR_const_vectorLKeyLineGR_const_MatR_const_vectorLKeyLineGR_const_vectorLDMatchGR_MatR_const_ScalarR_const_ScalarR_const_vectorLcharGR_int(img1.as_raw_Mat(), keylines1.as_raw_VectorOfKeyLine(), img2.as_raw_Mat(), keylines2.as_raw_VectorOfKeyLine(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw_mut_Mat(), &match_color, &single_line_color, matches_mask.as_raw_VectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -428,8 +428,7 @@ pub mod line_descriptor {
 	impl Drop for BinaryDescriptor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BinaryDescriptor_delete(instance: *mut c_void); }
-			unsafe { cv_BinaryDescriptor_delete(self.as_raw_mut_BinaryDescriptor()) };
+			unsafe { sys::cv_line_descriptor_BinaryDescriptor_delete(self.as_raw_mut_BinaryDescriptor()) };
 		}
 	}
 	
@@ -496,7 +495,7 @@ pub mod line_descriptor {
 		
 	}
 	
-	boxed_cast_base! { BinaryDescriptor, core::Algorithm, cv_BinaryDescriptor_to_Algorithm }
+	boxed_cast_base! { BinaryDescriptor, core::Algorithm, cv_line_descriptor_BinaryDescriptor_to_Algorithm }
 	
 	impl std::fmt::Debug for BinaryDescriptor {
 		#[inline]
@@ -513,27 +512,27 @@ pub mod line_descriptor {
 		/// the number of image octaves (default = 1)
 		#[inline]
 		fn num_of_octave_(&self) -> i32 {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropNumOfOctave__const(self.as_raw_BinaryDescriptor_Params()) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propNumOfOctave__const(self.as_raw_BinaryDescriptor_Params()) };
 			ret
 		}
 		
 		/// the width of band; (default: 7)
 		#[inline]
 		fn width_of_band_(&self) -> i32 {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropWidthOfBand__const(self.as_raw_BinaryDescriptor_Params()) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propWidthOfBand__const(self.as_raw_BinaryDescriptor_Params()) };
 			ret
 		}
 		
 		/// image's reduction ratio in construction of Gaussian pyramids
 		#[inline]
 		fn reduction_ratio(&self) -> i32 {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropReductionRatio_const(self.as_raw_BinaryDescriptor_Params()) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propReductionRatio_const(self.as_raw_BinaryDescriptor_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn ksize_(&self) -> i32 {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_getPropKsize__const(self.as_raw_BinaryDescriptor_Params()) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propKsize__const(self.as_raw_BinaryDescriptor_Params()) };
 			ret
 		}
 		
@@ -556,27 +555,27 @@ pub mod line_descriptor {
 		/// the number of image octaves (default = 1)
 		#[inline]
 		fn set_num_of_octave_(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropNumOfOctave__int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propNumOfOctave__int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
 			ret
 		}
 		
 		/// the width of band; (default: 7)
 		#[inline]
 		fn set_width_of_band_(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropWidthOfBand__int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propWidthOfBand__int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
 			ret
 		}
 		
 		/// image's reduction ratio in construction of Gaussian pyramids
 		#[inline]
 		fn set_reduction_ratio(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropReductionRatio_int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propReductionRatio_int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ksize_(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_setPropKsize__int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propKsize__int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
 			ret
 		}
 		
@@ -602,8 +601,7 @@ pub mod line_descriptor {
 	impl Drop for BinaryDescriptor_Params {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BinaryDescriptor_Params_delete(instance: *mut c_void); }
-			unsafe { cv_BinaryDescriptor_Params_delete(self.as_raw_mut_BinaryDescriptor_Params()) };
+			unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_delete(self.as_raw_mut_BinaryDescriptor_Params()) };
 		}
 	}
 	
@@ -907,8 +905,7 @@ pub mod line_descriptor {
 	impl Drop for BinaryDescriptorMatcher {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BinaryDescriptorMatcher_delete(instance: *mut c_void); }
-			unsafe { cv_BinaryDescriptorMatcher_delete(self.as_raw_mut_BinaryDescriptorMatcher()) };
+			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_delete(self.as_raw_mut_BinaryDescriptorMatcher()) };
 		}
 	}
 	
@@ -957,7 +954,7 @@ pub mod line_descriptor {
 		
 	}
 	
-	boxed_cast_base! { BinaryDescriptorMatcher, core::Algorithm, cv_BinaryDescriptorMatcher_to_Algorithm }
+	boxed_cast_base! { BinaryDescriptorMatcher, core::Algorithm, cv_line_descriptor_BinaryDescriptorMatcher_to_Algorithm }
 	
 	impl std::fmt::Debug for BinaryDescriptorMatcher {
 		#[inline]
@@ -1145,8 +1142,7 @@ pub mod line_descriptor {
 	impl Drop for LSDDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LSDDetector_delete(instance: *mut c_void); }
-			unsafe { cv_LSDDetector_delete(self.as_raw_mut_LSDDetector()) };
+			unsafe { sys::cv_line_descriptor_LSDDetector_delete(self.as_raw_mut_LSDDetector()) };
 		}
 	}
 	
@@ -1212,7 +1208,7 @@ pub mod line_descriptor {
 		
 	}
 	
-	boxed_cast_base! { LSDDetector, core::Algorithm, cv_LSDDetector_to_Algorithm }
+	boxed_cast_base! { LSDDetector, core::Algorithm, cv_line_descriptor_LSDDetector_to_Algorithm }
 	
 	impl std::fmt::Debug for LSDDetector {
 		#[inline]

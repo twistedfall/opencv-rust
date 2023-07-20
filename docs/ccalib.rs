@@ -611,8 +611,7 @@ pub mod ccalib {
 	impl Drop for CustomPattern {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CustomPattern_delete(instance: *mut c_void); }
-			unsafe { cv_CustomPattern_delete(self.as_raw_mut_CustomPattern()) };
+			unsafe { sys::cv_ccalib_CustomPattern_delete(self.as_raw_mut_CustomPattern()) };
 		}
 	}
 	
@@ -647,7 +646,7 @@ pub mod ccalib {
 		
 	}
 	
-	boxed_cast_base! { CustomPattern, core::Algorithm, cv_CustomPattern_to_Algorithm }
+	boxed_cast_base! { CustomPattern, core::Algorithm, cv_ccalib_CustomPattern_to_Algorithm }
 	
 	impl std::fmt::Debug for CustomPattern {
 		#[inline]
@@ -736,8 +735,7 @@ pub mod ccalib {
 	impl Drop for MultiCameraCalibration {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MultiCameraCalibration_delete(instance: *mut c_void); }
-			unsafe { cv_MultiCameraCalibration_delete(self.as_raw_mut_MultiCameraCalibration()) };
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_delete(self.as_raw_mut_MultiCameraCalibration()) };
 		}
 	}
 	
@@ -788,25 +786,25 @@ pub mod ccalib {
 	
 		#[inline]
 		fn camera_vertex(&self) -> i32 {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_getPropCameraVertex_const(self.as_raw_MultiCameraCalibration_edge()) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propCameraVertex_const(self.as_raw_MultiCameraCalibration_edge()) };
 			ret
 		}
 		
 		#[inline]
 		fn photo_vertex(&self) -> i32 {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_getPropPhotoVertex_const(self.as_raw_MultiCameraCalibration_edge()) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoVertex_const(self.as_raw_MultiCameraCalibration_edge()) };
 			ret
 		}
 		
 		#[inline]
 		fn photo_index(&self) -> i32 {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_getPropPhotoIndex_const(self.as_raw_MultiCameraCalibration_edge()) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoIndex_const(self.as_raw_MultiCameraCalibration_edge()) };
 			ret
 		}
 		
 		#[inline]
 		fn transform(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_getPropTransform_const(self.as_raw_MultiCameraCalibration_edge()) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propTransform_const(self.as_raw_MultiCameraCalibration_edge()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -819,25 +817,25 @@ pub mod ccalib {
 	
 		#[inline]
 		fn set_camera_vertex(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_setPropCameraVertex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propCameraVertex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_photo_vertex(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_setPropPhotoVertex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoVertex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_photo_index(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_setPropPhotoIndex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoIndex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_transform(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_setPropTransform_Mat(self.as_raw_mut_MultiCameraCalibration_edge(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propTransform_Mat(self.as_raw_mut_MultiCameraCalibration_edge(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
@@ -852,8 +850,7 @@ pub mod ccalib {
 	impl Drop for MultiCameraCalibration_edge {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MultiCameraCalibration_edge_delete(instance: *mut c_void); }
-			unsafe { cv_MultiCameraCalibration_edge_delete(self.as_raw_mut_MultiCameraCalibration_edge()) };
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_delete(self.as_raw_mut_MultiCameraCalibration_edge()) };
 		}
 	}
 	
@@ -898,14 +895,14 @@ pub mod ccalib {
 	
 		#[inline]
 		fn pose(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_getPropPose_const(self.as_raw_MultiCameraCalibration_vertex()) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propPose_const(self.as_raw_MultiCameraCalibration_vertex()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn timestamp(&self) -> i32 {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_getPropTimestamp_const(self.as_raw_MultiCameraCalibration_vertex()) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propTimestamp_const(self.as_raw_MultiCameraCalibration_vertex()) };
 			ret
 		}
 		
@@ -917,13 +914,13 @@ pub mod ccalib {
 	
 		#[inline]
 		fn set_pose(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_setPropPose_Mat(self.as_raw_mut_MultiCameraCalibration_vertex(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propPose_Mat(self.as_raw_mut_MultiCameraCalibration_vertex(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_timestamp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_setPropTimestamp_int(self.as_raw_mut_MultiCameraCalibration_vertex(), val) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propTimestamp_int(self.as_raw_mut_MultiCameraCalibration_vertex(), val) };
 			ret
 		}
 		
@@ -938,8 +935,7 @@ pub mod ccalib {
 	impl Drop for MultiCameraCalibration_vertex {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MultiCameraCalibration_vertex_delete(instance: *mut c_void); }
-			unsafe { cv_MultiCameraCalibration_vertex_delete(self.as_raw_mut_MultiCameraCalibration_vertex()) };
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_delete(self.as_raw_mut_MultiCameraCalibration_vertex()) };
 		}
 	}
 	
@@ -1073,8 +1069,7 @@ pub mod ccalib {
 	impl Drop for RandomPatternCornerFinder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RandomPatternCornerFinder_delete(instance: *mut c_void); }
-			unsafe { cv_RandomPatternCornerFinder_delete(self.as_raw_mut_RandomPatternCornerFinder()) };
+			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_delete(self.as_raw_mut_RandomPatternCornerFinder()) };
 		}
 	}
 	
@@ -1157,8 +1152,7 @@ pub mod ccalib {
 	impl Drop for RandomPatternGenerator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RandomPatternGenerator_delete(instance: *mut c_void); }
-			unsafe { cv_RandomPatternGenerator_delete(self.as_raw_mut_RandomPatternGenerator()) };
+			unsafe { sys::cv_randpattern_RandomPatternGenerator_delete(self.as_raw_mut_RandomPatternGenerator()) };
 		}
 	}
 	

@@ -1486,8 +1486,7 @@ pub mod videoio {
 	impl Drop for VideoCapture {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_VideoCapture_delete(instance: *mut c_void); }
-			unsafe { cv_VideoCapture_delete(self.as_raw_mut_VideoCapture()) };
+			unsafe { sys::cv_VideoCapture_delete(self.as_raw_mut_VideoCapture()) };
 		}
 	}
 	
@@ -1863,8 +1862,7 @@ pub mod videoio {
 	impl Drop for VideoWriter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_VideoWriter_delete(instance: *mut c_void); }
-			unsafe { cv_VideoWriter_delete(self.as_raw_mut_VideoWriter()) };
+			unsafe { sys::cv_VideoWriter_delete(self.as_raw_mut_VideoWriter()) };
 		}
 	}
 	
@@ -2016,7 +2014,7 @@ pub mod videoio {
 		#[inline]
 		pub fn fourcc(c1: char, c2: char, c3: char, c4: char) -> Result<i32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(u8::try_from(c1)? as i8, u8::try_from(c2)? as i8, u8::try_from(c3)? as i8, u8::try_from(c4)? as i8, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_VideoWriter_fourcc_char_char_char_char(u8::try_from(c1)? as c_char, u8::try_from(c2)? as c_char, u8::try_from(c3)? as c_char, u8::try_from(c4)? as c_char, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

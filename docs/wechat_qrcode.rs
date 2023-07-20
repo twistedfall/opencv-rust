@@ -83,8 +83,7 @@ pub mod wechat_qrcode {
 	impl Drop for WeChatQRCode {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WeChatQRCode_delete(instance: *mut c_void); }
-			unsafe { cv_WeChatQRCode_delete(self.as_raw_mut_WeChatQRCode()) };
+			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_delete(self.as_raw_mut_WeChatQRCode()) };
 		}
 	}
 	

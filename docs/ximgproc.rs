@@ -2287,8 +2287,7 @@ pub mod ximgproc {
 	impl Drop for AdaptiveManifoldFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AdaptiveManifoldFilter_delete(instance: *mut c_void); }
-			unsafe { cv_AdaptiveManifoldFilter_delete(self.as_raw_mut_AdaptiveManifoldFilter()) };
+			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_delete(self.as_raw_mut_AdaptiveManifoldFilter()) };
 		}
 	}
 	
@@ -2323,7 +2322,7 @@ pub mod ximgproc {
 		
 	}
 	
-	boxed_cast_base! { AdaptiveManifoldFilter, core::Algorithm, cv_AdaptiveManifoldFilter_to_Algorithm }
+	boxed_cast_base! { AdaptiveManifoldFilter, core::Algorithm, cv_ximgproc_AdaptiveManifoldFilter_to_Algorithm }
 	
 	impl std::fmt::Debug for AdaptiveManifoldFilter {
 		#[inline]
@@ -2467,8 +2466,7 @@ pub mod ximgproc {
 	impl Drop for ContourFitting {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ContourFitting_delete(instance: *mut c_void); }
-			unsafe { cv_ContourFitting_delete(self.as_raw_mut_ContourFitting()) };
+			unsafe { sys::cv_ximgproc_ContourFitting_delete(self.as_raw_mut_ContourFitting()) };
 		}
 	}
 	
@@ -2512,7 +2510,7 @@ pub mod ximgproc {
 		
 	}
 	
-	boxed_cast_base! { ContourFitting, core::Algorithm, cv_ContourFitting_to_Algorithm }
+	boxed_cast_base! { ContourFitting, core::Algorithm, cv_ximgproc_ContourFitting_to_Algorithm }
 	
 	impl std::fmt::Debug for ContourFitting {
 		#[inline]
@@ -2569,8 +2567,7 @@ pub mod ximgproc {
 	impl Drop for DTFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DTFilter_delete(instance: *mut c_void); }
-			unsafe { cv_DTFilter_delete(self.as_raw_mut_DTFilter()) };
+			unsafe { sys::cv_ximgproc_DTFilter_delete(self.as_raw_mut_DTFilter()) };
 		}
 	}
 	
@@ -2595,7 +2592,7 @@ pub mod ximgproc {
 	impl DTFilter {
 	}
 	
-	boxed_cast_base! { DTFilter, core::Algorithm, cv_DTFilter_to_Algorithm }
+	boxed_cast_base! { DTFilter, core::Algorithm, cv_ximgproc_DTFilter_to_Algorithm }
 	
 	impl std::fmt::Debug for DTFilter {
 		#[inline]
@@ -2665,8 +2662,7 @@ pub mod ximgproc {
 	impl Drop for DisparityFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DisparityFilter_delete(instance: *mut c_void); }
-			unsafe { cv_DisparityFilter_delete(self.as_raw_mut_DisparityFilter()) };
+			unsafe { sys::cv_ximgproc_DisparityFilter_delete(self.as_raw_mut_DisparityFilter()) };
 		}
 	}
 	
@@ -2691,9 +2687,9 @@ pub mod ximgproc {
 	impl DisparityFilter {
 	}
 	
-	boxed_cast_descendant! { DisparityFilter, crate::ximgproc::DisparityWLSFilter, cv_DisparityFilter_to_DisparityWLSFilter }
+	boxed_cast_descendant! { DisparityFilter, crate::ximgproc::DisparityWLSFilter, cv_ximgproc_DisparityFilter_to_DisparityWLSFilter }
 	
-	boxed_cast_base! { DisparityFilter, core::Algorithm, cv_DisparityFilter_to_Algorithm }
+	boxed_cast_base! { DisparityFilter, core::Algorithm, cv_ximgproc_DisparityFilter_to_Algorithm }
 	
 	impl std::fmt::Debug for DisparityFilter {
 		#[inline]
@@ -2839,8 +2835,7 @@ pub mod ximgproc {
 	impl Drop for DisparityWLSFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DisparityWLSFilter_delete(instance: *mut c_void); }
-			unsafe { cv_DisparityWLSFilter_delete(self.as_raw_mut_DisparityWLSFilter()) };
+			unsafe { sys::cv_ximgproc_DisparityWLSFilter_delete(self.as_raw_mut_DisparityWLSFilter()) };
 		}
 	}
 	
@@ -2873,9 +2868,9 @@ pub mod ximgproc {
 	impl DisparityWLSFilter {
 	}
 	
-	boxed_cast_base! { DisparityWLSFilter, core::Algorithm, cv_DisparityWLSFilter_to_Algorithm }
+	boxed_cast_base! { DisparityWLSFilter, core::Algorithm, cv_ximgproc_DisparityWLSFilter_to_Algorithm }
 	
-	boxed_cast_base! { DisparityWLSFilter, crate::ximgproc::DisparityFilter, cv_DisparityWLSFilter_to_DisparityFilter }
+	boxed_cast_base! { DisparityWLSFilter, crate::ximgproc::DisparityFilter, cv_ximgproc_DisparityWLSFilter_to_DisparityFilter }
 	
 	impl std::fmt::Debug for DisparityWLSFilter {
 		#[inline]
@@ -3063,8 +3058,7 @@ pub mod ximgproc {
 	impl Drop for EdgeAwareInterpolator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_EdgeAwareInterpolator_delete(instance: *mut c_void); }
-			unsafe { cv_EdgeAwareInterpolator_delete(self.as_raw_mut_EdgeAwareInterpolator()) };
+			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_delete(self.as_raw_mut_EdgeAwareInterpolator()) };
 		}
 	}
 	
@@ -3097,9 +3091,9 @@ pub mod ximgproc {
 	impl EdgeAwareInterpolator {
 	}
 	
-	boxed_cast_base! { EdgeAwareInterpolator, core::Algorithm, cv_EdgeAwareInterpolator_to_Algorithm }
+	boxed_cast_base! { EdgeAwareInterpolator, core::Algorithm, cv_ximgproc_EdgeAwareInterpolator_to_Algorithm }
 	
-	boxed_cast_base! { EdgeAwareInterpolator, crate::ximgproc::SparseMatchInterpolator, cv_EdgeAwareInterpolator_to_SparseMatchInterpolator }
+	boxed_cast_base! { EdgeAwareInterpolator, crate::ximgproc::SparseMatchInterpolator, cv_ximgproc_EdgeAwareInterpolator_to_SparseMatchInterpolator }
 	
 	impl std::fmt::Debug for EdgeAwareInterpolator {
 		#[inline]
@@ -3393,8 +3387,7 @@ pub mod ximgproc {
 	impl Drop for EdgeBoxes {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_EdgeBoxes_delete(instance: *mut c_void); }
-			unsafe { cv_EdgeBoxes_delete(self.as_raw_mut_EdgeBoxes()) };
+			unsafe { sys::cv_ximgproc_EdgeBoxes_delete(self.as_raw_mut_EdgeBoxes()) };
 		}
 	}
 	
@@ -3419,7 +3412,7 @@ pub mod ximgproc {
 	impl EdgeBoxes {
 	}
 	
-	boxed_cast_base! { EdgeBoxes, core::Algorithm, cv_EdgeBoxes_to_Algorithm }
+	boxed_cast_base! { EdgeBoxes, core::Algorithm, cv_ximgproc_EdgeBoxes_to_Algorithm }
 	
 	impl std::fmt::Debug for EdgeBoxes {
 		#[inline]
@@ -3436,7 +3429,7 @@ pub mod ximgproc {
 		#[inline]
 		fn params(&self) -> crate::ximgproc::EdgeDrawing_Params {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ximgproc_EdgeDrawing_getPropParams_const(self.as_raw_EdgeDrawing(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ximgproc_EdgeDrawing_propParams_const(self.as_raw_EdgeDrawing(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -3460,7 +3453,7 @@ pub mod ximgproc {
 	
 		#[inline]
 		fn set_params(&mut self, val: crate::ximgproc::EdgeDrawing_Params) {
-			let ret = unsafe { sys::cv_ximgproc_EdgeDrawing_setPropParams_Params(self.as_raw_mut_EdgeDrawing(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ximgproc_EdgeDrawing_propParams_Params(self.as_raw_mut_EdgeDrawing(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -3575,8 +3568,7 @@ pub mod ximgproc {
 	impl Drop for EdgeDrawing {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_EdgeDrawing_delete(instance: *mut c_void); }
-			unsafe { cv_EdgeDrawing_delete(self.as_raw_mut_EdgeDrawing()) };
+			unsafe { sys::cv_ximgproc_EdgeDrawing_delete(self.as_raw_mut_EdgeDrawing()) };
 		}
 	}
 	
@@ -3601,7 +3593,7 @@ pub mod ximgproc {
 	impl EdgeDrawing {
 	}
 	
-	boxed_cast_base! { EdgeDrawing, core::Algorithm, cv_EdgeDrawing_to_Algorithm }
+	boxed_cast_base! { EdgeDrawing, core::Algorithm, cv_ximgproc_EdgeDrawing_to_Algorithm }
 	
 	impl std::fmt::Debug for EdgeDrawing {
 		#[inline]
@@ -3726,8 +3718,7 @@ pub mod ximgproc {
 	impl Drop for FastBilateralSolverFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FastBilateralSolverFilter_delete(instance: *mut c_void); }
-			unsafe { cv_FastBilateralSolverFilter_delete(self.as_raw_mut_FastBilateralSolverFilter()) };
+			unsafe { sys::cv_ximgproc_FastBilateralSolverFilter_delete(self.as_raw_mut_FastBilateralSolverFilter()) };
 		}
 	}
 	
@@ -3752,7 +3743,7 @@ pub mod ximgproc {
 	impl FastBilateralSolverFilter {
 	}
 	
-	boxed_cast_base! { FastBilateralSolverFilter, core::Algorithm, cv_FastBilateralSolverFilter_to_Algorithm }
+	boxed_cast_base! { FastBilateralSolverFilter, core::Algorithm, cv_ximgproc_FastBilateralSolverFilter_to_Algorithm }
 	
 	impl std::fmt::Debug for FastBilateralSolverFilter {
 		#[inline]
@@ -3803,8 +3794,7 @@ pub mod ximgproc {
 	impl Drop for FastGlobalSmootherFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FastGlobalSmootherFilter_delete(instance: *mut c_void); }
-			unsafe { cv_FastGlobalSmootherFilter_delete(self.as_raw_mut_FastGlobalSmootherFilter()) };
+			unsafe { sys::cv_ximgproc_FastGlobalSmootherFilter_delete(self.as_raw_mut_FastGlobalSmootherFilter()) };
 		}
 	}
 	
@@ -3829,7 +3819,7 @@ pub mod ximgproc {
 	impl FastGlobalSmootherFilter {
 	}
 	
-	boxed_cast_base! { FastGlobalSmootherFilter, core::Algorithm, cv_FastGlobalSmootherFilter_to_Algorithm }
+	boxed_cast_base! { FastGlobalSmootherFilter, core::Algorithm, cv_ximgproc_FastGlobalSmootherFilter_to_Algorithm }
 	
 	impl std::fmt::Debug for FastGlobalSmootherFilter {
 		#[inline]
@@ -3913,8 +3903,7 @@ pub mod ximgproc {
 	impl Drop for FastLineDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FastLineDetector_delete(instance: *mut c_void); }
-			unsafe { cv_FastLineDetector_delete(self.as_raw_mut_FastLineDetector()) };
+			unsafe { sys::cv_ximgproc_FastLineDetector_delete(self.as_raw_mut_FastLineDetector()) };
 		}
 	}
 	
@@ -3939,7 +3928,7 @@ pub mod ximgproc {
 	impl FastLineDetector {
 	}
 	
-	boxed_cast_base! { FastLineDetector, core::Algorithm, cv_FastLineDetector_to_Algorithm }
+	boxed_cast_base! { FastLineDetector, core::Algorithm, cv_ximgproc_FastLineDetector_to_Algorithm }
 	
 	impl std::fmt::Debug for FastLineDetector {
 		#[inline]
@@ -3996,8 +3985,7 @@ pub mod ximgproc {
 	impl Drop for GuidedFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GuidedFilter_delete(instance: *mut c_void); }
-			unsafe { cv_GuidedFilter_delete(self.as_raw_mut_GuidedFilter()) };
+			unsafe { sys::cv_ximgproc_GuidedFilter_delete(self.as_raw_mut_GuidedFilter()) };
 		}
 	}
 	
@@ -4022,7 +4010,7 @@ pub mod ximgproc {
 	impl GuidedFilter {
 	}
 	
-	boxed_cast_base! { GuidedFilter, core::Algorithm, cv_GuidedFilter_to_Algorithm }
+	boxed_cast_base! { GuidedFilter, core::Algorithm, cv_ximgproc_GuidedFilter_to_Algorithm }
 	
 	impl std::fmt::Debug for GuidedFilter {
 		#[inline]
@@ -4077,8 +4065,7 @@ pub mod ximgproc {
 	impl Drop for RFFeatureGetter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RFFeatureGetter_delete(instance: *mut c_void); }
-			unsafe { cv_RFFeatureGetter_delete(self.as_raw_mut_RFFeatureGetter()) };
+			unsafe { sys::cv_ximgproc_RFFeatureGetter_delete(self.as_raw_mut_RFFeatureGetter()) };
 		}
 	}
 	
@@ -4103,7 +4090,7 @@ pub mod ximgproc {
 	impl RFFeatureGetter {
 	}
 	
-	boxed_cast_base! { RFFeatureGetter, core::Algorithm, cv_RFFeatureGetter_to_Algorithm }
+	boxed_cast_base! { RFFeatureGetter, core::Algorithm, cv_ximgproc_RFFeatureGetter_to_Algorithm }
 	
 	impl std::fmt::Debug for RFFeatureGetter {
 		#[inline]
@@ -4502,8 +4489,7 @@ pub mod ximgproc {
 	impl Drop for RICInterpolator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RICInterpolator_delete(instance: *mut c_void); }
-			unsafe { cv_RICInterpolator_delete(self.as_raw_mut_RICInterpolator()) };
+			unsafe { sys::cv_ximgproc_RICInterpolator_delete(self.as_raw_mut_RICInterpolator()) };
 		}
 	}
 	
@@ -4536,9 +4522,9 @@ pub mod ximgproc {
 	impl RICInterpolator {
 	}
 	
-	boxed_cast_base! { RICInterpolator, core::Algorithm, cv_RICInterpolator_to_Algorithm }
+	boxed_cast_base! { RICInterpolator, core::Algorithm, cv_ximgproc_RICInterpolator_to_Algorithm }
 	
-	boxed_cast_base! { RICInterpolator, crate::ximgproc::SparseMatchInterpolator, cv_RICInterpolator_to_SparseMatchInterpolator }
+	boxed_cast_base! { RICInterpolator, crate::ximgproc::SparseMatchInterpolator, cv_ximgproc_RICInterpolator_to_SparseMatchInterpolator }
 	
 	impl std::fmt::Debug for RICInterpolator {
 		#[inline]
@@ -4588,8 +4574,7 @@ pub mod ximgproc {
 	impl Drop for RidgeDetectionFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RidgeDetectionFilter_delete(instance: *mut c_void); }
-			unsafe { cv_RidgeDetectionFilter_delete(self.as_raw_mut_RidgeDetectionFilter()) };
+			unsafe { sys::cv_ximgproc_RidgeDetectionFilter_delete(self.as_raw_mut_RidgeDetectionFilter()) };
 		}
 	}
 	
@@ -4646,7 +4631,7 @@ pub mod ximgproc {
 		
 	}
 	
-	boxed_cast_base! { RidgeDetectionFilter, core::Algorithm, cv_RidgeDetectionFilter_to_Algorithm }
+	boxed_cast_base! { RidgeDetectionFilter, core::Algorithm, cv_ximgproc_RidgeDetectionFilter_to_Algorithm }
 	
 	impl std::fmt::Debug for RidgeDetectionFilter {
 		#[inline]
@@ -4753,8 +4738,7 @@ pub mod ximgproc {
 	impl Drop for ScanSegment {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ScanSegment_delete(instance: *mut c_void); }
-			unsafe { cv_ScanSegment_delete(self.as_raw_mut_ScanSegment()) };
+			unsafe { sys::cv_ximgproc_ScanSegment_delete(self.as_raw_mut_ScanSegment()) };
 		}
 	}
 	
@@ -4779,7 +4763,7 @@ pub mod ximgproc {
 	impl ScanSegment {
 	}
 	
-	boxed_cast_base! { ScanSegment, core::Algorithm, cv_ScanSegment_to_Algorithm }
+	boxed_cast_base! { ScanSegment, core::Algorithm, cv_ximgproc_ScanSegment_to_Algorithm }
 	
 	impl std::fmt::Debug for ScanSegment {
 		#[inline]
@@ -4840,8 +4824,7 @@ pub mod ximgproc {
 	impl Drop for SparseMatchInterpolator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SparseMatchInterpolator_delete(instance: *mut c_void); }
-			unsafe { cv_SparseMatchInterpolator_delete(self.as_raw_mut_SparseMatchInterpolator()) };
+			unsafe { sys::cv_ximgproc_SparseMatchInterpolator_delete(self.as_raw_mut_SparseMatchInterpolator()) };
 		}
 	}
 	
@@ -4866,11 +4849,11 @@ pub mod ximgproc {
 	impl SparseMatchInterpolator {
 	}
 	
-	boxed_cast_descendant! { SparseMatchInterpolator, crate::ximgproc::EdgeAwareInterpolator, cv_SparseMatchInterpolator_to_EdgeAwareInterpolator }
+	boxed_cast_descendant! { SparseMatchInterpolator, crate::ximgproc::EdgeAwareInterpolator, cv_ximgproc_SparseMatchInterpolator_to_EdgeAwareInterpolator }
 	
-	boxed_cast_descendant! { SparseMatchInterpolator, crate::ximgproc::RICInterpolator, cv_SparseMatchInterpolator_to_RICInterpolator }
+	boxed_cast_descendant! { SparseMatchInterpolator, crate::ximgproc::RICInterpolator, cv_ximgproc_SparseMatchInterpolator_to_RICInterpolator }
 	
-	boxed_cast_base! { SparseMatchInterpolator, core::Algorithm, cv_SparseMatchInterpolator_to_Algorithm }
+	boxed_cast_base! { SparseMatchInterpolator, core::Algorithm, cv_ximgproc_SparseMatchInterpolator_to_Algorithm }
 	
 	impl std::fmt::Debug for SparseMatchInterpolator {
 		#[inline]
@@ -4966,8 +4949,7 @@ pub mod ximgproc {
 	impl Drop for StructuredEdgeDetection {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_StructuredEdgeDetection_delete(instance: *mut c_void); }
-			unsafe { cv_StructuredEdgeDetection_delete(self.as_raw_mut_StructuredEdgeDetection()) };
+			unsafe { sys::cv_ximgproc_StructuredEdgeDetection_delete(self.as_raw_mut_StructuredEdgeDetection()) };
 		}
 	}
 	
@@ -4992,7 +4974,7 @@ pub mod ximgproc {
 	impl StructuredEdgeDetection {
 	}
 	
-	boxed_cast_base! { StructuredEdgeDetection, core::Algorithm, cv_StructuredEdgeDetection_to_Algorithm }
+	boxed_cast_base! { StructuredEdgeDetection, core::Algorithm, cv_ximgproc_StructuredEdgeDetection_to_Algorithm }
 	
 	impl std::fmt::Debug for StructuredEdgeDetection {
 		#[inline]
@@ -5131,8 +5113,7 @@ pub mod ximgproc {
 	impl Drop for SuperpixelLSC {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperpixelLSC_delete(instance: *mut c_void); }
-			unsafe { cv_SuperpixelLSC_delete(self.as_raw_mut_SuperpixelLSC()) };
+			unsafe { sys::cv_ximgproc_SuperpixelLSC_delete(self.as_raw_mut_SuperpixelLSC()) };
 		}
 	}
 	
@@ -5157,7 +5138,7 @@ pub mod ximgproc {
 	impl SuperpixelLSC {
 	}
 	
-	boxed_cast_base! { SuperpixelLSC, core::Algorithm, cv_SuperpixelLSC_to_Algorithm }
+	boxed_cast_base! { SuperpixelLSC, core::Algorithm, cv_ximgproc_SuperpixelLSC_to_Algorithm }
 	
 	impl std::fmt::Debug for SuperpixelLSC {
 		#[inline]
@@ -5305,8 +5286,7 @@ pub mod ximgproc {
 	impl Drop for SuperpixelSEEDS {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperpixelSEEDS_delete(instance: *mut c_void); }
-			unsafe { cv_SuperpixelSEEDS_delete(self.as_raw_mut_SuperpixelSEEDS()) };
+			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_delete(self.as_raw_mut_SuperpixelSEEDS()) };
 		}
 	}
 	
@@ -5331,7 +5311,7 @@ pub mod ximgproc {
 	impl SuperpixelSEEDS {
 	}
 	
-	boxed_cast_base! { SuperpixelSEEDS, core::Algorithm, cv_SuperpixelSEEDS_to_Algorithm }
+	boxed_cast_base! { SuperpixelSEEDS, core::Algorithm, cv_ximgproc_SuperpixelSEEDS_to_Algorithm }
 	
 	impl std::fmt::Debug for SuperpixelSEEDS {
 		#[inline]
@@ -5472,8 +5452,7 @@ pub mod ximgproc {
 	impl Drop for SuperpixelSLIC {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperpixelSLIC_delete(instance: *mut c_void); }
-			unsafe { cv_SuperpixelSLIC_delete(self.as_raw_mut_SuperpixelSLIC()) };
+			unsafe { sys::cv_ximgproc_SuperpixelSLIC_delete(self.as_raw_mut_SuperpixelSLIC()) };
 		}
 	}
 	
@@ -5498,7 +5477,7 @@ pub mod ximgproc {
 	impl SuperpixelSLIC {
 	}
 	
-	boxed_cast_base! { SuperpixelSLIC, core::Algorithm, cv_SuperpixelSLIC_to_Algorithm }
+	boxed_cast_base! { SuperpixelSLIC, core::Algorithm, cv_ximgproc_SuperpixelSLIC_to_Algorithm }
 	
 	impl std::fmt::Debug for SuperpixelSLIC {
 		#[inline]
@@ -5600,8 +5579,7 @@ pub mod ximgproc {
 	impl Drop for GraphSegmentation {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GraphSegmentation_delete(instance: *mut c_void); }
-			unsafe { cv_GraphSegmentation_delete(self.as_raw_mut_GraphSegmentation()) };
+			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_delete(self.as_raw_mut_GraphSegmentation()) };
 		}
 	}
 	
@@ -5626,7 +5604,7 @@ pub mod ximgproc {
 	impl GraphSegmentation {
 	}
 	
-	boxed_cast_base! { GraphSegmentation, core::Algorithm, cv_GraphSegmentation_to_Algorithm }
+	boxed_cast_base! { GraphSegmentation, core::Algorithm, cv_ximgproc_segmentation_GraphSegmentation_to_Algorithm }
 	
 	impl std::fmt::Debug for GraphSegmentation {
 		#[inline]
@@ -5806,8 +5784,7 @@ pub mod ximgproc {
 	impl Drop for SelectiveSearchSegmentation {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SelectiveSearchSegmentation_delete(instance: *mut c_void); }
-			unsafe { cv_SelectiveSearchSegmentation_delete(self.as_raw_mut_SelectiveSearchSegmentation()) };
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_delete(self.as_raw_mut_SelectiveSearchSegmentation()) };
 		}
 	}
 	
@@ -5832,7 +5809,7 @@ pub mod ximgproc {
 	impl SelectiveSearchSegmentation {
 	}
 	
-	boxed_cast_base! { SelectiveSearchSegmentation, core::Algorithm, cv_SelectiveSearchSegmentation_to_Algorithm }
+	boxed_cast_base! { SelectiveSearchSegmentation, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentation_to_Algorithm }
 	
 	impl std::fmt::Debug for SelectiveSearchSegmentation {
 		#[inline]
@@ -5912,8 +5889,7 @@ pub mod ximgproc {
 	impl Drop for SelectiveSearchSegmentationStrategy {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SelectiveSearchSegmentationStrategy_delete(instance: *mut c_void); }
-			unsafe { cv_SelectiveSearchSegmentationStrategy_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategy()) };
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategy()) };
 		}
 	}
 	
@@ -5938,17 +5914,17 @@ pub mod ximgproc {
 	impl SelectiveSearchSegmentationStrategy {
 	}
 	
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyColor, cv_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyColor }
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyColor, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyColor }
 	
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyFill, cv_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyFill }
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyFill, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyFill }
 	
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple, cv_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyMultiple }
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyMultiple }
 	
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategySize, cv_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategySize }
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategySize, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategySize }
 	
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyTexture, cv_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyTexture }
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyTexture, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyTexture }
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategy, core::Algorithm, cv_SelectiveSearchSegmentationStrategy_to_Algorithm }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategy, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_Algorithm }
 	
 	impl std::fmt::Debug for SelectiveSearchSegmentationStrategy {
 		#[inline]
@@ -5981,8 +5957,7 @@ pub mod ximgproc {
 	impl Drop for SelectiveSearchSegmentationStrategyColor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SelectiveSearchSegmentationStrategyColor_delete(instance: *mut c_void); }
-			unsafe { cv_SelectiveSearchSegmentationStrategyColor_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyColor()) };
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColor_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyColor()) };
 		}
 	}
 	
@@ -6015,9 +5990,9 @@ pub mod ximgproc {
 	impl SelectiveSearchSegmentationStrategyColor {
 	}
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyColor, core::Algorithm, cv_SelectiveSearchSegmentationStrategyColor_to_Algorithm }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyColor, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColor_to_Algorithm }
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyColor, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_SelectiveSearchSegmentationStrategyColor_to_SelectiveSearchSegmentationStrategy }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyColor, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColor_to_SelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyColor {
 		#[inline]
@@ -6050,8 +6025,7 @@ pub mod ximgproc {
 	impl Drop for SelectiveSearchSegmentationStrategyFill {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SelectiveSearchSegmentationStrategyFill_delete(instance: *mut c_void); }
-			unsafe { cv_SelectiveSearchSegmentationStrategyFill_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyFill()) };
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFill_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyFill()) };
 		}
 	}
 	
@@ -6084,9 +6058,9 @@ pub mod ximgproc {
 	impl SelectiveSearchSegmentationStrategyFill {
 	}
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyFill, core::Algorithm, cv_SelectiveSearchSegmentationStrategyFill_to_Algorithm }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyFill, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFill_to_Algorithm }
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyFill, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_SelectiveSearchSegmentationStrategyFill_to_SelectiveSearchSegmentationStrategy }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyFill, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFill_to_SelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyFill {
 		#[inline]
@@ -6141,8 +6115,7 @@ pub mod ximgproc {
 	impl Drop for SelectiveSearchSegmentationStrategyMultiple {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SelectiveSearchSegmentationStrategyMultiple_delete(instance: *mut c_void); }
-			unsafe { cv_SelectiveSearchSegmentationStrategyMultiple_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyMultiple()) };
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyMultiple()) };
 		}
 	}
 	
@@ -6175,9 +6148,9 @@ pub mod ximgproc {
 	impl SelectiveSearchSegmentationStrategyMultiple {
 	}
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyMultiple, core::Algorithm, cv_SelectiveSearchSegmentationStrategyMultiple_to_Algorithm }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyMultiple, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_to_Algorithm }
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyMultiple, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_SelectiveSearchSegmentationStrategyMultiple_to_SelectiveSearchSegmentationStrategy }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyMultiple, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_to_SelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyMultiple {
 		#[inline]
@@ -6210,8 +6183,7 @@ pub mod ximgproc {
 	impl Drop for SelectiveSearchSegmentationStrategySize {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SelectiveSearchSegmentationStrategySize_delete(instance: *mut c_void); }
-			unsafe { cv_SelectiveSearchSegmentationStrategySize_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategySize()) };
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySize_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategySize()) };
 		}
 	}
 	
@@ -6244,9 +6216,9 @@ pub mod ximgproc {
 	impl SelectiveSearchSegmentationStrategySize {
 	}
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategySize, core::Algorithm, cv_SelectiveSearchSegmentationStrategySize_to_Algorithm }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategySize, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySize_to_Algorithm }
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategySize, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_SelectiveSearchSegmentationStrategySize_to_SelectiveSearchSegmentationStrategy }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategySize, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySize_to_SelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for SelectiveSearchSegmentationStrategySize {
 		#[inline]
@@ -6279,8 +6251,7 @@ pub mod ximgproc {
 	impl Drop for SelectiveSearchSegmentationStrategyTexture {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SelectiveSearchSegmentationStrategyTexture_delete(instance: *mut c_void); }
-			unsafe { cv_SelectiveSearchSegmentationStrategyTexture_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyTexture()) };
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTexture_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyTexture()) };
 		}
 	}
 	
@@ -6313,9 +6284,9 @@ pub mod ximgproc {
 	impl SelectiveSearchSegmentationStrategyTexture {
 	}
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyTexture, core::Algorithm, cv_SelectiveSearchSegmentationStrategyTexture_to_Algorithm }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyTexture, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTexture_to_Algorithm }
 	
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyTexture, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_SelectiveSearchSegmentationStrategyTexture_to_SelectiveSearchSegmentationStrategy }
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyTexture, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTexture_to_SelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyTexture {
 		#[inline]

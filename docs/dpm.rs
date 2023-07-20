@@ -102,8 +102,7 @@ pub mod dpm {
 	impl Drop for DPMDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DPMDetector_delete(instance: *mut c_void); }
-			unsafe { cv_DPMDetector_delete(self.as_raw_mut_DPMDetector()) };
+			unsafe { sys::cv_dpm_DPMDetector_delete(self.as_raw_mut_DPMDetector()) };
 		}
 	}
 	
@@ -155,20 +154,20 @@ pub mod dpm {
 		#[inline]
 		fn rect(&self) -> core::Rect {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_getPropRect_const(self.as_raw_DPMDetector_ObjectDetection(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_const(self.as_raw_DPMDetector_ObjectDetection(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn score(&self) -> f32 {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_getPropScore_const(self.as_raw_DPMDetector_ObjectDetection()) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propScore_const(self.as_raw_DPMDetector_ObjectDetection()) };
 			ret
 		}
 		
 		#[inline]
 		fn class_id(&self) -> i32 {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_getPropClassID_const(self.as_raw_DPMDetector_ObjectDetection()) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propClassID_const(self.as_raw_DPMDetector_ObjectDetection()) };
 			ret
 		}
 		
@@ -180,19 +179,19 @@ pub mod dpm {
 	
 		#[inline]
 		fn set_rect(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_setPropRect_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_score(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_setPropScore_float(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propScore_float(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_class_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_setPropClassID_int(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propClassID_int(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
 			ret
 		}
 		
@@ -207,8 +206,7 @@ pub mod dpm {
 	impl Drop for DPMDetector_ObjectDetection {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DPMDetector_ObjectDetection_delete(instance: *mut c_void); }
-			unsafe { cv_DPMDetector_ObjectDetection_delete(self.as_raw_mut_DPMDetector_ObjectDetection()) };
+			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_delete(self.as_raw_mut_DPMDetector_ObjectDetection()) };
 		}
 	}
 	

@@ -214,8 +214,7 @@ pub mod cudaobjdetect {
 	impl Drop for CUDA_CascadeClassifier {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_CascadeClassifier_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_CascadeClassifier_delete(self.as_raw_mut_CUDA_CascadeClassifier()) };
+			unsafe { sys::cv_cuda_CascadeClassifier_delete(self.as_raw_mut_CUDA_CascadeClassifier()) };
 		}
 	}
 	
@@ -275,7 +274,7 @@ pub mod cudaobjdetect {
 		
 	}
 	
-	boxed_cast_base! { CUDA_CascadeClassifier, core::Algorithm, cv_CUDA_CascadeClassifier_to_Algorithm }
+	boxed_cast_base! { CUDA_CascadeClassifier, core::Algorithm, cv_cuda_CascadeClassifier_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_CascadeClassifier {
 		#[inline]
@@ -644,8 +643,7 @@ pub mod cudaobjdetect {
 	impl Drop for CUDA_HOG {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_HOG_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_HOG_delete(self.as_raw_mut_CUDA_HOG()) };
+			unsafe { sys::cv_cuda_HOG_delete(self.as_raw_mut_CUDA_HOG()) };
 		}
 	}
 	
@@ -695,7 +693,7 @@ pub mod cudaobjdetect {
 		
 	}
 	
-	boxed_cast_base! { CUDA_HOG, core::Algorithm, cv_CUDA_HOG_to_Algorithm }
+	boxed_cast_base! { CUDA_HOG, core::Algorithm, cv_cuda_HOG_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_HOG {
 		#[inline]

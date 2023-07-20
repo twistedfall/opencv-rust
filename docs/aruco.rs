@@ -558,20 +558,20 @@ pub mod aruco {
 		#[inline]
 		fn pattern(&self) -> crate::aruco::PatternPositionType {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_aruco_EstimateParameters_getPropPattern_const(self.as_raw_EstimateParameters(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_aruco_EstimateParameters_propPattern_const(self.as_raw_EstimateParameters(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn use_extrinsic_guess(&self) -> bool {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_getPropUseExtrinsicGuess_const(self.as_raw_EstimateParameters()) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propUseExtrinsicGuess_const(self.as_raw_EstimateParameters()) };
 			ret
 		}
 		
 		#[inline]
 		fn solve_pnp_method(&self) -> i32 {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_getPropSolvePnPMethod_const(self.as_raw_EstimateParameters()) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propSolvePnPMethod_const(self.as_raw_EstimateParameters()) };
 			ret
 		}
 		
@@ -583,19 +583,19 @@ pub mod aruco {
 	
 		#[inline]
 		fn set_pattern(&mut self, val: crate::aruco::PatternPositionType) {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_setPropPattern_PatternPositionType(self.as_raw_mut_EstimateParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propPattern_PatternPositionType(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_extrinsic_guess(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_setPropUseExtrinsicGuess_bool(self.as_raw_mut_EstimateParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propUseExtrinsicGuess_bool(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_solve_pnp_method(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_setPropSolvePnPMethod_int(self.as_raw_mut_EstimateParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propSolvePnPMethod_int(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
 		
@@ -620,8 +620,7 @@ pub mod aruco {
 	impl Drop for EstimateParameters {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_EstimateParameters_delete(instance: *mut c_void); }
-			unsafe { cv_EstimateParameters_delete(self.as_raw_mut_EstimateParameters()) };
+			unsafe { sys::cv_aruco_EstimateParameters_delete(self.as_raw_mut_EstimateParameters()) };
 		}
 	}
 	
@@ -651,8 +650,7 @@ pub mod aruco {
 	impl Clone for EstimateParameters {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_EstimateParameters_implicitClone_const_EstimateParameters(val: extern_send!(EstimateParameters)) -> extern_receive!(EstimateParameters: 'static); }
-			unsafe { Self::from_raw(cv_EstimateParameters_implicitClone_const_EstimateParameters(self.as_raw_EstimateParameters())) }
+			unsafe { Self::from_raw(sys::cv_aruco_EstimateParameters_implicitClone_const(self.as_raw_EstimateParameters())) }
 		}
 	}
 	

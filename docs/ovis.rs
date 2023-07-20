@@ -843,8 +843,7 @@ pub mod ovis {
 	impl Drop for WindowScene {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WindowScene_delete(instance: *mut c_void); }
-			unsafe { cv_WindowScene_delete(self.as_raw_mut_WindowScene()) };
+			unsafe { sys::cv_ovis_WindowScene_delete(self.as_raw_mut_WindowScene()) };
 		}
 	}
 	

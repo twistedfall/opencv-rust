@@ -238,8 +238,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_BroxOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_BroxOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_BroxOpticalFlow_delete(self.as_raw_mut_CUDA_BroxOpticalFlow()) };
+			unsafe { sys::cv_cuda_BroxOpticalFlow_delete(self.as_raw_mut_CUDA_BroxOpticalFlow()) };
 		}
 	}
 	
@@ -289,9 +288,9 @@ pub mod cudaoptflow {
 		
 	}
 	
-	boxed_cast_base! { CUDA_BroxOpticalFlow, core::Algorithm, cv_CUDA_BroxOpticalFlow_to_Algorithm }
+	boxed_cast_base! { CUDA_BroxOpticalFlow, core::Algorithm, cv_cuda_BroxOpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_BroxOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_CUDA_BroxOpticalFlow_to_CUDA_DenseOpticalFlow }
+	boxed_cast_base! { CUDA_BroxOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_BroxOpticalFlow_to_CUDA_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for CUDA_BroxOpticalFlow {
 		#[inline]
@@ -345,8 +344,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_DenseOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_DenseOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_DenseOpticalFlow_delete(self.as_raw_mut_CUDA_DenseOpticalFlow()) };
+			unsafe { sys::cv_cuda_DenseOpticalFlow_delete(self.as_raw_mut_CUDA_DenseOpticalFlow()) };
 		}
 	}
 	
@@ -371,15 +369,15 @@ pub mod cudaoptflow {
 	impl CUDA_DenseOpticalFlow {
 	}
 	
-	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_BroxOpticalFlow, cv_CUDA_DenseOpticalFlow_to_CUDA_BroxOpticalFlow }
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_BroxOpticalFlow, cv_cuda_DenseOpticalFlow_to_CUDA_BroxOpticalFlow }
 	
-	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow, cv_CUDA_DenseOpticalFlow_to_CUDA_DensePyrLKOpticalFlow }
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow, cv_cuda_DenseOpticalFlow_to_CUDA_DensePyrLKOpticalFlow }
 	
-	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_FarnebackOpticalFlow, cv_CUDA_DenseOpticalFlow_to_CUDA_FarnebackOpticalFlow }
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_FarnebackOpticalFlow, cv_cuda_DenseOpticalFlow_to_CUDA_FarnebackOpticalFlow }
 	
-	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1, cv_CUDA_DenseOpticalFlow_to_CUDA_OpticalFlowDual_TVL1 }
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1, cv_cuda_DenseOpticalFlow_to_CUDA_OpticalFlowDual_TVL1 }
 	
-	boxed_cast_base! { CUDA_DenseOpticalFlow, core::Algorithm, cv_CUDA_DenseOpticalFlow_to_Algorithm }
+	boxed_cast_base! { CUDA_DenseOpticalFlow, core::Algorithm, cv_cuda_DenseOpticalFlow_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_DenseOpticalFlow {
 		#[inline]
@@ -486,8 +484,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_DensePyrLKOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_DensePyrLKOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_DensePyrLKOpticalFlow_delete(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow()) };
+			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_delete(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow()) };
 		}
 	}
 	
@@ -535,9 +532,9 @@ pub mod cudaoptflow {
 		
 	}
 	
-	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, core::Algorithm, cv_CUDA_DensePyrLKOpticalFlow_to_Algorithm }
+	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, core::Algorithm, cv_cuda_DensePyrLKOpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_CUDA_DensePyrLKOpticalFlow_to_CUDA_DenseOpticalFlow }
+	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_DensePyrLKOpticalFlow_to_CUDA_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for CUDA_DensePyrLKOpticalFlow {
 		#[inline]
@@ -713,8 +710,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_FarnebackOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_FarnebackOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_FarnebackOpticalFlow_delete(self.as_raw_mut_CUDA_FarnebackOpticalFlow()) };
+			unsafe { sys::cv_cuda_FarnebackOpticalFlow_delete(self.as_raw_mut_CUDA_FarnebackOpticalFlow()) };
 		}
 	}
 	
@@ -766,9 +762,9 @@ pub mod cudaoptflow {
 		
 	}
 	
-	boxed_cast_base! { CUDA_FarnebackOpticalFlow, core::Algorithm, cv_CUDA_FarnebackOpticalFlow_to_Algorithm }
+	boxed_cast_base! { CUDA_FarnebackOpticalFlow, core::Algorithm, cv_cuda_FarnebackOpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_FarnebackOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_CUDA_FarnebackOpticalFlow_to_CUDA_DenseOpticalFlow }
+	boxed_cast_base! { CUDA_FarnebackOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_FarnebackOpticalFlow_to_CUDA_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for CUDA_FarnebackOpticalFlow {
 		#[inline]
@@ -862,8 +858,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_NvidiaHWOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_NvidiaHWOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_NvidiaHWOpticalFlow_delete(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow()) };
+			unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_delete(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow()) };
 		}
 	}
 	
@@ -888,11 +883,11 @@ pub mod cudaoptflow {
 	impl CUDA_NvidiaHWOpticalFlow {
 	}
 	
-	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0, cv_CUDA_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_1_0 }
+	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0, cv_cuda_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_1_0 }
 	
-	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0, cv_CUDA_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_2_0 }
+	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0, cv_cuda_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_2_0 }
 	
-	boxed_cast_base! { CUDA_NvidiaHWOpticalFlow, core::Algorithm, cv_CUDA_NvidiaHWOpticalFlow_to_Algorithm }
+	boxed_cast_base! { CUDA_NvidiaHWOpticalFlow, core::Algorithm, cv_cuda_NvidiaHWOpticalFlow_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_NvidiaHWOpticalFlow {
 		#[inline]
@@ -950,8 +945,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_NvidiaOpticalFlow_1_0 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_NvidiaOpticalFlow_1_0_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_NvidiaOpticalFlow_1_0_delete(self.as_raw_mut_CUDA_NvidiaOpticalFlow_1_0()) };
+			unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_delete(self.as_raw_mut_CUDA_NvidiaOpticalFlow_1_0()) };
 		}
 	}
 	
@@ -1021,9 +1015,9 @@ pub mod cudaoptflow {
 		
 	}
 	
-	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, core::Algorithm, cv_CUDA_NvidiaOpticalFlow_1_0_to_Algorithm }
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, core::Algorithm, cv_cuda_NvidiaOpticalFlow_1_0_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_CUDA_NvidiaOpticalFlow_1_0_to_CUDA_NvidiaHWOpticalFlow }
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_cuda_NvidiaOpticalFlow_1_0_to_CUDA_NvidiaHWOpticalFlow }
 	
 	impl std::fmt::Debug for CUDA_NvidiaOpticalFlow_1_0 {
 		#[inline]
@@ -1078,8 +1072,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_NvidiaOpticalFlow_2_0 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_NvidiaOpticalFlow_2_0_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_NvidiaOpticalFlow_2_0_delete(self.as_raw_mut_CUDA_NvidiaOpticalFlow_2_0()) };
+			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_delete(self.as_raw_mut_CUDA_NvidiaOpticalFlow_2_0()) };
 		}
 	}
 	
@@ -1199,9 +1192,9 @@ pub mod cudaoptflow {
 		
 	}
 	
-	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, core::Algorithm, cv_CUDA_NvidiaOpticalFlow_2_0_to_Algorithm }
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, core::Algorithm, cv_cuda_NvidiaOpticalFlow_2_0_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_CUDA_NvidiaOpticalFlow_2_0_to_CUDA_NvidiaHWOpticalFlow }
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_cuda_NvidiaOpticalFlow_2_0_to_CUDA_NvidiaHWOpticalFlow }
 	
 	impl std::fmt::Debug for CUDA_NvidiaOpticalFlow_2_0 {
 		#[inline]
@@ -1439,8 +1432,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_OpticalFlowDual_TVL1 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_OpticalFlowDual_TVL1_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_OpticalFlowDual_TVL1_delete(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1()) };
+			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_delete(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1()) };
 		}
 	}
 	
@@ -1494,9 +1486,9 @@ pub mod cudaoptflow {
 		
 	}
 	
-	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, core::Algorithm, cv_CUDA_OpticalFlowDual_TVL1_to_Algorithm }
+	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, core::Algorithm, cv_cuda_OpticalFlowDual_TVL1_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_CUDA_OpticalFlowDual_TVL1_to_CUDA_DenseOpticalFlow }
+	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_OpticalFlowDual_TVL1_to_CUDA_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for CUDA_OpticalFlowDual_TVL1 {
 		#[inline]
@@ -1558,8 +1550,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_SparseOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_SparseOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_SparseOpticalFlow_delete(self.as_raw_mut_CUDA_SparseOpticalFlow()) };
+			unsafe { sys::cv_cuda_SparseOpticalFlow_delete(self.as_raw_mut_CUDA_SparseOpticalFlow()) };
 		}
 	}
 	
@@ -1584,9 +1575,9 @@ pub mod cudaoptflow {
 	impl CUDA_SparseOpticalFlow {
 	}
 	
-	boxed_cast_descendant! { CUDA_SparseOpticalFlow, crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow, cv_CUDA_SparseOpticalFlow_to_CUDA_SparsePyrLKOpticalFlow }
+	boxed_cast_descendant! { CUDA_SparseOpticalFlow, crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow, cv_cuda_SparseOpticalFlow_to_CUDA_SparsePyrLKOpticalFlow }
 	
-	boxed_cast_base! { CUDA_SparseOpticalFlow, core::Algorithm, cv_CUDA_SparseOpticalFlow_to_Algorithm }
+	boxed_cast_base! { CUDA_SparseOpticalFlow, core::Algorithm, cv_cuda_SparseOpticalFlow_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_SparseOpticalFlow {
 		#[inline]
@@ -1700,8 +1691,7 @@ pub mod cudaoptflow {
 	impl Drop for CUDA_SparsePyrLKOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_SparsePyrLKOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_SparsePyrLKOpticalFlow_delete(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow()) };
+			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_delete(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow()) };
 		}
 	}
 	
@@ -1749,9 +1739,9 @@ pub mod cudaoptflow {
 		
 	}
 	
-	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, core::Algorithm, cv_CUDA_SparsePyrLKOpticalFlow_to_Algorithm }
+	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, core::Algorithm, cv_cuda_SparsePyrLKOpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, crate::cudaoptflow::CUDA_SparseOpticalFlow, cv_CUDA_SparsePyrLKOpticalFlow_to_CUDA_SparseOpticalFlow }
+	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, crate::cudaoptflow::CUDA_SparseOpticalFlow, cv_cuda_SparsePyrLKOpticalFlow_to_CUDA_SparseOpticalFlow }
 	
 	impl std::fmt::Debug for CUDA_SparsePyrLKOpticalFlow {
 		#[inline]

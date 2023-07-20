@@ -7068,8 +7068,7 @@ pub mod imgproc {
 	impl Drop for CLAHE {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CLAHE_delete(instance: *mut c_void); }
-			unsafe { cv_CLAHE_delete(self.as_raw_mut_CLAHE()) };
+			unsafe { sys::cv_CLAHE_delete(self.as_raw_mut_CLAHE()) };
 		}
 	}
 	
@@ -7281,8 +7280,7 @@ pub mod imgproc {
 	impl Drop for GeneralizedHough {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GeneralizedHough_delete(instance: *mut c_void); }
-			unsafe { cv_GeneralizedHough_delete(self.as_raw_mut_GeneralizedHough()) };
+			unsafe { sys::cv_GeneralizedHough_delete(self.as_raw_mut_GeneralizedHough()) };
 		}
 	}
 	
@@ -7383,8 +7381,7 @@ pub mod imgproc {
 	impl Drop for GeneralizedHoughBallard {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GeneralizedHoughBallard_delete(instance: *mut c_void); }
-			unsafe { cv_GeneralizedHoughBallard_delete(self.as_raw_mut_GeneralizedHoughBallard()) };
+			unsafe { sys::cv_GeneralizedHoughBallard_delete(self.as_raw_mut_GeneralizedHoughBallard()) };
 		}
 	}
 	
@@ -7681,8 +7678,7 @@ pub mod imgproc {
 	impl Drop for GeneralizedHoughGuil {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GeneralizedHoughGuil_delete(instance: *mut c_void); }
-			unsafe { cv_GeneralizedHoughGuil_delete(self.as_raw_mut_GeneralizedHoughGuil()) };
+			unsafe { sys::cv_GeneralizedHoughGuil_delete(self.as_raw_mut_GeneralizedHoughGuil()) };
 		}
 	}
 	
@@ -7733,81 +7729,81 @@ pub mod imgproc {
 	
 		#[inline]
 		fn ptr0(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_LineIterator_getPropPtr0_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propPtr0_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn step(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropStep_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propStep_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn elem_size(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropElemSize_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propElemSize_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn err(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropErr_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propErr_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn count(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropCount_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propCount_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn minus_delta(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropMinusDelta_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propMinusDelta_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn plus_delta(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropPlusDelta_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propPlusDelta_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn minus_step(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropMinusStep_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propMinusStep_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn plus_step(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropPlusStep_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propPlusStep_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn minus_shift(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropMinusShift_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propMinusShift_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn plus_shift(&self) -> i32 {
-			let ret = unsafe { sys::cv_LineIterator_getPropPlusShift_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propPlusShift_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		fn p(&self) -> core::Point {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LineIterator_getPropP_const(self.as_raw_LineIterator(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_LineIterator_propP_const(self.as_raw_LineIterator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn ptmode(&self) -> bool {
-			let ret = unsafe { sys::cv_LineIterator_getPropPtmode_const(self.as_raw_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propPtmode_const(self.as_raw_LineIterator()) };
 			ret
 		}
 		
@@ -7829,85 +7825,85 @@ pub mod imgproc {
 	
 		#[inline]
 		fn ptr(&mut self) -> *mut u8 {
-			let ret = unsafe { sys::cv_LineIterator_getPropPtr(self.as_raw_mut_LineIterator()) };
+			let ret = unsafe { sys::cv_LineIterator_propPtr(self.as_raw_mut_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
 		unsafe fn set_ptr(&mut self, val: *mut u8) {
-			let ret = { sys::cv_LineIterator_setPropPtr_unsigned_charX(self.as_raw_mut_LineIterator(), val) };
+			let ret = { sys::cv_LineIterator_propPtr_unsigned_charX(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropStep_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propStep_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_elem_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropElemSize_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propElemSize_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_err(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropErr_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propErr_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_count(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropCount_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propCount_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_minus_delta(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropMinusDelta_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propMinusDelta_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_plus_delta(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropPlusDelta_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propPlusDelta_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_minus_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropMinusStep_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propMinusStep_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_plus_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropPlusStep_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propPlusStep_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_minus_shift(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropMinusShift_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propMinusShift_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_plus_shift(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_setPropPlusShift_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propPlusShift_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_p(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_LineIterator_setPropP_Point(self.as_raw_mut_LineIterator(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_LineIterator_propP_Point(self.as_raw_mut_LineIterator(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ptmode(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LineIterator_setPropPtmode_bool(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propPtmode_bool(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
@@ -7984,8 +7980,7 @@ pub mod imgproc {
 	impl Drop for LineIterator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LineIterator_delete(instance: *mut c_void); }
-			unsafe { cv_LineIterator_delete(self.as_raw_mut_LineIterator()) };
+			unsafe { sys::cv_LineIterator_delete(self.as_raw_mut_LineIterator()) };
 		}
 	}
 	
@@ -8196,8 +8191,7 @@ pub mod imgproc {
 	impl Drop for LineSegmentDetector {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LineSegmentDetector_delete(instance: *mut c_void); }
-			unsafe { cv_LineSegmentDetector_delete(self.as_raw_mut_LineSegmentDetector()) };
+			unsafe { sys::cv_LineSegmentDetector_delete(self.as_raw_mut_LineSegmentDetector()) };
 		}
 	}
 	
@@ -8555,8 +8549,7 @@ pub mod imgproc {
 	impl Drop for Subdiv2D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Subdiv2D_delete(instance: *mut c_void); }
-			unsafe { cv_Subdiv2D_delete(self.as_raw_mut_Subdiv2D()) };
+			unsafe { sys::cv_Subdiv2D_delete(self.as_raw_mut_Subdiv2D()) };
 		}
 	}
 	
@@ -8816,8 +8809,7 @@ pub mod imgproc {
 	impl Drop for IntelligentScissorsMB {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_IntelligentScissorsMB_delete(instance: *mut c_void); }
-			unsafe { cv_IntelligentScissorsMB_delete(self.as_raw_mut_IntelligentScissorsMB()) };
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_delete(self.as_raw_mut_IntelligentScissorsMB()) };
 		}
 	}
 	
@@ -8847,8 +8839,7 @@ pub mod imgproc {
 	impl Clone for IntelligentScissorsMB {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_IntelligentScissorsMB_implicitClone_const_IntelligentScissorsMB(val: extern_send!(IntelligentScissorsMB)) -> extern_receive!(IntelligentScissorsMB: 'static); }
-			unsafe { Self::from_raw(cv_IntelligentScissorsMB_implicitClone_const_IntelligentScissorsMB(self.as_raw_IntelligentScissorsMB())) }
+			unsafe { Self::from_raw(sys::cv_segmentation_IntelligentScissorsMB_implicitClone_const(self.as_raw_IntelligentScissorsMB())) }
 		}
 	}
 	

@@ -64,8 +64,7 @@ pub mod phase_unwrapping {
 	impl Drop for HistogramPhaseUnwrapping {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HistogramPhaseUnwrapping_delete(instance: *mut c_void); }
-			unsafe { cv_HistogramPhaseUnwrapping_delete(self.as_raw_mut_HistogramPhaseUnwrapping()) };
+			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_delete(self.as_raw_mut_HistogramPhaseUnwrapping()) };
 		}
 	}
 	
@@ -115,9 +114,9 @@ pub mod phase_unwrapping {
 		
 	}
 	
-	boxed_cast_base! { HistogramPhaseUnwrapping, core::Algorithm, cv_HistogramPhaseUnwrapping_to_Algorithm }
+	boxed_cast_base! { HistogramPhaseUnwrapping, core::Algorithm, cv_phase_unwrapping_HistogramPhaseUnwrapping_to_Algorithm }
 	
-	boxed_cast_base! { HistogramPhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrapping, cv_HistogramPhaseUnwrapping_to_PhaseUnwrapping }
+	boxed_cast_base! { HistogramPhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrapping, cv_phase_unwrapping_HistogramPhaseUnwrapping_to_PhaseUnwrapping }
 	
 	impl std::fmt::Debug for HistogramPhaseUnwrapping {
 		#[inline]
@@ -202,8 +201,7 @@ pub mod phase_unwrapping {
 	impl Drop for PhaseUnwrapping {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PhaseUnwrapping_delete(instance: *mut c_void); }
-			unsafe { cv_PhaseUnwrapping_delete(self.as_raw_mut_PhaseUnwrapping()) };
+			unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_delete(self.as_raw_mut_PhaseUnwrapping()) };
 		}
 	}
 	
@@ -228,9 +226,9 @@ pub mod phase_unwrapping {
 	impl PhaseUnwrapping {
 	}
 	
-	boxed_cast_descendant! { PhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrapping, cv_PhaseUnwrapping_to_HistogramPhaseUnwrapping }
+	boxed_cast_descendant! { PhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrapping, cv_phase_unwrapping_PhaseUnwrapping_to_HistogramPhaseUnwrapping }
 	
-	boxed_cast_base! { PhaseUnwrapping, core::Algorithm, cv_PhaseUnwrapping_to_Algorithm }
+	boxed_cast_base! { PhaseUnwrapping, core::Algorithm, cv_phase_unwrapping_PhaseUnwrapping_to_Algorithm }
 	
 	impl std::fmt::Debug for PhaseUnwrapping {
 		#[inline]

@@ -68,20 +68,20 @@ pub mod cvv {
 	
 		#[inline]
 		fn file(&self) -> String {
-			let ret = unsafe { sys::cvv_impl_CallMetaData_getPropFile_const(self.as_raw_CallMetaData()) };
+			let ret = unsafe { sys::cvv_impl_CallMetaData_propFile_const(self.as_raw_CallMetaData()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn line(&self) -> size_t {
-			let ret = unsafe { sys::cvv_impl_CallMetaData_getPropLine_const(self.as_raw_CallMetaData()) };
+			let ret = unsafe { sys::cvv_impl_CallMetaData_propLine_const(self.as_raw_CallMetaData()) };
 			ret
 		}
 		
 		#[inline]
 		fn function(&self) -> String {
-			let ret = unsafe { sys::cvv_impl_CallMetaData_getPropFunction_const(self.as_raw_CallMetaData()) };
+			let ret = unsafe { sys::cvv_impl_CallMetaData_propFunction_const(self.as_raw_CallMetaData()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -89,7 +89,7 @@ pub mod cvv {
 		/// Whether *this holds actual data.
 		#[inline]
 		fn is_known(&self) -> bool {
-			let ret = unsafe { sys::cvv_impl_CallMetaData_getPropIsKnown_const(self.as_raw_CallMetaData()) };
+			let ret = unsafe { sys::cvv_impl_CallMetaData_propIsKnown_const(self.as_raw_CallMetaData()) };
 			ret
 		}
 		
@@ -120,8 +120,7 @@ pub mod cvv {
 	impl Drop for CallMetaData {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CallMetaData_delete(instance: *mut c_void); }
-			unsafe { cv_CallMetaData_delete(self.as_raw_mut_CallMetaData()) };
+			unsafe { sys::cvv_impl_CallMetaData_delete(self.as_raw_mut_CallMetaData()) };
 		}
 	}
 	
@@ -167,8 +166,7 @@ pub mod cvv {
 	impl Clone for CallMetaData {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_CallMetaData_implicitClone_const_CallMetaData(val: extern_send!(CallMetaData)) -> extern_receive!(CallMetaData: 'static); }
-			unsafe { Self::from_raw(cv_CallMetaData_implicitClone_const_CallMetaData(self.as_raw_CallMetaData())) }
+			unsafe { Self::from_raw(sys::cvv_impl_CallMetaData_implicitClone_const(self.as_raw_CallMetaData())) }
 		}
 	}
 	

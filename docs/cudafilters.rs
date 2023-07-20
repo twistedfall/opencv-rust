@@ -442,8 +442,7 @@ pub mod cudafilters {
 	impl Drop for Filter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Filter_delete(instance: *mut c_void); }
-			unsafe { cv_Filter_delete(self.as_raw_mut_Filter()) };
+			unsafe { sys::cv_cuda_Filter_delete(self.as_raw_mut_Filter()) };
 		}
 	}
 	
@@ -468,7 +467,7 @@ pub mod cudafilters {
 	impl Filter {
 	}
 	
-	boxed_cast_base! { Filter, core::Algorithm, cv_Filter_to_Algorithm }
+	boxed_cast_base! { Filter, core::Algorithm, cv_cuda_Filter_to_Algorithm }
 	
 	impl std::fmt::Debug for Filter {
 		#[inline]

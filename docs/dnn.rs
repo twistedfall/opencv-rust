@@ -1353,8 +1353,7 @@ pub mod dnn {
 	impl Drop for AbsLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AbsLayer_delete(instance: *mut c_void); }
-			unsafe { cv_AbsLayer_delete(self.as_raw_mut_AbsLayer()) };
+			unsafe { sys::cv_dnn_AbsLayer_delete(self.as_raw_mut_AbsLayer()) };
 		}
 	}
 	
@@ -1405,11 +1404,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { AbsLayer, crate::dnn::ActivationLayer, cv_AbsLayer_to_ActivationLayer }
+	boxed_cast_base! { AbsLayer, crate::dnn::ActivationLayer, cv_dnn_AbsLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { AbsLayer, core::Algorithm, cv_AbsLayer_to_Algorithm }
+	boxed_cast_base! { AbsLayer, core::Algorithm, cv_dnn_AbsLayer_to_Algorithm }
 	
-	boxed_cast_base! { AbsLayer, crate::dnn::Layer, cv_AbsLayer_to_Layer }
+	boxed_cast_base! { AbsLayer, crate::dnn::Layer, cv_dnn_AbsLayer_to_Layer }
 	
 	impl std::fmt::Debug for AbsLayer {
 		#[inline]
@@ -1444,8 +1443,7 @@ pub mod dnn {
 	impl Drop for AccumLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AccumLayer_delete(instance: *mut c_void); }
-			unsafe { cv_AccumLayer_delete(self.as_raw_mut_AccumLayer()) };
+			unsafe { sys::cv_dnn_AccumLayer_delete(self.as_raw_mut_AccumLayer()) };
 		}
 	}
 	
@@ -1488,9 +1486,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { AccumLayer, core::Algorithm, cv_AccumLayer_to_Algorithm }
+	boxed_cast_base! { AccumLayer, core::Algorithm, cv_dnn_AccumLayer_to_Algorithm }
 	
-	boxed_cast_base! { AccumLayer, crate::dnn::Layer, cv_AccumLayer_to_Layer }
+	boxed_cast_base! { AccumLayer, crate::dnn::Layer, cv_dnn_AccumLayer_to_Layer }
 	
 	impl std::fmt::Debug for AccumLayer {
 		#[inline]
@@ -1525,8 +1523,7 @@ pub mod dnn {
 	impl Drop for AcosLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AcosLayer_delete(instance: *mut c_void); }
-			unsafe { cv_AcosLayer_delete(self.as_raw_mut_AcosLayer()) };
+			unsafe { sys::cv_dnn_AcosLayer_delete(self.as_raw_mut_AcosLayer()) };
 		}
 	}
 	
@@ -1577,11 +1574,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { AcosLayer, crate::dnn::ActivationLayer, cv_AcosLayer_to_ActivationLayer }
+	boxed_cast_base! { AcosLayer, crate::dnn::ActivationLayer, cv_dnn_AcosLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { AcosLayer, core::Algorithm, cv_AcosLayer_to_Algorithm }
+	boxed_cast_base! { AcosLayer, core::Algorithm, cv_dnn_AcosLayer_to_Algorithm }
 	
-	boxed_cast_base! { AcosLayer, crate::dnn::Layer, cv_AcosLayer_to_Layer }
+	boxed_cast_base! { AcosLayer, crate::dnn::Layer, cv_dnn_AcosLayer_to_Layer }
 	
 	impl std::fmt::Debug for AcosLayer {
 		#[inline]
@@ -1616,8 +1613,7 @@ pub mod dnn {
 	impl Drop for AcoshLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AcoshLayer_delete(instance: *mut c_void); }
-			unsafe { cv_AcoshLayer_delete(self.as_raw_mut_AcoshLayer()) };
+			unsafe { sys::cv_dnn_AcoshLayer_delete(self.as_raw_mut_AcoshLayer()) };
 		}
 	}
 	
@@ -1668,11 +1664,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { AcoshLayer, crate::dnn::ActivationLayer, cv_AcoshLayer_to_ActivationLayer }
+	boxed_cast_base! { AcoshLayer, crate::dnn::ActivationLayer, cv_dnn_AcoshLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { AcoshLayer, core::Algorithm, cv_AcoshLayer_to_Algorithm }
+	boxed_cast_base! { AcoshLayer, core::Algorithm, cv_dnn_AcoshLayer_to_Algorithm }
 	
-	boxed_cast_base! { AcoshLayer, crate::dnn::Layer, cv_AcoshLayer_to_Layer }
+	boxed_cast_base! { AcoshLayer, crate::dnn::Layer, cv_dnn_AcoshLayer_to_Layer }
 	
 	impl std::fmt::Debug for AcoshLayer {
 		#[inline]
@@ -1725,8 +1721,7 @@ pub mod dnn {
 	impl Drop for ActivationLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ActivationLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ActivationLayer_delete(self.as_raw_mut_ActivationLayer()) };
+			unsafe { sys::cv_dnn_ActivationLayer_delete(self.as_raw_mut_ActivationLayer()) };
 		}
 	}
 	
@@ -1759,97 +1754,99 @@ pub mod dnn {
 	impl ActivationLayer {
 	}
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::AbsLayer, cv_ActivationLayer_to_AbsLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::AbsLayer, cv_dnn_ActivationLayer_to_AbsLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::AcosLayer, cv_ActivationLayer_to_AcosLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::AcosLayer, cv_dnn_ActivationLayer_to_AcosLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::AcoshLayer, cv_ActivationLayer_to_AcoshLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::AcoshLayer, cv_dnn_ActivationLayer_to_AcoshLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ActivationLayerInt8, cv_ActivationLayer_to_ActivationLayerInt8 }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ActivationLayerInt8, cv_dnn_ActivationLayer_to_ActivationLayerInt8 }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::AsinLayer, cv_ActivationLayer_to_AsinLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::AsinLayer, cv_dnn_ActivationLayer_to_AsinLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::AsinhLayer, cv_ActivationLayer_to_AsinhLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::AsinhLayer, cv_dnn_ActivationLayer_to_AsinhLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::AtanLayer, cv_ActivationLayer_to_AtanLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::AtanLayer, cv_dnn_ActivationLayer_to_AtanLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::AtanhLayer, cv_ActivationLayer_to_AtanhLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::AtanhLayer, cv_dnn_ActivationLayer_to_AtanhLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::BNLLLayer, cv_ActivationLayer_to_BNLLLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::BNLLLayer, cv_dnn_ActivationLayer_to_BNLLLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::BatchNormLayer, cv_ActivationLayer_to_BatchNormLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::BatchNormLayer, cv_dnn_ActivationLayer_to_BatchNormLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::CeilLayer, cv_ActivationLayer_to_CeilLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::BatchNormLayerInt8, cv_dnn_ActivationLayer_to_BatchNormLayerInt8 }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::CeluLayer, cv_ActivationLayer_to_CeluLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::CeilLayer, cv_dnn_ActivationLayer_to_CeilLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ChannelsPReLULayer, cv_ActivationLayer_to_ChannelsPReLULayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::CeluLayer, cv_dnn_ActivationLayer_to_CeluLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::CosLayer, cv_ActivationLayer_to_CosLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ChannelsPReLULayer, cv_dnn_ActivationLayer_to_ChannelsPReLULayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::CoshLayer, cv_ActivationLayer_to_CoshLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::CosLayer, cv_dnn_ActivationLayer_to_CosLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ELULayer, cv_ActivationLayer_to_ELULayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::CoshLayer, cv_dnn_ActivationLayer_to_CoshLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ErfLayer, cv_ActivationLayer_to_ErfLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ELULayer, cv_dnn_ActivationLayer_to_ELULayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ExpLayer, cv_ActivationLayer_to_ExpLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ErfLayer, cv_dnn_ActivationLayer_to_ErfLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::FloorLayer, cv_ActivationLayer_to_FloorLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ExpLayer, cv_dnn_ActivationLayer_to_ExpLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::GeluApproximationLayer, cv_ActivationLayer_to_GeluApproximationLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::FloorLayer, cv_dnn_ActivationLayer_to_FloorLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::GeluLayer, cv_ActivationLayer_to_GeluLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::GeluApproximationLayer, cv_dnn_ActivationLayer_to_GeluApproximationLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::HardSigmoidLayer, cv_ActivationLayer_to_HardSigmoidLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::GeluLayer, cv_dnn_ActivationLayer_to_GeluLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::HardSwishLayer, cv_ActivationLayer_to_HardSwishLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::HardSigmoidLayer, cv_dnn_ActivationLayer_to_HardSigmoidLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::LogLayer, cv_ActivationLayer_to_LogLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::HardSwishLayer, cv_dnn_ActivationLayer_to_HardSwishLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::MishLayer, cv_ActivationLayer_to_MishLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::LogLayer, cv_dnn_ActivationLayer_to_LogLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::NotLayer, cv_ActivationLayer_to_NotLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::MishLayer, cv_dnn_ActivationLayer_to_MishLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::PowerLayer, cv_ActivationLayer_to_PowerLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::NotLayer, cv_dnn_ActivationLayer_to_NotLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ReLU6Layer, cv_ActivationLayer_to_ReLU6Layer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::PowerLayer, cv_dnn_ActivationLayer_to_PowerLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ReLULayer, cv_ActivationLayer_to_ReLULayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ReLU6Layer, cv_dnn_ActivationLayer_to_ReLU6Layer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ReciprocalLayer, cv_ActivationLayer_to_ReciprocalLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ReLULayer, cv_dnn_ActivationLayer_to_ReLULayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::RoundLayer, cv_ActivationLayer_to_RoundLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ReciprocalLayer, cv_dnn_ActivationLayer_to_ReciprocalLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::SeluLayer, cv_ActivationLayer_to_SeluLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::RoundLayer, cv_dnn_ActivationLayer_to_RoundLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ShrinkLayer, cv_ActivationLayer_to_ShrinkLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::SeluLayer, cv_dnn_ActivationLayer_to_SeluLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::SigmoidLayer, cv_ActivationLayer_to_SigmoidLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ShrinkLayer, cv_dnn_ActivationLayer_to_ShrinkLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::SignLayer, cv_ActivationLayer_to_SignLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::SigmoidLayer, cv_dnn_ActivationLayer_to_SigmoidLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::SinLayer, cv_ActivationLayer_to_SinLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::SignLayer, cv_dnn_ActivationLayer_to_SignLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::SinhLayer, cv_ActivationLayer_to_SinhLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::SinLayer, cv_dnn_ActivationLayer_to_SinLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::SoftplusLayer, cv_ActivationLayer_to_SoftplusLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::SinhLayer, cv_dnn_ActivationLayer_to_SinhLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::SoftsignLayer, cv_ActivationLayer_to_SoftsignLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::SoftplusLayer, cv_dnn_ActivationLayer_to_SoftplusLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::SqrtLayer, cv_ActivationLayer_to_SqrtLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::SoftsignLayer, cv_dnn_ActivationLayer_to_SoftsignLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::SwishLayer, cv_ActivationLayer_to_SwishLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::SqrtLayer, cv_dnn_ActivationLayer_to_SqrtLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::TanHLayer, cv_ActivationLayer_to_TanHLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::SwishLayer, cv_dnn_ActivationLayer_to_SwishLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::TanLayer, cv_ActivationLayer_to_TanLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::TanHLayer, cv_dnn_ActivationLayer_to_TanHLayer }
 	
-	boxed_cast_descendant! { ActivationLayer, crate::dnn::ThresholdedReluLayer, cv_ActivationLayer_to_ThresholdedReluLayer }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::TanLayer, cv_dnn_ActivationLayer_to_TanLayer }
 	
-	boxed_cast_base! { ActivationLayer, core::Algorithm, cv_ActivationLayer_to_Algorithm }
+	boxed_cast_descendant! { ActivationLayer, crate::dnn::ThresholdedReluLayer, cv_dnn_ActivationLayer_to_ThresholdedReluLayer }
 	
-	boxed_cast_base! { ActivationLayer, crate::dnn::Layer, cv_ActivationLayer_to_Layer }
+	boxed_cast_base! { ActivationLayer, core::Algorithm, cv_dnn_ActivationLayer_to_Algorithm }
+	
+	boxed_cast_base! { ActivationLayer, crate::dnn::Layer, cv_dnn_ActivationLayer_to_Layer }
 	
 	impl std::fmt::Debug for ActivationLayer {
 		#[inline]
@@ -1884,8 +1881,7 @@ pub mod dnn {
 	impl Drop for ActivationLayerInt8 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ActivationLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_ActivationLayerInt8_delete(self.as_raw_mut_ActivationLayerInt8()) };
+			unsafe { sys::cv_dnn_ActivationLayerInt8_delete(self.as_raw_mut_ActivationLayerInt8()) };
 		}
 	}
 	
@@ -1936,11 +1932,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ActivationLayerInt8, crate::dnn::ActivationLayer, cv_ActivationLayerInt8_to_ActivationLayer }
+	boxed_cast_base! { ActivationLayerInt8, crate::dnn::ActivationLayer, cv_dnn_ActivationLayerInt8_to_ActivationLayer }
 	
-	boxed_cast_base! { ActivationLayerInt8, core::Algorithm, cv_ActivationLayerInt8_to_Algorithm }
+	boxed_cast_base! { ActivationLayerInt8, core::Algorithm, cv_dnn_ActivationLayerInt8_to_Algorithm }
 	
-	boxed_cast_base! { ActivationLayerInt8, crate::dnn::Layer, cv_ActivationLayerInt8_to_Layer }
+	boxed_cast_base! { ActivationLayerInt8, crate::dnn::Layer, cv_dnn_ActivationLayerInt8_to_Layer }
 	
 	impl std::fmt::Debug for ActivationLayerInt8 {
 		#[inline]
@@ -1978,8 +1974,7 @@ pub mod dnn {
 	impl Drop for ArgLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ArgLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ArgLayer_delete(self.as_raw_mut_ArgLayer()) };
+			unsafe { sys::cv_dnn_ArgLayer_delete(self.as_raw_mut_ArgLayer()) };
 		}
 	}
 	
@@ -2022,9 +2017,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ArgLayer, core::Algorithm, cv_ArgLayer_to_Algorithm }
+	boxed_cast_base! { ArgLayer, core::Algorithm, cv_dnn_ArgLayer_to_Algorithm }
 	
-	boxed_cast_base! { ArgLayer, crate::dnn::Layer, cv_ArgLayer_to_Layer }
+	boxed_cast_base! { ArgLayer, crate::dnn::Layer, cv_dnn_ArgLayer_to_Layer }
 	
 	impl std::fmt::Debug for ArgLayer {
 		#[inline]
@@ -2059,8 +2054,7 @@ pub mod dnn {
 	impl Drop for AsinLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AsinLayer_delete(instance: *mut c_void); }
-			unsafe { cv_AsinLayer_delete(self.as_raw_mut_AsinLayer()) };
+			unsafe { sys::cv_dnn_AsinLayer_delete(self.as_raw_mut_AsinLayer()) };
 		}
 	}
 	
@@ -2111,11 +2105,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { AsinLayer, crate::dnn::ActivationLayer, cv_AsinLayer_to_ActivationLayer }
+	boxed_cast_base! { AsinLayer, crate::dnn::ActivationLayer, cv_dnn_AsinLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { AsinLayer, core::Algorithm, cv_AsinLayer_to_Algorithm }
+	boxed_cast_base! { AsinLayer, core::Algorithm, cv_dnn_AsinLayer_to_Algorithm }
 	
-	boxed_cast_base! { AsinLayer, crate::dnn::Layer, cv_AsinLayer_to_Layer }
+	boxed_cast_base! { AsinLayer, crate::dnn::Layer, cv_dnn_AsinLayer_to_Layer }
 	
 	impl std::fmt::Debug for AsinLayer {
 		#[inline]
@@ -2150,8 +2144,7 @@ pub mod dnn {
 	impl Drop for AsinhLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AsinhLayer_delete(instance: *mut c_void); }
-			unsafe { cv_AsinhLayer_delete(self.as_raw_mut_AsinhLayer()) };
+			unsafe { sys::cv_dnn_AsinhLayer_delete(self.as_raw_mut_AsinhLayer()) };
 		}
 	}
 	
@@ -2202,11 +2195,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { AsinhLayer, crate::dnn::ActivationLayer, cv_AsinhLayer_to_ActivationLayer }
+	boxed_cast_base! { AsinhLayer, crate::dnn::ActivationLayer, cv_dnn_AsinhLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { AsinhLayer, core::Algorithm, cv_AsinhLayer_to_Algorithm }
+	boxed_cast_base! { AsinhLayer, core::Algorithm, cv_dnn_AsinhLayer_to_Algorithm }
 	
-	boxed_cast_base! { AsinhLayer, crate::dnn::Layer, cv_AsinhLayer_to_Layer }
+	boxed_cast_base! { AsinhLayer, crate::dnn::Layer, cv_dnn_AsinhLayer_to_Layer }
 	
 	impl std::fmt::Debug for AsinhLayer {
 		#[inline]
@@ -2241,8 +2234,7 @@ pub mod dnn {
 	impl Drop for AtanLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AtanLayer_delete(instance: *mut c_void); }
-			unsafe { cv_AtanLayer_delete(self.as_raw_mut_AtanLayer()) };
+			unsafe { sys::cv_dnn_AtanLayer_delete(self.as_raw_mut_AtanLayer()) };
 		}
 	}
 	
@@ -2293,11 +2285,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { AtanLayer, crate::dnn::ActivationLayer, cv_AtanLayer_to_ActivationLayer }
+	boxed_cast_base! { AtanLayer, crate::dnn::ActivationLayer, cv_dnn_AtanLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { AtanLayer, core::Algorithm, cv_AtanLayer_to_Algorithm }
+	boxed_cast_base! { AtanLayer, core::Algorithm, cv_dnn_AtanLayer_to_Algorithm }
 	
-	boxed_cast_base! { AtanLayer, crate::dnn::Layer, cv_AtanLayer_to_Layer }
+	boxed_cast_base! { AtanLayer, crate::dnn::Layer, cv_dnn_AtanLayer_to_Layer }
 	
 	impl std::fmt::Debug for AtanLayer {
 		#[inline]
@@ -2332,8 +2324,7 @@ pub mod dnn {
 	impl Drop for AtanhLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AtanhLayer_delete(instance: *mut c_void); }
-			unsafe { cv_AtanhLayer_delete(self.as_raw_mut_AtanhLayer()) };
+			unsafe { sys::cv_dnn_AtanhLayer_delete(self.as_raw_mut_AtanhLayer()) };
 		}
 	}
 	
@@ -2384,11 +2375,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { AtanhLayer, crate::dnn::ActivationLayer, cv_AtanhLayer_to_ActivationLayer }
+	boxed_cast_base! { AtanhLayer, crate::dnn::ActivationLayer, cv_dnn_AtanhLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { AtanhLayer, core::Algorithm, cv_AtanhLayer_to_Algorithm }
+	boxed_cast_base! { AtanhLayer, core::Algorithm, cv_dnn_AtanhLayer_to_Algorithm }
 	
-	boxed_cast_base! { AtanhLayer, crate::dnn::Layer, cv_AtanhLayer_to_Layer }
+	boxed_cast_base! { AtanhLayer, crate::dnn::Layer, cv_dnn_AtanhLayer_to_Layer }
 	
 	impl std::fmt::Debug for AtanhLayer {
 		#[inline]
@@ -2423,8 +2414,7 @@ pub mod dnn {
 	impl Drop for BNLLLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BNLLLayer_delete(instance: *mut c_void); }
-			unsafe { cv_BNLLLayer_delete(self.as_raw_mut_BNLLLayer()) };
+			unsafe { sys::cv_dnn_BNLLLayer_delete(self.as_raw_mut_BNLLLayer()) };
 		}
 	}
 	
@@ -2475,11 +2465,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { BNLLLayer, crate::dnn::ActivationLayer, cv_BNLLLayer_to_ActivationLayer }
+	boxed_cast_base! { BNLLLayer, crate::dnn::ActivationLayer, cv_dnn_BNLLLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { BNLLLayer, core::Algorithm, cv_BNLLLayer_to_Algorithm }
+	boxed_cast_base! { BNLLLayer, core::Algorithm, cv_dnn_BNLLLayer_to_Algorithm }
 	
-	boxed_cast_base! { BNLLLayer, crate::dnn::Layer, cv_BNLLLayer_to_Layer }
+	boxed_cast_base! { BNLLLayer, crate::dnn::Layer, cv_dnn_BNLLLayer_to_Layer }
 	
 	impl std::fmt::Debug for BNLLLayer {
 		#[inline]
@@ -2500,7 +2490,7 @@ pub mod dnn {
 		/// Backend identifier.
 		#[inline]
 		fn backend_id(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_BackendNode_getPropBackendId_const(self.as_raw_BackendNode()) };
+			let ret = unsafe { sys::cv_dnn_BackendNode_propBackendId_const(self.as_raw_BackendNode()) };
 			ret
 		}
 		
@@ -2513,7 +2503,7 @@ pub mod dnn {
 		/// Backend identifier.
 		#[inline]
 		fn set_backend_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_BackendNode_setPropBackendId_int(self.as_raw_mut_BackendNode(), val) };
+			let ret = unsafe { sys::cv_dnn_BackendNode_propBackendId_int(self.as_raw_mut_BackendNode(), val) };
 			ret
 		}
 		
@@ -2529,8 +2519,7 @@ pub mod dnn {
 	impl Drop for BackendNode {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BackendNode_delete(instance: *mut c_void); }
-			unsafe { cv_BackendNode_delete(self.as_raw_mut_BackendNode()) };
+			unsafe { sys::cv_dnn_BackendNode_delete(self.as_raw_mut_BackendNode()) };
 		}
 	}
 	
@@ -2563,14 +2552,14 @@ pub mod dnn {
 		/// Backend identifier.
 		#[inline]
 		fn backend_id(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_BackendWrapper_getPropBackendId_const(self.as_raw_BackendWrapper()) };
+			let ret = unsafe { sys::cv_dnn_BackendWrapper_propBackendId_const(self.as_raw_BackendWrapper()) };
 			ret
 		}
 		
 		/// Target identifier.
 		#[inline]
 		fn target_id(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_BackendWrapper_getPropTargetId_const(self.as_raw_BackendWrapper()) };
+			let ret = unsafe { sys::cv_dnn_BackendWrapper_propTargetId_const(self.as_raw_BackendWrapper()) };
 			ret
 		}
 		
@@ -2583,14 +2572,14 @@ pub mod dnn {
 		/// Backend identifier.
 		#[inline]
 		fn set_backend_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_BackendWrapper_setPropBackendId_int(self.as_raw_mut_BackendWrapper(), val) };
+			let ret = unsafe { sys::cv_dnn_BackendWrapper_propBackendId_int(self.as_raw_mut_BackendWrapper(), val) };
 			ret
 		}
 		
 		/// Target identifier.
 		#[inline]
 		fn set_target_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_BackendWrapper_setPropTargetId_int(self.as_raw_mut_BackendWrapper(), val) };
+			let ret = unsafe { sys::cv_dnn_BackendWrapper_propTargetId_int(self.as_raw_mut_BackendWrapper(), val) };
 			ret
 		}
 		
@@ -2626,8 +2615,7 @@ pub mod dnn {
 	impl Drop for BackendWrapper {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BackendWrapper_delete(instance: *mut c_void); }
-			unsafe { cv_BackendWrapper_delete(self.as_raw_mut_BackendWrapper()) };
+			unsafe { sys::cv_dnn_BackendWrapper_delete(self.as_raw_mut_BackendWrapper()) };
 		}
 	}
 	
@@ -2661,7 +2649,7 @@ pub mod dnn {
 		#[inline]
 		fn kernel(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropKernel_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_BaseConvolutionLayer_propKernel_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2669,7 +2657,7 @@ pub mod dnn {
 		#[inline]
 		fn stride(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropStride_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_BaseConvolutionLayer_propStride_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2677,7 +2665,7 @@ pub mod dnn {
 		#[inline]
 		fn pad(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropPad_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_BaseConvolutionLayer_propPad_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2685,7 +2673,7 @@ pub mod dnn {
 		#[inline]
 		fn dilation(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropDilation_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_BaseConvolutionLayer_propDilation_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -2693,63 +2681,63 @@ pub mod dnn {
 		#[inline]
 		fn adjust_pad(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropAdjustPad_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_BaseConvolutionLayer_propAdjustPad_const(self.as_raw_BaseConvolutionLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn adjust_pads(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropAdjust_pads_const(self.as_raw_BaseConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propAdjust_pads_const(self.as_raw_BaseConvolutionLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn kernel_size(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropKernel_size_const(self.as_raw_BaseConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propKernel_size_const(self.as_raw_BaseConvolutionLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn strides(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropStrides_const(self.as_raw_BaseConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propStrides_const(self.as_raw_BaseConvolutionLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn dilations(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropDilations_const(self.as_raw_BaseConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propDilations_const(self.as_raw_BaseConvolutionLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pads_begin(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropPads_begin_const(self.as_raw_BaseConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propPads_begin_const(self.as_raw_BaseConvolutionLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pads_end(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropPads_end_const(self.as_raw_BaseConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propPads_end_const(self.as_raw_BaseConvolutionLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pad_mode(&self) -> String {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropPadMode_const(self.as_raw_BaseConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propPadMode_const(self.as_raw_BaseConvolutionLayer()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn num_output(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_getPropNumOutput_const(self.as_raw_BaseConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propNumOutput_const(self.as_raw_BaseConvolutionLayer()) };
 			ret
 		}
 		
@@ -2761,80 +2749,80 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_kernel(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropKernel_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propKernel_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_stride(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropStride_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propStride_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pad(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropPad_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propPad_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_dilation(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropDilation_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propDilation_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_adjust_pad(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropAdjustPad_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propAdjustPad_Size(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_adjust_pads(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropAdjust_pads_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propAdjust_pads_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kernel_size(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropKernel_size_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propKernel_size_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_strides(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropStrides_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propStrides_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_dilations(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropDilations_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propDilations_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pads_begin(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropPads_begin_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propPads_begin_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pads_end(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropPads_end_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propPads_end_vectorLsize_tG(self.as_raw_mut_BaseConvolutionLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pad_mode(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropPadMode_String(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propPadMode_String(self.as_raw_mut_BaseConvolutionLayer(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_output(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_setPropNumOutput_int(self.as_raw_mut_BaseConvolutionLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_BaseConvolutionLayer_propNumOutput_int(self.as_raw_mut_BaseConvolutionLayer(), val) };
 			ret
 		}
 		
@@ -2849,8 +2837,7 @@ pub mod dnn {
 	impl Drop for BaseConvolutionLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BaseConvolutionLayer_delete(instance: *mut c_void); }
-			unsafe { cv_BaseConvolutionLayer_delete(self.as_raw_mut_BaseConvolutionLayer()) };
+			unsafe { sys::cv_dnn_BaseConvolutionLayer_delete(self.as_raw_mut_BaseConvolutionLayer()) };
 		}
 	}
 	
@@ -2883,9 +2870,9 @@ pub mod dnn {
 	impl BaseConvolutionLayer {
 	}
 	
-	boxed_cast_base! { BaseConvolutionLayer, core::Algorithm, cv_BaseConvolutionLayer_to_Algorithm }
+	boxed_cast_base! { BaseConvolutionLayer, core::Algorithm, cv_dnn_BaseConvolutionLayer_to_Algorithm }
 	
-	boxed_cast_base! { BaseConvolutionLayer, crate::dnn::Layer, cv_BaseConvolutionLayer_to_Layer }
+	boxed_cast_base! { BaseConvolutionLayer, crate::dnn::Layer, cv_dnn_BaseConvolutionLayer_to_Layer }
 	
 	impl std::fmt::Debug for BaseConvolutionLayer {
 		#[inline]
@@ -2918,19 +2905,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn has_weights(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayer_getPropHasWeights_const(self.as_raw_BatchNormLayer()) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayer_propHasWeights_const(self.as_raw_BatchNormLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn has_bias(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayer_getPropHasBias_const(self.as_raw_BatchNormLayer()) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayer_propHasBias_const(self.as_raw_BatchNormLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn epsilon(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayer_getPropEpsilon_const(self.as_raw_BatchNormLayer()) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayer_propEpsilon_const(self.as_raw_BatchNormLayer()) };
 			ret
 		}
 		
@@ -2942,19 +2929,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_has_weights(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayer_setPropHasWeights_bool(self.as_raw_mut_BatchNormLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayer_propHasWeights_bool(self.as_raw_mut_BatchNormLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_has_bias(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayer_setPropHasBias_bool(self.as_raw_mut_BatchNormLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayer_propHasBias_bool(self.as_raw_mut_BatchNormLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_epsilon(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayer_setPropEpsilon_float(self.as_raw_mut_BatchNormLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayer_propEpsilon_float(self.as_raw_mut_BatchNormLayer(), val) };
 			ret
 		}
 		
@@ -2969,8 +2956,7 @@ pub mod dnn {
 	impl Drop for BatchNormLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BatchNormLayer_delete(instance: *mut c_void); }
-			unsafe { cv_BatchNormLayer_delete(self.as_raw_mut_BatchNormLayer()) };
+			unsafe { sys::cv_dnn_BatchNormLayer_delete(self.as_raw_mut_BatchNormLayer()) };
 		}
 	}
 	
@@ -3021,11 +3007,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { BatchNormLayer, crate::dnn::ActivationLayer, cv_BatchNormLayer_to_ActivationLayer }
+	boxed_cast_base! { BatchNormLayer, crate::dnn::ActivationLayer, cv_dnn_BatchNormLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { BatchNormLayer, core::Algorithm, cv_BatchNormLayer_to_Algorithm }
+	boxed_cast_base! { BatchNormLayer, core::Algorithm, cv_dnn_BatchNormLayer_to_Algorithm }
 	
-	boxed_cast_base! { BatchNormLayer, crate::dnn::Layer, cv_BatchNormLayer_to_Layer }
+	boxed_cast_base! { BatchNormLayer, crate::dnn::Layer, cv_dnn_BatchNormLayer_to_Layer }
 	
 	impl std::fmt::Debug for BatchNormLayer {
 		#[inline]
@@ -3048,25 +3034,25 @@ pub mod dnn {
 	
 		#[inline]
 		fn input_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_getPropInput_sc_const(self.as_raw_BatchNormLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_propInput_sc_const(self.as_raw_BatchNormLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_getPropOutput_sc_const(self.as_raw_BatchNormLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_propOutput_sc_const(self.as_raw_BatchNormLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn input_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_getPropInput_zp_const(self.as_raw_BatchNormLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_propInput_zp_const(self.as_raw_BatchNormLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_getPropOutput_zp_const(self.as_raw_BatchNormLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_propOutput_zp_const(self.as_raw_BatchNormLayerInt8()) };
 			ret
 		}
 		
@@ -3078,25 +3064,25 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_input_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_setPropInput_sc_float(self.as_raw_mut_BatchNormLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_propInput_sc_float(self.as_raw_mut_BatchNormLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_setPropOutput_sc_float(self.as_raw_mut_BatchNormLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_propOutput_sc_float(self.as_raw_mut_BatchNormLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_input_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_setPropInput_zp_int(self.as_raw_mut_BatchNormLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_propInput_zp_int(self.as_raw_mut_BatchNormLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_setPropOutput_zp_int(self.as_raw_mut_BatchNormLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_BatchNormLayerInt8_propOutput_zp_int(self.as_raw_mut_BatchNormLayerInt8(), val) };
 			ret
 		}
 		
@@ -3111,8 +3097,7 @@ pub mod dnn {
 	impl Drop for BatchNormLayerInt8 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BatchNormLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_BatchNormLayerInt8_delete(self.as_raw_mut_BatchNormLayerInt8()) };
+			unsafe { sys::cv_dnn_BatchNormLayerInt8_delete(self.as_raw_mut_BatchNormLayerInt8()) };
 		}
 	}
 	
@@ -3171,13 +3156,13 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { BatchNormLayerInt8, crate::dnn::ActivationLayer, cv_BatchNormLayerInt8_to_ActivationLayer }
+	boxed_cast_base! { BatchNormLayerInt8, crate::dnn::ActivationLayer, cv_dnn_BatchNormLayerInt8_to_ActivationLayer }
 	
-	boxed_cast_base! { BatchNormLayerInt8, core::Algorithm, cv_BatchNormLayerInt8_to_Algorithm }
+	boxed_cast_base! { BatchNormLayerInt8, core::Algorithm, cv_dnn_BatchNormLayerInt8_to_Algorithm }
 	
-	boxed_cast_base! { BatchNormLayerInt8, crate::dnn::BatchNormLayer, cv_BatchNormLayerInt8_to_BatchNormLayer }
+	boxed_cast_base! { BatchNormLayerInt8, crate::dnn::BatchNormLayer, cv_dnn_BatchNormLayerInt8_to_BatchNormLayer }
 	
-	boxed_cast_base! { BatchNormLayerInt8, crate::dnn::Layer, cv_BatchNormLayerInt8_to_Layer }
+	boxed_cast_base! { BatchNormLayerInt8, crate::dnn::Layer, cv_dnn_BatchNormLayerInt8_to_Layer }
 	
 	impl std::fmt::Debug for BatchNormLayerInt8 {
 		#[inline]
@@ -3238,8 +3223,7 @@ pub mod dnn {
 	impl Drop for BlankLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BlankLayer_delete(instance: *mut c_void); }
-			unsafe { cv_BlankLayer_delete(self.as_raw_mut_BlankLayer()) };
+			unsafe { sys::cv_dnn_BlankLayer_delete(self.as_raw_mut_BlankLayer()) };
 		}
 	}
 	
@@ -3282,9 +3266,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { BlankLayer, core::Algorithm, cv_BlankLayer_to_Algorithm }
+	boxed_cast_base! { BlankLayer, core::Algorithm, cv_dnn_BlankLayer_to_Algorithm }
 	
-	boxed_cast_base! { BlankLayer, crate::dnn::Layer, cv_BlankLayer_to_Layer }
+	boxed_cast_base! { BlankLayer, crate::dnn::Layer, cv_dnn_BlankLayer_to_Layer }
 	
 	impl std::fmt::Debug for BlankLayer {
 		#[inline]
@@ -3319,8 +3303,7 @@ pub mod dnn {
 	impl Drop for CeilLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CeilLayer_delete(instance: *mut c_void); }
-			unsafe { cv_CeilLayer_delete(self.as_raw_mut_CeilLayer()) };
+			unsafe { sys::cv_dnn_CeilLayer_delete(self.as_raw_mut_CeilLayer()) };
 		}
 	}
 	
@@ -3371,11 +3354,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { CeilLayer, crate::dnn::ActivationLayer, cv_CeilLayer_to_ActivationLayer }
+	boxed_cast_base! { CeilLayer, crate::dnn::ActivationLayer, cv_dnn_CeilLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { CeilLayer, core::Algorithm, cv_CeilLayer_to_Algorithm }
+	boxed_cast_base! { CeilLayer, core::Algorithm, cv_dnn_CeilLayer_to_Algorithm }
 	
-	boxed_cast_base! { CeilLayer, crate::dnn::Layer, cv_CeilLayer_to_Layer }
+	boxed_cast_base! { CeilLayer, crate::dnn::Layer, cv_dnn_CeilLayer_to_Layer }
 	
 	impl std::fmt::Debug for CeilLayer {
 		#[inline]
@@ -3395,7 +3378,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn alpha(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_CeluLayer_getPropAlpha_const(self.as_raw_CeluLayer()) };
+			let ret = unsafe { sys::cv_dnn_CeluLayer_propAlpha_const(self.as_raw_CeluLayer()) };
 			ret
 		}
 		
@@ -3407,7 +3390,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_alpha(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_CeluLayer_setPropAlpha_float(self.as_raw_mut_CeluLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_CeluLayer_propAlpha_float(self.as_raw_mut_CeluLayer(), val) };
 			ret
 		}
 		
@@ -3422,8 +3405,7 @@ pub mod dnn {
 	impl Drop for CeluLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CeluLayer_delete(instance: *mut c_void); }
-			unsafe { cv_CeluLayer_delete(self.as_raw_mut_CeluLayer()) };
+			unsafe { sys::cv_dnn_CeluLayer_delete(self.as_raw_mut_CeluLayer()) };
 		}
 	}
 	
@@ -3474,11 +3456,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { CeluLayer, crate::dnn::ActivationLayer, cv_CeluLayer_to_ActivationLayer }
+	boxed_cast_base! { CeluLayer, crate::dnn::ActivationLayer, cv_dnn_CeluLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { CeluLayer, core::Algorithm, cv_CeluLayer_to_Algorithm }
+	boxed_cast_base! { CeluLayer, core::Algorithm, cv_dnn_CeluLayer_to_Algorithm }
 	
-	boxed_cast_base! { CeluLayer, crate::dnn::Layer, cv_CeluLayer_to_Layer }
+	boxed_cast_base! { CeluLayer, crate::dnn::Layer, cv_dnn_CeluLayer_to_Layer }
 	
 	impl std::fmt::Debug for CeluLayer {
 		#[inline]
@@ -3514,8 +3496,7 @@ pub mod dnn {
 	impl Drop for ChannelsPReLULayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ChannelsPReLULayer_delete(instance: *mut c_void); }
-			unsafe { cv_ChannelsPReLULayer_delete(self.as_raw_mut_ChannelsPReLULayer()) };
+			unsafe { sys::cv_dnn_ChannelsPReLULayer_delete(self.as_raw_mut_ChannelsPReLULayer()) };
 		}
 	}
 	
@@ -3566,11 +3547,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ChannelsPReLULayer, crate::dnn::ActivationLayer, cv_ChannelsPReLULayer_to_ActivationLayer }
+	boxed_cast_base! { ChannelsPReLULayer, crate::dnn::ActivationLayer, cv_dnn_ChannelsPReLULayer_to_ActivationLayer }
 	
-	boxed_cast_base! { ChannelsPReLULayer, core::Algorithm, cv_ChannelsPReLULayer_to_Algorithm }
+	boxed_cast_base! { ChannelsPReLULayer, core::Algorithm, cv_dnn_ChannelsPReLULayer_to_Algorithm }
 	
-	boxed_cast_base! { ChannelsPReLULayer, crate::dnn::Layer, cv_ChannelsPReLULayer_to_Layer }
+	boxed_cast_base! { ChannelsPReLULayer, crate::dnn::Layer, cv_dnn_ChannelsPReLULayer_to_Layer }
 	
 	impl std::fmt::Debug for ChannelsPReLULayer {
 		#[inline]
@@ -3669,8 +3650,7 @@ pub mod dnn {
 	impl Drop for ClassificationModel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ClassificationModel_delete(instance: *mut c_void); }
-			unsafe { cv_ClassificationModel_delete(self.as_raw_mut_ClassificationModel()) };
+			unsafe { sys::cv_dnn_ClassificationModel_delete(self.as_raw_mut_ClassificationModel()) };
 		}
 	}
 	
@@ -3741,12 +3721,11 @@ pub mod dnn {
 	impl Clone for ClassificationModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_ClassificationModel_implicitClone_const_ClassificationModel(val: extern_send!(ClassificationModel)) -> extern_receive!(ClassificationModel: 'static); }
-			unsafe { Self::from_raw(cv_ClassificationModel_implicitClone_const_ClassificationModel(self.as_raw_ClassificationModel())) }
+			unsafe { Self::from_raw(sys::cv_dnn_ClassificationModel_implicitClone_const(self.as_raw_ClassificationModel())) }
 		}
 	}
 	
-	boxed_cast_base! { ClassificationModel, crate::dnn::Model, cv_ClassificationModel_to_Model }
+	boxed_cast_base! { ClassificationModel, crate::dnn::Model, cv_dnn_ClassificationModel_to_Model }
 	
 	impl std::fmt::Debug for ClassificationModel {
 		#[inline]
@@ -3777,8 +3756,7 @@ pub mod dnn {
 	impl Drop for CompareLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CompareLayer_delete(instance: *mut c_void); }
-			unsafe { cv_CompareLayer_delete(self.as_raw_mut_CompareLayer()) };
+			unsafe { sys::cv_dnn_CompareLayer_delete(self.as_raw_mut_CompareLayer()) };
 		}
 	}
 	
@@ -3821,9 +3799,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { CompareLayer, core::Algorithm, cv_CompareLayer_to_Algorithm }
+	boxed_cast_base! { CompareLayer, core::Algorithm, cv_dnn_CompareLayer_to_Algorithm }
 	
-	boxed_cast_base! { CompareLayer, crate::dnn::Layer, cv_CompareLayer_to_Layer }
+	boxed_cast_base! { CompareLayer, crate::dnn::Layer, cv_dnn_CompareLayer_to_Layer }
 	
 	impl std::fmt::Debug for CompareLayer {
 		#[inline]
@@ -3843,7 +3821,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn axis(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_ConcatLayer_getPropAxis_const(self.as_raw_ConcatLayer()) };
+			let ret = unsafe { sys::cv_dnn_ConcatLayer_propAxis_const(self.as_raw_ConcatLayer()) };
 			ret
 		}
 		
@@ -3853,13 +3831,13 @@ pub mod dnn {
 		/// Details: <https://github.com/torch/nn/blob/master/doc/containers.md#depthconcat>
 		#[inline]
 		fn padding(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_ConcatLayer_getPropPadding_const(self.as_raw_ConcatLayer()) };
+			let ret = unsafe { sys::cv_dnn_ConcatLayer_propPadding_const(self.as_raw_ConcatLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn padding_value(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_ConcatLayer_getPropPaddingValue_const(self.as_raw_ConcatLayer()) };
+			let ret = unsafe { sys::cv_dnn_ConcatLayer_propPaddingValue_const(self.as_raw_ConcatLayer()) };
 			ret
 		}
 		
@@ -3871,7 +3849,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_axis(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_ConcatLayer_setPropAxis_int(self.as_raw_mut_ConcatLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ConcatLayer_propAxis_int(self.as_raw_mut_ConcatLayer(), val) };
 			ret
 		}
 		
@@ -3881,13 +3859,13 @@ pub mod dnn {
 		/// Details: <https://github.com/torch/nn/blob/master/doc/containers.md#depthconcat>
 		#[inline]
 		fn set_padding(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_ConcatLayer_setPropPadding_bool(self.as_raw_mut_ConcatLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ConcatLayer_propPadding_bool(self.as_raw_mut_ConcatLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_padding_value(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_ConcatLayer_setPropPaddingValue_int(self.as_raw_mut_ConcatLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ConcatLayer_propPaddingValue_int(self.as_raw_mut_ConcatLayer(), val) };
 			ret
 		}
 		
@@ -3902,8 +3880,7 @@ pub mod dnn {
 	impl Drop for ConcatLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ConcatLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ConcatLayer_delete(self.as_raw_mut_ConcatLayer()) };
+			unsafe { sys::cv_dnn_ConcatLayer_delete(self.as_raw_mut_ConcatLayer()) };
 		}
 	}
 	
@@ -3946,9 +3923,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ConcatLayer, core::Algorithm, cv_ConcatLayer_to_Algorithm }
+	boxed_cast_base! { ConcatLayer, core::Algorithm, cv_dnn_ConcatLayer_to_Algorithm }
 	
-	boxed_cast_base! { ConcatLayer, crate::dnn::Layer, cv_ConcatLayer_to_Layer }
+	boxed_cast_base! { ConcatLayer, crate::dnn::Layer, cv_dnn_ConcatLayer_to_Layer }
 	
 	impl std::fmt::Debug for ConcatLayer {
 		#[inline]
@@ -3987,8 +3964,7 @@ pub mod dnn {
 	impl Drop for ConstLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ConstLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ConstLayer_delete(self.as_raw_mut_ConstLayer()) };
+			unsafe { sys::cv_dnn_ConstLayer_delete(self.as_raw_mut_ConstLayer()) };
 		}
 	}
 	
@@ -4031,9 +4007,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ConstLayer, core::Algorithm, cv_ConstLayer_to_Algorithm }
+	boxed_cast_base! { ConstLayer, core::Algorithm, cv_dnn_ConstLayer_to_Algorithm }
 	
-	boxed_cast_base! { ConstLayer, crate::dnn::Layer, cv_ConstLayer_to_Layer }
+	boxed_cast_base! { ConstLayer, crate::dnn::Layer, cv_dnn_ConstLayer_to_Layer }
 	
 	impl std::fmt::Debug for ConstLayer {
 		#[inline]
@@ -4053,19 +4029,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn fused_activation(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_getPropFusedActivation_const(self.as_raw_ConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_propFusedActivation_const(self.as_raw_ConvolutionLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn fused_add(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_getPropFusedAdd_const(self.as_raw_ConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_propFusedAdd_const(self.as_raw_ConvolutionLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_winograd(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_getPropUseWinograd_const(self.as_raw_ConvolutionLayer()) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_propUseWinograd_const(self.as_raw_ConvolutionLayer()) };
 			ret
 		}
 		
@@ -4079,7 +4055,7 @@ pub mod dnn {
 		/// * val: false
 		#[inline]
 		fn set_fused_activation(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_setPropFusedActivation_bool(self.as_raw_mut_ConvolutionLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_propFusedActivation_bool(self.as_raw_mut_ConvolutionLayer(), val) };
 			ret
 		}
 		
@@ -4087,7 +4063,7 @@ pub mod dnn {
 		/// * val: false
 		#[inline]
 		fn set_fused_add(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_setPropFusedAdd_bool(self.as_raw_mut_ConvolutionLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_propFusedAdd_bool(self.as_raw_mut_ConvolutionLayer(), val) };
 			ret
 		}
 		
@@ -4095,7 +4071,7 @@ pub mod dnn {
 		/// * val: false
 		#[inline]
 		fn set_use_winograd(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_setPropUseWinograd_bool(self.as_raw_mut_ConvolutionLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayer_propUseWinograd_bool(self.as_raw_mut_ConvolutionLayer(), val) };
 			ret
 		}
 		
@@ -4110,8 +4086,7 @@ pub mod dnn {
 	impl Drop for ConvolutionLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ConvolutionLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ConvolutionLayer_delete(self.as_raw_mut_ConvolutionLayer()) };
+			unsafe { sys::cv_dnn_ConvolutionLayer_delete(self.as_raw_mut_ConvolutionLayer()) };
 		}
 	}
 	
@@ -4162,11 +4137,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ConvolutionLayer, core::Algorithm, cv_ConvolutionLayer_to_Algorithm }
+	boxed_cast_base! { ConvolutionLayer, core::Algorithm, cv_dnn_ConvolutionLayer_to_Algorithm }
 	
-	boxed_cast_base! { ConvolutionLayer, crate::dnn::BaseConvolutionLayer, cv_ConvolutionLayer_to_BaseConvolutionLayer }
+	boxed_cast_base! { ConvolutionLayer, crate::dnn::BaseConvolutionLayer, cv_dnn_ConvolutionLayer_to_BaseConvolutionLayer }
 	
-	boxed_cast_base! { ConvolutionLayer, crate::dnn::Layer, cv_ConvolutionLayer_to_Layer }
+	boxed_cast_base! { ConvolutionLayer, crate::dnn::Layer, cv_dnn_ConvolutionLayer_to_Layer }
 	
 	impl std::fmt::Debug for ConvolutionLayer {
 		#[inline]
@@ -4202,37 +4177,37 @@ pub mod dnn {
 	
 		#[inline]
 		fn input_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_getPropInput_zp_const(self.as_raw_ConvolutionLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propInput_zp_const(self.as_raw_ConvolutionLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_getPropOutput_zp_const(self.as_raw_ConvolutionLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propOutput_zp_const(self.as_raw_ConvolutionLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn input_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_getPropInput_sc_const(self.as_raw_ConvolutionLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propInput_sc_const(self.as_raw_ConvolutionLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_getPropOutput_sc_const(self.as_raw_ConvolutionLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propOutput_sc_const(self.as_raw_ConvolutionLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn per_channel(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_getPropPer_channel_const(self.as_raw_ConvolutionLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propPer_channel_const(self.as_raw_ConvolutionLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_winograd(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_getPropUseWinograd_const(self.as_raw_ConvolutionLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propUseWinograd_const(self.as_raw_ConvolutionLayerInt8()) };
 			ret
 		}
 		
@@ -4244,31 +4219,31 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_input_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_setPropInput_zp_int(self.as_raw_mut_ConvolutionLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propInput_zp_int(self.as_raw_mut_ConvolutionLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_setPropOutput_zp_int(self.as_raw_mut_ConvolutionLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propOutput_zp_int(self.as_raw_mut_ConvolutionLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_input_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_setPropInput_sc_float(self.as_raw_mut_ConvolutionLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propInput_sc_float(self.as_raw_mut_ConvolutionLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_setPropOutput_sc_float(self.as_raw_mut_ConvolutionLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propOutput_sc_float(self.as_raw_mut_ConvolutionLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_per_channel(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_setPropPer_channel_bool(self.as_raw_mut_ConvolutionLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propPer_channel_bool(self.as_raw_mut_ConvolutionLayerInt8(), val) };
 			ret
 		}
 		
@@ -4276,7 +4251,7 @@ pub mod dnn {
 		/// * val: true
 		#[inline]
 		fn set_use_winograd(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_setPropUseWinograd_bool(self.as_raw_mut_ConvolutionLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_ConvolutionLayerInt8_propUseWinograd_bool(self.as_raw_mut_ConvolutionLayerInt8(), val) };
 			ret
 		}
 		
@@ -4291,8 +4266,7 @@ pub mod dnn {
 	impl Drop for ConvolutionLayerInt8 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ConvolutionLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_ConvolutionLayerInt8_delete(self.as_raw_mut_ConvolutionLayerInt8()) };
+			unsafe { sys::cv_dnn_ConvolutionLayerInt8_delete(self.as_raw_mut_ConvolutionLayerInt8()) };
 		}
 	}
 	
@@ -4343,11 +4317,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ConvolutionLayerInt8, core::Algorithm, cv_ConvolutionLayerInt8_to_Algorithm }
+	boxed_cast_base! { ConvolutionLayerInt8, core::Algorithm, cv_dnn_ConvolutionLayerInt8_to_Algorithm }
 	
-	boxed_cast_base! { ConvolutionLayerInt8, crate::dnn::BaseConvolutionLayer, cv_ConvolutionLayerInt8_to_BaseConvolutionLayer }
+	boxed_cast_base! { ConvolutionLayerInt8, crate::dnn::BaseConvolutionLayer, cv_dnn_ConvolutionLayerInt8_to_BaseConvolutionLayer }
 	
-	boxed_cast_base! { ConvolutionLayerInt8, crate::dnn::Layer, cv_ConvolutionLayerInt8_to_Layer }
+	boxed_cast_base! { ConvolutionLayerInt8, crate::dnn::Layer, cv_dnn_ConvolutionLayerInt8_to_Layer }
 	
 	impl std::fmt::Debug for ConvolutionLayerInt8 {
 		#[inline]
@@ -4401,8 +4375,7 @@ pub mod dnn {
 	impl Drop for CorrelationLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CorrelationLayer_delete(instance: *mut c_void); }
-			unsafe { cv_CorrelationLayer_delete(self.as_raw_mut_CorrelationLayer()) };
+			unsafe { sys::cv_dnn_CorrelationLayer_delete(self.as_raw_mut_CorrelationLayer()) };
 		}
 	}
 	
@@ -4445,9 +4418,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { CorrelationLayer, core::Algorithm, cv_CorrelationLayer_to_Algorithm }
+	boxed_cast_base! { CorrelationLayer, core::Algorithm, cv_dnn_CorrelationLayer_to_Algorithm }
 	
-	boxed_cast_base! { CorrelationLayer, crate::dnn::Layer, cv_CorrelationLayer_to_Layer }
+	boxed_cast_base! { CorrelationLayer, crate::dnn::Layer, cv_dnn_CorrelationLayer_to_Layer }
 	
 	impl std::fmt::Debug for CorrelationLayer {
 		#[inline]
@@ -4482,8 +4455,7 @@ pub mod dnn {
 	impl Drop for CosLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CosLayer_delete(instance: *mut c_void); }
-			unsafe { cv_CosLayer_delete(self.as_raw_mut_CosLayer()) };
+			unsafe { sys::cv_dnn_CosLayer_delete(self.as_raw_mut_CosLayer()) };
 		}
 	}
 	
@@ -4534,11 +4506,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { CosLayer, crate::dnn::ActivationLayer, cv_CosLayer_to_ActivationLayer }
+	boxed_cast_base! { CosLayer, crate::dnn::ActivationLayer, cv_dnn_CosLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { CosLayer, core::Algorithm, cv_CosLayer_to_Algorithm }
+	boxed_cast_base! { CosLayer, core::Algorithm, cv_dnn_CosLayer_to_Algorithm }
 	
-	boxed_cast_base! { CosLayer, crate::dnn::Layer, cv_CosLayer_to_Layer }
+	boxed_cast_base! { CosLayer, crate::dnn::Layer, cv_dnn_CosLayer_to_Layer }
 	
 	impl std::fmt::Debug for CosLayer {
 		#[inline]
@@ -4573,8 +4545,7 @@ pub mod dnn {
 	impl Drop for CoshLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CoshLayer_delete(instance: *mut c_void); }
-			unsafe { cv_CoshLayer_delete(self.as_raw_mut_CoshLayer()) };
+			unsafe { sys::cv_dnn_CoshLayer_delete(self.as_raw_mut_CoshLayer()) };
 		}
 	}
 	
@@ -4625,11 +4596,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { CoshLayer, crate::dnn::ActivationLayer, cv_CoshLayer_to_ActivationLayer }
+	boxed_cast_base! { CoshLayer, crate::dnn::ActivationLayer, cv_dnn_CoshLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { CoshLayer, core::Algorithm, cv_CoshLayer_to_Algorithm }
+	boxed_cast_base! { CoshLayer, core::Algorithm, cv_dnn_CoshLayer_to_Algorithm }
 	
-	boxed_cast_base! { CoshLayer, crate::dnn::Layer, cv_CoshLayer_to_Layer }
+	boxed_cast_base! { CoshLayer, crate::dnn::Layer, cv_dnn_CoshLayer_to_Layer }
 	
 	impl std::fmt::Debug for CoshLayer {
 		#[inline]
@@ -4664,8 +4635,7 @@ pub mod dnn {
 	impl Drop for CropAndResizeLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CropAndResizeLayer_delete(instance: *mut c_void); }
-			unsafe { cv_CropAndResizeLayer_delete(self.as_raw_mut_CropAndResizeLayer()) };
+			unsafe { sys::cv_dnn_CropAndResizeLayer_delete(self.as_raw_mut_CropAndResizeLayer()) };
 		}
 	}
 	
@@ -4708,9 +4678,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { CropAndResizeLayer, core::Algorithm, cv_CropAndResizeLayer_to_Algorithm }
+	boxed_cast_base! { CropAndResizeLayer, core::Algorithm, cv_dnn_CropAndResizeLayer_to_Algorithm }
 	
-	boxed_cast_base! { CropAndResizeLayer, crate::dnn::Layer, cv_CropAndResizeLayer_to_Layer }
+	boxed_cast_base! { CropAndResizeLayer, crate::dnn::Layer, cv_dnn_CropAndResizeLayer_to_Layer }
 	
 	impl std::fmt::Debug for CropAndResizeLayer {
 		#[inline]
@@ -4745,8 +4715,7 @@ pub mod dnn {
 	impl Drop for CropLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CropLayer_delete(instance: *mut c_void); }
-			unsafe { cv_CropLayer_delete(self.as_raw_mut_CropLayer()) };
+			unsafe { sys::cv_dnn_CropLayer_delete(self.as_raw_mut_CropLayer()) };
 		}
 	}
 	
@@ -4789,9 +4758,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { CropLayer, core::Algorithm, cv_CropLayer_to_Algorithm }
+	boxed_cast_base! { CropLayer, core::Algorithm, cv_dnn_CropLayer_to_Algorithm }
 	
-	boxed_cast_base! { CropLayer, crate::dnn::Layer, cv_CropLayer_to_Layer }
+	boxed_cast_base! { CropLayer, crate::dnn::Layer, cv_dnn_CropLayer_to_Layer }
 	
 	impl std::fmt::Debug for CropLayer {
 		#[inline]
@@ -4811,13 +4780,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn exclusive(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_CumSumLayer_getPropExclusive_const(self.as_raw_CumSumLayer()) };
+			let ret = unsafe { sys::cv_dnn_CumSumLayer_propExclusive_const(self.as_raw_CumSumLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn reverse(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_CumSumLayer_getPropReverse_const(self.as_raw_CumSumLayer()) };
+			let ret = unsafe { sys::cv_dnn_CumSumLayer_propReverse_const(self.as_raw_CumSumLayer()) };
 			ret
 		}
 		
@@ -4829,13 +4798,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_exclusive(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_CumSumLayer_setPropExclusive_int(self.as_raw_mut_CumSumLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_CumSumLayer_propExclusive_int(self.as_raw_mut_CumSumLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_reverse(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_CumSumLayer_setPropReverse_int(self.as_raw_mut_CumSumLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_CumSumLayer_propReverse_int(self.as_raw_mut_CumSumLayer(), val) };
 			ret
 		}
 		
@@ -4850,8 +4819,7 @@ pub mod dnn {
 	impl Drop for CumSumLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CumSumLayer_delete(instance: *mut c_void); }
-			unsafe { cv_CumSumLayer_delete(self.as_raw_mut_CumSumLayer()) };
+			unsafe { sys::cv_dnn_CumSumLayer_delete(self.as_raw_mut_CumSumLayer()) };
 		}
 	}
 	
@@ -4894,9 +4862,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { CumSumLayer, core::Algorithm, cv_CumSumLayer_to_Algorithm }
+	boxed_cast_base! { CumSumLayer, core::Algorithm, cv_dnn_CumSumLayer_to_Algorithm }
 	
-	boxed_cast_base! { CumSumLayer, crate::dnn::Layer, cv_CumSumLayer_to_Layer }
+	boxed_cast_base! { CumSumLayer, crate::dnn::Layer, cv_dnn_CumSumLayer_to_Layer }
 	
 	impl std::fmt::Debug for CumSumLayer {
 		#[inline]
@@ -4933,8 +4901,7 @@ pub mod dnn {
 	impl Drop for DataAugmentationLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DataAugmentationLayer_delete(instance: *mut c_void); }
-			unsafe { cv_DataAugmentationLayer_delete(self.as_raw_mut_DataAugmentationLayer()) };
+			unsafe { sys::cv_dnn_DataAugmentationLayer_delete(self.as_raw_mut_DataAugmentationLayer()) };
 		}
 	}
 	
@@ -4977,9 +4944,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { DataAugmentationLayer, core::Algorithm, cv_DataAugmentationLayer_to_Algorithm }
+	boxed_cast_base! { DataAugmentationLayer, core::Algorithm, cv_dnn_DataAugmentationLayer_to_Algorithm }
 	
-	boxed_cast_base! { DataAugmentationLayer, crate::dnn::Layer, cv_DataAugmentationLayer_to_Layer }
+	boxed_cast_base! { DataAugmentationLayer, crate::dnn::Layer, cv_dnn_DataAugmentationLayer_to_Layer }
 	
 	impl std::fmt::Debug for DataAugmentationLayer {
 		#[inline]
@@ -5014,8 +4981,7 @@ pub mod dnn {
 	impl Drop for DeconvolutionLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DeconvolutionLayer_delete(instance: *mut c_void); }
-			unsafe { cv_DeconvolutionLayer_delete(self.as_raw_mut_DeconvolutionLayer()) };
+			unsafe { sys::cv_dnn_DeconvolutionLayer_delete(self.as_raw_mut_DeconvolutionLayer()) };
 		}
 	}
 	
@@ -5066,11 +5032,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { DeconvolutionLayer, core::Algorithm, cv_DeconvolutionLayer_to_Algorithm }
+	boxed_cast_base! { DeconvolutionLayer, core::Algorithm, cv_dnn_DeconvolutionLayer_to_Algorithm }
 	
-	boxed_cast_base! { DeconvolutionLayer, crate::dnn::BaseConvolutionLayer, cv_DeconvolutionLayer_to_BaseConvolutionLayer }
+	boxed_cast_base! { DeconvolutionLayer, crate::dnn::BaseConvolutionLayer, cv_dnn_DeconvolutionLayer_to_BaseConvolutionLayer }
 	
-	boxed_cast_base! { DeconvolutionLayer, crate::dnn::Layer, cv_DeconvolutionLayer_to_Layer }
+	boxed_cast_base! { DeconvolutionLayer, crate::dnn::Layer, cv_dnn_DeconvolutionLayer_to_Layer }
 	
 	impl std::fmt::Debug for DeconvolutionLayer {
 		#[inline]
@@ -5103,14 +5069,14 @@ pub mod dnn {
 	
 		#[inline]
 		fn scales(&self) -> core::Vector<f32> {
-			let ret = unsafe { sys::cv_dnn_DequantizeLayer_getPropScales_const(self.as_raw_DequantizeLayer()) };
+			let ret = unsafe { sys::cv_dnn_DequantizeLayer_propScales_const(self.as_raw_DequantizeLayer()) };
 			let ret = unsafe { core::Vector::<f32>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn zeropoints(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_dnn_DequantizeLayer_getPropZeropoints_const(self.as_raw_DequantizeLayer()) };
+			let ret = unsafe { sys::cv_dnn_DequantizeLayer_propZeropoints_const(self.as_raw_DequantizeLayer()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
@@ -5123,13 +5089,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_scales(&mut self, mut val: core::Vector<f32>) {
-			let ret = unsafe { sys::cv_dnn_DequantizeLayer_setPropScales_vectorLfloatG(self.as_raw_mut_DequantizeLayer(), val.as_raw_mut_VectorOff32()) };
+			let ret = unsafe { sys::cv_dnn_DequantizeLayer_propScales_vectorLfloatG(self.as_raw_mut_DequantizeLayer(), val.as_raw_mut_VectorOff32()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_zeropoints(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_dnn_DequantizeLayer_setPropZeropoints_vectorLintG(self.as_raw_mut_DequantizeLayer(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_dnn_DequantizeLayer_propZeropoints_vectorLintG(self.as_raw_mut_DequantizeLayer(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
@@ -5144,8 +5110,7 @@ pub mod dnn {
 	impl Drop for DequantizeLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DequantizeLayer_delete(instance: *mut c_void); }
-			unsafe { cv_DequantizeLayer_delete(self.as_raw_mut_DequantizeLayer()) };
+			unsafe { sys::cv_dnn_DequantizeLayer_delete(self.as_raw_mut_DequantizeLayer()) };
 		}
 	}
 	
@@ -5188,9 +5153,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { DequantizeLayer, core::Algorithm, cv_DequantizeLayer_to_Algorithm }
+	boxed_cast_base! { DequantizeLayer, core::Algorithm, cv_dnn_DequantizeLayer_to_Algorithm }
 	
-	boxed_cast_base! { DequantizeLayer, crate::dnn::Layer, cv_DequantizeLayer_to_Layer }
+	boxed_cast_base! { DequantizeLayer, crate::dnn::Layer, cv_dnn_DequantizeLayer_to_Layer }
 	
 	impl std::fmt::Debug for DequantizeLayer {
 		#[inline]
@@ -5281,8 +5246,7 @@ pub mod dnn {
 	impl Drop for DetectionModel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DetectionModel_delete(instance: *mut c_void); }
-			unsafe { cv_DetectionModel_delete(self.as_raw_mut_DetectionModel()) };
+			unsafe { sys::cv_dnn_DetectionModel_delete(self.as_raw_mut_DetectionModel()) };
 		}
 	}
 	
@@ -5353,12 +5317,11 @@ pub mod dnn {
 	impl Clone for DetectionModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_DetectionModel_implicitClone_const_DetectionModel(val: extern_send!(DetectionModel)) -> extern_receive!(DetectionModel: 'static); }
-			unsafe { Self::from_raw(cv_DetectionModel_implicitClone_const_DetectionModel(self.as_raw_DetectionModel())) }
+			unsafe { Self::from_raw(sys::cv_dnn_DetectionModel_implicitClone_const(self.as_raw_DetectionModel())) }
 		}
 	}
 	
-	boxed_cast_base! { DetectionModel, crate::dnn::Model, cv_DetectionModel_to_Model }
+	boxed_cast_base! { DetectionModel, crate::dnn::Model, cv_dnn_DetectionModel_to_Model }
 	
 	impl std::fmt::Debug for DetectionModel {
 		#[inline]
@@ -5395,8 +5358,7 @@ pub mod dnn {
 	impl Drop for DetectionOutputLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DetectionOutputLayer_delete(instance: *mut c_void); }
-			unsafe { cv_DetectionOutputLayer_delete(self.as_raw_mut_DetectionOutputLayer()) };
+			unsafe { sys::cv_dnn_DetectionOutputLayer_delete(self.as_raw_mut_DetectionOutputLayer()) };
 		}
 	}
 	
@@ -5439,9 +5401,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { DetectionOutputLayer, core::Algorithm, cv_DetectionOutputLayer_to_Algorithm }
+	boxed_cast_base! { DetectionOutputLayer, core::Algorithm, cv_dnn_DetectionOutputLayer_to_Algorithm }
 	
-	boxed_cast_base! { DetectionOutputLayer, crate::dnn::Layer, cv_DetectionOutputLayer_to_Layer }
+	boxed_cast_base! { DetectionOutputLayer, crate::dnn::Layer, cv_dnn_DetectionOutputLayer_to_Layer }
 	
 	impl std::fmt::Debug for DetectionOutputLayer {
 		#[inline]
@@ -5584,8 +5546,7 @@ pub mod dnn {
 	impl Drop for Dict {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Dict_delete(instance: *mut c_void); }
-			unsafe { cv_Dict_delete(self.as_raw_mut_Dict()) };
+			unsafe { sys::cv_dnn_Dict_delete(self.as_raw_mut_Dict()) };
 		}
 	}
 	
@@ -5748,8 +5709,7 @@ pub mod dnn {
 	impl Drop for DictValue {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_DictValue_delete(instance: *mut c_void); }
-			unsafe { cv_DictValue_delete(self.as_raw_mut_DictValue()) };
+			unsafe { sys::cv_dnn_DictValue_delete(self.as_raw_mut_DictValue()) };
 		}
 	}
 	
@@ -5845,7 +5805,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn alpha(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ELULayer_getPropAlpha_const(self.as_raw_ELULayer()) };
+			let ret = unsafe { sys::cv_dnn_ELULayer_propAlpha_const(self.as_raw_ELULayer()) };
 			ret
 		}
 		
@@ -5857,7 +5817,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_alpha(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ELULayer_setPropAlpha_float(self.as_raw_mut_ELULayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ELULayer_propAlpha_float(self.as_raw_mut_ELULayer(), val) };
 			ret
 		}
 		
@@ -5872,8 +5832,7 @@ pub mod dnn {
 	impl Drop for ELULayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ELULayer_delete(instance: *mut c_void); }
-			unsafe { cv_ELULayer_delete(self.as_raw_mut_ELULayer()) };
+			unsafe { sys::cv_dnn_ELULayer_delete(self.as_raw_mut_ELULayer()) };
 		}
 	}
 	
@@ -5924,11 +5883,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ELULayer, crate::dnn::ActivationLayer, cv_ELULayer_to_ActivationLayer }
+	boxed_cast_base! { ELULayer, crate::dnn::ActivationLayer, cv_dnn_ELULayer_to_ActivationLayer }
 	
-	boxed_cast_base! { ELULayer, core::Algorithm, cv_ELULayer_to_Algorithm }
+	boxed_cast_base! { ELULayer, core::Algorithm, cv_dnn_ELULayer_to_Algorithm }
 	
-	boxed_cast_base! { ELULayer, crate::dnn::Layer, cv_ELULayer_to_Layer }
+	boxed_cast_base! { ELULayer, crate::dnn::Layer, cv_dnn_ELULayer_to_Layer }
 	
 	impl std::fmt::Debug for ELULayer {
 		#[inline]
@@ -5970,8 +5929,7 @@ pub mod dnn {
 	impl Drop for EltwiseLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_EltwiseLayer_delete(instance: *mut c_void); }
-			unsafe { cv_EltwiseLayer_delete(self.as_raw_mut_EltwiseLayer()) };
+			unsafe { sys::cv_dnn_EltwiseLayer_delete(self.as_raw_mut_EltwiseLayer()) };
 		}
 	}
 	
@@ -6014,9 +5972,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { EltwiseLayer, core::Algorithm, cv_EltwiseLayer_to_Algorithm }
+	boxed_cast_base! { EltwiseLayer, core::Algorithm, cv_dnn_EltwiseLayer_to_Algorithm }
 	
-	boxed_cast_base! { EltwiseLayer, crate::dnn::Layer, cv_EltwiseLayer_to_Layer }
+	boxed_cast_base! { EltwiseLayer, crate::dnn::Layer, cv_dnn_EltwiseLayer_to_Layer }
 	
 	impl std::fmt::Debug for EltwiseLayer {
 		#[inline]
@@ -6051,8 +6009,7 @@ pub mod dnn {
 	impl Drop for EltwiseLayerInt8 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_EltwiseLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_EltwiseLayerInt8_delete(self.as_raw_mut_EltwiseLayerInt8()) };
+			unsafe { sys::cv_dnn_EltwiseLayerInt8_delete(self.as_raw_mut_EltwiseLayerInt8()) };
 		}
 	}
 	
@@ -6095,9 +6052,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { EltwiseLayerInt8, core::Algorithm, cv_EltwiseLayerInt8_to_Algorithm }
+	boxed_cast_base! { EltwiseLayerInt8, core::Algorithm, cv_dnn_EltwiseLayerInt8_to_Algorithm }
 	
-	boxed_cast_base! { EltwiseLayerInt8, crate::dnn::Layer, cv_EltwiseLayerInt8_to_Layer }
+	boxed_cast_base! { EltwiseLayerInt8, crate::dnn::Layer, cv_dnn_EltwiseLayerInt8_to_Layer }
 	
 	impl std::fmt::Debug for EltwiseLayerInt8 {
 		#[inline]
@@ -6132,8 +6089,7 @@ pub mod dnn {
 	impl Drop for ErfLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ErfLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ErfLayer_delete(self.as_raw_mut_ErfLayer()) };
+			unsafe { sys::cv_dnn_ErfLayer_delete(self.as_raw_mut_ErfLayer()) };
 		}
 	}
 	
@@ -6184,11 +6140,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ErfLayer, crate::dnn::ActivationLayer, cv_ErfLayer_to_ActivationLayer }
+	boxed_cast_base! { ErfLayer, crate::dnn::ActivationLayer, cv_dnn_ErfLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { ErfLayer, core::Algorithm, cv_ErfLayer_to_Algorithm }
+	boxed_cast_base! { ErfLayer, core::Algorithm, cv_dnn_ErfLayer_to_Algorithm }
 	
-	boxed_cast_base! { ErfLayer, crate::dnn::Layer, cv_ErfLayer_to_Layer }
+	boxed_cast_base! { ErfLayer, crate::dnn::Layer, cv_dnn_ErfLayer_to_Layer }
 	
 	impl std::fmt::Debug for ErfLayer {
 		#[inline]
@@ -6208,19 +6164,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn base(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ExpLayer_getPropBase_const(self.as_raw_ExpLayer()) };
+			let ret = unsafe { sys::cv_dnn_ExpLayer_propBase_const(self.as_raw_ExpLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn scale(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ExpLayer_getPropScale_const(self.as_raw_ExpLayer()) };
+			let ret = unsafe { sys::cv_dnn_ExpLayer_propScale_const(self.as_raw_ExpLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn shift(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ExpLayer_getPropShift_const(self.as_raw_ExpLayer()) };
+			let ret = unsafe { sys::cv_dnn_ExpLayer_propShift_const(self.as_raw_ExpLayer()) };
 			ret
 		}
 		
@@ -6232,19 +6188,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_base(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ExpLayer_setPropBase_float(self.as_raw_mut_ExpLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ExpLayer_propBase_float(self.as_raw_mut_ExpLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ExpLayer_setPropScale_float(self.as_raw_mut_ExpLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ExpLayer_propScale_float(self.as_raw_mut_ExpLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_shift(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ExpLayer_setPropShift_float(self.as_raw_mut_ExpLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ExpLayer_propShift_float(self.as_raw_mut_ExpLayer(), val) };
 			ret
 		}
 		
@@ -6259,8 +6215,7 @@ pub mod dnn {
 	impl Drop for ExpLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ExpLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ExpLayer_delete(self.as_raw_mut_ExpLayer()) };
+			unsafe { sys::cv_dnn_ExpLayer_delete(self.as_raw_mut_ExpLayer()) };
 		}
 	}
 	
@@ -6311,11 +6266,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ExpLayer, crate::dnn::ActivationLayer, cv_ExpLayer_to_ActivationLayer }
+	boxed_cast_base! { ExpLayer, crate::dnn::ActivationLayer, cv_dnn_ExpLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { ExpLayer, core::Algorithm, cv_ExpLayer_to_Algorithm }
+	boxed_cast_base! { ExpLayer, core::Algorithm, cv_dnn_ExpLayer_to_Algorithm }
 	
-	boxed_cast_base! { ExpLayer, crate::dnn::Layer, cv_ExpLayer_to_Layer }
+	boxed_cast_base! { ExpLayer, crate::dnn::Layer, cv_dnn_ExpLayer_to_Layer }
 	
 	impl std::fmt::Debug for ExpLayer {
 		#[inline]
@@ -6353,8 +6308,7 @@ pub mod dnn {
 	impl Drop for FlattenLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FlattenLayer_delete(instance: *mut c_void); }
-			unsafe { cv_FlattenLayer_delete(self.as_raw_mut_FlattenLayer()) };
+			unsafe { sys::cv_dnn_FlattenLayer_delete(self.as_raw_mut_FlattenLayer()) };
 		}
 	}
 	
@@ -6397,9 +6351,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { FlattenLayer, core::Algorithm, cv_FlattenLayer_to_Algorithm }
+	boxed_cast_base! { FlattenLayer, core::Algorithm, cv_dnn_FlattenLayer_to_Algorithm }
 	
-	boxed_cast_base! { FlattenLayer, crate::dnn::Layer, cv_FlattenLayer_to_Layer }
+	boxed_cast_base! { FlattenLayer, crate::dnn::Layer, cv_dnn_FlattenLayer_to_Layer }
 	
 	impl std::fmt::Debug for FlattenLayer {
 		#[inline]
@@ -6434,8 +6388,7 @@ pub mod dnn {
 	impl Drop for FloorLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FloorLayer_delete(instance: *mut c_void); }
-			unsafe { cv_FloorLayer_delete(self.as_raw_mut_FloorLayer()) };
+			unsafe { sys::cv_dnn_FloorLayer_delete(self.as_raw_mut_FloorLayer()) };
 		}
 	}
 	
@@ -6486,11 +6439,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { FloorLayer, crate::dnn::ActivationLayer, cv_FloorLayer_to_ActivationLayer }
+	boxed_cast_base! { FloorLayer, crate::dnn::ActivationLayer, cv_dnn_FloorLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { FloorLayer, core::Algorithm, cv_FloorLayer_to_Algorithm }
+	boxed_cast_base! { FloorLayer, core::Algorithm, cv_dnn_FloorLayer_to_Algorithm }
 	
-	boxed_cast_base! { FloorLayer, crate::dnn::Layer, cv_FloorLayer_to_Layer }
+	boxed_cast_base! { FloorLayer, crate::dnn::Layer, cv_dnn_FloorLayer_to_Layer }
 	
 	impl std::fmt::Debug for FloorLayer {
 		#[inline]
@@ -6525,8 +6478,7 @@ pub mod dnn {
 	impl Drop for FlowWarpLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FlowWarpLayer_delete(instance: *mut c_void); }
-			unsafe { cv_FlowWarpLayer_delete(self.as_raw_mut_FlowWarpLayer()) };
+			unsafe { sys::cv_dnn_FlowWarpLayer_delete(self.as_raw_mut_FlowWarpLayer()) };
 		}
 	}
 	
@@ -6569,9 +6521,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { FlowWarpLayer, core::Algorithm, cv_FlowWarpLayer_to_Algorithm }
+	boxed_cast_base! { FlowWarpLayer, core::Algorithm, cv_dnn_FlowWarpLayer_to_Algorithm }
 	
-	boxed_cast_base! { FlowWarpLayer, crate::dnn::Layer, cv_FlowWarpLayer_to_Layer }
+	boxed_cast_base! { FlowWarpLayer, crate::dnn::Layer, cv_dnn_FlowWarpLayer_to_Layer }
 	
 	impl std::fmt::Debug for FlowWarpLayer {
 		#[inline]
@@ -6632,8 +6584,7 @@ pub mod dnn {
 	impl Drop for GRULayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GRULayer_delete(instance: *mut c_void); }
-			unsafe { cv_GRULayer_delete(self.as_raw_mut_GRULayer()) };
+			unsafe { sys::cv_dnn_GRULayer_delete(self.as_raw_mut_GRULayer()) };
 		}
 	}
 	
@@ -6677,9 +6628,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { GRULayer, core::Algorithm, cv_GRULayer_to_Algorithm }
+	boxed_cast_base! { GRULayer, core::Algorithm, cv_dnn_GRULayer_to_Algorithm }
 	
-	boxed_cast_base! { GRULayer, crate::dnn::Layer, cv_GRULayer_to_Layer }
+	boxed_cast_base! { GRULayer, crate::dnn::Layer, cv_dnn_GRULayer_to_Layer }
 	
 	impl std::fmt::Debug for GRULayer {
 		#[inline]
@@ -6715,8 +6666,7 @@ pub mod dnn {
 	impl Drop for GatherLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GatherLayer_delete(instance: *mut c_void); }
-			unsafe { cv_GatherLayer_delete(self.as_raw_mut_GatherLayer()) };
+			unsafe { sys::cv_dnn_GatherLayer_delete(self.as_raw_mut_GatherLayer()) };
 		}
 	}
 	
@@ -6759,9 +6709,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { GatherLayer, core::Algorithm, cv_GatherLayer_to_Algorithm }
+	boxed_cast_base! { GatherLayer, core::Algorithm, cv_dnn_GatherLayer_to_Algorithm }
 	
-	boxed_cast_base! { GatherLayer, crate::dnn::Layer, cv_GatherLayer_to_Layer }
+	boxed_cast_base! { GatherLayer, crate::dnn::Layer, cv_dnn_GatherLayer_to_Layer }
 	
 	impl std::fmt::Debug for GatherLayer {
 		#[inline]
@@ -6796,8 +6746,7 @@ pub mod dnn {
 	impl Drop for GeluApproximationLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GeluApproximationLayer_delete(instance: *mut c_void); }
-			unsafe { cv_GeluApproximationLayer_delete(self.as_raw_mut_GeluApproximationLayer()) };
+			unsafe { sys::cv_dnn_GeluApproximationLayer_delete(self.as_raw_mut_GeluApproximationLayer()) };
 		}
 	}
 	
@@ -6848,11 +6797,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { GeluApproximationLayer, crate::dnn::ActivationLayer, cv_GeluApproximationLayer_to_ActivationLayer }
+	boxed_cast_base! { GeluApproximationLayer, crate::dnn::ActivationLayer, cv_dnn_GeluApproximationLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { GeluApproximationLayer, core::Algorithm, cv_GeluApproximationLayer_to_Algorithm }
+	boxed_cast_base! { GeluApproximationLayer, core::Algorithm, cv_dnn_GeluApproximationLayer_to_Algorithm }
 	
-	boxed_cast_base! { GeluApproximationLayer, crate::dnn::Layer, cv_GeluApproximationLayer_to_Layer }
+	boxed_cast_base! { GeluApproximationLayer, crate::dnn::Layer, cv_dnn_GeluApproximationLayer_to_Layer }
 	
 	impl std::fmt::Debug for GeluApproximationLayer {
 		#[inline]
@@ -6887,8 +6836,7 @@ pub mod dnn {
 	impl Drop for GeluLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GeluLayer_delete(instance: *mut c_void); }
-			unsafe { cv_GeluLayer_delete(self.as_raw_mut_GeluLayer()) };
+			unsafe { sys::cv_dnn_GeluLayer_delete(self.as_raw_mut_GeluLayer()) };
 		}
 	}
 	
@@ -6939,11 +6887,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { GeluLayer, crate::dnn::ActivationLayer, cv_GeluLayer_to_ActivationLayer }
+	boxed_cast_base! { GeluLayer, crate::dnn::ActivationLayer, cv_dnn_GeluLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { GeluLayer, core::Algorithm, cv_GeluLayer_to_Algorithm }
+	boxed_cast_base! { GeluLayer, core::Algorithm, cv_dnn_GeluLayer_to_Algorithm }
 	
-	boxed_cast_base! { GeluLayer, crate::dnn::Layer, cv_GeluLayer_to_Layer }
+	boxed_cast_base! { GeluLayer, crate::dnn::Layer, cv_dnn_GeluLayer_to_Layer }
 	
 	impl std::fmt::Debug for GeluLayer {
 		#[inline]
@@ -6963,13 +6911,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn alpha(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_HardSigmoidLayer_getPropAlpha_const(self.as_raw_HardSigmoidLayer()) };
+			let ret = unsafe { sys::cv_dnn_HardSigmoidLayer_propAlpha_const(self.as_raw_HardSigmoidLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn beta(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_HardSigmoidLayer_getPropBeta_const(self.as_raw_HardSigmoidLayer()) };
+			let ret = unsafe { sys::cv_dnn_HardSigmoidLayer_propBeta_const(self.as_raw_HardSigmoidLayer()) };
 			ret
 		}
 		
@@ -6981,13 +6929,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_alpha(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_HardSigmoidLayer_setPropAlpha_float(self.as_raw_mut_HardSigmoidLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_HardSigmoidLayer_propAlpha_float(self.as_raw_mut_HardSigmoidLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_beta(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_HardSigmoidLayer_setPropBeta_float(self.as_raw_mut_HardSigmoidLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_HardSigmoidLayer_propBeta_float(self.as_raw_mut_HardSigmoidLayer(), val) };
 			ret
 		}
 		
@@ -7002,8 +6950,7 @@ pub mod dnn {
 	impl Drop for HardSigmoidLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HardSigmoidLayer_delete(instance: *mut c_void); }
-			unsafe { cv_HardSigmoidLayer_delete(self.as_raw_mut_HardSigmoidLayer()) };
+			unsafe { sys::cv_dnn_HardSigmoidLayer_delete(self.as_raw_mut_HardSigmoidLayer()) };
 		}
 	}
 	
@@ -7054,11 +7001,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { HardSigmoidLayer, crate::dnn::ActivationLayer, cv_HardSigmoidLayer_to_ActivationLayer }
+	boxed_cast_base! { HardSigmoidLayer, crate::dnn::ActivationLayer, cv_dnn_HardSigmoidLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { HardSigmoidLayer, core::Algorithm, cv_HardSigmoidLayer_to_Algorithm }
+	boxed_cast_base! { HardSigmoidLayer, core::Algorithm, cv_dnn_HardSigmoidLayer_to_Algorithm }
 	
-	boxed_cast_base! { HardSigmoidLayer, crate::dnn::Layer, cv_HardSigmoidLayer_to_Layer }
+	boxed_cast_base! { HardSigmoidLayer, crate::dnn::Layer, cv_dnn_HardSigmoidLayer_to_Layer }
 	
 	impl std::fmt::Debug for HardSigmoidLayer {
 		#[inline]
@@ -7095,8 +7042,7 @@ pub mod dnn {
 	impl Drop for HardSwishLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HardSwishLayer_delete(instance: *mut c_void); }
-			unsafe { cv_HardSwishLayer_delete(self.as_raw_mut_HardSwishLayer()) };
+			unsafe { sys::cv_dnn_HardSwishLayer_delete(self.as_raw_mut_HardSwishLayer()) };
 		}
 	}
 	
@@ -7147,11 +7093,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { HardSwishLayer, crate::dnn::ActivationLayer, cv_HardSwishLayer_to_ActivationLayer }
+	boxed_cast_base! { HardSwishLayer, crate::dnn::ActivationLayer, cv_dnn_HardSwishLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { HardSwishLayer, core::Algorithm, cv_HardSwishLayer_to_Algorithm }
+	boxed_cast_base! { HardSwishLayer, core::Algorithm, cv_dnn_HardSwishLayer_to_Algorithm }
 	
-	boxed_cast_base! { HardSwishLayer, crate::dnn::Layer, cv_HardSwishLayer_to_Layer }
+	boxed_cast_base! { HardSwishLayer, crate::dnn::Layer, cv_dnn_HardSwishLayer_to_Layer }
 	
 	impl std::fmt::Debug for HardSwishLayer {
 		#[inline]
@@ -7231,7 +7177,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn axis(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayer_getPropAxis_const(self.as_raw_InnerProductLayer()) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayer_propAxis_const(self.as_raw_InnerProductLayer()) };
 			ret
 		}
 		
@@ -7243,7 +7189,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_axis(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayer_setPropAxis_int(self.as_raw_mut_InnerProductLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayer_propAxis_int(self.as_raw_mut_InnerProductLayer(), val) };
 			ret
 		}
 		
@@ -7260,8 +7206,7 @@ pub mod dnn {
 	impl Drop for InnerProductLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_InnerProductLayer_delete(instance: *mut c_void); }
-			unsafe { cv_InnerProductLayer_delete(self.as_raw_mut_InnerProductLayer()) };
+			unsafe { sys::cv_dnn_InnerProductLayer_delete(self.as_raw_mut_InnerProductLayer()) };
 		}
 	}
 	
@@ -7304,9 +7249,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { InnerProductLayer, core::Algorithm, cv_InnerProductLayer_to_Algorithm }
+	boxed_cast_base! { InnerProductLayer, core::Algorithm, cv_dnn_InnerProductLayer_to_Algorithm }
 	
-	boxed_cast_base! { InnerProductLayer, crate::dnn::Layer, cv_InnerProductLayer_to_Layer }
+	boxed_cast_base! { InnerProductLayer, crate::dnn::Layer, cv_dnn_InnerProductLayer_to_Layer }
 	
 	impl std::fmt::Debug for InnerProductLayer {
 		#[inline]
@@ -7327,31 +7272,31 @@ pub mod dnn {
 	
 		#[inline]
 		fn input_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_getPropInput_zp_const(self.as_raw_InnerProductLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propInput_zp_const(self.as_raw_InnerProductLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_getPropOutput_zp_const(self.as_raw_InnerProductLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propOutput_zp_const(self.as_raw_InnerProductLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn input_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_getPropInput_sc_const(self.as_raw_InnerProductLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propInput_sc_const(self.as_raw_InnerProductLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_getPropOutput_sc_const(self.as_raw_InnerProductLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propOutput_sc_const(self.as_raw_InnerProductLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn per_channel(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_getPropPer_channel_const(self.as_raw_InnerProductLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propPer_channel_const(self.as_raw_InnerProductLayerInt8()) };
 			ret
 		}
 		
@@ -7363,31 +7308,31 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_input_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_setPropInput_zp_int(self.as_raw_mut_InnerProductLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propInput_zp_int(self.as_raw_mut_InnerProductLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_setPropOutput_zp_int(self.as_raw_mut_InnerProductLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propOutput_zp_int(self.as_raw_mut_InnerProductLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_input_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_setPropInput_sc_float(self.as_raw_mut_InnerProductLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propInput_sc_float(self.as_raw_mut_InnerProductLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_setPropOutput_sc_float(self.as_raw_mut_InnerProductLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propOutput_sc_float(self.as_raw_mut_InnerProductLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_per_channel(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_setPropPer_channel_bool(self.as_raw_mut_InnerProductLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_InnerProductLayerInt8_propPer_channel_bool(self.as_raw_mut_InnerProductLayerInt8(), val) };
 			ret
 		}
 		
@@ -7402,8 +7347,7 @@ pub mod dnn {
 	impl Drop for InnerProductLayerInt8 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_InnerProductLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_InnerProductLayerInt8_delete(self.as_raw_mut_InnerProductLayerInt8()) };
+			unsafe { sys::cv_dnn_InnerProductLayerInt8_delete(self.as_raw_mut_InnerProductLayerInt8()) };
 		}
 	}
 	
@@ -7454,11 +7398,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { InnerProductLayerInt8, core::Algorithm, cv_InnerProductLayerInt8_to_Algorithm }
+	boxed_cast_base! { InnerProductLayerInt8, core::Algorithm, cv_dnn_InnerProductLayerInt8_to_Algorithm }
 	
-	boxed_cast_base! { InnerProductLayerInt8, crate::dnn::InnerProductLayer, cv_InnerProductLayerInt8_to_InnerProductLayer }
+	boxed_cast_base! { InnerProductLayerInt8, crate::dnn::InnerProductLayer, cv_dnn_InnerProductLayerInt8_to_InnerProductLayer }
 	
-	boxed_cast_base! { InnerProductLayerInt8, crate::dnn::Layer, cv_InnerProductLayerInt8_to_Layer }
+	boxed_cast_base! { InnerProductLayerInt8, crate::dnn::Layer, cv_dnn_InnerProductLayerInt8_to_Layer }
 	
 	impl std::fmt::Debug for InnerProductLayerInt8 {
 		#[inline]
@@ -7502,8 +7446,7 @@ pub mod dnn {
 	impl Drop for InterpLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_InterpLayer_delete(instance: *mut c_void); }
-			unsafe { cv_InterpLayer_delete(self.as_raw_mut_InterpLayer()) };
+			unsafe { sys::cv_dnn_InterpLayer_delete(self.as_raw_mut_InterpLayer()) };
 		}
 	}
 	
@@ -7546,9 +7489,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { InterpLayer, core::Algorithm, cv_InterpLayer_to_Algorithm }
+	boxed_cast_base! { InterpLayer, core::Algorithm, cv_dnn_InterpLayer_to_Algorithm }
 	
-	boxed_cast_base! { InterpLayer, crate::dnn::Layer, cv_InterpLayer_to_Layer }
+	boxed_cast_base! { InterpLayer, crate::dnn::Layer, cv_dnn_InterpLayer_to_Layer }
 	
 	impl std::fmt::Debug for InterpLayer {
 		#[inline]
@@ -7608,8 +7551,7 @@ pub mod dnn {
 	impl Drop for KeypointsModel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KeypointsModel_delete(instance: *mut c_void); }
-			unsafe { cv_KeypointsModel_delete(self.as_raw_mut_KeypointsModel()) };
+			unsafe { sys::cv_dnn_KeypointsModel_delete(self.as_raw_mut_KeypointsModel()) };
 		}
 	}
 	
@@ -7670,12 +7612,11 @@ pub mod dnn {
 	impl Clone for KeypointsModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_KeypointsModel_implicitClone_const_KeypointsModel(val: extern_send!(KeypointsModel)) -> extern_receive!(KeypointsModel: 'static); }
-			unsafe { Self::from_raw(cv_KeypointsModel_implicitClone_const_KeypointsModel(self.as_raw_KeypointsModel())) }
+			unsafe { Self::from_raw(sys::cv_dnn_KeypointsModel_implicitClone_const(self.as_raw_KeypointsModel())) }
 		}
 	}
 	
-	boxed_cast_base! { KeypointsModel, crate::dnn::Model, cv_KeypointsModel_to_Model }
+	boxed_cast_base! { KeypointsModel, crate::dnn::Model, cv_dnn_KeypointsModel_to_Model }
 	
 	impl std::fmt::Debug for KeypointsModel {
 		#[inline]
@@ -7691,37 +7632,37 @@ pub mod dnn {
 	
 		#[inline]
 		fn typ(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_getPropType_const(self.as_raw_LRNLayer()) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propType_const(self.as_raw_LRNLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn size(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_getPropSize_const(self.as_raw_LRNLayer()) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propSize_const(self.as_raw_LRNLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn alpha(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_getPropAlpha_const(self.as_raw_LRNLayer()) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propAlpha_const(self.as_raw_LRNLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn beta(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_getPropBeta_const(self.as_raw_LRNLayer()) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propBeta_const(self.as_raw_LRNLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn bias(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_getPropBias_const(self.as_raw_LRNLayer()) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propBias_const(self.as_raw_LRNLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn norm_by_size(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_getPropNormBySize_const(self.as_raw_LRNLayer()) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propNormBySize_const(self.as_raw_LRNLayer()) };
 			ret
 		}
 		
@@ -7733,37 +7674,37 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_type(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_setPropType_int(self.as_raw_mut_LRNLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propType_int(self.as_raw_mut_LRNLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_setPropSize_int(self.as_raw_mut_LRNLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propSize_int(self.as_raw_mut_LRNLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_alpha(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_setPropAlpha_float(self.as_raw_mut_LRNLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propAlpha_float(self.as_raw_mut_LRNLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_beta(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_setPropBeta_float(self.as_raw_mut_LRNLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propBeta_float(self.as_raw_mut_LRNLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_bias(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_setPropBias_float(self.as_raw_mut_LRNLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propBias_float(self.as_raw_mut_LRNLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_norm_by_size(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_LRNLayer_setPropNormBySize_bool(self.as_raw_mut_LRNLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_LRNLayer_propNormBySize_bool(self.as_raw_mut_LRNLayer(), val) };
 			ret
 		}
 		
@@ -7778,8 +7719,7 @@ pub mod dnn {
 	impl Drop for LRNLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LRNLayer_delete(instance: *mut c_void); }
-			unsafe { cv_LRNLayer_delete(self.as_raw_mut_LRNLayer()) };
+			unsafe { sys::cv_dnn_LRNLayer_delete(self.as_raw_mut_LRNLayer()) };
 		}
 	}
 	
@@ -7822,9 +7762,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { LRNLayer, core::Algorithm, cv_LRNLayer_to_Algorithm }
+	boxed_cast_base! { LRNLayer, core::Algorithm, cv_dnn_LRNLayer_to_Algorithm }
 	
-	boxed_cast_base! { LRNLayer, crate::dnn::Layer, cv_LRNLayer_to_Layer }
+	boxed_cast_base! { LRNLayer, crate::dnn::Layer, cv_dnn_LRNLayer_to_Layer }
 	
 	impl std::fmt::Debug for LRNLayer {
 		#[inline]
@@ -7983,8 +7923,7 @@ pub mod dnn {
 	impl Drop for LSTMLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LSTMLayer_delete(instance: *mut c_void); }
-			unsafe { cv_LSTMLayer_delete(self.as_raw_mut_LSTMLayer()) };
+			unsafe { sys::cv_dnn_LSTMLayer_delete(self.as_raw_mut_LSTMLayer()) };
 		}
 	}
 	
@@ -8028,9 +7967,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { LSTMLayer, core::Algorithm, cv_LSTMLayer_to_Algorithm }
+	boxed_cast_base! { LSTMLayer, core::Algorithm, cv_dnn_LSTMLayer_to_Algorithm }
 	
-	boxed_cast_base! { LSTMLayer, crate::dnn::Layer, cv_LSTMLayer_to_Layer }
+	boxed_cast_base! { LSTMLayer, crate::dnn::Layer, cv_dnn_LSTMLayer_to_Layer }
 	
 	impl std::fmt::Debug for LSTMLayer {
 		#[inline]
@@ -8051,7 +7990,7 @@ pub mod dnn {
 		/// List of learned parameters must be stored here to allow read them by using Net::getParam().
 		#[inline]
 		fn blobs(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_dnn_Layer_getPropBlobs_const(self.as_raw_Layer()) };
+			let ret = unsafe { sys::cv_dnn_Layer_propBlobs_const(self.as_raw_Layer()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
@@ -8059,7 +7998,7 @@ pub mod dnn {
 		/// Name of the layer instance, can be used for logging or other internal purposes.
 		#[inline]
 		fn name(&self) -> String {
-			let ret = unsafe { sys::cv_dnn_Layer_getPropName_const(self.as_raw_Layer()) };
+			let ret = unsafe { sys::cv_dnn_Layer_propName_const(self.as_raw_Layer()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -8067,7 +8006,7 @@ pub mod dnn {
 		/// Type name which was used for creating layer by layer factory.
 		#[inline]
 		fn typ(&self) -> String {
-			let ret = unsafe { sys::cv_dnn_Layer_getPropType_const(self.as_raw_Layer()) };
+			let ret = unsafe { sys::cv_dnn_Layer_propType_const(self.as_raw_Layer()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -8075,7 +8014,7 @@ pub mod dnn {
 		/// prefer target for layer forwarding
 		#[inline]
 		fn preferable_target(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_Layer_getPropPreferableTarget_const(self.as_raw_Layer()) };
+			let ret = unsafe { sys::cv_dnn_Layer_propPreferableTarget_const(self.as_raw_Layer()) };
 			ret
 		}
 		
@@ -8162,7 +8101,7 @@ pub mod dnn {
 		/// List of learned parameters must be stored here to allow read them by using Net::getParam().
 		#[inline]
 		fn set_blobs(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_dnn_Layer_setPropBlobs_vectorLMatG(self.as_raw_mut_Layer(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_dnn_Layer_propBlobs_vectorLMatG(self.as_raw_mut_Layer(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
@@ -8170,7 +8109,7 @@ pub mod dnn {
 		#[inline]
 		fn set_name(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_dnn_Layer_setPropName_String(self.as_raw_mut_Layer(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_dnn_Layer_propName_String(self.as_raw_mut_Layer(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
@@ -8178,14 +8117,14 @@ pub mod dnn {
 		#[inline]
 		fn set_type(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_dnn_Layer_setPropType_String(self.as_raw_mut_Layer(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_dnn_Layer_propType_String(self.as_raw_mut_Layer(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		/// prefer target for layer forwarding
 		#[inline]
 		fn set_preferable_target(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_Layer_setPropPreferableTarget_int(self.as_raw_mut_Layer(), val) };
+			let ret = unsafe { sys::cv_dnn_Layer_propPreferableTarget_int(self.as_raw_mut_Layer(), val) };
 			ret
 		}
 		
@@ -8566,8 +8505,7 @@ pub mod dnn {
 	impl Drop for Layer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Layer_delete(instance: *mut c_void); }
-			unsafe { cv_Layer_delete(self.as_raw_mut_Layer()) };
+			unsafe { sys::cv_dnn_Layer_delete(self.as_raw_mut_Layer()) };
 		}
 	}
 	
@@ -8612,113 +8550,217 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_descendant! { Layer, crate::dnn::AccumLayer, cv_Layer_to_AccumLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::AbsLayer, cv_dnn_Layer_to_AbsLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ActivationLayer, cv_Layer_to_ActivationLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::AccumLayer, cv_dnn_Layer_to_AccumLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ArgLayer, cv_Layer_to_ArgLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::AcosLayer, cv_dnn_Layer_to_AcosLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::BaseConvolutionLayer, cv_Layer_to_BaseConvolutionLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::AcoshLayer, cv_dnn_Layer_to_AcoshLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::BlankLayer, cv_Layer_to_BlankLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ActivationLayer, cv_dnn_Layer_to_ActivationLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::CompareLayer, cv_Layer_to_CompareLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ActivationLayerInt8, cv_dnn_Layer_to_ActivationLayerInt8 }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ConcatLayer, cv_Layer_to_ConcatLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ArgLayer, cv_dnn_Layer_to_ArgLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ConstLayer, cv_Layer_to_ConstLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::AsinLayer, cv_dnn_Layer_to_AsinLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::CorrelationLayer, cv_Layer_to_CorrelationLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::AsinhLayer, cv_dnn_Layer_to_AsinhLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::CropAndResizeLayer, cv_Layer_to_CropAndResizeLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::AtanLayer, cv_dnn_Layer_to_AtanLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::CropLayer, cv_Layer_to_CropLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::AtanhLayer, cv_dnn_Layer_to_AtanhLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::CumSumLayer, cv_Layer_to_CumSumLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::BNLLLayer, cv_dnn_Layer_to_BNLLLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::DataAugmentationLayer, cv_Layer_to_DataAugmentationLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::BaseConvolutionLayer, cv_dnn_Layer_to_BaseConvolutionLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::DequantizeLayer, cv_Layer_to_DequantizeLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::BatchNormLayer, cv_dnn_Layer_to_BatchNormLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::DetectionOutputLayer, cv_Layer_to_DetectionOutputLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::BatchNormLayerInt8, cv_dnn_Layer_to_BatchNormLayerInt8 }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::EltwiseLayer, cv_Layer_to_EltwiseLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::BlankLayer, cv_dnn_Layer_to_BlankLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::EltwiseLayerInt8, cv_Layer_to_EltwiseLayerInt8 }
+	boxed_cast_descendant! { Layer, crate::dnn::CeilLayer, cv_dnn_Layer_to_CeilLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::FlattenLayer, cv_Layer_to_FlattenLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::CeluLayer, cv_dnn_Layer_to_CeluLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::FlowWarpLayer, cv_Layer_to_FlowWarpLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ChannelsPReLULayer, cv_dnn_Layer_to_ChannelsPReLULayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::GRULayer, cv_Layer_to_GRULayer }
+	boxed_cast_descendant! { Layer, crate::dnn::CompareLayer, cv_dnn_Layer_to_CompareLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::GatherLayer, cv_Layer_to_GatherLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ConcatLayer, cv_dnn_Layer_to_ConcatLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::InnerProductLayer, cv_Layer_to_InnerProductLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ConstLayer, cv_dnn_Layer_to_ConstLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::InterpLayer, cv_Layer_to_InterpLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ConvolutionLayer, cv_dnn_Layer_to_ConvolutionLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::LRNLayer, cv_Layer_to_LRNLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ConvolutionLayerInt8, cv_dnn_Layer_to_ConvolutionLayerInt8 }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::LSTMLayer, cv_Layer_to_LSTMLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::CorrelationLayer, cv_dnn_Layer_to_CorrelationLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::LayerNormLayer, cv_Layer_to_LayerNormLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::CosLayer, cv_dnn_Layer_to_CosLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::MVNLayer, cv_Layer_to_MVNLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::CoshLayer, cv_dnn_Layer_to_CoshLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::MaxUnpoolLayer, cv_Layer_to_MaxUnpoolLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::CropAndResizeLayer, cv_dnn_Layer_to_CropAndResizeLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::NaryEltwiseLayer, cv_Layer_to_NaryEltwiseLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::CropLayer, cv_dnn_Layer_to_CropLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::NormalizeBBoxLayer, cv_Layer_to_NormalizeBBoxLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::CumSumLayer, cv_dnn_Layer_to_CumSumLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::PaddingLayer, cv_Layer_to_PaddingLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::DataAugmentationLayer, cv_dnn_Layer_to_DataAugmentationLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::PermuteLayer, cv_Layer_to_PermuteLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::DeconvolutionLayer, cv_dnn_Layer_to_DeconvolutionLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::PoolingLayer, cv_Layer_to_PoolingLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::DequantizeLayer, cv_dnn_Layer_to_DequantizeLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::PriorBoxLayer, cv_Layer_to_PriorBoxLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::DetectionOutputLayer, cv_dnn_Layer_to_DetectionOutputLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ProposalLayer, cv_Layer_to_ProposalLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ELULayer, cv_dnn_Layer_to_ELULayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::QuantizeLayer, cv_Layer_to_QuantizeLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::EltwiseLayer, cv_dnn_Layer_to_EltwiseLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::RNNLayer, cv_Layer_to_RNNLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::EltwiseLayerInt8, cv_dnn_Layer_to_EltwiseLayerInt8 }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ReduceLayer, cv_Layer_to_ReduceLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ErfLayer, cv_dnn_Layer_to_ErfLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::RegionLayer, cv_Layer_to_RegionLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::ExpLayer, cv_dnn_Layer_to_ExpLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ReorgLayer, cv_Layer_to_ReorgLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::FlattenLayer, cv_dnn_Layer_to_FlattenLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::RequantizeLayer, cv_Layer_to_RequantizeLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::FloorLayer, cv_dnn_Layer_to_FloorLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ReshapeLayer, cv_Layer_to_ReshapeLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::FlowWarpLayer, cv_dnn_Layer_to_FlowWarpLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ResizeLayer, cv_Layer_to_ResizeLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::GRULayer, cv_dnn_Layer_to_GRULayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ScaleLayer, cv_Layer_to_ScaleLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::GatherLayer, cv_dnn_Layer_to_GatherLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ScatterLayer, cv_Layer_to_ScatterLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::GeluApproximationLayer, cv_dnn_Layer_to_GeluApproximationLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ScatterNDLayer, cv_Layer_to_ScatterNDLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::GeluLayer, cv_dnn_Layer_to_GeluLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ShiftLayer, cv_Layer_to_ShiftLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::HardSigmoidLayer, cv_dnn_Layer_to_HardSigmoidLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ShiftLayerInt8, cv_Layer_to_ShiftLayerInt8 }
+	boxed_cast_descendant! { Layer, crate::dnn::HardSwishLayer, cv_dnn_Layer_to_HardSwishLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::ShuffleChannelLayer, cv_Layer_to_ShuffleChannelLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::InnerProductLayer, cv_dnn_Layer_to_InnerProductLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::SliceLayer, cv_Layer_to_SliceLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::InnerProductLayerInt8, cv_dnn_Layer_to_InnerProductLayerInt8 }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::SoftmaxLayer, cv_Layer_to_SoftmaxLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::InterpLayer, cv_dnn_Layer_to_InterpLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::SplitLayer, cv_Layer_to_SplitLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::LRNLayer, cv_dnn_Layer_to_LRNLayer }
 	
-	boxed_cast_descendant! { Layer, crate::dnn::TileLayer, cv_Layer_to_TileLayer }
+	boxed_cast_descendant! { Layer, crate::dnn::LSTMLayer, cv_dnn_Layer_to_LSTMLayer }
 	
-	boxed_cast_base! { Layer, core::Algorithm, cv_Layer_to_Algorithm }
+	boxed_cast_descendant! { Layer, crate::dnn::LayerNormLayer, cv_dnn_Layer_to_LayerNormLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::LogLayer, cv_dnn_Layer_to_LogLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::MVNLayer, cv_dnn_Layer_to_MVNLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::MaxUnpoolLayer, cv_dnn_Layer_to_MaxUnpoolLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::MishLayer, cv_dnn_Layer_to_MishLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::NaryEltwiseLayer, cv_dnn_Layer_to_NaryEltwiseLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::NormalizeBBoxLayer, cv_dnn_Layer_to_NormalizeBBoxLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::NotLayer, cv_dnn_Layer_to_NotLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::PaddingLayer, cv_dnn_Layer_to_PaddingLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::PermuteLayer, cv_dnn_Layer_to_PermuteLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::PoolingLayer, cv_dnn_Layer_to_PoolingLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::PoolingLayerInt8, cv_dnn_Layer_to_PoolingLayerInt8 }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::PowerLayer, cv_dnn_Layer_to_PowerLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::PriorBoxLayer, cv_dnn_Layer_to_PriorBoxLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ProposalLayer, cv_dnn_Layer_to_ProposalLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::QuantizeLayer, cv_dnn_Layer_to_QuantizeLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::RNNLayer, cv_dnn_Layer_to_RNNLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ReLU6Layer, cv_dnn_Layer_to_ReLU6Layer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ReLULayer, cv_dnn_Layer_to_ReLULayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ReciprocalLayer, cv_dnn_Layer_to_ReciprocalLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ReduceLayer, cv_dnn_Layer_to_ReduceLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::RegionLayer, cv_dnn_Layer_to_RegionLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ReorgLayer, cv_dnn_Layer_to_ReorgLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::RequantizeLayer, cv_dnn_Layer_to_RequantizeLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ReshapeLayer, cv_dnn_Layer_to_ReshapeLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ResizeLayer, cv_dnn_Layer_to_ResizeLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::RoundLayer, cv_dnn_Layer_to_RoundLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ScaleLayer, cv_dnn_Layer_to_ScaleLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ScaleLayerInt8, cv_dnn_Layer_to_ScaleLayerInt8 }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ScatterLayer, cv_dnn_Layer_to_ScatterLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ScatterNDLayer, cv_dnn_Layer_to_ScatterNDLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SeluLayer, cv_dnn_Layer_to_SeluLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ShiftLayer, cv_dnn_Layer_to_ShiftLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ShiftLayerInt8, cv_dnn_Layer_to_ShiftLayerInt8 }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ShrinkLayer, cv_dnn_Layer_to_ShrinkLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ShuffleChannelLayer, cv_dnn_Layer_to_ShuffleChannelLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SigmoidLayer, cv_dnn_Layer_to_SigmoidLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SignLayer, cv_dnn_Layer_to_SignLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SinLayer, cv_dnn_Layer_to_SinLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SinhLayer, cv_dnn_Layer_to_SinhLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SliceLayer, cv_dnn_Layer_to_SliceLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SoftmaxLayer, cv_dnn_Layer_to_SoftmaxLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SoftmaxLayerInt8, cv_dnn_Layer_to_SoftmaxLayerInt8 }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SoftplusLayer, cv_dnn_Layer_to_SoftplusLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SoftsignLayer, cv_dnn_Layer_to_SoftsignLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SplitLayer, cv_dnn_Layer_to_SplitLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SqrtLayer, cv_dnn_Layer_to_SqrtLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::SwishLayer, cv_dnn_Layer_to_SwishLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::TanHLayer, cv_dnn_Layer_to_TanHLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::TanLayer, cv_dnn_Layer_to_TanLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::ThresholdedReluLayer, cv_dnn_Layer_to_ThresholdedReluLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::TileLayer, cv_dnn_Layer_to_TileLayer }
+	
+	boxed_cast_base! { Layer, core::Algorithm, cv_dnn_Layer_to_Algorithm }
 	
 	impl std::fmt::Debug for Layer {
 		#[inline]
@@ -8754,8 +8796,7 @@ pub mod dnn {
 	impl Drop for LayerFactory {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LayerFactory_delete(instance: *mut c_void); }
-			unsafe { cv_LayerFactory_delete(self.as_raw_mut_LayerFactory()) };
+			unsafe { sys::cv_dnn_LayerFactory_delete(self.as_raw_mut_LayerFactory()) };
 		}
 	}
 	
@@ -8836,19 +8877,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn has_bias(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_LayerNormLayer_getPropHasBias_const(self.as_raw_LayerNormLayer()) };
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_propHasBias_const(self.as_raw_LayerNormLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn axis(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_LayerNormLayer_getPropAxis_const(self.as_raw_LayerNormLayer()) };
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_propAxis_const(self.as_raw_LayerNormLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn epsilon(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_LayerNormLayer_getPropEpsilon_const(self.as_raw_LayerNormLayer()) };
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_propEpsilon_const(self.as_raw_LayerNormLayer()) };
 			ret
 		}
 		
@@ -8860,19 +8901,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_has_bias(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_LayerNormLayer_setPropHasBias_bool(self.as_raw_mut_LayerNormLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_propHasBias_bool(self.as_raw_mut_LayerNormLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_axis(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_LayerNormLayer_setPropAxis_int(self.as_raw_mut_LayerNormLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_propAxis_int(self.as_raw_mut_LayerNormLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_epsilon(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_LayerNormLayer_setPropEpsilon_float(self.as_raw_mut_LayerNormLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_LayerNormLayer_propEpsilon_float(self.as_raw_mut_LayerNormLayer(), val) };
 			ret
 		}
 		
@@ -8887,8 +8928,7 @@ pub mod dnn {
 	impl Drop for LayerNormLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LayerNormLayer_delete(instance: *mut c_void); }
-			unsafe { cv_LayerNormLayer_delete(self.as_raw_mut_LayerNormLayer()) };
+			unsafe { sys::cv_dnn_LayerNormLayer_delete(self.as_raw_mut_LayerNormLayer()) };
 		}
 	}
 	
@@ -8931,9 +8971,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { LayerNormLayer, core::Algorithm, cv_LayerNormLayer_to_Algorithm }
+	boxed_cast_base! { LayerNormLayer, core::Algorithm, cv_dnn_LayerNormLayer_to_Algorithm }
 	
-	boxed_cast_base! { LayerNormLayer, crate::dnn::Layer, cv_LayerNormLayer_to_Layer }
+	boxed_cast_base! { LayerNormLayer, crate::dnn::Layer, cv_dnn_LayerNormLayer_to_Layer }
 	
 	impl std::fmt::Debug for LayerNormLayer {
 		#[inline]
@@ -8957,7 +8997,7 @@ pub mod dnn {
 		/// List of learned parameters stored as blobs.
 		#[inline]
 		fn blobs(&self) -> core::Vector<core::Mat> {
-			let ret = unsafe { sys::cv_dnn_LayerParams_getPropBlobs_const(self.as_raw_LayerParams()) };
+			let ret = unsafe { sys::cv_dnn_LayerParams_propBlobs_const(self.as_raw_LayerParams()) };
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			ret
 		}
@@ -8965,7 +9005,7 @@ pub mod dnn {
 		/// Name of the layer instance (optional, can be used internal purposes).
 		#[inline]
 		fn name(&self) -> String {
-			let ret = unsafe { sys::cv_dnn_LayerParams_getPropName_const(self.as_raw_LayerParams()) };
+			let ret = unsafe { sys::cv_dnn_LayerParams_propName_const(self.as_raw_LayerParams()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -8973,7 +9013,7 @@ pub mod dnn {
 		/// Type name which was used for creating layer by layer factory (optional).
 		#[inline]
 		fn typ(&self) -> String {
-			let ret = unsafe { sys::cv_dnn_LayerParams_getPropType_const(self.as_raw_LayerParams()) };
+			let ret = unsafe { sys::cv_dnn_LayerParams_propType_const(self.as_raw_LayerParams()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -8987,7 +9027,7 @@ pub mod dnn {
 		/// List of learned parameters stored as blobs.
 		#[inline]
 		fn set_blobs(&mut self, mut val: core::Vector<core::Mat>) {
-			let ret = unsafe { sys::cv_dnn_LayerParams_setPropBlobs_vectorLMatG(self.as_raw_mut_LayerParams(), val.as_raw_mut_VectorOfMat()) };
+			let ret = unsafe { sys::cv_dnn_LayerParams_propBlobs_vectorLMatG(self.as_raw_mut_LayerParams(), val.as_raw_mut_VectorOfMat()) };
 			ret
 		}
 		
@@ -8995,7 +9035,7 @@ pub mod dnn {
 		#[inline]
 		fn set_name(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_dnn_LayerParams_setPropName_String(self.as_raw_mut_LayerParams(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_dnn_LayerParams_propName_String(self.as_raw_mut_LayerParams(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
@@ -9003,7 +9043,7 @@ pub mod dnn {
 		#[inline]
 		fn set_type(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_dnn_LayerParams_setPropType_String(self.as_raw_mut_LayerParams(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_dnn_LayerParams_propType_String(self.as_raw_mut_LayerParams(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
@@ -9022,8 +9062,7 @@ pub mod dnn {
 	impl Drop for LayerParams {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LayerParams_delete(instance: *mut c_void); }
-			unsafe { cv_LayerParams_delete(self.as_raw_mut_LayerParams()) };
+			unsafe { sys::cv_dnn_LayerParams_delete(self.as_raw_mut_LayerParams()) };
 		}
 	}
 	
@@ -9046,9 +9085,19 @@ pub mod dnn {
 	}
 	
 	impl LayerParams {
+		#[inline]
+		pub fn default() -> Result<crate::dnn::LayerParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_LayerParams_new_const(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::LayerParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
-	boxed_cast_base! { LayerParams, crate::dnn::Dict, cv_LayerParams_to_Dict }
+	boxed_cast_base! { LayerParams, crate::dnn::Dict, cv_dnn_LayerParams_to_Dict }
 	
 	impl std::fmt::Debug for LayerParams {
 		#[inline]
@@ -9082,8 +9131,7 @@ pub mod dnn {
 	impl Drop for LogLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LogLayer_delete(instance: *mut c_void); }
-			unsafe { cv_LogLayer_delete(self.as_raw_mut_LogLayer()) };
+			unsafe { sys::cv_dnn_LogLayer_delete(self.as_raw_mut_LogLayer()) };
 		}
 	}
 	
@@ -9134,11 +9182,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { LogLayer, crate::dnn::ActivationLayer, cv_LogLayer_to_ActivationLayer }
+	boxed_cast_base! { LogLayer, crate::dnn::ActivationLayer, cv_dnn_LogLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { LogLayer, core::Algorithm, cv_LogLayer_to_Algorithm }
+	boxed_cast_base! { LogLayer, core::Algorithm, cv_dnn_LogLayer_to_Algorithm }
 	
-	boxed_cast_base! { LogLayer, crate::dnn::Layer, cv_LogLayer_to_Layer }
+	boxed_cast_base! { LogLayer, crate::dnn::Layer, cv_dnn_LogLayer_to_Layer }
 	
 	impl std::fmt::Debug for LogLayer {
 		#[inline]
@@ -9158,19 +9206,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn eps(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_MVNLayer_getPropEps_const(self.as_raw_MVNLayer()) };
+			let ret = unsafe { sys::cv_dnn_MVNLayer_propEps_const(self.as_raw_MVNLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn norm_variance(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_MVNLayer_getPropNormVariance_const(self.as_raw_MVNLayer()) };
+			let ret = unsafe { sys::cv_dnn_MVNLayer_propNormVariance_const(self.as_raw_MVNLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn across_channels(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_MVNLayer_getPropAcrossChannels_const(self.as_raw_MVNLayer()) };
+			let ret = unsafe { sys::cv_dnn_MVNLayer_propAcrossChannels_const(self.as_raw_MVNLayer()) };
 			ret
 		}
 		
@@ -9182,19 +9230,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_eps(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_MVNLayer_setPropEps_float(self.as_raw_mut_MVNLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_MVNLayer_propEps_float(self.as_raw_mut_MVNLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_norm_variance(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_MVNLayer_setPropNormVariance_bool(self.as_raw_mut_MVNLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_MVNLayer_propNormVariance_bool(self.as_raw_mut_MVNLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_across_channels(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_MVNLayer_setPropAcrossChannels_bool(self.as_raw_mut_MVNLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_MVNLayer_propAcrossChannels_bool(self.as_raw_mut_MVNLayer(), val) };
 			ret
 		}
 		
@@ -9209,8 +9257,7 @@ pub mod dnn {
 	impl Drop for MVNLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MVNLayer_delete(instance: *mut c_void); }
-			unsafe { cv_MVNLayer_delete(self.as_raw_mut_MVNLayer()) };
+			unsafe { sys::cv_dnn_MVNLayer_delete(self.as_raw_mut_MVNLayer()) };
 		}
 	}
 	
@@ -9253,9 +9300,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { MVNLayer, core::Algorithm, cv_MVNLayer_to_Algorithm }
+	boxed_cast_base! { MVNLayer, core::Algorithm, cv_dnn_MVNLayer_to_Algorithm }
 	
-	boxed_cast_base! { MVNLayer, crate::dnn::Layer, cv_MVNLayer_to_Layer }
+	boxed_cast_base! { MVNLayer, crate::dnn::Layer, cv_dnn_MVNLayer_to_Layer }
 	
 	impl std::fmt::Debug for MVNLayer {
 		#[inline]
@@ -9279,7 +9326,7 @@ pub mod dnn {
 		#[inline]
 		fn pool_kernel(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_MaxUnpoolLayer_getPropPoolKernel_const(self.as_raw_MaxUnpoolLayer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_MaxUnpoolLayer_propPoolKernel_const(self.as_raw_MaxUnpoolLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -9287,7 +9334,7 @@ pub mod dnn {
 		#[inline]
 		fn pool_pad(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_MaxUnpoolLayer_getPropPoolPad_const(self.as_raw_MaxUnpoolLayer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_MaxUnpoolLayer_propPoolPad_const(self.as_raw_MaxUnpoolLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -9295,7 +9342,7 @@ pub mod dnn {
 		#[inline]
 		fn pool_stride(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_MaxUnpoolLayer_getPropPoolStride_const(self.as_raw_MaxUnpoolLayer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_MaxUnpoolLayer_propPoolStride_const(self.as_raw_MaxUnpoolLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -9308,19 +9355,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_pool_kernel(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_dnn_MaxUnpoolLayer_setPropPoolKernel_Size(self.as_raw_mut_MaxUnpoolLayer(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dnn_MaxUnpoolLayer_propPoolKernel_Size(self.as_raw_mut_MaxUnpoolLayer(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pool_pad(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_dnn_MaxUnpoolLayer_setPropPoolPad_Size(self.as_raw_mut_MaxUnpoolLayer(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dnn_MaxUnpoolLayer_propPoolPad_Size(self.as_raw_mut_MaxUnpoolLayer(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pool_stride(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_dnn_MaxUnpoolLayer_setPropPoolStride_Size(self.as_raw_mut_MaxUnpoolLayer(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dnn_MaxUnpoolLayer_propPoolStride_Size(self.as_raw_mut_MaxUnpoolLayer(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -9335,8 +9382,7 @@ pub mod dnn {
 	impl Drop for MaxUnpoolLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MaxUnpoolLayer_delete(instance: *mut c_void); }
-			unsafe { cv_MaxUnpoolLayer_delete(self.as_raw_mut_MaxUnpoolLayer()) };
+			unsafe { sys::cv_dnn_MaxUnpoolLayer_delete(self.as_raw_mut_MaxUnpoolLayer()) };
 		}
 	}
 	
@@ -9379,9 +9425,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { MaxUnpoolLayer, core::Algorithm, cv_MaxUnpoolLayer_to_Algorithm }
+	boxed_cast_base! { MaxUnpoolLayer, core::Algorithm, cv_dnn_MaxUnpoolLayer_to_Algorithm }
 	
-	boxed_cast_base! { MaxUnpoolLayer, crate::dnn::Layer, cv_MaxUnpoolLayer_to_Layer }
+	boxed_cast_base! { MaxUnpoolLayer, crate::dnn::Layer, cv_dnn_MaxUnpoolLayer_to_Layer }
 	
 	impl std::fmt::Debug for MaxUnpoolLayer {
 		#[inline]
@@ -9419,8 +9465,7 @@ pub mod dnn {
 	impl Drop for MishLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MishLayer_delete(instance: *mut c_void); }
-			unsafe { cv_MishLayer_delete(self.as_raw_mut_MishLayer()) };
+			unsafe { sys::cv_dnn_MishLayer_delete(self.as_raw_mut_MishLayer()) };
 		}
 	}
 	
@@ -9471,11 +9516,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { MishLayer, crate::dnn::ActivationLayer, cv_MishLayer_to_ActivationLayer }
+	boxed_cast_base! { MishLayer, crate::dnn::ActivationLayer, cv_dnn_MishLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { MishLayer, core::Algorithm, cv_MishLayer_to_Algorithm }
+	boxed_cast_base! { MishLayer, core::Algorithm, cv_dnn_MishLayer_to_Algorithm }
 	
-	boxed_cast_base! { MishLayer, crate::dnn::Layer, cv_MishLayer_to_Layer }
+	boxed_cast_base! { MishLayer, crate::dnn::Layer, cv_dnn_MishLayer_to_Layer }
 	
 	impl std::fmt::Debug for MishLayer {
 		#[inline]
@@ -9685,8 +9730,7 @@ pub mod dnn {
 	impl Drop for Model {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Model_delete(instance: *mut c_void); }
-			unsafe { cv_Model_delete(self.as_raw_mut_Model()) };
+			unsafe { sys::cv_dnn_Model_delete(self.as_raw_mut_Model()) };
 		}
 	}
 	
@@ -9763,8 +9807,7 @@ pub mod dnn {
 	impl Clone for Model {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Model_implicitClone_const_Model(val: extern_send!(Model)) -> extern_receive!(Model: 'static); }
-			unsafe { Self::from_raw(cv_Model_implicitClone_const_Model(self.as_raw_Model())) }
+			unsafe { Self::from_raw(sys::cv_dnn_Model_implicitClone_const(self.as_raw_Model())) }
 		}
 	}
 	
@@ -9797,8 +9840,7 @@ pub mod dnn {
 	impl Drop for NaryEltwiseLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NaryEltwiseLayer_delete(instance: *mut c_void); }
-			unsafe { cv_NaryEltwiseLayer_delete(self.as_raw_mut_NaryEltwiseLayer()) };
+			unsafe { sys::cv_dnn_NaryEltwiseLayer_delete(self.as_raw_mut_NaryEltwiseLayer()) };
 		}
 	}
 	
@@ -9841,9 +9883,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { NaryEltwiseLayer, core::Algorithm, cv_NaryEltwiseLayer_to_Algorithm }
+	boxed_cast_base! { NaryEltwiseLayer, core::Algorithm, cv_dnn_NaryEltwiseLayer_to_Algorithm }
 	
-	boxed_cast_base! { NaryEltwiseLayer, crate::dnn::Layer, cv_NaryEltwiseLayer_to_Layer }
+	boxed_cast_base! { NaryEltwiseLayer, crate::dnn::Layer, cv_dnn_NaryEltwiseLayer_to_Layer }
 	
 	impl std::fmt::Debug for NaryEltwiseLayer {
 		#[inline]
@@ -10782,8 +10824,7 @@ pub mod dnn {
 	impl Drop for Net {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Net_delete(instance: *mut c_void); }
-			unsafe { cv_Net_delete(self.as_raw_mut_Net()) };
+			unsafe { sys::cv_dnn_Net_delete(self.as_raw_mut_Net()) };
 		}
 	}
 	
@@ -10865,8 +10906,7 @@ pub mod dnn {
 	impl Clone for Net {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Net_implicitClone_const_Net(val: extern_send!(Net)) -> extern_receive!(Net: 'static); }
-			unsafe { Self::from_raw(cv_Net_implicitClone_const_Net(self.as_raw_Net())) }
+			unsafe { Self::from_raw(sys::cv_dnn_Net_implicitClone_const(self.as_raw_Net())) }
 		}
 	}
 	
@@ -10884,19 +10924,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn pnorm(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_getPropPnorm_const(self.as_raw_NormalizeBBoxLayer()) };
+			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_propPnorm_const(self.as_raw_NormalizeBBoxLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn epsilon(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_getPropEpsilon_const(self.as_raw_NormalizeBBoxLayer()) };
+			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_propEpsilon_const(self.as_raw_NormalizeBBoxLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn across_spatial(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_getPropAcrossSpatial_const(self.as_raw_NormalizeBBoxLayer()) };
+			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_propAcrossSpatial_const(self.as_raw_NormalizeBBoxLayer()) };
 			ret
 		}
 		
@@ -10908,19 +10948,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_pnorm(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_setPropPnorm_float(self.as_raw_mut_NormalizeBBoxLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_propPnorm_float(self.as_raw_mut_NormalizeBBoxLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_epsilon(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_setPropEpsilon_float(self.as_raw_mut_NormalizeBBoxLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_propEpsilon_float(self.as_raw_mut_NormalizeBBoxLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_across_spatial(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_setPropAcrossSpatial_bool(self.as_raw_mut_NormalizeBBoxLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_NormalizeBBoxLayer_propAcrossSpatial_bool(self.as_raw_mut_NormalizeBBoxLayer(), val) };
 			ret
 		}
 		
@@ -10959,8 +10999,7 @@ pub mod dnn {
 	impl Drop for NormalizeBBoxLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NormalizeBBoxLayer_delete(instance: *mut c_void); }
-			unsafe { cv_NormalizeBBoxLayer_delete(self.as_raw_mut_NormalizeBBoxLayer()) };
+			unsafe { sys::cv_dnn_NormalizeBBoxLayer_delete(self.as_raw_mut_NormalizeBBoxLayer()) };
 		}
 	}
 	
@@ -11003,9 +11042,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { NormalizeBBoxLayer, core::Algorithm, cv_NormalizeBBoxLayer_to_Algorithm }
+	boxed_cast_base! { NormalizeBBoxLayer, core::Algorithm, cv_dnn_NormalizeBBoxLayer_to_Algorithm }
 	
-	boxed_cast_base! { NormalizeBBoxLayer, crate::dnn::Layer, cv_NormalizeBBoxLayer_to_Layer }
+	boxed_cast_base! { NormalizeBBoxLayer, crate::dnn::Layer, cv_dnn_NormalizeBBoxLayer_to_Layer }
 	
 	impl std::fmt::Debug for NormalizeBBoxLayer {
 		#[inline]
@@ -11043,8 +11082,7 @@ pub mod dnn {
 	impl Drop for NotLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NotLayer_delete(instance: *mut c_void); }
-			unsafe { cv_NotLayer_delete(self.as_raw_mut_NotLayer()) };
+			unsafe { sys::cv_dnn_NotLayer_delete(self.as_raw_mut_NotLayer()) };
 		}
 	}
 	
@@ -11095,11 +11133,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { NotLayer, crate::dnn::ActivationLayer, cv_NotLayer_to_ActivationLayer }
+	boxed_cast_base! { NotLayer, crate::dnn::ActivationLayer, cv_dnn_NotLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { NotLayer, core::Algorithm, cv_NotLayer_to_Algorithm }
+	boxed_cast_base! { NotLayer, core::Algorithm, cv_dnn_NotLayer_to_Algorithm }
 	
-	boxed_cast_base! { NotLayer, crate::dnn::Layer, cv_NotLayer_to_Layer }
+	boxed_cast_base! { NotLayer, crate::dnn::Layer, cv_dnn_NotLayer_to_Layer }
 	
 	impl std::fmt::Debug for NotLayer {
 		#[inline]
@@ -11154,8 +11192,7 @@ pub mod dnn {
 	impl Drop for PaddingLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PaddingLayer_delete(instance: *mut c_void); }
-			unsafe { cv_PaddingLayer_delete(self.as_raw_mut_PaddingLayer()) };
+			unsafe { sys::cv_dnn_PaddingLayer_delete(self.as_raw_mut_PaddingLayer()) };
 		}
 	}
 	
@@ -11198,9 +11235,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { PaddingLayer, core::Algorithm, cv_PaddingLayer_to_Algorithm }
+	boxed_cast_base! { PaddingLayer, core::Algorithm, cv_dnn_PaddingLayer_to_Algorithm }
 	
-	boxed_cast_base! { PaddingLayer, crate::dnn::Layer, cv_PaddingLayer_to_Layer }
+	boxed_cast_base! { PaddingLayer, crate::dnn::Layer, cv_dnn_PaddingLayer_to_Layer }
 	
 	impl std::fmt::Debug for PaddingLayer {
 		#[inline]
@@ -11235,8 +11272,7 @@ pub mod dnn {
 	impl Drop for PermuteLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PermuteLayer_delete(instance: *mut c_void); }
-			unsafe { cv_PermuteLayer_delete(self.as_raw_mut_PermuteLayer()) };
+			unsafe { sys::cv_dnn_PermuteLayer_delete(self.as_raw_mut_PermuteLayer()) };
 		}
 	}
 	
@@ -11279,9 +11315,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { PermuteLayer, core::Algorithm, cv_PermuteLayer_to_Algorithm }
+	boxed_cast_base! { PermuteLayer, core::Algorithm, cv_dnn_PermuteLayer_to_Algorithm }
 	
-	boxed_cast_base! { PermuteLayer, crate::dnn::Layer, cv_PermuteLayer_to_Layer }
+	boxed_cast_base! { PermuteLayer, crate::dnn::Layer, cv_dnn_PermuteLayer_to_Layer }
 	
 	impl std::fmt::Debug for PermuteLayer {
 		#[inline]
@@ -11301,34 +11337,34 @@ pub mod dnn {
 	
 		#[inline]
 		fn typ(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropType_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propType_const(self.as_raw_PoolingLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn kernel_size(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropKernel_size_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propKernel_size_const(self.as_raw_PoolingLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn strides(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropStrides_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propStrides_const(self.as_raw_PoolingLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pads_begin(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropPads_begin_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propPads_begin_const(self.as_raw_PoolingLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn pads_end(&self) -> core::Vector<size_t> {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropPads_end_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propPads_end_const(self.as_raw_PoolingLayer()) };
 			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
 			ret
 		}
@@ -11336,59 +11372,59 @@ pub mod dnn {
 		/// Flag is true if at least one of the axes is global pooled.
 		#[inline]
 		fn global_pooling(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropGlobalPooling_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propGlobalPooling_const(self.as_raw_PoolingLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn is_global_pooling(&self) -> core::Vector<bool> {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropIsGlobalPooling_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propIsGlobalPooling_const(self.as_raw_PoolingLayer()) };
 			let ret = unsafe { core::Vector::<bool>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn compute_max_idx(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropComputeMaxIdx_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propComputeMaxIdx_const(self.as_raw_PoolingLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn pad_mode(&self) -> String {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropPadMode_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propPadMode_const(self.as_raw_PoolingLayer()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn ceil_mode(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropCeilMode_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propCeilMode_const(self.as_raw_PoolingLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn ave_pool_padded_area(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropAvePoolPaddedArea_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propAvePoolPaddedArea_const(self.as_raw_PoolingLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn pooled_size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_PoolingLayer_getPropPooledSize_const(self.as_raw_PoolingLayer(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_PoolingLayer_propPooledSize_const(self.as_raw_PoolingLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn spatial_scale(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropSpatialScale_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propSpatialScale_const(self.as_raw_PoolingLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn ps_roi_out_channels(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_getPropPsRoiOutChannels_const(self.as_raw_PoolingLayer()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propPsRoiOutChannels_const(self.as_raw_PoolingLayer()) };
 			ret
 		}
 		
@@ -11400,87 +11436,87 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_type(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropType_int(self.as_raw_mut_PoolingLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propType_int(self.as_raw_mut_PoolingLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kernel_size(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropKernel_size_vectorLsize_tG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propKernel_size_vectorLsize_tG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_strides(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropStrides_vectorLsize_tG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propStrides_vectorLsize_tG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pads_begin(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropPads_begin_vectorLsize_tG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propPads_begin_vectorLsize_tG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pads_end(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropPads_end_vectorLsize_tG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propPads_end_vectorLsize_tG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfsize_t()) };
 			ret
 		}
 		
 		/// Flag is true if at least one of the axes is global pooled.
 		#[inline]
 		fn set_global_pooling(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropGlobalPooling_bool(self.as_raw_mut_PoolingLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propGlobalPooling_bool(self.as_raw_mut_PoolingLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_is_global_pooling(&mut self, mut val: core::Vector<bool>) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropIsGlobalPooling_vectorLboolG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfbool()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propIsGlobalPooling_vectorLboolG(self.as_raw_mut_PoolingLayer(), val.as_raw_mut_VectorOfbool()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_compute_max_idx(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropComputeMaxIdx_bool(self.as_raw_mut_PoolingLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propComputeMaxIdx_bool(self.as_raw_mut_PoolingLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pad_mode(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropPadMode_String(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propPadMode_String(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ceil_mode(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropCeilMode_bool(self.as_raw_mut_PoolingLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propCeilMode_bool(self.as_raw_mut_PoolingLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ave_pool_padded_area(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropAvePoolPaddedArea_bool(self.as_raw_mut_PoolingLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propAvePoolPaddedArea_bool(self.as_raw_mut_PoolingLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pooled_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropPooledSize_Size(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propPooledSize_Size(self.as_raw_mut_PoolingLayer(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_spatial_scale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropSpatialScale_float(self.as_raw_mut_PoolingLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propSpatialScale_float(self.as_raw_mut_PoolingLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ps_roi_out_channels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayer_setPropPsRoiOutChannels_int(self.as_raw_mut_PoolingLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayer_propPsRoiOutChannels_int(self.as_raw_mut_PoolingLayer(), val) };
 			ret
 		}
 		
@@ -11495,8 +11531,7 @@ pub mod dnn {
 	impl Drop for PoolingLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PoolingLayer_delete(instance: *mut c_void); }
-			unsafe { cv_PoolingLayer_delete(self.as_raw_mut_PoolingLayer()) };
+			unsafe { sys::cv_dnn_PoolingLayer_delete(self.as_raw_mut_PoolingLayer()) };
 		}
 	}
 	
@@ -11539,9 +11574,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { PoolingLayer, core::Algorithm, cv_PoolingLayer_to_Algorithm }
+	boxed_cast_base! { PoolingLayer, core::Algorithm, cv_dnn_PoolingLayer_to_Algorithm }
 	
-	boxed_cast_base! { PoolingLayer, crate::dnn::Layer, cv_PoolingLayer_to_Layer }
+	boxed_cast_base! { PoolingLayer, crate::dnn::Layer, cv_dnn_PoolingLayer_to_Layer }
 	
 	impl std::fmt::Debug for PoolingLayer {
 		#[inline]
@@ -11575,25 +11610,25 @@ pub mod dnn {
 	
 		#[inline]
 		fn input_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_getPropInput_zp_const(self.as_raw_PoolingLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_propInput_zp_const(self.as_raw_PoolingLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_getPropOutput_zp_const(self.as_raw_PoolingLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_propOutput_zp_const(self.as_raw_PoolingLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn input_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_getPropInput_sc_const(self.as_raw_PoolingLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_propInput_sc_const(self.as_raw_PoolingLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_getPropOutput_sc_const(self.as_raw_PoolingLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_propOutput_sc_const(self.as_raw_PoolingLayerInt8()) };
 			ret
 		}
 		
@@ -11605,25 +11640,25 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_input_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_setPropInput_zp_int(self.as_raw_mut_PoolingLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_propInput_zp_int(self.as_raw_mut_PoolingLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_setPropOutput_zp_int(self.as_raw_mut_PoolingLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_propOutput_zp_int(self.as_raw_mut_PoolingLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_input_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_setPropInput_sc_float(self.as_raw_mut_PoolingLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_propInput_sc_float(self.as_raw_mut_PoolingLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_setPropOutput_sc_float(self.as_raw_mut_PoolingLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_PoolingLayerInt8_propOutput_sc_float(self.as_raw_mut_PoolingLayerInt8(), val) };
 			ret
 		}
 		
@@ -11638,8 +11673,7 @@ pub mod dnn {
 	impl Drop for PoolingLayerInt8 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PoolingLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_PoolingLayerInt8_delete(self.as_raw_mut_PoolingLayerInt8()) };
+			unsafe { sys::cv_dnn_PoolingLayerInt8_delete(self.as_raw_mut_PoolingLayerInt8()) };
 		}
 	}
 	
@@ -11690,11 +11724,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { PoolingLayerInt8, core::Algorithm, cv_PoolingLayerInt8_to_Algorithm }
+	boxed_cast_base! { PoolingLayerInt8, core::Algorithm, cv_dnn_PoolingLayerInt8_to_Algorithm }
 	
-	boxed_cast_base! { PoolingLayerInt8, crate::dnn::Layer, cv_PoolingLayerInt8_to_Layer }
+	boxed_cast_base! { PoolingLayerInt8, crate::dnn::Layer, cv_dnn_PoolingLayerInt8_to_Layer }
 	
-	boxed_cast_base! { PoolingLayerInt8, crate::dnn::PoolingLayer, cv_PoolingLayerInt8_to_PoolingLayer }
+	boxed_cast_base! { PoolingLayerInt8, crate::dnn::PoolingLayer, cv_dnn_PoolingLayerInt8_to_PoolingLayer }
 	
 	impl std::fmt::Debug for PoolingLayerInt8 {
 		#[inline]
@@ -11732,19 +11766,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn power(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_PowerLayer_getPropPower_const(self.as_raw_PowerLayer()) };
+			let ret = unsafe { sys::cv_dnn_PowerLayer_propPower_const(self.as_raw_PowerLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn scale(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_PowerLayer_getPropScale_const(self.as_raw_PowerLayer()) };
+			let ret = unsafe { sys::cv_dnn_PowerLayer_propScale_const(self.as_raw_PowerLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn shift(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_PowerLayer_getPropShift_const(self.as_raw_PowerLayer()) };
+			let ret = unsafe { sys::cv_dnn_PowerLayer_propShift_const(self.as_raw_PowerLayer()) };
 			ret
 		}
 		
@@ -11756,19 +11790,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_power(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_PowerLayer_setPropPower_float(self.as_raw_mut_PowerLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PowerLayer_propPower_float(self.as_raw_mut_PowerLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_PowerLayer_setPropScale_float(self.as_raw_mut_PowerLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PowerLayer_propScale_float(self.as_raw_mut_PowerLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_shift(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_PowerLayer_setPropShift_float(self.as_raw_mut_PowerLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_PowerLayer_propShift_float(self.as_raw_mut_PowerLayer(), val) };
 			ret
 		}
 		
@@ -11783,8 +11817,7 @@ pub mod dnn {
 	impl Drop for PowerLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PowerLayer_delete(instance: *mut c_void); }
-			unsafe { cv_PowerLayer_delete(self.as_raw_mut_PowerLayer()) };
+			unsafe { sys::cv_dnn_PowerLayer_delete(self.as_raw_mut_PowerLayer()) };
 		}
 	}
 	
@@ -11835,11 +11868,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { PowerLayer, crate::dnn::ActivationLayer, cv_PowerLayer_to_ActivationLayer }
+	boxed_cast_base! { PowerLayer, crate::dnn::ActivationLayer, cv_dnn_PowerLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { PowerLayer, core::Algorithm, cv_PowerLayer_to_Algorithm }
+	boxed_cast_base! { PowerLayer, core::Algorithm, cv_dnn_PowerLayer_to_Algorithm }
 	
-	boxed_cast_base! { PowerLayer, crate::dnn::Layer, cv_PowerLayer_to_Layer }
+	boxed_cast_base! { PowerLayer, crate::dnn::Layer, cv_dnn_PowerLayer_to_Layer }
 	
 	impl std::fmt::Debug for PowerLayer {
 		#[inline]
@@ -11877,8 +11910,7 @@ pub mod dnn {
 	impl Drop for PriorBoxLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_PriorBoxLayer_delete(instance: *mut c_void); }
-			unsafe { cv_PriorBoxLayer_delete(self.as_raw_mut_PriorBoxLayer()) };
+			unsafe { sys::cv_dnn_PriorBoxLayer_delete(self.as_raw_mut_PriorBoxLayer()) };
 		}
 	}
 	
@@ -11921,9 +11953,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { PriorBoxLayer, core::Algorithm, cv_PriorBoxLayer_to_Algorithm }
+	boxed_cast_base! { PriorBoxLayer, core::Algorithm, cv_dnn_PriorBoxLayer_to_Algorithm }
 	
-	boxed_cast_base! { PriorBoxLayer, crate::dnn::Layer, cv_PriorBoxLayer_to_Layer }
+	boxed_cast_base! { PriorBoxLayer, crate::dnn::Layer, cv_dnn_PriorBoxLayer_to_Layer }
 	
 	impl std::fmt::Debug for PriorBoxLayer {
 		#[inline]
@@ -11958,8 +11990,7 @@ pub mod dnn {
 	impl Drop for ProposalLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ProposalLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ProposalLayer_delete(self.as_raw_mut_ProposalLayer()) };
+			unsafe { sys::cv_dnn_ProposalLayer_delete(self.as_raw_mut_ProposalLayer()) };
 		}
 	}
 	
@@ -12002,9 +12033,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ProposalLayer, core::Algorithm, cv_ProposalLayer_to_Algorithm }
+	boxed_cast_base! { ProposalLayer, core::Algorithm, cv_dnn_ProposalLayer_to_Algorithm }
 	
-	boxed_cast_base! { ProposalLayer, crate::dnn::Layer, cv_ProposalLayer_to_Layer }
+	boxed_cast_base! { ProposalLayer, crate::dnn::Layer, cv_dnn_ProposalLayer_to_Layer }
 	
 	impl std::fmt::Debug for ProposalLayer {
 		#[inline]
@@ -12024,14 +12055,14 @@ pub mod dnn {
 	
 		#[inline]
 		fn scales(&self) -> core::Vector<f32> {
-			let ret = unsafe { sys::cv_dnn_QuantizeLayer_getPropScales_const(self.as_raw_QuantizeLayer()) };
+			let ret = unsafe { sys::cv_dnn_QuantizeLayer_propScales_const(self.as_raw_QuantizeLayer()) };
 			let ret = unsafe { core::Vector::<f32>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn zeropoints(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_dnn_QuantizeLayer_getPropZeropoints_const(self.as_raw_QuantizeLayer()) };
+			let ret = unsafe { sys::cv_dnn_QuantizeLayer_propZeropoints_const(self.as_raw_QuantizeLayer()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
@@ -12044,13 +12075,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_scales(&mut self, mut val: core::Vector<f32>) {
-			let ret = unsafe { sys::cv_dnn_QuantizeLayer_setPropScales_vectorLfloatG(self.as_raw_mut_QuantizeLayer(), val.as_raw_mut_VectorOff32()) };
+			let ret = unsafe { sys::cv_dnn_QuantizeLayer_propScales_vectorLfloatG(self.as_raw_mut_QuantizeLayer(), val.as_raw_mut_VectorOff32()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_zeropoints(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_dnn_QuantizeLayer_setPropZeropoints_vectorLintG(self.as_raw_mut_QuantizeLayer(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_dnn_QuantizeLayer_propZeropoints_vectorLintG(self.as_raw_mut_QuantizeLayer(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
@@ -12065,8 +12096,7 @@ pub mod dnn {
 	impl Drop for QuantizeLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_QuantizeLayer_delete(instance: *mut c_void); }
-			unsafe { cv_QuantizeLayer_delete(self.as_raw_mut_QuantizeLayer()) };
+			unsafe { sys::cv_dnn_QuantizeLayer_delete(self.as_raw_mut_QuantizeLayer()) };
 		}
 	}
 	
@@ -12109,9 +12139,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { QuantizeLayer, core::Algorithm, cv_QuantizeLayer_to_Algorithm }
+	boxed_cast_base! { QuantizeLayer, core::Algorithm, cv_dnn_QuantizeLayer_to_Algorithm }
 	
-	boxed_cast_base! { QuantizeLayer, crate::dnn::Layer, cv_QuantizeLayer_to_Layer }
+	boxed_cast_base! { QuantizeLayer, crate::dnn::Layer, cv_dnn_QuantizeLayer_to_Layer }
 	
 	impl std::fmt::Debug for QuantizeLayer {
 		#[inline]
@@ -12197,8 +12227,7 @@ pub mod dnn {
 	impl Drop for RNNLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RNNLayer_delete(instance: *mut c_void); }
-			unsafe { cv_RNNLayer_delete(self.as_raw_mut_RNNLayer()) };
+			unsafe { sys::cv_dnn_RNNLayer_delete(self.as_raw_mut_RNNLayer()) };
 		}
 	}
 	
@@ -12242,9 +12271,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { RNNLayer, core::Algorithm, cv_RNNLayer_to_Algorithm }
+	boxed_cast_base! { RNNLayer, core::Algorithm, cv_dnn_RNNLayer_to_Algorithm }
 	
-	boxed_cast_base! { RNNLayer, crate::dnn::Layer, cv_RNNLayer_to_Layer }
+	boxed_cast_base! { RNNLayer, crate::dnn::Layer, cv_dnn_RNNLayer_to_Layer }
 	
 	impl std::fmt::Debug for RNNLayer {
 		#[inline]
@@ -12264,13 +12293,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn min_value(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ReLU6Layer_getPropMinValue_const(self.as_raw_ReLU6Layer()) };
+			let ret = unsafe { sys::cv_dnn_ReLU6Layer_propMinValue_const(self.as_raw_ReLU6Layer()) };
 			ret
 		}
 		
 		#[inline]
 		fn max_value(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ReLU6Layer_getPropMaxValue_const(self.as_raw_ReLU6Layer()) };
+			let ret = unsafe { sys::cv_dnn_ReLU6Layer_propMaxValue_const(self.as_raw_ReLU6Layer()) };
 			ret
 		}
 		
@@ -12282,13 +12311,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_min_value(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ReLU6Layer_setPropMinValue_float(self.as_raw_mut_ReLU6Layer(), val) };
+			let ret = unsafe { sys::cv_dnn_ReLU6Layer_propMinValue_float(self.as_raw_mut_ReLU6Layer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_max_value(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ReLU6Layer_setPropMaxValue_float(self.as_raw_mut_ReLU6Layer(), val) };
+			let ret = unsafe { sys::cv_dnn_ReLU6Layer_propMaxValue_float(self.as_raw_mut_ReLU6Layer(), val) };
 			ret
 		}
 		
@@ -12303,8 +12332,7 @@ pub mod dnn {
 	impl Drop for ReLU6Layer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ReLU6Layer_delete(instance: *mut c_void); }
-			unsafe { cv_ReLU6Layer_delete(self.as_raw_mut_ReLU6Layer()) };
+			unsafe { sys::cv_dnn_ReLU6Layer_delete(self.as_raw_mut_ReLU6Layer()) };
 		}
 	}
 	
@@ -12355,11 +12383,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ReLU6Layer, crate::dnn::ActivationLayer, cv_ReLU6Layer_to_ActivationLayer }
+	boxed_cast_base! { ReLU6Layer, crate::dnn::ActivationLayer, cv_dnn_ReLU6Layer_to_ActivationLayer }
 	
-	boxed_cast_base! { ReLU6Layer, core::Algorithm, cv_ReLU6Layer_to_Algorithm }
+	boxed_cast_base! { ReLU6Layer, core::Algorithm, cv_dnn_ReLU6Layer_to_Algorithm }
 	
-	boxed_cast_base! { ReLU6Layer, crate::dnn::Layer, cv_ReLU6Layer_to_Layer }
+	boxed_cast_base! { ReLU6Layer, crate::dnn::Layer, cv_dnn_ReLU6Layer_to_Layer }
 	
 	impl std::fmt::Debug for ReLU6Layer {
 		#[inline]
@@ -12381,7 +12409,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn negative_slope(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ReLULayer_getPropNegativeSlope_const(self.as_raw_ReLULayer()) };
+			let ret = unsafe { sys::cv_dnn_ReLULayer_propNegativeSlope_const(self.as_raw_ReLULayer()) };
 			ret
 		}
 		
@@ -12393,7 +12421,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_negative_slope(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ReLULayer_setPropNegativeSlope_float(self.as_raw_mut_ReLULayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ReLULayer_propNegativeSlope_float(self.as_raw_mut_ReLULayer(), val) };
 			ret
 		}
 		
@@ -12408,8 +12436,7 @@ pub mod dnn {
 	impl Drop for ReLULayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ReLULayer_delete(instance: *mut c_void); }
-			unsafe { cv_ReLULayer_delete(self.as_raw_mut_ReLULayer()) };
+			unsafe { sys::cv_dnn_ReLULayer_delete(self.as_raw_mut_ReLULayer()) };
 		}
 	}
 	
@@ -12460,11 +12487,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ReLULayer, crate::dnn::ActivationLayer, cv_ReLULayer_to_ActivationLayer }
+	boxed_cast_base! { ReLULayer, crate::dnn::ActivationLayer, cv_dnn_ReLULayer_to_ActivationLayer }
 	
-	boxed_cast_base! { ReLULayer, core::Algorithm, cv_ReLULayer_to_Algorithm }
+	boxed_cast_base! { ReLULayer, core::Algorithm, cv_dnn_ReLULayer_to_Algorithm }
 	
-	boxed_cast_base! { ReLULayer, crate::dnn::Layer, cv_ReLULayer_to_Layer }
+	boxed_cast_base! { ReLULayer, crate::dnn::Layer, cv_dnn_ReLULayer_to_Layer }
 	
 	impl std::fmt::Debug for ReLULayer {
 		#[inline]
@@ -12500,8 +12527,7 @@ pub mod dnn {
 	impl Drop for ReciprocalLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ReciprocalLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ReciprocalLayer_delete(self.as_raw_mut_ReciprocalLayer()) };
+			unsafe { sys::cv_dnn_ReciprocalLayer_delete(self.as_raw_mut_ReciprocalLayer()) };
 		}
 	}
 	
@@ -12552,11 +12578,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ReciprocalLayer, crate::dnn::ActivationLayer, cv_ReciprocalLayer_to_ActivationLayer }
+	boxed_cast_base! { ReciprocalLayer, crate::dnn::ActivationLayer, cv_dnn_ReciprocalLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { ReciprocalLayer, core::Algorithm, cv_ReciprocalLayer_to_Algorithm }
+	boxed_cast_base! { ReciprocalLayer, core::Algorithm, cv_dnn_ReciprocalLayer_to_Algorithm }
 	
-	boxed_cast_base! { ReciprocalLayer, crate::dnn::Layer, cv_ReciprocalLayer_to_Layer }
+	boxed_cast_base! { ReciprocalLayer, crate::dnn::Layer, cv_dnn_ReciprocalLayer_to_Layer }
 	
 	impl std::fmt::Debug for ReciprocalLayer {
 		#[inline]
@@ -12591,8 +12617,7 @@ pub mod dnn {
 	impl Drop for ReduceLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ReduceLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ReduceLayer_delete(self.as_raw_mut_ReduceLayer()) };
+			unsafe { sys::cv_dnn_ReduceLayer_delete(self.as_raw_mut_ReduceLayer()) };
 		}
 	}
 	
@@ -12635,9 +12660,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ReduceLayer, core::Algorithm, cv_ReduceLayer_to_Algorithm }
+	boxed_cast_base! { ReduceLayer, core::Algorithm, cv_dnn_ReduceLayer_to_Algorithm }
 	
-	boxed_cast_base! { ReduceLayer, crate::dnn::Layer, cv_ReduceLayer_to_Layer }
+	boxed_cast_base! { ReduceLayer, crate::dnn::Layer, cv_dnn_ReduceLayer_to_Layer }
 	
 	impl std::fmt::Debug for ReduceLayer {
 		#[inline]
@@ -12657,7 +12682,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn nms_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_RegionLayer_getPropNmsThreshold_const(self.as_raw_RegionLayer()) };
+			let ret = unsafe { sys::cv_dnn_RegionLayer_propNmsThreshold_const(self.as_raw_RegionLayer()) };
 			ret
 		}
 		
@@ -12669,7 +12694,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_nms_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_RegionLayer_setPropNmsThreshold_float(self.as_raw_mut_RegionLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_RegionLayer_propNmsThreshold_float(self.as_raw_mut_RegionLayer(), val) };
 			ret
 		}
 		
@@ -12684,8 +12709,7 @@ pub mod dnn {
 	impl Drop for RegionLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RegionLayer_delete(instance: *mut c_void); }
-			unsafe { cv_RegionLayer_delete(self.as_raw_mut_RegionLayer()) };
+			unsafe { sys::cv_dnn_RegionLayer_delete(self.as_raw_mut_RegionLayer()) };
 		}
 	}
 	
@@ -12728,9 +12752,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { RegionLayer, core::Algorithm, cv_RegionLayer_to_Algorithm }
+	boxed_cast_base! { RegionLayer, core::Algorithm, cv_dnn_RegionLayer_to_Algorithm }
 	
-	boxed_cast_base! { RegionLayer, crate::dnn::Layer, cv_RegionLayer_to_Layer }
+	boxed_cast_base! { RegionLayer, crate::dnn::Layer, cv_dnn_RegionLayer_to_Layer }
 	
 	impl std::fmt::Debug for RegionLayer {
 		#[inline]
@@ -12766,8 +12790,7 @@ pub mod dnn {
 	impl Drop for ReorgLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ReorgLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ReorgLayer_delete(self.as_raw_mut_ReorgLayer()) };
+			unsafe { sys::cv_dnn_ReorgLayer_delete(self.as_raw_mut_ReorgLayer()) };
 		}
 	}
 	
@@ -12810,9 +12833,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ReorgLayer, core::Algorithm, cv_ReorgLayer_to_Algorithm }
+	boxed_cast_base! { ReorgLayer, core::Algorithm, cv_dnn_ReorgLayer_to_Algorithm }
 	
-	boxed_cast_base! { ReorgLayer, crate::dnn::Layer, cv_ReorgLayer_to_Layer }
+	boxed_cast_base! { ReorgLayer, crate::dnn::Layer, cv_dnn_ReorgLayer_to_Layer }
 	
 	impl std::fmt::Debug for ReorgLayer {
 		#[inline]
@@ -12832,13 +12855,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn scale(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_RequantizeLayer_getPropScale_const(self.as_raw_RequantizeLayer()) };
+			let ret = unsafe { sys::cv_dnn_RequantizeLayer_propScale_const(self.as_raw_RequantizeLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn shift(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_RequantizeLayer_getPropShift_const(self.as_raw_RequantizeLayer()) };
+			let ret = unsafe { sys::cv_dnn_RequantizeLayer_propShift_const(self.as_raw_RequantizeLayer()) };
 			ret
 		}
 		
@@ -12850,13 +12873,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_scale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_RequantizeLayer_setPropScale_float(self.as_raw_mut_RequantizeLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_RequantizeLayer_propScale_float(self.as_raw_mut_RequantizeLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_shift(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_RequantizeLayer_setPropShift_float(self.as_raw_mut_RequantizeLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_RequantizeLayer_propShift_float(self.as_raw_mut_RequantizeLayer(), val) };
 			ret
 		}
 		
@@ -12871,8 +12894,7 @@ pub mod dnn {
 	impl Drop for RequantizeLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RequantizeLayer_delete(instance: *mut c_void); }
-			unsafe { cv_RequantizeLayer_delete(self.as_raw_mut_RequantizeLayer()) };
+			unsafe { sys::cv_dnn_RequantizeLayer_delete(self.as_raw_mut_RequantizeLayer()) };
 		}
 	}
 	
@@ -12915,9 +12937,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { RequantizeLayer, core::Algorithm, cv_RequantizeLayer_to_Algorithm }
+	boxed_cast_base! { RequantizeLayer, core::Algorithm, cv_dnn_RequantizeLayer_to_Algorithm }
 	
-	boxed_cast_base! { RequantizeLayer, crate::dnn::Layer, cv_RequantizeLayer_to_Layer }
+	boxed_cast_base! { RequantizeLayer, crate::dnn::Layer, cv_dnn_RequantizeLayer_to_Layer }
 	
 	impl std::fmt::Debug for RequantizeLayer {
 		#[inline]
@@ -12939,14 +12961,14 @@ pub mod dnn {
 	
 		#[inline]
 		fn new_shape_desc(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_dnn_ReshapeLayer_getPropNewShapeDesc_const(self.as_raw_ReshapeLayer()) };
+			let ret = unsafe { sys::cv_dnn_ReshapeLayer_propNewShapeDesc_const(self.as_raw_ReshapeLayer()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn new_shape_range(&self) -> core::Range {
-			let ret = unsafe { sys::cv_dnn_ReshapeLayer_getPropNewShapeRange_const(self.as_raw_ReshapeLayer()) };
+			let ret = unsafe { sys::cv_dnn_ReshapeLayer_propNewShapeRange_const(self.as_raw_ReshapeLayer()) };
 			let ret = unsafe { core::Range::opencv_from_extern(ret) };
 			ret
 		}
@@ -12959,13 +12981,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_new_shape_desc(&mut self, mut val: crate::dnn::MatShape) {
-			let ret = unsafe { sys::cv_dnn_ReshapeLayer_setPropNewShapeDesc_MatShape(self.as_raw_mut_ReshapeLayer(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_dnn_ReshapeLayer_propNewShapeDesc_MatShape(self.as_raw_mut_ReshapeLayer(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_new_shape_range(&mut self, mut val: core::Range) {
-			let ret = unsafe { sys::cv_dnn_ReshapeLayer_setPropNewShapeRange_Range(self.as_raw_mut_ReshapeLayer(), val.as_raw_mut_Range()) };
+			let ret = unsafe { sys::cv_dnn_ReshapeLayer_propNewShapeRange_Range(self.as_raw_mut_ReshapeLayer(), val.as_raw_mut_Range()) };
 			ret
 		}
 		
@@ -12980,8 +13002,7 @@ pub mod dnn {
 	impl Drop for ReshapeLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ReshapeLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ReshapeLayer_delete(self.as_raw_mut_ReshapeLayer()) };
+			unsafe { sys::cv_dnn_ReshapeLayer_delete(self.as_raw_mut_ReshapeLayer()) };
 		}
 	}
 	
@@ -13024,9 +13045,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ReshapeLayer, core::Algorithm, cv_ReshapeLayer_to_Algorithm }
+	boxed_cast_base! { ReshapeLayer, core::Algorithm, cv_dnn_ReshapeLayer_to_Algorithm }
 	
-	boxed_cast_base! { ReshapeLayer, crate::dnn::Layer, cv_ReshapeLayer_to_Layer }
+	boxed_cast_base! { ReshapeLayer, crate::dnn::Layer, cv_dnn_ReshapeLayer_to_Layer }
 	
 	impl std::fmt::Debug for ReshapeLayer {
 		#[inline]
@@ -13066,8 +13087,7 @@ pub mod dnn {
 	impl Drop for ResizeLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ResizeLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ResizeLayer_delete(self.as_raw_mut_ResizeLayer()) };
+			unsafe { sys::cv_dnn_ResizeLayer_delete(self.as_raw_mut_ResizeLayer()) };
 		}
 	}
 	
@@ -13110,9 +13130,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ResizeLayer, core::Algorithm, cv_ResizeLayer_to_Algorithm }
+	boxed_cast_base! { ResizeLayer, core::Algorithm, cv_dnn_ResizeLayer_to_Algorithm }
 	
-	boxed_cast_base! { ResizeLayer, crate::dnn::Layer, cv_ResizeLayer_to_Layer }
+	boxed_cast_base! { ResizeLayer, crate::dnn::Layer, cv_dnn_ResizeLayer_to_Layer }
 	
 	impl std::fmt::Debug for ResizeLayer {
 		#[inline]
@@ -13147,8 +13167,7 @@ pub mod dnn {
 	impl Drop for RoundLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RoundLayer_delete(instance: *mut c_void); }
-			unsafe { cv_RoundLayer_delete(self.as_raw_mut_RoundLayer()) };
+			unsafe { sys::cv_dnn_RoundLayer_delete(self.as_raw_mut_RoundLayer()) };
 		}
 	}
 	
@@ -13199,11 +13218,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { RoundLayer, crate::dnn::ActivationLayer, cv_RoundLayer_to_ActivationLayer }
+	boxed_cast_base! { RoundLayer, crate::dnn::ActivationLayer, cv_dnn_RoundLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { RoundLayer, core::Algorithm, cv_RoundLayer_to_Algorithm }
+	boxed_cast_base! { RoundLayer, core::Algorithm, cv_dnn_RoundLayer_to_Algorithm }
 	
-	boxed_cast_base! { RoundLayer, crate::dnn::Layer, cv_RoundLayer_to_Layer }
+	boxed_cast_base! { RoundLayer, crate::dnn::Layer, cv_dnn_RoundLayer_to_Layer }
 	
 	impl std::fmt::Debug for RoundLayer {
 		#[inline]
@@ -13223,19 +13242,19 @@ pub mod dnn {
 	
 		#[inline]
 		fn has_bias(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_ScaleLayer_getPropHasBias_const(self.as_raw_ScaleLayer()) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayer_propHasBias_const(self.as_raw_ScaleLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn axis(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_ScaleLayer_getPropAxis_const(self.as_raw_ScaleLayer()) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayer_propAxis_const(self.as_raw_ScaleLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn mode(&self) -> String {
-			let ret = unsafe { sys::cv_dnn_ScaleLayer_getPropMode_const(self.as_raw_ScaleLayer()) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayer_propMode_const(self.as_raw_ScaleLayer()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -13248,20 +13267,20 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_has_bias(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_ScaleLayer_setPropHasBias_bool(self.as_raw_mut_ScaleLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayer_propHasBias_bool(self.as_raw_mut_ScaleLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_axis(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_ScaleLayer_setPropAxis_int(self.as_raw_mut_ScaleLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayer_propAxis_int(self.as_raw_mut_ScaleLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_mode(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_dnn_ScaleLayer_setPropMode_String(self.as_raw_mut_ScaleLayer(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayer_propMode_String(self.as_raw_mut_ScaleLayer(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
@@ -13276,8 +13295,7 @@ pub mod dnn {
 	impl Drop for ScaleLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ScaleLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ScaleLayer_delete(self.as_raw_mut_ScaleLayer()) };
+			unsafe { sys::cv_dnn_ScaleLayer_delete(self.as_raw_mut_ScaleLayer()) };
 		}
 	}
 	
@@ -13320,9 +13338,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ScaleLayer, core::Algorithm, cv_ScaleLayer_to_Algorithm }
+	boxed_cast_base! { ScaleLayer, core::Algorithm, cv_dnn_ScaleLayer_to_Algorithm }
 	
-	boxed_cast_base! { ScaleLayer, crate::dnn::Layer, cv_ScaleLayer_to_Layer }
+	boxed_cast_base! { ScaleLayer, crate::dnn::Layer, cv_dnn_ScaleLayer_to_Layer }
 	
 	impl std::fmt::Debug for ScaleLayer {
 		#[inline]
@@ -13345,13 +13363,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn output_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ScaleLayerInt8_getPropOutput_sc_const(self.as_raw_ScaleLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayerInt8_propOutput_sc_const(self.as_raw_ScaleLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_ScaleLayerInt8_getPropOutput_zp_const(self.as_raw_ScaleLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayerInt8_propOutput_zp_const(self.as_raw_ScaleLayerInt8()) };
 			ret
 		}
 		
@@ -13363,13 +13381,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_output_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ScaleLayerInt8_setPropOutput_sc_float(self.as_raw_mut_ScaleLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayerInt8_propOutput_sc_float(self.as_raw_mut_ScaleLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_ScaleLayerInt8_setPropOutput_zp_int(self.as_raw_mut_ScaleLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_ScaleLayerInt8_propOutput_zp_int(self.as_raw_mut_ScaleLayerInt8(), val) };
 			ret
 		}
 		
@@ -13384,8 +13402,7 @@ pub mod dnn {
 	impl Drop for ScaleLayerInt8 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ScaleLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_ScaleLayerInt8_delete(self.as_raw_mut_ScaleLayerInt8()) };
+			unsafe { sys::cv_dnn_ScaleLayerInt8_delete(self.as_raw_mut_ScaleLayerInt8()) };
 		}
 	}
 	
@@ -13436,11 +13453,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ScaleLayerInt8, core::Algorithm, cv_ScaleLayerInt8_to_Algorithm }
+	boxed_cast_base! { ScaleLayerInt8, core::Algorithm, cv_dnn_ScaleLayerInt8_to_Algorithm }
 	
-	boxed_cast_base! { ScaleLayerInt8, crate::dnn::Layer, cv_ScaleLayerInt8_to_Layer }
+	boxed_cast_base! { ScaleLayerInt8, crate::dnn::Layer, cv_dnn_ScaleLayerInt8_to_Layer }
 	
-	boxed_cast_base! { ScaleLayerInt8, crate::dnn::ScaleLayer, cv_ScaleLayerInt8_to_ScaleLayer }
+	boxed_cast_base! { ScaleLayerInt8, crate::dnn::ScaleLayer, cv_dnn_ScaleLayerInt8_to_ScaleLayer }
 	
 	impl std::fmt::Debug for ScaleLayerInt8 {
 		#[inline]
@@ -13480,8 +13497,7 @@ pub mod dnn {
 	impl Drop for ScatterLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ScatterLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ScatterLayer_delete(self.as_raw_mut_ScatterLayer()) };
+			unsafe { sys::cv_dnn_ScatterLayer_delete(self.as_raw_mut_ScatterLayer()) };
 		}
 	}
 	
@@ -13524,9 +13540,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ScatterLayer, core::Algorithm, cv_ScatterLayer_to_Algorithm }
+	boxed_cast_base! { ScatterLayer, core::Algorithm, cv_dnn_ScatterLayer_to_Algorithm }
 	
-	boxed_cast_base! { ScatterLayer, crate::dnn::Layer, cv_ScatterLayer_to_Layer }
+	boxed_cast_base! { ScatterLayer, crate::dnn::Layer, cv_dnn_ScatterLayer_to_Layer }
 	
 	impl std::fmt::Debug for ScatterLayer {
 		#[inline]
@@ -13561,8 +13577,7 @@ pub mod dnn {
 	impl Drop for ScatterNDLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ScatterNDLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ScatterNDLayer_delete(self.as_raw_mut_ScatterNDLayer()) };
+			unsafe { sys::cv_dnn_ScatterNDLayer_delete(self.as_raw_mut_ScatterNDLayer()) };
 		}
 	}
 	
@@ -13605,9 +13620,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ScatterNDLayer, core::Algorithm, cv_ScatterNDLayer_to_Algorithm }
+	boxed_cast_base! { ScatterNDLayer, core::Algorithm, cv_dnn_ScatterNDLayer_to_Algorithm }
 	
-	boxed_cast_base! { ScatterNDLayer, crate::dnn::Layer, cv_ScatterNDLayer_to_Layer }
+	boxed_cast_base! { ScatterNDLayer, crate::dnn::Layer, cv_dnn_ScatterNDLayer_to_Layer }
 	
 	impl std::fmt::Debug for ScatterNDLayer {
 		#[inline]
@@ -13662,8 +13677,7 @@ pub mod dnn {
 	impl Drop for SegmentationModel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SegmentationModel_delete(instance: *mut c_void); }
-			unsafe { cv_SegmentationModel_delete(self.as_raw_mut_SegmentationModel()) };
+			unsafe { sys::cv_dnn_SegmentationModel_delete(self.as_raw_mut_SegmentationModel()) };
 		}
 	}
 	
@@ -13724,12 +13738,11 @@ pub mod dnn {
 	impl Clone for SegmentationModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_SegmentationModel_implicitClone_const_SegmentationModel(val: extern_send!(SegmentationModel)) -> extern_receive!(SegmentationModel: 'static); }
-			unsafe { Self::from_raw(cv_SegmentationModel_implicitClone_const_SegmentationModel(self.as_raw_SegmentationModel())) }
+			unsafe { Self::from_raw(sys::cv_dnn_SegmentationModel_implicitClone_const(self.as_raw_SegmentationModel())) }
 		}
 	}
 	
-	boxed_cast_base! { SegmentationModel, crate::dnn::Model, cv_SegmentationModel_to_Model }
+	boxed_cast_base! { SegmentationModel, crate::dnn::Model, cv_dnn_SegmentationModel_to_Model }
 	
 	impl std::fmt::Debug for SegmentationModel {
 		#[inline]
@@ -13745,13 +13758,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn alpha(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_SeluLayer_getPropAlpha_const(self.as_raw_SeluLayer()) };
+			let ret = unsafe { sys::cv_dnn_SeluLayer_propAlpha_const(self.as_raw_SeluLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn gamma(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_SeluLayer_getPropGamma_const(self.as_raw_SeluLayer()) };
+			let ret = unsafe { sys::cv_dnn_SeluLayer_propGamma_const(self.as_raw_SeluLayer()) };
 			ret
 		}
 		
@@ -13763,13 +13776,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_alpha(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_SeluLayer_setPropAlpha_float(self.as_raw_mut_SeluLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_SeluLayer_propAlpha_float(self.as_raw_mut_SeluLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_gamma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_SeluLayer_setPropGamma_float(self.as_raw_mut_SeluLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_SeluLayer_propGamma_float(self.as_raw_mut_SeluLayer(), val) };
 			ret
 		}
 		
@@ -13784,8 +13797,7 @@ pub mod dnn {
 	impl Drop for SeluLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SeluLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SeluLayer_delete(self.as_raw_mut_SeluLayer()) };
+			unsafe { sys::cv_dnn_SeluLayer_delete(self.as_raw_mut_SeluLayer()) };
 		}
 	}
 	
@@ -13836,11 +13848,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SeluLayer, crate::dnn::ActivationLayer, cv_SeluLayer_to_ActivationLayer }
+	boxed_cast_base! { SeluLayer, crate::dnn::ActivationLayer, cv_dnn_SeluLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { SeluLayer, core::Algorithm, cv_SeluLayer_to_Algorithm }
+	boxed_cast_base! { SeluLayer, core::Algorithm, cv_dnn_SeluLayer_to_Algorithm }
 	
-	boxed_cast_base! { SeluLayer, crate::dnn::Layer, cv_SeluLayer_to_Layer }
+	boxed_cast_base! { SeluLayer, crate::dnn::Layer, cv_dnn_SeluLayer_to_Layer }
 	
 	impl std::fmt::Debug for SeluLayer {
 		#[inline]
@@ -13877,8 +13889,7 @@ pub mod dnn {
 	impl Drop for ShiftLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ShiftLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ShiftLayer_delete(self.as_raw_mut_ShiftLayer()) };
+			unsafe { sys::cv_dnn_ShiftLayer_delete(self.as_raw_mut_ShiftLayer()) };
 		}
 	}
 	
@@ -13921,9 +13932,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ShiftLayer, core::Algorithm, cv_ShiftLayer_to_Algorithm }
+	boxed_cast_base! { ShiftLayer, core::Algorithm, cv_dnn_ShiftLayer_to_Algorithm }
 	
-	boxed_cast_base! { ShiftLayer, crate::dnn::Layer, cv_ShiftLayer_to_Layer }
+	boxed_cast_base! { ShiftLayer, crate::dnn::Layer, cv_dnn_ShiftLayer_to_Layer }
 	
 	impl std::fmt::Debug for ShiftLayer {
 		#[inline]
@@ -13958,8 +13969,7 @@ pub mod dnn {
 	impl Drop for ShiftLayerInt8 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ShiftLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_ShiftLayerInt8_delete(self.as_raw_mut_ShiftLayerInt8()) };
+			unsafe { sys::cv_dnn_ShiftLayerInt8_delete(self.as_raw_mut_ShiftLayerInt8()) };
 		}
 	}
 	
@@ -14002,9 +14012,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ShiftLayerInt8, core::Algorithm, cv_ShiftLayerInt8_to_Algorithm }
+	boxed_cast_base! { ShiftLayerInt8, core::Algorithm, cv_dnn_ShiftLayerInt8_to_Algorithm }
 	
-	boxed_cast_base! { ShiftLayerInt8, crate::dnn::Layer, cv_ShiftLayerInt8_to_Layer }
+	boxed_cast_base! { ShiftLayerInt8, crate::dnn::Layer, cv_dnn_ShiftLayerInt8_to_Layer }
 	
 	impl std::fmt::Debug for ShiftLayerInt8 {
 		#[inline]
@@ -14024,13 +14034,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn bias(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ShrinkLayer_getPropBias_const(self.as_raw_ShrinkLayer()) };
+			let ret = unsafe { sys::cv_dnn_ShrinkLayer_propBias_const(self.as_raw_ShrinkLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn lambd(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ShrinkLayer_getPropLambd_const(self.as_raw_ShrinkLayer()) };
+			let ret = unsafe { sys::cv_dnn_ShrinkLayer_propLambd_const(self.as_raw_ShrinkLayer()) };
 			ret
 		}
 		
@@ -14042,13 +14052,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_bias(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ShrinkLayer_setPropBias_float(self.as_raw_mut_ShrinkLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ShrinkLayer_propBias_float(self.as_raw_mut_ShrinkLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_lambd(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ShrinkLayer_setPropLambd_float(self.as_raw_mut_ShrinkLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ShrinkLayer_propLambd_float(self.as_raw_mut_ShrinkLayer(), val) };
 			ret
 		}
 		
@@ -14063,8 +14073,7 @@ pub mod dnn {
 	impl Drop for ShrinkLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ShrinkLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ShrinkLayer_delete(self.as_raw_mut_ShrinkLayer()) };
+			unsafe { sys::cv_dnn_ShrinkLayer_delete(self.as_raw_mut_ShrinkLayer()) };
 		}
 	}
 	
@@ -14115,11 +14124,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ShrinkLayer, crate::dnn::ActivationLayer, cv_ShrinkLayer_to_ActivationLayer }
+	boxed_cast_base! { ShrinkLayer, crate::dnn::ActivationLayer, cv_dnn_ShrinkLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { ShrinkLayer, core::Algorithm, cv_ShrinkLayer_to_Algorithm }
+	boxed_cast_base! { ShrinkLayer, core::Algorithm, cv_dnn_ShrinkLayer_to_Algorithm }
 	
-	boxed_cast_base! { ShrinkLayer, crate::dnn::Layer, cv_ShrinkLayer_to_Layer }
+	boxed_cast_base! { ShrinkLayer, crate::dnn::Layer, cv_dnn_ShrinkLayer_to_Layer }
 	
 	impl std::fmt::Debug for ShrinkLayer {
 		#[inline]
@@ -14141,7 +14150,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn group(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_ShuffleChannelLayer_getPropGroup_const(self.as_raw_ShuffleChannelLayer()) };
+			let ret = unsafe { sys::cv_dnn_ShuffleChannelLayer_propGroup_const(self.as_raw_ShuffleChannelLayer()) };
 			ret
 		}
 		
@@ -14153,7 +14162,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_group(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_ShuffleChannelLayer_setPropGroup_int(self.as_raw_mut_ShuffleChannelLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ShuffleChannelLayer_propGroup_int(self.as_raw_mut_ShuffleChannelLayer(), val) };
 			ret
 		}
 		
@@ -14176,8 +14185,7 @@ pub mod dnn {
 	impl Drop for ShuffleChannelLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ShuffleChannelLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ShuffleChannelLayer_delete(self.as_raw_mut_ShuffleChannelLayer()) };
+			unsafe { sys::cv_dnn_ShuffleChannelLayer_delete(self.as_raw_mut_ShuffleChannelLayer()) };
 		}
 	}
 	
@@ -14220,9 +14228,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ShuffleChannelLayer, core::Algorithm, cv_ShuffleChannelLayer_to_Algorithm }
+	boxed_cast_base! { ShuffleChannelLayer, core::Algorithm, cv_dnn_ShuffleChannelLayer_to_Algorithm }
 	
-	boxed_cast_base! { ShuffleChannelLayer, crate::dnn::Layer, cv_ShuffleChannelLayer_to_Layer }
+	boxed_cast_base! { ShuffleChannelLayer, crate::dnn::Layer, cv_dnn_ShuffleChannelLayer_to_Layer }
 	
 	impl std::fmt::Debug for ShuffleChannelLayer {
 		#[inline]
@@ -14258,8 +14266,7 @@ pub mod dnn {
 	impl Drop for SigmoidLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SigmoidLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SigmoidLayer_delete(self.as_raw_mut_SigmoidLayer()) };
+			unsafe { sys::cv_dnn_SigmoidLayer_delete(self.as_raw_mut_SigmoidLayer()) };
 		}
 	}
 	
@@ -14310,11 +14317,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SigmoidLayer, crate::dnn::ActivationLayer, cv_SigmoidLayer_to_ActivationLayer }
+	boxed_cast_base! { SigmoidLayer, crate::dnn::ActivationLayer, cv_dnn_SigmoidLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { SigmoidLayer, core::Algorithm, cv_SigmoidLayer_to_Algorithm }
+	boxed_cast_base! { SigmoidLayer, core::Algorithm, cv_dnn_SigmoidLayer_to_Algorithm }
 	
-	boxed_cast_base! { SigmoidLayer, crate::dnn::Layer, cv_SigmoidLayer_to_Layer }
+	boxed_cast_base! { SigmoidLayer, crate::dnn::Layer, cv_dnn_SigmoidLayer_to_Layer }
 	
 	impl std::fmt::Debug for SigmoidLayer {
 		#[inline]
@@ -14349,8 +14356,7 @@ pub mod dnn {
 	impl Drop for SignLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SignLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SignLayer_delete(self.as_raw_mut_SignLayer()) };
+			unsafe { sys::cv_dnn_SignLayer_delete(self.as_raw_mut_SignLayer()) };
 		}
 	}
 	
@@ -14401,11 +14407,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SignLayer, crate::dnn::ActivationLayer, cv_SignLayer_to_ActivationLayer }
+	boxed_cast_base! { SignLayer, crate::dnn::ActivationLayer, cv_dnn_SignLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { SignLayer, core::Algorithm, cv_SignLayer_to_Algorithm }
+	boxed_cast_base! { SignLayer, core::Algorithm, cv_dnn_SignLayer_to_Algorithm }
 	
-	boxed_cast_base! { SignLayer, crate::dnn::Layer, cv_SignLayer_to_Layer }
+	boxed_cast_base! { SignLayer, crate::dnn::Layer, cv_dnn_SignLayer_to_Layer }
 	
 	impl std::fmt::Debug for SignLayer {
 		#[inline]
@@ -14440,8 +14446,7 @@ pub mod dnn {
 	impl Drop for SinLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SinLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SinLayer_delete(self.as_raw_mut_SinLayer()) };
+			unsafe { sys::cv_dnn_SinLayer_delete(self.as_raw_mut_SinLayer()) };
 		}
 	}
 	
@@ -14492,11 +14497,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SinLayer, crate::dnn::ActivationLayer, cv_SinLayer_to_ActivationLayer }
+	boxed_cast_base! { SinLayer, crate::dnn::ActivationLayer, cv_dnn_SinLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { SinLayer, core::Algorithm, cv_SinLayer_to_Algorithm }
+	boxed_cast_base! { SinLayer, core::Algorithm, cv_dnn_SinLayer_to_Algorithm }
 	
-	boxed_cast_base! { SinLayer, crate::dnn::Layer, cv_SinLayer_to_Layer }
+	boxed_cast_base! { SinLayer, crate::dnn::Layer, cv_dnn_SinLayer_to_Layer }
 	
 	impl std::fmt::Debug for SinLayer {
 		#[inline]
@@ -14531,8 +14536,7 @@ pub mod dnn {
 	impl Drop for SinhLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SinhLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SinhLayer_delete(self.as_raw_mut_SinhLayer()) };
+			unsafe { sys::cv_dnn_SinhLayer_delete(self.as_raw_mut_SinhLayer()) };
 		}
 	}
 	
@@ -14583,11 +14587,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SinhLayer, crate::dnn::ActivationLayer, cv_SinhLayer_to_ActivationLayer }
+	boxed_cast_base! { SinhLayer, crate::dnn::ActivationLayer, cv_dnn_SinhLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { SinhLayer, core::Algorithm, cv_SinhLayer_to_Algorithm }
+	boxed_cast_base! { SinhLayer, core::Algorithm, cv_dnn_SinhLayer_to_Algorithm }
 	
-	boxed_cast_base! { SinhLayer, crate::dnn::Layer, cv_SinhLayer_to_Layer }
+	boxed_cast_base! { SinhLayer, crate::dnn::Layer, cv_dnn_SinhLayer_to_Layer }
 	
 	impl std::fmt::Debug for SinhLayer {
 		#[inline]
@@ -14611,27 +14615,27 @@ pub mod dnn {
 		/// Inner vector has slice ranges for the first number of input dimensions.
 		#[inline]
 		fn slice_ranges(&self) -> core::Vector<core::Vector<core::Range>> {
-			let ret = unsafe { sys::cv_dnn_SliceLayer_getPropSliceRanges_const(self.as_raw_SliceLayer()) };
+			let ret = unsafe { sys::cv_dnn_SliceLayer_propSliceRanges_const(self.as_raw_SliceLayer()) };
 			let ret = unsafe { core::Vector::<core::Vector<core::Range>>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn slice_steps(&self) -> core::Vector<core::Vector<i32>> {
-			let ret = unsafe { sys::cv_dnn_SliceLayer_getPropSliceSteps_const(self.as_raw_SliceLayer()) };
+			let ret = unsafe { sys::cv_dnn_SliceLayer_propSliceSteps_const(self.as_raw_SliceLayer()) };
 			let ret = unsafe { core::Vector::<core::Vector<i32>>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn axis(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_SliceLayer_getPropAxis_const(self.as_raw_SliceLayer()) };
+			let ret = unsafe { sys::cv_dnn_SliceLayer_propAxis_const(self.as_raw_SliceLayer()) };
 			ret
 		}
 		
 		#[inline]
 		fn num_split(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_SliceLayer_getPropNum_split_const(self.as_raw_SliceLayer()) };
+			let ret = unsafe { sys::cv_dnn_SliceLayer_propNum_split_const(self.as_raw_SliceLayer()) };
 			ret
 		}
 		
@@ -14647,25 +14651,25 @@ pub mod dnn {
 		/// Inner vector has slice ranges for the first number of input dimensions.
 		#[inline]
 		fn set_slice_ranges(&mut self, mut val: core::Vector<core::Vector<core::Range>>) {
-			let ret = unsafe { sys::cv_dnn_SliceLayer_setPropSliceRanges_vectorLvectorLRangeGG(self.as_raw_mut_SliceLayer(), val.as_raw_mut_VectorOfVectorOfRange()) };
+			let ret = unsafe { sys::cv_dnn_SliceLayer_propSliceRanges_vectorLvectorLRangeGG(self.as_raw_mut_SliceLayer(), val.as_raw_mut_VectorOfVectorOfRange()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_slice_steps(&mut self, mut val: core::Vector<core::Vector<i32>>) {
-			let ret = unsafe { sys::cv_dnn_SliceLayer_setPropSliceSteps_vectorLvectorLintGG(self.as_raw_mut_SliceLayer(), val.as_raw_mut_VectorOfVectorOfi32()) };
+			let ret = unsafe { sys::cv_dnn_SliceLayer_propSliceSteps_vectorLvectorLintGG(self.as_raw_mut_SliceLayer(), val.as_raw_mut_VectorOfVectorOfi32()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_axis(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_SliceLayer_setPropAxis_int(self.as_raw_mut_SliceLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_SliceLayer_propAxis_int(self.as_raw_mut_SliceLayer(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_split(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_SliceLayer_setPropNum_split_int(self.as_raw_mut_SliceLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_SliceLayer_propNum_split_int(self.as_raw_mut_SliceLayer(), val) };
 			ret
 		}
 		
@@ -14703,8 +14707,7 @@ pub mod dnn {
 	impl Drop for SliceLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SliceLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SliceLayer_delete(self.as_raw_mut_SliceLayer()) };
+			unsafe { sys::cv_dnn_SliceLayer_delete(self.as_raw_mut_SliceLayer()) };
 		}
 	}
 	
@@ -14747,9 +14750,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SliceLayer, core::Algorithm, cv_SliceLayer_to_Algorithm }
+	boxed_cast_base! { SliceLayer, core::Algorithm, cv_dnn_SliceLayer_to_Algorithm }
 	
-	boxed_cast_base! { SliceLayer, crate::dnn::Layer, cv_SliceLayer_to_Layer }
+	boxed_cast_base! { SliceLayer, crate::dnn::Layer, cv_dnn_SliceLayer_to_Layer }
 	
 	impl std::fmt::Debug for SliceLayer {
 		#[inline]
@@ -14773,7 +14776,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn log_soft_max(&self) -> bool {
-			let ret = unsafe { sys::cv_dnn_SoftmaxLayer_getPropLogSoftMax_const(self.as_raw_SoftmaxLayer()) };
+			let ret = unsafe { sys::cv_dnn_SoftmaxLayer_propLogSoftMax_const(self.as_raw_SoftmaxLayer()) };
 			ret
 		}
 		
@@ -14785,7 +14788,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_log_soft_max(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_dnn_SoftmaxLayer_setPropLogSoftMax_bool(self.as_raw_mut_SoftmaxLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_SoftmaxLayer_propLogSoftMax_bool(self.as_raw_mut_SoftmaxLayer(), val) };
 			ret
 		}
 		
@@ -14800,8 +14803,7 @@ pub mod dnn {
 	impl Drop for SoftmaxLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SoftmaxLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SoftmaxLayer_delete(self.as_raw_mut_SoftmaxLayer()) };
+			unsafe { sys::cv_dnn_SoftmaxLayer_delete(self.as_raw_mut_SoftmaxLayer()) };
 		}
 	}
 	
@@ -14844,9 +14846,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SoftmaxLayer, core::Algorithm, cv_SoftmaxLayer_to_Algorithm }
+	boxed_cast_base! { SoftmaxLayer, core::Algorithm, cv_dnn_SoftmaxLayer_to_Algorithm }
 	
-	boxed_cast_base! { SoftmaxLayer, crate::dnn::Layer, cv_SoftmaxLayer_to_Layer }
+	boxed_cast_base! { SoftmaxLayer, crate::dnn::Layer, cv_dnn_SoftmaxLayer_to_Layer }
 	
 	impl std::fmt::Debug for SoftmaxLayer {
 		#[inline]
@@ -14867,13 +14869,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn output_sc(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_SoftmaxLayerInt8_getPropOutput_sc_const(self.as_raw_SoftmaxLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_SoftmaxLayerInt8_propOutput_sc_const(self.as_raw_SoftmaxLayerInt8()) };
 			ret
 		}
 		
 		#[inline]
 		fn output_zp(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_SoftmaxLayerInt8_getPropOutput_zp_const(self.as_raw_SoftmaxLayerInt8()) };
+			let ret = unsafe { sys::cv_dnn_SoftmaxLayerInt8_propOutput_zp_const(self.as_raw_SoftmaxLayerInt8()) };
 			ret
 		}
 		
@@ -14885,13 +14887,13 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_output_sc(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_SoftmaxLayerInt8_setPropOutput_sc_float(self.as_raw_mut_SoftmaxLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_SoftmaxLayerInt8_propOutput_sc_float(self.as_raw_mut_SoftmaxLayerInt8(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_output_zp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_SoftmaxLayerInt8_setPropOutput_zp_int(self.as_raw_mut_SoftmaxLayerInt8(), val) };
+			let ret = unsafe { sys::cv_dnn_SoftmaxLayerInt8_propOutput_zp_int(self.as_raw_mut_SoftmaxLayerInt8(), val) };
 			ret
 		}
 		
@@ -14906,8 +14908,7 @@ pub mod dnn {
 	impl Drop for SoftmaxLayerInt8 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SoftmaxLayerInt8_delete(instance: *mut c_void); }
-			unsafe { cv_SoftmaxLayerInt8_delete(self.as_raw_mut_SoftmaxLayerInt8()) };
+			unsafe { sys::cv_dnn_SoftmaxLayerInt8_delete(self.as_raw_mut_SoftmaxLayerInt8()) };
 		}
 	}
 	
@@ -14958,11 +14959,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SoftmaxLayerInt8, core::Algorithm, cv_SoftmaxLayerInt8_to_Algorithm }
+	boxed_cast_base! { SoftmaxLayerInt8, core::Algorithm, cv_dnn_SoftmaxLayerInt8_to_Algorithm }
 	
-	boxed_cast_base! { SoftmaxLayerInt8, crate::dnn::Layer, cv_SoftmaxLayerInt8_to_Layer }
+	boxed_cast_base! { SoftmaxLayerInt8, crate::dnn::Layer, cv_dnn_SoftmaxLayerInt8_to_Layer }
 	
-	boxed_cast_base! { SoftmaxLayerInt8, crate::dnn::SoftmaxLayer, cv_SoftmaxLayerInt8_to_SoftmaxLayer }
+	boxed_cast_base! { SoftmaxLayerInt8, crate::dnn::SoftmaxLayer, cv_dnn_SoftmaxLayerInt8_to_SoftmaxLayer }
 	
 	impl std::fmt::Debug for SoftmaxLayerInt8 {
 		#[inline]
@@ -15000,8 +15001,7 @@ pub mod dnn {
 	impl Drop for SoftplusLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SoftplusLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SoftplusLayer_delete(self.as_raw_mut_SoftplusLayer()) };
+			unsafe { sys::cv_dnn_SoftplusLayer_delete(self.as_raw_mut_SoftplusLayer()) };
 		}
 	}
 	
@@ -15052,11 +15052,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SoftplusLayer, crate::dnn::ActivationLayer, cv_SoftplusLayer_to_ActivationLayer }
+	boxed_cast_base! { SoftplusLayer, crate::dnn::ActivationLayer, cv_dnn_SoftplusLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { SoftplusLayer, core::Algorithm, cv_SoftplusLayer_to_Algorithm }
+	boxed_cast_base! { SoftplusLayer, core::Algorithm, cv_dnn_SoftplusLayer_to_Algorithm }
 	
-	boxed_cast_base! { SoftplusLayer, crate::dnn::Layer, cv_SoftplusLayer_to_Layer }
+	boxed_cast_base! { SoftplusLayer, crate::dnn::Layer, cv_dnn_SoftplusLayer_to_Layer }
 	
 	impl std::fmt::Debug for SoftplusLayer {
 		#[inline]
@@ -15091,8 +15091,7 @@ pub mod dnn {
 	impl Drop for SoftsignLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SoftsignLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SoftsignLayer_delete(self.as_raw_mut_SoftsignLayer()) };
+			unsafe { sys::cv_dnn_SoftsignLayer_delete(self.as_raw_mut_SoftsignLayer()) };
 		}
 	}
 	
@@ -15143,11 +15142,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SoftsignLayer, crate::dnn::ActivationLayer, cv_SoftsignLayer_to_ActivationLayer }
+	boxed_cast_base! { SoftsignLayer, crate::dnn::ActivationLayer, cv_dnn_SoftsignLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { SoftsignLayer, core::Algorithm, cv_SoftsignLayer_to_Algorithm }
+	boxed_cast_base! { SoftsignLayer, core::Algorithm, cv_dnn_SoftsignLayer_to_Algorithm }
 	
-	boxed_cast_base! { SoftsignLayer, crate::dnn::Layer, cv_SoftsignLayer_to_Layer }
+	boxed_cast_base! { SoftsignLayer, crate::dnn::Layer, cv_dnn_SoftsignLayer_to_Layer }
 	
 	impl std::fmt::Debug for SoftsignLayer {
 		#[inline]
@@ -15168,7 +15167,7 @@ pub mod dnn {
 		/// Number of copies that will be produced (is ignored when negative).
 		#[inline]
 		fn outputs_count(&self) -> i32 {
-			let ret = unsafe { sys::cv_dnn_SplitLayer_getPropOutputsCount_const(self.as_raw_SplitLayer()) };
+			let ret = unsafe { sys::cv_dnn_SplitLayer_propOutputsCount_const(self.as_raw_SplitLayer()) };
 			ret
 		}
 		
@@ -15181,7 +15180,7 @@ pub mod dnn {
 		/// Number of copies that will be produced (is ignored when negative).
 		#[inline]
 		fn set_outputs_count(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dnn_SplitLayer_setPropOutputsCount_int(self.as_raw_mut_SplitLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_SplitLayer_propOutputsCount_int(self.as_raw_mut_SplitLayer(), val) };
 			ret
 		}
 		
@@ -15196,8 +15195,7 @@ pub mod dnn {
 	impl Drop for SplitLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SplitLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SplitLayer_delete(self.as_raw_mut_SplitLayer()) };
+			unsafe { sys::cv_dnn_SplitLayer_delete(self.as_raw_mut_SplitLayer()) };
 		}
 	}
 	
@@ -15240,9 +15238,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SplitLayer, core::Algorithm, cv_SplitLayer_to_Algorithm }
+	boxed_cast_base! { SplitLayer, core::Algorithm, cv_dnn_SplitLayer_to_Algorithm }
 	
-	boxed_cast_base! { SplitLayer, crate::dnn::Layer, cv_SplitLayer_to_Layer }
+	boxed_cast_base! { SplitLayer, crate::dnn::Layer, cv_dnn_SplitLayer_to_Layer }
 	
 	impl std::fmt::Debug for SplitLayer {
 		#[inline]
@@ -15278,8 +15276,7 @@ pub mod dnn {
 	impl Drop for SqrtLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SqrtLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SqrtLayer_delete(self.as_raw_mut_SqrtLayer()) };
+			unsafe { sys::cv_dnn_SqrtLayer_delete(self.as_raw_mut_SqrtLayer()) };
 		}
 	}
 	
@@ -15330,11 +15327,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SqrtLayer, crate::dnn::ActivationLayer, cv_SqrtLayer_to_ActivationLayer }
+	boxed_cast_base! { SqrtLayer, crate::dnn::ActivationLayer, cv_dnn_SqrtLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { SqrtLayer, core::Algorithm, cv_SqrtLayer_to_Algorithm }
+	boxed_cast_base! { SqrtLayer, core::Algorithm, cv_dnn_SqrtLayer_to_Algorithm }
 	
-	boxed_cast_base! { SqrtLayer, crate::dnn::Layer, cv_SqrtLayer_to_Layer }
+	boxed_cast_base! { SqrtLayer, crate::dnn::Layer, cv_dnn_SqrtLayer_to_Layer }
 	
 	impl std::fmt::Debug for SqrtLayer {
 		#[inline]
@@ -15369,8 +15366,7 @@ pub mod dnn {
 	impl Drop for SwishLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SwishLayer_delete(instance: *mut c_void); }
-			unsafe { cv_SwishLayer_delete(self.as_raw_mut_SwishLayer()) };
+			unsafe { sys::cv_dnn_SwishLayer_delete(self.as_raw_mut_SwishLayer()) };
 		}
 	}
 	
@@ -15421,11 +15417,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { SwishLayer, crate::dnn::ActivationLayer, cv_SwishLayer_to_ActivationLayer }
+	boxed_cast_base! { SwishLayer, crate::dnn::ActivationLayer, cv_dnn_SwishLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { SwishLayer, core::Algorithm, cv_SwishLayer_to_Algorithm }
+	boxed_cast_base! { SwishLayer, core::Algorithm, cv_dnn_SwishLayer_to_Algorithm }
 	
-	boxed_cast_base! { SwishLayer, crate::dnn::Layer, cv_SwishLayer_to_Layer }
+	boxed_cast_base! { SwishLayer, crate::dnn::Layer, cv_dnn_SwishLayer_to_Layer }
 	
 	impl std::fmt::Debug for SwishLayer {
 		#[inline]
@@ -15460,8 +15456,7 @@ pub mod dnn {
 	impl Drop for TanHLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TanHLayer_delete(instance: *mut c_void); }
-			unsafe { cv_TanHLayer_delete(self.as_raw_mut_TanHLayer()) };
+			unsafe { sys::cv_dnn_TanHLayer_delete(self.as_raw_mut_TanHLayer()) };
 		}
 	}
 	
@@ -15512,11 +15507,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { TanHLayer, crate::dnn::ActivationLayer, cv_TanHLayer_to_ActivationLayer }
+	boxed_cast_base! { TanHLayer, crate::dnn::ActivationLayer, cv_dnn_TanHLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { TanHLayer, core::Algorithm, cv_TanHLayer_to_Algorithm }
+	boxed_cast_base! { TanHLayer, core::Algorithm, cv_dnn_TanHLayer_to_Algorithm }
 	
-	boxed_cast_base! { TanHLayer, crate::dnn::Layer, cv_TanHLayer_to_Layer }
+	boxed_cast_base! { TanHLayer, crate::dnn::Layer, cv_dnn_TanHLayer_to_Layer }
 	
 	impl std::fmt::Debug for TanHLayer {
 		#[inline]
@@ -15551,8 +15546,7 @@ pub mod dnn {
 	impl Drop for TanLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TanLayer_delete(instance: *mut c_void); }
-			unsafe { cv_TanLayer_delete(self.as_raw_mut_TanLayer()) };
+			unsafe { sys::cv_dnn_TanLayer_delete(self.as_raw_mut_TanLayer()) };
 		}
 	}
 	
@@ -15603,11 +15597,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { TanLayer, crate::dnn::ActivationLayer, cv_TanLayer_to_ActivationLayer }
+	boxed_cast_base! { TanLayer, crate::dnn::ActivationLayer, cv_dnn_TanLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { TanLayer, core::Algorithm, cv_TanLayer_to_Algorithm }
+	boxed_cast_base! { TanLayer, core::Algorithm, cv_dnn_TanLayer_to_Algorithm }
 	
-	boxed_cast_base! { TanLayer, crate::dnn::Layer, cv_TanLayer_to_Layer }
+	boxed_cast_base! { TanLayer, crate::dnn::Layer, cv_dnn_TanLayer_to_Layer }
 	
 	impl std::fmt::Debug for TanLayer {
 		#[inline]
@@ -15751,8 +15745,7 @@ pub mod dnn {
 	impl Drop for TextDetectionModel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TextDetectionModel_delete(instance: *mut c_void); }
-			unsafe { cv_TextDetectionModel_delete(self.as_raw_mut_TextDetectionModel()) };
+			unsafe { sys::cv_dnn_TextDetectionModel_delete(self.as_raw_mut_TextDetectionModel()) };
 		}
 	}
 	
@@ -15777,7 +15770,7 @@ pub mod dnn {
 	impl TextDetectionModel {
 	}
 	
-	boxed_cast_base! { TextDetectionModel, crate::dnn::Model, cv_TextDetectionModel_to_Model }
+	boxed_cast_base! { TextDetectionModel, crate::dnn::Model, cv_dnn_TextDetectionModel_to_Model }
 	
 	impl std::fmt::Debug for TextDetectionModel {
 		#[inline]
@@ -15895,8 +15888,7 @@ pub mod dnn {
 	impl Drop for TextDetectionModel_DB {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TextDetectionModel_DB_delete(instance: *mut c_void); }
-			unsafe { cv_TextDetectionModel_DB_delete(self.as_raw_mut_TextDetectionModel_DB()) };
+			unsafe { sys::cv_dnn_TextDetectionModel_DB_delete(self.as_raw_mut_TextDetectionModel_DB()) };
 		}
 	}
 	
@@ -15975,14 +15967,13 @@ pub mod dnn {
 	impl Clone for TextDetectionModel_DB {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TextDetectionModel_DB_implicitClone_const_TextDetectionModel_DB(val: extern_send!(TextDetectionModel_DB)) -> extern_receive!(TextDetectionModel_DB: 'static); }
-			unsafe { Self::from_raw(cv_TextDetectionModel_DB_implicitClone_const_TextDetectionModel_DB(self.as_raw_TextDetectionModel_DB())) }
+			unsafe { Self::from_raw(sys::cv_dnn_TextDetectionModel_DB_implicitClone_const(self.as_raw_TextDetectionModel_DB())) }
 		}
 	}
 	
-	boxed_cast_base! { TextDetectionModel_DB, crate::dnn::Model, cv_TextDetectionModel_DB_to_Model }
+	boxed_cast_base! { TextDetectionModel_DB, crate::dnn::Model, cv_dnn_TextDetectionModel_DB_to_Model }
 	
-	boxed_cast_base! { TextDetectionModel_DB, crate::dnn::TextDetectionModel, cv_TextDetectionModel_DB_to_TextDetectionModel }
+	boxed_cast_base! { TextDetectionModel_DB, crate::dnn::TextDetectionModel, cv_dnn_TextDetectionModel_DB_to_TextDetectionModel }
 	
 	impl std::fmt::Debug for TextDetectionModel_DB {
 		#[inline]
@@ -16064,8 +16055,7 @@ pub mod dnn {
 	impl Drop for TextDetectionModel_EAST {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TextDetectionModel_EAST_delete(instance: *mut c_void); }
-			unsafe { cv_TextDetectionModel_EAST_delete(self.as_raw_mut_TextDetectionModel_EAST()) };
+			unsafe { sys::cv_dnn_TextDetectionModel_EAST_delete(self.as_raw_mut_TextDetectionModel_EAST()) };
 		}
 	}
 	
@@ -16144,14 +16134,13 @@ pub mod dnn {
 	impl Clone for TextDetectionModel_EAST {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TextDetectionModel_EAST_implicitClone_const_TextDetectionModel_EAST(val: extern_send!(TextDetectionModel_EAST)) -> extern_receive!(TextDetectionModel_EAST: 'static); }
-			unsafe { Self::from_raw(cv_TextDetectionModel_EAST_implicitClone_const_TextDetectionModel_EAST(self.as_raw_TextDetectionModel_EAST())) }
+			unsafe { Self::from_raw(sys::cv_dnn_TextDetectionModel_EAST_implicitClone_const(self.as_raw_TextDetectionModel_EAST())) }
 		}
 	}
 	
-	boxed_cast_base! { TextDetectionModel_EAST, crate::dnn::Model, cv_TextDetectionModel_EAST_to_Model }
+	boxed_cast_base! { TextDetectionModel_EAST, crate::dnn::Model, cv_dnn_TextDetectionModel_EAST_to_Model }
 	
-	boxed_cast_base! { TextDetectionModel_EAST, crate::dnn::TextDetectionModel, cv_TextDetectionModel_EAST_to_TextDetectionModel }
+	boxed_cast_base! { TextDetectionModel_EAST, crate::dnn::TextDetectionModel, cv_dnn_TextDetectionModel_EAST_to_TextDetectionModel }
 	
 	impl std::fmt::Debug for TextDetectionModel_EAST {
 		#[inline]
@@ -16293,8 +16282,7 @@ pub mod dnn {
 	impl Drop for TextRecognitionModel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TextRecognitionModel_delete(instance: *mut c_void); }
-			unsafe { cv_TextRecognitionModel_delete(self.as_raw_mut_TextRecognitionModel()) };
+			unsafe { sys::cv_dnn_TextRecognitionModel_delete(self.as_raw_mut_TextRecognitionModel()) };
 		}
 	}
 	
@@ -16366,12 +16354,11 @@ pub mod dnn {
 	impl Clone for TextRecognitionModel {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TextRecognitionModel_implicitClone_const_TextRecognitionModel(val: extern_send!(TextRecognitionModel)) -> extern_receive!(TextRecognitionModel: 'static); }
-			unsafe { Self::from_raw(cv_TextRecognitionModel_implicitClone_const_TextRecognitionModel(self.as_raw_TextRecognitionModel())) }
+			unsafe { Self::from_raw(sys::cv_dnn_TextRecognitionModel_implicitClone_const(self.as_raw_TextRecognitionModel())) }
 		}
 	}
 	
-	boxed_cast_base! { TextRecognitionModel, crate::dnn::Model, cv_TextRecognitionModel_to_Model }
+	boxed_cast_base! { TextRecognitionModel, crate::dnn::Model, cv_dnn_TextRecognitionModel_to_Model }
 	
 	impl std::fmt::Debug for TextRecognitionModel {
 		#[inline]
@@ -16387,7 +16374,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn alpha(&self) -> f32 {
-			let ret = unsafe { sys::cv_dnn_ThresholdedReluLayer_getPropAlpha_const(self.as_raw_ThresholdedReluLayer()) };
+			let ret = unsafe { sys::cv_dnn_ThresholdedReluLayer_propAlpha_const(self.as_raw_ThresholdedReluLayer()) };
 			ret
 		}
 		
@@ -16399,7 +16386,7 @@ pub mod dnn {
 	
 		#[inline]
 		fn set_alpha(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dnn_ThresholdedReluLayer_setPropAlpha_float(self.as_raw_mut_ThresholdedReluLayer(), val) };
+			let ret = unsafe { sys::cv_dnn_ThresholdedReluLayer_propAlpha_float(self.as_raw_mut_ThresholdedReluLayer(), val) };
 			ret
 		}
 		
@@ -16414,8 +16401,7 @@ pub mod dnn {
 	impl Drop for ThresholdedReluLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ThresholdedReluLayer_delete(instance: *mut c_void); }
-			unsafe { cv_ThresholdedReluLayer_delete(self.as_raw_mut_ThresholdedReluLayer()) };
+			unsafe { sys::cv_dnn_ThresholdedReluLayer_delete(self.as_raw_mut_ThresholdedReluLayer()) };
 		}
 	}
 	
@@ -16466,11 +16452,11 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { ThresholdedReluLayer, crate::dnn::ActivationLayer, cv_ThresholdedReluLayer_to_ActivationLayer }
+	boxed_cast_base! { ThresholdedReluLayer, crate::dnn::ActivationLayer, cv_dnn_ThresholdedReluLayer_to_ActivationLayer }
 	
-	boxed_cast_base! { ThresholdedReluLayer, core::Algorithm, cv_ThresholdedReluLayer_to_Algorithm }
+	boxed_cast_base! { ThresholdedReluLayer, core::Algorithm, cv_dnn_ThresholdedReluLayer_to_Algorithm }
 	
-	boxed_cast_base! { ThresholdedReluLayer, crate::dnn::Layer, cv_ThresholdedReluLayer_to_Layer }
+	boxed_cast_base! { ThresholdedReluLayer, crate::dnn::Layer, cv_dnn_ThresholdedReluLayer_to_Layer }
 	
 	impl std::fmt::Debug for ThresholdedReluLayer {
 		#[inline]
@@ -16506,8 +16492,7 @@ pub mod dnn {
 	impl Drop for TileLayer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TileLayer_delete(instance: *mut c_void); }
-			unsafe { cv_TileLayer_delete(self.as_raw_mut_TileLayer()) };
+			unsafe { sys::cv_dnn_TileLayer_delete(self.as_raw_mut_TileLayer()) };
 		}
 	}
 	
@@ -16550,9 +16535,9 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { TileLayer, core::Algorithm, cv_TileLayer_to_Algorithm }
+	boxed_cast_base! { TileLayer, core::Algorithm, cv_dnn_TileLayer_to_Algorithm }
 	
-	boxed_cast_base! { TileLayer, crate::dnn::Layer, cv_TileLayer_to_Layer }
+	boxed_cast_base! { TileLayer, crate::dnn::Layer, cv_dnn_TileLayer_to_Layer }
 	
 	impl std::fmt::Debug for TileLayer {
 		#[inline]
@@ -16587,8 +16572,7 @@ pub mod dnn {
 	impl Drop for _Range {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv__Range_delete(instance: *mut c_void); }
-			unsafe { cv__Range_delete(self.as_raw_mut__Range()) };
+			unsafe { sys::cv_dnn__Range_delete(self.as_raw_mut__Range()) };
 		}
 	}
 	
@@ -16635,7 +16619,7 @@ pub mod dnn {
 		
 	}
 	
-	boxed_cast_base! { _Range, core::Range, cv__Range_to_Range }
+	boxed_cast_base! { _Range, core::Range, cv_dnn__Range_to_Range }
 	
 	impl std::fmt::Debug for _Range {
 		#[inline]

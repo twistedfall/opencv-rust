@@ -256,8 +256,7 @@ pub mod hfs {
 	impl Drop for HfsSegment {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HfsSegment_delete(instance: *mut c_void); }
-			unsafe { cv_HfsSegment_delete(self.as_raw_mut_HfsSegment()) };
+			unsafe { sys::cv_hfs_HfsSegment_delete(self.as_raw_mut_HfsSegment()) };
 		}
 	}
 	
@@ -312,7 +311,7 @@ pub mod hfs {
 		
 	}
 	
-	boxed_cast_base! { HfsSegment, core::Algorithm, cv_HfsSegment_to_Algorithm }
+	boxed_cast_base! { HfsSegment, core::Algorithm, cv_hfs_HfsSegment_to_Algorithm }
 	
 	impl std::fmt::Debug for HfsSegment {
 		#[inline]

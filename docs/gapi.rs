@@ -4477,7 +4477,7 @@ pub mod gapi {
 		#[inline]
 		fn kind(&self) -> crate::gapi::Detail_ArgKind {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GArg_getPropKind_const(self.as_raw_GArg(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GArg_propKind_const(self.as_raw_GArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -4485,7 +4485,7 @@ pub mod gapi {
 		#[inline]
 		fn opaque_kind(&self) -> crate::gapi::Detail_OpaqueKind {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GArg_getPropOpaque_kind_const(self.as_raw_GArg(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GArg_propOpaque_kind_const(self.as_raw_GArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -4500,7 +4500,7 @@ pub mod gapi {
 		/// * val: detail::ArgKind::OPAQUE_VAL
 		#[inline]
 		fn set_kind(&mut self, val: crate::gapi::Detail_ArgKind) {
-			let ret = unsafe { sys::cv_GArg_setPropKind_ArgKind(self.as_raw_mut_GArg(), val) };
+			let ret = unsafe { sys::cv_GArg_propKind_ArgKind(self.as_raw_mut_GArg(), val) };
 			ret
 		}
 		
@@ -4508,7 +4508,7 @@ pub mod gapi {
 		/// * val: detail::OpaqueKind::CV_UNKNOWN
 		#[inline]
 		fn set_opaque_kind(&mut self, val: crate::gapi::Detail_OpaqueKind) {
-			let ret = unsafe { sys::cv_GArg_setPropOpaque_kind_OpaqueKind(self.as_raw_mut_GArg(), val) };
+			let ret = unsafe { sys::cv_GArg_propOpaque_kind_OpaqueKind(self.as_raw_mut_GArg(), val) };
 			ret
 		}
 		
@@ -4523,8 +4523,7 @@ pub mod gapi {
 	impl Drop for GArg {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GArg_delete(instance: *mut c_void); }
-			unsafe { cv_GArg_delete(self.as_raw_mut_GArg()) };
+			unsafe { sys::cv_GArg_delete(self.as_raw_mut_GArg()) };
 		}
 	}
 	
@@ -4592,8 +4591,7 @@ pub mod gapi {
 	impl Drop for GArrayDesc {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GArrayDesc_delete(instance: *mut c_void); }
-			unsafe { cv_GArrayDesc_delete(self.as_raw_mut_GArrayDesc()) };
+			unsafe { sys::cv_GArrayDesc_delete(self.as_raw_mut_GArrayDesc()) };
 		}
 	}
 	
@@ -4609,8 +4607,7 @@ pub mod gapi {
 	
 	impl GArrayDesc {
 		fn default() -> Self {
-			extern "C" { fn cv_GArrayDesc_defaultNew_const() -> extern_receive!(GArrayDesc: 'static); }
-			unsafe { Self::from_raw(cv_GArrayDesc_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_GArrayDesc_defaultNew_const()) }
 		}
 		
 	}
@@ -4618,8 +4615,7 @@ pub mod gapi {
 	impl Clone for GArrayDesc {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GArrayDesc_implicitClone_const_GArrayDesc(val: extern_send!(GArrayDesc)) -> extern_receive!(GArrayDesc: 'static); }
-			unsafe { Self::from_raw(cv_GArrayDesc_implicitClone_const_GArrayDesc(self.as_raw_GArrayDesc())) }
+			unsafe { Self::from_raw(sys::cv_GArrayDesc_implicitClone_const(self.as_raw_GArrayDesc())) }
 		}
 	}
 	
@@ -4737,8 +4733,7 @@ pub mod gapi {
 	impl Drop for GCall {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GCall_delete(instance: *mut c_void); }
-			unsafe { cv_GCall_delete(self.as_raw_mut_GCall()) };
+			unsafe { sys::cv_GCall_delete(self.as_raw_mut_GCall()) };
 		}
 	}
 	
@@ -4779,7 +4774,7 @@ pub mod gapi {
 	
 		#[inline]
 		fn tag(&self) -> String {
-			let ret = unsafe { sys::cv_GCompileArg_getPropTag_const(self.as_raw_GCompileArg()) };
+			let ret = unsafe { sys::cv_GCompileArg_propTag_const(self.as_raw_GCompileArg()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -4793,7 +4788,7 @@ pub mod gapi {
 		#[inline]
 		fn set_tag(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GCompileArg_setPropTag_string(self.as_raw_mut_GCompileArg(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_GCompileArg_propTag_string(self.as_raw_mut_GCompileArg(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
@@ -4817,8 +4812,7 @@ pub mod gapi {
 	impl Drop for GCompileArg {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GCompileArg_delete(instance: *mut c_void); }
-			unsafe { cv_GCompileArg_delete(self.as_raw_mut_GCompileArg()) };
+			unsafe { sys::cv_GCompileArg_delete(self.as_raw_mut_GCompileArg()) };
 		}
 	}
 	
@@ -5142,8 +5136,7 @@ pub mod gapi {
 	impl Drop for GCompiled {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GCompiled_delete(instance: *mut c_void); }
-			unsafe { cv_GCompiled_delete(self.as_raw_mut_GCompiled()) };
+			unsafe { sys::cv_GCompiled_delete(self.as_raw_mut_GCompiled()) };
 		}
 	}
 	
@@ -5465,8 +5458,7 @@ pub mod gapi {
 	impl Drop for GComputation {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GComputation_delete(instance: *mut c_void); }
-			unsafe { cv_GComputation_delete(self.as_raw_mut_GComputation()) };
+			unsafe { sys::cv_GComputation_delete(self.as_raw_mut_GComputation()) };
 		}
 	}
 	
@@ -5714,8 +5706,7 @@ pub mod gapi {
 	impl Drop for GFrame {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GFrame_delete(instance: *mut c_void); }
-			unsafe { cv_GFrame_delete(self.as_raw_mut_GFrame()) };
+			unsafe { sys::cv_GFrame_delete(self.as_raw_mut_GFrame()) };
 		}
 	}
 	
@@ -5751,8 +5742,7 @@ pub mod gapi {
 	impl Clone for GFrame {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GFrame_implicitClone_const_GFrame(val: extern_send!(GFrame)) -> extern_receive!(GFrame: 'static); }
-			unsafe { Self::from_raw(cv_GFrame_implicitClone_const_GFrame(self.as_raw_GFrame())) }
+			unsafe { Self::from_raw(sys::cv_GFrame_implicitClone_const(self.as_raw_GFrame())) }
 		}
 	}
 	
@@ -5771,7 +5761,7 @@ pub mod gapi {
 		#[inline]
 		fn fmt(&self) -> crate::gapi::MediaFormat {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GFrameDesc_getPropFmt_const(self.as_raw_GFrameDesc(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GFrameDesc_propFmt_const(self.as_raw_GFrameDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -5779,7 +5769,7 @@ pub mod gapi {
 		#[inline]
 		fn size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GFrameDesc_getPropSize_const(self.as_raw_GFrameDesc(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GFrameDesc_propSize_const(self.as_raw_GFrameDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -5801,13 +5791,13 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_fmt(&mut self, val: crate::gapi::MediaFormat) {
-			let ret = unsafe { sys::cv_GFrameDesc_setPropFmt_MediaFormat(self.as_raw_mut_GFrameDesc(), val) };
+			let ret = unsafe { sys::cv_GFrameDesc_propFmt_MediaFormat(self.as_raw_mut_GFrameDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_GFrameDesc_setPropSize_Size(self.as_raw_mut_GFrameDesc(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_GFrameDesc_propSize_Size(self.as_raw_mut_GFrameDesc(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -5823,8 +5813,7 @@ pub mod gapi {
 	impl Drop for GFrameDesc {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GFrameDesc_delete(instance: *mut c_void); }
-			unsafe { cv_GFrameDesc_delete(self.as_raw_mut_GFrameDesc()) };
+			unsafe { sys::cv_GFrameDesc_delete(self.as_raw_mut_GFrameDesc()) };
 		}
 	}
 	
@@ -5857,35 +5846,35 @@ pub mod gapi {
 	
 		#[inline]
 		fn name(&self) -> String {
-			let ret = unsafe { sys::cv_GKernel_getPropName_const(self.as_raw_GKernel()) };
+			let ret = unsafe { sys::cv_GKernel_propName_const(self.as_raw_GKernel()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn tag(&self) -> String {
-			let ret = unsafe { sys::cv_GKernel_getPropTag_const(self.as_raw_GKernel()) };
+			let ret = unsafe { sys::cv_GKernel_propTag_const(self.as_raw_GKernel()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn out_shapes(&self) -> core::Vector<crate::gapi::GShape> {
-			let ret = unsafe { sys::cv_GKernel_getPropOutShapes_const(self.as_raw_GKernel()) };
+			let ret = unsafe { sys::cv_GKernel_propOutShapes_const(self.as_raw_GKernel()) };
 			let ret = unsafe { core::Vector::<crate::gapi::GShape>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn in_kinds(&self) -> core::Vector<crate::gapi::Detail_OpaqueKind> {
-			let ret = unsafe { sys::cv_GKernel_getPropInKinds_const(self.as_raw_GKernel()) };
+			let ret = unsafe { sys::cv_GKernel_propInKinds_const(self.as_raw_GKernel()) };
 			let ret = unsafe { core::Vector::<crate::gapi::Detail_OpaqueKind>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn out_kinds(&self) -> core::Vector<crate::gapi::Detail_OpaqueKind> {
-			let ret = unsafe { sys::cv_GKernel_getPropOutKinds_const(self.as_raw_GKernel()) };
+			let ret = unsafe { sys::cv_GKernel_propOutKinds_const(self.as_raw_GKernel()) };
 			let ret = unsafe { core::Vector::<crate::gapi::Detail_OpaqueKind>::opencv_from_extern(ret) };
 			ret
 		}
@@ -5899,32 +5888,32 @@ pub mod gapi {
 		#[inline]
 		fn set_name(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GKernel_setPropName_string(self.as_raw_mut_GKernel(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_GKernel_propName_string(self.as_raw_mut_GKernel(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_tag(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GKernel_setPropTag_string(self.as_raw_mut_GKernel(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_GKernel_propTag_string(self.as_raw_mut_GKernel(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_out_shapes(&mut self, mut val: crate::gapi::GShapes) {
-			let ret = unsafe { sys::cv_GKernel_setPropOutShapes_GShapes(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfGShape()) };
+			let ret = unsafe { sys::cv_GKernel_propOutShapes_GShapes(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfGShape()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_in_kinds(&mut self, mut val: crate::gapi::GKinds) {
-			let ret = unsafe { sys::cv_GKernel_setPropInKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
+			let ret = unsafe { sys::cv_GKernel_propInKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_out_kinds(&mut self, mut val: crate::gapi::GKinds) {
-			let ret = unsafe { sys::cv_GKernel_setPropOutKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
+			let ret = unsafe { sys::cv_GKernel_propOutKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
 			ret
 		}
 		
@@ -5939,8 +5928,7 @@ pub mod gapi {
 	impl Drop for GKernel {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GKernel_delete(instance: *mut c_void); }
-			unsafe { cv_GKernel_delete(self.as_raw_mut_GKernel()) };
+			unsafe { sys::cv_GKernel_delete(self.as_raw_mut_GKernel()) };
 		}
 	}
 	
@@ -5976,7 +5964,7 @@ pub mod gapi {
 	
 		#[inline]
 		fn opaque(&self) -> crate::gapi::any {
-			let ret = unsafe { sys::cv_GKernelImpl_getPropOpaque_const(self.as_raw_GKernelImpl()) };
+			let ret = unsafe { sys::cv_GKernelImpl_propOpaque_const(self.as_raw_GKernelImpl()) };
 			let ret = unsafe { crate::gapi::any::opencv_from_extern(ret) };
 			ret
 		}
@@ -5989,7 +5977,7 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_opaque(&mut self, mut val: crate::gapi::any) {
-			let ret = unsafe { sys::cv_GKernelImpl_setPropOpaque_any(self.as_raw_mut_GKernelImpl(), val.as_raw_mut_any()) };
+			let ret = unsafe { sys::cv_GKernelImpl_propOpaque_any(self.as_raw_mut_GKernelImpl(), val.as_raw_mut_any()) };
 			ret
 		}
 		
@@ -6004,8 +5992,7 @@ pub mod gapi {
 	impl Drop for GKernelImpl {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GKernelImpl_delete(instance: *mut c_void); }
-			unsafe { cv_GKernelImpl_delete(self.as_raw_mut_GKernelImpl()) };
+			unsafe { sys::cv_GKernelImpl_delete(self.as_raw_mut_GKernelImpl()) };
 		}
 	}
 	
@@ -6181,8 +6168,7 @@ pub mod gapi {
 	impl Drop for GKernelPackage {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GKernelPackage_delete(instance: *mut c_void); }
-			unsafe { cv_GKernelPackage_delete(self.as_raw_mut_GKernelPackage()) };
+			unsafe { sys::cv_GKernelPackage_delete(self.as_raw_mut_GKernelPackage()) };
 		}
 	}
 	
@@ -6198,8 +6184,7 @@ pub mod gapi {
 	
 	impl GKernelPackage {
 		fn default() -> Self {
-			extern "C" { fn cv_GKernelPackage_defaultNew_const() -> extern_receive!(GKernelPackage: 'static); }
-			unsafe { Self::from_raw(cv_GKernelPackage_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_GKernelPackage_defaultNew_const()) }
 		}
 		
 	}
@@ -6207,8 +6192,7 @@ pub mod gapi {
 	impl Clone for GKernelPackage {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GKernelPackage_implicitClone_const_GKernelPackage(val: extern_send!(GKernelPackage)) -> extern_receive!(GKernelPackage: 'static); }
-			unsafe { Self::from_raw(cv_GKernelPackage_implicitClone_const_GKernelPackage(self.as_raw_GKernelPackage())) }
+			unsafe { Self::from_raw(sys::cv_GKernelPackage_implicitClone_const(self.as_raw_GKernelPackage())) }
 		}
 	}
 	
@@ -6286,8 +6270,7 @@ pub mod gapi {
 	impl Drop for GMat {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GMat_delete(instance: *mut c_void); }
-			unsafe { cv_GMat_delete(self.as_raw_mut_GMat()) };
+			unsafe { sys::cv_GMat_delete(self.as_raw_mut_GMat()) };
 		}
 	}
 	
@@ -6323,8 +6306,7 @@ pub mod gapi {
 	impl Clone for GMat {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GMat_implicitClone_const_GMat(val: extern_send!(GMat)) -> extern_receive!(GMat: 'static); }
-			unsafe { Self::from_raw(cv_GMat_implicitClone_const_GMat(self.as_raw_GMat())) }
+			unsafe { Self::from_raw(sys::cv_GMat_implicitClone_const(self.as_raw_GMat())) }
 		}
 	}
 	
@@ -6342,33 +6324,33 @@ pub mod gapi {
 	
 		#[inline]
 		fn depth(&self) -> i32 {
-			let ret = unsafe { sys::cv_GMatDesc_getPropDepth_const(self.as_raw_GMatDesc()) };
+			let ret = unsafe { sys::cv_GMatDesc_propDepth_const(self.as_raw_GMatDesc()) };
 			ret
 		}
 		
 		#[inline]
 		fn chan(&self) -> i32 {
-			let ret = unsafe { sys::cv_GMatDesc_getPropChan_const(self.as_raw_GMatDesc()) };
+			let ret = unsafe { sys::cv_GMatDesc_propChan_const(self.as_raw_GMatDesc()) };
 			ret
 		}
 		
 		#[inline]
 		fn size(&self) -> core::Size {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_getPropSize_const(self.as_raw_GMatDesc(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GMatDesc_propSize_const(self.as_raw_GMatDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn planar(&self) -> bool {
-			let ret = unsafe { sys::cv_GMatDesc_getPropPlanar_const(self.as_raw_GMatDesc()) };
+			let ret = unsafe { sys::cv_GMatDesc_propPlanar_const(self.as_raw_GMatDesc()) };
 			ret
 		}
 		
 		#[inline]
 		fn dims(&self) -> core::Vector<i32> {
-			let ret = unsafe { sys::cv_GMatDesc_getPropDims_const(self.as_raw_GMatDesc()) };
+			let ret = unsafe { sys::cv_GMatDesc_propDims_const(self.as_raw_GMatDesc()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
@@ -6506,31 +6488,31 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_depth(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_GMatDesc_setPropDepth_int(self.as_raw_mut_GMatDesc(), val) };
+			let ret = unsafe { sys::cv_GMatDesc_propDepth_int(self.as_raw_mut_GMatDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_chan(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_GMatDesc_setPropChan_int(self.as_raw_mut_GMatDesc(), val) };
+			let ret = unsafe { sys::cv_GMatDesc_propChan_int(self.as_raw_mut_GMatDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_GMatDesc_setPropSize_Size(self.as_raw_mut_GMatDesc(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_GMatDesc_propSize_Size(self.as_raw_mut_GMatDesc(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_planar(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_GMatDesc_setPropPlanar_bool(self.as_raw_mut_GMatDesc(), val) };
+			let ret = unsafe { sys::cv_GMatDesc_propPlanar_bool(self.as_raw_mut_GMatDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_dims(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_GMatDesc_setPropDims_vectorLintG(self.as_raw_mut_GMatDesc(), val.as_raw_mut_VectorOfi32()) };
+			let ret = unsafe { sys::cv_GMatDesc_propDims_vectorLintG(self.as_raw_mut_GMatDesc(), val.as_raw_mut_VectorOfi32()) };
 			ret
 		}
 		
@@ -6546,8 +6528,7 @@ pub mod gapi {
 	impl Drop for GMatDesc {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GMatDesc_delete(instance: *mut c_void); }
-			unsafe { cv_GMatDesc_delete(self.as_raw_mut_GMatDesc()) };
+			unsafe { sys::cv_GMatDesc_delete(self.as_raw_mut_GMatDesc()) };
 		}
 	}
 	
@@ -6609,8 +6590,7 @@ pub mod gapi {
 	impl Clone for GMatDesc {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GMatDesc_implicitClone_const_GMatDesc(val: extern_send!(GMatDesc)) -> extern_receive!(GMatDesc: 'static); }
-			unsafe { Self::from_raw(cv_GMatDesc_implicitClone_const_GMatDesc(self.as_raw_GMatDesc())) }
+			unsafe { Self::from_raw(sys::cv_GMatDesc_implicitClone_const(self.as_raw_GMatDesc())) }
 		}
 	}
 	
@@ -6648,8 +6628,7 @@ pub mod gapi {
 	impl Drop for GMatP {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GMatP_delete(instance: *mut c_void); }
-			unsafe { cv_GMatP_delete(self.as_raw_mut_GMatP()) };
+			unsafe { sys::cv_GMatP_delete(self.as_raw_mut_GMatP()) };
 		}
 	}
 	
@@ -6715,8 +6694,7 @@ pub mod gapi {
 	impl Drop for GOpaqueDesc {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GOpaqueDesc_delete(instance: *mut c_void); }
-			unsafe { cv_GOpaqueDesc_delete(self.as_raw_mut_GOpaqueDesc()) };
+			unsafe { sys::cv_GOpaqueDesc_delete(self.as_raw_mut_GOpaqueDesc()) };
 		}
 	}
 	
@@ -6732,8 +6710,7 @@ pub mod gapi {
 	
 	impl GOpaqueDesc {
 		fn default() -> Self {
-			extern "C" { fn cv_GOpaqueDesc_defaultNew_const() -> extern_receive!(GOpaqueDesc: 'static); }
-			unsafe { Self::from_raw(cv_GOpaqueDesc_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_GOpaqueDesc_defaultNew_const()) }
 		}
 		
 	}
@@ -6741,8 +6718,7 @@ pub mod gapi {
 	impl Clone for GOpaqueDesc {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GOpaqueDesc_implicitClone_const_GOpaqueDesc(val: extern_send!(GOpaqueDesc)) -> extern_receive!(GOpaqueDesc: 'static); }
-			unsafe { Self::from_raw(cv_GOpaqueDesc_implicitClone_const_GOpaqueDesc(self.as_raw_GOpaqueDesc())) }
+			unsafe { Self::from_raw(sys::cv_GOpaqueDesc_implicitClone_const(self.as_raw_GOpaqueDesc())) }
 		}
 	}
 	
@@ -6783,8 +6759,7 @@ pub mod gapi {
 	impl Drop for GRunArg {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GRunArg_delete(instance: *mut c_void); }
-			unsafe { cv_GRunArg_delete(self.as_raw_mut_GRunArg()) };
+			unsafe { sys::cv_GRunArg_delete(self.as_raw_mut_GRunArg()) };
 		}
 	}
 	
@@ -6874,8 +6849,7 @@ pub mod gapi {
 	impl Drop for GScalar {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GScalar_delete(instance: *mut c_void); }
-			unsafe { cv_GScalar_delete(self.as_raw_mut_GScalar()) };
+			unsafe { sys::cv_GScalar_delete(self.as_raw_mut_GScalar()) };
 		}
 	}
 	
@@ -7013,8 +6987,7 @@ pub mod gapi {
 	impl Clone for GScalar {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GScalar_implicitClone_const_GScalar(val: extern_send!(GScalar)) -> extern_receive!(GScalar: 'static); }
-			unsafe { Self::from_raw(cv_GScalar_implicitClone_const_GScalar(self.as_raw_GScalar())) }
+			unsafe { Self::from_raw(sys::cv_GScalar_implicitClone_const(self.as_raw_GScalar())) }
 		}
 	}
 	
@@ -7066,8 +7039,7 @@ pub mod gapi {
 	impl Drop for GScalarDesc {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GScalarDesc_delete(instance: *mut c_void); }
-			unsafe { cv_GScalarDesc_delete(self.as_raw_mut_GScalarDesc()) };
+			unsafe { sys::cv_GScalarDesc_delete(self.as_raw_mut_GScalarDesc()) };
 		}
 	}
 	
@@ -7083,8 +7055,7 @@ pub mod gapi {
 	
 	impl GScalarDesc {
 		fn default() -> Self {
-			extern "C" { fn cv_GScalarDesc_defaultNew_const() -> extern_receive!(GScalarDesc: 'static); }
-			unsafe { Self::from_raw(cv_GScalarDesc_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_GScalarDesc_defaultNew_const()) }
 		}
 		
 	}
@@ -7092,8 +7063,7 @@ pub mod gapi {
 	impl Clone for GScalarDesc {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GScalarDesc_implicitClone_const_GScalarDesc(val: extern_send!(GScalarDesc)) -> extern_receive!(GScalarDesc: 'static); }
-			unsafe { Self::from_raw(cv_GScalarDesc_implicitClone_const_GScalarDesc(self.as_raw_GScalarDesc())) }
+			unsafe { Self::from_raw(sys::cv_GScalarDesc_implicitClone_const(self.as_raw_GScalarDesc())) }
 		}
 	}
 	
@@ -7293,8 +7263,7 @@ pub mod gapi {
 	impl Drop for GStreamingCompiled {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GStreamingCompiled_delete(instance: *mut c_void); }
-			unsafe { cv_GStreamingCompiled_delete(self.as_raw_mut_GStreamingCompiled()) };
+			unsafe { sys::cv_GStreamingCompiled_delete(self.as_raw_mut_GStreamingCompiled()) };
 		}
 	}
 	
@@ -7324,8 +7293,7 @@ pub mod gapi {
 	impl Clone for GStreamingCompiled {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GStreamingCompiled_implicitClone_const_GStreamingCompiled(val: extern_send!(GStreamingCompiled)) -> extern_receive!(GStreamingCompiled: 'static); }
-			unsafe { Self::from_raw(cv_GStreamingCompiled_implicitClone_const_GStreamingCompiled(self.as_raw_GStreamingCompiled())) }
+			unsafe { Self::from_raw(sys::cv_GStreamingCompiled_implicitClone_const(self.as_raw_GStreamingCompiled())) }
 		}
 	}
 	
@@ -7343,7 +7311,7 @@ pub mod gapi {
 	
 		#[inline]
 		fn description(&self) -> String {
-			let ret = unsafe { sys::cv_GTransform_getPropDescription_const(self.as_raw_GTransform()) };
+			let ret = unsafe { sys::cv_GTransform_propDescription_const(self.as_raw_GTransform()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -7357,7 +7325,7 @@ pub mod gapi {
 		#[inline]
 		fn set_description(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GTransform_setPropDescription_string(self.as_raw_mut_GTransform(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_GTransform_propDescription_string(self.as_raw_mut_GTransform(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
@@ -7372,8 +7340,7 @@ pub mod gapi {
 	impl Drop for GTransform {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GTransform_delete(instance: *mut c_void); }
-			unsafe { cv_GTransform_delete(self.as_raw_mut_GTransform()) };
+			unsafe { sys::cv_GTransform_delete(self.as_raw_mut_GTransform()) };
 		}
 	}
 	
@@ -7406,7 +7373,7 @@ pub mod gapi {
 		#[inline]
 		fn shape(&self) -> crate::gapi::GShape {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GTypeInfo_getPropShape_const(self.as_raw_GTypeInfo(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GTypeInfo_propShape_const(self.as_raw_GTypeInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -7414,7 +7381,7 @@ pub mod gapi {
 		#[inline]
 		fn kind(&self) -> crate::gapi::Detail_OpaqueKind {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GTypeInfo_getPropKind_const(self.as_raw_GTypeInfo(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GTypeInfo_propKind_const(self.as_raw_GTypeInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -7427,13 +7394,13 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_shape(&mut self, val: crate::gapi::GShape) {
-			let ret = unsafe { sys::cv_GTypeInfo_setPropShape_GShape(self.as_raw_mut_GTypeInfo(), val) };
+			let ret = unsafe { sys::cv_GTypeInfo_propShape_GShape(self.as_raw_mut_GTypeInfo(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kind(&mut self, val: crate::gapi::Detail_OpaqueKind) {
-			let ret = unsafe { sys::cv_GTypeInfo_setPropKind_OpaqueKind(self.as_raw_mut_GTypeInfo(), val) };
+			let ret = unsafe { sys::cv_GTypeInfo_propKind_OpaqueKind(self.as_raw_mut_GTypeInfo(), val) };
 			ret
 		}
 		
@@ -7448,8 +7415,7 @@ pub mod gapi {
 	impl Drop for GTypeInfo {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GTypeInfo_delete(instance: *mut c_void); }
-			unsafe { cv_GTypeInfo_delete(self.as_raw_mut_GTypeInfo()) };
+			unsafe { sys::cv_GTypeInfo_delete(self.as_raw_mut_GTypeInfo()) };
 		}
 	}
 	
@@ -7465,8 +7431,7 @@ pub mod gapi {
 	
 	impl GTypeInfo {
 		fn default() -> Self {
-			extern "C" { fn cv_GTypeInfo_defaultNew_const() -> extern_receive!(GTypeInfo: 'static); }
-			unsafe { Self::from_raw(cv_GTypeInfo_defaultNew_const()) }
+			unsafe { Self::from_raw(sys::cv_GTypeInfo_defaultNew_const()) }
 		}
 		
 	}
@@ -7474,8 +7439,7 @@ pub mod gapi {
 	impl Clone for GTypeInfo {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_GTypeInfo_implicitClone_const_GTypeInfo(val: extern_send!(GTypeInfo)) -> extern_receive!(GTypeInfo: 'static); }
-			unsafe { Self::from_raw(cv_GTypeInfo_implicitClone_const_GTypeInfo(self.as_raw_GTypeInfo())) }
+			unsafe { Self::from_raw(sys::cv_GTypeInfo_implicitClone_const(self.as_raw_GTypeInfo())) }
 		}
 	}
 	
@@ -7563,8 +7527,7 @@ pub mod gapi {
 	impl Drop for MediaFrame {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MediaFrame_delete(instance: *mut c_void); }
-			unsafe { cv_MediaFrame_delete(self.as_raw_mut_MediaFrame()) };
+			unsafe { sys::cv_MediaFrame_delete(self.as_raw_mut_MediaFrame()) };
 		}
 	}
 	
@@ -7652,8 +7615,7 @@ pub mod gapi {
 	impl Drop for MediaFrame_IAdapter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MediaFrame_IAdapter_delete(instance: *mut c_void); }
-			unsafe { cv_MediaFrame_IAdapter_delete(self.as_raw_mut_MediaFrame_IAdapter()) };
+			unsafe { sys::cv_MediaFrame_IAdapter_delete(self.as_raw_mut_MediaFrame_IAdapter()) };
 		}
 	}
 	
@@ -7734,8 +7696,7 @@ pub mod gapi {
 	impl Drop for MediaFrame_View {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MediaFrame_View_delete(instance: *mut c_void); }
-			unsafe { cv_MediaFrame_View_delete(self.as_raw_mut_MediaFrame_View()) };
+			unsafe { sys::cv_MediaFrame_View_delete(self.as_raw_mut_MediaFrame_View()) };
 		}
 	}
 	
@@ -7801,8 +7762,7 @@ pub mod gapi {
 	impl Drop for RMat {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RMat_delete(instance: *mut c_void); }
-			unsafe { cv_RMat_delete(self.as_raw_mut_RMat()) };
+			unsafe { sys::cv_RMat_delete(self.as_raw_mut_RMat()) };
 		}
 	}
 	
@@ -7873,8 +7833,7 @@ pub mod gapi {
 	impl Drop for RMat_IAdapter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RMat_IAdapter_delete(instance: *mut c_void); }
-			unsafe { cv_RMat_IAdapter_delete(self.as_raw_mut_RMat_IAdapter()) };
+			unsafe { sys::cv_RMat_IAdapter_delete(self.as_raw_mut_RMat_IAdapter()) };
 		}
 	}
 	
@@ -8014,8 +7973,7 @@ pub mod gapi {
 	impl Drop for RMat_View {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_RMat_View_delete(instance: *mut c_void); }
-			unsafe { cv_RMat_View_delete(self.as_raw_mut_RMat_View()) };
+			unsafe { sys::cv_RMat_View_delete(self.as_raw_mut_RMat_View()) };
 		}
 	}
 	
@@ -8093,8 +8051,7 @@ pub mod gapi {
 	impl Drop for Detail_ExtractArgsCallback {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_ExtractArgsCallback_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_ExtractArgsCallback_delete(self.as_raw_mut_Detail_ExtractArgsCallback()) };
+			unsafe { sys::cv_detail_ExtractArgsCallback_delete(self.as_raw_mut_Detail_ExtractArgsCallback()) };
 		}
 	}
 	
@@ -8140,8 +8097,7 @@ pub mod gapi {
 	impl Drop for Detail_ExtractMetaCallback {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_ExtractMetaCallback_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_ExtractMetaCallback_delete(self.as_raw_mut_Detail_ExtractMetaCallback()) };
+			unsafe { sys::cv_detail_ExtractMetaCallback_delete(self.as_raw_mut_Detail_ExtractMetaCallback()) };
 		}
 	}
 	
@@ -8187,8 +8143,7 @@ pub mod gapi {
 	impl Drop for Detail_GArrayU {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_GArrayU_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_GArrayU_delete(self.as_raw_mut_Detail_GArrayU()) };
+			unsafe { sys::cv_detail_GArrayU_delete(self.as_raw_mut_Detail_GArrayU()) };
 		}
 	}
 	
@@ -8234,8 +8189,7 @@ pub mod gapi {
 	impl Drop for Detail_GOpaqueU {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Detail_GOpaqueU_delete(instance: *mut c_void); }
-			unsafe { cv_Detail_GOpaqueU_delete(self.as_raw_mut_Detail_GOpaqueU()) };
+			unsafe { sys::cv_detail_GOpaqueU_delete(self.as_raw_mut_Detail_GOpaqueU()) };
 		}
 	}
 	
@@ -8291,8 +8245,7 @@ pub mod gapi {
 	impl Drop for GBackend {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GBackend_delete(instance: *mut c_void); }
-			unsafe { cv_GBackend_delete(self.as_raw_mut_GBackend()) };
+			unsafe { sys::cv_gapi_GBackend_delete(self.as_raw_mut_GBackend()) };
 		}
 	}
 	
@@ -8379,8 +8332,7 @@ pub mod gapi {
 	impl Drop for GFunctor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GFunctor_delete(instance: *mut c_void); }
-			unsafe { cv_GFunctor_delete(self.as_raw_mut_GFunctor()) };
+			unsafe { sys::cv_gapi_GFunctor_delete(self.as_raw_mut_GFunctor()) };
 		}
 	}
 	
@@ -8426,7 +8378,7 @@ pub mod gapi {
 	
 		#[inline]
 		fn val(&mut self) -> &mut [f64; 4] {
-			let ret = unsafe { sys::cv_gapi_own_Scalar_getPropVal(self.as_raw_mut_Scalar()) };
+			let ret = unsafe { sys::cv_gapi_own_Scalar_propVal(self.as_raw_mut_Scalar()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
@@ -8451,8 +8403,7 @@ pub mod gapi {
 	impl Drop for Scalar {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Scalar_delete(instance: *mut c_void); }
-			unsafe { cv_Scalar_delete(self.as_raw_mut_Scalar()) };
+			unsafe { sys::cv_gapi_own_Scalar_delete(self.as_raw_mut_Scalar()) };
 		}
 	}
 	
@@ -8557,7 +8508,7 @@ pub mod gapi {
 	
 		#[inline]
 		fn pkg(&self) -> crate::gapi::GKernelPackage {
-			let ret = unsafe { sys::cv_gapi_use_only_getPropPkg_const(self.as_raw_use_only()) };
+			let ret = unsafe { sys::cv_gapi_use_only_propPkg_const(self.as_raw_use_only()) };
 			let ret = unsafe { crate::gapi::GKernelPackage::opencv_from_extern(ret) };
 			ret
 		}
@@ -8570,7 +8521,7 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_pkg(&mut self, mut val: crate::gapi::GKernelPackage) {
-			let ret = unsafe { sys::cv_gapi_use_only_setPropPkg_GKernelPackage(self.as_raw_mut_use_only(), val.as_raw_mut_GKernelPackage()) };
+			let ret = unsafe { sys::cv_gapi_use_only_propPkg_GKernelPackage(self.as_raw_mut_use_only(), val.as_raw_mut_GKernelPackage()) };
 			ret
 		}
 		
@@ -8591,8 +8542,7 @@ pub mod gapi {
 	impl Drop for use_only {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_use_only_delete(instance: *mut c_void); }
-			unsafe { cv_use_only_delete(self.as_raw_mut_use_only()) };
+			unsafe { sys::cv_gapi_use_only_delete(self.as_raw_mut_use_only()) };
 		}
 	}
 	
@@ -8644,8 +8594,7 @@ pub mod gapi {
 	impl Drop for Data {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Data_delete(instance: *mut c_void); }
-			unsafe { cv_Data_delete(self.as_raw_mut_Data()) };
+			unsafe { sys::cv_gapi_wip_Data_delete(self.as_raw_mut_Data()) };
 		}
 	}
 	
@@ -8670,7 +8619,7 @@ pub mod gapi {
 	impl Data {
 	}
 	
-	boxed_cast_base! { Data, crate::gapi::GRunArg, cv_Data_to_GRunArg }
+	boxed_cast_base! { Data, crate::gapi::GRunArg, cv_gapi_wip_Data_to_GRunArg }
 	
 	impl std::fmt::Debug for Data {
 		#[inline]
@@ -8752,7 +8701,7 @@ pub mod gapi {
 		#[inline]
 		fn org(&self) -> core::Point {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_wip_draw_Image_getPropOrg_const(self.as_raw_Image(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_gapi_wip_draw_Image_propOrg_const(self.as_raw_Image(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -8760,7 +8709,7 @@ pub mod gapi {
 		/// Image to draw
 		#[inline]
 		fn img(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_getPropImg_const(self.as_raw_Image()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propImg_const(self.as_raw_Image()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -8768,7 +8717,7 @@ pub mod gapi {
 		/// Alpha channel for image to draw (same size and number of channels)
 		#[inline]
 		fn alpha(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_getPropAlpha_const(self.as_raw_Image()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propAlpha_const(self.as_raw_Image()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -8782,21 +8731,21 @@ pub mod gapi {
 		/// The bottom-left corner of the image
 		#[inline]
 		fn set_org(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_setPropOrg_Point(self.as_raw_mut_Image(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propOrg_Point(self.as_raw_mut_Image(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Image to draw
 		#[inline]
 		fn set_img(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_setPropImg_Mat(self.as_raw_mut_Image(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propImg_Mat(self.as_raw_mut_Image(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		/// Alpha channel for image to draw (same size and number of channels)
 		#[inline]
 		fn set_alpha(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_setPropAlpha_Mat(self.as_raw_mut_Image(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propAlpha_Mat(self.as_raw_mut_Image(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
@@ -8814,8 +8763,7 @@ pub mod gapi {
 	impl Drop for Image {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Image_delete(instance: *mut c_void); }
-			unsafe { cv_Image_delete(self.as_raw_mut_Image()) };
+			unsafe { sys::cv_gapi_wip_draw_Image_delete(self.as_raw_mut_Image()) };
 		}
 	}
 	
@@ -8858,8 +8806,7 @@ pub mod gapi {
 	impl Clone for Image {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Image_implicitClone_const_Image(val: extern_send!(Image)) -> extern_receive!(Image: 'static); }
-			unsafe { Self::from_raw(cv_Image_implicitClone_const_Image(self.as_raw_Image())) }
+			unsafe { Self::from_raw(sys::cv_gapi_wip_draw_Image_implicitClone_const(self.as_raw_Image())) }
 		}
 	}
 	
@@ -8996,7 +8943,7 @@ pub mod gapi {
 		/// Points to connect
 		#[inline]
 		fn points(&self) -> core::Vector<core::Point> {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_getPropPoints_const(self.as_raw_Poly()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propPoints_const(self.as_raw_Poly()) };
 			let ret = unsafe { core::Vector::<core::Point>::opencv_from_extern(ret) };
 			ret
 		}
@@ -9005,7 +8952,7 @@ pub mod gapi {
 		#[inline]
 		fn color(&self) -> core::Scalar {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_wip_draw_Poly_getPropColor_const(self.as_raw_Poly(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_gapi_wip_draw_Poly_propColor_const(self.as_raw_Poly(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -9013,21 +8960,21 @@ pub mod gapi {
 		/// The thickness of line
 		#[inline]
 		fn thick(&self) -> i32 {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_getPropThick_const(self.as_raw_Poly()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propThick_const(self.as_raw_Poly()) };
 			ret
 		}
 		
 		/// The Type of the line. See #LineTypes
 		#[inline]
 		fn lt(&self) -> i32 {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_getPropLt_const(self.as_raw_Poly()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propLt_const(self.as_raw_Poly()) };
 			ret
 		}
 		
 		/// The number of fractional bits in the point coordinate
 		#[inline]
 		fn shift(&self) -> i32 {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_getPropShift_const(self.as_raw_Poly()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propShift_const(self.as_raw_Poly()) };
 			ret
 		}
 		
@@ -9040,35 +8987,35 @@ pub mod gapi {
 		/// Points to connect
 		#[inline]
 		fn set_points(&mut self, mut val: core::Vector<core::Point>) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_setPropPoints_vectorLPointG(self.as_raw_mut_Poly(), val.as_raw_mut_VectorOfPoint()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propPoints_vectorLPointG(self.as_raw_mut_Poly(), val.as_raw_mut_VectorOfPoint()) };
 			ret
 		}
 		
 		/// The line color
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_setPropColor_Scalar(self.as_raw_mut_Poly(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propColor_Scalar(self.as_raw_mut_Poly(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The thickness of line
 		#[inline]
 		fn set_thick(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_setPropThick_int(self.as_raw_mut_Poly(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propThick_int(self.as_raw_mut_Poly(), val) };
 			ret
 		}
 		
 		/// The Type of the line. See #LineTypes
 		#[inline]
 		fn set_lt(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_setPropLt_int(self.as_raw_mut_Poly(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propLt_int(self.as_raw_mut_Poly(), val) };
 			ret
 		}
 		
 		/// The number of fractional bits in the point coordinate
 		#[inline]
 		fn set_shift(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_setPropShift_int(self.as_raw_mut_Poly(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propShift_int(self.as_raw_mut_Poly(), val) };
 			ret
 		}
 		
@@ -9084,8 +9031,7 @@ pub mod gapi {
 	impl Drop for Poly {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Poly_delete(instance: *mut c_void); }
-			unsafe { cv_Poly_delete(self.as_raw_mut_Poly()) };
+			unsafe { sys::cv_gapi_wip_draw_Poly_delete(self.as_raw_mut_Poly()) };
 		}
 	}
 	
@@ -9135,8 +9081,7 @@ pub mod gapi {
 	impl Clone for Poly {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Poly_implicitClone_const_Poly(val: extern_send!(Poly)) -> extern_receive!(Poly: 'static); }
-			unsafe { Self::from_raw(cv_Poly_implicitClone_const_Poly(self.as_raw_Poly())) }
+			unsafe { Self::from_raw(sys::cv_gapi_wip_draw_Poly_implicitClone_const(self.as_raw_Poly())) }
 		}
 	}
 	
@@ -9229,7 +9174,7 @@ pub mod gapi {
 		/// The text string to be drawn
 		#[inline]
 		fn text(&self) -> String {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_getPropText_const(self.as_raw_Text()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propText_const(self.as_raw_Text()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
@@ -9238,7 +9183,7 @@ pub mod gapi {
 		#[inline]
 		fn org(&self) -> core::Point {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_wip_draw_Text_getPropOrg_const(self.as_raw_Text(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_gapi_wip_draw_Text_propOrg_const(self.as_raw_Text(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -9246,14 +9191,14 @@ pub mod gapi {
 		/// The font type, see #HersheyFonts
 		#[inline]
 		fn ff(&self) -> i32 {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_getPropFf_const(self.as_raw_Text()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFf_const(self.as_raw_Text()) };
 			ret
 		}
 		
 		/// The font scale factor that is multiplied by the font-specific base size
 		#[inline]
 		fn fs(&self) -> f64 {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_getPropFs_const(self.as_raw_Text()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFs_const(self.as_raw_Text()) };
 			ret
 		}
 		
@@ -9261,7 +9206,7 @@ pub mod gapi {
 		#[inline]
 		fn color(&self) -> core::Scalar {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_wip_draw_Text_getPropColor_const(self.as_raw_Text(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_gapi_wip_draw_Text_propColor_const(self.as_raw_Text(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -9269,21 +9214,21 @@ pub mod gapi {
 		/// The thickness of the lines used to draw a text
 		#[inline]
 		fn thick(&self) -> i32 {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_getPropThick_const(self.as_raw_Text()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propThick_const(self.as_raw_Text()) };
 			ret
 		}
 		
 		/// The line type. See #LineTypes
 		#[inline]
 		fn lt(&self) -> i32 {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_getPropLt_const(self.as_raw_Text()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propLt_const(self.as_raw_Text()) };
 			ret
 		}
 		
 		/// When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
 		#[inline]
 		fn bottom_left_origin(&self) -> bool {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_getPropBottom_left_origin_const(self.as_raw_Text()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propBottom_left_origin_const(self.as_raw_Text()) };
 			ret
 		}
 		
@@ -9297,56 +9242,56 @@ pub mod gapi {
 		#[inline]
 		fn set_text(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_setPropText_string(self.as_raw_mut_Text(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propText_string(self.as_raw_mut_Text(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		/// The bottom-left corner of the text string in the image
 		#[inline]
 		fn set_org(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_setPropOrg_Point(self.as_raw_mut_Text(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propOrg_Point(self.as_raw_mut_Text(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The font type, see #HersheyFonts
 		#[inline]
 		fn set_ff(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_setPropFf_int(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFf_int(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// The font scale factor that is multiplied by the font-specific base size
 		#[inline]
 		fn set_fs(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_setPropFs_double(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFs_double(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// The text color
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_setPropColor_Scalar(self.as_raw_mut_Text(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propColor_Scalar(self.as_raw_mut_Text(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The thickness of the lines used to draw a text
 		#[inline]
 		fn set_thick(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_setPropThick_int(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propThick_int(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// The line type. See #LineTypes
 		#[inline]
 		fn set_lt(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_setPropLt_int(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propLt_int(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
 		#[inline]
 		fn set_bottom_left_origin(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_setPropBottom_left_origin_bool(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propBottom_left_origin_bool(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
@@ -9364,8 +9309,7 @@ pub mod gapi {
 	impl Drop for Text {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Text_delete(instance: *mut c_void); }
-			unsafe { cv_Text_delete(self.as_raw_mut_Text()) };
+			unsafe { sys::cv_gapi_wip_draw_Text_delete(self.as_raw_mut_Text()) };
 		}
 	}
 	
@@ -9419,8 +9363,7 @@ pub mod gapi {
 	impl Clone for Text {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Text_implicitClone_const_Text(val: extern_send!(Text)) -> extern_receive!(Text: 'static); }
-			unsafe { Self::from_raw(cv_Text_implicitClone_const_Text(self.as_raw_Text())) }
+			unsafe { Self::from_raw(sys::cv_gapi_wip_draw_Text_implicitClone_const(self.as_raw_Text())) }
 		}
 	}
 	
@@ -9469,8 +9412,7 @@ pub mod gapi {
 	impl Drop for any {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_any_delete(instance: *mut c_void); }
-			unsafe { cv_any_delete(self.as_raw_mut_any()) };
+			unsafe { sys::cv_util_any_delete(self.as_raw_mut_any()) };
 		}
 	}
 	

@@ -1465,8 +1465,7 @@ pub mod hdf {
 	impl Drop for HDF5 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HDF5_delete(instance: *mut c_void); }
-			unsafe { cv_HDF5_delete(self.as_raw_mut_HDF5()) };
+			unsafe { sys::cv_hdf_HDF5_delete(self.as_raw_mut_HDF5()) };
 		}
 	}
 	

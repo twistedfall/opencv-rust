@@ -512,8 +512,7 @@ pub mod viz {
 	impl Drop for Camera {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Camera_delete(instance: *mut c_void); }
-			unsafe { cv_Camera_delete(self.as_raw_mut_Camera()) };
+			unsafe { sys::cv_viz_Camera_delete(self.as_raw_mut_Camera()) };
 		}
 	}
 	
@@ -684,8 +683,7 @@ pub mod viz {
 	impl Drop for Color {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Color_delete(instance: *mut c_void); }
-			unsafe { cv_Color_delete(self.as_raw_mut_Color()) };
+			unsafe { sys::cv_viz_Color_delete(self.as_raw_mut_Color()) };
 		}
 	}
 	
@@ -1110,27 +1108,27 @@ pub mod viz {
 		#[inline]
 		fn action(&self) -> crate::viz::KeyboardEvent_Action {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_KeyboardEvent_getPropAction_const(self.as_raw_KeyboardEvent(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_KeyboardEvent_propAction_const(self.as_raw_KeyboardEvent(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn symbol(&self) -> String {
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_getPropSymbol_const(self.as_raw_KeyboardEvent()) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propSymbol_const(self.as_raw_KeyboardEvent()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn code(&self) -> u8 {
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_getPropCode_const(self.as_raw_KeyboardEvent()) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propCode_const(self.as_raw_KeyboardEvent()) };
 			ret
 		}
 		
 		#[inline]
 		fn modifiers(&self) -> i32 {
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_getPropModifiers_const(self.as_raw_KeyboardEvent()) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propModifiers_const(self.as_raw_KeyboardEvent()) };
 			ret
 		}
 		
@@ -1142,26 +1140,26 @@ pub mod viz {
 	
 		#[inline]
 		fn set_action(&mut self, val: crate::viz::KeyboardEvent_Action) {
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_setPropAction_Action(self.as_raw_mut_KeyboardEvent(), val) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propAction_Action(self.as_raw_mut_KeyboardEvent(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_symbol(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_setPropSymbol_String(self.as_raw_mut_KeyboardEvent(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propSymbol_String(self.as_raw_mut_KeyboardEvent(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_code(&mut self, val: u8) {
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_setPropCode_unsigned_char(self.as_raw_mut_KeyboardEvent(), val) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propCode_unsigned_char(self.as_raw_mut_KeyboardEvent(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_modifiers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_setPropModifiers_int(self.as_raw_mut_KeyboardEvent(), val) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propModifiers_int(self.as_raw_mut_KeyboardEvent(), val) };
 			ret
 		}
 		
@@ -1177,8 +1175,7 @@ pub mod viz {
 	impl Drop for KeyboardEvent {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_KeyboardEvent_delete(instance: *mut c_void); }
-			unsafe { cv_KeyboardEvent_delete(self.as_raw_mut_KeyboardEvent()) };
+			unsafe { sys::cv_viz_KeyboardEvent_delete(self.as_raw_mut_KeyboardEvent()) };
 		}
 	}
 	
@@ -1232,7 +1229,7 @@ pub mod viz {
 		/// point coordinates of type CV_32FC3 or CV_64FC3 with only 1 row
 		#[inline]
 		fn cloud(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_viz_Mesh_getPropCloud_const(self.as_raw_Mesh()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propCloud_const(self.as_raw_Mesh()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -1240,7 +1237,7 @@ pub mod viz {
 		/// point color of type CV_8UC3 or CV_8UC4 with only 1 row
 		#[inline]
 		fn colors(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_viz_Mesh_getPropColors_const(self.as_raw_Mesh()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propColors_const(self.as_raw_Mesh()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -1248,7 +1245,7 @@ pub mod viz {
 		/// point normals of type CV_32FC3, CV_32FC4, CV_64FC3 or CV_64FC4 with only 1 row
 		#[inline]
 		fn normals(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_viz_Mesh_getPropNormals_const(self.as_raw_Mesh()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propNormals_const(self.as_raw_Mesh()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -1256,14 +1253,14 @@ pub mod viz {
 		/// CV_32SC1 with only 1 row
 		#[inline]
 		fn polygons(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_viz_Mesh_getPropPolygons_const(self.as_raw_Mesh()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propPolygons_const(self.as_raw_Mesh()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn texture(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_viz_Mesh_getPropTexture_const(self.as_raw_Mesh()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propTexture_const(self.as_raw_Mesh()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -1271,7 +1268,7 @@ pub mod viz {
 		/// CV_32FC2 or CV_64FC2 with only 1 row
 		#[inline]
 		fn tcoords(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_viz_Mesh_getPropTcoords_const(self.as_raw_Mesh()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propTcoords_const(self.as_raw_Mesh()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
@@ -1285,41 +1282,41 @@ pub mod viz {
 		/// point coordinates of type CV_32FC3 or CV_64FC3 with only 1 row
 		#[inline]
 		fn set_cloud(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_setPropCloud_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propCloud_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		/// point color of type CV_8UC3 or CV_8UC4 with only 1 row
 		#[inline]
 		fn set_colors(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_setPropColors_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propColors_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		/// point normals of type CV_32FC3, CV_32FC4, CV_64FC3 or CV_64FC4 with only 1 row
 		#[inline]
 		fn set_normals(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_setPropNormals_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propNormals_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		/// CV_32SC1 with only 1 row
 		#[inline]
 		fn set_polygons(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_setPropPolygons_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propPolygons_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_texture(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_setPropTexture_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propTexture_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
 		/// CV_32FC2 or CV_64FC2 with only 1 row
 		#[inline]
 		fn set_tcoords(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_setPropTcoords_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+			let ret = unsafe { sys::cv_viz_Mesh_propTcoords_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
 			ret
 		}
 		
@@ -1335,8 +1332,7 @@ pub mod viz {
 	impl Drop for Mesh {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Mesh_delete(instance: *mut c_void); }
-			unsafe { cv_Mesh_delete(self.as_raw_mut_Mesh()) };
+			unsafe { sys::cv_viz_Mesh_delete(self.as_raw_mut_Mesh()) };
 		}
 	}
 	
@@ -1389,8 +1385,7 @@ pub mod viz {
 	impl Clone for Mesh {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_Mesh_implicitClone_const_Mesh(val: extern_send!(Mesh)) -> extern_receive!(Mesh: 'static); }
-			unsafe { Self::from_raw(cv_Mesh_implicitClone_const_Mesh(self.as_raw_Mesh())) }
+			unsafe { Self::from_raw(sys::cv_viz_Mesh_implicitClone_const(self.as_raw_Mesh())) }
 		}
 	}
 	
@@ -1415,7 +1410,7 @@ pub mod viz {
 		#[inline]
 		fn typ(&self) -> crate::viz::MouseEvent_Type {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_MouseEvent_getPropType_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_MouseEvent_propType_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1423,7 +1418,7 @@ pub mod viz {
 		#[inline]
 		fn button(&self) -> crate::viz::MouseEvent_MouseButton {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_MouseEvent_getPropButton_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_MouseEvent_propButton_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -1431,14 +1426,14 @@ pub mod viz {
 		#[inline]
 		fn pointer(&self) -> core::Point {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_MouseEvent_getPropPointer_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_MouseEvent_propPointer_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
 		
 		#[inline]
 		fn modifiers(&self) -> i32 {
-			let ret = unsafe { sys::cv_viz_MouseEvent_getPropModifiers_const(self.as_raw_MouseEvent()) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propModifiers_const(self.as_raw_MouseEvent()) };
 			ret
 		}
 		
@@ -1450,25 +1445,25 @@ pub mod viz {
 	
 		#[inline]
 		fn set_type(&mut self, val: crate::viz::MouseEvent_Type) {
-			let ret = unsafe { sys::cv_viz_MouseEvent_setPropType_Type(self.as_raw_mut_MouseEvent(), val) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propType_Type(self.as_raw_mut_MouseEvent(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_button(&mut self, val: crate::viz::MouseEvent_MouseButton) {
-			let ret = unsafe { sys::cv_viz_MouseEvent_setPropButton_MouseButton(self.as_raw_mut_MouseEvent(), val) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propButton_MouseButton(self.as_raw_mut_MouseEvent(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pointer(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_viz_MouseEvent_setPropPointer_Point(self.as_raw_mut_MouseEvent(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propPointer_Point(self.as_raw_mut_MouseEvent(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_modifiers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_viz_MouseEvent_setPropModifiers_int(self.as_raw_mut_MouseEvent(), val) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propModifiers_int(self.as_raw_mut_MouseEvent(), val) };
 			ret
 		}
 		
@@ -1484,8 +1479,7 @@ pub mod viz {
 	impl Drop for MouseEvent {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_MouseEvent_delete(instance: *mut c_void); }
-			unsafe { cv_MouseEvent_delete(self.as_raw_mut_MouseEvent()) };
+			unsafe { sys::cv_viz_MouseEvent_delete(self.as_raw_mut_MouseEvent()) };
 		}
 	}
 	
@@ -2128,8 +2122,7 @@ pub mod viz {
 	impl Drop for Viz3d {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Viz3d_delete(instance: *mut c_void); }
-			unsafe { cv_Viz3d_delete(self.as_raw_mut_Viz3d()) };
+			unsafe { sys::cv_viz_Viz3d_delete(self.as_raw_mut_Viz3d()) };
 		}
 	}
 	
@@ -2204,8 +2197,7 @@ pub mod viz {
 	impl Drop for WArrow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WArrow_delete(instance: *mut c_void); }
-			unsafe { cv_WArrow_delete(self.as_raw_mut_WArrow()) };
+			unsafe { sys::cv_viz_WArrow_delete(self.as_raw_mut_WArrow()) };
 		}
 	}
 	
@@ -2262,9 +2254,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WArrow, crate::viz::Widget, cv_WArrow_to_Widget }
+	boxed_cast_base! { WArrow, crate::viz::Widget, cv_viz_WArrow_to_Widget }
 	
-	boxed_cast_base! { WArrow, crate::viz::Widget3D, cv_WArrow_to_Widget3D }
+	boxed_cast_base! { WArrow, crate::viz::Widget3D, cv_viz_WArrow_to_Widget3D }
 	
 	impl std::fmt::Debug for WArrow {
 		#[inline]
@@ -2296,8 +2288,7 @@ pub mod viz {
 	impl Drop for WCameraPosition {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WCameraPosition_delete(instance: *mut c_void); }
-			unsafe { cv_WCameraPosition_delete(self.as_raw_mut_WCameraPosition()) };
+			unsafe { sys::cv_viz_WCameraPosition_delete(self.as_raw_mut_WCameraPosition()) };
 		}
 	}
 	
@@ -2446,9 +2437,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WCameraPosition, crate::viz::Widget, cv_WCameraPosition_to_Widget }
+	boxed_cast_base! { WCameraPosition, crate::viz::Widget, cv_viz_WCameraPosition_to_Widget }
 	
-	boxed_cast_base! { WCameraPosition, crate::viz::Widget3D, cv_WCameraPosition_to_Widget3D }
+	boxed_cast_base! { WCameraPosition, crate::viz::Widget3D, cv_viz_WCameraPosition_to_Widget3D }
 	
 	impl std::fmt::Debug for WCameraPosition {
 		#[inline]
@@ -2480,8 +2471,7 @@ pub mod viz {
 	impl Drop for WCircle {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WCircle_delete(instance: *mut c_void); }
-			unsafe { cv_WCircle_delete(self.as_raw_mut_WCircle()) };
+			unsafe { sys::cv_viz_WCircle_delete(self.as_raw_mut_WCircle()) };
 		}
 	}
 	
@@ -2556,9 +2546,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WCircle, crate::viz::Widget, cv_WCircle_to_Widget }
+	boxed_cast_base! { WCircle, crate::viz::Widget, cv_viz_WCircle_to_Widget }
 	
-	boxed_cast_base! { WCircle, crate::viz::Widget3D, cv_WCircle_to_Widget3D }
+	boxed_cast_base! { WCircle, crate::viz::Widget3D, cv_viz_WCircle_to_Widget3D }
 	
 	impl std::fmt::Debug for WCircle {
 		#[inline]
@@ -2593,8 +2583,7 @@ pub mod viz {
 	impl Drop for WCloud {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WCloud_delete(instance: *mut c_void); }
-			unsafe { cv_WCloud_delete(self.as_raw_mut_WCloud()) };
+			unsafe { sys::cv_viz_WCloud_delete(self.as_raw_mut_WCloud()) };
 		}
 	}
 	
@@ -2706,9 +2695,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WCloud, crate::viz::Widget, cv_WCloud_to_Widget }
+	boxed_cast_base! { WCloud, crate::viz::Widget, cv_viz_WCloud_to_Widget }
 	
-	boxed_cast_base! { WCloud, crate::viz::Widget3D, cv_WCloud_to_Widget3D }
+	boxed_cast_base! { WCloud, crate::viz::Widget3D, cv_viz_WCloud_to_Widget3D }
 	
 	impl std::fmt::Debug for WCloud {
 		#[inline]
@@ -2794,8 +2783,7 @@ pub mod viz {
 	impl Drop for WCloudCollection {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WCloudCollection_delete(instance: *mut c_void); }
-			unsafe { cv_WCloudCollection_delete(self.as_raw_mut_WCloudCollection()) };
+			unsafe { sys::cv_viz_WCloudCollection_delete(self.as_raw_mut_WCloudCollection()) };
 		}
 	}
 	
@@ -2838,9 +2826,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WCloudCollection, crate::viz::Widget, cv_WCloudCollection_to_Widget }
+	boxed_cast_base! { WCloudCollection, crate::viz::Widget, cv_viz_WCloudCollection_to_Widget }
 	
-	boxed_cast_base! { WCloudCollection, crate::viz::Widget3D, cv_WCloudCollection_to_Widget3D }
+	boxed_cast_base! { WCloudCollection, crate::viz::Widget3D, cv_viz_WCloudCollection_to_Widget3D }
 	
 	impl std::fmt::Debug for WCloudCollection {
 		#[inline]
@@ -2872,8 +2860,7 @@ pub mod viz {
 	impl Drop for WCloudNormals {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WCloudNormals_delete(instance: *mut c_void); }
-			unsafe { cv_WCloudNormals_delete(self.as_raw_mut_WCloudNormals()) };
+			unsafe { sys::cv_viz_WCloudNormals_delete(self.as_raw_mut_WCloudNormals()) };
 		}
 	}
 	
@@ -2934,9 +2921,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WCloudNormals, crate::viz::Widget, cv_WCloudNormals_to_Widget }
+	boxed_cast_base! { WCloudNormals, crate::viz::Widget, cv_viz_WCloudNormals_to_Widget }
 	
-	boxed_cast_base! { WCloudNormals, crate::viz::Widget3D, cv_WCloudNormals_to_Widget3D }
+	boxed_cast_base! { WCloudNormals, crate::viz::Widget3D, cv_viz_WCloudNormals_to_Widget3D }
 	
 	impl std::fmt::Debug for WCloudNormals {
 		#[inline]
@@ -2968,8 +2955,7 @@ pub mod viz {
 	impl Drop for WCone {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WCone_delete(instance: *mut c_void); }
-			unsafe { cv_WCone_delete(self.as_raw_mut_WCone()) };
+			unsafe { sys::cv_viz_WCone_delete(self.as_raw_mut_WCone()) };
 		}
 	}
 	
@@ -3045,9 +3031,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WCone, crate::viz::Widget, cv_WCone_to_Widget }
+	boxed_cast_base! { WCone, crate::viz::Widget, cv_viz_WCone_to_Widget }
 	
-	boxed_cast_base! { WCone, crate::viz::Widget3D, cv_WCone_to_Widget3D }
+	boxed_cast_base! { WCone, crate::viz::Widget3D, cv_viz_WCone_to_Widget3D }
 	
 	impl std::fmt::Debug for WCone {
 		#[inline]
@@ -3079,8 +3065,7 @@ pub mod viz {
 	impl Drop for WCoordinateSystem {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WCoordinateSystem_delete(instance: *mut c_void); }
-			unsafe { cv_WCoordinateSystem_delete(self.as_raw_mut_WCoordinateSystem()) };
+			unsafe { sys::cv_viz_WCoordinateSystem_delete(self.as_raw_mut_WCoordinateSystem()) };
 		}
 	}
 	
@@ -3130,9 +3115,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget, cv_WCoordinateSystem_to_Widget }
+	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget, cv_viz_WCoordinateSystem_to_Widget }
 	
-	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget3D, cv_WCoordinateSystem_to_Widget3D }
+	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget3D, cv_viz_WCoordinateSystem_to_Widget3D }
 	
 	impl std::fmt::Debug for WCoordinateSystem {
 		#[inline]
@@ -3164,8 +3149,7 @@ pub mod viz {
 	impl Drop for WCube {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WCube_delete(instance: *mut c_void); }
-			unsafe { cv_WCube_delete(self.as_raw_mut_WCube()) };
+			unsafe { sys::cv_viz_WCube_delete(self.as_raw_mut_WCube()) };
 		}
 	}
 	
@@ -3223,9 +3207,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WCube, crate::viz::Widget, cv_WCube_to_Widget }
+	boxed_cast_base! { WCube, crate::viz::Widget, cv_viz_WCube_to_Widget }
 	
-	boxed_cast_base! { WCube, crate::viz::Widget3D, cv_WCube_to_Widget3D }
+	boxed_cast_base! { WCube, crate::viz::Widget3D, cv_viz_WCube_to_Widget3D }
 	
 	impl std::fmt::Debug for WCube {
 		#[inline]
@@ -3257,8 +3241,7 @@ pub mod viz {
 	impl Drop for WCylinder {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WCylinder_delete(instance: *mut c_void); }
-			unsafe { cv_WCylinder_delete(self.as_raw_mut_WCylinder()) };
+			unsafe { sys::cv_viz_WCylinder_delete(self.as_raw_mut_WCylinder()) };
 		}
 	}
 	
@@ -3313,9 +3296,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WCylinder, crate::viz::Widget, cv_WCylinder_to_Widget }
+	boxed_cast_base! { WCylinder, crate::viz::Widget, cv_viz_WCylinder_to_Widget }
 	
-	boxed_cast_base! { WCylinder, crate::viz::Widget3D, cv_WCylinder_to_Widget3D }
+	boxed_cast_base! { WCylinder, crate::viz::Widget3D, cv_viz_WCylinder_to_Widget3D }
 	
 	impl std::fmt::Debug for WCylinder {
 		#[inline]
@@ -3347,8 +3330,7 @@ pub mod viz {
 	impl Drop for WGrid {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WGrid_delete(instance: *mut c_void); }
-			unsafe { cv_WGrid_delete(self.as_raw_mut_WGrid()) };
+			unsafe { sys::cv_viz_WGrid_delete(self.as_raw_mut_WGrid()) };
 		}
 	}
 	
@@ -3418,9 +3400,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WGrid, crate::viz::Widget, cv_WGrid_to_Widget }
+	boxed_cast_base! { WGrid, crate::viz::Widget, cv_viz_WGrid_to_Widget }
 	
-	boxed_cast_base! { WGrid, crate::viz::Widget3D, cv_WGrid_to_Widget3D }
+	boxed_cast_base! { WGrid, crate::viz::Widget3D, cv_viz_WGrid_to_Widget3D }
 	
 	impl std::fmt::Debug for WGrid {
 		#[inline]
@@ -3479,8 +3461,7 @@ pub mod viz {
 	impl Drop for WImage3D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WImage3D_delete(instance: *mut c_void); }
-			unsafe { cv_WImage3D_delete(self.as_raw_mut_WImage3D()) };
+			unsafe { sys::cv_viz_WImage3D_delete(self.as_raw_mut_WImage3D()) };
 		}
 	}
 	
@@ -3548,9 +3529,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WImage3D, crate::viz::Widget, cv_WImage3D_to_Widget }
+	boxed_cast_base! { WImage3D, crate::viz::Widget, cv_viz_WImage3D_to_Widget }
 	
-	boxed_cast_base! { WImage3D, crate::viz::Widget3D, cv_WImage3D_to_Widget3D }
+	boxed_cast_base! { WImage3D, crate::viz::Widget3D, cv_viz_WImage3D_to_Widget3D }
 	
 	impl std::fmt::Debug for WImage3D {
 		#[inline]
@@ -3596,8 +3577,7 @@ pub mod viz {
 	impl Drop for WImageOverlay {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WImageOverlay_delete(instance: *mut c_void); }
-			unsafe { cv_WImageOverlay_delete(self.as_raw_mut_WImageOverlay()) };
+			unsafe { sys::cv_viz_WImageOverlay_delete(self.as_raw_mut_WImageOverlay()) };
 		}
 	}
 	
@@ -3646,9 +3626,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WImageOverlay, crate::viz::Widget, cv_WImageOverlay_to_Widget }
+	boxed_cast_base! { WImageOverlay, crate::viz::Widget, cv_viz_WImageOverlay_to_Widget }
 	
-	boxed_cast_base! { WImageOverlay, crate::viz::Widget2D, cv_WImageOverlay_to_Widget2D }
+	boxed_cast_base! { WImageOverlay, crate::viz::Widget2D, cv_viz_WImageOverlay_to_Widget2D }
 	
 	impl std::fmt::Debug for WImageOverlay {
 		#[inline]
@@ -3680,8 +3660,7 @@ pub mod viz {
 	impl Drop for WLine {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WLine_delete(instance: *mut c_void); }
-			unsafe { cv_WLine_delete(self.as_raw_mut_WLine()) };
+			unsafe { sys::cv_viz_WLine_delete(self.as_raw_mut_WLine()) };
 		}
 	}
 	
@@ -3733,9 +3712,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WLine, crate::viz::Widget, cv_WLine_to_Widget }
+	boxed_cast_base! { WLine, crate::viz::Widget, cv_viz_WLine_to_Widget }
 	
-	boxed_cast_base! { WLine, crate::viz::Widget3D, cv_WLine_to_Widget3D }
+	boxed_cast_base! { WLine, crate::viz::Widget3D, cv_viz_WLine_to_Widget3D }
 	
 	impl std::fmt::Debug for WLine {
 		#[inline]
@@ -3774,8 +3753,7 @@ pub mod viz {
 	impl Drop for WMesh {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WMesh_delete(instance: *mut c_void); }
-			unsafe { cv_WMesh_delete(self.as_raw_mut_WMesh()) };
+			unsafe { sys::cv_viz_WMesh_delete(self.as_raw_mut_WMesh()) };
 		}
 	}
 	
@@ -3835,9 +3813,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WMesh, crate::viz::Widget, cv_WMesh_to_Widget }
+	boxed_cast_base! { WMesh, crate::viz::Widget, cv_viz_WMesh_to_Widget }
 	
-	boxed_cast_base! { WMesh, crate::viz::Widget3D, cv_WMesh_to_Widget3D }
+	boxed_cast_base! { WMesh, crate::viz::Widget3D, cv_viz_WMesh_to_Widget3D }
 	
 	impl std::fmt::Debug for WMesh {
 		#[inline]
@@ -3868,8 +3846,7 @@ pub mod viz {
 	impl Drop for WPaintedCloud {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WPaintedCloud_delete(instance: *mut c_void); }
-			unsafe { cv_WPaintedCloud_delete(self.as_raw_mut_WPaintedCloud()) };
+			unsafe { sys::cv_viz_WPaintedCloud_delete(self.as_raw_mut_WPaintedCloud()) };
 		}
 	}
 	
@@ -3938,9 +3915,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WPaintedCloud, crate::viz::Widget, cv_WPaintedCloud_to_Widget }
+	boxed_cast_base! { WPaintedCloud, crate::viz::Widget, cv_viz_WPaintedCloud_to_Widget }
 	
-	boxed_cast_base! { WPaintedCloud, crate::viz::Widget3D, cv_WPaintedCloud_to_Widget3D }
+	boxed_cast_base! { WPaintedCloud, crate::viz::Widget3D, cv_viz_WPaintedCloud_to_Widget3D }
 	
 	impl std::fmt::Debug for WPaintedCloud {
 		#[inline]
@@ -3972,8 +3949,7 @@ pub mod viz {
 	impl Drop for WPlane {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WPlane_delete(instance: *mut c_void); }
-			unsafe { cv_WPlane_delete(self.as_raw_mut_WPlane()) };
+			unsafe { sys::cv_viz_WPlane_delete(self.as_raw_mut_WPlane()) };
 		}
 	}
 	
@@ -4047,9 +4023,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WPlane, crate::viz::Widget, cv_WPlane_to_Widget }
+	boxed_cast_base! { WPlane, crate::viz::Widget, cv_viz_WPlane_to_Widget }
 	
-	boxed_cast_base! { WPlane, crate::viz::Widget3D, cv_WPlane_to_Widget3D }
+	boxed_cast_base! { WPlane, crate::viz::Widget3D, cv_viz_WPlane_to_Widget3D }
 	
 	impl std::fmt::Debug for WPlane {
 		#[inline]
@@ -4081,8 +4057,7 @@ pub mod viz {
 	impl Drop for WPolyLine {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WPolyLine_delete(instance: *mut c_void); }
-			unsafe { cv_WPolyLine_delete(self.as_raw_mut_WPolyLine()) };
+			unsafe { sys::cv_viz_WPolyLine_delete(self.as_raw_mut_WPolyLine()) };
 		}
 	}
 	
@@ -4146,9 +4121,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WPolyLine, crate::viz::Widget, cv_WPolyLine_to_Widget }
+	boxed_cast_base! { WPolyLine, crate::viz::Widget, cv_viz_WPolyLine_to_Widget }
 	
-	boxed_cast_base! { WPolyLine, crate::viz::Widget3D, cv_WPolyLine_to_Widget3D }
+	boxed_cast_base! { WPolyLine, crate::viz::Widget3D, cv_viz_WPolyLine_to_Widget3D }
 	
 	impl std::fmt::Debug for WPolyLine {
 		#[inline]
@@ -4180,8 +4155,7 @@ pub mod viz {
 	impl Drop for WSphere {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WSphere_delete(instance: *mut c_void); }
-			unsafe { cv_WSphere_delete(self.as_raw_mut_WSphere()) };
+			unsafe { sys::cv_viz_WSphere_delete(self.as_raw_mut_WSphere()) };
 		}
 	}
 	
@@ -4235,9 +4209,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WSphere, crate::viz::Widget, cv_WSphere_to_Widget }
+	boxed_cast_base! { WSphere, crate::viz::Widget, cv_viz_WSphere_to_Widget }
 	
-	boxed_cast_base! { WSphere, crate::viz::Widget3D, cv_WSphere_to_Widget3D }
+	boxed_cast_base! { WSphere, crate::viz::Widget3D, cv_viz_WSphere_to_Widget3D }
 	
 	impl std::fmt::Debug for WSphere {
 		#[inline]
@@ -4294,8 +4268,7 @@ pub mod viz {
 	impl Drop for WText {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WText_delete(instance: *mut c_void); }
-			unsafe { cv_WText_delete(self.as_raw_mut_WText()) };
+			unsafe { sys::cv_viz_WText_delete(self.as_raw_mut_WText()) };
 		}
 	}
 	
@@ -4350,9 +4323,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WText, crate::viz::Widget, cv_WText_to_Widget }
+	boxed_cast_base! { WText, crate::viz::Widget, cv_viz_WText_to_Widget }
 	
-	boxed_cast_base! { WText, crate::viz::Widget2D, cv_WText_to_Widget2D }
+	boxed_cast_base! { WText, crate::viz::Widget2D, cv_viz_WText_to_Widget2D }
 	
 	impl std::fmt::Debug for WText {
 		#[inline]
@@ -4409,8 +4382,7 @@ pub mod viz {
 	impl Drop for WText3D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WText3D_delete(instance: *mut c_void); }
-			unsafe { cv_WText3D_delete(self.as_raw_mut_WText3D()) };
+			unsafe { sys::cv_viz_WText3D_delete(self.as_raw_mut_WText3D()) };
 		}
 	}
 	
@@ -4467,9 +4439,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WText3D, crate::viz::Widget, cv_WText3D_to_Widget }
+	boxed_cast_base! { WText3D, crate::viz::Widget, cv_viz_WText3D_to_Widget }
 	
-	boxed_cast_base! { WText3D, crate::viz::Widget3D, cv_WText3D_to_Widget3D }
+	boxed_cast_base! { WText3D, crate::viz::Widget3D, cv_viz_WText3D_to_Widget3D }
 	
 	impl std::fmt::Debug for WText3D {
 		#[inline]
@@ -4501,8 +4473,7 @@ pub mod viz {
 	impl Drop for WTrajectory {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WTrajectory_delete(instance: *mut c_void); }
-			unsafe { cv_WTrajectory_delete(self.as_raw_mut_WTrajectory()) };
+			unsafe { sys::cv_viz_WTrajectory_delete(self.as_raw_mut_WTrajectory()) };
 		}
 	}
 	
@@ -4564,9 +4535,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WTrajectory, crate::viz::Widget, cv_WTrajectory_to_Widget }
+	boxed_cast_base! { WTrajectory, crate::viz::Widget, cv_viz_WTrajectory_to_Widget }
 	
-	boxed_cast_base! { WTrajectory, crate::viz::Widget3D, cv_WTrajectory_to_Widget3D }
+	boxed_cast_base! { WTrajectory, crate::viz::Widget3D, cv_viz_WTrajectory_to_Widget3D }
 	
 	impl std::fmt::Debug for WTrajectory {
 		#[inline]
@@ -4598,8 +4569,7 @@ pub mod viz {
 	impl Drop for WTrajectoryFrustums {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WTrajectoryFrustums_delete(instance: *mut c_void); }
-			unsafe { cv_WTrajectoryFrustums_delete(self.as_raw_mut_WTrajectoryFrustums()) };
+			unsafe { sys::cv_viz_WTrajectoryFrustums_delete(self.as_raw_mut_WTrajectoryFrustums()) };
 		}
 	}
 	
@@ -4680,9 +4650,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget, cv_WTrajectoryFrustums_to_Widget }
+	boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget, cv_viz_WTrajectoryFrustums_to_Widget }
 	
-	boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget3D, cv_WTrajectoryFrustums_to_Widget3D }
+	boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget3D, cv_viz_WTrajectoryFrustums_to_Widget3D }
 	
 	impl std::fmt::Debug for WTrajectoryFrustums {
 		#[inline]
@@ -4717,8 +4687,7 @@ pub mod viz {
 	impl Drop for WTrajectorySpheres {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WTrajectorySpheres_delete(instance: *mut c_void); }
-			unsafe { cv_WTrajectorySpheres_delete(self.as_raw_mut_WTrajectorySpheres()) };
+			unsafe { sys::cv_viz_WTrajectorySpheres_delete(self.as_raw_mut_WTrajectorySpheres()) };
 		}
 	}
 	
@@ -4776,9 +4745,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget, cv_WTrajectorySpheres_to_Widget }
+	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget, cv_viz_WTrajectorySpheres_to_Widget }
 	
-	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget3D, cv_WTrajectorySpheres_to_Widget3D }
+	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget3D, cv_viz_WTrajectorySpheres_to_Widget3D }
 	
 	impl std::fmt::Debug for WTrajectorySpheres {
 		#[inline]
@@ -4838,8 +4807,7 @@ pub mod viz {
 	impl Drop for WWidgetMerger {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WWidgetMerger_delete(instance: *mut c_void); }
-			unsafe { cv_WWidgetMerger_delete(self.as_raw_mut_WWidgetMerger()) };
+			unsafe { sys::cv_viz_WWidgetMerger_delete(self.as_raw_mut_WWidgetMerger()) };
 		}
 	}
 	
@@ -4882,9 +4850,9 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { WWidgetMerger, crate::viz::Widget, cv_WWidgetMerger_to_Widget }
+	boxed_cast_base! { WWidgetMerger, crate::viz::Widget, cv_viz_WWidgetMerger_to_Widget }
 	
-	boxed_cast_base! { WWidgetMerger, crate::viz::Widget3D, cv_WWidgetMerger_to_Widget3D }
+	boxed_cast_base! { WWidgetMerger, crate::viz::Widget3D, cv_viz_WWidgetMerger_to_Widget3D }
 	
 	impl std::fmt::Debug for WWidgetMerger {
 		#[inline]
@@ -4984,8 +4952,7 @@ pub mod viz {
 	impl Drop for Widget {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Widget_delete(instance: *mut c_void); }
-			unsafe { cv_Widget_delete(self.as_raw_mut_Widget()) };
+			unsafe { sys::cv_viz_Widget_delete(self.as_raw_mut_Widget()) };
 		}
 	}
 	
@@ -5080,8 +5047,7 @@ pub mod viz {
 	impl Drop for Widget2D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Widget2D_delete(instance: *mut c_void); }
-			unsafe { cv_Widget2D_delete(self.as_raw_mut_Widget2D()) };
+			unsafe { sys::cv_viz_Widget2D_delete(self.as_raw_mut_Widget2D()) };
 		}
 	}
 	
@@ -5116,7 +5082,7 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { Widget2D, crate::viz::Widget, cv_Widget2D_to_Widget }
+	boxed_cast_base! { Widget2D, crate::viz::Widget, cv_viz_Widget2D_to_Widget }
 	
 	impl std::fmt::Debug for Widget2D {
 		#[inline]
@@ -5210,8 +5176,7 @@ pub mod viz {
 	impl Drop for Widget3D {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Widget3D_delete(instance: *mut c_void); }
-			unsafe { cv_Widget3D_delete(self.as_raw_mut_Widget3D()) };
+			unsafe { sys::cv_viz_Widget3D_delete(self.as_raw_mut_Widget3D()) };
 		}
 	}
 	
@@ -5246,7 +5211,7 @@ pub mod viz {
 		
 	}
 	
-	boxed_cast_base! { Widget3D, crate::viz::Widget, cv_Widget3D_to_Widget }
+	boxed_cast_base! { Widget3D, crate::viz::Widget, cv_viz_Widget3D_to_Widget }
 	
 	impl std::fmt::Debug for Widget3D {
 		#[inline]

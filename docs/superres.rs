@@ -316,8 +316,7 @@ pub mod superres {
 	impl Drop for SuperRes_BroxOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperRes_BroxOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_SuperRes_BroxOpticalFlow_delete(self.as_raw_mut_SuperRes_BroxOpticalFlow()) };
+			unsafe { sys::cv_superres_BroxOpticalFlow_delete(self.as_raw_mut_SuperRes_BroxOpticalFlow()) };
 		}
 	}
 	
@@ -350,9 +349,9 @@ pub mod superres {
 	impl SuperRes_BroxOpticalFlow {
 	}
 	
-	boxed_cast_base! { SuperRes_BroxOpticalFlow, core::Algorithm, cv_SuperRes_BroxOpticalFlow_to_Algorithm }
+	boxed_cast_base! { SuperRes_BroxOpticalFlow, core::Algorithm, cv_superres_BroxOpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { SuperRes_BroxOpticalFlow, crate::superres::SuperRes_DenseOpticalFlowExt, cv_SuperRes_BroxOpticalFlow_to_SuperRes_DenseOpticalFlowExt }
+	boxed_cast_base! { SuperRes_BroxOpticalFlow, crate::superres::SuperRes_DenseOpticalFlowExt, cv_superres_BroxOpticalFlow_to_SuperRes_DenseOpticalFlowExt }
 	
 	impl std::fmt::Debug for SuperRes_BroxOpticalFlow {
 		#[inline]
@@ -407,8 +406,7 @@ pub mod superres {
 	impl Drop for SuperRes_DenseOpticalFlowExt {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperRes_DenseOpticalFlowExt_delete(instance: *mut c_void); }
-			unsafe { cv_SuperRes_DenseOpticalFlowExt_delete(self.as_raw_mut_SuperRes_DenseOpticalFlowExt()) };
+			unsafe { sys::cv_superres_DenseOpticalFlowExt_delete(self.as_raw_mut_SuperRes_DenseOpticalFlowExt()) };
 		}
 	}
 	
@@ -433,15 +431,15 @@ pub mod superres {
 	impl SuperRes_DenseOpticalFlowExt {
 	}
 	
-	boxed_cast_descendant! { SuperRes_DenseOpticalFlowExt, crate::superres::SuperRes_BroxOpticalFlow, cv_SuperRes_DenseOpticalFlowExt_to_SuperRes_BroxOpticalFlow }
+	boxed_cast_descendant! { SuperRes_DenseOpticalFlowExt, crate::superres::SuperRes_BroxOpticalFlow, cv_superres_DenseOpticalFlowExt_to_SuperRes_BroxOpticalFlow }
 	
-	boxed_cast_descendant! { SuperRes_DenseOpticalFlowExt, crate::superres::SuperRes_DualTVL1OpticalFlow, cv_SuperRes_DenseOpticalFlowExt_to_SuperRes_DualTVL1OpticalFlow }
+	boxed_cast_descendant! { SuperRes_DenseOpticalFlowExt, crate::superres::SuperRes_DualTVL1OpticalFlow, cv_superres_DenseOpticalFlowExt_to_SuperRes_DualTVL1OpticalFlow }
 	
-	boxed_cast_descendant! { SuperRes_DenseOpticalFlowExt, crate::superres::SuperRes_FarnebackOpticalFlow, cv_SuperRes_DenseOpticalFlowExt_to_SuperRes_FarnebackOpticalFlow }
+	boxed_cast_descendant! { SuperRes_DenseOpticalFlowExt, crate::superres::SuperRes_FarnebackOpticalFlow, cv_superres_DenseOpticalFlowExt_to_SuperRes_FarnebackOpticalFlow }
 	
-	boxed_cast_descendant! { SuperRes_DenseOpticalFlowExt, crate::superres::SuperRes_PyrLKOpticalFlow, cv_SuperRes_DenseOpticalFlowExt_to_SuperRes_PyrLKOpticalFlow }
+	boxed_cast_descendant! { SuperRes_DenseOpticalFlowExt, crate::superres::SuperRes_PyrLKOpticalFlow, cv_superres_DenseOpticalFlowExt_to_SuperRes_PyrLKOpticalFlow }
 	
-	boxed_cast_base! { SuperRes_DenseOpticalFlowExt, core::Algorithm, cv_SuperRes_DenseOpticalFlowExt_to_Algorithm }
+	boxed_cast_base! { SuperRes_DenseOpticalFlowExt, core::Algorithm, cv_superres_DenseOpticalFlowExt_to_Algorithm }
 	
 	impl std::fmt::Debug for SuperRes_DenseOpticalFlowExt {
 		#[inline]
@@ -648,8 +646,7 @@ pub mod superres {
 	impl Drop for SuperRes_DualTVL1OpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperRes_DualTVL1OpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_SuperRes_DualTVL1OpticalFlow_delete(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow()) };
+			unsafe { sys::cv_superres_DualTVL1OpticalFlow_delete(self.as_raw_mut_SuperRes_DualTVL1OpticalFlow()) };
 		}
 	}
 	
@@ -682,9 +679,9 @@ pub mod superres {
 	impl SuperRes_DualTVL1OpticalFlow {
 	}
 	
-	boxed_cast_base! { SuperRes_DualTVL1OpticalFlow, core::Algorithm, cv_SuperRes_DualTVL1OpticalFlow_to_Algorithm }
+	boxed_cast_base! { SuperRes_DualTVL1OpticalFlow, core::Algorithm, cv_superres_DualTVL1OpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { SuperRes_DualTVL1OpticalFlow, crate::superres::SuperRes_DenseOpticalFlowExt, cv_SuperRes_DualTVL1OpticalFlow_to_SuperRes_DenseOpticalFlowExt }
+	boxed_cast_base! { SuperRes_DualTVL1OpticalFlow, crate::superres::SuperRes_DenseOpticalFlowExt, cv_superres_DualTVL1OpticalFlow_to_SuperRes_DenseOpticalFlowExt }
 	
 	impl std::fmt::Debug for SuperRes_DualTVL1OpticalFlow {
 		#[inline]
@@ -869,8 +866,7 @@ pub mod superres {
 	impl Drop for SuperRes_FarnebackOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperRes_FarnebackOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_SuperRes_FarnebackOpticalFlow_delete(self.as_raw_mut_SuperRes_FarnebackOpticalFlow()) };
+			unsafe { sys::cv_superres_FarnebackOpticalFlow_delete(self.as_raw_mut_SuperRes_FarnebackOpticalFlow()) };
 		}
 	}
 	
@@ -903,9 +899,9 @@ pub mod superres {
 	impl SuperRes_FarnebackOpticalFlow {
 	}
 	
-	boxed_cast_base! { SuperRes_FarnebackOpticalFlow, core::Algorithm, cv_SuperRes_FarnebackOpticalFlow_to_Algorithm }
+	boxed_cast_base! { SuperRes_FarnebackOpticalFlow, core::Algorithm, cv_superres_FarnebackOpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { SuperRes_FarnebackOpticalFlow, crate::superres::SuperRes_DenseOpticalFlowExt, cv_SuperRes_FarnebackOpticalFlow_to_SuperRes_DenseOpticalFlowExt }
+	boxed_cast_base! { SuperRes_FarnebackOpticalFlow, crate::superres::SuperRes_DenseOpticalFlowExt, cv_superres_FarnebackOpticalFlow_to_SuperRes_DenseOpticalFlowExt }
 	
 	impl std::fmt::Debug for SuperRes_FarnebackOpticalFlow {
 		#[inline]
@@ -955,8 +951,7 @@ pub mod superres {
 	impl Drop for SuperRes_FrameSource {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperRes_FrameSource_delete(instance: *mut c_void); }
-			unsafe { cv_SuperRes_FrameSource_delete(self.as_raw_mut_SuperRes_FrameSource()) };
+			unsafe { sys::cv_superres_FrameSource_delete(self.as_raw_mut_SuperRes_FrameSource()) };
 		}
 	}
 	
@@ -973,7 +968,7 @@ pub mod superres {
 	impl SuperRes_FrameSource {
 	}
 	
-	boxed_cast_descendant! { SuperRes_FrameSource, crate::superres::SuperRes_SuperResolution, cv_SuperRes_FrameSource_to_SuperRes_SuperResolution }
+	boxed_cast_descendant! { SuperRes_FrameSource, crate::superres::SuperRes_SuperResolution, cv_superres_FrameSource_to_SuperRes_SuperResolution }
 	
 	impl std::fmt::Debug for SuperRes_FrameSource {
 		#[inline]
@@ -1070,8 +1065,7 @@ pub mod superres {
 	impl Drop for SuperRes_PyrLKOpticalFlow {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperRes_PyrLKOpticalFlow_delete(instance: *mut c_void); }
-			unsafe { cv_SuperRes_PyrLKOpticalFlow_delete(self.as_raw_mut_SuperRes_PyrLKOpticalFlow()) };
+			unsafe { sys::cv_superres_PyrLKOpticalFlow_delete(self.as_raw_mut_SuperRes_PyrLKOpticalFlow()) };
 		}
 	}
 	
@@ -1104,9 +1098,9 @@ pub mod superres {
 	impl SuperRes_PyrLKOpticalFlow {
 	}
 	
-	boxed_cast_base! { SuperRes_PyrLKOpticalFlow, core::Algorithm, cv_SuperRes_PyrLKOpticalFlow_to_Algorithm }
+	boxed_cast_base! { SuperRes_PyrLKOpticalFlow, core::Algorithm, cv_superres_PyrLKOpticalFlow_to_Algorithm }
 	
-	boxed_cast_base! { SuperRes_PyrLKOpticalFlow, crate::superres::SuperRes_DenseOpticalFlowExt, cv_SuperRes_PyrLKOpticalFlow_to_SuperRes_DenseOpticalFlowExt }
+	boxed_cast_base! { SuperRes_PyrLKOpticalFlow, crate::superres::SuperRes_DenseOpticalFlowExt, cv_superres_PyrLKOpticalFlow_to_SuperRes_DenseOpticalFlowExt }
 	
 	impl std::fmt::Debug for SuperRes_PyrLKOpticalFlow {
 		#[inline]
@@ -1428,8 +1422,7 @@ pub mod superres {
 	impl Drop for SuperRes_SuperResolution {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SuperRes_SuperResolution_delete(instance: *mut c_void); }
-			unsafe { cv_SuperRes_SuperResolution_delete(self.as_raw_mut_SuperRes_SuperResolution()) };
+			unsafe { sys::cv_superres_SuperResolution_delete(self.as_raw_mut_SuperRes_SuperResolution()) };
 		}
 	}
 	
@@ -1462,9 +1455,9 @@ pub mod superres {
 	impl SuperRes_SuperResolution {
 	}
 	
-	boxed_cast_base! { SuperRes_SuperResolution, core::Algorithm, cv_SuperRes_SuperResolution_to_Algorithm }
+	boxed_cast_base! { SuperRes_SuperResolution, core::Algorithm, cv_superres_SuperResolution_to_Algorithm }
 	
-	boxed_cast_base! { SuperRes_SuperResolution, crate::superres::SuperRes_FrameSource, cv_SuperRes_SuperResolution_to_SuperRes_FrameSource }
+	boxed_cast_base! { SuperRes_SuperResolution, crate::superres::SuperRes_FrameSource, cv_superres_SuperResolution_to_SuperRes_FrameSource }
 	
 	impl std::fmt::Debug for SuperRes_SuperResolution {
 		#[inline]

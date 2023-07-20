@@ -882,8 +882,7 @@ pub mod sfm {
 	impl Drop for BaseSFM {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BaseSFM_delete(instance: *mut c_void); }
-			unsafe { cv_BaseSFM_delete(self.as_raw_mut_BaseSFM()) };
+			unsafe { sys::cv_sfm_BaseSFM_delete(self.as_raw_mut_BaseSFM()) };
 		}
 	}
 	
@@ -900,7 +899,7 @@ pub mod sfm {
 	impl BaseSFM {
 	}
 	
-	boxed_cast_descendant! { BaseSFM, crate::sfm::SFMLibmvEuclideanReconstruction, cv_BaseSFM_to_SFMLibmvEuclideanReconstruction }
+	boxed_cast_descendant! { BaseSFM, crate::sfm::SFMLibmvEuclideanReconstruction, cv_sfm_BaseSFM_to_SFMLibmvEuclideanReconstruction }
 	
 	impl std::fmt::Debug for BaseSFM {
 		#[inline]
@@ -1091,8 +1090,7 @@ pub mod sfm {
 	impl Drop for SFMLibmvEuclideanReconstruction {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SFMLibmvEuclideanReconstruction_delete(instance: *mut c_void); }
-			unsafe { cv_SFMLibmvEuclideanReconstruction_delete(self.as_raw_mut_SFMLibmvEuclideanReconstruction()) };
+			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_delete(self.as_raw_mut_SFMLibmvEuclideanReconstruction()) };
 		}
 	}
 	
@@ -1132,7 +1130,7 @@ pub mod sfm {
 		
 	}
 	
-	boxed_cast_base! { SFMLibmvEuclideanReconstruction, crate::sfm::BaseSFM, cv_SFMLibmvEuclideanReconstruction_to_BaseSFM }
+	boxed_cast_base! { SFMLibmvEuclideanReconstruction, crate::sfm::BaseSFM, cv_sfm_SFMLibmvEuclideanReconstruction_to_BaseSFM }
 	
 	impl std::fmt::Debug for SFMLibmvEuclideanReconstruction {
 		#[inline]

@@ -59,8 +59,7 @@ pub mod tracking {
 	impl Drop for TrackerCSRT {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TrackerCSRT_delete(instance: *mut c_void); }
-			unsafe { cv_TrackerCSRT_delete(self.as_raw_mut_TrackerCSRT()) };
+			unsafe { sys::cv_tracking_TrackerCSRT_delete(self.as_raw_mut_TrackerCSRT()) };
 		}
 	}
 	
@@ -101,7 +100,7 @@ pub mod tracking {
 		
 	}
 	
-	boxed_cast_base! { TrackerCSRT, crate::video::Tracker, cv_TrackerCSRT_to_Tracker }
+	boxed_cast_base! { TrackerCSRT, crate::video::Tracker, cv_tracking_TrackerCSRT_to_Tracker }
 	
 	impl std::fmt::Debug for TrackerCSRT {
 		#[inline]
@@ -117,166 +116,166 @@ pub mod tracking {
 	
 		#[inline]
 		fn use_hog(&self) -> bool {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_hog_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_hog_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_color_names(&self) -> bool {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_color_names_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_color_names_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_gray(&self) -> bool {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_gray_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_gray_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_rgb(&self) -> bool {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_rgb_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_rgb_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_channel_weights(&self) -> bool {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_channel_weights_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_channel_weights_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn use_segmentation(&self) -> bool {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropUse_segmentation_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_segmentation_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		/// Window function: "hann", "cheb", "kaiser"
 		#[inline]
 		fn window_function(&self) -> String {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropWindow_function_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propWindow_function_const(self.as_raw_TrackerCSRT_Params()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
 		fn kaiser_alpha(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropKaiser_alpha_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propKaiser_alpha_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn cheb_attenuation(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropCheb_attenuation_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propCheb_attenuation_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn template_size(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropTemplate_size_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propTemplate_size_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn gsl_sigma(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropGsl_sigma_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propGsl_sigma_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn hog_orientations(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHog_orientations_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHog_orientations_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn hog_clip(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHog_clip_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHog_clip_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn padding(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropPadding_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propPadding_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn filter_lr(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropFilter_lr_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propFilter_lr_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn weights_lr(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropWeights_lr_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propWeights_lr_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn num_hog_channels_used(&self) -> i32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropNum_hog_channels_used_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propNum_hog_channels_used_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn admm_iterations(&self) -> i32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropAdmm_iterations_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propAdmm_iterations_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn histogram_bins(&self) -> i32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHistogram_bins_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHistogram_bins_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn histogram_lr(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropHistogram_lr_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHistogram_lr_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn background_ratio(&self) -> i32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropBackground_ratio_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propBackground_ratio_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn number_of_scales(&self) -> i32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropNumber_of_scales_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propNumber_of_scales_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn scale_sigma_factor(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_sigma_factor_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_sigma_factor_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn scale_model_max_area(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_model_max_area_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_model_max_area_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn scale_lr(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_lr_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_lr_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		#[inline]
 		fn scale_step(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropScale_step_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_step_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
 		/// we lost the target, if the psr is lower than this.
 		#[inline]
 		fn psr_threshold(&self) -> f32 {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_getPropPsr_threshold_const(self.as_raw_TrackerCSRT_Params()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propPsr_threshold_const(self.as_raw_TrackerCSRT_Params()) };
 			ret
 		}
 		
@@ -288,37 +287,37 @@ pub mod tracking {
 	
 		#[inline]
 		fn set_use_hog(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_hog_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_hog_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_color_names(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_color_names_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_color_names_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_gray(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_gray_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_gray_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_rgb(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_rgb_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_rgb_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_channel_weights(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_channel_weights_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_channel_weights_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_segmentation(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropUse_segmentation_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_segmentation_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
@@ -326,128 +325,128 @@ pub mod tracking {
 		#[inline]
 		fn set_window_function(&mut self, val: &str) {
 			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropWindow_function_string(self.as_raw_mut_TrackerCSRT_Params(), val.opencv_as_extern_mut()) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propWindow_function_string(self.as_raw_mut_TrackerCSRT_Params(), val.opencv_as_extern_mut()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kaiser_alpha(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropKaiser_alpha_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propKaiser_alpha_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_cheb_attenuation(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropCheb_attenuation_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propCheb_attenuation_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_template_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropTemplate_size_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propTemplate_size_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_gsl_sigma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropGsl_sigma_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propGsl_sigma_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_hog_orientations(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropHog_orientations_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHog_orientations_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_hog_clip(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropHog_clip_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHog_clip_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_padding(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropPadding_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propPadding_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_filter_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropFilter_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propFilter_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_weights_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropWeights_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propWeights_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_hog_channels_used(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropNum_hog_channels_used_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propNum_hog_channels_used_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_admm_iterations(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropAdmm_iterations_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propAdmm_iterations_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_histogram_bins(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropHistogram_bins_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHistogram_bins_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_histogram_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropHistogram_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHistogram_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_background_ratio(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropBackground_ratio_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propBackground_ratio_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_number_of_scales(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropNumber_of_scales_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propNumber_of_scales_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale_sigma_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropScale_sigma_factor_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_sigma_factor_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale_model_max_area(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropScale_model_max_area_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_model_max_area_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropScale_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale_step(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropScale_step_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_step_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		/// we lost the target, if the psr is lower than this.
 		#[inline]
 		fn set_psr_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_setPropPsr_threshold_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propPsr_threshold_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
@@ -462,8 +461,7 @@ pub mod tracking {
 	impl Drop for TrackerCSRT_Params {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TrackerCSRT_Params_delete(instance: *mut c_void); }
-			unsafe { cv_TrackerCSRT_Params_delete(self.as_raw_mut_TrackerCSRT_Params()) };
+			unsafe { sys::cv_tracking_TrackerCSRT_Params_delete(self.as_raw_mut_TrackerCSRT_Params()) };
 		}
 	}
 	
@@ -493,8 +491,7 @@ pub mod tracking {
 	impl Clone for TrackerCSRT_Params {
 		#[inline]
 		fn clone(&self) -> Self {
-			extern "C" { fn cv_TrackerCSRT_Params_implicitClone_const_TrackerCSRT_Params(val: extern_send!(TrackerCSRT_Params)) -> extern_receive!(TrackerCSRT_Params: 'static); }
-			unsafe { Self::from_raw(cv_TrackerCSRT_Params_implicitClone_const_TrackerCSRT_Params(self.as_raw_TrackerCSRT_Params())) }
+			unsafe { Self::from_raw(sys::cv_tracking_TrackerCSRT_Params_implicitClone_const(self.as_raw_TrackerCSRT_Params())) }
 		}
 	}
 	
@@ -572,8 +569,7 @@ pub mod tracking {
 	impl Drop for TrackerKCF {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TrackerKCF_delete(instance: *mut c_void); }
-			unsafe { cv_TrackerKCF_delete(self.as_raw_mut_TrackerKCF()) };
+			unsafe { sys::cv_tracking_TrackerKCF_delete(self.as_raw_mut_TrackerKCF()) };
 		}
 	}
 	
@@ -614,7 +610,7 @@ pub mod tracking {
 		
 	}
 	
-	boxed_cast_base! { TrackerKCF, crate::video::Tracker, cv_TrackerKCF_to_Tracker }
+	boxed_cast_base! { TrackerKCF, crate::video::Tracker, cv_tracking_TrackerKCF_to_Tracker }
 	
 	impl std::fmt::Debug for TrackerKCF {
 		#[inline]

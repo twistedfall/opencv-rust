@@ -175,8 +175,7 @@ pub mod shape {
 	impl Drop for AffineTransformer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_AffineTransformer_delete(instance: *mut c_void); }
-			unsafe { cv_AffineTransformer_delete(self.as_raw_mut_AffineTransformer()) };
+			unsafe { sys::cv_AffineTransformer_delete(self.as_raw_mut_AffineTransformer()) };
 		}
 	}
 	
@@ -243,8 +242,7 @@ pub mod shape {
 	impl Drop for ChiHistogramCostExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ChiHistogramCostExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_ChiHistogramCostExtractor_delete(self.as_raw_mut_ChiHistogramCostExtractor()) };
+			unsafe { sys::cv_ChiHistogramCostExtractor_delete(self.as_raw_mut_ChiHistogramCostExtractor()) };
 		}
 	}
 	
@@ -329,8 +327,7 @@ pub mod shape {
 	impl Drop for EMDHistogramCostExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_EMDHistogramCostExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_EMDHistogramCostExtractor_delete(self.as_raw_mut_EMDHistogramCostExtractor()) };
+			unsafe { sys::cv_EMDHistogramCostExtractor_delete(self.as_raw_mut_EMDHistogramCostExtractor()) };
 		}
 	}
 	
@@ -397,8 +394,7 @@ pub mod shape {
 	impl Drop for EMDL1HistogramCostExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_EMDL1HistogramCostExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_EMDL1HistogramCostExtractor_delete(self.as_raw_mut_EMDL1HistogramCostExtractor()) };
+			unsafe { sys::cv_EMDL1HistogramCostExtractor_delete(self.as_raw_mut_EMDL1HistogramCostExtractor()) };
 		}
 	}
 	
@@ -518,8 +514,7 @@ pub mod shape {
 	impl Drop for HausdorffDistanceExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HausdorffDistanceExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_HausdorffDistanceExtractor_delete(self.as_raw_mut_HausdorffDistanceExtractor()) };
+			unsafe { sys::cv_HausdorffDistanceExtractor_delete(self.as_raw_mut_HausdorffDistanceExtractor()) };
 		}
 	}
 	
@@ -634,8 +629,7 @@ pub mod shape {
 	impl Drop for HistogramCostExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_HistogramCostExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_HistogramCostExtractor_delete(self.as_raw_mut_HistogramCostExtractor()) };
+			unsafe { sys::cv_HistogramCostExtractor_delete(self.as_raw_mut_HistogramCostExtractor()) };
 		}
 	}
 	
@@ -718,8 +712,7 @@ pub mod shape {
 	impl Drop for NormHistogramCostExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_NormHistogramCostExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_NormHistogramCostExtractor_delete(self.as_raw_mut_NormHistogramCostExtractor()) };
+			unsafe { sys::cv_NormHistogramCostExtractor_delete(self.as_raw_mut_NormHistogramCostExtractor()) };
 		}
 	}
 	
@@ -1094,8 +1087,7 @@ pub mod shape {
 	impl Drop for ShapeContextDistanceExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ShapeContextDistanceExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_ShapeContextDistanceExtractor_delete(self.as_raw_mut_ShapeContextDistanceExtractor()) };
+			unsafe { sys::cv_ShapeContextDistanceExtractor_delete(self.as_raw_mut_ShapeContextDistanceExtractor()) };
 		}
 	}
 	
@@ -1181,8 +1173,7 @@ pub mod shape {
 	impl Drop for ShapeDistanceExtractor {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ShapeDistanceExtractor_delete(instance: *mut c_void); }
-			unsafe { cv_ShapeDistanceExtractor_delete(self.as_raw_mut_ShapeDistanceExtractor()) };
+			unsafe { sys::cv_ShapeDistanceExtractor_delete(self.as_raw_mut_ShapeDistanceExtractor()) };
 		}
 	}
 	
@@ -1303,8 +1294,7 @@ pub mod shape {
 	impl Drop for ShapeTransformer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ShapeTransformer_delete(instance: *mut c_void); }
-			unsafe { cv_ShapeTransformer_delete(self.as_raw_mut_ShapeTransformer()) };
+			unsafe { sys::cv_ShapeTransformer_delete(self.as_raw_mut_ShapeTransformer()) };
 		}
 	}
 	
@@ -1391,8 +1381,7 @@ pub mod shape {
 	impl Drop for ThinPlateSplineShapeTransformer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_ThinPlateSplineShapeTransformer_delete(instance: *mut c_void); }
-			unsafe { cv_ThinPlateSplineShapeTransformer_delete(self.as_raw_mut_ThinPlateSplineShapeTransformer()) };
+			unsafe { sys::cv_ThinPlateSplineShapeTransformer_delete(self.as_raw_mut_ThinPlateSplineShapeTransformer()) };
 		}
 	}
 	

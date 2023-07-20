@@ -175,7 +175,7 @@ pub mod stereo {
 		#[inline]
 		fn param(&self) -> crate::stereo::PropagationParameters {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_stereo_QuasiDenseStereo_getPropParam_const(self.as_raw_QuasiDenseStereo(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_stereo_QuasiDenseStereo_propParam_const(self.as_raw_QuasiDenseStereo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
@@ -188,7 +188,7 @@ pub mod stereo {
 	
 		#[inline]
 		fn set_param(&mut self, val: crate::stereo::PropagationParameters) {
-			let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_setPropParam_PropagationParameters(self.as_raw_mut_QuasiDenseStereo(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_propParam_PropagationParameters(self.as_raw_mut_QuasiDenseStereo(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -359,8 +359,7 @@ pub mod stereo {
 	impl Drop for QuasiDenseStereo {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_QuasiDenseStereo_delete(instance: *mut c_void); }
-			unsafe { cv_QuasiDenseStereo_delete(self.as_raw_mut_QuasiDenseStereo()) };
+			unsafe { sys::cv_stereo_QuasiDenseStereo_delete(self.as_raw_mut_QuasiDenseStereo()) };
 		}
 	}
 	

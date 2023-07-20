@@ -175,8 +175,7 @@ pub mod freetype {
 	impl Drop for FreeType2 {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_FreeType2_delete(instance: *mut c_void); }
-			unsafe { cv_FreeType2_delete(self.as_raw_mut_FreeType2()) };
+			unsafe { sys::cv_freetype_FreeType2_delete(self.as_raw_mut_FreeType2()) };
 		}
 	}
 	
@@ -201,7 +200,7 @@ pub mod freetype {
 	impl FreeType2 {
 	}
 	
-	boxed_cast_base! { FreeType2, core::Algorithm, cv_FreeType2_to_Algorithm }
+	boxed_cast_base! { FreeType2, core::Algorithm, cv_freetype_FreeType2_to_Algorithm }
 	
 	impl std::fmt::Debug for FreeType2 {
 		#[inline]

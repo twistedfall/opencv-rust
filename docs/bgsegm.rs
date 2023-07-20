@@ -321,8 +321,7 @@ pub mod bgsegm {
 	impl Drop for BackgroundSubtractorCNT {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BackgroundSubtractorCNT_delete(instance: *mut c_void); }
-			unsafe { cv_BackgroundSubtractorCNT_delete(self.as_raw_mut_BackgroundSubtractorCNT()) };
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_delete(self.as_raw_mut_BackgroundSubtractorCNT()) };
 		}
 	}
 	
@@ -355,9 +354,9 @@ pub mod bgsegm {
 	impl BackgroundSubtractorCNT {
 	}
 	
-	boxed_cast_base! { BackgroundSubtractorCNT, core::Algorithm, cv_BackgroundSubtractorCNT_to_Algorithm }
+	boxed_cast_base! { BackgroundSubtractorCNT, core::Algorithm, cv_bgsegm_BackgroundSubtractorCNT_to_Algorithm }
 	
-	boxed_cast_base! { BackgroundSubtractorCNT, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorCNT_to_BackgroundSubtractor }
+	boxed_cast_base! { BackgroundSubtractorCNT, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorCNT_to_BackgroundSubtractor }
 	
 	impl std::fmt::Debug for BackgroundSubtractorCNT {
 		#[inline]
@@ -602,8 +601,7 @@ pub mod bgsegm {
 	impl Drop for BackgroundSubtractorGMG {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BackgroundSubtractorGMG_delete(instance: *mut c_void); }
-			unsafe { cv_BackgroundSubtractorGMG_delete(self.as_raw_mut_BackgroundSubtractorGMG()) };
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_delete(self.as_raw_mut_BackgroundSubtractorGMG()) };
 		}
 	}
 	
@@ -636,9 +634,9 @@ pub mod bgsegm {
 	impl BackgroundSubtractorGMG {
 	}
 	
-	boxed_cast_base! { BackgroundSubtractorGMG, core::Algorithm, cv_BackgroundSubtractorGMG_to_Algorithm }
+	boxed_cast_base! { BackgroundSubtractorGMG, core::Algorithm, cv_bgsegm_BackgroundSubtractorGMG_to_Algorithm }
 	
-	boxed_cast_base! { BackgroundSubtractorGMG, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorGMG_to_BackgroundSubtractor }
+	boxed_cast_base! { BackgroundSubtractorGMG, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorGMG_to_BackgroundSubtractor }
 	
 	impl std::fmt::Debug for BackgroundSubtractorGMG {
 		#[inline]
@@ -695,8 +693,7 @@ pub mod bgsegm {
 	impl Drop for BackgroundSubtractorGSOC {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BackgroundSubtractorGSOC_delete(instance: *mut c_void); }
-			unsafe { cv_BackgroundSubtractorGSOC_delete(self.as_raw_mut_BackgroundSubtractorGSOC()) };
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_delete(self.as_raw_mut_BackgroundSubtractorGSOC()) };
 		}
 	}
 	
@@ -729,9 +726,9 @@ pub mod bgsegm {
 	impl BackgroundSubtractorGSOC {
 	}
 	
-	boxed_cast_base! { BackgroundSubtractorGSOC, core::Algorithm, cv_BackgroundSubtractorGSOC_to_Algorithm }
+	boxed_cast_base! { BackgroundSubtractorGSOC, core::Algorithm, cv_bgsegm_BackgroundSubtractorGSOC_to_Algorithm }
 	
-	boxed_cast_base! { BackgroundSubtractorGSOC, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorGSOC_to_BackgroundSubtractor }
+	boxed_cast_base! { BackgroundSubtractorGSOC, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorGSOC_to_BackgroundSubtractor }
 	
 	impl std::fmt::Debug for BackgroundSubtractorGSOC {
 		#[inline]
@@ -786,8 +783,7 @@ pub mod bgsegm {
 	impl Drop for BackgroundSubtractorLSBP {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BackgroundSubtractorLSBP_delete(instance: *mut c_void); }
-			unsafe { cv_BackgroundSubtractorLSBP_delete(self.as_raw_mut_BackgroundSubtractorLSBP()) };
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_delete(self.as_raw_mut_BackgroundSubtractorLSBP()) };
 		}
 	}
 	
@@ -820,9 +816,9 @@ pub mod bgsegm {
 	impl BackgroundSubtractorLSBP {
 	}
 	
-	boxed_cast_base! { BackgroundSubtractorLSBP, core::Algorithm, cv_BackgroundSubtractorLSBP_to_Algorithm }
+	boxed_cast_base! { BackgroundSubtractorLSBP, core::Algorithm, cv_bgsegm_BackgroundSubtractorLSBP_to_Algorithm }
 	
-	boxed_cast_base! { BackgroundSubtractorLSBP, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorLSBP_to_BackgroundSubtractor }
+	boxed_cast_base! { BackgroundSubtractorLSBP, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorLSBP_to_BackgroundSubtractor }
 	
 	impl std::fmt::Debug for BackgroundSubtractorLSBP {
 		#[inline]
@@ -854,8 +850,7 @@ pub mod bgsegm {
 	impl Drop for BackgroundSubtractorLSBPDesc {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BackgroundSubtractorLSBPDesc_delete(instance: *mut c_void); }
-			unsafe { cv_BackgroundSubtractorLSBPDesc_delete(self.as_raw_mut_BackgroundSubtractorLSBPDesc()) };
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_delete(self.as_raw_mut_BackgroundSubtractorLSBPDesc()) };
 		}
 	}
 	
@@ -1006,8 +1001,7 @@ pub mod bgsegm {
 	impl Drop for BackgroundSubtractorMOG {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_BackgroundSubtractorMOG_delete(instance: *mut c_void); }
-			unsafe { cv_BackgroundSubtractorMOG_delete(self.as_raw_mut_BackgroundSubtractorMOG()) };
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_delete(self.as_raw_mut_BackgroundSubtractorMOG()) };
 		}
 	}
 	
@@ -1040,9 +1034,9 @@ pub mod bgsegm {
 	impl BackgroundSubtractorMOG {
 	}
 	
-	boxed_cast_base! { BackgroundSubtractorMOG, core::Algorithm, cv_BackgroundSubtractorMOG_to_Algorithm }
+	boxed_cast_base! { BackgroundSubtractorMOG, core::Algorithm, cv_bgsegm_BackgroundSubtractorMOG_to_Algorithm }
 	
-	boxed_cast_base! { BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorMOG_to_BackgroundSubtractor }
+	boxed_cast_base! { BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorMOG_to_BackgroundSubtractor }
 	
 	impl std::fmt::Debug for BackgroundSubtractorMOG {
 		#[inline]
@@ -1093,8 +1087,7 @@ pub mod bgsegm {
 	impl Drop for SyntheticSequenceGenerator {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SyntheticSequenceGenerator_delete(instance: *mut c_void); }
-			unsafe { cv_SyntheticSequenceGenerator_delete(self.as_raw_mut_SyntheticSequenceGenerator()) };
+			unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_delete(self.as_raw_mut_SyntheticSequenceGenerator()) };
 		}
 	}
 	
@@ -1140,7 +1133,7 @@ pub mod bgsegm {
 		
 	}
 	
-	boxed_cast_base! { SyntheticSequenceGenerator, core::Algorithm, cv_SyntheticSequenceGenerator_to_Algorithm }
+	boxed_cast_base! { SyntheticSequenceGenerator, core::Algorithm, cv_bgsegm_SyntheticSequenceGenerator_to_Algorithm }
 	
 	impl std::fmt::Debug for SyntheticSequenceGenerator {
 		#[inline]

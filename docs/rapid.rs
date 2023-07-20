@@ -224,8 +224,7 @@ pub mod rapid {
 	impl Drop for Rapid_GOSTracker {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Rapid_GOSTracker_delete(instance: *mut c_void); }
-			unsafe { cv_Rapid_GOSTracker_delete(self.as_raw_mut_Rapid_GOSTracker()) };
+			unsafe { sys::cv_rapid_GOSTracker_delete(self.as_raw_mut_Rapid_GOSTracker()) };
 		}
 	}
 	
@@ -273,9 +272,9 @@ pub mod rapid {
 		
 	}
 	
-	boxed_cast_base! { Rapid_GOSTracker, core::Algorithm, cv_Rapid_GOSTracker_to_Algorithm }
+	boxed_cast_base! { Rapid_GOSTracker, core::Algorithm, cv_rapid_GOSTracker_to_Algorithm }
 	
-	boxed_cast_base! { Rapid_GOSTracker, crate::rapid::Rapid_Tracker, cv_Rapid_GOSTracker_to_Rapid_Tracker }
+	boxed_cast_base! { Rapid_GOSTracker, crate::rapid::Rapid_Tracker, cv_rapid_GOSTracker_to_Rapid_Tracker }
 	
 	impl std::fmt::Debug for Rapid_GOSTracker {
 		#[inline]
@@ -308,8 +307,7 @@ pub mod rapid {
 	impl Drop for Rapid_OLSTracker {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Rapid_OLSTracker_delete(instance: *mut c_void); }
-			unsafe { cv_Rapid_OLSTracker_delete(self.as_raw_mut_Rapid_OLSTracker()) };
+			unsafe { sys::cv_rapid_OLSTracker_delete(self.as_raw_mut_Rapid_OLSTracker()) };
 		}
 	}
 	
@@ -357,9 +355,9 @@ pub mod rapid {
 		
 	}
 	
-	boxed_cast_base! { Rapid_OLSTracker, core::Algorithm, cv_Rapid_OLSTracker_to_Algorithm }
+	boxed_cast_base! { Rapid_OLSTracker, core::Algorithm, cv_rapid_OLSTracker_to_Algorithm }
 	
-	boxed_cast_base! { Rapid_OLSTracker, crate::rapid::Rapid_Tracker, cv_Rapid_OLSTracker_to_Rapid_Tracker }
+	boxed_cast_base! { Rapid_OLSTracker, crate::rapid::Rapid_Tracker, cv_rapid_OLSTracker_to_Rapid_Tracker }
 	
 	impl std::fmt::Debug for Rapid_OLSTracker {
 		#[inline]
@@ -391,8 +389,7 @@ pub mod rapid {
 	impl Drop for Rapid_Rapid {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Rapid_Rapid_delete(instance: *mut c_void); }
-			unsafe { cv_Rapid_Rapid_delete(self.as_raw_mut_Rapid_Rapid()) };
+			unsafe { sys::cv_rapid_Rapid_delete(self.as_raw_mut_Rapid_Rapid()) };
 		}
 	}
 	
@@ -437,9 +434,9 @@ pub mod rapid {
 		
 	}
 	
-	boxed_cast_base! { Rapid_Rapid, core::Algorithm, cv_Rapid_Rapid_to_Algorithm }
+	boxed_cast_base! { Rapid_Rapid, core::Algorithm, cv_rapid_Rapid_to_Algorithm }
 	
-	boxed_cast_base! { Rapid_Rapid, crate::rapid::Rapid_Tracker, cv_Rapid_Rapid_to_Rapid_Tracker }
+	boxed_cast_base! { Rapid_Rapid, crate::rapid::Rapid_Tracker, cv_rapid_Rapid_to_Rapid_Tracker }
 	
 	impl std::fmt::Debug for Rapid_Rapid {
 		#[inline]
@@ -495,8 +492,7 @@ pub mod rapid {
 	impl Drop for Rapid_Tracker {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Rapid_Tracker_delete(instance: *mut c_void); }
-			unsafe { cv_Rapid_Tracker_delete(self.as_raw_mut_Rapid_Tracker()) };
+			unsafe { sys::cv_rapid_Tracker_delete(self.as_raw_mut_Rapid_Tracker()) };
 		}
 	}
 	
@@ -521,13 +517,13 @@ pub mod rapid {
 	impl Rapid_Tracker {
 	}
 	
-	boxed_cast_descendant! { Rapid_Tracker, crate::rapid::Rapid_GOSTracker, cv_Rapid_Tracker_to_Rapid_GOSTracker }
+	boxed_cast_descendant! { Rapid_Tracker, crate::rapid::Rapid_GOSTracker, cv_rapid_Tracker_to_Rapid_GOSTracker }
 	
-	boxed_cast_descendant! { Rapid_Tracker, crate::rapid::Rapid_OLSTracker, cv_Rapid_Tracker_to_Rapid_OLSTracker }
+	boxed_cast_descendant! { Rapid_Tracker, crate::rapid::Rapid_OLSTracker, cv_rapid_Tracker_to_Rapid_OLSTracker }
 	
-	boxed_cast_descendant! { Rapid_Tracker, crate::rapid::Rapid_Rapid, cv_Rapid_Tracker_to_Rapid_Rapid }
+	boxed_cast_descendant! { Rapid_Tracker, crate::rapid::Rapid_Rapid, cv_rapid_Tracker_to_Rapid_Rapid }
 	
-	boxed_cast_base! { Rapid_Tracker, core::Algorithm, cv_Rapid_Tracker_to_Algorithm }
+	boxed_cast_base! { Rapid_Tracker, core::Algorithm, cv_rapid_Tracker_to_Algorithm }
 	
 	impl std::fmt::Debug for Rapid_Tracker {
 		#[inline]

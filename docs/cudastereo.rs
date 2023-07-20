@@ -355,8 +355,7 @@ pub mod cudastereo {
 	impl Drop for CUDA_DisparityBilateralFilter {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_DisparityBilateralFilter_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_DisparityBilateralFilter_delete(self.as_raw_mut_CUDA_DisparityBilateralFilter()) };
+			unsafe { sys::cv_cuda_DisparityBilateralFilter_delete(self.as_raw_mut_CUDA_DisparityBilateralFilter()) };
 		}
 	}
 	
@@ -381,7 +380,7 @@ pub mod cudastereo {
 	impl CUDA_DisparityBilateralFilter {
 	}
 	
-	boxed_cast_base! { CUDA_DisparityBilateralFilter, core::Algorithm, cv_CUDA_DisparityBilateralFilter_to_Algorithm }
+	boxed_cast_base! { CUDA_DisparityBilateralFilter, core::Algorithm, cv_cuda_DisparityBilateralFilter_to_Algorithm }
 	
 	impl std::fmt::Debug for CUDA_DisparityBilateralFilter {
 		#[inline]
@@ -427,8 +426,7 @@ pub mod cudastereo {
 	impl Drop for CUDA_StereoBM {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_StereoBM_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_StereoBM_delete(self.as_raw_mut_CUDA_StereoBM()) };
+			unsafe { sys::cv_cuda_StereoBM_delete(self.as_raw_mut_CUDA_StereoBM()) };
 		}
 	}
 	
@@ -469,11 +467,11 @@ pub mod cudastereo {
 	impl CUDA_StereoBM {
 	}
 	
-	boxed_cast_base! { CUDA_StereoBM, core::Algorithm, cv_CUDA_StereoBM_to_Algorithm }
+	boxed_cast_base! { CUDA_StereoBM, core::Algorithm, cv_cuda_StereoBM_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_StereoBM, crate::calib3d::StereoBM, cv_CUDA_StereoBM_to_StereoBM }
+	boxed_cast_base! { CUDA_StereoBM, crate::calib3d::StereoBM, cv_cuda_StereoBM_to_StereoBM }
 	
-	boxed_cast_base! { CUDA_StereoBM, crate::calib3d::StereoMatcher, cv_CUDA_StereoBM_to_StereoMatcher }
+	boxed_cast_base! { CUDA_StereoBM, crate::calib3d::StereoMatcher, cv_cuda_StereoBM_to_StereoMatcher }
 	
 	impl std::fmt::Debug for CUDA_StereoBM {
 		#[inline]
@@ -716,8 +714,7 @@ pub mod cudastereo {
 	impl Drop for CUDA_StereoBeliefPropagation {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_StereoBeliefPropagation_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_StereoBeliefPropagation_delete(self.as_raw_mut_CUDA_StereoBeliefPropagation()) };
+			unsafe { sys::cv_cuda_StereoBeliefPropagation_delete(self.as_raw_mut_CUDA_StereoBeliefPropagation()) };
 		}
 	}
 	
@@ -761,11 +758,11 @@ pub mod cudastereo {
 		
 	}
 	
-	boxed_cast_descendant! { CUDA_StereoBeliefPropagation, crate::cudastereo::CUDA_StereoConstantSpaceBP, cv_CUDA_StereoBeliefPropagation_to_CUDA_StereoConstantSpaceBP }
+	boxed_cast_descendant! { CUDA_StereoBeliefPropagation, crate::cudastereo::CUDA_StereoConstantSpaceBP, cv_cuda_StereoBeliefPropagation_to_CUDA_StereoConstantSpaceBP }
 	
-	boxed_cast_base! { CUDA_StereoBeliefPropagation, core::Algorithm, cv_CUDA_StereoBeliefPropagation_to_Algorithm }
+	boxed_cast_base! { CUDA_StereoBeliefPropagation, core::Algorithm, cv_cuda_StereoBeliefPropagation_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_StereoBeliefPropagation, crate::calib3d::StereoMatcher, cv_CUDA_StereoBeliefPropagation_to_StereoMatcher }
+	boxed_cast_base! { CUDA_StereoBeliefPropagation, crate::calib3d::StereoMatcher, cv_cuda_StereoBeliefPropagation_to_StereoMatcher }
 	
 	impl std::fmt::Debug for CUDA_StereoBeliefPropagation {
 		#[inline]
@@ -854,8 +851,7 @@ pub mod cudastereo {
 	impl Drop for CUDA_StereoConstantSpaceBP {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_StereoConstantSpaceBP_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_StereoConstantSpaceBP_delete(self.as_raw_mut_CUDA_StereoConstantSpaceBP()) };
+			unsafe { sys::cv_cuda_StereoConstantSpaceBP_delete(self.as_raw_mut_CUDA_StereoConstantSpaceBP()) };
 		}
 	}
 	
@@ -907,11 +903,11 @@ pub mod cudastereo {
 		
 	}
 	
-	boxed_cast_base! { CUDA_StereoConstantSpaceBP, core::Algorithm, cv_CUDA_StereoConstantSpaceBP_to_Algorithm }
+	boxed_cast_base! { CUDA_StereoConstantSpaceBP, core::Algorithm, cv_cuda_StereoConstantSpaceBP_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_StereoConstantSpaceBP, crate::cudastereo::CUDA_StereoBeliefPropagation, cv_CUDA_StereoConstantSpaceBP_to_CUDA_StereoBeliefPropagation }
+	boxed_cast_base! { CUDA_StereoConstantSpaceBP, crate::cudastereo::CUDA_StereoBeliefPropagation, cv_cuda_StereoConstantSpaceBP_to_CUDA_StereoBeliefPropagation }
 	
-	boxed_cast_base! { CUDA_StereoConstantSpaceBP, crate::calib3d::StereoMatcher, cv_CUDA_StereoConstantSpaceBP_to_StereoMatcher }
+	boxed_cast_base! { CUDA_StereoConstantSpaceBP, crate::calib3d::StereoMatcher, cv_cuda_StereoConstantSpaceBP_to_StereoMatcher }
 	
 	impl std::fmt::Debug for CUDA_StereoConstantSpaceBP {
 		#[inline]
@@ -986,8 +982,7 @@ pub mod cudastereo {
 	impl Drop for CUDA_StereoSGM {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_CUDA_StereoSGM_delete(instance: *mut c_void); }
-			unsafe { cv_CUDA_StereoSGM_delete(self.as_raw_mut_CUDA_StereoSGM()) };
+			unsafe { sys::cv_cuda_StereoSGM_delete(self.as_raw_mut_CUDA_StereoSGM()) };
 		}
 	}
 	
@@ -1028,11 +1023,11 @@ pub mod cudastereo {
 	impl CUDA_StereoSGM {
 	}
 	
-	boxed_cast_base! { CUDA_StereoSGM, core::Algorithm, cv_CUDA_StereoSGM_to_Algorithm }
+	boxed_cast_base! { CUDA_StereoSGM, core::Algorithm, cv_cuda_StereoSGM_to_Algorithm }
 	
-	boxed_cast_base! { CUDA_StereoSGM, crate::calib3d::StereoMatcher, cv_CUDA_StereoSGM_to_StereoMatcher }
+	boxed_cast_base! { CUDA_StereoSGM, crate::calib3d::StereoMatcher, cv_cuda_StereoSGM_to_StereoMatcher }
 	
-	boxed_cast_base! { CUDA_StereoSGM, crate::calib3d::StereoSGBM, cv_CUDA_StereoSGM_to_StereoSGBM }
+	boxed_cast_base! { CUDA_StereoSGM, crate::calib3d::StereoSGBM, cv_cuda_StereoSGM_to_StereoSGBM }
 	
 	impl std::fmt::Debug for CUDA_StereoSGM {
 		#[inline]

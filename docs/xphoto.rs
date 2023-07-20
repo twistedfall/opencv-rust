@@ -456,8 +456,7 @@ pub mod xphoto {
 	impl Drop for GrayworldWB {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_GrayworldWB_delete(instance: *mut c_void); }
-			unsafe { cv_GrayworldWB_delete(self.as_raw_mut_GrayworldWB()) };
+			unsafe { sys::cv_xphoto_GrayworldWB_delete(self.as_raw_mut_GrayworldWB()) };
 		}
 	}
 	
@@ -490,9 +489,9 @@ pub mod xphoto {
 	impl GrayworldWB {
 	}
 	
-	boxed_cast_base! { GrayworldWB, core::Algorithm, cv_GrayworldWB_to_Algorithm }
+	boxed_cast_base! { GrayworldWB, core::Algorithm, cv_xphoto_GrayworldWB_to_Algorithm }
 	
-	boxed_cast_base! { GrayworldWB, crate::xphoto::WhiteBalancer, cv_GrayworldWB_to_WhiteBalancer }
+	boxed_cast_base! { GrayworldWB, crate::xphoto::WhiteBalancer, cv_xphoto_GrayworldWB_to_WhiteBalancer }
 	
 	impl std::fmt::Debug for GrayworldWB {
 		#[inline]
@@ -641,8 +640,7 @@ pub mod xphoto {
 	impl Drop for LearningBasedWB {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_LearningBasedWB_delete(instance: *mut c_void); }
-			unsafe { cv_LearningBasedWB_delete(self.as_raw_mut_LearningBasedWB()) };
+			unsafe { sys::cv_xphoto_LearningBasedWB_delete(self.as_raw_mut_LearningBasedWB()) };
 		}
 	}
 	
@@ -675,9 +673,9 @@ pub mod xphoto {
 	impl LearningBasedWB {
 	}
 	
-	boxed_cast_base! { LearningBasedWB, core::Algorithm, cv_LearningBasedWB_to_Algorithm }
+	boxed_cast_base! { LearningBasedWB, core::Algorithm, cv_xphoto_LearningBasedWB_to_Algorithm }
 	
-	boxed_cast_base! { LearningBasedWB, crate::xphoto::WhiteBalancer, cv_LearningBasedWB_to_WhiteBalancer }
+	boxed_cast_base! { LearningBasedWB, crate::xphoto::WhiteBalancer, cv_xphoto_LearningBasedWB_to_WhiteBalancer }
 	
 	impl std::fmt::Debug for LearningBasedWB {
 		#[inline]
@@ -831,8 +829,7 @@ pub mod xphoto {
 	impl Drop for SimpleWB {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_SimpleWB_delete(instance: *mut c_void); }
-			unsafe { cv_SimpleWB_delete(self.as_raw_mut_SimpleWB()) };
+			unsafe { sys::cv_xphoto_SimpleWB_delete(self.as_raw_mut_SimpleWB()) };
 		}
 	}
 	
@@ -865,9 +862,9 @@ pub mod xphoto {
 	impl SimpleWB {
 	}
 	
-	boxed_cast_base! { SimpleWB, core::Algorithm, cv_SimpleWB_to_Algorithm }
+	boxed_cast_base! { SimpleWB, core::Algorithm, cv_xphoto_SimpleWB_to_Algorithm }
 	
-	boxed_cast_base! { SimpleWB, crate::xphoto::WhiteBalancer, cv_SimpleWB_to_WhiteBalancer }
+	boxed_cast_base! { SimpleWB, crate::xphoto::WhiteBalancer, cv_xphoto_SimpleWB_to_WhiteBalancer }
 	
 	impl std::fmt::Debug for SimpleWB {
 		#[inline]
@@ -978,8 +975,7 @@ pub mod xphoto {
 	impl Drop for TonemapDurand {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_TonemapDurand_delete(instance: *mut c_void); }
-			unsafe { cv_TonemapDurand_delete(self.as_raw_mut_TonemapDurand()) };
+			unsafe { sys::cv_xphoto_TonemapDurand_delete(self.as_raw_mut_TonemapDurand()) };
 		}
 	}
 	
@@ -1012,9 +1008,9 @@ pub mod xphoto {
 	impl TonemapDurand {
 	}
 	
-	boxed_cast_base! { TonemapDurand, core::Algorithm, cv_TonemapDurand_to_Algorithm }
+	boxed_cast_base! { TonemapDurand, core::Algorithm, cv_xphoto_TonemapDurand_to_Algorithm }
 	
-	boxed_cast_base! { TonemapDurand, crate::photo::Tonemap, cv_TonemapDurand_to_Tonemap }
+	boxed_cast_base! { TonemapDurand, crate::photo::Tonemap, cv_xphoto_TonemapDurand_to_Tonemap }
 	
 	impl std::fmt::Debug for TonemapDurand {
 		#[inline]
@@ -1064,8 +1060,7 @@ pub mod xphoto {
 	impl Drop for WhiteBalancer {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_WhiteBalancer_delete(instance: *mut c_void); }
-			unsafe { cv_WhiteBalancer_delete(self.as_raw_mut_WhiteBalancer()) };
+			unsafe { sys::cv_xphoto_WhiteBalancer_delete(self.as_raw_mut_WhiteBalancer()) };
 		}
 	}
 	
@@ -1090,13 +1085,13 @@ pub mod xphoto {
 	impl WhiteBalancer {
 	}
 	
-	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::GrayworldWB, cv_WhiteBalancer_to_GrayworldWB }
+	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::GrayworldWB, cv_xphoto_WhiteBalancer_to_GrayworldWB }
 	
-	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::LearningBasedWB, cv_WhiteBalancer_to_LearningBasedWB }
+	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::LearningBasedWB, cv_xphoto_WhiteBalancer_to_LearningBasedWB }
 	
-	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::SimpleWB, cv_WhiteBalancer_to_SimpleWB }
+	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::SimpleWB, cv_xphoto_WhiteBalancer_to_SimpleWB }
 	
-	boxed_cast_base! { WhiteBalancer, core::Algorithm, cv_WhiteBalancer_to_Algorithm }
+	boxed_cast_base! { WhiteBalancer, core::Algorithm, cv_xphoto_WhiteBalancer_to_Algorithm }
 	
 	impl std::fmt::Debug for WhiteBalancer {
 		#[inline]

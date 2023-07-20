@@ -198,8 +198,7 @@ pub mod plot {
 	impl Drop for Plot2d {
 		#[inline]
 		fn drop(&mut self) {
-			extern "C" { fn cv_Plot2d_delete(instance: *mut c_void); }
-			unsafe { cv_Plot2d_delete(self.as_raw_mut_Plot2d()) };
+			unsafe { sys::cv_plot_Plot2d_delete(self.as_raw_mut_Plot2d()) };
 		}
 	}
 	
@@ -257,7 +256,7 @@ pub mod plot {
 		
 	}
 	
-	boxed_cast_base! { Plot2d, core::Algorithm, cv_Plot2d_to_Algorithm }
+	boxed_cast_base! { Plot2d, core::Algorithm, cv_plot_Plot2d_to_Algorithm }
 	
 	impl std::fmt::Debug for Plot2d {
 		#[inline]
