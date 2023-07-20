@@ -55,12 +55,22 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	}
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
-		let type_hint = match &self.type_hint() {
-			FieldTypeHint::ArgOverride(over) => TypeRefTypeHint::ArgOverride(*over),
-			_ => TypeRefTypeHint::None,
-		};
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
+				let type_hint = match self.type_hint() {
+					FieldTypeHint::ArgOverride(over) => TypeRefTypeHint::ArgOverride(over),
+					_ => {
+						let default_value_string = self
+							.default_value()
+							.map_or(false, |def| def.contains(|c| c == '"' || c == '\''));
+						if default_value_string {
+							TypeRefTypeHint::ArgOverride(ArgOverride::CharAsRustChar)
+						} else {
+							TypeRefTypeHint::None
+						}
+					}
+				};
+
 				TypeRef::new_ext(entity.get_type().expect("Can't get type"), type_hint, Some(entity), gen_env)
 			}
 			Self::Desc(desc) => desc.type_ref.clone(),
