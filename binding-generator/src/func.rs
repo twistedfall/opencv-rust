@@ -386,14 +386,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			if !out.is_empty() {
 				out += "::";
 			}
-			let local_name = fld.cpp_name(CppNameStyle::Declaration);
-			let is_setter = self.constness().is_mut() && args.len() == 1;
-			let (first_letter, rest) = local_name.split_at(1);
-			if is_setter {
-				write!(out, "setProp{}{rest}", first_letter.to_uppercase()).expect("write! to String shouldn't fail");
-			} else {
-				write!(out, "getProp{}{rest}", first_letter.to_uppercase()).expect("write! to String shouldn't fail");
-			}
+			let decl_name = fld.cpp_name(CppNameStyle::Declaration);
+			let (first_letter, rest) = decl_name.split_at(1);
+			write!(out, "prop{}{rest}", first_letter.to_uppercase()).expect("write! to String shouldn't fail");
 			out
 		} else {
 			self.cpp_name(CppNameStyle::Reference).into_owned()

@@ -107,9 +107,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_Mat_create_int_int_int", "+_rows_cols"),
 		("cv_Mat_diag_const_MatR", "+_mat"),
 		("cv_Mat_eye_Size_int", "+_size"),
-		("cv_Mat_getPropData", "+_mut"),
-		("cv_Mat_getPropSize_const", "mat_size"),
-		("cv_Mat_getPropStep_const", "mat_step"),
+		("cv_Mat_propData", "+_mut"),
+		("cv_Mat_propSize_const", "mat_size"),
+		("cv_Mat_propStep_const", "mat_step"),
 		("cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags", "get_umat"),
 		("cv_Mat_getUMat_const_int_UMatUsageFlags", "get_umat"), // 3.2 only
 		("cv_Mat_ones_Size_int", "+_size"),
@@ -160,8 +160,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_UMat_create_const_vectorLintGR_int_UMatUsageFlags", "+_nd_vec"),
 		("cv_UMat_create_int_const_intX_int_UMatUsageFlags", "+_nd"),
 		("cv_UMat_create_int_int_int_UMatUsageFlags", "+_rows_cols"),
-		("cv_UMat_getPropSize_const", "mat_size"),
-		("cv_UMat_getPropStep_const", "mat_step"),
+		("cv_UMat_propSize_const", "mat_size"),
+		("cv_UMat_propStep_const", "mat_step"),
 		("cv_UMat_rowRange_const_int_int", "row_bounds"),
 		("cv_UMat_type_const", "typ"),
 		("cv__InputArray__InputArray_const_GpuMatR", "from_gpumat"),
@@ -274,16 +274,16 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_write_FileStorageR_const_StringR_int", "+_i32"),
 
 		("cv_AsyncArray__getImpl_const", "-"),
-		("cv_MatExpr_getPropOp_const", "-"), // fixme implement PointerOf types
+		("cv_MatExpr_propOp_const", "-"), // fixme implement PointerOf types
 		("cv_Mat_Mat_const_MatR_const_RangeX", "-"), // duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
 		("cv_Mat_copySize_const_MatR", "-"), // internal function
 		("cv_Mat_push_back__const_voidX", "-"), // internal method
-		("cv_Mat_setPropSize_MatSize", "-"), // MatSize and MatStep types prevent assignment
-		("cv_Mat_setPropStep_MatStep", "-"), // MatSize and MatStep types prevent assignment
+		("cv_Mat_propSize_MatSize", "-"), // MatSize and MatStep types prevent assignment
+		("cv_Mat_propStep_MatStep", "-"), // MatSize and MatStep types prevent assignment
 		("cv_UMat_UMat_const_UMatR_const_RangeX", "-"), // duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
 		("cv_UMat_copySize_const_UMatR", "-"), // internal function
-		("cv_UMat_setPropSize_MatSize", "-"), // MatSize and MatStep types prevent assignment
-		("cv_UMat_setPropStep_MatStep", "-"), // MatSize and MatStep types prevent assignment
+		("cv_UMat_propSize_MatSize", "-"), // MatSize and MatStep types prevent assignment
+		("cv_UMat_propStep_MatStep", "-"), // MatSize and MatStep types prevent assignment
 		("cv_addImpl_int_const_charX", "-"),
 		("cv_calcCovarMatrix_const_MatX_int_MatR_MatR_int_int", "-"), // duplicate of cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int, but with pointers
 		("cv_cv_abs_short", "-"),
@@ -350,7 +350,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_dnn_Model_operator_cv_dnn_Net_const", "-"), // fixme, should generate fine, it's a dup of get_network_() anyway
 
 		// ### face ###
-		("cv_face_FacemarkLBF_Params_getPropPupils", "-"), // fixme array of vectors
+		("cv_face_FacemarkLBF_Params_propPupils", "-"), // fixme array of vectors
 
 		// ### features2d ###
 		("cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType", "+_with_type"),
@@ -433,7 +433,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool", "+_weights"),
 		("cv_HOGDescriptor_detect_const_const_MatR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 3.2 3.4
 		("cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 4.x
-		("cv_HOGDescriptor_setPropSvmDetector_vectorLfloatG", "+_vec"),
+		("cv_HOGDescriptor_propSvmDetector_vectorLfloatG", "+_vec"),
 		("cv_groupRectangles_vectorLRectGR_vectorLintGR_vectorLdoubleGR_int_double", "+_levels"),
 		("cv_groupRectangles_vectorLRectGR_vectorLintGR_int_double", "+_weights"),
 		("cv_groupRectangles_vectorLRectGR_int_double_vectorLintGX_vectorLdoubleGX", "+_levelweights"),
@@ -462,8 +462,8 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 
 		// ### text ###
 		("cv_text_BaseOCR_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_mask"),
-		("cv_text_ERStat_getPropPixels", "-"), // fixme: reference to a vector, we don't handle it too well yet
-		("cv_text_ERStat_setPropPixels_vectorLintGX", "-"), // fixme: reference to a vector, we don't handle it too well yet
+		("cv_text_ERStat_propPixels", "-"), // fixme: reference to a vector, we don't handle it too well yet
+		("cv_text_ERStat_propPixels_vectorLintGX", "-"), // fixme: reference to a vector, we don't handle it too well yet
 		("cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int", "+_from_file"),
 		("cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_multiple_mask"),
 		("cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int", "+_multiple"),
