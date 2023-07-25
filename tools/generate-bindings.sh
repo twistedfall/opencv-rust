@@ -162,3 +162,8 @@ export OPENCV_BINDING_GENERATOR_EMIT_DEBUG=1
 #done
 parallel --eta "$script_dir/../target/release/binding-generator" --debug "$OPENCV_4_HEADER_DIR" "$SRC_CPP_DIR" "$OUT_DIR_4" "{}" ::: $modules_4
 parallel --eta "$script_dir/../target/release/binding-generator" --debug "$OPENCV_34_HEADER_DIR" "$SRC_CPP_DIR" "$OUT_DIR_34" "{}" ::: $modules_34
+
+#parallel --eta "$script_dir/../target/release/binding-generator" --debug "{1}" "$SRC_CPP_DIR" "{2}" "{3}" \
+#	::: "$OPENCV_4_HEADER_DIR" "$OPENCV_34_HEADER_DIR" \
+#	:::+ "$OUT_DIR_4" "$OUT_DIR_34" \
+#	::: $modules_4
