@@ -8,7 +8,7 @@ use regex::{Captures, Regex};
 use crate::class::ClassDesc;
 use crate::function::Function;
 use crate::settings::ArgOverride;
-use crate::smart_ptr::SmartPtr;
+use crate::smart_ptr::{SmartPtr, SmartPtrDesc};
 use crate::tuple::Tuple;
 use crate::type_ref::{Constness, TemplateArg, TypeRef, TypeRefKind, TypeRefTemplateArg, TypeRefTypeHint};
 use crate::typedef::NewTypedefResult;
@@ -72,6 +72,10 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		Self::try_primitive("unsigned char").expect("Static primitive type")
 	}
 
+	pub fn float() -> TypeRef<'tu, 'ge> {
+		Self::try_primitive("float").expect("Static primitive type")
+	}
+
 	pub fn double() -> TypeRef<'tu, 'ge> {
 		Self::try_primitive("double").expect("Static primitive type")
 	}
@@ -91,6 +95,56 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 	/// `cv::Size`
 	pub fn cv_size() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_class(ClassDesc::cv_size())
+	}
+
+	/// `cv::Point`
+	pub fn cv_point() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_point())
+	}
+
+	/// `cv::Point2d`
+	pub fn cv_point2d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_point())
+	}
+
+	/// `cv::Point3i`
+	pub fn cv_point3i() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_point3i())
+	}
+
+	/// `cv::Point3f`
+	pub fn cv_point3f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_point3f())
+	}
+
+	/// `cv::Point3d`
+	pub fn cv_point3d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_point3d())
+	}
+
+	/// `cv::Vec2f`
+	pub fn cv_vec2f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_vec2f())
+	}
+
+	/// `cv::Vec2d`
+	pub fn cv_vec2d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_vec2d())
+	}
+
+	/// `cv::Vec3f`
+	pub fn cv_vec3f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_vec3f())
+	}
+
+	/// `cv::Vec3d`
+	pub fn cv_vec3d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_vec3d())
+	}
+
+	/// `cv::Vec4i`
+	pub fn cv_vec4i() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_vec4i())
 	}
 
 	/// `cv::Scalar`
@@ -118,9 +172,110 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		TypeRef::new_class(ClassDesc::cv_string())
 	}
 
-	/// `Vector<cv::String>`
+	/// `std::vector<std::vector<double>>`
+	pub fn vector_of_vector_of_double() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRef::new_vector(Vector::new_desc(
+			VectorDesc::new(TypeRefDesc::double()),
+		)))))
+	}
+
+	/// `std::vector<std::vector<int>>`
+	pub fn vector_of_vector_of_int() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRef::new_vector(Vector::new_desc(
+			VectorDesc::new(TypeRefDesc::int()),
+		)))))
+	}
+
+	/// `std::vector<cv::String>`
 	pub fn vector_of_cv_string() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_string())))
+	}
+
+	/// `std::vector<cv::Vec2f>`
+	pub fn vector_of_cv_vec2f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_vec2f())))
+	}
+
+	/// `std::vector<cv::Vec2d>`
+	pub fn vector_of_cv_vec2d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_vec2d())))
+	}
+
+	/// `std::vector<cv::Vec3f>`
+	pub fn vector_of_cv_vec3f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_vec3f())))
+	}
+
+	/// `std::vector<std::vector<cv::Vec3f>>`
+	pub fn vector_of_vector_of_cv_vec3f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::vector_of_cv_vec3f())))
+	}
+
+	/// `std::vector<cv::Vec3d>`
+	pub fn vector_of_cv_vec3d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_vec3d())))
+	}
+
+	/// `std::vector<cv::Vec4i>`
+	pub fn vector_of_cv_vec4i() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_vec4i())))
+	}
+
+	/// `std::vector<std::vector<cv::Point>>`
+	pub fn vector_of_vector_of_cv_point() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRef::new_vector(Vector::new_desc(
+			VectorDesc::new(TypeRefDesc::cv_point()),
+		)))))
+	}
+
+	/// `std::vector<cv::Point2d>`
+	pub fn vector_of_cv_point2d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_point2d())))
+	}
+
+	/// `std::vector<cv::Point3i>`
+	pub fn vector_of_cv_point3i() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_point3i())))
+	}
+
+	/// `std::vector<std::vector<cv::Point3i>>`
+	pub fn vector_of_vector_of_cv_point3i() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(Self::vector_of_cv_point3i())))
+	}
+
+	/// `std::vector<cv::Point3f>`
+	pub fn vector_of_cv_point3f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_point3f())))
+	}
+
+	/// `std::vector<std::vector<cv::Point3f>>`
+	pub fn vector_of_vector_of_cv_point3f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(Self::vector_of_cv_point3f())))
+	}
+
+	/// `std::vector<cv::Point3d>`
+	pub fn vector_of_cv_point3d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_point3d())))
+	}
+
+	/// `std::vector<std::vector<cv::Point3d>>`
+	pub fn vector_of_vector_of_cv_point3d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(Self::vector_of_cv_point3d())))
+	}
+
+	/// `cv::Ptr<float>`
+	pub fn ptr_of_float() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_smartptr(SmartPtr::new_desc(SmartPtrDesc::new(TypeRefDesc::float())))
+	}
+
+	/// `cv::Ptr<cv::Feature2d>`
+	pub fn ptr_of_cv_feature2d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_smartptr(SmartPtr::new_desc(SmartPtrDesc::new(TypeRefDesc::cv_feature2d())))
+	}
+
+	/// `cv::Feature2D`
+	pub fn cv_feature2d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_feature2d())
 	}
 
 	/// `cv::dnn::DictValue`

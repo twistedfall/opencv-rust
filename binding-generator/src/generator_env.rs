@@ -10,8 +10,8 @@ use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
 use crate::class::ClassKind;
 use crate::type_ref::CppNameStyle;
 use crate::{
-	comment, is_ephemeral_header, is_opencv_path, opencv_module_from_path, settings, Class, Const, Element, EntityWalkerExt,
-	EntityWalkerVisitor, Func, MemoizeMap, MemoizeMapExt, NamePool, WalkAction,
+	comment, is_opencv_path, opencv_module_from_path, settings, Class, Const, Element, EntityWalkerExt, EntityWalkerVisitor,
+	MemoizeMap, MemoizeMapExt, NamePool, WalkAction,
 };
 
 #[derive(Copy, Clone, Debug)]
@@ -93,9 +93,8 @@ struct ExportIdx {
 
 /// Populates different fields of [GeneratorEnv] to be used later for binding generation.
 ///
-/// This is 2nd pass of the analysis. It performs some of the same actions as [crate::generator::EphemeralGenerator], but we can't
-/// share the collected data between them because after generating an ephemeral header we do a re-parse and that invalidates any
-/// [Entity] we might've stored in the pre-collected data
+///
+/// This is 1st pass of the analysis. It performs the collection of the necessary auxiliary data like which descendants a class has.
 struct GeneratorEnvPopulator<'tu, 'ge> {
 	gen_env: &'ge mut GeneratorEnv<'tu>,
 }
@@ -123,25 +122,11 @@ impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 			self.gen_env.class_constants.insert(full_name.clone(), cnst.clone());
 		}
 	}
-
-	fn add_used_in_smart_ptr(&mut self, func: Entity<'tu>) {
-		let args = Func::new(func, self.gen_env)
-			.arguments()
-			.iter()
-			.filter_map(|arg| arg.type_ref().as_smart_ptr())
-			.map(|smart_ptr| smart_ptr.pointee().cpp_name(CppNameStyle::Reference).into_owned())
-			.collect::<Vec<_>>();
-		for arg in args {
-			self.gen_env.used_in_smart_ptr.insert(arg);
-		}
-	}
 }
 
 impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		is_opencv_path(path)
-			|| is_ephemeral_header(path)
-			|| opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
+		is_opencv_path(path) || opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
 	}
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
@@ -163,7 +148,6 @@ impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 						| EntityKind::FunctionTemplate
 						| EntityKind::ConversionFunction => {
 							self.add_func_comment(c);
-							self.add_used_in_smart_ptr(c);
 						}
 						EntityKind::VarDecl => {
 							if let Some(StorageClass::Static) = c.get_storage_class() {
@@ -179,7 +163,6 @@ impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 			}
 			EntityKind::FunctionDecl => {
 				self.add_func_comment(entity);
-				self.add_used_in_smart_ptr(entity);
 			}
 			_ => {}
 		}
@@ -202,7 +185,6 @@ pub struct GeneratorEnv<'tu> {
 	/// Cache of the calculated [ClassKind]s
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
 	class_constants: HashMap<String, Const<'tu>>,
-	used_in_smart_ptr: HashSet<String>,
 	descendants: HashMap<String, HashSet<Entity<'tu>>>,
 }
 
@@ -216,7 +198,6 @@ impl<'tu> GeneratorEnv<'tu> {
 			func_comments: HashMap::with_capacity(2048),
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
 			class_constants: HashMap::with_capacity(32),
-			used_in_smart_ptr: HashSet::with_capacity(32),
 			descendants: HashMap::with_capacity(16),
 		};
 		root_entity.walk_opencv_entities(GeneratorEnvPopulator { gen_env: &mut out });
@@ -237,28 +218,22 @@ impl<'tu> GeneratorEnv<'tu> {
 				.get_end()
 				.get_spelling_location();
 			let path = l.file.expect("Can't get exported macro file").get_path();
-			if is_ephemeral_header(&path) {
-				(l, 0)
-			} else {
-				let mut f = BufReader::new(File::open(&path).expect("Can't open export macro file"));
-				f.seek(SeekFrom::Start(u64::from(l.offset)))
-					.expect("Can't seek export macro file");
-				let mut line_offset = 0;
-				let mut line = String::with_capacity(8);
-				while f.read_line(&mut line).is_ok() {
-					if line.trim().is_empty() {
-						line_offset += 1;
-					} else {
-						break;
-					}
+			let mut f = BufReader::new(File::open(&path).expect("Can't open export macro file"));
+			f.seek(SeekFrom::Start(u64::from(l.offset)))
+				.expect("Can't seek export macro file");
+			let mut line_offset = 0;
+			let mut line = String::with_capacity(8);
+			while f.read_line(&mut line).is_ok() {
+				if line.trim().is_empty() {
+					line_offset += 1;
+				} else {
+					break;
 				}
-				if line_offset > 1 {
-					panic!(
-						"Line offset more than 1 is not supported, modify fuzzy_key in get_export_config() to support higher values"
-					);
-				}
-				(l, line_offset)
 			}
+			if line_offset > 1 {
+				panic!("Line offset more than 1 is not supported, modify fuzzy_key in get_export_config() to support higher values");
+			}
+			(l, line_offset)
 		} else {
 			let loc = if let Some(range) = entity.get_range() {
 				range.get_start().get_spelling_location()
@@ -383,10 +358,6 @@ impl<'tu> GeneratorEnv<'tu> {
 
 	pub fn resolve_class_constant(&self, constant: &str) -> Option<&Const<'tu>> {
 		self.class_constants.get(constant)
-	}
-
-	pub fn is_used_in_smart_ptr(&self, cpp_refname: &str) -> bool {
-		self.used_in_smart_ptr.contains(cpp_refname)
 	}
 
 	/// Returns the descendants of the specified class

@@ -51,11 +51,18 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 	}
 
 	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
-		if let Some(typedef) = self.pointee().as_typedef() {
-			typedef.generated_types()
+		let mut out = if let Some(cls) = self.pointee().as_class() {
+			cls.all_family()
+				.into_iter()
+				.map(|desc| GeneratedType::SmartPtr(SmartPtr::new_desc(SmartPtrDesc::new(TypeRef::new_class(desc)))))
+				.collect()
 		} else {
 			vec![]
+		};
+		if let Some(typedef) = self.pointee().as_typedef() {
+			out.extend(typedef.generated_types());
 		}
+		out
 	}
 }
 

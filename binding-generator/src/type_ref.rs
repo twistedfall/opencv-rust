@@ -101,6 +101,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		Self::new_desc(TypeRefDesc::new(TypeRefKind::StdVector(vector)))
 	}
 
+	pub fn new_smartptr(smart_ptr: SmartPtr<'tu, 'ge>) -> Self {
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(smart_ptr)))
+	}
+
 	/// Create a [TypeRef] from a textual C++ representation
 	///
 	/// Correctness may vary, very few [TypeRefKind]s are supported.

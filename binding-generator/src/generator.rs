@@ -1,23 +1,19 @@
 use std::borrow::Cow;
-use std::collections::{HashMap, HashSet};
-use std::fmt::Write;
 use std::fs::File;
 use std::io::BufReader;
 use std::path::{Path, PathBuf};
 
 use clang::diagnostic::{Diagnostic, Severity};
-use clang::{Clang, Entity, EntityKind, EntityVisitResult, Index, Unsaved};
+use clang::{Clang, Entity, EntityKind, Index};
 use dunce::canonicalize;
-use once_cell::sync::Lazy;
 
 use crate::entity::WalkAction;
-use crate::type_ref::{CppNameStyle, FishStyle};
+use crate::type_ref::{CppNameStyle, FishStyle, TypeRef, TypeRefKind};
 use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	get_definition_text, line_reader, opencv_module_from_path, settings, Class, ClassSimplicity, CompiledInterpolation, Const,
-	Element, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Enum, Func, GeneratorEnv, LineReaderAction, SmartPtr, StrExt, Tuple,
-	Typedef, Vector,
+	get_definition_text, line_reader, settings, Class, ClassSimplicity, Const, Element, EntityExt, EntityWalkerExt,
+	EntityWalkerVisitor, Enum, Func, GeneratorEnv, LineReaderAction, SmartPtr, Tuple, Typedef, Vector,
 };
 
 #[derive(Debug)]
@@ -25,6 +21,19 @@ pub enum GeneratedType<'tu, 'ge> {
 	Vector(Vector<'tu, 'ge>),
 	SmartPtr(SmartPtr<'tu, 'ge>),
 	Tuple(Tuple<'tu, 'ge>),
+}
+
+impl<'tu, 'ge> TryFrom<TypeRef<'tu, 'ge>> for GeneratedType<'tu, 'ge> {
+	type Error = ();
+
+	fn try_from(value: TypeRef<'tu, 'ge>) -> Result<Self, Self::Error> {
+		match value.kind().into_owned() {
+			TypeRefKind::StdVector(vec) => Ok(Self::Vector(vec)),
+			TypeRefKind::StdTuple(tuple) => Ok(Self::Tuple(tuple)),
+			TypeRefKind::SmartPtr(ptr) => Ok(Self::SmartPtr(ptr)),
+			_ => Err(()),
+		}
+	}
 }
 
 /// Visitor of the different supported OpenCV entities, used in conjunction with [Generator]
@@ -55,146 +64,13 @@ pub trait GeneratorVisitor {
 
 	/// Dependent generated type like `std::vector<Mat>` or `std::tuple<1, 2, 3>`
 	fn visit_generated_type(&mut self, typ: GeneratedType, gen_env: &GeneratorEnv) {}
-
-	/// Contents of the generated ephemeral header
-	fn visit_ephemeral_header(&mut self, contents: &str) {}
-}
-
-/// Generator for the auxiliary header filled with helper structures
-///
-/// In particular this generator collects information about which types are used inside smart pointers and their descendants to
-/// generate fuller OpenCV bindings. See `binding-generator/tpl/ephemeral/ephemeral.tpl.hpp` for its template. This is the 1st pass
-/// of analysis.
-struct EphemeralGenerator<'m> {
-	module: &'m str,
-	used_in_smart_ptr: HashSet<String>,
-	descendants: HashMap<String, HashSet<String>>,
-}
-
-impl<'m> EphemeralGenerator<'m> {
-	pub fn new(module: &'m str) -> Self {
-		Self {
-			module,
-			used_in_smart_ptr: HashSet::with_capacity(32),
-			descendants: HashMap::with_capacity(16),
-		}
-	}
-
-	fn add_used_in_smart_ptr(&mut self, func: Entity) {
-		for arg_type in func.get_arguments().iter().flatten().filter_map(Entity::get_type) {
-			if arg_type
-				.get_declaration()
-				.map_or(false, |ent| ent.cpp_name(CppNameStyle::Reference).starts_with("cv::Ptr"))
-			{
-				let inner_type_ent = arg_type
-					.get_template_argument_types()
-					.into_iter()
-					.flatten()
-					.flatten()
-					.next()
-					.and_then(|t| t.get_declaration());
-				if let Some(inner_type_ent) = inner_type_ent {
-					self
-						.used_in_smart_ptr
-						.insert(inner_type_ent.cpp_name(CppNameStyle::Reference).into_owned());
-				}
-			}
-		}
-	}
-
-	pub fn generate_header(&self) -> String {
-		static TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("../tpl/ephemeral/ephemeral.tpl.hpp").compile_interpolation());
-
-		let mut includes = String::with_capacity(128);
-		let mut generate_types: Vec<Cow<_>> = Vec::with_capacity(32);
-
-		let global_tweaks = settings::GENERATOR_MODULE_TWEAKS.get("*");
-		let module_tweaks = settings::GENERATOR_MODULE_TWEAKS.get(self.module);
-		for tweak in global_tweaks.iter().chain(module_tweaks.iter()) {
-			for &include in &tweak.includes {
-				writeln!(includes, "#include <opencv2/{include}>").expect("Can't fail");
-			}
-			for &gen_type in &tweak.generate_types {
-				generate_types.push(gen_type.into());
-			}
-		}
-		let mut used_in_smart_ptr = self.used_in_smart_ptr.iter().collect::<Vec<_>>();
-		used_in_smart_ptr.sort_unstable();
-
-		fn all_descendants<'d>(descendants: &'d HashMap<String, HashSet<String>>, class: &str) -> HashSet<&'d String> {
-			descendants
-				.get(class)
-				.map(|d| d.iter().collect::<Vec<_>>())
-				.into_iter()
-				.flatten()
-				.flat_map(|descendant| {
-					let mut out = all_descendants(descendants, descendant);
-					out.insert(descendant);
-					out
-				})
-				.collect()
-		}
-
-		for used_cppfull in used_in_smart_ptr {
-			let mut descendants = all_descendants(&self.descendants, used_cppfull)
-				.into_iter()
-				.collect::<Vec<_>>();
-			descendants.sort_unstable();
-			for desc_cppfull in descendants {
-				if !self.used_in_smart_ptr.contains(desc_cppfull) {
-					generate_types.push(format!("cv::Ptr<{desc_cppfull}>").into());
-				}
-			}
-		}
-
-		TPL.interpolate(&HashMap::from([
-			("includes", includes),
-			("generate_types", generate_types.join(",\n")),
-		]))
-	}
-}
-
-impl EntityWalkerVisitor<'_> for &mut EphemeralGenerator<'_> {
-	fn wants_file(&mut self, path: &Path) -> bool {
-		opencv_module_from_path(path).map_or(false, |m| m == self.module)
-	}
-
-	fn visit_entity(&mut self, entity: Entity<'_>) -> WalkAction {
-		match entity.get_kind() {
-			EntityKind::ClassDecl | EntityKind::StructDecl => {
-				entity.visit_children(|c, _| {
-					match c.get_kind() {
-						EntityKind::BaseSpecifier => {
-							let c_decl = c.get_definition().expect("Can't get base class definition");
-							self
-								.descendants
-								.entry(c_decl.cpp_name(CppNameStyle::Reference).into_owned())
-								.or_insert_with(|| HashSet::with_capacity(4))
-								.insert(entity.cpp_name(CppNameStyle::Reference).into_owned());
-						}
-						EntityKind::Constructor
-						| EntityKind::Method
-						| EntityKind::FunctionTemplate
-						| EntityKind::ConversionFunction => self.add_used_in_smart_ptr(c),
-						_ => {}
-					}
-					EntityVisitResult::Continue
-				});
-			}
-			EntityKind::FunctionDecl => {
-				self.add_used_in_smart_ptr(entity);
-			}
-			_ => {}
-		}
-		WalkAction::Continue
-	}
 }
 
 /// Bridge between [EntityWalkerVisitor] and [GeneratorVisitor]
 ///
 /// It takes [Entity]s supplied by the entity walker, extracts their export data (whether the entity should appear in bindings at
-/// all or is internal) and calls the corresponding method in [GeneratorVisitor] based on their type.
+/// all or is internal) and calls the corresponding method in [GeneratorVisitor] based on their type. This is the 2nd pass of the
+/// binding generation.
 struct OpenCvWalker<'tu, 'r, V: GeneratorVisitor> {
 	opencv_module_header_dir: &'r Path,
 	visitor: V,
@@ -446,6 +322,13 @@ impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 				self.visitor.visit_func(inject_func, &self.gen_env);
 			}
 		}
+		if let Some(tweaks) = settings::GENERATOR_MODULE_TWEAKS.get(self.gen_env.module()) {
+			for generated in &tweaks.generate_types {
+				if let Ok(generated) = GeneratedType::try_from(generated()) {
+					self.visitor.visit_generated_type(generated, &self.gen_env);
+				}
+			}
+		}
 	}
 }
 
@@ -453,11 +336,9 @@ impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 ///
 /// Full binding generation for a module is happening in the following major phases:
 /// 1. Headers are parsed with `libclang`
-/// 1. [EphemeralGenerator] collects necessary data to generate the ephemeral header (1st pass)
-/// 2. Headers are reparsed to include the data from ehemeral header
-/// 3. [crate::generator_env::GeneratorEnvPopulator] collects the data necessary in the binding generation (2nd pass)
-/// 4. Binding entities are extracted using the data from step 3 (3rd pass)
-/// 5. Specific source files are generated by [crate::writer::RustNativeBindingWriter] (at the moment)
+/// 2. [crate::generator_env::GeneratorEnvPopulator] collects the data necessary in the binding generation (1st pass)
+/// 3. Binding entities are extracted using the data from step 2 (2nd pass)
+/// 4. Specific source files are generated by [crate::writer::RustNativeBindingWriter] (at the moment)
 #[derive(Debug)]
 pub struct Generator {
 	clang_include_dirs: Vec<PathBuf>,
@@ -496,10 +377,6 @@ impl Generator {
 		}
 	}
 
-	fn make_ephemeral_header(&self, contents: &str) -> Unsaved {
-		Unsaved::new(self.src_cpp_dir.join("ocvrs_ephemeral.hpp"), contents)
-	}
-
 	fn handle_diags(diags: &[Diagnostic], panic_on_error: bool) {
 		if !diags.is_empty() {
 			let mut has_error = false;
@@ -531,48 +408,36 @@ impl Generator {
 			}))
 			.collect::<Vec<_>>();
 		args.push("-DOCVRS_PARSING_HEADERS".into());
-		args.push("-includeocvrs_ephemeral.hpp".into());
+		args.push("-includeocvrs_common.hpp".into());
 		// need to have c++14 here because VS headers contain features that require it
 		args.push("-std=c++14".into());
 		args
 	}
 
-	/// Runs 1st pass, reparses the headers and hands off to `entity_processor`
-	pub fn pre_process(&self, module: &str, panic_on_error: bool, entity_processor: impl FnOnce(Entity, &str)) {
+	/// Runs the clang header parsing, check for the compilation errors and hands off to `entity_processor`
+	pub fn pre_process(&self, module: &str, panic_on_error: bool, entity_processor: impl FnOnce(Entity)) {
 		let index = Index::new(&self.clang, true, false);
 		let mut module_file = self.src_cpp_dir.join(format!("{module}.hpp"));
 		if !module_file.exists() {
 			module_file = self.opencv_module_header_dir.join(format!("{module}.hpp"));
 		}
-		let mut root_tu = index
+		let root_tu = index
 			.parser(module_file)
-			.unsaved(&[self.make_ephemeral_header("")])
 			.arguments(&self.build_clang_command_line_args())
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
 			.parse()
 			.unwrap_or_else(|_| panic!("Cannot parse module: {module}"));
-		let mut ephem_gen = EphemeralGenerator::new(module);
-		root_tu.get_entity().walk_opencv_entities(&mut ephem_gen);
-		let hdr = ephem_gen.generate_header();
-		root_tu = root_tu
-			.reparse(&[self.make_ephemeral_header(&hdr)])
-			.expect("Can't reparse file");
 		Self::handle_diags(&root_tu.get_diagnostics(), panic_on_error);
-		entity_processor(root_tu.get_entity(), &hdr);
+		entity_processor(root_tu.get_entity());
 	}
 
 	/// Runs the full binding generation process using the supplied `visitor`
-	pub fn generate(&self, module: &str, mut visitor: impl GeneratorVisitor) {
-		self.pre_process(module, true, |root_entity, ephemeral_header| {
-			visitor.visit_ephemeral_header(ephemeral_header);
+	pub fn generate(&self, module: &str, visitor: impl GeneratorVisitor) {
+		self.pre_process(module, true, |root_entity| {
 			let gen_env = GeneratorEnv::new(root_entity, module);
 			let opencv_walker = OpenCvWalker::new(&self.opencv_module_header_dir, visitor, gen_env);
 			root_entity.walk_opencv_entities(opencv_walker);
 		});
 	}
-}
-
-pub fn is_ephemeral_header(path: &Path) -> bool {
-	path.ends_with("ocvrs_ephemeral.hpp")
 }

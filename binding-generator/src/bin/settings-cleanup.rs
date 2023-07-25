@@ -115,7 +115,7 @@ fn main() {
 		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir);
 		for module in modules {
 			println!("  {module}");
-			gen.pre_process(&module, false, |root_entity, _hdr| {
+			gen.pre_process(&module, false, |root_entity| {
 				let gen_env = GeneratorEnv::new(root_entity, &module);
 				root_entity.walk_opencv_entities(FunctionFinder {
 					gen_env,

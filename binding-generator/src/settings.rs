@@ -1212,8 +1212,7 @@ pub static PREVENT_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(||
 
 #[derive(Default)]
 pub struct ModuleTweak {
-	pub includes: Vec<&'static str>,
-	pub generate_types: Vec<&'static str>,
+	pub generate_types: Vec<TypeRefFactory>,
 }
 
 pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new(|| {
@@ -1221,8 +1220,7 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 		(
 			"aruco",
 			ModuleTweak {
-				generate_types: vec!["std::vector<cv::Vec3f>", "std::vector<cv::Vec3d>"],
-				..Default::default()
+				generate_types: vec![TypeRefDesc::vector_of_cv_vec3f, TypeRefDesc::vector_of_cv_vec3d],
 			},
 		),
 		(
@@ -1230,51 +1228,32 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 			ModuleTweak {
 				generate_types: vec![
 					// for calibrate_camera
-					"std::vector<cv::Point3i>",
-					"std::vector<std::vector<cv::Point3i>>",
-					"std::vector<cv::Point3f>",
-					"std::vector<std::vector<cv::Point3f>>",
-					"std::vector<cv::Point3d>",
-					"std::vector<std::vector<cv::Point3d>>",
-					"std::vector<cv::Vec3f>",
-					"std::vector<std::vector<cv::Vec3f>>",
+					TypeRefDesc::vector_of_cv_point3i,
+					TypeRefDesc::vector_of_vector_of_cv_point3i,
+					TypeRefDesc::vector_of_cv_point3f,
+					TypeRefDesc::vector_of_vector_of_cv_point3f,
+					TypeRefDesc::vector_of_cv_point3d,
+					TypeRefDesc::vector_of_vector_of_cv_point3d,
+					TypeRefDesc::vector_of_cv_vec3f,
+					TypeRefDesc::vector_of_vector_of_cv_vec3f,
 					// for solve_pnp tvec and rvec parameters
-					"std::vector<std::vector<double>>",
+					TypeRefDesc::vector_of_vector_of_double,
 					// for solve_pnp_ransac imagePoints parameter
-					"std::vector<cv::Point2d>",
-				],
-				..Default::default()
-			},
-		),
-		(
-			"core",
-			ModuleTweak {
-				includes: vec!["core.hpp"],
-				generate_types: vec![
-					"cv::Ptr<float>", // for 3.2, no function uses that so it's not generated
+					TypeRefDesc::vector_of_cv_point2d,
 				],
 			},
 		),
 		(
 			"dnn",
 			ModuleTweak {
-				includes: vec!["dnn/dict.hpp"],
-				generate_types: vec!["std::vector<std::vector<int>>"], // Make sure that `Vector<MatShape>` is generated
-			},
-		),
-		(
-			"face",
-			ModuleTweak {
-				includes: vec!["face.hpp"],
-				..Default::default()
+				generate_types: vec![TypeRefDesc::vector_of_vector_of_int], // Make sure that `Vector<MatShape>` is generated
 			},
 		),
 		(
 			"features2d",
 			ModuleTweak {
-				includes: vec!["features2d.hpp"],
 				// type used in other modules, thus needs casting (https://github.com/twistedfall/opencv-rust/issues/218)
-				generate_types: vec!["cv::Ptr<cv::Feature2D>"],
+				generate_types: vec![TypeRefDesc::ptr_of_cv_feature2d],
 			},
 		),
 		(
@@ -1282,50 +1261,14 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 			ModuleTweak {
 				generate_types: vec![
 					// for findContours()
-					"std::vector<cv::Vec4i>",
-					"std::vector<std::vector<cv::Point>>",
+					TypeRefDesc::vector_of_cv_vec4i,
+					TypeRefDesc::vector_of_vector_of_cv_point,
 					// for HoughLines()
-					"std::vector<cv::Vec2f>",
-					"std::vector<cv::Vec2d>",
-					"std::vector<cv::Vec3f>",
-					"std::vector<cv::Vec3d>",
+					TypeRefDesc::vector_of_cv_vec2f,
+					TypeRefDesc::vector_of_cv_vec2d,
+					TypeRefDesc::vector_of_cv_vec3f,
+					TypeRefDesc::vector_of_cv_vec3d,
 				],
-				..Default::default()
-			},
-		),
-		(
-			"shape",
-			ModuleTweak {
-				includes: vec!["shape.hpp"],
-				..Default::default()
-			},
-		),
-		(
-			"stitching",
-			ModuleTweak {
-				includes: vec!["stitching.hpp"],
-				..Default::default()
-			},
-		),
-		(
-			"tracking",
-			ModuleTweak {
-				includes: vec!["tracking.hpp"],
-				..Default::default()
-			},
-		),
-		(
-			"videostab",
-			ModuleTweak {
-				includes: vec!["videostab.hpp"],
-				..Default::default()
-			},
-		),
-		(
-			"ximgproc",
-			ModuleTweak {
-				includes: vec!["ximgproc.hpp"],
-				..Default::default()
 			},
 		),
 	])

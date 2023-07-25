@@ -16,8 +16,8 @@ use crate::field::Field;
 use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
 use crate::{
-	is_ephemeral_header, opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func,
-	GeneratedType, GeneratorEnv, GeneratorVisitor, IteratorExt, StrExt, Typedef,
+	opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func, GeneratedType, GeneratorEnv,
+	GeneratorVisitor, IteratorExt, StrExt, Typedef,
 };
 
 mod class;
@@ -114,7 +114,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 
 impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		is_ephemeral_header(path) || opencv_module_from_path(path).map_or(false, |m| m == self.module)
+		opencv_module_from_path(path).map_or(false, |m| m == self.module)
 	}
 
 	fn visit_module_comment(&mut self, comment: String) {
@@ -221,14 +221,6 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 			typ.gen_rust_exports(gen_env)
 		});
 		write_generated_type(&self.types_dir, "cpp", prio, &safe_id, || typ.gen_cpp(gen_env));
-	}
-
-	fn visit_ephemeral_header(&mut self, contents: &str) {
-		if self.debug {
-			let mut file = File::create(self.types_dir.join(format!("ocvrs_ephemeral_{}.hpp", self.module)))
-				.expect("Can't create debug ephemeral file");
-			file.write_all(contents.as_bytes()).expect("Can't write debug ephemeral file");
-		}
 	}
 }
 

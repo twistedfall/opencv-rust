@@ -255,22 +255,50 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn has_descendants(&self) -> bool {
 		match self {
-			&Self::Clang { gen_env, .. } => gen_env
-				.descendants_of(self.cpp_name(CppNameStyle::Reference).as_ref())
-				.is_some(),
+			&Self::Clang { gen_env, .. } => gen_env.descendants_of(&self.cpp_name(CppNameStyle::Reference)).is_some(),
 			Self::Desc(_) => false,
 		}
 	}
 
-	pub fn descendants(&self) -> Vec<Class<'tu, 'ge>> {
+	pub fn descendants(&self) -> HashSet<Class<'tu, 'ge>> {
 		match self {
-			Self::Clang { gen_env, .. } => gen_env
-				.descendants_of(self.cpp_name(CppNameStyle::Reference).as_ref())
+			&Self::Clang { gen_env, .. } => gen_env
+				.descendants_of(&self.cpp_name(CppNameStyle::Reference))
 				.into_iter()
-				.flat_map(move |desc| desc.iter().map(move |e| Self::new(*e, gen_env)))
+				.flat_map(|desc| desc.iter().map(|e| Self::new(*e, gen_env)))
 				.collect(),
-			Self::Desc(_) => vec![],
+			Self::Desc(_) => HashSet::new(),
 		}
+	}
+
+	pub fn all_descendants(&self) -> HashSet<Class<'tu, 'ge>> {
+		self
+			.descendants()
+			.into_iter()
+			.flat_map(|descendant| {
+				let mut out = descendant.all_descendants();
+				out.insert(descendant);
+				out
+			})
+			.collect()
+	}
+
+	pub fn all_family(&self) -> HashSet<Class<'tu, 'ge>> {
+		fn collect<'tu, 'ge>(out: &mut HashSet<Class<'tu, 'ge>>, cls: Class<'tu, 'ge>) {
+			if out.insert(cls.clone()) {
+				#[allow(clippy::unnecessary_to_owned)]
+				for base in cls.bases().into_owned() {
+					collect(out, base);
+				}
+				for desc in cls.descendants() {
+					collect(out, desc);
+				}
+			}
+		}
+
+		let mut out = HashSet::new();
+		collect(&mut out, self.clone());
+		out
 	}
 
 	pub fn has_methods(&self) -> bool {

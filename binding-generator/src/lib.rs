@@ -30,7 +30,7 @@ pub use enumeration::Enum;
 use field::{Field, FieldTypeHint};
 pub use func::{Func, FuncId, FuncTypeHint};
 use function::Function;
-pub use generator::{is_ephemeral_header, GeneratedType, Generator, GeneratorVisitor};
+pub use generator::{GeneratedType, Generator, GeneratorVisitor};
 pub use generator_env::{ClassSimplicity, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 use memoize::{MemoizeMap, MemoizeMapExt};

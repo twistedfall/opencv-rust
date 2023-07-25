@@ -502,7 +502,7 @@ fn all_bases<'tu, 'ge>(cls: &Class<'tu, 'ge>) -> Vec<Class<'tu, 'ge>> {
 
 fn descendants<'tu, 'ge>(cls: &Class<'tu, 'ge>) -> Vec<Class<'tu, 'ge>> {
 	let mut out = cls
-		.descendants()
+		.all_descendants()
 		.into_iter()
 		.filter(|d| d.exclude_kind().is_included() && !d.kind().is_simple())
 		.collect::<Vec<_>>();

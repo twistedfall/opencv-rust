@@ -7,7 +7,7 @@ use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::smart_ptr::SmartPtrDesc;
-use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefDesc, TypeRefKind};
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
 use crate::writer::rust_native::RustStringExt;
 use crate::{Class, CompiledInterpolation, Element, Func, GeneratorEnv, SmartPtr, StrExt};
@@ -63,7 +63,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/rust.tpl.rs").compile_interpolation());
 
 		static TRAIT_RAW_TPL: Lazy<CompiledInterpolation> =
@@ -132,12 +132,9 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 				);
 				inter_vars.insert("base_rust_full_ref", base.rust_name(NameStyle::ref_()).into_owned().into());
 				impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
-				if gen_env.is_used_in_smart_ptr(base.cpp_name(CppNameStyle::Reference).as_ref()) {
-					let extern_cast_to_base =
-						method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base_rust_local).identifier();
-					inter_vars.insert("extern_cast_to_base", extern_cast_to_base.into());
-					impls += &BASE_CAST_TPL.interpolate(&inter_vars);
-				}
+				let extern_cast_to_base = method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base_rust_local).identifier();
+				inter_vars.insert("extern_cast_to_base", extern_cast_to_base.into());
+				impls += &BASE_CAST_TPL.interpolate(&inter_vars);
 				let base_fields = base.fields();
 				let base_field_const_methods = base.field_methods(
 					base_fields.iter().filter(|f| f.exclude_kind().is_included()),
@@ -176,10 +173,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		out.push_str(&method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_rust_exports(gen_env));
 		out.push_str(&FuncDesc::method_delete(smartptr_class.clone()).gen_rust_exports(gen_env));
 		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
-			for base in all_bases(&cls)
-				.into_iter()
-				.filter(|base| gen_env.is_used_in_smart_ptr(base.cpp_name(CppNameStyle::Reference).as_ref()))
-			{
+			for base in all_bases(&cls) {
 				out.push_str(
 					&method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base.rust_name(NameStyle::decl()))
 						.gen_rust_exports(gen_env),
@@ -204,10 +198,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		methods.push(method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_cpp(gen_env));
 		methods.push(FuncDesc::method_delete(smartptr_class.clone()).gen_cpp(gen_env));
 		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
-			for base in all_bases(&cls)
-				.into_iter()
-				.filter(|base| gen_env.is_used_in_smart_ptr(base.cpp_name(CppNameStyle::Reference).as_ref()))
-			{
+			for base in all_bases(&cls) {
 				methods.push(
 					method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base.rust_name(NameStyle::decl())).gen_cpp(gen_env),
 				);
@@ -246,6 +237,20 @@ pub trait SmartPtrExt {
 
 impl SmartPtrExt for SmartPtr<'_, '_> {
 	fn rust_localalias(&self) -> Cow<str> {
+		/*
+		let pointee = self.pointee();
+		let pointee_alias = pointee.rust_safe_id(true);
+		let pointee_alias = if let Some(rem) = pointee_alias.strip_prefix("const_") {
+			format!("Const{rem}").into()
+		} else {
+			pointee_alias
+		};
+		format!("PtrOf{pointee_alias}").into()
+		*/
+		// fixme: Not adding const here in rust_safe_id() leads to some smart pointers losing the const qualifier on the internal
+		// type (e.g. cv::Ptr<const cv::optflow::PCAPrior>). If we add it (see commented code above) it leads to problems with casting
+		// because casting doesn't take constness into account. This might not be a problem per se (e.g. if we own Ptr<PCAPrior> there is
+		// no problem to pass it as Ptr<const PCAPrior>), otherwise fix it so that it works with add_const = true in rust_safe_id().
 		format!("PtrOf{typ}", typ = self.pointee().rust_safe_id(false)).into()
 	}
 }
@@ -304,9 +309,7 @@ fn method_cast_to_base<'tu, 'ge>(
 			.into(),
 		),
 		FuncRustBody::Auto,
-		TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(SmartPtr::new_desc(SmartPtrDesc {
-			pointee_type_ref: base_type_ref,
-		})))),
+		TypeRef::new_smartptr(SmartPtr::new_desc(SmartPtrDesc::new(base_type_ref))),
 	))
 }
 

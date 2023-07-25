@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::rc::Rc;
 
 use once_cell::sync::Lazy;
 
@@ -8,7 +7,7 @@ use crate::debug::DefinitionLocation;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::smart_ptr::{SmartPtr, SmartPtrDesc};
-use crate::type_ref::{Constness, TypeRef, TypeRefDesc, TypeRefKind, TypeRefTypeHint};
+use crate::type_ref::{Constness, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::{Func, FuncTypeHint};
 
 pub type FuncFactory = fn() -> Func<'static, 'static>;
@@ -135,14 +134,7 @@ pub static FUNC_INJECT_MANUAL: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new
 					vec![],
 					FuncCppBody::Auto,
 					FuncRustBody::Auto,
-					TypeRef::new_desc(TypeRefDesc {
-						kind: TypeRefKind::SmartPtr(SmartPtr::new_desc(SmartPtrDesc {
-							pointee_type_ref: TypeRef::new_class(ClassDesc::cv_orb()),
-						})),
-						inherent_constness: Constness::Mut,
-						type_hint: TypeRefTypeHint::None,
-						template_specialization_args: Rc::new([]),
-					}),
+					TypeRef::new_smartptr(SmartPtr::new_desc(SmartPtrDesc::new(TypeRef::new_class(ClassDesc::cv_orb())))),
 				))
 			}],
 		),
