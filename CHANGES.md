@@ -1,3 +1,9 @@
+* 0.84.0
+  * Detect more cases where a Rust `char` can be used.
+  * Remove deprecated `DataType::depth()`, `DataType::channels()` and `DataType::typ()` functions.
+  * Speed up binding generation by reducing number of passes (3 → 2) and removing the usage of `ocvrs_ephemeral.hpp`.
+  * Generate more casts (to base and to decendants) for `Ptr`s and classes.
+
 * 0.83.0
   * Add support for OpenCV 4.8.
   * Tune naming for classes in `rapid` and CUDA modules.
