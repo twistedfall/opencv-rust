@@ -83,6 +83,7 @@ impl BindingGenerator {
 		let mut join_handles = Vec::with_capacity(modules.len());
 		let start = Instant::now();
 		// todo use thread::scope when MSRV is 1.63
+		eprintln!("=== Generating {} modules", modules.len());
 		modules.iter().for_each(|module| {
 			let token = job_server.acquire().expect("Can't acquire token from job server");
 			let join_handle = thread::spawn({

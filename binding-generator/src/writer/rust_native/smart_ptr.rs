@@ -10,7 +10,7 @@ use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
 use crate::writer::rust_native::RustStringExt;
-use crate::{Class, CompiledInterpolation, Element, Func, GeneratorEnv, SmartPtr, StrExt};
+use crate::{Class, CompiledInterpolation, Element, Func, GeneratorEnv, IteratorExt, SmartPtr, StrExt};
 
 use super::class::ClassExt;
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -160,57 +160,57 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		TPL.interpolate(&inter_vars)
 	}
 
-	// todo: move the common logic for gen_rust_exports() and gen_cpp() out as with extern_functions() in Class
 	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
-		let type_ref = self.type_ref();
-		let pointee_type = self.pointee();
-		let smartptr_class = smartptr_class(&type_ref);
-
-		let mut out = String::new();
-		out.push_str(
-			&method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).gen_rust_exports(gen_env),
-		);
-		out.push_str(&method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_rust_exports(gen_env));
-		out.push_str(&FuncDesc::method_delete(smartptr_class.clone()).gen_rust_exports(gen_env));
-		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
-			for base in all_bases(&cls) {
-				out.push_str(
-					&method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base.rust_name(NameStyle::decl()))
-						.gen_rust_exports(gen_env),
-				);
-			}
-		}
-		if gen_ctor(&pointee_type) {
-			out.push_str(&method_new(smartptr_class, type_ref, pointee_type).gen_rust_exports(gen_env));
-		}
-		out
+		extern_functions(self)
+			.into_iter()
+			.map(|f| f.gen_rust_exports(gen_env))
+			.join("")
 	}
 
 	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation());
 
-		let type_ref = self.type_ref();
-		let pointee_type = self.pointee();
-		let smartptr_class = smartptr_class(&type_ref);
-
-		let mut methods = Vec::with_capacity(8);
-		methods.push(method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).gen_cpp(gen_env));
-		methods.push(method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).gen_cpp(gen_env));
-		methods.push(FuncDesc::method_delete(smartptr_class.clone()).gen_cpp(gen_env));
-		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
-			for base in all_bases(&cls) {
-				methods.push(
-					method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base.rust_name(NameStyle::decl())).gen_cpp(gen_env),
-				);
-			}
-		}
-
-		if gen_ctor(&pointee_type) {
-			methods.push(method_new(smartptr_class, type_ref, pointee_type).gen_cpp(gen_env));
-		};
-
-		TPL.interpolate(&[("methods", methods.join(""))].into())
+		TPL.interpolate(
+			&[(
+				"methods",
+				extern_functions(self).into_iter().map(|f| f.gen_cpp(gen_env)).join(""),
+			)]
+			.into(),
+		)
 	}
+}
+
+#[inline]
+fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
+	let type_ref = ptr.type_ref();
+	let pointee_type = ptr.pointee();
+	let smartptr_class = smartptr_class(&type_ref);
+
+	let mut out = Vec::with_capacity(6);
+	out.push(method_get_inner_ptr(
+		smartptr_class.clone(),
+		pointee_type.clone(),
+		Constness::Const,
+	));
+	out.push(method_get_inner_ptr(
+		smartptr_class.clone(),
+		pointee_type.clone(),
+		Constness::Mut,
+	));
+	out.push(FuncDesc::method_delete(smartptr_class.clone()));
+	if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
+		for base in all_bases(&cls) {
+			out.push(method_cast_to_base(
+				smartptr_class.clone(),
+				base.type_ref(),
+				&base.rust_name(NameStyle::decl()),
+			));
+		}
+	}
+	if gen_ctor(&pointee_type) {
+		out.push(method_new(smartptr_class, type_ref, pointee_type));
+	}
+	out
 }
 
 fn gen_ctor(pointee_type: &TypeRef) -> bool {

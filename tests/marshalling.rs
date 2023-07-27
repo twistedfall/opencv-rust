@@ -184,13 +184,13 @@ fn simple_struct_return_infallible() -> Result<()> {
 	miscellaneous memory problems like segmentation faults. That shouldn't happen anymore because such returns are now handled by
 	the output argument.
 	 */
-	let contour = Vector::<Point2f>::from_iter(IntoIterator::into_iter([
+	let contour = Vector::<Point2f>::from_iter([
 		Point2f::new(5., 5.),
 		Point2f::new(5., 15.),
 		Point2f::new(15., 15.),
 		Point2f::new(15., 5.),
 		Point2f::new(5., 5.),
-	]));
+	]);
 	let bound_rect = imgproc::bounding_rect(&contour)?;
 	assert_eq!(Rect::new(5, 5, 11, 11), bound_rect);
 	let min_area_rect = imgproc::min_area_rect(&contour)?;

@@ -81,7 +81,7 @@ impl<T, const N: usize> IntoIterator for VecN<T, N> {
 
 	#[inline]
 	fn into_iter(self) -> array::IntoIter<T, N> {
-		IntoIterator::into_iter(self.0)
+		self.0.into_iter()
 	}
 }
 

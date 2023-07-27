@@ -189,7 +189,8 @@ fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
 }
 
 fn make_modules(opencv_dir: &Path) -> Result<()> {
-	let enable_modules = IntoIterator::into_iter(["core".to_string()])
+	let enable_modules = ["core".to_string()]
+		.into_iter()
 		.chain(env::vars_os().filter_map(|(k, _)| {
 			k.to_str()
 				.and_then(|s| s.strip_prefix("CARGO_FEATURE_"))

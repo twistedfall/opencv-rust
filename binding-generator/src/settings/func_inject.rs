@@ -30,7 +30,7 @@ pub static FUNC_INJECT_MANUAL: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new
 						FuncRustBody::Auto,
 						TypeRefDesc::bool(),
 					))
-				}) as FuncFactory,
+				}) as FuncFactory, // todo: remove this cast when MSRV allows
 				|| {
 					Func::new_desc(FuncDesc::new(
 						FuncKind::InstanceMethod(ClassDesc::cv_matconstiterator()),
