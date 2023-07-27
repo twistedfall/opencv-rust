@@ -71,100 +71,83 @@ macro_rules! vector_extern {
 		$extern_push: ident,
 		$extern_insert: ident $(,)?
 	) => {
-		extern "C" {
-			fn $extern_new<'a>() -> extern_receive!($crate::core::Vector<$type>: 'a);
-			fn $extern_delete(instance: extern_send!(mut $crate::core::Vector<$type>));
-			fn $extern_len(instance: extern_send!($crate::core::Vector<$type>)) -> $crate::platform_types::size_t;
-			fn $extern_is_empty(instance: extern_send!($crate::core::Vector<$type>)) -> bool;
-			fn $extern_capacity(instance: extern_send!($crate::core::Vector<$type>)) -> $crate::platform_types::size_t;
-			fn $extern_shrink_to_fit(instance: extern_send!(mut $crate::core::Vector<$type>));
-			fn $extern_reserve(instance: extern_send!(mut $crate::core::Vector<$type>), additional: $crate::platform_types::size_t);
-			fn $extern_remove(instance: extern_send!(mut $crate::core::Vector<$type>), index: $crate::platform_types::size_t);
-			fn $extern_swap(instance: extern_send!(mut $crate::core::Vector<$type>), index1: $crate::platform_types::size_t, index2: $crate::platform_types::size_t);
-			fn $extern_clear(instance: extern_send!(mut $crate::core::Vector<$type>));
-			fn $extern_get<'a>(instance: extern_send!($crate::core::Vector<$type>), index: $crate::platform_types::size_t, ocvrs_return: *mut extern_receive!($type: 'a));
-			fn $extern_push<'a>(instance: extern_send!(mut $crate::core::Vector<$type>), val: extern_arg_send!($type: 'a));
-			fn $extern_insert<'a>(instance: extern_send!(mut $crate::core::Vector<$type>), index: $crate::platform_types::size_t, val: extern_arg_send!($type: 'a));
-			fn $extern_set<'a>(instance: extern_send!(mut $crate::core::Vector<$type>), index: $crate::platform_types::size_t, val: extern_arg_send!($type: 'a));
-		}
-
 		impl $crate::core::VectorExtern<$type> for $crate::core::Vector<$type> {
 			#[inline]
 			unsafe fn extern_new<'a>() -> extern_receive!(Self: 'a) {
-				$extern_new()
+				sys::$extern_new()
 			}
 
 			#[inline]
 			unsafe fn extern_delete(&mut self) {
-				$extern_delete(self.as_raw_mut())
+				sys::$extern_delete(self.as_raw_mut())
 			}
 
 			#[inline]
 			unsafe fn extern_len(&self) -> $crate::platform_types::size_t {
-				$extern_len(self.as_raw())
+				sys::$extern_len(self.as_raw())
 			}
 
 			#[inline]
 			unsafe fn extern_is_empty(&self) -> bool {
-				$extern_is_empty(self.as_raw())
+				sys::$extern_is_empty(self.as_raw())
 			}
 
 			#[inline]
 			unsafe fn extern_capacity(&self) -> $crate::platform_types::size_t {
-				$extern_capacity(self.as_raw())
+				sys::$extern_capacity(self.as_raw())
 			}
 
 			#[inline]
 			unsafe fn extern_shrink_to_fit(&mut self) {
-				$extern_shrink_to_fit(self.as_raw_mut())
+				sys::$extern_shrink_to_fit(self.as_raw_mut())
 			}
 
 			#[inline]
 			unsafe fn extern_reserve(&mut self, additional: $crate::platform_types::size_t) {
-				$extern_reserve(self.as_raw_mut(), additional)
+				sys::$extern_reserve(self.as_raw_mut(), additional)
 			}
 
 			#[inline]
 			unsafe fn extern_remove(&mut self, index: $crate::platform_types::size_t) {
-				$extern_remove(self.as_raw_mut(), index)
+				sys::$extern_remove(self.as_raw_mut(), index)
 			}
 
 			#[inline]
 			unsafe fn extern_swap(&mut self, index1: $crate::platform_types::size_t, index2: $crate::platform_types::size_t) {
-				$extern_swap(self.as_raw_mut(), index1, index2)
+				sys::$extern_swap(self.as_raw_mut(), index1, index2)
 			}
 
 			#[inline]
 			unsafe fn extern_clear(&mut self) {
-				$extern_clear(self.as_raw_mut())
+				sys::$extern_clear(self.as_raw_mut())
 			}
 
 			#[inline]
 			unsafe fn extern_get(&self, index: $crate::platform_types::size_t) -> extern_receive!($type) {
 				return_send!(via ocvrs_return);
-				$extern_get(self.as_raw(), index, ocvrs_return.as_mut_ptr());
+				sys::$extern_get(self.as_raw(), index, ocvrs_return.as_mut_ptr());
 				return_receive!(ocvrs_return => ret);
 				ret
 			}
 
 			#[inline]
 			unsafe fn extern_push<'a>(&mut self, val: extern_arg_send!($type: 'a)) {
-				$extern_push(self.as_raw_mut(), val)
+				sys::$extern_push(self.as_raw_mut(), val)
 			}
 
 			#[inline]
 			unsafe fn extern_push_owned(&mut self, val: extern_container_send!($type)) {
-				$extern_push(self.as_raw_mut(), val)
+				sys::$extern_push(self.as_raw_mut(), val)
 			}
 
 			#[inline]
 			unsafe fn extern_insert<'a>(&mut self, index: $crate::platform_types::size_t, val: extern_arg_send!($type: 'a)) {
-				$extern_insert(self.as_raw_mut(), index, val)
+				sys::$extern_insert(self.as_raw_mut(), index, val)
 			}
 
 			#[inline]
 			unsafe fn extern_set<'a>(&mut self, index: $crate::platform_types::size_t, val: extern_arg_send!($type: 'a)) {
-				$extern_set(self.as_raw_mut(), index, val)
+				sys::$extern_set(self.as_raw_mut(), index, val)
 			}
 		}
 	};
@@ -193,16 +176,6 @@ macro_rules! vector_copy_non_bool {
 		$extern_from_slice: ident,
 		$extern_clone: ident $(,)?
 	) => {
-		impl $crate::core::Vector<$type>
-		where
-			$crate::core::Vector<$type>: $crate::core::VectorExtern<$type>,
-		{
-			#[inline]
-			unsafe fn extern_clone(&self) -> extern_receive!(Self) {
-				sys::$extern_clone(self.as_raw())
-			}
-		}
-
 		impl $crate::core::VectorElement for $type
 		where
 			$crate::core::Vector<$type>: $crate::core::VectorExtern<$type>,
@@ -219,7 +192,7 @@ macro_rules! vector_copy_non_bool {
 		{
 			#[inline]
 			fn clone(&self) -> Self {
-				unsafe { Self::opencv_from_extern(self.extern_clone()) }
+				unsafe { Self::opencv_from_extern(sys::$extern_clone(self.as_raw())) }
 			}
 		}
 

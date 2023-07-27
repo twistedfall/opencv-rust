@@ -9,7 +9,7 @@ use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::settings::ArgOverride;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::RustStringExt;
-use crate::{settings, Class, CompiledInterpolation, Func, GeneratorEnv, StrExt, TypeRef, Vector};
+use crate::{settings, Class, CompiledInterpolation, Func, GeneratorEnv, IteratorExt, StrExt, TypeRef, Vector};
 
 use super::element::RustElement;
 use super::type_ref::TypeRefExt;
@@ -174,24 +174,10 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 	}
 
 	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
-		let element_type = self.element_type();
-		let mut out = String::new();
-		if !element_type.is_char() {
-			let vec_type_ref = self.type_ref();
-			let vector_class = vector_class(&vec_type_ref);
-			if element_type.is_copy() && !element_type.is_bool() {
-				out.push_str(&method_clone(vector_class.clone(), vec_type_ref.clone()).gen_rust_exports(gen_env));
-				out.push_str(&method_data(vector_class.clone(), element_type.clone()).gen_rust_exports(gen_env));
-				out.push_str(&method_data_mut(vector_class.clone(), element_type.clone()).gen_rust_exports(gen_env));
-				out.push_str(&method_from_slice(vec_type_ref, element_type.clone()).gen_rust_exports(gen_env));
-			}
-			if element_type.is_element_data_type() {
-				out.push_str(&method_input_array(vector_class.clone()).gen_rust_exports(gen_env));
-				out.push_str(&method_output_array(vector_class.clone()).gen_rust_exports(gen_env));
-				out.push_str(&method_input_output_array(vector_class).gen_rust_exports(gen_env));
-			}
-		}
-		out
+		extern_functions(self)
+			.into_iter()
+			.map(|f| f.gen_rust_exports(gen_env))
+			.join("")
 	}
 
 	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
@@ -203,42 +189,51 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			// todo we should generate smth like VectorRef in this case
 			return "".to_string();
 		}
-		let element_type = self.element_type();
 
-		let mut methods = vec![];
-		if !element_type.is_char() {
-			let element_is_bool = element_type.is_bool();
-			let vector_class = vector_class(&vec_type_ref);
-			methods.extend([
-				method_new(vector_class.clone(), vec_type_ref.clone()).gen_cpp(gen_env),
-				FuncDesc::method_delete(vector_class.clone()).gen_cpp(gen_env),
-				method_len(vector_class.clone()).gen_cpp(gen_env),
-				method_is_empty(vector_class.clone()).gen_cpp(gen_env),
-				method_capacity(vector_class.clone()).gen_cpp(gen_env),
-				method_shrink_to_fit(vector_class.clone()).gen_cpp(gen_env),
-				method_reserve(vector_class.clone()).gen_cpp(gen_env),
-				method_remove(vector_class.clone()).gen_cpp(gen_env),
-				method_swap(vector_class.clone(), element_is_bool).gen_cpp(gen_env),
-				method_clear(vector_class.clone()).gen_cpp(gen_env),
-				method_push(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
-				method_insert(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
-				method_get(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
-				method_set(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
-			]);
-			if element_type.is_copy() && !element_is_bool {
-				methods.push(method_clone(vector_class.clone(), vec_type_ref.clone()).gen_cpp(gen_env));
-				methods.push(method_data(vector_class.clone(), element_type.clone()).gen_cpp(gen_env));
-				methods.push(method_data_mut(vector_class.clone(), element_type.clone()).gen_cpp(gen_env));
-				methods.push(method_from_slice(vec_type_ref.clone(), element_type.clone()).gen_cpp(gen_env));
-			}
-			if element_type.is_element_data_type() {
-				methods.push(method_input_array(vector_class.clone()).gen_cpp(gen_env));
-				methods.push(method_output_array(vector_class.clone()).gen_cpp(gen_env));
-				methods.push(method_input_output_array(vector_class).gen_cpp(gen_env));
-			}
-		}
-		COMMON_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
+		COMMON_TPL.interpolate(&HashMap::from([(
+			"methods",
+			extern_functions(self).into_iter().map(|f| f.gen_cpp(gen_env)).join(""),
+		)]))
 	}
+}
+
+#[inline]
+fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
+	let element_type = vec.element_type();
+	let mut out = Vec::with_capacity(7);
+	if !element_type.is_char() {
+		let element_is_bool = element_type.is_bool();
+		let vec_type_ref = vec.type_ref();
+		let vector_class = vector_class(&vec_type_ref);
+		out.extend([
+			method_new(vector_class.clone(), vec_type_ref.clone()),
+			FuncDesc::method_delete(vector_class.clone()),
+			method_len(vector_class.clone()),
+			method_is_empty(vector_class.clone()),
+			method_capacity(vector_class.clone()),
+			method_shrink_to_fit(vector_class.clone()),
+			method_reserve(vector_class.clone()),
+			method_remove(vector_class.clone()),
+			method_swap(vector_class.clone(), element_is_bool),
+			method_clear(vector_class.clone()),
+			method_push(vector_class.clone(), element_type.clone()),
+			method_insert(vector_class.clone(), element_type.clone()),
+			method_get(vector_class.clone(), element_type.clone()),
+			method_set(vector_class.clone(), element_type.clone()),
+		]);
+		if element_type.is_copy() && !element_is_bool {
+			out.push(method_clone(vector_class.clone(), vec_type_ref.clone()));
+			out.push(method_data(vector_class.clone(), element_type.clone()));
+			out.push(method_data_mut(vector_class.clone(), element_type.clone()));
+			out.push(method_from_slice(vec_type_ref, element_type.clone()));
+		}
+		if element_type.is_element_data_type() {
+			out.push(method_input_array(vector_class.clone()));
+			out.push(method_output_array(vector_class.clone()));
+			out.push(method_input_output_array(vector_class));
+		}
+	}
+	out
 }
 
 pub trait VectorExt {
@@ -402,7 +397,10 @@ fn method_push<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		ReturnKind::InfallibleNaked,
 		"push",
 		"core",
-		vec![Field::new_desc(FieldDesc::new("val", element_type))],
+		vec![Field::new_desc(FieldDesc::new(
+			"val",
+			element_type.with_constness(Constness::Const),
+		))],
 		FuncCppBody::ManualCall("instance->push_back({{args}})".into()),
 		FuncRustBody::Auto,
 		TypeRefDesc::void(),
@@ -418,7 +416,7 @@ fn method_insert<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
-			Field::new_desc(FieldDesc::new("val", element_type)),
+			Field::new_desc(FieldDesc::new("val", element_type.with_constness(Constness::Const))),
 		],
 		FuncCppBody::ManualCall("instance->insert(instance->begin() + {{args}})".into()),
 		FuncRustBody::Auto,
@@ -449,7 +447,7 @@ fn method_set<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
-			Field::new_desc(FieldDesc::new("val", element_type.clone())),
+			Field::new_desc(FieldDesc::new("val", element_type.clone().with_constness(Constness::Const))),
 		],
 		FuncCppBody::ManualCall(format!("(*instance)[index] = {}", element_type.cpp_arg_func_call("val")).into()),
 		FuncRustBody::Auto,
