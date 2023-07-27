@@ -1,4 +1,11 @@
-ARG DEBIAN_FRONTEND=noninteractive
+# Crosscompilation to Raspberry Pi on RasiOS using system OpenCV
+#
+# Building this image requries `qemu-arm` to be present on the host system and the corresponding `binfmt-misc` set up (see
+# e.g. https://wiki.debian.org/QemuUserEmulation, only `Installing packages` should be enough).
+#
+# After the successful build you will have an image configured for cross-compilation to Raspberry Pi. It will contain the
+# sample build script `/usr/local/bin/cargo-xbuild` that you can check for the correct environment setup and the specific
+# command line arguments to use when crosscompiling the project inside the container created from that image.
 
 
 # Download and extract rpi root filesystem
@@ -22,12 +29,12 @@ COPY --from=0 /rpi-root /
 
 RUN set -xeu && \
     apt-get update && \
-    apt-get dist-upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && \
     apt-get autoremove -y --purge && \
     apt-get -y autoclean
 
 RUN set -xeu && \
-    apt-get install -y symlinks
+    DEBIAN_FRONTEND=noninteractive apt-get install -y symlinks
 
 # error: undefined symbol: _dl_pagesize (and __pointer_chk_guard_local)
 # solution: fix the rpi-root symlink /usr/lib/arm-linux-gnueabihf/libpthread.so to be relative and point to ../../../lib/arm-linux-gnueabihf/libpthread.so.0
@@ -35,24 +42,24 @@ RUN set -xeu && \
 RUN set -xeu && \
     symlinks -cr /
 
-# specify dependencies that you need to have on rpi
+# Specify dependencies that you need to have on rpi
 RUN set -xeu && \
-    apt-get install -y libudev-dev libsqlite3-dev libopencv-dev libstrophe-dev libcamera-dev pkg-config
+    DEBIAN_FRONTEND=noninteractive apt-get install -y libudev-dev libsqlite3-dev libopencv-dev libstrophe-dev libcamera-dev pkg-config
 
 
-# Create image that will be used for crosscompilation
+# Create the image that will be used for crosscompilation
 FROM ubuntu:22.04
 
 COPY --from=1 / /rpi-root
 
 RUN set -xeu && \
     apt-get update && \
-    apt-get dist-upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y && \
     apt-get autoremove -y --purge && \
     apt-get -y autoclean
 
 RUN set -xeu && \
-    apt-get install -y clang libclang-dev lld curl git build-essential pkg-config cmake
+    DEBIAN_FRONTEND=noninteractive apt-get install -y clang libclang-dev lld curl git build-essential pkg-config cmake
 
 RUN set -xeu && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile=minimal && \

@@ -111,12 +111,12 @@ you can get some information on how to perform the build in CI scripts:
 
 ### Crosscompilation
 
-Cross-compilation is supported to at least some extend. The ability to crosscompile projects using `opencv` from x86-64
+Cross-compilation is supported to at least some extent. The ability to crosscompile projects using `opencv` from x86-64
 Linux host machine to Raspberry Pi is tested regularly. Cross-compilation is notoriously difficult to set up, so you can
-use this example [rpi-xcompile.Dockerfile](https://github.com/twistedfall/opencv-rust/blob/master/tools/rpi-xcompile.Dockerfile).
+use this example [rpi-xcompile.Dockerfile](https://github.com/twistedfall/opencv-rust/blob/master/tools/docker/rpi-xcompile.Dockerfile).
 
 ```shell
-docker build -t rpi-xcompile -f tools/rpi-xcompile.Dockerfile tools
+docker build -t rpi-xcompile -f tools/docker/rpi-xcompile.Dockerfile tools
 ```
 
 Building this image requries `qemu-arm` to be present on the host system and the corresponding `binfmt-misc` set up (see
