@@ -1,3 +1,6 @@
+* 0.84.1
+  * Fix build targeting Android (fixes https://github.com/twistedfall/opencv-rust/issues/477)
+
 * 0.84.0
   * Detect more cases where a Rust `char` can be used.
   * Remove deprecated `DataType::depth()`, `DataType::channels()` and `DataType::typ()` functions.
