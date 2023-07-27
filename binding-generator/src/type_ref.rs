@@ -635,8 +635,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				match self.source().kind().into_owned() {
 					TypeRefKind::StdVector(vec) => {
 						let mut out = vec.generated_types();
-						out.reserve(2);
-						if let Some(Dir::In(str_type)) = vec.element_type().as_string() {
+						let element_type = vec.element_type();
+						if let Some(Dir::In(str_type)) = element_type.as_string() {
 							// implement workaround for race when type with std::string gets generated first
 							// we only want vector<cv::String> because it's more compatible across OpenCV versions
 							if matches!(str_type, StrType::StdString(_)) {
@@ -655,6 +655,13 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 							} else {
 								out.push(GeneratedType::Vector(vec))
 							}
+						} else if element_type.is_char() {
+							out.reserve(3);
+							// C++ char can be signed or unsigned based on the platform and that can lead to duplicate definitions when
+							// we generate Vector<u8> together with Vector<c_char>
+							out.push(TypeRefDesc::vector_of_uchar().try_into().expect("Static vector"));
+							out.push(TypeRefDesc::vector_of_schar().try_into().expect("Static vector"));
+							out.push(GeneratedType::Vector(vec));
 						} else {
 							out.push(GeneratedType::Vector(vec));
 						}

@@ -71,92 +71,101 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		static INPUT_OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/rust_input_output_array.tpl.rs").compile_interpolation());
 
-		let vec_type_ref = self.type_ref();
-
-		if vec_type_ref.constness().is_const() {
-			// todo we should generate smth like VectorRef in this case
-			return "".to_string();
-		}
 		let rust_localalias = self.rust_localalias();
 		let element_type = self.element_type();
-		let vector_class = vector_class(&vec_type_ref);
-
-		let extern_new = method_new(vector_class.clone(), vec_type_ref.clone()).identifier();
-		let extern_delete = FuncDesc::method_delete(vector_class.clone()).identifier();
-		let extern_len = method_len(vector_class.clone()).identifier();
-		let extern_is_empty = method_is_empty(vector_class.clone()).identifier();
-		let extern_capacity = method_capacity(vector_class.clone()).identifier();
-		let extern_shrink_to_fit = method_shrink_to_fit(vector_class.clone()).identifier();
-		let extern_reserve = method_reserve(vector_class.clone()).identifier();
-		let extern_remove = method_remove(vector_class.clone()).identifier();
-		let extern_swap = method_swap(vector_class.clone(), element_type.is_bool()).identifier();
-		let extern_clear = method_clear(vector_class.clone()).identifier();
-		let extern_get = method_get(vector_class.clone(), element_type.clone()).identifier();
-		let extern_set = method_set(vector_class.clone(), element_type.clone()).identifier();
-		let extern_push = method_push(vector_class.clone(), element_type.clone()).identifier();
-		let extern_insert = method_insert(vector_class.clone(), element_type.clone()).identifier();
 
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.clone()),
 			("rust_full", self.rust_name(NameStyle::ref_())),
 			("inner_rust_full", element_type.rust_name(NameStyle::ref_())),
-			("extern_new", extern_new.into()),
-			("extern_delete", extern_delete.into()),
-			("extern_len", extern_len.into()),
-			("extern_is_empty", extern_is_empty.into()),
-			("extern_capacity", extern_capacity.into()),
-			("extern_shrink_to_fit", extern_shrink_to_fit.into()),
-			("extern_reserve", extern_reserve.into()),
-			("extern_remove", extern_remove.into()),
-			("extern_swap", extern_swap.into()),
-			("extern_clear", extern_clear.into()),
-			("extern_get", extern_get.into()),
-			("extern_set", extern_set.into()),
-			("extern_push", extern_push.into()),
-			("extern_insert", extern_insert.into()),
 		]);
 
 		let mut impls = String::new();
-		if settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref()) {
-			inter_vars.insert("extern", "".into());
-			inter_vars.insert("additional_methods", "".into());
-		} else {
-			impls += &EXTERN_TPL.interpolate(&inter_vars);
+		// Generate only the basic type alias and as_raw* methods for char, the rest will be handled by the generated Vector<u8> and
+		// Vector<i8> to handle the dualistic nature of C++ char on different platforms, see also `TypeRef::generated_types()`
+		// in binding-generator/src/type_ref.rs
+		if !element_type.is_char() {
+			let vec_type_ref = self.type_ref();
 
-			if element_type.is_copy() && !element_type.is_bool() {
-				let extern_clone = method_clone(vector_class.clone(), vec_type_ref.clone()).identifier();
-				let extern_data = method_data(vector_class.clone(), element_type.clone()).identifier();
-				let extern_data_mut = method_data_mut(vector_class.clone(), element_type.clone()).identifier();
-				let extern_from_slice = method_from_slice(vec_type_ref, element_type.clone()).identifier();
-				inter_vars.extend([
-					("extern_clone", extern_clone.into()),
-					("extern_data", extern_data.into()),
-					("extern_data_mut", extern_data_mut.into()),
-					("extern_from_slice", extern_from_slice.into()),
-				]);
-				impls += &ADD_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
-			} else {
-				inter_vars.insert(
-					"clone",
-					if element_type.is_clone() {
-						"clone "
-					} else {
-						""
-					}
-					.into(),
-				);
-				impls += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
+			if vec_type_ref.constness().is_const() {
+				// todo we should generate smth like VectorRef in this case
+				return "".to_string();
 			}
-			if element_type.is_element_data_type() {
-				let input_array = method_input_array(vector_class.clone()).gen_rust(_opencv_version, gen_env);
-				let output_array = method_output_array(vector_class.clone()).gen_rust(_opencv_version, gen_env);
-				let input_output_array = method_input_output_array(vector_class).gen_rust(_opencv_version, gen_env);
-				inter_vars.extend([
-					("input_array_impl", input_array.into()),
-					("output_array_impl", output_array.into()),
-					("input_output_array_impl", input_output_array.into()),
-				]);
-				impls += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
+			let vector_class = vector_class(&vec_type_ref);
+
+			let extern_new = method_new(vector_class.clone(), vec_type_ref.clone()).identifier();
+			let extern_delete = FuncDesc::method_delete(vector_class.clone()).identifier();
+			let extern_len = method_len(vector_class.clone()).identifier();
+			let extern_is_empty = method_is_empty(vector_class.clone()).identifier();
+			let extern_capacity = method_capacity(vector_class.clone()).identifier();
+			let extern_shrink_to_fit = method_shrink_to_fit(vector_class.clone()).identifier();
+			let extern_reserve = method_reserve(vector_class.clone()).identifier();
+			let extern_remove = method_remove(vector_class.clone()).identifier();
+			let extern_swap = method_swap(vector_class.clone(), element_type.is_bool()).identifier();
+			let extern_clear = method_clear(vector_class.clone()).identifier();
+			let extern_get = method_get(vector_class.clone(), element_type.clone()).identifier();
+			let extern_set = method_set(vector_class.clone(), element_type.clone()).identifier();
+			let extern_push = method_push(vector_class.clone(), element_type.clone()).identifier();
+			let extern_insert = method_insert(vector_class.clone(), element_type.clone()).identifier();
+
+			inter_vars.extend([
+				("extern_new", extern_new.into()),
+				("extern_delete", extern_delete.into()),
+				("extern_len", extern_len.into()),
+				("extern_is_empty", extern_is_empty.into()),
+				("extern_capacity", extern_capacity.into()),
+				("extern_shrink_to_fit", extern_shrink_to_fit.into()),
+				("extern_reserve", extern_reserve.into()),
+				("extern_remove", extern_remove.into()),
+				("extern_swap", extern_swap.into()),
+				("extern_clear", extern_clear.into()),
+				("extern_get", extern_get.into()),
+				("extern_set", extern_set.into()),
+				("extern_push", extern_push.into()),
+				("extern_insert", extern_insert.into()),
+			]);
+
+			if settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref()) {
+				inter_vars.insert("extern", "".into());
+				inter_vars.insert("additional_methods", "".into());
+			} else {
+				impls += &EXTERN_TPL.interpolate(&inter_vars);
+
+				if element_type.is_copy() && !element_type.is_bool() {
+					let extern_clone = method_clone(vector_class.clone(), vec_type_ref.clone()).identifier();
+					let extern_data = method_data(vector_class.clone(), element_type.clone()).identifier();
+					let extern_data_mut = method_data_mut(vector_class.clone(), element_type.clone()).identifier();
+					let extern_from_slice = method_from_slice(vec_type_ref, element_type.clone()).identifier();
+					inter_vars.extend([
+						("extern_clone", extern_clone.into()),
+						("extern_data", extern_data.into()),
+						("extern_data_mut", extern_data_mut.into()),
+						("extern_from_slice", extern_from_slice.into()),
+					]);
+					impls += &ADD_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
+				} else {
+					inter_vars.insert(
+						"clone",
+						if element_type.is_clone() {
+							"clone "
+						} else {
+							""
+						}
+						.into(),
+					);
+					impls += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
+				}
+				if element_type.is_element_data_type() {
+					let input_array = method_input_array(vector_class.clone()).gen_rust(_opencv_version, gen_env);
+					let output_array = method_output_array(vector_class.clone()).gen_rust(_opencv_version, gen_env);
+					let input_output_array = method_input_output_array(vector_class).gen_rust(_opencv_version, gen_env);
+					inter_vars.extend([
+						("input_array_impl", input_array.into()),
+						("output_array_impl", output_array.into()),
+						("input_output_array_impl", input_output_array.into()),
+					]);
+					impls += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
+				}
 			}
 		}
 		inter_vars.insert("impls", impls.into());
@@ -165,21 +174,22 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 	}
 
 	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
-		let vec_type_ref = self.type_ref();
 		let element_type = self.element_type();
-		let vector_class = vector_class(&vec_type_ref);
-
 		let mut out = String::new();
-		if element_type.is_copy() && !element_type.is_bool() {
-			out.push_str(&method_clone(vector_class.clone(), vec_type_ref.clone()).gen_rust_exports(gen_env));
-			out.push_str(&method_data(vector_class.clone(), element_type.clone()).gen_rust_exports(gen_env));
-			out.push_str(&method_data_mut(vector_class.clone(), element_type.clone()).gen_rust_exports(gen_env));
-			out.push_str(&method_from_slice(vec_type_ref, element_type.clone()).gen_rust_exports(gen_env));
-		}
-		if element_type.is_element_data_type() {
-			out.push_str(&method_input_array(vector_class.clone()).gen_rust_exports(gen_env));
-			out.push_str(&method_output_array(vector_class.clone()).gen_rust_exports(gen_env));
-			out.push_str(&method_input_output_array(vector_class).gen_rust_exports(gen_env));
+		if !element_type.is_char() {
+			let vec_type_ref = self.type_ref();
+			let vector_class = vector_class(&vec_type_ref);
+			if element_type.is_copy() && !element_type.is_bool() {
+				out.push_str(&method_clone(vector_class.clone(), vec_type_ref.clone()).gen_rust_exports(gen_env));
+				out.push_str(&method_data(vector_class.clone(), element_type.clone()).gen_rust_exports(gen_env));
+				out.push_str(&method_data_mut(vector_class.clone(), element_type.clone()).gen_rust_exports(gen_env));
+				out.push_str(&method_from_slice(vec_type_ref, element_type.clone()).gen_rust_exports(gen_env));
+			}
+			if element_type.is_element_data_type() {
+				out.push_str(&method_input_array(vector_class.clone()).gen_rust_exports(gen_env));
+				out.push_str(&method_output_array(vector_class.clone()).gen_rust_exports(gen_env));
+				out.push_str(&method_input_output_array(vector_class).gen_rust_exports(gen_env));
+			}
 		}
 		out
 	}
@@ -194,34 +204,38 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			return "".to_string();
 		}
 		let element_type = self.element_type();
-		let element_is_bool = element_type.is_bool();
-		let vector_class = vector_class(&vec_type_ref);
-		let mut methods = vec![
-			method_new(vector_class.clone(), vec_type_ref.clone()).gen_cpp(gen_env),
-			FuncDesc::method_delete(vector_class.clone()).gen_cpp(gen_env),
-			method_len(vector_class.clone()).gen_cpp(gen_env),
-			method_is_empty(vector_class.clone()).gen_cpp(gen_env),
-			method_capacity(vector_class.clone()).gen_cpp(gen_env),
-			method_shrink_to_fit(vector_class.clone()).gen_cpp(gen_env),
-			method_reserve(vector_class.clone()).gen_cpp(gen_env),
-			method_remove(vector_class.clone()).gen_cpp(gen_env),
-			method_swap(vector_class.clone(), element_is_bool).gen_cpp(gen_env),
-			method_clear(vector_class.clone()).gen_cpp(gen_env),
-			method_push(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
-			method_insert(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
-			method_get(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
-			method_set(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
-		];
-		if element_type.is_copy() && !element_is_bool {
-			methods.push(method_clone(vector_class.clone(), vec_type_ref.clone()).gen_cpp(gen_env));
-			methods.push(method_data(vector_class.clone(), element_type.clone()).gen_cpp(gen_env));
-			methods.push(method_data_mut(vector_class.clone(), element_type.clone()).gen_cpp(gen_env));
-			methods.push(method_from_slice(vec_type_ref.clone(), element_type.clone()).gen_cpp(gen_env));
-		}
-		if element_type.is_element_data_type() {
-			methods.push(method_input_array(vector_class.clone()).gen_cpp(gen_env));
-			methods.push(method_output_array(vector_class.clone()).gen_cpp(gen_env));
-			methods.push(method_input_output_array(vector_class).gen_cpp(gen_env));
+
+		let mut methods = vec![];
+		if !element_type.is_char() {
+			let element_is_bool = element_type.is_bool();
+			let vector_class = vector_class(&vec_type_ref);
+			methods.extend([
+				method_new(vector_class.clone(), vec_type_ref.clone()).gen_cpp(gen_env),
+				FuncDesc::method_delete(vector_class.clone()).gen_cpp(gen_env),
+				method_len(vector_class.clone()).gen_cpp(gen_env),
+				method_is_empty(vector_class.clone()).gen_cpp(gen_env),
+				method_capacity(vector_class.clone()).gen_cpp(gen_env),
+				method_shrink_to_fit(vector_class.clone()).gen_cpp(gen_env),
+				method_reserve(vector_class.clone()).gen_cpp(gen_env),
+				method_remove(vector_class.clone()).gen_cpp(gen_env),
+				method_swap(vector_class.clone(), element_is_bool).gen_cpp(gen_env),
+				method_clear(vector_class.clone()).gen_cpp(gen_env),
+				method_push(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
+				method_insert(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
+				method_get(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
+				method_set(vector_class.clone(), element_type.clone()).gen_cpp(gen_env),
+			]);
+			if element_type.is_copy() && !element_is_bool {
+				methods.push(method_clone(vector_class.clone(), vec_type_ref.clone()).gen_cpp(gen_env));
+				methods.push(method_data(vector_class.clone(), element_type.clone()).gen_cpp(gen_env));
+				methods.push(method_data_mut(vector_class.clone(), element_type.clone()).gen_cpp(gen_env));
+				methods.push(method_from_slice(vec_type_ref.clone(), element_type.clone()).gen_cpp(gen_env));
+			}
+			if element_type.is_element_data_type() {
+				methods.push(method_input_array(vector_class.clone()).gen_cpp(gen_env));
+				methods.push(method_output_array(vector_class.clone()).gen_cpp(gen_env));
+				methods.push(method_input_output_array(vector_class).gen_cpp(gen_env));
+			}
 		}
 		COMMON_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
 	}

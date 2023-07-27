@@ -1,11 +1,13 @@
+use std::any::TypeId;
+use std::os::raw::c_char;
+
 use matches::assert_matches;
 
 use opencv::core::{DMatch, Point2d, Point2f, Scalar, SparseMat_Hdr, Vec4i};
 use opencv::prelude::*;
-use opencv::types::VectorOfKeyPoint;
 use opencv::types::{
-	VectorOfDMatch, VectorOfMat, VectorOfPoint2d, VectorOfPoint2f, VectorOfRange, VectorOfString, VectorOfVec4i,
-	VectorOfVectorOfPoint2f, VectorOfbool, VectorOfc_char, VectorOff64, VectorOfi32, VectorOfu8,
+	VectorOfDMatch, VectorOfKeyPoint, VectorOfMat, VectorOfPoint2d, VectorOfPoint2f, VectorOfRange, VectorOfString, VectorOfVec4i,
+	VectorOfVectorOfPoint2f, VectorOfbool, VectorOfc_char, VectorOff64, VectorOfi32, VectorOfi8, VectorOfu8,
 };
 use opencv::{core, Error, Result};
 
@@ -126,6 +128,37 @@ fn primitive() -> Result<()> {
 	assert_eq!(4, unsafe { vec.get_unchecked(0) });
 	assert_eq!(5, unsafe { vec.get_unchecked(1) });
 	assert_eq!(6, unsafe { vec.get_unchecked(2) });
+	Ok(())
+}
+
+#[test]
+fn char() -> Result<()> {
+	let mut vec_char = VectorOfc_char::new();
+	vec_char.push(5);
+	vec_char.push(10);
+	vec_char.push(33);
+
+	assert_eq!(&[5 as c_char, 10, 33], vec_char.as_slice());
+
+	let mut vec_i8 = VectorOfi8::new();
+	vec_i8.push(5);
+	vec_i8.push(10);
+	vec_i8.push(33);
+
+	assert_eq!(&[5i8, 10, 33], vec_i8.as_slice());
+
+	let mut vec_u8 = VectorOfu8::new();
+	vec_u8.push(5);
+	vec_u8.push(10);
+	vec_u8.push(33);
+
+	assert_eq!(&[5u8, 10, 33], vec_u8.as_slice());
+
+	assert!(
+		TypeId::of::<VectorOfc_char>() == TypeId::of::<VectorOfi8>()
+			|| TypeId::of::<VectorOfc_char>() == TypeId::of::<VectorOfu8>()
+	);
+
 	Ok(())
 }
 
