@@ -1106,8 +1106,8 @@ mod core_types {
 		std_vectorLcv_DMatchG_capacity_const, std_vectorLcv_DMatchG_shrinkToFit,
 		std_vectorLcv_DMatchG_reserve_size_t, std_vectorLcv_DMatchG_remove_size_t,
 		std_vectorLcv_DMatchG_swap_size_t_size_t, std_vectorLcv_DMatchG_clear,
-		std_vectorLcv_DMatchG_get_const_size_t, std_vectorLcv_DMatchG_set_size_t_DMatch,
-		std_vectorLcv_DMatchG_push_DMatch, std_vectorLcv_DMatchG_insert_size_t_DMatch,
+		std_vectorLcv_DMatchG_get_const_size_t, std_vectorLcv_DMatchG_set_size_t_const_DMatch,
+		std_vectorLcv_DMatchG_push_const_DMatch, std_vectorLcv_DMatchG_insert_size_t_const_DMatch,
 	}
 	vector_copy_non_bool! { core::DMatch,
 		std_vectorLcv_DMatchG_data_const, std_vectorLcv_DMatchG_dataMut, cv_fromSlice_const_const_DMatchX_size_t,
@@ -1127,8 +1127,8 @@ mod core_types {
 		std_vectorLcv_cuda_GpuMatG_capacity_const, std_vectorLcv_cuda_GpuMatG_shrinkToFit,
 		std_vectorLcv_cuda_GpuMatG_reserve_size_t, std_vectorLcv_cuda_GpuMatG_remove_size_t,
 		std_vectorLcv_cuda_GpuMatG_swap_size_t_size_t, std_vectorLcv_cuda_GpuMatG_clear,
-		std_vectorLcv_cuda_GpuMatG_get_const_size_t, std_vectorLcv_cuda_GpuMatG_set_size_t_GpuMat,
-		std_vectorLcv_cuda_GpuMatG_push_GpuMat, std_vectorLcv_cuda_GpuMatG_insert_size_t_GpuMat,
+		std_vectorLcv_cuda_GpuMatG_get_const_size_t, std_vectorLcv_cuda_GpuMatG_set_size_t_const_GpuMat,
+		std_vectorLcv_cuda_GpuMatG_push_const_GpuMat, std_vectorLcv_cuda_GpuMatG_insert_size_t_const_GpuMat,
 	}
 	vector_non_copy_or_bool! { clone core::GpuMat }
 	
@@ -1145,8 +1145,8 @@ mod core_types {
 		std_vectorLcv_KeyPointG_capacity_const, std_vectorLcv_KeyPointG_shrinkToFit,
 		std_vectorLcv_KeyPointG_reserve_size_t, std_vectorLcv_KeyPointG_remove_size_t,
 		std_vectorLcv_KeyPointG_swap_size_t_size_t, std_vectorLcv_KeyPointG_clear,
-		std_vectorLcv_KeyPointG_get_const_size_t, std_vectorLcv_KeyPointG_set_size_t_KeyPoint,
-		std_vectorLcv_KeyPointG_push_KeyPoint, std_vectorLcv_KeyPointG_insert_size_t_KeyPoint,
+		std_vectorLcv_KeyPointG_get_const_size_t, std_vectorLcv_KeyPointG_set_size_t_const_KeyPoint,
+		std_vectorLcv_KeyPointG_push_const_KeyPoint, std_vectorLcv_KeyPointG_insert_size_t_const_KeyPoint,
 	}
 	vector_non_copy_or_bool! { clone core::KeyPoint }
 	
@@ -1163,8 +1163,8 @@ mod core_types {
 		std_vectorLcv_MatG_capacity_const, std_vectorLcv_MatG_shrinkToFit,
 		std_vectorLcv_MatG_reserve_size_t, std_vectorLcv_MatG_remove_size_t,
 		std_vectorLcv_MatG_swap_size_t_size_t, std_vectorLcv_MatG_clear,
-		std_vectorLcv_MatG_get_const_size_t, std_vectorLcv_MatG_set_size_t_Mat,
-		std_vectorLcv_MatG_push_Mat, std_vectorLcv_MatG_insert_size_t_Mat,
+		std_vectorLcv_MatG_get_const_size_t, std_vectorLcv_MatG_set_size_t_const_Mat,
+		std_vectorLcv_MatG_push_const_Mat, std_vectorLcv_MatG_insert_size_t_const_Mat,
 	}
 	vector_non_copy_or_bool! { clone core::Mat }
 	
@@ -1181,8 +1181,8 @@ mod core_types {
 		std_vectorLcv_ocl_PlatformInfoG_capacity_const, std_vectorLcv_ocl_PlatformInfoG_shrinkToFit,
 		std_vectorLcv_ocl_PlatformInfoG_reserve_size_t, std_vectorLcv_ocl_PlatformInfoG_remove_size_t,
 		std_vectorLcv_ocl_PlatformInfoG_swap_size_t_size_t, std_vectorLcv_ocl_PlatformInfoG_clear,
-		std_vectorLcv_ocl_PlatformInfoG_get_const_size_t, std_vectorLcv_ocl_PlatformInfoG_set_size_t_PlatformInfo,
-		std_vectorLcv_ocl_PlatformInfoG_push_PlatformInfo, std_vectorLcv_ocl_PlatformInfoG_insert_size_t_PlatformInfo,
+		std_vectorLcv_ocl_PlatformInfoG_get_const_size_t, std_vectorLcv_ocl_PlatformInfoG_set_size_t_const_PlatformInfo,
+		std_vectorLcv_ocl_PlatformInfoG_push_const_PlatformInfo, std_vectorLcv_ocl_PlatformInfoG_insert_size_t_const_PlatformInfo,
 	}
 	vector_non_copy_or_bool! { core::PlatformInfo }
 	
@@ -1199,8 +1199,8 @@ mod core_types {
 		std_vectorLcv_PointG_capacity_const, std_vectorLcv_PointG_shrinkToFit,
 		std_vectorLcv_PointG_reserve_size_t, std_vectorLcv_PointG_remove_size_t,
 		std_vectorLcv_PointG_swap_size_t_size_t, std_vectorLcv_PointG_clear,
-		std_vectorLcv_PointG_get_const_size_t, std_vectorLcv_PointG_set_size_t_Point,
-		std_vectorLcv_PointG_push_Point, std_vectorLcv_PointG_insert_size_t_Point,
+		std_vectorLcv_PointG_get_const_size_t, std_vectorLcv_PointG_set_size_t_const_Point,
+		std_vectorLcv_PointG_push_const_Point, std_vectorLcv_PointG_insert_size_t_const_Point,
 	}
 	vector_copy_non_bool! { core::Point,
 		std_vectorLcv_PointG_data_const, std_vectorLcv_PointG_dataMut, cv_fromSlice_const_const_PointX_size_t,
@@ -1261,8 +1261,8 @@ mod core_types {
 		std_vectorLcv_Point2dG_capacity_const, std_vectorLcv_Point2dG_shrinkToFit,
 		std_vectorLcv_Point2dG_reserve_size_t, std_vectorLcv_Point2dG_remove_size_t,
 		std_vectorLcv_Point2dG_swap_size_t_size_t, std_vectorLcv_Point2dG_clear,
-		std_vectorLcv_Point2dG_get_const_size_t, std_vectorLcv_Point2dG_set_size_t_Point2d,
-		std_vectorLcv_Point2dG_push_Point2d, std_vectorLcv_Point2dG_insert_size_t_Point2d,
+		std_vectorLcv_Point2dG_get_const_size_t, std_vectorLcv_Point2dG_set_size_t_const_Point2d,
+		std_vectorLcv_Point2dG_push_const_Point2d, std_vectorLcv_Point2dG_insert_size_t_const_Point2d,
 	}
 	vector_copy_non_bool! { core::Point2d,
 		std_vectorLcv_Point2dG_data_const, std_vectorLcv_Point2dG_dataMut, cv_fromSlice_const_const_Point2dX_size_t,
@@ -1323,8 +1323,8 @@ mod core_types {
 		std_vectorLcv_Point2fG_capacity_const, std_vectorLcv_Point2fG_shrinkToFit,
 		std_vectorLcv_Point2fG_reserve_size_t, std_vectorLcv_Point2fG_remove_size_t,
 		std_vectorLcv_Point2fG_swap_size_t_size_t, std_vectorLcv_Point2fG_clear,
-		std_vectorLcv_Point2fG_get_const_size_t, std_vectorLcv_Point2fG_set_size_t_Point2f,
-		std_vectorLcv_Point2fG_push_Point2f, std_vectorLcv_Point2fG_insert_size_t_Point2f,
+		std_vectorLcv_Point2fG_get_const_size_t, std_vectorLcv_Point2fG_set_size_t_const_Point2f,
+		std_vectorLcv_Point2fG_push_const_Point2f, std_vectorLcv_Point2fG_insert_size_t_const_Point2f,
 	}
 	vector_copy_non_bool! { core::Point2f,
 		std_vectorLcv_Point2fG_data_const, std_vectorLcv_Point2fG_dataMut, cv_fromSlice_const_const_Point2fX_size_t,
@@ -1385,8 +1385,8 @@ mod core_types {
 		std_vectorLcv_Point3dG_capacity_const, std_vectorLcv_Point3dG_shrinkToFit,
 		std_vectorLcv_Point3dG_reserve_size_t, std_vectorLcv_Point3dG_remove_size_t,
 		std_vectorLcv_Point3dG_swap_size_t_size_t, std_vectorLcv_Point3dG_clear,
-		std_vectorLcv_Point3dG_get_const_size_t, std_vectorLcv_Point3dG_set_size_t_Point3d,
-		std_vectorLcv_Point3dG_push_Point3d, std_vectorLcv_Point3dG_insert_size_t_Point3d,
+		std_vectorLcv_Point3dG_get_const_size_t, std_vectorLcv_Point3dG_set_size_t_const_Point3d,
+		std_vectorLcv_Point3dG_push_const_Point3d, std_vectorLcv_Point3dG_insert_size_t_const_Point3d,
 	}
 	vector_copy_non_bool! { core::Point3d,
 		std_vectorLcv_Point3dG_data_const, std_vectorLcv_Point3dG_dataMut, cv_fromSlice_const_const_Point3dX_size_t,
@@ -1447,8 +1447,8 @@ mod core_types {
 		std_vectorLcv_Point3fG_capacity_const, std_vectorLcv_Point3fG_shrinkToFit,
 		std_vectorLcv_Point3fG_reserve_size_t, std_vectorLcv_Point3fG_remove_size_t,
 		std_vectorLcv_Point3fG_swap_size_t_size_t, std_vectorLcv_Point3fG_clear,
-		std_vectorLcv_Point3fG_get_const_size_t, std_vectorLcv_Point3fG_set_size_t_Point3f,
-		std_vectorLcv_Point3fG_push_Point3f, std_vectorLcv_Point3fG_insert_size_t_Point3f,
+		std_vectorLcv_Point3fG_get_const_size_t, std_vectorLcv_Point3fG_set_size_t_const_Point3f,
+		std_vectorLcv_Point3fG_push_const_Point3f, std_vectorLcv_Point3fG_insert_size_t_const_Point3f,
 	}
 	vector_copy_non_bool! { core::Point3f,
 		std_vectorLcv_Point3fG_data_const, std_vectorLcv_Point3fG_dataMut, cv_fromSlice_const_const_Point3fX_size_t,
@@ -1509,8 +1509,8 @@ mod core_types {
 		std_vectorLcv_Point3iG_capacity_const, std_vectorLcv_Point3iG_shrinkToFit,
 		std_vectorLcv_Point3iG_reserve_size_t, std_vectorLcv_Point3iG_remove_size_t,
 		std_vectorLcv_Point3iG_swap_size_t_size_t, std_vectorLcv_Point3iG_clear,
-		std_vectorLcv_Point3iG_get_const_size_t, std_vectorLcv_Point3iG_set_size_t_Point3i,
-		std_vectorLcv_Point3iG_push_Point3i, std_vectorLcv_Point3iG_insert_size_t_Point3i,
+		std_vectorLcv_Point3iG_get_const_size_t, std_vectorLcv_Point3iG_set_size_t_const_Point3i,
+		std_vectorLcv_Point3iG_push_const_Point3i, std_vectorLcv_Point3iG_insert_size_t_const_Point3i,
 	}
 	vector_copy_non_bool! { core::Point3i,
 		std_vectorLcv_Point3iG_data_const, std_vectorLcv_Point3iG_dataMut, cv_fromSlice_const_const_Point3iX_size_t,
@@ -1571,8 +1571,8 @@ mod core_types {
 		std_vectorLcv_RangeG_capacity_const, std_vectorLcv_RangeG_shrinkToFit,
 		std_vectorLcv_RangeG_reserve_size_t, std_vectorLcv_RangeG_remove_size_t,
 		std_vectorLcv_RangeG_swap_size_t_size_t, std_vectorLcv_RangeG_clear,
-		std_vectorLcv_RangeG_get_const_size_t, std_vectorLcv_RangeG_set_size_t_Range,
-		std_vectorLcv_RangeG_push_Range, std_vectorLcv_RangeG_insert_size_t_Range,
+		std_vectorLcv_RangeG_get_const_size_t, std_vectorLcv_RangeG_set_size_t_const_Range,
+		std_vectorLcv_RangeG_push_const_Range, std_vectorLcv_RangeG_insert_size_t_const_Range,
 	}
 	vector_non_copy_or_bool! { core::Range }
 	
@@ -1589,8 +1589,8 @@ mod core_types {
 		std_vectorLcv_RectG_capacity_const, std_vectorLcv_RectG_shrinkToFit,
 		std_vectorLcv_RectG_reserve_size_t, std_vectorLcv_RectG_remove_size_t,
 		std_vectorLcv_RectG_swap_size_t_size_t, std_vectorLcv_RectG_clear,
-		std_vectorLcv_RectG_get_const_size_t, std_vectorLcv_RectG_set_size_t_Rect,
-		std_vectorLcv_RectG_push_Rect, std_vectorLcv_RectG_insert_size_t_Rect,
+		std_vectorLcv_RectG_get_const_size_t, std_vectorLcv_RectG_set_size_t_const_Rect,
+		std_vectorLcv_RectG_push_const_Rect, std_vectorLcv_RectG_insert_size_t_const_Rect,
 	}
 	vector_copy_non_bool! { core::Rect,
 		std_vectorLcv_RectG_data_const, std_vectorLcv_RectG_dataMut, cv_fromSlice_const_const_RectX_size_t,
@@ -1651,8 +1651,8 @@ mod core_types {
 		std_vectorLcv_Rect2dG_capacity_const, std_vectorLcv_Rect2dG_shrinkToFit,
 		std_vectorLcv_Rect2dG_reserve_size_t, std_vectorLcv_Rect2dG_remove_size_t,
 		std_vectorLcv_Rect2dG_swap_size_t_size_t, std_vectorLcv_Rect2dG_clear,
-		std_vectorLcv_Rect2dG_get_const_size_t, std_vectorLcv_Rect2dG_set_size_t_Rect2d,
-		std_vectorLcv_Rect2dG_push_Rect2d, std_vectorLcv_Rect2dG_insert_size_t_Rect2d,
+		std_vectorLcv_Rect2dG_get_const_size_t, std_vectorLcv_Rect2dG_set_size_t_const_Rect2d,
+		std_vectorLcv_Rect2dG_push_const_Rect2d, std_vectorLcv_Rect2dG_insert_size_t_const_Rect2d,
 	}
 	vector_copy_non_bool! { core::Rect2d,
 		std_vectorLcv_Rect2dG_data_const, std_vectorLcv_Rect2dG_dataMut, cv_fromSlice_const_const_Rect2dX_size_t,
@@ -1713,8 +1713,8 @@ mod core_types {
 		std_vectorLcv_RotatedRectG_capacity_const, std_vectorLcv_RotatedRectG_shrinkToFit,
 		std_vectorLcv_RotatedRectG_reserve_size_t, std_vectorLcv_RotatedRectG_remove_size_t,
 		std_vectorLcv_RotatedRectG_swap_size_t_size_t, std_vectorLcv_RotatedRectG_clear,
-		std_vectorLcv_RotatedRectG_get_const_size_t, std_vectorLcv_RotatedRectG_set_size_t_RotatedRect,
-		std_vectorLcv_RotatedRectG_push_RotatedRect, std_vectorLcv_RotatedRectG_insert_size_t_RotatedRect,
+		std_vectorLcv_RotatedRectG_get_const_size_t, std_vectorLcv_RotatedRectG_set_size_t_const_RotatedRect,
+		std_vectorLcv_RotatedRectG_push_const_RotatedRect, std_vectorLcv_RotatedRectG_insert_size_t_const_RotatedRect,
 	}
 	vector_copy_non_bool! { core::RotatedRect,
 		std_vectorLcv_RotatedRectG_data_const, std_vectorLcv_RotatedRectG_dataMut, cv_fromSlice_const_const_RotatedRectX_size_t,
@@ -1734,8 +1734,8 @@ mod core_types {
 		std_vectorLcv_ScalarG_capacity_const, std_vectorLcv_ScalarG_shrinkToFit,
 		std_vectorLcv_ScalarG_reserve_size_t, std_vectorLcv_ScalarG_remove_size_t,
 		std_vectorLcv_ScalarG_swap_size_t_size_t, std_vectorLcv_ScalarG_clear,
-		std_vectorLcv_ScalarG_get_const_size_t, std_vectorLcv_ScalarG_set_size_t_Scalar,
-		std_vectorLcv_ScalarG_push_Scalar, std_vectorLcv_ScalarG_insert_size_t_Scalar,
+		std_vectorLcv_ScalarG_get_const_size_t, std_vectorLcv_ScalarG_set_size_t_const_Scalar,
+		std_vectorLcv_ScalarG_push_const_Scalar, std_vectorLcv_ScalarG_insert_size_t_const_Scalar,
 	}
 	vector_copy_non_bool! { core::Scalar,
 		std_vectorLcv_ScalarG_data_const, std_vectorLcv_ScalarG_dataMut, cv_fromSlice_const_const_ScalarX_size_t,
@@ -1796,8 +1796,8 @@ mod core_types {
 		std_vectorLcv_SizeG_capacity_const, std_vectorLcv_SizeG_shrinkToFit,
 		std_vectorLcv_SizeG_reserve_size_t, std_vectorLcv_SizeG_remove_size_t,
 		std_vectorLcv_SizeG_swap_size_t_size_t, std_vectorLcv_SizeG_clear,
-		std_vectorLcv_SizeG_get_const_size_t, std_vectorLcv_SizeG_set_size_t_Size,
-		std_vectorLcv_SizeG_push_Size, std_vectorLcv_SizeG_insert_size_t_Size,
+		std_vectorLcv_SizeG_get_const_size_t, std_vectorLcv_SizeG_set_size_t_const_Size,
+		std_vectorLcv_SizeG_push_const_Size, std_vectorLcv_SizeG_insert_size_t_const_Size,
 	}
 	vector_copy_non_bool! { core::Size,
 		std_vectorLcv_SizeG_data_const, std_vectorLcv_SizeG_dataMut, cv_fromSlice_const_const_SizeX_size_t,
@@ -1858,8 +1858,8 @@ mod core_types {
 		std_vectorLcv_StringG_capacity_const, std_vectorLcv_StringG_shrinkToFit,
 		std_vectorLcv_StringG_reserve_size_t, std_vectorLcv_StringG_remove_size_t,
 		std_vectorLcv_StringG_swap_size_t_size_t, std_vectorLcv_StringG_clear,
-		std_vectorLcv_StringG_get_const_size_t, std_vectorLcv_StringG_set_size_t_String,
-		std_vectorLcv_StringG_push_String, std_vectorLcv_StringG_insert_size_t_String,
+		std_vectorLcv_StringG_get_const_size_t, std_vectorLcv_StringG_set_size_t_const_String,
+		std_vectorLcv_StringG_push_const_String, std_vectorLcv_StringG_insert_size_t_const_String,
 	}
 	vector_non_copy_or_bool! { String }
 	
@@ -1876,8 +1876,8 @@ mod core_types {
 		std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_capacity_const, std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_shrinkToFit,
 		std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_reserve_size_t, std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_remove_size_t,
 		std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_swap_size_t_size_t, std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_clear,
-		std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_get_const_size_t, std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_set_size_t_pairLcv_Point2i__cv_Point2iG,
-		std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_push_pairLcv_Point2i__cv_Point2iG, std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_insert_size_t_pairLcv_Point2i__cv_Point2iG,
+		std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_get_const_size_t, std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_set_size_t_const_pairLcv_Point2i__cv_Point2iG,
+		std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_push_const_pairLcv_Point2i__cv_Point2iG, std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_insert_size_t_const_pairLcv_Point2i__cv_Point2iG,
 	}
 	vector_non_copy_or_bool! { core::Tuple<(core::Point2i, core::Point2i)> }
 	
@@ -1894,8 +1894,8 @@ mod core_types {
 		std_vectorLstd_pairLcv_UMat__unsigned_charGG_capacity_const, std_vectorLstd_pairLcv_UMat__unsigned_charGG_shrinkToFit,
 		std_vectorLstd_pairLcv_UMat__unsigned_charGG_reserve_size_t, std_vectorLstd_pairLcv_UMat__unsigned_charGG_remove_size_t,
 		std_vectorLstd_pairLcv_UMat__unsigned_charGG_swap_size_t_size_t, std_vectorLstd_pairLcv_UMat__unsigned_charGG_clear,
-		std_vectorLstd_pairLcv_UMat__unsigned_charGG_get_const_size_t, std_vectorLstd_pairLcv_UMat__unsigned_charGG_set_size_t_pairLcv_UMat__unsigned_charG,
-		std_vectorLstd_pairLcv_UMat__unsigned_charGG_push_pairLcv_UMat__unsigned_charG, std_vectorLstd_pairLcv_UMat__unsigned_charGG_insert_size_t_pairLcv_UMat__unsigned_charG,
+		std_vectorLstd_pairLcv_UMat__unsigned_charGG_get_const_size_t, std_vectorLstd_pairLcv_UMat__unsigned_charGG_set_size_t_const_pairLcv_UMat__unsigned_charG,
+		std_vectorLstd_pairLcv_UMat__unsigned_charGG_push_const_pairLcv_UMat__unsigned_charG, std_vectorLstd_pairLcv_UMat__unsigned_charGG_insert_size_t_const_pairLcv_UMat__unsigned_charG,
 	}
 	vector_non_copy_or_bool! { core::Tuple<(core::UMat, u8)> }
 	
@@ -1912,8 +1912,8 @@ mod core_types {
 		std_vectorLstd_pairLint__doubleGG_capacity_const, std_vectorLstd_pairLint__doubleGG_shrinkToFit,
 		std_vectorLstd_pairLint__doubleGG_reserve_size_t, std_vectorLstd_pairLint__doubleGG_remove_size_t,
 		std_vectorLstd_pairLint__doubleGG_swap_size_t_size_t, std_vectorLstd_pairLint__doubleGG_clear,
-		std_vectorLstd_pairLint__doubleGG_get_const_size_t, std_vectorLstd_pairLint__doubleGG_set_size_t_pairLint__doubleG,
-		std_vectorLstd_pairLint__doubleGG_push_pairLint__doubleG, std_vectorLstd_pairLint__doubleGG_insert_size_t_pairLint__doubleG,
+		std_vectorLstd_pairLint__doubleGG_get_const_size_t, std_vectorLstd_pairLint__doubleGG_set_size_t_const_pairLint__doubleG,
+		std_vectorLstd_pairLint__doubleGG_push_const_pairLint__doubleG, std_vectorLstd_pairLint__doubleGG_insert_size_t_const_pairLint__doubleG,
 	}
 	vector_non_copy_or_bool! { core::Tuple<(i32, f64)> }
 	
@@ -1930,8 +1930,8 @@ mod core_types {
 		std_vectorLcv_UMatG_capacity_const, std_vectorLcv_UMatG_shrinkToFit,
 		std_vectorLcv_UMatG_reserve_size_t, std_vectorLcv_UMatG_remove_size_t,
 		std_vectorLcv_UMatG_swap_size_t_size_t, std_vectorLcv_UMatG_clear,
-		std_vectorLcv_UMatG_get_const_size_t, std_vectorLcv_UMatG_set_size_t_UMat,
-		std_vectorLcv_UMatG_push_UMat, std_vectorLcv_UMatG_insert_size_t_UMat,
+		std_vectorLcv_UMatG_get_const_size_t, std_vectorLcv_UMatG_set_size_t_const_UMat,
+		std_vectorLcv_UMatG_push_const_UMat, std_vectorLcv_UMatG_insert_size_t_const_UMat,
 	}
 	vector_non_copy_or_bool! { clone core::UMat }
 	
@@ -1948,8 +1948,8 @@ mod core_types {
 		std_vectorLcv_Vec2dG_capacity_const, std_vectorLcv_Vec2dG_shrinkToFit,
 		std_vectorLcv_Vec2dG_reserve_size_t, std_vectorLcv_Vec2dG_remove_size_t,
 		std_vectorLcv_Vec2dG_swap_size_t_size_t, std_vectorLcv_Vec2dG_clear,
-		std_vectorLcv_Vec2dG_get_const_size_t, std_vectorLcv_Vec2dG_set_size_t_Vec2d,
-		std_vectorLcv_Vec2dG_push_Vec2d, std_vectorLcv_Vec2dG_insert_size_t_Vec2d,
+		std_vectorLcv_Vec2dG_get_const_size_t, std_vectorLcv_Vec2dG_set_size_t_const_Vec2d,
+		std_vectorLcv_Vec2dG_push_const_Vec2d, std_vectorLcv_Vec2dG_insert_size_t_const_Vec2d,
 	}
 	vector_copy_non_bool! { core::Vec2d,
 		std_vectorLcv_Vec2dG_data_const, std_vectorLcv_Vec2dG_dataMut, cv_fromSlice_const_const_Vec2dX_size_t,
@@ -2010,8 +2010,8 @@ mod core_types {
 		std_vectorLcv_Vec2fG_capacity_const, std_vectorLcv_Vec2fG_shrinkToFit,
 		std_vectorLcv_Vec2fG_reserve_size_t, std_vectorLcv_Vec2fG_remove_size_t,
 		std_vectorLcv_Vec2fG_swap_size_t_size_t, std_vectorLcv_Vec2fG_clear,
-		std_vectorLcv_Vec2fG_get_const_size_t, std_vectorLcv_Vec2fG_set_size_t_Vec2f,
-		std_vectorLcv_Vec2fG_push_Vec2f, std_vectorLcv_Vec2fG_insert_size_t_Vec2f,
+		std_vectorLcv_Vec2fG_get_const_size_t, std_vectorLcv_Vec2fG_set_size_t_const_Vec2f,
+		std_vectorLcv_Vec2fG_push_const_Vec2f, std_vectorLcv_Vec2fG_insert_size_t_const_Vec2f,
 	}
 	vector_copy_non_bool! { core::Vec2f,
 		std_vectorLcv_Vec2fG_data_const, std_vectorLcv_Vec2fG_dataMut, cv_fromSlice_const_const_Vec2fX_size_t,
@@ -2072,8 +2072,8 @@ mod core_types {
 		std_vectorLcv_Vec2iG_capacity_const, std_vectorLcv_Vec2iG_shrinkToFit,
 		std_vectorLcv_Vec2iG_reserve_size_t, std_vectorLcv_Vec2iG_remove_size_t,
 		std_vectorLcv_Vec2iG_swap_size_t_size_t, std_vectorLcv_Vec2iG_clear,
-		std_vectorLcv_Vec2iG_get_const_size_t, std_vectorLcv_Vec2iG_set_size_t_Vec2i,
-		std_vectorLcv_Vec2iG_push_Vec2i, std_vectorLcv_Vec2iG_insert_size_t_Vec2i,
+		std_vectorLcv_Vec2iG_get_const_size_t, std_vectorLcv_Vec2iG_set_size_t_const_Vec2i,
+		std_vectorLcv_Vec2iG_push_const_Vec2i, std_vectorLcv_Vec2iG_insert_size_t_const_Vec2i,
 	}
 	vector_copy_non_bool! { core::Vec2i,
 		std_vectorLcv_Vec2iG_data_const, std_vectorLcv_Vec2iG_dataMut, cv_fromSlice_const_const_Vec2iX_size_t,
@@ -2134,8 +2134,8 @@ mod core_types {
 		std_vectorLcv_Vec3dG_capacity_const, std_vectorLcv_Vec3dG_shrinkToFit,
 		std_vectorLcv_Vec3dG_reserve_size_t, std_vectorLcv_Vec3dG_remove_size_t,
 		std_vectorLcv_Vec3dG_swap_size_t_size_t, std_vectorLcv_Vec3dG_clear,
-		std_vectorLcv_Vec3dG_get_const_size_t, std_vectorLcv_Vec3dG_set_size_t_Vec3d,
-		std_vectorLcv_Vec3dG_push_Vec3d, std_vectorLcv_Vec3dG_insert_size_t_Vec3d,
+		std_vectorLcv_Vec3dG_get_const_size_t, std_vectorLcv_Vec3dG_set_size_t_const_Vec3d,
+		std_vectorLcv_Vec3dG_push_const_Vec3d, std_vectorLcv_Vec3dG_insert_size_t_const_Vec3d,
 	}
 	vector_copy_non_bool! { core::Vec3d,
 		std_vectorLcv_Vec3dG_data_const, std_vectorLcv_Vec3dG_dataMut, cv_fromSlice_const_const_Vec3dX_size_t,
@@ -2196,8 +2196,8 @@ mod core_types {
 		std_vectorLcv_Vec3fG_capacity_const, std_vectorLcv_Vec3fG_shrinkToFit,
 		std_vectorLcv_Vec3fG_reserve_size_t, std_vectorLcv_Vec3fG_remove_size_t,
 		std_vectorLcv_Vec3fG_swap_size_t_size_t, std_vectorLcv_Vec3fG_clear,
-		std_vectorLcv_Vec3fG_get_const_size_t, std_vectorLcv_Vec3fG_set_size_t_Vec3f,
-		std_vectorLcv_Vec3fG_push_Vec3f, std_vectorLcv_Vec3fG_insert_size_t_Vec3f,
+		std_vectorLcv_Vec3fG_get_const_size_t, std_vectorLcv_Vec3fG_set_size_t_const_Vec3f,
+		std_vectorLcv_Vec3fG_push_const_Vec3f, std_vectorLcv_Vec3fG_insert_size_t_const_Vec3f,
 	}
 	vector_copy_non_bool! { core::Vec3f,
 		std_vectorLcv_Vec3fG_data_const, std_vectorLcv_Vec3fG_dataMut, cv_fromSlice_const_const_Vec3fX_size_t,
@@ -2258,8 +2258,8 @@ mod core_types {
 		std_vectorLcv_Vec3iG_capacity_const, std_vectorLcv_Vec3iG_shrinkToFit,
 		std_vectorLcv_Vec3iG_reserve_size_t, std_vectorLcv_Vec3iG_remove_size_t,
 		std_vectorLcv_Vec3iG_swap_size_t_size_t, std_vectorLcv_Vec3iG_clear,
-		std_vectorLcv_Vec3iG_get_const_size_t, std_vectorLcv_Vec3iG_set_size_t_Vec3i,
-		std_vectorLcv_Vec3iG_push_Vec3i, std_vectorLcv_Vec3iG_insert_size_t_Vec3i,
+		std_vectorLcv_Vec3iG_get_const_size_t, std_vectorLcv_Vec3iG_set_size_t_const_Vec3i,
+		std_vectorLcv_Vec3iG_push_const_Vec3i, std_vectorLcv_Vec3iG_insert_size_t_const_Vec3i,
 	}
 	vector_copy_non_bool! { core::Vec3i,
 		std_vectorLcv_Vec3iG_data_const, std_vectorLcv_Vec3iG_dataMut, cv_fromSlice_const_const_Vec3iX_size_t,
@@ -2320,8 +2320,8 @@ mod core_types {
 		std_vectorLcv_Vec4fG_capacity_const, std_vectorLcv_Vec4fG_shrinkToFit,
 		std_vectorLcv_Vec4fG_reserve_size_t, std_vectorLcv_Vec4fG_remove_size_t,
 		std_vectorLcv_Vec4fG_swap_size_t_size_t, std_vectorLcv_Vec4fG_clear,
-		std_vectorLcv_Vec4fG_get_const_size_t, std_vectorLcv_Vec4fG_set_size_t_Vec4f,
-		std_vectorLcv_Vec4fG_push_Vec4f, std_vectorLcv_Vec4fG_insert_size_t_Vec4f,
+		std_vectorLcv_Vec4fG_get_const_size_t, std_vectorLcv_Vec4fG_set_size_t_const_Vec4f,
+		std_vectorLcv_Vec4fG_push_const_Vec4f, std_vectorLcv_Vec4fG_insert_size_t_const_Vec4f,
 	}
 	vector_copy_non_bool! { core::Vec4f,
 		std_vectorLcv_Vec4fG_data_const, std_vectorLcv_Vec4fG_dataMut, cv_fromSlice_const_const_Vec4fX_size_t,
@@ -2382,8 +2382,8 @@ mod core_types {
 		std_vectorLcv_Vec4iG_capacity_const, std_vectorLcv_Vec4iG_shrinkToFit,
 		std_vectorLcv_Vec4iG_reserve_size_t, std_vectorLcv_Vec4iG_remove_size_t,
 		std_vectorLcv_Vec4iG_swap_size_t_size_t, std_vectorLcv_Vec4iG_clear,
-		std_vectorLcv_Vec4iG_get_const_size_t, std_vectorLcv_Vec4iG_set_size_t_Vec4i,
-		std_vectorLcv_Vec4iG_push_Vec4i, std_vectorLcv_Vec4iG_insert_size_t_Vec4i,
+		std_vectorLcv_Vec4iG_get_const_size_t, std_vectorLcv_Vec4iG_set_size_t_const_Vec4i,
+		std_vectorLcv_Vec4iG_push_const_Vec4i, std_vectorLcv_Vec4iG_insert_size_t_const_Vec4i,
 	}
 	vector_copy_non_bool! { core::Vec4i,
 		std_vectorLcv_Vec4iG_data_const, std_vectorLcv_Vec4iG_dataMut, cv_fromSlice_const_const_Vec4iX_size_t,
@@ -2444,8 +2444,8 @@ mod core_types {
 		std_vectorLcv_Vec6fG_capacity_const, std_vectorLcv_Vec6fG_shrinkToFit,
 		std_vectorLcv_Vec6fG_reserve_size_t, std_vectorLcv_Vec6fG_remove_size_t,
 		std_vectorLcv_Vec6fG_swap_size_t_size_t, std_vectorLcv_Vec6fG_clear,
-		std_vectorLcv_Vec6fG_get_const_size_t, std_vectorLcv_Vec6fG_set_size_t_Vec6f,
-		std_vectorLcv_Vec6fG_push_Vec6f, std_vectorLcv_Vec6fG_insert_size_t_Vec6f,
+		std_vectorLcv_Vec6fG_get_const_size_t, std_vectorLcv_Vec6fG_set_size_t_const_Vec6f,
+		std_vectorLcv_Vec6fG_push_const_Vec6f, std_vectorLcv_Vec6fG_insert_size_t_const_Vec6f,
 	}
 	vector_copy_non_bool! { core::Vec6f,
 		std_vectorLcv_Vec6fG_data_const, std_vectorLcv_Vec6fG_dataMut, cv_fromSlice_const_const_Vec6fX_size_t,
@@ -2506,8 +2506,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_DMatchGG_capacity_const, std_vectorLstd_vectorLcv_DMatchGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_DMatchGG_reserve_size_t, std_vectorLstd_vectorLcv_DMatchGG_remove_size_t,
 		std_vectorLstd_vectorLcv_DMatchGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_DMatchGG_clear,
-		std_vectorLstd_vectorLcv_DMatchGG_get_const_size_t, std_vectorLstd_vectorLcv_DMatchGG_set_size_t_vectorLDMatchG,
-		std_vectorLstd_vectorLcv_DMatchGG_push_vectorLDMatchG, std_vectorLstd_vectorLcv_DMatchGG_insert_size_t_vectorLDMatchG,
+		std_vectorLstd_vectorLcv_DMatchGG_get_const_size_t, std_vectorLstd_vectorLcv_DMatchGG_set_size_t_const_vectorLDMatchG,
+		std_vectorLstd_vectorLcv_DMatchGG_push_const_vectorLDMatchG, std_vectorLstd_vectorLcv_DMatchGG_insert_size_t_const_vectorLDMatchG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::DMatch> }
 	
@@ -2524,8 +2524,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_KeyPointGG_capacity_const, std_vectorLstd_vectorLcv_KeyPointGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_KeyPointGG_reserve_size_t, std_vectorLstd_vectorLcv_KeyPointGG_remove_size_t,
 		std_vectorLstd_vectorLcv_KeyPointGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_KeyPointGG_clear,
-		std_vectorLstd_vectorLcv_KeyPointGG_get_const_size_t, std_vectorLstd_vectorLcv_KeyPointGG_set_size_t_vectorLKeyPointG,
-		std_vectorLstd_vectorLcv_KeyPointGG_push_vectorLKeyPointG, std_vectorLstd_vectorLcv_KeyPointGG_insert_size_t_vectorLKeyPointG,
+		std_vectorLstd_vectorLcv_KeyPointGG_get_const_size_t, std_vectorLstd_vectorLcv_KeyPointGG_set_size_t_const_vectorLKeyPointG,
+		std_vectorLstd_vectorLcv_KeyPointGG_push_const_vectorLKeyPointG, std_vectorLstd_vectorLcv_KeyPointGG_insert_size_t_const_vectorLKeyPointG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::KeyPoint> }
 	
@@ -2542,8 +2542,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_MatGG_capacity_const, std_vectorLstd_vectorLcv_MatGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_MatGG_reserve_size_t, std_vectorLstd_vectorLcv_MatGG_remove_size_t,
 		std_vectorLstd_vectorLcv_MatGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_MatGG_clear,
-		std_vectorLstd_vectorLcv_MatGG_get_const_size_t, std_vectorLstd_vectorLcv_MatGG_set_size_t_vectorLMatG,
-		std_vectorLstd_vectorLcv_MatGG_push_vectorLMatG, std_vectorLstd_vectorLcv_MatGG_insert_size_t_vectorLMatG,
+		std_vectorLstd_vectorLcv_MatGG_get_const_size_t, std_vectorLstd_vectorLcv_MatGG_set_size_t_const_vectorLMatG,
+		std_vectorLstd_vectorLcv_MatGG_push_const_vectorLMatG, std_vectorLstd_vectorLcv_MatGG_insert_size_t_const_vectorLMatG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Mat> }
 	
@@ -2560,8 +2560,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_PointGG_capacity_const, std_vectorLstd_vectorLcv_PointGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_PointGG_reserve_size_t, std_vectorLstd_vectorLcv_PointGG_remove_size_t,
 		std_vectorLstd_vectorLcv_PointGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_PointGG_clear,
-		std_vectorLstd_vectorLcv_PointGG_get_const_size_t, std_vectorLstd_vectorLcv_PointGG_set_size_t_vectorLPointG,
-		std_vectorLstd_vectorLcv_PointGG_push_vectorLPointG, std_vectorLstd_vectorLcv_PointGG_insert_size_t_vectorLPointG,
+		std_vectorLstd_vectorLcv_PointGG_get_const_size_t, std_vectorLstd_vectorLcv_PointGG_set_size_t_const_vectorLPointG,
+		std_vectorLstd_vectorLcv_PointGG_push_const_vectorLPointG, std_vectorLstd_vectorLcv_PointGG_insert_size_t_const_vectorLPointG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point> }
 	
@@ -2619,8 +2619,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Point2fGG_capacity_const, std_vectorLstd_vectorLcv_Point2fGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_Point2fGG_reserve_size_t, std_vectorLstd_vectorLcv_Point2fGG_remove_size_t,
 		std_vectorLstd_vectorLcv_Point2fGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Point2fGG_clear,
-		std_vectorLstd_vectorLcv_Point2fGG_get_const_size_t, std_vectorLstd_vectorLcv_Point2fGG_set_size_t_vectorLPoint2fG,
-		std_vectorLstd_vectorLcv_Point2fGG_push_vectorLPoint2fG, std_vectorLstd_vectorLcv_Point2fGG_insert_size_t_vectorLPoint2fG,
+		std_vectorLstd_vectorLcv_Point2fGG_get_const_size_t, std_vectorLstd_vectorLcv_Point2fGG_set_size_t_const_vectorLPoint2fG,
+		std_vectorLstd_vectorLcv_Point2fGG_push_const_vectorLPoint2fG, std_vectorLstd_vectorLcv_Point2fGG_insert_size_t_const_vectorLPoint2fG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point2f> }
 	
@@ -2678,8 +2678,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Point3dGG_capacity_const, std_vectorLstd_vectorLcv_Point3dGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_Point3dGG_reserve_size_t, std_vectorLstd_vectorLcv_Point3dGG_remove_size_t,
 		std_vectorLstd_vectorLcv_Point3dGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Point3dGG_clear,
-		std_vectorLstd_vectorLcv_Point3dGG_get_const_size_t, std_vectorLstd_vectorLcv_Point3dGG_set_size_t_vectorLPoint3dG,
-		std_vectorLstd_vectorLcv_Point3dGG_push_vectorLPoint3dG, std_vectorLstd_vectorLcv_Point3dGG_insert_size_t_vectorLPoint3dG,
+		std_vectorLstd_vectorLcv_Point3dGG_get_const_size_t, std_vectorLstd_vectorLcv_Point3dGG_set_size_t_const_vectorLPoint3dG,
+		std_vectorLstd_vectorLcv_Point3dGG_push_const_vectorLPoint3dG, std_vectorLstd_vectorLcv_Point3dGG_insert_size_t_const_vectorLPoint3dG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3d> }
 	
@@ -2737,8 +2737,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Point3fGG_capacity_const, std_vectorLstd_vectorLcv_Point3fGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_Point3fGG_reserve_size_t, std_vectorLstd_vectorLcv_Point3fGG_remove_size_t,
 		std_vectorLstd_vectorLcv_Point3fGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Point3fGG_clear,
-		std_vectorLstd_vectorLcv_Point3fGG_get_const_size_t, std_vectorLstd_vectorLcv_Point3fGG_set_size_t_vectorLPoint3fG,
-		std_vectorLstd_vectorLcv_Point3fGG_push_vectorLPoint3fG, std_vectorLstd_vectorLcv_Point3fGG_insert_size_t_vectorLPoint3fG,
+		std_vectorLstd_vectorLcv_Point3fGG_get_const_size_t, std_vectorLstd_vectorLcv_Point3fGG_set_size_t_const_vectorLPoint3fG,
+		std_vectorLstd_vectorLcv_Point3fGG_push_const_vectorLPoint3fG, std_vectorLstd_vectorLcv_Point3fGG_insert_size_t_const_vectorLPoint3fG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3f> }
 	
@@ -2796,8 +2796,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Point3iGG_capacity_const, std_vectorLstd_vectorLcv_Point3iGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_Point3iGG_reserve_size_t, std_vectorLstd_vectorLcv_Point3iGG_remove_size_t,
 		std_vectorLstd_vectorLcv_Point3iGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Point3iGG_clear,
-		std_vectorLstd_vectorLcv_Point3iGG_get_const_size_t, std_vectorLstd_vectorLcv_Point3iGG_set_size_t_vectorLPoint3iG,
-		std_vectorLstd_vectorLcv_Point3iGG_push_vectorLPoint3iG, std_vectorLstd_vectorLcv_Point3iGG_insert_size_t_vectorLPoint3iG,
+		std_vectorLstd_vectorLcv_Point3iGG_get_const_size_t, std_vectorLstd_vectorLcv_Point3iGG_set_size_t_const_vectorLPoint3iG,
+		std_vectorLstd_vectorLcv_Point3iGG_push_const_vectorLPoint3iG, std_vectorLstd_vectorLcv_Point3iGG_insert_size_t_const_vectorLPoint3iG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3i> }
 	
@@ -2855,8 +2855,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_RangeGG_capacity_const, std_vectorLstd_vectorLcv_RangeGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_RangeGG_reserve_size_t, std_vectorLstd_vectorLcv_RangeGG_remove_size_t,
 		std_vectorLstd_vectorLcv_RangeGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_RangeGG_clear,
-		std_vectorLstd_vectorLcv_RangeGG_get_const_size_t, std_vectorLstd_vectorLcv_RangeGG_set_size_t_vectorLRangeG,
-		std_vectorLstd_vectorLcv_RangeGG_push_vectorLRangeG, std_vectorLstd_vectorLcv_RangeGG_insert_size_t_vectorLRangeG,
+		std_vectorLstd_vectorLcv_RangeGG_get_const_size_t, std_vectorLstd_vectorLcv_RangeGG_set_size_t_const_vectorLRangeG,
+		std_vectorLstd_vectorLcv_RangeGG_push_const_vectorLRangeG, std_vectorLstd_vectorLcv_RangeGG_insert_size_t_const_vectorLRangeG,
 	}
 	vector_non_copy_or_bool! { core::Vector<core::Range> }
 	
@@ -2873,8 +2873,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Vec2iGG_capacity_const, std_vectorLstd_vectorLcv_Vec2iGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_Vec2iGG_reserve_size_t, std_vectorLstd_vectorLcv_Vec2iGG_remove_size_t,
 		std_vectorLstd_vectorLcv_Vec2iGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Vec2iGG_clear,
-		std_vectorLstd_vectorLcv_Vec2iGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec2iGG_set_size_t_vectorLVec2iG,
-		std_vectorLstd_vectorLcv_Vec2iGG_push_vectorLVec2iG, std_vectorLstd_vectorLcv_Vec2iGG_insert_size_t_vectorLVec2iG,
+		std_vectorLstd_vectorLcv_Vec2iGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec2iGG_set_size_t_const_vectorLVec2iG,
+		std_vectorLstd_vectorLcv_Vec2iGG_push_const_vectorLVec2iG, std_vectorLstd_vectorLcv_Vec2iGG_insert_size_t_const_vectorLVec2iG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec2i> }
 	
@@ -2932,8 +2932,8 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Vec3fGG_capacity_const, std_vectorLstd_vectorLcv_Vec3fGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_Vec3fGG_reserve_size_t, std_vectorLstd_vectorLcv_Vec3fGG_remove_size_t,
 		std_vectorLstd_vectorLcv_Vec3fGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Vec3fGG_clear,
-		std_vectorLstd_vectorLcv_Vec3fGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec3fGG_set_size_t_vectorLVec3fG,
-		std_vectorLstd_vectorLcv_Vec3fGG_push_vectorLVec3fG, std_vectorLstd_vectorLcv_Vec3fGG_insert_size_t_vectorLVec3fG,
+		std_vectorLstd_vectorLcv_Vec3fGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec3fGG_set_size_t_const_vectorLVec3fG,
+		std_vectorLstd_vectorLcv_Vec3fGG_push_const_vectorLVec3fG, std_vectorLstd_vectorLcv_Vec3fGG_insert_size_t_const_vectorLVec3fG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec3f> }
 	
@@ -2991,8 +2991,8 @@ mod core_types {
 		std_vectorLstd_vectorLcharGG_capacity_const, std_vectorLstd_vectorLcharGG_shrinkToFit,
 		std_vectorLstd_vectorLcharGG_reserve_size_t, std_vectorLstd_vectorLcharGG_remove_size_t,
 		std_vectorLstd_vectorLcharGG_swap_size_t_size_t, std_vectorLstd_vectorLcharGG_clear,
-		std_vectorLstd_vectorLcharGG_get_const_size_t, std_vectorLstd_vectorLcharGG_set_size_t_vectorLcharG,
-		std_vectorLstd_vectorLcharGG_push_vectorLcharG, std_vectorLstd_vectorLcharGG_insert_size_t_vectorLcharG,
+		std_vectorLstd_vectorLcharGG_get_const_size_t, std_vectorLstd_vectorLcharGG_set_size_t_const_vectorLcharG,
+		std_vectorLstd_vectorLcharGG_push_const_vectorLcharG, std_vectorLstd_vectorLcharGG_insert_size_t_const_vectorLcharG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<c_char> }
 	
@@ -3050,8 +3050,8 @@ mod core_types {
 		std_vectorLstd_vectorLfloatGG_capacity_const, std_vectorLstd_vectorLfloatGG_shrinkToFit,
 		std_vectorLstd_vectorLfloatGG_reserve_size_t, std_vectorLstd_vectorLfloatGG_remove_size_t,
 		std_vectorLstd_vectorLfloatGG_swap_size_t_size_t, std_vectorLstd_vectorLfloatGG_clear,
-		std_vectorLstd_vectorLfloatGG_get_const_size_t, std_vectorLstd_vectorLfloatGG_set_size_t_vectorLfloatG,
-		std_vectorLstd_vectorLfloatGG_push_vectorLfloatG, std_vectorLstd_vectorLfloatGG_insert_size_t_vectorLfloatG,
+		std_vectorLstd_vectorLfloatGG_get_const_size_t, std_vectorLstd_vectorLfloatGG_set_size_t_const_vectorLfloatG,
+		std_vectorLstd_vectorLfloatGG_push_const_vectorLfloatG, std_vectorLstd_vectorLfloatGG_insert_size_t_const_vectorLfloatG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<f32> }
 	
@@ -3109,8 +3109,8 @@ mod core_types {
 		std_vectorLstd_vectorLdoubleGG_capacity_const, std_vectorLstd_vectorLdoubleGG_shrinkToFit,
 		std_vectorLstd_vectorLdoubleGG_reserve_size_t, std_vectorLstd_vectorLdoubleGG_remove_size_t,
 		std_vectorLstd_vectorLdoubleGG_swap_size_t_size_t, std_vectorLstd_vectorLdoubleGG_clear,
-		std_vectorLstd_vectorLdoubleGG_get_const_size_t, std_vectorLstd_vectorLdoubleGG_set_size_t_vectorLdoubleG,
-		std_vectorLstd_vectorLdoubleGG_push_vectorLdoubleG, std_vectorLstd_vectorLdoubleGG_insert_size_t_vectorLdoubleG,
+		std_vectorLstd_vectorLdoubleGG_get_const_size_t, std_vectorLstd_vectorLdoubleGG_set_size_t_const_vectorLdoubleG,
+		std_vectorLstd_vectorLdoubleGG_push_const_vectorLdoubleG, std_vectorLstd_vectorLdoubleGG_insert_size_t_const_vectorLdoubleG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<f64> }
 	
@@ -3168,8 +3168,8 @@ mod core_types {
 		std_vectorLstd_vectorLintGG_capacity_const, std_vectorLstd_vectorLintGG_shrinkToFit,
 		std_vectorLstd_vectorLintGG_reserve_size_t, std_vectorLstd_vectorLintGG_remove_size_t,
 		std_vectorLstd_vectorLintGG_swap_size_t_size_t, std_vectorLstd_vectorLintGG_clear,
-		std_vectorLstd_vectorLintGG_get_const_size_t, std_vectorLstd_vectorLintGG_set_size_t_vectorLintG,
-		std_vectorLstd_vectorLintGG_push_vectorLintG, std_vectorLstd_vectorLintGG_insert_size_t_vectorLintG,
+		std_vectorLstd_vectorLintGG_get_const_size_t, std_vectorLstd_vectorLintGG_set_size_t_const_vectorLintG,
+		std_vectorLstd_vectorLintGG_push_const_vectorLintG, std_vectorLstd_vectorLintGG_insert_size_t_const_vectorLintG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<i32> }
 	
@@ -3227,8 +3227,8 @@ mod core_types {
 		std_vectorLstd_vectorLuint8_tGG_capacity_const, std_vectorLstd_vectorLuint8_tGG_shrinkToFit,
 		std_vectorLstd_vectorLuint8_tGG_reserve_size_t, std_vectorLstd_vectorLuint8_tGG_remove_size_t,
 		std_vectorLstd_vectorLuint8_tGG_swap_size_t_size_t, std_vectorLstd_vectorLuint8_tGG_clear,
-		std_vectorLstd_vectorLuint8_tGG_get_const_size_t, std_vectorLstd_vectorLuint8_tGG_set_size_t_vectorLuint8_tG,
-		std_vectorLstd_vectorLuint8_tGG_push_vectorLuint8_tG, std_vectorLstd_vectorLuint8_tGG_insert_size_t_vectorLuint8_tG,
+		std_vectorLstd_vectorLuint8_tGG_get_const_size_t, std_vectorLstd_vectorLuint8_tGG_set_size_t_const_vectorLuint8_tG,
+		std_vectorLstd_vectorLuint8_tGG_push_const_vectorLuint8_tG, std_vectorLstd_vectorLuint8_tGG_insert_size_t_const_vectorLuint8_tG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<u8> }
 	
@@ -3286,8 +3286,8 @@ mod core_types {
 		std_vectorLboolG_capacity_const, std_vectorLboolG_shrinkToFit,
 		std_vectorLboolG_reserve_size_t, std_vectorLboolG_remove_size_t,
 		std_vectorLboolG_swap_size_t_size_t, std_vectorLboolG_clear,
-		std_vectorLboolG_get_const_size_t, std_vectorLboolG_set_size_t_bool,
-		std_vectorLboolG_push_bool, std_vectorLboolG_insert_size_t_bool,
+		std_vectorLboolG_get_const_size_t, std_vectorLboolG_set_size_t_const_bool,
+		std_vectorLboolG_push_const_bool, std_vectorLboolG_insert_size_t_const_bool,
 	}
 	vector_non_copy_or_bool! { clone bool }
 	
@@ -3297,61 +3297,6 @@ mod core_types {
 		pub fn as_raw_VectorOfc_char(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfc_char(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
-	
-	vector_extern! { c_char,
-		std_vectorLcharG_new_const, std_vectorLcharG_delete,
-		std_vectorLcharG_len_const, std_vectorLcharG_isEmpty_const,
-		std_vectorLcharG_capacity_const, std_vectorLcharG_shrinkToFit,
-		std_vectorLcharG_reserve_size_t, std_vectorLcharG_remove_size_t,
-		std_vectorLcharG_swap_size_t_size_t, std_vectorLcharG_clear,
-		std_vectorLcharG_get_const_size_t, std_vectorLcharG_set_size_t_char,
-		std_vectorLcharG_push_char, std_vectorLcharG_insert_size_t_char,
-	}
-	vector_copy_non_bool! { c_char,
-		std_vectorLcharG_data_const, std_vectorLcharG_dataMut, cv_fromSlice_const_const_charX_size_t,
-		std_vectorLcharG_clone_const,
-	}
-	
-	impl core::ToInputArray for core::Vector<c_char> {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::std_vectorLcharG_inputArray_const(self.as_raw_VectorOfc_char(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-	}
-	
-	impl core::ToOutputArray for core::Vector<c_char> {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::std_vectorLcharG_outputArray(self.as_raw_mut_VectorOfc_char(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-	}
-	
-	impl core::ToInputOutputArray for core::Vector<c_char> {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::std_vectorLcharG_inputOutputArray(self.as_raw_mut_VectorOfc_char(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-	}
-	
-	input_output_array_ref_forward! { core::Vector<c_char> }
 	
 	pub type VectorOff32 = core::Vector<f32>;
 	
@@ -3366,8 +3311,8 @@ mod core_types {
 		std_vectorLfloatG_capacity_const, std_vectorLfloatG_shrinkToFit,
 		std_vectorLfloatG_reserve_size_t, std_vectorLfloatG_remove_size_t,
 		std_vectorLfloatG_swap_size_t_size_t, std_vectorLfloatG_clear,
-		std_vectorLfloatG_get_const_size_t, std_vectorLfloatG_set_size_t_float,
-		std_vectorLfloatG_push_float, std_vectorLfloatG_insert_size_t_float,
+		std_vectorLfloatG_get_const_size_t, std_vectorLfloatG_set_size_t_const_float,
+		std_vectorLfloatG_push_const_float, std_vectorLfloatG_insert_size_t_const_float,
 	}
 	vector_copy_non_bool! { f32,
 		std_vectorLfloatG_data_const, std_vectorLfloatG_dataMut, cv_fromSlice_const_const_floatX_size_t,
@@ -3428,8 +3373,8 @@ mod core_types {
 		std_vectorLdoubleG_capacity_const, std_vectorLdoubleG_shrinkToFit,
 		std_vectorLdoubleG_reserve_size_t, std_vectorLdoubleG_remove_size_t,
 		std_vectorLdoubleG_swap_size_t_size_t, std_vectorLdoubleG_clear,
-		std_vectorLdoubleG_get_const_size_t, std_vectorLdoubleG_set_size_t_double,
-		std_vectorLdoubleG_push_double, std_vectorLdoubleG_insert_size_t_double,
+		std_vectorLdoubleG_get_const_size_t, std_vectorLdoubleG_set_size_t_const_double,
+		std_vectorLdoubleG_push_const_double, std_vectorLdoubleG_insert_size_t_const_double,
 	}
 	vector_copy_non_bool! { f64,
 		std_vectorLdoubleG_data_const, std_vectorLdoubleG_dataMut, cv_fromSlice_const_const_doubleX_size_t,
@@ -3490,8 +3435,8 @@ mod core_types {
 		std_vectorLintG_capacity_const, std_vectorLintG_shrinkToFit,
 		std_vectorLintG_reserve_size_t, std_vectorLintG_remove_size_t,
 		std_vectorLintG_swap_size_t_size_t, std_vectorLintG_clear,
-		std_vectorLintG_get_const_size_t, std_vectorLintG_set_size_t_int,
-		std_vectorLintG_push_int, std_vectorLintG_insert_size_t_int,
+		std_vectorLintG_get_const_size_t, std_vectorLintG_set_size_t_const_int,
+		std_vectorLintG_push_const_int, std_vectorLintG_insert_size_t_const_int,
 	}
 	vector_copy_non_bool! { i32,
 		std_vectorLintG_data_const, std_vectorLintG_dataMut, cv_fromSlice_const_const_intX_size_t,
@@ -3539,6 +3484,27 @@ mod core_types {
 	
 	input_output_array_ref_forward! { core::Vector<i32> }
 	
+	pub type VectorOfi8 = core::Vector<i8>;
+	
+	impl core::Vector<i8> {
+		pub fn as_raw_VectorOfi8(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfi8(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	vector_extern! { i8,
+		std_vectorLsigned_charG_new_const, std_vectorLsigned_charG_delete,
+		std_vectorLsigned_charG_len_const, std_vectorLsigned_charG_isEmpty_const,
+		std_vectorLsigned_charG_capacity_const, std_vectorLsigned_charG_shrinkToFit,
+		std_vectorLsigned_charG_reserve_size_t, std_vectorLsigned_charG_remove_size_t,
+		std_vectorLsigned_charG_swap_size_t_size_t, std_vectorLsigned_charG_clear,
+		std_vectorLsigned_charG_get_const_size_t, std_vectorLsigned_charG_set_size_t_const_signed_char,
+		std_vectorLsigned_charG_push_const_signed_char, std_vectorLsigned_charG_insert_size_t_const_signed_char,
+	}
+	vector_copy_non_bool! { i8,
+		std_vectorLsigned_charG_data_const, std_vectorLsigned_charG_dataMut, cv_fromSlice_const_const_signed_charX_size_t,
+		std_vectorLsigned_charG_clone_const,
+	}
+	
 	pub type VectorOfsize_t = core::Vector<size_t>;
 	
 	impl core::Vector<size_t> {
@@ -3552,8 +3518,8 @@ mod core_types {
 		std_vectorLsize_tG_capacity_const, std_vectorLsize_tG_shrinkToFit,
 		std_vectorLsize_tG_reserve_size_t, std_vectorLsize_tG_remove_size_t,
 		std_vectorLsize_tG_swap_size_t_size_t, std_vectorLsize_tG_clear,
-		std_vectorLsize_tG_get_const_size_t, std_vectorLsize_tG_set_size_t_size_t,
-		std_vectorLsize_tG_push_size_t, std_vectorLsize_tG_insert_size_t_size_t,
+		std_vectorLsize_tG_get_const_size_t, std_vectorLsize_tG_set_size_t_const_size_t,
+		std_vectorLsize_tG_push_const_size_t, std_vectorLsize_tG_insert_size_t_const_size_t,
 	}
 	vector_copy_non_bool! { size_t,
 		std_vectorLsize_tG_data_const, std_vectorLsize_tG_dataMut, cv_fromSlice_const_const_size_tX_size_t,
@@ -3573,8 +3539,8 @@ mod core_types {
 		std_vectorLuint8_tG_capacity_const, std_vectorLuint8_tG_shrinkToFit,
 		std_vectorLuint8_tG_reserve_size_t, std_vectorLuint8_tG_remove_size_t,
 		std_vectorLuint8_tG_swap_size_t_size_t, std_vectorLuint8_tG_clear,
-		std_vectorLuint8_tG_get_const_size_t, std_vectorLuint8_tG_set_size_t_uint8_t,
-		std_vectorLuint8_tG_push_uint8_t, std_vectorLuint8_tG_insert_size_t_uint8_t,
+		std_vectorLuint8_tG_get_const_size_t, std_vectorLuint8_tG_set_size_t_const_uint8_t,
+		std_vectorLuint8_tG_push_const_uint8_t, std_vectorLuint8_tG_insert_size_t_const_uint8_t,
 	}
 	vector_copy_non_bool! { u8,
 		std_vectorLuint8_tG_data_const, std_vectorLuint8_tG_dataMut, cv_fromSlice_const_const_uint8_tX_size_t,
@@ -11634,8 +11600,8 @@ mod dnn_types {
 		std_vectorLcv_PtrLcv_dnn_BackendNodeGG_capacity_const, std_vectorLcv_PtrLcv_dnn_BackendNodeGG_shrinkToFit,
 		std_vectorLcv_PtrLcv_dnn_BackendNodeGG_reserve_size_t, std_vectorLcv_PtrLcv_dnn_BackendNodeGG_remove_size_t,
 		std_vectorLcv_PtrLcv_dnn_BackendNodeGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_dnn_BackendNodeGG_clear,
-		std_vectorLcv_PtrLcv_dnn_BackendNodeGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_BackendNodeGG_set_size_t_PtrLBackendNodeG,
-		std_vectorLcv_PtrLcv_dnn_BackendNodeGG_push_PtrLBackendNodeG, std_vectorLcv_PtrLcv_dnn_BackendNodeGG_insert_size_t_PtrLBackendNodeG,
+		std_vectorLcv_PtrLcv_dnn_BackendNodeGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_BackendNodeGG_set_size_t_const_PtrLBackendNodeG,
+		std_vectorLcv_PtrLcv_dnn_BackendNodeGG_push_const_PtrLBackendNodeG, std_vectorLcv_PtrLcv_dnn_BackendNodeGG_insert_size_t_const_PtrLBackendNodeG,
 	}
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::BackendNode> }
 	
@@ -11652,8 +11618,8 @@ mod dnn_types {
 		std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_capacity_const, std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_shrinkToFit,
 		std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_reserve_size_t, std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_remove_size_t,
 		std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_clear,
-		std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_set_size_t_PtrLBackendWrapperG,
-		std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_push_PtrLBackendWrapperG, std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_insert_size_t_PtrLBackendWrapperG,
+		std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_set_size_t_const_PtrLBackendWrapperG,
+		std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_push_const_PtrLBackendWrapperG, std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_insert_size_t_const_PtrLBackendWrapperG,
 	}
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::BackendWrapper> }
 	
@@ -11670,8 +11636,8 @@ mod dnn_types {
 		std_vectorLcv_PtrLcv_dnn_LayerGG_capacity_const, std_vectorLcv_PtrLcv_dnn_LayerGG_shrinkToFit,
 		std_vectorLcv_PtrLcv_dnn_LayerGG_reserve_size_t, std_vectorLcv_PtrLcv_dnn_LayerGG_remove_size_t,
 		std_vectorLcv_PtrLcv_dnn_LayerGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_dnn_LayerGG_clear,
-		std_vectorLcv_PtrLcv_dnn_LayerGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_LayerGG_set_size_t_PtrLLayerG,
-		std_vectorLcv_PtrLcv_dnn_LayerGG_push_PtrLLayerG, std_vectorLcv_PtrLcv_dnn_LayerGG_insert_size_t_PtrLLayerG,
+		std_vectorLcv_PtrLcv_dnn_LayerGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_LayerGG_set_size_t_const_PtrLLayerG,
+		std_vectorLcv_PtrLcv_dnn_LayerGG_push_const_PtrLLayerG, std_vectorLcv_PtrLcv_dnn_LayerGG_insert_size_t_const_PtrLLayerG,
 	}
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::Layer> }
 	
@@ -11688,8 +11654,8 @@ mod dnn_types {
 		std_vectorLcv_dnn_TargetG_capacity_const, std_vectorLcv_dnn_TargetG_shrinkToFit,
 		std_vectorLcv_dnn_TargetG_reserve_size_t, std_vectorLcv_dnn_TargetG_remove_size_t,
 		std_vectorLcv_dnn_TargetG_swap_size_t_size_t, std_vectorLcv_dnn_TargetG_clear,
-		std_vectorLcv_dnn_TargetG_get_const_size_t, std_vectorLcv_dnn_TargetG_set_size_t_Target,
-		std_vectorLcv_dnn_TargetG_push_Target, std_vectorLcv_dnn_TargetG_insert_size_t_Target,
+		std_vectorLcv_dnn_TargetG_get_const_size_t, std_vectorLcv_dnn_TargetG_set_size_t_const_Target,
+		std_vectorLcv_dnn_TargetG_push_const_Target, std_vectorLcv_dnn_TargetG_insert_size_t_const_Target,
 	}
 	vector_copy_non_bool! { crate::dnn::Target,
 		std_vectorLcv_dnn_TargetG_data_const, std_vectorLcv_dnn_TargetG_dataMut, cv_fromSlice_const_const_TargetX_size_t,
@@ -11709,8 +11675,8 @@ mod dnn_types {
 		std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_capacity_const, std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_shrinkToFit,
 		std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_reserve_size_t, std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_remove_size_t,
 		std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_swap_size_t_size_t, std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_clear,
-		std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_get_const_size_t, std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_set_size_t_pairLcv_dnn_Backend__cv_dnn_TargetG,
-		std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_push_pairLcv_dnn_Backend__cv_dnn_TargetG, std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_insert_size_t_pairLcv_dnn_Backend__cv_dnn_TargetG,
+		std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_get_const_size_t, std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_set_size_t_const_pairLcv_dnn_Backend__cv_dnn_TargetG,
+		std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_push_const_pairLcv_dnn_Backend__cv_dnn_TargetG, std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_insert_size_t_const_pairLcv_dnn_Backend__cv_dnn_TargetG,
 	}
 	vector_non_copy_or_bool! { core::Tuple<(crate::dnn::Backend, crate::dnn::Target)> }
 	
@@ -11727,8 +11693,8 @@ mod dnn_types {
 		std_vectorLstd_vectorLcv_dnn_MatShapeGG_capacity_const, std_vectorLstd_vectorLcv_dnn_MatShapeGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_dnn_MatShapeGG_reserve_size_t, std_vectorLstd_vectorLcv_dnn_MatShapeGG_remove_size_t,
 		std_vectorLstd_vectorLcv_dnn_MatShapeGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_dnn_MatShapeGG_clear,
-		std_vectorLstd_vectorLcv_dnn_MatShapeGG_get_const_size_t, std_vectorLstd_vectorLcv_dnn_MatShapeGG_set_size_t_vectorLMatShapeG,
-		std_vectorLstd_vectorLcv_dnn_MatShapeGG_push_vectorLMatShapeG, std_vectorLstd_vectorLcv_dnn_MatShapeGG_insert_size_t_vectorLMatShapeG,
+		std_vectorLstd_vectorLcv_dnn_MatShapeGG_get_const_size_t, std_vectorLstd_vectorLcv_dnn_MatShapeGG_set_size_t_const_vectorLMatShapeG,
+		std_vectorLstd_vectorLcv_dnn_MatShapeGG_push_const_vectorLMatShapeG, std_vectorLstd_vectorLcv_dnn_MatShapeGG_insert_size_t_const_vectorLMatShapeG,
 	}
 	vector_non_copy_or_bool! { core::Vector<crate::dnn::MatShape> }
 	
@@ -11816,8 +11782,8 @@ mod dpm_types {
 		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_capacity_const, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_shrinkToFit,
 		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_reserve_size_t, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_remove_size_t,
 		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_swap_size_t_size_t, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_clear,
-		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_get_const_size_t, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_set_size_t_ObjectDetection,
-		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_push_ObjectDetection, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_insert_size_t_ObjectDetection,
+		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_get_const_size_t, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_set_size_t_const_ObjectDetection,
+		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_push_const_ObjectDetection, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_insert_size_t_const_ObjectDetection,
 	}
 	vector_non_copy_or_bool! { crate::dpm::DPMDetector_ObjectDetection }
 	
@@ -12471,8 +12437,8 @@ mod face_types {
 		std_vectorLcv_face_FacemarkAAM_ConfigG_capacity_const, std_vectorLcv_face_FacemarkAAM_ConfigG_shrinkToFit,
 		std_vectorLcv_face_FacemarkAAM_ConfigG_reserve_size_t, std_vectorLcv_face_FacemarkAAM_ConfigG_remove_size_t,
 		std_vectorLcv_face_FacemarkAAM_ConfigG_swap_size_t_size_t, std_vectorLcv_face_FacemarkAAM_ConfigG_clear,
-		std_vectorLcv_face_FacemarkAAM_ConfigG_get_const_size_t, std_vectorLcv_face_FacemarkAAM_ConfigG_set_size_t_Config,
-		std_vectorLcv_face_FacemarkAAM_ConfigG_push_Config, std_vectorLcv_face_FacemarkAAM_ConfigG_insert_size_t_Config,
+		std_vectorLcv_face_FacemarkAAM_ConfigG_get_const_size_t, std_vectorLcv_face_FacemarkAAM_ConfigG_set_size_t_const_Config,
+		std_vectorLcv_face_FacemarkAAM_ConfigG_push_const_Config, std_vectorLcv_face_FacemarkAAM_ConfigG_insert_size_t_const_Config,
 	}
 	vector_non_copy_or_bool! { crate::face::FacemarkAAM_Config }
 	
@@ -12489,8 +12455,8 @@ mod face_types {
 		std_vectorLcv_face_FacemarkAAM_Model_TextureG_capacity_const, std_vectorLcv_face_FacemarkAAM_Model_TextureG_shrinkToFit,
 		std_vectorLcv_face_FacemarkAAM_Model_TextureG_reserve_size_t, std_vectorLcv_face_FacemarkAAM_Model_TextureG_remove_size_t,
 		std_vectorLcv_face_FacemarkAAM_Model_TextureG_swap_size_t_size_t, std_vectorLcv_face_FacemarkAAM_Model_TextureG_clear,
-		std_vectorLcv_face_FacemarkAAM_Model_TextureG_get_const_size_t, std_vectorLcv_face_FacemarkAAM_Model_TextureG_set_size_t_Texture,
-		std_vectorLcv_face_FacemarkAAM_Model_TextureG_push_Texture, std_vectorLcv_face_FacemarkAAM_Model_TextureG_insert_size_t_Texture,
+		std_vectorLcv_face_FacemarkAAM_Model_TextureG_get_const_size_t, std_vectorLcv_face_FacemarkAAM_Model_TextureG_set_size_t_const_Texture,
+		std_vectorLcv_face_FacemarkAAM_Model_TextureG_push_const_Texture, std_vectorLcv_face_FacemarkAAM_Model_TextureG_insert_size_t_const_Texture,
 	}
 	vector_non_copy_or_bool! { crate::face::FacemarkAAM_Model_Texture }
 	
@@ -13581,8 +13547,8 @@ mod flann_types {
 		std_vectorLcv_flann_FlannIndexTypeG_capacity_const, std_vectorLcv_flann_FlannIndexTypeG_shrinkToFit,
 		std_vectorLcv_flann_FlannIndexTypeG_reserve_size_t, std_vectorLcv_flann_FlannIndexTypeG_remove_size_t,
 		std_vectorLcv_flann_FlannIndexTypeG_swap_size_t_size_t, std_vectorLcv_flann_FlannIndexTypeG_clear,
-		std_vectorLcv_flann_FlannIndexTypeG_get_const_size_t, std_vectorLcv_flann_FlannIndexTypeG_set_size_t_FlannIndexType,
-		std_vectorLcv_flann_FlannIndexTypeG_push_FlannIndexType, std_vectorLcv_flann_FlannIndexTypeG_insert_size_t_FlannIndexType,
+		std_vectorLcv_flann_FlannIndexTypeG_get_const_size_t, std_vectorLcv_flann_FlannIndexTypeG_set_size_t_const_FlannIndexType,
+		std_vectorLcv_flann_FlannIndexTypeG_push_const_FlannIndexType, std_vectorLcv_flann_FlannIndexTypeG_insert_size_t_const_FlannIndexType,
 	}
 	vector_copy_non_bool! { crate::flann::FlannIndexType,
 		std_vectorLcv_flann_FlannIndexTypeG_data_const, std_vectorLcv_flann_FlannIndexTypeG_dataMut, cv_fromSlice_const_const_FlannIndexTypeX_size_t,
@@ -13602,8 +13568,8 @@ mod flann_types {
 		std_vectorLcvflann_lsh_FeatureIndexG_capacity_const, std_vectorLcvflann_lsh_FeatureIndexG_shrinkToFit,
 		std_vectorLcvflann_lsh_FeatureIndexG_reserve_size_t, std_vectorLcvflann_lsh_FeatureIndexG_remove_size_t,
 		std_vectorLcvflann_lsh_FeatureIndexG_swap_size_t_size_t, std_vectorLcvflann_lsh_FeatureIndexG_clear,
-		std_vectorLcvflann_lsh_FeatureIndexG_get_const_size_t, std_vectorLcvflann_lsh_FeatureIndexG_set_size_t_FeatureIndex,
-		std_vectorLcvflann_lsh_FeatureIndexG_push_FeatureIndex, std_vectorLcvflann_lsh_FeatureIndexG_insert_size_t_FeatureIndex,
+		std_vectorLcvflann_lsh_FeatureIndexG_get_const_size_t, std_vectorLcvflann_lsh_FeatureIndexG_set_size_t_const_FeatureIndex,
+		std_vectorLcvflann_lsh_FeatureIndexG_push_const_FeatureIndex, std_vectorLcvflann_lsh_FeatureIndexG_insert_size_t_const_FeatureIndex,
 	}
 	vector_copy_non_bool! { crate::flann::feature_index,
 		std_vectorLcvflann_lsh_FeatureIndexG_data_const, std_vectorLcvflann_lsh_FeatureIndexG_dataMut, cv_fromSlice_const_const_FeatureIndexX_size_t,
@@ -13744,8 +13710,8 @@ mod gapi_types {
 		std_vectorLcv_detail_OpaqueKindG_capacity_const, std_vectorLcv_detail_OpaqueKindG_shrinkToFit,
 		std_vectorLcv_detail_OpaqueKindG_reserve_size_t, std_vectorLcv_detail_OpaqueKindG_remove_size_t,
 		std_vectorLcv_detail_OpaqueKindG_swap_size_t_size_t, std_vectorLcv_detail_OpaqueKindG_clear,
-		std_vectorLcv_detail_OpaqueKindG_get_const_size_t, std_vectorLcv_detail_OpaqueKindG_set_size_t_OpaqueKind,
-		std_vectorLcv_detail_OpaqueKindG_push_OpaqueKind, std_vectorLcv_detail_OpaqueKindG_insert_size_t_OpaqueKind,
+		std_vectorLcv_detail_OpaqueKindG_get_const_size_t, std_vectorLcv_detail_OpaqueKindG_set_size_t_const_OpaqueKind,
+		std_vectorLcv_detail_OpaqueKindG_push_const_OpaqueKind, std_vectorLcv_detail_OpaqueKindG_insert_size_t_const_OpaqueKind,
 	}
 	vector_copy_non_bool! { crate::gapi::Detail_OpaqueKind,
 		std_vectorLcv_detail_OpaqueKindG_data_const, std_vectorLcv_detail_OpaqueKindG_dataMut, cv_fromSlice_const_const_OpaqueKindX_size_t,
@@ -13765,8 +13731,8 @@ mod gapi_types {
 		std_vectorLcv_GArgG_capacity_const, std_vectorLcv_GArgG_shrinkToFit,
 		std_vectorLcv_GArgG_reserve_size_t, std_vectorLcv_GArgG_remove_size_t,
 		std_vectorLcv_GArgG_swap_size_t_size_t, std_vectorLcv_GArgG_clear,
-		std_vectorLcv_GArgG_get_const_size_t, std_vectorLcv_GArgG_set_size_t_GArg,
-		std_vectorLcv_GArgG_push_GArg, std_vectorLcv_GArgG_insert_size_t_GArg,
+		std_vectorLcv_GArgG_get_const_size_t, std_vectorLcv_GArgG_set_size_t_const_GArg,
+		std_vectorLcv_GArgG_push_const_GArg, std_vectorLcv_GArgG_insert_size_t_const_GArg,
 	}
 	vector_non_copy_or_bool! { crate::gapi::GArg }
 	
@@ -13783,8 +13749,8 @@ mod gapi_types {
 		std_vectorLcv_gapi_GBackendG_capacity_const, std_vectorLcv_gapi_GBackendG_shrinkToFit,
 		std_vectorLcv_gapi_GBackendG_reserve_size_t, std_vectorLcv_gapi_GBackendG_remove_size_t,
 		std_vectorLcv_gapi_GBackendG_swap_size_t_size_t, std_vectorLcv_gapi_GBackendG_clear,
-		std_vectorLcv_gapi_GBackendG_get_const_size_t, std_vectorLcv_gapi_GBackendG_set_size_t_GBackend,
-		std_vectorLcv_gapi_GBackendG_push_GBackend, std_vectorLcv_gapi_GBackendG_insert_size_t_GBackend,
+		std_vectorLcv_gapi_GBackendG_get_const_size_t, std_vectorLcv_gapi_GBackendG_set_size_t_const_GBackend,
+		std_vectorLcv_gapi_GBackendG_push_const_GBackend, std_vectorLcv_gapi_GBackendG_insert_size_t_const_GBackend,
 	}
 	vector_non_copy_or_bool! { crate::gapi::GBackend }
 	
@@ -13801,8 +13767,8 @@ mod gapi_types {
 		std_vectorLcv_GCompileArgG_capacity_const, std_vectorLcv_GCompileArgG_shrinkToFit,
 		std_vectorLcv_GCompileArgG_reserve_size_t, std_vectorLcv_GCompileArgG_remove_size_t,
 		std_vectorLcv_GCompileArgG_swap_size_t_size_t, std_vectorLcv_GCompileArgG_clear,
-		std_vectorLcv_GCompileArgG_get_const_size_t, std_vectorLcv_GCompileArgG_set_size_t_GCompileArg,
-		std_vectorLcv_GCompileArgG_push_GCompileArg, std_vectorLcv_GCompileArgG_insert_size_t_GCompileArg,
+		std_vectorLcv_GCompileArgG_get_const_size_t, std_vectorLcv_GCompileArgG_set_size_t_const_GCompileArg,
+		std_vectorLcv_GCompileArgG_push_const_GCompileArg, std_vectorLcv_GCompileArgG_insert_size_t_const_GCompileArg,
 	}
 	vector_non_copy_or_bool! { crate::gapi::GCompileArg }
 	
@@ -13819,8 +13785,8 @@ mod gapi_types {
 		std_vectorLcv_GMatG_capacity_const, std_vectorLcv_GMatG_shrinkToFit,
 		std_vectorLcv_GMatG_reserve_size_t, std_vectorLcv_GMatG_remove_size_t,
 		std_vectorLcv_GMatG_swap_size_t_size_t, std_vectorLcv_GMatG_clear,
-		std_vectorLcv_GMatG_get_const_size_t, std_vectorLcv_GMatG_set_size_t_GMat,
-		std_vectorLcv_GMatG_push_GMat, std_vectorLcv_GMatG_insert_size_t_GMat,
+		std_vectorLcv_GMatG_get_const_size_t, std_vectorLcv_GMatG_set_size_t_const_GMat,
+		std_vectorLcv_GMatG_push_const_GMat, std_vectorLcv_GMatG_insert_size_t_const_GMat,
 	}
 	vector_non_copy_or_bool! { clone crate::gapi::GMat }
 	
@@ -13837,8 +13803,8 @@ mod gapi_types {
 		std_vectorLcv_GRunArgG_capacity_const, std_vectorLcv_GRunArgG_shrinkToFit,
 		std_vectorLcv_GRunArgG_reserve_size_t, std_vectorLcv_GRunArgG_remove_size_t,
 		std_vectorLcv_GRunArgG_swap_size_t_size_t, std_vectorLcv_GRunArgG_clear,
-		std_vectorLcv_GRunArgG_get_const_size_t, std_vectorLcv_GRunArgG_set_size_t_GRunArg,
-		std_vectorLcv_GRunArgG_push_GRunArg, std_vectorLcv_GRunArgG_insert_size_t_GRunArg,
+		std_vectorLcv_GRunArgG_get_const_size_t, std_vectorLcv_GRunArgG_set_size_t_const_GRunArg,
+		std_vectorLcv_GRunArgG_push_const_GRunArg, std_vectorLcv_GRunArgG_insert_size_t_const_GRunArg,
 	}
 	vector_non_copy_or_bool! { crate::gapi::GRunArg }
 	
@@ -13855,8 +13821,8 @@ mod gapi_types {
 		std_vectorLcv_GShapeG_capacity_const, std_vectorLcv_GShapeG_shrinkToFit,
 		std_vectorLcv_GShapeG_reserve_size_t, std_vectorLcv_GShapeG_remove_size_t,
 		std_vectorLcv_GShapeG_swap_size_t_size_t, std_vectorLcv_GShapeG_clear,
-		std_vectorLcv_GShapeG_get_const_size_t, std_vectorLcv_GShapeG_set_size_t_GShape,
-		std_vectorLcv_GShapeG_push_GShape, std_vectorLcv_GShapeG_insert_size_t_GShape,
+		std_vectorLcv_GShapeG_get_const_size_t, std_vectorLcv_GShapeG_set_size_t_const_GShape,
+		std_vectorLcv_GShapeG_push_const_GShape, std_vectorLcv_GShapeG_insert_size_t_const_GShape,
 	}
 	vector_copy_non_bool! { crate::gapi::GShape,
 		std_vectorLcv_GShapeG_data_const, std_vectorLcv_GShapeG_dataMut, cv_fromSlice_const_const_GShapeX_size_t,
@@ -13876,8 +13842,8 @@ mod gapi_types {
 		std_vectorLcv_GTransformG_capacity_const, std_vectorLcv_GTransformG_shrinkToFit,
 		std_vectorLcv_GTransformG_reserve_size_t, std_vectorLcv_GTransformG_remove_size_t,
 		std_vectorLcv_GTransformG_swap_size_t_size_t, std_vectorLcv_GTransformG_clear,
-		std_vectorLcv_GTransformG_get_const_size_t, std_vectorLcv_GTransformG_set_size_t_GTransform,
-		std_vectorLcv_GTransformG_push_GTransform, std_vectorLcv_GTransformG_insert_size_t_GTransform,
+		std_vectorLcv_GTransformG_get_const_size_t, std_vectorLcv_GTransformG_set_size_t_const_GTransform,
+		std_vectorLcv_GTransformG_push_const_GTransform, std_vectorLcv_GTransformG_insert_size_t_const_GTransform,
 	}
 	vector_non_copy_or_bool! { crate::gapi::GTransform }
 	
@@ -13894,8 +13860,8 @@ mod gapi_types {
 		std_vectorLcv_GTypeInfoG_capacity_const, std_vectorLcv_GTypeInfoG_shrinkToFit,
 		std_vectorLcv_GTypeInfoG_reserve_size_t, std_vectorLcv_GTypeInfoG_remove_size_t,
 		std_vectorLcv_GTypeInfoG_swap_size_t_size_t, std_vectorLcv_GTypeInfoG_clear,
-		std_vectorLcv_GTypeInfoG_get_const_size_t, std_vectorLcv_GTypeInfoG_set_size_t_GTypeInfo,
-		std_vectorLcv_GTypeInfoG_push_GTypeInfo, std_vectorLcv_GTypeInfoG_insert_size_t_GTypeInfo,
+		std_vectorLcv_GTypeInfoG_get_const_size_t, std_vectorLcv_GTypeInfoG_set_size_t_const_GTypeInfo,
+		std_vectorLcv_GTypeInfoG_push_const_GTypeInfo, std_vectorLcv_GTypeInfoG_insert_size_t_const_GTypeInfo,
 	}
 	vector_non_copy_or_bool! { clone crate::gapi::GTypeInfo }
 	
@@ -14661,8 +14627,8 @@ mod line_descriptor_types {
 		std_vectorLcv_line_descriptor_KeyLineG_capacity_const, std_vectorLcv_line_descriptor_KeyLineG_shrinkToFit,
 		std_vectorLcv_line_descriptor_KeyLineG_reserve_size_t, std_vectorLcv_line_descriptor_KeyLineG_remove_size_t,
 		std_vectorLcv_line_descriptor_KeyLineG_swap_size_t_size_t, std_vectorLcv_line_descriptor_KeyLineG_clear,
-		std_vectorLcv_line_descriptor_KeyLineG_get_const_size_t, std_vectorLcv_line_descriptor_KeyLineG_set_size_t_KeyLine,
-		std_vectorLcv_line_descriptor_KeyLineG_push_KeyLine, std_vectorLcv_line_descriptor_KeyLineG_insert_size_t_KeyLine,
+		std_vectorLcv_line_descriptor_KeyLineG_get_const_size_t, std_vectorLcv_line_descriptor_KeyLineG_set_size_t_const_KeyLine,
+		std_vectorLcv_line_descriptor_KeyLineG_push_const_KeyLine, std_vectorLcv_line_descriptor_KeyLineG_insert_size_t_const_KeyLine,
 	}
 	vector_copy_non_bool! { crate::line_descriptor::KeyLine,
 		std_vectorLcv_line_descriptor_KeyLineG_data_const, std_vectorLcv_line_descriptor_KeyLineG_dataMut, cv_fromSlice_const_const_KeyLineX_size_t,
@@ -14682,8 +14648,8 @@ mod line_descriptor_types {
 		std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_capacity_const, std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_reserve_size_t, std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_remove_size_t,
 		std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_clear,
-		std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_get_const_size_t, std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_set_size_t_vectorLKeyLineG,
-		std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_push_vectorLKeyLineG, std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_insert_size_t_vectorLKeyLineG,
+		std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_get_const_size_t, std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_set_size_t_const_vectorLKeyLineG,
+		std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_push_const_vectorLKeyLineG, std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_insert_size_t_const_vectorLKeyLineG,
 	}
 	vector_non_copy_or_bool! { clone core::Vector<crate::line_descriptor::KeyLine> }
 	
@@ -14845,8 +14811,8 @@ mod mcc_types {
 		std_vectorLcv_PtrLcv_mcc_CCheckerGG_capacity_const, std_vectorLcv_PtrLcv_mcc_CCheckerGG_shrinkToFit,
 		std_vectorLcv_PtrLcv_mcc_CCheckerGG_reserve_size_t, std_vectorLcv_PtrLcv_mcc_CCheckerGG_remove_size_t,
 		std_vectorLcv_PtrLcv_mcc_CCheckerGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_mcc_CCheckerGG_clear,
-		std_vectorLcv_PtrLcv_mcc_CCheckerGG_get_const_size_t, std_vectorLcv_PtrLcv_mcc_CCheckerGG_set_size_t_PtrLCCheckerG,
-		std_vectorLcv_PtrLcv_mcc_CCheckerGG_push_PtrLCCheckerG, std_vectorLcv_PtrLcv_mcc_CCheckerGG_insert_size_t_PtrLCCheckerG,
+		std_vectorLcv_PtrLcv_mcc_CCheckerGG_get_const_size_t, std_vectorLcv_PtrLcv_mcc_CCheckerGG_set_size_t_const_PtrLCCheckerG,
+		std_vectorLcv_PtrLcv_mcc_CCheckerGG_push_const_PtrLCCheckerG, std_vectorLcv_PtrLcv_mcc_CCheckerGG_insert_size_t_const_PtrLCCheckerG,
 	}
 	vector_non_copy_or_bool! { core::Ptr<crate::mcc::MCC_CChecker> }
 	
@@ -15493,8 +15459,8 @@ mod ml_types {
 		std_vectorLcv_ml_DTrees_NodeG_capacity_const, std_vectorLcv_ml_DTrees_NodeG_shrinkToFit,
 		std_vectorLcv_ml_DTrees_NodeG_reserve_size_t, std_vectorLcv_ml_DTrees_NodeG_remove_size_t,
 		std_vectorLcv_ml_DTrees_NodeG_swap_size_t_size_t, std_vectorLcv_ml_DTrees_NodeG_clear,
-		std_vectorLcv_ml_DTrees_NodeG_get_const_size_t, std_vectorLcv_ml_DTrees_NodeG_set_size_t_Node,
-		std_vectorLcv_ml_DTrees_NodeG_push_Node, std_vectorLcv_ml_DTrees_NodeG_insert_size_t_Node,
+		std_vectorLcv_ml_DTrees_NodeG_get_const_size_t, std_vectorLcv_ml_DTrees_NodeG_set_size_t_const_Node,
+		std_vectorLcv_ml_DTrees_NodeG_push_const_Node, std_vectorLcv_ml_DTrees_NodeG_insert_size_t_const_Node,
 	}
 	vector_non_copy_or_bool! { crate::ml::DTrees_Node }
 	
@@ -15511,8 +15477,8 @@ mod ml_types {
 		std_vectorLcv_ml_DTrees_SplitG_capacity_const, std_vectorLcv_ml_DTrees_SplitG_shrinkToFit,
 		std_vectorLcv_ml_DTrees_SplitG_reserve_size_t, std_vectorLcv_ml_DTrees_SplitG_remove_size_t,
 		std_vectorLcv_ml_DTrees_SplitG_swap_size_t_size_t, std_vectorLcv_ml_DTrees_SplitG_clear,
-		std_vectorLcv_ml_DTrees_SplitG_get_const_size_t, std_vectorLcv_ml_DTrees_SplitG_set_size_t_Split,
-		std_vectorLcv_ml_DTrees_SplitG_push_Split, std_vectorLcv_ml_DTrees_SplitG_insert_size_t_Split,
+		std_vectorLcv_ml_DTrees_SplitG_get_const_size_t, std_vectorLcv_ml_DTrees_SplitG_set_size_t_const_Split,
+		std_vectorLcv_ml_DTrees_SplitG_push_const_Split, std_vectorLcv_ml_DTrees_SplitG_insert_size_t_const_Split,
 	}
 	vector_non_copy_or_bool! { crate::ml::DTrees_Split }
 	
@@ -15980,8 +15946,8 @@ mod objdetect_types {
 		std_vectorLcv_DetectionBasedTracker_ExtObjectG_capacity_const, std_vectorLcv_DetectionBasedTracker_ExtObjectG_shrinkToFit,
 		std_vectorLcv_DetectionBasedTracker_ExtObjectG_reserve_size_t, std_vectorLcv_DetectionBasedTracker_ExtObjectG_remove_size_t,
 		std_vectorLcv_DetectionBasedTracker_ExtObjectG_swap_size_t_size_t, std_vectorLcv_DetectionBasedTracker_ExtObjectG_clear,
-		std_vectorLcv_DetectionBasedTracker_ExtObjectG_get_const_size_t, std_vectorLcv_DetectionBasedTracker_ExtObjectG_set_size_t_ExtObject,
-		std_vectorLcv_DetectionBasedTracker_ExtObjectG_push_ExtObject, std_vectorLcv_DetectionBasedTracker_ExtObjectG_insert_size_t_ExtObject,
+		std_vectorLcv_DetectionBasedTracker_ExtObjectG_get_const_size_t, std_vectorLcv_DetectionBasedTracker_ExtObjectG_set_size_t_const_ExtObject,
+		std_vectorLcv_DetectionBasedTracker_ExtObjectG_push_const_ExtObject, std_vectorLcv_DetectionBasedTracker_ExtObjectG_insert_size_t_const_ExtObject,
 	}
 	vector_non_copy_or_bool! { clone crate::objdetect::DetectionBasedTracker_ExtObject }
 	
@@ -15998,8 +15964,8 @@ mod objdetect_types {
 		std_vectorLcv_DetectionBasedTracker_ObjectG_capacity_const, std_vectorLcv_DetectionBasedTracker_ObjectG_shrinkToFit,
 		std_vectorLcv_DetectionBasedTracker_ObjectG_reserve_size_t, std_vectorLcv_DetectionBasedTracker_ObjectG_remove_size_t,
 		std_vectorLcv_DetectionBasedTracker_ObjectG_swap_size_t_size_t, std_vectorLcv_DetectionBasedTracker_ObjectG_clear,
-		std_vectorLcv_DetectionBasedTracker_ObjectG_get_const_size_t, std_vectorLcv_DetectionBasedTracker_ObjectG_set_size_t_Object,
-		std_vectorLcv_DetectionBasedTracker_ObjectG_push_Object, std_vectorLcv_DetectionBasedTracker_ObjectG_insert_size_t_Object,
+		std_vectorLcv_DetectionBasedTracker_ObjectG_get_const_size_t, std_vectorLcv_DetectionBasedTracker_ObjectG_set_size_t_const_Object,
+		std_vectorLcv_DetectionBasedTracker_ObjectG_push_const_Object, std_vectorLcv_DetectionBasedTracker_ObjectG_insert_size_t_const_Object,
 	}
 	vector_non_copy_or_bool! { crate::objdetect::DetectionBasedTracker_Object }
 	
@@ -16016,8 +15982,8 @@ mod objdetect_types {
 		std_vectorLcv_DetectionROIG_capacity_const, std_vectorLcv_DetectionROIG_shrinkToFit,
 		std_vectorLcv_DetectionROIG_reserve_size_t, std_vectorLcv_DetectionROIG_remove_size_t,
 		std_vectorLcv_DetectionROIG_swap_size_t_size_t, std_vectorLcv_DetectionROIG_clear,
-		std_vectorLcv_DetectionROIG_get_const_size_t, std_vectorLcv_DetectionROIG_set_size_t_DetectionROI,
-		std_vectorLcv_DetectionROIG_push_DetectionROI, std_vectorLcv_DetectionROIG_insert_size_t_DetectionROI,
+		std_vectorLcv_DetectionROIG_get_const_size_t, std_vectorLcv_DetectionROIG_set_size_t_const_DetectionROI,
+		std_vectorLcv_DetectionROIG_push_const_DetectionROI, std_vectorLcv_DetectionROIG_insert_size_t_const_DetectionROI,
 	}
 	vector_non_copy_or_bool! { crate::objdetect::DetectionROI }
 	
@@ -16367,8 +16333,8 @@ mod optflow_types {
 		std_vectorLcv_optflow_GPCPatchDescriptorG_capacity_const, std_vectorLcv_optflow_GPCPatchDescriptorG_shrinkToFit,
 		std_vectorLcv_optflow_GPCPatchDescriptorG_reserve_size_t, std_vectorLcv_optflow_GPCPatchDescriptorG_remove_size_t,
 		std_vectorLcv_optflow_GPCPatchDescriptorG_swap_size_t_size_t, std_vectorLcv_optflow_GPCPatchDescriptorG_clear,
-		std_vectorLcv_optflow_GPCPatchDescriptorG_get_const_size_t, std_vectorLcv_optflow_GPCPatchDescriptorG_set_size_t_GPCPatchDescriptor,
-		std_vectorLcv_optflow_GPCPatchDescriptorG_push_GPCPatchDescriptor, std_vectorLcv_optflow_GPCPatchDescriptorG_insert_size_t_GPCPatchDescriptor,
+		std_vectorLcv_optflow_GPCPatchDescriptorG_get_const_size_t, std_vectorLcv_optflow_GPCPatchDescriptorG_set_size_t_const_GPCPatchDescriptor,
+		std_vectorLcv_optflow_GPCPatchDescriptorG_push_const_GPCPatchDescriptor, std_vectorLcv_optflow_GPCPatchDescriptorG_insert_size_t_const_GPCPatchDescriptor,
 	}
 	vector_non_copy_or_bool! { crate::optflow::GPCPatchDescriptor }
 	
@@ -16385,8 +16351,8 @@ mod optflow_types {
 		std_vectorLcv_optflow_GPCPatchSampleG_capacity_const, std_vectorLcv_optflow_GPCPatchSampleG_shrinkToFit,
 		std_vectorLcv_optflow_GPCPatchSampleG_reserve_size_t, std_vectorLcv_optflow_GPCPatchSampleG_remove_size_t,
 		std_vectorLcv_optflow_GPCPatchSampleG_swap_size_t_size_t, std_vectorLcv_optflow_GPCPatchSampleG_clear,
-		std_vectorLcv_optflow_GPCPatchSampleG_get_const_size_t, std_vectorLcv_optflow_GPCPatchSampleG_set_size_t_GPCPatchSample,
-		std_vectorLcv_optflow_GPCPatchSampleG_push_GPCPatchSample, std_vectorLcv_optflow_GPCPatchSampleG_insert_size_t_GPCPatchSample,
+		std_vectorLcv_optflow_GPCPatchSampleG_get_const_size_t, std_vectorLcv_optflow_GPCPatchSampleG_set_size_t_const_GPCPatchSample,
+		std_vectorLcv_optflow_GPCPatchSampleG_push_const_GPCPatchSample, std_vectorLcv_optflow_GPCPatchSampleG_insert_size_t_const_GPCPatchSample,
 	}
 	vector_non_copy_or_bool! { crate::optflow::GPCPatchSample }
 	
@@ -18571,8 +18537,8 @@ mod rgbd_types {
 		std_vectorLcv_linemod_FeatureG_capacity_const, std_vectorLcv_linemod_FeatureG_shrinkToFit,
 		std_vectorLcv_linemod_FeatureG_reserve_size_t, std_vectorLcv_linemod_FeatureG_remove_size_t,
 		std_vectorLcv_linemod_FeatureG_swap_size_t_size_t, std_vectorLcv_linemod_FeatureG_clear,
-		std_vectorLcv_linemod_FeatureG_get_const_size_t, std_vectorLcv_linemod_FeatureG_set_size_t_Feature,
-		std_vectorLcv_linemod_FeatureG_push_Feature, std_vectorLcv_linemod_FeatureG_insert_size_t_Feature,
+		std_vectorLcv_linemod_FeatureG_get_const_size_t, std_vectorLcv_linemod_FeatureG_set_size_t_const_Feature,
+		std_vectorLcv_linemod_FeatureG_push_const_Feature, std_vectorLcv_linemod_FeatureG_insert_size_t_const_Feature,
 	}
 	vector_copy_non_bool! { crate::rgbd::LineMod_Feature,
 		std_vectorLcv_linemod_FeatureG_data_const, std_vectorLcv_linemod_FeatureG_dataMut, cv_fromSlice_const_const_FeatureX_size_t,
@@ -18592,8 +18558,8 @@ mod rgbd_types {
 		std_vectorLcv_linemod_MatchG_capacity_const, std_vectorLcv_linemod_MatchG_shrinkToFit,
 		std_vectorLcv_linemod_MatchG_reserve_size_t, std_vectorLcv_linemod_MatchG_remove_size_t,
 		std_vectorLcv_linemod_MatchG_swap_size_t_size_t, std_vectorLcv_linemod_MatchG_clear,
-		std_vectorLcv_linemod_MatchG_get_const_size_t, std_vectorLcv_linemod_MatchG_set_size_t_Match,
-		std_vectorLcv_linemod_MatchG_push_Match, std_vectorLcv_linemod_MatchG_insert_size_t_Match,
+		std_vectorLcv_linemod_MatchG_get_const_size_t, std_vectorLcv_linemod_MatchG_set_size_t_const_Match,
+		std_vectorLcv_linemod_MatchG_push_const_Match, std_vectorLcv_linemod_MatchG_insert_size_t_const_Match,
 	}
 	vector_non_copy_or_bool! { clone crate::rgbd::LineMod_Match }
 	
@@ -18610,8 +18576,8 @@ mod rgbd_types {
 		std_vectorLcv_linemod_TemplateG_capacity_const, std_vectorLcv_linemod_TemplateG_shrinkToFit,
 		std_vectorLcv_linemod_TemplateG_reserve_size_t, std_vectorLcv_linemod_TemplateG_remove_size_t,
 		std_vectorLcv_linemod_TemplateG_swap_size_t_size_t, std_vectorLcv_linemod_TemplateG_clear,
-		std_vectorLcv_linemod_TemplateG_get_const_size_t, std_vectorLcv_linemod_TemplateG_set_size_t_Template,
-		std_vectorLcv_linemod_TemplateG_push_Template, std_vectorLcv_linemod_TemplateG_insert_size_t_Template,
+		std_vectorLcv_linemod_TemplateG_get_const_size_t, std_vectorLcv_linemod_TemplateG_set_size_t_const_Template,
+		std_vectorLcv_linemod_TemplateG_push_const_Template, std_vectorLcv_linemod_TemplateG_insert_size_t_const_Template,
 	}
 	vector_non_copy_or_bool! { clone crate::rgbd::LineMod_Template }
 	
@@ -18628,8 +18594,8 @@ mod rgbd_types {
 		std_vectorLcv_PtrLcv_linemod_ModalityGG_capacity_const, std_vectorLcv_PtrLcv_linemod_ModalityGG_shrinkToFit,
 		std_vectorLcv_PtrLcv_linemod_ModalityGG_reserve_size_t, std_vectorLcv_PtrLcv_linemod_ModalityGG_remove_size_t,
 		std_vectorLcv_PtrLcv_linemod_ModalityGG_swap_size_t_size_t, std_vectorLcv_PtrLcv_linemod_ModalityGG_clear,
-		std_vectorLcv_PtrLcv_linemod_ModalityGG_get_const_size_t, std_vectorLcv_PtrLcv_linemod_ModalityGG_set_size_t_PtrLModalityG,
-		std_vectorLcv_PtrLcv_linemod_ModalityGG_push_PtrLModalityG, std_vectorLcv_PtrLcv_linemod_ModalityGG_insert_size_t_PtrLModalityG,
+		std_vectorLcv_PtrLcv_linemod_ModalityGG_get_const_size_t, std_vectorLcv_PtrLcv_linemod_ModalityGG_set_size_t_const_PtrLModalityG,
+		std_vectorLcv_PtrLcv_linemod_ModalityGG_push_const_PtrLModalityG, std_vectorLcv_PtrLcv_linemod_ModalityGG_insert_size_t_const_PtrLModalityG,
 	}
 	vector_non_copy_or_bool! { core::Ptr<crate::rgbd::LineMod_Modality> }
 	
@@ -19667,8 +19633,8 @@ mod stereo_types {
 		std_vectorLcv_stereo_MatchQuasiDenseG_capacity_const, std_vectorLcv_stereo_MatchQuasiDenseG_shrinkToFit,
 		std_vectorLcv_stereo_MatchQuasiDenseG_reserve_size_t, std_vectorLcv_stereo_MatchQuasiDenseG_remove_size_t,
 		std_vectorLcv_stereo_MatchQuasiDenseG_swap_size_t_size_t, std_vectorLcv_stereo_MatchQuasiDenseG_clear,
-		std_vectorLcv_stereo_MatchQuasiDenseG_get_const_size_t, std_vectorLcv_stereo_MatchQuasiDenseG_set_size_t_MatchQuasiDense,
-		std_vectorLcv_stereo_MatchQuasiDenseG_push_MatchQuasiDense, std_vectorLcv_stereo_MatchQuasiDenseG_insert_size_t_MatchQuasiDense,
+		std_vectorLcv_stereo_MatchQuasiDenseG_get_const_size_t, std_vectorLcv_stereo_MatchQuasiDenseG_set_size_t_const_MatchQuasiDense,
+		std_vectorLcv_stereo_MatchQuasiDenseG_push_const_MatchQuasiDense, std_vectorLcv_stereo_MatchQuasiDenseG_insert_size_t_const_MatchQuasiDense,
 	}
 	vector_copy_non_bool! { crate::stereo::MatchQuasiDense,
 		std_vectorLcv_stereo_MatchQuasiDenseG_data_const, std_vectorLcv_stereo_MatchQuasiDenseG_dataMut, cv_fromSlice_const_const_MatchQuasiDenseX_size_t,
@@ -21589,8 +21555,8 @@ mod stitching_types {
 		std_vectorLcv_detail_CameraParamsG_capacity_const, std_vectorLcv_detail_CameraParamsG_shrinkToFit,
 		std_vectorLcv_detail_CameraParamsG_reserve_size_t, std_vectorLcv_detail_CameraParamsG_remove_size_t,
 		std_vectorLcv_detail_CameraParamsG_swap_size_t_size_t, std_vectorLcv_detail_CameraParamsG_clear,
-		std_vectorLcv_detail_CameraParamsG_get_const_size_t, std_vectorLcv_detail_CameraParamsG_set_size_t_CameraParams,
-		std_vectorLcv_detail_CameraParamsG_push_CameraParams, std_vectorLcv_detail_CameraParamsG_insert_size_t_CameraParams,
+		std_vectorLcv_detail_CameraParamsG_get_const_size_t, std_vectorLcv_detail_CameraParamsG_set_size_t_const_CameraParams,
+		std_vectorLcv_detail_CameraParamsG_push_const_CameraParams, std_vectorLcv_detail_CameraParamsG_insert_size_t_const_CameraParams,
 	}
 	vector_non_copy_or_bool! { clone crate::stitching::Detail_CameraParams }
 	
@@ -21607,8 +21573,8 @@ mod stitching_types {
 		std_vectorLcv_detail_ImageFeaturesG_capacity_const, std_vectorLcv_detail_ImageFeaturesG_shrinkToFit,
 		std_vectorLcv_detail_ImageFeaturesG_reserve_size_t, std_vectorLcv_detail_ImageFeaturesG_remove_size_t,
 		std_vectorLcv_detail_ImageFeaturesG_swap_size_t_size_t, std_vectorLcv_detail_ImageFeaturesG_clear,
-		std_vectorLcv_detail_ImageFeaturesG_get_const_size_t, std_vectorLcv_detail_ImageFeaturesG_set_size_t_ImageFeatures,
-		std_vectorLcv_detail_ImageFeaturesG_push_ImageFeatures, std_vectorLcv_detail_ImageFeaturesG_insert_size_t_ImageFeatures,
+		std_vectorLcv_detail_ImageFeaturesG_get_const_size_t, std_vectorLcv_detail_ImageFeaturesG_set_size_t_const_ImageFeatures,
+		std_vectorLcv_detail_ImageFeaturesG_push_const_ImageFeatures, std_vectorLcv_detail_ImageFeaturesG_insert_size_t_const_ImageFeatures,
 	}
 	vector_non_copy_or_bool! { clone crate::stitching::Detail_ImageFeatures }
 	
@@ -21625,8 +21591,8 @@ mod stitching_types {
 		std_vectorLcv_detail_MatchesInfoG_capacity_const, std_vectorLcv_detail_MatchesInfoG_shrinkToFit,
 		std_vectorLcv_detail_MatchesInfoG_reserve_size_t, std_vectorLcv_detail_MatchesInfoG_remove_size_t,
 		std_vectorLcv_detail_MatchesInfoG_swap_size_t_size_t, std_vectorLcv_detail_MatchesInfoG_clear,
-		std_vectorLcv_detail_MatchesInfoG_get_const_size_t, std_vectorLcv_detail_MatchesInfoG_set_size_t_MatchesInfo,
-		std_vectorLcv_detail_MatchesInfoG_push_MatchesInfo, std_vectorLcv_detail_MatchesInfoG_insert_size_t_MatchesInfo,
+		std_vectorLcv_detail_MatchesInfoG_get_const_size_t, std_vectorLcv_detail_MatchesInfoG_set_size_t_const_MatchesInfo,
+		std_vectorLcv_detail_MatchesInfoG_push_const_MatchesInfo, std_vectorLcv_detail_MatchesInfoG_insert_size_t_const_MatchesInfo,
 	}
 	vector_non_copy_or_bool! { clone crate::stitching::Detail_MatchesInfo }
 	
@@ -22201,8 +22167,8 @@ mod surface_matching_types {
 		std_vectorLcv_ppf_match_3d_Pose3DPtrG_capacity_const, std_vectorLcv_ppf_match_3d_Pose3DPtrG_shrinkToFit,
 		std_vectorLcv_ppf_match_3d_Pose3DPtrG_reserve_size_t, std_vectorLcv_ppf_match_3d_Pose3DPtrG_remove_size_t,
 		std_vectorLcv_ppf_match_3d_Pose3DPtrG_swap_size_t_size_t, std_vectorLcv_ppf_match_3d_Pose3DPtrG_clear,
-		std_vectorLcv_ppf_match_3d_Pose3DPtrG_get_const_size_t, std_vectorLcv_ppf_match_3d_Pose3DPtrG_set_size_t_Pose3DPtr,
-		std_vectorLcv_ppf_match_3d_Pose3DPtrG_push_Pose3DPtr, std_vectorLcv_ppf_match_3d_Pose3DPtrG_insert_size_t_Pose3DPtr,
+		std_vectorLcv_ppf_match_3d_Pose3DPtrG_get_const_size_t, std_vectorLcv_ppf_match_3d_Pose3DPtrG_set_size_t_const_Pose3DPtr,
+		std_vectorLcv_ppf_match_3d_Pose3DPtrG_push_const_Pose3DPtr, std_vectorLcv_ppf_match_3d_Pose3DPtrG_insert_size_t_const_Pose3DPtr,
 	}
 	vector_non_copy_or_bool! { crate::surface_matching::Pose3DPtr }
 	
@@ -22588,8 +22554,8 @@ mod text_types {
 		std_vectorLcv_text_ERStatG_capacity_const, std_vectorLcv_text_ERStatG_shrinkToFit,
 		std_vectorLcv_text_ERStatG_reserve_size_t, std_vectorLcv_text_ERStatG_remove_size_t,
 		std_vectorLcv_text_ERStatG_swap_size_t_size_t, std_vectorLcv_text_ERStatG_clear,
-		std_vectorLcv_text_ERStatG_get_const_size_t, std_vectorLcv_text_ERStatG_set_size_t_ERStat,
-		std_vectorLcv_text_ERStatG_push_ERStat, std_vectorLcv_text_ERStatG_insert_size_t_ERStat,
+		std_vectorLcv_text_ERStatG_get_const_size_t, std_vectorLcv_text_ERStatG_set_size_t_const_ERStat,
+		std_vectorLcv_text_ERStatG_push_const_ERStat, std_vectorLcv_text_ERStatG_insert_size_t_const_ERStat,
 	}
 	vector_non_copy_or_bool! { crate::text::ERStat }
 	
@@ -22606,8 +22572,8 @@ mod text_types {
 		std_vectorLstd_vectorLcv_text_ERStatGG_capacity_const, std_vectorLstd_vectorLcv_text_ERStatGG_shrinkToFit,
 		std_vectorLstd_vectorLcv_text_ERStatGG_reserve_size_t, std_vectorLstd_vectorLcv_text_ERStatGG_remove_size_t,
 		std_vectorLstd_vectorLcv_text_ERStatGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_text_ERStatGG_clear,
-		std_vectorLstd_vectorLcv_text_ERStatGG_get_const_size_t, std_vectorLstd_vectorLcv_text_ERStatGG_set_size_t_vectorLERStatG,
-		std_vectorLstd_vectorLcv_text_ERStatGG_push_vectorLERStatG, std_vectorLstd_vectorLcv_text_ERStatGG_insert_size_t_vectorLERStatG,
+		std_vectorLstd_vectorLcv_text_ERStatGG_get_const_size_t, std_vectorLstd_vectorLcv_text_ERStatGG_set_size_t_const_vectorLERStatG,
+		std_vectorLstd_vectorLcv_text_ERStatGG_push_const_vectorLERStatG, std_vectorLstd_vectorLcv_text_ERStatGG_insert_size_t_const_vectorLERStatG,
 	}
 	vector_non_copy_or_bool! { core::Vector<crate::text::ERStat> }
 	
@@ -23290,8 +23256,8 @@ mod videoio_types {
 		std_vectorLcv_VideoCaptureG_capacity_const, std_vectorLcv_VideoCaptureG_shrinkToFit,
 		std_vectorLcv_VideoCaptureG_reserve_size_t, std_vectorLcv_VideoCaptureG_remove_size_t,
 		std_vectorLcv_VideoCaptureG_swap_size_t_size_t, std_vectorLcv_VideoCaptureG_clear,
-		std_vectorLcv_VideoCaptureG_get_const_size_t, std_vectorLcv_VideoCaptureG_set_size_t_VideoCapture,
-		std_vectorLcv_VideoCaptureG_push_VideoCapture, std_vectorLcv_VideoCaptureG_insert_size_t_VideoCapture,
+		std_vectorLcv_VideoCaptureG_get_const_size_t, std_vectorLcv_VideoCaptureG_set_size_t_const_VideoCapture,
+		std_vectorLcv_VideoCaptureG_push_const_VideoCapture, std_vectorLcv_VideoCaptureG_insert_size_t_const_VideoCapture,
 	}
 	vector_non_copy_or_bool! { crate::videoio::VideoCapture }
 	
@@ -23308,8 +23274,8 @@ mod videoio_types {
 		std_vectorLcv_VideoCaptureAPIsG_capacity_const, std_vectorLcv_VideoCaptureAPIsG_shrinkToFit,
 		std_vectorLcv_VideoCaptureAPIsG_reserve_size_t, std_vectorLcv_VideoCaptureAPIsG_remove_size_t,
 		std_vectorLcv_VideoCaptureAPIsG_swap_size_t_size_t, std_vectorLcv_VideoCaptureAPIsG_clear,
-		std_vectorLcv_VideoCaptureAPIsG_get_const_size_t, std_vectorLcv_VideoCaptureAPIsG_set_size_t_VideoCaptureAPIs,
-		std_vectorLcv_VideoCaptureAPIsG_push_VideoCaptureAPIs, std_vectorLcv_VideoCaptureAPIsG_insert_size_t_VideoCaptureAPIs,
+		std_vectorLcv_VideoCaptureAPIsG_get_const_size_t, std_vectorLcv_VideoCaptureAPIsG_set_size_t_const_VideoCaptureAPIs,
+		std_vectorLcv_VideoCaptureAPIsG_push_const_VideoCaptureAPIs, std_vectorLcv_VideoCaptureAPIsG_insert_size_t_const_VideoCaptureAPIs,
 	}
 	vector_copy_non_bool! { crate::videoio::VideoCaptureAPIs,
 		std_vectorLcv_VideoCaptureAPIsG_data_const, std_vectorLcv_VideoCaptureAPIsG_dataMut, cv_fromSlice_const_const_VideoCaptureAPIsX_size_t,
@@ -25897,8 +25863,8 @@ mod xfeatures2d_types {
 		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_capacity_const, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_shrinkToFit,
 		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_reserve_size_t, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_remove_size_t,
 		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_swap_size_t_size_t, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_clear,
-		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_get_const_size_t, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_set_size_t_Elliptic_KeyPoint,
-		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_push_Elliptic_KeyPoint, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_insert_size_t_Elliptic_KeyPoint,
+		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_get_const_size_t, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_set_size_t_const_Elliptic_KeyPoint,
+		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_push_const_Elliptic_KeyPoint, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_insert_size_t_const_Elliptic_KeyPoint,
 	}
 	vector_non_copy_or_bool! { crate::xfeatures2d::Elliptic_KeyPoint }
 	
@@ -27078,8 +27044,8 @@ mod ximgproc_types {
 		std_vectorLcv_ximgproc_BoxG_capacity_const, std_vectorLcv_ximgproc_BoxG_shrinkToFit,
 		std_vectorLcv_ximgproc_BoxG_reserve_size_t, std_vectorLcv_ximgproc_BoxG_remove_size_t,
 		std_vectorLcv_ximgproc_BoxG_swap_size_t_size_t, std_vectorLcv_ximgproc_BoxG_clear,
-		std_vectorLcv_ximgproc_BoxG_get_const_size_t, std_vectorLcv_ximgproc_BoxG_set_size_t_Box,
-		std_vectorLcv_ximgproc_BoxG_push_Box, std_vectorLcv_ximgproc_BoxG_insert_size_t_Box,
+		std_vectorLcv_ximgproc_BoxG_get_const_size_t, std_vectorLcv_ximgproc_BoxG_set_size_t_const_Box,
+		std_vectorLcv_ximgproc_BoxG_push_const_Box, std_vectorLcv_ximgproc_BoxG_insert_size_t_const_Box,
 	}
 	vector_copy_non_bool! { crate::ximgproc::Box,
 		std_vectorLcv_ximgproc_BoxG_data_const, std_vectorLcv_ximgproc_BoxG_dataMut, cv_fromSlice_const_const_BoxX_size_t,
