@@ -49,7 +49,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	fn format_as_array(&self, elem_type: &str, size: Option<usize>) -> String {
 		format!(
 			"&{cnst}[{elem_type}{size}]",
-			cnst = self.constness().rust_qual(false),
+			cnst = self.constness().rust_qual(),
 			size = size.map_or_else(|| "".to_string(), |s| format!("; {s}"))
 		)
 	}
@@ -172,7 +172,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 					&& !self.as_pointer().is_some()
 					&& !self.as_reference().is_some(),
 		)
-		.rust_qual(false);
+		.rust_qual();
 		format!("{cnst}{name}: {typ}")
 	}
 
@@ -265,7 +265,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		if self.as_reference().map_or(false, |inner| {
 			(inner.as_simple_class().is_some() || inner.is_enum()) && (inner.constness().is_const() || self.is_by_move())
 		}) {
-			return format!("&{cnst}{name}", cnst = constness.rust_qual(false));
+			return format!("&{cnst}{name}", cnst = constness.rust_qual());
 		}
 		if self.as_simple_class().is_some() {
 			return format!("{name}.opencv_as_extern()");
@@ -311,8 +311,8 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				// some special care for double pointers
 				return format!(
 					"{name} as *{cnst} _ as *{cnst} *{const_inner} _",
-					cnst = self.clang_constness().rust_qual(true),
-					const_inner = inner.clang_constness().rust_qual(true)
+					cnst = self.clang_constness().rust_qual_ptr(),
+					const_inner = inner.clang_constness().rust_qual_ptr()
 				);
 			}
 		}
@@ -359,18 +359,18 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			if let Some(arg_dir) = self.as_string() {
 				break 'typ match dir {
 					ExternDir::ToCpp | ExternDir::Pure => match arg_dir {
-						Dir::In(_) => format!("*{cnst}c_char", cnst = constness.rust_qual(true)).into(),
+						Dir::In(_) => format!("*{cnst}c_char", cnst = constness.rust_qual_ptr()).into(),
 						Dir::Out(_) => "*mut *mut c_void".into(),
 					},
 					ExternDir::FromCpp => "*mut c_void".into(),
 				};
 			}
 			if self.extern_pass_kind().is_by_void_ptr() {
-				break 'typ format!("*{cnst}c_void", cnst = constness.rust_qual(true)).into();
+				break 'typ format!("*{cnst}c_void", cnst = constness.rust_qual_ptr()).into();
 			}
 			if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
 				let mut out = String::with_capacity(64);
-				write!(out, "*{}", self.constness().rust_qual(true)).expect("Impossible");
+				write!(out, "*{}", self.constness().rust_qual_ptr()).expect("Impossible");
 				if inner.is_void() {
 					out += "c_void";
 				} else if self.as_string().is_some() {
@@ -383,7 +383,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			if let Some((elem, len)) = self.as_fixed_array() {
 				break 'typ format!(
 					"*{cnst}[{typ}; {len}]",
-					cnst = self.constness().rust_qual(true),
+					cnst = self.constness().rust_qual_ptr(),
 					typ = elem.rust_extern(ExternDir::Pure),
 				)
 				.into();
@@ -392,11 +392,11 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr))) {
 					// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
 					// argv is treated as array of output arguments and it doesn't seem to be meant this way
-					format!("*{cnst}c_char", cnst = elem.clang_constness().rust_qual(true)).into()
+					format!("*{cnst}c_char", cnst = elem.clang_constness().rust_qual_ptr()).into()
 				} else {
 					elem.rust_extern(ExternDir::Pure)
 				};
-				break 'typ format!("*{cnst}{typ}", cnst = self.constness().rust_qual(true)).into();
+				break 'typ format!("*{cnst}{typ}", cnst = self.constness().rust_qual_ptr()).into();
 			}
 			if let Some(func) = self.as_function() {
 				break 'typ func.rust_extern().into_owned().into();

@@ -1,11 +1,9 @@
 use std::{env, time};
 
-use opencv::{
-	core::{self, UMat, UMatUsageFlags},
-	imgcodecs, imgproc,
-	prelude::*,
-	types, Result,
-};
+use opencv::core::{UMat, UMatUsageFlags};
+use opencv::prelude::*;
+use opencv::{core, imgcodecs, imgproc, types, Result};
+
 opencv::opencv_branch_4! {
 	use opencv::core::AccessFlag::ACCESS_READ;
 }

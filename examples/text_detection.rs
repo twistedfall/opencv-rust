@@ -128,7 +128,12 @@ fn four_points_transform(frame: &Mat, vertices: &[Point2f]) -> Result<Mat> {
 		Point2f::new((output_size.width - 1) as f32, 0.),
 		Point2f::new((output_size.width - 1) as f32, (output_size.height - 1) as f32),
 	];
-	let rotation_matrix = imgproc::get_perspective_transform_slice(vertices, &target_vertices, core::DECOMP_LU)?;
+	opencv::opencv_branch_4! {
+		let rotation_matrix = imgproc::get_perspective_transform_slice(vertices, &target_vertices, core::DECOMP_LU)?;
+	}
+	opencv::not_opencv_branch_4! {
+		let rotation_matrix = imgproc::get_perspective_transform_slice(vertices, &target_vertices)?;
+	}
 	let mut out = Mat::default();
 	imgproc::warp_perspective(
 		frame,

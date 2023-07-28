@@ -937,7 +937,7 @@ impl<'f> FuncId<'f> {
 	pub fn from_entity(entity: Entity) -> Self {
 		let name = entity.cpp_name(CppNameStyle::Reference).into_owned().into();
 		let args = if let EntityKind::FunctionTemplate = entity.get_kind() {
-			let mut args = vec![];
+			let mut args = Vec::with_capacity(8);
 			entity.walk_children_while(|child| {
 				if child.get_kind() == EntityKind::ParmDecl {
 					args.push(child.get_name().map_or_else(|| UNNAMED.into(), Cow::Owned));

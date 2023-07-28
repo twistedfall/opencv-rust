@@ -911,13 +911,19 @@ impl Constness {
 		!self.is_const()
 	}
 
-	pub fn rust_qual(self, pointer: bool) -> &'static str {
+	/// Returns `""` or `"mut "`, for usage with Rust references, e.g. `&mut T`
+	pub fn rust_qual(self) -> &'static str {
 		if self.is_const() {
-			if pointer {
-				"const "
-			} else {
-				""
-			}
+			""
+		} else {
+			"mut "
+		}
+	}
+
+	/// Returns `"const "` or `"mut "`, for usage with Rust pointers, e.g. `*const T`
+	pub fn rust_qual_ptr(self) -> &'static str {
+		if self.is_const() {
+			"const "
 		} else {
 			"mut "
 		}

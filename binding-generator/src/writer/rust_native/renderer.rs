@@ -117,12 +117,12 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				} else {
 					inner.render(self.recurse())
 				};
-				format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual(true), typ = typ).into()
+				format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual_ptr(), typ = typ).into()
 			}
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) => {
 				let typ = format!(
 					"&{lt: <}{cnst}{typ}",
-					cnst = type_ref.constness().rust_qual(false),
+					cnst = type_ref.constness().rust_qual(),
 					lt = self.lifetime,
 					typ = inner.render(self.recurse())
 				);
