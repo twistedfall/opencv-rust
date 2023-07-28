@@ -3,6 +3,7 @@ use std::fmt;
 use std::fmt::Write;
 
 use crate::type_ref::{Constness, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefKind};
+use crate::writer::rust_native::class::ClassExt;
 use crate::{IteratorExt, StringExt};
 
 use super::element::RustElement;
@@ -33,7 +34,7 @@ pub trait TypeRefExt {
 	fn rust_arg_forward(&self, name: &str) -> String;
 	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String;
 	fn rust_extern(&self, dir: ExternDir) -> Cow<str>;
-	fn rust_return(&self, turbo_fish_style: FishStyle) -> Cow<str>;
+	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str>;
 	fn rust_extern_return_fallible(&self) -> Cow<str>;
 	fn rust_lifetime_count(&self) -> usize;
 
@@ -162,6 +163,14 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				break 'decl_type self.format_as_array("&str", size).into();
 			} else if self.is_rust_char() {
 				break 'decl_type "char".into();
+			} else if let Some((tref, cls)) = self.as_abstract_class_ptr() {
+				let constness = tref.constness();
+				break 'decl_type format!(
+					"&{cnst}impl {name}",
+					cnst = constness.rust_qual(),
+					name = cls.rust_trait_name(NameStyle::ref_(), constness)
+				)
+				.into();
 			}
 			break 'decl_type self.rust_name(NameStyle::ref_());
 		};
@@ -408,8 +417,25 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		}
 	}
 
-	fn rust_return(&self, turbo_fish_style: FishStyle) -> Cow<str> {
-		if self.extern_pass_kind().is_by_void_ptr() {
+	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str> {
+		if self.as_abstract_class_ptr().is_some() {
+			let mut_suf = if self.constness().is_const() {
+				""
+			} else {
+				"Mut"
+			};
+			let lt = if is_static_func {
+				"'static, "
+			} else {
+				""
+			};
+			format!(
+				"types::AbstractRef{mut_suf}{fish}<{lt}{typ}>",
+				fish = turbo_fish_style.rust_qual(),
+				typ = self.source().rust_name(NameStyle::Reference(turbo_fish_style)),
+			)
+			.into()
+		} else if self.extern_pass_kind().is_by_void_ptr() {
 			self
 				.source()
 				.rust_name(NameStyle::Reference(turbo_fish_style))

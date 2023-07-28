@@ -12,12 +12,13 @@ use crate::type_ref::{CppNameStyle, FishStyle, TypeRef, TypeRefKind};
 use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	get_definition_text, line_reader, settings, Class, ClassSimplicity, Const, Element, EntityExt, EntityWalkerExt,
-	EntityWalkerVisitor, Enum, Func, GeneratorEnv, LineReaderAction, SmartPtr, Tuple, Typedef, Vector,
+	get_definition_text, line_reader, settings, AbstractRefWrapper, Class, ClassSimplicity, Const, Element, EntityExt,
+	EntityWalkerExt, EntityWalkerVisitor, Enum, Func, GeneratorEnv, LineReaderAction, SmartPtr, Tuple, Typedef, Vector,
 };
 
 #[derive(Debug)]
 pub enum GeneratedType<'tu, 'ge> {
+	AbstractRefWrapper(AbstractRefWrapper<'tu, 'ge>),
 	Vector(Vector<'tu, 'ge>),
 	SmartPtr(SmartPtr<'tu, 'ge>),
 	Tuple(Tuple<'tu, 'ge>),

@@ -12,7 +12,7 @@ use crate::element::ExcludeKind;
 use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
 use crate::settings::ArgOverride;
 use crate::vector::VectorDesc;
-use crate::{settings, ClassSimplicity, ExportConfig};
+use crate::{settings, AbstractRefWrapper, ClassSimplicity, ExportConfig};
 use crate::{Class, Element, Enum, Function, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Tuple, Typedef, Vector};
 use desc::ClangTypeExt;
 use style::ExternPassKind;
@@ -674,7 +674,13 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 						out
 					}
 					TypeRefKind::Typedef(typedef) => typedef.generated_types(),
-					_ => vec![],
+					_ => {
+						let mut out = vec![];
+						if self.as_abstract_class_ptr().is_some() {
+							out.push(GeneratedType::AbstractRefWrapper(AbstractRefWrapper::new(self.clone())))
+						}
+						out
+					}
 				}
 			}
 			Self::Desc(_) => {

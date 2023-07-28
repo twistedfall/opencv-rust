@@ -160,6 +160,7 @@ impl<'ne, 'tu: 'ne, 'ge: 'ne> AsRef<dyn RustNativeGeneratedElement + 'ne> for Ge
 			GeneratedType::Vector(vec) => vec,
 			GeneratedType::SmartPtr(ptr) => ptr,
 			GeneratedType::Tuple(tuple) => tuple,
+			GeneratedType::AbstractRefWrapper(aref) => aref,
 		}
 	}
 }

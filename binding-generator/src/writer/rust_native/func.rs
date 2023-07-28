@@ -6,7 +6,7 @@ use once_cell::sync::Lazy;
 use regex::Regex;
 
 use crate::field::Field;
-use crate::func::{cpp_disambiguate_names, OperatorKind, ReturnKind, Safety};
+use crate::func::{cpp_disambiguate_names, FuncKind, OperatorKind, ReturnKind, Safety};
 use crate::type_ref::{Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef};
 use crate::writer::rust_native::disambiguate_single_name;
 use crate::{
@@ -306,10 +306,15 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else {
 			"pub "
 		};
+		let is_static_func = matches!(kind.as_ref(), FuncKind::Function | FuncKind::StaticMethod(_));
 		let return_type_func_decl = if return_kind.is_infallible() {
-			return_type_ref.rust_return(FishStyle::No)
+			return_type_ref.rust_return(FishStyle::No, is_static_func)
 		} else {
-			format!("Result<{}>", self.return_type_ref().rust_return(FishStyle::No)).into()
+			format!(
+				"Result<{}>",
+				self.return_type_ref().rust_return(FishStyle::No, is_static_func)
+			)
+			.into()
 		};
 		let return_type_func_decl = if return_type_func_decl == "()" {
 			Cow::Borrowed("")
@@ -338,7 +343,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		if !return_kind.is_infallible() {
 			ret_convert.push("let ret = ret.into_result()?;".into())
 		}
-		let ret_map = rust_return_map(&return_type_ref, "ret", safety, return_kind);
+		let ret_map = rust_return_map(&return_type_ref, "ret", safety, return_kind, is_static_func);
 		if !ret_map.is_empty() {
 			ret_convert.push(format!("let ret = {ret_map};").into());
 		}
@@ -566,7 +571,13 @@ fn pre_post_arg_handle(mut arg: String, args: &mut Vec<String>) {
 	}
 }
 
-fn rust_return_map(return_type: &TypeRef, ret_name: &str, context_safety: Safety, return_kind: ReturnKind) -> Cow<'static, str> {
+fn rust_return_map(
+	return_type: &TypeRef,
+	ret_name: &str,
+	context_safety: Safety,
+	return_kind: ReturnKind,
+	is_static_func: bool,
+) -> Cow<'static, str> {
 	let unsafety_call = if context_safety.is_safe() {
 		"unsafe "
 	} else {
@@ -576,7 +587,7 @@ fn rust_return_map(return_type: &TypeRef, ret_name: &str, context_safety: Safety
 		format!(
 			"{unsafety_call}{{ {typ}::opencv_from_extern({ret_name}) }}",
 			unsafety_call = unsafety_call,
-			typ = return_type.rust_return(FishStyle::Turbo),
+			typ = return_type.rust_return(FishStyle::Turbo, is_static_func),
 			ret_name = ret_name,
 		)
 		.into()

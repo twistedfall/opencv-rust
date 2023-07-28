@@ -20,6 +20,7 @@ use std::io::{BufRead, Read, Seek, SeekFrom};
 
 use clang::Entity;
 
+pub use abstract_ref_wrapper::AbstractRefWrapper;
 pub use class::Class;
 pub use constant::Const;
 pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Element, EntityElement};
@@ -48,6 +49,7 @@ pub use walker::{EntityWalkerExt, EntityWalkerVisitor};
 
 use crate::debug::NameDebug;
 
+mod abstract_ref_wrapper;
 mod class;
 pub mod comment;
 mod constant;
