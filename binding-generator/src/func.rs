@@ -86,7 +86,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn specialize(self, spec: &'static HashMap<&'static str, TypeRefFactory>) -> Self {
+	pub fn specialize(self, spec: &HashMap<&str, TypeRefFactory>) -> Self {
 		let specialized = |type_ref: &TypeRef| -> Option<TypeRef<'static, 'static>> {
 			if type_ref.is_generic() {
 				spec
@@ -571,7 +571,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 impl Element for Func<'_, '_> {
 	fn exclude_kind(&self) -> ExcludeKind {
 		let identifier = self.identifier();
-		if settings::FUNC_MANUAL.contains_key(identifier.as_str()) || settings::FUNC_SPECIALIZE.contains_key(identifier.as_str()) {
+		if settings::FUNC_MANUAL.contains_key(identifier.as_str()) || settings::FUNC_SPECIALIZE.contains_key(&self.func_id()) {
 			return ExcludeKind::Included;
 		}
 		let kind = self.kind();
@@ -934,7 +934,7 @@ impl<'f> FuncId<'f> {
 		}
 	}
 
-	pub fn from_entity(entity: Entity) -> Self {
+	pub fn from_entity(entity: Entity) -> FuncId<'static> {
 		let name = entity.cpp_name(CppNameStyle::Reference).into_owned().into();
 		let args = if let EntityKind::FunctionTemplate = entity.get_kind() {
 			let mut args = Vec::with_capacity(8);
@@ -953,18 +953,25 @@ impl<'f> FuncId<'f> {
 				.map(|a| a.get_name().map_or_else(|| UNNAMED.into(), Cow::Owned))
 				.collect()
 		};
-		Self { name, args }
+		FuncId { name, args }
 	}
 
-	pub fn from_desc(desc: &'f FuncDesc) -> Self {
+	pub fn from_desc(desc: &'f FuncDesc) -> FuncId<'f> {
 		let name = desc.cpp_name.as_ref().into();
 		let args = desc
 			.arguments
 			.iter()
-			.map(|arg| arg.cpp_name(CppNameStyle::Declaration).into_owned().into())
+			.map(|arg| arg.cpp_name(CppNameStyle::Declaration))
 			.collect();
 
-		Self { name, args }
+		FuncId { name, args }
+	}
+
+	pub fn make_static(self) -> FuncId<'static> {
+		FuncId {
+			name: self.name.into_owned().into(),
+			args: self.args.into_iter().map(|arg| arg.into_owned().into()).collect(),
+		}
 	}
 
 	pub fn name(&self) -> &str {

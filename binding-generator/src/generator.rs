@@ -213,7 +213,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 		if let Some(e) = gen_env.get_export_config(func_decl) {
 			let func = Func::new(func_decl, gen_env);
 			if func.exclude_kind().is_included() {
-				let identifier = func.identifier();
+				let func_id = func.func_id().make_static();
 				let mut processor = |spec| {
 					let func = if e.only_generated_types {
 						Func::new(func_decl, gen_env)
@@ -237,7 +237,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						visitor.visit_func(func, gen_env);
 					}
 				};
-				if let Some(specs) = settings::FUNC_SPECIALIZE.get(identifier.as_str()) {
+				if let Some(specs) = settings::FUNC_SPECIALIZE.get(&func_id) {
 					for spec in specs {
 						processor(Some(spec));
 					}

@@ -318,7 +318,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		self.for_each_method(|func| {
 			if constness_filter.map_or(true, |c| c == func.constness()) {
 				if func.is_generic() {
-					if let Some(specs) = settings::FUNC_SPECIALIZE.get(func.identifier().as_str()) {
+					if let Some(specs) = settings::FUNC_SPECIALIZE.get(&func.func_id()) {
 						for spec in specs {
 							out.push(func.clone().specialize(spec));
 						}

@@ -54,6 +54,16 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_AsyncArray_get_const_const__OutputArrayR_int64_t", "+_with_timeout"),
 		("cv_AsyncArray_wait_for_const_double", "+_f64"),
 		("cv_Cholesky_floatX_size_t_int_floatX_size_t_int", "+_f32"),
+		("cv_CommandLineParser_get_bool_const_const_StringR_bool", "+_bool"),
+		("cv_CommandLineParser_get_bool_const_int_bool", "+_bool_idx"),
+		("cv_CommandLineParser_get_cv_String_const_const_StringR_bool", "+_str"),
+		("cv_CommandLineParser_get_cv_String_const_int_bool", "+_str_idx"),
+		("cv_CommandLineParser_get_double_const_const_StringR_bool", "+_f64"),
+		("cv_CommandLineParser_get_double_const_int_bool", "+_f64_idx"),
+		("cv_CommandLineParser_get_int_const_const_StringR_bool", "+_i32"),
+		("cv_CommandLineParser_get_int_const_int_bool", "+_i32_idx"),
+		("cv_CommandLineParser_get_uint64_t_const_const_StringR_bool", "+_u64"),
+		("cv_CommandLineParser_get_uint64_t_const_int_bool", "+_u64_idx"),
 		("cv_DMatch_DMatch_int_int_int_float", "new_index"),
 		("cv_FileStorage_write_const_StringR_const_MatR", "+_mat"),
 		("cv_FileStorage_write_const_StringR_const_StringR", "+_str"),
@@ -794,10 +804,10 @@ pub static FUNC_MANUAL: Lazy<HashMap<&str, CompiledInterpolation>> = Lazy::new(|
 pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
 
 // todo: get rid of FUNC_SPECIALIZE and property reader/writer generation in favor of just injecting manual functions
-pub static FUNC_SPECIALIZE: Lazy<HashMap<&str, Vec<HashMap<&str, TypeRefFactory>>>> = Lazy::new(|| {
+pub static FUNC_SPECIALIZE: Lazy<HashMap<FuncId, Vec<HashMap<&str, TypeRefFactory>>>> = Lazy::new(|| {
 	HashMap::from([
 		(
-			"cv_dnn_Dict_set_const_StringR_const_TR",
+			FuncId::new("cv::dnn::Dict::set", ["key", "value"]),
 			vec![
 				HashMap::from([("const T", TypeRefDesc::cv_string as _)]),
 				HashMap::from([("const T", TypeRefDesc::cv_dnn_dict_value as _)]),
@@ -806,12 +816,32 @@ pub static FUNC_SPECIALIZE: Lazy<HashMap<&str, Vec<HashMap<&str, TypeRefFactory>
 			],
 		),
 		(
-			"cv_dnn_DictValue_get_const_int",
+			FuncId::new("cv::dnn::DictValue::get", ["idx"]),
 			vec![
 				HashMap::from([("T", TypeRefDesc::cv_string as _)]),
 				HashMap::from([("T", TypeRefDesc::double as _)]),
 				HashMap::from([("T", TypeRefDesc::int as _)]),
 				HashMap::from([("T", TypeRefDesc::int64_t as _)]),
+			],
+		),
+		(
+			FuncId::new("cv::CommandLineParser::get", ["name", "space_delete"]),
+			vec![
+				HashMap::from([("T", TypeRefDesc::bool as _)]),
+				HashMap::from([("T", TypeRefDesc::int as _)]),
+				HashMap::from([("T", TypeRefDesc::double as _)]),
+				HashMap::from([("T", TypeRefDesc::cv_string as _)]),
+				HashMap::from([("T", TypeRefDesc::uint64_t as _)]),
+			],
+		),
+		(
+			FuncId::new("cv::CommandLineParser::get", ["index", "space_delete"]),
+			vec![
+				HashMap::from([("T", TypeRefDesc::bool as _)]),
+				HashMap::from([("T", TypeRefDesc::int as _)]),
+				HashMap::from([("T", TypeRefDesc::double as _)]),
+				HashMap::from([("T", TypeRefDesc::cv_string as _)]),
+				HashMap::from([("T", TypeRefDesc::uint64_t as _)]),
 			],
 		),
 	])

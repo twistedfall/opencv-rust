@@ -92,6 +92,10 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		Self::try_primitive("int64_t").expect("Static primitive type")
 	}
 
+	pub fn uint64_t() -> TypeRef<'tu, 'ge> {
+		Self::try_primitive("uint64_t").expect("Static primitive type")
+	}
+
 	pub fn size_t() -> TypeRef<'tu, 'ge> {
 		Self::try_primitive("size_t").expect("Static primitive type")
 	}

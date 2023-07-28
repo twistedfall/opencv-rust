@@ -16,7 +16,7 @@ struct FunctionFinder<'tu, 'f> {
 	pub func_cfg_attr_unused: RefCell<&'f mut HashSet<&'static str>>,
 	pub func_unsafe_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
 	pub func_manual_unused: RefCell<&'f mut HashSet<&'static str>>,
-	pub func_specialize_unused: RefCell<&'f mut HashSet<&'static str>>,
+	pub func_specialize_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
 	pub argument_override_unused: RefCell<&'f mut HashSet<String>>, // fixme, doesn't seem to work perfectly (shows cv::mixChannels, but it's def used)
 }
 
@@ -33,7 +33,7 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 			self.func_unsafe_unused.borrow_mut().remove(&static_func_id);
 		}
 		self.func_manual_unused.borrow_mut().remove(identifier.as_str());
-		self.func_specialize_unused.borrow_mut().remove(identifier.as_str());
+		self.func_specialize_unused.borrow_mut().remove(&f.func_id().make_static());
 		self.argument_override_unused.borrow_mut().remove(cpp_refname.as_ref());
 	}
 }
@@ -94,7 +94,7 @@ fn main() {
 	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
 	let mut func_manual_unused = settings::FUNC_MANUAL.keys().copied().collect::<HashSet<_>>();
-	let mut func_specialize_unused = settings::FUNC_SPECIALIZE.keys().copied().collect::<HashSet<_>>();
+	let mut func_specialize_unused = settings::FUNC_SPECIALIZE.keys().cloned().collect::<HashSet<_>>();
 	let mut argument_override_unused = settings::ARGUMENT_OVERRIDE
 		.keys()
 		.cloned()
