@@ -86,6 +86,12 @@ impl Element for Vector<'_, '_> {
 	}
 }
 
+impl PartialEq for Vector<'_, '_> {
+	fn eq(&self, other: &Self) -> bool {
+		self.element_type() == other.element_type()
+	}
+}
+
 impl fmt::Debug for Vector<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct(match self {

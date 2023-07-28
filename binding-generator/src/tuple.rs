@@ -94,6 +94,12 @@ impl Element for Tuple<'_, '_> {
 	}
 }
 
+impl PartialEq for Tuple<'_, '_> {
+	fn eq(&self, other: &Self) -> bool {
+		self.type_ref == other.type_ref && self.tuple_type == other.tuple_type
+	}
+}
+
 impl fmt::Display for Tuple<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.entity().get_display_name().expect("Can't get display name"))

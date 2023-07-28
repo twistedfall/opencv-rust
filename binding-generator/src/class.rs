@@ -580,17 +580,7 @@ impl Hash for Class<'_, '_> {
 
 impl PartialEq for Class<'_, '_> {
 	fn eq(&self, other: &Self) -> bool {
-		match (self, other) {
-			(
-				Self::Clang { entity: left_entity, .. },
-				Self::Clang {
-					entity: right_entity, ..
-				},
-			) => left_entity.eq(right_entity),
-			(left, right) => left
-				.cpp_name(CppNameStyle::Reference)
-				.eq(right.cpp_name(CppNameStyle::Reference).as_ref()),
-		}
+		self.cpp_name(CppNameStyle::Reference) == other.cpp_name(CppNameStyle::Reference) && self.kind() == other.kind()
 	}
 }
 

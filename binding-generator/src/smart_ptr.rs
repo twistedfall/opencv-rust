@@ -101,6 +101,12 @@ impl Element for SmartPtr<'_, '_> {
 	}
 }
 
+impl PartialEq for SmartPtr<'_, '_> {
+	fn eq(&self, other: &Self) -> bool {
+		self.pointee() == other.pointee()
+	}
+}
+
 impl fmt::Debug for SmartPtr<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct(match self {

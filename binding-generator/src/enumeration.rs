@@ -10,7 +10,7 @@ use crate::entity::WalkAction;
 use crate::type_ref::CppNameStyle;
 use crate::{Const, DefaultElement, Element, EntityElement, EntityExt, NameDebug, StrExt};
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct Enum<'tu> {
 	entity: Entity<'tu>,
 	custom_fullname: Option<Rc<str>>,

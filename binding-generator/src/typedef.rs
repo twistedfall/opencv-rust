@@ -139,6 +139,12 @@ impl<'me> NameDebug<'me> for &'me Typedef<'_, '_> {
 	}
 }
 
+impl PartialEq for Typedef<'_, '_> {
+	fn eq(&self, other: &Self) -> bool {
+		self.entity == other.entity
+	}
+}
+
 impl fmt::Debug for Typedef<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let mut debug_struct = f.debug_struct("Typedef");

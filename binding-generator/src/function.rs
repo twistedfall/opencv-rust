@@ -70,6 +70,12 @@ impl Element for Function<'_, '_> {
 	}
 }
 
+impl PartialEq for Function<'_, '_> {
+	fn eq(&self, other: &Self) -> bool {
+		self.type_ref == other.type_ref && self.parent_entity == other.parent_entity
+	}
+}
+
 impl fmt::Display for Function<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}", self.cpp_name(CppNameStyle::Reference))

@@ -84,7 +84,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		// Generate only the basic type alias and as_raw* methods for char, the rest will be handled by the generated Vector<u8> and
 		// Vector<i8> to handle the dualistic nature of C++ char on different platforms, see also `TypeRef::generated_types()`
 		// in binding-generator/src/type_ref.rs
-		if !element_type.is_char() {
+		if !element_type.base().is_char() {
 			let vec_type_ref = self.type_ref();
 
 			if vec_type_ref.constness().is_const() {
@@ -201,7 +201,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let element_type = vec.element_type();
 	let mut out = Vec::with_capacity(7);
-	if !element_type.is_char() {
+	if !element_type.base().is_char() {
 		let element_is_bool = element_type.is_bool();
 		let vec_type_ref = vec.type_ref();
 		let vector_class = vector_class(&vec_type_ref);

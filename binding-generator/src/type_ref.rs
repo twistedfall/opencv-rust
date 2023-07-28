@@ -19,8 +19,10 @@ use style::ExternPassKind;
 
 mod desc;
 mod style;
+#[cfg(test)]
+mod test;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum TypeRefKind<'tu, 'ge> {
 	/// (rust name, cpp name)
 	Primitive(&'static str, &'static str),
@@ -116,10 +118,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		} else if let Some(primitive_typeref) = TypeRefDesc::try_primitive(cpp_refname) {
 			primitive_typeref
 		} else {
-			let simplicity = settings::ELEMENT_EXPORT_TWEAK
-				.get(cpp_refname)
-				.and_then(|export_tweak| export_tweak(ExportConfig::default()))
-				.map_or(ClassSimplicity::Boxed, |e| e.simplicity);
+			let simplicity = settings::DATA_TYPES
+				.contains(cpp_refname)
+				.then(|| ClassSimplicity::Simple)
+				.unwrap_or_else(|| {
+					settings::ELEMENT_EXPORT_TWEAK
+						.get(cpp_refname)
+						.and_then(|export_tweak| export_tweak(ExportConfig::default()))
+						.map_or(ClassSimplicity::Boxed, |e| e.simplicity)
+				});
 			let cls = if simplicity.is_boxed() {
 				ClassDesc::boxed(cpp_refname, rust_module)
 			} else {
@@ -241,6 +248,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Reference(inner) => TypeRef::new_reference(inner.map(f)),
 			TypeRefKind::RValueReference(inner) => TypeRef::new_rvalue_reference(inner.map(f)),
 			TypeRefKind::Array(element, size) => TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Array(element.map(f), *size))),
+			_ => f(self),
+		}
+	}
+
+	/// Map the contained TypeRef inside `Vector` variant
+	pub fn map_vector<'otu, 'oge>(&self, f: impl FnOnce(&TypeRef<'tu, 'ge>) -> TypeRef<'otu, 'oge>) -> TypeRef<'otu, 'oge> {
+		match self.kind().as_ref() {
+			TypeRefKind::StdVector(vec) => TypeRef::new_vector(Vector::new_desc(VectorDesc::new(vec.element_type().map_vector(f)))),
 			_ => f(self),
 		}
 	}
@@ -632,7 +647,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
 		match self {
 			Self::Clang { .. } => {
-				match self.source().kind().into_owned() {
+				let source = self.source();
+				match source.kind().into_owned() {
 					TypeRefKind::StdVector(vec) => {
 						let mut out = vec.generated_types();
 						let element_type = vec.element_type();
@@ -655,12 +671,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 							} else {
 								out.push(GeneratedType::Vector(vec))
 							}
-						} else if element_type.is_char() {
+						} else if element_type.base().is_char() {
 							out.reserve(3);
 							// C++ char can be signed or unsigned based on the platform and that can lead to duplicate definitions when
 							// we generate Vector<u8> together with Vector<c_char>
-							out.push(TypeRefDesc::vector_of_uchar().try_into().expect("Static vector"));
-							out.push(TypeRefDesc::vector_of_schar().try_into().expect("Static vector"));
+							out.push(source.map_vector(|_| TypeRefDesc::uchar()).try_into().expect("Known Vector"));
+							out.push(source.map_vector(|_| TypeRefDesc::schar()).try_into().expect("Known vector"));
 							out.push(GeneratedType::Vector(vec));
 						} else {
 							out.push(GeneratedType::Vector(vec));
@@ -752,20 +768,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 impl PartialEq for TypeRef<'_, '_> {
 	fn eq(&self, other: &Self) -> bool {
-		match (self, other) {
-			(
-				Self::Clang {
-					type_ref: left_type_ref, ..
-				},
-				Self::Clang {
-					type_ref: right_type_ref,
-					..
-				},
-			) => left_type_ref.eq(right_type_ref),
-			(left, right) => left
-				.cpp_name(CppNameStyle::Reference)
-				.eq(right.cpp_name(CppNameStyle::Reference).as_ref()),
-		}
+		self.kind() == other.kind() && self.constness() == other.constness() && self.type_hint() == other.type_hint()
 	}
 }
 

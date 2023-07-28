@@ -72,6 +72,10 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		Self::try_primitive("signed char").expect("Static primitive type")
 	}
 
+	pub fn char() -> TypeRef<'tu, 'ge> {
+		Self::try_primitive("char").expect("Static primitive type")
+	}
+
 	pub fn uchar() -> TypeRef<'tu, 'ge> {
 		Self::try_primitive("unsigned char").expect("Static primitive type")
 	}
@@ -180,16 +184,6 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		TypeRef::new_class(ClassDesc::cv_string())
 	}
 
-	/// `std::vector<signed char>`
-	pub fn vector_of_schar() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(Self::schar())))
-	}
-
-	/// `std::vector<unsigned char>`
-	pub fn vector_of_uchar() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(Self::uchar())))
-	}
-
 	/// `std::vector<std::vector<double>>`
 	pub fn vector_of_vector_of_double() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRef::new_vector(Vector::new_desc(
@@ -198,10 +192,13 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 	}
 
 	/// `std::vector<std::vector<int>>`
+	pub fn vector_of_int() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::int())))
+	}
+
+	/// `std::vector<std::vector<int>>`
 	pub fn vector_of_vector_of_int() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRef::new_vector(Vector::new_desc(
-			VectorDesc::new(TypeRefDesc::int()),
-		)))))
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(Self::vector_of_int())))
 	}
 
 	/// `std::vector<cv::String>`
