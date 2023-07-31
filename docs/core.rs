@@ -9369,6 +9369,448 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_bool(&self, name: &str, space_delete: bool) -> Result<bool> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_bool_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_i32(&self, name: &str, space_delete: bool) -> Result<i32> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_int_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_f64(&self, name: &str, space_delete: bool) -> Result<f64> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_double_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_str(&self, name: &str, space_delete: bool) -> Result<String> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_cv_String_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_u64(&self, name: &str, space_delete: bool) -> Result<u64> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_bool_idx(&self, index: i32, space_delete: bool) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_bool_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_i32_idx(&self, index: i32, space_delete: bool) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_int_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_f64_idx(&self, index: i32, space_delete: bool) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_double_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_str_idx(&self, index: i32, space_delete: bool) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_cv_String_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// ## C++ default parameters
+		/// * space_delete: true
+		#[inline]
+		fn get_u64_idx(&self, index: i32, space_delete: bool) -> Result<u64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Check if field was provided in the command line
 		/// 
 		/// ## Parameters
@@ -15611,7 +16053,7 @@ pub mod core {
 		/// * _beta: 1
 		/// * _s: Scalar()
 		#[inline]
-		pub fn new(_op: &core::MatOp, _flags: i32, _a: &core::Mat, _b: &core::Mat, _c: &core::Mat, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
+		pub fn new(_op: &impl core::MatOpTraitConst, _flags: i32, _a: &core::Mat, _b: &core::Mat, _c: &core::Mat, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int_const_MatR_const_MatR_const_MatR_double_double_const_ScalarR(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, &_s, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -24314,15 +24756,15 @@ pub mod core {
 		
 		/// allocator
 		#[inline]
-		fn allocator(&mut self) -> core::GpuMat_Allocator {
+		fn allocator(&mut self) -> types::AbstractRefMut<core::GpuMat_Allocator> {
 			let ret = unsafe { sys::cv_cuda_GpuMat_propAllocator(self.as_raw_mut_GpuMat()) };
-			let ret = unsafe { core::GpuMat_Allocator::opencv_from_extern(ret) };
+			let ret = unsafe { types::AbstractRefMut::<core::GpuMat_Allocator>::opencv_from_extern(ret) };
 			ret
 		}
 		
 		/// allocator
 		#[inline]
-		unsafe fn set_allocator(&mut self, val: &mut core::GpuMat_Allocator) {
+		unsafe fn set_allocator(&mut self, val: &mut impl core::GpuMat_AllocatorTrait) {
 			let ret = { sys::cv_cuda_GpuMat_propAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_mut_GpuMat_Allocator()) };
 			ret
 		}
@@ -24537,17 +24979,17 @@ pub mod core {
 	impl GpuMat {
 		/// default allocator
 		#[inline]
-		pub fn default_allocator() -> Result<core::GpuMat_Allocator> {
+		pub fn default_allocator() -> Result<types::AbstractRefMut<'static, core::GpuMat_Allocator>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_defaultAllocator(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat_Allocator::opencv_from_extern(ret) };
+			let ret = unsafe { types::AbstractRefMut::<'static, core::GpuMat_Allocator>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 		#[inline]
-		pub unsafe fn set_default_allocator(allocator: &mut core::GpuMat_Allocator) -> Result<()> {
+		pub unsafe fn set_default_allocator(allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -24560,7 +25002,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new(allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new(allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -24574,7 +25016,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX(rows, cols, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -24586,7 +25028,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new_size(size: core::Size, typ: i32, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new_size(size: core::Size, typ: i32, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX(size.opencv_as_extern(), typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -24600,7 +25042,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX(rows, cols, typ, s.opencv_as_extern(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -24612,7 +25054,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX(size.opencv_as_extern(), typ, s.opencv_as_extern(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -24684,7 +25126,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
-		pub unsafe fn from_hostmem(arr: &impl core::ToInputArray, allocator: &mut core::GpuMat_Allocator) -> Result<core::GpuMat> {
+		pub unsafe fn from_hostmem(arr: &impl core::ToInputArray, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };

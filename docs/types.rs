@@ -691,6 +691,22 @@ pub use ccalib_types::*;
 mod core_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	impl core::GpuMat_AllocatorTraitConst for types::AbstractRefMut<'static, core::GpuMat_Allocator> {
+		#[inline] fn as_raw_GpuMat_Allocator(&self) -> extern_send!(Self) { self.as_raw() }
+	}
+	
+	impl core::GpuMat_AllocatorTrait for types::AbstractRefMut<'static, core::GpuMat_Allocator> {
+		#[inline] fn as_raw_mut_GpuMat_Allocator(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	impl core::MatOpTraitConst for types::AbstractRefMut<'static, core::MatOp> {
+		#[inline] fn as_raw_MatOp(&self) -> extern_send!(Self) { self.as_raw() }
+	}
+	
+	impl core::MatOpTrait for types::AbstractRefMut<'static, core::MatOp> {
+		#[inline] fn as_raw_mut_MatOp(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
 	pub type PtrOfAlgorithm = core::Ptr<core::Algorithm>;
 	
 	ptr_extern! { core::Algorithm,
@@ -2985,58 +3001,6 @@ mod core_types {
 		pub fn as_raw_mut_VectorOfVectorOfc_char(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
 	
-	vector_extern! { core::Vector<c_char>,
-		std_vectorLstd_vectorLcharGG_new_const, std_vectorLstd_vectorLcharGG_delete,
-		std_vectorLstd_vectorLcharGG_len_const, std_vectorLstd_vectorLcharGG_isEmpty_const,
-		std_vectorLstd_vectorLcharGG_capacity_const, std_vectorLstd_vectorLcharGG_shrinkToFit,
-		std_vectorLstd_vectorLcharGG_reserve_size_t, std_vectorLstd_vectorLcharGG_remove_size_t,
-		std_vectorLstd_vectorLcharGG_swap_size_t_size_t, std_vectorLstd_vectorLcharGG_clear,
-		std_vectorLstd_vectorLcharGG_get_const_size_t, std_vectorLstd_vectorLcharGG_set_size_t_const_vectorLcharG,
-		std_vectorLstd_vectorLcharGG_push_const_vectorLcharG, std_vectorLstd_vectorLcharGG_insert_size_t_const_vectorLcharG,
-	}
-	vector_non_copy_or_bool! { clone core::Vector<c_char> }
-	
-	impl core::ToInputArray for core::Vector<core::Vector<c_char>> {
-		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::std_vectorLstd_vectorLcharGG_inputArray_const(self.as_raw_VectorOfVectorOfc_char(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-	}
-	
-	impl core::ToOutputArray for core::Vector<core::Vector<c_char>> {
-		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::std_vectorLstd_vectorLcharGG_outputArray(self.as_raw_mut_VectorOfVectorOfc_char(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-	}
-	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<c_char>> {
-		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::std_vectorLstd_vectorLcharGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfc_char(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-	}
-	
-	input_output_array_ref_forward! { core::Vector<core::Vector<c_char>> }
-	
 	pub type VectorOfVectorOff32 = core::Vector<core::Vector<f32>>;
 	
 	impl core::Vector<core::Vector<f32>> {
@@ -3213,6 +3177,24 @@ mod core_types {
 	}
 	
 	input_output_array_ref_forward! { core::Vector<core::Vector<i32>> }
+	
+	pub type VectorOfVectorOfi8 = core::Vector<core::Vector<i8>>;
+	
+	impl core::Vector<core::Vector<i8>> {
+		pub fn as_raw_VectorOfVectorOfi8(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfVectorOfi8(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Vector<i8>,
+		std_vectorLstd_vectorLsigned_charGG_new_const, std_vectorLstd_vectorLsigned_charGG_delete,
+		std_vectorLstd_vectorLsigned_charGG_len_const, std_vectorLstd_vectorLsigned_charGG_isEmpty_const,
+		std_vectorLstd_vectorLsigned_charGG_capacity_const, std_vectorLstd_vectorLsigned_charGG_shrinkToFit,
+		std_vectorLstd_vectorLsigned_charGG_reserve_size_t, std_vectorLstd_vectorLsigned_charGG_remove_size_t,
+		std_vectorLstd_vectorLsigned_charGG_swap_size_t_size_t, std_vectorLstd_vectorLsigned_charGG_clear,
+		std_vectorLstd_vectorLsigned_charGG_get_const_size_t, std_vectorLstd_vectorLsigned_charGG_set_size_t_const_vectorLsigned_charG,
+		std_vectorLstd_vectorLsigned_charGG_push_const_vectorLsigned_charG, std_vectorLstd_vectorLsigned_charGG_insert_size_t_const_vectorLsigned_charG,
+	}
+	vector_non_copy_or_bool! { clone core::Vector<i8> }
 	
 	pub type VectorOfVectorOfu8 = core::Vector<core::Vector<u8>>;
 	
