@@ -5,13 +5,13 @@ use std::fs::File;
 use std::io::{BufRead, BufReader, Read, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
 
-use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
+use clang::{Entity, EntityKind, EntityVisitResult};
 
 use crate::class::ClassKind;
 use crate::type_ref::CppNameStyle;
 use crate::{
-	comment, is_opencv_path, opencv_module_from_path, settings, Class, Const, Element, EntityWalkerExt, EntityWalkerVisitor,
-	MemoizeMap, MemoizeMapExt, NamePool, WalkAction,
+	comment, is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
+	MemoizeMapExt, NamePool, WalkAction,
 };
 
 #[derive(Copy, Clone, Debug)]
@@ -112,17 +112,6 @@ impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 		}
 	}
 
-	fn add_class_constant(&mut self, cnst: Entity<'tu>) {
-		let cnst = Const::new(cnst);
-		let mut full_name = cnst.cpp_name(CppNameStyle::Reference).into_owned();
-		self.gen_env.class_constants.insert(full_name.clone(), cnst.clone());
-		const SEP: &str = "::";
-		while let Some(idx) = full_name.find(SEP) {
-			full_name.drain(..idx + SEP.len());
-			self.gen_env.class_constants.insert(full_name.clone(), cnst.clone());
-		}
-	}
-
 	fn add_descendant(&mut self, base_class: Entity, descendant: Entity<'tu>) {
 		self
 			.gen_env
@@ -152,13 +141,6 @@ impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 						| EntityKind::ConversionFunction => {
 							self.add_func_comment(child);
 						}
-						EntityKind::VarDecl => {
-							if let Some(StorageClass::Static) = child.get_storage_class() {
-								if child.evaluate().is_some() {
-									self.add_class_constant(child);
-								}
-							}
-						}
 						_ => {}
 					}
 					EntityVisitResult::Continue
@@ -187,7 +169,6 @@ pub struct GeneratorEnv<'tu> {
 	func_comments: HashMap<String, Vec<(u32, String)>>,
 	/// Cache of the calculated [ClassKind]s
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
-	class_constants: HashMap<String, Const<'tu>>,
 	descendants: HashMap<String, HashSet<Entity<'tu>>>,
 }
 
@@ -200,7 +181,6 @@ impl<'tu> GeneratorEnv<'tu> {
 			func_names: NamePool::with_capacity(512),
 			func_comments: HashMap::with_capacity(2048),
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
-			class_constants: HashMap::with_capacity(32),
 			descendants: HashMap::with_capacity(16),
 		};
 		root_entity.walk_opencv_entities(GeneratorEnvPopulator { gen_env: &mut out });
@@ -353,10 +333,6 @@ impl<'tu> GeneratorEnv<'tu> {
 			}
 			None
 		})
-	}
-
-	pub fn resolve_class_constant(&self, constant: &str) -> Option<&Const<'tu>> {
-		self.class_constants.get(constant)
 	}
 
 	/// Returns the descendants of the specified class

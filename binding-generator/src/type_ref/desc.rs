@@ -483,7 +483,11 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					Regex::new(r#"^.+<\s*(.+?)\s*(?:,\s*(.+?)\s*)?(?:,\s*(.+?)\s*)?(?:,\s*(.+?)\s*)?>$"#)
 						.expect("Can't compile static regex")
 				});
-				let display_name = self.get_display_name();
+				// getting declaration resolves constants so `Vec<int, nFeatures>` becomes `Vec<int, 18>`
+				let display_name = self
+					.get_declaration()
+					.and_then(|d| d.get_display_name())
+					.unwrap_or_else(|| self.get_display_name());
 				let generic_args: UnsyncLazy<Option<Captures>, _> = UnsyncLazy::new(|| TYPE_EXTRACT.captures(&display_name));
 				args
 					.into_iter()
@@ -493,17 +497,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 							TemplateArg::Typename(TypeRef::new(type_ref, gen_env))
 						} else {
 							if let Some(generic_args) = &*generic_args {
-								generic_args
-									.get(i + 1)
-									.map(|m| m.as_str())
-									.map(|literal| {
-										if let Some(cnst) = gen_env.resolve_class_constant(literal).and_then(|c| c.value()) {
-											cnst.to_string()
-										} else {
-											literal.to_string()
-										}
-									})
-									.map(TemplateArg::Constant)
+								generic_args.get(i + 1).map(|m| TemplateArg::Constant(m.as_str().to_string()))
 							} else {
 								None
 							}
