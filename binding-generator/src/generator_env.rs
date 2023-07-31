@@ -107,7 +107,7 @@ impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 			let line = entity.get_location().map_or(0, |l| l.get_file_location().line);
 			let defs = self.gen_env.func_comments.entry(name).or_insert_with(Vec::new);
 			defs.push((line, comment::strip_comment_markers(&raw_comment)));
-			// reverse sort due to how we're querying this
+			// reverse sort due to how we're querying this; the amount of elements in this Vec doesn't go above 7
 			defs.sort_unstable_by(|(left_line, _), (right_line, _)| right_line.cmp(left_line));
 		}
 	}
@@ -122,6 +122,15 @@ impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 			self.gen_env.class_constants.insert(full_name.clone(), cnst.clone());
 		}
 	}
+
+	fn add_descendant(&mut self, base_class: Entity, descendant: Entity<'tu>) {
+		self
+			.gen_env
+			.descendants
+			.entry(base_class.cpp_name(CppNameStyle::Reference).into_owned())
+			.or_insert_with(|| HashSet::with_capacity(4))
+			.insert(descendant);
+	}
 }
 
 impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
@@ -132,27 +141,21 @@ impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
 		match entity.get_kind() {
 			EntityKind::ClassDecl | EntityKind::StructDecl => {
-				entity.visit_children(|c, _| {
-					match c.get_kind() {
+				entity.visit_children(|child, _| {
+					match child.get_kind() {
 						EntityKind::BaseSpecifier => {
-							let c_decl = c.get_definition().expect("Can't get base class definition");
-							self
-								.gen_env
-								.descendants
-								.entry(c_decl.cpp_name(CppNameStyle::Reference).into_owned())
-								.or_insert_with(|| HashSet::with_capacity(4))
-								.insert(entity);
+							self.add_descendant(child.get_definition().expect("Can't get base class definition"), entity);
 						}
 						EntityKind::Constructor
 						| EntityKind::Method
 						| EntityKind::FunctionTemplate
 						| EntityKind::ConversionFunction => {
-							self.add_func_comment(c);
+							self.add_func_comment(child);
 						}
 						EntityKind::VarDecl => {
-							if let Some(StorageClass::Static) = c.get_storage_class() {
-								if c.evaluate().is_some() {
-									self.add_class_constant(c);
+							if let Some(StorageClass::Static) = child.get_storage_class() {
+								if child.evaluate().is_some() {
+									self.add_class_constant(child);
 								}
 							}
 						}
@@ -321,11 +324,7 @@ impl<'tu> GeneratorEnv<'tu> {
 	pub fn get_class_kind(&self, entity: Entity<'tu>) -> Option<ClassKind> {
 		let id = entity.cpp_name(CppNameStyle::Reference);
 		self.class_kind_cache.memo_get(id.as_ref(), || {
-			let entity = if let Some(tpl_decl) = entity.get_template() {
-				tpl_decl
-			} else {
-				entity
-			};
+			let entity = entity.get_template().unwrap_or(entity);
 			if let Some(range) = entity.get_range() {
 				let name_ranges = entity.get_name_ranges();
 				if !name_ranges.is_empty() {

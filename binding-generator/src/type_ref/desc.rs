@@ -10,7 +10,7 @@ use crate::function::Function;
 use crate::settings::ArgOverride;
 use crate::smart_ptr::{SmartPtr, SmartPtrDesc};
 use crate::tuple::Tuple;
-use crate::type_ref::{Constness, TemplateArg, TypeRef, TypeRefKind, TypeRefTemplateArg, TypeRefTypeHint};
+use crate::type_ref::{Constness, TemplateArg, TypeRef, TypeRefKind, TypeRefTypeHint};
 use crate::typedef::NewTypedefResult;
 use crate::vector::{Vector, VectorDesc};
 use crate::{settings, Class, CppNameStyle, Element, Enum, GeneratorEnv, StringExt, Typedef};
@@ -20,7 +20,7 @@ pub struct TypeRefDesc<'tu, 'ge> {
 	pub kind: TypeRefKind<'tu, 'ge>,
 	pub inherent_constness: Constness,
 	pub type_hint: TypeRefTypeHint,
-	pub template_specialization_args: Rc<[TypeRefTemplateArg<TypeRef<'tu, 'ge>>]>,
+	pub template_specialization_args: Rc<[TemplateArg<'tu, 'ge>]>,
 }
 
 impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {

@@ -79,22 +79,36 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		]))
 	}
 
+	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
+		extern_functions(self)
+			.into_iter()
+			.map(|f| f.gen_rust_exports(gen_env))
+			.join("")
+	}
+
 	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
 		static CPP_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/cpp.tpl.cpp").compile_interpolation());
 
-		let type_ref = self.type_ref();
-		let elements = self.elements();
-		let tuple_desc = tuple_class(&type_ref);
-
-		let mut methods = Vec::with_capacity(elements.len() + 2);
-		methods.push(method_new(type_ref, &elements).gen_cpp(gen_env));
-		for (i, typ) in elements.into_iter().enumerate() {
-			methods.push(method_get(tuple_desc.clone(), typ, i).gen_cpp(gen_env));
-		}
-		methods.push(FuncDesc::method_delete(tuple_desc).gen_cpp(gen_env));
-
-		CPP_TPL.interpolate(&HashMap::from([("methods", methods.join(""))]))
+		CPP_TPL.interpolate(&HashMap::from([(
+			"methods",
+			extern_functions(self).into_iter().map(|f| f.gen_cpp(gen_env)).join(""),
+		)]))
 	}
+}
+
+#[inline]
+fn extern_functions<'tu, 'ge>(tuple: &Tuple<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
+	let type_ref = tuple.type_ref();
+	let elements = tuple.elements();
+	let tuple_desc = tuple_class(&type_ref);
+
+	let mut out = Vec::with_capacity(elements.len() + 2);
+	out.push(method_new(type_ref, &elements));
+	for (i, typ) in elements.into_iter().enumerate() {
+		out.push(method_get(tuple_desc.clone(), typ, i));
+	}
+	out.push(FuncDesc::method_delete(tuple_desc));
+	out
 }
 
 pub trait TupleExt {

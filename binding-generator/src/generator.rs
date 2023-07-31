@@ -190,7 +190,11 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 					WalkAction::Continue
 				});
 				let cls = Class::new(class_decl, gen_env);
-				visitor.visit_class(cls, gen_env)
+				if let Some(enm) = cls.as_enum() {
+					visitor.visit_enum(enm, gen_env);
+				} else {
+					visitor.visit_class(cls, gen_env);
+				}
 			}
 		}
 	}

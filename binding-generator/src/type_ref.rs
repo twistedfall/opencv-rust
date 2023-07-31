@@ -866,26 +866,24 @@ impl fmt::Debug for TypeRef<'_, '_> {
 }
 
 #[derive(Clone, Debug)]
-pub enum TypeRefTemplateArg<TRef> {
+pub enum TemplateArg<'tu, 'ge> {
 	Unknown,
-	Typename(TRef),
+	Typename(TypeRef<'tu, 'ge>),
 	Constant(String),
 }
 
-pub type TemplateArg<'tu, 'ge> = TypeRefTemplateArg<TypeRef<'tu, 'ge>>;
-
-impl<TRef> TypeRefTemplateArg<TRef> {
-	pub fn into_typename(self) -> Option<TRef> {
+impl<'tu, 'ge> TemplateArg<'tu, 'ge> {
+	pub fn into_typename(self) -> Option<TypeRef<'tu, 'ge>> {
 		match self {
-			TypeRefTemplateArg::Typename(t) => Some(t),
-			TypeRefTemplateArg::Unknown | TypeRefTemplateArg::Constant(_) => None,
+			Self::Typename(t) => Some(t),
+			Self::Unknown | Self::Constant(_) => None,
 		}
 	}
 
-	pub fn as_typename(&self) -> Option<&TRef> {
+	pub fn as_typename(&self) -> Option<&TypeRef<'tu, 'ge>> {
 		match self {
-			TypeRefTemplateArg::Typename(t) => Some(t),
-			TypeRefTemplateArg::Unknown | TypeRefTemplateArg::Constant(_) => None,
+			Self::Typename(t) => Some(t),
+			Self::Unknown | Self::Constant(_) => None,
 		}
 	}
 }

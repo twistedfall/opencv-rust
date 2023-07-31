@@ -2,7 +2,7 @@ use std::borrow::Cow;
 use std::fmt::Write;
 
 use crate::renderer::TypeRefRenderer;
-use crate::type_ref::{CppNameStyle, Dir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefKind, TypeRefTemplateArg};
+use crate::type_ref::{CppNameStyle, Dir, FishStyle, NameStyle, StrEnc, StrType, TemplateArg, TypeRef, TypeRefKind};
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{settings, Element};
@@ -19,8 +19,8 @@ fn render_rust_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, f
 		let generic_types = generic_types
 			.iter()
 			.filter_map(|t| match t {
-				TypeRefTemplateArg::Typename(type_ref) => Some(type_ref.render(renderer.recurse())),
-				TypeRefTemplateArg::Constant(literal) => {
+				TemplateArg::Typename(type_ref) => Some(type_ref.render(renderer.recurse())),
+				TemplateArg::Constant(literal) => {
 					if const_generics_implemented {
 						Some(literal.into())
 					} else {
@@ -28,7 +28,7 @@ fn render_rust_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, f
 						None
 					}
 				}
-				TypeRefTemplateArg::Unknown => None,
+				TemplateArg::Unknown => None,
 			})
 			.collect::<Vec<_>>();
 		format!(
