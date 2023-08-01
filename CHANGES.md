@@ -1,3 +1,6 @@
+* 0.84.3
+  * Update docs
+
 * 0.84.2
   * Fix build targeting Android even more (definitely fixes https://github.com/twistedfall/opencv-rust/issues/477).
   * Fix double-free crash and linker errors when using CUDA (fixes https://github.com/twistedfall/opencv-rust/issues/478 and
