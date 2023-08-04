@@ -71,7 +71,7 @@ rgb = { version = "0.8.20", features = ["argb"], optional = true }
 [build-dependencies]
 opencv-binding-generator = { version = "0.71.0", path = "binding-generator" }
 # cc starting with version 1.0.80 hangs on build https://github.com/twistedfall/opencv-rust/issues/480
-cc = { version = "<=1.0.79", features = ["parallel"] }
+cc = { version = "<=1.0.82", features = ["parallel"] }
 dunce = "1"
 # jobserver-0.1.25 is the first one that has Client::available() method
 jobserver = "0.1.25"
