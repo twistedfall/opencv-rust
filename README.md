@@ -43,6 +43,10 @@ and additionally to support more OpenCV modules:
 
 `apt install libopencv-dev clang libclang-dev`
 
+#### Opensuse:
+
+`zypper install opencv-devel clang-devel gcc-c++`
+
 #### Other Linux:
 You have several options of getting the OpenCV library:
 
@@ -119,8 +123,9 @@ use this example [rpi-xcompile.Dockerfile](https://github.com/twistedfall/opencv
 docker build -t rpi-xcompile -f tools/docker/rpi-xcompile.Dockerfile tools
 ```
 
-Building this image requries `qemu-arm` to be present on the host system and the corresponding `binfmt-misc` set up (see
-e.g. https://wiki.debian.org/QemuUserEmulation, only `Installing packages` should be enough).
+Building this image requries `qemu-arm` to be present on the host system and the corresponding `binfmt-misc` set up 
+- see e.g. https://wiki.debian.org/QemuUserEmulation, only `Installing packages` should be enough for debian-based distros,
+- for opensuse, install `qemu-linux-user` via zypper to set up the host correctly.
 
 After the successful build you will have an image configured for cross-compilation to Raspberry Pi. It will contain the
 sample build script `/usr/local/bin/cargo-xbuild` that you can check for the correct environment setup and the specific
