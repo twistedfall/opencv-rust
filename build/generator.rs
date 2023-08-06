@@ -1,6 +1,7 @@
 use std::ffi::{OsStr, OsString};
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, BufWriter, Write};
+use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::sync::Arc;
@@ -305,14 +306,19 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 	Ok(())
 }
 
-fn build_job_server() -> Result<jobserver::Client> {
+fn build_job_server() -> Result<Jobserver> {
 	unsafe { jobserver::Client::from_env() }
-		.and_then(|c| {
-			let available_jobs = c.available().unwrap_or(0);
+		.and_then(|client| {
+			let own_token_released = client.release_raw().is_ok();
+			let available_jobs = client.available().unwrap_or(0);
 			if available_jobs > 0 {
 				eprintln!("=== Using environment job server with the the amount of available jobs: {available_jobs}");
-				Some(c)
+				Some(Jobserver {
+					client,
+					reacquire_token_on_drop: own_token_released,
+				})
 			} else {
+				client.acquire_raw().expect("Can't reacquire build script thread token");
 				eprintln!(
 					"=== Available jobs from the environment created jobserver is: {available_jobs} or there is an error reading that value"
 				);
@@ -326,7 +332,31 @@ fn build_job_server() -> Result<jobserver::Client> {
 				.unwrap_or(2)
 				.max(1);
 			eprintln!("=== Creating a new job server with num_jobs: {num_jobs}");
-			jobserver::Client::new(num_jobs).ok()
+			jobserver::Client::new(num_jobs).ok().map(|client| Jobserver {
+				client,
+				reacquire_token_on_drop: false,
+			})
 		})
 		.ok_or_else(|| "Can't create job server".into())
+}
+
+pub struct Jobserver {
+	client: jobserver::Client,
+	reacquire_token_on_drop: bool,
+}
+
+impl Drop for Jobserver {
+	fn drop(&mut self) {
+		if self.reacquire_token_on_drop {
+			self.client.acquire_raw().expect("Can't reacquire build script thread token");
+		}
+	}
+}
+
+impl Deref for Jobserver {
+	type Target = jobserver::Client;
+
+	fn deref(&self) -> &Self::Target {
+		&self.client
+	}
 }
