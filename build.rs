@@ -51,7 +51,7 @@ static OPENCV_BRANCH_4: Lazy<VersionReq> =
 
 /// Environment vars that affect the build, the source will be rebuilt if those change, the contents of those vars will also
 /// be present in the debug log
-static AFFECTING_ENV_VARS: [&str; 17] = [
+static AFFECTING_ENV_VARS: [&str; 18] = [
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
 	"OPENCV_CMAKE_NAME",
@@ -61,6 +61,7 @@ static AFFECTING_ENV_VARS: [&str; 17] = [
 	"OPENCV_LINK_PATHS",
 	"OPENCV_INCLUDE_PATHS",
 	"OPENCV_DISABLE_PROBES",
+	"OPENCV_MSVC_CRT",
 	"CMAKE_PREFIX_PATH",
 	"OpenCV_DIR",
 	"PKG_CONFIG_PATH",
@@ -246,6 +247,15 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 
 	if *TARGET_ENV_MSVC {
 		out.flag_if_supported("-std=c++14"); // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
+		if let Ok(crt) = env::var("OPENCV_MSVC_CRT") {
+			if crt.trim().to_lowercase() == "dynamic" {
+				out.static_crt(false);
+			} else if crt.trim().to_lowercase() == "static" {
+				out.static_crt(true);
+			} else {
+				panic!("Invalid value of OPENCV_MSVC_CRT var, expected \"static\" or \"dynamic\"");
+			}
+		}
 	}
 	if out.get_compiler().is_like_msvc() {
 		out.flag("-std:c++latest")

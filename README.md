@@ -281,6 +281,10 @@ The following variables are rarely used, but you might need them under some circ
       cmake (cmake related environment variables are applicable with this probe)
     * vcpkg
 
+* `OPENCV_MSVC_CRT`
+  Allows selecting the CRT library when building with MSVC for Windows. Allowed values are `"static"` for `/MT`
+  and `"dynamic"` for `/MD`.
+
 The following variables affect the building the of the `opencv` crate, but belong to external components:
 
 * `PKG_CONFIG_PATH`
