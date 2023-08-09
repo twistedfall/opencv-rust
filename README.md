@@ -33,7 +33,7 @@ use opencv::prelude::*;
 
 OpenCV package in Arch is suitable for this:
 
-`pacman -S clang qt5-base opencv`
+`pacman -S clang qt6-base opencv`
 
 and additionally to support more OpenCV modules:
 
@@ -281,18 +281,14 @@ The following variables are rarely used, but you might need them under some circ
       cmake (cmake related environment variables are applicable with this probe)
     * vcpkg
 
-* `OPENCV_MODULE_WHITELIST` and `OPENCV_MODULE_BLACKLIST`
-  Not used anymore. These used to be used to select modules that get their binding generated. We have switched to
-  using cargo features for module selection. Please see the section on features to learn how to switch.
-
 The following variables affect the building the of the `opencv` crate, but belong to external components:
 
 * `PKG_CONFIG_PATH`
   Where to look for `*.pc` files see the [man pkg-config](https://linux.die.net/man/1/pkg-config)
   Path specified here must contain `opencv.pc` (pre OpenCV 4) or `opencv4.pc` (OpenCV 4 and later).
 
-* `VCPKG_ROOT` and `VCPKGRS_DYNAMIC`
-  The root of `vcpkg` installation and flag allowing use of `*.dll` libraries, see the
+* `VCPKG_ROOT`, `VCPKGRS_DYNAMIC` and `VCPKGRS_TRIPLET`
+  The root of `vcpkg` installation, flag allowing use of `*.dll` libraries and selected `vcpkg` triplet, see the
   [documentation for `vcpkg` crate](https://docs.rs/vcpkg)
 
 * `OpenCV_DIR`

@@ -320,8 +320,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 		match self.get_kind() {
 			TypeKind::Void => TypeRefKind::Primitive("()", "void"),
 			TypeKind::Bool => TypeRefKind::Primitive("bool", "bool"),
-			TypeKind::CharS => TypeRefKind::Primitive("c_char", "char"),
-			TypeKind::CharU => TypeRefKind::Primitive("c_char", "char"),
+			TypeKind::CharS | TypeKind::CharU => TypeRefKind::Primitive("c_char", "char"),
 			TypeKind::SChar => TypeRefKind::Primitive("i8", "signed char"),
 			TypeKind::UChar => TypeRefKind::Primitive("u8", "unsigned char"),
 			TypeKind::WChar => TypeRefKind::Primitive("u16", "wchar_t"),

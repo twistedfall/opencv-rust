@@ -1,10 +1,10 @@
 use std::collections::HashSet;
+use std::env;
 use std::ffi::OsStr;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use std::time::Instant;
-use std::{env, iter};
 
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
@@ -49,7 +49,9 @@ static OPENCV_BRANCH_34: Lazy<VersionReq> =
 static OPENCV_BRANCH_4: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
 
-static ENV_VARS: [&str; 16] = [
+/// Environment vars that affect the build, the source will be rebuilt if those change, the contents of those vars will also
+/// be present in the debug log
+static AFFECTING_ENV_VARS: [&str; 17] = [
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
 	"OPENCV_CMAKE_NAME",
@@ -64,9 +66,13 @@ static ENV_VARS: [&str; 16] = [
 	"PKG_CONFIG_PATH",
 	"VCPKG_ROOT",
 	"VCPKGRS_DYNAMIC",
+	"VCPKGRS_TRIPLET",
 	"OCVRS_DOCS_GENERATE_DIR",
 	"DOCS_RS",
 ];
+
+/// The contents of these vars will be present in the debug log, but will not cause the source rebuild
+static DEBUG_ENV_VARS: [&str; 1] = ["PATH"];
 
 pub enum GenerateFullBindings {
 	Stop,
@@ -260,7 +266,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 }
 
 fn setup_rerun() -> Result<()> {
-	for &v in ENV_VARS.iter() {
+	for &v in AFFECTING_ENV_VARS.iter() {
 		println!("cargo:rerun-if-env-changed={v}");
 	}
 
@@ -306,7 +312,7 @@ fn main() -> Result<()> {
 
 	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));
 	eprintln!("=== Environment configuration:");
-	for v in ENV_VARS.into_iter().chain(iter::once("PATH")) {
+	for v in AFFECTING_ENV_VARS.into_iter().chain(DEBUG_ENV_VARS) {
 		eprintln!("===   {v} = {:?}", env::var_os(v));
 	}
 	eprintln!("=== Enabled features:");
