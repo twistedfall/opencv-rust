@@ -1,3 +1,9 @@
+* 0.84.5
+  * Improve parallel build performance (more noticeable on lower thread count).
+  * Take `VCPKGRS_TRIPLET` environment var into account for crate rebuild.
+  * Add a way to select MSVC CRT library with `OPENCV_MSVC_CRT` environment variable.
+  * Make sure to always generate bindings for `Ptr<float>` (fixes https://github.com/twistedfall/opencv-rust/issues/487).
+
 * 0.84.4
   * Workaround for a build hang due to `cc` dependency
 
