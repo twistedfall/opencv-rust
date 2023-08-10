@@ -1248,6 +1248,12 @@ pub struct ModuleTweak {
 pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new(|| {
 	HashMap::from([
 		(
+			"core",
+			ModuleTweak {
+				generate_types: vec![TypeRefDesc::ptr_of_float],
+			},
+		),
+		(
 			"aruco",
 			ModuleTweak {
 				generate_types: vec![TypeRefDesc::vector_of_cv_vec3f, TypeRefDesc::vector_of_cv_vec3d],
