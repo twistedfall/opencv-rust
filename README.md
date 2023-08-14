@@ -94,7 +94,7 @@ Get OpenCV from homebrew:
   brew install opencv
   ```
   You will also need a working C++ compiler and libclang, you can install Command Line Tools (`xcode-select
-  --install`), XCode (from AppStore) or `llvm` (from Brew). You most probably need to also check the item 6 of the
+  --install`), XCode (from AppStore) or `llvm` (from Brew). You most probably need to also check the item 7 of the
   troubleshooting below.
 
 ### Manual build
