@@ -35,14 +35,7 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 	pub fn simple(cpp_refname: impl Into<Rc<str>>, rust_module: impl Into<Rc<str>>) -> Self {
 		Self {
 			kind: ClassKind::Simple,
-			is_abstract: false,
-			is_system: false,
-			is_public: true,
-			exclude_kind: ExcludeKind::Included,
-			template_kind: TemplateKind::No,
-			bases: Rc::new([]),
-			cpp_fullname: cpp_refname.into(),
-			rust_module: rust_module.into(),
+			..Self::boxed(cpp_refname, rust_module)
 		}
 	}
 

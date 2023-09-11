@@ -5,8 +5,8 @@ use clang::{Entity, EntityKind};
 
 use crate::type_ref::FishStyle;
 use crate::{
-	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, GeneratorEnv, IteratorExt,
-	NameStyle, StrExt, StringExt,
+	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, StrExt,
+	StringExt,
 };
 
 use super::comment;
@@ -111,15 +111,15 @@ pub trait RustNativeGeneratedElement {
 
 	fn element_safe_id(&self) -> String;
 
-	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str) -> String {
 		"".to_string()
 	}
 
-	fn gen_rust_exports(&self, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust_exports(&self) -> String {
 		"".to_string()
 	}
 
-	fn gen_cpp(&self, _gen_env: &GeneratorEnv) -> String {
+	fn gen_cpp(&self) -> String {
 		"".to_string()
 	}
 }

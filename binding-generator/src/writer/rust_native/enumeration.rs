@@ -5,7 +5,7 @@ use once_cell::sync::Lazy;
 
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{CompiledInterpolation, CppNameStyle, Element, EntityElement, Enum, GeneratorEnv, StrExt};
+use crate::{CompiledInterpolation, CppNameStyle, Element, EntityElement, Enum, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
@@ -33,7 +33,7 @@ impl RustNativeGeneratedElement for Enum<'_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str) -> String {
 		static ENUM_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/enum/enum.tpl.rs").compile_interpolation());
 
 		static CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/enum/const.tpl.rs").compile_interpolation());

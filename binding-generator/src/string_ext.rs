@@ -201,8 +201,8 @@ impl StringExt for String {
 	}
 
 	fn extend_sep(&mut self, sep: &str, s: &str) {
-		self.reserve(s.len() + sep.len());
 		if !self.is_empty() {
+			self.reserve(s.len() + sep.len());
 			self.push_str(sep);
 		}
 		self.push_str(s);
@@ -388,7 +388,7 @@ impl StrExt for str {
 		static R2: Lazy<Regex> = Lazy::new(|| Regex::new(r#"([a-z0-9])([A-Z])"#).expect("Can't compile regex"));
 		let out = R2.replace_all(&out, "${1}_$2");
 
-		static R3: Lazy<Regex> = Lazy::new(|| Regex::new(r#"\B([23])_(D)\b"#).expect("Can't compile regex"));
+		static R3: Lazy<Regex> = Lazy::new(|| Regex::new(r"\B([23])_(D)\b").expect("Can't compile regex"));
 		let out = R3.replace_all(&out, "_$1$2");
 
 		static R4: Lazy<Regex> = Lazy::new(|| Regex::new(r#"_(P[n3])_(P)"#).expect("Can't compile regex"));
@@ -424,7 +424,7 @@ impl StrExt for str {
 	}
 
 	fn compile_interpolation(&self) -> CompiledInterpolation {
-		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r#"\{\{\s*([^{}]+?)\s*}}"#).expect("Can't compile regex"));
+		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r"\{\{\s*([^{}]+?)\s*}}").expect("Can't compile regex"));
 
 		// trim leading newline
 		let tpl = self.strip_prefix('\n').unwrap_or(self);

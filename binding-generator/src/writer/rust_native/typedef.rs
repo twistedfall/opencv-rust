@@ -5,7 +5,7 @@ use once_cell::sync::Lazy;
 
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle, TypeRefKind};
-use crate::{CompiledInterpolation, CppNameStyle, DefaultElement, EntityElement, GeneratorEnv, IteratorExt, StrExt, Typedef};
+use crate::{CompiledInterpolation, CppNameStyle, DefaultElement, EntityElement, IteratorExt, StrExt, Typedef};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::{Lifetime, TypeRefExt};
@@ -41,7 +41,7 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/typedef/tpl.rs").compile_interpolation());
 		let underlying_type = self.underlying_type_ref();
 		let lifetimes = Lifetime::explicit()

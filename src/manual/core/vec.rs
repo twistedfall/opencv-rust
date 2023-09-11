@@ -47,7 +47,7 @@ impl<T, const N: usize> VecN<T, N> {
 		Self: Copy,
 	{
 		let mut out = *self;
-		out.iter_mut().zip(v.into_iter()).for_each(|(dest, m)| *dest *= m);
+		out.iter_mut().zip(v).for_each(|(dest, m)| *dest *= m);
 		out
 	}
 }

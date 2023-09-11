@@ -29,7 +29,7 @@ mod desc;
 pub enum Func<'tu, 'ge> {
 	Clang {
 		entity: Entity<'tu>,
-		custom_rust_leafname: Option<Rc<str>>,
+		rust_custom_leafname: Option<Rc<str>>,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	},
 	Desc(Rc<FuncDesc<'tu, 'ge>>),
@@ -39,15 +39,15 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::Clang {
 			entity,
-			custom_rust_leafname: None,
+			rust_custom_leafname: None,
 			gen_env,
 		}
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, custom_rust_leafname: Option<Rc<str>>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(entity: Entity<'tu>, rust_custom_leafname: Option<Rc<str>>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::Clang {
 			entity,
-			custom_rust_leafname,
+			rust_custom_leafname,
 			gen_env,
 		}
 	}
@@ -56,33 +56,37 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	/// Sets custom rust_leafname for this func, used to disambiguate function names
-	pub fn set_custom_rust_leafname(&mut self, custom_rust_leafname: Option<Rc<str>>) {
+	fn with_desc_mut(desc: &mut Rc<FuncDesc<'tu, 'ge>>, cb: impl FnOnce(&mut FuncDesc<'tu, 'ge>)) {
+		if let Some(desc) = Rc::get_mut(desc) {
+			cb(desc);
+		} else {
+			let mut new_desc = desc.as_ref().clone();
+			cb(&mut new_desc);
+			*desc = Rc::new(new_desc);
+		}
+	}
+
+	/// Sets custom rust_leafname for this func, used to e.g. disambiguate function names
+	pub fn set_rust_custom_leafname(&mut self, rust_custom_leafname: Option<Rc<str>>) {
 		match self {
 			Self::Clang {
-				custom_rust_leafname: old_custom_rust_leafname,
+				rust_custom_leafname: old_rust_custom_leafname,
 				..
-			} => *old_custom_rust_leafname = custom_rust_leafname,
+			} => *old_rust_custom_leafname = rust_custom_leafname,
 			Self::Desc(desc) => {
-				if desc.custom_rust_leafname != custom_rust_leafname {
-					if let Some(desc_mut) = Rc::get_mut(desc) {
-						desc_mut.custom_rust_leafname = custom_rust_leafname;
-					} else {
-						let mut new_desc = (**desc).clone();
-						new_desc.custom_rust_leafname = custom_rust_leafname;
-						*desc = Rc::new(new_desc);
-					}
+				if desc.rust_custom_leafname != rust_custom_leafname {
+					Self::with_desc_mut(desc, |desc| desc.rust_custom_leafname = rust_custom_leafname);
 				}
 			}
 		}
 	}
 
-	pub fn custom_rust_leafname(&self) -> Option<&str> {
+	pub fn rust_custom_leafname(&self) -> Option<&str> {
 		match self {
 			Self::Clang {
-				custom_rust_leafname, ..
-			} => custom_rust_leafname.as_deref(),
-			Self::Desc(desc) => desc.custom_rust_leafname.as_ref().map(|n| n.as_ref()),
+				rust_custom_leafname, ..
+			} => rust_custom_leafname.as_deref(),
+			Self::Desc(desc) => desc.rust_custom_leafname.as_ref().map(|n| n.as_ref()),
 		}
 	}
 
@@ -131,7 +135,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			constness: self.constness(),
 			return_kind: self.return_kind(),
 			cpp_name: self.cpp_name(CppNameStyle::Reference).into(),
-			custom_rust_leafname: None,
+			rust_custom_leafname: None,
 			rust_module: self.rust_module().into(),
 			doc_comment: self.doc_comment().into(),
 			def_loc: self.file_line_name().location,
@@ -585,10 +589,7 @@ impl Element for Func<'_, '_> {
 				is_unavailable || {
 					kind.as_operator().map_or(false, |(_, op)| op == OperatorKind::Unsupported)
 						|| self.arguments().iter().any(|a| a.type_ref().exclude_kind().is_ignored())
-						|| settings::FUNC_RENAME
-							.get(identifier.as_str())
-							.filter(|&&n| n == "-")
-							.is_some()
+						|| settings::FUNC_EXCLUDE.contains(identifier.as_str())
 				}
 			})
 			.with_is_excluded(|| {
@@ -628,8 +629,8 @@ impl Element for Func<'_, '_> {
 	fn cpp_namespace(&self) -> Cow<str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultElement::cpp_namespace(entity).into(),
-			Self::Desc(_) => match self.kind().as_ref() {
-				FuncKind::Function | FuncKind::FunctionOperator(_) | FuncKind::GenericFunction => "cv".into(),
+			Self::Desc(desc) => match self.kind().as_ref() {
+				FuncKind::Function | FuncKind::FunctionOperator(_) | FuncKind::GenericFunction => desc.cpp_name.namespace().into(),
 				FuncKind::Constructor(cls)
 				| FuncKind::InstanceMethod(cls)
 				| FuncKind::StaticMethod(cls)

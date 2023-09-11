@@ -141,14 +141,14 @@ impl Library {
 	}
 
 	fn process_env_var_list<'a, T: From<&'a str>>(env_list: Option<EnvList<'a>>, sys_list: Vec<T>) -> Vec<T> {
-		if let Some(include_paths) = env_list {
-			let mut includes = if include_paths.is_extend() {
+		if let Some(env_list) = env_list {
+			let mut paths = if env_list.is_extend() {
 				sys_list
 			} else {
 				vec![]
 			};
-			includes.extend(include_paths.iter().filter(|v| !v.is_empty()).map(T::from));
-			includes
+			paths.extend(env_list.iter().filter(|v| !v.is_empty()).map(T::from));
+			paths
 		} else {
 			sys_list
 		}
@@ -172,8 +172,7 @@ impl Library {
 		sys_link_libs: Vec<String>,
 		typ: Option<&'a str>,
 	) -> impl Iterator<Item = String> + 'a {
-		Self::process_library_list(Self::process_env_var_list(link_libs, sys_link_libs).into_iter())
-			.map(move |l| Self::emit_link_lib(&l, typ))
+		Self::process_library_list(Self::process_env_var_list(link_libs, sys_link_libs)).map(move |l| Self::emit_link_lib(&l, typ))
 	}
 
 	fn find_vcpkg_tool(vcpkg_root: &Path, tool_name: &str) -> Option<PathBuf> {
@@ -288,9 +287,7 @@ impl Library {
 	) -> Result<Self> {
 		eprintln!(
 			"=== Probing OpenCV library using cmake{}",
-			toolchain
-				.map(|tc| format!(" with toolchain: {}", tc.display()))
-				.unwrap_or_else(|| "".to_string())
+			toolchain.map_or_else(|| "".to_string(), |tc| format!(" with toolchain: {}", tc.display()))
 		);
 
 		let src_dir = MANIFEST_DIR.join("cmake");

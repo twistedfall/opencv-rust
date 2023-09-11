@@ -64,7 +64,7 @@ pub static FUNC_INJECT_MANUAL: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new
 						constness: Constness::Mut,
 						return_kind: ReturnKind::Fallible,
 						cpp_name: "set".into(),
-						custom_rust_leafname: None,
+						rust_custom_leafname: None,
 						rust_module: "core".into(),
 						doc_comment: "@brief Sets all or some of the array elements to the specified value.
 

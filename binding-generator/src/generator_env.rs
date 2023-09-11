@@ -105,7 +105,7 @@ impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 		if !raw_comment.is_empty() && !raw_comment.contains("@overload") && !raw_comment.contains("@copybrief") {
 			let name = entity.cpp_name(CppNameStyle::Reference).into_owned();
 			let line = entity.get_location().map_or(0, |l| l.get_file_location().line);
-			let defs = self.gen_env.func_comments.entry(name).or_insert_with(Vec::new);
+			let defs = self.gen_env.func_comments.entry(name).or_default();
 			defs.push((line, comment::strip_comment_markers(&raw_comment)));
 			// reverse sort due to how we're querying this; the amount of elements in this Vec doesn't go above 7
 			defs.sort_unstable_by(|(left_line, _), (right_line, _)| right_line.cmp(left_line));

@@ -329,21 +329,18 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			}
 			WalkAction::Continue
 		});
-		match self {
-			&Class::Clang { gen_env, .. } => {
-				for inject_func_fact in settings::FUNC_INJECT_MANUAL.get(gen_env.module()).into_iter().flatten() {
-					let inject_func: Func = inject_func_fact();
-					if constness_filter.map_or(true, |c| c == inject_func.constness()) {
-						if let Some(cls) = inject_func.kind().as_class_method() {
-							if cls == self {
-								out.push(inject_func);
-							}
-						}
+		let rust_module = match self {
+			Class::Clang { gen_env, .. } => gen_env.module(),
+			Class::Desc(desc) => desc.rust_module.as_ref(),
+		};
+		for inject_func_fact in settings::FUNC_INJECT_MANUAL.get(rust_module).into_iter().flatten() {
+			let inject_func: Func = inject_func_fact();
+			if constness_filter.map_or(true, |c| c == inject_func.constness()) {
+				if let Some(cls) = inject_func.kind().as_class_method() {
+					if cls == self {
+						out.push(inject_func);
 					}
 				}
-			}
-			Class::Desc(_) => {
-				// todo, if we drop the GeneratorEnv dependency for FuncFactory then it should be possible to use here too
 			}
 		}
 		out
@@ -408,7 +405,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								type_hint: FuncTypeHint::None,
 								kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
 								cpp_name: fld.cpp_name(CppNameStyle::Reference).into(),
-								custom_rust_leafname: None,
+								rust_custom_leafname: None,
 								rust_module: fld.rust_module().into(),
 								constness: fld.constness(),
 								return_kind: ReturnKind::infallible(fld_type_ref.return_as_naked()),
@@ -433,7 +430,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								type_hint: FuncTypeHint::None,
 								kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
 								cpp_name: format!("{}::set{}{rest}", fld.cpp_namespace(), first_letter.to_uppercase()).into(),
-								custom_rust_leafname: None,
+								rust_custom_leafname: None,
 								rust_module: fld.rust_module().into(),
 								constness: Constness::Mut,
 								doc_comment,

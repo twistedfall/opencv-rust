@@ -318,7 +318,9 @@ fn build_job_server() -> Result<Jobserver> {
 					reacquire_token_on_drop: own_token_released,
 				})
 			} else {
-				client.acquire_raw().expect("Can't reacquire build script thread token");
+				if own_token_released {
+					client.acquire_raw().expect("Can't reacquire build script thread token");
+				}
 				eprintln!(
 					"=== Available jobs from the environment created jobserver is: {available_jobs} or there is an error reading that value"
 				);

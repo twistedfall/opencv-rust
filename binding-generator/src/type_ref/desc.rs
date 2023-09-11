@@ -479,7 +479,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 				// there is no way to extract constant generic arguments (e.g. Vec<double, 3>) via libclang
 				// so we have to apply some hacks
 				static TYPE_EXTRACT: Lazy<Regex> = Lazy::new(|| {
-					Regex::new(r#"^.+<\s*(.+?)\s*(?:,\s*(.+?)\s*)?(?:,\s*(.+?)\s*)?(?:,\s*(.+?)\s*)?>$"#)
+					Regex::new(r"^.+<\s*(.+?)\s*(?:,\s*(.+?)\s*)?(?:,\s*(.+?)\s*)?(?:,\s*(.+?)\s*)?>$")
 						.expect("Can't compile static regex")
 				});
 				// getting declaration resolves constants so `Vec<int, nFeatures>` becomes `Vec<int, 18>`

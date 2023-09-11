@@ -8,13 +8,13 @@ use crate::debug::NameDebug;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef};
 use crate::writer::rust_native::func::cpp_return_map;
-use crate::{settings, Class, CompiledInterpolation, Element, Func, GeneratorEnv, IteratorExt, NamePool, StrExt};
+use crate::{settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
-fn gen_rust_class(c: &Class, opencv_version: &str, gen_env: &GeneratorEnv) -> String {
+fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	static BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/boxed.tpl.rs").compile_interpolation());
 
 	static IMPL_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/impl.tpl.rs").compile_interpolation());
@@ -104,13 +104,11 @@ fn gen_rust_class(c: &Class, opencv_version: &str, gen_env: &GeneratorEnv) -> St
 			const_methods.iter().filter(|m| m.kind().as_instance_method().is_some()),
 			&mut trait_methods_pool,
 			opencv_version,
-			gen_env,
 		);
 		let trait_mut_methods = rust_generate_funcs(
 			mut_methods.iter().filter(|m| m.kind().as_instance_method().is_some()),
 			&mut trait_methods_pool,
 			opencv_version,
-			gen_env,
 		);
 
 		let rust_local = type_ref.rust_name(NameStyle::ref_());
@@ -263,7 +261,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str, gen_env: &GeneratorEnv) -> St
 			needs_default_impl = true;
 		}
 	}
-	let needs_default_ctor = needs_default_ctor(class_kind, c, const_methods.iter().chain(mut_methods.iter()));
+	let needs_default_ctor = needs_default_ctor(class_kind, c, const_methods.iter().chain(&mut_methods));
 	if needs_default_ctor {
 		let extern_default_new = method_default_new(c.clone(), type_ref.clone()).identifier();
 		inherent_methods.push_str(&DEFAULT_CTOR.interpolate(&HashMap::from([("extern_default_new", extern_default_new)])));
@@ -283,14 +281,12 @@ fn gen_rust_class(c: &Class, opencv_version: &str, gen_env: &GeneratorEnv) -> St
 			}),
 			&mut inherent_methods_pool,
 			opencv_version,
-			gen_env,
 		)
 	} else {
 		rust_generate_funcs(
 			const_methods.iter().chain(mut_methods.iter()),
 			&mut inherent_methods_pool,
 			opencv_version,
-			gen_env,
 		)
 	});
 
@@ -300,7 +296,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str, gen_env: &GeneratorEnv) -> St
 		&BOXED_TPL
 	};
 
-	let consts = consts.iter().map(|c| c.gen_rust(opencv_version, gen_env)).join("");
+	let consts = consts.iter().map(|c| c.gen_rust(opencv_version)).join("");
 
 	let extern_delete = FuncDesc::method_delete(c.clone()).identifier();
 
@@ -339,7 +335,6 @@ fn rust_generate_funcs<'f, 'tu, 'ge>(
 	fns: impl Iterator<Item = &'f Func<'tu, 'ge>>,
 	name_pool: &mut NamePool,
 	opencv_version: &str,
-	gen_env: &GeneratorEnv,
 ) -> String
 where
 	'tu: 'ge,
@@ -353,7 +348,7 @@ where
 			let name = name.into();
 			func.to_mut().set_custom_rust_leafname(Some(name));
 		}
-		func.gen_rust(opencv_version, gen_env) // fixme
+		func.gen_rust(opencv_version)
 	})
 	.join("")
 }
@@ -425,22 +420,19 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str) -> String {
 		match self.kind() {
-			ClassKind::Simple | ClassKind::Boxed | ClassKind::BoxedForced => gen_rust_class(self, _opencv_version, gen_env),
+			ClassKind::Simple | ClassKind::Boxed | ClassKind::BoxedForced => gen_rust_class(self, _opencv_version),
 			ClassKind::System | ClassKind::Other => "".to_string(),
 		}
 	}
 
-	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
-		extern_functions(self)
-			.into_iter()
-			.map(|f| f.gen_rust_exports(gen_env))
-			.join("")
+	fn gen_rust_exports(&self) -> String {
+		extern_functions(self).iter().map(Func::gen_rust_exports).join("")
 	}
 
-	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
-		extern_functions(self).into_iter().map(|f| f.gen_cpp(gen_env)).join("")
+	fn gen_cpp(&self) -> String {
+		extern_functions(self).iter().map(Func::gen_cpp).join("")
 	}
 }
 

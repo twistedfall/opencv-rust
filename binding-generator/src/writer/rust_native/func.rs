@@ -9,9 +9,7 @@ use crate::field::Field;
 use crate::func::{cpp_disambiguate_names, FuncKind, OperatorKind, ReturnKind, Safety};
 use crate::type_ref::{Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef};
 use crate::writer::rust_native::disambiguate_single_name;
-use crate::{
-	reserved_rename, settings, CompiledInterpolation, Element, Func, GeneratorEnv, IteratorExt, NameDebug, StrExt, StringExt,
-};
+use crate::{reserved_rename, settings, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
 
 use super::comment;
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -42,6 +40,9 @@ impl RustElement for Func<'_, '_> {
 	}
 
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
+		if let Some(rust_custom_leafname) = self.rust_custom_leafname() {
+			return rust_custom_leafname.into();
+		}
 		let cpp_name = match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				if let Some(name) = gen_env.get_rename_config(entity).map(|c| &c.rename) {
@@ -52,97 +53,101 @@ impl RustElement for Func<'_, '_> {
 			}
 			Self::Desc(_) => self.cpp_name(CppNameStyle::Declaration),
 		};
-		let kind = self.kind();
-		let rust_name = if let Some(cls) = kind.as_constructor() {
-			let args = self.arguments();
-			#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
-			'ctor_name: loop {
-				if args.is_empty() {
-					break 'ctor_name "default";
-				} else if args.len() == 1 {
-					let arg_typeref = args[0].type_ref();
-					let class_arg = arg_typeref.source_smart().as_class();
-					if let Some(class_arg) = class_arg {
-						if *cls == class_arg {
-							break 'ctor_name if arg_typeref.constness().is_const() {
-								"copy"
-							} else {
-								"copy_mut"
-							};
-						} else if class_arg.descendants().contains(cls) {
-							break 'ctor_name "from_base";
+		let rust_name = if self.is_clone() {
+			"try_clone".into()
+		} else {
+			let kind = self.kind();
+			if let Some(cls) = kind.as_constructor() {
+				let args = self.arguments();
+				#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
+				'ctor_name: loop {
+					if args.is_empty() {
+						break 'ctor_name "default";
+					} else if args.len() == 1 {
+						let arg_typeref = args[0].type_ref();
+						let class_arg = arg_typeref.source_smart().as_class();
+						if let Some(class_arg) = class_arg {
+							if *cls == class_arg {
+								break 'ctor_name if arg_typeref.constness().is_const() {
+									"copy"
+								} else {
+									"copy_mut"
+								};
+							} else if class_arg.descendants().contains(cls) {
+								break 'ctor_name "from_base";
+							}
 						}
 					}
+					break 'ctor_name "new";
 				}
-				break 'ctor_name "new";
-			}
-			.into()
-		} else if kind.as_conversion_method().is_some() {
-			let mut name = self.return_type_ref().rust_name(NameStyle::decl()).into_owned();
-			name.cleanup_name();
-			format!("to_{name}").into()
-		} else if let Some((cls, kind)) = kind.as_operator() {
-			if cpp_name.starts_with("operator") {
-				let name = match kind {
-					OperatorKind::Unsupported => cpp_name.as_ref(),
-					OperatorKind::Index => {
-						if self.constness().is_const() {
-							"get"
-						} else {
-							"get_mut"
+				.into()
+			} else if kind.as_conversion_method().is_some() {
+				let mut name = self.return_type_ref().rust_name(NameStyle::decl()).into_owned();
+				name.cleanup_name();
+				format!("to_{name}").into()
+			} else if let Some((cls, kind)) = kind.as_operator() {
+				if cpp_name.starts_with("operator") {
+					let name = match kind {
+						OperatorKind::Unsupported => cpp_name.as_ref(),
+						OperatorKind::Index => {
+							if self.constness().is_const() {
+								"get"
+							} else {
+								"get_mut"
+							}
 						}
-					}
-					OperatorKind::Add => "add",
-					OperatorKind::Sub => "sub",
-					OperatorKind::Mul => "mul",
-					OperatorKind::Div => "div",
-					OperatorKind::Apply => "apply",
-					OperatorKind::Deref => {
-						if self.constness().is_const() {
-							"try_deref"
-						} else {
-							"try_deref_mut"
+						OperatorKind::Add => "add",
+						OperatorKind::Sub => "sub",
+						OperatorKind::Mul => "mul",
+						OperatorKind::Div => "div",
+						OperatorKind::Apply => "apply",
+						OperatorKind::Deref => {
+							if self.constness().is_const() {
+								"try_deref"
+							} else {
+								"try_deref_mut"
+							}
 						}
-					}
-					OperatorKind::Equals => "equals",
-					OperatorKind::NotEquals => "not_equals",
-					OperatorKind::GreaterThan => "greater_than",
-					OperatorKind::GreaterThanOrEqual => "greater_than_or_equal",
-					OperatorKind::LessThan => "less_than",
-					OperatorKind::LessThanOrEqual => "less_than_or_equal",
-					OperatorKind::Incr => "incr",
-					OperatorKind::Decr => "decr",
-					OperatorKind::And => "and",
-					OperatorKind::Or => "or",
-					OperatorKind::Xor => "xor",
-					OperatorKind::BitwiseNot => "negate",
-				};
-				if kind.add_args_to_name() {
-					let args = self.arguments();
-					let args = args.as_ref();
-					let is_single_arg_same_as_class = if let (Some(cls), [single_arg]) = (cls, args) {
-						single_arg
-							.type_ref()
-							.source()
-							.as_class()
-							.map_or(false, |single_class| &single_class == cls)
-					} else {
-						false
+						OperatorKind::Equals => "equals",
+						OperatorKind::NotEquals => "not_equals",
+						OperatorKind::GreaterThan => "greater_than",
+						OperatorKind::GreaterThanOrEqual => "greater_than_or_equal",
+						OperatorKind::LessThan => "less_than",
+						OperatorKind::LessThanOrEqual => "less_than_or_equal",
+						OperatorKind::Incr => "incr",
+						OperatorKind::Decr => "decr",
+						OperatorKind::And => "and",
+						OperatorKind::Or => "or",
+						OperatorKind::Xor => "xor",
+						OperatorKind::BitwiseNot => "negate",
 					};
-					if args.is_empty() || is_single_arg_same_as_class {
-						name.into()
+					if kind.add_args_to_name() {
+						let args = self.arguments();
+						let args = args.as_ref();
+						let is_single_arg_same_as_class = if let (Some(cls), [single_arg]) = (cls, args) {
+							single_arg
+								.type_ref()
+								.source()
+								.as_class()
+								.map_or(false, |single_class| &single_class == cls)
+						} else {
+							false
+						};
+						if args.is_empty() || is_single_arg_same_as_class {
+							name.into()
+						} else {
+							let args = args.iter().map(|arg| arg.type_ref().rust_simple_name()).join("_");
+							format!("{name}_{args}").into()
+						}
 					} else {
-						let args = args.iter().map(|arg| arg.type_ref().rust_simple_name()).join("_");
-						format!("{name}_{args}").into()
+						name.into()
 					}
 				} else {
-					name.into()
+					cpp_name
 				}
 			} else {
 				cpp_name
 			}
-		} else {
-			cpp_name
 		};
 		if let Some(&name) = settings::FUNC_RENAME.get(self.identifier().as_str()) {
 			if name.contains('+') {
@@ -163,18 +168,17 @@ impl RustElement for Func<'_, '_> {
 				const OVERLOAD: &str = "@overload";
 				if let Some(idx) = comment.find(OVERLOAD) {
 					let rep = if let Some(copy) = gen_env.get_func_comment(line, entity.cpp_name(CppNameStyle::Reference).as_ref()) {
-						format!("{copy}\n\n## Overloaded parameters\n")
+						Cow::Owned(format!("{copy}\n\n## Overloaded parameters\n"))
 					} else {
-						"This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.".to_string()
+						Cow::Borrowed("This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.")
 					};
 					comment.replace_range(idx..idx + OVERLOAD.len(), &rep);
 				}
-				static COPY_BRIEF: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@copybrief\s+(\w+)"#).unwrap());
+				static COPY_BRIEF: Lazy<Regex> = Lazy::new(|| Regex::new(r"@copybrief\s+(\w+)").unwrap());
 				comment.replace_in_place_regex_cb(&COPY_BRIEF, |comment, caps| {
 					let copy_name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
 					let mut copy_full_name = self.cpp_namespace().into_owned();
-					copy_full_name += "::";
-					copy_full_name += copy_name;
+					copy_full_name.extend_sep("::", copy_name);
 					if let Some(copy) = gen_env.get_func_comment(line, &copy_full_name) {
 						Some(copy.into())
 					} else {
@@ -216,17 +220,10 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
 
-		let name = if self.is_clone() {
-			Cow::Borrowed("try_clone")
-		} else if let Some(name_hint) = self.custom_rust_leafname() {
-			name_hint.into()
-		} else {
-			self.rust_leafname(FishStyle::No)
-		};
-
+		let name = self.rust_leafname(FishStyle::No);
 		let kind = self.kind();
 		let constness = self.constness();
 		let return_kind = self.return_kind();
@@ -396,7 +393,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		]))
 	}
 
-	fn gen_rust_exports(&self, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust_exports(&self) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust_extern.tpl.rs").compile_interpolation());
 
 		let identifier = self.identifier();
@@ -444,7 +441,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		]))
 	}
 
-	fn gen_cpp(&self, _gen_env: &GeneratorEnv) -> String {
+	fn gen_cpp(&self) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation());
 
 		let identifier = self.identifier();

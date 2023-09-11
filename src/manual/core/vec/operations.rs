@@ -7,7 +7,7 @@ use super::VecN;
 impl<T: AddAssign, const N: usize> AddAssign for VecN<T, N> {
 	#[inline]
 	fn add_assign(&mut self, rhs: Self) {
-		self.iter_mut().zip(rhs.into_iter()).for_each(|(out, v)| *out += v)
+		self.iter_mut().zip(rhs).for_each(|(out, v)| *out += v)
 	}
 }
 
@@ -16,7 +16,7 @@ impl<T: Add<Output = T> + Copy, const N: usize> Add for VecN<T, N> {
 
 	#[inline]
 	fn add(mut self, rhs: Self) -> Self::Output {
-		self.iter_mut().zip(rhs.into_iter()).for_each(|(out, v)| *out = *out + v);
+		self.iter_mut().zip(rhs).for_each(|(out, v)| *out = *out + v);
 		self
 	}
 }
@@ -24,7 +24,7 @@ impl<T: Add<Output = T> + Copy, const N: usize> Add for VecN<T, N> {
 impl<T: SubAssign, const N: usize> SubAssign for VecN<T, N> {
 	#[inline]
 	fn sub_assign(&mut self, rhs: Self) {
-		self.iter_mut().zip(rhs.into_iter()).for_each(|(out, v)| *out -= v)
+		self.iter_mut().zip(rhs).for_each(|(out, v)| *out -= v)
 	}
 }
 
@@ -33,7 +33,7 @@ impl<T: Sub<Output = T> + Copy, const N: usize> Sub for VecN<T, N> {
 
 	#[inline]
 	fn sub(mut self, rhs: Self) -> Self::Output {
-		self.iter_mut().zip(rhs.into_iter()).for_each(|(out, v)| *out = *out - v);
+		self.iter_mut().zip(rhs).for_each(|(out, v)| *out = *out - v);
 		self
 	}
 }

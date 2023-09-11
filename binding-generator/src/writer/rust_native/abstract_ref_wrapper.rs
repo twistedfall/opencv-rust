@@ -5,7 +5,7 @@ use once_cell::sync::Lazy;
 use crate::type_ref::Constness;
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::element::RustElement;
-use crate::{AbstractRefWrapper, CompiledInterpolation, GeneratorEnv, NameStyle, StrExt};
+use crate::{AbstractRefWrapper, CompiledInterpolation, NameStyle, StrExt};
 
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
@@ -20,7 +20,7 @@ impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 		format!("{}-{}", type_ref.rust_module(), type_ref.rust_safe_id(true))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str) -> String {
 		static RUST: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/abstract_ref_wrapper/rust.tpl.rs").compile_interpolation());
 

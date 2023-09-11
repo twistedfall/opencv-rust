@@ -10,7 +10,7 @@ use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
 use crate::writer::rust_native::RustStringExt;
-use crate::{Class, CompiledInterpolation, Element, Func, GeneratorEnv, IteratorExt, SmartPtr, StrExt};
+use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, SmartPtr, StrExt};
 
 use super::class::ClassExt;
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -63,7 +63,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/rust.tpl.rs").compile_interpolation());
 
 		static TRAIT_RAW_TPL: Lazy<CompiledInterpolation> =
@@ -160,23 +160,14 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		TPL.interpolate(&inter_vars)
 	}
 
-	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
-		extern_functions(self)
-			.into_iter()
-			.map(|f| f.gen_rust_exports(gen_env))
-			.join("")
+	fn gen_rust_exports(&self) -> String {
+		extern_functions(self).iter().map(Func::gen_rust_exports).join("")
 	}
 
-	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
+	fn gen_cpp(&self) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation());
 
-		TPL.interpolate(
-			&[(
-				"methods",
-				extern_functions(self).into_iter().map(|f| f.gen_cpp(gen_env)).join(""),
-			)]
-			.into(),
-		)
+		TPL.interpolate(&[("methods", extern_functions(self).iter().map(Func::gen_cpp).join(""))].into())
 	}
 }
 

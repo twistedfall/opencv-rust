@@ -17,7 +17,7 @@ pub struct FuncDesc<'tu, 'ge> {
 	// fixme, this should be just a `is_infallible` property, but `method_get` in `Vector` forces `InfallibleViaArg`
 	pub return_kind: ReturnKind,
 	pub cpp_name: Rc<str>,
-	pub custom_rust_leafname: Option<Rc<str>>,
+	pub rust_custom_leafname: Option<Rc<str>>,
 	pub rust_module: Rc<str>,
 	pub doc_comment: Rc<str>,
 	pub def_loc: DefinitionLocation,
@@ -46,7 +46,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 			constness,
 			return_kind,
 			cpp_name: cpp_name.into(),
-			custom_rust_leafname: None,
+			rust_custom_leafname: None,
 			rust_module: rust_module.into(),
 			doc_comment: "".into(),
 			def_loc: DefinitionLocation::Generated,

@@ -70,9 +70,9 @@ pub fn render_doc_comment_with_processor(
 	let mut out = strip_comment_markers(doc_comment);
 	out.replace_in_place("\r\n", "\n");
 	// module titles
-	static MODULE_TITLE_1: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)\s*@[}{].*$"#).unwrap());
-	static MODULE_TITLE_2: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@defgroup [^ ]+ (.*)"#).unwrap());
-	static MODULE_TITLE_3: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)^.*?@addtogroup\s+.+"#).unwrap());
+	static MODULE_TITLE_1: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)\s*@[}{].*$").unwrap());
+	static MODULE_TITLE_2: Lazy<Regex> = Lazy::new(|| Regex::new(r"@defgroup [^ ]+ (.*)").unwrap());
+	static MODULE_TITLE_3: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^.*?@addtogroup\s+.+").unwrap());
 	out.replace_in_place_regex(&MODULE_TITLE_1, "");
 	out.replace_in_place_regex(&MODULE_TITLE_2, r#"# $1"#);
 	out.replace_in_place_regex(&MODULE_TITLE_3, "");
@@ -87,7 +87,7 @@ pub fn render_doc_comment_with_processor(
 	out.replace_in_place("@note", "\nNote:");
 
 	// code blocks, don't run them during tests
-	static CODE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@code(?: ?\{.+?})?"#).unwrap());
+	static CODE: Lazy<Regex> = Lazy::new(|| Regex::new(r"@code(?: ?\{.+?})?").unwrap());
 	out.replace_in_place_regex(&CODE, "```C++");
 	out.replace_in_place("@endcode", "```\n");
 
@@ -95,31 +95,17 @@ pub fn render_doc_comment_with_processor(
 	out.replace_in_place("@name ", "");
 
 	// snippets
-	static SNIPPET: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@snippet\s+([\w/.]+)\s+([\w-]+)"#).unwrap());
-	out.replace_in_place_regex_cb(&SNIPPET, |s, caps| {
-		let (path_start, path_end) = caps.get(1).expect("Impossible");
-		let path = &s[path_start..path_end];
-		let (name_start, name_end) = caps.get(2).expect("Impossible");
+	static SNIPPET: Lazy<Regex> = Lazy::new(|| Regex::new(r"@snippet\s+([\w/.]+)\s+([\w-]+)").unwrap());
+	out.replace_in_place_regex_cb(&SNIPPET, |comment, caps| {
+		let path = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
+		let name = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
 		if path.starts_with("samples/") {
 			// fixme: hack to detect hdf snippets
-			Some(
-				format!(
-					"[{name}](https://github.com/opencv/opencv_contrib/blob/{version}/modules/hdf/{path}#L1)",
-					name = &s[name_start..name_end],
-					version = opencv_version,
-					path = path,
-				)
-				.into(),
-			)
+			Some(format!("[{name}](https://github.com/opencv/opencv_contrib/blob/{opencv_version}/modules/hdf/{path}#L1)",).into())
 		} else {
 			Some(
-				format!(
-					"[{name}](https://github.com/opencv/opencv/blob/{version}/samples/cpp/tutorial_code/{path}#L1)",
-					name = &s[name_start..name_end],
-					version = opencv_version,
-					path = path,
-				)
-				.into(),
+				format!("[{name}](https://github.com/opencv/opencv/blob/{opencv_version}/samples/cpp/tutorial_code/{path}#L1)",)
+					.into(),
 			)
 		}
 	});
@@ -129,8 +115,8 @@ pub fn render_doc_comment_with_processor(
 	out.replace_in_place("'cv::Exception'", r#""cv::Exception""#);
 
 	// see also block
-	static SEE_ALSO_BLOCK: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)^\s*@(sa|see)\s+"#).unwrap());
-	static SEE_ALSO_INLINE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@(sa|see)\s+"#).unwrap());
+	static SEE_ALSO_BLOCK: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^\s*@(sa|see)\s+").unwrap());
+	static SEE_ALSO_INLINE: Lazy<Regex> = Lazy::new(|| Regex::new(r"@(sa|see)\s+").unwrap());
 	if out.replacen_in_place_regex(&SEE_ALSO_BLOCK, 1, "## See also\n") {
 		out.replace_in_place_regex(&SEE_ALSO_INLINE, "");
 	} else {
@@ -138,57 +124,54 @@ pub fn render_doc_comment_with_processor(
 	}
 
 	// citation links
-	static CITE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@cite\s+([\w:]+)"#).unwrap());
+	static CITE: Lazy<Regex> = Lazy::new(|| Regex::new(r"@cite\s+([\w:]+)").unwrap());
 	out.replace_in_place_regex(
 		&CITE,
 		&format!("[$1](https://docs.opencv.org/{opencv_version}/d0/de3/citelist.html#CITEREF_$1)"),
 	);
 
 	// references
-	static REF: Lazy<Regex> = Lazy::new(|| Regex::new(r#"@ref\s+([\w:]+)"#).unwrap());
+	static REF: Lazy<Regex> = Lazy::new(|| Regex::new(r"@ref\s+([\w:]+)").unwrap());
 	out.replace_in_place_regex(&REF, "[$1]");
 
 	// images
-	static IMAGE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"!\[(.*?)]\((?:.*/)?(.+)?\)"#).unwrap());
+	static IMAGE: Lazy<Regex> = Lazy::new(|| Regex::new(r"!\[(.*?)]\((?:.*/)?(.+)?\)").unwrap());
 	out.replace_in_place_regex(&IMAGE, &format!("![$1](https://docs.opencv.org/{opencv_version}/$2)"));
 
 	// returns
-	static RETURNS: Lazy<Regex> = Lazy::new(|| Regex::new(r#".*?@returns?\s*"#).unwrap());
+	static RETURNS: Lazy<Regex> = Lazy::new(|| Regex::new(r".*?@returns?\s*").unwrap());
 	out.replace_in_place_regex(&RETURNS, "## Returns\n");
 
 	// parameter list
 	static PARAM_HEADER: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)^(.*?@param)"#).unwrap());
-	static PARAM: Lazy<Regex> = Lazy::new(|| Regex::new(r#".*?@param\s*(?:\[in]|(\[out]))?\s+(\w+) *(.*)"#).unwrap());
+	static PARAM: Lazy<Regex> = Lazy::new(|| Regex::new(r".*?@param\s*(?:\[in]|(\[out]))?\s+(\w+) *(.*)").unwrap());
 	out.replacen_in_place_regex(&PARAM_HEADER, 1, "## Parameters\n$1");
 	out.replace_in_place_regex(&PARAM, "* $2:$1 $3");
 
 	// deprecated
-	static DEPRECATED: Lazy<Regex> = Lazy::new(|| Regex::new(r#".*?@deprecated\s+(.+)"#).unwrap());
+	static DEPRECATED: Lazy<Regex> = Lazy::new(|| Regex::new(r".*?@deprecated\s+(.+)").unwrap());
 	let mut deprecated = None;
-	out.replace_in_place_regex_cb(&DEPRECATED, |out, caps| {
-		let (cap_start, cap_end) = caps.get(1).expect("Impossible");
-		let deprecated_msg = out[cap_start..cap_end].to_string();
+	out.replace_in_place_regex_cb(&DEPRECATED, |comment, caps| {
+		let deprecated_msg = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible").to_string();
 		let out = format!("\n**Deprecated**: {deprecated_msg}");
 		deprecated = Some(deprecated_msg);
 		Some(out.into())
 	});
 
 	// leading dashes
-	static LEADING_DASH: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)^(\s*)-(\s{2,})"#).unwrap());
+	static LEADING_DASH: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^(\s*)-(\s{2,})").unwrap());
 	out.replace_in_place_regex(&LEADING_DASH, "$1*$2");
 
 	// math expressions
-	static BLOCK_FORMULA: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?s)\\f\[(.*?)\\f]"#).unwrap());
-	static INLINE_FORMULA: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?s)\\f\$(.*?)\\f\$"#).unwrap());
+	static BLOCK_FORMULA: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?s)\\f\[(.*?)\\f]").unwrap());
+	static INLINE_FORMULA: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?s)\\f\$(.*?)\\f\$").unwrap());
 	out.replace_in_place_regex_cb(&BLOCK_FORMULA, |out, caps| {
-		let (cap_start, cap_end) = caps.get(1).expect("Impossible");
-		let formula = preprocess_formula(&out[cap_start..cap_end]);
+		let formula = preprocess_formula(caps.get(1).map(|(s, e)| &out[s..e]).expect("Impossible"));
 		let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
 		Some(format!("![block formula](https://latex.codecogs.com/png.latex?{encoded})").into())
 	});
 	out.replace_in_place_regex_cb(&INLINE_FORMULA, |out, caps| {
-		let (cap_start, cap_end) = caps.get(1).expect("Impossible");
-		let formula = preprocess_formula(&out[cap_start..cap_end]);
+		let formula = preprocess_formula(caps.get(1).map(|(s, e)| &out[s..e]).expect("Impossible"));
 		let encoded = utf8_percent_encode(&formula, NON_ALPHANUMERIC);
 		Some(format!("![inline formula](https://latex.codecogs.com/png.latex?{encoded})").into())
 	});
@@ -200,11 +183,11 @@ pub fn render_doc_comment_with_processor(
 	out.replace_in_place_regex(&URL, "$1<$2>");
 
 	// escapes
-	static ESCAPE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)\\n$"#).unwrap());
+	static ESCAPE: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)\\n$").unwrap());
 	out.replace_in_place_regex(&ESCAPE, "\n");
 
 	// catch sequences of 4 indents and reduce them to avoid cargo test running them as code
-	static INDENTS: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)^(\s{3}|\s{7}|\s{11}|\s{15}|\s{19})\s(\S)"#).unwrap());
+	static INDENTS: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^(\s{3}|\s{7}|\s{11}|\s{15}|\s{19})\s(\S)").unwrap());
 	out.replace_in_place_regex(&INDENTS, "$1$2");
 
 	post_processor(&mut out);

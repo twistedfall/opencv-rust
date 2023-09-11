@@ -158,7 +158,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			},
 			Self::Desc(desc) => {
 				if desc.type_hint != type_hint {
-					let mut desc = Rc::try_unwrap(desc).unwrap_or_else(|desc| (*desc).clone());
+					let mut desc = Rc::try_unwrap(desc).unwrap_or_else(|desc| desc.as_ref().clone());
 					desc.type_hint = type_hint;
 					Self::Desc(Rc::new(desc))
 				} else {
