@@ -61,21 +61,16 @@ impl RustElement for Func<'_, '_> {
 					break 'ctor_name "default";
 				} else if args.len() == 1 {
 					let arg_typeref = args[0].type_ref();
-					let class_arg = arg_typeref.as_reference().and_then(|typ| {
-						if let Some(ptr) = typ.as_smart_ptr() {
-							ptr.pointee()
-						} else {
-							typ
-						}
-						.as_class()
-					});
-					if let Some(other) = class_arg {
-						if *cls == other {
+					let class_arg = arg_typeref.source_smart().as_class();
+					if let Some(class_arg) = class_arg {
+						if *cls == class_arg {
 							break 'ctor_name if arg_typeref.constness().is_const() {
 								"copy"
 							} else {
 								"copy_mut"
 							};
+						} else if class_arg.descendants().contains(cls) {
+							break 'ctor_name "from_base";
 						}
 					}
 				}

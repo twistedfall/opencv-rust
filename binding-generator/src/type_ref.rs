@@ -229,6 +229,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	/// Like source(), but also removes indirection by `Ptr`
+	pub fn source_smart(&self) -> TypeRef<'tu, 'ge> {
+		let source = self.source();
+		match source.kind().as_ref() {
+			TypeRefKind::SmartPtr(ptr) => ptr.pointee().source_smart(),
+			_ => source,
+		}
+	}
+
 	/// Like source(), but digs down to the elements of arrays
 	pub fn base(&self) -> TypeRef<'tu, 'ge> {
 		let source = self.source();
