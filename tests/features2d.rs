@@ -2,7 +2,7 @@
 
 use std::path::PathBuf;
 
-use opencv::core::Size;
+use opencv::core::{ Size, NORM_HAMMING, no_array };
 use opencv::prelude::*;
 use opencv::types::VectorOfKeyPoint;
 use opencv::{features2d, imgcodecs, Result};
@@ -45,17 +45,11 @@ fn orb_bruteforce_match() -> Result<()> {
 	assert_eq!(size, kp_b.len());
 	assert_eq!(Size::new(32, size as i32), des_b.size()?);
 
-    let mut bf_matcher = features2d::BFMatcher::create(NORM_HAMMING, true).unwrap();
-
-    // Match descriptors
-    let mut query_descriptors: Vector<Mat> = Vector::new();
-	query_descriptors.push(des_a);
-	query_descriptors.push(des_b);
+    let bf_matcher = features2d::BFMatcher::create(NORM_HAMMING, true).unwrap();
 
     let mut matches = opencv::types::VectorOfDMatch::new();
-    bf_matcher.match_(&query_descriptors, &mut matches, &no_array()).unwrap();
+    bf_matcher.train_match(&des_a, &des_b, &mut matches, &no_array()).unwrap();
 
 	assert_ne!(matches.len(), 0);  // expected many matches since images are equal
-	println!("Match  {:?}", matches);
 	Ok(())
 }
