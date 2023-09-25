@@ -1,5 +1,6 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
+use std::iter;
 
 use once_cell::sync::Lazy;
 
@@ -7,7 +8,7 @@ use crate::class::ClassKind;
 use crate::debug::NameDebug;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef};
-use crate::writer::rust_native::func::cpp_return_map;
+use crate::writer::rust_native::func::{cpp_return_map, FuncExt};
 use crate::{settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -341,15 +342,21 @@ where
 	'ge: 'f,
 {
 	let fns = fns.filter(|f| f.exclude_kind().is_included());
-	fns.map(move |func| {
-		let mut func = Cow::Borrowed(func);
-		let mut name = func.rust_leafname(FishStyle::No);
-		if name_pool.make_unique_name(&mut name).is_changed() {
-			let name = name.into();
-			func.to_mut().set_custom_rust_leafname(Some(name));
+	fns.flat_map(move |func| {
+		let companion_funcs = func.companion_functions();
+		let mut funcs = Vec::with_capacity(companion_funcs.len() + 1);
+		funcs.push(Cow::Borrowed(func));
+		funcs.extend(companion_funcs.into_iter().map(Cow::Owned));
+		for func in &mut funcs {
+			let mut name = func.rust_leafname(FishStyle::No);
+			if name_pool.make_unique_name(&mut name).is_changed() {
+				let name = name.into();
+				func.to_mut().set_rust_custom_leafname(Some(name));
+			}
 		}
-		func.gen_rust(opencv_version)
+		funcs
 	})
+	.map(|f| f.gen_rust(opencv_version))
 	.join("")
 }
 
@@ -445,6 +452,10 @@ fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let mut out = methods
 		.into_iter()
 		.filter(|m| m.exclude_kind().is_included())
+		.flat_map(|m| {
+			let companion_func = m.companion_functions();
+			iter::once(m).chain(companion_func)
+		})
 		.collect::<Vec<_>>();
 
 	if c.has_implicit_clone() {

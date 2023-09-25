@@ -1,20 +1,106 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::fmt::Write;
+use std::rc::Rc;
 
 use once_cell::sync::Lazy;
 use regex::Regex;
 
+use crate::comment as crate_comment;
 use crate::field::Field;
-use crate::func::{cpp_disambiguate_names, FuncKind, OperatorKind, ReturnKind, Safety};
+use crate::func::{cpp_disambiguate_names, FuncCppBody, FuncDesc, FuncKind, FuncRustBody, OperatorKind, ReturnKind, Safety};
 use crate::type_ref::{Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef};
 use crate::writer::rust_native::disambiguate_single_name;
-use crate::{reserved_rename, settings, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
+use crate::{
+	reserved_rename, settings, CompiledInterpolation, Element, Func, FuncTypeHint, IteratorExt, NameDebug, StrExt, StringExt,
+};
 
 use super::comment;
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
 use super::{rust_disambiguate_names, RustNativeGeneratedElement};
+
+pub trait FuncExt<'tu, 'ge> {
+	fn companion_func_default_args(&self) -> Option<Func<'tu, 'ge>>;
+	fn companion_functions(&self) -> Vec<Func<'tu, 'ge>>;
+}
+
+impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
+	/// Companion function with all optional arguments as defaults
+	fn companion_func_default_args(&self) -> Option<Func<'tu, 'ge>> {
+		fn viable_default_arg(arg: &Field) -> bool {
+			arg.default_value().is_some() && !arg.is_user_data() && !arg.type_ref().as_function().is_some()
+		}
+
+		let identifier = self.identifier();
+		if settings::FUNC_MANUAL.contains_key(identifier.as_str()) || self.kind().as_field_accessor().is_some() {
+			return None;
+		}
+
+		let args = self.arguments();
+		// default args are usually in the end
+		if args.iter().rev().any(viable_default_arg) {
+			let first_non_default_arg_idx = args.iter().rposition(|arg| !viable_default_arg(arg));
+			let (args_without_def, args_with_def) = if let Some(first_non_default_arg_idx) = first_non_default_arg_idx {
+				if first_non_default_arg_idx + 1 == args.len() {
+					return None;
+				}
+				(&args[..=first_non_default_arg_idx], &args[first_non_default_arg_idx..])
+			} else {
+				([].as_slice(), args.as_ref())
+			};
+			let original_rust_leafname = self.rust_leafname(FishStyle::No);
+			let mut doc_comment = crate_comment::strip_comment_markers(&self.doc_comment());
+			let rust_leafname = format!("{}_def", original_rust_leafname);
+			let default_args = comment::render_cpp_default_args(args_with_def);
+			if !doc_comment.is_empty() {
+				doc_comment.push_str("\n\n");
+			}
+			write!(
+				&mut doc_comment,
+				"## Note\nThis alternative version of #{original_rust_leafname} function uses the following default values for its arguments:\n{default_args}"
+			)
+				.expect("Write to String doesn't fail");
+			let desc = match self.clone() {
+				Func::Clang { .. } => FuncDesc {
+					kind: self.kind().into_owned(),
+					type_hint: FuncTypeHint::None,
+					constness: self.constness(),
+					return_kind: self.return_kind(),
+					cpp_name: self.cpp_name(CppNameStyle::Reference).into(),
+					rust_custom_leafname: Some(rust_leafname.into()),
+					rust_module: self.rust_module().into(),
+					doc_comment: doc_comment.into(),
+					def_loc: self.file_line_name().location,
+					arguments: args_without_def.into(),
+					return_type_ref: self.return_type_ref(),
+					cpp_body: FuncCppBody::Auto,
+					rust_body: FuncRustBody::Auto,
+				},
+				Func::Desc(desc) => {
+					let mut desc = Rc::try_unwrap(desc).unwrap_or_else(|desc| desc.as_ref().clone());
+					desc.arguments = args_without_def.into();
+					desc.rust_custom_leafname = Some(rust_leafname.into());
+					desc
+				}
+			};
+			let out = Self::new_desc(desc);
+			if out.exclude_kind().is_included() {
+				Some(out)
+			} else {
+				None
+			}
+		} else {
+			None
+		}
+	}
+
+	fn companion_functions(&self) -> Vec<Func<'tu, 'ge>> {
+		let mut out = vec![];
+		out.extend(self.companion_func_default_args());
+		out
+	}
+}
 
 impl RustElement for Func<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
@@ -190,26 +276,13 @@ impl RustElement for Func<'_, '_> {
 			Self::Desc(desc) => desc.doc_comment.as_ref().into(),
 		};
 		comment::render_doc_comment_with_processor(&comment, prefix, opencv_version, |out| {
-			let mut default_args_comment = String::with_capacity(1024);
-			for arg in self.arguments().as_ref() {
-				if let Some(def_val) = arg.default_value() {
-					if default_args_comment.is_empty() {
-						default_args_comment += "## C++ default parameters";
-					}
-					write!(
-						&mut default_args_comment,
-						"\n* {name}: {val}",
-						name = arg.rust_leafname(FishStyle::No),
-						val = def_val
-					)
-					.expect("write! to String shouldn't fail");
-				}
-			}
+			let default_args_comment = comment::render_cpp_default_args(self.arguments().as_ref());
 			if !default_args_comment.is_empty() {
 				if !out.is_empty() {
 					out.push_str("\n\n");
 				}
-				out.push_str(&default_args_comment);
+				out.push_str("## C++ default parameters\n");
+				out.push_str(default_args_comment.trim_end());
 			}
 		})
 	}

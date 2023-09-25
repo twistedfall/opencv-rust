@@ -5,6 +5,9 @@ use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
 use regex::Regex;
 
 use crate::comment::strip_comment_markers;
+use crate::field::Field;
+use crate::type_ref::FishStyle;
+use crate::writer::rust_native::element::RustElement;
 use crate::{StrExt, StringExt};
 
 fn preprocess_formula(formula: &str) -> String {
@@ -206,6 +209,17 @@ pub fn render_doc_comment_with_processor(
 	};
 	if let Some(deprecated) = deprecated {
 		write!(out, "\n#[deprecated = \"{deprecated}\"]").expect("write! to String shouldn't fail");
+	}
+	out
+}
+
+pub fn render_cpp_default_args(args: &[Field]) -> String {
+	let mut out = String::with_capacity(args.len() * 64);
+	for arg in args {
+		if let Some(def_val) = arg.default_value() {
+			writeln!(&mut out, "* {name}: {def_val}", name = arg.rust_leafname(FishStyle::No))
+				.expect("write! to String shouldn't fail");
+		}
 	}
 	out
 }

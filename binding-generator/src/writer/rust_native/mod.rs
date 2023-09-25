@@ -15,6 +15,7 @@ pub use string_ext::RustStringExt;
 use crate::field::Field;
 use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
+use crate::writer::rust_native::func::FuncExt;
 use crate::{
 	opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func, GeneratedType, GeneratorVisitor,
 	IteratorExt, StrExt, Typedef,
@@ -140,10 +141,13 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 
 	fn visit_func(&mut self, func: Func) {
 		self.emit_debug_log(&func);
-		let name = func.identifier();
-		self.rust_funcs.push((name.clone(), func.gen_rust(self.opencv_version)));
-		self.export_funcs.push((name.clone(), func.gen_rust_exports()));
-		self.cpp_funcs.push((name, func.gen_cpp()));
+		let companion_funcs = func.companion_functions();
+		for func in iter::once(func).chain(companion_funcs) {
+			let name = func.identifier();
+			self.rust_funcs.push((name.clone(), func.gen_rust(self.opencv_version)));
+			self.export_funcs.push((name.clone(), func.gen_rust_exports()));
+			self.cpp_funcs.push((name, func.gen_cpp()));
+		}
 	}
 
 	fn visit_typedef(&mut self, typedef: Typedef) {

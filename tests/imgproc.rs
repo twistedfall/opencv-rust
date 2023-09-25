@@ -46,7 +46,7 @@ fn get_rotation_matrix_2d() -> Result<()> {
 fn line_iterator() -> Result<()> {
 	let mut data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12u8];
 	let mat = unsafe { Mat::new_rows_cols_with_data(4, 3, u8::opencv_type(), data.as_mut_ptr() as *mut _, Mat_AUTO_STEP) }?;
-	let mut line_iter = imgproc::LineIterator::new(&mat, Point::new(0, 0), Point::new(2, 2), 8, false)?;
+	let mut line_iter = imgproc::LineIterator::new_def(&mat, Point::new(0, 0), Point::new(2, 2))?;
 	assert_eq!(3, line_iter.count());
 	assert_eq!(Point::new(0, 0), line_iter.pos()?);
 	assert_eq!(1, unsafe { *line_iter.try_deref_mut()?.as_ref().unwrap() });

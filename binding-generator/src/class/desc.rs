@@ -147,9 +147,4 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 	pub fn cv_dnn_dict_value() -> Class<'tu, 'ge> {
 		Class::new_desc(Self::boxed("cv::dnn::DictValue", "dnn"))
 	}
-
-	/// `cv::ORB`
-	pub fn cv_orb() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::boxed("cv::ORB", "features2d"))
-	}
 }

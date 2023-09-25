@@ -6,7 +6,6 @@ use crate::class::ClassDesc;
 use crate::debug::DefinitionLocation;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
-use crate::smart_ptr::{SmartPtr, SmartPtrDesc};
 use crate::type_ref::{Constness, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::{Func, FuncTypeHint};
 
@@ -119,22 +118,6 @@ pub static FUNC_INJECT_MANUAL: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new
 					FuncCppBody::Auto,
 					FuncRustBody::Auto,
 					TypeRef::new_class(ClassDesc::cv_dnn_layerparams()),
-				))
-			}],
-		),
-		(
-			"features2d",
-			vec![|| {
-				Func::new_desc(FuncDesc::new(
-					FuncKind::StaticMethod(ClassDesc::cv_orb()),
-					Constness::Const,
-					ReturnKind::Fallible,
-					"create",
-					"features2d",
-					vec![],
-					FuncCppBody::Auto,
-					FuncRustBody::Auto,
-					TypeRef::new_smartptr(SmartPtr::new_desc(SmartPtrDesc::new(TypeRef::new_class(ClassDesc::cv_orb())))),
 				))
 			}],
 		),

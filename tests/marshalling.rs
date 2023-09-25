@@ -61,7 +61,7 @@ fn callback() -> Result<()> {
 		{
 			if let Err(Error {
 				code: core::StsError, ..
-			}) = highgui::named_window("test_1", 0)
+			}) = highgui::named_window_def("test_1")
 			{
 				// means that OpenCV is not built with GUI support, just skip the test
 				return Ok(());
@@ -87,7 +87,7 @@ fn callback() -> Result<()> {
 		}
 
 		{
-			highgui::named_window("test_2", 0)?;
+			highgui::named_window_def("test_2")?;
 			let cb_value = Arc::new(Mutex::new(0));
 			highgui::create_trackbar(
 				"test_track_2",
