@@ -1517,7 +1517,7 @@ mod core_sys {
 		pub fn cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorR(it: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_node_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		#[cfg(not(target_os = "windows"))]
-		pub fn cv_SparseMatConstIterator_operatorSS(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
+		// pub fn cv_SparseMatConstIterator_operatorSS(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_operatorAA(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_seekEnd(instance: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_SparseMatConstIterator_propM_const(instance: *const c_void) -> *mut c_void;
