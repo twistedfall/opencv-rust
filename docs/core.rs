@@ -23132,16 +23132,16 @@ pub mod core {
 			Ok(ret)
 		}
 		
-		// #[inline]
-		// #[cfg(not(target_os = "windows"))]
-		// pub fn from_gpumat_vec(d_mat: &core::Vector<core::GpuMat>) -> Result<core::_OutputArray> {
-		// 	return_send!(via ocvrs_return);
-		// 	unsafe { sys::cv__OutputArray__OutputArray_const_vectorLGpuMatGR(d_mat.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
-		// 	return_receive!(unsafe ocvrs_return => ret);
-		// 	let ret = ret.into_result()?;
-		// 	let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
-		// 	Ok(ret)
-		// }
+		#[inline]
+		#[cfg(not(target_os = "windows"))]
+		pub fn from_gpumat_vec(d_mat: &core::Vector<core::GpuMat>) -> Result<core::_OutputArray> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_const_vectorLGpuMatGR(d_mat.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			Ok(ret)
+		}
 		
 		#[inline]
 		pub fn new_2(buf: &core::Buffer) -> Result<core::_OutputArray> {
