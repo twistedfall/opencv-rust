@@ -210,7 +210,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv__OutputArray__OutputArray_const_HostMemR", "from_hostmem"),
 		("cv__OutputArray__OutputArray_const_MatR", "from_mat"),
 		("cv__OutputArray__OutputArray_const_UMatR", "from_umat"),
-		// ("cv__OutputArray__OutputArray_const_vectorLGpuMatGR", "from_gpumat_vec"),
+		("cv__OutputArray__OutputArray_const_vectorLGpuMatGR", "from_gpumat_vec"),
 		("cv__OutputArray__OutputArray_const_vectorLMatGR", "from_mat_vec"),
 		("cv__OutputArray__OutputArray_const_vectorLUMatGR", "from_umat_vec"),
 		("cv__OutputArray__OutputArray_vectorLGpuMatGR", "from_gpumat_vec_mut"),
