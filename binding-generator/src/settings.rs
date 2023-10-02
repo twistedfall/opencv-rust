@@ -551,8 +551,8 @@ pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {
 		// ### core ###
 		// ("cv_SparseMatConstIterator_operatorSS", ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)")),
 		// ("cv__OutputArray__OutputArray_const_vectorLGpuMatGR", ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)")),
-		("cv_SparseMatConstIterator_operatorSS", ("not(target_os = \"ios\")", "false")),
-		("cv__OutputArray__OutputArray_const_vectorLGpuMatGR", ("not(target_os = \"ios\")", "false")),
+		("cv_SparseMatConstIterator_operatorSS", ("any()", "false")),
+		("cv__OutputArray__OutputArray_const_vectorLGpuMatGR", ("any()", "false")),
 
 		// ### imgproc ###
 		("cv_getRotationMatrix2D__Point2f_double_double", ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)")),
