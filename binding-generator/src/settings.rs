@@ -210,10 +210,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv__OutputArray__OutputArray_const_HostMemR", "from_hostmem"),
 		("cv__OutputArray__OutputArray_const_MatR", "from_mat"),
 		("cv__OutputArray__OutputArray_const_UMatR", "from_umat"),
-		("cv__OutputArray__OutputArray_const_vectorLGpuMatGR", "from_gpumat_vec"),
 		("cv__OutputArray__OutputArray_const_vectorLMatGR", "from_mat_vec"),
 		("cv__OutputArray__OutputArray_const_vectorLUMatGR", "from_umat_vec"),
-		("cv__OutputArray__OutputArray_vectorLGpuMatGR", "from_gpumat_vec_mut"),
+		("cv__OutputArray__OutputArray_vectorLGpuMatGR", "from_gpumat_vec"),
 		("cv__OutputArray__OutputArray_vectorLMatGR", "from_mat_vec_mut"),
 		("cv__OutputArray__OutputArray_vectorLUMatGR", "from_umat_vec_mut"),
 		("cv__OutputArray_create_const_Size_int_int_bool_DepthMask", "+_size"),
@@ -516,7 +515,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
 		// ### core ###
 		("cv_MatConstIterator_MatConstIterator_const_MatX_const_intX", "-"),
+		("cv_SparseMatConstIterator_operatorSS", "-"),
 		("cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX", "-"),
+		("cv__OutputArray__OutputArray_const_vectorLGpuMatGR", "-"),
 		("cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR", "-"),
 		("cv_getImpl_vectorLintGR_vectorLStringGR", "-"),
 		// ### dnn ###
@@ -548,10 +549,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 /// identifier => (rust_attr, cpp_attr)
 pub static FUNC_CFG_ATTR: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {
 	HashMap::from([
-		// ### core ###
-		("cv_SparseMatConstIterator_operatorSS", ("any()", "false")),
-		("cv__OutputArray__OutputArray_const_vectorLGpuMatGR", ("any()", "false")),
-
 		// ### imgproc ###
 		("cv_getRotationMatrix2D__Point2f_double_double", ("not(target_os = \"windows\")", "!defined(OCVRS_TARGET_OS_WINDOWS)")),
 
