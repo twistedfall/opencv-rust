@@ -6,11 +6,25 @@ use std::{env, fmt, iter};
 
 use dunce::canonicalize;
 use semver::Version;
+use once_cell::sync::Lazy;
 
 use super::cmake_probe::CmakeProbe;
 use super::{
 	cleanup_lib_filename, get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_OS_WINDOWS, TARGET_VENDOR_APPLE,
 };
+
+static FEATURES: Lazy<HashSet<String>> = Lazy::new(|| {
+	let mut features = HashSet::new();
+	for (key, _ ) in env::vars() {
+		if key.starts_with("CARGO_FEATURE_") {
+			let feature = key.trim_start_matches("CARGO_FEATURE_").to_ascii_lowercase();
+			features.insert(feature);
+		}
+	}
+	features.insert("core".to_string());
+
+	features
+});
 
 struct PackageName;
 
@@ -173,7 +187,17 @@ impl Library {
 		typ: Option<&'a str>,
 	) -> impl Iterator<Item = String> + 'a {
 		Self::process_library_list(Self::process_env_var_list(link_libs, sys_link_libs).into_iter())
-			.map(move |l| Self::emit_link_lib(&l, typ))
+			.filter_map(move |l| {
+				if l.starts_with("opencv_") {
+					if FEATURES.contains(l.trim_start_matches("opencv_")) {
+						Some(Self::emit_link_lib(&l, typ))
+					} else {
+						None
+					}
+				} else {
+					Some(Self::emit_link_lib(&l, typ))
+				}
+			})
 	}
 
 	fn find_vcpkg_tool(vcpkg_root: &Path, tool_name: &str) -> Option<PathBuf> {
