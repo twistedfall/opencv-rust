@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::fmt::Write;
 
 use once_cell::sync::Lazy;
@@ -136,6 +137,18 @@ pub fn render_doc_comment_with_processor(
 	// references
 	static REF: Lazy<Regex> = Lazy::new(|| Regex::new(r"@ref\s+([\w:]+)").unwrap());
 	out.replace_in_place_regex(&REF, "[$1]");
+
+	static REF_2: Lazy<Regex> = Lazy::new(|| Regex::new(r"#(\w+)(\s+)").unwrap());
+	out.replace_in_place_regex_cb(&REF_2, |comment, caps| {
+		let name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
+		let space = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
+		let name = if name.contains(char::is_lowercase) {
+			Cow::Owned(name.to_snake_case())
+		} else {
+			Cow::Borrowed(name)
+		};
+		Some(format!("[{name}]{space}").into())
+	});
 
 	// images
 	static IMAGE: Lazy<Regex> = Lazy::new(|| Regex::new(r"!\[(.*?)]\((?:.*/)?(.+)?\)").unwrap());
