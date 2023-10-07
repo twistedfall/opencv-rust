@@ -34,10 +34,10 @@ pub mod quality {
 	/// BRISQUE (Blind/Referenceless Image Spatial Quality Evaluator) is a No Reference Image Quality Assessment (NR-IQA) algorithm.
 	/// 
 	/// BRISQUE computes a score based on extracting Natural Scene Statistics (<https://en.wikipedia.org/wiki/Scene_statistics>)
-	/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Mittal2_software) .
+	/// and calculating feature vectors. See Mittal et al. [Mittal2](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Mittal2) for original paper and original implementation [Mittal2_software](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Mittal2_software) .
 	/// 
-	/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
-	/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
+	/// A trained model is provided in the /samples/ directory and is trained on the LIVE-R2 database [Sheikh](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Sheikh) as in the original implementation.
+	/// When evaluated against the TID2008 database [Ponomarenko](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Ponomarenko) , the SROCC is -0.8424 versus the SROCC of -0.8354 in the original implementation.
 	/// C++ code for the BRISQUE LIVE-R2 trainer and TID2008 evaluator are also provided in the /samples/ directory.
 	pub struct QualityBRISQUE {
 		ptr: *mut c_void
@@ -668,6 +668,25 @@ pub mod quality {
 			Ok(ret)
 		}
 		
+		/// Create an object which calculates quality
+		/// ## Parameters
+		/// * ref: input image to use as the source for comparison
+		/// * maxPixelValue: maximum per-channel value for any individual pixel; eg 255 for uint8 image
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
+		#[inline]
+		pub fn create_def(ref_: &impl core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
+			input_array_arg!(ref_);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_quality_QualityPSNR_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::quality::QualityPSNR>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// static method for computing quality
 		/// ## Parameters
 		/// * ref: reference image
@@ -686,6 +705,30 @@ pub mod quality {
 			output_array_arg!(quality_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), max_pixel_value, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// static method for computing quality
+		/// ## Parameters
+		/// * ref: reference image
+		/// * cmp: comparison image
+		/// * qualityMap: output quality map, or cv::noArray()
+		/// * maxPixelValue: maximum per-channel value for any individual pixel; eg 255 for uint8 image
+		/// ## Returns
+		/// PSNR value, or std::numeric_limits<double>::infinity() if the MSE between the two images == 0
+		/// 
+		/// ## Note
+		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
+		#[inline]
+		pub fn compute_def(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray) -> Result<core::Scalar> {
+			input_array_arg!(ref_);
+			input_array_arg!(cmp);
+			output_array_arg!(quality_map);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR_const__InputArrayR_const__OutputArrayR(ref_.as_raw__InputArray(), cmp.as_raw__InputArray(), quality_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

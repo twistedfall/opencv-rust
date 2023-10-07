@@ -165,6 +165,21 @@ pub mod features2d {
 	pub type FeatureDetector = crate::features2d::Feature2D;
 	pub type SiftDescriptorExtractor = crate::features2d::SIFT;
 	pub type SiftFeatureDetector = crate::features2d::SIFT;
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [agast] function uses the following default values for its arguments:
+	/// * nonmax_suppression: true
+	#[inline]
+	pub fn agast_def(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32) -> Result<()> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Detects corners using the AGAST algorithm
 	/// 
 	/// ## Parameters
@@ -181,7 +196,7 @@ pub mod features2d {
 	/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 	/// The 32-bit binary tree tables were generated automatically from original code using perl script.
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
-	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -213,12 +228,27 @@ pub mod features2d {
 	/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 	/// The 32-bit binary tree tables were generated automatically from original code using perl script.
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
-	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	#[inline]
 	pub fn agast_with_type(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [fast] function uses the following default values for its arguments:
+	/// * nonmax_suppression: true
+	#[inline]
+	pub fn fast_def(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32) -> Result<()> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -237,7 +267,7 @@ pub mod features2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// 
 	/// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -271,7 +301,7 @@ pub mod features2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// 
 	/// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -291,6 +321,38 @@ pub mod features2d {
 	pub fn compute_recall_precision_curve(matches1to2: &core::Vector<core::Vector<core::DMatch>>, correct_matches1to2_mask: &core::Vector<core::Vector<u8>>, recall_precision_curve: &mut core::Vector<core::Point2f>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_computeRecallPrecisionCurve_const_vectorLvectorLDMatchGGR_const_vectorLvectorLunsigned_charGGR_vectorLPoint2fGR(matches1to2.as_raw_VectorOfVectorOfDMatch(), correct_matches1to2_mask.as_raw_VectorOfVectorOfu8(), recall_precision_curve.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Draws keypoints.
+	/// 
+	/// ## Parameters
+	/// * image: Source image.
+	/// * keypoints: Keypoints from the source image.
+	/// * outImage: Output image. Its content depends on the flags value defining what is drawn in the
+	/// output image. See possible flags bit values below.
+	/// * color: Color of keypoints.
+	/// * flags: Flags setting drawing features. Possible flags bit values are defined by
+	/// DrawMatchesFlags. See details above in drawMatches .
+	/// 
+	/// 
+	/// Note:
+	/// For Python API, flags are modified as cv.DRAW_MATCHES_FLAGS_DEFAULT,
+	/// cv.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS, cv.DRAW_MATCHES_FLAGS_DRAW_OVER_OUTIMG,
+	/// cv.DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINTS
+	/// 
+	/// ## Note
+	/// This alternative version of [draw_keypoints] function uses the following default values for its arguments:
+	/// * color: Scalar::all(-1)
+	/// * flags: DrawMatchesFlags::DEFAULT
+	#[inline]
+	pub fn draw_keypoints_def(image: &impl core::ToInputArray, keypoints: &core::Vector<core::KeyPoint>, out_image: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		input_output_array_arg!(out_image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_drawKeypoints_const__InputArrayR_const_vectorLKeyPointGR_const__InputOutputArrayR(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), out_image.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -350,6 +412,47 @@ pub mod features2d {
 	/// This function draws matches of keypoints from two images in the output image. Match is a line
 	/// connecting two keypoints (circles). See cv::DrawMatchesFlags.
 	/// 
+	/// ## Note
+	/// This alternative version of [draw_matches] function uses the following default values for its arguments:
+	/// * match_color: Scalar::all(-1)
+	/// * single_point_color: Scalar::all(-1)
+	/// * matches_mask: std::vector<char>()
+	/// * flags: DrawMatchesFlags::DEFAULT
+	#[inline]
+	pub fn draw_matches_def(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_array_arg!(img1);
+		input_array_arg!(img2);
+		input_output_array_arg!(out_img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Draws the found matches of keypoints from two images.
+	/// 
+	/// ## Parameters
+	/// * img1: First source image.
+	/// * keypoints1: Keypoints from the first source image.
+	/// * img2: Second source image.
+	/// * keypoints2: Keypoints from the second source image.
+	/// * matches1to2: Matches from the first image to the second one, which means that keypoints1[i]
+	/// has a corresponding point in keypoints2[matches[i]] .
+	/// * outImg: Output image. Its content depends on the flags value defining what is drawn in the
+	/// output image. See possible flags bit values below.
+	/// * matchColor: Color of matches (lines and connected keypoints). If matchColor==Scalar::all(-1)
+	/// , the color is generated randomly.
+	/// * singlePointColor: Color of single keypoints (circles), which means that keypoints do not
+	/// have the matches. If singlePointColor==Scalar::all(-1) , the color is generated randomly.
+	/// * matchesMask: Mask determining which matches are drawn. If the mask is empty, all matches are
+	/// drawn.
+	/// * flags: Flags setting drawing features. Possible flags bit values are defined by
+	/// DrawMatchesFlags.
+	/// 
+	/// This function draws matches of keypoints from two images in the output image. Match is a line
+	/// connecting two keypoints (circles). See cv::DrawMatchesFlags.
+	/// 
 	/// ## C++ default parameters
 	/// * match_color: Scalar::all(-1)
 	/// * single_point_color: Scalar::all(-1)
@@ -362,6 +465,26 @@ pub mod features2d {
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [draw_matches_1] function uses the following default values for its arguments:
+	/// * match_color: Scalar::all(-1)
+	/// * single_point_color: Scalar::all(-1)
+	/// * matches_mask: std::vector<char>()
+	/// * flags: DrawMatchesFlags::DEFAULT
+	#[inline]
+	pub fn draw_matches_1_def(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, matches_thickness: i32) -> Result<()> {
+		input_array_arg!(img1);
+		input_array_arg!(img2);
+		input_output_array_arg!(out_img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), matches_thickness, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -409,6 +532,24 @@ pub mod features2d {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [draw_matches_knn] function uses the following default values for its arguments:
+	/// * match_color: Scalar::all(-1)
+	/// * single_point_color: Scalar::all(-1)
+	/// * matches_mask: std::vector<std::vector<char>>()
+	/// * flags: DrawMatchesFlags::DEFAULT
+	#[inline]
+	pub fn draw_matches_knn_def(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_array_arg!(img1);
+		input_array_arg!(img2);
+		input_output_array_arg!(out_img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLvectorLDMatchGGR_const__InputOutputArrayR(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * match_color: Scalar::all(-1)
 	/// * single_point_color: Scalar::all(-1)
@@ -421,6 +562,22 @@ pub mod features2d {
 		input_output_array_arg!(out_img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLvectorLDMatchGGR_const__InputOutputArrayR_const_ScalarR_const_ScalarR_const_vectorLvectorLcharGGR_DrawMatchesFlags(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw__InputOutputArray(), &match_color, &single_point_color, matches_mask.as_raw_VectorOfVectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// *************************************************************************************\
+	///    Functions to evaluate the feature detectors and [generic] descriptor extractors      *
+	/// \***************************************************************************************
+	/// 
+	/// ## Note
+	/// This alternative version of [evaluate_feature_detector] function uses the following default values for its arguments:
+	/// * fdetector: Ptr<FeatureDetector>()
+	#[inline]
+	pub fn evaluate_feature_detector_def(img1: &core::Mat, img2: &core::Mat, h1to2: &core::Mat, keypoints1: &mut core::Vector<core::KeyPoint>, keypoints2: &mut core::Vector<core::KeyPoint>, repeatability: &mut f32, corresp_count: &mut i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_evaluateFeatureDetector_const_MatR_const_MatR_const_MatR_vectorLKeyPointGX_vectorLKeyPointGX_floatR_intR(img1.as_raw_Mat(), img2.as_raw_Mat(), h1to2.as_raw_Mat(), keypoints1.as_raw_mut_VectorOfKeyPoint(), keypoints2.as_raw_mut_VectorOfKeyPoint(), repeatability, corresp_count, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -607,7 +764,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_ANB13).
+	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_ANB13).
 	/// 
 	/// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
 	/// 
@@ -695,6 +852,38 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// The AKAZE constructor
+		/// 
+		/// ## Parameters
+		/// * descriptor_type: Type of the extracted descriptor: DESCRIPTOR_KAZE,
+		/// DESCRIPTOR_KAZE_UPRIGHT, DESCRIPTOR_MLDB or DESCRIPTOR_MLDB_UPRIGHT.
+		/// * descriptor_size: Size of the descriptor in bits. 0 -\> Full size
+		/// * descriptor_channels: Number of channels in the descriptor (1, 2, 3)
+		/// * threshold: Detector response threshold to accept point
+		/// * nOctaves: Maximum octave evolution of the image
+		/// * nOctaveLayers: Default number of sublevels per scale level
+		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
+		/// DIFF_CHARBONNIER
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * descriptor_type: AKAZE::DESCRIPTOR_MLDB
+		/// * descriptor_size: 0
+		/// * descriptor_channels: 3
+		/// * threshold: 0.001f
+		/// * n_octaves: 4
+		/// * n_octave_layers: 4
+		/// * diffusivity: KAZE::DIFF_PM_G2
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::AKAZE>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AKAZE_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::AKAZE>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { AKAZE, core::Algorithm, cv_AKAZE_to_Algorithm }
@@ -750,7 +939,7 @@ pub mod features2d {
 	}
 	
 	/// Class for implementing the wrapper which makes detectors and extractors to be affine invariant,
-	/// described as ASIFT in [YM11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_YM11) .
+	/// described as ASIFT in [YM11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_YM11) .
 	pub struct AffineFeature {
 		ptr: *mut c_void
 	}
@@ -807,6 +996,29 @@ pub mod features2d {
 		pub fn create(backend: &core::Ptr<crate::features2d::Feature2D>, max_tilt: i32, min_tilt: i32, tilt_step: f32, rotate_step_base: f32) -> Result<core::Ptr<crate::features2d::AffineFeature>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AffineFeature_create_const_PtrLFeature2DGR_int_int_float_float(backend.as_raw_PtrOfFeature2D(), max_tilt, min_tilt, tilt_step, rotate_step_base, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::AffineFeature>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Parameters
+		/// * backend: The detector/extractor you want to use as backend.
+		/// * maxTilt: The highest power index of tilt factor. 5 is used in the paper as tilt sampling range n.
+		/// * minTilt: The lowest power index of tilt factor. 0 is used in the paper.
+		/// * tiltStep: Tilt sampling step ![inline formula](https://latex.codecogs.com/png.latex?%5Cdelta%5Ft) in Algorithm 1 in the paper.
+		/// * rotateStepBase: Rotation sampling step factor b in Algorithm 1 in the paper.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * max_tilt: 5
+		/// * min_tilt: 0
+		/// * tilt_step: 1.4142135623730951f
+		/// * rotate_step_base: 72
+		#[inline]
+		pub fn create_def(backend: &core::Ptr<crate::features2d::Feature2D>) -> Result<core::Ptr<crate::features2d::AffineFeature>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AffineFeature_create_const_PtrLFeature2DGR(backend.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::AffineFeature>::opencv_from_extern(ret) };
@@ -958,6 +1170,21 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * threshold: 10
+		/// * nonmax_suppression: true
+		/// * typ: AgastFeatureDetector::OAST_9_16
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::AgastFeatureDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AgastFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::AgastFeatureDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { AgastFeatureDetector, core::Algorithm, cv_AgastFeatureDetector_to_Algorithm }
@@ -992,6 +1219,19 @@ pub mod features2d {
 		fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BFMatcher_clone_const_bool(self.as_raw_BFMatcher(), empty_train_data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [clone] function uses the following default values for its arguments:
+		/// * empty_train_data: false
+		#[inline]
+		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BFMatcher_clone_const(self.as_raw_BFMatcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
@@ -1066,6 +1306,22 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// Brute-force matcher constructor (obsolete). Please use BFMatcher.create()
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * norm_type: NORM_L2
+		/// * cross_check: false
+		#[inline]
+		pub fn new_def() -> Result<crate::features2d::BFMatcher> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BFMatcher_BFMatcher(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::features2d::BFMatcher::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Brute-force matcher create method.
 		/// ## Parameters
 		/// * normType: One of NORM_L1, NORM_L2, NORM_HAMMING, NORM_HAMMING2. L1 and L2 norms are
@@ -1086,6 +1342,33 @@ pub mod features2d {
 		pub fn create(norm_type: i32, cross_check: bool) -> Result<core::Ptr<crate::features2d::BFMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BFMatcher_create_int_bool(norm_type, cross_check, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::BFMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Brute-force matcher create method.
+		/// ## Parameters
+		/// * normType: One of NORM_L1, NORM_L2, NORM_HAMMING, NORM_HAMMING2. L1 and L2 norms are
+		/// preferable choices for SIFT and SURF descriptors, NORM_HAMMING should be used with ORB, BRISK and
+		/// BRIEF, NORM_HAMMING2 should be used with ORB when WTA_K==3 or 4 (see ORB::ORB constructor
+		/// description).
+		/// * crossCheck: If it is false, this is will be default BFMatcher behaviour when it finds the k
+		/// nearest neighbors for each query descriptor. If crossCheck==true, then the knnMatch() method with
+		/// k=1 will only return pairs (i,j) such that for i-th query descriptor the j-th descriptor in the
+		/// matcher's collection is the nearest and vice versa, i.e. the BFMatcher will only return consistent
+		/// pairs. Such technique usually produces best results with minimal number of outliers when there are
+		/// enough matches. This is alternative to the ratio test, used by D. Lowe in SIFT paper.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * norm_type: NORM_L2
+		/// * cross_check: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::BFMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BFMatcher_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BFMatcher>::opencv_from_extern(ret) };
@@ -1197,6 +1480,32 @@ pub mod features2d {
 		/// returned if it is non-zero.
 		/// * descriptors: Descriptors of the image keypoints that are returned if they are non-zero.
 		/// 
+		/// ## Note
+		/// This alternative version of [compute_desc] function uses the following default values for its arguments:
+		/// * point_idxs_of_clusters: 0
+		/// * descriptors: 0
+		#[inline]
+		fn compute_desc_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(img_descriptor);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR(self.as_raw_mut_BOWImgDescriptorExtractor(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), img_descriptor.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Computes an image descriptor using the set visual vocabulary.
+		/// 
+		/// ## Parameters
+		/// * image: Image, for which the descriptor is computed.
+		/// * keypoints: Keypoints detected in the input image.
+		/// * imgDescriptor: Computed output image descriptor.
+		/// * pointIdxsOfClusters: Indices of keypoints that belong to the cluster. This means that
+		/// pointIdxsOfClusters[i] are keypoint indices that belong to the i -th cluster (word of vocabulary)
+		/// returned if it is non-zero.
+		/// * descriptors: Descriptors of the image keypoints that are returned if they are non-zero.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// * keypointDescriptors: Computed descriptors to match with vocabulary.
@@ -1213,6 +1522,28 @@ pub mod features2d {
 			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_const__OutputArrayR_vectorLvectorLintGGX(self.as_raw_mut_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw__InputArray(), img_descriptor.as_raw__OutputArray(), point_idxs_of_clusters.as_raw_mut_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * keypointDescriptors: Computed descriptors to match with vocabulary.
+		/// * imgDescriptor: Computed output image descriptor.
+		/// * pointIdxsOfClusters: Indices of keypoints that belong to the cluster. This means that
+		/// pointIdxsOfClusters[i] are keypoint indices that belong to the i -th cluster (word of vocabulary)
+		/// returned if it is non-zero.
+		/// 
+		/// ## Note
+		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// * point_idxs_of_clusters: 0
+		#[inline]
+		fn compute_def(&mut self, keypoint_descriptors: &impl core::ToInputArray, img_descriptor: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(keypoint_descriptors);
+			output_array_arg!(img_descriptor);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw__InputArray(), img_descriptor.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1385,6 +1716,25 @@ pub mod features2d {
 		pub fn new(cluster_count: i32, termcrit: core::TermCriteria, attempts: i32, flags: i32) -> Result<crate::features2d::BOWKMeansTrainer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWKMeansTrainer_BOWKMeansTrainer_int_const_TermCriteriaR_int_int(cluster_count, &termcrit, attempts, flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::features2d::BOWKMeansTrainer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// The constructor.
+		/// ## See also
+		/// cv::kmeans
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * termcrit: TermCriteria()
+		/// * attempts: 3
+		/// * flags: KMEANS_PP_CENTERS
+		#[inline]
+		pub fn new_def(cluster_count: i32) -> Result<crate::features2d::BOWKMeansTrainer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BOWKMeansTrainer_BOWKMeansTrainer_int(cluster_count, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::BOWKMeansTrainer::opencv_from_extern(ret) };
@@ -1627,7 +1977,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LCS11) .
+	/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LCS11) .
 	pub struct BRISK {
 		ptr: *mut c_void
 	}
@@ -1690,6 +2040,29 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// The BRISK constructor
+		/// 
+		/// ## Parameters
+		/// * thresh: AGAST detection threshold score.
+		/// * octaves: detection octaves. Use 0 to do single scale.
+		/// * patternScale: apply this scale to the pattern used for sampling the neighbourhood of a
+		/// keypoint.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * thresh: 30
+		/// * octaves: 3
+		/// * pattern_scale: 1.0f
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::BRISK>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// The BRISK constructor for a custom pattern
 		/// 
 		/// ## Parameters
@@ -1711,6 +2084,34 @@ pub mod features2d {
 		pub fn create_with_pattern(radius_list: &core::Vector<f32>, number_list: &core::Vector<i32>, d_max: f32, d_min: f32, index_change: &core::Vector<i32>) -> Result<core::Ptr<crate::features2d::BRISK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_create_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR(radius_list.as_raw_VectorOff32(), number_list.as_raw_VectorOfi32(), d_max, d_min, index_change.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// The BRISK constructor for a custom pattern
+		/// 
+		/// ## Parameters
+		/// * radiusList: defines the radii (in pixels) where the samples around a keypoint are taken (for
+		/// keypoint scale 1).
+		/// * numberList: defines the number of sampling points on the sampling circle. Must be the same
+		/// size as radiusList..
+		/// * dMax: threshold for the short pairings used for descriptor formation (in pixels for keypoint
+		/// scale 1).
+		/// * dMin: threshold for the long pairings used for orientation determination (in pixels for
+		/// keypoint scale 1).
+		/// * indexChange: index remapping of the bits.
+		/// 
+		/// ## Note
+		/// This alternative version of [create_with_pattern] function uses the following default values for its arguments:
+		/// * d_max: 5.85f
+		/// * d_min: 8.2f
+		/// * index_change: std::vector<int>()
+		#[inline]
+		pub fn create_with_pattern_def(radius_list: &core::Vector<f32>, number_list: &core::Vector<i32>) -> Result<core::Ptr<crate::features2d::BRISK>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_create_const_vectorLfloatGR_const_vectorLintGR(radius_list.as_raw_VectorOff32(), number_list.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
@@ -1740,6 +2141,36 @@ pub mod features2d {
 		pub fn create_with_pattern_threshold_octaves(thresh: i32, octaves: i32, radius_list: &core::Vector<f32>, number_list: &core::Vector<i32>, d_max: f32, d_min: f32, index_change: &core::Vector<i32>) -> Result<core::Ptr<crate::features2d::BRISK>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BRISK_create_int_int_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR(thresh, octaves, radius_list.as_raw_VectorOff32(), number_list.as_raw_VectorOfi32(), d_max, d_min, index_change.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// The BRISK constructor for a custom pattern, detection threshold and octaves
+		/// 
+		/// ## Parameters
+		/// * thresh: AGAST detection threshold score.
+		/// * octaves: detection octaves. Use 0 to do single scale.
+		/// * radiusList: defines the radii (in pixels) where the samples around a keypoint are taken (for
+		/// keypoint scale 1).
+		/// * numberList: defines the number of sampling points on the sampling circle. Must be the same
+		/// size as radiusList..
+		/// * dMax: threshold for the short pairings used for descriptor formation (in pixels for keypoint
+		/// scale 1).
+		/// * dMin: threshold for the long pairings used for orientation determination (in pixels for
+		/// keypoint scale 1).
+		/// * indexChange: index remapping of the bits.
+		/// 
+		/// ## Note
+		/// This alternative version of [create_with_pattern_threshold_octaves] function uses the following default values for its arguments:
+		/// * d_max: 5.85f
+		/// * d_min: 8.2f
+		/// * index_change: std::vector<int>()
+		#[inline]
+		pub fn create_with_pattern_threshold_octaves_def(thresh: i32, octaves: i32, radius_list: &core::Vector<f32>, number_list: &core::Vector<i32>) -> Result<core::Ptr<crate::features2d::BRISK>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_create_int_int_const_vectorLfloatGR_const_vectorLintGR(thresh, octaves, radius_list.as_raw_VectorOff32(), number_list.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::BRISK>::opencv_from_extern(ret) };
@@ -1826,6 +2257,37 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// Finds the best match for each descriptor from a query set.
+		/// 
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches. If a query descriptor is masked out in mask , no match is added for this
+		/// descriptor. So, matches size may be smaller than the query descriptors count.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// 
+		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
+		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
+		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
+		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
+		/// mask.at\<uchar\>(i,j) is non-zero.
+		/// 
+		/// ## Note
+		/// This alternative version of [train_match] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		#[inline]
+		fn train_match_def(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vectorLDMatchGR(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Finds the k best matches for each descriptor from a query set.
 		/// 
 		/// ## Parameters
@@ -1855,6 +2317,40 @@ pub mod features2d {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, mask.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Finds the k best matches for each descriptor from a query set.
+		/// 
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * matches: Matches. Each matches[i] is k or less matches for the same query descriptor.
+		/// * k: Count of best matches found per each query descriptor or less if a query descriptor has
+		/// less than k possible matches in total.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		/// 
+		/// These extended variants of DescriptorMatcher::match methods find several best matches for each query
+		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
+		/// for the details about query and train descriptors.
+		/// 
+		/// ## Note
+		/// This alternative version of [knn_train_match] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		/// * compact_result: false
+		#[inline]
+		fn knn_train_match_def(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1895,6 +2391,41 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// For each query descriptor, finds the training descriptors not farther than the specified distance.
+		/// 
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Found matches.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		/// * maxDistance: Threshold for the distance between matched descriptors. Distance means here
+		/// metric distance (e.g. Hamming distance), not the distance between coordinates (which is measured
+		/// in Pixels)!
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// 
+		/// For each query descriptor, the methods find such training descriptors that the distance between the
+		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
+		/// returned in the distance increasing order.
+		/// 
+		/// ## Note
+		/// This alternative version of [radius_train_match] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		/// * compact_result: false
+		#[inline]
+		fn radius_train_match_def(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn write(&self, file_name: &str) -> Result<()> {
 			extern_container_arg!(file_name);
@@ -1928,6 +2459,26 @@ pub mod features2d {
 		fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_clone_const_bool(self.as_raw_DescriptorMatcher(), empty_train_data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Clones the matcher.
+		/// 
+		/// ## Parameters
+		/// * emptyTrainData: If emptyTrainData is false, the method creates a deep copy of the object,
+		/// that is, copies both parameters and train data. If emptyTrainData is true, the method creates an
+		/// object copy with the current parameters but with empty train data.
+		/// 
+		/// ## Note
+		/// This alternative version of [clone] function uses the following default values for its arguments:
+		/// * empty_train_data: false
+		#[inline]
+		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_clone_const(self.as_raw_DescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
@@ -2041,6 +2592,27 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * matches: Matches. If a query descriptor is masked out in mask , no match is added for this
+		/// descriptor. So, matches size may be smaller than the query descriptors count.
+		/// * masks: Set of masks. Each masks[i] specifies permissible matches between the input query
+		/// descriptors and stored train descriptors from the i-th image trainDescCollection[i].
+		/// 
+		/// ## Note
+		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// * masks: noArray()
+		#[inline]
+		fn match__def(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Finds the k best matches for each descriptor from a query set.
 		/// 
 		/// ## Parameters
@@ -2081,6 +2653,32 @@ pub mod features2d {
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, masks.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * matches: Matches. Each matches[i] is k or less matches for the same query descriptor.
+		/// * k: Count of best matches found per each query descriptor or less if a query descriptor has
+		/// less than k possible matches in total.
+		/// * masks: Set of masks. Each masks[i] specifies permissible matches between the input query
+		/// descriptors and stored train descriptors from the i-th image trainDescCollection[i].
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		/// 
+		/// ## Note
+		/// This alternative version of [knn_match] function uses the following default values for its arguments:
+		/// * masks: noArray()
+		/// * compact_result: false
+		#[inline]
+		fn knn_match_def(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2128,6 +2726,33 @@ pub mod features2d {
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, masks.as_raw__InputArray(), compact_result, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * matches: Found matches.
+		/// * maxDistance: Threshold for the distance between matched descriptors. Distance means here
+		/// metric distance (e.g. Hamming distance), not the distance between coordinates (which is measured
+		/// in Pixels)!
+		/// * masks: Set of masks. Each masks[i] specifies permissible matches between the input query
+		/// descriptors and stored train descriptors from the i-th image trainDescCollection[i].
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		/// 
+		/// ## Note
+		/// This alternative version of [radius_match] function uses the following default values for its arguments:
+		/// * masks: noArray()
+		/// * compact_result: false
+		#[inline]
+		fn radius_match_def(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2369,6 +2994,21 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * threshold: 10
+		/// * nonmax_suppression: true
+		/// * typ: FastFeatureDetector::TYPE_9_16
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::FastFeatureDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FastFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::FastFeatureDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { FastFeatureDetector, core::Algorithm, cv_FastFeatureDetector_to_Algorithm }
@@ -2510,6 +3150,28 @@ pub mod features2d {
 		/// * mask: Mask specifying where to look for keypoints (optional). It must be a 8-bit integer
 		/// matrix with non-zero values in the region of interest.
 		/// 
+		/// ## Note
+		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		#[inline]
+		fn detect_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLKeyPointGR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Detects keypoints in an image (first variant) or image set (second variant).
+		/// 
+		/// ## Parameters
+		/// * image: Image.
+		/// * keypoints: The detected keypoints. In the second variant of the method keypoints[i] is a set
+		/// of keypoints detected in images[i] .
+		/// * mask: Mask specifying where to look for keypoints (optional). It must be a 8-bit integer
+		/// matrix with non-zero values in the region of interest.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// * images: Image set.
@@ -2526,6 +3188,27 @@ pub mod features2d {
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR_const__InputArrayR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), masks.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * images: Image set.
+		/// * keypoints: The detected keypoints. In the second variant of the method keypoints[i] is a set
+		/// of keypoints detected in images[i] .
+		/// * masks: Masks for each input image specifying where to look for keypoints (optional).
+		/// masks[i] is a mask for images[i].
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_multiple] function uses the following default values for its arguments:
+		/// * masks: noArray()
+		#[inline]
+		fn detect_multiple_def(&mut self, images: &impl core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>) -> Result<()> {
+			input_array_arg!(images);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2597,6 +3280,23 @@ pub mod features2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_bool(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), use_provided_keypoints, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Detects keypoints and computes the descriptors
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_and_compute] function uses the following default values for its arguments:
+		/// * use_provided_keypoints: false
+		#[inline]
+		fn detect_and_compute_def(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
+			output_array_arg!(descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Feature2D_detectAndCompute_const__InputArrayR_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2724,6 +3424,19 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [clone] function uses the following default values for its arguments:
+		/// * empty_train_data: false
+		#[inline]
+		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FlannBasedMatcher_clone_const(self.as_raw_FlannBasedMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::features2d::FlannBasedMatcher]
@@ -2822,6 +3535,20 @@ pub mod features2d {
 		pub fn new(index_params: &core::Ptr<crate::flann::IndexParams>, search_params: &core::Ptr<crate::flann::SearchParams>) -> Result<crate::features2d::FlannBasedMatcher> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_FlannBasedMatcher_const_PtrLIndexParamsGR_const_PtrLSearchParamsGR(index_params.as_raw_PtrOfIndexParams(), search_params.as_raw_PtrOfSearchParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::features2d::FlannBasedMatcher::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * index_params: makePtr<flann::KDTreeIndexParams>()
+		/// * search_params: makePtr<flann::SearchParams>()
+		#[inline]
+		pub fn new_def() -> Result<crate::features2d::FlannBasedMatcher> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FlannBasedMatcher_FlannBasedMatcher(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::features2d::FlannBasedMatcher::opencv_from_extern(ret) };
@@ -3058,6 +3785,24 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * max_corners: 1000
+		/// * quality_level: 0.01
+		/// * min_distance: 1
+		/// * block_size: 3
+		/// * use_harris_detector: false
+		/// * k: 0.04
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GFTTDetector_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * use_harris_detector: false
 		/// * k: 0.04
@@ -3065,6 +3810,20 @@ pub mod features2d {
 		pub fn create_with_gradient(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32, use_harris_detector: bool, k: f64) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_int_bool_double(max_corners, quality_level, min_distance, block_size, gradiant_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create_with_gradient] function uses the following default values for its arguments:
+		/// * use_harris_detector: false
+		/// * k: 0.04
+		#[inline]
+		pub fn create_with_gradient_def(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_int(max_corners, quality_level, min_distance, block_size, gradiant_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
@@ -3215,7 +3974,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_ABD12) .
+	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_ABD12) .
 	/// 
 	/// 
 	/// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
@@ -3283,6 +4042,35 @@ pub mod features2d {
 		pub fn create(extended: bool, upright: bool, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: crate::features2d::KAZE_DiffusivityType) -> Result<core::Ptr<crate::features2d::KAZE>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KAZE_create_bool_bool_float_int_int_DiffusivityType(extended, upright, threshold, n_octaves, n_octave_layers, diffusivity, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::KAZE>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// The KAZE constructor
+		/// 
+		/// ## Parameters
+		/// * extended: Set to enable extraction of extended (128-byte) descriptor.
+		/// * upright: Set to enable use of upright descriptors (non rotation-invariant).
+		/// * threshold: Detector response threshold to accept point
+		/// * nOctaves: Maximum octave evolution of the image
+		/// * nOctaveLayers: Default number of sublevels per scale level
+		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
+		/// DIFF_CHARBONNIER
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * extended: false
+		/// * upright: false
+		/// * threshold: 0.001f
+		/// * n_octaves: 4
+		/// * n_octave_layers: 4
+		/// * diffusivity: KAZE::DIFF_PM_G2
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::KAZE>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KAZE_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::KAZE>::opencv_from_extern(ret) };
@@ -3368,6 +4156,18 @@ pub mod features2d {
 		pub fn run_by_keypoint_size(keypoints: &mut core::Vector<core::KeyPoint>, min_size: f32, max_size: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_runByKeypointSize_vectorLKeyPointGR_float_float(keypoints.as_raw_mut_VectorOfKeyPoint(), min_size, max_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [run_by_keypoint_size] function uses the following default values for its arguments:
+		/// * max_size: FLT_MAX
+		#[inline]
+		pub fn run_by_keypoint_size_def(keypoints: &mut core::Vector<core::KeyPoint>, min_size: f32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KeyPointsFilter_runByKeypointSize_vectorLKeyPointGR_float(keypoints.as_raw_mut_VectorOfKeyPoint(), min_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3653,10 +4453,10 @@ pub mod features2d {
 	/// 
 	/// - there are two different implementation of %MSER: one for grey image, one for color image
 	/// 
-	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
+	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
 	/// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
 	/// 
-	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
+	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
 	/// than grey image method ( 3~4 times )
 	/// 
 	/// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
@@ -3727,6 +4527,40 @@ pub mod features2d {
 		pub fn create(delta: i32, min_area: i32, max_area: i32, max_variation: f64, min_diversity: f64, max_evolution: i32, area_threshold: f64, min_margin: f64, edge_blur_size: i32) -> Result<core::Ptr<crate::features2d::MSER>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_create_int_int_int_double_double_int_double_double_int(delta, min_area, max_area, max_variation, min_diversity, max_evolution, area_threshold, min_margin, edge_blur_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::MSER>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Full constructor for %MSER detector
+		/// 
+		/// ## Parameters
+		/// * delta: it compares ![inline formula](https://latex.codecogs.com/png.latex?%28size%5F%7Bi%7D%2Dsize%5F%7Bi%2Ddelta%7D%29%2Fsize%5F%7Bi%2Ddelta%7D)
+		/// * min_area: prune the area which smaller than minArea
+		/// * max_area: prune the area which bigger than maxArea
+		/// * max_variation: prune the area have similar size to its children
+		/// * min_diversity: for color image, trace back to cut off mser with diversity less than min_diversity
+		/// * max_evolution: for color image, the evolution steps
+		/// * area_threshold: for color image, the area threshold to cause re-initialize
+		/// * min_margin: for color image, ignore too small margin
+		/// * edge_blur_size: for color image, the aperture size for edge blur
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * delta: 5
+		/// * min_area: 60
+		/// * max_area: 14400
+		/// * max_variation: 0.25
+		/// * min_diversity: .2
+		/// * max_evolution: 200
+		/// * area_threshold: 1.01
+		/// * min_margin: 0.003
+		/// * edge_blur_size: 5
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::MSER>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MSER_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::MSER>::opencv_from_extern(ret) };
@@ -3933,7 +4767,7 @@ pub mod features2d {
 	
 	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
 	/// 
-	/// described in [RRKB11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
+	/// described in [RRKB11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
 	/// the strongest features using FAST or Harris response, finds their orientation using first-order
 	/// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 	/// k-tuples) are rotated according to the measured orientation).
@@ -3978,16 +4812,6 @@ pub mod features2d {
 	
 	impl ORB {
 		pub const kBytes: i32 = 32;
-		#[inline]
-		pub fn default() -> Result<core::Ptr<crate::features2d::ORB>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ORB_create_const(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
 		/// The ORB constructor
 		/// 
 		/// ## Parameters
@@ -4034,6 +4858,59 @@ pub mod features2d {
 		pub fn create(nfeatures: i32, scale_factor: f32, nlevels: i32, edge_threshold: i32, first_level: i32, wta_k: i32, score_type: crate::features2d::ORB_ScoreType, patch_size: i32, fast_threshold: i32) -> Result<core::Ptr<crate::features2d::ORB>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ORB_create_int_float_int_int_int_int_ScoreType_int_int(nfeatures, scale_factor, nlevels, edge_threshold, first_level, wta_k, score_type, patch_size, fast_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// The ORB constructor
+		/// 
+		/// ## Parameters
+		/// * nfeatures: The maximum number of features to retain.
+		/// * scaleFactor: Pyramid decimation ratio, greater than 1. scaleFactor==2 means the classical
+		/// pyramid, where each next level has 4x less pixels than the previous, but such a big scale factor
+		/// will degrade feature matching scores dramatically. On the other hand, too close to 1 scale factor
+		/// will mean that to cover certain scale range you will need more pyramid levels and so the speed
+		/// will suffer.
+		/// * nlevels: The number of pyramid levels. The smallest level will have linear size equal to
+		/// input_image_linear_size/pow(scaleFactor, nlevels - firstLevel).
+		/// * edgeThreshold: This is size of the border where the features are not detected. It should
+		/// roughly match the patchSize parameter.
+		/// * firstLevel: The level of pyramid to put source image to. Previous layers are filled
+		/// with upscaled source image.
+		/// * WTA_K: The number of points that produce each element of the oriented BRIEF descriptor. The
+		/// default value 2 means the BRIEF where we take a random point pair and compare their brightnesses,
+		/// so we get 0/1 response. Other possible values are 3 and 4. For example, 3 means that we take 3
+		/// random points (of course, those point coordinates are random, but they are generated from the
+		/// pre-defined seed, so each element of BRIEF descriptor is computed deterministically from the pixel
+		/// rectangle), find point of maximum brightness and output index of the winner (0, 1 or 2). Such
+		/// output will occupy 2 bits, and therefore it will need a special variant of Hamming distance,
+		/// denoted as NORM_HAMMING2 (2 bits per bin). When WTA_K=4, we take 4 random points to compute each
+		/// bin (that will also occupy 2 bits with possible values 0, 1, 2 or 3).
+		/// * scoreType: The default HARRIS_SCORE means that Harris algorithm is used to rank features
+		/// (the score is written to KeyPoint::score and is used to retain best nfeatures features);
+		/// FAST_SCORE is alternative value of the parameter that produces slightly less stable keypoints,
+		/// but it is a little faster to compute.
+		/// * patchSize: size of the patch used by the oriented BRIEF descriptor. Of course, on smaller
+		/// pyramid layers the perceived image area covered by a feature will be larger.
+		/// * fastThreshold: the fast threshold
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * nfeatures: 500
+		/// * scale_factor: 1.2f
+		/// * nlevels: 8
+		/// * edge_threshold: 31
+		/// * first_level: 0
+		/// * wta_k: 2
+		/// * score_type: ORB::HARRIS_SCORE
+		/// * patch_size: 31
+		/// * fast_threshold: 20
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::ORB>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ORB_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
@@ -4167,7 +5044,7 @@ pub mod features2d {
 	}
 	
 	/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
-	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Lowe04) .
+	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lowe04) .
 	pub struct SIFT {
 		ptr: *mut c_void
 	}
@@ -4251,6 +5128,50 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		/// ## Parameters
+		/// * nfeatures: The number of best features to retain. The features are ranked by their scores
+		/// (measured in SIFT algorithm as the local contrast)
+		/// 
+		/// * nOctaveLayers: The number of layers in each octave. 3 is the value used in D. Lowe paper. The
+		/// number of octaves is computed automatically from the image resolution.
+		/// 
+		/// * contrastThreshold: The contrast threshold used to filter out weak features in semi-uniform
+		/// (low-contrast) regions. The larger the threshold, the less features are produced by the detector.
+		/// 
+		/// 
+		/// Note: The contrast threshold will be divided by nOctaveLayers when the filtering is applied. When
+		/// nOctaveLayers is set to default and if you want to use the value used in D. Lowe paper, 0.03, set
+		/// this argument to 0.09.
+		/// 
+		/// * edgeThreshold: The threshold used to filter out edge-like features. Note that the its meaning
+		/// is different from the contrastThreshold, i.e. the larger the edgeThreshold, the less features are
+		/// filtered out (more features are retained).
+		/// 
+		/// * sigma: The sigma of the Gaussian applied to the input image at the octave \#0. If your image
+		/// is captured with a weak camera with soft lenses, you might want to reduce the number.
+		/// 
+		/// * enable_precise_upscale: Whether to enable precise upscaling in the scale pyramid, which maps
+		/// index ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bx%7D) to ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B2x%7D). This prevents localization bias. The option
+		/// is disabled by default.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * nfeatures: 0
+		/// * n_octave_layers: 3
+		/// * contrast_threshold: 0.04
+		/// * edge_threshold: 10
+		/// * sigma: 1.6
+		/// * enable_precise_upscale: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::SIFT>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Create SIFT with specified descriptorType.
 		/// ## Parameters
 		/// * nfeatures: The number of best features to retain. The features are ranked by their scores
@@ -4286,6 +5207,48 @@ pub mod features2d {
 		pub fn create_1(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32, enable_precise_upscale: bool) -> Result<core::Ptr<crate::features2d::SIFT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_create_int_int_double_double_double_int_bool(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, descriptor_type, enable_precise_upscale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create SIFT with specified descriptorType.
+		/// ## Parameters
+		/// * nfeatures: The number of best features to retain. The features are ranked by their scores
+		/// (measured in SIFT algorithm as the local contrast)
+		/// 
+		/// * nOctaveLayers: The number of layers in each octave. 3 is the value used in D. Lowe paper. The
+		/// number of octaves is computed automatically from the image resolution.
+		/// 
+		/// * contrastThreshold: The contrast threshold used to filter out weak features in semi-uniform
+		/// (low-contrast) regions. The larger the threshold, the less features are produced by the detector.
+		/// 
+		/// 
+		/// Note: The contrast threshold will be divided by nOctaveLayers when the filtering is applied. When
+		/// nOctaveLayers is set to default and if you want to use the value used in D. Lowe paper, 0.03, set
+		/// this argument to 0.09.
+		/// 
+		/// * edgeThreshold: The threshold used to filter out edge-like features. Note that the its meaning
+		/// is different from the contrastThreshold, i.e. the larger the edgeThreshold, the less features are
+		/// filtered out (more features are retained).
+		/// 
+		/// * sigma: The sigma of the Gaussian applied to the input image at the octave \#0. If your image
+		/// is captured with a weak camera with soft lenses, you might want to reduce the number.
+		/// 
+		/// * descriptorType: The type of descriptors. Only CV_32F and CV_8U are supported.
+		/// 
+		/// * enable_precise_upscale: Whether to enable precise upscaling in the scale pyramid, which maps
+		/// index ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bx%7D) to ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B2x%7D). This prevents localization bias. The option
+		/// is disabled by default.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * enable_precise_upscale: false
+		#[inline]
+		pub fn create_def_1(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32) -> Result<core::Ptr<crate::features2d::SIFT>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_create_int_int_double_double_double_int(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, descriptor_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SIFT>::opencv_from_extern(ret) };
@@ -4432,6 +5395,19 @@ pub mod features2d {
 		pub fn create(parameters: crate::features2d::SimpleBlobDetector_Params) -> Result<core::Ptr<crate::features2d::SimpleBlobDetector>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SimpleBlobDetector_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::SimpleBlobDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * parameters: SimpleBlobDetector::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::SimpleBlobDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SimpleBlobDetector_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::SimpleBlobDetector>::opencv_from_extern(ret) };

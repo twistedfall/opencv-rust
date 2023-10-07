@@ -63,13 +63,13 @@ pub mod ximgproc {
 	pub const ARO_90_135: i32 = 2;
 	pub const ARO_CTR_HOR: i32 = 7;
 	pub const ARO_CTR_VER: i32 = 8;
-	/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Niblack1985) .
+	/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Niblack1985) .
 	pub const BINARIZATION_NIBLACK: i32 = 0;
-	/// NICK technique. See [Khurshid2009](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Khurshid2009) .
+	/// NICK technique. See [Khurshid2009](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Khurshid2009) .
 	pub const BINARIZATION_NICK: i32 = 3;
-	/// Sauvola's technique. See [Sauvola1997](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Sauvola1997) .
+	/// Sauvola's technique. See [Sauvola1997](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Sauvola1997) .
 	pub const BINARIZATION_SAUVOLA: i32 = 1;
-	/// Wolf's technique. See [Wolf2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Wolf2004) .
+	/// Wolf's technique. See [Wolf2004](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Wolf2004) .
 	pub const BINARIZATION_WOLF: i32 = 2;
 	pub const DTF_IC: i32 = 1;
 	pub const DTF_NC: i32 = 0;
@@ -188,13 +188,13 @@ pub mod ximgproc {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum LocalBinarizationMethods {
-		/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Niblack1985) .
+		/// Classic Niblack binarization. See [Niblack1985](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Niblack1985) .
 		BINARIZATION_NIBLACK = 0,
-		/// Sauvola's technique. See [Sauvola1997](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Sauvola1997) .
+		/// Sauvola's technique. See [Sauvola1997](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Sauvola1997) .
 		BINARIZATION_SAUVOLA = 1,
-		/// Wolf's technique. See [Wolf2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Wolf2004) .
+		/// Wolf's technique. See [Wolf2004](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Wolf2004) .
 		BINARIZATION_WOLF = 2,
-		/// NICK technique. See [Khurshid2009](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Khurshid2009) .
+		/// NICK technique. See [Khurshid2009](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Khurshid2009) .
 		BINARIZATION_NICK = 3,
 	}
 	
@@ -254,6 +254,20 @@ pub mod ximgproc {
 	opencv_type_enum! { crate::ximgproc::WMFWeightType }
 	
 	pub type Boxes = core::Vector<crate::ximgproc::Box>;
+	/// ## Note
+	/// This alternative version of [bright_edges] function uses the following default values for its arguments:
+	/// * contrast: 1
+	/// * shortrange: 3
+	/// * longrange: 9
+	#[inline]
+	pub fn bright_edges_def(_original: &mut core::Mat, _edgeview: &mut core::Mat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_BrightEdges_MatR_MatR(_original.as_raw_mut_Mat(), _edgeview.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * contrast: 1
 	/// * shortrange: 3
@@ -262,6 +276,34 @@ pub mod ximgproc {
 	pub fn bright_edges(_original: &mut core::Mat, _edgeview: &mut core::Mat, contrast: i32, shortrange: i32, longrange: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_BrightEdges_MatR_MatR_int_int_int(_original.as_raw_mut_Mat(), _edgeview.as_raw_mut_Mat(), contrast, shortrange, longrange, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates 2D Fast Hough transform of an image.
+	/// ## Parameters
+	/// * dst: The destination image, result of transformation.
+	/// * src: The source (input) image.
+	/// * dstMatDepth: The depth of destination image
+	/// * op: The operation to be applied, see cv::HoughOp
+	/// * angleRange: The part of Hough space to calculate, see cv::AngleRangeOption
+	/// * makeSkew: Specifies to do or not to do image skewing, see cv::HoughDeskewOption
+	/// 
+	/// The function calculates the fast Hough transform for full, half or quarter
+	/// range of angles.
+	/// 
+	/// ## Note
+	/// This alternative version of [fast_hough_transform] function uses the following default values for its arguments:
+	/// * angle_range: ARO_315_135
+	/// * op: FHT_ADD
+	/// * make_skew: HDO_DESKEW
+	#[inline]
+	pub fn fast_hough_transform_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, dst_mat_depth: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_FastHoughTransform_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dst_mat_depth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -347,7 +389,7 @@ pub mod ximgproc {
 	
 	/// Applies Paillou filter to an image.
 	/// 
-	/// For more details about this implementation, please see [paillou1997detecting](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_paillou1997detecting)
+	/// For more details about this implementation, please see [paillou1997detecting](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_paillou1997detecting)
 	/// 
 	/// ## Parameters
 	/// * op: Source CV_8U(S) or CV_16U(S), 1-channel or 3-channels image.
@@ -362,6 +404,36 @@ pub mod ximgproc {
 		output_array_arg!(_dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_GradientPaillouY_const__InputArrayR_const__OutputArrayR_double_double(op.as_raw__InputArray(), _dst.as_raw__OutputArray(), alpha, omega, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates coordinates of line segment corresponded by point in Hough space.
+	/// ## Parameters
+	/// * houghPoint: Point in Hough space.
+	/// * srcImgInfo: The source (input) image of Hough transform.
+	/// * angleRange: The part of Hough space where point is situated, see cv::AngleRangeOption
+	/// * makeSkew: Specifies to do or not to do image skewing, see cv::HoughDeskewOption
+	/// * rules: Specifies strictness of line segment calculating, see cv::RulesOption
+	/// @retval  [Vec4i]     Coordinates of line segment corresponded by point in Hough space.
+	/// @remarks If rules parameter set to RO_STRICT
+	///        then returned line cut along the border of source image.
+	/// @remarks If rules parameter set to RO_WEAK then in case of point, which belongs
+	///        the incorrect part of Hough image, returned line will not intersect source image.
+	/// 
+	/// The function calculates coordinates of line segment corresponded by point in Hough space.
+	/// 
+	/// ## Note
+	/// This alternative version of [hough_point2_line] function uses the following default values for its arguments:
+	/// * angle_range: ARO_315_135
+	/// * make_skew: HDO_DESKEW
+	/// * rules: RO_IGNORE_BORDERS
+	#[inline]
+	pub fn hough_point2_line_def(hough_point: core::Point, src_img_info: &impl core::ToInputArray) -> Result<core::Vec4i> {
+		input_array_arg!(src_img_info);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_HoughPoint2Line_const_PointR_const__InputArrayR(&hough_point, src_img_info.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -459,6 +531,42 @@ pub mod ximgproc {
 	/// If crop is selected, the input image will be crop into square then circle,
 	/// and output size will be num_of_integral x min_edge.
 	/// 
+	/// ## Note
+	/// This alternative version of [radon_transform] function uses the following default values for its arguments:
+	/// * theta: 1
+	/// * start_angle: 0
+	/// * end_angle: 180
+	/// * crop: false
+	/// * norm: false
+	#[inline]
+	pub fn radon_transform_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_RadonTransform_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculate Radon Transform of an image.
+	/// ## Parameters
+	/// * src: The source (input) image.
+	/// * dst: The destination image, result of transformation.
+	/// * theta: Angle resolution of the transform in degrees.
+	/// * start_angle: Start angle of the transform in degrees.
+	/// * end_angle: End angle of the transform in degrees.
+	/// * crop: Crop the source image into a circle.
+	/// * norm: Normalize the output Mat to grayscale and convert type to CV_8U
+	/// 
+	/// This function calculates the Radon Transform of a given image in any range.
+	/// See <https://engineering.purdue.edu/~malcolm/pct/CTI_Ch03.pdf> for detail.
+	/// If the input type is CV_8U, the output will be CV_32S.
+	/// If the input type is CV_32F or CV_64F, the output will be CV_64F
+	/// The output size will be num_of_integral x src_diagonal_length.
+	/// If crop is selected, the input image will be crop into square then circle,
+	/// and output size will be num_of_integral x min_edge.
+	/// 
 	/// ## C++ default parameters
 	/// * theta: 1
 	/// * start_angle: 0
@@ -471,6 +579,43 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_RadonTransform_const__InputArrayR_const__OutputArrayR_double_double_double_bool_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), theta, start_angle, end_angle, crop, norm, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Simple one-line Adaptive Manifold Filter call.
+	/// 
+	/// ## Parameters
+	/// * joint: joint (also called as guided) image or array of images with any numbers of channels.
+	/// 
+	/// * src: filtering image with any numbers of channels.
+	/// 
+	/// * dst: output image.
+	/// 
+	/// * sigma_s: spatial standard deviation.
+	/// 
+	/// * sigma_r: color space standard deviation, it is similar to the sigma in the color space into
+	/// bilateralFilter.
+	/// 
+	/// * adjust_outliers: optional, specify perform outliers adjust operation or not, (Eq. 9) in the
+	/// original paper.
+	/// 
+	/// 
+	/// Note: Joint images with CV_8U and CV_16U depth converted to images with CV_32F depth and [0; 1]
+	/// color range before processing. Hence color space sigma sigma_r must be in [0; 1] range, unlike same
+	/// sigmas in bilateralFilter and dtFilter functions. see also: bilateralFilter, dtFilter, guidedFilter
+	/// 
+	/// ## Note
+	/// This alternative version of [am_filter] function uses the following default values for its arguments:
+	/// * adjust_outliers: false
+	#[inline]
+	pub fn am_filter_def(joint: &impl core::ToInputArray, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sigma_s: f64, sigma_r: f64) -> Result<()> {
+		input_array_arg!(joint);
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_amFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -544,7 +689,44 @@ pub mod ximgproc {
 	}
 	
 	/// Applies the bilateral texture filter to an image. It performs structure-preserving texture filter.
-	/// For more details about this filter see [Cho2014](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Cho2014).
+	/// For more details about this filter see [Cho2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Cho2014).
+	/// 
+	/// ## Parameters
+	/// * src: Source image whose depth is 8-bit UINT or 32-bit FLOAT
+	/// 
+	/// * dst: Destination image of the same size and type as src.
+	/// 
+	/// * fr: Radius of kernel to be used for filtering. It should be positive integer
+	/// 
+	/// * numIter: Number of iterations of algorithm, It should be positive integer
+	/// 
+	/// * sigmaAlpha: Controls the sharpness of the weight transition from edges to smooth/texture regions, where
+	/// a bigger value means sharper transition. When the value is negative, it is automatically calculated.
+	/// 
+	/// * sigmaAvg: Range blur parameter for texture blurring. Larger value makes result to be more blurred. When the
+	/// value is negative, it is automatically calculated as described in the paper.
+	/// ## See also
+	/// rollingGuidanceFilter, bilateralFilter
+	/// 
+	/// ## Note
+	/// This alternative version of [bilateral_texture_filter] function uses the following default values for its arguments:
+	/// * fr: 3
+	/// * num_iter: 1
+	/// * sigma_alpha: -1.
+	/// * sigma_avg: -1.
+	#[inline]
+	pub fn bilateral_texture_filter_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_bilateralTextureFilter_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Applies the bilateral texture filter to an image. It performs structure-preserving texture filter.
+	/// For more details about this filter see [Cho2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Cho2014).
 	/// 
 	/// ## Parameters
 	/// * src: Source image whose depth is 8-bit UINT or 32-bit FLOAT
@@ -592,6 +774,34 @@ pub mod ximgproc {
 		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_colorMatchTemplate_const__InputArrayR_const__InputArrayR_const__OutputArrayR(img.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Function for computing the percent of "bad" pixels in the disparity map
+	/// (pixels where error is higher than a specified threshold)
+	/// 
+	/// ## Parameters
+	/// * GT: ground truth disparity map
+	/// 
+	/// * src: disparity map to evaluate
+	/// 
+	/// * ROI: region of interest
+	/// 
+	/// * thresh: threshold used to determine "bad" pixels
+	/// 
+	/// @result returns mean square error between GT and src
+	/// 
+	/// ## Note
+	/// This alternative version of [compute_bad_pixel_percent] function uses the following default values for its arguments:
+	/// * thresh: 24
+	#[inline]
+	pub fn compute_bad_pixel_percent_def(gt: &impl core::ToInputArray, src: &impl core::ToInputArray, roi: core::Rect) -> Result<f64> {
+		input_array_arg!(gt);
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_computeBadPixelPercent_const__InputArrayR_const__InputArrayR_Rect(gt.as_raw__InputArray(), src.as_raw__InputArray(), roi.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -698,7 +908,38 @@ pub mod ximgproc {
 	/// * adjust_outliers: optional, specify perform outliers adjust operation or not, (Eq. 9) in the
 	/// original paper.
 	/// 
-	/// For more details about Adaptive Manifold Filter parameters, see the original article [Gastal12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gastal12) .
+	/// For more details about Adaptive Manifold Filter parameters, see the original article [Gastal12](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Gastal12) .
+	/// 
+	/// 
+	/// Note: Joint images with CV_8U and CV_16U depth converted to images with CV_32F depth and [0; 1]
+	/// color range before processing. Hence color space sigma sigma_r must be in [0; 1] range, unlike same
+	/// sigmas in bilateralFilter and dtFilter functions.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_am_filter] function uses the following default values for its arguments:
+	/// * adjust_outliers: false
+	#[inline]
+	pub fn create_am_filter_def(sigma_s: f64, sigma_r: f64) -> Result<core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createAMFilter_double_double(sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::AdaptiveManifoldFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Factory method, create instance of AdaptiveManifoldFilter and produce some initialization routines.
+	/// 
+	/// ## Parameters
+	/// * sigma_s: spatial standard deviation.
+	/// 
+	/// * sigma_r: color space standard deviation, it is similar to the sigma in the color space into
+	/// bilateralFilter.
+	/// 
+	/// * adjust_outliers: optional, specify perform outliers adjust operation or not, (Eq. 9) in the
+	/// original paper.
+	/// 
+	/// For more details about Adaptive Manifold Filter parameters, see the original article [Gastal12](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Gastal12) .
 	/// 
 	/// 
 	/// Note: Joint images with CV_8U and CV_16U depth converted to images with CV_32F depth and [0; 1]
@@ -714,6 +955,26 @@ pub mod ximgproc {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::AdaptiveManifoldFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// create ContourFitting algorithm object
+	/// 
+	/// ## Parameters
+	/// * ctr: number of Fourier descriptors equal to number of contour points after resampling.
+	/// * fd: Contour defining second shape (Target).
+	/// 
+	/// ## Note
+	/// This alternative version of [create_contour_fitting] function uses the following default values for its arguments:
+	/// * ctr: 1024
+	/// * fd: 16
+	#[inline]
+	pub fn create_contour_fitting_def() -> Result<core::Ptr<crate::ximgproc::ContourFitting>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createContourFitting(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::ContourFitting>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -753,7 +1014,42 @@ pub mod ximgproc {
 	/// 
 	/// * numIters: optional number of iterations used for filtering, 3 is quite enough.
 	/// 
-	/// For more details about Domain Transform filter parameters, see the original article [Gastal11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gastal11) and
+	/// For more details about Domain Transform filter parameters, see the original article [Gastal11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Gastal11) and
+	/// [Domain Transform filter homepage](http://www.inf.ufrgs.br/~eslgastal/DomainTransform/).
+	/// 
+	/// ## Note
+	/// This alternative version of [create_dt_filter] function uses the following default values for its arguments:
+	/// * mode: DTF_NC
+	/// * num_iters: 3
+	#[inline]
+	pub fn create_dt_filter_def(guide: &impl core::ToInputArray, sigma_spatial: f64, sigma_color: f64) -> Result<core::Ptr<crate::ximgproc::DTFilter>> {
+		input_array_arg!(guide);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createDTFilter_const__InputArrayR_double_double(guide.as_raw__InputArray(), sigma_spatial, sigma_color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::DTFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Factory method, create instance of DTFilter and produce initialization routines.
+	/// 
+	/// ## Parameters
+	/// * guide: guided image (used to build transformed distance, which describes edge structure of
+	/// guided image).
+	/// 
+	/// * sigmaSpatial: ![inline formula](https://latex.codecogs.com/png.latex?%7B%5Csigma%7D%5FH) parameter in the original article, it's similar to the sigma in the
+	/// coordinate space into bilateralFilter.
+	/// 
+	/// * sigmaColor: ![inline formula](https://latex.codecogs.com/png.latex?%7B%5Csigma%7D%5Fr) parameter in the original article, it's similar to the sigma in the
+	/// color space into bilateralFilter.
+	/// 
+	/// * mode: one form three modes DTF_NC, DTF_RF and DTF_IC which corresponds to three modes for
+	/// filtering 2D signals in the article.
+	/// 
+	/// * numIters: optional number of iterations used for filtering, 3 is quite enough.
+	/// 
+	/// For more details about Domain Transform filter parameters, see the original article [Gastal11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Gastal11) and
 	/// [Domain Transform filter homepage](http://www.inf.ufrgs.br/~eslgastal/DomainTransform/).
 	/// 
 	/// ## C++ default parameters
@@ -830,6 +1126,46 @@ pub mod ximgproc {
 	/// * gamma: affinity sensitivity.
 	/// * kappa: scale sensitivity.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_edge_boxes] function uses the following default values for its arguments:
+	/// * alpha: 0.65f
+	/// * beta: 0.75f
+	/// * eta: 1
+	/// * min_score: 0.01f
+	/// * max_boxes: 10000
+	/// * edge_min_mag: 0.1f
+	/// * edge_merge_thr: 0.5f
+	/// * cluster_min_mag: 0.5f
+	/// * max_aspect_ratio: 3
+	/// * min_box_area: 1000
+	/// * gamma: 2
+	/// * kappa: 1.5f
+	#[inline]
+	pub fn create_edge_boxes_def() -> Result<core::Ptr<crate::ximgproc::EdgeBoxes>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createEdgeBoxes(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::EdgeBoxes>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates a Edgeboxes
+	/// 
+	/// ## Parameters
+	/// * alpha: step size of sliding window search.
+	/// * beta: nms threshold for object proposals.
+	/// * eta: adaptation rate for nms threshold.
+	/// * minScore: min score of boxes to detect.
+	/// * maxBoxes: max number of boxes to detect.
+	/// * edgeMinMag: edge min magnitude. Increase to trade off accuracy for speed.
+	/// * edgeMergeThr: edge merge threshold. Increase to trade off accuracy for speed.
+	/// * clusterMinMag: cluster min magnitude. Increase to trade off accuracy for speed.
+	/// * maxAspectRatio: max aspect ratio of boxes.
+	/// * minBoxArea: minimum area of boxes.
+	/// * gamma: affinity sensitivity.
+	/// * kappa: scale sensitivity.
+	/// 
 	/// ## C++ default parameters
 	/// * alpha: 0.65f
 	/// * beta: 0.75f
@@ -881,7 +1217,42 @@ pub mod ximgproc {
 	/// 
 	/// * max_tol: convergence tolerance used for solver.
 	/// 
-	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
+	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BarronPoole2016).
+	/// 
+	/// ## Note
+	/// This alternative version of [create_fast_bilateral_solver_filter] function uses the following default values for its arguments:
+	/// * lambda: 128.0
+	/// * num_iter: 25
+	/// * max_tol: 1e-5
+	#[inline]
+	pub fn create_fast_bilateral_solver_filter_def(guide: &impl core::ToInputArray, sigma_spatial: f64, sigma_luma: f64, sigma_chroma: f64) -> Result<core::Ptr<crate::ximgproc::FastBilateralSolverFilter>> {
+		input_array_arg!(guide);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createFastBilateralSolverFilter_const__InputArrayR_double_double_double(guide.as_raw__InputArray(), sigma_spatial, sigma_luma, sigma_chroma, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::FastBilateralSolverFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Factory method, create instance of FastBilateralSolverFilter and execute the initialization routines.
+	/// 
+	/// ## Parameters
+	/// * guide: image serving as guide for filtering. It should have 8-bit depth and either 1 or 3 channels.
+	/// 
+	/// * sigma_spatial: parameter, that is similar to spatial space sigma (bandwidth) in bilateralFilter.
+	/// 
+	/// * sigma_luma: parameter, that is similar to luma space sigma (bandwidth) in bilateralFilter.
+	/// 
+	/// * sigma_chroma: parameter, that is similar to chroma space sigma (bandwidth) in bilateralFilter.
+	/// 
+	/// * lambda: smoothness strength parameter for solver.
+	/// 
+	/// * num_iter: number of iterations used for solver, 25 is usually enough.
+	/// 
+	/// * max_tol: convergence tolerance used for solver.
+	/// 
+	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BarronPoole2016).
 	/// 
 	/// ## C++ default parameters
 	/// * lambda: 128.0
@@ -912,7 +1283,43 @@ pub mod ximgproc {
 	/// 
 	/// * num_iter: number of iterations used for filtering, 3 is usually enough.
 	/// 
-	/// For more details about Fast Global Smoother parameters, see the original paper [Min2014](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Min2014). However, please note that
+	/// For more details about Fast Global Smoother parameters, see the original paper [Min2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Min2014). However, please note that
+	/// there are several differences. Lambda attenuation described in the paper is implemented a bit differently so do not
+	/// expect the results to be identical to those from the paper; sigma_color values from the paper should be multiplied by 255.0 to
+	/// achieve the same effect. Also, in case of image filtering where source and guide image are the same, authors
+	/// propose to dynamically update the guide image after each iteration. To maximize the performance this feature
+	/// was not implemented here.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_fast_global_smoother_filter] function uses the following default values for its arguments:
+	/// * lambda_attenuation: 0.25
+	/// * num_iter: 3
+	#[inline]
+	pub fn create_fast_global_smoother_filter_def(guide: &impl core::ToInputArray, lambda: f64, sigma_color: f64) -> Result<core::Ptr<crate::ximgproc::FastGlobalSmootherFilter>> {
+		input_array_arg!(guide);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createFastGlobalSmootherFilter_const__InputArrayR_double_double(guide.as_raw__InputArray(), lambda, sigma_color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::FastGlobalSmootherFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Factory method, create instance of FastGlobalSmootherFilter and execute the initialization routines.
+	/// 
+	/// ## Parameters
+	/// * guide: image serving as guide for filtering. It should have 8-bit depth and either 1 or 3 channels.
+	/// 
+	/// * lambda: parameter defining the amount of regularization
+	/// 
+	/// * sigma_color: parameter, that is similar to color space sigma in bilateralFilter.
+	/// 
+	/// * lambda_attenuation: internal parameter, defining how much lambda decreases after each iteration. Normally,
+	/// it should be 0.25. Setting it to 1.0 may lead to streaking artifacts.
+	/// 
+	/// * num_iter: number of iterations used for filtering, 3 is usually enough.
+	/// 
+	/// For more details about Fast Global Smoother parameters, see the original paper [Min2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Min2014). However, please note that
 	/// there are several differences. Lambda attenuation described in the paper is implemented a bit differently so do not
 	/// expect the results to be identical to those from the paper; sigma_color values from the paper should be multiplied by 255.0 to
 	/// achieve the same effect. Also, in case of image filtering where source and guide image are the same, authors
@@ -930,6 +1337,36 @@ pub mod ximgproc {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::FastGlobalSmootherFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates a smart pointer to a FastLineDetector object and initializes it
+	/// 
+	/// ## Parameters
+	/// * length_threshold: Segment shorter than this will be discarded
+	/// * distance_threshold: A point placed from a hypothesis line
+	///                            segment farther than this will be regarded as an outlier
+	/// * canny_th1: First threshold for hysteresis procedure in Canny()
+	/// * canny_th2: Second threshold for hysteresis procedure in Canny()
+	/// * canny_aperture_size: Aperturesize for the sobel operator in Canny().
+	///                            If zero, Canny() is not applied and the input image is taken as an edge image.
+	/// * do_merge: If true, incremental merging of segments will be performed
+	/// 
+	/// ## Note
+	/// This alternative version of [create_fast_line_detector] function uses the following default values for its arguments:
+	/// * length_threshold: 10
+	/// * distance_threshold: 1.414213562f
+	/// * canny_th1: 50.0
+	/// * canny_th2: 50.0
+	/// * canny_aperture_size: 3
+	/// * do_merge: false
+	#[inline]
+	pub fn create_fast_line_detector_def() -> Result<core::Ptr<crate::ximgproc::FastLineDetector>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createFastLineDetector(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::FastLineDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -973,7 +1410,7 @@ pub mod ximgproc {
 	/// * eps: regularization term of Guided Filter. ![inline formula](https://latex.codecogs.com/png.latex?%7Beps%7D%5E2) is similar to the sigma in the color
 	/// space into bilateralFilter.
 	/// 
-	/// For more details about Guided Filter parameters, see the original article [Kaiming10](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Kaiming10) .
+	/// For more details about Guided Filter parameters, see the original article [Kaiming10](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Kaiming10) .
 	#[inline]
 	pub fn create_guided_filter(guide: &impl core::ToInputArray, radius: i32, eps: f64) -> Result<core::Ptr<crate::ximgproc::GuidedFilter>> {
 		input_array_arg!(guide);
@@ -1055,6 +1492,37 @@ pub mod ximgproc {
 	/// * merge_small: merge small segments to give the desired number of superpixels. Processing is
 	/// much faster without merging, but many small segments will be left in the image.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_scan_segment] function uses the following default values for its arguments:
+	/// * slices: 8
+	/// * merge_small: true
+	#[inline]
+	pub fn create_scan_segment_def(image_width: i32, image_height: i32, num_superpixels: i32) -> Result<core::Ptr<crate::ximgproc::ScanSegment>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createScanSegment_int_int_int(image_width, image_height, num_superpixels, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::ScanSegment>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Initializes a ScanSegment object.
+	/// 
+	/// The function initializes a ScanSegment object for the input image. It stores the parameters of
+	/// the image: image_width and image_height. It also sets the parameters of the F-DBSCAN superpixel
+	/// algorithm, which are: num_superpixels, threads, and merge_small.
+	/// 
+	/// ## Parameters
+	/// * image_width: Image width.
+	/// * image_height: Image height.
+	/// * num_superpixels: Desired number of superpixels. Note that the actual number may be smaller
+	/// due to restrictions (depending on the image size). Use getNumberOfSuperpixels() to
+	/// get the actual number.
+	/// * slices: Number of processing threads for parallelisation. Setting -1 uses the maximum number
+	/// of threads. In practice, four threads is enough for smaller images and eight threads for larger ones.
+	/// * merge_small: merge small segments to give the desired number of superpixels. Processing is
+	/// much faster without merging, but many small segments will be left in the image.
+	/// 
 	/// ## C++ default parameters
 	/// * slices: 8
 	/// * merge_small: true
@@ -1065,6 +1533,28 @@ pub mod ximgproc {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::ScanSegment>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// !
+	/// * The only constructor
+	/// *
+	/// * \param model : name of the file where the model is stored
+	/// * \param howToGetFeatures : optional object inheriting from RFFeatureGetter.
+	/// *                           You need it only if you would like to train your
+	/// *                           own forest, pass NULL otherwise
+	/// 
+	/// ## Note
+	/// This alternative version of [create_structured_edge_detection] function uses the following default values for its arguments:
+	/// * how_to_get_features: Ptr<RFFeatureGetter>()
+	#[inline]
+	pub fn create_structured_edge_detection_def(model: &str) -> Result<core::Ptr<crate::ximgproc::StructuredEdgeDetection>> {
+		extern_container_arg!(model);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createStructuredEdgeDetection_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::StructuredEdgeDetection>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -1102,7 +1592,37 @@ pub mod ximgproc {
 	/// For enanched results it is recommended for color images to preprocess image with little gaussian blur
 	/// with a small 3 x 3 kernel and additional conversion into CieLAB color space.
 	/// 
-	/// ![image](https://docs.opencv.org/4.8.0/superpixels_lsc.png)
+	/// ![image](https://docs.opencv.org/4.8.1/superpixels_lsc.png)
+	/// 
+	/// ## Note
+	/// This alternative version of [create_superpixel_lsc] function uses the following default values for its arguments:
+	/// * region_size: 10
+	/// * ratio: 0.075f
+	#[inline]
+	pub fn create_superpixel_lsc_def(image: &impl core::ToInputArray) -> Result<core::Ptr<crate::ximgproc::SuperpixelLSC>> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createSuperpixelLSC_const__InputArrayR(image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelLSC>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Class implementing the LSC (Linear Spectral Clustering) superpixels
+	/// 
+	/// ## Parameters
+	/// * image: Image to segment
+	/// * region_size: Chooses an average superpixel size measured in pixels
+	/// * ratio: Chooses the enforcement of superpixel compactness factor of superpixel
+	/// 
+	/// The function initializes a SuperpixelLSC object for the input image. It sets the parameters of
+	/// superpixel algorithm, which are: region_size and ruler. It preallocate some buffers for future
+	/// computing iterations over the given image. An example of LSC is ilustrated in the following picture.
+	/// For enanched results it is recommended for color images to preprocess image with little gaussian blur
+	/// with a small 3 x 3 kernel and additional conversion into CieLAB color space.
+	/// 
+	/// ![image](https://docs.opencv.org/4.8.1/superpixels_lsc.png)
 	/// 
 	/// ## C++ default parameters
 	/// * region_size: 10
@@ -1146,7 +1666,52 @@ pub mod ximgproc {
 	/// recursively until the smaller block level. An example of initialization of 4 block levels is
 	/// illustrated in the following figure.
 	/// 
-	/// ![image](https://docs.opencv.org/4.8.0/superpixels_blocks.png)
+	/// ![image](https://docs.opencv.org/4.8.1/superpixels_blocks.png)
+	/// 
+	/// ## Note
+	/// This alternative version of [create_superpixel_seeds] function uses the following default values for its arguments:
+	/// * prior: 2
+	/// * histogram_bins: 5
+	/// * double_step: false
+	#[inline]
+	pub fn create_superpixel_seeds_def(image_width: i32, image_height: i32, image_channels: i32, num_superpixels: i32, num_levels: i32) -> Result<core::Ptr<crate::ximgproc::SuperpixelSEEDS>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createSuperpixelSEEDS_int_int_int_int_int(image_width, image_height, image_channels, num_superpixels, num_levels, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelSEEDS>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Initializes a SuperpixelSEEDS object.
+	/// 
+	/// ## Parameters
+	/// * image_width: Image width.
+	/// * image_height: Image height.
+	/// * image_channels: Number of channels of the image.
+	/// * num_superpixels: Desired number of superpixels. Note that the actual number may be smaller
+	/// due to restrictions (depending on the image size and num_levels). Use getNumberOfSuperpixels() to
+	/// get the actual number.
+	/// * num_levels: Number of block levels. The more levels, the more accurate is the segmentation,
+	/// but needs more memory and CPU time.
+	/// * prior: enable 3x3 shape smoothing term if \>0. A larger value leads to smoother shapes. prior
+	/// must be in the range [0, 5].
+	/// * histogram_bins: Number of histogram bins.
+	/// * double_step: If true, iterate each block level twice for higher accuracy.
+	/// 
+	/// The function initializes a SuperpixelSEEDS object for the input image. It stores the parameters of
+	/// the image: image_width, image_height and image_channels. It also sets the parameters of the SEEDS
+	/// superpixel algorithm, which are: num_superpixels, num_levels, use_prior, histogram_bins and
+	/// double_step.
+	/// 
+	/// The number of levels in num_levels defines the amount of block levels that the algorithm use in the
+	/// optimization. The initialization is a grid, in which the superpixels are equally distributed through
+	/// the width and the height of the image. The larger blocks correspond to the superpixel size, and the
+	/// levels with smaller blocks are formed by dividing the larger blocks into 2 x 2 blocks of pixels,
+	/// recursively until the smaller block level. An example of initialization of 4 block levels is
+	/// illustrated in the following figure.
+	/// 
+	/// ![image](https://docs.opencv.org/4.8.1/superpixels_blocks.png)
 	/// 
 	/// ## C++ default parameters
 	/// * prior: 2
@@ -1178,7 +1743,41 @@ pub mod ximgproc {
 	/// preprocess image with little gaussian blur using a small 3 x 3 kernel and additional conversion into
 	/// CieLAB color space. An example of SLIC versus SLICO and MSLIC is ilustrated in the following picture.
 	/// 
-	/// ![image](https://docs.opencv.org/4.8.0/superpixels_slic.png)
+	/// ![image](https://docs.opencv.org/4.8.1/superpixels_slic.png)
+	/// 
+	/// ## Note
+	/// This alternative version of [create_superpixel_slic] function uses the following default values for its arguments:
+	/// * algorithm: SLICO
+	/// * region_size: 10
+	/// * ruler: 10.0f
+	#[inline]
+	pub fn create_superpixel_slic_def(image: &impl core::ToInputArray) -> Result<core::Ptr<crate::ximgproc::SuperpixelSLIC>> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_createSuperpixelSLIC_const__InputArrayR(image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelSLIC>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Initialize a SuperpixelSLIC object
+	/// 
+	/// ## Parameters
+	/// * image: Image to segment
+	/// * algorithm: Chooses the algorithm variant to use:
+	/// SLIC segments image using a desired region_size, and in addition SLICO will optimize using adaptive compactness factor,
+	/// while MSLIC will optimize using manifold methods resulting in more content-sensitive superpixels.
+	/// * region_size: Chooses an average superpixel size measured in pixels
+	/// * ruler: Chooses the enforcement of superpixel smoothness factor of superpixel
+	/// 
+	/// The function initializes a SuperpixelSLIC object for the input image. It sets the parameters of choosed
+	/// superpixel algorithm, which are: region_size and ruler. It preallocate some buffers for future
+	/// computing iterations over the given image. For enanched results it is recommended for color images to
+	/// preprocess image with little gaussian blur using a small 3 x 3 kernel and additional conversion into
+	/// CieLAB color space. An example of SLIC versus SLICO and MSLIC is ilustrated in the following picture.
+	/// 
+	/// ![image](https://docs.opencv.org/4.8.1/superpixels_slic.png)
 	/// 
 	/// ## C++ default parameters
 	/// * algorithm: SLICO
@@ -1192,6 +1791,40 @@ pub mod ximgproc {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::ximgproc::SuperpixelSLIC>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Simple one-line Domain Transform filter call. If you have multiple images to filter with the same
+	/// guided image then use DTFilter interface to avoid extra computations on initialization stage.
+	/// 
+	/// ## Parameters
+	/// * guide: guided image (also called as joint image) with unsigned 8-bit or floating-point 32-bit
+	/// depth and up to 4 channels.
+	/// * src: filtering image with unsigned 8-bit or floating-point 32-bit depth and up to 4 channels.
+	/// * dst: destination image
+	/// * sigmaSpatial: ![inline formula](https://latex.codecogs.com/png.latex?%7B%5Csigma%7D%5FH) parameter in the original article, it's similar to the sigma in the
+	/// coordinate space into bilateralFilter.
+	/// * sigmaColor: ![inline formula](https://latex.codecogs.com/png.latex?%7B%5Csigma%7D%5Fr) parameter in the original article, it's similar to the sigma in the
+	/// color space into bilateralFilter.
+	/// * mode: one form three modes DTF_NC, DTF_RF and DTF_IC which corresponds to three modes for
+	/// filtering 2D signals in the article.
+	/// * numIters: optional number of iterations used for filtering, 3 is quite enough.
+	/// ## See also
+	/// bilateralFilter, guidedFilter, amFilter
+	/// 
+	/// ## Note
+	/// This alternative version of [dt_filter] function uses the following default values for its arguments:
+	/// * mode: DTF_NC
+	/// * num_iters: 3
+	#[inline]
+	pub fn dt_filter_def(guide: &impl core::ToInputArray, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sigma_spatial: f64, sigma_color: f64) -> Result<()> {
+		input_array_arg!(guide);
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_dtFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double(guide.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_spatial, sigma_color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1274,7 +1907,57 @@ pub mod ximgproc {
 	/// 
 	/// * max_tol: convergence tolerance used for solver.
 	/// 
-	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BarronPoole2016).
+	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BarronPoole2016).
+	/// 
+	/// 
+	/// Note: Confidence images with CV_8U depth are expected to in [0, 255] and CV_32F in [0, 1] range.
+	/// 
+	/// ## Note
+	/// This alternative version of [fast_bilateral_solver_filter] function uses the following default values for its arguments:
+	/// * sigma_spatial: 8
+	/// * sigma_luma: 8
+	/// * sigma_chroma: 8
+	/// * lambda: 128.0
+	/// * num_iter: 25
+	/// * max_tol: 1e-5
+	#[inline]
+	pub fn fast_bilateral_solver_filter_def(guide: &impl core::ToInputArray, src: &impl core::ToInputArray, confidence: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(guide);
+		input_array_arg!(src);
+		input_array_arg!(confidence);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_fastBilateralSolverFilter_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(guide.as_raw__InputArray(), src.as_raw__InputArray(), confidence.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Simple one-line Fast Bilateral Solver filter call. If you have multiple images to filter with the same
+	/// guide then use FastBilateralSolverFilter interface to avoid extra computations.
+	/// 
+	/// ## Parameters
+	/// * guide: image serving as guide for filtering. It should have 8-bit depth and either 1 or 3 channels.
+	/// 
+	/// * src: source image for filtering with unsigned 8-bit or signed 16-bit or floating-point 32-bit depth and up to 4 channels.
+	/// 
+	/// * confidence: confidence image with unsigned 8-bit or floating-point 32-bit confidence and 1 channel.
+	/// 
+	/// * dst: destination image.
+	/// 
+	/// * sigma_spatial: parameter, that is similar to spatial space sigma (bandwidth) in bilateralFilter.
+	/// 
+	/// * sigma_luma: parameter, that is similar to luma space sigma (bandwidth) in bilateralFilter.
+	/// 
+	/// * sigma_chroma: parameter, that is similar to chroma space sigma (bandwidth) in bilateralFilter.
+	/// 
+	/// * lambda: smoothness strength parameter for solver.
+	/// 
+	/// * num_iter: number of iterations used for solver, 25 is usually enough.
+	/// 
+	/// * max_tol: convergence tolerance used for solver.
+	/// 
+	/// For more details about the Fast Bilateral Solver parameters, see the original paper [BarronPoole2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BarronPoole2016).
 	/// 
 	/// 
 	/// Note: Confidence images with CV_8U depth are expected to in [0, 255] and CV_32F in [0, 1] range.
@@ -1318,6 +2001,41 @@ pub mod ximgproc {
 	/// 
 	/// * num_iter: number of iterations used for filtering, 3 is usually enough.
 	/// 
+	/// ## Note
+	/// This alternative version of [fast_global_smoother_filter] function uses the following default values for its arguments:
+	/// * lambda_attenuation: 0.25
+	/// * num_iter: 3
+	#[inline]
+	pub fn fast_global_smoother_filter_def(guide: &impl core::ToInputArray, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, lambda: f64, sigma_color: f64) -> Result<()> {
+		input_array_arg!(guide);
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_fastGlobalSmootherFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_double(guide.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), lambda, sigma_color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Simple one-line Fast Global Smoother filter call. If you have multiple images to filter with the same
+	/// guide then use FastGlobalSmootherFilter interface to avoid extra computations.
+	/// 
+	/// ## Parameters
+	/// * guide: image serving as guide for filtering. It should have 8-bit depth and either 1 or 3 channels.
+	/// 
+	/// * src: source image for filtering with unsigned 8-bit or signed 16-bit or floating-point 32-bit depth and up to 4 channels.
+	/// 
+	/// * dst: destination image.
+	/// 
+	/// * lambda: parameter defining the amount of regularization
+	/// 
+	/// * sigma_color: parameter, that is similar to color space sigma in bilateralFilter.
+	/// 
+	/// * lambda_attenuation: internal parameter, defining how much lambda decreases after each iteration. Normally,
+	/// it should be 0.25. Setting it to 1.0 may lead to streaking artifacts.
+	/// 
+	/// * num_iter: number of iterations used for filtering, 3 is usually enough.
+	/// 
 	/// ## C++ default parameters
 	/// * lambda_attenuation: 0.25
 	/// * num_iter: 3
@@ -1336,7 +2054,37 @@ pub mod ximgproc {
 	/// Finds ellipses fastly in an image using projective invariant pruning.
 	/// *
 	/// * The function detects ellipses in images using projective invariant pruning.
-	/// * For more details about this implementation, please see [jia2017fast](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_jia2017fast)
+	/// * For more details about this implementation, please see [jia2017fast](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_jia2017fast)
+	/// * Jia, Qi et al, (2017).
+	/// * A Fast Ellipse Detector using Projective Invariant Pruning. IEEE Transactions on Image Processing.
+	/// *
+	/// ## Parameters
+	/// * image: input image, could be gray or color.
+	/// * ellipses: output vector of found ellipses. each vector is encoded as five float $x, y, a, b, radius, score$.
+	/// * scoreThreshold: float, the threshold of ellipse score.
+	/// * reliabilityThreshold: float, the threshold of reliability.
+	/// * centerDistanceThreshold: float, the threshold of center distance.
+	/// 
+	/// ## Note
+	/// This alternative version of [find_ellipses] function uses the following default values for its arguments:
+	/// * score_threshold: 0.7f
+	/// * reliability_threshold: 0.5f
+	/// * center_distance_threshold: 0.05f
+	#[inline]
+	pub fn find_ellipses_def(image: &impl core::ToInputArray, ellipses: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(ellipses);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_findEllipses_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), ellipses.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds ellipses fastly in an image using projective invariant pruning.
+	/// *
+	/// * The function detects ellipses in images using projective invariant pruning.
+	/// * For more details about this implementation, please see [jia2017fast](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_jia2017fast)
 	/// * Jia, Qi et al, (2017).
 	/// * A Fast Ellipse Detector using Projective Invariant Pruning. IEEE Transactions on Image Processing.
 	/// *
@@ -1364,7 +2112,32 @@ pub mod ximgproc {
 	
 	/// Fourier descriptors for planed closed curves
 	/// 
-	/// For more details about this implementation, please see [PersoonFu1977](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_PersoonFu1977)
+	/// For more details about this implementation, please see [PersoonFu1977](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PersoonFu1977)
+	/// 
+	/// ## Parameters
+	/// * src: contour type vector<Point> , vector<Point2f>  or vector<Point2d>
+	/// * dst: Mat of type CV_64FC2 and nbElt rows A VERIFIER
+	/// * nbElt: number of rows in dst or getOptimalDFTSize rows if nbElt=-1
+	/// * nbFD: number of FD return in dst dst = [FD(1...nbFD/2) FD(nbFD/2-nbElt+1...:nbElt)]
+	/// 
+	/// ## Note
+	/// This alternative version of [fourier_descriptor] function uses the following default values for its arguments:
+	/// * nb_elt: -1
+	/// * nb_fd: -1
+	#[inline]
+	pub fn fourier_descriptor_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_fourierDescriptor_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Fourier descriptors for planed closed curves
+	/// 
+	/// For more details about this implementation, please see [PersoonFu1977](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PersoonFu1977)
 	/// 
 	/// ## Parameters
 	/// * src: contour type vector<Point> , vector<Point2f>  or vector<Point2d>
@@ -1395,6 +2168,29 @@ pub mod ximgproc {
 	/// 
 	/// * scale: disparity map will be multiplied by this value for visualization
 	/// 
+	/// ## Note
+	/// This alternative version of [get_disparity_vis] function uses the following default values for its arguments:
+	/// * scale: 1.0
+	#[inline]
+	pub fn get_disparity_vis_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_getDisparityVis_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Function for creating a disparity map visualization (clamped CV_8U image)
+	/// 
+	/// ## Parameters
+	/// * src: input disparity map (CV_16S depth)
+	/// 
+	/// * dst: output visualization
+	/// 
+	/// * scale: disparity map will be multiplied by this value for visualization
+	/// 
 	/// ## C++ default parameters
 	/// * scale: 1.0
 	#[inline]
@@ -1403,6 +2199,43 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_getDisparityVis_const__InputArrayR_const__OutputArrayR_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Simple one-line Guided Filter call.
+	/// 
+	/// If you have multiple images to filter with the same guided image then use GuidedFilter interface to
+	/// avoid extra computations on initialization stage.
+	/// 
+	/// ## Parameters
+	/// * guide: guided image (or array of images) with up to 3 channels, if it have more then 3
+	/// channels then only first 3 channels will be used.
+	/// 
+	/// * src: filtering image with any numbers of channels.
+	/// 
+	/// * dst: output image.
+	/// 
+	/// * radius: radius of Guided Filter.
+	/// 
+	/// * eps: regularization term of Guided Filter. ![inline formula](https://latex.codecogs.com/png.latex?%7Beps%7D%5E2) is similar to the sigma in the color
+	/// space into bilateralFilter.
+	/// 
+	/// * dDepth: optional depth of the output image.
+	/// ## See also
+	/// bilateralFilter, dtFilter, amFilter
+	/// 
+	/// ## Note
+	/// This alternative version of [guided_filter] function uses the following default values for its arguments:
+	/// * d_depth: -1
+	#[inline]
+	pub fn guided_filter_def(guide: &impl core::ToInputArray, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, radius: i32, eps: f64) -> Result<()> {
+		input_array_arg!(guide);
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_guidedFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double(guide.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), radius, eps, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1473,6 +2306,50 @@ pub mod ximgproc {
 	/// ## See also
 	/// bilateralFilter, amFilter
 	/// 
+	/// ## Note
+	/// This alternative version of [joint_bilateral_filter] function uses the following default values for its arguments:
+	/// * border_type: BORDER_DEFAULT
+	#[inline]
+	pub fn joint_bilateral_filter_def(joint: &impl core::ToInputArray, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, d: i32, sigma_color: f64, sigma_space: f64) -> Result<()> {
+		input_array_arg!(joint);
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_jointBilateralFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_double_double(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Applies the joint bilateral filter to an image.
+	/// 
+	/// ## Parameters
+	/// * joint: Joint 8-bit or floating-point, 1-channel or 3-channel image.
+	/// 
+	/// * src: Source 8-bit or floating-point, 1-channel or 3-channel image with the same depth as joint
+	/// image.
+	/// 
+	/// * dst: Destination image of the same size and type as src .
+	/// 
+	/// * d: Diameter of each pixel neighborhood that is used during filtering. If it is non-positive,
+	/// it is computed from sigmaSpace .
+	/// 
+	/// * sigmaColor: Filter sigma in the color space. A larger value of the parameter means that
+	/// farther colors within the pixel neighborhood (see sigmaSpace ) will be mixed together, resulting in
+	/// larger areas of semi-equal color.
+	/// 
+	/// * sigmaSpace: Filter sigma in the coordinate space. A larger value of the parameter means that
+	/// farther pixels will influence each other as long as their colors are close enough (see sigmaColor ).
+	/// When d\>0 , it specifies the neighborhood size regardless of sigmaSpace . Otherwise, d is
+	/// proportional to sigmaSpace .
+	/// 
+	/// * borderType: 
+	/// 
+	/// 
+	/// Note: bilateralFilter and jointBilateralFilter use L1 norm to compute difference between colors.
+	/// ## See also
+	/// bilateralFilter, amFilter
+	/// 
 	/// ## C++ default parameters
 	/// * border_type: BORDER_DEFAULT
 	#[inline]
@@ -1498,7 +2375,35 @@ pub mod ximgproc {
 	/// 
 	/// * kappa: parameter defining the increasing factor of the weight of the gradient data term.
 	/// 
-	/// For more details about L0 Smoother, see the original paper [xu2011image](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_xu2011image).
+	/// For more details about L0 Smoother, see the original paper [xu2011image](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_xu2011image).
+	/// 
+	/// ## Note
+	/// This alternative version of [l0_smooth] function uses the following default values for its arguments:
+	/// * lambda: 0.02
+	/// * kappa: 2.0
+	#[inline]
+	pub fn l0_smooth_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_l0Smooth_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Global image smoothing via L0 gradient minimization.
+	/// 
+	/// ## Parameters
+	/// * src: source image for filtering with unsigned 8-bit or signed 16-bit or floating-point depth.
+	/// 
+	/// * dst: destination image.
+	/// 
+	/// * lambda: parameter defining the smooth term weight.
+	/// 
+	/// * kappa: parameter defining the increasing factor of the weight of the gradient data term.
+	/// 
+	/// For more details about L0 Smoother, see the original paper [xu2011image](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_xu2011image).
 	/// 
 	/// ## C++ default parameters
 	/// * lambda: 0.02
@@ -1509,6 +2414,55 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_l0Smooth_const__InputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), lambda, kappa, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs thresholding on input images using Niblack's technique or some of the
+	/// popular variations it inspired.
+	/// 
+	/// The function transforms a grayscale image to a binary image according to the formulae:
+	/// *   **THRESH_BINARY**
+	///    ![block formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7BmaxValue%7D%7D%7Bif%20%5C%28src%28x%2Cy%29%20%3E%20T%28x%2Cy%29%5C%29%7D%7B0%7D%7Botherwise%7D)
+	/// *   **THRESH_BINARY_INV**
+	///    ![block formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20%20%5Cfork%7B0%7D%7Bif%20%5C%28src%28x%2Cy%29%20%3E%20T%28x%2Cy%29%5C%29%7D%7B%5Ctexttt%7BmaxValue%7D%7D%7Botherwise%7D)
+	/// where ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2Cy%29) is a threshold calculated individually for each pixel.
+	/// 
+	/// The threshold value ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2C%20y%29) is determined based on the binarization method chosen. For
+	/// classic Niblack, it is the mean minus ![inline formula](https://latex.codecogs.com/png.latex?%20k%20) times standard deviation of
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BblockSize%7D%20%5Ctimes%5Ctexttt%7BblockSize%7D) neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29).
+	/// 
+	/// The function can't process the image in-place.
+	/// 
+	/// ## Parameters
+	/// * _src: Source 8-bit single-channel image.
+	/// * _dst: Destination image of the same size and the same type as src.
+	/// * maxValue: Non-zero value assigned to the pixels for which the condition is satisfied,
+	/// used with the THRESH_BINARY and THRESH_BINARY_INV thresholding types.
+	/// * type: Thresholding type, see cv::ThresholdTypes.
+	/// * blockSize: Size of a pixel neighborhood that is used to calculate a threshold value
+	/// for the pixel: 3, 5, 7, and so on.
+	/// * k: The user-adjustable parameter used by Niblack and inspired techniques. For Niblack, this is
+	/// normally a value between 0 and 1 that is multiplied with the standard deviation and subtracted from
+	/// the mean.
+	/// * binarizationMethod: Binarization method to use. By default, Niblack's technique is used.
+	/// Other techniques can be specified, see cv::ximgproc::LocalBinarizationMethods.
+	/// * r: The user-adjustable parameter used by Sauvola's technique. This is the dynamic range
+	/// of standard deviation.
+	/// ## See also
+	/// threshold, adaptiveThreshold
+	/// 
+	/// ## Note
+	/// This alternative version of [ni_black_threshold] function uses the following default values for its arguments:
+	/// * binarization_method: BINARIZATION_NIBLACK
+	/// * r: 128
+	#[inline]
+	pub fn ni_black_threshold_def(_src: &impl core::ToInputArray, _dst: &mut impl core::ToOutputArray, max_value: f64, typ: i32, block_size: i32, k: f64) -> Result<()> {
+		input_array_arg!(_src);
+		output_array_arg!(_dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_niBlackThreshold_const__InputArrayR_const__OutputArrayR_double_int_int_double(_src.as_raw__InputArray(), _dst.as_raw__OutputArray(), max_value, typ, block_size, k, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1658,6 +2612,27 @@ pub mod ximgproc {
 	/// * size: image size (to be used if an "on" boundary should be used in erosion, using the default
 	///                  means that the size is computed from the extension of the input)
 	/// 
+	/// ## Note
+	/// This alternative version of [create_rle_image] function uses the following default values for its arguments:
+	/// * size: Size(0,0)
+	#[inline]
+	pub fn create_rle_image_def(runs: &core::Vector<core::Point3i>, res: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(res);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_rl_createRLEImage_const_vectorLPoint3iGR_const__OutputArrayR(runs.as_raw_VectorOfPoint3i(), res.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Creates a run-length encoded image from a vector of runs (column begin, column end, row)
+	/// 
+	/// ## Parameters
+	/// * runs: vector of runs
+	/// * res: result
+	/// * size: image size (to be used if an "on" boundary should be used in erosion, using the default
+	///                  means that the size is computed from the extension of the input)
+	/// 
 	/// ## C++ default parameters
 	/// * size: Size(0,0)
 	#[inline]
@@ -1665,6 +2640,31 @@ pub mod ximgproc {
 		output_array_arg!(res);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_createRLEImage_const_vectorLPoint3iGR_const__OutputArrayR_Size(runs.as_raw_VectorOfPoint3i(), res.as_raw__OutputArray(), size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Dilates an run-length encoded binary image by using a specific structuring element.
+	/// 
+	/// 
+	/// ## Parameters
+	/// * rlSrc: input image
+	/// * rlDest: result
+	/// * rlKernel: kernel
+	/// * anchor: position of the anchor within the element; default value (0, 0)
+	///                      is usually the element center.
+	/// 
+	/// ## Note
+	/// This alternative version of [dilate] function uses the following default values for its arguments:
+	/// * anchor: Point(0,0)
+	#[inline]
+	pub fn dilate_def(rl_src: &impl core::ToInputArray, rl_dest: &mut impl core::ToOutputArray, rl_kernel: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(rl_src);
+		output_array_arg!(rl_dest);
+		input_array_arg!(rl_kernel);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_rl_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1689,6 +2689,34 @@ pub mod ximgproc {
 		input_array_arg!(rl_kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_rl_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Point(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), anchor.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Erodes an run-length encoded binary image by using a specific structuring element.
+	/// 
+	/// 
+	/// ## Parameters
+	/// * rlSrc: input image
+	/// * rlDest: result
+	/// * rlKernel: kernel
+	/// * bBoundaryOn: indicates whether pixel outside the image boundary are assumed to be on
+	///          (True: works in the same way as the default of cv::erode, False: is a little faster)
+	/// * anchor: position of the anchor within the element; default value (0, 0)
+	///                      is usually the element center.
+	/// 
+	/// ## Note
+	/// This alternative version of [erode] function uses the following default values for its arguments:
+	/// * b_boundary_on: true
+	/// * anchor: Point(0,0)
+	#[inline]
+	pub fn erode_def(rl_src: &impl core::ToInputArray, rl_dest: &mut impl core::ToOutputArray, rl_kernel: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(rl_src);
+		output_array_arg!(rl_dest);
+		input_array_arg!(rl_kernel);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_rl_erode_const__InputArrayR_const__OutputArrayR_const__InputArrayR(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), rl_kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1765,6 +2793,35 @@ pub mod ximgproc {
 	///          False: is a little faster)
 	/// * anchor: position of the anchor within the element; default value (0, 0) is usually the element center.
 	/// 
+	/// ## Note
+	/// This alternative version of [morphology_ex] function uses the following default values for its arguments:
+	/// * b_boundary_on_for_erosion: true
+	/// * anchor: Point(0,0)
+	#[inline]
+	pub fn morphology_ex_def(rl_src: &impl core::ToInputArray, rl_dest: &mut impl core::ToOutputArray, op: i32, rl_kernel: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(rl_src);
+		output_array_arg!(rl_dest);
+		input_array_arg!(rl_kernel);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_rl_morphologyEx_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR(rl_src.as_raw__InputArray(), rl_dest.as_raw__OutputArray(), op, rl_kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Applies a morphological operation to a run-length encoded binary image.
+	/// 
+	/// 
+	/// ## Parameters
+	/// * rlSrc: input image
+	/// * rlDest: result
+	/// * op: all operations supported by cv::morphologyEx (except cv::MORPH_HITMISS)
+	/// * rlKernel: kernel
+	/// * bBoundaryOnForErosion: indicates whether pixel outside the image boundary are assumed
+	///          to be on for erosion operations (True: works in the same way as the default of cv::erode,
+	///          False: is a little faster)
+	/// * anchor: position of the anchor within the element; default value (0, 0) is usually the element center.
+	/// 
 	/// ## C++ default parameters
 	/// * b_boundary_on_for_erosion: true
 	/// * anchor: Point(0,0)
@@ -1819,7 +2876,55 @@ pub mod ximgproc {
 	
 	/// Applies the rolling guidance filter to an image.
 	/// 
-	/// For more details, please see [zhang2014rolling](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_zhang2014rolling)
+	/// For more details, please see [zhang2014rolling](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_zhang2014rolling)
+	/// 
+	/// ## Parameters
+	/// * src: Source 8-bit or floating-point, 1-channel or 3-channel image.
+	/// 
+	/// * dst: Destination image of the same size and type as src.
+	/// 
+	/// * d: Diameter of each pixel neighborhood that is used during filtering. If it is non-positive,
+	/// it is computed from sigmaSpace .
+	/// 
+	/// * sigmaColor: Filter sigma in the color space. A larger value of the parameter means that
+	/// farther colors within the pixel neighborhood (see sigmaSpace ) will be mixed together, resulting in
+	/// larger areas of semi-equal color.
+	/// 
+	/// * sigmaSpace: Filter sigma in the coordinate space. A larger value of the parameter means that
+	/// farther pixels will influence each other as long as their colors are close enough (see sigmaColor ).
+	/// When d\>0 , it specifies the neighborhood size regardless of sigmaSpace . Otherwise, d is
+	/// proportional to sigmaSpace .
+	/// 
+	/// * numOfIter: Number of iterations of joint edge-preserving filtering applied on the source image.
+	/// 
+	/// * borderType: 
+	/// 
+	/// 
+	/// Note:  rollingGuidanceFilter uses jointBilateralFilter as the edge-preserving filter.
+	/// ## See also
+	/// jointBilateralFilter, bilateralFilter, amFilter
+	/// 
+	/// ## Note
+	/// This alternative version of [rolling_guidance_filter] function uses the following default values for its arguments:
+	/// * d: -1
+	/// * sigma_color: 25
+	/// * sigma_space: 3
+	/// * num_of_iter: 4
+	/// * border_type: BORDER_DEFAULT
+	#[inline]
+	pub fn rolling_guidance_filter_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_rollingGuidanceFilter_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Applies the rolling guidance filter to an image.
+	/// 
+	/// For more details, please see [zhang2014rolling](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_zhang2014rolling)
 	/// 
 	/// ## Parameters
 	/// * src: Source 8-bit or floating-point, 1-channel or 3-channel image.
@@ -1861,6 +2966,27 @@ pub mod ximgproc {
 		unsafe { sys::cv_ximgproc_rollingGuidanceFilter_const__InputArrayR_const__OutputArrayR_int_double_double_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), d, sigma_color, sigma_space, num_of_iter, border_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Creates a graph based segmentor
+	/// ## Parameters
+	/// * sigma: The sigma parameter, used to smooth image
+	/// * k: The k parameter of the algorythm
+	/// * min_size: The minimum size of segments
+	/// 
+	/// ## Note
+	/// This alternative version of [create_graph_segmentation] function uses the following default values for its arguments:
+	/// * sigma: 0.5
+	/// * k: 300
+	/// * min_size: 100
+	#[inline]
+	pub fn create_graph_segmentation_def() -> Result<core::Ptr<crate::ximgproc::GraphSegmentation>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_segmentation_createGraphSegmentation(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ximgproc::GraphSegmentation>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -2017,6 +3143,29 @@ pub mod ximgproc {
 	/// * dst: Destination image of the same size and the same type as src. The function can work in-place.
 	/// * thinningType: Value that defines which thinning algorithm should be used. See cv::ximgproc::ThinningTypes
 	/// 
+	/// ## Note
+	/// This alternative version of [thinning] function uses the following default values for its arguments:
+	/// * thinning_type: THINNING_ZHANGSUEN
+	#[inline]
+	pub fn thinning_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_thinning_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Applies a binary blob thinning operation, to achieve a skeletization of the input image.
+	/// 
+	/// The function transforms a binary blob image into a skeletized form using the technique of Zhang-Suen.
+	/// 
+	/// ## Parameters
+	/// * src: Source 8-bit single-channel image, containing binary blobs, with blobs having 255 pixel values.
+	/// * dst: Destination image of the same size and the same type as src. The function can work in-place.
+	/// * thinningType: Value that defines which thinning algorithm should be used. See cv::ximgproc::ThinningTypes
+	/// 
 	/// ## C++ default parameters
 	/// * thinning_type: THINNING_ZHANGSUEN
 	#[inline]
@@ -2025,6 +3174,29 @@ pub mod ximgproc {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ximgproc_thinning_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thinning_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// transform a contour
+	/// 
+	/// ## Parameters
+	/// * src: contour or Fourier Descriptors if fd is true
+	/// * t: transform Mat given by estimateTransformation
+	/// * dst: Mat of type CV_64FC2 and nbElt rows
+	/// * fdContour: true src are Fourier Descriptors. fdContour false src is a contour
+	/// 
+	/// ## Note
+	/// This alternative version of [transform_fd] function uses the following default values for its arguments:
+	/// * fd_contour: true
+	#[inline]
+	pub fn transform_fd_def(src: &impl core::ToInputArray, t: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(t);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_transformFD_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), t.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2054,7 +3226,40 @@ pub mod ximgproc {
 	
 	/// Applies weighted median filter to an image.
 	/// 
-	/// For more details about this implementation, please see [zhang2014100](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_zhang2014100)+
+	/// For more details about this implementation, please see [zhang2014100](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_zhang2014100)+
+	/// 
+	/// ## Parameters
+	/// * joint: Joint 8-bit, 1-channel or 3-channel image.
+	/// * src: Source 8-bit or floating-point, 1-channel or 3-channel image.
+	/// * dst: Destination image.
+	/// * r: Radius of filtering kernel, should be a positive integer.
+	/// * sigma: Filter range standard deviation for the joint image.
+	/// * weightType: weightType The type of weight definition, see WMFWeightType
+	/// * mask: A 0-1 mask that has the same size with I. This mask is used to ignore the effect of some pixels. If the pixel value on mask is 0,
+	///                           the pixel will be ignored when maintaining the joint-histogram. This is useful for applications like optical flow occlusion handling.
+	/// ## See also
+	/// medianBlur, jointBilateralFilter
+	/// 
+	/// ## Note
+	/// This alternative version of [weighted_median_filter] function uses the following default values for its arguments:
+	/// * sigma: 25.5
+	/// * weight_type: WMF_EXP
+	/// * mask: noArray()
+	#[inline]
+	pub fn weighted_median_filter_def(joint: &impl core::ToInputArray, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, r: i32) -> Result<()> {
+		input_array_arg!(joint);
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ximgproc_weightedMedianFilter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(joint.as_raw__InputArray(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), r, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Applies weighted median filter to an image.
+	/// 
+	/// For more details about this implementation, please see [zhang2014100](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_zhang2014100)+
 	/// 
 	/// ## Parameters
 	/// * joint: Joint 8-bit, 1-channel or 3-channel image.
@@ -2184,6 +3389,29 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Apply high-dimensional filtering using adaptive manifolds.
+		/// 
+		/// ## Parameters
+		/// * src: filtering image with any numbers of channels.
+		/// 
+		/// * dst: output image.
+		/// 
+		/// * joint: optional joint (also called as guided) image with any numbers of channels.
+		/// 
+		/// ## Note
+		/// This alternative version of [filter] function uses the following default values for its arguments:
+		/// * joint: noArray()
+		#[inline]
+		fn filter_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_filter_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_AdaptiveManifoldFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn collect_garbage(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2263,7 +3491,7 @@ pub mod ximgproc {
 	
 	/// Interface for Adaptive Manifold Filter realizations.
 	/// 
-	/// For more details about this filter see [Gastal12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gastal12) and References_.
+	/// For more details about this filter see [Gastal12](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Gastal12) and References_.
 	/// 
 	/// Below listed optional parameters which may be set up with Algorithm::set function.
 	/// *   member double sigma_s = 16.0
@@ -2357,7 +3585,7 @@ pub mod ximgproc {
 	pub trait ContourFittingTrait: core::AlgorithmTrait + crate::ximgproc::ContourFittingTraitConst {
 		fn as_raw_mut_ContourFitting(&mut self) -> *mut c_void;
 	
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
 		/// 
 		/// ## Parameters
 		/// * src: Contour defining first shape.
@@ -2381,7 +3609,32 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// 
+		/// ## Parameters
+		/// * src: Contour defining first shape.
+		/// * dst: Contour defining second shape (Target).
+		/// * alphaPhiST: : ![inline formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20)=alphaPhiST(0,0), ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cphi%20)=alphaPhiST(0,1) (in radian), s=alphaPhiST(0,2), Tx=alphaPhiST(0,3), Ty=alphaPhiST(0,4) rotation center
+		/// * dist: distance between src and dst after matching.
+		/// * fdContour: false then src and dst are contours and true src and dst are fourier descriptors.
+		/// 
+		/// ## Note
+		/// This alternative version of [estimate_transformation] function uses the following default values for its arguments:
+		/// * dist: 0
+		/// * fd_contour: false
+		#[inline]
+		fn estimate_transformation_def(&mut self, src: &impl core::ToInputArray, dst: &impl core::ToInputArray, alpha_phi_st: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			input_array_arg!(dst);
+			output_array_arg!(alpha_phi_st);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ContourFitting(), src.as_raw__InputArray(), dst.as_raw__InputArray(), alpha_phi_st.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
 		/// 
 		/// ## Parameters
 		/// * src: Contour defining first shape.
@@ -2399,6 +3652,30 @@ pub mod ximgproc {
 			output_array_arg!(alpha_phi_st);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayR_const__InputArrayR_const__OutputArrayR_doubleR_bool(self.as_raw_mut_ContourFitting(), src.as_raw__InputArray(), dst.as_raw__InputArray(), alpha_phi_st.as_raw__OutputArray(), dist, fd_contour, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// 
+		/// ## Parameters
+		/// * src: Contour defining first shape.
+		/// * dst: Contour defining second shape (Target).
+		/// * alphaPhiST: : ![inline formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20)=alphaPhiST(0,0), ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cphi%20)=alphaPhiST(0,1) (in radian), s=alphaPhiST(0,2), Tx=alphaPhiST(0,3), Ty=alphaPhiST(0,4) rotation center
+		/// * dist: distance between src and dst after matching.
+		/// * fdContour: false then src and dst are contours and true src and dst are fourier descriptors.
+		/// 
+		/// ## Note
+		/// This alternative version of [estimate_transformation] function uses the following default values for its arguments:
+		/// * fd_contour: false
+		#[inline]
+		fn estimate_transformation_def_1(&mut self, src: &impl core::ToInputArray, dst: &impl core::ToInputArray, alpha_phi_st: &mut impl core::ToOutputArray, dist: &mut f64) -> Result<()> {
+			input_array_arg!(src);
+			input_array_arg!(dst);
+			output_array_arg!(alpha_phi_st);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_ContourFitting_estimateTransformation_const__InputArrayR_const__InputArrayR_const__OutputArrayR_doubleR(self.as_raw_mut_ContourFitting(), src.as_raw__InputArray(), dst.as_raw__InputArray(), alpha_phi_st.as_raw__OutputArray(), dist, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2489,7 +3766,7 @@ pub mod ximgproc {
 	}
 	
 	impl ContourFitting {
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
 		/// 
 		/// ## Parameters
 		/// * ctr: number of Fourier descriptors equal to number of contour points after resampling.
@@ -2502,6 +3779,26 @@ pub mod ximgproc {
 		pub fn new(ctr: i32, fd: i32) -> Result<crate::ximgproc::ContourFitting> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_ContourFitting_ContourFitting_int_int(ctr, fd, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ximgproc::ContourFitting::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		/// 
+		/// ## Parameters
+		/// * ctr: number of Fourier descriptors equal to number of contour points after resampling.
+		/// * fd: Contour defining second shape (Target).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * ctr: 1024
+		/// * fd: 16
+		#[inline]
+		pub fn new_def() -> Result<crate::ximgproc::ContourFitting> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_ContourFitting_ContourFitting(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ximgproc::ContourFitting::opencv_from_extern(ret) };
@@ -2553,11 +3850,35 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Produce domain transform filtering operation on source image.
+		/// 
+		/// ## Parameters
+		/// * src: filtering image with unsigned 8-bit or floating-point 32-bit depth and up to 4 channels.
+		/// 
+		/// * dst: destination image.
+		/// 
+		/// * dDepth: optional depth of the output image. dDepth can be set to -1, which will be equivalent
+		/// to src.depth().
+		/// 
+		/// ## Note
+		/// This alternative version of [filter] function uses the following default values for its arguments:
+		/// * d_depth: -1
+		#[inline]
+		fn filter_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_DTFilter_filter_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DTFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Interface for realizations of Domain Transform filter.
 	/// 
-	/// For more details about this filter see [Gastal11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gastal11) .
+	/// For more details about this filter see [Gastal11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Gastal11) .
 	pub struct DTFilter {
 		ptr: *mut c_void
 	}
@@ -2645,6 +3966,43 @@ pub mod ximgproc {
 			input_array_arg!(right_view);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_Rect_const__InputArrayR(self.as_raw_mut_DisparityFilter(), disparity_map_left.as_raw__InputArray(), left_view.as_raw__InputArray(), filtered_disparity_map.as_raw__OutputArray(), disparity_map_right.as_raw__InputArray(), roi.opencv_as_extern(), right_view.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Apply filtering to the disparity map.
+		/// 
+		/// ## Parameters
+		/// * disparity_map_left: disparity map of the left view, 1 channel, CV_16S type. Implicitly assumes that disparity
+		/// values are scaled by 16 (one-pixel disparity corresponds to the value of 16 in the disparity map). Disparity map
+		/// can have any resolution, it will be automatically resized to fit left_view resolution.
+		/// 
+		/// * left_view: left view of the original stereo-pair to guide the filtering process, 8-bit single-channel
+		/// or three-channel image.
+		/// 
+		/// * filtered_disparity_map: output disparity map.
+		/// 
+		/// * disparity_map_right: optional argument, some implementations might also use the disparity map
+		/// of the right view to compute confidence maps, for instance.
+		/// 
+		/// * ROI: region of the disparity map to filter. Optional, usually it should be set automatically.
+		/// 
+		/// * right_view: optional argument, some implementations might also use the right view of the original
+		/// stereo-pair.
+		/// 
+		/// ## Note
+		/// This alternative version of [filter] function uses the following default values for its arguments:
+		/// * disparity_map_right: Mat()
+		/// * roi: Rect()
+		/// * right_view: Mat()
+		#[inline]
+		fn filter_def(&mut self, disparity_map_left: &impl core::ToInputArray, left_view: &impl core::ToInputArray, filtered_disparity_map: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(disparity_map_left);
+			input_array_arg!(left_view);
+			output_array_arg!(filtered_disparity_map);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_DisparityFilter_filter_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DisparityFilter(), disparity_map_left.as_raw__InputArray(), left_view.as_raw__InputArray(), filtered_disparity_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3048,7 +4406,7 @@ pub mod ximgproc {
 	}
 	
 	/// Sparse match interpolation algorithm based on modified locally-weighted affine
-	/// estimator from [Revaud2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Revaud2015) and Fast Global Smoother as post-processing filter.
+	/// estimator from [Revaud2015](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Revaud2015) and Fast Global Smoother as post-processing filter.
 	pub struct EdgeAwareInterpolator {
 		ptr: *mut c_void
 	}
@@ -3255,6 +4613,28 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Returns array containing proposal boxes.
+		/// 
+		/// ## Parameters
+		/// * edge_map: edge image.
+		/// * orientation_map: orientation map.
+		/// * boxes: proposal boxes.
+		/// * scores: of the proposal boxes, provided a vector of float types.
+		/// 
+		/// ## Note
+		/// This alternative version of [get_bounding_boxes] function uses the following default values for its arguments:
+		/// * scores: noArray()
+		#[inline]
+		fn get_bounding_boxes_def(&mut self, edge_map: &impl core::ToInputArray, orientation_map: &impl core::ToInputArray, boxes: &mut core::Vector<core::Rect>) -> Result<()> {
+			input_array_arg!(edge_map);
+			input_array_arg!(orientation_map);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_EdgeBoxes_getBoundingBoxes_const__InputArrayR_const__InputArrayR_vectorLRectGR(self.as_raw_mut_EdgeBoxes(), edge_map.as_raw__InputArray(), orientation_map.as_raw__InputArray(), boxes.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Sets the step size of sliding window search.
 		#[inline]
 		fn set_alpha(&mut self, value: f32) -> Result<()> {
@@ -3377,7 +4757,7 @@ pub mod ximgproc {
 		
 	}
 	
-	/// Class implementing EdgeBoxes algorithm from [ZitnickECCV14edgeBoxes](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_ZitnickECCV14edgeBoxes) :
+	/// Class implementing EdgeBoxes algorithm from [ZitnickECCV14edgeBoxes](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_ZitnickECCV14edgeBoxes) :
 	pub struct EdgeBoxes {
 		ptr: *mut c_void
 	}
@@ -3558,7 +4938,7 @@ pub mod ximgproc {
 		
 	}
 	
-	/// Class implementing the ED (EdgeDrawing) [topal2012edge](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_topal2012edge), EDLines [akinlar2011edlines](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_akinlar2011edlines), EDPF [akinlar2012edpf](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_akinlar2012edpf) and EDCircles [akinlar2013edcircles](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_akinlar2013edcircles) algorithms
+	/// Class implementing the ED (EdgeDrawing) [topal2012edge](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_topal2012edge), EDLines [akinlar2011edlines](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_akinlar2011edlines), EDPF [akinlar2012edpf](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_akinlar2012edpf) and EDCircles [akinlar2013edcircles](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_akinlar2013edcircles) algorithms
 	pub struct EdgeDrawing {
 		ptr: *mut c_void
 	}
@@ -3708,7 +5088,7 @@ pub mod ximgproc {
 	
 	/// Interface for implementations of Fast Bilateral Solver.
 	/// 
-	/// For more details about this solver see [BarronPoole2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BarronPoole2016) .
+	/// For more details about this solver see [BarronPoole2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BarronPoole2016) .
 	pub struct FastBilateralSolverFilter {
 		ptr: *mut c_void
 	}
@@ -3784,7 +5164,7 @@ pub mod ximgproc {
 	
 	/// Interface for implementations of Fast Global Smoother filter.
 	/// 
-	/// For more details about this filter see [Min2014](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Min2014) and [Farbman2008](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Farbman2008) .
+	/// For more details about this filter see [Min2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Min2014) and [Farbman2008](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Farbman2008) .
 	pub struct FastGlobalSmootherFilter {
 		ptr: *mut c_void
 	}
@@ -3846,7 +5226,7 @@ pub mod ximgproc {
 		///       This is the output of the default parameters of the algorithm on the above
 		///       shown image.
 		/// 
-		///       ![image](https://docs.opencv.org/4.8.0/corridor_fld.jpg)
+		///       ![image](https://docs.opencv.org/4.8.1/corridor_fld.jpg)
 		/// 
 		/// ## Parameters
 		/// * image: A grayscale (CV_8UC1) input image. If only a roi needs to be
@@ -3886,6 +5266,31 @@ pub mod ximgproc {
 			input_array_arg!(lines);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_FastLineDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR_bool_Scalar_int(self.as_raw_mut_FastLineDetector(), image.as_raw__InputOutputArray(), lines.as_raw__InputArray(), draw_arrow, linecolor.opencv_as_extern(), linethickness, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Draws the line segments on a given image.
+		/// ## Parameters
+		/// * image: The image, where the lines will be drawn. Should be bigger
+		/// or equal to the image, where the lines were found.
+		/// * lines: A vector of the lines that needed to be drawn.
+		/// * draw_arrow: If true, arrow heads will be drawn.
+		/// * linecolor: Line color.
+		/// * linethickness: Line thickness.
+		/// 
+		/// ## Note
+		/// This alternative version of [draw_segments] function uses the following default values for its arguments:
+		/// * draw_arrow: false
+		/// * linecolor: Scalar(0,0,255)
+		/// * linethickness: 1
+		#[inline]
+		fn draw_segments_def(&mut self, image: &mut impl core::ToInputOutputArray, lines: &impl core::ToInputArray) -> Result<()> {
+			input_output_array_arg!(image);
+			input_array_arg!(lines);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_FastLineDetector_drawSegments_const__InputOutputArrayR_const__InputArrayR(self.as_raw_mut_FastLineDetector(), image.as_raw__InputOutputArray(), lines.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3971,11 +5376,35 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Apply Guided Filter to the filtering image.
+		/// 
+		/// ## Parameters
+		/// * src: filtering image with any numbers of channels.
+		/// 
+		/// * dst: output image.
+		/// 
+		/// * dDepth: optional depth of the output image. dDepth can be set to -1, which will be equivalent
+		/// to src.depth().
+		/// 
+		/// ## Note
+		/// This alternative version of [filter] function uses the following default values for its arguments:
+		/// * d_depth: -1
+		#[inline]
+		fn filter_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_GuidedFilter_filter_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_GuidedFilter(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Interface for realizations of Guided Filter.
 	/// 
-	/// For more details about this filter see [Kaiming10](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Kaiming10) .
+	/// For more details about this filter see [Kaiming10](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Kaiming10) .
 	pub struct GuidedFilter {
 		ptr: *mut c_void
 	}
@@ -4106,7 +5535,7 @@ pub mod ximgproc {
 	
 		/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
 		/// model for a superpixel segment. However, lower values would make the interpolation
-		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
+		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
 		///      *  see also: setK
 		#[inline]
 		fn get_k(&self) -> Result<i32> {
@@ -4275,7 +5704,7 @@ pub mod ximgproc {
 	
 		/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
 		/// model for a superpixel segment. However, lower values would make the interpolation
-		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
+		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
 		/// 
 		/// ## C++ default parameters
 		/// * k: 32
@@ -4283,6 +5712,22 @@ pub mod ximgproc {
 		fn set_k(&mut self, k: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setK_int(self.as_raw_mut_RICInterpolator(), k, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
+		/// model for a superpixel segment. However, lower values would make the interpolation
+		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_k] function uses the following default values for its arguments:
+		/// * k: 32
+		#[inline]
+		fn set_k_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setK(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4321,6 +5766,22 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Get the internal cost, i.e. edge map, used for estimating the edge-aware term.
+		/// ## See also
+		/// setCostMap
+		/// 
+		/// ## Note
+		/// This alternative version of [set_superpixel_size] function uses the following default values for its arguments:
+		/// * sp_size: 15
+		#[inline]
+		fn set_superpixel_size_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelSize(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Parameter defines the number of nearest-neighbor matches for each superpixel considered, when fitting a locally affine
 		/// model.
 		/// 
@@ -4330,6 +5791,21 @@ pub mod ximgproc {
 		fn set_superpixel_nn_cnt(&mut self, sp_nn: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelNNCnt_int(self.as_raw_mut_RICInterpolator(), sp_nn, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Parameter defines the number of nearest-neighbor matches for each superpixel considered, when fitting a locally affine
+		/// model.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_superpixel_nn_cnt] function uses the following default values for its arguments:
+		/// * sp_nn: 150
+		#[inline]
+		fn set_superpixel_nn_cnt_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelNNCnt(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4345,6 +5821,22 @@ pub mod ximgproc {
 		fn set_superpixel_ruler(&mut self, ruler: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelRuler_float(self.as_raw_mut_RICInterpolator(), ruler, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Parameter to tune enforcement of superpixel smoothness factor used for oversegmentation.
+		/// ## See also
+		/// cv::ximgproc::createSuperpixelSLIC
+		/// 
+		/// ## Note
+		/// This alternative version of [set_superpixel_ruler] function uses the following default values for its arguments:
+		/// * ruler: 15.f
+		#[inline]
+		fn set_superpixel_ruler_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelRuler(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4368,6 +5860,25 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Parameter to choose superpixel algorithm variant to use:
+		/// - cv::ximgproc::SLICType SLIC segments image using a desired region_size (value: 100)
+		/// - cv::ximgproc::SLICType SLICO will optimize using adaptive compactness factor (value: 101)
+		/// - cv::ximgproc::SLICType MSLIC will optimize using manifold methods resulting in more content-sensitive superpixels (value: 102).
+		/// ## See also
+		/// cv::ximgproc::createSuperpixelSLIC
+		/// 
+		/// ## Note
+		/// This alternative version of [set_superpixel_mode] function uses the following default values for its arguments:
+		/// * mode: 100
+		#[inline]
+		fn set_superpixel_mode_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setSuperpixelMode(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Alpha is a parameter defining a global weight for transforming geodesic distance into weight.
 		/// 
 		/// ## C++ default parameters
@@ -4376,6 +5887,20 @@ pub mod ximgproc {
 		fn set_alpha(&mut self, alpha: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setAlpha_float(self.as_raw_mut_RICInterpolator(), alpha, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Alpha is a parameter defining a global weight for transforming geodesic distance into weight.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_alpha] function uses the following default values for its arguments:
+		/// * alpha: 0.7f
+		#[inline]
+		fn set_alpha_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setAlpha(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4394,6 +5919,20 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Parameter defining the number of iterations for piece-wise affine model estimation.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_model_iter] function uses the following default values for its arguments:
+		/// * model_iter: 4
+		#[inline]
+		fn set_model_iter_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setModelIter(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Parameter to choose wether additional refinement of the piece-wise affine models is employed.
 		/// 
 		/// ## C++ default parameters
@@ -4402,6 +5941,20 @@ pub mod ximgproc {
 		fn set_refine_models(&mut self, refine_modles: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setRefineModels_bool(self.as_raw_mut_RICInterpolator(), refine_modles, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Parameter to choose wether additional refinement of the piece-wise affine models is employed.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_refine_models] function uses the following default values for its arguments:
+		/// * refine_modles: true
+		#[inline]
+		fn set_refine_models_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setRefineModels(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4421,6 +5974,21 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// MaxFlow is a threshold to validate the predictions using a certain piece-wise affine model.
+		/// If the prediction exceeds the treshold the translational model will be applied instead.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_max_flow] function uses the following default values for its arguments:
+		/// * max_flow: 250.f
+		#[inline]
+		fn set_max_flow_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setMaxFlow(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Parameter to choose wether the VariationalRefinement post-processing  is employed.
 		/// 
 		/// ## C++ default parameters
@@ -4434,6 +6002,20 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Parameter to choose wether the VariationalRefinement post-processing  is employed.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_use_variational_refinement] function uses the following default values for its arguments:
+		/// * use_variational_refinement: false
+		#[inline]
+		fn set_use_variational_refinement_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setUseVariationalRefinement(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Sets whether the fastGlobalSmootherFilter() post-processing is employed.
 		/// 
 		/// ## C++ default parameters
@@ -4442,6 +6024,20 @@ pub mod ximgproc {
 		fn set_use_global_smoother_filter(&mut self, use_fgs: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RICInterpolator_setUseGlobalSmootherFilter_bool(self.as_raw_mut_RICInterpolator(), use_fgs, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Sets whether the fastGlobalSmootherFilter() post-processing is employed.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_use_global_smoother_filter] function uses the following default values for its arguments:
+		/// * use_fgs: true
+		#[inline]
+		fn set_use_global_smoother_filter_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setUseGlobalSmootherFilter(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4462,6 +6058,20 @@ pub mod ximgproc {
 		
 		/// Sets the respective fastGlobalSmootherFilter() parameter.
 		/// 
+		/// ## Note
+		/// This alternative version of [set_fgs_lambda] function uses the following default values for its arguments:
+		/// * lambda: 500.f
+		#[inline]
+		fn set_fgs_lambda_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setFGSLambda(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Sets the respective fastGlobalSmootherFilter() parameter.
+		/// 
 		/// ## C++ default parameters
 		/// * sigma: 1.5f
 		#[inline]
@@ -4473,10 +6083,24 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Sets the respective fastGlobalSmootherFilter() parameter.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_fgs_sigma] function uses the following default values for its arguments:
+		/// * sigma: 1.5f
+		#[inline]
+		fn set_fgs_sigma_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RICInterpolator_setFGSSigma(self.as_raw_mut_RICInterpolator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Sparse match interpolation algorithm based on modified piecewise locally-weighted affine
-	/// estimator called Robust Interpolation method of Correspondences or RIC from [Hu2017](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Hu2017) and Variational
+	/// estimator called Robust Interpolation method of Correspondences or RIC from [Hu2017](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Hu2017) and Variational
 	/// and Fast Global Smoother as post-processing filter. The RICInterpolator is a extension of the EdgeAwareInterpolator.
 	/// Main concept of this extension is an piece-wise affine model based on over-segmentation via SLIC superpixel estimation.
 	/// The method contains an efficient propagation mechanism to estimate among the pieces-wise models.
@@ -4564,7 +6188,7 @@ pub mod ximgproc {
 	/// Applies Ridge Detection Filter to an input image.
 	/// Implements Ridge detection similar to the one in [Mathematica](http://reference.wolfram.com/language/ref/RidgeFilter.html)
 	/// using the eigen values from the Hessian Matrix of the input image using Sobel Derivatives.
-	/// Additional refinement can be done using Skeletonization and Binarization. Adapted from [segleafvein](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_segleafvein) and [M_RF](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_M_RF)
+	/// Additional refinement can be done using Skeletonization and Binarization. Adapted from [segleafvein](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_segleafvein) and [M_RF](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_M_RF)
 	pub struct RidgeDetectionFilter {
 		ptr: *mut c_void
 	}
@@ -4623,6 +6247,39 @@ pub mod ximgproc {
 		pub fn create(ddepth: i32, dx: i32, dy: i32, ksize: i32, out_dtype: i32, scale: f64, delta: f64, border_type: i32) -> Result<core::Ptr<crate::ximgproc::RidgeDetectionFilter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_RidgeDetectionFilter_create_int_int_int_int_int_double_double_int(ddepth, dx, dy, ksize, out_dtype, scale, delta, border_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ximgproc::RidgeDetectionFilter>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create pointer to the Ridge detection filter.
+		/// ## Parameters
+		/// * ddepth: Specifies output image depth. Defualt is CV_32FC1
+		/// * dx: Order of derivative x, default is 1
+		/// * dy: Order of derivative y, default is 1
+		/// * ksize: Sobel kernel size , default is 3
+		/// * out_dtype: Converted format for output, default is CV_8UC1
+		/// * scale: Optional scale value for derivative values, default is 1
+		/// * delta: Optional bias added to output, default is 0
+		/// * borderType: Pixel extrapolation method, default is BORDER_DEFAULT
+		/// ## See also
+		/// Sobel, threshold, getStructuringElement, morphologyEx.( for additional refinement)
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * ddepth: CV_32FC1
+		/// * dx: 1
+		/// * dy: 1
+		/// * ksize: 3
+		/// * out_dtype: CV_8UC1
+		/// * scale: 1
+		/// * delta: 0
+		/// * border_type: BORDER_DEFAULT
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::ximgproc::RidgeDetectionFilter>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RidgeDetectionFilter_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ximgproc::RidgeDetectionFilter>::opencv_from_extern(ret) };
@@ -4719,10 +6376,31 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Returns the mask of the superpixel segmentation stored in the ScanSegment object.
+		/// 
+		/// The function return the boundaries of the superpixel segmentation.
+		/// 
+		/// ## Parameters
+		/// * image: Return: CV_8UC1 image mask where -1 indicates that the pixel is a superpixel border, and 0 otherwise.
+		/// * thick_line: If false, the border is only one pixel wide, otherwise all pixels at the border are masked.
+		/// 
+		/// ## Note
+		/// This alternative version of [get_label_contour_mask] function uses the following default values for its arguments:
+		/// * thick_line: false
+		#[inline]
+		fn get_label_contour_mask_def(&mut self, image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_ScanSegment_getLabelContourMask_const__OutputArrayR(self.as_raw_mut_ScanSegment(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Class implementing the F-DBSCAN (Accelerated superpixel image segmentation with a parallelized DBSCAN algorithm) superpixels
-	/// algorithm by Loke SC, et al. [loke2021accelerated](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_loke2021accelerated) for original paper.
+	/// algorithm by Loke SC, et al. [loke2021accelerated](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_loke2021accelerated) for original paper.
 	/// 
 	/// The algorithm uses a parallelised DBSCAN cluster search that is resistant to noise, competitive in segmentation quality, and faster than
 	/// existing superpixel segmentation methods. When tested on the Berkeley Segmentation Dataset, the average processing speed is 175 frames/s
@@ -4931,6 +6609,35 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// The function edgenms in edge image and suppress edges where edge is stronger in orthogonal direction.
+		/// 
+		/// ## Parameters
+		/// * edge_image: edge image from detectEdges function.
+		/// * orientation_image: orientation image from computeOrientation function.
+		/// * dst: suppressed image (grayscale, float, in [0;1])
+		/// * r: radius for NMS suppression.
+		/// * s: radius for boundary suppression.
+		/// * m: multiplier for conservative suppression.
+		/// * isParallel: enables/disables parallel computing.
+		/// 
+		/// ## Note
+		/// This alternative version of [edges_nms] function uses the following default values for its arguments:
+		/// * r: 2
+		/// * s: 0
+		/// * m: 1
+		/// * is_parallel: true
+		#[inline]
+		fn edges_nms_def(&self, edge_image: &impl core::ToInputArray, orientation_image: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(edge_image);
+			input_array_arg!(orientation_image);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_StructuredEdgeDetection_edgesNms_const_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_StructuredEdgeDetection(), edge_image.as_raw__InputArray(), orientation_image.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::ximgproc::StructuredEdgeDetection]
@@ -4939,7 +6646,7 @@ pub mod ximgproc {
 	
 	}
 	
-	/// Class implementing edge detection algorithm from [Dollar2013](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Dollar2013) :
+	/// Class implementing edge detection algorithm from [Dollar2013](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Dollar2013) :
 	pub struct StructuredEdgeDetection {
 		ptr: *mut c_void
 	}
@@ -5042,6 +6749,30 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Returns the mask of the superpixel segmentation stored in SuperpixelLSC object.
+		/// 
+		/// ## Parameters
+		/// * image: Return: CV_8U1 image mask where -1 indicates that the pixel is a superpixel border,
+		/// and 0 otherwise.
+		/// 
+		/// * thick_line: If false, the border is only one pixel wide, otherwise all pixels at the border
+		/// are masked.
+		/// 
+		/// The function return the boundaries of the superpixel segmentation.
+		/// 
+		/// ## Note
+		/// This alternative version of [get_label_contour_mask] function uses the following default values for its arguments:
+		/// * thick_line: true
+		#[inline]
+		fn get_label_contour_mask_def(&self, image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_SuperpixelLSC_getLabelContourMask_const_const__OutputArrayR(self.as_raw_SuperpixelLSC(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::ximgproc::SuperpixelLSC]
@@ -5073,6 +6804,32 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Calculates the superpixel segmentation on a given image with the initialized
+		/// parameters in the SuperpixelLSC object.
+		/// 
+		/// This function can be called again without the need of initializing the algorithm with
+		/// createSuperpixelLSC(). This save the computational cost of allocating memory for all the
+		/// structures of the algorithm.
+		/// 
+		/// ## Parameters
+		/// * num_iterations: Number of iterations. Higher number improves the result.
+		/// 
+		/// The function computes the superpixels segmentation of an image with the parameters initialized
+		/// with the function createSuperpixelLSC(). The algorithms starts from a grid of superpixels and
+		/// then refines the boundaries by proposing updates of edges boundaries.
+		/// 
+		/// ## Note
+		/// This alternative version of [iterate] function uses the following default values for its arguments:
+		/// * num_iterations: 10
+		#[inline]
+		fn iterate_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_SuperpixelLSC_iterate(self.as_raw_mut_SuperpixelLSC(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Enforce label connectivity.
 		/// 
 		/// ## Parameters
@@ -5094,10 +6851,32 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Enforce label connectivity.
+		/// 
+		/// ## Parameters
+		/// * min_element_size: The minimum element size in percents that should be absorbed into a bigger
+		/// superpixel. Given resulted average superpixel size valid value should be in 0-100 range, 25 means
+		/// that less then a quarter sized superpixel should be absorbed, this is default.
+		/// 
+		/// The function merge component that is too small, assigning the previously found adjacent label
+		/// to this component. Calling this function may change the final number of superpixels.
+		/// 
+		/// ## Note
+		/// This alternative version of [enforce_label_connectivity] function uses the following default values for its arguments:
+		/// * min_element_size: 25
+		#[inline]
+		fn enforce_label_connectivity_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_SuperpixelLSC_enforceLabelConnectivity(self.as_raw_mut_SuperpixelLSC(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Class implementing the LSC (Linear Spectral Clustering) superpixels
-	/// algorithm described in [LiCVPR2015LSC](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LiCVPR2015LSC).
+	/// algorithm described in [LiCVPR2015LSC](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LiCVPR2015LSC).
 	/// 
 	/// LSC (Linear Spectral Clustering) produces compact and uniform superpixels with low
 	/// computational costs. Basically, a normalized cuts formulation of the superpixel
@@ -5192,7 +6971,7 @@ pub mod ximgproc {
 		/// from large to smaller size, finalizing with proposing pixel updates. An illustrative example
 		/// can be seen below.
 		/// 
-		/// ![image](https://docs.opencv.org/4.8.0/superpixels_blocks2.png)
+		/// ![image](https://docs.opencv.org/4.8.1/superpixels_blocks2.png)
 		/// 
 		/// ## C++ default parameters
 		/// * num_iterations: 4
@@ -5201,6 +6980,42 @@ pub mod ximgproc {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_iterate_const__InputArrayR_int(self.as_raw_mut_SuperpixelSEEDS(), img.as_raw__InputArray(), num_iterations, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Calculates the superpixel segmentation on a given image with the initialized
+		/// parameters in the SuperpixelSEEDS object.
+		/// 
+		/// This function can be called again for other images without the need of initializing the
+		/// algorithm with createSuperpixelSEEDS(). This save the computational cost of allocating memory
+		/// for all the structures of the algorithm.
+		/// 
+		/// ## Parameters
+		/// * img: Input image. Supported formats: CV_8U, CV_16U, CV_32F. Image size & number of
+		/// channels must match with the initialized image size & channels with the function
+		/// createSuperpixelSEEDS(). It should be in HSV or Lab color space. Lab is a bit better, but also
+		/// slower.
+		/// 
+		/// * num_iterations: Number of pixel level iterations. Higher number improves the result.
+		/// 
+		/// The function computes the superpixels segmentation of an image with the parameters initialized
+		/// with the function createSuperpixelSEEDS(). The algorithms starts from a grid of superpixels and
+		/// then refines the boundaries by proposing updates of blocks of pixels that lie at the boundaries
+		/// from large to smaller size, finalizing with proposing pixel updates. An illustrative example
+		/// can be seen below.
+		/// 
+		/// ![image](https://docs.opencv.org/4.8.1/superpixels_blocks2.png)
+		/// 
+		/// ## Note
+		/// This alternative version of [iterate] function uses the following default values for its arguments:
+		/// * num_iterations: 4
+		#[inline]
+		fn iterate_def(&mut self, img: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_iterate_const__InputArrayR(self.as_raw_mut_SuperpixelSEEDS(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5252,7 +7067,7 @@ pub mod ximgproc {
 		///        parameters and set them to the user convenience. In the console the frame-rate of the
 		///        algorithm is indicated.
 		/// 
-		/// ![image](https://docs.opencv.org/4.8.0/superpixels_demo.png)
+		/// ![image](https://docs.opencv.org/4.8.1/superpixels_demo.png)
 		/// 
 		/// ## C++ default parameters
 		/// * thick_line: false
@@ -5266,10 +7081,51 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Returns the mask of the superpixel segmentation stored in SuperpixelSEEDS object.
+		/// 
+		/// ## Parameters
+		/// * image: Return: CV_8UC1 image mask where -1 indicates that the pixel is a superpixel border,
+		/// and 0 otherwise.
+		/// 
+		/// * thick_line: If false, the border is only one pixel wide, otherwise all pixels at the border
+		/// are masked.
+		/// 
+		/// The function return the boundaries of the superpixel segmentation.
+		/// 
+		/// 
+		/// Note:
+		///    *   (Python) A demo on how to generate superpixels in images from the webcam can be found at
+		///        opencv_source_code/samples/python2/seeds.py
+		///    *   (cpp) A demo on how to generate superpixels in images from the webcam can be found at
+		///        opencv_source_code/modules/ximgproc/samples/seeds.cpp. By adding a file image as a command
+		///        line argument, the static image will be used instead of the webcam.
+		///    *   It will show a window with the video from the webcam with the superpixel boundaries marked
+		///        in red (see below). Use Space to switch between different output modes. At the top of the
+		///        window there are 4 sliders, from which the user can change on-the-fly the number of
+		///        superpixels, the number of block levels, the strength of the boundary prior term to modify
+		///        the shape, and the number of iterations at pixel level. This is useful to play with the
+		///        parameters and set them to the user convenience. In the console the frame-rate of the
+		///        algorithm is indicated.
+		/// 
+		/// ![image](https://docs.opencv.org/4.8.1/superpixels_demo.png)
+		/// 
+		/// ## Note
+		/// This alternative version of [get_label_contour_mask] function uses the following default values for its arguments:
+		/// * thick_line: false
+		#[inline]
+		fn get_label_contour_mask_def(&mut self, image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_getLabelContourMask_const__OutputArrayR(self.as_raw_mut_SuperpixelSEEDS(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Class implementing the SEEDS (Superpixels Extracted via Energy-Driven Sampling) superpixels
-	/// algorithm described in [VBRV14](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_VBRV14) .
+	/// algorithm described in [VBRV14](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_VBRV14) .
 	/// 
 	/// The algorithm uses an efficient hill-climbing algorithm to optimize the superpixels' energy
 	/// function that is based on color histograms and a boundary term, which is optional. The energy
@@ -5379,6 +7235,30 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Returns the mask of the superpixel segmentation stored in SuperpixelSLIC object.
+		/// 
+		/// ## Parameters
+		/// * image: Return: CV_8U1 image mask where -1 indicates that the pixel is a superpixel border,
+		/// and 0 otherwise.
+		/// 
+		/// * thick_line: If false, the border is only one pixel wide, otherwise all pixels at the border
+		/// are masked.
+		/// 
+		/// The function return the boundaries of the superpixel segmentation.
+		/// 
+		/// ## Note
+		/// This alternative version of [get_label_contour_mask] function uses the following default values for its arguments:
+		/// * thick_line: true
+		#[inline]
+		fn get_label_contour_mask_def(&self, image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_SuperpixelSLIC_getLabelContourMask_const_const__OutputArrayR(self.as_raw_SuperpixelSLIC(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::ximgproc::SuperpixelSLIC]
@@ -5410,6 +7290,32 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Calculates the superpixel segmentation on a given image with the initialized
+		/// parameters in the SuperpixelSLIC object.
+		/// 
+		/// This function can be called again without the need of initializing the algorithm with
+		/// createSuperpixelSLIC(). This save the computational cost of allocating memory for all the
+		/// structures of the algorithm.
+		/// 
+		/// ## Parameters
+		/// * num_iterations: Number of iterations. Higher number improves the result.
+		/// 
+		/// The function computes the superpixels segmentation of an image with the parameters initialized
+		/// with the function createSuperpixelSLIC(). The algorithms starts from a grid of superpixels and
+		/// then refines the boundaries by proposing updates of edges boundaries.
+		/// 
+		/// ## Note
+		/// This alternative version of [iterate] function uses the following default values for its arguments:
+		/// * num_iterations: 10
+		#[inline]
+		fn iterate_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_SuperpixelSLIC_iterate(self.as_raw_mut_SuperpixelSLIC(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Enforce label connectivity.
 		/// 
 		/// ## Parameters
@@ -5431,18 +7337,40 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Enforce label connectivity.
+		/// 
+		/// ## Parameters
+		/// * min_element_size: The minimum element size in percents that should be absorbed into a bigger
+		/// superpixel. Given resulted average superpixel size valid value should be in 0-100 range, 25 means
+		/// that less then a quarter sized superpixel should be absorbed, this is default.
+		/// 
+		/// The function merge component that is too small, assigning the previously found adjacent label
+		/// to this component. Calling this function may change the final number of superpixels.
+		/// 
+		/// ## Note
+		/// This alternative version of [enforce_label_connectivity] function uses the following default values for its arguments:
+		/// * min_element_size: 25
+		#[inline]
+		fn enforce_label_connectivity_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_SuperpixelSLIC_enforceLabelConnectivity(self.as_raw_mut_SuperpixelSLIC(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Class implementing the SLIC (Simple Linear Iterative Clustering) superpixels
-	/// algorithm described in [Achanta2012](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Achanta2012).
+	/// algorithm described in [Achanta2012](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Achanta2012).
 	/// 
 	/// SLIC (Simple Linear Iterative Clustering) clusters pixels using pixel channels and image plane space
 	/// to efficiently generate compact, nearly uniform superpixels. The simplicity of approach makes it
 	/// extremely easy to use a lone parameter specifies the number of superpixels and the efficiency of
 	/// the algorithm makes it very practical.
 	/// Several optimizations are available for SLIC class:
-	/// SLICO stands for "Zero parameter SLIC" and it is an optimization of baseline SLIC described in [Achanta2012](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Achanta2012).
-	/// MSLIC stands for "Manifold SLIC" and it is an optimization of baseline SLIC described in [Liu_2017_IEEE](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Liu_2017_IEEE).
+	/// SLICO stands for "Zero parameter SLIC" and it is an optimization of baseline SLIC described in [Achanta2012](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Achanta2012).
+	/// MSLIC stands for "Manifold SLIC" and it is an optimization of baseline SLIC described in [Liu_2017_IEEE](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Liu_2017_IEEE).
 	pub struct SuperpixelSLIC {
 		ptr: *mut c_void
 	}
@@ -5569,7 +7497,7 @@ pub mod ximgproc {
 	}
 	
 	/// Graph Based Segmentation Algorithm.
-	/// The class implements the algorithm described in [PFF2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_PFF2004) .
+	/// The class implements the algorithm described in [PFF2004](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PFF2004) .
 	pub struct GraphSegmentation {
 		ptr: *mut c_void
 	}
@@ -5637,7 +7565,7 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
-		/// Initialize the class with the 'Single stragegy' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// Initialize the class with the 'Single stragegy' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 		/// ## Parameters
 		/// * k: The k parameter for the graph segmentation
 		/// * sigma: The sigma parameter for the graph segmentation
@@ -5654,7 +7582,25 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
-		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// Initialize the class with the 'Single stragegy' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// ## Parameters
+		/// * k: The k parameter for the graph segmentation
+		/// * sigma: The sigma parameter for the graph segmentation
+		/// 
+		/// ## Note
+		/// This alternative version of [switch_to_single_strategy] function uses the following default values for its arguments:
+		/// * k: 200
+		/// * sigma: 0.8f
+		#[inline]
+		fn switch_to_single_strategy_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSingleStrategy(self.as_raw_mut_SelectiveSearchSegmentation(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 		/// ## Parameters
 		/// * base_k: The k parameter for the first graph segmentation
 		/// * inc_k: The increment of the k parameter for all graph segmentations
@@ -5673,7 +7619,27 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
-		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// ## Parameters
+		/// * base_k: The k parameter for the first graph segmentation
+		/// * inc_k: The increment of the k parameter for all graph segmentations
+		/// * sigma: The sigma parameter for the graph segmentation
+		/// 
+		/// ## Note
+		/// This alternative version of [switch_to_selective_search_fast] function uses the following default values for its arguments:
+		/// * base_k: 150
+		/// * inc_k: 150
+		/// * sigma: 0.8f
+		#[inline]
+		fn switch_to_selective_search_fast_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSelectiveSearchFast(self.as_raw_mut_SelectiveSearchSegmentation(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 		/// ## Parameters
 		/// * base_k: The k parameter for the first graph segmentation
 		/// * inc_k: The increment of the k parameter for all graph segmentations
@@ -5687,6 +7653,26 @@ pub mod ximgproc {
 		fn switch_to_selective_search_quality(&mut self, base_k: i32, inc_k: i32, sigma: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSelectiveSearchQuality_int_int_float(self.as_raw_mut_SelectiveSearchSegmentation(), base_k, inc_k, sigma, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Initialize the class with the 'Selective search fast' parameters describled in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+		/// ## Parameters
+		/// * base_k: The k parameter for the first graph segmentation
+		/// * inc_k: The increment of the k parameter for all graph segmentations
+		/// * sigma: The sigma parameter for the graph segmentation
+		/// 
+		/// ## Note
+		/// This alternative version of [switch_to_selective_search_quality] function uses the following default values for its arguments:
+		/// * base_k: 150
+		/// * inc_k: 150
+		/// * sigma: 0.8f
+		#[inline]
+		fn switch_to_selective_search_quality_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_switchToSelectiveSearchQuality(self.as_raw_mut_SelectiveSearchSegmentation(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5774,7 +7760,7 @@ pub mod ximgproc {
 	}
 	
 	/// Selective search segmentation algorithm
-	/// The class implements the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class implements the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentation {
 		ptr: *mut c_void
 	}
@@ -5850,6 +7836,28 @@ pub mod ximgproc {
 			Ok(ret)
 		}
 		
+		/// Set a initial image, with a segmentation.
+		/// ## Parameters
+		/// * img: The input image. Any number of channel can be provided
+		/// * regions: A segmentation of the image. The parameter must be the same size of img.
+		/// * sizes: The sizes of different regions
+		/// * image_id: If not set to -1, try to cache pre-computations. If the same set og (img, regions, size) is used, the image_id need to be the same.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_image] function uses the following default values for its arguments:
+		/// * image_id: -1
+		#[inline]
+		fn set_image_def(&mut self, img: &impl core::ToInputArray, regions: &impl core::ToInputArray, sizes: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(img);
+			input_array_arg!(regions);
+			input_array_arg!(sizes);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_setImage_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_SelectiveSearchSegmentationStrategy(), img.as_raw__InputArray(), regions.as_raw__InputArray(), sizes.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Return the score between two regions (between 0 and 1)
 		/// ## Parameters
 		/// * r1: The first region
@@ -5879,7 +7887,7 @@ pub mod ximgproc {
 	}
 	
 	/// Strategie for the selective search segmentation algorithm
-	/// The class implements a generic stragery for the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class implements a generic stragery for the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategy {
 		ptr: *mut c_void
 	}
@@ -5947,7 +7955,7 @@ pub mod ximgproc {
 	}
 	
 	/// Color-based strategy for the selective search segmentation algorithm
-	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategyColor {
 		ptr: *mut c_void
 	}
@@ -6015,7 +8023,7 @@ pub mod ximgproc {
 	}
 	
 	/// Fill-based strategy for the selective search segmentation algorithm
-	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategyFill {
 		ptr: *mut c_void
 	}
@@ -6173,7 +8181,7 @@ pub mod ximgproc {
 	}
 	
 	/// Size-based strategy for the selective search segmentation algorithm
-	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategySize {
 		ptr: *mut c_void
 	}
@@ -6241,7 +8249,7 @@ pub mod ximgproc {
 	}
 	
 	/// Texture-based strategy for the selective search segmentation algorithm
-	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategyTexture {
 		ptr: *mut c_void
 	}

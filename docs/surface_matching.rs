@@ -59,7 +59,7 @@ pub mod surface_matching {
 	//! ----------------------------------------------
 	//! 
 	//! The state of the algorithms in order to achieve the task 3D matching is heavily based on
-	//! [drost2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
+	//! [drost2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
 	//! approach is composed of extracting 3D feature points randomly from depth images or generic point
 	//! clouds, indexing them and later in runtime querying them efficiently. Only the 3D structure is
 	//! considered, and a trivial hash table is used for feature queries.
@@ -69,7 +69,7 @@ pub mod surface_matching {
 	//! methods (Typically for such algorithms training on a CAD model is not needed, and a point cloud
 	//! would be sufficient). Below is the outline of the entire algorithm:
 	//! 
-	//! ![Outline of the Algorithm](https://docs.opencv.org/4.8.0/outline.jpg)
+	//! ![Outline of the Algorithm](https://docs.opencv.org/4.8.1/outline.jpg)
 	//! 
 	//! As explained, the algorithm relies on the extraction and indexing of point pair features, which are
 	//! defined as follows:
@@ -218,7 +218,7 @@ pub mod surface_matching {
 	//! increase the speed. However this is not an optimality guarantee and many times causes wrong points
 	//! to be matched. Luckily the assignments are corrected over iterations.
 	//! 
-	//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
+	//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
 	//! correspondences) are two well-known methods. Picky ICP first finds the correspondences in the
 	//! old-fashioned way and then among the resulting corresponding pairs, if more than one scene point
 	//! ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) is assigned to the same model point ![inline formula](https://latex.codecogs.com/png.latex?m%5Fj), it selects ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) that corresponds to the minimum
@@ -245,7 +245,7 @@ pub mod surface_matching {
 	//! 
 	//! ### Error Metric
 	//! 
-	//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
+	//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
 	//! both speeds up the registration process and improves convergence.
 	//! 
 	//! ### Minimization
@@ -294,11 +294,11 @@ pub mod surface_matching {
 	//! This section is dedicated to the results of surface matching (point-pair-feature matching and a
 	//! following ICP refinement):
 	//! 
-	//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/4.8.0/gsoc_forg_matches.jpg)
+	//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/4.8.1/gsoc_forg_matches.jpg)
 	//! 
 	//! Matches of different models for Mian dataset is presented below:
 	//! 
-	//! ![Matches of different models for Mian dataset](https://docs.opencv.org/4.8.0/snapshot27.jpg)
+	//! ![Matches of different models for Mian dataset](https://docs.opencv.org/4.8.1/snapshot27.jpg)
 	//! 
 	//! You might checkout the video on [youTube here](http://www.youtube.com/watch?v=uFnqLFznuZU).
 	//! 
@@ -322,8 +322,8 @@ pub mod surface_matching {
 	//! quadratically increased as the complexity is O(N\^2). This is especially a concern for 32 bit
 	//! systems, where large models can easily overshoot the available memory. Typically, values in the
 	//! range of 0.025 - 0.05 seem adequate for most of the applications, where the default value is 0.03.
-	//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_drost2010) . In
-	//! [drost2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
+	//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_drost2010) . In
+	//! [drost2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
 	//! sampling. In my implementation, the cuboid is a rectangular prism, and each dimension is quantized
 	//! independently. I do not take reference from the diameter but along the individual dimensions.
 	//! 
@@ -495,6 +495,38 @@ pub mod surface_matching {
 			Ok(ret)
 		}
 		
+		/// \brief ICP constructor with default arguments.
+		/// ## Parameters
+		/// * iterations: 
+		/// * tolerence: Controls the accuracy of registration at each iteration of ICP.
+		/// * rejectionScale: Robust outlier rejection is applied for robustness. This value
+		///        actually corresponds to the standard deviation coefficient. Points with
+		///        rejectionScale * &sigma are ignored during registration.
+		/// * numLevels: Number of pyramid levels to proceed. Deep pyramids increase speed but
+		///        decrease accuracy. Too coarse pyramids might have computational overhead on top of the
+		///        inaccurate registrtaion. This parameter should be chosen to optimize a balance. Typical
+		///        values range from 4 to 10.
+		/// * sampleType: Currently this parameter is ignored and only uniform sampling is
+		///        applied. Leave it as 0.
+		/// * numMaxCorr: Currently this parameter is ignored and only PickyICP is applied. Leave it as 1.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * tolerence: 0.05f
+		/// * rejection_scale: 2.5f
+		/// * num_levels: 6
+		/// * sample_type: ICP::ICP_SAMPLING_TYPE_UNIFORM
+		/// * num_max_corr: 1
+		#[inline]
+		pub fn new_def(iterations: i32) -> Result<crate::surface_matching::ICP> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_ICP_ICP_const_int(iterations, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::ICP::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl std::fmt::Debug for ICP {
@@ -534,6 +566,26 @@ pub mod surface_matching {
 			Ok(ret)
 		}
 		
+		/// Set the parameters for the search
+		/// ## Parameters
+		/// * positionThreshold: Position threshold controlling the similarity of translations. Depends on the units of calibration/model.
+		/// * rotationThreshold: Position threshold controlling the similarity of rotations. This parameter can be perceived as a threshold over the difference of angles
+		/// * useWeightedClustering: The algorithm by default clusters the poses without weighting. A non-zero value would indicate that the pose clustering should take into account the number of votes as the weights and perform a weighted averaging instead of a simple one.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_search_params] function uses the following default values for its arguments:
+		/// * position_threshold: -1
+		/// * rotation_threshold: -1
+		/// * use_weighted_clustering: false
+		#[inline]
+		fn set_search_params_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_setSearchParams(self.as_raw_mut_PPF3DDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// \brief Trains a new model.
 		/// 
 		/// ## Parameters
@@ -564,6 +616,27 @@ pub mod surface_matching {
 		fn match_(&mut self, scene: &core::Mat, results: &mut core::Vector<crate::surface_matching::Pose3DPtr>, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vectorLPose3DPtrGR_const_double_const_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// \brief Matches a trained model across a provided scene.
+		/// 
+		/// ## Parameters
+		/// * scene: Point cloud for the scene
+		/// * results:[out] List of output poses
+		/// * relativeSceneSampleStep: The ratio of scene points to be used for the matching after sampling with relativeSceneDistance. For example, if this value is set to 1.0/5.0, every 5th point from the scene is used for pose estimation. This parameter allows an easy trade-off between speed and accuracy of the matching. Increasing the value leads to less points being used and in turn to a faster but less accurate pose computation. Decreasing the value has the inverse effect.
+		/// * relativeSceneDistance: Set the distance threshold relative to the diameter of the model. This parameter is equivalent to relativeSamplingStep in the training stage. This parameter acts like a prior sampling with the relativeSceneSampleStep parameter.
+		/// 
+		/// ## Note
+		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// * relative_scene_sample_step: 1.0/5.0
+		/// * relative_scene_distance: 0.03
+		#[inline]
+		fn match__def(&mut self, scene: &core::Mat, results: &mut core::Vector<crate::surface_matching::Pose3DPtr>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vectorLPose3DPtrGR(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -630,6 +703,26 @@ pub mod surface_matching {
 		pub fn new(relative_sampling_step: f64, relative_distance_step: f64, num_angles: f64) -> Result<crate::surface_matching::PPF3DDetector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double_const_double_const_double(relative_sampling_step, relative_distance_step, num_angles, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructor with arguments
+		/// ## Parameters
+		/// * relativeSamplingStep: Sampling distance relative to the object's diameter. Models are first sampled uniformly in order to improve efficiency. Decreasing this value leads to a denser model, and a more accurate pose estimation but the larger the model, the slower the training. Increasing the value leads to a less accurate pose computation but a smaller model and faster model generation and matching. Beware of the memory consumption when using small values.
+		/// * relativeDistanceStep: The discretization distance of the point pair distance relative to the model's diameter. This value has a direct impact on the hashtable. Using small values would lead to too fine discretization, and thus ambiguity in the bins of hashtable. Too large values would lead to no discrimination over the feature vectors and different point pair features would be assigned to the same bin. This argument defaults to the value of RelativeSamplingStep. For noisy scenes, the value can be increased to improve the robustness of the matching against noisy points.
+		/// * numAngles: Set the discretization of the point pair orientation as the number of subdivisions of the angle. This value is the equivalent of RelativeDistanceStep for the orientations. Increasing the value increases the precision of the matching but decreases the robustness against incorrect normal directions. Decreasing the value decreases the precision of the matching but increases the robustness against incorrect normal directions. For very noisy scenes where the normal directions can not be computed accurately, the value can be set to 25 or 20.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * relative_distance_step: 0.05
+		/// * num_angles: 30
+		#[inline]
+		pub fn new_def(relative_sampling_step: f64) -> Result<crate::surface_matching::PPF3DDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double(relative_sampling_step, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
@@ -885,6 +978,20 @@ pub mod surface_matching {
 		pub fn new(alpha: f64, model_index: size_t, num_votes: size_t) -> Result<crate::surface_matching::Pose3D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double_size_t_size_t(alpha, model_index, num_votes, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * model_index: 0
+		/// * num_votes: 0
+		#[inline]
+		pub fn new_def(alpha: f64) -> Result<crate::surface_matching::Pose3D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double(alpha, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };

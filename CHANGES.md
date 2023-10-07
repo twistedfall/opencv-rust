@@ -1,3 +1,12 @@
+* 0.85.0
+  * Generate companion functions `*_def()` that allow skipping the default arguments to improve API usability.
+  * Remove bindings to `SparseMatIterator--` and change `OutputArray::from_gpu_mat_vec()` to take mutable argument (instead of
+    `OutputArray::from_gpu_mat_vec_mut()` which is now removed). Those functions were often missing in the OpenCV shared libraries
+    causing linking errors.
+  * Update automatic case conversion algorithm to increase performance and improve correctness. Some function names are now slightly
+    different. Especially those containing `2d` and `3d`.
+  * Improve documentation generation.
+ 
 * 0.84.5
   * Improve parallel build performance (more noticeable on lower thread count).
   * Take `VCPKGRS_TRIPLET` environment var into account for crate rebuild.

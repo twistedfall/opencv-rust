@@ -76,7 +76,7 @@ pub mod sfm {
 	/// * R: Output 3x3 rotation matrix.
 	/// * t: Output 3x1 translation vector.
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) A4.1.1 pag.579
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) A4.1.1 pag.579
 	#[inline]
 	pub fn k_rt_from_projection(p: &impl core::ToInputArray, k: &mut impl core::ToOutputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(p);
@@ -154,7 +154,7 @@ pub mod sfm {
 	/// * K2: Input 3x3 second camera matrix. The parameters are similar to K1.
 	/// * E: Output 3x3 essential matrix.
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
 	#[inline]
 	pub fn essential_from_fundamental(f: &impl core::ToInputArray, k1: &impl core::ToInputArray, k2: &impl core::ToInputArray, e: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(f);
@@ -176,7 +176,7 @@ pub mod sfm {
 	/// * t2: Input 3x1 second camera translation vector.
 	/// * E: Output 3x3 essential matrix.
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
 	#[inline]
 	pub fn essential_from_rt(r1: &impl core::ToInputArray, t1: &impl core::ToInputArray, r2: &impl core::ToInputArray, t2: &impl core::ToInputArray, e: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(r1);
@@ -201,6 +201,37 @@ pub mod sfm {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_euclideanToHomogeneous_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Estimate robustly the fundamental matrix between two dataset of 2D point (image coords space).
+	/// ## Parameters
+	/// * x1: Input 2xN Array of 2D points in view 1.
+	/// * x2: Input 2xN Array of 2D points in view 2.
+	/// * max_error: maximum error (in pixels).
+	/// * F: Output 3x3 fundamental matrix such that ![inline formula](https://latex.codecogs.com/png.latex?x%5F2%5ET%20F%20x%5F1%3D0).
+	/// * inliers: Output 1xN vector that contains the indexes of the detected inliers.
+	/// * outliers_probability: outliers probability (in ]0,1[).
+	///          The number of iterations is controlled using the following equation:
+	///          ![inline formula](https://latex.codecogs.com/png.latex?k%20%3D%20%5Cfrac%7Blog%281%2Dp%29%7D%7Blog%281%2E0%20%2D%20w%5En%20%29%7D) where ![inline formula](https://latex.codecogs.com/png.latex?k), ![inline formula](https://latex.codecogs.com/png.latex?w) and ![inline formula](https://latex.codecogs.com/png.latex?n) are the number of
+	///          iterations, the inliers ratio and minimun number of selected independent samples.
+	///          The more this value is high, the less the function selects ramdom samples.
+	/// 
+	/// The fundamental solver relies on the 7 point solution. Returns the best error (in pixels), associated to the solution F.
+	/// 
+	/// ## Note
+	/// This alternative version of [fundamental_from_correspondences7_point_robust] function uses the following default values for its arguments:
+	/// * outliers_probability: 1e-2
+	#[inline]
+	pub fn fundamental_from_correspondences7_point_robust_def(x1: &impl core::ToInputArray, x2: &impl core::ToInputArray, max_error: f64, f: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray) -> Result<f64> {
+		input_array_arg!(x1);
+		input_array_arg!(x2);
+		output_array_arg!(f);
+		output_array_arg!(inliers);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_sfm_fundamentalFromCorrespondences7PointRobust_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR_const__OutputArrayR(x1.as_raw__InputArray(), x2.as_raw__InputArray(), max_error, f.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -251,6 +282,37 @@ pub mod sfm {
 	/// 
 	/// The fundamental solver relies on the 8 point solution. Returns the best error (in pixels), associated to the solution F.
 	/// 
+	/// ## Note
+	/// This alternative version of [fundamental_from_correspondences8_point_robust] function uses the following default values for its arguments:
+	/// * outliers_probability: 1e-2
+	#[inline]
+	pub fn fundamental_from_correspondences8_point_robust_def(x1: &impl core::ToInputArray, x2: &impl core::ToInputArray, max_error: f64, f: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray) -> Result<f64> {
+		input_array_arg!(x1);
+		input_array_arg!(x2);
+		output_array_arg!(f);
+		output_array_arg!(inliers);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_sfm_fundamentalFromCorrespondences8PointRobust_const__InputArrayR_const__InputArrayR_double_const__OutputArrayR_const__OutputArrayR(x1.as_raw__InputArray(), x2.as_raw__InputArray(), max_error, f.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Estimate robustly the fundamental matrix between two dataset of 2D point (image coords space).
+	/// ## Parameters
+	/// * x1: Input 2xN Array of 2D points in view 1.
+	/// * x2: Input 2xN Array of 2D points in view 2.
+	/// * max_error: maximum error (in pixels).
+	/// * F: Output 3x3 fundamental matrix such that ![inline formula](https://latex.codecogs.com/png.latex?x%5F2%5ET%20F%20x%5F1%3D0).
+	/// * inliers: Output 1xN vector that contains the indexes of the detected inliers.
+	/// * outliers_probability: outliers probability (in ]0,1[).
+	///          The number of iterations is controlled using the following equation:
+	///          ![inline formula](https://latex.codecogs.com/png.latex?k%20%3D%20%5Cfrac%7Blog%281%2Dp%29%7D%7Blog%281%2E0%20%2D%20w%5En%20%29%7D) where ![inline formula](https://latex.codecogs.com/png.latex?k), ![inline formula](https://latex.codecogs.com/png.latex?w) and ![inline formula](https://latex.codecogs.com/png.latex?n) are the number of
+	///          iterations, the inliers ratio and minimun number of selected independent samples.
+	///          The more this value is high, the less the function selects ramdom samples.
+	/// 
+	/// The fundamental solver relies on the 8 point solution. Returns the best error (in pixels), associated to the solution F.
+	/// 
 	/// ## C++ default parameters
 	/// * outliers_probability: 1e-2
 	#[inline]
@@ -273,7 +335,7 @@ pub mod sfm {
 	/// * K2: Input 3x3 second camera matrix. The parameters are similar to K1.
 	/// * F: Output 3x3 fundamental matrix.
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12) or <http://ai.stanford.edu/~birch/projective/node20.html>
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12) or <http://ai.stanford.edu/~birch/projective/node20.html>
 	#[inline]
 	pub fn fundamental_from_essential(e: &impl core::ToInputArray, k1: &impl core::ToInputArray, k2: &impl core::ToInputArray, f: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(e);
@@ -330,6 +392,34 @@ pub mod sfm {
 	/// 
 	/// The function supports reconstructions from Bundler.
 	/// 
+	/// ## Note
+	/// This alternative version of [import_reconstruction] function uses the following default values for its arguments:
+	/// * file_format: SFM_IO_BUNDLER
+	#[inline]
+	pub fn import_reconstruction_def(file: &str, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, ks: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+		extern_container_arg!(file);
+		output_array_arg!(rs);
+		output_array_arg!(ts);
+		output_array_arg!(ks);
+		output_array_arg!(points3d);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_sfm_importReconstruction_const_StringR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(file.opencv_as_extern(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), ks.as_raw__OutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Import a reconstruction file.
+	/// ## Parameters
+	/// * file: The path to the file.
+	/// * Rs: Output vector of 3x3 rotations of the camera
+	/// * Ts: Output vector of 3x1 translations of the camera.
+	/// * Ks: Output vector of 3x3 instrinsics of the camera.
+	/// * points3d: Output array with 3d points. Is 3 x N.
+	/// * file_format: The format of the file to import.
+	/// 
+	/// The function supports reconstructions from Bundler.
+	/// 
 	/// ## C++ default parameters
 	/// * file_format: SFM_IO_BUNDLER
 	#[inline]
@@ -354,7 +444,7 @@ pub mod sfm {
 	/// Computes the transformation matrix such that each coordinate direction will be scaled equally,
 	/// bringing the centroid to the origin with an average centroid ![inline formula](https://latex.codecogs.com/png.latex?%281%2C1%2C1%29%5ET).
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 	#[inline]
 	pub fn isotropic_preconditioner_from_points(points: &impl core::ToInputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(points);
@@ -397,7 +487,7 @@ pub mod sfm {
 	/// Decides the right solution by checking that the triangulation of a match
 	/// x1--x2 lies in front of the cameras. Return index of the right solution or -1 if no solution.
 	/// 
-	/// Reference: See [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (9.6.3 Geometrical interpretation of the 4 solutions).
+	/// Reference: See [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (9.6.3 Geometrical interpretation of the 4 solutions).
 	#[inline]
 	pub fn motion_from_essential_choose_solution(rs: &impl core::ToInputArray, ts: &impl core::ToInputArray, k1: &impl core::ToInputArray, x1: &impl core::ToInputArray, k2: &impl core::ToInputArray, x2: &impl core::ToInputArray) -> Result<i32> {
 		input_array_arg!(rs);
@@ -419,7 +509,7 @@ pub mod sfm {
 	/// * Rs: Output vector of 3x3 rotation matrices.
 	/// * ts: Output vector of 3x1 translation vectors.
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (Result 9.19)
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (Result 9.19)
 	#[inline]
 	pub fn motion_from_essential(e: &impl core::ToInputArray, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(e);
@@ -458,7 +548,7 @@ pub mod sfm {
 	/// Internally calls [preconditionerFromPoints] in order to get the scaling matrix before applying [applyTransformationToPoints].
 	/// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 	#[inline]
 	pub fn normalize_isotropic_points(points: &impl core::ToInputArray, normalized_points: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(points);
@@ -480,7 +570,7 @@ pub mod sfm {
 	/// Internally calls [preconditionerFromPoints] in order to get the scaling matrix before applying [applyTransformationToPoints].
 	/// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 	#[inline]
 	pub fn normalize_points(points: &impl core::ToInputArray, normalized_points: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(points);
@@ -500,7 +590,7 @@ pub mod sfm {
 	/// * F: Output 3x3 fundamental matrix.
 	/// 
 	/// Uses the normalized 8-point fundamental matrix solver.
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.2 pag.281 (x1 = x, x2 = x')
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.2 pag.281 (x1 = x, x2 = x')
 	#[inline]
 	pub fn normalized_eight_point_solver(x1: &impl core::ToInputArray, x2: &impl core::ToInputArray, f: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(x1);
@@ -521,7 +611,7 @@ pub mod sfm {
 	/// Computes the transformation matrix such that the two principal moments of the set of points are equal to unity,
 	/// forming an approximately symmetric circular cloud of points of radius 1 about the origin.
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 	#[inline]
 	pub fn preconditioner_from_points(points: &impl core::ToInputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(points);
@@ -585,6 +675,36 @@ pub mod sfm {
 	/// Note:
 	///   - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
 	/// 
+	/// ## Note
+	/// This alternative version of [reconstruct] function uses the following default values for its arguments:
+	/// * is_projective: false
+	#[inline]
+	pub fn reconstruct_def(points2d: &impl core::ToInputArray, ps: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray, k: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_array_arg!(points2d);
+		output_array_arg!(ps);
+		output_array_arg!(points3d);
+		input_output_array_arg!(k);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_sfm_reconstruct_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR(points2d.as_raw__InputArray(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Reconstruct 3d points from 2d correspondences while performing autocalibration.
+	/// ## Parameters
+	/// * points2d: Input vector of vectors of 2d points (the inner vector is per image).
+	/// * Ps: Output vector with the 3x4 projections matrices of each image.
+	/// * points3d: Output array with estimated 3d points.
+	/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
+	/// * is_projective: if true, the cameras are supposed to be projective.
+	/// 
+	/// This method calls below signature and extracts projection matrices from estimated K, R and t.
+	/// 
+	///  
+	/// Note:
+	///   - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
+	/// 
 	/// ## C++ default parameters
 	/// * is_projective: false
 	#[inline]
@@ -595,6 +715,39 @@ pub mod sfm {
 		input_output_array_arg!(k);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_reconstruct_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(points2d.as_raw__InputArray(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Reconstruct 3d points from 2d correspondences while performing autocalibration.
+	/// ## Parameters
+	/// * points2d: Input vector of vectors of 2d points (the inner vector is per image).
+	/// * Rs: Output vector of 3x3 rotations of the camera.
+	/// * Ts: Output vector of 3x1 translations of the camera.
+	/// * points3d: Output array with estimated 3d points.
+	/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
+	/// * is_projective: if true, the cameras are supposed to be projective.
+	/// 
+	/// Internally calls libmv simple pipeline routine with some default parameters by instatiating SFMLibmvEuclideanReconstruction class.
+	/// 
+	/// 
+	/// Note:
+	///   - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
+	///   - To see a working example for camera motion reconstruction, check the following tutorial: [tutorial_sfm_trajectory_estimation].
+	/// 
+	/// ## Note
+	/// This alternative version of [reconstruct_1] function uses the following default values for its arguments:
+	/// * is_projective: false
+	#[inline]
+	pub fn reconstruct_1_def(points2d: &impl core::ToInputArray, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, k: &mut impl core::ToInputOutputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(points2d);
+		output_array_arg!(rs);
+		output_array_arg!(ts);
+		input_output_array_arg!(k);
+		output_array_arg!(points3d);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_sfm_reconstruct_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR(points2d.as_raw__InputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -647,6 +800,36 @@ pub mod sfm {
 	///   - The images must be ordered as they were an image sequence. Additionally, each frame should be as close as posible to the previous and posterior.
 	///   - For now DAISY features are used in order to compute the 2d points tracks and it only works for 3-4 images.
 	/// 
+	/// ## Note
+	/// This alternative version of [reconstruct_2] function uses the following default values for its arguments:
+	/// * is_projective: false
+	#[inline]
+	pub fn reconstruct_2_def(images: core::Vector<String>, ps: &mut impl core::ToOutputArray, points3d: &mut impl core::ToOutputArray, k: &mut impl core::ToInputOutputArray) -> Result<()> {
+		output_array_arg!(ps);
+		output_array_arg!(points3d);
+		input_output_array_arg!(k);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_sfm_reconstruct_const_vectorLStringG_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR(images.as_raw_VectorOfString(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Reconstruct 3d points from 2d images while performing autocalibration.
+	/// ## Parameters
+	/// * images: a vector of string with the images paths.
+	/// * Ps: Output vector with the 3x4 projections matrices of each image.
+	/// * points3d: Output array with estimated 3d points.
+	/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
+	/// * is_projective: if true, the cameras are supposed to be projective.
+	/// 
+	/// This method calls below signature and extracts projection matrices from estimated K, R and t.
+	/// 
+	///  
+	/// Note:
+	///   - The images must be ordered as they were an image sequence. Additionally, each frame should be as close as posible to the previous and posterior.
+	///   - For now DAISY features are used in order to compute the 2d points tracks and it only works for 3-4 images.
+	/// 
 	/// ## C++ default parameters
 	/// * is_projective: false
 	#[inline]
@@ -656,6 +839,39 @@ pub mod sfm {
 		input_output_array_arg!(k);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sfm_reconstruct_const_vectorLStringG_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_bool(images.as_raw_VectorOfString(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Reconstruct 3d points from 2d images while performing autocalibration.
+	/// ## Parameters
+	/// * images: a vector of string with the images paths.
+	/// * Rs: Output vector of 3x3 rotations of the camera.
+	/// * Ts: Output vector of 3x1 translations of the camera.
+	/// * points3d: Output array with estimated 3d points.
+	/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
+	/// * is_projective: if true, the cameras are supposed to be projective.
+	/// 
+	/// Internally calls libmv simple pipeline routine with some default parameters by instatiating SFMLibmvEuclideanReconstruction class.
+	/// 
+	///  
+	/// Note:
+	///   - The images must be ordered as they were an image sequence. Additionally, each frame should be as close as posible to the previous and posterior.
+	///   - For now DAISY features are used in order to compute the 2d points tracks and it only works for 3-4 images.
+	///   - To see a working example for scene reconstruction, check the following tutorial: [tutorial_sfm_scene_reconstruction].
+	/// 
+	/// ## Note
+	/// This alternative version of [reconstruct_3] function uses the following default values for its arguments:
+	/// * is_projective: false
+	#[inline]
+	pub fn reconstruct_3_def(images: core::Vector<String>, rs: &mut impl core::ToOutputArray, ts: &mut impl core::ToOutputArray, k: &mut impl core::ToInputOutputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(rs);
+		output_array_arg!(ts);
+		input_output_array_arg!(k);
+		output_array_arg!(points3d);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_sfm_reconstruct_const_vectorLStringG_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__OutputArrayR(images.as_raw_VectorOfString(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -724,7 +940,7 @@ pub mod sfm {
 	/// ## Parameters
 	/// * x: Input 3x1 vector.
 	/// 
-	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00), p581, equation (A4.5).
+	/// Reference: [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00), p581, equation (A4.5).
 	#[inline]
 	pub fn skew(x: &impl core::ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(x);
@@ -743,7 +959,7 @@ pub mod sfm {
 	/// * points3d: Output array with computed 3d points. Is 3 x N.
 	/// 
 	/// Triangulates the 3d position of 2d correspondences between several images.
-	/// Reference: Internally it uses DLT method [HartleyZ00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HartleyZ00) 12.2 pag.312
+	/// Reference: Internally it uses DLT method [HartleyZ00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 12.2 pag.312
 	#[inline]
 	pub fn triangulate_points(points2d: &impl core::ToInputArray, projection_matrices: &impl core::ToInputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
 		input_array_arg!(points2d);
@@ -1128,6 +1344,22 @@ pub mod sfm {
 			Ok(ret)
 		}
 		
+		/// Creates an instance of the SFMLibmvEuclideanReconstruction class. Initializes Libmv.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * camera_instrinsic_options: libmv_CameraIntrinsicsOptions()
+		/// * reconstruction_options: libmv_ReconstructionOptions()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::sfm::SFMLibmvEuclideanReconstruction>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { SFMLibmvEuclideanReconstruction, crate::sfm::BaseSFM, cv_sfm_SFMLibmvEuclideanReconstruction_to_BaseSFM }
@@ -1199,6 +1431,27 @@ pub mod sfm {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * _distortion_model: 0
+		/// * _focal_length_x: 0
+		/// * _focal_length_y: 0
+		/// * _principal_point_x: 0
+		/// * _principal_point_y: 0
+		/// * _polynomial_k1: 0
+		/// * _polynomial_k2: 0
+		/// * _polynomial_k3: 0
+		/// * _polynomial_p1: 0
+		/// * _polynomial_p2: 0
+		#[inline]
+		pub fn new_def() -> Result<crate::sfm::libmv_CameraIntrinsicsOptions> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_sfm_libmv_CameraIntrinsicsOptions_libmv_CameraIntrinsicsOptions(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Data structure describing the reconstruction options.
@@ -1231,6 +1484,22 @@ pub mod sfm {
 		pub fn new(_keyframe1: i32, _keyframe2: i32, _refine_intrinsics: i32, _select_keyframes: i32, _verbosity_level: i32) -> Result<crate::sfm::libmv_ReconstructionOptions> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_sfm_libmv_ReconstructionOptions_libmv_ReconstructionOptions_const_int_const_int_const_int_const_int_const_int(_keyframe1, _keyframe2, _refine_intrinsics, _select_keyframes, _verbosity_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * _keyframe1: 1
+		/// * _keyframe2: 2
+		/// * _refine_intrinsics: 1
+		/// * _select_keyframes: 1
+		/// * _verbosity_level: -1
+		#[inline]
+		pub fn new_def() -> Result<crate::sfm::libmv_ReconstructionOptions> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_sfm_libmv_ReconstructionOptions_libmv_ReconstructionOptions(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

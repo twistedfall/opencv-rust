@@ -6,9 +6,9 @@ pub mod stitching {
 	//! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 	//! one can combine and use them separately.
 	//! 
-	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BL07) .
+	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BL07) .
 	//! 
-	//! ![stitching pipeline](https://docs.opencv.org/4.8.0/StitchingPipeline.jpg)
+	//! ![stitching pipeline](https://docs.opencv.org/4.8.1/StitchingPipeline.jpg)
 	//! 
 	//! Camera models
 	//! -------------
@@ -156,6 +156,27 @@ pub mod stitching {
 	/// * features: 
 	/// * mask: 
 	/// 
+	/// ## Note
+	/// This alternative version of [compute_image_features2] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn compute_image_features2_def(features_finder: &core::Ptr<crate::features2d::Feature2D>, image: &impl core::ToInputArray, features: &mut crate::stitching::Detail_ImageFeatures) -> Result<()> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_computeImageFeatures_const_PtrLFeature2DGR_const__InputArrayR_ImageFeaturesR(features_finder.as_raw_PtrOfFeature2D(), image.as_raw__InputArray(), features.as_raw_mut_Detail_ImageFeatures(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// 
+	/// 
+	/// ## Parameters
+	/// * featuresFinder: 
+	/// * image: 
+	/// * features: 
+	/// * mask: 
+	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -164,6 +185,27 @@ pub mod stitching {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_detail_computeImageFeatures_const_PtrLFeature2DGR_const__InputArrayR_ImageFeaturesR_const__InputArrayR(features_finder.as_raw_PtrOfFeature2D(), image.as_raw__InputArray(), features.as_raw_mut_Detail_ImageFeatures(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// 
+	/// 
+	/// ## Parameters
+	/// * featuresFinder: 
+	/// * images: 
+	/// * features: 
+	/// * masks: 
+	/// 
+	/// ## Note
+	/// This alternative version of [compute_image_features] function uses the following default values for its arguments:
+	/// * masks: noArray()
+	#[inline]
+	pub fn compute_image_features_def(features_finder: &core::Ptr<crate::features2d::Feature2D>, images: &impl core::ToInputArray, features: &mut core::Vector<crate::stitching::Detail_ImageFeatures>) -> Result<()> {
+		input_array_arg!(images);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detail_computeImageFeatures_const_PtrLFeature2DGR_const__InputArrayR_vectorLImageFeaturesGR(features_finder.as_raw_PtrOfFeature2D(), images.as_raw__InputArray(), features.as_raw_mut_VectorOfDetail_ImageFeatures(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -495,6 +537,20 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * a: 1
+		/// * b: 1
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::CompressedRectilinearPortraitWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::CompressedRectilinearPortraitWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { CompressedRectilinearPortraitWarper, crate::stitching::WarperCreator, cv_CompressedRectilinearPortraitWarper_to_WarperCreator }
@@ -568,6 +624,20 @@ pub mod stitching {
 		pub fn new(a: f32, b: f32) -> Result<crate::stitching::CompressedRectilinearWarper> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float(a, b, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::CompressedRectilinearWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * a: 1
+		/// * b: 1
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::CompressedRectilinearWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CompressedRectilinearWarper_CompressedRectilinearWarper(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::CompressedRectilinearWarper::opencv_from_extern(ret) };
@@ -920,6 +990,20 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * a: 1
+		/// * b: 1
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::PaniniPortraitWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PaniniPortraitWarper_PaniniPortraitWarper(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::PaniniPortraitWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { PaniniPortraitWarper, crate::stitching::WarperCreator, cv_PaniniPortraitWarper_to_WarperCreator }
@@ -993,6 +1077,20 @@ pub mod stitching {
 		pub fn new(a: f32, b: f32) -> Result<crate::stitching::PaniniWarper> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PaniniWarper_PaniniWarper_float_float(a, b, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::PaniniWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * a: 1
+		/// * b: 1
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::PaniniWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PaniniWarper_PaniniWarper(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::PaniniWarper::opencv_from_extern(ret) };
@@ -2005,6 +2103,31 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// These functions try to match the given images and to estimate rotations of each camera.
+		/// 
+		/// 
+		/// Note: Use the functions only if you're aware of the stitching pipeline, otherwise use
+		/// Stitcher::stitch.
+		/// 
+		/// ## Parameters
+		/// * images: Input images.
+		/// * masks: Masks for each input image specifying where to look for keypoints (optional).
+		/// ## Returns
+		/// Status code.
+		/// 
+		/// ## Note
+		/// This alternative version of [estimate_transform] function uses the following default values for its arguments:
+		/// * masks: noArray()
+		#[inline]
+		fn estimate_transform_def(&mut self, images: &impl core::ToInputArray) -> Result<crate::stitching::Stitcher_Status> {
+			input_array_arg!(images);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Stitcher_estimateTransform_const__InputArrayR(self.as_raw_mut_Stitcher(), images.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// These function restors camera rotation and camera intrinsics of each camera
 		/// that can be got with [Stitcher::cameras] call
 		/// 
@@ -2191,6 +2314,28 @@ pub mod stitching {
 		pub fn create(mode: crate::stitching::Stitcher_Mode) -> Result<core::Ptr<crate::stitching::Stitcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Stitcher_create_Mode(mode, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates a Stitcher configured in one of the stitching modes.
+		/// 
+		/// ## Parameters
+		/// * mode: Scenario for stitcher operation. This is usually determined by source of images
+		/// to stitch and their transformation. Default parameters will be chosen for operation in given
+		/// scenario.
+		/// ## Returns
+		/// Stitcher class instance.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * mode: Stitcher::PANORAMA
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::stitching::Stitcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Stitcher_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(ret) };
@@ -2520,6 +2665,35 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// Constructs a "best of 2 nearest" matcher that expects affine transformation
+		/// between images
+		/// 
+		/// ## Parameters
+		/// * full_affine: whether to use full affine transformation with 6 degress of freedom or reduced
+		/// transformation with 4 degrees of freedom using only rotation, translation and uniform scaling
+		/// * try_use_gpu: Should try to use GPU or not
+		/// * match_conf: Match distances ration threshold
+		/// * num_matches_thresh1: Minimum number of matches required for the 2D affine transform
+		/// estimation used in the inliers classification step
+		/// ## See also
+		/// cv::estimateAffine2D cv::estimateAffinePartial2D
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * full_affine: false
+		/// * try_use_gpu: false
+		/// * match_conf: 0.3f
+		/// * num_matches_thresh1: 6
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_AffineBestOf2NearestMatcher> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_AffineBestOf2NearestMatcher_AffineBestOf2NearestMatcher(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_AffineBestOf2NearestMatcher::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_AffineBestOf2NearestMatcher_to_Detail_BestOf2NearestMatcher }
@@ -2709,6 +2883,24 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// Construct an instance of the affine warper class.
+		/// 
+		/// ## Parameters
+		/// * scale: Projected image scale multiplier
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_AffineWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_AffineWarper_AffineWarper(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_AffineWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_PlaneWarper, cv_detail_AffineWarper_to_Detail_PlaneWarper }
@@ -2808,6 +3000,35 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// Constructs a "best of 2 nearest" matcher.
+		/// 
+		/// ## Parameters
+		/// * try_use_gpu: Should try to use GPU or not
+		/// * match_conf: Match distances ration threshold
+		/// * num_matches_thresh1: Minimum number of matches required for the 2D projective transform
+		/// estimation used in the inliers classification step
+		/// * num_matches_thresh2: Minimum number of matches required for the 2D projective transform
+		/// re-estimation on inliers
+		/// * matches_confindece_thresh: Matching confidence threshold to take the match into account.
+		/// The threshold was determined experimentally and set to 3 by default.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * try_use_gpu: false
+		/// * match_conf: 0.3f
+		/// * num_matches_thresh1: 6
+		/// * num_matches_thresh2: 6
+		/// * matches_confindece_thresh: 3.
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_BestOf2NearestMatcher> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BestOf2NearestMatcher_BestOf2NearestMatcher(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BestOf2NearestMatcher::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * try_use_gpu: false
 		/// * match_conf: 0.3f
@@ -2818,6 +3039,23 @@ pub mod stitching {
 		pub fn create(try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32, matches_confindece_thresh: f64) -> Result<core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_BestOf2NearestMatcher_create_bool_float_int_int_double(try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, matches_confindece_thresh, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_BestOf2NearestMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * try_use_gpu: false
+		/// * match_conf: 0.3f
+		/// * num_matches_thresh1: 6
+		/// * num_matches_thresh2: 6
+		/// * matches_confindece_thresh: 3.
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BestOf2NearestMatcher_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::stitching::Detail_BestOf2NearestMatcher>::opencv_from_extern(ret) };
@@ -2902,6 +3140,23 @@ pub mod stitching {
 		pub fn new(range_width: i32, try_use_gpu: bool, match_conf: f32, num_matches_thresh1: i32, num_matches_thresh2: i32) -> Result<crate::stitching::Detail_BestOf2NearestRangeMatcher> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_BestOf2NearestRangeMatcher_BestOf2NearestRangeMatcher_int_bool_float_int_int(range_width, try_use_gpu, match_conf, num_matches_thresh1, num_matches_thresh2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BestOf2NearestRangeMatcher::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * range_width: 5
+		/// * try_use_gpu: false
+		/// * match_conf: 0.3f
+		/// * num_matches_thresh1: 6
+		/// * num_matches_thresh2: 6
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_BestOf2NearestRangeMatcher> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BestOf2NearestRangeMatcher_BestOf2NearestRangeMatcher(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_BestOf2NearestRangeMatcher::opencv_from_extern(ret) };
@@ -3036,6 +3291,19 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create_default] function uses the following default values for its arguments:
+		/// * try_gpu: false
+		#[inline]
+		pub fn create_default_def(typ: i32) -> Result<core::Ptr<crate::stitching::Detail_Blender>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_Blender_createDefault_int(typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_Blender>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_FeatherBlender, cv_detail_Blender_to_Detail_FeatherBlender }
@@ -3121,6 +3389,21 @@ pub mod stitching {
 		pub fn new(bl_width: i32, bl_height: i32, nr_feeds: i32) -> Result<crate::stitching::Detail_BlocksChannelsCompensator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_BlocksChannelsCompensator_BlocksChannelsCompensator_int_int_int(bl_width, bl_height, nr_feeds, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BlocksChannelsCompensator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * bl_width: 32
+		/// * bl_height: 32
+		/// * nr_feeds: 1
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_BlocksChannelsCompensator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BlocksChannelsCompensator_BlocksChannelsCompensator(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_BlocksChannelsCompensator::opencv_from_extern(ret) };
@@ -3363,7 +3646,7 @@ pub mod stitching {
 	}
 	
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-	/// intensities, see [UES01](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+	/// intensities, see [UES01](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_UES01) for details.
 	pub struct Detail_BlocksGainCompensator {
 		ptr: *mut c_void
 	}
@@ -3411,6 +3694,20 @@ pub mod stitching {
 		pub fn new(bl_width: i32, bl_height: i32) -> Result<crate::stitching::Detail_BlocksGainCompensator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator_int_int(bl_width, bl_height, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BlocksGainCompensator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * bl_width: 32
+		/// * bl_height: 32
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_BlocksGainCompensator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_BlocksGainCompensator::opencv_from_extern(ret) };
@@ -4201,6 +4498,19 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * nr_feeds: 1
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_ChannelsCompensator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_ChannelsCompensator_ChannelsCompensator(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_ChannelsCompensator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_ChannelsCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_ChannelsCompensator_to_Detail_ExposureCompensator }
@@ -4371,6 +4681,20 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * a: 1
+		/// * b: 1
+		#[inline]
+		pub fn new_def(scale: f32) -> Result<crate::stitching::Detail_CompressedRectilinearPortraitWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_CompressedRectilinearPortraitWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_CompressedRectilinearPortraitWarper_to_Detail_RotationWarper }
@@ -4535,6 +4859,20 @@ pub mod stitching {
 		pub fn new(scale: f32, a: f32, b: f32) -> Result<crate::stitching::Detail_CompressedRectilinearWarper> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float_float(scale, a, b, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_CompressedRectilinearWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * a: 1
+		/// * b: 1
+		#[inline]
+		pub fn new_def(scale: f32) -> Result<crate::stitching::Detail_CompressedRectilinearWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_CompressedRectilinearWarper_CompressedRectilinearWarper_float(scale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_CompressedRectilinearWarper::opencv_from_extern(ret) };
@@ -5093,6 +5431,19 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * elem_count: 0
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_DisjointSets> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_DisjointSets_DisjointSets(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_DisjointSets::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl std::fmt::Debug for Detail_DisjointSets {
@@ -5192,6 +5543,19 @@ pub mod stitching {
 		pub fn new(cost_func: crate::stitching::Detail_DpSeamFinder_CostFunction) -> Result<crate::stitching::Detail_DpSeamFinder> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder_CostFunction(cost_func, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * cost_func: COLOR
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_DpSeamFinder> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(ret) };
@@ -5578,6 +5942,19 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * sharpness: 0.02f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_FeatherBlender> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_FeatherBlender_FeatherBlender(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_FeatherBlender::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_FeatherBlender, crate::stitching::Detail_Blender, cv_detail_FeatherBlender_to_Detail_Blender }
@@ -5653,6 +6030,29 @@ pub mod stitching {
 		fn apply2(&mut self, features: &core::Vector<crate::stitching::Detail_ImageFeatures>, pairwise_matches: &mut core::Vector<crate::stitching::Detail_MatchesInfo>, mask: &core::UMat) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_FeaturesMatcher_operator___const_vectorLImageFeaturesGR_vectorLMatchesInfoGR_const_UMatR(self.as_raw_mut_Detail_FeaturesMatcher(), features.as_raw_VectorOfDetail_ImageFeatures(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), mask.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Performs images matching.
+		/// 
+		/// ## Parameters
+		/// * features: Features of the source images
+		/// * pairwise_matches: Found pairwise matches
+		/// * mask: Mask indicating which image pairs must be matched
+		/// 
+		/// The function is parallelized with the TBB library.
+		/// ## See also
+		/// detail::MatchesInfo
+		/// 
+		/// ## Note
+		/// This alternative version of [apply2] function uses the following default values for its arguments:
+		/// * mask: cv::UMat()
+		#[inline]
+		fn apply2_def(&mut self, features: &core::Vector<crate::stitching::Detail_ImageFeatures>, pairwise_matches: &mut core::Vector<crate::stitching::Detail_MatchesInfo>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_FeaturesMatcher_operator___const_vectorLImageFeaturesGR_vectorLMatchesInfoGR(self.as_raw_mut_Detail_FeaturesMatcher(), features.as_raw_VectorOfDetail_ImageFeatures(), pairwise_matches.as_raw_mut_VectorOfDetail_MatchesInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5967,7 +6367,7 @@ pub mod stitching {
 	}
 	
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-	/// intensities, see [BL07](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+	/// intensities, see [BL07](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_WJ10) for details.
 	pub struct Detail_GainCompensator {
 		ptr: *mut c_void
 	}
@@ -6107,6 +6507,19 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * num_vertices: 0
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_Graph> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_Graph_Graph(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_Graph::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl std::fmt::Debug for Detail_Graph {
@@ -6138,7 +6551,7 @@ pub mod stitching {
 		
 	}
 	
-	/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_V03) .
+	/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_V03) .
 	pub struct Detail_GraphCutSeamFinder {
 		ptr: *mut c_void
 	}
@@ -6193,6 +6606,21 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * cost_type: COST_COLOR_GRAD
+		/// * terminal_cost: 10000.f
+		/// * bad_region_penalty: 1000.f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_GraphCutSeamFinder> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_GraphCutSeamFinder_GraphCutSeamFinder(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinder::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * terminal_cost: 10000.f
 		/// * bad_region_penalty: 1000.f
@@ -6201,6 +6629,21 @@ pub mod stitching {
 			extern_container_arg!(mut cost_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_GraphCutSeamFinder_GraphCutSeamFinder_String_float_float(cost_type.opencv_as_extern_mut(), terminal_cost, bad_region_penalty, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinder::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * terminal_cost: 10000.f
+		/// * bad_region_penalty: 1000.f
+		#[inline]
+		pub fn new_def_1(cost_type: &str) -> Result<crate::stitching::Detail_GraphCutSeamFinder> {
+			extern_container_arg!(mut cost_type);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_GraphCutSeamFinder_GraphCutSeamFinder_String(cost_type.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinder::opencv_from_extern(ret) };
@@ -6354,6 +6797,21 @@ pub mod stitching {
 		pub fn new(cost_type: i32, terminal_cost: f32, bad_region_penalty: f32) -> Result<crate::stitching::Detail_GraphCutSeamFinderGpu> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_GraphCutSeamFinderGpu_GraphCutSeamFinderGpu_int_float_float(cost_type, terminal_cost, bad_region_penalty, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinderGpu::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * cost_type: COST_COLOR_GRAD
+		/// * terminal_cost: 10000.f
+		/// * bad_region_penalty: 1000.f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_GraphCutSeamFinderGpu> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_GraphCutSeamFinderGpu_GraphCutSeamFinderGpu(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinderGpu::opencv_from_extern(ret) };
@@ -6540,6 +6998,19 @@ pub mod stitching {
 		pub fn new(is_focals_estimated: bool) -> Result<crate::stitching::Detail_HomographyBasedEstimator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_HomographyBasedEstimator_HomographyBasedEstimator_bool(is_focals_estimated, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_HomographyBasedEstimator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * is_focals_estimated: false
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_HomographyBasedEstimator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_HomographyBasedEstimator_HomographyBasedEstimator(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_HomographyBasedEstimator::opencv_from_extern(ret) };
@@ -7095,7 +7566,7 @@ pub mod stitching {
 		
 	}
 	
-	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BA83)).
+	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BA83)).
 	pub struct Detail_MultiBandBlender {
 		ptr: *mut c_void
 	}
@@ -7136,6 +7607,21 @@ pub mod stitching {
 		pub fn new(try_gpu: i32, num_bands: i32, weight_type: i32) -> Result<crate::stitching::Detail_MultiBandBlender> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_MultiBandBlender_MultiBandBlender_int_int_int(try_gpu, num_bands, weight_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_MultiBandBlender::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * try_gpu: false
+		/// * num_bands: 5
+		/// * weight_type: CV_32F
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_MultiBandBlender> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_MultiBandBlender_MultiBandBlender(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_MultiBandBlender::opencv_from_extern(ret) };
@@ -7620,6 +8106,20 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * a: 1
+		/// * b: 1
+		#[inline]
+		pub fn new_def(scale: f32) -> Result<crate::stitching::Detail_PaniniPortraitWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_PaniniPortraitWarper_PaniniPortraitWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_PaniniPortraitWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_PaniniPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_PaniniPortraitWarper_to_Detail_RotationWarper }
@@ -7784,6 +8284,20 @@ pub mod stitching {
 		pub fn new(scale: f32, a: f32, b: f32) -> Result<crate::stitching::Detail_PaniniWarper> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_PaniniWarper_PaniniWarper_float_float_float(scale, a, b, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_PaniniWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * a: 1
+		/// * b: 1
+		#[inline]
+		pub fn new_def(scale: f32) -> Result<crate::stitching::Detail_PaniniWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_PaniniWarper_PaniniWarper_float(scale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_PaniniWarper::opencv_from_extern(ret) };
@@ -8203,6 +8717,24 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// Construct an instance of the plane warper class.
+		/// 
+		/// ## Parameters
+		/// * scale: Projected image scale multiplier
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_PlaneWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_PlaneWarper_PlaneWarper(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_PlaneWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_AffineWarper, cv_detail_PlaneWarper_to_Detail_AffineWarper }
@@ -8383,6 +8915,19 @@ pub mod stitching {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_PlaneWarperGpu> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_PlaneWarperGpu_PlaneWarperGpu(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_PlaneWarperGpu::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_PlaneWarper, cv_detail_PlaneWarperGpu_to_Detail_PlaneWarper }
@@ -8465,6 +9010,20 @@ pub mod stitching {
 			input_array_arg!(t);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_ProjectorBase_setCameraParams_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_Detail_ProjectorBase(), k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [set_camera_params] function uses the following default values for its arguments:
+		/// * k: Mat::eye(3,3,CV_32F)
+		/// * r: Mat::eye(3,3,CV_32F)
+		/// * t: Mat::zeros(3,1,CV_32F)
+		#[inline]
+		fn set_camera_params_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_ProjectorBase_setCameraParams(self.as_raw_mut_Detail_ProjectorBase(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

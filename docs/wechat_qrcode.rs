@@ -39,6 +39,30 @@ pub mod wechat_qrcode {
 			Ok(ret)
 		}
 		
+		/// Both detects and decodes QR code.
+		/// To simplify the usage, there is a only API: detectAndDecode
+		/// 
+		/// ## Parameters
+		/// * img: supports grayscale or color (BGR) image.
+		/// * points: optional output array of vertices of the found QR code quadrangle. Will be
+		/// empty if not found.
+		/// ## Returns
+		/// list of decoded string.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_and_decode] function uses the following default values for its arguments:
+		/// * points: noArray()
+		#[inline]
+		fn detect_and_decode_def(&mut self, img: &impl core::ToInputArray) -> Result<core::Vector<String>> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_detectAndDecode_const__InputArrayR(self.as_raw_mut_WeChatQRCode(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// set scale factor
 		/// QR code detector use neural network to detect QR.
 		/// Before running the neural network, the input image is pre-processed by scaling.
@@ -121,6 +145,32 @@ pub mod wechat_qrcode {
 			extern_container_arg!(super_resolution_caffe_model_path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode_const_stringR_const_stringR_const_stringR_const_stringR(detector_prototxt_path.opencv_as_extern(), detector_caffe_model_path.opencv_as_extern(), super_resolution_prototxt_path.opencv_as_extern(), super_resolution_caffe_model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Initialize the WeChatQRCode.
+		/// It includes two models, which are packaged with caffe format.
+		/// Therefore, there are prototxt and caffe models (In total, four paramenters).
+		/// 
+		/// ## Parameters
+		/// * detector_prototxt_path: prototxt file path for the detector
+		/// * detector_caffe_model_path: caffe model file path for the detector
+		/// * super_resolution_prototxt_path: prototxt file path for the super resolution model
+		/// * super_resolution_caffe_model_path: caffe file path for the super resolution model
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * detector_prototxt_path: ""
+		/// * detector_caffe_model_path: ""
+		/// * super_resolution_prototxt_path: ""
+		/// * super_resolution_caffe_model_path: ""
+		#[inline]
+		pub fn new_def() -> Result<crate::wechat_qrcode::WeChatQRCode> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };

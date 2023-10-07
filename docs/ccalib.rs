@@ -42,6 +42,43 @@ pub mod ccalib {
 	/// * idx: Indices of images that pass initialization, which are really used in calibration. So the size of rvecs is the
 	/// same as idx.total().
 	/// 
+	/// ## Note
+	/// This alternative version of [calibrate] function uses the following default values for its arguments:
+	/// * idx: noArray()
+	#[inline]
+	pub fn calibrate_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, size: core::Size, k: &mut impl core::ToInputOutputArray, xi: &mut impl core::ToInputOutputArray, d: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+		input_array_arg!(object_points);
+		input_array_arg!(image_points);
+		input_output_array_arg!(k);
+		input_output_array_arg!(xi);
+		input_output_array_arg!(d);
+		output_array_arg!(rvecs);
+		output_array_arg!(tvecs);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_omnidir_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), size.opencv_as_extern(), k.as_raw__InputOutputArray(), xi.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Perform omnidirectional camera calibration, the default depth of outputs is CV_64F.
+	/// 
+	/// ## Parameters
+	/// * objectPoints: Vector of vector of Vec3f object points in world (pattern) coordinate.
+	/// It also can be vector of Mat with size 1xN/Nx1 and type CV_32FC3. Data with depth of 64_F is also acceptable.
+	/// * imagePoints: Vector of vector of Vec2f corresponding image points of objectPoints. It must be the same
+	/// size and the same type with objectPoints.
+	/// * size: Image size of calibration images.
+	/// * K: Output calibrated camera matrix.
+	/// * xi: Output parameter xi for CMei's model
+	/// * D: Output distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29)
+	/// * rvecs: Output rotations for each calibration images
+	/// * tvecs: Output translation for each calibration images
+	/// * flags: The flags that control calibrate
+	/// * criteria: Termination criteria for optimization
+	/// * idx: Indices of images that pass initialization, which are really used in calibration. So the size of rvecs is the
+	/// same as idx.total().
+	/// 
 	/// ## C++ default parameters
 	/// * idx: noArray()
 	#[inline]
@@ -94,6 +131,24 @@ pub mod ccalib {
 		Ok(ret)
 	}
 	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [project_points_1] function uses the following default values for its arguments:
+	/// * jacobian: noArray()
+	#[inline]
+	pub fn project_points_1_def(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, affine: core::Affine3d, k: &impl core::ToInputArray, xi: f64, d: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(object_points);
+		output_array_arg!(image_points);
+		input_array_arg!(k);
+		input_array_arg!(d);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_double_const__InputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), xi, d.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Projects points for omnidirectional camera using CMei's model
 	/// 
 	/// ## Parameters
@@ -127,6 +182,44 @@ pub mod ccalib {
 		output_array_arg!(jacobian);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const_Affine3dR_const__InputArrayR_double_const__InputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), xi, d.as_raw__InputArray(), jacobian.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Projects points for omnidirectional camera using CMei's model
+	/// 
+	/// ## Parameters
+	/// * objectPoints: Object points in world coordinate, vector of vector of Vec3f or Mat of
+	/// 1xN/Nx1 3-channel of type CV_32F and N is the number of points. 64F is also acceptable.
+	/// * imagePoints: Output array of image points, vector of vector of Vec2f or
+	/// 1xN/Nx1 2-channel of type CV_32F. 64F is also acceptable.
+	/// * rvec: vector of rotation between world coordinate and camera coordinate, i.e., om
+	/// * tvec: vector of translation between pattern coordinate and camera coordinate
+	/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%20s%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
+	/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29).
+	/// * xi: The parameter xi for CMei's model
+	/// * jacobian: Optional output 2Nx16 of type CV_64F jacobian matrix, contains the derivatives of
+	/// image pixel points wrt parameters including ![inline formula](https://latex.codecogs.com/png.latex?om%2C%20T%2C%20f%5Fx%2C%20f%5Fy%2C%20s%2C%20c%5Fx%2C%20c%5Fy%2C%20xi%2C%20k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2).
+	/// This matrix will be used in calibration by optimization.
+	/// 
+	/// The function projects object 3D points of world coordinate to image pixels, parameter by intrinsic
+	/// and extrinsic parameters. Also, it optionally compute a by-product: the jacobian matrix containing
+	/// contains the derivatives of image pixel points wrt intrinsic and extrinsic parameters.
+	/// 
+	/// ## Note
+	/// This alternative version of [project_points] function uses the following default values for its arguments:
+	/// * jacobian: noArray()
+	#[inline]
+	pub fn project_points_def(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, k: &impl core::ToInputArray, xi: f64, d: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(object_points);
+		output_array_arg!(image_points);
+		input_array_arg!(rvec);
+		input_array_arg!(tvec);
+		input_array_arg!(k);
+		input_array_arg!(d);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_omnidir_projectPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_const__InputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), xi, d.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -198,6 +291,59 @@ pub mod ccalib {
 	/// same as idx.total().
 	/// @
 	/// 
+	/// ## Note
+	/// This alternative version of [stereo_calibrate] function uses the following default values for its arguments:
+	/// * idx: noArray()
+	#[inline]
+	pub fn stereo_calibrate_def(object_points: &mut impl core::ToInputOutputArray, image_points1: &mut impl core::ToInputOutputArray, image_points2: &mut impl core::ToInputOutputArray, image_size1: core::Size, image_size2: core::Size, k1: &mut impl core::ToInputOutputArray, xi1: &mut impl core::ToInputOutputArray, d1: &mut impl core::ToInputOutputArray, k2: &mut impl core::ToInputOutputArray, xi2: &mut impl core::ToInputOutputArray, d2: &mut impl core::ToInputOutputArray, rvec: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray, rvecs_l: &mut impl core::ToOutputArray, tvecs_l: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+		input_output_array_arg!(object_points);
+		input_output_array_arg!(image_points1);
+		input_output_array_arg!(image_points2);
+		input_output_array_arg!(k1);
+		input_output_array_arg!(xi1);
+		input_output_array_arg!(d1);
+		input_output_array_arg!(k2);
+		input_output_array_arg!(xi2);
+		input_output_array_arg!(d2);
+		output_array_arg!(rvec);
+		output_array_arg!(tvec);
+		output_array_arg!(rvecs_l);
+		output_array_arg!(tvecs_l);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputOutputArray(), image_points1.as_raw__InputOutputArray(), image_points2.as_raw__InputOutputArray(), &image_size1, &image_size2, k1.as_raw__InputOutputArray(), xi1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), xi2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), rvecs_l.as_raw__OutputArray(), tvecs_l.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Stereo calibration for omnidirectional camera model. It computes the intrinsic parameters for two
+	/// cameras and the extrinsic parameters between two cameras. The default depth of outputs is CV_64F.
+	/// 
+	/// ## Parameters
+	/// * objectPoints: Object points in world (pattern) coordinate. Its type is vector<vector<Vec3f> >.
+	/// It also can be vector of Mat with size 1xN/Nx1 and type CV_32FC3. Data with depth of 64_F is also acceptable.
+	/// * imagePoints1: The corresponding image points of the first camera, with type vector<vector<Vec2f> >.
+	/// It must be the same size and the same type as objectPoints.
+	/// * imagePoints2: The corresponding image points of the second camera, with type vector<vector<Vec2f> >.
+	/// It must be the same size and the same type as objectPoints.
+	/// * imageSize1: Image size of calibration images of the first camera.
+	/// * imageSize2: Image size of calibration images of the second camera.
+	/// * K1: Output camera matrix for the first camera.
+	/// * xi1: Output parameter xi of Mei's model for the first camera
+	/// * D1: Output distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29) for the first camera
+	/// * K2: Output camera matrix for the first camera.
+	/// * xi2: Output parameter xi of CMei's model for the second camera
+	/// * D2: Output distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29) for the second camera
+	/// * rvec: Output rotation between the first and second camera
+	/// * tvec: Output translation between the first and second camera
+	/// * rvecsL: Output rotation for each image of the first camera
+	/// * tvecsL: Output translation for each image of the first camera
+	/// * flags: The flags that control stereoCalibrate
+	/// * criteria: Termination criteria for optimization
+	/// * idx: Indices of image pairs that pass initialization, which are really used in calibration. So the size of rvecs is the
+	/// same as idx.total().
+	/// @
+	/// 
 	/// ## C++ default parameters
 	/// * idx: noArray()
 	#[inline]
@@ -218,6 +364,58 @@ pub mod ccalib {
 		output_array_arg!(idx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(object_points.as_raw__InputOutputArray(), image_points1.as_raw__InputOutputArray(), image_points2.as_raw__InputOutputArray(), &image_size1, &image_size2, k1.as_raw__InputOutputArray(), xi1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), xi2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), rvecs_l.as_raw__OutputArray(), tvecs_l.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Stereo 3D reconstruction from a pair of images
+	/// 
+	/// ## Parameters
+	/// * image1: The first input image
+	/// * image2: The second input image
+	/// * K1: Input camera matrix of the first camera
+	/// * D1: Input distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29) for the first camera
+	/// * xi1: Input parameter xi for the first camera for CMei's model
+	/// * K2: Input camera matrix of the second camera
+	/// * D2: Input distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29) for the second camera
+	/// * xi2: Input parameter xi for the second camera for CMei's model
+	/// * R: Rotation between the first and second camera
+	/// * T: Translation between the first and second camera
+	/// * flag: Flag of rectification type, RECTIFY_PERSPECTIVE or RECTIFY_LONGLATI
+	/// * numDisparities: The parameter 'numDisparities' in StereoSGBM, see StereoSGBM for details.
+	/// * SADWindowSize: The parameter 'SADWindowSize' in StereoSGBM, see StereoSGBM for details.
+	/// * disparity: Disparity map generated by stereo matching
+	/// * image1Rec: Rectified image of the first image
+	/// * image2Rec: rectified image of the second image
+	/// * newSize: Image size of rectified image, see omnidir::undistortImage
+	/// * Knew: New camera matrix of rectified image, see omnidir::undistortImage
+	/// * pointCloud: Point cloud of 3D reconstruction, with type CV_64FC3
+	/// * pointType: Point cloud type, it can be XYZRGB or XYZ
+	/// 
+	/// ## Note
+	/// This alternative version of [stereo_reconstruct] function uses the following default values for its arguments:
+	/// * new_size: Size()
+	/// * knew: cv::noArray()
+	/// * point_cloud: cv::noArray()
+	/// * point_type: XYZRGB
+	#[inline]
+	pub fn stereo_reconstruct_def(image1: &impl core::ToInputArray, image2: &impl core::ToInputArray, k1: &impl core::ToInputArray, d1: &impl core::ToInputArray, xi1: &impl core::ToInputArray, k2: &impl core::ToInputArray, d2: &impl core::ToInputArray, xi2: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, flag: i32, num_disparities: i32, sad_window_size: i32, disparity: &mut impl core::ToOutputArray, image1_rec: &mut impl core::ToOutputArray, image2_rec: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(image1);
+		input_array_arg!(image2);
+		input_array_arg!(k1);
+		input_array_arg!(d1);
+		input_array_arg!(xi1);
+		input_array_arg!(k2);
+		input_array_arg!(d2);
+		input_array_arg!(xi2);
+		input_array_arg!(r);
+		input_array_arg!(t);
+		output_array_arg!(disparity);
+		output_array_arg!(image1_rec);
+		output_array_arg!(image2_rec);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_omnidir_stereoReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int_int_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(image1.as_raw__InputArray(), image2.as_raw__InputArray(), k1.as_raw__InputArray(), d1.as_raw__InputArray(), xi1.as_raw__InputArray(), k2.as_raw__InputArray(), d2.as_raw__InputArray(), xi2.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), flag, num_disparities, sad_window_size, disparity.as_raw__OutputArray(), image1_rec.as_raw__OutputArray(), image2_rec.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -309,6 +507,38 @@ pub mod ccalib {
 	/// * new_size: The new image size. By default, it is the size of distorted.
 	/// * R: Rotation matrix between the input and output images. By default, it is identity matrix.
 	/// 
+	/// ## Note
+	/// This alternative version of [undistort_image] function uses the following default values for its arguments:
+	/// * knew: cv::noArray()
+	/// * new_size: Size()
+	/// * r: Mat::eye(3,3,CV_64F)
+	#[inline]
+	pub fn undistort_image_def(distorted: &impl core::ToInputArray, undistorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray, xi: &impl core::ToInputArray, flags: i32) -> Result<()> {
+		input_array_arg!(distorted);
+		output_array_arg!(undistorted);
+		input_array_arg!(k);
+		input_array_arg!(d);
+		input_array_arg!(xi);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_omnidir_undistortImage_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Undistort omnidirectional images to perspective images
+	/// 
+	/// ## Parameters
+	/// * distorted: The input omnidirectional image.
+	/// * undistorted: The output undistorted image.
+	/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%20s%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
+	/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29).
+	/// * xi: The parameter xi for CMei's model.
+	/// * flags: Flags indicates the rectification type,  RECTIFY_PERSPECTIVE, RECTIFY_CYLINDRICAL, RECTIFY_LONGLATI and RECTIFY_STEREOGRAPHIC
+	/// * Knew: Camera matrix of the distorted image. If it is not assigned, it is just K.
+	/// * new_size: The new image size. By default, it is the size of distorted.
+	/// * R: Rotation matrix between the input and output images. By default, it is identity matrix.
+	/// 
 	/// ## C++ default parameters
 	/// * knew: cv::noArray()
 	/// * new_size: Size()
@@ -379,6 +609,19 @@ pub mod ccalib {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * output: noArray()
+		#[inline]
+		fn create_def(&mut self, pattern: &impl core::ToInputArray, board_size: core::Size2f) -> Result<bool> {
+			input_array_arg!(pattern);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccalib_CustomPattern_create_const__InputArrayR_const_Size2f(self.as_raw_mut_CustomPattern(), pattern.as_raw__InputArray(), board_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * ratio: 0.7
 		/// * proj_error: 8.0
@@ -396,6 +639,26 @@ pub mod ccalib {
 			output_array_arg!(pattern_corners);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findPattern_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const_double_const_double_const_bool_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), matched_features.as_raw__OutputArray(), pattern_points.as_raw__OutputArray(), ratio, proj_error, refine_position, out.as_raw__OutputArray(), h.as_raw__OutputArray(), pattern_corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [find_pattern] function uses the following default values for its arguments:
+		/// * ratio: 0.7
+		/// * proj_error: 8.0
+		/// * refine_position: false
+		/// * out: noArray()
+		/// * h: noArray()
+		/// * pattern_corners: noArray()
+		#[inline]
+		fn find_pattern_def(&mut self, image: &impl core::ToInputArray, matched_features: &mut impl core::ToOutputArray, pattern_points: &mut impl core::ToOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			output_array_arg!(matched_features);
+			output_array_arg!(pattern_points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccalib_CustomPattern_findPattern_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), matched_features.as_raw__OutputArray(), pattern_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -503,6 +766,25 @@ pub mod ccalib {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [calibrate] function uses the following default values for its arguments:
+		/// * flags: 0
+		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+		#[inline]
+		fn calibrate_def(&mut self, object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray) -> Result<f64> {
+			input_array_arg!(object_points);
+			input_array_arg!(image_points);
+			input_output_array_arg!(camera_matrix);
+			input_output_array_arg!(dist_coeffs);
+			output_array_arg!(rvecs);
+			output_array_arg!(tvecs);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccalib_CustomPattern_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
@@ -521,6 +803,25 @@ pub mod ccalib {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [find_rt] function uses the following default values for its arguments:
+		/// * use_extrinsic_guess: false
+		/// * flags: SOLVEPNP_ITERATIVE
+		#[inline]
+		fn find_rt_def(&mut self, object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<bool> {
+			input_array_arg!(object_points);
+			input_array_arg!(image_points);
+			input_array_arg!(camera_matrix);
+			input_array_arg!(dist_coeffs);
+			input_output_array_arg!(rvec);
+			input_output_array_arg!(tvec);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
@@ -533,6 +834,24 @@ pub mod ccalib {
 			input_output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_bool_int(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [find_rt] function uses the following default values for its arguments:
+		/// * use_extrinsic_guess: false
+		/// * flags: SOLVEPNP_ITERATIVE
+		#[inline]
+		fn find_rt_def_1(&mut self, image: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			input_array_arg!(camera_matrix);
+			input_array_arg!(dist_coeffs);
+			input_output_array_arg!(rvec);
+			input_output_array_arg!(tvec);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccalib_CustomPattern_findRt_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -561,6 +880,29 @@ pub mod ccalib {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [find_rt_ransac] function uses the following default values for its arguments:
+		/// * use_extrinsic_guess: false
+		/// * iterations_count: 100
+		/// * reprojection_error: 8.0
+		/// * min_inliers_count: 100
+		/// * inliers: noArray()
+		/// * flags: SOLVEPNP_ITERATIVE
+		#[inline]
+		fn find_rt_ransac_def(&mut self, object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<bool> {
+			input_array_arg!(object_points);
+			input_array_arg!(image_points);
+			input_array_arg!(camera_matrix);
+			input_array_arg!(dist_coeffs);
+			input_output_array_arg!(rvec);
+			input_output_array_arg!(tvec);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * use_extrinsic_guess: false
 		/// * iterations_count: 100
@@ -583,6 +925,28 @@ pub mod ccalib {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [find_rt_ransac] function uses the following default values for its arguments:
+		/// * use_extrinsic_guess: false
+		/// * iterations_count: 100
+		/// * reprojection_error: 8.0
+		/// * min_inliers_count: 100
+		/// * inliers: noArray()
+		/// * flags: SOLVEPNP_ITERATIVE
+		#[inline]
+		fn find_rt_ransac_def_1(&mut self, image: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<bool> {
+			input_array_arg!(image);
+			input_array_arg!(camera_matrix);
+			input_array_arg!(dist_coeffs);
+			input_output_array_arg!(rvec);
+			input_output_array_arg!(tvec);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * axis_length: 3
 		/// * axis_width: 2
@@ -595,6 +959,24 @@ pub mod ccalib {
 			input_array_arg!(dist_coeffs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccalib_CustomPattern_drawOrientation_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double_int(self.as_raw_mut_CustomPattern(), image.as_raw__InputOutputArray(), tvec.as_raw__InputArray(), rvec.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), axis_length, axis_width, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [draw_orientation] function uses the following default values for its arguments:
+		/// * axis_length: 3
+		/// * axis_width: 2
+		#[inline]
+		fn draw_orientation_def(&mut self, image: &mut impl core::ToInputOutputArray, tvec: &impl core::ToInputArray, rvec: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray) -> Result<()> {
+			input_output_array_arg!(image);
+			input_array_arg!(tvec);
+			input_array_arg!(rvec);
+			input_array_arg!(camera_matrix);
+			input_array_arg!(dist_coeffs);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccalib_CustomPattern_drawOrientation_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_CustomPattern(), image.as_raw__InputOutputArray(), tvec.as_raw__InputArray(), rvec.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -764,6 +1146,27 @@ pub mod ccalib {
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, criteria.opencv_as_extern(), detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * verbose: 0
+		/// * show_extration: 0
+		/// * n_mini_matches: 20
+		/// * flags: 0
+		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,200,1e-7)
+		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
+		#[inline]
+		pub fn new_def(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32) -> Result<crate::ccalib::MultiCameraCalibration> {
+			extern_container_arg!(file_name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
@@ -1096,6 +1499,25 @@ pub mod ccalib {
 		pub fn new(pattern_width: f32, pattern_height: f32, nmini_match: i32, depth: i32, verbose: i32, show_extraction: i32, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::RandomPatternCornerFinder> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(pattern_width, pattern_height, nmini_match, depth, verbose, show_extraction, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * nmini_match: 20
+		/// * depth: CV_32F
+		/// * verbose: 0
+		/// * show_extraction: 0
+		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
+		#[inline]
+		pub fn new_def(pattern_width: f32, pattern_height: f32) -> Result<crate::ccalib::RandomPatternCornerFinder> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float(pattern_width, pattern_height, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };

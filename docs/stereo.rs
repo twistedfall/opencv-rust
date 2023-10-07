@@ -42,6 +42,24 @@ pub mod stereo {
 	/// MCT_MEAN_VARIATION - Implementation of a modified census transform which is also taking into account the variation to the mean of the window not just the center pixel
 	/// *
 	/// 
+	/// ## Note
+	/// This alternative version of [modified_census_transform] function uses the following default values for its arguments:
+	/// * t: 0
+	/// * integral_image1: Mat()
+	/// * integral_image2: Mat()
+	#[inline]
+	pub fn modified_census_transform_def(img1: &core::Mat, img2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat, typ: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatR_const_MatR_int_MatR_MatR_const_int(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// STANDARD_MCT - Modified census which is memorizing for each pixel 2 bits and includes a tolerance to the pixel comparison
+	/// MCT_MEAN_VARIATION - Implementation of a modified census transform which is also taking into account the variation to the mean of the window not just the center pixel
+	/// *
+	/// 
 	/// ## C++ default parameters
 	/// * t: 0
 	/// * integral_image1: Mat()
@@ -50,6 +68,21 @@ pub mod stereo {
 	pub fn modified_census_transform(img1: &core::Mat, img2: &core::Mat, kernel_size: i32, dist1: &mut core::Mat, dist2: &mut core::Mat, typ: i32, t: i32, integral_image1: &core::Mat, integral_image2: &core::Mat) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatR_const_MatR_int_MatR_MatR_const_int_int_const_MatR_const_MatR(img1.as_raw_Mat(), img2.as_raw_Mat(), kernel_size, dist1.as_raw_mut_Mat(), dist2.as_raw_mut_Mat(), typ, t, integral_image1.as_raw_Mat(), integral_image2.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// single version of modified census transform descriptor
+	/// 
+	/// ## Note
+	/// This alternative version of [modified_census_transform_1] function uses the following default values for its arguments:
+	/// * t: 0
+	/// * integral_image: Mat()
+	#[inline]
+	pub fn modified_census_transform_1_def(img1: &core::Mat, kernel_size: i32, dist: &mut core::Mat, typ: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_stereo_modifiedCensusTransform_const_MatR_int_MatR_const_int(img1.as_raw_Mat(), kernel_size, dist.as_raw_mut_Mat(), typ, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -346,10 +379,10 @@ pub mod stereo {
 	/// that are not previously computed. New matches are stored in the seed priority queue and used as seeds.
 	/// The propagation process ends when no additional matches can be retrieved.
 	/// ## See also
-	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
-	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Stoyanov2010).
 	/// 
-	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Lhuillier2000)
+	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lhuillier2000)
 	pub struct QuasiDenseStereo {
 		ptr: *mut c_void
 	}
@@ -381,6 +414,19 @@ pub mod stereo {
 			extern_container_arg!(mut param_filepath);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * param_filepath: cv::String()
+		#[inline]
+		pub fn create_def(mono_img_size: core::Size) -> Result<core::Ptr<crate::stereo::QuasiDenseStereo>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size(mono_img_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };

@@ -318,6 +318,24 @@ pub mod cudacodec {
 	
 	opencv_type_enum! { crate::cudacodec::CUDA_VideoReaderProps }
 	
+	/// @overload
+	/// ## Parameters
+	/// * source: RAW video source implemented by user.
+	/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_video_reader_1] function uses the following default values for its arguments:
+	/// * params: VideoReaderInitParams()
+	#[inline]
+	pub fn create_video_reader_1_def(source: &core::Ptr<crate::cudacodec::CUDA_RawVideoSource>) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoReader>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR(source.as_raw_PtrOfCUDA_RawVideoSource(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Creates video reader.
 	/// 
 	/// ## Parameters
@@ -341,6 +359,33 @@ pub mod cudacodec {
 	pub fn create_video_reader_1(source: &core::Ptr<crate::cudacodec::CUDA_RawVideoSource>, params: crate::cudacodec::CUDA_VideoReaderInitParams) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoReader>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR_const_VideoReaderInitParams(source.as_raw_PtrOfCUDA_RawVideoSource(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates video reader.
+	/// 
+	/// ## Parameters
+	/// * filename: Name of the input video file.
+	/// * sourceParams: Pass through parameters for VideoCapure.  VideoCapture with the FFMpeg back end (CAP_FFMPEG) is used to parse the video input.
+	/// The `sourceParams` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+	///    See cv::VideoCaptureProperties
+	/// e.g. when streaming from an RTSP source CAP_PROP_OPEN_TIMEOUT_MSEC may need to be set.
+	/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
+	/// 
+	/// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
+	/// 
+	/// ## Note
+	/// This alternative version of [create_video_reader] function uses the following default values for its arguments:
+	/// * source_params: {}
+	/// * params: VideoReaderInitParams()
+	#[inline]
+	pub fn create_video_reader_def(filename: &str) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoReader>> {
+		extern_container_arg!(filename);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_createVideoReader_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
@@ -384,6 +429,35 @@ pub mod cudacodec {
 	/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
 	/// * stream: Stream for frame pre-processing.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_video_writer] function uses the following default values for its arguments:
+	/// * codec: Codec::H264
+	/// * fps: 25.0
+	/// * color_format: ColorFormat::BGR
+	/// * encoder_callback: 0
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn create_video_writer_def(file_name: &str, frame_size: core::Size) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
+		extern_container_arg!(file_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates video writer.
+	/// 
+	/// ## Parameters
+	/// * fileName: Name of the output video file. Only raw h264 or hevc files are supported.
+	/// * frameSize: Size of the input video frames.
+	/// * codec: Codec.
+	/// * fps: Framerate of the created video stream.
+	/// * colorFormat: OpenCv color format of the frames to be encoded.
+	/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
+	/// * stream: Stream for frame pre-processing.
+	/// 
 	/// ## C++ default parameters
 	/// * codec: Codec::H264
 	/// * fps: 25.0
@@ -395,6 +469,33 @@ pub mod cudacodec {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), codec, fps, color_format, encoder_callback.as_raw_mut_PtrOfCUDA_EncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates video writer.
+	/// 
+	/// ## Parameters
+	/// * fileName: Name of the output video file. Only raw h264 or hevc files are supported.
+	/// * frameSize: Size of the input video frames.
+	/// * codec: Codec.
+	/// * fps: Framerate of the created video stream.
+	/// * colorFormat: OpenCv color format of the frames to be encoded.
+	/// * params: Additional encoding parameters.
+	/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
+	/// * stream: Stream for frame pre-processing.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_video_writer_1] function uses the following default values for its arguments:
+	/// * encoder_callback: 0
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn create_video_writer_1_def(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, params: crate::cudacodec::CUDA_EncoderParams) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
+		extern_container_arg!(file_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), codec, fps, color_format, &params, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
@@ -772,6 +873,33 @@ pub mod cudacodec {
 			Ok(ret)
 		}
 		
+		/// Returns previously grabbed video data.
+		/// 
+		/// ## Parameters
+		/// * frame:[out] The returned data which depends on the provided idx.
+		/// * idx: Determines the returned data inside image. The returned data can be the:
+		///  - Decoded frame, idx = get(PROP_DECODED_FRAME_IDX).
+		///  - Extra data if available, idx = get(PROP_EXTRA_DATA_INDEX).
+		///  - Raw encoded data package.  To retrieve package i,  idx = get(PROP_RAW_PACKAGES_BASE_INDEX) + i with i < get(PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB)
+		/// ## Returns
+		/// `false` if no frames have been grabbed
+		/// 
+		/// The method returns data associated with the current video source since the last call to grab() or the creation of the VideoReader. If no data is present
+		/// the method returns false and the function returns an empty image.
+		/// 
+		/// ## Note
+		/// This alternative version of [retrieve] function uses the following default values for its arguments:
+		/// * idx: static_cast<size_t>(VideoReaderProps::PROP_DECODED_FRAME_IDX)
+		#[inline]
+		fn retrieve_def(&self, frame: &mut impl core::ToOutputArray) -> Result<bool> {
+			output_array_arg!(frame);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_const__OutputArrayR(self.as_raw_CUDA_VideoReader(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Returns previously grabbed encoded video data.
 		/// 
 		/// ## Parameters
@@ -841,6 +969,18 @@ pub mod cudacodec {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [get_video_reader_props] function uses the following default values for its arguments:
+		/// * property_val_in: 0
+		#[inline]
+		fn get_video_reader_props_def(&self, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val_out: &mut f64) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_VideoReader_getVideoReaderProps_const_const_VideoReaderProps_doubleR(self.as_raw_CUDA_VideoReader(), property_id, property_val_out, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Retrieves the specified property used by the VideoSource.
 		/// 
 		/// ## Parameters
@@ -887,6 +1027,29 @@ pub mod cudacodec {
 			Ok(ret)
 		}
 		
+		/// Grabs, decodes and returns the next video frame.
+		/// 
+		/// ## Parameters
+		/// * frame:[out] The video frame.
+		/// * stream: Stream for the asynchronous version.
+		/// ## Returns
+		/// `false` if no frames have been grabbed.
+		/// 
+		/// If no frames have been grabbed (there are no more frames in video file), the methods return false.
+		/// The method throws an Exception if error occurs.
+		/// 
+		/// ## Note
+		/// This alternative version of [next_frame] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn next_frame_def(&mut self, frame: &mut core::GpuMat) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Grabs the next frame from the video source.
 		/// 
 		/// ## Parameters
@@ -906,6 +1069,31 @@ pub mod cudacodec {
 		fn grab(&mut self, stream: &mut core::Stream) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_grab_StreamR(self.as_raw_mut_CUDA_VideoReader(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Grabs the next frame from the video source.
+		/// 
+		/// ## Parameters
+		/// * stream: Stream for the asynchronous version.
+		/// ## Returns
+		/// `true` (non-zero) in the case of success.
+		/// 
+		/// The method/function grabs the next frame from video file or camera and returns true (non-zero) in
+		/// the case of success.
+		/// 
+		/// The primary use of the function is for reading both the encoded and decoded video data when rawMode is enabled.  With rawMode enabled
+		/// retrieve() can be called following grab() to retrieve all the data associated with the current video source since the last call to grab() or the creation of the VideoReader.
+		/// 
+		/// ## Note
+		/// This alternative version of [grab] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn grab_def(&mut self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_VideoReader_grab(self.as_raw_mut_CUDA_VideoReader(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

@@ -3,7 +3,7 @@ pub mod videostab {
 	//! 
 	//! The video stabilization module contains a set of functions and classes that can be used to solve the
 	//! problem of video stabilization. There are a few methods implemented, most of them are described in
-	//! the papers [OF06](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
+	//! the papers [OF06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 	//! paper methods.
 	//! 
 	//! ### References
@@ -21,7 +21,7 @@ pub mod videostab {
 	//! 
 	//!          # Fast Marching Method
 	//! 
-	//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
+	//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 	//! color inpainting. The method is implemented is a flexible way and it's made public for other users.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
@@ -102,6 +102,35 @@ pub mod videostab {
 	/// ## Returns
 	/// 3x3 2D transformation matrix (32F).
 	/// 
+	/// ## Note
+	/// This alternative version of [estimate_global_motion_least_squares] function uses the following default values for its arguments:
+	/// * model: MM_AFFINE
+	/// * rmse: 0
+	#[inline]
+	pub fn estimate_global_motion_least_squares_def(points0: &mut impl core::ToInputOutputArray, points1: &mut impl core::ToInputOutputArray) -> Result<core::Mat> {
+		input_output_array_arg!(points0);
+		input_output_array_arg!(points1);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_videostab_estimateGlobalMotionLeastSquares_const__InputOutputArrayR_const__InputOutputArrayR(points0.as_raw__InputOutputArray(), points1.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Estimates best global motion between two 2D point clouds in the least-squares sense.
+	/// 
+	/// 
+	/// Note: Works in-place and changes input point arrays.
+	/// 
+	/// ## Parameters
+	/// * points0: Source set of 2D points (32F).
+	/// * points1: Destination set of 2D points (32F).
+	/// * model: Motion model (up to MM_AFFINE).
+	/// * rmse: Final root-mean-square error.
+	/// ## Returns
+	/// 3x3 2D transformation matrix (32F).
+	/// 
 	/// ## C++ default parameters
 	/// * model: MM_AFFINE
 	/// * rmse: 0
@@ -111,6 +140,34 @@ pub mod videostab {
 		input_output_array_arg!(points1);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_videostab_estimateGlobalMotionLeastSquares_const__InputOutputArrayR_const__InputOutputArrayR_int_floatX(points0.as_raw__InputOutputArray(), points1.as_raw__InputOutputArray(), model, rmse, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Estimates best global motion between two 2D point clouds robustly (using RANSAC method).
+	/// 
+	/// ## Parameters
+	/// * points0: Source set of 2D points (32F).
+	/// * points1: Destination set of 2D points (32F).
+	/// * model: Motion model. See cv::videostab::MotionModel.
+	/// * params: RANSAC method parameters. See videostab::RansacParams.
+	/// * rmse: Final root-mean-square error.
+	/// * ninliers: Final number of inliers.
+	/// 
+	/// ## Note
+	/// This alternative version of [estimate_global_motion_ransac] function uses the following default values for its arguments:
+	/// * model: MM_AFFINE
+	/// * params: RansacParams::default2dMotion(MM_AFFINE)
+	/// * rmse: 0
+	/// * ninliers: 0
+	#[inline]
+	pub fn estimate_global_motion_ransac_def(points0: &impl core::ToInputArray, points1: &impl core::ToInputArray) -> Result<core::Mat> {
+		input_array_arg!(points0);
+		input_array_arg!(points1);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_videostab_estimateGlobalMotionRansac_const__InputArrayR_const__InputArrayR(points0.as_raw__InputArray(), points1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -296,6 +353,20 @@ pub mod videostab {
 		pub fn new(method: i32, radius: f64) -> Result<crate::videostab::ColorInpainter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_ColorInpainter_ColorInpainter_int_double(method, radius, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::ColorInpainter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * method: INPAINT_TELEA
+		/// * radius: 2.
+		#[inline]
+		pub fn new_def() -> Result<crate::videostab::ColorInpainter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_ColorInpainter_ColorInpainter(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videostab::ColorInpainter::opencv_from_extern(ret) };
@@ -724,6 +795,19 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_FromFileMotionReader_estimate_const_MatR_const_MatR(self.as_raw_mut_FromFileMotionReader(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	pub struct FromFileMotionReader {
@@ -820,6 +904,18 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [set_params] function uses the following default values for its arguments:
+		/// * stdev: -1.f
+		#[inline]
+		fn set_params_def(&mut self, radius: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_GaussianMotionFilter_setParams_int(self.as_raw_mut_GaussianMotionFilter(), radius, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn stabilize(&mut self, idx: i32, motions: &core::Vector<core::Mat>, range: &core::Range) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -879,6 +975,20 @@ pub mod videostab {
 		pub fn new(radius: i32, stdev: f32) -> Result<crate::videostab::GaussianMotionFilter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_GaussianMotionFilter_GaussianMotionFilter_int_float(radius, stdev, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::GaussianMotionFilter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * radius: 15
+		/// * stdev: -1.f
+		#[inline]
+		pub fn new_def() -> Result<crate::videostab::GaussianMotionFilter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_GaussianMotionFilter_GaussianMotionFilter(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videostab::GaussianMotionFilter::opencv_from_extern(ret) };
@@ -1331,6 +1441,19 @@ pub mod videostab {
 		fn estimate(&mut self, frame0: &core::Mat, frame1: &core::Mat, ok: &mut bool) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_ImageMotionEstimatorBase_estimate_const_MatR_const_MatR_boolX(self.as_raw_mut_ImageMotionEstimatorBase(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_ImageMotionEstimatorBase_estimate_const_MatR_const_MatR(self.as_raw_mut_ImageMotionEstimatorBase(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -1805,6 +1928,19 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [estimate_mat] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_mat_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate_const_MatR_const_MatR(self.as_raw_mut_KeypointBasedMotionEstimator(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
@@ -1813,6 +1949,21 @@ pub mod videostab {
 			input_array_arg!(frame1);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate_const__InputArrayR_const__InputArrayR_boolX(self.as_raw_mut_KeypointBasedMotionEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), ok, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_def(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(frame0);
+			input_array_arg!(frame1);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate_const__InputArrayR_const__InputArrayR(self.as_raw_mut_KeypointBasedMotionEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -1936,12 +2087,38 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_estimate_const_MatR_const_MatR(self.as_raw_mut_KeypointBasedMotionEstimatorGpu(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * ok: 0
 		#[inline]
 		fn estimate_1(&mut self, frame0: &core::GpuMat, frame1: &core::GpuMat, ok: &mut bool) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_estimate_const_GpuMatR_const_GpuMatR_boolX(self.as_raw_mut_KeypointBasedMotionEstimatorGpu(), frame0.as_raw_GpuMat(), frame1.as_raw_GpuMat(), ok, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_def_1(&mut self, frame0: &core::GpuMat, frame1: &core::GpuMat) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_estimate_const_GpuMatR_const_GpuMatR(self.as_raw_mut_KeypointBasedMotionEstimatorGpu(), frame0.as_raw_GpuMat(), frame1.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -2261,6 +2438,19 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * model: MM_SIMILARITY
+		#[inline]
+		pub fn new_def() -> Result<crate::videostab::LpMotionStabilizer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_LpMotionStabilizer_LpMotionStabilizer(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::LpMotionStabilizer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { LpMotionStabilizer, crate::videostab::IMotionStabilizer, cv_videostab_LpMotionStabilizer_to_IMotionStabilizer }
@@ -2337,7 +2527,7 @@ pub mod videostab {
 	
 	impl MaskFrameSource {
 		#[inline]
-		pub fn new(source: &core::Ptr<crate::videostab::IFrameSource>) -> Result<crate::videostab::MaskFrameSource> {
+		pub fn from_base(source: &core::Ptr<crate::videostab::IFrameSource>) -> Result<crate::videostab::MaskFrameSource> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_MaskFrameSource_MaskFrameSource_const_PtrLIFrameSourceGR(source.as_raw_PtrOfIFrameSource(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2652,6 +2842,30 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+		/// Estimates global motion between two 2D point clouds.
+		/// 
+		/// ## Parameters
+		/// * points0: Source set of 2D points (32F).
+		/// * points1: Destination set of 2D points (32F).
+		/// * ok: Indicates whether motion was estimated successfully.
+		/// ## Returns
+		/// 3x3 2D transformation matrix (32F).
+		/// 
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_def(&mut self, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(points0);
+			input_array_arg!(points1);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_MotionEstimatorBase_estimate_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MotionEstimatorBase(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Base class for all global motion estimation methods.
@@ -2717,6 +2931,21 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_def(&mut self, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(points0);
+			input_array_arg!(points1);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_MotionEstimatorL1_estimate_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MotionEstimatorL1(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Describes a global 2D motion estimation method which minimizes L1 error.
@@ -2761,6 +2990,19 @@ pub mod videostab {
 		pub fn new(model: crate::videostab::MotionModel) -> Result<crate::videostab::MotionEstimatorL1> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_MotionEstimatorL1_MotionEstimatorL1_MotionModel(model, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::MotionEstimatorL1::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * model: MM_AFFINE
+		#[inline]
+		pub fn new_def() -> Result<crate::videostab::MotionEstimatorL1> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_MotionEstimatorL1_MotionEstimatorL1(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videostab::MotionEstimatorL1::opencv_from_extern(ret) };
@@ -2840,6 +3082,21 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_def(&mut self, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(points0);
+			input_array_arg!(points1);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_estimate_const__InputArrayR_const__InputArrayR(self.as_raw_mut_MotionEstimatorRansacL2(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Describes a robust RANSAC-based global 2D motion estimation method which minimizes L2 error.
@@ -2881,6 +3138,19 @@ pub mod videostab {
 		pub fn new(model: crate::videostab::MotionModel) -> Result<crate::videostab::MotionEstimatorRansacL2> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_MotionEstimatorRansacL2_MotionModel(model, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::MotionEstimatorRansacL2::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * model: MM_AFFINE
+		#[inline]
+		pub fn new_def() -> Result<crate::videostab::MotionEstimatorRansacL2> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_MotionEstimatorRansacL2(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videostab::MotionEstimatorRansacL2::opencv_from_extern(ret) };
@@ -4457,6 +4727,19 @@ pub mod videostab {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * ok: 0
+		#[inline]
+		fn estimate_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_ToFileMotionWriter_estimate_const_MatR_const_MatR(self.as_raw_mut_ToFileMotionWriter(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	pub struct ToFileMotionWriter {
@@ -4886,6 +5169,20 @@ pub mod videostab {
 			extern_container_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_videostab_VideoFileSource_VideoFileSource_const_StringR_bool(path.opencv_as_extern(), volatile_frame, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::VideoFileSource::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * volatile_frame: false
+		#[inline]
+		pub fn new_def(path: &str) -> Result<crate::videostab::VideoFileSource> {
+			extern_container_arg!(path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_VideoFileSource_VideoFileSource_const_StringR(path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videostab::VideoFileSource::opencv_from_extern(ret) };

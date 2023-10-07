@@ -180,6 +180,49 @@ pub mod cudaobjdetect {
 			Ok(ret)
 		}
 		
+		/// Detects objects of different sizes in the input image.
+		/// 
+		/// ## Parameters
+		/// * image: Matrix of type CV_8U containing an image where objects should be detected.
+		/// * objects: Buffer to store detected objects (rectangles).
+		/// * stream: CUDA stream.
+		/// 
+		/// To get final array of detected objects use CascadeClassifier::convert method.
+		/// 
+		/// ```C++
+		///    Ptr<cuda::CascadeClassifier> cascade_gpu = cuda::CascadeClassifier::create(...);
+		/// 
+		///    Mat image_cpu = imread(...)
+		///    GpuMat image_gpu(image_cpu);
+		/// 
+		///    GpuMat objbuf;
+		///    cascade_gpu->detectMultiScale(image_gpu, objbuf);
+		/// 
+		///    std::vector<Rect> faces;
+		///    cascade_gpu->convert(objbuf, faces);
+		/// 
+		///    for(int i = 0; i < detections_num; ++i)
+		///        cv::rectangle(image_cpu, faces[i], Scalar(255));
+		/// 
+		///    imshow("Faces", image_cpu);
+		/// ```
+		/// ## See also
+		/// CascadeClassifier::detectMultiScale
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_multi_scale] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn detect_multi_scale_def(&mut self, image: &impl core::ToInputArray, objects: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(objects);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_CascadeClassifier_detectMultiScale_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Converts objects array from internal representation to standard vector.
 		/// 
 		/// ## Parameters
@@ -533,6 +576,26 @@ pub mod cudaobjdetect {
 			Ok(ret)
 		}
 		
+		/// Performs object detection without a multi-scale window.
+		/// 
+		/// ## Parameters
+		/// * img: Source image. CV_8UC1 and CV_8UC4 types are supported for now.
+		/// * found_locations: Left-top corner points of detected objects boundaries.
+		/// * confidences: Optional output array for confidences.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// * confidences: NULL
+		#[inline]
+		fn detect_def(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HOG_detect_const__InputArrayR_vectorLPointGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn detect_1(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
 			input_array_arg!(img);
@@ -572,6 +635,26 @@ pub mod cudaobjdetect {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLdoubleGX(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Performs object detection with a multi-scale window.
+		/// 
+		/// ## Parameters
+		/// * img: Source image. See cuda::HOGDescriptor::detect for type limitations.
+		/// * found_locations: Detected objects boundaries.
+		/// * confidences: Optional output array for confidences.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_multi_scale] function uses the following default values for its arguments:
+		/// * confidences: NULL
+		#[inline]
+		fn detect_multi_scale_def(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HOG_detectMultiScale_const__InputArrayR_vectorLRectGR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -622,9 +705,30 @@ pub mod cudaobjdetect {
 			Ok(ret)
 		}
 		
+		/// Returns block descriptors computed for the whole image.
+		/// 
+		/// ## Parameters
+		/// * img: Source image. See cuda::HOGDescriptor::detect for type limitations.
+		/// * descriptors: 2D array of descriptors.
+		/// * stream: CUDA stream.
+		/// 
+		/// ## Note
+		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn compute_def(&mut self, img: &impl core::ToInputArray, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(img);
+			output_array_arg!(descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HOG_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_HOG(), img.as_raw__InputArray(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
-	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
+	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
 	/// 
 	/// 
 	/// Note:
@@ -685,6 +789,32 @@ pub mod cudaobjdetect {
 		pub fn create(win_size: core::Size, block_size: core::Size, block_stride: core::Size, cell_size: core::Size, nbins: i32) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_HOG>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HOG_create_Size_Size_Size_Size_int(win_size.opencv_as_extern(), block_size.opencv_as_extern(), block_stride.opencv_as_extern(), cell_size.opencv_as_extern(), nbins, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_HOG>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates the HOG descriptor and detector.
+		/// 
+		/// ## Parameters
+		/// * win_size: Detection window size. Align to block size and block stride.
+		/// * block_size: Block size in pixels. Align to cell size. Only (16,16) is supported for now.
+		/// * block_stride: Block stride. It must be a multiple of cell size.
+		/// * cell_size: Cell size. Only (8, 8) is supported for now.
+		/// * nbins: Number of bins. Only 9 bins per cell are supported for now.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * win_size: Size(64,128)
+		/// * block_size: Size(16,16)
+		/// * block_stride: Size(8,8)
+		/// * cell_size: Size(8,8)
+		/// * nbins: 9
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaobjdetect::CUDA_HOG>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HOG_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_HOG>::opencv_from_extern(ret) };

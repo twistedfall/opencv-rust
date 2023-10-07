@@ -50,7 +50,7 @@ pub mod hdf {
 	/// ```
 	/// 
 	/// 
-	/// ![Visualization of 10x10 CV_64FC2 (Hilbert matrix) using HDFView tool](https://docs.opencv.org/4.8.0/hdfview_demo.gif)
+	/// ![Visualization of 10x10 CV_64FC2 (Hilbert matrix) using HDFView tool](https://docs.opencv.org/4.8.1/hdfview_demo.gif)
 	/// 
 	/// - Text dump (3x3 Hilbert matrix) of hdf5 dataset using **h5dump** tool:
 	/// ```C++
@@ -496,6 +496,20 @@ pub mod hdf {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [dscreate] function uses the following default values for its arguments:
+		/// * compresslevel: HDF5::H5_NONE
+		/// * dims_chunks: vector<int>()
+		#[inline]
+		fn dscreate_def(&self, sizes: &core::Vector<i32>, typ: i32, dslabel: &str) -> Result<()> {
+			extern_container_arg!(dslabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_dscreate_const_const_vectorLintGR_const_int_const_StringR(self.as_raw_HDF5(), sizes.as_raw_VectorOfi32(), typ, dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Create and allocate storage for n-dimensional dataset, single or multichannel type.
 		/// ## Parameters
 		/// * n_dims: declare number of dimensions
@@ -613,6 +627,37 @@ pub mod hdf {
 			Ok(ret)
 		}
 		
+		/// Fetch dataset sizes
+		/// ## Parameters
+		/// * dslabel: specify the hdf5 dataset label to be measured.
+		/// * dims_flag: will fetch dataset dimensions on H5_GETDIMS, dataset maximum dimensions on H5_GETMAXDIMS,
+		///                  and chunk sizes on H5_GETCHUNKDIMS.
+		/// 
+		/// Returns vector object containing sizes of dataset on each dimensions.
+		/// 
+		/// 
+		/// Note: Resulting vector size will match the amount of dataset dimensions. By default H5_GETDIMS will return
+		/// actual dataset dimensions. Using H5_GETMAXDIM flag will get maximum allowed dimension which normally match
+		/// actual dataset dimension but can hold H5_UNLIMITED value if dataset was prepared in **unlimited** mode on
+		/// some of its dimension. It can be useful to check existing dataset dimensions before overwrite it as whole or subset.
+		/// Trying to write with oversized source data into dataset target will thrown exception. The H5_GETCHUNKDIMS will
+		/// return the dimension of chunk if dataset was created with chunking options otherwise returned vector size
+		/// will be zero.
+		/// 
+		/// ## Note
+		/// This alternative version of [dsgetsize] function uses the following default values for its arguments:
+		/// * dims_flag: HDF5::H5_GETDIMS
+		#[inline]
+		fn dsgetsize_def(&self, dslabel: &str) -> Result<core::Vector<i32>> {
+			extern_container_arg!(dslabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_dsgetsize_const_const_StringR(self.as_raw_HDF5(), dslabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Fetch dataset type
 		/// ## Parameters
 		/// * dslabel: specify the hdf5 dataset label to be checked.
@@ -663,6 +708,20 @@ pub mod hdf {
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_vectorLintGR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [dswrite] function uses the following default values for its arguments:
+		/// * dims_counts: vector<int>()
+		#[inline]
+		fn dswrite_def(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
+			input_array_arg!(array);
+			extern_container_arg!(dslabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -779,6 +838,20 @@ pub mod hdf {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [dsinsert] function uses the following default values for its arguments:
+		/// * dims_counts: vector<int>()
+		#[inline]
+		fn dsinsert_def(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
+			input_array_arg!(array);
+			extern_container_arg!(dslabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Insert or overwrite a Mat object into specified dataset and auto expand dataset size if **unlimited** property allows.
 		/// ## Parameters
 		/// * Array: specify Mat data array to be written.
@@ -874,6 +947,20 @@ pub mod hdf {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [dsread] function uses the following default values for its arguments:
+		/// * dims_counts: vector<int>()
+		#[inline]
+		fn dsread_def(&self, array: &mut impl core::ToOutputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
+			output_array_arg!(array);
+			extern_container_arg!(dslabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_vectorLintGR(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.opencv_as_extern(), dims_offset.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Read specific dataset from hdf5 file into Mat object.
 		/// ## Parameters
 		/// * Array: Mat container where data reads will be returned.
@@ -954,6 +1041,34 @@ pub mod hdf {
 			Ok(ret)
 		}
 		
+		/// Fetch keypoint dataset size
+		/// ## Parameters
+		/// * kplabel: specify the hdf5 dataset label to be measured.
+		/// * dims_flag: will fetch dataset dimensions on H5_GETDIMS, and dataset maximum dimensions on H5_GETMAXDIMS.
+		/// 
+		/// Returns size of keypoints dataset.
+		/// 
+		/// 
+		/// Note: Resulting size will match the amount of keypoints. By default H5_GETDIMS will return actual dataset dimension.
+		/// Using H5_GETMAXDIM flag will get maximum allowed dimension which normally match actual dataset dimension but can hold
+		/// H5_UNLIMITED value if dataset was prepared in **unlimited** mode. It can be useful to check existing dataset dimension
+		/// before overwrite it as whole or subset. Trying to write with oversized source data into dataset target will thrown
+		/// exception. The H5_GETCHUNKDIMS will return the dimension of chunk if dataset was created with chunking options otherwise
+		/// returned vector size will be zero.
+		/// 
+		/// ## Note
+		/// This alternative version of [kpgetsize] function uses the following default values for its arguments:
+		/// * dims_flag: HDF5::H5_GETDIMS
+		#[inline]
+		fn kpgetsize_def(&self, kplabel: &str) -> Result<i32> {
+			extern_container_arg!(kplabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_kpgetsize_const_const_StringR(self.as_raw_HDF5(), kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Create and allocate special storage for cv::KeyPoint dataset.
 		/// ## Parameters
 		/// * size: declare fixed number of KeyPoints
@@ -1002,6 +1117,60 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpcreate_const_const_int_const_StringR_const_int_const_int(self.as_raw_HDF5(), size, kplabel.opencv_as_extern(), compresslevel, chunks, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Create and allocate special storage for cv::KeyPoint dataset.
+		/// ## Parameters
+		/// * size: declare fixed number of KeyPoints
+		/// * kplabel: specify the hdf5 dataset label, any existing dataset with the same label will be overwritten.
+		/// * compresslevel: specify the compression level 0-9 to be used, H5_NONE is default and means no compression.
+		/// * chunks: each array member specifies chunking sizes to be used for block I/O,
+		///        H5_NONE is default and means no compression.
+		/// 
+		/// Note: If the dataset already exists an exception will be thrown. Existence of the dataset can be checked
+		/// using hlexists().
+		/// 
+		/// - See example below that creates space for 100 keypoints in the dataset:
+		/// ```C++
+		///  open hdf5 file
+		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
+		///   if ( ! h5io->hlexists( "keypoints" ) )
+		///    h5io->kpcreate( 100, "keypoints" );
+		///   else
+		///    printf("DS already created, skipping\n" );
+		/// ```
+		/// 
+		/// 
+		/// 
+		/// Note: A value of H5_UNLIMITED for **size** means **unlimited** keypoints, thus is possible to expand anytime such
+		/// dataset by adding or inserting. Presence of H5_UNLIMITED **require** to define custom chunking. No default chunking
+		/// will be defined in unlimited scenario since default size on that dimension will be zero, and will grow once dataset
+		/// is written. Writing into dataset that have H5_UNLIMITED on some of its dimension requires kpinsert() that allow
+		/// growth on unlimited dimension instead of kpwrite() that allows to write only in predefined data space.
+		/// 
+		/// - See example below that creates unlimited space for keypoints chunking size of 100 but no compression:
+		/// ```C++
+		///  open hdf5 file
+		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
+		///   if ( ! h5io->hlexists( "keypoints" ) )
+		///    h5io->kpcreate( cv::hdf::HDF5::H5_UNLIMITED, "keypoints", cv::hdf::HDF5::H5_NONE, 100 );
+		///   else
+		///    printf("DS already created, skipping\n" );
+		/// ```
+		/// 
+		/// 
+		/// ## Note
+		/// This alternative version of [kpcreate] function uses the following default values for its arguments:
+		/// * compresslevel: H5_NONE
+		/// * chunks: H5_NONE
+		#[inline]
+		fn kpcreate_def(&self, size: i32, kplabel: &str) -> Result<()> {
+			extern_container_arg!(kplabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_kpcreate_const_const_int_const_StringR(self.as_raw_HDF5(), size, kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1074,6 +1243,74 @@ pub mod hdf {
 			Ok(ret)
 		}
 		
+		/// Write or overwrite list of KeyPoint into specified dataset of hdf5 file.
+		/// ## Parameters
+		/// * keypoints: specify keypoints data list to be written.
+		/// * kplabel: specify the target hdf5 dataset label.
+		/// * offset: specify the offset location on dataset from where keypoints will be (over)written into dataset.
+		/// * counts: specify the amount of keypoints that will be written into dataset.
+		/// 
+		/// Writes vector<KeyPoint> object into targeted dataset.
+		/// 
+		/// 
+		/// Note: If dataset is not created and does not exist it will be created **automatically**. It is thread safe but
+		/// it is recommended that writes to happen over separate non overlapping regions. Multiple datasets can be written
+		/// inside single hdf5 file.
+		/// 
+		/// - Example below writes a 100 keypoints into a dataset. No dataset precreation required. If routine is called multiple
+		/// times dataset will be just overwritten:
+		/// ```C++
+		///  generate 100 dummy keypoints
+		///   std::vector<cv::KeyPoint> keypoints;
+		///   for(int i = 0; i < 100; i++)
+		///    keypoints.push_back( cv::KeyPoint(i, -i, 1, -1, 0, 0, -1) );
+		///  open / autocreate hdf5 file
+		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
+		///  write / overwrite dataset
+		///   h5io->kpwrite( keypoints, "keypoints" );
+		///  release
+		///   h5io->close();
+		/// ```
+		/// 
+		/// 
+		/// - Example below uses smaller set of 50 keypoints and writes into compressed space of 100 keypoints optimised by 10 chunks.
+		/// Same keypoint set is written three times, first into first half (0->50) and at second half (50->75) then into remaining slots
+		/// (75->99) of data space using offset and count parameters to settle the window for write access.If routine is called multiple times
+		/// dataset will be just overwritten:
+		/// ```C++
+		///  generate 50 dummy keypoints
+		///   std::vector<cv::KeyPoint> keypoints;
+		///   for(int i = 0; i < 50; i++)
+		///    keypoints.push_back( cv::KeyPoint(i, -i, 1, -1, 0, 0, -1) );
+		///  open / autocreate hdf5 file
+		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
+		///  create maximum compressed space of size 100 with chunk size 10
+		///   h5io->kpcreate( 100, "keypoints", 9, 10 );
+		///  write into first half
+		///   h5io->kpwrite( keypoints, "keypoints", 0 );
+		///  write first 25 keypoints into second half
+		///   h5io->kpwrite( keypoints, "keypoints", 50, 25 );
+		///  write first 25 keypoints into remained space of second half
+		///   h5io->kpwrite( keypoints, "keypoints", 75, 25 );
+		///  release
+		///   h5io->close();
+		/// ```
+		/// 
+		/// 
+		/// ## Note
+		/// This alternative version of [kpwrite] function uses the following default values for its arguments:
+		/// * offset: H5_NONE
+		/// * counts: H5_NONE
+		#[inline]
+		fn kpwrite_def(&self, keypoints: core::Vector<core::KeyPoint>, kplabel: &str) -> Result<()> {
+			extern_container_arg!(kplabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_kpwrite_const_const_vectorLKeyPointG_const_StringR(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Insert or overwrite list of KeyPoint into specified dataset and autoexpand dataset size if **unlimited** property allows.
 		/// ## Parameters
 		/// * keypoints: specify keypoints data list to be written.
@@ -1117,6 +1354,55 @@ pub mod hdf {
 			extern_container_arg!(kplabel);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hdf_HDF5_kpinsert_const_const_vectorLKeyPointG_const_StringR_const_int_const_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.opencv_as_extern(), offset, counts, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Insert or overwrite list of KeyPoint into specified dataset and autoexpand dataset size if **unlimited** property allows.
+		/// ## Parameters
+		/// * keypoints: specify keypoints data list to be written.
+		/// * kplabel: specify the target hdf5 dataset label.
+		/// * offset: specify the offset location on dataset from where keypoints will be (over)written into dataset.
+		/// * counts: specify the amount of keypoints that will be written into dataset.
+		/// 
+		/// Writes vector<KeyPoint> object into targeted dataset and **autoexpand** dataset dimension if allowed.
+		/// 
+		/// 
+		/// Note: Unlike kpwrite(), datasets are **not** created **automatically**. If dsinsert() happen over outer region of dataset
+		/// and dataset has been created in **unlimited** mode then dataset is expanded, otherwise exception is thrown. To create datasets
+		/// with **unlimited** property see kpcreate() and the optional H5_UNLIMITED flag at creation time. It is not thread safe over same
+		/// dataset but multiple datasets can be merged inside single hdf5 file.
+		/// 
+		/// - Example below creates **unlimited** space for keypoints storage, and inserts a list of 10 keypoints ten times into that space.
+		/// Final dataset will have 100 keypoints. Chunks size is 10 just optimized against list of keypoints. If routine is called multiple
+		/// times dataset will be just overwritten:
+		/// ```C++
+		///  generate 10 dummy keypoints
+		///   std::vector<cv::KeyPoint> keypoints;
+		///   for(int i = 0; i < 10; i++)
+		///    keypoints.push_back( cv::KeyPoint(i, -i, 1, -1, 0, 0, -1) );
+		///  open / autocreate hdf5 file
+		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
+		///  create unlimited size space with chunk size of 10
+		///   h5io->kpcreate( cv::hdf::HDF5::H5_UNLIMITED, "keypoints", -1, 10 );
+		///  insert 10 times same 10 keypoints
+		///   for(int i = 0; i < 10; i++)
+		///    h5io->kpinsert( keypoints, "keypoints", i * 10 );
+		///  release
+		///   h5io->close();
+		/// ```
+		/// 
+		/// 
+		/// ## Note
+		/// This alternative version of [kpinsert] function uses the following default values for its arguments:
+		/// * offset: H5_NONE
+		/// * counts: H5_NONE
+		#[inline]
+		fn kpinsert_def(&self, keypoints: core::Vector<core::KeyPoint>, kplabel: &str) -> Result<()> {
+			extern_container_arg!(kplabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_kpinsert_const_const_vectorLKeyPointG_const_StringR(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1174,6 +1460,59 @@ pub mod hdf {
 			Ok(ret)
 		}
 		
+		/// Read specific keypoint dataset from hdf5 file into vector<KeyPoint> object.
+		/// ## Parameters
+		/// * keypoints: vector<KeyPoint> container where data reads will be returned.
+		/// * kplabel: specify the source hdf5 dataset label.
+		/// * offset: specify the offset location over dataset from where read starts.
+		/// * counts: specify the amount of keypoints from dataset to read.
+		/// 
+		/// Reads out vector<KeyPoint> object reflecting the stored dataset.
+		/// 
+		/// 
+		/// Note: If hdf5 file does not exist an exception will be thrown. Use hlexists() to check dataset presence.
+		/// It is thread safe.
+		/// 
+		/// - Example below reads a dataset containing keypoints starting with second entry:
+		/// ```C++
+		///  open hdf5 file
+		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
+		///  blank KeyPoint container
+		///   std::vector<cv::KeyPoint> keypoints;
+		///  read keypoints starting second one
+		///   h5io->kpread( keypoints, "keypoints", 1 );
+		///  release
+		///   h5io->close();
+		/// ```
+		/// 
+		/// 
+		/// - Example below perform read of 3 keypoints from second entry.
+		/// ```C++
+		///  open hdf5 file
+		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
+		///  blank KeyPoint container
+		///   std::vector<cv::KeyPoint> keypoints;
+		///  read three keypoints starting second one
+		///   h5io->kpread( keypoints, "keypoints", 1, 3 );
+		///  release
+		///   h5io->close();
+		/// ```
+		/// 
+		/// 
+		/// ## Note
+		/// This alternative version of [kpread] function uses the following default values for its arguments:
+		/// * offset: H5_NONE
+		/// * counts: H5_NONE
+		#[inline]
+		fn kpread_def(&self, keypoints: &mut core::Vector<core::KeyPoint>, kplabel: &str) -> Result<()> {
+			extern_container_arg!(kplabel);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hdf_HDF5_kpread_const_vectorLKeyPointGR_const_StringR(self.as_raw_HDF5(), keypoints.as_raw_mut_VectorOfKeyPoint(), kplabel.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::hdf::HDF5]
@@ -1203,11 +1542,11 @@ pub mod hdf {
 		/// 
 		/// - In this example, Group1 will have one subgroup called SubGroup1:
 		/// 
-		///  [create_group](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/create_groups.cpp#L1)
+		///  [create_group](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/create_groups.cpp#L1)
 		/// 
 		///  The corresponding result visualized using the HDFView tool is
 		/// 
-		///  ![Visualization of groups using the HDFView tool](https://docs.opencv.org/4.8.0/create_groups.png)
+		///  ![Visualization of groups using the HDFView tool](https://docs.opencv.org/4.8.1/create_groups.png)
 		/// 
 		/// 
 		/// Note: When a dataset is created with dscreate() or kpcreate(), it can be created within a group by specifying the
@@ -1250,7 +1589,7 @@ pub mod hdf {
 		/// 
 		/// The following example demonstrates how to write an attribute of type cv::String:
 		/// 
-		///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/read_write_attributes.cpp#L1)
+		///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/read_write_attributes.cpp#L1)
 		/// 
 		/// 
 		/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
@@ -1276,7 +1615,7 @@ pub mod hdf {
 		/// 
 		/// The following example demonstrates how to read an attribute of type cv::String:
 		/// 
-		///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/read_write_attributes.cpp#L1)
+		///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/read_write_attributes.cpp#L1)
 		/// 
 		/// 
 		/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()
@@ -1301,7 +1640,7 @@ pub mod hdf {
 		/// 
 		/// The following example demonstrates how to write an attribute of type cv::String:
 		/// 
-		///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/read_write_attributes.cpp#L1)
+		///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/read_write_attributes.cpp#L1)
 		/// 
 		/// 
 		/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
@@ -1329,7 +1668,7 @@ pub mod hdf {
 		/// 
 		/// The following example demonstrates how to read an attribute of type cv::String:
 		/// 
-		///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/read_write_attributes.cpp#L1)
+		///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/read_write_attributes.cpp#L1)
 		/// 
 		/// 
 		/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()
@@ -1356,7 +1695,7 @@ pub mod hdf {
 		/// 
 		/// The following example demonstrates how to write an attribute of type cv::String:
 		/// 
-		///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/read_write_attributes.cpp#L1)
+		///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/read_write_attributes.cpp#L1)
 		/// 
 		/// 
 		/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
@@ -1385,7 +1724,7 @@ pub mod hdf {
 		/// 
 		/// The following example demonstrates how to read an attribute of type cv::String:
 		/// 
-		///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/read_write_attributes.cpp#L1)
+		///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/read_write_attributes.cpp#L1)
 		/// 
 		/// 
 		/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()

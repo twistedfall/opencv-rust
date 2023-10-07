@@ -133,6 +133,37 @@ pub mod cudafeatures2d {
 		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
 		/// mask.at\<uchar\>(i,j) is non-zero.
 		/// 
+		/// ## Note
+		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		#[inline]
+		fn match__def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_match_const__InputArrayR_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Finds the best match for each descriptor from a query set (blocking version).
+		/// 
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches. If a query descriptor is masked out in mask , no match is added for this
+		/// descriptor. So, matches size may be smaller than the query descriptors count.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// 
+		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
+		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
+		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
+		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
+		/// mask.at\<uchar\>(i,j) is non-zero.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// ## C++ default parameters
@@ -142,6 +173,21 @@ pub mod cudafeatures2d {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR_const_vectorLGpuMatGR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), masks.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// * masks: std::vector<GpuMat>()
+		#[inline]
+		fn match__def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -199,6 +245,40 @@ pub mod cudafeatures2d {
 		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
 		/// mask.at\<uchar\>(i,j) is non-zero.
 		/// 
+		/// ## Note
+		/// This alternative version of [match_async] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn match_async_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			output_array_arg!(matches);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_matchAsync_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Finds the best match for each descriptor from a query set (asynchronous version).
+		/// 
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches array stored in GPU memory. Internal representation is not defined.
+		/// Use DescriptorMatcher::matchConvert method to retrieve results in standard representation.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * stream: CUDA stream.
+		/// 
+		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
+		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
+		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
+		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
+		/// mask.at\<uchar\>(i,j) is non-zero.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// ## C++ default parameters
@@ -210,6 +290,23 @@ pub mod cudafeatures2d {
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_matchAsync_const__InputArrayR_const__OutputArrayR_const_vectorLGpuMatGR_StreamR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), masks.as_raw_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [match_async] function uses the following default values for its arguments:
+		/// * masks: std::vector<GpuMat>()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn match_async_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			output_array_arg!(matches);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_matchAsync_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -286,6 +383,40 @@ pub mod cudafeatures2d {
 		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
 		/// for the details about query and train descriptors.
 		/// 
+		/// ## Note
+		/// This alternative version of [knn_match] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		/// * compact_result: false
+		#[inline]
+		fn knn_match_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatch_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Finds the k best matches for each descriptor from a query set (blocking version).
+		/// 
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches. Each matches[i] is k or less matches for the same query descriptor.
+		/// * k: Count of best matches found per each query descriptor or less if a query descriptor has
+		/// less than k possible matches in total.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		/// 
+		/// These extended variants of DescriptorMatcher::match methods find several best matches for each query
+		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
+		/// for the details about query and train descriptors.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// ## C++ default parameters
@@ -296,6 +427,22 @@ pub mod cudafeatures2d {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int_const_vectorLGpuMatGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, masks.as_raw_VectorOfGpuMat(), compact_result, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [knn_match] function uses the following default values for its arguments:
+		/// * masks: std::vector<GpuMat>()
+		/// * compact_result: false
+		#[inline]
+		fn knn_match_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -353,6 +500,40 @@ pub mod cudafeatures2d {
 		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::matchAsync
 		/// for the details about query and train descriptors.
 		/// 
+		/// ## Note
+		/// This alternative version of [knn_match_async] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn knn_match_async_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, k: i32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			output_array_arg!(matches);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchAsync_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), k, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Finds the k best matches for each descriptor from a query set (asynchronous version).
+		/// 
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches array stored in GPU memory. Internal representation is not defined.
+		/// Use DescriptorMatcher::knnMatchConvert method to retrieve results in standard representation.
+		/// * k: Count of best matches found per each query descriptor or less if a query descriptor has
+		/// less than k possible matches in total.
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * stream: CUDA stream.
+		/// 
+		/// These extended variants of DescriptorMatcher::matchAsync methods find several best matches for each query
+		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::matchAsync
+		/// for the details about query and train descriptors.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// ## C++ default parameters
@@ -364,6 +545,23 @@ pub mod cudafeatures2d {
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchAsync_const__InputArrayR_const__OutputArrayR_int_const_vectorLGpuMatGR_StreamR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), k, masks.as_raw_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [knn_match_async] function uses the following default values for its arguments:
+		/// * masks: std::vector<GpuMat>()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn knn_match_async_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, k: i32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			output_array_arg!(matches);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchAsync_const__InputArrayR_const__OutputArrayR_int(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), k, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -388,6 +586,31 @@ pub mod cudafeatures2d {
 			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), compact_result, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Converts matches array from internal representation to standard matches vector.
+		/// 
+		/// The method is supposed to be used with DescriptorMatcher::knnMatchAsync to get final result.
+		/// Call this method only after DescriptorMatcher::knnMatchAsync is completed (ie. after synchronization).
+		/// 
+		/// ## Parameters
+		/// * gpu_matches: Matches, returned from DescriptorMatcher::knnMatchAsync.
+		/// * matches: Vector of DMatch objects.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		/// 
+		/// ## Note
+		/// This alternative version of [knn_match_convert] function uses the following default values for its arguments:
+		/// * compact_result: false
+		#[inline]
+		fn knn_match_convert_def(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>) -> Result<()> {
+			input_array_arg!(gpu_matches);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -448,6 +671,41 @@ pub mod cudafeatures2d {
 		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
 		/// returned in the distance increasing order.
 		/// 
+		/// ## Note
+		/// This alternative version of [radius_match] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		/// * compact_result: false
+		#[inline]
+		fn radius_match_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatch_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// For each query descriptor, finds the training descriptors not farther than the specified distance (blocking version).
+		/// 
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Found matches.
+		/// * maxDistance: Threshold for the distance between matched descriptors. Distance means here
+		/// metric distance (e.g. Hamming distance), not the distance between coordinates (which is measured
+		/// in Pixels)!
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		/// 
+		/// For each query descriptor, the methods find such training descriptors that the distance between the
+		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
+		/// returned in the distance increasing order.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// ## C++ default parameters
@@ -458,6 +716,22 @@ pub mod cudafeatures2d {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float_const_vectorLGpuMatGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, masks.as_raw_VectorOfGpuMat(), compact_result, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [radius_match] function uses the following default values for its arguments:
+		/// * masks: std::vector<GpuMat>()
+		/// * compact_result: false
+		#[inline]
+		fn radius_match_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -517,6 +791,41 @@ pub mod cudafeatures2d {
 		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
 		/// returned in the distance increasing order.
 		/// 
+		/// ## Note
+		/// This alternative version of [radius_match_async] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn radius_match_async_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, max_distance: f32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			input_array_arg!(train_descriptors);
+			output_array_arg!(matches);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchAsync_const__InputArrayR_const__InputArrayR_const__OutputArrayR_float(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), max_distance, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// For each query descriptor, finds the training descriptors not farther than the specified distance (asynchronous version).
+		/// 
+		/// ## Parameters
+		/// * queryDescriptors: Query set of descriptors.
+		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
+		/// collection stored in the class object.
+		/// * matches: Matches array stored in GPU memory. Internal representation is not defined.
+		/// Use DescriptorMatcher::radiusMatchConvert method to retrieve results in standard representation.
+		/// * maxDistance: Threshold for the distance between matched descriptors. Distance means here
+		/// metric distance (e.g. Hamming distance), not the distance between coordinates (which is measured
+		/// in Pixels)!
+		/// * mask: Mask specifying permissible matches between an input query and train matrices of
+		/// descriptors.
+		/// * stream: CUDA stream.
+		/// 
+		/// For each query descriptor, the methods find such training descriptors that the distance between the
+		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
+		/// returned in the distance increasing order.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// ## C++ default parameters
@@ -528,6 +837,23 @@ pub mod cudafeatures2d {
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchAsync_const__InputArrayR_const__OutputArrayR_float_const_vectorLGpuMatGR_StreamR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), max_distance, masks.as_raw_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [radius_match_async] function uses the following default values for its arguments:
+		/// * masks: std::vector<GpuMat>()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn radius_match_async_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, max_distance: f32) -> Result<()> {
+			input_array_arg!(query_descriptors);
+			output_array_arg!(matches);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchAsync_const__InputArrayR_const__OutputArrayR_float(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw__OutputArray(), max_distance, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -552,6 +878,31 @@ pub mod cudafeatures2d {
 			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), compact_result, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Converts matches array from internal representation to standard matches vector.
+		/// 
+		/// The method is supposed to be used with DescriptorMatcher::radiusMatchAsync to get final result.
+		/// Call this method only after DescriptorMatcher::radiusMatchAsync is completed (ie. after synchronization).
+		/// 
+		/// ## Parameters
+		/// * gpu_matches: Matches, returned from DescriptorMatcher::radiusMatchAsync.
+		/// * matches: Vector of DMatch objects.
+		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
+		/// 
+		/// ## Note
+		/// This alternative version of [radius_match_convert] function uses the following default values for its arguments:
+		/// * compact_result: false
+		#[inline]
+		fn radius_match_convert_def(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>) -> Result<()> {
+			input_array_arg!(gpu_matches);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -612,6 +963,30 @@ pub mod cudafeatures2d {
 		pub fn create_bf_matcher(norm_type: i32) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_createBFMatcher_int(norm_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_DescriptorMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Brute-force descriptor matcher.
+		/// 
+		/// For each descriptor in the first set, this matcher finds the closest descriptor in the second set
+		/// by trying each one. This descriptor matcher supports masking permissible matches of descriptor
+		/// sets.
+		/// 
+		/// ## Parameters
+		/// * normType: One of NORM_L1, NORM_L2, NORM_HAMMING. L1 and L2 norms are
+		/// preferable choices for SIFT and SURF descriptors, NORM_HAMMING should be used with ORB, BRISK and
+		/// BRIEF).
+		/// 
+		/// ## Note
+		/// This alternative version of [create_bf_matcher] function uses the following default values for its arguments:
+		/// * norm_type: cv::NORM_L2
+		#[inline]
+		pub fn create_bf_matcher_def() -> Result<core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DescriptorMatcher_createBFMatcher(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_DescriptorMatcher>::opencv_from_extern(ret) };
@@ -737,6 +1112,22 @@ pub mod cudafeatures2d {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * threshold: 10
+		/// * nonmax_suppression: true
+		/// * typ: cv::FastFeatureDetector::TYPE_9_16
+		/// * max_npoints: 5000
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_FastFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_FastFeatureDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { CUDA_FastFeatureDetector, core::Algorithm, cv_cuda_FastFeatureDetector_to_Algorithm }
@@ -787,6 +1178,30 @@ pub mod cudafeatures2d {
 			Ok(ret)
 		}
 		
+		/// Detects keypoints in an image.
+		/// 
+		/// ## Parameters
+		/// * image: Image.
+		/// * keypoints: The detected keypoints.
+		/// * mask: Mask specifying where to look for keypoints (optional). It must be a 8-bit integer
+		/// matrix with non-zero values in the region of interest.
+		/// * stream: CUDA stream.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_async] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn detect_async_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(keypoints);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Feature2DAsync_detectAsync_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_Feature2DAsync(), image.as_raw__InputArray(), keypoints.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Computes the descriptors for a set of keypoints detected in an image.
 		/// 
 		/// ## Parameters
@@ -809,6 +1224,29 @@ pub mod cudafeatures2d {
 			Ok(ret)
 		}
 		
+		/// Computes the descriptors for a set of keypoints detected in an image.
+		/// 
+		/// ## Parameters
+		/// * image: Image.
+		/// * keypoints: Input collection of keypoints.
+		/// * descriptors: Computed descriptors. Row j is the descriptor for j-th keypoint.
+		/// * stream: CUDA stream.
+		/// 
+		/// ## Note
+		/// This alternative version of [compute_async] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn compute_async_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(keypoints);
+			output_array_arg!(descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Feature2DAsync_computeAsync_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_Feature2DAsync(), image.as_raw__InputArray(), keypoints.as_raw__OutputArray(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Detects keypoints and computes the descriptors.
 		/// 
 		/// ## C++ default parameters
@@ -822,6 +1260,25 @@ pub mod cudafeatures2d {
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Feature2DAsync_detectAndComputeAsync_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(self.as_raw_mut_CUDA_Feature2DAsync(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw__OutputArray(), descriptors.as_raw__OutputArray(), use_provided_keypoints, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Detects keypoints and computes the descriptors.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_and_compute_async] function uses the following default values for its arguments:
+		/// * use_provided_keypoints: false
+		/// * stream: Stream::Null()
+		#[inline]
+		fn detect_and_compute_async_def(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
+			output_array_arg!(keypoints);
+			output_array_arg!(descriptors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Feature2DAsync_detectAndComputeAsync_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_Feature2DAsync(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw__OutputArray(), descriptors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1165,6 +1622,28 @@ pub mod cudafeatures2d {
 		pub fn create(nfeatures: i32, scale_factor: f32, nlevels: i32, edge_threshold: i32, first_level: i32, wta_k: i32, score_type: i32, patch_size: i32, fast_threshold: i32, blur_for_descriptor: bool) -> Result<core::Ptr<crate::cudafeatures2d::CUDA_ORB>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_ORB_create_int_float_int_int_int_int_int_int_int_bool(nfeatures, scale_factor, nlevels, edge_threshold, first_level, wta_k, score_type, patch_size, fast_threshold, blur_for_descriptor, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_ORB>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * nfeatures: 500
+		/// * scale_factor: 1.2f
+		/// * nlevels: 8
+		/// * edge_threshold: 31
+		/// * first_level: 0
+		/// * wta_k: 2
+		/// * score_type: cv::ORB::HARRIS_SCORE
+		/// * patch_size: 31
+		/// * fast_threshold: 20
+		/// * blur_for_descriptor: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudafeatures2d::CUDA_ORB>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_ORB_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_ORB>::opencv_from_extern(ret) };

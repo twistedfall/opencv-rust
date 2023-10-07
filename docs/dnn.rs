@@ -178,6 +178,19 @@ pub mod dnn {
 	/// **Deprecated**: Use getLayerId() with int result.
 	#[deprecated = "Use getLayerId() with int result."]
 	pub type Net_LayerId = crate::dnn::DictValue;
+	/// ## Note
+	/// This alternative version of [nms_boxes_batched_1] function uses the following default values for its arguments:
+	/// * eta: 1.f
+	/// * top_k: 0
+	#[inline]
+	pub fn nms_boxes_batched_1_def(bboxes: &core::Vector<core::Rect2d>, scores: &core::Vector<f32>, class_ids: &core::Vector<i32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector<i32>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_NMSBoxesBatched_const_vectorLRect2dGR_const_vectorLfloatGR_const_vectorLintGR_const_float_const_float_vectorLintGR(bboxes.as_raw_VectorOfRect2d(), scores.as_raw_VectorOff32(), class_ids.as_raw_VectorOfi32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * eta: 1.f
 	/// * top_k: 0
@@ -185,6 +198,31 @@ pub mod dnn {
 	pub fn nms_boxes_batched_1(bboxes: &core::Vector<core::Rect2d>, scores: &core::Vector<f32>, class_ids: &core::Vector<i32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector<i32>, eta: f32, top_k: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_NMSBoxesBatched_const_vectorLRect2dGR_const_vectorLfloatGR_const_vectorLintGR_const_float_const_float_vectorLintGR_const_float_const_int(bboxes.as_raw_VectorOfRect2d(), scores.as_raw_VectorOff32(), class_ids.as_raw_VectorOfi32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), eta, top_k, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs batched non maximum suppression on given boxes and corresponding scores across different classes.
+	/// 
+	/// ## Parameters
+	/// * bboxes: a set of bounding boxes to apply NMS.
+	/// * scores: a set of corresponding confidences.
+	/// * class_ids: a set of corresponding class ids. Ids are integer and usually start from 0.
+	/// * score_threshold: a threshold used to filter boxes by score.
+	/// * nms_threshold: a threshold used in non maximum suppression.
+	/// * indices: the kept indices of bboxes after NMS.
+	/// * eta: a coefficient in adaptive threshold formula: ![inline formula](https://latex.codecogs.com/png.latex?nms%5C%5Fthreshold%5F%7Bi%2B1%7D%3Deta%5Ccdot%20nms%5C%5Fthreshold%5Fi).
+	/// * top_k: if `>0`, keep at most @p top_k picked indices.
+	/// 
+	/// ## Note
+	/// This alternative version of [nms_boxes_batched] function uses the following default values for its arguments:
+	/// * eta: 1.f
+	/// * top_k: 0
+	#[inline]
+	pub fn nms_boxes_batched_def(bboxes: &core::Vector<core::Rect>, scores: &core::Vector<f32>, class_ids: &core::Vector<i32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector<i32>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_NMSBoxesBatched_const_vectorLRectGR_const_vectorLfloatGR_const_vectorLintGR_const_float_const_float_vectorLintGR(bboxes.as_raw_VectorOfRect(), scores.as_raw_VectorOff32(), class_ids.as_raw_VectorOfi32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -214,6 +252,19 @@ pub mod dnn {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [nms_boxes_f64] function uses the following default values for its arguments:
+	/// * eta: 1.f
+	/// * top_k: 0
+	#[inline]
+	pub fn nms_boxes_f64_def(bboxes: &core::Vector<core::Rect2d>, scores: &core::Vector<f32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector<i32>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_NMSBoxes_const_vectorLRect2dGR_const_vectorLfloatGR_const_float_const_float_vectorLintGR(bboxes.as_raw_VectorOfRect2d(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * eta: 1.f
 	/// * top_k: 0
@@ -221,6 +272,30 @@ pub mod dnn {
 	pub fn nms_boxes_f64(bboxes: &core::Vector<core::Rect2d>, scores: &core::Vector<f32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector<i32>, eta: f32, top_k: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_NMSBoxes_const_vectorLRect2dGR_const_vectorLfloatGR_const_float_const_float_vectorLintGR_const_float_const_int(bboxes.as_raw_VectorOfRect2d(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), eta, top_k, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs non maximum suppression given boxes and corresponding scores.
+	/// 
+	/// ## Parameters
+	/// * bboxes: a set of bounding boxes to apply NMS.
+	/// * scores: a set of corresponding confidences.
+	/// * score_threshold: a threshold used to filter boxes by score.
+	/// * nms_threshold: a threshold used in non maximum suppression.
+	/// * indices: the kept indices of bboxes after NMS.
+	/// * eta: a coefficient in adaptive threshold formula: ![inline formula](https://latex.codecogs.com/png.latex?nms%5C%5Fthreshold%5F%7Bi%2B1%7D%3Deta%5Ccdot%20nms%5C%5Fthreshold%5Fi).
+	/// * top_k: if `>0`, keep at most @p top_k picked indices.
+	/// 
+	/// ## Note
+	/// This alternative version of [nms_boxes] function uses the following default values for its arguments:
+	/// * eta: 1.f
+	/// * top_k: 0
+	#[inline]
+	pub fn nms_boxes_def(bboxes: &core::Vector<core::Rect>, scores: &core::Vector<f32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector<i32>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_NMSBoxes_const_vectorLRectGR_const_vectorLfloatGR_const_float_const_float_vectorLintGR(bboxes.as_raw_VectorOfRect(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -249,6 +324,19 @@ pub mod dnn {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [nms_boxes_rotated] function uses the following default values for its arguments:
+	/// * eta: 1.f
+	/// * top_k: 0
+	#[inline]
+	pub fn nms_boxes_rotated_def(bboxes: &core::Vector<core::RotatedRect>, scores: &core::Vector<f32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector<i32>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_NMSBoxes_const_vectorLRotatedRectGR_const_vectorLfloatGR_const_float_const_float_vectorLintGR(bboxes.as_raw_VectorOfRotatedRect(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * eta: 1.f
 	/// * top_k: 0
@@ -258,6 +346,31 @@ pub mod dnn {
 		unsafe { sys::cv_dnn_NMSBoxes_const_vectorLRotatedRectGR_const_vectorLfloatGR_const_float_const_float_vectorLintGR_const_float_const_int(bboxes.as_raw_VectorOfRotatedRect(), scores.as_raw_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), eta, top_k, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Creates 4-dimensional blob from image with given params.
+	/// 
+	/// @details This function is an extension of [blobFromImage] to meet more image preprocess needs.
+	/// Given input image and preprocessing parameters, and function outputs the blob.
+	/// 
+	/// ## Parameters
+	/// * image: input image (all with 1-, 3- or 4-channels).
+	/// * param: struct of Image2BlobParams, contains all parameters needed by processing of image to blob.
+	/// ## Returns
+	/// 4-dimensional Mat.
+	/// 
+	/// ## Note
+	/// This alternative version of [blob_from_image_with_params] function uses the following default values for its arguments:
+	/// * param: Image2BlobParams()
+	#[inline]
+	pub fn blob_from_image_with_params_def(image: &impl core::ToInputArray) -> Result<core::Mat> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImageWithParams_const__InputArrayR(image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -285,6 +398,22 @@ pub mod dnn {
 		Ok(ret)
 	}
 	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [blob_from_image_with_params_1] function uses the following default values for its arguments:
+	/// * param: Image2BlobParams()
+	#[inline]
+	pub fn blob_from_image_with_params_1_def(image: &impl core::ToInputArray, blob: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(blob);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImageWithParams_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), blob.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Creates 4-dimensional blob from image with given params.
 	/// 
 	/// @details This function is an extension of [blobFromImage] to meet more image preprocess needs.
@@ -306,6 +435,70 @@ pub mod dnn {
 		output_array_arg!(blob);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_blobFromImageWithParams_const__InputArrayR_const__OutputArrayR_const_Image2BlobParamsR(image.as_raw__InputArray(), blob.as_raw__OutputArray(), &param, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Creates 4-dimensional blob from image. Optionally resizes and crops @p image from center,
+	///  subtract @p mean values, scales values by @p scalefactor, swap Blue and Red channels.
+	/// ## Parameters
+	/// * image: input image (with 1-, 3- or 4-channels).
+	/// * scalefactor: multiplier for @p images values.
+	/// * size: spatial size for output image
+	/// * mean: scalar with mean values which are subtracted from channels. Values are intended
+	///  to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.
+	/// * swapRB: flag which indicates that swap first and last channels
+	///  in 3-channel image is necessary.
+	/// * crop: flag which indicates whether image will be cropped after resize or not
+	/// * ddepth: Depth of output blob. Choose CV_32F or CV_8U.
+	///  @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
+	///  dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
+	///  If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
+	/// ## Returns
+	/// 4-dimensional Mat with NCHW dimensions order.
+	/// 
+	/// 
+	/// Note:
+	/// The order and usage of `scalefactor` and `mean` are (input - mean) * scalefactor.
+	/// 
+	/// ## Note
+	/// This alternative version of [blob_from_image] function uses the following default values for its arguments:
+	/// * scalefactor: 1.0
+	/// * size: Size()
+	/// * mean: Scalar()
+	/// * swap_rb: false
+	/// * crop: false
+	/// * ddepth: CV_32F
+	#[inline]
+	pub fn blob_from_image_def(image: &impl core::ToInputArray) -> Result<core::Mat> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImage_const__InputArrayR(image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates 4-dimensional blob from image.
+	/// @details This is an overloaded member function, provided for convenience.
+	///          It differs from the above function only in what argument(s) it accepts.
+	/// 
+	/// ## Note
+	/// This alternative version of [blob_from_image_to] function uses the following default values for its arguments:
+	/// * scalefactor: 1.0
+	/// * size: Size()
+	/// * mean: Scalar()
+	/// * swap_rb: false
+	/// * crop: false
+	/// * ddepth: CV_32F
+	#[inline]
+	pub fn blob_from_image_to_def(image: &impl core::ToInputArray, blob: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(blob);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImage_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), blob.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -384,6 +577,31 @@ pub mod dnn {
 	/// ## Returns
 	/// 4-dimensional Mat.
 	/// 
+	/// ## Note
+	/// This alternative version of [blob_from_images_with_params] function uses the following default values for its arguments:
+	/// * param: Image2BlobParams()
+	#[inline]
+	pub fn blob_from_images_with_params_def(images: &impl core::ToInputArray) -> Result<core::Mat> {
+		input_array_arg!(images);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImagesWithParams_const__InputArrayR(images.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates 4-dimensional blob from series of images with given params.
+	/// 
+	/// @details This function is an extension of [blobFromImages] to meet more image preprocess needs.
+	/// Given input image and preprocessing parameters, and function outputs the blob.
+	/// 
+	/// ## Parameters
+	/// * images: input image (all with 1-, 3- or 4-channels).
+	/// * param: struct of Image2BlobParams, contains all parameters needed by processing of image to blob.
+	/// ## Returns
+	/// 4-dimensional Mat.
+	/// 
 	/// ## C++ default parameters
 	/// * param: Image2BlobParams()
 	#[inline]
@@ -394,6 +612,22 @@ pub mod dnn {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [blob_from_images_with_params_1] function uses the following default values for its arguments:
+	/// * param: Image2BlobParams()
+	#[inline]
+	pub fn blob_from_images_with_params_1_def(images: &impl core::ToInputArray, blob: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(images);
+		output_array_arg!(blob);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImagesWithParams_const__InputArrayR_const__OutputArrayR(images.as_raw__InputArray(), blob.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -418,6 +652,71 @@ pub mod dnn {
 		output_array_arg!(blob);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_blobFromImagesWithParams_const__InputArrayR_const__OutputArrayR_const_Image2BlobParamsR(images.as_raw__InputArray(), blob.as_raw__OutputArray(), &param, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Creates 4-dimensional blob from series of images. Optionally resizes and
+	///  crops @p images from center, subtract @p mean values, scales values by @p scalefactor,
+	///  swap Blue and Red channels.
+	/// ## Parameters
+	/// * images: input images (all with 1-, 3- or 4-channels).
+	/// * size: spatial size for output image
+	/// * mean: scalar with mean values which are subtracted from channels. Values are intended
+	///  to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.
+	/// * scalefactor: multiplier for @p images values.
+	/// * swapRB: flag which indicates that swap first and last channels
+	///  in 3-channel image is necessary.
+	/// * crop: flag which indicates whether image will be cropped after resize or not
+	/// * ddepth: Depth of output blob. Choose CV_32F or CV_8U.
+	///  @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
+	///  dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
+	///  If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
+	/// ## Returns
+	/// 4-dimensional Mat with NCHW dimensions order.
+	/// 
+	/// 
+	/// Note:
+	/// The order and usage of `scalefactor` and `mean` are (input - mean) * scalefactor.
+	/// 
+	/// ## Note
+	/// This alternative version of [blob_from_images] function uses the following default values for its arguments:
+	/// * scalefactor: 1.0
+	/// * size: Size()
+	/// * mean: Scalar()
+	/// * swap_rb: false
+	/// * crop: false
+	/// * ddepth: CV_32F
+	#[inline]
+	pub fn blob_from_images_def(images: &impl core::ToInputArray) -> Result<core::Mat> {
+		input_array_arg!(images);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImages_const__InputArrayR(images.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates 4-dimensional blob from series of images.
+	/// @details This is an overloaded member function, provided for convenience.
+	///          It differs from the above function only in what argument(s) it accepts.
+	/// 
+	/// ## Note
+	/// This alternative version of [blob_from_images_to] function uses the following default values for its arguments:
+	/// * scalefactor: 1.0
+	/// * size: Size()
+	/// * mean: Scalar()
+	/// * swap_rb: false
+	/// * crop: false
+	/// * ddepth: CV_32F
+	#[inline]
+	pub fn blob_from_images_to_def(images: &impl core::ToInputArray, blob: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(images);
+		output_array_arg!(blob);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_blobFromImages_const__InputArrayR_const__OutputArrayR(images.as_raw__InputArray(), blob.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -613,6 +912,27 @@ pub mod dnn {
 	/// ## Returns
 	/// Net object.
 	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_caffe] function uses the following default values for its arguments:
+	/// * caffe_model: String()
+	#[inline]
+	pub fn read_net_from_caffe_def(prototxt: &str) -> Result<crate::dnn::Net> {
+		extern_container_arg!(prototxt);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromCaffe_const_StringR(prototxt.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="http://caffe.berkeleyvision.org">Caffe</a> framework's format.
+	/// ## Parameters
+	/// * prototxt: path to the .prototxt file with text description of the network architecture.
+	/// * caffeModel: path to the .caffemodel file with learned network.
+	/// ## Returns
+	/// Net object.
+	/// 
 	/// ## C++ default parameters
 	/// * caffe_model: String()
 	#[inline]
@@ -621,6 +941,32 @@ pub mod dnn {
 		extern_container_arg!(caffe_model);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_readNetFromCaffe_const_StringR_const_StringR(prototxt.opencv_as_extern(), caffe_model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in Caffe model in memory.
+	/// @details This is an overloaded member function, provided for convenience.
+	/// It differs from the above function only in what argument(s) it accepts.
+	/// ## Parameters
+	/// * bufferProto: buffer containing the content of the .prototxt file
+	/// * lenProto: length of bufferProto
+	/// * bufferModel: buffer containing the content of the .caffemodel file
+	/// * lenModel: length of bufferModel
+	/// ## Returns
+	/// Net object.
+	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_caffe_str] function uses the following default values for its arguments:
+	/// * buffer_model: NULL
+	/// * len_model: 0
+	#[inline]
+	pub fn read_net_from_caffe_str_def(buffer_proto: &str, len_proto: size_t) -> Result<crate::dnn::Net> {
+		extern_container_arg!(buffer_proto);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromCaffe_const_charX_size_t(buffer_proto.opencv_as_extern(), len_proto, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
@@ -660,12 +1006,53 @@ pub mod dnn {
 	/// ## Returns
 	/// Net object.
 	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_caffe_buffer] function uses the following default values for its arguments:
+	/// * buffer_model: std::vector<uchar>()
+	#[inline]
+	pub fn read_net_from_caffe_buffer_def(buffer_proto: &core::Vector<u8>) -> Result<crate::dnn::Net> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromCaffe_const_vectorLunsigned_charGR(buffer_proto.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in Caffe model in memory.
+	/// ## Parameters
+	/// * bufferProto: buffer containing the content of the .prototxt file
+	/// * bufferModel: buffer containing the content of the .caffemodel file
+	/// ## Returns
+	/// Net object.
+	/// 
 	/// ## C++ default parameters
 	/// * buffer_model: std::vector<uchar>()
 	#[inline]
 	pub fn read_net_from_caffe_buffer(buffer_proto: &core::Vector<u8>, buffer_model: &core::Vector<u8>) -> Result<crate::dnn::Net> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_readNetFromCaffe_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR(buffer_proto.as_raw_VectorOfu8(), buffer_model.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="https://pjreddie.com/darknet/">Darknet</a> model files.
+	/// ## Parameters
+	/// * cfgFile: path to the .cfg file with text description of the network architecture.
+	/// * darknetModel: path to the .weights file with learned network.
+	/// ## Returns
+	/// Network object that ready to do forward, throw an exception in failure cases.
+	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_darknet] function uses the following default values for its arguments:
+	/// * darknet_model: String()
+	#[inline]
+	pub fn read_net_from_darknet_def(cfg_file: &str) -> Result<crate::dnn::Net> {
+		extern_container_arg!(cfg_file);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromDarknet_const_StringR(cfg_file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
@@ -702,6 +1089,30 @@ pub mod dnn {
 	/// ## Returns
 	/// Net object.
 	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_darknet_str] function uses the following default values for its arguments:
+	/// * buffer_model: NULL
+	/// * len_model: 0
+	#[inline]
+	pub fn read_net_from_darknet_str_def(buffer_cfg: &str, len_cfg: size_t) -> Result<crate::dnn::Net> {
+		extern_container_arg!(buffer_cfg);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromDarknet_const_charX_size_t(buffer_cfg.opencv_as_extern(), len_cfg, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="https://pjreddie.com/darknet/">Darknet</a> model files.
+	/// ## Parameters
+	/// * bufferCfg: A buffer contains a content of .cfg file with text description of the network architecture.
+	/// * lenCfg: Number of bytes to read from bufferCfg
+	/// * bufferModel: A buffer contains a content of .weights file with learned network.
+	/// * lenModel: Number of bytes to read from bufferModel
+	/// ## Returns
+	/// Net object.
+	/// 
 	/// ## C++ default parameters
 	/// * buffer_model: NULL
 	/// * len_model: 0
@@ -711,6 +1122,26 @@ pub mod dnn {
 		extern_container_arg!(buffer_model);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_readNetFromDarknet_const_charX_size_t_const_charX_size_t(buffer_cfg.opencv_as_extern(), len_cfg, buffer_model.opencv_as_extern(), len_model, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="https://pjreddie.com/darknet/">Darknet</a> model files.
+	/// ## Parameters
+	/// * bufferCfg: A buffer contains a content of .cfg file with text description of the network architecture.
+	/// * bufferModel: A buffer contains a content of .weights file with learned network.
+	/// ## Returns
+	/// Net object.
+	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_darknet_buffer] function uses the following default values for its arguments:
+	/// * buffer_model: std::vector<uchar>()
+	#[inline]
+	pub fn read_net_from_darknet_buffer_def(buffer_cfg: &core::Vector<u8>) -> Result<crate::dnn::Net> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromDarknet_const_vectorLunsigned_charGR(buffer_cfg.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
@@ -903,6 +1334,29 @@ pub mod dnn {
 	/// ## Returns
 	/// Net object.
 	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_tensorflow] function uses the following default values for its arguments:
+	/// * config: String()
+	#[inline]
+	pub fn read_net_from_tensorflow_def(model: &str) -> Result<crate::dnn::Net> {
+		extern_container_arg!(model);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromTensorflow_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="https://www.tensorflow.org/">TensorFlow</a> framework's format.
+	/// ## Parameters
+	/// * model: path to the .pb file with binary protobuf description of the network architecture
+	/// * config: path to the .pbtxt file that contains text graph definition in protobuf format.
+	///               Resulting Net object is built by text graph using weights from a binary one that
+	///               let us make it more flexible.
+	/// ## Returns
+	/// Net object.
+	/// 
 	/// ## C++ default parameters
 	/// * config: String()
 	#[inline]
@@ -911,6 +1365,30 @@ pub mod dnn {
 		extern_container_arg!(config);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_readNetFromTensorflow_const_StringR_const_StringR(model.opencv_as_extern(), config.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="https://www.tensorflow.org/">TensorFlow</a> framework's format.
+	/// @details This is an overloaded member function, provided for convenience.
+	/// It differs from the above function only in what argument(s) it accepts.
+	/// ## Parameters
+	/// * bufferModel: buffer containing the content of the pb file
+	/// * lenModel: length of bufferModel
+	/// * bufferConfig: buffer containing the content of the pbtxt file
+	/// * lenConfig: length of bufferConfig
+	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_tensorflow_str] function uses the following default values for its arguments:
+	/// * buffer_config: NULL
+	/// * len_config: 0
+	#[inline]
+	pub fn read_net_from_tensorflow_str_def(buffer_model: &str, len_model: size_t) -> Result<crate::dnn::Net> {
+		extern_container_arg!(buffer_model);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromTensorflow_const_charX_size_t(buffer_model.opencv_as_extern(), len_model, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
@@ -948,12 +1426,75 @@ pub mod dnn {
 	/// ## Returns
 	/// Net object.
 	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_tensorflow_buffer] function uses the following default values for its arguments:
+	/// * buffer_config: std::vector<uchar>()
+	#[inline]
+	pub fn read_net_from_tensorflow_buffer_def(buffer_model: &core::Vector<u8>) -> Result<crate::dnn::Net> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromTensorflow_const_vectorLunsigned_charGR(buffer_model.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="https://www.tensorflow.org/">TensorFlow</a> framework's format.
+	/// ## Parameters
+	/// * bufferModel: buffer containing the content of the pb file
+	/// * bufferConfig: buffer containing the content of the pbtxt file
+	/// ## Returns
+	/// Net object.
+	/// 
 	/// ## C++ default parameters
 	/// * buffer_config: std::vector<uchar>()
 	#[inline]
 	pub fn read_net_from_tensorflow_buffer(buffer_model: &core::Vector<u8>, buffer_config: &core::Vector<u8>) -> Result<crate::dnn::Net> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_readNetFromTensorflow_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR(buffer_model.as_raw_VectorOfu8(), buffer_config.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads a network model stored in <a href="http://torch.ch">Torch7</a> framework's format.
+	/// ## Parameters
+	/// * model: path to the file, dumped from Torch by using torch.save() function.
+	/// * isBinary: specifies whether the network was serialized in ascii mode or binary.
+	/// * evaluate: specifies testing phase of network. If true, it's similar to evaluate() method in Torch.
+	/// ## Returns
+	/// Net object.
+	/// 
+	///  
+	/// Note: Ascii mode of Torch serializer is more preferable, because binary mode extensively use `long` type of C language,
+	///  which has various bit-length on different systems.
+	/// 
+	/// The loading file must contain serialized <a href="https://github.com/torch/nn/blob/master/doc/module.md">nn.Module</a> object
+	/// with importing network. Try to eliminate a custom objects from serialazing data to avoid importing errors.
+	/// 
+	/// List of supported layers (i.e. object instances derived from Torch nn.Module class):
+	/// - nn.Sequential
+	/// - nn.Parallel
+	/// - nn.Concat
+	/// - nn.Linear
+	/// - nn.SpatialConvolution
+	/// - nn.SpatialMaxPooling, nn.SpatialAveragePooling
+	/// - nn.ReLU, nn.TanH, nn.Sigmoid
+	/// - nn.Reshape
+	/// - nn.SoftMax, nn.LogSoftMax
+	/// 
+	/// Also some equivalents of these classes from cunn, cudnn, and fbcunn may be successfully imported.
+	/// 
+	/// ## Note
+	/// This alternative version of [read_net_from_torch] function uses the following default values for its arguments:
+	/// * is_binary: true
+	/// * evaluate: true
+	#[inline]
+	pub fn read_net_from_torch_def(model: &str) -> Result<crate::dnn::Net> {
+		extern_container_arg!(model);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNetFromTorch_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
@@ -1027,6 +1568,46 @@ pub mod dnn {
 	/// [readNetFromTorch] or [readNetFromDarknet]. An order of @p model and @p config
 	/// arguments does not matter.
 	/// 
+	/// ## Note
+	/// This alternative version of [read_net] function uses the following default values for its arguments:
+	/// * config: ""
+	/// * framework: ""
+	#[inline]
+	pub fn read_net_def(model: &str) -> Result<crate::dnn::Net> {
+		extern_container_arg!(model);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNet_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Read deep learning network represented in one of the supported formats.
+	/// ## Parameters
+	/// * model: Binary file contains trained weights. The following file
+	///                  extensions are expected for models from different frameworks:
+	///                  * `*.caffemodel` (Caffe, <http://caffe.berkeleyvision.org/>)
+	///                  * `*.pb` (TensorFlow, <https://www.tensorflow.org/>)
+	///                  * `*.t7` | `*.net` (Torch, <http://torch.ch/>)
+	///                  * `*.weights` (Darknet, <https://pjreddie.com/darknet/>)
+	///                  * `*.bin` (DLDT, <https://software.intel.com/openvino-toolkit>)
+	///                  * `*.onnx` (ONNX, <https://onnx.ai/>)
+	/// * config: Text file contains network configuration. It could be a
+	///                   file with the following extensions:
+	///                  * `*.prototxt` (Caffe, <http://caffe.berkeleyvision.org/>)
+	///                  * `*.pbtxt` (TensorFlow, <https://www.tensorflow.org/>)
+	///                  * `*.cfg` (Darknet, <https://pjreddie.com/darknet/>)
+	///                  * `*.xml` (DLDT, <https://software.intel.com/openvino-toolkit>)
+	/// * framework: Explicit framework name tag to determine a format.
+	/// ## Returns
+	/// Net object.
+	/// 
+	/// This function automatically detects an origin framework of trained model
+	/// and calls an appropriate function such [readNetFromCaffe], [readNetFromTensorflow],
+	/// [readNetFromTorch] or [readNetFromDarknet]. An order of @p model and @p config
+	/// arguments does not matter.
+	/// 
 	/// ## C++ default parameters
 	/// * config: ""
 	/// * framework: ""
@@ -1037,6 +1618,30 @@ pub mod dnn {
 		extern_container_arg!(framework);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_readNet_const_StringR_const_StringR_const_StringR(model.opencv_as_extern(), config.opencv_as_extern(), framework.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Read deep learning network represented in one of the supported formats.
+	/// @details This is an overloaded member function, provided for convenience.
+	///          It differs from the above function only in what argument(s) it accepts.
+	/// ## Parameters
+	/// * framework: Name of origin framework.
+	/// * bufferModel: A buffer with a content of binary file with weights
+	/// * bufferConfig: A buffer with a content of text file contains network configuration.
+	/// ## Returns
+	/// Net object.
+	/// 
+	/// ## Note
+	/// This alternative version of [read_net_1] function uses the following default values for its arguments:
+	/// * buffer_config: std::vector<uchar>()
+	#[inline]
+	pub fn read_net_1_def(framework: &str, buffer_model: &core::Vector<u8>) -> Result<crate::dnn::Net> {
+		extern_container_arg!(framework);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readNet_const_StringR_const_vectorLunsigned_charGR(framework.opencv_as_extern(), buffer_model.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
@@ -1076,6 +1681,23 @@ pub mod dnn {
 		extern_container_arg!(path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_readTensorFromONNX_const_StringR(path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Loads blob which was serialized as torch.Tensor object of Torch7 framework.
+	/// @warning This function has the same limitations as readNetFromTorch().
+	/// 
+	/// ## Note
+	/// This alternative version of [read_torch_blob] function uses the following default values for its arguments:
+	/// * is_binary: true
+	#[inline]
+	pub fn read_torch_blob_def(filename: &str) -> Result<core::Mat> {
+		extern_container_arg!(filename);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_readTorchBlob_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -1180,6 +1802,21 @@ pub mod dnn {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [shape_4] function uses the following default values for its arguments:
+	/// * a1: -1
+	/// * a2: -1
+	/// * a3: -1
+	#[inline]
+	pub fn shape_4_def(a0: i32) -> Result<core::Vector<i32>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_shape_int(a0, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * a1: -1
 	/// * a2: -1
@@ -1191,6 +1828,35 @@ pub mod dnn {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Convert all weights of Caffe network to half precision floating point.
+	/// ## Parameters
+	/// * src: Path to origin model from Caffe framework contains single
+	///            precision floating point weights (usually has `.caffemodel` extension).
+	/// * dst: Path to destination model with updated weights.
+	/// * layersTypes: Set of layers types which parameters will be converted.
+	///                    By default, converts only Convolutional and Fully-Connected layers'
+	///                    weights.
+	/// 
+	/// 
+	/// Note: Shrinked model has no origin float32 weights so it can't be used
+	///       in origin Caffe framework anymore. However the structure of data
+	///       is taken from NVidia's Caffe fork: <https://github.com/NVIDIA/caffe>.
+	///       So the resulting model may be used there.
+	/// 
+	/// ## Note
+	/// This alternative version of [shrink_caffe_model] function uses the following default values for its arguments:
+	/// * layers_types: std::vector<String>()
+	#[inline]
+	pub fn shrink_caffe_model_def(src: &str, dst: &str) -> Result<()> {
+		extern_container_arg!(src);
+		extern_container_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_shrinkCaffeModel_const_StringR_const_StringR(src.opencv_as_extern(), dst.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1277,6 +1943,35 @@ pub mod dnn {
 	/// ## See also
 	/// SoftNMSMethod
 	/// 
+	/// ## Note
+	/// This alternative version of [soft_nms_boxes] function uses the following default values for its arguments:
+	/// * top_k: 0
+	/// * sigma: 0.5
+	/// * method: SoftNMSMethod::SOFTNMS_GAUSSIAN
+	#[inline]
+	pub fn soft_nms_boxes_def(bboxes: &core::Vector<core::Rect>, scores: &core::Vector<f32>, updated_scores: &mut core::Vector<f32>, score_threshold: f32, nms_threshold: f32, indices: &mut core::Vector<i32>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_softNMSBoxes_const_vectorLRectGR_const_vectorLfloatGR_vectorLfloatGR_const_float_const_float_vectorLintGR(bboxes.as_raw_VectorOfRect(), scores.as_raw_VectorOff32(), updated_scores.as_raw_mut_VectorOff32(), score_threshold, nms_threshold, indices.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs soft non maximum suppression given boxes and corresponding scores.
+	/// Reference: <https://arxiv.org/abs/1704.04503>
+	/// ## Parameters
+	/// * bboxes: a set of bounding boxes to apply Soft NMS.
+	/// * scores: a set of corresponding confidences.
+	/// * updated_scores: a set of corresponding updated confidences.
+	/// * score_threshold: a threshold used to filter boxes by score.
+	/// * nms_threshold: a threshold used in non maximum suppression.
+	/// * indices: the kept indices of bboxes after NMS.
+	/// * top_k: keep at most @p top_k picked indices.
+	/// * sigma: parameter of Gaussian weighting.
+	/// * method: Gaussian or linear.
+	/// ## See also
+	/// SoftNMSMethod
+	/// 
 	/// ## C++ default parameters
 	/// * top_k: 0
 	/// * sigma: 0.5
@@ -1290,6 +1985,19 @@ pub mod dnn {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [total_1] function uses the following default values for its arguments:
+	/// * start: -1
+	/// * end: -1
+	#[inline]
+	pub fn total_1_def(mat: &core::Mat) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_total_const_MatR(mat.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * start: -1
 	/// * end: -1
@@ -1297,6 +2005,19 @@ pub mod dnn {
 	pub fn total_1(mat: &core::Mat, start: i32, end: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_total_const_MatR_int_int(mat.as_raw_Mat(), start, end, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [total] function uses the following default values for its arguments:
+	/// * start: -1
+	/// * end: -1
+	#[inline]
+	pub fn total_def(shape: &crate::dnn::MatShape) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dnn_total_const_MatShapeR(shape.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3703,6 +4424,26 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// Create classification model from network represented in one of the supported formats.
+		/// An order of @p model and @p config arguments does not matter.
+		/// ## Parameters
+		/// * model: Binary file contains trained weights.
+		/// * config: Text file contains network configuration.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * config: ""
+		#[inline]
+		pub fn new_def(model: &str) -> Result<crate::dnn::ClassificationModel> {
+			extern_container_arg!(model);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_ClassificationModel_ClassificationModel_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::ClassificationModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Create model from deep learning network.
 		/// ## Parameters
 		/// * network: Net object.
@@ -5229,6 +5970,29 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// Given the @p input frame, create input blob, run net and return result detections.
+		/// ## Parameters
+		/// * frame: The input image.
+		/// * classIds:[out] Class indexes in result detection.
+		/// * confidences:[out] A set of corresponding confidences.
+		/// * boxes:[out] A set of bounding boxes.
+		/// * confThreshold: A threshold used to filter boxes by confidences.
+		/// * nmsThreshold: A threshold used in non maximum suppression.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// * conf_threshold: 0.5f
+		/// * nms_threshold: 0.0f
+		#[inline]
+		fn detect_def(&mut self, frame: &impl core::ToInputArray, class_ids: &mut core::Vector<i32>, confidences: &mut core::Vector<f32>, boxes: &mut core::Vector<core::Rect>) -> Result<()> {
+			input_array_arg!(frame);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DetectionModel_detect_const__InputArrayR_vectorLintGR_vectorLfloatGR_vectorLRectGR(self.as_raw_mut_DetectionModel(), frame.as_raw__InputArray(), class_ids.as_raw_mut_VectorOfi32(), confidences.as_raw_mut_VectorOff32(), boxes.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// This class represents high-level API for object detection networks.
@@ -5283,6 +6047,26 @@ pub mod dnn {
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_DetectionModel_DetectionModel_const_StringR_const_StringR(model.opencv_as_extern(), config.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::DetectionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create detection model from network represented in one of the supported formats.
+		/// An order of @p model and @p config arguments does not matter.
+		/// ## Parameters
+		/// * model: Binary file contains trained weights.
+		/// * config: Text file contains network configuration.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * config: ""
+		#[inline]
+		pub fn new_def(model: &str) -> Result<crate::dnn::DetectionModel> {
+			extern_container_arg!(model);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DetectionModel_DetectionModel_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::DetectionModel::opencv_from_extern(ret) };
@@ -5587,12 +6371,31 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		#[inline]
+		fn get_str_def(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DictValue_get_cv_String_const(self.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * idx: -1
 		#[inline]
 		fn get_f64(&self, idx: i32) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_DictValue_get_double_const_int(self.as_raw_DictValue(), idx, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn get_f64_def(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DictValue_get_double_const(self.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5609,12 +6412,30 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		#[inline]
+		fn get_i32_def(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DictValue_get_int_const(self.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * idx: -1
 		#[inline]
 		fn get_i64(&self, idx: i32) -> Result<i64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_DictValue_get_int64_t_const_int(self.as_raw_DictValue(), idx, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn get_i64_def(&self) -> Result<i64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DictValue_get_int64_t_const(self.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5667,6 +6488,18 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [get_int_value] function uses the following default values for its arguments:
+		/// * idx: -1
+		#[inline]
+		fn get_int_value_def(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DictValue_getIntValue_const(self.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * idx: -1
 		#[inline]
@@ -5678,12 +6511,37 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [get_real_value] function uses the following default values for its arguments:
+		/// * idx: -1
+		#[inline]
+		fn get_real_value_def(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DictValue_getRealValue_const(self.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * idx: -1
 		#[inline]
 		fn get_string_value(&self, idx: i32) -> Result<String> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_DictValue_getStringValue_const_int(self.as_raw_DictValue(), idx, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [get_string_value] function uses the following default values for its arguments:
+		/// * idx: -1
+		#[inline]
+		fn get_string_value_def(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DictValue_getStringValue_const(self.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -5750,6 +6608,19 @@ pub mod dnn {
 		pub fn from_i64(i: i64) -> Result<crate::dnn::DictValue> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_DictValue_DictValue_int64_t(i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::DictValue::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [from_i64] function uses the following default values for its arguments:
+		/// * i: 0
+		#[inline]
+		pub fn from_i64_def() -> Result<crate::dnn::DictValue> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DictValue_DictValue(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::DictValue::opencv_from_extern(ret) };
@@ -7169,6 +8040,23 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * size: Size()
+		/// * mean: Scalar()
+		/// * swap_rb: false
+		/// * ddepth: CV_32F
+		/// * datalayout: DNN_LAYOUT_NCHW
+		/// * mode: DNN_PMODE_NULL
+		#[inline]
+		pub fn new_def(scalefactor: core::Scalar) -> Result<crate::dnn::Image2BlobParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Image2BlobParams_Image2BlobParams_const_ScalarR(&scalefactor, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Constant methods for [crate::dnn::InnerProductLayer]
@@ -7535,6 +8423,27 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// Given the @p input frame, create input blob, run net
+		/// ## Parameters
+		/// * frame: The input image.
+		/// * thresh: minimum confidence threshold to select a keypoint
+		/// ## Returns
+		/// a vector holding the x and y coordinates of each detected keypoint
+		/// 
+		/// ## Note
+		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// * thresh: 0.5
+		#[inline]
+		fn estimate_def(&mut self, frame: &impl core::ToInputArray) -> Result<core::Vector<core::Point2f>> {
+			input_array_arg!(frame);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_KeypointsModel_estimate_const__InputArrayR(self.as_raw_mut_KeypointsModel(), frame.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	/// This class represents high-level API for keypoints models
@@ -7588,6 +8497,26 @@ pub mod dnn {
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_KeypointsModel_KeypointsModel_const_StringR_const_StringR(model.opencv_as_extern(), config.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::KeypointsModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create keypoints model from network represented in one of the supported formats.
+		/// An order of @p model and @p config arguments does not matter.
+		/// ## Parameters
+		/// * model: Binary file contains trained weights.
+		/// * config: Text file contains network configuration.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * config: ""
+		#[inline]
+		pub fn new_def(model: &str) -> Result<crate::dnn::KeypointsModel> {
+			extern_container_arg!(model);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_KeypointsModel_KeypointsModel_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::KeypointsModel::opencv_from_extern(ret) };
@@ -7852,6 +8781,22 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// Specifies shape of output blob which will be [[`T`], `N`] + @p outTailShape.
+		/// @details If this parameter is empty or unset then @p outTailShape = [`Wh`.size(0)] will be used,
+		/// where `Wh` is parameter from setWeights().
+		/// 
+		/// ## Note
+		/// This alternative version of [set_out_shape] function uses the following default values for its arguments:
+		/// * out_tail_shape: MatShape()
+		#[inline]
+		fn set_out_shape_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_LSTMLayer_setOutShape(self.as_raw_mut_LSTMLayer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// 
 		/// **Deprecated**: Use flag `produce_cell_output` in LayerParams.
 		/// Specifies either interpret first dimension of input blob as timestamp dimension either as sample.
@@ -7875,6 +8820,29 @@ pub mod dnn {
 		}
 		
 		/// 
+		/// **Deprecated**: Use flag `produce_cell_output` in LayerParams.
+		/// Specifies either interpret first dimension of input blob as timestamp dimension either as sample.
+		/// 
+		/// If flag is set to true then shape of input blob will be interpreted as [`T`, `N`, `[data dims]`] where `T` specifies number of timestamps, `N` is number of independent streams.
+		/// In this case each forward() call will iterate through `T` timestamps and update layer's state `T` times.
+		/// 
+		/// If flag is set to false then shape of input blob will be interpreted as [`N`, `[data dims]`].
+		/// In this case each forward() call will make one iteration and produce one timestamp with shape [`N`, `[out dims]`].
+		/// 
+		/// ## Note
+		/// This alternative version of [set_use_timstamps_dim] function uses the following default values for its arguments:
+		/// * use_: true
+		#[deprecated = "Use flag `produce_cell_output` in LayerParams."]
+		#[inline]
+		fn set_use_timstamps_dim_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_LSTMLayer_setUseTimstampsDim(self.as_raw_mut_LSTMLayer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// 
 		/// **Deprecated**: Use flag `use_timestamp_dim` in LayerParams.
 		/// If this flag is set to true then layer will produce @f$ c_t @f$ as second output.
 		/// @details Shape of the second output is the same as first output.
@@ -7886,6 +8854,24 @@ pub mod dnn {
 		fn set_produce_cell_output(&mut self, produce: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_LSTMLayer_setProduceCellOutput_bool(self.as_raw_mut_LSTMLayer(), produce, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// 
+		/// **Deprecated**: Use flag `use_timestamp_dim` in LayerParams.
+		/// If this flag is set to true then layer will produce @f$ c_t @f$ as second output.
+		/// @details Shape of the second output is the same as first output.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_produce_cell_output] function uses the following default values for its arguments:
+		/// * produce: false
+		#[deprecated = "Use flag `use_timestamp_dim` in LayerParams."]
+		#[inline]
+		fn set_produce_cell_output_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_LSTMLayer_setProduceCellOutput(self.as_raw_mut_LSTMLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9052,7 +10038,7 @@ pub mod dnn {
 	/// This class provides all data needed to initialize layer.
 	/// 
 	/// It includes dictionary with scalar params (which can be read by using Dict interface),
-	/// blob params #blobs and optional meta information: #name and #type of layer instance.
+	/// blob params [blobs] and optional meta information: [name] and [type] of layer instance.
 	pub struct LayerParams {
 		ptr: *mut c_void
 	}
@@ -9680,6 +10666,31 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// Set preprocessing parameters for frame.
+		/// ## Parameters
+		/// * size: New input size.
+		/// * mean: Scalar with mean values which are subtracted from channels.
+		/// * scale: Multiplier for frame values.
+		/// * swapRB: Flag which indicates that swap first and last channels.
+		/// * crop: Flag which indicates whether image will be cropped after resize or not.
+		/// blob(n, c, y, x) = scale * resize( frame(y, x, c) ) - mean(c) )
+		/// 
+		/// ## Note
+		/// This alternative version of [set_input_params] function uses the following default values for its arguments:
+		/// * scale: 1.0
+		/// * size: Size()
+		/// * mean: Scalar()
+		/// * swap_rb: false
+		/// * crop: false
+		#[inline]
+		fn set_input_params_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Model_setInputParams(self.as_raw_mut_Model(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## See also
 		/// Net::setPreferableBackend
 		#[inline]
@@ -9783,6 +10794,26 @@ pub mod dnn {
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Model_Model_const_StringR_const_StringR(model.opencv_as_extern(), config.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::Model::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create model from deep learning network represented in one of the supported formats.
+		/// An order of @p model and @p config arguments does not matter.
+		/// ## Parameters
+		/// * model: Binary file contains trained weights.
+		/// * config: Text file contains network configuration.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * config: ""
+		#[inline]
+		pub fn new_def(model: &str) -> Result<crate::dnn::Model> {
+			extern_container_arg!(model);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Model_Model_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::Model::opencv_from_extern(ret) };
@@ -10038,6 +11069,26 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// Returns parameter blob of the layer.
+		/// ## Parameters
+		/// * layer: name or id of the layer.
+		/// * numParam: index of the layer parameter in the Layer::blobs array.
+		/// ## See also
+		/// Layer::blobs
+		/// 
+		/// ## Note
+		/// This alternative version of [get_param] function uses the following default values for its arguments:
+		/// * num_param: 0
+		#[inline]
+		fn get_param_def(&self, layer: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Net_getParam_const_int(self.as_raw_Net(), layer, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * num_param: 0
 		#[inline]
@@ -10045,6 +11096,20 @@ pub mod dnn {
 			extern_container_arg!(layer_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Net_getParam_const_const_StringR_int(self.as_raw_Net(), layer_name.opencv_as_extern(), num_param, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [get_param] function uses the following default values for its arguments:
+		/// * num_param: 0
+		#[inline]
+		fn get_param_def_1(&self, layer_name: &str) -> Result<core::Mat> {
+			extern_container_arg!(layer_name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Net_getParam_const_const_StringR(self.as_raw_Net(), layer_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -10557,6 +11622,26 @@ pub mod dnn {
 		/// Runs forward pass to compute output of layer with name @p outputName.
 		/// ## Parameters
 		/// * outputName: name for layer which output is needed to get
+		/// ## Returns
+		/// blob for first output of specified layer.
+		/// @details By default runs forward pass for the whole network.
+		/// 
+		/// ## Note
+		/// This alternative version of [forward_single] function uses the following default values for its arguments:
+		/// * output_name: String()
+		#[inline]
+		fn forward_single_def(&mut self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Net_forward(self.as_raw_mut_Net(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Runs forward pass to compute output of layer with name @p outputName.
+		/// ## Parameters
+		/// * outputName: name for layer which output is needed to get
 		/// @details By default runs forward pass for the whole network.
 		/// 
 		/// This is an asynchronous version of forward(const String&).
@@ -10577,6 +11662,27 @@ pub mod dnn {
 		
 		/// Runs forward pass to compute output of layer with name @p outputName.
 		/// ## Parameters
+		/// * outputName: name for layer which output is needed to get
+		/// @details By default runs forward pass for the whole network.
+		/// 
+		/// This is an asynchronous version of forward(const String&).
+		/// dnn::DNN_BACKEND_INFERENCE_ENGINE backend is required.
+		/// 
+		/// ## Note
+		/// This alternative version of [forward_async] function uses the following default values for its arguments:
+		/// * output_name: String()
+		#[inline]
+		fn forward_async_def(&mut self) -> Result<core::AsyncArray> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Net_forwardAsync(self.as_raw_mut_Net(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Runs forward pass to compute output of layer with name @p outputName.
+		/// ## Parameters
 		/// * outputBlobs: contains all output blobs for specified layer.
 		/// * outputName: name for layer which output is needed to get
 		/// @details If @p outputName is empty, runs forward pass for the whole network.
@@ -10589,6 +11695,25 @@ pub mod dnn {
 			extern_container_arg!(output_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Net_forward_const__OutputArrayR_const_StringR(self.as_raw_mut_Net(), output_blobs.as_raw__OutputArray(), output_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Runs forward pass to compute output of layer with name @p outputName.
+		/// ## Parameters
+		/// * outputBlobs: contains all output blobs for specified layer.
+		/// * outputName: name for layer which output is needed to get
+		/// @details If @p outputName is empty, runs forward pass for the whole network.
+		/// 
+		/// ## Note
+		/// This alternative version of [forward_layer] function uses the following default values for its arguments:
+		/// * output_name: String()
+		#[inline]
+		fn forward_layer_def(&mut self, output_blobs: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(output_blobs);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Net_forward_const__OutputArrayR(self.as_raw_mut_Net(), output_blobs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -10636,6 +11761,28 @@ pub mod dnn {
 			input_array_arg!(calib_data);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Net_quantize_const__InputArrayR_int_int_bool(self.as_raw_mut_Net(), calib_data.as_raw__InputArray(), inputs_dtype, outputs_dtype, per_channel, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Returns a quantized Net from a floating-point Net.
+		/// ## Parameters
+		/// * calibData: Calibration data to compute the quantization parameters.
+		/// * inputsDtype: Datatype of quantized net's inputs. Can be CV_32F or CV_8S.
+		/// * outputsDtype: Datatype of quantized net's outputs. Can be CV_32F or CV_8S.
+		/// * perChannel: Quantization granularity of quantized Net. The default is true, that means quantize model
+		/// in per-channel way (channel-wise). Set it false to quantize model in per-tensor way (or tensor-wise).
+		/// 
+		/// ## Note
+		/// This alternative version of [quantize] function uses the following default values for its arguments:
+		/// * per_channel: true
+		#[inline]
+		fn quantize_def(&mut self, calib_data: &impl core::ToInputArray, inputs_dtype: i32, outputs_dtype: i32) -> Result<crate::dnn::Net> {
+			input_array_arg!(calib_data);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Net_quantize_const__InputArrayR_int_int(self.as_raw_mut_Net(), calib_data.as_raw__InputArray(), inputs_dtype, outputs_dtype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::Net::opencv_from_extern(ret) };
@@ -10727,6 +11874,34 @@ pub mod dnn {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Net_setInput_const__InputArrayR_const_StringR_double_const_ScalarR(self.as_raw_mut_Net(), blob.as_raw__InputArray(), name.opencv_as_extern(), scalefactor, &mean, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Sets the new input value for the network
+		/// ## Parameters
+		/// * blob: A new blob. Should have CV_32F or CV_8U depth.
+		/// * name: A name of input layer.
+		/// * scalefactor: An optional normalization scale.
+		/// * mean: An optional mean subtraction values.
+		/// ## See also
+		/// connect(String, String) to know format of the descriptor.
+		/// 
+		///  If scale or mean values are specified, a final input blob is computed
+		///  as:
+		/// ![block formula](https://latex.codecogs.com/png.latex?input%28n%2Cc%2Ch%2Cw%29%20%3D%20scalefactor%20%5Ctimes%20%28blob%28n%2Cc%2Ch%2Cw%29%20%2D%20mean%5Fc%29)
+		/// 
+		/// ## Note
+		/// This alternative version of [set_input] function uses the following default values for its arguments:
+		/// * name: ""
+		/// * scalefactor: 1.0
+		/// * mean: Scalar()
+		#[inline]
+		fn set_input_def(&mut self, blob: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(blob);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Net_setInput_const__InputArrayR(self.as_raw_mut_Net(), blob.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -12199,6 +13374,21 @@ pub mod dnn {
 		fn set_produce_hidden_output(&mut self, produce: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_RNNLayer_setProduceHiddenOutput_bool(self.as_raw_mut_RNNLayer(), produce, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// If this flag is set to true then layer will produce @f$ h_t @f$ as second output.
+		/// @details Shape of the second output is the same as first output.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_produce_hidden_output] function uses the following default values for its arguments:
+		/// * produce: false
+		#[inline]
+		fn set_produce_hidden_output_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_RNNLayer_setProduceHiddenOutput(self.as_raw_mut_RNNLayer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -13714,6 +14904,26 @@ pub mod dnn {
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_SegmentationModel_SegmentationModel_const_StringR_const_StringR(model.opencv_as_extern(), config.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::SegmentationModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create segmentation model from network represented in one of the supported formats.
+		/// An order of @p model and @p config arguments does not matter.
+		/// ## Parameters
+		/// * model: Binary file contains trained weights.
+		/// * config: Text file contains network configuration.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * config: ""
+		#[inline]
+		pub fn new_def(model: &str) -> Result<crate::dnn::SegmentationModel> {
+			extern_container_arg!(model);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_SegmentationModel_SegmentationModel_const_StringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::SegmentationModel::opencv_from_extern(ret) };
@@ -15870,7 +17080,7 @@ pub mod dnn {
 	
 	/// This class represents high-level API for text detection DL networks compatible with DB model.
 	/// 
-	/// Related publications: [liao2020real](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_liao2020real)
+	/// Related publications: [liao2020real](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_liao2020real)
 	/// Paper: <https://arxiv.org/abs/1911.08947>
 	/// For more information about the hyper-parameters setting, please refer to <https://github.com/MhLiao/DB>
 	/// 
@@ -15956,6 +17166,26 @@ pub mod dnn {
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_TextDetectionModel_DB_TextDetectionModel_DB_const_stringR_const_stringR(model.opencv_as_extern(), config.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::TextDetectionModel_DB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create text detection model from network represented in one of the supported formats.
+		/// An order of @p model and @p config arguments does not matter.
+		/// ## Parameters
+		/// * model: Binary file contains trained weights.
+		/// * config: Text file contains network configuration.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * config: ""
+		#[inline]
+		pub fn new_def(model: &str) -> Result<crate::dnn::TextDetectionModel_DB> {
+			extern_container_arg!(model);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_TextDetectionModel_DB_TextDetectionModel_DB_const_stringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::TextDetectionModel_DB::opencv_from_extern(ret) };
@@ -16129,6 +17359,26 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// Create text detection model from network represented in one of the supported formats.
+		/// An order of @p model and @p config arguments does not matter.
+		/// ## Parameters
+		/// * model: Binary file contains trained weights.
+		/// * config: Text file contains network configuration.
+		/// 
+		/// ## Note
+		/// This alternative version of [from_file] function uses the following default values for its arguments:
+		/// * config: ""
+		#[inline]
+		pub fn from_file_def(model: &str) -> Result<crate::dnn::TextDetectionModel_EAST> {
+			extern_container_arg!(model);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_TextDetectionModel_EAST_TextDetectionModel_EAST_const_stringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::TextDetectionModel_EAST::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl Clone for TextDetectionModel_EAST {
@@ -16252,6 +17502,25 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// Set the decoding method options for `"CTC-prefix-beam-search"` decode usage
+		/// ## Parameters
+		/// * beamSize: Beam size for search
+		/// * vocPruneSize: Parameter to optimize big vocabulary search,
+		/// only take top @p vocPruneSize tokens in each search step, @p vocPruneSize <= 0 stands for disable this prune.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_decode_opts_ctc_prefix_beam_search] function uses the following default values for its arguments:
+		/// * voc_prune_size: 0
+		#[inline]
+		fn set_decode_opts_ctc_prefix_beam_search_def(&mut self, beam_size: i32) -> Result<crate::dnn::TextRecognitionModel> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_TextRecognitionModel_setDecodeOptsCTCPrefixBeamSearch_int(self.as_raw_mut_TextRecognitionModel(), beam_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::TextRecognitionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Set the vocabulary for recognition.
 		/// ## Parameters
 		/// * vocabulary: the associated vocabulary of the network.
@@ -16343,6 +17612,26 @@ pub mod dnn {
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_TextRecognitionModel_TextRecognitionModel_const_stringR_const_stringR(model.opencv_as_extern(), config.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::TextRecognitionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create text recognition model from network represented in one of the supported formats
+		/// Call setDecodeType() and setVocabulary() after constructor to initialize the decoding method
+		/// ## Parameters
+		/// * model: Binary file contains trained weights
+		/// * config: Text file contains network configuration
+		/// 
+		/// ## Note
+		/// This alternative version of [from_file] function uses the following default values for its arguments:
+		/// * config: ""
+		#[inline]
+		pub fn from_file_def(model: &str) -> Result<crate::dnn::TextRecognitionModel> {
+			extern_container_arg!(model);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_TextRecognitionModel_TextRecognitionModel_const_stringR(model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::TextRecognitionModel::opencv_from_extern(ret) };
@@ -16596,7 +17885,7 @@ pub mod dnn {
 	
 	impl _Range {
 		#[inline]
-		pub fn new(r: &core::Range) -> Result<crate::dnn::_Range> {
+		pub fn from_base(r: &core::Range) -> Result<crate::dnn::_Range> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn__Range__Range_const_RangeR(r.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -16608,9 +17897,22 @@ pub mod dnn {
 		/// ## C++ default parameters
 		/// * size_: 1
 		#[inline]
-		pub fn new_1(start_: i32, size_: i32) -> Result<crate::dnn::_Range> {
+		pub fn new(start_: i32, size_: i32) -> Result<crate::dnn::_Range> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn__Range__Range_int_int(start_, size_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::_Range::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * size_: 1
+		#[inline]
+		pub fn new_def(start_: i32) -> Result<crate::dnn::_Range> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn__Range__Range_int(start_, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dnn::_Range::opencv_from_extern(ret) };

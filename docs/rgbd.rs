@@ -89,6 +89,26 @@ pub mod rgbd {
 	/// * tl: template bbox top-left offset see [Detector::addTemplate]
 	/// * size: marker size see [cv::drawMarker]
 	/// 
+	/// ## Note
+	/// This alternative version of [draw_features] function uses the following default values for its arguments:
+	/// * size: 10
+	#[inline]
+	pub fn draw_features_def(img: &mut impl core::ToInputOutputArray, templates: &core::Vector<crate::rgbd::LineMod_Template>, tl: core::Point2i) -> Result<()> {
+		input_output_array_arg!(img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_linemod_drawFeatures_const__InputOutputArrayR_const_vectorLTemplateGR_const_Point2iR(img.as_raw__InputOutputArray(), templates.as_raw_VectorOfLineMod_Template(), &tl, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// \brief Debug function to draw linemod features
+	/// ## Parameters
+	/// * img: 
+	/// * templates: see [Detector::addTemplate]
+	/// * tl: template bbox top-left offset see [Detector::addTemplate]
+	/// * size: marker size see [cv::drawMarker]
+	/// 
 	/// ## C++ default parameters
 	/// * size: 10
 	#[inline]
@@ -141,6 +161,31 @@ pub mod rgbd {
 		output_array_arg!(points3d);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_depthTo3dSparse_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(depth.as_raw__InputArray(), in_k.as_raw__InputArray(), in_points.as_raw__InputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Converts a depth image to an organized set of 3d points.
+	/// The coordinate system is x pointing left, y down and z away from the camera
+	/// ## Parameters
+	/// * depth: the depth image (if given as short int CV_U, it is assumed to be the depth in millimeters
+	///              (as done with the Microsoft Kinect), otherwise, if given as CV_32F or CV_64F, it is assumed in meters)
+	/// * K: The calibration matrix
+	/// * points3d: the resulting 3d points. They are of depth the same as `depth` if it is CV_32F or CV_64F, and the
+	///        depth of `K` if `depth` is of depth CV_U
+	/// * mask: the mask of the points to consider (can be empty)
+	/// 
+	/// ## Note
+	/// This alternative version of [depth_to3d] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn depth_to3d_def(depth: &impl core::ToInputArray, k: &impl core::ToInputArray, points3d: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(depth);
+		input_array_arg!(k);
+		output_array_arg!(points3d);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rgbd_depthTo3d_const__InputArrayR_const__InputArrayR_const__OutputArrayR(depth.as_raw__InputArray(), k.as_raw__InputArray(), points3d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -248,6 +293,43 @@ pub mod rgbd {
 	/// * registeredDepth: the result of transforming the depth into the external camera
 	/// * depthDilation: whether or not the depth is dilated to avoid holes and occlusion errors (optional)
 	/// 
+	/// ## Note
+	/// This alternative version of [register_depth] function uses the following default values for its arguments:
+	/// * depth_dilation: false
+	#[inline]
+	pub fn register_depth_def(unregistered_camera_matrix: &impl core::ToInputArray, registered_camera_matrix: &impl core::ToInputArray, registered_dist_coeffs: &impl core::ToInputArray, rt: &impl core::ToInputArray, unregistered_depth: &impl core::ToInputArray, output_image_plane_size: core::Size, registered_depth: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(unregistered_camera_matrix);
+		input_array_arg!(registered_camera_matrix);
+		input_array_arg!(registered_dist_coeffs);
+		input_array_arg!(rt);
+		input_array_arg!(unregistered_depth);
+		output_array_arg!(registered_depth);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rgbd_registerDepth_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_SizeR_const__OutputArrayR(unregistered_camera_matrix.as_raw__InputArray(), registered_camera_matrix.as_raw__InputArray(), registered_dist_coeffs.as_raw__InputArray(), rt.as_raw__InputArray(), unregistered_depth.as_raw__InputArray(), &output_image_plane_size, registered_depth.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Registers depth data to an external camera
+	/// Registration is performed by creating a depth cloud, transforming the cloud by
+	/// the rigid body transformation between the cameras, and then projecting the
+	/// transformed points into the RGB camera.
+	/// 
+	/// uv_rgb = K_rgb * [R | t] * z * inv(K_ir) * uv_ir
+	/// 
+	/// Currently does not check for negative depth values.
+	/// 
+	/// ## Parameters
+	/// * unregisteredCameraMatrix: the camera matrix of the depth camera
+	/// * registeredCameraMatrix: the camera matrix of the external camera
+	/// * registeredDistCoeffs: the distortion coefficients of the external camera
+	/// * Rt: the rigid body transform between the cameras. Transforms points from depth camera frame to external camera frame.
+	/// * unregisteredDepth: the input depth data
+	/// * outputImagePlaneSize: the image plane dimensions of the external camera (width, height)
+	/// * registeredDepth: the result of transforming the depth into the external camera
+	/// * depthDilation: whether or not the depth is dilated to avoid holes and occlusion errors (optional)
+	/// 
 	/// ## C++ default parameters
 	/// * depth_dilation: false
 	#[inline]
@@ -275,6 +357,30 @@ pub mod rgbd {
 	/// * out: The rescaled float depth image
 	/// * depth_factor: (optional) factor by which depth is converted to distance (by default = 1000.0 for Kinect sensor)
 	/// 
+	/// ## Note
+	/// This alternative version of [rescale_depth] function uses the following default values for its arguments:
+	/// * depth_factor: 1000.0
+	#[inline]
+	pub fn rescale_depth_def(in_: &impl core::ToInputArray, depth: i32, out: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(in_);
+		output_array_arg!(out);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rgbd_rescaleDepth_const__InputArrayR_int_const__OutputArrayR(in_.as_raw__InputArray(), depth, out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// If the input image is of type CV_16UC1 (like the Kinect one), the image is converted to floats, divided
+	/// by depth_factor to get a depth in meters, and the values 0 are converted to std::numeric_limits<float>::quiet_NaN()
+	/// Otherwise, the image is simply converted to floats
+	/// ## Parameters
+	/// * in: the depth image (if given as short int CV_U, it is assumed to be the depth in millimeters
+	///              (as done with the Microsoft Kinect), it is assumed in meters)
+	/// * depth: the desired output depth (floats or double)
+	/// * out: The rescaled float depth image
+	/// * depth_factor: (optional) factor by which depth is converted to distance (by default = 1000.0 for Kinect sensor)
+	/// 
 	/// ## C++ default parameters
 	/// * depth_factor: 1000.0
 	#[inline]
@@ -283,6 +389,34 @@ pub mod rgbd {
 		output_array_arg!(out);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_rgbd_rescaleDepth_const__InputArrayR_int_const__OutputArrayR_double(in_.as_raw__InputArray(), depth, out.as_raw__OutputArray(), depth_factor, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Warp the image: compute 3d points from the depth, transform them using given transformation,
+	/// then project color point cloud to an image plane.
+	/// This function can be used to visualize results of the Odometry algorithm.
+	/// ## Parameters
+	/// * image: The image (of CV_8UC1 or CV_8UC3 type)
+	/// * depth: The depth (of type used in depthTo3d fuction)
+	/// * mask: The mask of used pixels (of CV_8UC1), it can be empty
+	/// * Rt: The transformation that will be applied to the 3d points computed from the depth
+	/// * cameraMatrix: Camera matrix
+	/// * distCoeff: Distortion coefficients
+	/// * warpedImage: The warped image.
+	/// * warpedDepth: The warped depth.
+	/// * warpedMask: The warped mask.
+	/// 
+	/// ## Note
+	/// This alternative version of [warp_frame] function uses the following default values for its arguments:
+	/// * warped_depth: noArray()
+	/// * warped_mask: noArray()
+	#[inline]
+	pub fn warp_frame_def(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, rt: &core::Mat, camera_matrix: &core::Mat, dist_coeff: &core::Mat, warped_image: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(warped_image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rgbd_warpFrame_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), rt.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeff.as_raw_Mat(), warped_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -392,6 +526,30 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Gets points, normals and colors of current 3d mesh
+		/// 
+		/// The order of normals corresponds to order of points.
+		/// The order of points is undefined.
+		/// 
+		/// ## Parameters
+		/// * points: vector of points which are 4-float vectors
+		/// * normals: vector of normals which are 4-float vectors
+		/// * colors: vector of colors which are 4-float vectors
+		/// 
+		/// ## Note
+		/// This alternative version of [get_cloud] function uses the following default values for its arguments:
+		/// * colors: noArray()
+		#[inline]
+		fn get_cloud_def(&self, points: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(points);
+			output_array_arg!(normals);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_colored_kinfu_ColoredKinFu_getCloud_const_const__OutputArrayR_const__OutputArrayR(self.as_raw_ColoredKinfu_ColoredKinFu(), points.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Gets points of current 3d mesh
 		/// 
 		/// The order of points is undefined.
@@ -474,7 +632,7 @@ pub mod rgbd {
 	/// KinectFusion implementation
 	/// 
 	/// This class implements a 3d reconstruction algorithm described in
-	/// [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+	/// [kinectfusion](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
 	/// 
 	/// It takes a sequence of depth images taken from depth sensor
 	/// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
@@ -482,7 +640,7 @@ pub mod rgbd {
 	/// or can be Phong-rendered from given camera pose.
 	/// 
 	/// An internal representation of a model is a voxel cuboid that keeps TSDF values
-	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
 	/// There is no interface to that representation yet.
 	/// 
 	/// KinFu uses OpenCL acceleration automatically if available.
@@ -1115,6 +1273,29 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Renders a volume into an image
+		/// 
+		/// Renders a 0-surface of TSDF using Phong shading into a CV_8UC4 Mat.
+		/// Light pose is fixed in DynaFu params.
+		/// 
+		/// ## Parameters
+		/// * image: resulting image
+		/// * cameraPose: pose of camera to render from. If empty then render from current pose
+		///   which is a last frame camera pose.
+		/// 
+		/// ## Note
+		/// This alternative version of [render] function uses the following default values for its arguments:
+		/// * camera_pose: Matx44f::eye()
+		#[inline]
+		fn render_def(&self, image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dynafu_DynaFu_render_const_const__OutputArrayR(self.as_raw_Dynafu_DynaFu(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Gets points and normals of current 3d mesh
 		/// 
 		/// The order of normals corresponds to order of points.
@@ -1242,6 +1423,21 @@ pub mod rgbd {
 			output_array_arg!(norm_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dynafu_DynaFu_renderSurface_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_bool(self.as_raw_mut_Dynafu_DynaFu(), depth_image.as_raw__OutputArray(), vert_image.as_raw__OutputArray(), norm_image.as_raw__OutputArray(), warp, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [render_surface] function uses the following default values for its arguments:
+		/// * warp: true
+		#[inline]
+		fn render_surface_def(&mut self, depth_image: &mut impl core::ToOutputArray, vert_image: &mut impl core::ToOutputArray, norm_image: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(depth_image);
+			output_array_arg!(vert_image);
+			output_array_arg!(norm_image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dynafu_DynaFu_renderSurface_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_Dynafu_DynaFu(), depth_image.as_raw__OutputArray(), vert_image.as_raw__OutputArray(), norm_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1581,7 +1777,7 @@ pub mod rgbd {
 	/// KinectFusion implementation
 	/// 
 	/// This class implements a 3d reconstruction algorithm described in
-	/// [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
+	/// [kinectfusion](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_kinectfusion) paper.
 	/// 
 	/// It takes a sequence of depth images taken from depth sensor
 	/// (or any depth images source such as stereo camera matching algorithm or even raymarching renderer).
@@ -1589,7 +1785,7 @@ pub mod rgbd {
 	/// or can be Phong-rendered from given camera pose.
 	/// 
 	/// An internal representation of a model is a voxel cuboid that keeps TSDF values
-	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
+	/// which are a sort of distances to the surface (for details read the [kinectfusion](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_kinectfusion) article about TSDF).
 	/// There is no interface to that representation yet.
 	/// 
 	/// KinFu uses OpenCL acceleration automatically if available.
@@ -2275,6 +2471,19 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [integrate] function uses the following default values for its arguments:
+		/// * frame_id: 0
+		#[inline]
+		fn integrate_def(&mut self, _depth: &impl core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr) -> Result<()> {
+			input_array_arg!(_depth);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_float_const_Matx44fR_const_IntrR(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * frame_id: 0
 		#[inline]
@@ -2283,6 +2492,20 @@ pub mod rgbd {
 			input_array_arg!(_rgb);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_IntrR_const_int(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), _rgb.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, &rgb_intrinsics, frame_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [integrate] function uses the following default values for its arguments:
+		/// * frame_id: 0
+		#[inline]
+		fn integrate_def_1(&mut self, _depth: &impl core::ToInputArray, _rgb: &impl core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, rgb_intrinsics: crate::rgbd::Kinfu_Intr) -> Result<()> {
+			input_array_arg!(_depth);
+			input_array_arg!(_rgb);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_kinfu_Volume_integrate_const__InputArrayR_const__InputArrayR_float_const_Matx44fR_const_IntrR_const_IntrR(self.as_raw_mut_Kinfu_Volume(), _depth.as_raw__InputArray(), _rgb.as_raw__InputArray(), depth_factor, &camera_pose, &intrinsics, &rgb_intrinsics, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2703,12 +2926,36 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [add_edge] function uses the following default values for its arguments:
+		/// * _information: Matx66f::eye()
+		#[inline]
+		fn add_edge_def(&mut self, _source_node_id: size_t, _target_node_id: size_t, _transformation: core::Affine3f) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_kinfu_detail_PoseGraph_addEdge_size_t_size_t_const_Affine3fR(self.as_raw_mut_Kinfu_Detail_PoseGraph(), _source_node_id, _target_node_id, &_transformation, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * tc: cv::TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,1e-6)
 		#[inline]
 		fn optimize(&mut self, tc: core::TermCriteria) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_kinfu_detail_PoseGraph_optimize_const_TermCriteriaR(self.as_raw_mut_Kinfu_Detail_PoseGraph(), &tc, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [optimize] function uses the following default values for its arguments:
+		/// * tc: cv::TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,1e-6)
+		#[inline]
+		fn optimize_def(&mut self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_kinfu_detail_PoseGraph_optimize(self.as_raw_mut_Kinfu_Detail_PoseGraph(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2877,7 +3124,7 @@ pub mod rgbd {
 	/// Phong-rendered from given camera pose.
 	/// 
 	/// An internal representation of a model is a spatially hashed voxel cube that stores TSDF values
-	/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_kinectfusion) article
+	/// which represent the distance to the closest surface (for details read the [kinectfusion](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_kinectfusion) article
 	/// about TSDF). There is no interface to that representation yet.
 	/// 
 	/// For posegraph optimization, a Submap abstraction over the Volume class is created.
@@ -3634,6 +3881,34 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// \brief Detect objects by template matching.
+		/// 
+		/// Matches globally at the lowest pyramid level, then refines locally stepping up the pyramid.
+		/// 
+		/// \param      sources   Source images, one for each modality.
+		/// \param      threshold Similarity threshold, a percentage between 0 and 100.
+		/// \param[out] matches   Template matches, sorted by similarity score.
+		/// \param      class_ids If non-empty, only search for the desired object classes.
+		/// \param[out] quantized_images Optionally return vector<Mat> of quantized images.
+		/// \param      masks     The masks for consideration during matching. The masks should be CV_8UC1
+		///                       where 255 represents a valid pixel.  If non-empty, the vector must be
+		///                       the same size as sources.  Each element must be
+		///                       empty or the same size as its corresponding source.
+		/// 
+		/// ## Note
+		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// * class_ids: std::vector<String>()
+		/// * quantized_images: noArray()
+		/// * masks: std::vector<Mat>()
+		#[inline]
+		fn match__def(&self, sources: &core::Vector<core::Mat>, threshold: f32, matches: &mut core::Vector<crate::rgbd::LineMod_Match>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_linemod_Detector_match_const_const_vectorLMatGR_float_vectorLMatchGR(self.as_raw_LineMod_Detector(), sources.as_raw_VectorOfMat(), threshold, matches.as_raw_mut_VectorOfLineMod_Match(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// \brief Get the modalities used by this detector.
 		/// 
 		/// You are not permitted to add/remove modalities, but you may dynamic_cast them to
@@ -3752,6 +4027,18 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [write_classes] function uses the following default values for its arguments:
+		/// * format: "templates_%s.yml.gz"
+		#[inline]
+		fn write_classes_def(&self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_linemod_Detector_writeClasses_const(self.as_raw_LineMod_Detector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::rgbd::LineMod_Detector]
@@ -3774,6 +4061,28 @@ pub mod rgbd {
 			extern_container_arg!(class_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_addTemplate_const_vectorLMatGR_const_StringR_const_MatR_RectX(self.as_raw_mut_LineMod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), bounding_box, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// \brief Add new object template.
+		/// 
+		/// \param      sources      Source images, one for each modality.
+		/// \param      class_id     Object class ID.
+		/// \param      object_mask  Mask separating object from background.
+		/// \param[out] bounding_box Optionally return bounding box of the extracted features.
+		/// 
+		/// \return Template ID, or -1 if failed to extract a valid template.
+		/// 
+		/// ## Note
+		/// This alternative version of [add_template] function uses the following default values for its arguments:
+		/// * bounding_box: NULL
+		#[inline]
+		fn add_template_def(&mut self, sources: &core::Vector<core::Mat>, class_id: &str, object_mask: &core::Mat) -> Result<i32> {
+			extern_container_arg!(class_id);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_linemod_Detector_addTemplate_const_vectorLMatGR_const_StringR_const_MatR(self.as_raw_mut_LineMod_Detector(), sources.as_raw_VectorOfMat(), class_id.opencv_as_extern(), object_mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3812,6 +4121,19 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [read_class] function uses the following default values for its arguments:
+		/// * class_id_override: ""
+		#[inline]
+		fn read_class_def(&mut self, fn_: &core::FileNode) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_linemod_Detector_readClass_const_FileNodeR(self.as_raw_mut_LineMod_Detector(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * format: "templates_%s.yml.gz"
 		#[inline]
@@ -3819,6 +4141,18 @@ pub mod rgbd {
 			extern_container_arg!(format);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Detector_readClasses_const_vectorLStringGR_const_StringR(self.as_raw_mut_LineMod_Detector(), class_ids.as_raw_VectorOfString(), format.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [read_classes] function uses the following default values for its arguments:
+		/// * format: "templates_%s.yml.gz"
+		#[inline]
+		fn read_classes_def(&mut self, class_ids: &core::Vector<String>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_linemod_Detector_readClasses_const_vectorLStringGR(self.as_raw_mut_LineMod_Detector(), class_ids.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4118,6 +4452,25 @@ pub mod rgbd {
 		fn process(&self, src: &core::Mat, mask: &core::Mat) -> Result<core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_linemod_Modality_process_const_const_MatR_const_MatR(self.as_raw_LineMod_Modality(), src.as_raw_Mat(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_QuantizedPyramid>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// \brief Form a quantized image pyramid from a source image.
+		/// 
+		/// \param[in] src  The source image. Type depends on the modality.
+		/// \param[in] mask Optional mask. If not empty, unmasked pixels are set to zero
+		///                in quantized image and cannot be extracted as features.
+		/// 
+		/// ## Note
+		/// This alternative version of [process] function uses the following default values for its arguments:
+		/// * mask: Mat()
+		#[inline]
+		fn process_def(&self, src: &core::Mat) -> Result<core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_linemod_Modality_process_const_const_MatR(self.as_raw_LineMod_Modality(), src.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::LineMod_QuantizedPyramid>::opencv_from_extern(ret) };
@@ -4602,6 +4955,26 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Constructor
+		/// ## Parameters
+		/// * depth: the depth of the normals (only CV_32F or CV_64F)
+		/// * window_size: the window size to compute the normals: can only be 1,3,5 or 7
+		/// * method: one of the methods to use: RGBD_NORMALS_METHOD_SRI, RGBD_NORMALS_METHOD_FALS
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * window_size: 5
+		/// * method: DepthCleaner::DEPTH_CLEANER_NIL
+		#[inline]
+		pub fn new_def(depth: i32) -> Result<crate::rgbd::DepthCleaner> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_DepthCleaner_DepthCleaner_int(depth, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::DepthCleaner::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * window_size: 5
 		/// * method: DepthCleaner::DEPTH_CLEANER_NIL
@@ -4609,6 +4982,20 @@ pub mod rgbd {
 		pub fn create(depth: i32, window_size: i32, method: i32) -> Result<core::Ptr<crate::rgbd::DepthCleaner>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_DepthCleaner_create_int_int_int(depth, window_size, method, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::DepthCleaner>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * window_size: 5
+		/// * method: DepthCleaner::DEPTH_CLEANER_NIL
+		#[inline]
+		pub fn create_def(depth: i32) -> Result<core::Ptr<crate::rgbd::DepthCleaner>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_DepthCleaner_create_int(depth, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::DepthCleaner>::opencv_from_extern(ret) };
@@ -4883,6 +5270,36 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Constructor.
+		/// ## Parameters
+		/// * cameraMatrix: Camera matrix
+		/// * maxDistDiff: Correspondences between pixels of two given frames will be filtered out
+		///                    if their depth difference is larger than maxDepthDiff
+		/// * angleThreshold: Correspondence will be filtered out
+		///                    if an angle between their normals is bigger than threshold
+		/// * sigmaDepth: Depth sigma in meters for bilateral smooth
+		/// * sigmaSpatial: Spatial sigma in pixels for bilateral smooth
+		/// * kernelSize: Kernel size in pixels for bilateral smooth
+		/// * iterCounts: Count of iterations on each pyramid level
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * max_dist_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
+		/// * angle_threshold: (float)(30.*CV_PI/180.)
+		/// * sigma_depth: 0.04f
+		/// * sigma_spatial: 4.5f
+		/// * kernel_size: 7
+		/// * iter_counts: std::vector<int>()
+		#[inline]
+		pub fn new_def(camera_matrix: &core::Mat) -> Result<crate::rgbd::FastICPOdometry> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_FastICPOdometry_FastICPOdometry_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::FastICPOdometry::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * max_dist_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
 		/// * angle_threshold: (float)(30.*CV_PI/180.)
@@ -4894,6 +5311,24 @@ pub mod rgbd {
 		pub fn create(camera_matrix: &core::Mat, max_dist_diff: f32, angle_threshold: f32, sigma_depth: f32, sigma_spatial: f32, kernel_size: i32, iter_counts: &core::Vector<i32>) -> Result<core::Ptr<crate::rgbd::FastICPOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_FastICPOdometry_create_const_MatR_float_float_float_float_int_const_vectorLintGR(camera_matrix.as_raw_Mat(), max_dist_diff, angle_threshold, sigma_depth, sigma_spatial, kernel_size, iter_counts.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::FastICPOdometry>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * max_dist_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
+		/// * angle_threshold: (float)(30.*CV_PI/180.)
+		/// * sigma_depth: 0.04f
+		/// * sigma_spatial: 4.5f
+		/// * kernel_size: 7
+		/// * iter_counts: std::vector<int>()
+		#[inline]
+		pub fn create_def(camera_matrix: &core::Mat) -> Result<core::Ptr<crate::rgbd::FastICPOdometry>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_FastICPOdometry_create_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::FastICPOdometry>::opencv_from_extern(ret) };
@@ -5189,6 +5624,35 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Constructor.
+		/// ## Parameters
+		/// * cameraMatrix: Camera matrix
+		/// * minDepth: Pixels with depth less than minDepth will not be used
+		/// * maxDepth: Pixels with depth larger than maxDepth will not be used
+		/// * maxDepthDiff: Correspondences between pixels of two given frames will be filtered out
+		///                    if their depth difference is larger than maxDepthDiff
+		/// * maxPointsPart: The method uses a random pixels subset of size frameWidth x frameHeight x pointsPart
+		/// * iterCounts: Count of iterations on each pyramid level.
+		/// * transformType: Class of trasformation
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
+		/// * max_depth: Odometry::DEFAULT_MAX_DEPTH()
+		/// * max_depth_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
+		/// * max_points_part: Odometry::DEFAULT_MAX_POINTS_PART()
+		/// * iter_counts: std::vector<int>()
+		/// * transform_type: Odometry::RIGID_BODY_MOTION
+		#[inline]
+		pub fn new_def(camera_matrix: &core::Mat) -> Result<crate::rgbd::ICPOdometry> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_ICPOdometry_ICPOdometry_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::ICPOdometry::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * camera_matrix: Mat()
 		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
@@ -5201,6 +5665,25 @@ pub mod rgbd {
 		pub fn create(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, transform_type: i32) -> Result<core::Ptr<crate::rgbd::ICPOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_ICPOdometry_create_const_MatR_float_float_float_float_const_vectorLintGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), transform_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::ICPOdometry>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * camera_matrix: Mat()
+		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
+		/// * max_depth: Odometry::DEFAULT_MAX_DEPTH()
+		/// * max_depth_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
+		/// * max_points_part: Odometry::DEFAULT_MAX_POINTS_PART()
+		/// * iter_counts: std::vector<int>()
+		/// * transform_type: Odometry::RIGID_BODY_MOTION
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::rgbd::ICPOdometry>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_ICPOdometry_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::ICPOdometry>::opencv_from_extern(ret) };
@@ -5256,6 +5739,38 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Method to compute a transformation from the source frame to the destination one.
+		/// Some odometry algorithms do not used some data of frames (eg. ICP does not use images).
+		/// In such case corresponding arguments can be set as empty Mat.
+		/// The method returns true if all internal computations were possible (e.g. there were enough correspondences,
+		/// system of equations has a solution, etc) and resulting transformation satisfies some test if it's provided
+		/// by the Odometry inheritor implementation (e.g. thresholds for maximum translation and rotation).
+		/// ## Parameters
+		/// * srcImage: Image data of the source frame (CV_8UC1)
+		/// * srcDepth: Depth data of the source frame (CV_32FC1, in meters)
+		/// * srcMask: Mask that sets which pixels have to be used from the source frame (CV_8UC1)
+		/// * dstImage: Image data of the destination frame (CV_8UC1)
+		/// * dstDepth: Depth data of the destination frame (CV_32FC1, in meters)
+		/// * dstMask: Mask that sets which pixels have to be used from the destination frame (CV_8UC1)
+		/// * Rt: Resulting transformation from the source frame to the destination one (rigid body motion):
+		///   dst_p = Rt * src_p, where dst_p is a homogeneous point in the destination frame and src_p is
+		///   homogeneous point in the source frame,
+		///   Rt is 4x4 matrix of CV_64FC1 type.
+		/// * initRt: Initial transformation from the source frame to the destination one (optional)
+		/// 
+		/// ## Note
+		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// * init_rt: Mat()
+		#[inline]
+		fn compute_def(&self, src_image: &core::Mat, src_depth: &core::Mat, src_mask: &core::Mat, dst_image: &core::Mat, dst_depth: &core::Mat, dst_mask: &core::Mat, rt: &mut impl core::ToOutputArray) -> Result<bool> {
+			output_array_arg!(rt);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_Odometry_compute_const_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const_MatR_const__OutputArrayR(self.as_raw_Odometry(), src_image.as_raw_Mat(), src_depth.as_raw_Mat(), src_mask.as_raw_Mat(), dst_image.as_raw_Mat(), dst_depth.as_raw_Mat(), dst_mask.as_raw_Mat(), rt.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// One more method to compute a transformation from the source frame to the destination one.
 		/// It is designed to save on computing the frame data (image pyramids, normals, etc.).
 		/// 
@@ -5266,6 +5781,22 @@ pub mod rgbd {
 			output_array_arg!(rt);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_Odometry_compute_const_PtrLOdometryFrameGR_PtrLOdometryFrameGR_const__OutputArrayR_const_MatR(self.as_raw_Odometry(), src_frame.as_raw_mut_PtrOfOdometryFrame(), dst_frame.as_raw_mut_PtrOfOdometryFrame(), rt.as_raw__OutputArray(), init_rt.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// One more method to compute a transformation from the source frame to the destination one.
+		/// It is designed to save on computing the frame data (image pyramids, normals, etc.).
+		/// 
+		/// ## Note
+		/// This alternative version of [compute2] function uses the following default values for its arguments:
+		/// * init_rt: Mat()
+		#[inline]
+		fn compute2_def(&self, src_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, dst_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, rt: &mut impl core::ToOutputArray) -> Result<bool> {
+			output_array_arg!(rt);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_Odometry_compute_const_PtrLOdometryFrameGR_PtrLOdometryFrameGR_const__OutputArrayR(self.as_raw_Odometry(), src_frame.as_raw_mut_PtrOfOdometryFrame(), dst_frame.as_raw_mut_PtrOfOdometryFrame(), rt.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5663,6 +6194,21 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * mask: Mat()
+		/// * normals: Mat()
+		/// * id: -1
+		#[inline]
+		pub fn new_def(image: &core::Mat, depth: &core::Mat) -> Result<crate::rgbd::OdometryFrame> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_OdometryFrame_OdometryFrame_const_MatR_const_MatR(image.as_raw_Mat(), depth.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::OdometryFrame::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * image: Mat()
 		/// * depth: Mat()
@@ -5673,6 +6219,23 @@ pub mod rgbd {
 		pub fn create(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, normals: &core::Mat, id: i32) -> Result<core::Ptr<crate::rgbd::OdometryFrame>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_OdometryFrame_create_const_MatR_const_MatR_const_MatR_const_MatR_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::OdometryFrame>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * image: Mat()
+		/// * depth: Mat()
+		/// * mask: Mat()
+		/// * normals: Mat()
+		/// * id: -1
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::rgbd::OdometryFrame>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_OdometryFrame_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::OdometryFrame>::opencv_from_extern(ret) };
@@ -5839,6 +6402,21 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * mask: Mat()
+		/// * normals: Mat()
+		/// * id: -1
+		#[inline]
+		pub fn new_def(image: &core::Mat, depth: &core::Mat) -> Result<crate::rgbd::RgbdFrame> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdFrame_RgbdFrame_const_MatR_const_MatR(image.as_raw_Mat(), depth.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::RgbdFrame::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * image: Mat()
 		/// * depth: Mat()
@@ -5849,6 +6427,23 @@ pub mod rgbd {
 		pub fn create(image: &core::Mat, depth: &core::Mat, mask: &core::Mat, normals: &core::Mat, id: i32) -> Result<core::Ptr<crate::rgbd::RgbdFrame>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdFrame_create_const_MatR_const_MatR_const_MatR_const_MatR_int(image.as_raw_Mat(), depth.as_raw_Mat(), mask.as_raw_Mat(), normals.as_raw_Mat(), id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdFrame>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * image: Mat()
+		/// * depth: Mat()
+		/// * mask: Mat()
+		/// * normals: Mat()
+		/// * id: -1
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::rgbd::RgbdFrame>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdFrame_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdFrame>::opencv_from_extern(ret) };
@@ -6168,6 +6763,38 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Constructor.
+		/// ## Parameters
+		/// * cameraMatrix: Camera matrix
+		/// * minDepth: Pixels with depth less than minDepth will not be used
+		/// * maxDepth: Pixels with depth larger than maxDepth will not be used
+		/// * maxDepthDiff: Correspondences between pixels of two given frames will be filtered out
+		///                    if their depth difference is larger than maxDepthDiff
+		/// * maxPointsPart: The method uses a random pixels subset of size frameWidth x frameHeight x pointsPart
+		/// * iterCounts: Count of iterations on each pyramid level.
+		/// * minGradientMagnitudes: For each pyramid level the pixels will be filtered out
+		///                              if they have gradient magnitude less than minGradientMagnitudes[level].
+		/// * transformType: Class of trasformation
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
+		/// * max_depth: Odometry::DEFAULT_MAX_DEPTH()
+		/// * max_depth_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
+		/// * max_points_part: Odometry::DEFAULT_MAX_POINTS_PART()
+		/// * iter_counts: std::vector<int>()
+		/// * min_gradient_magnitudes: std::vector<float>()
+		/// * transform_type: Odometry::RIGID_BODY_MOTION
+		#[inline]
+		pub fn new_def(camera_matrix: &core::Mat) -> Result<crate::rgbd::RgbdICPOdometry> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdICPOdometry_RgbdICPOdometry_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::RgbdICPOdometry::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * camera_matrix: Mat()
 		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
@@ -6181,6 +6808,26 @@ pub mod rgbd {
 		pub fn create(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, max_points_part: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, transform_type: i32) -> Result<core::Ptr<crate::rgbd::RgbdICPOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdICPOdometry_create_const_MatR_float_float_float_float_const_vectorLintGR_const_vectorLfloatGR_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, max_points_part, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), transform_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdICPOdometry>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * camera_matrix: Mat()
+		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
+		/// * max_depth: Odometry::DEFAULT_MAX_DEPTH()
+		/// * max_depth_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
+		/// * max_points_part: Odometry::DEFAULT_MAX_POINTS_PART()
+		/// * iter_counts: std::vector<int>()
+		/// * min_gradient_magnitudes: std::vector<float>()
+		/// * transform_type: Odometry::RIGID_BODY_MOTION
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::rgbd::RgbdICPOdometry>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdICPOdometry_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdICPOdometry>::opencv_from_extern(ret) };
@@ -6422,6 +7069,30 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Constructor
+		/// ## Parameters
+		/// * rows: the number of rows of the depth image normals will be computed on
+		/// * cols: the number of cols of the depth image normals will be computed on
+		/// * depth: the depth of the normals (only CV_32F or CV_64F)
+		/// * K: the calibration matrix to use
+		/// * window_size: the window size to compute the normals: can only be 1,3,5 or 7
+		/// * method: one of the methods to use: RGBD_NORMALS_METHOD_SRI, RGBD_NORMALS_METHOD_FALS
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * window_size: 5
+		/// * method: RgbdNormals::RGBD_NORMALS_METHOD_FALS
+		#[inline]
+		pub fn new_def(rows: i32, cols: i32, depth: i32, k: &impl core::ToInputArray) -> Result<crate::rgbd::RgbdNormals> {
+			input_array_arg!(k);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdNormals_RgbdNormals_int_int_int_const__InputArrayR(rows, cols, depth, k.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::RgbdNormals::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * window_size: 5
 		/// * method: RgbdNormals::RGBD_NORMALS_METHOD_FALS
@@ -6430,6 +7101,21 @@ pub mod rgbd {
 			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdNormals_create_int_int_int_const__InputArrayR_int_int(rows, cols, depth, k.as_raw__InputArray(), window_size, method, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdNormals>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * window_size: 5
+		/// * method: RgbdNormals::RGBD_NORMALS_METHOD_FALS
+		#[inline]
+		pub fn create_def(rows: i32, cols: i32, depth: i32, k: &impl core::ToInputArray) -> Result<core::Ptr<crate::rgbd::RgbdNormals>> {
+			input_array_arg!(k);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdNormals_create_int_int_int_const__InputArrayR(rows, cols, depth, k.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdNormals>::opencv_from_extern(ret) };
@@ -6735,6 +7421,38 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Constructor.
+		/// ## Parameters
+		/// * cameraMatrix: Camera matrix
+		/// * minDepth: Pixels with depth less than minDepth will not be used (in meters)
+		/// * maxDepth: Pixels with depth larger than maxDepth will not be used (in meters)
+		/// * maxDepthDiff: Correspondences between pixels of two given frames will be filtered out
+		///                    if their depth difference is larger than maxDepthDiff (in meters)
+		/// * iterCounts: Count of iterations on each pyramid level.
+		/// * minGradientMagnitudes: For each pyramid level the pixels will be filtered out
+		///                              if they have gradient magnitude less than minGradientMagnitudes[level].
+		/// * maxPointsPart: The method uses a random pixels subset of size frameWidth x frameHeight x pointsPart
+		/// * transformType: Class of transformation
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
+		/// * max_depth: Odometry::DEFAULT_MAX_DEPTH()
+		/// * max_depth_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
+		/// * iter_counts: std::vector<int>()
+		/// * min_gradient_magnitudes: std::vector<float>()
+		/// * max_points_part: Odometry::DEFAULT_MAX_POINTS_PART()
+		/// * transform_type: Odometry::RIGID_BODY_MOTION
+		#[inline]
+		pub fn new_def(camera_matrix: &core::Mat) -> Result<crate::rgbd::RgbdOdometry> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdOdometry_RgbdOdometry_const_MatR(camera_matrix.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::RgbdOdometry::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * camera_matrix: Mat()
 		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
@@ -6748,6 +7466,26 @@ pub mod rgbd {
 		pub fn create(camera_matrix: &core::Mat, min_depth: f32, max_depth: f32, max_depth_diff: f32, iter_counts: &core::Vector<i32>, min_gradient_magnitudes: &core::Vector<f32>, max_points_part: f32, transform_type: i32) -> Result<core::Ptr<crate::rgbd::RgbdOdometry>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdOdometry_create_const_MatR_float_float_float_const_vectorLintGR_const_vectorLfloatGR_float_int(camera_matrix.as_raw_Mat(), min_depth, max_depth, max_depth_diff, iter_counts.as_raw_VectorOfi32(), min_gradient_magnitudes.as_raw_VectorOff32(), max_points_part, transform_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdOdometry>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * camera_matrix: Mat()
+		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
+		/// * max_depth: Odometry::DEFAULT_MAX_DEPTH()
+		/// * max_depth_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
+		/// * iter_counts: std::vector<int>()
+		/// * min_gradient_magnitudes: std::vector<float>()
+		/// * max_points_part: Odometry::DEFAULT_MAX_POINTS_PART()
+		/// * transform_type: Odometry::RIGID_BODY_MOTION
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::rgbd::RgbdOdometry>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdOdometry_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdOdometry>::opencv_from_extern(ret) };
@@ -6990,6 +7728,19 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * method: RgbdPlane::RGBD_PLANE_METHOD_DEFAULT
+		#[inline]
+		pub fn new_def() -> Result<crate::rgbd::RgbdPlane> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdPlane_RgbdPlane(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::RgbdPlane::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Constructor
 		/// ## Parameters
 		/// * block_size: The size of the blocks to look at for a stable MSE
@@ -7014,6 +7765,31 @@ pub mod rgbd {
 			Ok(ret)
 		}
 		
+		/// Constructor
+		/// ## Parameters
+		/// * block_size: The size of the blocks to look at for a stable MSE
+		/// * min_size: The minimum size of a cluster to be considered a plane
+		/// * threshold: The maximum distance of a point from a plane to belong to it (in meters)
+		/// * sensor_error_a: coefficient of the sensor error. 0 by default, 0.0075 for a Kinect
+		/// * sensor_error_b: coefficient of the sensor error. 0 by default
+		/// * sensor_error_c: coefficient of the sensor error. 0 by default
+		/// * method: The method to use to compute the planes.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * sensor_error_a: 0
+		/// * sensor_error_b: 0
+		/// * sensor_error_c: 0
+		#[inline]
+		pub fn new_def_1(method: i32, block_size: i32, min_size: i32, threshold: f64) -> Result<crate::rgbd::RgbdPlane> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdPlane_RgbdPlane_int_int_int_double(method, block_size, min_size, threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::rgbd::RgbdPlane::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * sensor_error_a: 0
 		/// * sensor_error_b: 0
@@ -7022,6 +7798,21 @@ pub mod rgbd {
 		pub fn create(method: i32, block_size: i32, min_size: i32, threshold: f64, sensor_error_a: f64, sensor_error_b: f64, sensor_error_c: f64) -> Result<core::Ptr<crate::rgbd::RgbdPlane>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rgbd_RgbdPlane_create_int_int_int_double_double_double_double(method, block_size, min_size, threshold, sensor_error_a, sensor_error_b, sensor_error_c, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdPlane>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * sensor_error_a: 0
+		/// * sensor_error_b: 0
+		/// * sensor_error_c: 0
+		#[inline]
+		pub fn create_def(method: i32, block_size: i32, min_size: i32, threshold: f64) -> Result<core::Ptr<crate::rgbd::RgbdPlane>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rgbd_RgbdPlane_create_int_int_int_double(method, block_size, min_size, threshold, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rgbd::RgbdPlane>::opencv_from_extern(ret) };

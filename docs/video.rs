@@ -26,7 +26,7 @@ pub mod video {
 	/// * criteria: Stop criteria for the underlying meanShift.
 	/// returns
 	/// (in old interfaces) Number of iterations CAMSHIFT took to converge
-	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
+	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
 	/// object center using meanShift and then adjusts the window size and finds the optimal rotation. The
 	/// function returns the rotated rectangle structure that includes the object position, size, and
 	/// orientation. The next position of the search window can be obtained with RotatedRect::boundingRect()
@@ -42,6 +42,40 @@ pub mod video {
 		input_array_arg!(prob_image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_CamShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Constructs the image pyramid which can be passed to calcOpticalFlowPyrLK.
+	/// 
+	/// ## Parameters
+	/// * img: 8-bit input image.
+	/// * pyramid: output pyramid.
+	/// * winSize: window size of optical flow algorithm. Must be not less than winSize argument of
+	/// calcOpticalFlowPyrLK. It is needed to calculate required padding for pyramid levels.
+	/// * maxLevel: 0-based maximal pyramid level number.
+	/// * withDerivatives: set to precompute gradients for the every pyramid level. If pyramid is
+	/// constructed without the gradients then calcOpticalFlowPyrLK will calculate them internally.
+	/// * pyrBorder: the border mode for pyramid layers.
+	/// * derivBorder: the border mode for gradients.
+	/// * tryReuseInputImage: put ROI of input image into the pyramid if possible. You can pass false
+	/// to force data copying.
+	/// ## Returns
+	/// number of levels in constructed pyramid. Can be less than maxLevel.
+	/// 
+	/// ## Note
+	/// This alternative version of [build_optical_flow_pyramid] function uses the following default values for its arguments:
+	/// * with_derivatives: true
+	/// * pyr_border: BORDER_REFLECT_101
+	/// * deriv_border: BORDER_CONSTANT
+	/// * try_reuse_input_image: true
+	#[inline]
+	pub fn build_optical_flow_pyramid_def(img: &impl core::ToInputArray, pyramid: &mut impl core::ToOutputArray, win_size: core::Size, max_level: i32) -> Result<i32> {
+		input_array_arg!(img);
+		output_array_arg!(pyramid);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), win_size.opencv_as_extern(), max_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -108,7 +142,7 @@ pub mod video {
 	///      normally, winsize for a Gaussian window should be set to a larger value to achieve the same
 	///      level of robustness.
 	/// 
-	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
+	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bprev%7D%20%28y%2Cx%29%20%20%5Csim%20%5Ctexttt%7Bnext%7D%20%28%20y%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B1%5D%2C%20%20x%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B0%5D%29)
 	/// 
@@ -162,13 +196,84 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	/// 
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// 
+	/// 
+	/// Note:
+	/// 
+	/// *   An example using the Lucas-Kanade optical flow algorithm can be found at
+	///    opencv_source_code/samples/cpp/lkdemo.cpp
+	/// *   (Python) An example using the Lucas-Kanade optical flow algorithm can be found at
+	///    opencv_source_code/samples/python/lk_track.py
+	/// *   (Python) An example using the Lucas-Kanade tracker for homography matching can be found at
+	///    opencv_source_code/samples/python/lk_homography.py
+	/// 
+	/// ## Note
+	/// This alternative version of [calc_optical_flow_pyr_lk] function uses the following default values for its arguments:
+	/// * win_size: Size(21,21)
+	/// * max_level: 3
+	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,0.01)
+	/// * flags: 0
+	/// * min_eig_threshold: 1e-4
+	#[inline]
+	pub fn calc_optical_flow_pyr_lk_def(prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, err: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(prev_img);
+		input_array_arg!(next_img);
+		input_array_arg!(prev_pts);
+		input_output_array_arg!(next_pts);
+		output_array_arg!(status);
+		output_array_arg!(err);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates an optical flow for a sparse feature set using the iterative Lucas-Kanade method with
+	/// pyramids.
+	/// 
+	/// ## Parameters
+	/// * prevImg: first 8-bit input image or pyramid constructed by buildOpticalFlowPyramid.
+	/// * nextImg: second input image or pyramid of the same size and the same type as prevImg.
+	/// * prevPts: vector of 2D points for which the flow needs to be found; point coordinates must be
+	/// single-precision floating-point numbers.
+	/// * nextPts: output vector of 2D points (with single-precision floating-point coordinates)
+	/// containing the calculated new positions of input features in the second image; when
+	/// OPTFLOW_USE_INITIAL_FLOW flag is passed, the vector must have the same size as in the input.
+	/// * status: output status vector (of unsigned chars); each element of the vector is set to 1 if
+	/// the flow for the corresponding features has been found, otherwise, it is set to 0.
+	/// * err: output vector of errors; each element of the vector is set to an error for the
+	/// corresponding feature, type of the error measure can be set in flags parameter; if the flow wasn't
+	/// found then the error is not defined (use the status parameter to find such cases).
+	/// * winSize: size of the search window at each pyramid level.
+	/// * maxLevel: 0-based maximal pyramid level number; if set to 0, pyramids are not used (single
+	/// level), if set to 1, two levels are used, and so on; if pyramids are passed to input then
+	/// algorithm will use as many levels as pyramids have but no more than maxLevel.
+	/// * criteria: parameter, specifying the termination criteria of the iterative search algorithm
+	/// (after the specified maximum number of iterations criteria.maxCount or when the search window
+	/// moves by less than criteria.epsilon.
+	/// * flags: operation flags:
+	///  *   **OPTFLOW_USE_INITIAL_FLOW** uses initial estimations, stored in nextPts; if the flag is
+	///      not set, then prevPts is copied to nextPts and is considered the initial estimate.
+	///  *   **OPTFLOW_LK_GET_MIN_EIGENVALS** use minimum eigen values as an error measure (see
+	///      minEigThreshold description); if the flag is not set, then L1 distance between patches
+	///      around the original and a moved point, divided by number of pixels in a window, is used as a
+	///      error measure.
+	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
+	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
+	/// performance boost.
+	/// 
+	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
+	/// [Bouguet00](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	/// 
 	/// 
 	/// Note:
@@ -201,7 +306,31 @@ pub mod video {
 		Ok(ret)
 	}
 	
-	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_EP08) .
+	/// 
+	/// ## Parameters
+	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
+	/// * inputImage: single-channel input image to be warped to provide an image similar to
+	///  templateImage, same type as templateImage.
+	/// * inputMask: An optional mask to indicate valid values of inputImage.
+	/// ## See also
+	/// findTransformECC
+	/// 
+	/// ## Note
+	/// This alternative version of [compute_ecc] function uses the following default values for its arguments:
+	/// * input_mask: noArray()
+	#[inline]
+	pub fn compute_ecc_def(template_image: &impl core::ToInputArray, input_image: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(template_image);
+		input_array_arg!(input_image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_computeECC_const__InputArrayR_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_EP08) .
 	/// 
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -234,6 +363,30 @@ pub mod video {
 	/// * detectShadows: If true, the algorithm will detect shadows and mark them. It decreases the
 	/// speed a bit, so if you do not need this feature, set the parameter to false.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_knn] function uses the following default values for its arguments:
+	/// * history: 500
+	/// * dist2_threshold: 400.0
+	/// * detect_shadows: true
+	#[inline]
+	pub fn create_background_subtractor_knn_def() -> Result<core::Ptr<crate::video::BackgroundSubtractorKNN>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createBackgroundSubtractorKNN(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorKNN>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates KNN Background Subtractor
+	/// 
+	/// ## Parameters
+	/// * history: Length of the history.
+	/// * dist2Threshold: Threshold on the squared distance between the pixel and the sample to decide
+	/// whether a pixel is close to that sample. This parameter does not affect the background update.
+	/// * detectShadows: If true, the algorithm will detect shadows and mark them. It decreases the
+	/// speed a bit, so if you do not need this feature, set the parameter to false.
+	/// 
 	/// ## C++ default parameters
 	/// * history: 500
 	/// * dist2_threshold: 400.0
@@ -245,6 +398,31 @@ pub mod video {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorKNN>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates MOG2 Background Subtractor
+	/// 
+	/// ## Parameters
+	/// * history: Length of the history.
+	/// * varThreshold: Threshold on the squared Mahalanobis distance between the pixel and the model
+	/// to decide whether a pixel is well described by the background model. This parameter does not
+	/// affect the background update.
+	/// * detectShadows: If true, the algorithm will detect shadows and mark them. It decreases the
+	/// speed a bit, so if you do not need this feature, set the parameter to false.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_mog2] function uses the following default values for its arguments:
+	/// * history: 500
+	/// * var_threshold: 16
+	/// * detect_shadows: true
+	#[inline]
+	pub fn create_background_subtractor_mog2_def() -> Result<core::Ptr<crate::video::BackgroundSubtractorMOG2>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createBackgroundSubtractorMOG2(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorMOG2>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -315,7 +493,26 @@ pub mod video {
 		Ok(ret)
 	}
 	
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [find_transform_ecc_1] function uses the following default values for its arguments:
+	/// * motion_type: MOTION_AFFINE
+	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,50,0.001)
+	/// * input_mask: noArray()
+	#[inline]
+	pub fn find_transform_ecc_1_def(template_image: &impl core::ToInputArray, input_image: &impl core::ToInputArray, warp_matrix: &mut impl core::ToInputOutputArray) -> Result<f64> {
+		input_array_arg!(template_image);
+		input_array_arg!(input_image);
+		input_output_array_arg!(warp_matrix);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_EP08) .
 	/// 
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -340,7 +537,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	/// 
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_EP08)), that is
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	/// 
@@ -385,7 +582,7 @@ pub mod video {
 		Ok(ret)
 	}
 	
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_EP08) .
 	/// 
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -410,7 +607,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	/// 
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_EP08)), that is
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	/// 
@@ -561,6 +758,30 @@ pub mod video {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractor_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractor(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Computes a foreground mask.
+		/// 
+		/// ## Parameters
+		/// * image: Next video frame.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BackgroundSubtractor_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractor(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -793,7 +1014,7 @@ pub mod video {
 	
 	/// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 	/// 
-	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	/// Very efficient if number of foreground pixels is low.
 	pub struct BackgroundSubtractorKNN {
 		ptr: *mut c_void
@@ -1148,12 +1369,36 @@ pub mod video {
 			Ok(ret)
 		}
 		
+		/// Computes a foreground mask.
+		/// 
+		/// ## Parameters
+		/// * image: Next video frame. Floating point frame will be used without scaling and should be in range ![inline formula](https://latex.codecogs.com/png.latex?%5B0%2C255%5D).
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	/// 
-	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
-	/// and [Zivkovic2006](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Zivkovic2004)
+	/// and [Zivkovic2006](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	pub struct BackgroundSubtractorMOG2 {
 		ptr: *mut c_void
 	}
@@ -1486,7 +1731,7 @@ pub mod video {
 	/// DIS optical flow algorithm.
 	/// 
 	/// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
-	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
+	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
 	/// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
 	/// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
 	/// 
@@ -1545,6 +1790,24 @@ pub mod video {
 		pub fn create(preset: i32) -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_create_int(preset, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates an instance of DISOpticalFlow
+		/// 
+		/// ## Parameters
+		/// * preset: one of PRESET_ULTRAFAST, PRESET_FAST and PRESET_MEDIUM
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * preset: DISOpticalFlow::PRESET_FAST
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DISOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
@@ -1872,6 +2135,26 @@ pub mod video {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * num_levels: 5
+		/// * pyr_scale: 0.5
+		/// * fast_pyramids: false
+		/// * win_size: 13
+		/// * num_iters: 10
+		/// * poly_n: 5
+		/// * poly_sigma: 1.1
+		/// * flags: 0
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::FarnebackOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FarnebackOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::FarnebackOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { FarnebackOpticalFlow, core::Algorithm, cv_FarnebackOpticalFlow_to_Algorithm }
@@ -2131,6 +2414,27 @@ pub mod video {
 			Ok(ret)
 		}
 		
+		/// Re-initializes Kalman filter. The previous content is destroyed.
+		/// 
+		/// ## Parameters
+		/// * dynamParams: Dimensionality of the state.
+		/// * measureParams: Dimensionality of the measurement.
+		/// * controlParams: Dimensionality of the control vector.
+		/// * type: Type of the created matrices that should be CV_32F or CV_64F.
+		/// 
+		/// ## Note
+		/// This alternative version of [init] function uses the following default values for its arguments:
+		/// * control_params: 0
+		/// * typ: CV_32F
+		#[inline]
+		fn init_def(&mut self, dynam_params: i32, measure_params: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KalmanFilter_init_int_int(self.as_raw_mut_KalmanFilter(), dynam_params, measure_params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Computes a predicted state.
 		/// 
 		/// ## Parameters
@@ -2142,6 +2446,24 @@ pub mod video {
 		fn predict(&mut self, control: &core::Mat) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_predict_const_MatR(self.as_raw_mut_KalmanFilter(), control.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Computes a predicted state.
+		/// 
+		/// ## Parameters
+		/// * control: The optional input control
+		/// 
+		/// ## Note
+		/// This alternative version of [predict] function uses the following default values for its arguments:
+		/// * control: Mat()
+		#[inline]
+		fn predict_def(&mut self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KalmanFilter_predict(self.as_raw_mut_KalmanFilter(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -2167,7 +2489,7 @@ pub mod video {
 	/// Kalman filter class.
 	/// 
 	/// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-	/// [Welch95](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+	/// [Welch95](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
 	/// an extended Kalman filter functionality.
 	/// 
 	/// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
@@ -2220,6 +2542,27 @@ pub mod video {
 		pub fn new(dynam_params: i32, measure_params: i32, control_params: i32, typ: i32) -> Result<crate::video::KalmanFilter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int_int_int(dynam_params, measure_params, control_params, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * dynamParams: Dimensionality of the state.
+		/// * measureParams: Dimensionality of the measurement.
+		/// * controlParams: Dimensionality of the control vector.
+		/// * type: Type of the created matrices that should be CV_32F or CV_64F.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * control_params: 0
+		/// * typ: CV_32F
+		#[inline]
+		pub fn new_def(dynam_params: i32, measure_params: i32) -> Result<crate::video::KalmanFilter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int(dynam_params, measure_params, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
@@ -2284,6 +2627,34 @@ pub mod video {
 			output_array_arg!(err);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Calculates a sparse optical flow.
+		/// 
+		/// ## Parameters
+		/// * prevImg: First input image.
+		/// * nextImg: Second input image of the same size and the same type as prevImg.
+		/// * prevPts: Vector of 2D points for which the flow needs to be found.
+		/// * nextPts: Output vector of 2D points containing the calculated new positions of input features in the second image.
+		/// * status: Output status vector. Each element of the vector is set to 1 if the
+		///               flow for the corresponding features has been found. Otherwise, it is set to 0.
+		/// * err: Optional output vector that contains error response for each point (inverse confidence).
+		/// 
+		/// ## Note
+		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// * err: cv::noArray()
+		#[inline]
+		fn calc_def(&mut self, prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(prev_img);
+			input_array_arg!(next_img);
+			input_array_arg!(prev_pts);
+			input_output_array_arg!(next_pts);
+			output_array_arg!(status);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR(self.as_raw_mut_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2502,6 +2873,23 @@ pub mod video {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * win_size: Size(21,21)
+		/// * max_level: 3
+		/// * crit: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,0.01)
+		/// * flags: 0
+		/// * min_eig_threshold: 1e-4
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::SparsePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparsePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { SparsePyrLKOpticalFlow, core::Algorithm, cv_SparsePyrLKOpticalFlow_to_Algorithm }
@@ -2675,6 +3063,23 @@ pub mod video {
 			Ok(ret)
 		}
 		
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: DaSiamRPN parameters TrackerDaSiamRPN::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * parameters: TrackerDaSiamRPN::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerDaSiamRPN>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerDaSiamRPN_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerDaSiamRPN>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { TrackerDaSiamRPN, crate::video::Tracker, cv_TrackerDaSiamRPN_to_Tracker }
@@ -2835,7 +3240,7 @@ pub mod video {
 	
 	/// the GOTURN (Generic Object Tracking Using Regression Networks) tracker
 	/// 
-	/// GOTURN ([GOTURN](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
+	/// GOTURN ([GOTURN](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
 	/// GOTURN is much faster due to offline training without online fine-tuning nature.
 	/// GOTURN tracker addresses the problem of single target tracking: given a bounding box label of an object in the first frame of the video,
 	/// we track that object through the rest of the video. NOTE: Current method of GOTURN does not handle occlusions; however, it is fairly
@@ -2889,6 +3294,23 @@ pub mod video {
 		pub fn create(parameters: &crate::video::TrackerGOTURN_Params) -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerGOTURN_create_const_ParamsR(parameters.as_raw_TrackerGOTURN_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: GOTURN parameters TrackerGOTURN::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * parameters: TrackerGOTURN::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerGOTURN_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
@@ -3016,7 +3438,7 @@ pub mod video {
 	/// background.
 	/// 
 	/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
-	/// based on [MIL](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MIL) .
+	/// based on [MIL](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MIL) .
 	/// 
 	/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
 	pub struct TrackerMIL {
@@ -3061,6 +3483,23 @@ pub mod video {
 		pub fn create(parameters: crate::video::TrackerMIL_Params) -> Result<core::Ptr<crate::video::TrackerMIL>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerMIL_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerMIL>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create MIL tracker instance
+		/// ## Parameters
+		/// * parameters: MIL parameters TrackerMIL::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * parameters: TrackerMIL::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerMIL>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerMIL_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerMIL>::opencv_from_extern(ret) };
@@ -3183,6 +3622,23 @@ pub mod video {
 		pub fn create(parameters: &crate::video::TrackerNano_Params) -> Result<core::Ptr<crate::video::TrackerNano>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerNano_create_const_ParamsR(parameters.as_raw_TrackerNano_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerNano>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: NanoTrack parameters TrackerNano::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * parameters: TrackerNano::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerNano>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerNano_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerNano>::opencv_from_extern(ret) };
@@ -3501,7 +3957,7 @@ pub mod video {
 	/// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
 	/// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
 	/// influence of outliers. A complete formulation and a description of the minimization
-	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Brox2004)
+	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Brox2004)
 	pub struct VariationalRefinement {
 		ptr: *mut c_void
 	}

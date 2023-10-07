@@ -752,6 +752,26 @@ pub mod mcc {
 			Ok(ret)
 		}
 		
+		/// Infer using fitting ccm.
+		/// ## Parameters
+		/// * img: the input image.
+		/// * islinear: default false.
+		/// ## Returns
+		/// the output array.
+		/// 
+		/// ## Note
+		/// This alternative version of [infer] function uses the following default values for its arguments:
+		/// * islinear: false
+		#[inline]
+		fn infer_def(&mut self, img: &core::Mat) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_infer_const_MatR(self.as_raw_mut_ColorCorrectionModel(), img.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Core class of ccm model
@@ -1092,6 +1112,40 @@ pub mod mcc {
 		
 		/// \brief Find the ColorCharts in the given image.
 		/// 
+		/// The found charts are not returned but instead stored in the
+		/// detector, these can be accessed later on using getBestColorChecker()
+		/// and getListColorChecker()
+		/// \param image image in color space BGR
+		/// \param chartType type of the chart to detect
+		/// \param regionsOfInterest regions of image to look for the chart, if
+		///                          it is empty, charts are looked for in the
+		///                          entire image
+		/// \param nc number of charts in the image, if you don't know the exact
+		///           then keeping this number high helps.
+		/// \param useNet if it is true the network provided using the setNet()
+		///               is used for preliminary search for regions where chart
+		///               could be present, inside the regionsOfInterest provied.
+		/// \param params parameters of the detection system. More information
+		///               about them can be found in the struct DetectorParameters.
+		/// \return true if atleast one chart is detected otherwise false
+		/// 
+		/// ## Note
+		/// This alternative version of [process_with_roi] function uses the following default values for its arguments:
+		/// * nc: 1
+		/// * use_net: false
+		/// * params: DetectorParameters::create()
+		#[inline]
+		fn process_with_roi_def(&mut self, image: &impl core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>) -> Result<bool> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vectorLRectGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// \brief Find the ColorCharts in the given image.
+		/// 
 		/// Differs from the above one only in the arguments.
 		/// 
 		/// This version searches for the chart in the full image.
@@ -1119,6 +1173,41 @@ pub mod mcc {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// \brief Find the ColorCharts in the given image.
+		/// 
+		/// Differs from the above one only in the arguments.
+		/// 
+		/// This version searches for the chart in the full image.
+		/// 
+		/// The found charts are not returned but instead stored in the
+		/// detector, these can be accessed later on using getBestColorChecker()
+		/// and getListColorChecker()
+		/// \param image image in color space BGR
+		/// \param chartType type of the chart to detect
+		/// \param nc number of charts in the image, if you don't know the exact
+		///           then keeping this number high helps.
+		/// \param useNet if it is true the network provided using the setNet()
+		///               is used for preliminary search for regions where chart
+		///               could be present, inside the regionsOfInterest provied.
+		/// \param params parameters of the detection system. More information
+		///               about them can be found in the struct DetectorParameters.
+		/// \return true if atleast one chart is detected otherwise false
+		/// 
+		/// ## Note
+		/// This alternative version of [process] function uses the following default values for its arguments:
+		/// * nc: 1
+		/// * use_net: false
+		/// * params: DetectorParameters::create()
+		#[inline]
+		fn process_def(&mut self, image: &impl core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART) -> Result<bool> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1285,6 +1374,28 @@ pub mod mcc {
 		pub fn create(mut p_checker: core::Ptr<crate::mcc::MCC_CChecker>, color: core::Scalar, thickness: i32) -> Result<core::Ptr<crate::mcc::MCC_CCheckerDraw>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDraw_create_PtrLCCheckerG_Scalar_int(p_checker.as_raw_mut_PtrOfMCC_CChecker(), color.opencv_as_extern(), thickness, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// \brief Create a new CCheckerDraw object.
+		/// \param pChecker The checker which will be drawn by this object.
+		/// \param color The color by with which the squares of the checker
+		///              will be drawn
+		/// \param thickness The thickness with which the sqaures will be
+		///                  drawn
+		/// \return A pointer to the implementation of the CCheckerDraw
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * color: CV_RGB(0,250,0)
+		/// * thickness: 2
+		#[inline]
+		pub fn create_def(mut p_checker: core::Ptr<crate::mcc::MCC_CChecker>) -> Result<core::Ptr<crate::mcc::MCC_CCheckerDraw>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDraw_create_PtrLCCheckerG(p_checker.as_raw_mut_PtrOfMCC_CChecker(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };

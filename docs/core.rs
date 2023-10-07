@@ -113,7 +113,7 @@ pub mod core {
 	/// The output covariance matrix is calculated as:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bscale%7D%20%20%20%5Ccdot%20%20%5B%20%20%5Ctexttt%7Bvects%7D%20%20%5B0%5D%2D%20%20%5Ctexttt%7Bmean%7D%20%20%2C%20%5Ctexttt%7Bvects%7D%20%20%5B1%5D%2D%20%20%5Ctexttt%7Bmean%7D%20%20%2C%2E%2E%2E%5D%20%20%5Ccdot%20%20%5B%20%5Ctexttt%7Bvects%7D%20%20%5B0%5D%2D%20%5Ctexttt%7Bmean%7D%20%20%2C%20%5Ctexttt%7Bvects%7D%20%20%5B1%5D%2D%20%5Ctexttt%7Bmean%7D%20%20%2C%2E%2E%2E%5D%5ET%2C)
 	/// covar will be a square matrix of the same size as the total number of elements in each input
-	/// vector. One and only one of #COVAR_SCRAMBLED and #COVAR_NORMAL must be specified.
+	/// vector. One and only one of [COVAR_SCRAMBLED] and [COVAR_NORMAL] must be specified.
 	pub const COVAR_NORMAL: i32 = 1;
 	/// If the flag is
 	/// specified, all the input vectors are stored as rows of the samples matrix. mean should be a
@@ -380,10 +380,10 @@ pub mod core {
 	pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 	pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 	pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-	pub const CV_VERSION: &str = "4.8.0";
+	pub const CV_VERSION: &str = "4.8.1";
 	pub const CV_VERSION_MAJOR: i32 = 4;
 	pub const CV_VERSION_MINOR: i32 = 8;
-	pub const CV_VERSION_REVISION: i32 = 0;
+	pub const CV_VERSION_REVISION: i32 = 1;
 	pub const CV_VERSION_STATUS: &str = "";
 	pub const CV_VSX: i32 = 0;
 	pub const CV_VSX3: i32 = 0;
@@ -1089,7 +1089,7 @@ pub mod core {
 		/// The output covariance matrix is calculated as:
 		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bscale%7D%20%20%20%5Ccdot%20%20%5B%20%20%5Ctexttt%7Bvects%7D%20%20%5B0%5D%2D%20%20%5Ctexttt%7Bmean%7D%20%20%2C%20%5Ctexttt%7Bvects%7D%20%20%5B1%5D%2D%20%20%5Ctexttt%7Bmean%7D%20%20%2C%2E%2E%2E%5D%20%20%5Ccdot%20%20%5B%20%5Ctexttt%7Bvects%7D%20%20%5B0%5D%2D%20%5Ctexttt%7Bmean%7D%20%20%2C%20%5Ctexttt%7Bvects%7D%20%20%5B1%5D%2D%20%5Ctexttt%7Bmean%7D%20%20%2C%2E%2E%2E%5D%5ET%2C)
 		/// covar will be a square matrix of the same size as the total number of elements in each input
-		/// vector. One and only one of #COVAR_SCRAMBLED and #COVAR_NORMAL must be specified.
+		/// vector. One and only one of [COVAR_SCRAMBLED] and [COVAR_NORMAL] must be specified.
 		COVAR_NORMAL = 1,
 		/// If the flag is specified, the function does not calculate mean from
 		/// the input vectors but, instead, uses the passed mean vector. This is useful if mean has been
@@ -1955,8 +1955,8 @@ pub mod core {
 	/// 
 	/// The function cv::Mahalanobis calculates and returns the weighted distance between two vectors:
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28%20%5Ctexttt%7Bvec1%7D%20%2C%20%5Ctexttt%7Bvec2%7D%20%29%3D%20%5Csqrt%7B%5Csum%5F%7Bi%2Cj%7D%7B%5Ctexttt%7Bicovar%28i%2Cj%29%7D%5Ccdot%28%5Ctexttt%7Bvec1%7D%28I%29%2D%5Ctexttt%7Bvec2%7D%28I%29%29%5Ccdot%28%5Ctexttt%7Bvec1%28j%29%7D%2D%5Ctexttt%7Bvec2%28j%29%7D%29%7D%20%7D)
-	/// The covariance matrix may be calculated using the #calcCovarMatrix function and then inverted using
-	/// the invert function (preferably using the #DECOMP_SVD method, as the most accurate).
+	/// The covariance matrix may be calculated using the [calc_covar_matrix] function and then inverted using
+	/// the invert function (preferably using the [DECOMP_SVD] method, as the most accurate).
 	/// ## Parameters
 	/// * v1: first 1D input vector.
 	/// * v2: second 1D input vector.
@@ -1982,6 +1982,41 @@ pub mod core {
 		output_array_arg!(result);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_PCABackProject_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// wrap PCA::operator()
+	/// 
+	/// ## Note
+	/// This alternative version of [pca_compute] function uses the following default values for its arguments:
+	/// * max_components: 0
+	#[inline]
+	pub fn pca_compute_def(data: &impl core::ToInputArray, mean: &mut impl core::ToInputOutputArray, eigenvectors: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(data);
+		input_output_array_arg!(mean);
+		output_array_arg!(eigenvectors);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// wrap PCA::operator() and add eigenvalues output parameter
+	/// 
+	/// ## Note
+	/// This alternative version of [pca_compute2] function uses the following default values for its arguments:
+	/// * max_components: 0
+	#[inline]
+	pub fn pca_compute2_def(data: &impl core::ToInputArray, mean: &mut impl core::ToInputOutputArray, eigenvectors: &mut impl core::ToOutputArray, eigenvalues: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(data);
+		input_output_array_arg!(mean);
+		output_array_arg!(eigenvectors);
+		output_array_arg!(eigenvalues);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_PCACompute_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2078,6 +2113,37 @@ pub mod core {
 	/// * src2: second input array of the same size as src1.
 	/// * R: the maximum pixel value (255 by default)
 	/// 
+	/// ## Note
+	/// This alternative version of [psnr] function uses the following default values for its arguments:
+	/// * r: 255.
+	#[inline]
+	pub fn psnr_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_PSNR_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes the Peak Signal-to-Noise Ratio (PSNR) image quality metric.
+	/// 
+	/// This function calculates the Peak Signal-to-Noise Ratio (PSNR) image quality metric in decibels (dB),
+	/// between two input arrays src1 and src2. The arrays must have the same type.
+	/// 
+	/// The PSNR is calculated as follows:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Ctexttt%7BPSNR%7D%20%3D%2010%20%5Ccdot%20%5Clog%5F%7B10%7D%7B%5Cleft%28%20%5Cfrac%7BR%5E2%7D%7BMSE%7D%20%5Cright%29%20%7D%0A)
+	/// 
+	/// where R is the maximum integer value of depth (e.g. 255 in the case of CV_8U data)
+	/// and MSE is the mean squared error between the two arrays.
+	/// 
+	/// ## Parameters
+	/// * src1: first input array.
+	/// * src2: second input array of the same size as src1.
+	/// * R: the maximum pixel value (255 by default)
+	/// 
 	/// ## C++ default parameters
 	/// * r: 255.
 	#[inline]
@@ -2101,6 +2167,24 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_SVBackSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// wrap SVD::compute
+	/// 
+	/// ## Note
+	/// This alternative version of [sv_decomp] function uses the following default values for its arguments:
+	/// * flags: 0
+	#[inline]
+	pub fn sv_decomp_def(src: &impl core::ToInputArray, w: &mut impl core::ToOutputArray, u: &mut impl core::ToOutputArray, vt: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(w);
+		output_array_arg!(u);
+		output_array_arg!(vt);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_SVDecomp_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2238,6 +2322,47 @@ pub mod core {
 	/// ## See also
 	/// add, subtract, scaleAdd, Mat::convertTo
 	/// 
+	/// ## Note
+	/// This alternative version of [add_weighted] function uses the following default values for its arguments:
+	/// * dtype: -1
+	#[inline]
+	pub fn add_weighted_def(src1: &impl core::ToInputArray, alpha: f64, src2: &impl core::ToInputArray, beta: f64, gamma: f64, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the weighted sum of two arrays.
+	/// 
+	/// The function addWeighted calculates the weighted sum of two arrays as follows:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2A%20%5Ctexttt%7Balpha%7D%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%2A%20%5Ctexttt%7Bbeta%7D%20%2B%20%20%5Ctexttt%7Bgamma%7D%20%29)
+	/// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
+	/// channel is processed independently.
+	/// The function can be replaced with a matrix expression:
+	/// ```C++
+	///    dst = src1*alpha + src2*beta + gamma;
+	/// ```
+	/// 
+	/// 
+	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
+	/// result of an incorrect sign in the case of overflow.
+	/// ## Parameters
+	/// * src1: first input array.
+	/// * alpha: weight of the first array elements.
+	/// * src2: second input array of the same size and channel number as src1.
+	/// * beta: weight of the second array elements.
+	/// * gamma: scalar added to each sum.
+	/// * dst: output array that has the same size and number of channels as the input arrays.
+	/// * dtype: optional depth of the output array; when both input arrays have the same depth, dtype
+	/// can be set to -1, which will be equivalent to src1.depth().
+	/// ## See also
+	/// add, subtract, scaleAdd, Mat::convertTo
+	/// 
 	/// ## C++ default parameters
 	/// * dtype: -1
 	#[inline]
@@ -2247,6 +2372,62 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element sum of two arrays or an array and a scalar.
+	/// 
+	/// The function add calculates:
+	/// - Sum of two arrays when both input arrays have the same size and the same number of channels:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2B%20%20%5Ctexttt%7Bsrc2%7D%28I%29%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
+	/// - Sum of an array and a scalar when src2 is constructed from Scalar or has the same number of
+	/// elements as `src1.channels()`:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
+	/// - Sum of a scalar and an array when src1 is constructed from Scalar or has the same number of
+	/// elements as `src2.channels()`:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%2B%20%20%5Ctexttt%7Bsrc2%7D%28I%29%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
+	/// where `I` is a multi-dimensional index of array elements. In case of multi-channel arrays, each
+	/// channel is processed independently.
+	/// 
+	/// The first function in the list above can be replaced with matrix expressions:
+	/// ```C++
+	///    dst = src1 + src2;
+	///    dst += src1; // equivalent to add(dst, src1, dst);
+	/// ```
+	/// 
+	/// The input arrays and the output array can all have the same or different depths. For example, you
+	/// can add a 16-bit unsigned array to a 8-bit signed array and store the sum as a 32-bit
+	/// floating-point array. Depth of the output array is determined by the dtype parameter. In the second
+	/// and third cases above, as well as in the first case, when src1.depth() == src2.depth(), dtype can
+	/// be set to the default -1. In this case, the output array will have the same depth as the input
+	/// array, be it src1, src2 or both.
+	/// 
+	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
+	/// result of an incorrect sign in the case of overflow.
+	/// ## Parameters
+	/// * src1: first input array or a scalar.
+	/// * src2: second input array or a scalar.
+	/// * dst: output array that has the same size and number of channels as the input array(s); the
+	/// depth is defined by dtype or src1/src2.
+	/// * mask: optional operation mask - 8-bit single channel array, that specifies elements of the
+	/// output array to be changed.
+	/// * dtype: optional depth of the output array (see the discussion below).
+	/// ## See also
+	/// subtract, addWeighted, scaleAdd, Mat::convertTo
+	/// 
+	/// ## Note
+	/// This alternative version of [add] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	/// * dtype: -1
+	#[inline]
+	pub fn add_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2313,6 +2494,31 @@ pub mod core {
 	/// see <http://en.wikipedia.org/wiki/Nearest_neighbor_search>
 	/// @todo document
 	/// 
+	/// ## Note
+	/// This alternative version of [batch_distance] function uses the following default values for its arguments:
+	/// * norm_type: NORM_L2
+	/// * k: 0
+	/// * mask: noArray()
+	/// * update: 0
+	/// * crosscheck: false
+	#[inline]
+	pub fn batch_distance_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dist: &mut impl core::ToOutputArray, dtype: i32, nidx: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dist);
+		output_array_arg!(nidx);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_batchDistance_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dist.as_raw__OutputArray(), dtype, nidx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// naive nearest neighbor finder
+	/// 
+	/// see <http://en.wikipedia.org/wiki/Nearest_neighbor_search>
+	/// @todo document
+	/// 
 	/// ## C++ default parameters
 	/// * norm_type: NORM_L2
 	/// * k: 0
@@ -2328,6 +2534,47 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_batchDistance_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_const__OutputArrayR_int_int_const__InputArrayR_int_bool(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dist.as_raw__OutputArray(), dtype, nidx.as_raw__OutputArray(), norm_type, k, mask.as_raw__InputArray(), update, crosscheck, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// computes bitwise conjunction of the two arrays (dst = src1 & src2)
+	/// Calculates the per-element bit-wise conjunction of two arrays or an
+	/// array and a scalar.
+	/// 
+	/// The function cv::bitwise_and calculates the per-element bit-wise logical conjunction for:
+	/// *   Two arrays when src1 and src2 have the same size:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Cwedge%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
+	/// *   An array and a scalar when src2 is constructed from Scalar or has
+	///    the same number of elements as `src1.channels()`:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Cwedge%20%5Ctexttt%7Bsrc2%7D%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
+	/// *   A scalar and an array when src1 is constructed from Scalar or has
+	///    the same number of elements as `src2.channels()`:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%20%5Cwedge%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
+	/// In case of floating-point arrays, their machine-specific bit
+	/// representations (usually IEEE754-compliant) are used for the operation.
+	/// In case of multi-channel arrays, each channel is processed
+	/// independently. In the second and third cases above, the scalar is first
+	/// converted to the array type.
+	/// ## Parameters
+	/// * src1: first input array or a scalar.
+	/// * src2: second input array or a scalar.
+	/// * dst: output array that has the same size and type as the input
+	/// arrays.
+	/// * mask: optional operation mask, 8-bit single channel array, that
+	/// specifies elements of the output array to be changed.
+	/// 
+	/// ## Note
+	/// This alternative version of [bitwise_and] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn bitwise_and_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2389,6 +2636,35 @@ pub mod core {
 	/// * mask: optional operation mask, 8-bit single channel array, that
 	/// specifies elements of the output array to be changed.
 	/// 
+	/// ## Note
+	/// This alternative version of [bitwise_not] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn bitwise_not_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bitwise_not_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Inverts every bit of an array.
+	/// 
+	/// The function cv::bitwise_not calculates per-element bit-wise inversion of the input
+	/// array:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Cneg%20%5Ctexttt%7Bsrc%7D%20%28I%29)
+	/// In case of a floating-point input array, its machine-specific bit
+	/// representation (usually IEEE754-compliant) is used for the operation. In
+	/// case of multi-channel arrays, each channel is processed independently.
+	/// ## Parameters
+	/// * src: input array.
+	/// * dst: output array that has the same size and type as the input
+	/// array.
+	/// * mask: optional operation mask, 8-bit single channel array, that
+	/// specifies elements of the output array to be changed.
+	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -2398,6 +2674,46 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element bit-wise disjunction of two arrays or an
+	/// array and a scalar.
+	/// 
+	/// The function cv::bitwise_or calculates the per-element bit-wise logical disjunction for:
+	/// *   Two arrays when src1 and src2 have the same size:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Cvee%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
+	/// *   An array and a scalar when src2 is constructed from Scalar or has
+	///    the same number of elements as `src1.channels()`:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Cvee%20%5Ctexttt%7Bsrc2%7D%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
+	/// *   A scalar and an array when src1 is constructed from Scalar or has
+	///    the same number of elements as `src2.channels()`:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%20%5Cvee%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
+	/// In case of floating-point arrays, their machine-specific bit
+	/// representations (usually IEEE754-compliant) are used for the operation.
+	/// In case of multi-channel arrays, each channel is processed
+	/// independently. In the second and third cases above, the scalar is first
+	/// converted to the array type.
+	/// ## Parameters
+	/// * src1: first input array or a scalar.
+	/// * src2: second input array or a scalar.
+	/// * dst: output array that has the same size and type as the input
+	/// arrays.
+	/// * mask: optional operation mask, 8-bit single channel array, that
+	/// specifies elements of the output array to be changed.
+	/// 
+	/// ## Note
+	/// This alternative version of [bitwise_or] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn bitwise_or_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2469,6 +2785,47 @@ pub mod core {
 	/// * mask: optional operation mask, 8-bit single channel array, that
 	/// specifies elements of the output array to be changed.
 	/// 
+	/// ## Note
+	/// This alternative version of [bitwise_xor] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn bitwise_xor_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element bit-wise "exclusive or" operation on two
+	/// arrays or an array and a scalar.
+	/// 
+	/// The function cv::bitwise_xor calculates the per-element bit-wise logical "exclusive-or"
+	/// operation for:
+	/// *   Two arrays when src1 and src2 have the same size:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Coplus%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
+	/// *   An array and a scalar when src2 is constructed from Scalar or has
+	///    the same number of elements as `src1.channels()`:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Coplus%20%5Ctexttt%7Bsrc2%7D%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
+	/// *   A scalar and an array when src1 is constructed from Scalar or has
+	///    the same number of elements as `src2.channels()`:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%20%5Coplus%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
+	/// In case of floating-point arrays, their machine-specific bit
+	/// representations (usually IEEE754-compliant) are used for the operation.
+	/// In case of multi-channel arrays, each channel is processed
+	/// independently. In the 2nd and 3rd cases above, the scalar is first
+	/// converted to the array type.
+	/// ## Parameters
+	/// * src1: first input array or a scalar.
+	/// * src2: second input array or a scalar.
+	/// * dst: output array that has the same size and type as the input
+	/// arrays.
+	/// * mask: optional operation mask, 8-bit single channel array, that
+	/// specifies elements of the output array to be changed.
+	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -2501,8 +2858,8 @@ pub mod core {
 	/// ## Parameters
 	/// * p: 0-based coordinate of the extrapolated pixel along one of the axes, likely \<0 or \>= len
 	/// * len: Length of the array along the corresponding axis.
-	/// * borderType: Border type, one of the #BorderTypes, except for #BORDER_TRANSPARENT and
-	/// #BORDER_ISOLATED . When borderType==#BORDER_CONSTANT , the function always returns -1, regardless
+	/// * borderType: Border type, one of the #BorderTypes, except for [BORDER_TRANSPARENT] and
+	/// [BORDER_ISOLATED] . When borderType==[BORDER_CONSTANT] , the function always returns -1, regardless
 	/// of p and len.
 	/// ## See also
 	/// copyMakeBorder
@@ -2510,6 +2867,31 @@ pub mod core {
 	pub fn border_interpolate(p: i32, len: i32, border_type: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_borderInterpolate_int_int_int(p, len, border_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// 
+	/// Note: use [COVAR_ROWS] or [COVAR_COLS] flag
+	/// ## Parameters
+	/// * samples: samples stored as rows/columns of a single matrix.
+	/// * covar: output covariance matrix of the type ctype and square size.
+	/// * mean: input or output (depending on the flags) array as the average value of the input vectors.
+	/// * flags: operation flags as a combination of [covar_flags]
+	/// * ctype: type of the matrixl; it equals 'CV_64F' by default.
+	/// 
+	/// ## Note
+	/// This alternative version of [calc_covar_matrix] function uses the following default values for its arguments:
+	/// * ctype: CV_64F
+	#[inline]
+	pub fn calc_covar_matrix_def(samples: &impl core::ToInputArray, covar: &mut impl core::ToOutputArray, mean: &mut impl core::ToInputOutputArray, flags: i32) -> Result<()> {
+		input_array_arg!(samples);
+		output_array_arg!(covar);
+		input_output_array_arg!(mean);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int(samples.as_raw__InputArray(), covar.as_raw__OutputArray(), mean.as_raw__InputOutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2524,7 +2906,7 @@ pub mod core {
 	/// * nsamples: number of samples
 	/// * covar: output covariance matrix of the type ctype and square size.
 	/// * mean: input or output (depending on the flags) array as the average value of the input vectors.
-	/// * flags: operation flags as a combination of #CovarFlags
+	/// * flags: operation flags as a combination of [covar_flags]
 	/// * ctype: type of the matrixl; it equals 'CV_64F' by default.
 	/// ## See also
 	/// PCA, mulTransposed, Mahalanobis
@@ -2533,11 +2915,11 @@ pub mod core {
 	/// ## Overloaded parameters
 	/// 
 	/// 
-	/// Note: use #COVAR_ROWS or #COVAR_COLS flag
+	/// Note: use [COVAR_ROWS] or [COVAR_COLS] flag
 	/// * samples: samples stored as rows/columns of a single matrix.
 	/// * covar: output covariance matrix of the type ctype and square size.
 	/// * mean: input or output (depending on the flags) array as the average value of the input vectors.
-	/// * flags: operation flags as a combination of #CovarFlags
+	/// * flags: operation flags as a combination of [covar_flags]
 	/// * ctype: type of the matrixl; it equals 'CV_64F' by default.
 	/// 
 	/// ## C++ default parameters
@@ -2549,6 +2931,42 @@ pub mod core {
 		input_output_array_arg!(mean);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int(samples.as_raw__InputArray(), covar.as_raw__OutputArray(), mean.as_raw__InputOutputArray(), flags, ctype, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the magnitude and angle of 2D vectors.
+	/// 
+	/// The function cv::cartToPolar calculates either the magnitude, angle, or both
+	/// for every 2D vector (x(I),y(I)):
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%3D%20%5Csqrt%7B%5Ctexttt%7Bx%7D%28I%29%5E2%2B%5Ctexttt%7By%7D%28I%29%5E2%7D%20%2C%20%5C%5C%20%5Ctexttt%7Bangle%7D%20%28I%29%3D%20%5Ctexttt%7Batan2%7D%20%28%20%5Ctexttt%7By%7D%20%28I%29%2C%20%5Ctexttt%7Bx%7D%20%28I%29%29%5B%20%5Ccdot180%20%2F%20%5Cpi%20%5D%20%5Cend%7Barray%7D)
+	/// 
+	/// The angles are calculated with accuracy about 0.3 degrees. For the point
+	/// (0,0), the angle is set to 0.
+	/// ## Parameters
+	/// * x: array of x-coordinates; this must be a single-precision or
+	/// double-precision floating-point array.
+	/// * y: array of y-coordinates, that must have the same size and same type as x.
+	/// * magnitude: output array of magnitudes of the same size and type as x.
+	/// * angle: output array of angles that has the same size and type as
+	/// x; the angles are measured in radians (from 0 to 2\*Pi) or in degrees (0 to 360 degrees).
+	/// * angleInDegrees: a flag, indicating whether the angles are measured
+	/// in radians (which is by default), or in degrees.
+	/// ## See also
+	/// Sobel, Scharr
+	/// 
+	/// ## Note
+	/// This alternative version of [cart_to_polar] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	#[inline]
+	pub fn cart_to_polar_def(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, angle: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(x);
+		input_array_arg!(y);
+		output_array_arg!(magnitude);
+		output_array_arg!(angle);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2601,6 +3019,38 @@ pub mod core {
 	pub fn check_hardware_support(feature: i32) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_checkHardwareSupport_int(feature, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Checks every element of an input array for invalid values.
+	/// 
+	/// The function cv::checkRange checks that every array element is neither NaN nor infinite. When minVal \>
+	/// -DBL_MAX and maxVal \< DBL_MAX, the function also checks that each value is between minVal and
+	/// maxVal. In case of multi-channel arrays, each channel is processed independently. If some values
+	/// are out of range, position of the first outlier is stored in pos (when pos != NULL). Then, the
+	/// function either returns false (when quiet=true) or throws an exception.
+	/// ## Parameters
+	/// * a: input array.
+	/// * quiet: a flag, indicating whether the functions quietly return false when the array elements
+	/// are out of range or they throw an exception.
+	/// * pos: optional output parameter, when not NULL, must be a pointer to array of src.dims
+	/// elements.
+	/// * minVal: inclusive lower boundary of valid values range.
+	/// * maxVal: exclusive upper boundary of valid values range.
+	/// 
+	/// ## Note
+	/// This alternative version of [check_range] function uses the following default values for its arguments:
+	/// * quiet: true
+	/// * pos: 0
+	/// * min_val: -DBL_MAX
+	/// * max_val: DBL_MAX
+	#[inline]
+	pub fn check_range_def(a: &impl core::ToInputArray) -> Result<bool> {
+		input_array_arg!(a);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_checkRange_const__InputArrayR(a.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2693,6 +3143,35 @@ pub mod core {
 	/// ## See also
 	/// flip, transpose
 	/// 
+	/// ## Note
+	/// This alternative version of [complete_symm] function uses the following default values for its arguments:
+	/// * lower_to_upper: false
+	#[inline]
+	pub fn complete_symm_def(m: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_output_array_arg!(m);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_completeSymm_const__InputOutputArrayR(m.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Copies the lower or the upper half of a square matrix to its another half.
+	/// 
+	/// The function cv::completeSymm copies the lower or the upper half of a square matrix to
+	/// its another half. The matrix diagonal remains unchanged:
+	///  - ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bm%7D%5F%7Bij%7D%3D%5Ctexttt%7Bm%7D%5F%7Bji%7D) for ![inline formula](https://latex.codecogs.com/png.latex?i%20%3E%20j) if
+	///    lowerToUpper=false
+	///  - ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bm%7D%5F%7Bij%7D%3D%5Ctexttt%7Bm%7D%5F%7Bji%7D) for ![inline formula](https://latex.codecogs.com/png.latex?i%20%3C%20j) if
+	///    lowerToUpper=true
+	/// 
+	/// ## Parameters
+	/// * m: input-output floating-point square matrix.
+	/// * lowerToUpper: operation flag; if true, the lower half is copied to
+	/// the upper half. Otherwise, the upper half is copied to the lower half.
+	/// ## See also
+	/// flip, transpose
+	/// 
 	/// ## C++ default parameters
 	/// * lower_to_upper: false
 	#[inline]
@@ -2742,6 +3221,49 @@ pub mod core {
 	///    randu(A, Scalar(-100), Scalar(100));
 	///    Mat_<float> B = A*5 + 3;
 	///    B = abs(B);
+	///  Mat_<float> B = abs(A*5+3) will also do the job,
+	///  but it will allocate a temporary matrix
+	/// ```
+	/// 
+	/// ## Parameters
+	/// * src: input array.
+	/// * dst: output array.
+	/// * alpha: optional scale factor.
+	/// * beta: optional delta added to the scaled values.
+	/// ## See also
+	/// Mat::convertTo, cv::abs(const Mat&)
+	/// 
+	/// ## Note
+	/// This alternative version of [convert_scale_abs] function uses the following default values for its arguments:
+	/// * alpha: 1
+	/// * beta: 0
+	#[inline]
+	pub fn convert_scale_abs_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_convertScaleAbs_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Scales, calculates absolute values, and converts the result to 8-bit.
+	/// 
+	/// On each element of the input array, the function convertScaleAbs
+	/// performs three operations sequentially: scaling, taking an absolute
+	/// value, conversion to an unsigned 8-bit type:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%5C%5Fcast%3Cuchar%3E%7D%20%28%7C%20%5Ctexttt%7Bsrc%7D%20%28I%29%2A%20%5Ctexttt%7Balpha%7D%20%2B%20%20%5Ctexttt%7Bbeta%7D%20%7C%29)
+	/// In case of multi-channel arrays, the function processes each channel
+	/// independently. When the output is not 8-bit, the operation can be
+	/// emulated by calling the Mat::convertTo method (or by using matrix
+	/// expressions) and then by calculating an absolute value of the result.
+	/// For example:
+	/// ```C++
+	///    Mat_<float> A(30,30);
+	///    randu(A, Scalar(-100), Scalar(100));
+	///    Mat_<float> B = A*5 + 3;
+	///    B = abs(B);
 	///    // Mat_<float> B = abs(A*5+3) will also do the job,
 	///    // but it will allocate a temporary matrix
 	/// ```
@@ -2763,6 +3285,66 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_convertScaleAbs_const__InputArrayR_const__OutputArrayR_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Forms a border around an image.
+	/// 
+	/// The function copies the source image into the middle of the destination image. The areas to the
+	/// left, to the right, above and below the copied source image will be filled with extrapolated
+	/// pixels. This is not what filtering functions based on it do (they extrapolate pixels on-fly), but
+	/// what other more complex functions, including your own, may do to simplify image boundary handling.
+	/// 
+	/// The function supports the mode when src is already in the middle of dst . In this case, the
+	/// function does not copy src itself but simply constructs the border, for example:
+	/// 
+	/// ```C++
+	///  let border be the same in all directions
+	///    int border=2;
+	///  constructs a larger image to fit both the image and the border
+	///    Mat gray_buf(rgb.rows + border*2, rgb.cols + border*2, rgb.depth());
+	///  select the middle part of it w/o copying data
+	///    Mat gray(gray_canvas, Rect(border, border, rgb.cols, rgb.rows));
+	///  convert image from RGB to grayscale
+	///    cvtColor(rgb, gray, COLOR_RGB2GRAY);
+	///  form a border in-place
+	///    copyMakeBorder(gray, gray_buf, border, border,
+	///                    border, border, BORDER_REPLICATE);
+	///  now do some custom filtering ...
+	///    ...
+	/// ```
+	/// 
+	/// 
+	/// Note: When the source image is a part (ROI) of a bigger image, the function will try to use the
+	/// pixels outside of the ROI to form a border. To disable this feature and always do extrapolation, as
+	/// if src was not a ROI, use borderType | #BORDER_ISOLATED.
+	/// 
+	/// ## Parameters
+	/// * src: Source image.
+	/// * dst: Destination image of the same type as src and the size Size(src.cols+left+right,
+	/// src.rows+top+bottom) .
+	/// * top: the top pixels
+	/// * bottom: the bottom pixels
+	/// * left: the left pixels
+	/// * right: Parameter specifying how many pixels in each direction from the source image rectangle
+	/// to extrapolate. For example, top=1, bottom=1, left=1, right=1 mean that 1 pixel-wide border needs
+	/// to be built.
+	/// * borderType: Border type. See borderInterpolate for details.
+	/// * value: Border value if borderType==BORDER_CONSTANT .
+	/// ## See also
+	/// borderInterpolate
+	/// 
+	/// ## Note
+	/// This alternative version of [copy_make_border] function uses the following default values for its arguments:
+	/// * value: Scalar()
+	#[inline]
+	pub fn copy_make_border_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2903,6 +3485,28 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// @overload
+	/// ## Parameters
+	/// * size: 2D array size: Size(cols, rows). In the Size() constructor, the number of rows and the number of columns go in the reverse order.
+	/// * type: Type of the matrix.
+	/// * cudaMemoryAddress: Address of the allocated GPU memory on the device. This does not allocate matrix data. Instead, it just initializes the matrix header that points to the specified \a cudaMemoryAddress, which means that no data is copied. This operation is very efficient and can be used to process external data using OpenCV functions. The external data is not automatically deallocated, so you should take care of it.
+	/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at the end of each row, if any. If the parameter is missing (set to Mat::AUTO_STEP ), no padding is assumed and the actual step is calculated as cols*elemSize(). See GpuMat::elemSize.
+	/// 
+	/// Note: Overload for generation of bindings only, not exported or intended for use internally from C++.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_gpu_mat_from_cuda_memory_1] function uses the following default values for its arguments:
+	/// * step: Mat::AUTO_STEP
+	#[inline]
+	pub fn create_gpu_mat_from_cuda_memory_1_def(size: core::Size, typ: i32, cuda_memory_address: size_t) -> Result<core::GpuMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createGpuMatFromCudaMemory_Size_int_size_t(size.opencv_as_extern(), typ, cuda_memory_address, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Bindings overload to create a GpuMat from existing GPU memory.
 	/// ## Parameters
 	/// * rows: Row count.
@@ -2928,6 +3532,29 @@ pub mod core {
 	pub fn create_gpu_mat_from_cuda_memory_1(size: core::Size, typ: i32, cuda_memory_address: size_t, step: size_t) -> Result<core::GpuMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createGpuMatFromCudaMemory_Size_int_size_t_size_t(size.opencv_as_extern(), typ, cuda_memory_address, step, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Bindings overload to create a GpuMat from existing GPU memory.
+	/// ## Parameters
+	/// * rows: Row count.
+	/// * cols: Column count.
+	/// * type: Type of the matrix.
+	/// * cudaMemoryAddress: Address of the allocated GPU memory on the device. This does not allocate matrix data. Instead, it just initializes the matrix header that points to the specified \a cudaMemoryAddress, which means that no data is copied. This operation is very efficient and can be used to process external data using OpenCV functions. The external data is not automatically deallocated, so you should take care of it.
+	/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at the end of each row, if any. If the parameter is missing (set to Mat::AUTO_STEP ), no padding is assumed and the actual step is calculated as cols*elemSize(). See GpuMat::elemSize.
+	/// 
+	/// Note: Overload for generation of bindings only, not exported or intended for use internally from C++.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_gpu_mat_from_cuda_memory] function uses the following default values for its arguments:
+	/// * step: Mat::AUTO_STEP
+	#[inline]
+	pub fn create_gpu_mat_from_cuda_memory_def(rows: i32, cols: i32, typ: i32, cuda_memory_address: size_t) -> Result<core::GpuMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createGpuMatFromCudaMemory_int_int_int_size_t(rows, cols, typ, cuda_memory_address, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
@@ -3094,6 +3721,25 @@ pub mod core {
 	/// * device: System index of a CUDA device starting with 0.
 	/// @ingroup core_opengl
 	/// 
+	/// ## Note
+	/// This alternative version of [set_gl_device] function uses the following default values for its arguments:
+	/// * device: 0
+	#[inline]
+	pub fn set_gl_device_def() -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_setGlDevice(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Sets a CUDA device and initializes it for the current thread with OpenGL interoperability.
+	/// 
+	/// This function should be explicitly called after OpenGL context creation and before any CUDA calls.
+	/// ## Parameters
+	/// * device: System index of a CUDA device starting with 0.
+	/// @ingroup core_opengl
+	/// 
 	/// ## C++ default parameters
 	/// * device: 0
 	#[inline]
@@ -3130,6 +3776,63 @@ pub mod core {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Stream::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Performs a forward or inverse discrete Cosine transform of 1D or 2D array.
+	/// 
+	/// The function cv::dct performs a forward or inverse discrete Cosine transform (DCT) of a 1D or 2D
+	/// floating-point array:
+	/// *   Forward Cosine transform of a 1D vector of N elements:
+	///    ![block formula](https://latex.codecogs.com/png.latex?Y%20%3D%20C%5E%7B%28N%29%7D%20%20%5Ccdot%20X)
+	///    where
+	///    ![block formula](https://latex.codecogs.com/png.latex?C%5E%7B%28N%29%7D%5F%7Bjk%7D%3D%20%5Csqrt%7B%5Calpha%5Fj%2FN%7D%20%5Ccos%20%5Cleft%20%28%20%5Cfrac%7B%5Cpi%282k%2B1%29j%7D%7B2N%7D%20%5Cright%20%29)
+	///    and
+	///    ![inline formula](https://latex.codecogs.com/png.latex?%5Calpha%5F0%3D1), ![inline formula](https://latex.codecogs.com/png.latex?%5Calpha%5Fj%3D2) for *j \> 0*.
+	/// *   Inverse Cosine transform of a 1D vector of N elements:
+	///    ![block formula](https://latex.codecogs.com/png.latex?X%20%3D%20%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5E%7B%2D1%7D%20%20%5Ccdot%20Y%20%3D%20%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5ET%20%20%5Ccdot%20Y)
+	///    (since ![inline formula](https://latex.codecogs.com/png.latex?C%5E%7B%28N%29%7D) is an orthogonal matrix, ![inline formula](https://latex.codecogs.com/png.latex?C%5E%7B%28N%29%7D%20%5Ccdot%20%5Cleft%28C%5E%7B%28N%29%7D%5Cright%29%5ET%20%3D%20I) )
+	/// *   Forward 2D Cosine transform of M x N matrix:
+	///    ![block formula](https://latex.codecogs.com/png.latex?Y%20%3D%20C%5E%7B%28N%29%7D%20%20%5Ccdot%20X%20%20%5Ccdot%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5ET)
+	/// *   Inverse 2D Cosine transform of M x N matrix:
+	///    ![block formula](https://latex.codecogs.com/png.latex?X%20%3D%20%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5ET%20%20%5Ccdot%20X%20%20%5Ccdot%20C%5E%7B%28N%29%7D)
+	/// 
+	/// The function chooses the mode of operation by looking at the flags and size of the input array:
+	/// *   If (flags & #DCT_INVERSE) == 0 , the function does a forward 1D or 2D transform. Otherwise, it
+	///    is an inverse 1D or 2D transform.
+	/// *   If (flags & #DCT_ROWS) != 0 , the function performs a 1D transform of each row.
+	/// *   If the array is a single column or a single row, the function performs a 1D transform.
+	/// *   If none of the above is true, the function performs a 2D transform.
+	/// 
+	/// 
+	/// Note: Currently dct supports even-size arrays (2, 4, 6 ...). For data analysis and approximation, you
+	/// can pad the array when necessary.
+	/// Also, the function performance depends very much, and not monotonically, on the array size (see
+	/// getOptimalDFTSize ). In the current implementation DCT of a vector of size N is calculated via DFT
+	/// of a vector of size N/2 . Thus, the optimal DCT size N1 \>= N can be calculated as:
+	/// ```C++
+	///    size_t getOptimalDCTSize(size_t N) { return 2*getOptimalDFTSize((N+1)/2); }
+	///    N1 = getOptimalDCTSize(N);
+	/// ```
+	/// 
+	/// ## Parameters
+	/// * src: input floating-point array.
+	/// * dst: output array of the same size and type as src .
+	/// * flags: transformation flags as a combination of cv::DftFlags (DCT_*)
+	/// ## See also
+	/// dft , getOptimalDFTSize , idct
+	/// 
+	/// ## Note
+	/// This alternative version of [dct] function uses the following default values for its arguments:
+	/// * flags: 0
+	#[inline]
+	pub fn dct_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dct_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -3428,28 +4131,179 @@ pub mod core {
 	/// In case of 1D transform of a real vector, the output looks like the first row of the matrix above.
 	/// 
 	/// So, the function chooses an operation mode depending on the flags and size of the input array:
-	/// *   If #DFT_ROWS is set or the input array has a single row or single column, the function
-	///    performs a 1D forward or inverse transform of each row of a matrix when #DFT_ROWS is set.
+	/// *   If [DFT_ROWS] is set or the input array has a single row or single column, the function
+	///    performs a 1D forward or inverse transform of each row of a matrix when [DFT_ROWS] is set.
 	///    Otherwise, it performs a 2D transform.
-	/// *   If the input array is real and #DFT_INVERSE is not set, the function performs a forward 1D or
+	/// *   If the input array is real and [DFT_INVERSE] is not set, the function performs a forward 1D or
 	///    2D transform:
-	///    *   When #DFT_COMPLEX_OUTPUT is set, the output is a complex matrix of the same size as
+	///    *   When [DFT_COMPLEX_OUTPUT] is set, the output is a complex matrix of the same size as
 	///        input.
-	///    *   When #DFT_COMPLEX_OUTPUT is not set, the output is a real matrix of the same size as
+	///    *   When [DFT_COMPLEX_OUTPUT] is not set, the output is a real matrix of the same size as
 	///        input. In case of 2D transform, it uses the packed format as shown above. In case of a
 	///        single 1D transform, it looks like the first row of the matrix above. In case of
-	///        multiple 1D transforms (when using the #DFT_ROWS flag), each row of the output matrix
+	///        multiple 1D transforms (when using the [DFT_ROWS] flag), each row of the output matrix
 	///        looks like the first row of the matrix above.
-	/// *   If the input array is complex and either #DFT_INVERSE or #DFT_REAL_OUTPUT are not set, the
+	/// *   If the input array is complex and either [DFT_INVERSE] or [DFT_REAL_OUTPUT] are not set, the
 	///    output is a complex array of the same size as input. The function performs a forward or
 	///    inverse 1D or 2D transform of the whole input array or each row of the input array
 	///    independently, depending on the flags DFT_INVERSE and DFT_ROWS.
-	/// *   When #DFT_INVERSE is set and the input array is real, or it is complex but #DFT_REAL_OUTPUT
+	/// *   When [DFT_INVERSE] is set and the input array is real, or it is complex but [DFT_REAL_OUTPUT]
 	///    is set, the output is a real array of the same size as input. The function performs a 1D or 2D
 	///    inverse transformation of the whole input array or each individual row, depending on the flags
-	///    #DFT_INVERSE and #DFT_ROWS.
+	///    [DFT_INVERSE] and #DFT_ROWS.
 	/// 
-	/// If #DFT_SCALE is set, the scaling is done after the transformation.
+	/// If [DFT_SCALE] is set, the scaling is done after the transformation.
+	/// 
+	/// Unlike dct , the function supports arrays of arbitrary size. But only those arrays are processed
+	/// efficiently, whose sizes can be factorized in a product of small prime numbers (2, 3, and 5 in the
+	/// current implementation). Such an efficient DFT size can be calculated using the getOptimalDFTSize
+	/// method.
+	/// 
+	/// The sample below illustrates how to calculate a DFT-based convolution of two 2D real arrays:
+	/// ```C++
+	///    void convolveDFT(InputArray A, InputArray B, OutputArray C)
+	///    {
+	///  reallocate the output array if needed
+	///        C.create(abs(A.rows - B.rows)+1, abs(A.cols - B.cols)+1, A.type());
+	///        Size dftSize;
+	///  calculate the size of DFT transform
+	///        dftSize.width = getOptimalDFTSize(A.cols + B.cols - 1);
+	///        dftSize.height = getOptimalDFTSize(A.rows + B.rows - 1);
+	/// 
+	///  allocate temporary buffers and initialize them with 0's
+	///        Mat tempA(dftSize, A.type(), Scalar::all(0));
+	///        Mat tempB(dftSize, B.type(), Scalar::all(0));
+	/// 
+	///  copy A and B to the top-left corners of tempA and tempB, respectively
+	///        Mat roiA(tempA, Rect(0,0,A.cols,A.rows));
+	///        A.copyTo(roiA);
+	///        Mat roiB(tempB, Rect(0,0,B.cols,B.rows));
+	///        B.copyTo(roiB);
+	/// 
+	///  now transform the padded A & B in-place;
+	///  use "nonzeroRows" hint for faster processing
+	///        dft(tempA, tempA, 0, A.rows);
+	///        dft(tempB, tempB, 0, B.rows);
+	/// 
+	///  multiply the spectrums;
+	///  the function handles packed spectrum representations well
+	///        mulSpectrums(tempA, tempB, tempA);
+	/// 
+	///  transform the product back from the frequency domain.
+	///  Even though all the result rows will be non-zero,
+	///  you need only the first C.rows of them, and thus you
+	///  pass nonzeroRows == C.rows
+	///        dft(tempA, tempA, DFT_INVERSE + DFT_SCALE, C.rows);
+	/// 
+	///  now copy the result back to C.
+	///        tempA(Rect(0, 0, C.cols, C.rows)).copyTo(C);
+	/// 
+	///  all the temporary buffers will be deallocated automatically
+	///    }
+	/// ```
+	/// 
+	/// To optimize this sample, consider the following approaches:
+	/// *   Since nonzeroRows != 0 is passed to the forward transform calls and since A and B are copied to
+	///    the top-left corners of tempA and tempB, respectively, it is not necessary to clear the whole
+	///    tempA and tempB. It is only necessary to clear the tempA.cols - A.cols ( tempB.cols - B.cols)
+	///    rightmost columns of the matrices.
+	/// *   This DFT-based convolution does not have to be applied to the whole big arrays, especially if B
+	///    is significantly smaller than A or vice versa. Instead, you can calculate convolution by parts.
+	///    To do this, you need to split the output array C into multiple tiles. For each tile, estimate
+	///    which parts of A and B are required to calculate convolution in this tile. If the tiles in C are
+	///    too small, the speed will decrease a lot because of repeated work. In the ultimate case, when
+	///    each tile in C is a single pixel, the algorithm becomes equivalent to the naive convolution
+	///    algorithm. If the tiles are too big, the temporary arrays tempA and tempB become too big and
+	///    there is also a slowdown because of bad cache locality. So, there is an optimal tile size
+	///    somewhere in the middle.
+	/// *   If different tiles in C can be calculated in parallel and, thus, the convolution is done by
+	///    parts, the loop can be threaded.
+	/// 
+	/// All of the above improvements have been implemented in [match_template] and [filter_2d] . Therefore, by
+	/// using them, you can get the performance even better than with the above theoretically optimal
+	/// implementation. Though, those two functions actually calculate cross-correlation, not convolution,
+	/// so you need to "flip" the second convolution operand B vertically and horizontally using flip .
+	/// 
+	/// Note:
+	/// *   An example using the discrete fourier transform can be found at
+	///    opencv_source_code/samples/cpp/dft.cpp
+	/// *   (Python) An example using the dft functionality to perform Wiener deconvolution can be found
+	///    at opencv_source/samples/python/deconvolution.py
+	/// *   (Python) An example rearranging the quadrants of a Fourier image can be found at
+	///    opencv_source/samples/python/dft.py
+	/// ## Parameters
+	/// * src: input array that could be real or complex.
+	/// * dst: output array whose size and type depends on the flags .
+	/// * flags: transformation flags, representing a combination of the [dft_flags]
+	/// * nonzeroRows: when the parameter is not zero, the function assumes that only the first
+	/// nonzeroRows rows of the input array ([DFT_INVERSE] is not set) or only the first nonzeroRows of the
+	/// output array ([DFT_INVERSE] is set) contain non-zeros, thus, the function can handle the rest of the
+	/// rows more efficiently and save some time; this technique is very useful for calculating array
+	/// cross-correlation or convolution using DFT.
+	/// ## See also
+	/// dct , getOptimalDFTSize , mulSpectrums, filter2D , matchTemplate , flip , cartToPolar ,
+	/// magnitude , phase
+	/// 
+	/// ## Note
+	/// This alternative version of [dft] function uses the following default values for its arguments:
+	/// * flags: 0
+	/// * nonzero_rows: 0
+	#[inline]
+	pub fn dft_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_dft_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs a forward or inverse Discrete Fourier transform of a 1D or 2D floating-point array.
+	/// 
+	/// The function cv::dft performs one of the following:
+	/// *   Forward the Fourier transform of a 1D vector of N elements:
+	///    ![block formula](https://latex.codecogs.com/png.latex?Y%20%3D%20F%5E%7B%28N%29%7D%20%20%5Ccdot%20X%2C)
+	///    where ![inline formula](https://latex.codecogs.com/png.latex?F%5E%7B%28N%29%7D%5F%7Bjk%7D%3D%5Cexp%28%2D2%5Cpi%20i%20j%20k%2FN%29) and ![inline formula](https://latex.codecogs.com/png.latex?i%3D%5Csqrt%7B%2D1%7D)
+	/// *   Inverse the Fourier transform of a 1D vector of N elements:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20X%27%3D%20%20%5Cleft%20%28F%5E%7B%28N%29%7D%20%5Cright%20%29%5E%7B%2D1%7D%20%20%5Ccdot%20Y%20%3D%20%20%5Cleft%20%28F%5E%7B%28N%29%7D%20%5Cright%20%29%5E%2A%20%20%5Ccdot%20y%20%20%5C%5C%20X%20%3D%20%281%2FN%29%20%20%5Ccdot%20X%2C%20%5Cend%7Barray%7D)
+	///    where ![inline formula](https://latex.codecogs.com/png.latex?F%5E%2A%3D%5Cleft%28%5Ctextrm%7BRe%7D%28F%5E%7B%28N%29%7D%29%2D%5Ctextrm%7BIm%7D%28F%5E%7B%28N%29%7D%29%5Cright%29%5ET)
+	/// *   Forward the 2D Fourier transform of a M x N matrix:
+	///    ![block formula](https://latex.codecogs.com/png.latex?Y%20%3D%20F%5E%7B%28M%29%7D%20%20%5Ccdot%20X%20%20%5Ccdot%20F%5E%7B%28N%29%7D)
+	/// *   Inverse the 2D Fourier transform of a M x N matrix:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20X%27%3D%20%20%5Cleft%20%28F%5E%7B%28M%29%7D%20%5Cright%20%29%5E%2A%20%20%5Ccdot%20Y%20%20%5Ccdot%20%5Cleft%20%28F%5E%7B%28N%29%7D%20%5Cright%20%29%5E%2A%20%5C%5C%20X%20%3D%20%20%5Cfrac%7B1%7D%7BM%20%5Ccdot%20N%7D%20%5Ccdot%20X%27%20%5Cend%7Barray%7D)
+	/// 
+	/// In case of real (single-channel) data, the output spectrum of the forward Fourier transform or input
+	/// spectrum of the inverse Fourier transform can be represented in a packed format called *CCS*
+	/// (complex-conjugate-symmetrical). It was borrowed from IPL (Intel\* Image Processing Library). Here
+	/// is how 2D *CCS* spectrum looks:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20Re%20Y%5F%7B0%2C0%7D%20%26%20Re%20Y%5F%7B0%2C1%7D%20%26%20Im%20Y%5F%7B0%2C1%7D%20%26%20Re%20Y%5F%7B0%2C2%7D%20%26%20Im%20Y%5F%7B0%2C2%7D%20%26%20%20%5Ccdots%20%26%20Re%20Y%5F%7B0%2CN%2F2%2D1%7D%20%26%20Im%20Y%5F%7B0%2CN%2F2%2D1%7D%20%26%20Re%20Y%5F%7B0%2CN%2F2%7D%20%20%5C%5C%20Re%20Y%5F%7B1%2C0%7D%20%26%20Re%20Y%5F%7B1%2C1%7D%20%26%20Im%20Y%5F%7B1%2C1%7D%20%26%20Re%20Y%5F%7B1%2C2%7D%20%26%20Im%20Y%5F%7B1%2C2%7D%20%26%20%20%5Ccdots%20%26%20Re%20Y%5F%7B1%2CN%2F2%2D1%7D%20%26%20Im%20Y%5F%7B1%2CN%2F2%2D1%7D%20%26%20Re%20Y%5F%7B1%2CN%2F2%7D%20%20%5C%5C%20Im%20Y%5F%7B1%2C0%7D%20%26%20Re%20Y%5F%7B2%2C1%7D%20%26%20Im%20Y%5F%7B2%2C1%7D%20%26%20Re%20Y%5F%7B2%2C2%7D%20%26%20Im%20Y%5F%7B2%2C2%7D%20%26%20%20%5Ccdots%20%26%20Re%20Y%5F%7B2%2CN%2F2%2D1%7D%20%26%20Im%20Y%5F%7B2%2CN%2F2%2D1%7D%20%26%20Im%20Y%5F%7B1%2CN%2F2%7D%20%20%5C%5C%20%5Cdots%20%5C%5C%20Re%20Y%5F%7BM%2F2%2D1%2C0%7D%20%26%20%20Re%20Y%5F%7BM%2D3%2C1%7D%20%20%26%20Im%20Y%5F%7BM%2D3%2C1%7D%20%26%20%20%5Cdots%20%26%20Re%20Y%5F%7BM%2D3%2CN%2F2%2D1%7D%20%26%20Im%20Y%5F%7BM%2D3%2CN%2F2%2D1%7D%26%20Re%20Y%5F%7BM%2F2%2D1%2CN%2F2%7D%20%20%5C%5C%20Im%20Y%5F%7BM%2F2%2D1%2C0%7D%20%26%20%20Re%20Y%5F%7BM%2D2%2C1%7D%20%20%26%20Im%20Y%5F%7BM%2D2%2C1%7D%20%26%20%20%5Cdots%20%26%20Re%20Y%5F%7BM%2D2%2CN%2F2%2D1%7D%20%26%20Im%20Y%5F%7BM%2D2%2CN%2F2%2D1%7D%26%20Im%20Y%5F%7BM%2F2%2D1%2CN%2F2%7D%20%20%5C%5C%20Re%20Y%5F%7BM%2F2%2C0%7D%20%20%26%20%20Re%20Y%5F%7BM%2D1%2C1%7D%20%26%20%20Im%20Y%5F%7BM%2D1%2C1%7D%20%26%20%20%5Cdots%20%26%20Re%20Y%5F%7BM%2D1%2CN%2F2%2D1%7D%20%26%20Im%20Y%5F%7BM%2D1%2CN%2F2%2D1%7D%26%20Re%20Y%5F%7BM%2F2%2CN%2F2%7D%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// In case of 1D transform of a real vector, the output looks like the first row of the matrix above.
+	/// 
+	/// So, the function chooses an operation mode depending on the flags and size of the input array:
+	/// *   If [DFT_ROWS] is set or the input array has a single row or single column, the function
+	///    performs a 1D forward or inverse transform of each row of a matrix when [DFT_ROWS] is set.
+	///    Otherwise, it performs a 2D transform.
+	/// *   If the input array is real and [DFT_INVERSE] is not set, the function performs a forward 1D or
+	///    2D transform:
+	///    *   When [DFT_COMPLEX_OUTPUT] is set, the output is a complex matrix of the same size as
+	///        input.
+	///    *   When [DFT_COMPLEX_OUTPUT] is not set, the output is a real matrix of the same size as
+	///        input. In case of 2D transform, it uses the packed format as shown above. In case of a
+	///        single 1D transform, it looks like the first row of the matrix above. In case of
+	///        multiple 1D transforms (when using the [DFT_ROWS] flag), each row of the output matrix
+	///        looks like the first row of the matrix above.
+	/// *   If the input array is complex and either [DFT_INVERSE] or [DFT_REAL_OUTPUT] are not set, the
+	///    output is a complex array of the same size as input. The function performs a forward or
+	///    inverse 1D or 2D transform of the whole input array or each row of the input array
+	///    independently, depending on the flags DFT_INVERSE and DFT_ROWS.
+	/// *   When [DFT_INVERSE] is set and the input array is real, or it is complex but [DFT_REAL_OUTPUT]
+	///    is set, the output is a real array of the same size as input. The function performs a 1D or 2D
+	///    inverse transformation of the whole input array or each individual row, depending on the flags
+	///    [DFT_INVERSE] and #DFT_ROWS.
+	/// 
+	/// If [DFT_SCALE] is set, the scaling is done after the transformation.
 	/// 
 	/// Unlike dct , the function supports arrays of arbitrary size. But only those arrays are processed
 	/// efficiently, whose sizes can be factorized in a product of small prime numbers (2, 3, and 5 in the
@@ -3516,7 +4370,7 @@ pub mod core {
 	/// *   If different tiles in C can be calculated in parallel and, thus, the convolution is done by
 	///    parts, the loop can be threaded.
 	/// 
-	/// All of the above improvements have been implemented in #matchTemplate and #filter2D . Therefore, by
+	/// All of the above improvements have been implemented in [match_template] and [filter_2d] . Therefore, by
 	/// using them, you can get the performance even better than with the above theoretically optimal
 	/// implementation. Though, those two functions actually calculate cross-correlation, not convolution,
 	/// so you need to "flip" the second convolution operand B vertically and horizontally using flip .
@@ -3531,10 +4385,10 @@ pub mod core {
 	/// ## Parameters
 	/// * src: input array that could be real or complex.
 	/// * dst: output array whose size and type depends on the flags .
-	/// * flags: transformation flags, representing a combination of the #DftFlags
+	/// * flags: transformation flags, representing a combination of the [dft_flags]
 	/// * nonzeroRows: when the parameter is not zero, the function assumes that only the first
-	/// nonzeroRows rows of the input array (#DFT_INVERSE is not set) or only the first nonzeroRows of the
-	/// output array (#DFT_INVERSE is set) contain non-zeros, thus, the function can handle the rest of the
+	/// nonzeroRows rows of the input array ([DFT_INVERSE] is not set) or only the first nonzeroRows of the
+	/// output array ([DFT_INVERSE] is set) contain non-zeros, thus, the function can handle the rest of the
 	/// rows more efficiently and save some time; this technique is very useful for calculating array
 	/// cross-correlation or convolution using DFT.
 	/// ## See also
@@ -3561,9 +4415,9 @@ pub mod core {
 	/// ## Returns
 	/// OpenCV type or -1 if there is no equivalent
 	#[inline]
-	pub fn get_type_from_d3d_format(i_d3_dformat: i32) -> Result<i32> {
+	pub fn get_type_from_d3d_format(id_3d_format: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_directx_getTypeFromD3DFORMAT_const_int(i_d3_dformat, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_directx_getTypeFromD3DFORMAT_const_int(id_3d_format, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3612,6 +4466,51 @@ pub mod core {
 	/// ## See also
 	/// multiply, add, subtract
 	/// 
+	/// ## Note
+	/// This alternative version of [divide2] function uses the following default values for its arguments:
+	/// * scale: 1
+	/// * dtype: -1
+	#[inline]
+	pub fn divide2_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs per-element division of two arrays or a scalar by an array.
+	/// 
+	/// The function cv::divide divides one array by another:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%28I%29%20%3D%20saturate%28src1%28I%29%2Ascale%2Fsrc2%28I%29%29%7D)
+	/// or a scalar by an array when there is no src1 :
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%28I%29%20%3D%20saturate%28scale%2Fsrc2%28I%29%29%7D)
+	/// 
+	/// Different channels of multi-channel arrays are processed independently.
+	/// 
+	/// For integer types when src2(I) is zero, dst(I) will also be zero.
+	/// 
+	/// 
+	/// Note: In case of floating point data there is no special defined behavior for zero src2(I) values.
+	/// Regular floating-point division is used.
+	/// Expect correct IEEE-754 behaviour for floating-point data (with NaN, Inf result values).
+	/// 
+	/// 
+	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
+	/// result of an incorrect sign in the case of overflow.
+	/// ## Parameters
+	/// * src1: first input array.
+	/// * src2: second input array of the same size and type as src1.
+	/// * scale: scalar factor.
+	/// * dst: output array of the same size and type as src2.
+	/// * dtype: optional depth of the output array; if -1, dst will have depth src2.depth(), but in
+	/// case of an array-by-array division, you can only pass -1 when src1.depth()==src2.depth().
+	/// ## See also
+	/// multiply, add, subtract
+	/// 
 	/// ## C++ default parameters
 	/// * scale: 1
 	/// * dtype: -1
@@ -3622,6 +4521,22 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [divide] function uses the following default values for its arguments:
+	/// * dtype: -1
+	#[inline]
+	pub fn divide_def(scale: f64, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_divide_double_const__InputArrayR_const__OutputArrayR(scale, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3695,6 +4610,43 @@ pub mod core {
 		output_array_arg!(eigenvectors);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_eigenNonSymmetric_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates eigenvalues and eigenvectors of a symmetric matrix.
+	/// 
+	/// The function cv::eigen calculates just eigenvalues, or eigenvalues and eigenvectors of the symmetric
+	/// matrix src:
+	/// ```C++
+	///    src*eigenvectors.row(i).t() = eigenvalues.at<srcType>(i)*eigenvectors.row(i).t()
+	/// ```
+	/// 
+	/// 
+	/// 
+	/// Note: Use cv::eigenNonSymmetric for calculation of real eigenvalues and eigenvectors of non-symmetric matrix.
+	/// 
+	/// ## Parameters
+	/// * src: input matrix that must have CV_32FC1 or CV_64FC1 type, square size and be symmetrical
+	/// (src ^T^ == src).
+	/// * eigenvalues: output vector of eigenvalues of the same type as src; the eigenvalues are stored
+	/// in the descending order.
+	/// * eigenvectors: output matrix of eigenvectors; it has the same size and type as src; the
+	/// eigenvectors are stored as subsequent matrix rows, in the same order as the corresponding
+	/// eigenvalues.
+	/// ## See also
+	/// eigenNonSymmetric, completeSymm , PCA
+	/// 
+	/// ## Note
+	/// This alternative version of [eigen] function uses the following default values for its arguments:
+	/// * eigenvectors: noArray()
+	#[inline]
+	pub fn eigen_def(src: &impl core::ToInputArray, eigenvalues: &mut impl core::ToOutputArray) -> Result<bool> {
+		input_array_arg!(src);
+		output_array_arg!(eigenvalues);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_eigen_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3928,6 +4880,53 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_flip_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs generalized matrix multiplication.
+	/// 
+	/// The function cv::gemm performs generalized matrix multiplication similar to the
+	/// gemm functions in BLAS level 3. For example,
+	/// `gemm(src1, src2, alpha, src3, beta, dst, GEMM_1_T + GEMM_3_T)`
+	/// corresponds to
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Balpha%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%5ET%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%2B%20%20%5Ctexttt%7Bbeta%7D%20%5Ccdot%20%5Ctexttt%7Bsrc3%7D%20%5ET)
+	/// 
+	/// In case of complex (two-channel) data, performed a complex matrix
+	/// multiplication.
+	/// 
+	/// The function can be replaced with a matrix expression. For example, the
+	/// above call can be replaced with:
+	/// ```C++
+	///    dst = alpha*src1.t()*src2 + beta*src3.t();
+	/// ```
+	/// 
+	/// ## Parameters
+	/// * src1: first multiplied input matrix that could be real(CV_32FC1,
+	/// CV_64FC1) or complex(CV_32FC2, CV_64FC2).
+	/// * src2: second multiplied input matrix of the same type as src1.
+	/// * alpha: weight of the matrix product.
+	/// * src3: third optional delta matrix added to the matrix product; it
+	/// should have the same type as src1 and src2.
+	/// * beta: weight of src3.
+	/// * dst: output matrix; it has the proper size and the same type as
+	/// input matrices.
+	/// * flags: operation flags (cv::GemmFlags)
+	/// ## See also
+	/// mulTransposed , transform
+	/// 
+	/// ## Note
+	/// This alternative version of [gemm] function uses the following default values for its arguments:
+	/// * flags: 0
+	#[inline]
+	pub fn gemm_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, alpha: f64, src3: &impl core::ToInputArray, beta: f64, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		input_array_arg!(src3);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4227,6 +5226,19 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [glob] function uses the following default values for its arguments:
+	/// * recursive: false
+	#[inline]
+	pub fn glob_def(pattern: &str, result: &mut core::Vector<String>) -> Result<()> {
+		extern_container_arg!(mut pattern);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_glob_String_vectorLStringGR(pattern.opencv_as_extern_mut(), result.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * recursive: false
 	#[inline]
@@ -4387,6 +5399,30 @@ pub mod core {
 	/// ## See also
 	/// dct, dft, idft, getOptimalDFTSize
 	/// 
+	/// ## Note
+	/// This alternative version of [idct] function uses the following default values for its arguments:
+	/// * flags: 0
+	#[inline]
+	pub fn idct_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_idct_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the inverse Discrete Cosine Transform of a 1D or 2D array.
+	/// 
+	/// idct(src, dst, flags) is equivalent to dct(src, dst, flags | DCT_INVERSE).
+	/// ## Parameters
+	/// * src: input floating-point single-channel array.
+	/// * dst: output array of the same size and type as src.
+	/// * flags: operation flags.
+	/// ## See also
+	/// dct, dft, idft, getOptimalDFTSize
+	/// 
 	/// ## C++ default parameters
 	/// * flags: 0
 	#[inline]
@@ -4404,7 +5440,37 @@ pub mod core {
 	/// 
 	/// idft(src, dst, flags) is equivalent to dft(src, dst, flags | #DFT_INVERSE) .
 	/// 
-	/// Note: None of dft and idft scales the result by default. So, you should pass #DFT_SCALE to one of
+	/// Note: None of dft and idft scales the result by default. So, you should pass [DFT_SCALE] to one of
+	/// dft or idft explicitly to make these transforms mutually inverse.
+	/// ## See also
+	/// dft, dct, idct, mulSpectrums, getOptimalDFTSize
+	/// ## Parameters
+	/// * src: input floating-point real or complex array.
+	/// * dst: output array whose size and type depend on the flags.
+	/// * flags: operation flags (see dft and #DftFlags).
+	/// * nonzeroRows: number of dst rows to process; the rest of the rows have undefined content (see
+	/// the convolution sample in dft description.
+	/// 
+	/// ## Note
+	/// This alternative version of [idft] function uses the following default values for its arguments:
+	/// * flags: 0
+	/// * nonzero_rows: 0
+	#[inline]
+	pub fn idft_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_idft_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the inverse Discrete Fourier Transform of a 1D or 2D array.
+	/// 
+	/// idft(src, dst, flags) is equivalent to dft(src, dst, flags | #DFT_INVERSE) .
+	/// 
+	/// Note: None of dft and idft scales the result by default. So, you should pass [DFT_SCALE] to one of
 	/// dft or idft explicitly to make these transforms mutually inverse.
 	/// ## See also
 	/// dft, dct, idct, mulSpectrums, getOptimalDFTSize
@@ -4531,15 +5597,56 @@ pub mod core {
 	/// the pseudo-inverse matrix (the dst matrix) so that norm(src\*dst - I) is
 	/// minimal, where I is an identity matrix.
 	/// 
-	/// In case of the #DECOMP_LU method, the function returns non-zero value if
+	/// In case of the [DECOMP_LU] method, the function returns non-zero value if
 	/// the inverse has been successfully calculated and 0 if src is singular.
 	/// 
-	/// In case of the #DECOMP_SVD method, the function returns the inverse
+	/// In case of the [DECOMP_SVD] method, the function returns the inverse
 	/// condition number of src (the ratio of the smallest singular value to the
 	/// largest singular value) and 0 if src is singular. The SVD method
 	/// calculates a pseudo-inverse matrix if src is singular.
 	/// 
-	/// Similarly to #DECOMP_LU, the method #DECOMP_CHOLESKY works only with
+	/// Similarly to #DECOMP_LU, the method [DECOMP_CHOLESKY] works only with
+	/// non-singular square matrices that should also be symmetrical and
+	/// positively defined. In this case, the function stores the inverted
+	/// matrix in dst and returns non-zero. Otherwise, it returns 0.
+	/// 
+	/// ## Parameters
+	/// * src: input floating-point M x N matrix.
+	/// * dst: output matrix of N x M size and the same type as src.
+	/// * flags: inversion method (cv::DecompTypes)
+	/// ## See also
+	/// solve, SVD
+	/// 
+	/// ## Note
+	/// This alternative version of [invert] function uses the following default values for its arguments:
+	/// * flags: DECOMP_LU
+	#[inline]
+	pub fn invert_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<f64> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_invert_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds the inverse or pseudo-inverse of a matrix.
+	/// 
+	/// The function cv::invert inverts the matrix src and stores the result in dst
+	/// . When the matrix src is singular or non-square, the function calculates
+	/// the pseudo-inverse matrix (the dst matrix) so that norm(src\*dst - I) is
+	/// minimal, where I is an identity matrix.
+	/// 
+	/// In case of the [DECOMP_LU] method, the function returns non-zero value if
+	/// the inverse has been successfully calculated and 0 if src is singular.
+	/// 
+	/// In case of the [DECOMP_SVD] method, the function returns the inverse
+	/// condition number of src (the ratio of the smallest singular value to the
+	/// largest singular value) and 0 if src is singular. The SVD method
+	/// calculates a pseudo-inverse matrix if src is singular.
+	/// 
+	/// Similarly to #DECOMP_LU, the method [DECOMP_CHOLESKY] works only with
 	/// non-singular square matrices that should also be symmetrical and
 	/// positively defined. In this case, the function stores the inverted
 	/// matrix in dst and returns non-zero. Otherwise, it returns 0.
@@ -4599,6 +5706,20 @@ pub mod core {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [set_ipp_status] function uses the following default values for its arguments:
+	/// * funcname: NULL
+	/// * filename: NULL
+	/// * line: 0
+	#[inline]
+	pub fn set_ipp_status_def(status: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ipp_setIppStatus_int(status, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -4686,7 +5807,57 @@ pub mod core {
 	/// after every attempt. The best (minimum) value is chosen and the corresponding labels and the
 	/// compactness value are returned by the function. Basically, you can use only the core of the
 	/// function, set the number of attempts to 1, initialize labels each time using a custom algorithm,
-	/// pass them with the ( flags = #KMEANS_USE_INITIAL_LABELS ) flag, and then choose the best
+	/// pass them with the ( flags = [KMEANS_USE_INITIAL_LABELS] ) flag, and then choose the best
+	/// (most-compact) clustering.
+	/// 
+	/// ## Note
+	/// This alternative version of [kmeans] function uses the following default values for its arguments:
+	/// * centers: noArray()
+	#[inline]
+	pub fn kmeans_def(data: &impl core::ToInputArray, k: i32, best_labels: &mut impl core::ToInputOutputArray, criteria: core::TermCriteria, attempts: i32, flags: i32) -> Result<f64> {
+		input_array_arg!(data);
+		input_output_array_arg!(best_labels);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_kmeans_const__InputArrayR_int_const__InputOutputArrayR_TermCriteria_int_int(data.as_raw__InputArray(), k, best_labels.as_raw__InputOutputArray(), criteria.opencv_as_extern(), attempts, flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds centers of clusters and groups input samples around the clusters.
+	/// 
+	/// The function kmeans implements a k-means algorithm that finds the centers of cluster_count clusters
+	/// and groups the input samples around the clusters. As an output, ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BbestLabels%7D%5Fi) contains a
+	/// 0-based cluster index for the sample stored in the ![inline formula](https://latex.codecogs.com/png.latex?i%5E%7Bth%7D) row of the samples matrix.
+	/// 
+	/// 
+	/// Note:
+	/// *   (Python) An example on K-means clustering can be found at
+	///    opencv_source_code/samples/python/kmeans.py
+	/// ## Parameters
+	/// * data: Data for clustering. An array of N-Dimensional points with float coordinates is needed.
+	/// Examples of this array can be:
+	/// *   Mat points(count, 2, CV_32F);
+	/// *   Mat points(count, 1, CV_32FC2);
+	/// *   Mat points(1, count, CV_32FC2);
+	/// *   std::vector\<cv::Point2f\> points(sampleCount);
+	/// * K: Number of clusters to split the set by.
+	/// * bestLabels: Input/output integer array that stores the cluster indices for every sample.
+	/// * criteria: The algorithm termination criteria, that is, the maximum number of iterations and/or
+	/// the desired accuracy. The accuracy is specified as criteria.epsilon. As soon as each of the cluster
+	/// centers moves by less than criteria.epsilon on some iteration, the algorithm stops.
+	/// * attempts: Flag to specify the number of times the algorithm is executed using different
+	/// initial labellings. The algorithm returns the labels that yield the best compactness (see the last
+	/// function parameter).
+	/// * flags: Flag that can take values of cv::KmeansFlags
+	/// * centers: Output matrix of the cluster centers, one row per each cluster center.
+	/// ## Returns
+	/// The function returns the compactness measure that is computed as
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20%5Fi%20%20%5C%7C%20%5Ctexttt%7Bsamples%7D%20%5Fi%20%2D%20%20%5Ctexttt%7Bcenters%7D%20%5F%7B%20%5Ctexttt%7Blabels%7D%20%5Fi%7D%20%5C%7C%20%5E2)
+	/// after every attempt. The best (minimum) value is chosen and the corresponding labels and the
+	/// compactness value are returned by the function. Basically, you can use only the core of the
+	/// function, set the number of attempts to 1, initialize labels each time using a custom algorithm,
+	/// pass them with the ( flags = [KMEANS_USE_INITIAL_LABELS] ) flag, and then choose the best
 	/// (most-compact) clustering.
 	/// 
 	/// ## C++ default parameters
@@ -4877,6 +6048,44 @@ pub mod core {
 	/// ## See also
 	/// countNonZero, mean, norm, minMaxLoc, calcCovarMatrix
 	/// 
+	/// ## Note
+	/// This alternative version of [mean_std_dev] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn mean_std_dev_def(src: &impl core::ToInputArray, mean: &mut impl core::ToOutputArray, stddev: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(mean);
+		output_array_arg!(stddev);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_meanStdDev_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mean.as_raw__OutputArray(), stddev.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates a mean and standard deviation of array elements.
+	/// 
+	/// The function cv::meanStdDev calculates the mean and the standard deviation M
+	/// of array elements independently for each channel and returns it via the
+	/// output parameters:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20N%20%3D%20%20%5Csum%20%5F%7BI%2C%20%5Ctexttt%7Bmask%7D%20%28I%29%20%20%5Cne%200%7D%201%20%5C%5C%20%5Ctexttt%7Bmean%7D%20%5Fc%20%3D%20%20%5Cfrac%7B%5Csum%5F%7B%20I%3A%20%5C%3B%20%5Ctexttt%7Bmask%7D%28I%29%20%5Cne%200%7D%20%5Ctexttt%7Bsrc%7D%20%28I%29%5Fc%7D%7BN%7D%20%5C%5C%20%5Ctexttt%7Bstddev%7D%20%5Fc%20%3D%20%20%5Csqrt%7B%5Cfrac%7B%5Csum%5F%7B%20I%3A%20%5C%3B%20%5Ctexttt%7Bmask%7D%28I%29%20%5Cne%200%7D%20%5Cleft%20%28%20%5Ctexttt%7Bsrc%7D%20%28I%29%5Fc%20%2D%20%20%5Ctexttt%7Bmean%7D%20%5Fc%20%5Cright%20%29%5E2%7D%7BN%7D%7D%20%5Cend%7Barray%7D)
+	/// When all the mask elements are 0's, the function returns
+	/// mean=stddev=Scalar::all(0).
+	/// 
+	/// Note: The calculated standard deviation is only the diagonal of the
+	/// complete normalized covariance matrix. If the full matrix is needed, you
+	/// can reshape the multi-channel array M x N to the single-channel array
+	/// M\*N x mtx.channels() (only possible when the matrix is continuous) and
+	/// then pass the matrix to calcCovarMatrix .
+	/// ## Parameters
+	/// * src: input array that should have from 1 to 4 channels so that the results can be stored in
+	/// Scalar_ 's.
+	/// * mean: output parameter: calculated mean value.
+	/// * stddev: output parameter: calculated standard deviation.
+	/// * mask: optional operation mask.
+	/// ## See also
+	/// countNonZero, mean, norm, minMaxLoc, calcCovarMatrix
+	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -4887,6 +6096,32 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_meanStdDev_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), mean.as_raw__OutputArray(), stddev.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates an average (mean) of array elements.
+	/// 
+	/// The function cv::mean calculates the mean value M of array elements,
+	/// independently for each channel, and return it:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20N%20%3D%20%20%5Csum%20%5F%7BI%3A%20%5C%3B%20%5Ctexttt%7Bmask%7D%20%28I%29%20%5Cne%200%7D%201%20%5C%5C%20M%5Fc%20%3D%20%20%5Cleft%20%28%20%5Csum%20%5F%7BI%3A%20%5C%3B%20%5Ctexttt%7Bmask%7D%20%28I%29%20%5Cne%200%7D%7B%20%5Ctexttt%7Bmtx%7D%20%28I%29%5Fc%7D%20%5Cright%20%29%2FN%20%5Cend%7Barray%7D)
+	/// When all the mask elements are 0's, the function returns Scalar::all(0)
+	/// ## Parameters
+	/// * src: input array that should have from 1 to 4 channels so that the result can be stored in
+	/// Scalar_ .
+	/// * mask: optional operation mask.
+	/// ## See also
+	/// countNonZero, meanStdDev, norm, minMaxLoc
+	/// 
+	/// ## Note
+	/// This alternative version of [mean] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn mean_def(src: &impl core::ToInputArray) -> Result<core::Scalar> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_mean_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4928,7 +6163,7 @@ pub mod core {
 	/// advanced way, use cv::mixChannels.
 	/// 
 	/// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -4981,6 +6216,47 @@ pub mod core {
 	/// * maxIdx: pointer to the returned maximum location (in nD case). NULL is used if not required.
 	/// * mask: specified array region
 	/// 
+	/// ## Note
+	/// This alternative version of [min_max_idx] function uses the following default values for its arguments:
+	/// * max_val: 0
+	/// * min_idx: 0
+	/// * max_idx: 0
+	/// * mask: noArray()
+	#[inline]
+	pub fn min_max_idx_def(src: &impl core::ToInputArray, min_val: Option<&mut f64>) -> Result<()> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds the global minimum and maximum in an array
+	/// 
+	/// The function cv::minMaxIdx finds the minimum and maximum element values and their positions. The
+	/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
+	/// array region. The function does not work with multi-channel arrays. If you need to find minimum or
+	/// maximum elements across all the channels, use Mat::reshape first to reinterpret the array as
+	/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
+	/// mixChannels , or split . In case of a sparse matrix, the minimum is found among non-zero elements
+	/// only.
+	/// 
+	/// Note: When minIdx is not NULL, it must have at least 2 elements (as well as maxIdx), even if src is
+	/// a single-row or single-column matrix. In OpenCV (following MATLAB) each array has at least 2
+	/// dimensions, i.e. single-column matrix is Mx1 matrix (and therefore minIdx/maxIdx will be
+	/// (i1,0)/(i2,0)) and single-row matrix is 1xN matrix (and therefore minIdx/maxIdx will be
+	/// (0,j1)/(0,j2)).
+	/// ## Parameters
+	/// * src: input single-channel array.
+	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
+	/// * maxVal: pointer to the returned maximum value; NULL is used if not required.
+	/// * minIdx: pointer to the returned minimum location (in nD case); NULL is used if not required;
+	/// Otherwise, it must point to an array of src.dims elements, the coordinates of the minimum element
+	/// in each dimension are stored there sequentially.
+	/// * maxIdx: pointer to the returned maximum location (in nD case). NULL is used if not required.
+	/// * mask: specified array region
+	/// 
 	/// ## C++ default parameters
 	/// * max_val: 0
 	/// * min_idx: 0
@@ -4992,6 +6268,29 @@ pub mod core {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX_doubleX_intX_intX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// ## Parameters
+	/// * a: input single-channel array.
+	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
+	/// * maxVal: pointer to the returned maximum value; NULL is used if not required.
+	/// * minIdx: pointer to the returned minimum location (in nD case); NULL is used if not required;
+	/// Otherwise, it must point to an array of src.dims elements, the coordinates of the minimum element
+	/// in each dimension are stored there sequentially.
+	/// * maxIdx: pointer to the returned maximum location (in nD case). NULL is used if not required.
+	/// 
+	/// ## Note
+	/// This alternative version of [min_max_loc_sparse] function uses the following default values for its arguments:
+	/// * min_idx: 0
+	/// * max_idx: 0
+	#[inline]
+	pub fn min_max_loc_sparse_def(a: &core::SparseMat, min_val: Option<&mut f64>, max_val: Option<&mut f64>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5034,6 +6333,42 @@ pub mod core {
 	pub fn min_max_loc_sparse(a: &core::SparseMat, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_idx: Option<&mut i32>, max_idx: Option<&mut i32>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX_intX_intX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds the global minimum and maximum in an array.
+	/// 
+	/// The function cv::minMaxLoc finds the minimum and maximum element values and their positions. The
+	/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
+	/// array region.
+	/// 
+	/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
+	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
+	/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
+	/// mixChannels , or split .
+	/// ## Parameters
+	/// * src: input single-channel array.
+	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
+	/// * maxVal: pointer to the returned maximum value; NULL is used if not required.
+	/// * minLoc: pointer to the returned minimum location (in 2D case); NULL is used if not required.
+	/// * maxLoc: pointer to the returned maximum location (in 2D case); NULL is used if not required.
+	/// * mask: optional mask used to select a sub-array.
+	/// ## See also
+	/// max, min, reduceArgMin, reduceArgMax, compare, inRange, extractImageCOI, mixChannels, split, Mat::reshape
+	/// 
+	/// ## Note
+	/// This alternative version of [min_max_loc] function uses the following default values for its arguments:
+	/// * max_val: 0
+	/// * min_loc: 0
+	/// * max_loc: 0
+	/// * mask: noArray()
+	#[inline]
+	pub fn min_max_loc_def(src: &impl core::ToInputArray, min_val: Option<&mut f64>) -> Result<()> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5336,6 +6671,39 @@ pub mod core {
 	/// * conjB: optional flag that conjugates the second input array before the multiplication (true)
 	/// or not (false).
 	/// 
+	/// ## Note
+	/// This alternative version of [mul_spectrums] function uses the following default values for its arguments:
+	/// * conj_b: false
+	#[inline]
+	pub fn mul_spectrums_def(a: &impl core::ToInputArray, b: &impl core::ToInputArray, c: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+		input_array_arg!(a);
+		input_array_arg!(b);
+		output_array_arg!(c);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs the per-element multiplication of two Fourier spectrums.
+	/// 
+	/// The function cv::mulSpectrums performs the per-element multiplication of the two CCS-packed or complex
+	/// matrices that are results of a real or complex Fourier transform.
+	/// 
+	/// The function, together with dft and idft , may be used to calculate convolution (pass conjB=false )
+	/// or correlation (pass conjB=true ) of two arrays rapidly. When the arrays are complex, they are
+	/// simply multiplied (per element) with an optional conjugation of the second-array elements. When the
+	/// arrays are real, they are assumed to be CCS-packed (see dft for details).
+	/// ## Parameters
+	/// * a: first input array.
+	/// * b: second input array of the same size and type as src1 .
+	/// * c: output array of the same size and type as src1 .
+	/// * flags: operation flags; currently, the only supported flag is cv::DFT_ROWS, which indicates that
+	/// each row of src1 and src2 is an independent 1D Fourier spectrum. If you do not want to use this flag, then simply add a `0` as value.
+	/// * conjB: optional flag that conjugates the second input array before the multiplication (true)
+	/// or not (false).
+	/// 
 	/// ## C++ default parameters
 	/// * conj_b: false
 	#[inline]
@@ -5345,6 +6713,52 @@ pub mod core {
 		output_array_arg!(c);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the product of a matrix and its transposition.
+	/// 
+	/// The function cv::mulTransposed calculates the product of src and its
+	/// transposition:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Ctexttt%7Bscale%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29%5ET%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29)
+	/// if aTa=true , and
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Ctexttt%7Bscale%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29%5ET)
+	/// otherwise. The function is used to calculate the covariance matrix. With
+	/// zero delta, it can be used as a faster substitute for general matrix
+	/// product A\*B when B=A'
+	/// ## Parameters
+	/// * src: input single-channel matrix. Note that unlike gemm, the
+	/// function can multiply not only floating-point matrices.
+	/// * dst: output square matrix.
+	/// * aTa: Flag specifying the multiplication ordering. See the
+	/// description below.
+	/// * delta: Optional delta matrix subtracted from src before the
+	/// multiplication. When the matrix is empty ( delta=noArray() ), it is
+	/// assumed to be zero, that is, nothing is subtracted. If it has the same
+	/// size as src , it is simply subtracted. Otherwise, it is "repeated" (see
+	/// repeat ) to cover the full src and then subtracted. Type of the delta
+	/// matrix, when it is not empty, must be the same as the type of created
+	/// output matrix. See the dtype parameter description below.
+	/// * scale: Optional scale factor for the matrix product.
+	/// * dtype: Optional type of the output matrix. When it is negative,
+	/// the output matrix will have the same type as src . Otherwise, it will be
+	/// type=CV_MAT_DEPTH(dtype) that should be either CV_32F or CV_64F .
+	/// ## See also
+	/// calcCovarMatrix, gemm, repeat, reduce
+	/// 
+	/// ## Note
+	/// This alternative version of [mul_transposed] function uses the following default values for its arguments:
+	/// * delta: noArray()
+	/// * scale: 1
+	/// * dtype: -1
+	#[inline]
+	pub fn mul_transposed_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, a_ta: bool) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_mulTransposed_const__InputArrayR_const__OutputArrayR_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), a_ta, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5391,6 +6805,46 @@ pub mod core {
 		input_array_arg!(delta);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_mulTransposed_const__InputArrayR_const__OutputArrayR_bool_const__InputArrayR_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), a_ta, delta.as_raw__InputArray(), scale, dtype, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element scaled product of two arrays.
+	/// 
+	/// The function multiply calculates the per-element product of two arrays:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
+	/// 
+	/// There is also a [MatrixExpressions] -friendly variant of the first function. See Mat::mul .
+	/// 
+	/// For a not-per-element matrix product, see gemm .
+	/// 
+	/// 
+	/// Note: Saturation is not applied when the output array has the depth
+	/// CV_32S. You may even get result of an incorrect sign in the case of
+	/// overflow.
+	/// ## Parameters
+	/// * src1: first input array.
+	/// * src2: second input array of the same size and the same type as src1.
+	/// * dst: output array of the same size and type as src1.
+	/// * scale: optional scale factor.
+	/// * dtype: optional depth of the output array
+	/// ## See also
+	/// add, subtract, divide, scaleAdd, addWeighted, accumulate, accumulateProduct, accumulateSquare,
+	/// Mat::convertTo
+	/// 
+	/// ## Note
+	/// This alternative version of [multiply] function uses the following default values for its arguments:
+	/// * scale: 1
+	/// * dtype: -1
+	#[inline]
+	pub fn multiply_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5467,6 +6921,84 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// Calculates the  absolute norm of an array.
+	/// 
+	/// This version of [norm] calculates the absolute norm of src1. The type of norm to calculate is specified using #NormTypes.
+	/// 
+	/// As example for one array consider the function ![inline formula](https://latex.codecogs.com/png.latex?r%28x%29%3D%20%5Cbegin%7Bpmatrix%7D%20x%20%5C%5C%201%2Dx%20%5Cend%7Bpmatrix%7D%2C%20x%20%5Cin%20%5B%2D1%3B1%5D).
+	/// The ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%2C%20L%5F%7B2%7D%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm for the sample value ![inline formula](https://latex.codecogs.com/png.latex?r%28%2D1%29%20%3D%20%5Cbegin%7Bpmatrix%7D%20%2D1%20%5C%5C%202%20%5Cend%7Bpmatrix%7D)
+	/// is calculated as follows
+	/// \f{align*}
+	///    \| r(-1) \|_{L_1} &= |-1| + |2| = 3 \\
+	///    \| r(-1) \|_{L_2} &= \sqrt{(-1)^{2} + (2)^{2}} = \sqrt{5} \\
+	///    \| r(-1) \|_{L_\infty} &= \max(|-1|,|2|) = 2
+	/// \f}
+	/// and for ![inline formula](https://latex.codecogs.com/png.latex?r%280%2E5%29%20%3D%20%5Cbegin%7Bpmatrix%7D%200%2E5%20%5C%5C%200%2E5%20%5Cend%7Bpmatrix%7D) the calculation is
+	/// \f{align*}
+	///    \| r(0.5) \|_{L_1} &= |0.5| + |0.5| = 1 \\
+	///    \| r(0.5) \|_{L_2} &= \sqrt{(0.5)^{2} + (0.5)^{2}} = \sqrt{0.5} \\
+	///    \| r(0.5) \|_{L_\infty} &= \max(|0.5|,|0.5|) = 0.5.
+	/// \f}
+	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
+	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.8.1/NormTypes_OneArray_1-2-INF.png)
+	/// 
+	/// When the mask parameter is specified and it is not empty, the norm is
+	/// 
+	/// If normType is not specified, [NORM_L2] is used.
+	/// calculated only over the region specified by the mask.
+	/// 
+	/// Multi-channel input arrays are treated as single-channel arrays, that is,
+	/// the results for all channels are combined.
+	/// 
+	/// Hamming norms can only be calculated with CV_8U depth arrays.
+	/// 
+	/// ## Parameters
+	/// * src1: first input array.
+	/// * normType: type of the norm (see #NormTypes).
+	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+	/// 
+	/// ## Note
+	/// This alternative version of [norm] function uses the following default values for its arguments:
+	/// * norm_type: NORM_L2
+	/// * mask: noArray()
+	#[inline]
+	pub fn norm_def(src1: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(src1);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_norm_const__InputArrayR(src1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates an absolute difference norm or a relative difference norm.
+	/// 
+	/// This version of cv::norm calculates the absolute difference norm
+	/// or the relative difference norm of arrays src1 and src2.
+	/// The type of norm to calculate is specified using #NormTypes.
+	/// 
+	/// ## Parameters
+	/// * src1: first input array.
+	/// * src2: second input array of the same size and the same type as src1.
+	/// * normType: type of the norm (see #NormTypes).
+	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+	/// 
+	/// ## Note
+	/// This alternative version of [norm2] function uses the following default values for its arguments:
+	/// * norm_type: NORM_L2
+	/// * mask: noArray()
+	#[inline]
+	pub fn norm2_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray) -> Result<f64> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_norm_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Calculates an absolute difference norm or a relative difference norm.
 	/// 
 	/// This version of cv::norm calculates the absolute difference norm
@@ -5496,7 +7028,7 @@ pub mod core {
 	
 	/// Calculates the  absolute norm of an array.
 	/// 
-	/// This version of #norm calculates the absolute norm of src1. The type of norm to calculate is specified using #NormTypes.
+	/// This version of [norm] calculates the absolute norm of src1. The type of norm to calculate is specified using #NormTypes.
 	/// 
 	/// As example for one array consider the function ![inline formula](https://latex.codecogs.com/png.latex?r%28x%29%3D%20%5Cbegin%7Bpmatrix%7D%20x%20%5C%5C%201%2Dx%20%5Cend%7Bpmatrix%7D%2C%20x%20%5Cin%20%5B%2D1%3B1%5D).
 	/// The ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%2C%20L%5F%7B2%7D%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm for the sample value ![inline formula](https://latex.codecogs.com/png.latex?r%28%2D1%29%20%3D%20%5Cbegin%7Bpmatrix%7D%20%2D1%20%5C%5C%202%20%5Cend%7Bpmatrix%7D)
@@ -5514,11 +7046,11 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.8.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.8.1/NormTypes_OneArray_1-2-INF.png)
 	/// 
 	/// When the mask parameter is specified and it is not empty, the norm is
 	/// 
-	/// If normType is not specified, #NORM_L2 is used.
+	/// If normType is not specified, [NORM_L2] is used.
 	/// calculated only over the region specified by the mask.
 	/// 
 	/// Multi-channel input arrays are treated as single-channel arrays, that is,
@@ -5642,6 +7174,85 @@ pub mod core {
 	///    vector<double> positiveData = { 2.0, 8.0, 10.0 };
 	///    vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
 	/// 
+	///  Norm to probability (total count)
+	///  sum(numbers) = 20.0
+	///  2.0      0.1     (2.0/20.0)
+	///  8.0      0.4     (8.0/20.0)
+	///  10.0     0.5     (10.0/20.0)
+	///    normalize(positiveData, normalizedData_l1, 1.0, 0.0, NORM_L1);
+	/// 
+	///  Norm to unit vector: ||positiveData|| = 1.0
+	///  2.0      0.15
+	///  8.0      0.62
+	///  10.0     0.77
+	///    normalize(positiveData, normalizedData_l2, 1.0, 0.0, NORM_L2);
+	/// 
+	///  Norm to max element
+	///  2.0      0.2     (2.0/10.0)
+	///  8.0      0.8     (8.0/10.0)
+	///  10.0     1.0     (10.0/10.0)
+	///    normalize(positiveData, normalizedData_inf, 1.0, 0.0, NORM_INF);
+	/// 
+	///  Norm to range [0.0;1.0]
+	///  2.0      0.0     (shift to left border)
+	///  8.0      0.75    (6.0/8.0)
+	///  10.0     1.0     (shift to right border)
+	///    normalize(positiveData, normalizedData_minmax, 1.0, 0.0, NORM_MINMAX);
+	/// ```
+	/// 
+	/// 
+	/// ## Parameters
+	/// * src: input array.
+	/// * dst: output array of the same size as src .
+	/// * alpha: norm value to normalize to or the lower range boundary in case of the range
+	/// normalization.
+	/// * beta: upper range boundary in case of the range normalization; it is not used for the norm
+	/// normalization.
+	/// * norm_type: normalization type (see cv::NormTypes).
+	/// * dtype: when negative, the output array has the same type as src; otherwise, it has the same
+	/// number of channels as src and the depth =CV_MAT_DEPTH(dtype).
+	/// * mask: optional operation mask.
+	/// ## See also
+	/// norm, Mat::convertTo, SparseMat::convertTo
+	/// 
+	/// ## Note
+	/// This alternative version of [normalize] function uses the following default values for its arguments:
+	/// * alpha: 1
+	/// * beta: 0
+	/// * norm_type: NORM_L2
+	/// * dtype: -1
+	/// * mask: noArray()
+	#[inline]
+	pub fn normalize_def(src: &impl core::ToInputArray, dst: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_normalize_const__InputArrayR_const__InputOutputArrayR(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Normalizes the norm or value range of an array.
+	/// 
+	/// The function cv::normalize normalizes scale and shift the input array elements so that
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7Bdst%7D%20%5C%7C%20%5F%7BL%5Fp%7D%3D%20%5Ctexttt%7Balpha%7D)
+	/// (where p=Inf, 1 or 2) when normType=NORM_INF, NORM_L1, or NORM_L2, respectively; or so that
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmin%20%5FI%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Balpha%7D%20%2C%20%5C%2C%20%5C%2C%20%5Cmax%20%5FI%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bbeta%7D)
+	/// 
+	/// when normType=NORM_MINMAX (for dense arrays only). The optional mask specifies a sub-array to be
+	/// normalized. This means that the norm or min-n-max are calculated over the sub-array, and then this
+	/// sub-array is modified to be normalized. If you want to only use the mask to calculate the norm or
+	/// min-max but modify the whole array, you can use norm and Mat::convertTo.
+	/// 
+	/// In case of sparse matrices, only the non-zero values are analyzed and transformed. Because of this,
+	/// the range transformation for sparse matrices is not allowed since it can shift the zero level.
+	/// 
+	/// Possible usage with some positive example data:
+	/// ```C++
+	///    vector<double> positiveData = { 2.0, 8.0, 10.0 };
+	///    vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
+	/// 
 	///    // Norm to probability (total count)
 	///    // sum(numbers) = 20.0
 	///    // 2.0      0.1     (2.0/20.0)
@@ -5732,6 +7343,27 @@ pub mod core {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		string_arg_output_receive!(build_options_via => build_options);
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [check_optimal_vector_width] function uses the following default values for its arguments:
+	/// * src2: noArray()
+	/// * src3: noArray()
+	/// * src4: noArray()
+	/// * src5: noArray()
+	/// * src6: noArray()
+	/// * src7: noArray()
+	/// * src8: noArray()
+	/// * src9: noArray()
+	/// * strat: OCL_VECTOR_DEFAULT
+	#[inline]
+	pub fn check_optimal_vector_width_def(vector_widths: &i32, src1: &impl core::ToInputArray) -> Result<i32> {
+		input_array_arg!(src1);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ocl_checkOptimalVectorWidth_const_intX_const__InputArrayR(vector_widths, src1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -5890,6 +7522,21 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [kernel_to_str] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	/// * name: NULL
+	#[inline]
+	pub fn kernel_to_str_def(_kernel: &impl core::ToInputArray) -> Result<String> {
+		input_array_arg!(_kernel);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ocl_kernelToStr_const__InputArrayR(_kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	/// * name: NULL
@@ -5915,6 +7562,26 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [predict_optimal_vector_width_max] function uses the following default values for its arguments:
+	/// * src2: noArray()
+	/// * src3: noArray()
+	/// * src4: noArray()
+	/// * src5: noArray()
+	/// * src6: noArray()
+	/// * src7: noArray()
+	/// * src8: noArray()
+	/// * src9: noArray()
+	#[inline]
+	pub fn predict_optimal_vector_width_max_def(src1: &impl core::ToInputArray) -> Result<i32> {
+		input_array_arg!(src1);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_const__InputArrayR(src1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * src2: noArray()
 	/// * src3: noArray()
@@ -5937,6 +7604,27 @@ pub mod core {
 		input_array_arg!(src9);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [predict_optimal_vector_width] function uses the following default values for its arguments:
+	/// * src2: noArray()
+	/// * src3: noArray()
+	/// * src4: noArray()
+	/// * src5: noArray()
+	/// * src6: noArray()
+	/// * src7: noArray()
+	/// * src8: noArray()
+	/// * src9: noArray()
+	/// * strat: OCL_VECTOR_DEFAULT
+	#[inline]
+	pub fn predict_optimal_vector_width_def(src1: &impl core::ToInputArray) -> Result<i32> {
+		input_array_arg!(src1);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ocl_predictOptimalVectorWidth_const__InputArrayR(src1.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6049,6 +7737,32 @@ pub mod core {
 	/// ## Returns
 	/// Returns UMat object
 	/// 
+	/// ## Note
+	/// This alternative version of [map_gl_buffer] function uses the following default values for its arguments:
+	/// * access_flags: ACCESS_READ|ACCESS_WRITE
+	#[inline]
+	pub fn map_gl_buffer_def(buffer: &core::Buffer) -> Result<core::UMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_mapGLBuffer_const_BufferR(buffer.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Maps Buffer object to process on CL side (convert to UMat).
+	/// 
+	/// Function creates CL buffer from GL one, and then constructs UMat that can be used
+	/// to process buffer data with OpenCV functions. Note that in current implementation
+	/// UMat constructed this way doesn't own corresponding GL buffer object, so it is
+	/// the user responsibility to close down CL/GL buffers relationships by explicitly
+	/// calling unmapGLBuffer() function.
+	/// ## Parameters
+	/// * buffer: - source Buffer object.
+	/// * accessFlags: - data access flags (ACCESS_READ|ACCESS_WRITE).
+	/// ## Returns
+	/// Returns UMat object
+	/// 
 	/// ## C++ default parameters
 	/// * access_flags: ACCESS_READ|ACCESS_WRITE
 	#[inline]
@@ -6071,6 +7785,46 @@ pub mod core {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// ## Parameters
+	/// * arr: Array of privitives vertices.
+	/// * mode: Render mode. One of cv::ogl::RenderModes
+	/// * color: Color for all vertices. Will be used if arr doesn't contain color array.
+	/// 
+	/// ## Note
+	/// This alternative version of [render_1] function uses the following default values for its arguments:
+	/// * mode: POINTS
+	/// * color: Scalar::all(255)
+	#[inline]
+	pub fn render_1_def(arr: &core::Arrays) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_render_const_ArraysR(arr.as_raw_Arrays(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// ## Parameters
+	/// * arr: Array of privitives vertices.
+	/// * indices: Array of vertices indices (host or device memory).
+	/// * mode: Render mode. One of cv::ogl::RenderModes
+	/// * color: Color for all vertices. Will be used if arr doesn't contain color array.
+	/// 
+	/// ## Note
+	/// This alternative version of [render_2] function uses the following default values for its arguments:
+	/// * mode: POINTS
+	/// * color: Scalar::all(255)
+	#[inline]
+	pub fn render_2_def(arr: &core::Arrays, indices: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(indices);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_render_const_ArraysR_const__InputArrayR(arr.as_raw_Arrays(), indices.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -6119,6 +7873,25 @@ pub mod core {
 	pub fn render_1(arr: &core::Arrays, mode: i32, color: core::Scalar) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ogl_render_const_ArraysR_int_Scalar(arr.as_raw_Arrays(), mode, color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Render OpenGL texture or primitives.
+	/// ## Parameters
+	/// * tex: Texture to draw.
+	/// * wndRect: Region of window, where to draw a texture (normalized coordinates).
+	/// * texRect: Region of texture to draw (normalized coordinates).
+	/// 
+	/// ## Note
+	/// This alternative version of [render] function uses the following default values for its arguments:
+	/// * wnd_rect: Rect_<double>(0.0,0.0,1.0,1.0)
+	/// * tex_rect: Rect_<double>(0.0,0.0,1.0,1.0)
+	#[inline]
+	pub fn render_def(tex: &core::Texture2D) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ogl_render_const_Texture2DR(tex.as_raw_Texture2D(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6801,12 +8574,46 @@ pub mod core {
 	/// 
 	/// @ingroup core_parallel
 	/// 
+	/// ## Note
+	/// This alternative version of [parallel_for_] function uses the following default values for its arguments:
+	/// * nstripes: -1.
+	#[inline]
+	pub fn parallel_for__def(range: &core::Range, body: &core::ParallelLoopBody) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_parallel_for__const_RangeR_const_ParallelLoopBodyR(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Parallel data processor
+	/// 
+	/// @ingroup core_parallel
+	/// 
 	/// ## C++ default parameters
 	/// * nstripes: -1.
 	#[inline]
 	pub fn parallel_for_(range: &core::Range, body: &core::ParallelLoopBody, nstripes: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_parallel_for__const_RangeR_const_ParallelLoopBodyR_double(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), nstripes, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// converts NaNs to the given number
+	/// ## Parameters
+	/// * a: input/output matrix (CV_32F type).
+	/// * val: value to convert the NaNs
+	/// 
+	/// ## Note
+	/// This alternative version of [patch_na_ns] function uses the following default values for its arguments:
+	/// * val: 0
+	#[inline]
+	pub fn patch_na_ns_def(a: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_output_array_arg!(a);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_patchNaNs_const__InputOutputArrayR(a.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6885,6 +8692,38 @@ pub mod core {
 	/// * angleInDegrees: when true, the function calculates the angle in
 	/// degrees, otherwise, they are measured in radians.
 	/// 
+	/// ## Note
+	/// This alternative version of [phase] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	#[inline]
+	pub fn phase_def(x: &impl core::ToInputArray, y: &impl core::ToInputArray, angle: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(x);
+		input_array_arg!(y);
+		output_array_arg!(angle);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the rotation angle of 2D vectors.
+	/// 
+	/// The function cv::phase calculates the rotation angle of each 2D vector that
+	/// is formed from the corresponding elements of x and y :
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bangle%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Batan2%7D%20%28%20%5Ctexttt%7By%7D%20%28I%29%2C%20%5Ctexttt%7Bx%7D%20%28I%29%29)
+	/// 
+	/// The angle estimation accuracy is about 0.3 degrees. When x(I)=y(I)=0 ,
+	/// the corresponding angle(I) is set to 0.
+	/// ## Parameters
+	/// * x: input floating-point array of x-coordinates of 2D vectors.
+	/// * y: input array of y-coordinates of 2D vectors; it must have the
+	/// same size and the same type as x.
+	/// * angle: output array of vector angles; it has the same size and
+	/// same type as x .
+	/// * angleInDegrees: when true, the function calculates the angle in
+	/// degrees, otherwise, they are measured in radians.
+	/// 
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	#[inline]
@@ -6894,6 +8733,44 @@ pub mod core {
 		output_array_arg!(angle);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates x and y coordinates of 2D vectors from their magnitude and angle.
+	/// 
+	/// The function cv::polarToCart calculates the Cartesian coordinates of each 2D
+	/// vector represented by the corresponding elements of magnitude and angle:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%5Ctexttt%7Bx%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%20%5Ccos%20%28%20%5Ctexttt%7Bangle%7D%20%28I%29%29%20%5C%5C%20%5Ctexttt%7By%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%20%5Csin%20%28%20%5Ctexttt%7Bangle%7D%20%28I%29%29%20%5C%5C%20%5Cend%7Barray%7D)
+	/// 
+	/// The relative accuracy of the estimated coordinates is about 1e-6.
+	/// ## Parameters
+	/// * magnitude: input floating-point array of magnitudes of 2D vectors;
+	/// it can be an empty matrix (=Mat()), in this case, the function assumes
+	/// that all the magnitudes are =1; if it is not empty, it must have the
+	/// same size and type as angle.
+	/// * angle: input floating-point array of angles of 2D vectors.
+	/// * x: output array of x-coordinates of 2D vectors; it has the same
+	/// size and type as angle.
+	/// * y: output array of y-coordinates of 2D vectors; it has the same
+	/// size and type as angle.
+	/// * angleInDegrees: when true, the input angles are measured in
+	/// degrees, otherwise, they are measured in radians.
+	/// ## See also
+	/// cartToPolar, magnitude, phase, exp, log, pow, sqrt
+	/// 
+	/// ## Note
+	/// This alternative version of [polar_to_cart] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	#[inline]
+	pub fn polar_to_cart_def(magnitude: &impl core::ToInputArray, angle: &impl core::ToInputArray, x: &mut impl core::ToOutputArray, y: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(magnitude);
+		input_array_arg!(angle);
+		output_array_arg!(x);
+		output_array_arg!(y);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6967,6 +8844,33 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_pow_const__InputArrayR_double_const__OutputArrayR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Shuffles the array elements randomly.
+	/// 
+	/// The function cv::randShuffle shuffles the specified 1D array by randomly choosing pairs of elements and
+	/// swapping them. The number of such swap operations will be dst.rows\*dst.cols\*iterFactor .
+	/// ## Parameters
+	/// * dst: input/output numerical 1D array.
+	/// * iterFactor: scale factor that determines the number of random swap operations (see the details
+	/// below).
+	/// * rng: optional random number generator used for shuffling; if it is zero, theRNG () is used
+	/// instead.
+	/// ## See also
+	/// RNG, sort
+	/// 
+	/// ## Note
+	/// This alternative version of [rand_shuffle] function uses the following default values for its arguments:
+	/// * iter_factor: 1.
+	/// * rng: 0
+	#[inline]
+	pub fn rand_shuffle_def(dst: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_randShuffle_const__InputOutputArrayR(dst.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7063,12 +8967,36 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [read_mat] function uses the following default values for its arguments:
+	/// * default_mat: Mat()
+	#[inline]
+	pub fn read_mat_def(node: &core::FileNode, mat: &mut core::Mat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_read_const_FileNodeR_MatR(node.as_raw_FileNode(), mat.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * default_mat: Mat()
 	#[inline]
 	pub fn read_mat(node: &core::FileNode, mat: &mut core::Mat, default_mat: &core::Mat) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_MatR_const_MatR(node.as_raw_FileNode(), mat.as_raw_mut_Mat(), default_mat.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [read_sparsemat] function uses the following default values for its arguments:
+	/// * default_mat: SparseMat()
+	#[inline]
+	pub fn read_sparsemat_def(node: &core::FileNode, mat: &mut core::SparseMat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_read_const_FileNodeR_SparseMatR(node.as_raw_FileNode(), mat.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7177,6 +9105,37 @@ pub mod core {
 	/// ## See also
 	/// reduceArgMin, minMaxLoc, min, max, compare, reduce
 	/// 
+	/// ## Note
+	/// This alternative version of [reduce_arg_max] function uses the following default values for its arguments:
+	/// * last_index: false
+	#[inline]
+	pub fn reduce_arg_max_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, axis: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_reduceArgMax_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds indices of max elements along provided axis
+	/// 
+	/// 
+	/// Note:
+	///      - If input or output array is not continuous, this function will create an internal copy.
+	///      - NaN handling is left unspecified, see patchNaNs().
+	///      - The returned index is always in bounds of input matrix.
+	/// 
+	/// ## Parameters
+	/// * src: input single-channel array.
+	/// * dst: output array of type CV_32SC1 with the same dimensionality as src,
+	/// except for axis being reduced - it should be set to 1.
+	/// * lastIndex: whether to get the index of first or last occurrence of max.
+	/// * axis: axis to reduce along.
+	/// ## See also
+	/// reduceArgMin, minMaxLoc, min, max, compare, reduce
+	/// 
 	/// ## C++ default parameters
 	/// * last_index: false
 	#[inline]
@@ -7185,6 +9144,37 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_reduceArgMax_const__InputArrayR_const__OutputArrayR_int_bool(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, last_index, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds indices of min elements along provided axis
+	/// 
+	/// 
+	/// Note:
+	///      - If input or output array is not continuous, this function will create an internal copy.
+	///      - NaN handling is left unspecified, see patchNaNs().
+	///      - The returned index is always in bounds of input matrix.
+	/// 
+	/// ## Parameters
+	/// * src: input single-channel array.
+	/// * dst: output array of type CV_32SC1 with the same dimensionality as src,
+	/// except for axis being reduced - it should be set to 1.
+	/// * lastIndex: whether to get the index of first or last occurrence of min.
+	/// * axis: axis to reduce along.
+	/// ## See also
+	/// reduceArgMax, minMaxLoc, min, max, compare, reduce
+	/// 
+	/// ## Note
+	/// This alternative version of [reduce_arg_min] function uses the following default values for its arguments:
+	/// * last_index: false
+	#[inline]
+	pub fn reduce_arg_min_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, axis: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_reduceArgMin_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), axis, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7222,25 +9212,65 @@ pub mod core {
 	
 	/// Reduces a matrix to a vector.
 	/// 
-	/// The function #reduce reduces the matrix to a vector by treating the matrix rows/columns as a set of
+	/// The function [reduce] reduces the matrix to a vector by treating the matrix rows/columns as a set of
 	/// 1D vectors and performing the specified operation on the vectors until a single row/column is
 	/// obtained. For example, the function can be used to compute horizontal and vertical projections of a
-	/// raster image. In case of #REDUCE_MAX and #REDUCE_MIN , the output image should have the same type as the source one.
-	/// In case of #REDUCE_SUM, #REDUCE_SUM2 and #REDUCE_AVG , the output may have a larger element bit-depth to preserve accuracy.
+	/// raster image. In case of [REDUCE_MAX] and [REDUCE_MIN] , the output image should have the same type as the source one.
+	/// In case of #REDUCE_SUM, [REDUCE_SUM2] and [REDUCE_AVG] , the output may have a larger element bit-depth to preserve accuracy.
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	/// 
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input 2D matrix.
 	/// * dst: output vector. Its size and type is defined by dim and dtype parameters.
 	/// * dim: dimension index along which the matrix is reduced. 0 means that the matrix is reduced to
 	/// a single row. 1 means that the matrix is reduced to a single column.
-	/// * rtype: reduction operation that could be one of #ReduceTypes
+	/// * rtype: reduction operation that could be one of [reduce_types]
+	/// * dtype: when negative, the output vector will have the same type as the input matrix,
+	/// otherwise, its type will be CV_MAKE_TYPE(CV_MAT_DEPTH(dtype), src.channels()).
+	/// ## See also
+	/// repeat, reduceArgMin, reduceArgMax
+	/// 
+	/// ## Note
+	/// This alternative version of [reduce] function uses the following default values for its arguments:
+	/// * dtype: -1
+	#[inline]
+	pub fn reduce_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, dim: i32, rtype: i32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_reduce_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dim, rtype, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Reduces a matrix to a vector.
+	/// 
+	/// The function [reduce] reduces the matrix to a vector by treating the matrix rows/columns as a set of
+	/// 1D vectors and performing the specified operation on the vectors until a single row/column is
+	/// obtained. For example, the function can be used to compute horizontal and vertical projections of a
+	/// raster image. In case of [REDUCE_MAX] and [REDUCE_MIN] , the output image should have the same type as the source one.
+	/// In case of #REDUCE_SUM, [REDUCE_SUM2] and [REDUCE_AVG] , the output may have a larger element bit-depth to preserve accuracy.
+	/// And multi-channel arrays are also supported in these two reduction modes.
+	/// 
+	/// The following code demonstrates its usage for a single channel matrix.
+	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// 
+	/// And the following code demonstrates its usage for a two-channel matrix.
+	/// [example2](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// 
+	/// ## Parameters
+	/// * src: input 2D matrix.
+	/// * dst: output vector. Its size and type is defined by dim and dtype parameters.
+	/// * dim: dimension index along which the matrix is reduced. 0 means that the matrix is reduced to
+	/// a single row. 1 means that the matrix is reduced to a single column.
+	/// * rtype: reduction operation that could be one of [reduce_types]
 	/// * dtype: when negative, the output vector will have the same type as the input matrix,
 	/// otherwise, its type will be CV_MAKE_TYPE(CV_MAT_DEPTH(dtype), src.channels()).
 	/// ## See also
@@ -7325,7 +9355,7 @@ pub mod core {
 	/// * src: input array.
 	/// * dst: output array of the same type as src.  The size is the same with ROTATE_180,
 	/// and the rows and cols are switched for ROTATE_90_CLOCKWISE and ROTATE_90_COUNTERCLOCKWISE.
-	/// * rotateCode: an enum to specify how to rotate the array; see the enum #RotateFlags
+	/// * rotateCode: an enum to specify how to rotate the array; see the enum [rotate_flags]
 	/// ## See also
 	/// transpose , repeat , completeSymm, flip, RotateFlags
 	#[inline]
@@ -7373,6 +9403,20 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [find_file_or_keep] function uses the following default values for its arguments:
+	/// * silent_mode: false
+	#[inline]
+	pub fn find_file_or_keep_def(relative_path: &str) -> Result<String> {
+		extern_container_arg!(relative_path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_samples_findFileOrKeep_const_StringR(relative_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * silent_mode: false
 	#[inline]
@@ -7380,6 +9424,46 @@ pub mod core {
 		extern_container_arg!(relative_path);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_samples_findFileOrKeep_const_StringR_bool(relative_path.opencv_as_extern(), silent_mode, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Try to find requested data file
+	/// 
+	/// Search directories:
+	/// 
+	/// 1. Directories passed via `addSamplesDataSearchPath()`
+	/// 2. OPENCV_SAMPLES_DATA_PATH_HINT environment variable
+	/// 3. OPENCV_SAMPLES_DATA_PATH environment variable
+	///    If parameter value is not empty and nothing is found then stop searching.
+	/// 4. Detects build/install path based on:
+	///    a. current working directory (CWD)
+	///    b. and/or binary module location (opencv_core/opencv_world, doesn't work with static linkage)
+	/// 5. Scan `<source>/{,data,samples/data}` directories if build directory is detected or the current directory is in source tree.
+	/// 6. Scan `<install>/share/OpenCV` directory if install directory is detected.
+	/// ## See also
+	/// cv::utils::findDataFile
+	/// 
+	/// ## Parameters
+	/// * relative_path: Relative path to data file
+	/// * required: Specify "file not found" handling.
+	///        If true, function prints information message and raises cv::Exception.
+	///        If false, function returns empty result
+	/// * silentMode: Disables messages
+	/// ## Returns
+	/// Returns path (absolute or relative to the current directory) or empty string if file is not found
+	/// 
+	/// ## Note
+	/// This alternative version of [find_file] function uses the following default values for its arguments:
+	/// * required: true
+	/// * silent_mode: false
+	#[inline]
+	pub fn find_file_def(relative_path: &str) -> Result<String> {
+		extern_container_arg!(relative_path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_samples_findFile_const_StringR(relative_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
@@ -7467,6 +9551,37 @@ pub mod core {
 	pub fn set_break_on_error(flag: bool) -> Result<bool> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setBreakOnError_bool(flag, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Initializes a scaled identity matrix.
+	/// 
+	/// The function cv::setIdentity initializes a scaled identity matrix:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bmtx%7D%20%28i%2Cj%29%3D%20%5Cfork%7B%5Ctexttt%7Bvalue%7D%7D%7B%20if%20%5C%28i%3Dj%5C%29%7D%7B0%7D%7Botherwise%7D)
+	/// 
+	/// The function can also be emulated using the matrix initializers and the
+	/// matrix expressions:
+	/// ```C++
+	///    Mat A = Mat::eye(4, 3, CV_32F)*5;
+	///  A will be set to [[5, 0, 0], [0, 5, 0], [0, 0, 5], [0, 0, 0]]
+	/// ```
+	/// 
+	/// ## Parameters
+	/// * mtx: matrix to initialize (not necessarily square).
+	/// * s: value to assign to diagonal elements.
+	/// ## See also
+	/// Mat::zeros, Mat::ones, Mat::setTo, Mat::operator=
+	/// 
+	/// ## Note
+	/// This alternative version of [set_identity] function uses the following default values for its arguments:
+	/// * s: Scalar(1)
+	#[inline]
+	pub fn set_identity_def(mtx: &mut impl core::ToInputOutputArray) -> Result<()> {
+		input_output_array_arg!(mtx);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_setIdentity_const__InputOutputArrayR(mtx.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7708,6 +9823,29 @@ pub mod core {
 	/// * roots: output (complex) array of roots.
 	/// * maxIters: maximum number of iterations the algorithm does.
 	/// 
+	/// ## Note
+	/// This alternative version of [solve_poly] function uses the following default values for its arguments:
+	/// * max_iters: 300
+	#[inline]
+	pub fn solve_poly_def(coeffs: &impl core::ToInputArray, roots: &mut impl core::ToOutputArray) -> Result<f64> {
+		input_array_arg!(coeffs);
+		output_array_arg!(roots);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_solvePoly_const__InputArrayR_const__OutputArrayR(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds the real or complex roots of a polynomial equation.
+	/// 
+	/// The function cv::solvePoly finds real and complex roots of a polynomial equation:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bcoeffs%7D%20%5Bn%5D%20x%5E%7Bn%7D%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5Bn%2D1%5D%20x%5E%7Bn%2D1%7D%20%2B%20%2E%2E%2E%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B1%5D%20x%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B0%5D%20%3D%200)
+	/// ## Parameters
+	/// * coeffs: array of polynomial coefficients.
+	/// * roots: output (complex) array of roots.
+	/// * maxIters: maximum number of iterations the algorithm does.
+	/// 
 	/// ## C++ default parameters
 	/// * max_iters: 300
 	#[inline]
@@ -7725,10 +9863,50 @@ pub mod core {
 	/// 
 	/// The function cv::solve solves a linear system or least-squares problem (the
 	/// latter is possible with SVD or QR methods, or by specifying the flag
-	/// #DECOMP_NORMAL ):
+	/// [DECOMP_NORMAL] ):
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Carg%20%5Cmin%20%5FX%20%5C%7C%20%5Ctexttt%7Bsrc1%7D%20%5Ccdot%20%5Ctexttt%7BX%7D%20%2D%20%20%5Ctexttt%7Bsrc2%7D%20%5C%7C)
 	/// 
-	/// If #DECOMP_LU or #DECOMP_CHOLESKY method is used, the function returns 1
+	/// If [DECOMP_LU] or [DECOMP_CHOLESKY] method is used, the function returns 1
+	/// if src1 (or ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc1%7D%5ET%5Ctexttt%7Bsrc1%7D) ) is non-singular. Otherwise,
+	/// it returns 0. In the latter case, dst is not valid. Other methods find a
+	/// pseudo-solution in case of a singular left-hand side part.
+	/// 
+	/// 
+	/// Note: If you want to find a unity-norm solution of an under-defined
+	/// singular system ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc1%7D%5Ccdot%5Ctexttt%7Bdst%7D%3D0) , the function solve
+	/// will not do the work. Use SVD::solveZ instead.
+	/// 
+	/// ## Parameters
+	/// * src1: input matrix on the left-hand side of the system.
+	/// * src2: input matrix on the right-hand side of the system.
+	/// * dst: output solution.
+	/// * flags: solution (matrix inversion) method (#DecompTypes)
+	/// ## See also
+	/// invert, SVD, eigen
+	/// 
+	/// ## Note
+	/// This alternative version of [solve] function uses the following default values for its arguments:
+	/// * flags: DECOMP_LU
+	#[inline]
+	pub fn solve_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<bool> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_solve_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Solves one or more linear systems or least-squares problems.
+	/// 
+	/// The function cv::solve solves a linear system or least-squares problem (the
+	/// latter is possible with SVD or QR methods, or by specifying the flag
+	/// [DECOMP_NORMAL] ):
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Carg%20%5Cmin%20%5FX%20%5C%7C%20%5Ctexttt%7Bsrc1%7D%20%5Ccdot%20%5Ctexttt%7BX%7D%20%2D%20%20%5Ctexttt%7Bsrc2%7D%20%5C%7C)
+	/// 
+	/// If [DECOMP_LU] or [DECOMP_CHOLESKY] method is used, the function returns 1
 	/// if src1 (or ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc1%7D%5ET%5Ctexttt%7Bsrc1%7D) ) is non-singular. Otherwise,
 	/// it returns 0. In the latter case, dst is not valid. Other methods find a
 	/// pseudo-solution in case of a singular left-hand side part.
@@ -7802,7 +9980,7 @@ pub mod core {
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * dst: output array of the same size and type as src.
-	/// * flags: operation flags, a combination of #SortFlags
+	/// * flags: operation flags, a combination of [sort_flags]
 	/// ## See also
 	/// sortIdx, randShuffle
 	#[inline]
@@ -7824,7 +10002,7 @@ pub mod core {
 	/// mixChannels .
 	/// 
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -7849,7 +10027,7 @@ pub mod core {
 	/// mixChannels .
 	/// 
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -7888,6 +10066,63 @@ pub mod core {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_sqrt_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element difference between two arrays or array and a scalar.
+	/// 
+	/// The function subtract calculates:
+	/// - Difference between two arrays, when both input arrays have the same size and the same number of
+	/// channels:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2D%20%20%5Ctexttt%7Bsrc2%7D%28I%29%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
+	/// - Difference between an array and a scalar, when src2 is constructed from Scalar or has the same
+	/// number of elements as `src1.channels()`:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2D%20%20%5Ctexttt%7Bsrc2%7D%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
+	/// - Difference between a scalar and an array, when src1 is constructed from Scalar or has the same
+	/// number of elements as `src2.channels()`:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%2D%20%20%5Ctexttt%7Bsrc2%7D%28I%29%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
+	/// - The reverse difference between a scalar and an array in the case of `SubRS`:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc2%7D%20%2D%20%20%5Ctexttt%7Bsrc1%7D%28I%29%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
+	/// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
+	/// channel is processed independently.
+	/// 
+	/// The first function in the list above can be replaced with matrix expressions:
+	/// ```C++
+	///    dst = src1 - src2;
+	///    dst -= src1; // equivalent to subtract(dst, src1, dst);
+	/// ```
+	/// 
+	/// The input arrays and the output array can all have the same or different depths. For example, you
+	/// can subtract to 8-bit unsigned arrays and store the difference in a 16-bit signed array. Depth of
+	/// the output array is determined by dtype parameter. In the second and third cases above, as well as
+	/// in the first case, when src1.depth() == src2.depth(), dtype can be set to the default -1. In this
+	/// case the output array will have the same depth as the input array, be it src1, src2 or both.
+	/// 
+	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
+	/// result of an incorrect sign in the case of overflow.
+	/// ## Parameters
+	/// * src1: first input array or a scalar.
+	/// * src2: second input array or a scalar.
+	/// * dst: output array of the same size and the same number of channels as the input array.
+	/// * mask: optional operation mask; this is an 8-bit single channel array that specifies elements
+	/// of the output array to be changed.
+	/// * dtype: optional depth of the output array
+	/// ## See also
+	/// add, addWeighted, scaleAdd, Mat::convertTo
+	/// 
+	/// ## Note
+	/// This alternative version of [subtract] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	/// * dtype: -1
+	#[inline]
+	pub fn subtract_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7987,6 +10222,19 @@ pub mod core {
 		unsafe { sys::cv_swap_UMatR_UMatR(a.as_raw_mut_UMat(), b.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [tempfile] function uses the following default values for its arguments:
+	/// * suffix: 0
+	#[inline]
+	pub fn tempfile_def() -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_tempfile(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -8147,6 +10395,21 @@ pub mod core {
 		unsafe { sys::cv_useOptimized(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [copy_mat_and_dump_named_arguments] function uses the following default values for its arguments:
+	/// * params: FunctionParams()
+	#[inline]
+	pub fn copy_mat_and_dump_named_arguments_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<String> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_copyMatAndDumpNamedArguments_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -8324,6 +10587,19 @@ pub mod core {
 	pub fn dump_term_criteria(argument: core::TermCriteria) -> Result<String> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_utils_dumpTermCriteria_const_TermCriteriaR(&argument, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [dump_vec2i] function uses the following default values for its arguments:
+	/// * value: cv::Vec2i(42,24)
+	#[inline]
+	pub fn dump_vec2i_def() -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_dumpVec2i(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
@@ -8545,6 +10821,19 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [test_overload_resolution] function uses the following default values for its arguments:
+	/// * point: Point(42,24)
+	#[inline]
+	pub fn test_overload_resolution_def(value: i32) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_testOverloadResolution_int(value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * point: Point(42,24)
 	#[inline]
@@ -8572,6 +10861,20 @@ pub mod core {
 		unsafe { sys::cv_utils_testRaiseGeneralException(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [test_reserved_keyword_conversion] function uses the following default values for its arguments:
+	/// * lambda: 2
+	/// * from: 3
+	#[inline]
+	pub fn test_reserved_keyword_conversion_def(positional_argument: i32) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_utils_testReservedKeywordConversion_int(positional_argument, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -8636,6 +10939,26 @@ pub mod core {
 		{ sys::cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display, src.as_raw__InputArray(), surface, size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Creates OpenCL context from VA.
+	/// ## Parameters
+	/// * display: - VADisplay for which CL interop should be established.
+	/// * tryInterop: - try to set up for interoperability, if true; set up for use slow copy if false.
+	/// ## Returns
+	/// Returns reference to OpenCL Context
+	/// 
+	/// ## Note
+	/// This alternative version of [initialize_context_from_va] function uses the following default values for its arguments:
+	/// * try_interop: true
+	#[inline]
+	pub unsafe fn initialize_context_from_va_def(display: core::va_display) -> Result<core::Context> {
+		return_send!(via ocvrs_return);
+		{ sys::cv_va_intel_ocl_initializeContextFromVA_VADisplay(display, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = { core::Context::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -8929,6 +11252,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// 
+		/// **Deprecated**: ## Note
+		/// This alternative version of [write_with_name] function uses the following default values for its arguments:
+		/// * name: String()
+		#[deprecated = "## Note"]
+		#[inline]
+		fn write_with_name_def(&self, fs: &core::Ptr<core::FileStorage>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Algorithm_write_const_const_PtrLFileStorageGR(self.as_raw_Algorithm(), fs.as_raw_PtrOfFileStorage(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Returns true if the Algorithm is empty (e.g. in the very beginning or after unsuccessful read
 		#[inline]
 		fn empty(&self) -> Result<bool> {
@@ -9000,7 +11337,7 @@ pub mod core {
 	/// etc.).
 	/// 
 	/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-	/// [Algorithm](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [Algorithm](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	pub struct Algorithm {
 		ptr: *mut c_void
 	}
@@ -9454,6 +11791,52 @@ pub mod core {
 		/// parser.get<String>("@image");
 		/// ```
 		/// 
+		#[inline]
+		fn get_bool_def(&self, name: &str) -> Result<bool> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_bool_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
 		/// 
 		/// ## C++ default parameters
 		/// * space_delete: true
@@ -9503,6 +11886,52 @@ pub mod core {
 		/// parser.get<String>("@image");
 		/// ```
 		/// 
+		#[inline]
+		fn get_i32_def(&self, name: &str) -> Result<i32> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_int_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
 		/// 
 		/// ## C++ default parameters
 		/// * space_delete: true
@@ -9511,6 +11940,52 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_double_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
+		#[inline]
+		fn get_f64_def(&self, name: &str) -> Result<f64> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_double_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9602,6 +12077,53 @@ pub mod core {
 		/// parser.get<String>("@image");
 		/// ```
 		/// 
+		#[inline]
+		fn get_str_def(&self, name: &str) -> Result<String> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_cv_String_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
 		/// 
 		/// ## C++ default parameters
 		/// * space_delete: true
@@ -9610,6 +12132,52 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_const_StringR_bool(self.as_raw_CommandLineParser(), name.opencv_as_extern(), space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access arguments by name
+		/// 
+		/// Returns argument converted to selected type. If the argument is not known or can not be
+		/// converted to selected type, the error flag is set (can be checked with [check]).
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{N count||}";
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// $ ./my-app -N=20
+		/// # or
+		/// $ ./my-app --count=20
+		/// ```
+		/// 
+		/// 
+		/// Access:
+		/// ```C++
+		/// int N = parser.get<int>("N");
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * name: name of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		/// 
+		/// 
+		/// Note: You can access positional arguments by their `@`-prefixed name:
+		/// ```C++
+		/// parser.get<String>("@image");
+		/// ```
+		/// 
+		#[inline]
+		fn get_u64_def(&self, name: &str) -> Result<u64> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_const_StringR(self.as_raw_CommandLineParser(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9681,6 +12249,42 @@ pub mod core {
 		/// * index: index of the argument
 		/// * space_delete: remove spaces from the left and right of the string
 		/// @tparam T the argument will be converted to this type if possible
+		#[inline]
+		fn get_bool_idx_def(&self, index: i32) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_bool_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
 		/// 
 		/// ## C++ default parameters
 		/// * space_delete: true
@@ -9720,6 +12324,42 @@ pub mod core {
 		/// * index: index of the argument
 		/// * space_delete: remove spaces from the left and right of the string
 		/// @tparam T the argument will be converted to this type if possible
+		#[inline]
+		fn get_i32_idx_def(&self, index: i32) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_int_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
 		/// 
 		/// ## C++ default parameters
 		/// * space_delete: true
@@ -9727,6 +12367,42 @@ pub mod core {
 		fn get_f64_idx(&self, index: i32, space_delete: bool) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_double_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		#[inline]
+		fn get_f64_idx_def(&self, index: i32) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_double_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9799,6 +12475,43 @@ pub mod core {
 		/// * index: index of the argument
 		/// * space_delete: remove spaces from the left and right of the string
 		/// @tparam T the argument will be converted to this type if possible
+		#[inline]
+		fn get_str_idx_def(&self, index: i32) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_cv_String_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
 		/// 
 		/// ## C++ default parameters
 		/// * space_delete: true
@@ -9806,6 +12519,42 @@ pub mod core {
 		fn get_u64_idx(&self, index: i32, space_delete: bool) -> Result<u64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_int_bool(self.as_raw_CommandLineParser(), index, space_delete, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Access positional arguments by index
+		/// 
+		/// Returns argument converted to selected type. Indexes are counted from zero.
+		/// 
+		/// For example, define:
+		/// ```C++
+		/// String keys = "{@arg1||}{@arg2||}"
+		/// ```
+		/// 
+		/// 
+		/// Call:
+		/// ```C++
+		/// ./my-app abc qwe
+		/// ```
+		/// 
+		/// 
+		/// Access arguments:
+		/// ```C++
+		/// String val_1 = parser.get<String>(0); // returns "abc", arg1
+		/// String val_2 = parser.get<String>(1); // returns "qwe", arg2
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * index: index of the argument
+		/// * space_delete: remove spaces from the left and right of the string
+		/// @tparam T the argument will be converted to this type if possible
+		#[inline]
+		fn get_u64_idx_def(&self, index: i32) -> Result<u64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_get_uint64_t_const_int(self.as_raw_CommandLineParser(), index, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -10143,6 +12892,34 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// This function returns the reference to the ready-to-use ConjGradSolver object.
+		/// 
+		/// All the parameters are optional, so this procedure can be called even without parameters at
+		/// all. In this case, the default values will be used. As default value for terminal criteria are
+		/// the only sensible ones, MinProblemSolver::setFunction() should be called upon the obtained
+		/// object, if the function was not given to create(). Otherwise, the two ways (submit it to
+		/// create() or miss it out and call the MinProblemSolver::setFunction()) are absolutely equivalent
+		/// (and will drop the same errors in the same way, should invalid input be detected).
+		/// ## Parameters
+		/// * f: Pointer to the function that will be minimized, similarly to the one you submit via
+		/// MinProblemSolver::setFunction.
+		/// * termcrit: Terminal criteria to the algorithm, similarly to the one you submit via
+		/// MinProblemSolver::setTermCriteria.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * f: Ptr<ConjGradSolver::Function>()
+		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<core::ConjGradSolver>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ConjGradSolver_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<core::ConjGradSolver>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { ConjGradSolver, core::Algorithm, cv_ConjGradSolver_to_Algorithm }
@@ -10366,6 +13143,38 @@ pub mod core {
 			input_array_arg!(init_step);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DownhillSolver_create_const_PtrLFunctionGR_const__InputArrayR_TermCriteria(f.as_raw_PtrOfMinProblemSolver_Function(), init_step.as_raw__InputArray(), termcrit.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<core::DownhillSolver>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// This function returns the reference to the ready-to-use DownhillSolver object.
+		/// 
+		/// All the parameters are optional, so this procedure can be called even without parameters at
+		/// all. In this case, the default values will be used. As default value for terminal criteria are
+		/// the only sensible ones, MinProblemSolver::setFunction() and DownhillSolver::setInitStep()
+		/// should be called upon the obtained object, if the respective parameters were not given to
+		/// create(). Otherwise, the two ways (give parameters to createDownhillSolver() or miss them out
+		/// and call the MinProblemSolver::setFunction() and DownhillSolver::setInitStep()) are absolutely
+		/// equivalent (and will drop the same errors in the same way, should invalid input be detected).
+		/// ## Parameters
+		/// * f: Pointer to the function that will be minimized, similarly to the one you submit via
+		/// MinProblemSolver::setFunction.
+		/// * initStep: Initial step, that will be used to construct the initial simplex, similarly to the one
+		/// you submit via MinProblemSolver::setInitStep.
+		/// * termcrit: Terminal criteria to the algorithm, similarly to the one you submit via
+		/// MinProblemSolver::setTermCriteria.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * f: Ptr<MinProblemSolver::Function>()
+		/// * init_step: Mat_<double>(1,1,0.0)
+		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<core::DownhillSolver>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DownhillSolver_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::DownhillSolver>::opencv_from_extern(ret) };
@@ -10956,6 +13765,21 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Internal method used when reading FileStorage.
+		/// Sets the type (int, real or string) and value of the previously created node.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_value] function uses the following default values for its arguments:
+		/// * len: -1
+		#[inline]
+		unsafe fn set_value_def(&mut self, typ: i32, value: *const c_void) -> Result<()> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_FileNode_setValue_int_const_voidX(self.as_raw_mut_FileNode(), typ, value, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// File Storage Node class.
@@ -11186,6 +14010,29 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Reads node elements to the buffer with the specified format.
+		/// 
+		/// Usually it is more convenient to use operator `>>` instead of this method.
+		/// ## Parameters
+		/// * fmt: Specification of each array element. See [format_spec] "format specification"
+		/// * vec: Pointer to the destination array.
+		/// * len: Number of bytes to read (buffer size limit). If it is greater than number of
+		///            remaining elements then all of them will be read.
+		/// 
+		/// ## Note
+		/// This alternative version of [read_raw] function uses the following default values for its arguments:
+		/// * len: (size_t)INT_MAX
+		#[inline]
+		unsafe fn read_raw_def(&mut self, fmt: &str, vec: *mut c_void) -> Result<core::FileNodeIterator> {
+			extern_container_arg!(fmt);
+			return_send!(via ocvrs_return);
+			{ sys::cv_FileNodeIterator_readRaw_const_StringR_voidX(self.as_raw_mut_FileNodeIterator(), fmt.opencv_as_extern(), vec, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::FileNodeIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	/// used to iterate through sequences and mappings.
@@ -11346,6 +14193,26 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Returns the top-level mapping
+		/// ## Parameters
+		/// * streamidx: Zero-based index of the stream. In most cases there is only one stream in the file.
+		/// However, YAML supports multiple streams and so there can be several.
+		/// ## Returns
+		/// The top-level mapping.
+		/// 
+		/// ## Note
+		/// This alternative version of [root] function uses the following default values for its arguments:
+		/// * streamidx: 0
+		#[inline]
+		fn root_def(&self) -> Result<core::FileNode> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_root_const(self.as_raw_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Returns the specified element of the top-level mapping.
 		/// ## Parameters
 		/// * nodename: Name of the file node.
@@ -11435,6 +14302,35 @@ pub mod core {
 			extern_container_arg!(encoding);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_open_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), filename.opencv_as_extern(), flags, encoding.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Opens a file.
+		/// 
+		/// See description of parameters in FileStorage::FileStorage. The method calls FileStorage::release
+		/// before opening the file.
+		/// ## Parameters
+		/// * filename: Name of the file to open or the text string to read the data from.
+		/// Extension of the file (.xml, .yml/.yaml or .json) determines its format (XML, YAML or JSON
+		/// respectively). Also you can append .gz to work with compressed files, for example myHugeMatrix.xml.gz. If both
+		/// FileStorage::WRITE and FileStorage::MEMORY flags are specified, source is used just to specify
+		/// the output file format (e.g. mydata.xml, .yml etc.). A file name can also contain parameters.
+		/// You can use this format, "*?base64" (e.g. "file.json?base64" (case sensitive)), as an alternative to
+		/// FileStorage::BASE64 flag.
+		/// * flags: Mode of operation. One of FileStorage::Mode
+		/// * encoding: Encoding of the file. Note that UTF-16 XML encoding is not supported currently and
+		/// you should use 8-bit encoding instead of it.
+		/// 
+		/// ## Note
+		/// This alternative version of [open] function uses the following default values for its arguments:
+		/// * encoding: String()
+		#[inline]
+		fn open_def(&mut self, filename: &str, flags: i32) -> Result<bool> {
+			extern_container_arg!(filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_open_const_StringR_int(self.as_raw_mut_FileStorage(), filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -11584,6 +14480,28 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Writes a comment.
+		/// 
+		/// The function writes a comment into file storage. The comments are skipped when the storage is read.
+		/// ## Parameters
+		/// * comment: The written comment, single-line or multi-line
+		/// * append: If true, the function tries to put the comment at the end of current line.
+		/// Else if the comment is multi-line, or if it does not fit at the end of the current
+		/// line, the comment starts a new line.
+		/// 
+		/// ## Note
+		/// This alternative version of [write_comment] function uses the following default values for its arguments:
+		/// * append: false
+		#[inline]
+		fn write_comment_def(&mut self, comment: &str) -> Result<()> {
+			extern_container_arg!(comment);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_writeComment_const_StringR(self.as_raw_mut_FileStorage(), comment.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Starts to write a nested structure (sequence or a mapping).
 		/// ## Parameters
 		/// * name: name of the structure. When writing to sequences (a.k.a. "arrays"), pass an empty string.
@@ -11599,6 +14517,26 @@ pub mod core {
 			extern_container_arg!(type_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_startWriteStruct_const_StringR_int_const_StringR(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Starts to write a nested structure (sequence or a mapping).
+		/// ## Parameters
+		/// * name: name of the structure. When writing to sequences (a.k.a. "arrays"), pass an empty string.
+		/// * flags: type of the structure (FileNode::MAP or FileNode::SEQ (both with optional FileNode::FLOW)).
+		/// * typeName: optional name of the type you store. The effect of setting this depends on the storage format.
+		/// I.e. if the format has a specification for storing type information, this parameter is used.
+		/// 
+		/// ## Note
+		/// This alternative version of [start_write_struct] function uses the following default values for its arguments:
+		/// * type_name: String()
+		#[inline]
+		fn start_write_struct_def(&mut self, name: &str, flags: i32) -> Result<()> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_startWriteStruct_const_StringR_int(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -11673,6 +14611,23 @@ pub mod core {
 			extern_container_arg!(encoding);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int_const_StringR(filename.opencv_as_extern(), flags, encoding.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// @copydoc open()
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * encoding: String()
+		#[inline]
+		pub fn new_def(filename: &str, flags: i32) -> Result<core::FileStorage> {
+			extern_container_arg!(filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
@@ -11804,12 +14759,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [set16f_precision] function uses the following default values for its arguments:
+		/// * p: 4
+		#[inline]
+		fn set16f_precision_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Formatter_set16fPrecision(self.as_raw_mut_Formatter(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * p: 8
 		#[inline]
 		fn set32f_precision(&mut self, p: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_set32fPrecision_int(self.as_raw_mut_Formatter(), p, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [set32f_precision] function uses the following default values for its arguments:
+		/// * p: 8
+		#[inline]
+		fn set32f_precision_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Formatter_set32fPrecision(self.as_raw_mut_Formatter(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -11826,12 +14805,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [set64f_precision] function uses the following default values for its arguments:
+		/// * p: 16
+		#[inline]
+		fn set64f_precision_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Formatter_set64fPrecision(self.as_raw_mut_Formatter(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * ml: true
 		#[inline]
 		fn set_multiline(&mut self, ml: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_setMultiline_bool(self.as_raw_mut_Formatter(), ml, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [set_multiline] function uses the following default values for its arguments:
+		/// * ml: true
+		#[inline]
+		fn set_multiline_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Formatter_setMultiline(self.as_raw_mut_Formatter(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -11870,6 +14873,19 @@ pub mod core {
 		pub fn get(fmt: core::Formatter_FormatType) -> Result<core::Ptr<core::Formatter>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Formatter_get_FormatType(fmt, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<core::Formatter>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [get] function uses the following default values for its arguments:
+		/// * fmt: FMT_DEFAULT
+		#[inline]
+		pub fn get_def() -> Result<core::Ptr<core::Formatter>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Formatter_get(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::Formatter>::opencv_from_extern(ret) };
@@ -12123,6 +15139,30 @@ pub mod core {
 		}
 		
 		/// ## Parameters
+		/// * pt: x & y coordinates of the keypoint
+		/// * size: keypoint diameter
+		/// * angle: keypoint orientation
+		/// * response: keypoint detector response on the keypoint (that is, strength of the keypoint)
+		/// * octave: pyramid octave in which the keypoint has been detected
+		/// * class_id: object id
+		/// 
+		/// ## Note
+		/// This alternative version of [new_point] function uses the following default values for its arguments:
+		/// * angle: -1
+		/// * response: 0
+		/// * octave: 0
+		/// * class_id: -1
+		#[inline]
+		pub fn new_point_def(pt: core::Point2f, size: f32) -> Result<core::KeyPoint> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KeyPoint_KeyPoint_Point2f_float(pt.opencv_as_extern(), size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Parameters
 		/// * x: x-coordinate of the keypoint
 		/// * y: y-coordinate of the keypoint
 		/// * size: keypoint diameter
@@ -12140,6 +15180,31 @@ pub mod core {
 		pub fn new_coords(x: f32, y: f32, size: f32, angle: f32, response: f32, octave: i32, class_id: i32) -> Result<core::KeyPoint> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(x, y, size, angle, response, octave, class_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Parameters
+		/// * x: x-coordinate of the keypoint
+		/// * y: y-coordinate of the keypoint
+		/// * size: keypoint diameter
+		/// * angle: keypoint orientation
+		/// * response: keypoint detector response on the keypoint (that is, strength of the keypoint)
+		/// * octave: pyramid octave in which the keypoint has been detected
+		/// * class_id: object id
+		/// 
+		/// ## Note
+		/// This alternative version of [new_coords] function uses the following default values for its arguments:
+		/// * angle: -1
+		/// * response: 0
+		/// * octave: 0
+		/// * class_id: -1
+		#[inline]
+		pub fn new_coords_def(x: f32, y: f32, size: f32) -> Result<core::KeyPoint> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KeyPoint_KeyPoint_float_float_float(x, y, size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KeyPoint::opencv_from_extern(ret) };
@@ -12175,6 +15240,27 @@ pub mod core {
 		/// * keypointIndexes: Array of indexes of keypoints to be converted to points. (Acts like a mask to
 		/// convert only specified keypoints)
 		/// 
+		/// ## Note
+		/// This alternative version of [convert] function uses the following default values for its arguments:
+		/// * keypoint_indexes: std::vector<int>()
+		#[inline]
+		pub fn convert_def(keypoints: &core::Vector<core::KeyPoint>, points2f: &mut core::Vector<core::Point2f>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KeyPoint_convert_const_vectorLKeyPointGR_vectorLPoint2fGR(keypoints.as_raw_VectorOfKeyPoint(), points2f.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// This method converts vector of keypoints to vector of points or the reverse, where each keypoint is
+		/// assigned the same size and the same orientation.
+		/// 
+		/// ## Parameters
+		/// * keypoints: Keypoints obtained from any feature detection algorithm like SIFT/SURF/ORB
+		/// * points2f: Array of (x,y) coordinates of each keypoint
+		/// * keypointIndexes: Array of indexes of keypoints to be converted to points. (Acts like a mask to
+		/// convert only specified keypoints)
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// * points2f: Array of (x,y) coordinates of each keypoint
@@ -12193,6 +15279,30 @@ pub mod core {
 		pub fn convert_to(points2f: &core::Vector<core::Point2f>, keypoints: &mut core::Vector<core::KeyPoint>, size: f32, response: f32, octave: i32, class_id: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPoint_convert_const_vectorLPoint2fGR_vectorLKeyPointGR_float_float_int_int(points2f.as_raw_VectorOfPoint2f(), keypoints.as_raw_mut_VectorOfKeyPoint(), size, response, octave, class_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * points2f: Array of (x,y) coordinates of each keypoint
+		/// * keypoints: Keypoints obtained from any feature detection algorithm like SIFT/SURF/ORB
+		/// * size: keypoint diameter
+		/// * response: keypoint detector response on the keypoint (that is, strength of the keypoint)
+		/// * octave: pyramid octave in which the keypoint has been detected
+		/// * class_id: object id
+		/// 
+		/// ## Note
+		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// * size: 1
+		/// * response: 1
+		/// * octave: 0
+		/// * class_id: -1
+		#[inline]
+		pub fn convert_to_def(points2f: &core::Vector<core::Point2f>, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KeyPoint_convert_const_vectorLPoint2fGR_vectorLKeyPointGR(points2f.as_raw_VectorOfPoint2f(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -12391,6 +15501,22 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// constructor
+		/// Initializes a LDA with num_components (default 0).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * num_components: 0
+		#[inline]
+		pub fn new_def() -> Result<core::LDA> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LDA_LDA(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Initializes and performs a Discriminant Analysis with Fisher's
 		/// Optimization Criterion on given data in src and corresponding labels
 		/// in labels. If 0 (or less) number of components are given, they are
@@ -12404,6 +15530,26 @@ pub mod core {
 			input_array_arg!(labels);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), labels.as_raw__InputArray(), num_components, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Initializes and performs a Discriminant Analysis with Fisher's
+		/// Optimization Criterion on given data in src and corresponding labels
+		/// in labels. If 0 (or less) number of components are given, they are
+		/// automatically determined for given data in computation.
+		/// 
+		/// ## Note
+		/// This alternative version of [new_with_data] function uses the following default values for its arguments:
+		/// * num_components: 0
+		#[inline]
+		pub fn new_with_data_def(src: &impl core::ToInputArray, labels: &impl core::ToInputArray) -> Result<core::LDA> {
+			input_array_arg!(src);
+			input_array_arg!(labels);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
@@ -12523,6 +15669,21 @@ pub mod core {
 		fn get_umat(&self, access_flags: core::AccessFlag, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags(self.as_raw_Mat(), access_flags, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// retrieve UMat from Mat
+		/// 
+		/// ## Note
+		/// This alternative version of [get_umat] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		fn get_umat_def(&self, access_flags: core::AccessFlag) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_getUMat_const_AccessFlag(self.as_raw_Mat(), access_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -12718,6 +15879,56 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Extracts a diagonal from a matrix
+		/// 
+		/// The method makes a new header for the specified matrix diagonal. The new matrix is represented as a
+		/// single-column matrix. Similarly to Mat::row and Mat::col, this is an O(1) operation.
+		/// ## Parameters
+		/// * d: index of the diagonal, with the following values:
+		/// - `d=0` is the main diagonal.
+		/// - `d<0` is a diagonal from the lower half. For example, d=-1 means the diagonal is set
+		///   immediately below the main one.
+		/// - `d>0` is a diagonal from the upper half. For example, d=1 means the diagonal is set
+		///   immediately above the main one.
+		/// For example:
+		/// ```C++
+		///    Mat m = (Mat_<int>(3,3) <<
+		///                1,2,3,
+		///                4,5,6,
+		///                7,8,9);
+		///    Mat d0 = m.diag(0);
+		///    Mat d1 = m.diag(1);
+		///    Mat d_1 = m.diag(-1);
+		/// ```
+		/// 
+		/// The resulting matrices are
+		/// ```C++
+		///  d0 =
+		///    [1;
+		///    5;
+		///    9]
+		///  d1 =
+		///    [2;
+		///    6]
+		///  d_1 =
+		///    [4;
+		///    8]
+		/// ```
+		/// 
+		/// 
+		/// ## Note
+		/// This alternative version of [diag] function uses the following default values for its arguments:
+		/// * d: 0
+		#[inline]
+		fn diag_def(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_diag_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Creates a full copy of the array and the underlying data.
 		/// 
 		/// The method creates a full copy of the array. The original step[] is not taken into account. So, the
@@ -12820,6 +16031,34 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Converts an array to another data type with optional scaling.
+		/// 
+		/// The method converts source pixel values to the target data type. saturate_cast\<\> is applied at
+		/// the end to avoid possible overflows:
+		/// 
+		/// ![block formula](https://latex.codecogs.com/png.latex?m%28x%2Cy%29%20%3D%20saturate%20%5C%5F%20cast%3CrType%3E%28%20%5Calpha%20%28%2Athis%29%28x%2Cy%29%20%2B%20%20%5Cbeta%20%29)
+		/// ## Parameters
+		/// * m: output matrix; if it does not have a proper size or type before the operation, it is
+		/// reallocated.
+		/// * rtype: desired output matrix type or, rather, the depth since the number of channels are the
+		/// same as the input has; if rtype is negative, the output matrix will have the same type as the input.
+		/// * alpha: optional scale factor.
+		/// * beta: optional delta added to the scaled values.
+		/// 
+		/// ## Note
+		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// * alpha: 1
+		/// * beta: 0
+		#[inline]
+		fn convert_to_def(&self, m: &mut impl core::ToOutputArray, rtype: i32) -> Result<()> {
+			output_array_arg!(m);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_convertTo_const_const__OutputArrayR_int(self.as_raw_Mat(), m.as_raw__OutputArray(), rtype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Provides a functional form of convertTo.
 		/// 
 		/// This is an internally used method called by the [MatrixExpressions] engine.
@@ -12833,6 +16072,25 @@ pub mod core {
 		fn assign_to(&self, m: &mut core::Mat, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_assignTo_const_MatR_int(self.as_raw_Mat(), m.as_raw_mut_Mat(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Provides a functional form of convertTo.
+		/// 
+		/// This is an internally used method called by the [MatrixExpressions] engine.
+		/// ## Parameters
+		/// * m: Destination array.
+		/// * type: Desired destination array depth (or -1 if it should be the same as the source type).
+		/// 
+		/// ## Note
+		/// This alternative version of [assign_to] function uses the following default values for its arguments:
+		/// * typ: -1
+		#[inline]
+		fn assign_to_def(&self, m: &mut core::Mat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_assignTo_const_MatR(self.as_raw_Mat(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -12884,6 +16142,59 @@ pub mod core {
 		fn reshape(&self, cn: i32, rows: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_reshape_const_int_int(self.as_raw_Mat(), cn, rows, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Changes the shape and/or the number of channels of a 2D matrix without copying the data.
+		/// 
+		/// The method makes a new matrix header for \*this elements. The new matrix may have a different size
+		/// and/or different number of channels. Any combination is possible if:
+		/// *   No extra elements are included into the new matrix and no elements are excluded. Consequently,
+		///    the product rows\*cols\*channels() must stay the same after the transformation.
+		/// *   No data is copied. That is, this is an O(1) operation. Consequently, if you change the number of
+		///    rows, or the operation changes the indices of elements row in some other way, the matrix must be
+		///    continuous. See Mat::isContinuous .
+		/// 
+		/// For example, if there is a set of 3D points stored as an STL vector, and you want to represent the
+		/// points as a 3xN matrix, do the following:
+		/// ```C++
+		///    std::vector<Point3f> vec;
+		///    ...
+		///    Mat pointMat = Mat(vec). // convert vector to Mat, O(1) operation
+		///                       reshape(1). // make Nx3 1-channel matrix out of Nx1 3-channel.
+		///  Also, an O(1) operation
+		///                          t(); // finally, transpose the Nx3 matrix.
+		///  This involves copying all the elements
+		/// ```
+		/// 
+		/// 3-channel 2x2 matrix reshaped to 1-channel 4x3 matrix, each column has values from one of original channels:
+		/// ```C++
+		/// Mat m(Size(2, 2), CV_8UC3, Scalar(1, 2, 3));
+		/// vector<int> new_shape {4, 3};
+		/// m = m.reshape(1, new_shape);
+		/// ```
+		/// 
+		/// or:
+		/// ```C++
+		/// Mat m(Size(2, 2), CV_8UC3, Scalar(1, 2, 3));
+		/// const int new_shape[] = {4, 3};
+		/// m = m.reshape(1, 2, new_shape);
+		/// ```
+		/// 
+		/// ## Parameters
+		/// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
+		/// * rows: New number of rows. If the parameter is 0, the number of rows remains the same.
+		/// 
+		/// ## Note
+		/// This alternative version of [reshape] function uses the following default values for its arguments:
+		/// * rows: 0
+		#[inline]
+		fn reshape_def(&self, cn: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_reshape_const_int(self.as_raw_Mat(), cn, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -13041,6 +16352,27 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Inverses a matrix.
+		/// 
+		/// The method performs a matrix inversion by means of matrix expressions. This means that a temporary
+		/// matrix inversion object is returned by the method and can be used further as a part of more complex
+		/// matrix expressions or can be assigned to a matrix.
+		/// ## Parameters
+		/// * method: Matrix inversion method. One of cv::DecompTypes
+		/// 
+		/// ## Note
+		/// This alternative version of [inv] function uses the following default values for its arguments:
+		/// * method: DECOMP_LU
+		#[inline]
+		fn inv_def(&self) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_inv_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Performs an element-wise multiplication or division of the two matrices.
 		/// 
 		/// The method returns a temporary object encoding per-element array multiplication, with optional
@@ -13062,6 +16394,34 @@ pub mod core {
 			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_mul_const_const__InputArrayR_double(self.as_raw_Mat(), m.as_raw__InputArray(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Performs an element-wise multiplication or division of the two matrices.
+		/// 
+		/// The method returns a temporary object encoding per-element array multiplication, with optional
+		/// scale. Note that this is not a matrix multiplication that corresponds to a simpler "\*" operator.
+		/// 
+		/// Example:
+		/// ```C++
+		///    Mat C = A.mul(5/B); // equivalent to divide(A, B, C, 5)
+		/// ```
+		/// 
+		/// ## Parameters
+		/// * m: Another array of the same type and the same size as \*this, or a matrix expression.
+		/// * scale: Optional scale factor.
+		/// 
+		/// ## Note
+		/// This alternative version of [mul] function uses the following default values for its arguments:
+		/// * scale: 1
+		#[inline]
+		fn mul_def(&self, m: &impl core::ToInputArray) -> Result<core::MatExpr> {
+			input_array_arg!(m);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_mul_const_const__InputArrayR(self.as_raw_Mat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -13384,6 +16744,23 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Returns a normalized step.
+		/// 
+		/// The method returns a matrix step divided by Mat::elemSize1() . It can be useful to quickly access an
+		/// arbitrary matrix element.
+		/// 
+		/// ## Note
+		/// This alternative version of [step1] function uses the following default values for its arguments:
+		/// * i: 0
+		#[inline]
+		fn step1_def(&self) -> Result<size_t> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_step1_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Returns true if the array has no elements.
 		/// 
 		/// The method returns true if Mat::total() is 0 or if Mat::data is NULL. Because of pop_back() and
@@ -13419,6 +16796,22 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Returns the total number of array elements.
+		/// 
+		/// The method returns the number of elements within a certain sub-array slice with startDim <= dim < endDim
+		/// 
+		/// ## Note
+		/// This alternative version of [total_slice] function uses the following default values for its arguments:
+		/// * end_dim: INT_MAX
+		#[inline]
+		fn total_slice_def(&self, start_dim: i32) -> Result<size_t> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_total_const_int(self.as_raw_Mat(), start_dim, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## Parameters
 		/// * elemChannels: Number of channels or number of columns the matrix should have.
 		///                    For a 2-D matrix, when the matrix has only 1 column, then it should have
@@ -13436,10 +16829,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		/// 
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// ## C++ default parameters
 		/// * depth: -1
@@ -13448,6 +16841,41 @@ pub mod core {
 		fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_checkVector_const_int_int_bool(self.as_raw_Mat(), elem_channels, depth, require_continuous, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Parameters
+		/// * elemChannels: Number of channels or number of columns the matrix should have.
+		///                    For a 2-D matrix, when the matrix has only 1 column, then it should have
+		///                    elemChannels channels; When the matrix has only 1 channel,
+		///                    then it should have elemChannels columns.
+		///                    For a 3-D matrix, it should have only one channel. Furthermore,
+		///                    if the number of planes is not one, then the number of rows
+		///                    within every plane has to be 1; if the number of rows within
+		///                    every plane is not 1, then the number of planes has to be 1.
+		/// * depth: The depth the matrix should have. Set it to -1 when any depth is fine.
+		/// * requireContinuous: Set it to true to require the matrix to be continuous
+		/// ## Returns
+		/// -1 if the requirement is not satisfied.
+		///        Otherwise, it returns the number of elements in the matrix. Note
+		///        that an element may have multiple channels.
+		/// 
+		/// The following code demonstrates its usage for a 2-d matrix:
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// 
+		/// The following code demonstrates its usage for a 3-d matrix:
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// 
+		/// ## Note
+		/// This alternative version of [check_vector] function uses the following default values for its arguments:
+		/// * depth: -1
+		/// * require_continuous: true
+		#[inline]
+		fn check_vector_def(&self, elem_channels: i32) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_checkVector_const_int(self.as_raw_Mat(), elem_channels, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -13468,6 +16896,20 @@ pub mod core {
 		fn ptr(&self, i0: i32) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_const_int(self.as_raw_Mat(), i0, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// * i0: 0
+		#[inline]
+		fn ptr_def(&self) -> Result<*const u8> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_ptr_const(self.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -13823,6 +17265,28 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Sets all or some of the array elements to the specified value.
+		/// 
+		/// This is an advanced variant of the Mat::operator=(const Scalar& s) operator.
+		/// ## Parameters
+		/// * value: Assigned scalar converted to the actual array type.
+		/// * mask: Operation mask of the same size as \*this. Its non-zero elements indicate which matrix
+		/// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels
+		/// 
+		/// ## Note
+		/// This alternative version of [set_to] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		#[inline]
+		fn set_to_def(&mut self, value: &impl core::ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(value);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_setTo_const__InputArrayR(self.as_raw_mut_Mat(), value.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Allocates new array data if needed.
 		/// 
 		/// This is one of the key Mat methods. Most new-style OpenCV functions and methods that produce arrays
@@ -14169,6 +17633,25 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Removes elements from the bottom of the matrix.
+		/// 
+		/// The method removes one or more rows from the bottom of the matrix.
+		/// ## Parameters
+		/// * nelems: Number of removed rows. If it is greater than the total number of rows, an exception
+		/// is thrown.
+		/// 
+		/// ## Note
+		/// This alternative version of [pop_back] function uses the following default values for its arguments:
+		/// * nelems: 1
+		#[inline]
+		fn pop_back_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_pop_back(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Adjusts a submatrix size and position within the parent matrix.
 		/// 
 		/// The method is complimentary to Mat::locateROI . The typical use of these functions is to determine
@@ -14221,6 +17704,25 @@ pub mod core {
 		fn ptr_mut(&mut self, i0: i32) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_ptr_int(self.as_raw_mut_Mat(), i0, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Returns a pointer to the specified matrix row.
+		/// 
+		/// The methods return `uchar*` or typed pointer to the specified matrix row. See the sample in
+		/// Mat::isContinuous to know how to use these methods.
+		/// ## Parameters
+		/// * i0: A 0-based row index.
+		/// 
+		/// ## Note
+		/// This alternative version of [ptr_mut] function uses the following default values for its arguments:
+		/// * i0: 0
+		#[inline]
+		fn ptr_mut_def(&mut self) -> Result<*mut u8> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_ptr(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -14973,6 +18475,34 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * rows: Number of rows in a 2D array.
+		/// * cols: Number of columns in a 2D array.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
+		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+		/// 
+		/// ## Note
+		/// This alternative version of [new_rows_cols_with_data] function uses the following default values for its arguments:
+		/// * step: AUTO_STEP
+		#[inline]
+		pub unsafe fn new_rows_cols_with_data_def(rows: i32, cols: i32, typ: i32, data: *mut c_void) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
 		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
 		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
@@ -15000,6 +18530,34 @@ pub mod core {
 		pub unsafe fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_Mat_Mat_Size_int_voidX_size_t(size.opencv_as_extern(), typ, data, step, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
+		/// number of columns go in the reverse order.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
+		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+		/// 
+		/// ## Note
+		/// This alternative version of [new_size_with_data] function uses the following default values for its arguments:
+		/// * step: AUTO_STEP
+		#[inline]
+		pub unsafe fn new_size_with_data_def(size: core::Size, typ: i32, data: *mut c_void) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_Size_int_voidX(size.opencv_as_extern(), typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::Mat::opencv_from_extern(ret) };
@@ -15038,6 +18596,33 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * ndims: Array dimensionality.
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
+		/// 
+		/// ## Note
+		/// This alternative version of [new_nd_with_data] function uses the following default values for its arguments:
+		/// * steps: 0
+		#[inline]
+		pub unsafe fn new_nd_with_data_def(sizes: &[i32], typ: i32, data: *mut c_void) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_int_const_intX_int_voidX(sizes.len() as _, sizes.as_ptr(), typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
 		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
 		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
@@ -15069,6 +18654,32 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
+		/// 
+		/// ## Note
+		/// This alternative version of [new_nd_vec_with_data] function uses the following default values for its arguments:
+		/// * steps: 0
+		#[inline]
+		pub unsafe fn new_nd_vec_with_data_def(sizes: &core::Vector<i32>, typ: i32, data: *mut c_void) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_const_vectorLintGR_int_voidX(sizes.as_raw_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
 		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
 		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
@@ -15092,6 +18703,30 @@ pub mod core {
 		pub fn rowscols(m: &core::Mat, row_range: &core::Range, col_range: &core::Range) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
+		/// end is exclusive. Use Range::all() to take all the rows.
+		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
+		/// 
+		/// ## Note
+		/// This alternative version of [rowscols] function uses the following default values for its arguments:
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols_def(m: &core::Mat, row_range: &core::Range) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -15588,12 +19223,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [seek] function uses the following default values for its arguments:
+		/// * relative: false
+		#[inline]
+		fn seek_def(&mut self, ofs: ptrdiff_t) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_seek_ptrdiff_t(self.as_raw_mut_MatConstIterator(), ofs, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * relative: false
 		#[inline]
 		fn seek_idx(&mut self, _idx: &i32, relative: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_seek_const_intX_bool(self.as_raw_mut_MatConstIterator(), _idx, relative, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [seek_idx] function uses the following default values for its arguments:
+		/// * relative: false
+		#[inline]
+		fn seek_idx_def(&mut self, _idx: &i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_seek_const_intX(self.as_raw_mut_MatConstIterator(), _idx, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -15656,6 +19315,21 @@ pub mod core {
 		pub fn with_rows_cols(_m: &core::Mat, _row: i32, _col: i32) -> Result<core::MatConstIterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int_int(_m.as_raw_Mat(), _row, _col, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// constructor that sets the iterator to the specified element of the matrix
+		/// 
+		/// ## Note
+		/// This alternative version of [with_rows_cols] function uses the following default values for its arguments:
+		/// * _col: 0
+		#[inline]
+		pub fn with_rows_cols_def(_m: &core::Mat, _row: i32) -> Result<core::MatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int(_m.as_raw_Mat(), _row, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
@@ -15810,6 +19484,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [diag] function uses the following default values for its arguments:
+		/// * d: 0
+		#[inline]
+		fn diag_def(&self) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatExpr_diag_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn apply(&self, row_range: &core::Range, col_range: &core::Range) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
@@ -15852,6 +19539,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [inv] function uses the following default values for its arguments:
+		/// * method: DECOMP_LU
+		#[inline]
+		fn inv_def(&self) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatExpr_inv_const(self.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * scale: 1
 		#[inline]
@@ -15864,12 +19564,38 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [mul_matexpr] function uses the following default values for its arguments:
+		/// * scale: 1
+		#[inline]
+		fn mul_matexpr_def(&self, e: &core::MatExpr) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatExpr_mul_const_const_MatExprR(self.as_raw_MatExpr(), e.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * scale: 1
 		#[inline]
 		fn mul(&self, m: &core::Mat, scale: f64) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatExpr_mul_const_const_MatR_double(self.as_raw_MatExpr(), m.as_raw_Mat(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [mul] function uses the following default values for its arguments:
+		/// * scale: 1
+		#[inline]
+		fn mul_def(&self, m: &core::Mat) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatExpr_mul_const_const_MatR(self.as_raw_MatExpr(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -16062,6 +19788,24 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * _a: Mat()
+		/// * _b: Mat()
+		/// * _c: Mat()
+		/// * _alpha: 1
+		/// * _beta: 1
+		/// * _s: Scalar()
+		#[inline]
+		pub fn new_def(_op: &impl core::MatOpTraitConst, _flags: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int(_op.as_raw_MatOp(), _flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl std::fmt::Debug for MatExpr {
@@ -16098,6 +19842,18 @@ pub mod core {
 		fn assign(&self, expr: &core::MatExpr, m: &mut core::Mat, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_assign_const_const_MatExprR_MatR_int(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [assign] function uses the following default values for its arguments:
+		/// * typ: -1
+		#[inline]
+		fn assign_def(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatOp_assign_const_const_MatExprR_MatR(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -16231,6 +19987,18 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [multiply] function uses the following default values for its arguments:
+		/// * scale: 1
+		#[inline]
+		fn multiply_def(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatOp_multiply_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn multiply_f64(&self, expr1: &core::MatExpr, s: f64, res: &mut core::MatExpr) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -16246,6 +20014,18 @@ pub mod core {
 		fn divide(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr, scale: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MatOp_divide_const_const_MatExprR_const_MatExprR_MatExprR_double(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [divide] function uses the following default values for its arguments:
+		/// * scale: 1
+		#[inline]
+		fn divide_def(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatOp_divide_const_const_MatExprR_const_MatExprR_MatExprR(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_mut_MatExpr(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -17614,6 +21394,41 @@ pub mod core {
 		/// * maxComponents: maximum number of components that PCA should
 		/// retain; by default, all the components are retained.
 		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * max_components: 0
+		#[inline]
+		fn apply_def(&mut self, data: &impl core::ToInputArray, mean: &impl core::ToInputArray, flags: i32) -> Result<core::PCA> {
+			input_array_arg!(data);
+			input_array_arg!(mean);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PCA_operator___const__InputArrayR_const__InputArrayR_int(self.as_raw_mut_PCA(), data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// performs %PCA
+		/// 
+		/// The operator performs %PCA of the supplied dataset. It is safe to reuse
+		/// the same PCA structure for multiple datasets. That is, if the structure
+		/// has been previously used with another dataset, the existing internal
+		/// data is reclaimed and the new [eigenvalues], [eigenvectors] and [mean] are allocated and computed.
+		/// 
+		/// The computed [eigenvalues] are sorted from the largest to the smallest and
+		/// the corresponding [eigenvectors] are stored as eigenvectors rows.
+		/// 
+		/// ## Parameters
+		/// * data: input samples stored as the matrix rows or as the matrix
+		/// columns.
+		/// * mean: optional mean value; if the matrix is empty (noArray()),
+		/// the mean is computed from the data.
+		/// * flags: operation flags; currently the parameter is only used to
+		/// specify the data layout. (Flags)
+		/// * maxComponents: maximum number of components that PCA should
+		/// retain; by default, all the components are retained.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// * data: input samples stored as the matrix rows or as the matrix
@@ -17778,6 +21593,31 @@ pub mod core {
 			input_array_arg!(mean);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * data: input samples stored as matrix rows or matrix columns.
+		/// * mean: optional mean value; if the matrix is empty (@c noArray()),
+		/// the mean is computed from the data.
+		/// * flags: operation flags; currently the parameter is only used to
+		/// specify the data layout (PCA::Flags)
+		/// * maxComponents: maximum number of components that %PCA should
+		/// retain; by default, all the components are retained.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * max_components: 0
+		#[inline]
+		pub fn new_def(data: &impl core::ToInputArray, mean: &impl core::ToInputArray, flags: i32) -> Result<core::PCA> {
+			input_array_arg!(data);
+			input_array_arg!(mean);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
@@ -18235,6 +22075,56 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Fills arrays with random numbers.
+		/// 
+		/// ## Parameters
+		/// * mat: 2D or N-dimensional matrix; currently matrices with more than
+		/// 4 channels are not supported by the methods, use Mat::reshape as a
+		/// possible workaround.
+		/// * distType: distribution type, RNG::UNIFORM or RNG::NORMAL.
+		/// * a: first distribution parameter; in case of the uniform
+		/// distribution, this is an inclusive lower boundary, in case of the normal
+		/// distribution, this is a mean value.
+		/// * b: second distribution parameter; in case of the uniform
+		/// distribution, this is a non-inclusive upper boundary, in case of the
+		/// normal distribution, this is a standard deviation (diagonal of the
+		/// standard deviation matrix or the full standard deviation matrix).
+		/// * saturateRange: pre-saturation flag; for uniform distribution only;
+		/// if true, the method will first convert a and b to the acceptable value
+		/// range (according to the mat datatype) and then will generate uniformly
+		/// distributed random numbers within the range [saturate(a), saturate(b)),
+		/// if saturateRange=false, the method will generate uniformly distributed
+		/// random numbers in the original range [a, b) and then will saturate them,
+		/// it means, for example, that
+		/// <tt>theRNG().fill(mat_8u, RNG::UNIFORM, -DBL_MAX, DBL_MAX)</tt> will likely
+		/// produce array mostly filled with 0's and 255's, since the range (0, 255)
+		/// is significantly smaller than [-DBL_MAX, DBL_MAX).
+		/// 
+		/// Each of the methods fills the matrix with the random values from the
+		/// specified distribution. As the new numbers are generated, the RNG state
+		/// is updated accordingly. In case of multiple-channel images, every
+		/// channel is filled independently, which means that RNG cannot generate
+		/// samples from the multi-dimensional Gaussian distribution with
+		/// non-diagonal covariance matrix directly. To do that, the method
+		/// generates samples from multi-dimensional standard Gaussian distribution
+		/// with zero mean and identity covariation matrix, and then transforms them
+		/// using transform to get samples from the specified Gaussian distribution.
+		/// 
+		/// ## Note
+		/// This alternative version of [fill] function uses the following default values for its arguments:
+		/// * saturate_range: false
+		#[inline]
+		fn fill_def(&mut self, mat: &mut impl core::ToInputOutputArray, dist_type: i32, a: &impl core::ToInputArray, b: &impl core::ToInputArray) -> Result<()> {
+			input_output_array_arg!(mat);
+			input_array_arg!(a);
+			input_array_arg!(b);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RNG_fill_const__InputOutputArrayR_int_const__InputArrayR_const__InputArrayR(self.as_raw_mut_RNG(), mat.as_raw__InputOutputArray(), dist_type, a.as_raw__InputArray(), b.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Returns the next random number sampled from the Gaussian distribution
 		/// ## Parameters
 		/// * sigma: standard deviation of the distribution.
@@ -18658,11 +22548,11 @@ pub mod core {
 	/// The class represents rotated (i.e. not up-right) rectangles on a plane.
 	/// 
 	/// Each rectangle is specified by the center point (mass center), length of each side (represented by
-	/// #Size2f structure) and the rotation angle in degrees.
+	/// [size2f] structure) and the rotation angle in degrees.
 	/// 
 	/// The sample below demonstrates how to use RotatedRect:
-	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	/// ![image](https://docs.opencv.org/4.8.0/rotatedrect.png)
+	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// ![image](https://docs.opencv.org/4.8.1/rotatedrect.png)
 	/// ## See also
 	/// CamShift, fitEllipse, minAreaRect, CvBox2D
 	#[repr(C)]
@@ -18809,7 +22699,7 @@ pub mod core {
 		/// if you need to solve many linear systems with the same left-hand side
 		/// (for example, src ). If all you need is to solve a single system
 		/// (possibly with multiple rhs immediately available), simply call solve
-		/// add pass #DECOMP_SVD there. It does absolutely the same thing.
+		/// add pass [DECOMP_SVD] there. It does absolutely the same thing.
 		#[inline]
 		fn back_subst(&self, rhs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
 			input_array_arg!(rhs);
@@ -18864,6 +22754,32 @@ pub mod core {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_operator___const__InputArrayR_int(self.as_raw_mut_SVD(), src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// the operator that performs SVD. The previously allocated u, w and vt are released.
+		/// 
+		/// The operator performs the singular value decomposition of the supplied
+		/// matrix. The u,`vt` , and the vector of singular values w are stored in
+		/// the structure. The same SVD structure can be reused many times with
+		/// different matrices. Each time, if needed, the previous u,`vt` , and w
+		/// are reclaimed and the new matrices are created, which is all handled by
+		/// Mat::create.
+		/// ## Parameters
+		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
+		/// * flags: operation flags (SVD::Flags)
+		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * flags: 0
+		#[inline]
+		fn apply_def(&mut self, src: &impl core::ToInputArray) -> Result<core::SVD> {
+			input_array_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SVD_operator___const__InputArrayR(self.as_raw_mut_SVD(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
@@ -18946,6 +22862,26 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// initializes an empty SVD structure and then calls SVD::operator()
+		/// ## Parameters
+		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
+		/// * flags: operation flags (SVD::Flags)
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * flags: 0
+		#[inline]
+		pub fn new_def(src: &impl core::ToInputArray) -> Result<core::SVD> {
+			input_array_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SVD_SVD_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// decomposes matrix and stores the results to user-provided matrices
 		/// 
 		/// The methods/functions perform SVD of matrix. Unlike SVD::SVD constructor
@@ -18999,6 +22935,41 @@ pub mod core {
 		/// * vt: transposed matrix of right singular vectors
 		/// * flags: operation flags - see SVD::Flags.
 		/// 
+		/// ## Note
+		/// This alternative version of [compute_ext] function uses the following default values for its arguments:
+		/// * flags: 0
+		#[inline]
+		pub fn compute_ext_def(src: &impl core::ToInputArray, w: &mut impl core::ToOutputArray, u: &mut impl core::ToOutputArray, vt: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(w);
+			output_array_arg!(u);
+			output_array_arg!(vt);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// decomposes matrix and stores the results to user-provided matrices
+		/// 
+		/// The methods/functions perform SVD of matrix. Unlike SVD::SVD constructor
+		/// and SVD::operator(), they store the results to the user-provided
+		/// matrices:
+		/// 
+		/// ```C++
+		/// Mat A, w, u, vt;
+		/// SVD::compute(A, w, u, vt);
+		/// ```
+		/// 
+		/// 
+		/// ## Parameters
+		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
+		/// * w: calculated singular values
+		/// * u: calculated left singular vectors
+		/// * vt: transposed matrix of right singular vectors
+		/// * flags: operation flags - see SVD::Flags.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		///    computes singular values of a matrix
@@ -19014,6 +22985,27 @@ pub mod core {
 			output_array_arg!(w);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// computes singular values of a matrix
+		/// ## Parameters
+		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
+		/// * w: calculated singular values
+		/// * flags: operation flags - see SVD::Flags.
+		/// 
+		/// ## Note
+		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// * flags: 0
+		#[inline]
+		pub fn compute_def(src: &impl core::ToInputArray, w: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(src);
+			output_array_arg!(w);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SVD_compute_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), w.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -19123,6 +23115,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// multiplies all the matrix elements by the specified scale factor alpha and converts the results to the specified data type
+		/// 
+		/// ## Note
+		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// * alpha: 1
+		#[inline]
+		fn convert_to_def(&self, m: &mut core::SparseMat, rtype: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_convertTo_const_SparseMatR_int(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), rtype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// converts sparse matrix to dense n-dim matrix with optional type conversion and scaling.
 		/// 
 		/// ## Parameters
@@ -19146,12 +23152,48 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// converts sparse matrix to dense n-dim matrix with optional type conversion and scaling.
+		/// 
+		/// ## Parameters
+		/// * m:[out] - output matrix; if it does not have a proper size or type before the operation,
+		///        it is reallocated
+		/// * rtype: - desired output matrix type or, rather, the depth since the number of channels
+		///        are the same as the input has; if rtype is negative, the output matrix will have the
+		///        same type as the input.
+		/// * alpha: - optional scale factor
+		/// * beta: - optional delta added to the scaled values
+		/// 
+		/// ## Note
+		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// * alpha: 1
+		/// * beta: 0
+		#[inline]
+		fn convert_to_def_1(&self, m: &mut core::Mat, rtype: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_convertTo_const_MatR_int(self.as_raw_SparseMat(), m.as_raw_mut_Mat(), rtype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * typ: -1
 		#[inline]
 		fn assign_to(&self, m: &mut core::SparseMat, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_assignTo_const_SparseMatR_int(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [assign_to] function uses the following default values for its arguments:
+		/// * typ: -1
+		#[inline]
+		fn assign_to_def(&self, m: &mut core::SparseMat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_assignTo_const_SparseMatR(self.as_raw_SparseMat(), m.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -19394,6 +23436,29 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// specialized variants for 1D, 2D, 3D cases and the generic_type one for n-D case.
+		///    return pointer to the matrix element.
+		///      - if the element is there (it's non-zero), the pointer to it is returned
+		///      - if it's not there and createMissing=false, NULL pointer is returned
+		///      - if it's not there and createMissing=true, then the new element
+		///        is created and initialized with 0. Pointer to it is returned
+		///      - if the optional hashval pointer is not NULL, the element hash value is
+		///        not computed, but *hashval is taken instead.
+		/// 
+		/// returns pointer to the specified element (1D case)
+		/// 
+		/// ## Note
+		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// * hashval: 0
+		#[inline]
+		fn ptr_def(&mut self, i0: i32, create_missing: bool) -> Result<*mut u8> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_ptr_int_bool(self.as_raw_mut_SparseMat(), i0, create_missing, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// returns pointer to the specified element (2D case)
 		/// 
 		/// ## C++ default parameters
@@ -19402,6 +23467,20 @@ pub mod core {
 		fn ptr_1(&mut self, i0: i32, i1: i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_int_int_bool_size_tX(self.as_raw_mut_SparseMat(), i0, i1, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// returns pointer to the specified element (2D case)
+		/// 
+		/// ## Note
+		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// * hashval: 0
+		#[inline]
+		fn ptr_def_1(&mut self, i0: i32, i1: i32, create_missing: bool) -> Result<*mut u8> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_ptr_int_int_bool(self.as_raw_mut_SparseMat(), i0, i1, create_missing, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -19420,6 +23499,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// returns pointer to the specified element (3D case)
+		/// 
+		/// ## Note
+		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// * hashval: 0
+		#[inline]
+		fn ptr_def_2(&mut self, i0: i32, i1: i32, i2: i32, create_missing: bool) -> Result<*mut u8> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_ptr_int_int_int_bool(self.as_raw_mut_SparseMat(), i0, i1, i2, create_missing, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// returns pointer to the specified element (nD case)
 		/// 
 		/// ## C++ default parameters
@@ -19428,6 +23521,20 @@ pub mod core {
 		fn ptr_3(&mut self, idx: &i32, create_missing: bool, hashval: &mut size_t) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_ptr_const_intX_bool_size_tX(self.as_raw_mut_SparseMat(), idx, create_missing, hashval, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// returns pointer to the specified element (nD case)
+		/// 
+		/// ## Note
+		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// * hashval: 0
+		#[inline]
+		fn ptr_def_3(&mut self, idx: &i32, create_missing: bool) -> Result<*mut u8> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_ptr_const_intX_bool(self.as_raw_mut_SparseMat(), idx, create_missing, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -19446,6 +23553,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// erases the specified element (2D case)
+		/// 
+		/// ## Note
+		/// This alternative version of [erase] function uses the following default values for its arguments:
+		/// * hashval: 0
+		#[inline]
+		fn erase_def(&mut self, i0: i32, i1: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_erase_int_int(self.as_raw_mut_SparseMat(), i0, i1, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// erases the specified element (3D case)
 		/// 
 		/// ## C++ default parameters
@@ -19459,6 +23580,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// erases the specified element (3D case)
+		/// 
+		/// ## Note
+		/// This alternative version of [erase] function uses the following default values for its arguments:
+		/// * hashval: 0
+		#[inline]
+		fn erase_def_1(&mut self, i0: i32, i1: i32, i2: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_erase_int_int_int(self.as_raw_mut_SparseMat(), i0, i1, i2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// erases the specified element (nD case)
 		/// 
 		/// ## C++ default parameters
@@ -19467,6 +23602,20 @@ pub mod core {
 		fn erase_2(&mut self, idx: &i32, hashval: &mut size_t) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseMat_erase_const_intX_size_tX(self.as_raw_mut_SparseMat(), idx, hashval, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// erases the specified element (nD case)
+		/// 
+		/// ## Note
+		/// This alternative version of [erase] function uses the following default values for its arguments:
+		/// * hashval: 0
+		#[inline]
+		fn erase_def_2(&mut self, idx: &i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_erase_const_intX(self.as_raw_mut_SparseMat(), idx, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -20041,18 +24190,6 @@ pub mod core {
 			ret
 		}
 		
-		/// moves iterator to the previous element
-		#[inline]
-		#[cfg(any())]
-		fn decr(&mut self) -> Result<core::SparseMatConstIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMatConstIterator_operatorSS(self.as_raw_mut_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
 		/// moves iterator to the next element
 		#[inline]
 		fn incr(&mut self) -> Result<core::SparseMatConstIterator> {
@@ -20451,10 +24588,10 @@ pub mod core {
 	/// 
 	/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 	/// execution time in seconds:
-	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// 
 	/// It is also possible to compute the average time over multiple runs:
-	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.8.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// ## See also
 	/// getTickCount, getTickFrequency
 	pub struct TickMeter {
@@ -20661,6 +24798,24 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ... for the specified diagonal
+		/// (d=0 - the main diagonal,
+		///  >0 - a diagonal from the upper half,
+		///  <0 - a diagonal from the lower half)
+		/// 
+		/// ## Note
+		/// This alternative version of [diag] function uses the following default values for its arguments:
+		/// * d: 0
+		#[inline]
+		fn diag_def(&self) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_diag_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// returns deep copy of the matrix, i.e. the data is copied
 		#[inline]
 		#[must_use]
@@ -20711,12 +24866,40 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// converts matrix to another datatype with optional scaling. See cvConvertScale.
+		/// 
+		/// ## Note
+		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// * alpha: 1
+		/// * beta: 0
+		#[inline]
+		fn convert_to_def(&self, m: &mut impl core::ToOutputArray, rtype: i32) -> Result<()> {
+			output_array_arg!(m);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_convertTo_const_const__OutputArrayR_int(self.as_raw_UMat(), m.as_raw__OutputArray(), rtype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * typ: -1
 		#[inline]
 		fn assign_to(&self, m: &mut core::UMat, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_assignTo_const_UMatR_int(self.as_raw_UMat(), m.as_raw_mut_UMat(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [assign_to] function uses the following default values for its arguments:
+		/// * typ: -1
+		#[inline]
+		fn assign_to_def(&self, m: &mut core::UMat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_assignTo_const_UMatR(self.as_raw_UMat(), m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -20730,6 +24913,21 @@ pub mod core {
 		fn reshape(&self, cn: i32, rows: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_reshape_const_int_int(self.as_raw_UMat(), cn, rows, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// creates alternative matrix header for the same data, with different
+		/// 
+		/// ## Note
+		/// This alternative version of [reshape] function uses the following default values for its arguments:
+		/// * rows: 0
+		#[inline]
+		fn reshape_def(&self, cn: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_reshape_const_int(self.as_raw_UMat(), cn, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -20771,6 +24969,21 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// matrix inversion by means of matrix expressions
+		/// 
+		/// ## Note
+		/// This alternative version of [inv] function uses the following default values for its arguments:
+		/// * method: DECOMP_LU
+		#[inline]
+		fn inv_def(&self) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_inv_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// per-element matrix multiplication by means of matrix expressions
 		/// 
 		/// ## C++ default parameters
@@ -20780,6 +24993,22 @@ pub mod core {
 			input_array_arg!(m);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_mul_const_const__InputArrayR_double(self.as_raw_UMat(), m.as_raw__InputArray(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// per-element matrix multiplication by means of matrix expressions
+		/// 
+		/// ## Note
+		/// This alternative version of [mul] function uses the following default values for its arguments:
+		/// * scale: 1
+		#[inline]
+		fn mul_def(&self, m: &impl core::ToInputArray) -> Result<core::UMat> {
+			input_array_arg!(m);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_mul_const_const__InputArrayR(self.as_raw_UMat(), m.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -20913,6 +25142,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// returns step/elemSize1()
+		/// 
+		/// ## Note
+		/// This alternative version of [step1] function uses the following default values for its arguments:
+		/// * i: 0
+		#[inline]
+		fn step1_def(&self) -> Result<size_t> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_step1_const(self.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// returns true if matrix data is NULL
 		#[inline]
 		fn empty(&self) -> bool {
@@ -20936,6 +25179,21 @@ pub mod core {
 		fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_checkVector_const_int_int_bool(self.as_raw_UMat(), elem_channels, depth, require_continuous, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// returns N if the matrix is 1-channel (N x ptdim) or ptdim-channel (1 x N) or (N x 1); negative number otherwise
+		/// 
+		/// ## Note
+		/// This alternative version of [check_vector] function uses the following default values for its arguments:
+		/// * depth: -1
+		/// * require_continuous: true
+		#[inline]
+		fn check_vector_def(&self, elem_channels: i32) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_checkVector_const_int(self.as_raw_UMat(), elem_channels, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -21054,6 +25312,22 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// sets some of the matrix elements to s, according to the mask
+		/// 
+		/// ## Note
+		/// This alternative version of [set_to] function uses the following default values for its arguments:
+		/// * mask: noArray()
+		#[inline]
+		fn set_to_def(&mut self, value: &impl core::ToInputArray) -> Result<core::UMat> {
+			input_array_arg!(value);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_setTo_const__InputArrayR(self.as_raw_mut_UMat(), value.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// allocates new matrix data unless the matrix already has specified size and type.
 		/// 
 		/// ## C++ default parameters
@@ -21063,6 +25337,20 @@ pub mod core {
 			return_send!(via ocvrs_return);
 			{ sys::cv_UMat_create_int_int_int_UMatUsageFlags(self.as_raw_mut_UMat(), rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// allocates new matrix data unless the matrix already has specified size and type.
+		/// 
+		/// ## Note
+		/// This alternative version of [create_rows_cols] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		fn create_rows_cols_def(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_create_int_int_int(self.as_raw_mut_UMat(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21078,6 +25366,18 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create_size] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		fn create_size_def(&mut self, size: core::Size, typ: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_create_Size_int(self.as_raw_mut_UMat(), size.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
@@ -21089,6 +25389,18 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create_nd] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		fn create_nd_def(&mut self, sizes: &[i32], typ: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_create_int_const_intX_int(self.as_raw_mut_UMat(), sizes.len() as _, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
@@ -21096,6 +25408,18 @@ pub mod core {
 			return_send!(via ocvrs_return);
 			{ sys::cv_UMat_create_const_vectorLintGR_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.as_raw_VectorOfi32(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create_nd_vec] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		fn create_nd_vec_def(&mut self, sizes: &core::Vector<i32>, typ: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_create_const_vectorLintGR_int(self.as_raw_mut_UMat(), sizes.as_raw_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -21189,6 +25513,18 @@ pub mod core {
 			ret
 		}
 		
+		/// default constructor
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_def() -> core::UMat {
+			let ret = unsafe { sys::cv_UMat_UMat() };
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			ret
+		}
+		
 		/// constructs 2D matrix of the specified size and type
 		/// 
 		/// ## C++ default parameters
@@ -21203,6 +25539,21 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// constructs 2D matrix of the specified size and type
+		/// 
+		/// ## Note
+		/// This alternative version of [new_rows_cols] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_rows_cols_def(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
@@ -21212,6 +25563,19 @@ pub mod core {
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new_size] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_size_def(size: core::Size, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_Size_int(size.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -21229,12 +25593,40 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// constructs 2D matrix and fills it with the specified value _s.
+		/// 
+		/// ## Note
+		/// This alternative version of [new_rows_cols_with_default] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_rows_cols_with_default_def(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_int_int_const_ScalarR(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
 		pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR_UMatUsageFlags(size.opencv_as_extern(), typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new_size_with_default] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_size_with_default_def(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR(size.opencv_as_extern(), typ, &s, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -21255,12 +25647,40 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// constructs n-dimensional matrix
+		/// 
+		/// ## Note
+		/// This alternative version of [new_nd] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_nd_def(sizes: &[i32], typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_const_intX_int(sizes.len() as _, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
 		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR_UMatUsageFlags(sizes.len() as _, sizes.as_ptr(), typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new_nd_with_default] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_nd_with_default_def(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR(sizes.len() as _, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -21286,6 +25706,21 @@ pub mod core {
 		pub fn rowscols(m: &core::UMat, row_range: &core::Range, col_range: &core::Range) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// creates a matrix header for a part of the bigger matrix
+		/// 
+		/// ## Note
+		/// This alternative version of [rowscols] function uses the following default values for its arguments:
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols_def(m: &core::UMat, row_range: &core::Range) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -21850,6 +26285,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [get_mat] function uses the following default values for its arguments:
+		/// * idx: -1
+		#[inline]
+		fn get_mat_def(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_getMat_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * idx: -1
 		#[inline]
@@ -21862,12 +26310,38 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [get_mat_] function uses the following default values for its arguments:
+		/// * idx: -1
+		#[inline]
+		fn get_mat__def(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_getMat__const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * idx: -1
 		#[inline]
 		fn get_umat(&self, idx: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_getUMat_const_int(self.as_raw__InputArray(), idx, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [get_umat] function uses the following default values for its arguments:
+		/// * idx: -1
+		#[inline]
+		fn get_umat_def(&self) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_getUMat_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -21968,12 +26442,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [dims] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn dims_def(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_dims_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		#[inline]
 		fn cols(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_cols_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [cols] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn cols_def(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_cols_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -21990,6 +26488,18 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [rows] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn rows_def(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_rows_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		#[inline]
@@ -22001,12 +26511,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [size] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn size_def(&self) -> Result<core::Size> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_size_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		#[inline]
 		fn sizend(&self, sz: &mut i32, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_sizend_const_intX_int(self.as_raw__InputArray(), sz, i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [sizend] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn sizend_def(&self, sz: &mut i32) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_sizend_const_intX(self.as_raw__InputArray(), sz, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -22033,12 +26567,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [total] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn total_def(&self) -> Result<size_t> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_total_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		#[inline]
 		fn typ(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_type_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [typ] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn typ_def(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_type_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -22055,12 +26613,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [depth] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn depth_def(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_depth_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		#[inline]
 		fn channels(&self, i: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_channels_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [channels] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn channels_def(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_channels_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -22077,12 +26659,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [is_continuous] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn is_continuous_def(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_isContinuous_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		#[inline]
 		fn is_submatrix(&self, i: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_isSubmatrix_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [is_submatrix] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn is_submatrix_def(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_isSubmatrix_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -22129,12 +26735,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [offset] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn offset_def(&self) -> Result<size_t> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_offset_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		#[inline]
 		fn step(&self, i: i32) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray_step_const_int(self.as_raw__InputArray(), i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [step] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn step_def(&self) -> Result<size_t> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray_step_const(self.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -22750,12 +27380,38 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [get_mat_ref] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn get_mat_ref_def(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray_getMatRef_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		#[inline]
 		fn get_umat_ref(&self, i: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_getUMatRef_const_int(self.as_raw__OutputArray(), i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [get_umat_ref] function uses the following default values for its arguments:
+		/// * i: -1
+		#[inline]
+		fn get_umat_ref_def(&self) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray_getUMatRef_const(self.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -22815,6 +27471,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create_size] function uses the following default values for its arguments:
+		/// * i: -1
+		/// * allow_transposed: false
+		/// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
+		#[inline]
+		fn create_size_def(&self, sz: core::Size, typ: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray_create_const_Size_int(self.as_raw__OutputArray(), sz.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		/// * allow_transposed: false
@@ -22828,6 +27498,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * i: -1
+		/// * allow_transposed: false
+		/// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
+		#[inline]
+		fn create_def(&self, rows: i32, cols: i32, typ: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray_create_const_int_int_int(self.as_raw__OutputArray(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * i: -1
 		/// * allow_transposed: false
@@ -22836,6 +27520,20 @@ pub mod core {
 		fn create_nd(&self, size: &[i32], typ: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask(self.as_raw__OutputArray(), size.len() as _, size.as_ptr(), typ, i, allow_transposed, fixed_depth_mask, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create_nd] function uses the following default values for its arguments:
+		/// * i: -1
+		/// * allow_transposed: false
+		/// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
+		#[inline]
+		fn create_nd_def(&self, size: &[i32], typ: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray_create_const_int_const_intX_int(self.as_raw__OutputArray(), size.len() as _, size.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -22877,6 +27575,19 @@ pub mod core {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_setTo_const_const__InputArrayR_const__InputArrayR(self.as_raw__OutputArray(), value.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [set_to] function uses the following default values for its arguments:
+		/// * mask: _InputArray()
+		#[inline]
+		fn set_to_def(&self, value: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(value);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray_setTo_const_const__InputArrayR(self.as_raw__OutputArray(), value.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -23133,17 +27844,6 @@ pub mod core {
 		}
 		
 		#[inline]
-		#[cfg(not(target_os = "windows"))]
-		pub fn from_gpumat_vec(d_mat: &core::Vector<core::GpuMat>) -> Result<core::_OutputArray> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_const_vectorLGpuMatGR(d_mat.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-		#[inline]
 		pub fn new_2(buf: &core::Buffer) -> Result<core::_OutputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
@@ -23251,7 +27951,7 @@ pub mod core {
 	/// 
 	/// 
 	/// 
-	/// Note: #setBufferPoolUsage must be called \em before any Stream declaration.
+	/// Note: [set_buffer_pool_usage] must be called \em before any Stream declaration.
 	/// 
 	/// Users may specify custom allocator for Stream and may implement their own stream based
 	/// functions utilizing the same underlying GPU memory management.
@@ -23265,7 +27965,7 @@ pub mod core {
 	/// Below is an example that utilizes BufferPool with StackAllocator:
 	/// 
 	/// ```C++
-	///    #include <opencv2/opencv.hpp>
+	///    [include] <opencv2/opencv.hpp>
 	/// 
 	///    using namespace cv;
 	///    using namespace cv::cuda
@@ -23298,7 +27998,7 @@ pub mod core {
 	/// ```
 	/// 
 	/// 
-	/// If a third stream is declared in the above example, allocating with #getBuffer
+	/// If a third stream is declared in the above example, allocating with [get_buffer]
 	/// within that stream will also be carried out by the DefaultAllocator because we've run out of
 	/// stacks.
 	/// 
@@ -23665,7 +28365,7 @@ pub mod core {
 		
 		/// maximum 2D mipmapped texture dimensions
 		#[inline]
-		fn max_texture2_d_mipmap(&self) -> Result<core::Vec2i> {
+		fn max_texture_2d_mipmap(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DMipmap_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23675,7 +28375,7 @@ pub mod core {
 		
 		/// maximum dimensions (width, height, pitch) for 2D textures bound to pitched memory
 		#[inline]
-		fn max_texture2_d_linear(&self) -> Result<core::Vec3i> {
+		fn max_texture_2d_linear(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DLinear_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23685,7 +28385,7 @@ pub mod core {
 		
 		/// maximum 2D texture dimensions if texture gather operations have to be performed
 		#[inline]
-		fn max_texture2_d_gather(&self) -> Result<core::Vec2i> {
+		fn max_texture_2d_gather(&self) -> Result<core::Vec2i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DGather_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23725,7 +28425,7 @@ pub mod core {
 		
 		/// maximum 2D layered texture dimensions
 		#[inline]
-		fn max_texture2_d_layered(&self) -> Result<core::Vec3i> {
+		fn max_texture_2d_layered(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxTexture2DLayered_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -23785,7 +28485,7 @@ pub mod core {
 		
 		/// maximum 2D layered surface dimensions
 		#[inline]
-		fn max_surface2_d_layered(&self) -> Result<core::Vec3i> {
+		fn max_surface_2d_layered(&self) -> Result<core::Vec3i> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DeviceInfo_maxSurface2DLayered_const(self.as_raw_DeviceInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -24103,6 +28803,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// records an event
+		/// 
+		/// ## Note
+		/// This alternative version of [record] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn record_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Event_record(self.as_raw_mut_Event(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// waits for an event to complete
 		#[inline]
 		fn wait_for_completion(&mut self) -> Result<()> {
@@ -24145,6 +28859,19 @@ pub mod core {
 		pub fn new(flags: core::Event_CreateFlags) -> Result<core::Event> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Event_Event_const_CreateFlags(flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Event::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * flags: Event::CreateFlags::DEFAULT
+		#[inline]
+		pub fn new_def() -> Result<core::Event> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Event_Event(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Event::opencv_from_extern(ret) };
@@ -24418,6 +29145,21 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// converts GpuMat to another datatype with scaling (Blocking call)
+		/// 
+		/// ## Note
+		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// * beta: 0.0
+		#[inline]
+		fn convert_to_def(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64) -> Result<()> {
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// converts GpuMat to another datatype with scaling (Non-Blocking call)
 		#[inline]
 		fn convert_to_3(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, stream: &mut core::Stream) -> Result<()> {
@@ -24451,12 +29193,36 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [assign_to] function uses the following default values for its arguments:
+		/// * typ: -1
+		#[inline]
+		fn assign_to_def(&self, m: &mut core::GpuMat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_assignTo_const_GpuMatR(self.as_raw_GpuMat(), m.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * y: 0
 		#[inline]
 		fn ptr(&self, y: i32) -> Result<*const u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_ptr_const_int(self.as_raw_GpuMat(), y, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// * y: 0
+		#[inline]
+		fn ptr_def(&self) -> Result<*const u8> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_ptr_const(self.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -24556,6 +29322,22 @@ pub mod core {
 		fn reshape(&self, cn: i32, rows: i32) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_reshape_const_int_int(self.as_raw_GpuMat(), cn, rows, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// creates alternative GpuMat header for the same data, with different
+		/// number of channels and/or different number of rows
+		/// 
+		/// ## Note
+		/// This alternative version of [reshape] function uses the following default values for its arguments:
+		/// * rows: 0
+		#[inline]
+		fn reshape_def(&self, cn: i32) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_reshape_const_int(self.as_raw_GpuMat(), cn, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
@@ -24898,6 +29680,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// returns pointer to y-th row
+		/// 
+		/// ## Note
+		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// * y: 0
+		#[inline]
+		fn ptr_def_1(&mut self) -> Result<*mut u8> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_ptr(self.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// moves/resizes the current GpuMat ROI inside the parent GpuMat
 		#[inline]
 		fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::GpuMat> {
@@ -25011,6 +29807,21 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// default constructor
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_def() -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// constructs GpuMat of the specified size and type
 		/// 
 		/// ## C++ default parameters
@@ -25025,6 +29836,21 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// constructs GpuMat of the specified size and type
+		/// 
+		/// ## Note
+		/// This alternative version of [new_rows_cols] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_rows_cols_def(rows: i32, cols: i32, typ: i32) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
@@ -25034,6 +29860,19 @@ pub mod core {
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new_size] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_size_def(size: core::Size, typ: i32) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int(size.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -25051,6 +29890,21 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// constructs GpuMat and fills it with the specified value _s
+		/// 
+		/// ## Note
+		/// This alternative version of [new_rows_cols_with_default] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_rows_cols_with_default_def(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar(rows, cols, typ, s.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * allocator: GpuMat::defaultAllocator()
 		#[inline]
@@ -25060,6 +29914,19 @@ pub mod core {
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new_size_with_default] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_size_with_default_def(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar(size.opencv_as_extern(), typ, s.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -25088,12 +29955,40 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// constructor for GpuMat headers pointing to user-allocated data
+		/// 
+		/// ## Note
+		/// This alternative version of [new_rows_cols_with_data] function uses the following default values for its arguments:
+		/// * step: Mat::AUTO_STEP
+		#[inline]
+		pub unsafe fn new_rows_cols_with_data_def(rows: i32, cols: i32, typ: i32, data: *mut c_void) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * step: Mat::AUTO_STEP
 		#[inline]
 		pub unsafe fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::GpuMat> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX_size_t(size.opencv_as_extern(), typ, data, step, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new_size_with_data] function uses the following default values for its arguments:
+		/// * step: Mat::AUTO_STEP
+		#[inline]
+		pub unsafe fn new_size_with_data_def(size: core::Size, typ: i32, data: *mut c_void) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX(size.opencv_as_extern(), typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::GpuMat::opencv_from_extern(ret) };
@@ -25133,6 +30028,22 @@ pub mod core {
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// builds GpuMat from host memory (Blocking call)
+		/// 
+		/// ## Note
+		/// This alternative version of [from_hostmem] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn from_hostmem_def(arr: &impl core::ToInputArray) -> Result<core::GpuMat> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -25285,7 +30196,7 @@ pub mod core {
 		/// 
 		///    This overload is non-blocking, so it may return even if the copy operation is not finished.
 		#[inline]
-		fn clone_1(&self, stream: &mut core::Stream) -> Result<core::GpuMatND> {
+		fn clone(&self, stream: &mut core::Stream) -> Result<core::GpuMatND> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMatND_clone_const_StreamR(self.as_raw_GpuMatND(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -25672,6 +30583,32 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * size: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * step: Array of _size.size()-1 steps in case of a multi-dimensional array (the last step is always
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * step: StepArray()
+		#[inline]
+		pub unsafe fn new_def(mut size: core::GpuMatND_SizeArray, typ: i32, data: *mut c_void) -> Result<core::GpuMatND> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX(size.as_raw_mut_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMatND::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn copy(unnamed: &core::GpuMatND) -> core::GpuMatND {
 			let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND_const_GpuMatNDR(unnamed.as_raw_GpuMatND()) };
@@ -25770,6 +30707,22 @@ pub mod core {
 		fn reshape(&self, cn: i32, rows: i32) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_reshape_const_int_int(self.as_raw_HostMem(), cn, rows, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// creates alternative HostMem header for the same data, with different
+		/// number of channels and/or different number of rows
+		/// 
+		/// ## Note
+		/// This alternative version of [reshape] function uses the following default values for its arguments:
+		/// * rows: 0
+		#[inline]
+		fn reshape_def(&self, cn: i32) -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_reshape_const_int(self.as_raw_HostMem(), cn, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
@@ -26048,6 +31001,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_def() -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn copy(m: &core::HostMem) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
@@ -26070,12 +31036,38 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_def_1(rows: i32, cols: i32, typ: i32) -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
 		#[inline]
 		pub fn new_2(size: core::Size, typ: i32, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_Size_int_AllocType(size.opencv_as_extern(), typ, alloc_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_def_2(size: core::Size, typ: i32) -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_Size_int(size.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
@@ -26091,6 +31083,22 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR_AllocType(arr.as_raw__InputArray(), alloc_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// creates from host memory with coping data
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_def_3(arr: &impl core::ToInputArray) -> Result<core::HostMem> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
@@ -26783,6 +31791,25 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * fun_name: 0
+		/// * file_name: NULL
+		/// * line_num: 0
+		/// * ret_address: NULL
+		/// * always_expand: false
+		/// * instr_type: TYPE_GENERAL
+		/// * impl_type: IMPL_PLAIN
+		#[inline]
+		pub fn new_def() -> Result<core::NodeData> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_instr_NodeData_NodeData(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn copy_mut(ref_: &mut core::NodeData) -> Result<core::NodeData> {
 			return_send!(via ocvrs_return);
@@ -26857,6 +31884,20 @@ pub mod core {
 			extern_container_arg!(type_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_internal_WriteStructContext_WriteStructContext_FileStorageR_const_StringR_int_const_StringR(_fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, type_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::WriteStructContext::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * type_name: String()
+		#[inline]
+		pub fn new_def(_fs: &mut core::FileStorage, name: &str, flags: i32) -> Result<core::WriteStructContext> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_internal_WriteStructContext_WriteStructContext_FileStorageR_const_StringR_int(_fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::WriteStructContext::opencv_from_extern(ret) };
@@ -27071,6 +32112,19 @@ pub mod core {
 		pub fn get_default(initialize: bool) -> Result<core::Context> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Context_getDefault_bool(initialize, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [get_default] function uses the following default values for its arguments:
+		/// * initialize: true
+		#[inline]
+		pub fn get_default_def() -> Result<core::Context> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Context_getDefault(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Context::opencv_from_extern(ret) };
@@ -27494,7 +32548,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn image2_d_max_width(&self) -> Result<size_t> {
+		fn image_2d_max_width(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image2DMaxWidth_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27503,7 +32557,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn image2_d_max_height(&self) -> Result<size_t> {
+		fn image_2d_max_height(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image2DMaxHeight_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27512,7 +32566,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn image3_d_max_width(&self) -> Result<size_t> {
+		fn image_3d_max_width(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image3DMaxWidth_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27521,7 +32575,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn image3_d_max_height(&self) -> Result<size_t> {
+		fn image_3d_max_height(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image3DMaxHeight_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27530,7 +32584,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn image3_d_max_depth(&self) -> Result<size_t> {
+		fn image_3d_max_depth(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_image3DMaxDepth_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -28060,6 +33114,26 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Parameters
+		/// * src: UMat object from which to get image properties and data
+		/// * norm: flag to enable the use of normalized channel data types
+		/// * alias: flag indicating that the image should alias the src UMat. If true, changes to the
+		///    image or src will be reflected in both objects.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * norm: false
+		/// * alias: false
+		#[inline]
+		pub fn new_def(src: &core::UMat) -> Result<core::Image2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Image2D_Image2D_const_UMatR(src.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Image2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn copy(i: &core::Image2D) -> Result<core::Image2D> {
 			return_send!(via ocvrs_return);
@@ -28205,6 +33279,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create_ext] function uses the following default values for its arguments:
+		/// * errmsg: 0
+		#[inline]
+		fn create_ext_def(&mut self, kname: &str, prog: &core::ProgramSource, buildopts: &str) -> Result<bool> {
+			extern_container_arg!(kname);
+			extern_container_arg!(buildopts);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_create_const_charX_const_ProgramSourceR_const_StringR(self.as_raw_mut_Kernel(), kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		#[inline]
 		unsafe fn set(&mut self, i: i32, value: *const c_void, sz: size_t) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -28267,6 +33355,33 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Run the OpenCL kernel (globalsize value may be adjusted)
+		/// 
+		/// ## Parameters
+		/// * dims: the work problem dimensions. It is the length of globalsize and localsize. It can be either 1, 2 or 3.
+		/// * globalsize: work items for each dimension. It is not the final globalsize passed to
+		///   OpenCL. Each dimension will be adjusted to the nearest integer divisible by the corresponding
+		///   value in localsize. If localsize is NULL, it will still be adjusted depending on dims. The
+		///   adjusted values are greater than or equal to the original values.
+		/// * localsize: work-group size for each dimension.
+		/// * sync: specify whether to wait for OpenCL computation to finish before return.
+		/// * q: command queue
+		/// 
+		/// 
+		/// Note: Use run_() if your kernel code doesn't support adjusted globalsize.
+		/// 
+		/// ## Note
+		/// This alternative version of [run] function uses the following default values for its arguments:
+		/// * q: Queue()
+		#[inline]
+		fn run_def(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_run_int_size_tX_size_tX_bool(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Run the OpenCL kernel
 		/// 
 		/// ## Parameters
@@ -28287,12 +33402,45 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Run the OpenCL kernel
+		/// 
+		/// ## Parameters
+		/// * dims: the work problem dimensions. It is the length of globalsize and localsize. It can be either 1, 2 or 3.
+		/// * globalsize: work items for each dimension. This value is passed to OpenCL without changes.
+		/// * localsize: work-group size for each dimension.
+		/// * sync: specify whether to wait for OpenCL computation to finish before return.
+		/// * q: command queue
+		/// 
+		/// ## Note
+		/// This alternative version of [run_] function uses the following default values for its arguments:
+		/// * q: Queue()
+		#[inline]
+		fn run__def(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_run__int_size_tX_size_tX_bool(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * q: Queue()
 		#[inline]
 		fn run_task(&mut self, sync: bool, q: &core::Queue) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_runTask_bool_const_QueueR(self.as_raw_mut_Kernel(), sync, q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [run_task] function uses the following default values for its arguments:
+		/// * q: Queue()
+		#[inline]
+		fn run_task_def(&mut self, sync: bool) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_runTask_bool(self.as_raw_mut_Kernel(), sync, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -28310,6 +33458,24 @@ pub mod core {
 		fn run_profiling(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], q: &core::Queue) -> Result<i64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Similar to synchronized run_() call with returning of kernel execution time
+		/// 
+		/// Separate OpenCL command queue may be used (with CL_QUEUE_PROFILING_ENABLE)
+		/// ## Returns
+		/// Execution time in nanoseconds or negative number on error
+		/// 
+		/// ## Note
+		/// This alternative version of [run_profiling] function uses the following default values for its arguments:
+		/// * q: Queue()
+		#[inline]
+		fn run_profiling_def(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t]) -> Result<i64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -28373,6 +33539,21 @@ pub mod core {
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
 			string_arg_output_receive!(errmsg_via => errmsg);
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * buildopts: String()
+		/// * errmsg: 0
+		#[inline]
+		pub fn new_def(kname: &str, prog: &core::ProgramSource) -> Result<core::Kernel> {
+			extern_container_arg!(kname);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -28529,6 +33710,22 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * wscale: 1
+		/// * iwscale: 1
+		/// * _obj: 0
+		/// * _sz: 0
+		#[inline]
+		pub fn new_def(_flags: i32, _m: &mut core::UMat) -> Result<core::KernelArg> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_KernelArg_KernelArg_int_UMatX(_flags, _m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn default() -> core::KernelArg {
 			let ret = unsafe { sys::cv_ocl_KernelArg_KernelArg() };
@@ -28589,6 +33786,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [read_write] function uses the following default values for its arguments:
+		/// * wscale: 1
+		/// * iwscale: 1
+		#[inline]
+		pub fn read_write_def(m: &core::UMat) -> Result<core::KernelArg> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_KernelArg_ReadWrite_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * wscale: 1
 		/// * iwscale: 1
@@ -28596,6 +33807,20 @@ pub mod core {
 		pub fn read_write_no_size(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_ReadWriteNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [read_write_no_size] function uses the following default values for its arguments:
+		/// * wscale: 1
+		/// * iwscale: 1
+		#[inline]
+		pub fn read_write_no_size_def(m: &core::UMat) -> Result<core::KernelArg> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_KernelArg_ReadWriteNoSize_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
@@ -28615,6 +33840,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [read_only] function uses the following default values for its arguments:
+		/// * wscale: 1
+		/// * iwscale: 1
+		#[inline]
+		pub fn read_only_def(m: &core::UMat) -> Result<core::KernelArg> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_KernelArg_ReadOnly_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * wscale: 1
 		/// * iwscale: 1
@@ -28622,6 +33861,20 @@ pub mod core {
 		pub fn write_only(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_WriteOnly_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [write_only] function uses the following default values for its arguments:
+		/// * wscale: 1
+		/// * iwscale: 1
+		#[inline]
+		pub fn write_only_def(m: &core::UMat) -> Result<core::KernelArg> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_KernelArg_WriteOnly_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
@@ -28641,6 +33894,20 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [read_only_no_size] function uses the following default values for its arguments:
+		/// * wscale: 1
+		/// * iwscale: 1
+		#[inline]
+		pub fn read_only_no_size_def(m: &core::UMat) -> Result<core::KernelArg> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_KernelArg_ReadOnlyNoSize_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * wscale: 1
 		/// * iwscale: 1
@@ -28648,6 +33915,20 @@ pub mod core {
 		pub fn write_only_no_size(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_KernelArg_WriteOnlyNoSize_const_UMatR_int_int(m.as_raw_UMat(), wscale, iwscale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [write_only_no_size] function uses the following default values for its arguments:
+		/// * wscale: 1
+		/// * iwscale: 1
+		#[inline]
+		pub fn write_only_no_size_def(m: &core::UMat) -> Result<core::KernelArg> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_KernelArg_WriteOnlyNoSize_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::KernelArg::opencv_from_extern(ret) };
@@ -29572,6 +34853,37 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Describe OpenCL program binary.
+		/// Do not call clCreateProgramWithBinary() and/or clBuildProgram().
+		/// 
+		/// Caller should guarantee binary buffer lifetime greater than ProgramSource object (and any of its copies).
+		/// 
+		/// This kind of binary is not portable between platforms in general - it is specific to OpenCL vendor / device / driver version.
+		/// 
+		/// ## Parameters
+		/// * module: name of program owner module
+		/// * name: unique name of program (module+name is used as key for OpenCL program caching)
+		/// * binary: buffer address. See buffer lifetime requirement in description.
+		/// * size: buffer size
+		/// * buildOptions: additional program-related build options passed to clBuildProgram()
+		/// ## Returns
+		/// created ProgramSource object
+		/// 
+		/// ## Note
+		/// This alternative version of [from_binary] function uses the following default values for its arguments:
+		/// * build_options: cv::String()
+		#[inline]
+		pub fn from_binary_def(module: &str, name: &str, binary: &u8, size: size_t) -> Result<core::ProgramSource> {
+			extern_container_arg!(module);
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_ProgramSource_fromBinary_const_StringR_const_StringR_const_unsigned_charX_const_size_t(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Describe OpenCL program in SPIR format.
 		/// Do not call clCreateProgramWithBinary() and/or clBuildProgram().
 		/// 
@@ -29604,6 +34916,44 @@ pub mod core {
 			extern_container_arg!(build_options);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_ProgramSource_fromSPIR_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, build_options.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Describe OpenCL program in SPIR format.
+		/// Do not call clCreateProgramWithBinary() and/or clBuildProgram().
+		/// 
+		/// Supports SPIR 1.2 by default (pass '-spir-std=X.Y' in buildOptions to override this behavior)
+		/// 
+		/// Caller should guarantee binary buffer lifetime greater than ProgramSource object (and any of its copies).
+		/// 
+		/// Programs in this format are portable between OpenCL implementations with 'khr_spir' extension:
+		/// <https://www.khronos.org/registry/OpenCL/sdk/2.0/docs/man/xhtml/cl_khr_spir.html>
+		/// (but they are not portable between different platforms: 32-bit / 64-bit)
+		/// 
+		/// Note: these programs can't support vendor specific extensions, like 'cl_intel_subgroups'.
+		/// 
+		/// ## Parameters
+		/// * module: name of program owner module
+		/// * name: unique name of program (module+name is used as key for OpenCL program caching)
+		/// * binary: buffer address. See buffer lifetime requirement in description.
+		/// * size: buffer size
+		/// * buildOptions: additional program-related build options passed to clBuildProgram()
+		///        (these options are added automatically: '-x spir' and '-spir-std=1.2')
+		/// ## Returns
+		/// created ProgramSource object.
+		/// 
+		/// ## Note
+		/// This alternative version of [from_spir] function uses the following default values for its arguments:
+		/// * build_options: cv::String()
+		#[inline]
+		pub fn from_spir_def(module: &str, name: &str, binary: &u8, size: size_t) -> Result<core::ProgramSource> {
+			extern_container_arg!(module);
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_ProgramSource_fromSPIR_const_StringR_const_StringR_const_unsigned_charX_const_size_t(module.opencv_as_extern(), name.opencv_as_extern(), binary, size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::ProgramSource::opencv_from_extern(ret) };
@@ -29679,6 +35029,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * c: Context()
+		/// * d: Device()
+		#[inline]
+		fn create_def(&mut self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Queue_create(self.as_raw_mut_Queue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn finish(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -29727,6 +35090,19 @@ pub mod core {
 		pub fn new(c: &core::Context, d: &core::Device) -> Result<core::Queue> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Queue_Queue_const_ContextR_const_DeviceR(c.as_raw_Context(), d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * d: Device()
+		#[inline]
+		pub fn new_def(c: &core::Context) -> Result<core::Queue> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Queue_Queue_const_ContextR(c.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
@@ -30119,6 +35495,26 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// Creates a full copy of the buffer object and the underlying data.
+		/// 
+		/// ## Parameters
+		/// * target: Buffer usage for destination buffer.
+		/// * autoRelease: Auto release mode for destination buffer.
+		/// 
+		/// ## Note
+		/// This alternative version of [clone] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		fn clone_def(&self) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_clone_const(self.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Binds OpenGL buffer to the specified buffer binding point.
 		/// 
 		/// ## Parameters
@@ -30259,6 +35655,28 @@ pub mod core {
 		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		fn create_def(&mut self, arows: i32, acols: i32, atype: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_create_int_int_int(self.as_raw_mut_Buffer(), arows, acols, atype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Allocates memory for ogl::Buffer object.
+		/// 
+		/// ## Parameters
+		/// * arows: Number of rows in a 2D array.
+		/// * acols: Number of columns in a 2D array.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// * asize: 2D array size.
@@ -30273,6 +35691,26 @@ pub mod core {
 		fn create_size(&mut self, asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_create_Size_int_Target_bool(self.as_raw_mut_Buffer(), asize.opencv_as_extern(), atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [create_size] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		fn create_size_def(&mut self, asize: core::Size, atype: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_create_Size_int(self.as_raw_mut_Buffer(), asize.opencv_as_extern(), atype, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -30333,6 +35771,26 @@ pub mod core {
 		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		/// 
+		/// ## Note
+		/// This alternative version of [copy_from] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		fn copy_from_def(&mut self, arr: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Copies from host/device memory to OpenGL buffer.
+		/// ## Parameters
+		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or std::vector ).
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// ## C++ default parameters
@@ -30343,6 +35801,22 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR_Target_bool(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), target, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [copy_from] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		fn copy_from_def_1(&mut self, arr: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_copyFrom_const__InputArrayR_StreamR(self.as_raw_mut_Buffer(), arr.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -30503,6 +35977,27 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * arows: Number of rows in a 2D array.
+		/// * acols: Number of columns in a 2D array.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * abufId: Buffer object name.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def(arows: i32, acols: i32, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int(arows, acols, atype, abuf_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// The constructors.
 		/// 
 		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
@@ -30522,6 +36017,26 @@ pub mod core {
 		pub fn new_1(asize: core::Size, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int_bool(asize.opencv_as_extern(), atype, abuf_id, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * abufId: Buffer object name.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_1(asize: core::Size, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int(asize.opencv_as_extern(), atype, abuf_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
@@ -30555,6 +36070,28 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * arows: Number of rows in a 2D array.
+		/// * acols: Number of columns in a 2D array.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_2(arows: i32, acols: i32, atype: i32) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int(arows, acols, atype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// The constructors.
 		/// 
 		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
@@ -30581,6 +36118,27 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_3(asize: core::Size, atype: i32) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int(asize.opencv_as_extern(), atype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// The constructors.
 		/// 
 		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
@@ -30601,6 +36159,27 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or std::vector ).
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_4(arr: &impl core::ToInputArray) -> Result<core::Buffer> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
@@ -30650,6 +36229,28 @@ pub mod core {
 			output_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR_int_bool(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ddepth, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Copies from OpenGL texture to host/device memory or another OpenGL texture object.
+		/// 
+		/// ## Parameters
+		/// * arr: Destination array (host or device memory, can be Mat , cuda::GpuMat , ogl::Buffer or
+		/// ogl::Texture2D ).
+		/// * ddepth: Destination depth.
+		/// * autoRelease: Auto release mode for destination buffer (if arr is OpenGL buffer or texture).
+		/// 
+		/// ## Note
+		/// This alternative version of [copy_to] function uses the following default values for its arguments:
+		/// * ddepth: CV_32F
+		/// * auto_release: false
+		#[inline]
+		fn copy_to_def(&self, arr: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_copyTo_const_const__OutputArrayR(self.as_raw_Texture2D(), arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -30753,6 +36354,26 @@ pub mod core {
 		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		fn create_def(&mut self, arows: i32, acols: i32, aformat: core::Texture2D_Format) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_create_int_int_Format(self.as_raw_mut_Texture2D(), arows, acols, aformat, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Allocates memory for ogl::Texture2D object.
+		/// 
+		/// ## Parameters
+		/// * arows: Number of rows.
+		/// * acols: Number of columns.
+		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// * asize: 2D array size.
@@ -30765,6 +36386,24 @@ pub mod core {
 		fn create_1(&mut self, asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_create_Size_Format_bool(self.as_raw_mut_Texture2D(), asize.opencv_as_extern(), aformat, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		fn create_def_1(&mut self, asize: core::Size, aformat: core::Texture2D_Format) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_create_Size_Format(self.as_raw_mut_Texture2D(), asize.opencv_as_extern(), aformat, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -30814,6 +36453,25 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR_bool(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Copies from host/device memory to OpenGL texture.
+		/// 
+		/// ## Parameters
+		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or ogl::Buffer ).
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [copy_from] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		fn copy_from_def(&mut self, arr: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_copyFrom_const__InputArrayR(self.as_raw_mut_Texture2D(), arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -30879,6 +36537,21 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int(arows, acols, aformat, atex_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// The constructors.
 		/// 
 		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
@@ -30892,6 +36565,21 @@ pub mod core {
 		pub fn new_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int_bool(asize.opencv_as_extern(), aformat, atex_id, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int(asize.opencv_as_extern(), aformat, atex_id, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
@@ -30923,6 +36611,26 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * arows: Number of rows.
+		/// * acols: Number of columns.
+		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_2(arows: i32, acols: i32, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format(arows, acols, aformat, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// The constructors.
 		/// 
 		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
@@ -30947,6 +36655,25 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// @overload
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_3(asize: core::Size, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format(asize.opencv_as_extern(), aformat, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// The constructors.
 		/// 
 		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
@@ -30965,6 +36692,25 @@ pub mod core {
 			input_array_arg!(arr);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or ogl::Buffer ).
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_4(arr: &impl core::ToInputArray) -> Result<core::Texture2D> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
@@ -30998,6 +36744,19 @@ pub mod core {
 		pub fn new(lambda_arg: i32, except_arg: i32) -> Result<core::ClassWithKeywordProperties> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_ClassWithKeywordProperties_ClassWithKeywordProperties_int_int(lambda_arg, except_arg, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * lambda_arg: 24
+		/// * except_arg: 42
+		#[inline]
+		pub fn new_def() -> Result<core::ClassWithKeywordProperties> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_utils_ClassWithKeywordProperties_ClassWithKeywordProperties(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -31241,6 +37000,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * params: OriginalClassName::Params()
+		#[inline]
+		pub fn new_def() -> Result<core::OriginalClassName> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_utils_nested_OriginalClassName_OriginalClassName(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OriginalClassName::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn original_name() -> Result<String> {
 			return_send!(via ocvrs_return);
@@ -31257,6 +37029,19 @@ pub mod core {
 		pub fn create(params: core::OriginalClassName_Params) -> Result<core::Ptr<core::OriginalClassName>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_create_const_ParamsR(&params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<core::OriginalClassName>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * params: OriginalClassName::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<core::OriginalClassName>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_utils_nested_OriginalClassName_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<core::OriginalClassName>::opencv_from_extern(ret) };
@@ -31290,6 +37075,19 @@ pub mod core {
 		pub fn new(int_param: i32, float_param: f32) -> Result<core::OriginalClassName_Params> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_utils_nested_OriginalClassName_Params_Params_int_float(int_param, float_param, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * int_param: 123
+		/// * float_param: 3.5f
+		#[inline]
+		pub fn new_def() -> Result<core::OriginalClassName_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_utils_nested_OriginalClassName_Params_Params(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

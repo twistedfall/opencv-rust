@@ -17,8 +17,8 @@ pub mod img_hash {
 	//! 
 	//! You can study more about image hashing from following paper and websites:
 	//! 
-	//! - "Implementation and benchmarking of perceptual image hash functions" [zauner2010implementation](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_zauner2010implementation)
-	//! - "Looks Like It" [lookslikeit](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+	//! - "Implementation and benchmarking of perceptual image hash functions" [zauner2010implementation](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_zauner2010implementation)
+	//! - "Looks Like It" [lookslikeit](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_lookslikeit)
 	//! 
 	//! ### Code Example
 	//! 
@@ -26,12 +26,12 @@ pub mod img_hash {
 	//! 
 	//! ### Performance under different attacks
 	//! 
-	//! ![Performance chart](https://docs.opencv.org/4.8.0/attack_performance.JPG)
+	//! ![Performance chart](https://docs.opencv.org/4.8.1/attack_performance.JPG)
 	//! 
 	//! ### Speed comparison with PHash library (100 images from ukbench)
 	//! 
-	//! ![Hash Computation chart](https://docs.opencv.org/4.8.0/hash_computation_chart.JPG)
-	//! ![Hash comparison chart](https://docs.opencv.org/4.8.0/hash_comparison_chart.JPG)
+	//! ![Hash Computation chart](https://docs.opencv.org/4.8.1/hash_computation_chart.JPG)
+	//! ![Hash comparison chart](https://docs.opencv.org/4.8.1/hash_comparison_chart.JPG)
 	//! 
 	//! As you can see, hash computation speed of img_hash module outperform [PHash library](http://www.phash.org/) a lot.
 	//! 
@@ -99,6 +99,26 @@ pub mod img_hash {
 	/// * outputArr: Hash value of input, it will contain 16 hex decimal number, return type is CV_8U
 	/// * mode: the mode
 	/// 
+	/// ## Note
+	/// This alternative version of [block_mean_hash] function uses the following default values for its arguments:
+	/// * mode: BLOCK_MEAN_HASH_MODE_0
+	#[inline]
+	pub fn block_mean_hash_def(input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(input_arr);
+		output_array_arg!(output_arr);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_img_hash_blockMeanHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes block mean hash of the input image
+	/// ## Parameters
+	/// * inputArr: input image want to compute hash value, type should be CV_8UC4, CV_8UC3 or CV_8UC1.
+	/// * outputArr: Hash value of input, it will contain 16 hex decimal number, return type is CV_8U
+	/// * mode: the mode
+	/// 
 	/// ## C++ default parameters
 	/// * mode: BLOCK_MEAN_HASH_MODE_0
 	#[inline]
@@ -125,6 +145,30 @@ pub mod img_hash {
 		output_array_arg!(output_arr);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_img_hash_colorMomentHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes average hash value of the input image
+	/// ## Parameters
+	/// * inputArr: input image want to compute hash value,
+	/// type should be CV_8UC4, CV_8UC3, CV_8UC1.
+	/// * outputArr: Hash value of input, it will contain 16 hex
+	/// decimal number, return type is CV_8U
+	/// * alpha: int scale factor for marr wavelet (default=2).
+	/// * scale: int level of scale factor (default = 1)
+	/// 
+	/// ## Note
+	/// This alternative version of [marr_hildreth_hash] function uses the following default values for its arguments:
+	/// * alpha: 2.0f
+	/// * scale: 1.0f
+	#[inline]
+	pub fn marr_hildreth_hash_def(input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(input_arr);
+		output_array_arg!(output_arr);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_img_hash_marrHildrethHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -177,6 +221,29 @@ pub mod img_hash {
 	/// * sigma: Gaussian kernel standard deviation
 	/// * numOfAngleLine: The number of angles to consider
 	/// 
+	/// ## Note
+	/// This alternative version of [radial_variance_hash] function uses the following default values for its arguments:
+	/// * sigma: 1
+	/// * num_of_angle_line: 180
+	#[inline]
+	pub fn radial_variance_hash_def(input_arr: &impl core::ToInputArray, output_arr: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(input_arr);
+		output_array_arg!(output_arr);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_img_hash_radialVarianceHash_const__InputArrayR_const__OutputArrayR(input_arr.as_raw__InputArray(), output_arr.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes radial variance hash of the input image
+	/// ## Parameters
+	/// * inputArr: input image want to compute hash value,
+	/// type should be CV_8UC4, CV_8UC3, CV_8UC1.
+	/// * outputArr: Hash value of input
+	/// * sigma: Gaussian kernel standard deviation
+	/// * numOfAngleLine: The number of angles to consider
+	/// 
 	/// ## C++ default parameters
 	/// * sigma: 1
 	/// * num_of_angle_line: 180
@@ -206,7 +273,7 @@ pub mod img_hash {
 	/// Computes average hash value of the input image
 	/// 
 	/// This is a fast image hashing algorithm, but only work on simple case. For more details, please
-	/// refer to [lookslikeit](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+	/// refer to [lookslikeit](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_lookslikeit)
 	pub struct AverageHash {
 		ptr: *mut c_void
 	}
@@ -307,7 +374,7 @@ pub mod img_hash {
 	
 	/// Image hash based on block mean.
 	/// 
-	/// See [zauner2010implementation](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+	/// See [zauner2010implementation](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 	pub struct BlockMeanHash {
 		ptr: *mut c_void
 	}
@@ -360,6 +427,19 @@ pub mod img_hash {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * mode: BLOCK_MEAN_HASH_MODE_0
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::img_hash::BlockMeanHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_BlockMeanHash_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { BlockMeanHash, core::Algorithm, cv_img_hash_BlockMeanHash_to_Algorithm }
@@ -388,7 +468,7 @@ pub mod img_hash {
 	
 	/// Image hash based on color moments.
 	/// 
-	/// See [tang2012perceptual](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+	/// See [tang2012perceptual](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 	pub struct ColorMomentHash {
 		ptr: *mut c_void
 	}
@@ -590,7 +670,7 @@ pub mod img_hash {
 	
 	/// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
 	/// 
-	/// See [zauner2010implementation](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+	/// See [zauner2010implementation](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 	pub struct MarrHildrethHash {
 		ptr: *mut c_void
 	}
@@ -648,6 +728,24 @@ pub mod img_hash {
 			Ok(ret)
 		}
 		
+		/// ## Parameters
+		/// * alpha: int scale factor for marr wavelet (default=2).
+		/// * scale: int level of scale factor (default = 1)
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * alpha: 2.0f
+		/// * scale: 1.0f
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::img_hash::MarrHildrethHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_MarrHildrethHash_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { MarrHildrethHash, core::Algorithm, cv_img_hash_MarrHildrethHash_to_Algorithm }
@@ -678,7 +776,7 @@ pub mod img_hash {
 	/// 
 	/// Slower than average_hash, but tolerant of minor modifications
 	/// 
-	/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+	/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_lookslikeit)
 	pub struct PHash {
 		ptr: *mut c_void
 	}
@@ -833,7 +931,7 @@ pub mod img_hash {
 	
 	/// Image hash based on Radon transform.
 	/// 
-	/// See [tang2012perceptual](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+	/// See [tang2012perceptual](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 	pub struct RadialVarianceHash {
 		ptr: *mut c_void
 	}
@@ -881,6 +979,20 @@ pub mod img_hash {
 		pub fn create(sigma: f64, num_of_angle_line: i32) -> Result<core::Ptr<crate::img_hash::RadialVarianceHash>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_img_hash_RadialVarianceHash_create_double_int(sigma, num_of_angle_line, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * sigma: 1
+		/// * num_of_angle_line: 180
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::img_hash::RadialVarianceHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_RadialVarianceHash_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(ret) };

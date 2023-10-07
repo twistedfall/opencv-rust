@@ -24,6 +24,30 @@ pub mod bgsegm {
 	/// * maxPixelStability: maximum allowed credit for a pixel in history
 	/// * isParallel: determines if we're parallelizing the algorithm
 	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_cnt] function uses the following default values for its arguments:
+	/// * min_pixel_stability: 15
+	/// * use_history: true
+	/// * max_pixel_stability: 15*60
+	/// * is_parallel: true
+	#[inline]
+	pub fn create_background_subtractor_cnt_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bgsegm_createBackgroundSubtractorCNT(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorCNT>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates a CNT Background Subtractor
+	/// 
+	/// ## Parameters
+	/// * minPixelStability: number of frames with same pixel color to consider stable
+	/// * useHistory: determines if we're giving a pixel credit for being stable for a long time
+	/// * maxPixelStability: maximum allowed credit for a pixel in history
+	/// * isParallel: determines if we're parallelizing the algorithm
+	/// 
 	/// ## C++ default parameters
 	/// * min_pixel_stability: 15
 	/// * use_history: true
@@ -45,6 +69,26 @@ pub mod bgsegm {
 	/// * initializationFrames: number of frames used to initialize the background models.
 	/// * decisionThreshold: Threshold value, above which it is marked foreground, else background.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_gmg] function uses the following default values for its arguments:
+	/// * initialization_frames: 120
+	/// * decision_threshold: 0.8
+	#[inline]
+	pub fn create_background_subtractor_gmg_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bgsegm_createBackgroundSubtractorGMG(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGMG>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates a GMG Background Subtractor
+	/// 
+	/// ## Parameters
+	/// * initializationFrames: number of frames used to initialize the background models.
+	/// * decisionThreshold: Threshold value, above which it is marked foreground, else background.
+	/// 
 	/// ## C++ default parameters
 	/// * initialization_frames: 120
 	/// * decision_threshold: 0.8
@@ -55,6 +99,46 @@ pub mod bgsegm {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGMG>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates an instance of BackgroundSubtractorGSOC algorithm.
+	/// 
+	/// Implementation of the different yet better algorithm which is called GSOC, as it was implemented during GSOC and was not originated from any paper.
+	/// 
+	/// ## Parameters
+	/// * mc: Whether to use camera motion compensation.
+	/// * nSamples: Number of samples to maintain at each point of the frame.
+	/// * replaceRate: Probability of replacing the old sample - how fast the model will update itself.
+	/// * propagationRate: Probability of propagating to neighbors.
+	/// * hitsThreshold: How many positives the sample must get before it will be considered as a possible replacement.
+	/// * alpha: Scale coefficient for threshold.
+	/// * beta: Bias coefficient for threshold.
+	/// * blinkingSupressionDecay: Blinking supression decay factor.
+	/// * blinkingSupressionMultiplier: Blinking supression multiplier.
+	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
+	/// * noiseRemovalThresholdFacFG: Strength of the noise removal for foreground points.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_gsoc] function uses the following default values for its arguments:
+	/// * mc: LSBP_CAMERA_MOTION_COMPENSATION_NONE
+	/// * n_samples: 20
+	/// * replace_rate: 0.003f
+	/// * propagation_rate: 0.01f
+	/// * hits_threshold: 32
+	/// * alpha: 0.01f
+	/// * beta: 0.0022f
+	/// * blinking_supression_decay: 0.1f
+	/// * blinking_supression_multiplier: 0.1f
+	/// * noise_removal_threshold_fac_bg: 0.0004f
+	/// * noise_removal_threshold_fac_fg: 0.0008f
+	#[inline]
+	pub fn create_background_subtractor_gsoc_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bgsegm_createBackgroundSubtractorGSOC(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGSOC>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -99,16 +183,60 @@ pub mod bgsegm {
 	
 	/// Creates an instance of BackgroundSubtractorLSBP algorithm.
 	/// 
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016)
 	/// 
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
 	/// * LSBPRadius: LSBP descriptor radius.
-	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
-	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Rscale: Scale coefficient for threshold values.
+	/// * Rincdec: Increase/Decrease step for threshold values.
+	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
+	/// * noiseRemovalThresholdFacFG: Strength of the noise removal for foreground points.
+	/// * LSBPthreshold: Threshold for LSBP binary string.
+	/// * minCount: Minimal number of matches for sample to be considered as foreground.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_lsbp] function uses the following default values for its arguments:
+	/// * mc: LSBP_CAMERA_MOTION_COMPENSATION_NONE
+	/// * n_samples: 20
+	/// * lsbp_radius: 16
+	/// * tlower: 2.0f
+	/// * tupper: 32.0f
+	/// * tinc: 1.0f
+	/// * tdec: 0.05f
+	/// * rscale: 10.0f
+	/// * rincdec: 0.005f
+	/// * noise_removal_threshold_fac_bg: 0.0004f
+	/// * noise_removal_threshold_fac_fg: 0.0008f
+	/// * lsb_pthreshold: 8
+	/// * min_count: 2
+	#[inline]
+	pub fn create_background_subtractor_lsbp_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bgsegm_createBackgroundSubtractorLSBP(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorLSBP>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates an instance of BackgroundSubtractorLSBP algorithm.
+	/// 
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// 
+	/// ## Parameters
+	/// * mc: Whether to use camera motion compensation.
+	/// * nSamples: Number of samples to maintain at each point of the frame.
+	/// * LSBPRadius: LSBP descriptor radius.
+	/// * Tlower: Lower bound for T-values. See [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tupper: Upper bound for T-values. See [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tinc: Increase step for T-values. See [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
+	/// * Tdec: Decrease step for T-values. See [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016) for details.
 	/// * Rscale: Scale coefficient for threshold values.
 	/// * Rincdec: Increase/Decrease step for threshold values.
 	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
@@ -149,6 +277,31 @@ pub mod bgsegm {
 	/// * noiseSigma: Noise strength (standard deviation of the brightness or each color channel). 0
 	/// means some automatic value.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_mog] function uses the following default values for its arguments:
+	/// * history: 200
+	/// * nmixtures: 5
+	/// * background_ratio: 0.7
+	/// * noise_sigma: 0
+	#[inline]
+	pub fn create_background_subtractor_mog_def() -> Result<core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorMOG>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates mixture-of-gaussian background subtractor
+	/// 
+	/// ## Parameters
+	/// * history: Length of the history.
+	/// * nmixtures: Number of Gaussian mixtures.
+	/// * backgroundRatio: Background ratio.
+	/// * noiseSigma: Noise strength (standard deviation of the brightness or each color channel). 0
+	/// means some automatic value.
+	/// 
 	/// ## C++ default parameters
 	/// * history: 200
 	/// * nmixtures: 5
@@ -161,6 +314,34 @@ pub mod bgsegm {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorMOG>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates an instance of SyntheticSequenceGenerator.
+	/// 
+	/// ## Parameters
+	/// * background: Background image for object.
+	/// * object: Object image which will move slowly over the background.
+	/// * amplitude: Amplitude of wave distortion applied to background.
+	/// * wavelength: Length of waves in distortion applied to background.
+	/// * wavespeed: How fast waves will move.
+	/// * objspeed: How fast object will fly over background.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_synthetic_sequence_generator] function uses the following default values for its arguments:
+	/// * amplitude: 2.0
+	/// * wavelength: 20.0
+	/// * wavespeed: 0.2
+	/// * objspeed: 6.0
+	#[inline]
+	pub fn create_synthetic_sequence_generator_def(background: &impl core::ToInputArray, object: &impl core::ToInputArray) -> Result<core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>> {
+		input_array_arg!(background);
+		input_array_arg!(object);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator_const__InputArrayR_const__InputArrayR(background.as_raw__InputArray(), object.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -259,6 +440,20 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorCNT(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -585,7 +780,7 @@ pub mod bgsegm {
 		
 	}
 	
-	/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gold2012) .
+	/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Gold2012) .
 	/// 
 	/// Takes a series of images and returns a sequence of mask (8UC1)
 	/// images of the same size, where 255 indicates Foreground and 0 represents Background.
@@ -674,6 +869,20 @@ pub mod bgsegm {
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorGSOC(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -771,9 +980,23 @@ pub mod bgsegm {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorLSBP(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
-	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LGuo2016)
+	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LGuo2016)
 	pub struct BackgroundSubtractorLSBP {
 		ptr: *mut c_void
 	}
@@ -991,7 +1214,7 @@ pub mod bgsegm {
 	
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	/// 
-	/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_KB2001) .
+	/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_KB2001) .
 	pub struct BackgroundSubtractorMOG {
 		ptr: *mut c_void
 	}

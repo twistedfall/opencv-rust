@@ -228,7 +228,7 @@ pub mod cudaoptflow {
 		
 	}
 	
-	/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Brox2004)).
+	/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Brox2004)).
 	pub struct CUDA_BroxOpticalFlow {
 		ptr: *mut c_void
 	}
@@ -286,6 +286,24 @@ pub mod cudaoptflow {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * alpha: 0.197
+		/// * gamma: 50.0
+		/// * scale_factor: 0.8
+		/// * inner_iterations: 5
+		/// * outer_iterations: 150
+		/// * solver_iterations: 10
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_BroxOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_BroxOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { CUDA_BroxOpticalFlow, core::Algorithm, cv_cuda_BroxOpticalFlow_to_Algorithm }
@@ -327,6 +345,29 @@ pub mod cudaoptflow {
 			input_output_array_arg!(flow);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DenseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_StreamR(self.as_raw_mut_CUDA_DenseOpticalFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Calculates a dense optical flow.
+		/// 
+		/// ## Parameters
+		/// * I0: first input image.
+		/// * I1: second input image of the same size and the same type as I0.
+		/// * flow: computed flow image that has the same size as I0 and type CV_32FC2.
+		/// * stream: Stream for the asynchronous version.
+		/// 
+		/// ## Note
+		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn calc_def(&mut self, i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_array_arg!(i0);
+			input_array_arg!(i1);
+			input_output_array_arg!(flow);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DenseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_CUDA_DenseOpticalFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -524,6 +565,22 @@ pub mod cudaoptflow {
 		pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_as_extern(), max_level, iters, use_initial_flow, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * win_size: Size(13,13)
+		/// * max_level: 3
+		/// * iters: 30
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(ret) };
@@ -760,6 +817,26 @@ pub mod cudaoptflow {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * num_levels: 5
+		/// * pyr_scale: 0.5
+		/// * fast_pyramids: false
+		/// * win_size: 13
+		/// * num_iters: 10
+		/// * poly_n: 5
+		/// * poly_sigma: 1.1
+		/// * flags: 0
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_FarnebackOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { CUDA_FarnebackOpticalFlow, core::Algorithm, cv_cuda_FarnebackOpticalFlow_to_Algorithm }
@@ -831,6 +908,47 @@ pub mod cudaoptflow {
 			output_array_arg!(cost);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_StreamR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow(), input_image.as_raw__InputArray(), reference_image.as_raw__InputArray(), flow.as_raw__InputOutputArray(), stream.as_raw_mut_Stream(), hint.as_raw__InputArray(), cost.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Calculates Optical Flow using NVIDIA Optical Flow SDK.
+		/// 
+		/// * NVIDIA GPUs starting with Turing contain a dedicated hardware accelerator for computing optical flow vectors between pairs of images.
+		/// * The optical flow hardware accelerator generates block-based optical flow vectors.
+		/// * The size of the block depends on hardware in use, and can be queried using the function getGridSize().
+		/// * The block-based flow vectors generated by the hardware can be converted to dense representation (i.e. per-pixel flow vectors) using upSampler() helper function, if needed.
+		/// * The flow vectors are stored in CV_16SC2 format with x and y components of each flow vector in 16-bit signed fixed point representation S10.5.
+		/// 
+		/// ## Parameters
+		/// * inputImage: Input image.
+		/// * referenceImage: Reference image of the same size and the same type as input image.
+		/// * flow: A buffer consisting of inputImage.Size() / getGridSize() flow vectors in CV_16SC2 format.
+		/// * stream: It is highly recommended that CUDA streams for pre and post processing of optical flow vectors should be set once per session in create() function as a part of optical flow session creation.
+		///               This parameter is left here for backward compatibility and may be removed in the future.
+		///               Default value is NULL stream;
+		/// * hint: Hint buffer if client provides external hints. Must have same size as flow buffer.
+		///            Caller can provide flow vectors as hints for optical flow calculation.
+		/// * cost: Cost buffer contains numbers indicating the confidence associated with each of the generated flow vectors.
+		///            Higher the cost, lower the confidence. Cost buffer is of type CV_32SC1.
+		/// 
+		/// 
+		/// Note:
+		/// - Client must use critical sections around each calc() function if calling it from multiple threads.
+		/// 
+		/// ## Note
+		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		/// * hint: cv::noArray()
+		/// * cost: cv::noArray()
+		#[inline]
+		fn calc_def(&mut self, input_image: &impl core::ToInputArray, reference_image: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_array_arg!(input_image);
+			input_array_arg!(reference_image);
+			input_output_array_arg!(flow);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow(), input_image.as_raw__InputArray(), reference_image.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1013,6 +1131,44 @@ pub mod cudaoptflow {
 			Ok(ret)
 		}
 		
+		/// Instantiate NVIDIA Optical Flow
+		/// 
+		/// ## Parameters
+		/// * imageSize: Size of input image in pixels.
+		/// * perfPreset: Optional parameter. Refer [NV OF SDK documentation](https://developer.nvidia.com/opticalflow-sdk) for details about presets.
+		///                   Defaults to NV_OF_PERF_LEVEL_SLOW.
+		/// * enableTemporalHints: Optional parameter. Flag to enable temporal hints. When set to true, the hardware uses the flow vectors
+		///                            generated in previous call to calc() as internal hints for the current call to calc().
+		///                            Useful when computing flow vectors between successive video frames. Defaults to false.
+		/// * enableExternalHints: Optional Parameter. Flag to enable passing external hints buffer to calc(). Defaults to false.
+		/// * enableCostBuffer: Optional Parameter. Flag to enable cost buffer output from calc(). Defaults to false.
+		/// * gpuId: Optional parameter to select the GPU ID on which the optical flow should be computed. Useful in multi-GPU systems. Defaults to 0.
+		/// * inputStream: Optical flow algorithm may optionally involve cuda preprocessing on the input buffers.
+		///                    The input cuda stream can be used to pipeline and synchronize the cuda preprocessing tasks with OF HW engine.
+		///                    If input stream is not set, the execute function will use default stream which is NULL stream;
+		/// * outputStream: Optical flow algorithm may optionally involve cuda post processing on the output flow vectors.
+		///                    The output cuda stream can be used to pipeline and synchronize the cuda post processing tasks with OF HW engine.
+		///                    If output stream is not set, the execute function will use default stream which is NULL stream;
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * perf_preset: cv::cuda::NvidiaOpticalFlow_1_0::NV_OF_PERF_LEVEL_SLOW
+		/// * enable_temporal_hints: false
+		/// * enable_external_hints: false
+		/// * enable_cost_buffer: false
+		/// * gpu_id: 0
+		/// * input_stream: Stream::Null()
+		/// * output_stream: Stream::Null()
+		#[inline]
+		pub fn create_def(image_size: core::Size) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_create_Size(image_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, core::Algorithm, cv_cuda_NvidiaOpticalFlow_1_0_to_Algorithm }
@@ -1146,6 +1302,50 @@ pub mod cudaoptflow {
 			Ok(ret)
 		}
 		
+		/// Instantiate NVIDIA Optical Flow
+		/// 
+		/// ## Parameters
+		/// * imageSize: Size of input image in pixels.
+		/// * perfPreset: Optional parameter. Refer [NV OF SDK documentation](https://developer.nvidia.com/opticalflow-sdk) for details about presets.
+		///                   Defaults to NV_OF_PERF_LEVEL_SLOW.
+		/// * outputGridSize: Optional parameter. Refer [NV OF SDK documentation](https://developer.nvidia.com/opticalflow-sdk) for details about output grid sizes.
+		///                       Defaults to NV_OF_OUTPUT_VECTOR_GRID_SIZE_1.
+		/// * hintGridSize: Optional parameter. Refer [NV OF SDK documentation](https://developer.nvidia.com/opticalflow-sdk) for details about hint grid sizes.
+		///                    Defaults to NV_OF_HINT_VECTOR_GRID_SIZE_1.
+		/// * enableTemporalHints: Optional parameter. Flag to enable temporal hints. When set to true, the hardware uses the flow vectors
+		///                            generated in previous call to calc() as internal hints for the current call to calc().
+		///                            Useful when computing flow vectors between successive video frames. Defaults to false.
+		/// * enableExternalHints: Optional Parameter. Flag to enable passing external hints buffer to calc(). Defaults to false.
+		/// * enableCostBuffer: Optional Parameter. Flag to enable cost buffer output from calc(). Defaults to false.
+		/// * gpuId: Optional parameter to select the GPU ID on which the optical flow should be computed. Useful in multi-GPU systems. Defaults to 0.
+		/// * inputStream: Optical flow algorithm may optionally involve cuda preprocessing on the input buffers.
+		///                    The input cuda stream can be used to pipeline and synchronize the cuda preprocessing tasks with OF HW engine.
+		///                    If input stream is not set, the execute function will use default stream which is NULL stream;
+		/// * outputStream: Optical flow algorithm may optionally involve cuda post processing on the output flow vectors.
+		///                    The output cuda stream can be used to pipeline and synchronize the cuda post processing tasks with OF HW engine.
+		///                    If output stream is not set, the execute function will use default stream which is NULL stream;
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * perf_preset: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_PERF_LEVEL_SLOW
+		/// * output_grid_size: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_OUTPUT_VECTOR_GRID_SIZE_1
+		/// * hint_grid_size: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_HINT_VECTOR_GRID_SIZE_1
+		/// * enable_temporal_hints: false
+		/// * enable_external_hints: false
+		/// * enable_cost_buffer: false
+		/// * gpu_id: 0
+		/// * input_stream: Stream::Null()
+		/// * output_stream: Stream::Null()
+		#[inline]
+		pub fn create_def(image_size: core::Size) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size(image_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Instantiate NVIDIA Optical Flow with ROI Feature
 		/// 
 		/// ## Parameters
@@ -1184,6 +1384,51 @@ pub mod cudaoptflow {
 		pub fn create_1(image_size: core::Size, mut roi_data: core::Vector<core::Rect>, perf_preset: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL, output_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE, hint_grid_size: crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_HINT_VECTOR_GRID_SIZE, enable_temporal_hints: bool, enable_external_hints: bool, enable_cost_buffer: bool, gpu_id: i32, input_stream: &mut core::Stream, output_stream: &mut core::Stream) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size_vectorLRectG_NVIDIA_OF_PERF_LEVEL_NVIDIA_OF_OUTPUT_VECTOR_GRID_SIZE_NVIDIA_OF_HINT_VECTOR_GRID_SIZE_bool_bool_bool_int_StreamR_StreamR(image_size.opencv_as_extern(), roi_data.as_raw_mut_VectorOfRect(), perf_preset, output_grid_size, hint_grid_size, enable_temporal_hints, enable_external_hints, enable_cost_buffer, gpu_id, input_stream.as_raw_mut_Stream(), output_stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Instantiate NVIDIA Optical Flow with ROI Feature
+		/// 
+		/// ## Parameters
+		/// * imageSize: Size of input image in pixels.
+		/// * roiData: Pointer to ROI data.
+		/// * perfPreset: Optional parameter. Refer [NV OF SDK documentation](https://developer.nvidia.com/opticalflow-sdk) for details about presets.
+		///                   Defaults to NV_OF_PERF_LEVEL_SLOW.
+		/// * outputGridSize: Optional parameter. Refer [NV OF SDK documentation](https://developer.nvidia.com/opticalflow-sdk) for details about output grid sizes.
+		///                       Defaults to NV_OF_OUTPUT_VECTOR_GRID_SIZE_1.
+		/// * hintGridSize: Optional parameter. Refer [NV OF SDK documentation](https://developer.nvidia.com/opticalflow-sdk) for details about hint grid sizes.
+		///                    Defaults to NV_OF_HINT_VECTOR_GRID_SIZE_1.
+		/// * enableTemporalHints: Optional parameter. Flag to enable temporal hints. When set to true, the hardware uses the flow vectors
+		///                            generated in previous call to calc() as internal hints for the current call to calc().
+		///                            Useful when computing flow vectors between successive video frames. Defaults to false.
+		/// * enableExternalHints: Optional Parameter. Flag to enable passing external hints buffer to calc(). Defaults to false.
+		/// * enableCostBuffer: Optional Parameter. Flag to enable cost buffer output from calc(). Defaults to false.
+		/// * gpuId: Optional parameter to select the GPU ID on which the optical flow should be computed. Useful in multi-GPU systems. Defaults to 0.
+		/// * inputStream: Optical flow algorithm may optionally involve cuda preprocessing on the input buffers.
+		///                    The input cuda stream can be used to pipeline and synchronize the cuda preprocessing tasks with OF HW engine.
+		///                    If input stream is not set, the execute function will use default stream which is NULL stream;
+		/// * outputStream: Optical flow algorithm may optionally involve cuda post processing on the output flow vectors.
+		///                    The output cuda stream can be used to pipeline and synchronize the cuda post processing tasks with OF HW engine.
+		///                    If output stream is not set, the execute function will use default stream which is NULL stream;
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * perf_preset: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_PERF_LEVEL_SLOW
+		/// * output_grid_size: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_OUTPUT_VECTOR_GRID_SIZE_1
+		/// * hint_grid_size: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_HINT_VECTOR_GRID_SIZE_1
+		/// * enable_temporal_hints: false
+		/// * enable_external_hints: false
+		/// * enable_cost_buffer: false
+		/// * gpu_id: 0
+		/// * input_stream: Stream::Null()
+		/// * output_stream: Stream::Null()
+		#[inline]
+		pub fn create_def_1(image_size: core::Size, mut roi_data: core::Vector<core::Rect>) -> Result<core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_create_Size_vectorLRectG(image_size.opencv_as_extern(), roi_data.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>::opencv_from_extern(ret) };
@@ -1484,6 +1729,28 @@ pub mod cudaoptflow {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * tau: 0.25
+		/// * lambda: 0.15
+		/// * theta: 0.3
+		/// * nscales: 5
+		/// * warps: 5
+		/// * epsilon: 0.01
+		/// * iterations: 300
+		/// * scale_step: 0.8
+		/// * gamma: 0.0
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, core::Algorithm, cv_cuda_OpticalFlowDual_TVL1_to_Algorithm }
@@ -1533,6 +1800,36 @@ pub mod cudaoptflow {
 			output_array_arg!(err);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Calculates a sparse optical flow.
+		/// 
+		/// ## Parameters
+		/// * prevImg: First input image.
+		/// * nextImg: Second input image of the same size and the same type as prevImg.
+		/// * prevPts: Vector of 2D points for which the flow needs to be found.
+		/// * nextPts: Output vector of 2D points containing the calculated new positions of input features in the second image.
+		/// * status: Output status vector. Each element of the vector is set to 1 if the
+		///               flow for the corresponding features has been found. Otherwise, it is set to 0.
+		/// * err: Optional output vector that contains error response for each point (inverse confidence).
+		/// * stream: Stream for the asynchronous version.
+		/// 
+		/// ## Note
+		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// * err: cv::noArray()
+		/// * stream: Stream::Null()
+		#[inline]
+		fn calc_def(&mut self, prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(prev_img);
+			input_array_arg!(next_img);
+			input_array_arg!(prev_pts);
+			input_output_array_arg!(next_pts);
+			output_array_arg!(status);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1731,6 +2028,22 @@ pub mod cudaoptflow {
 		pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(win_size.opencv_as_extern(), max_level, iters, use_initial_flow, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * win_size: Size(21,21)
+		/// * max_level: 3
+		/// * iters: 30
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };

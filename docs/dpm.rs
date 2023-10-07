@@ -5,7 +5,7 @@ pub mod dpm {
 	//! ---------------------------------------------------------------
 	//! 
 	//! The object detector described below has been initially proposed by P.F. Felzenszwalb in
-	//! [Felzenszwalb2010a](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
+	//! [Felzenszwalb2010a](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
 	//! of oriented gradients (HOG) features to represent an object category. This detector uses a sliding
 	//! window approach, where a filter is applied at all positions and scales of an image. The first
 	//! innovation is enriching the Dalal-Triggs model using a star-structured part-based model defined by a
@@ -21,7 +21,7 @@ pub mod dpm {
 	//! location.
 	//! 
 	//! The detector was dramatically speeded-up with cascade algorithm proposed by P.F. Felzenszwalb in
-	//! [Felzenszwalb2010b](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
+	//! [Felzenszwalb2010b](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
 	//! basic idea of the algorithm is to use a hierarchy of models defined by an ordering of the original
 	//! model's parts. For a model with (n+1) parts, including the root, a sequence of (n+1) models is
 	//! obtained. The i-th model in this sequence is defined by the first i parts from the original model.
@@ -137,6 +137,27 @@ pub mod dpm {
 			Ok(ret)
 		}
 		
+		/// Load the trained models from given .xml files and return cv::Ptr\<DPMDetector\>.
+		/// ## Parameters
+		/// * filenames: A set of filenames storing the trained detectors (models). Each file contains one
+		/// model. See examples of such files here `/opencv_extra/testdata/cv/dpm/VOC2007_Cascade/`.
+		/// * classNames: A set of trained models names. If it's empty then the name of each model will be
+		/// constructed from the name of file containing the model. E.g. the model stored in
+		/// "/home/user/cat.xml" will get the name "cat".
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * class_names: std::vector<std::string>()
+		#[inline]
+		pub fn create_def(filenames: &core::Vector<String>) -> Result<core::Ptr<crate::dpm::DPMDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dpm_DPMDetector_create_const_vectorLstringGR(filenames.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dpm::DPMDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl std::fmt::Debug for DPMDetector {
@@ -237,6 +258,19 @@ pub mod dpm {
 		pub fn new(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(&rect, score, class_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * class_id: -1
+		#[inline]
+		pub fn new_def(rect: core::Rect, score: f32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float(&rect, score, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };

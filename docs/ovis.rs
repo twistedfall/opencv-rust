@@ -130,6 +130,27 @@ pub mod ovis {
 	/// * size: extents of the grid
 	/// * segments: number of segments per side
 	/// 
+	/// ## Note
+	/// This alternative version of [create_grid_mesh] function uses the following default values for its arguments:
+	/// * segments: Size(1,1)
+	#[inline]
+	pub fn create_grid_mesh_def(name: &str, size: core::Size2f) -> Result<()> {
+		extern_container_arg!(name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ovis_createGridMesh_const_StringR_const_Size2fR(name.opencv_as_extern(), &size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// creates a grid
+	/// 
+	/// creates a material with the same name
+	/// ## Parameters
+	/// * name: name of the mesh
+	/// * size: extents of the grid
+	/// * segments: number of segments per side
+	/// 
 	/// ## C++ default parameters
 	/// * segments: Size(1,1)
 	#[inline]
@@ -137,6 +158,27 @@ pub mod ovis {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ovis_createGridMesh_const_StringR_const_Size2fR_const_SizeR(name.opencv_as_extern(), &size, &segments, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// create a 2D plane, X right, Y down, Z up
+	/// 
+	/// creates a material with the same name
+	/// ## Parameters
+	/// * name: name of the mesh
+	/// * size: size in world units
+	/// * image: optional texture
+	/// 
+	/// ## Note
+	/// This alternative version of [create_plane_mesh] function uses the following default values for its arguments:
+	/// * image: noArray()
+	#[inline]
+	pub fn create_plane_mesh_def(name: &str, size: core::Size2f) -> Result<()> {
+		extern_container_arg!(name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ovis_createPlaneMesh_const_StringR_const_Size2fR(name.opencv_as_extern(), &size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -158,6 +200,28 @@ pub mod ovis {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ovis_createPlaneMesh_const_StringR_const_Size2fR_const__InputArrayR(name.opencv_as_extern(), &size, image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// creates a point cloud mesh
+	/// 
+	/// creates a material with the same name
+	/// ## Parameters
+	/// * name: name of the mesh
+	/// * vertices: float vector of positions
+	/// * colors: uchar vector of colors
+	/// 
+	/// ## Note
+	/// This alternative version of [create_point_cloud_mesh] function uses the following default values for its arguments:
+	/// * colors: noArray()
+	#[inline]
+	pub fn create_point_cloud_mesh_def(name: &str, vertices: &impl core::ToInputArray) -> Result<()> {
+		extern_container_arg!(name);
+		input_array_arg!(vertices);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ovis_createPointCloudMesh_const_StringR_const__InputArrayR(name.opencv_as_extern(), vertices.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -194,6 +258,30 @@ pub mod ovis {
 	/// * normals: float vector of normals
 	/// * indices: int vector of indices
 	/// 
+	/// ## Note
+	/// This alternative version of [create_triangle_mesh] function uses the following default values for its arguments:
+	/// * normals: noArray()
+	/// * indices: noArray()
+	#[inline]
+	pub fn create_triangle_mesh_def(name: &str, vertices: &impl core::ToInputArray) -> Result<()> {
+		extern_container_arg!(name);
+		input_array_arg!(vertices);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ovis_createTriangleMesh_const_StringR_const__InputArrayR(name.opencv_as_extern(), vertices.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// creates a triangle mesh from vertex-vertex or face-vertex representation
+	/// 
+	/// creates a material with the same name
+	/// ## Parameters
+	/// * name: name of the mesh
+	/// * vertices: float vector of positions
+	/// * normals: float vector of normals
+	/// * indices: int vector of indices
+	/// 
 	/// ## C++ default parameters
 	/// * normals: noArray()
 	/// * indices: noArray()
@@ -207,6 +295,31 @@ pub mod ovis {
 		unsafe { sys::cv_ovis_createTriangleMesh_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR(name.opencv_as_extern(), vertices.as_raw__InputArray(), normals.as_raw__InputArray(), indices.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// create a new rendering window/ viewport
+	/// ## Parameters
+	/// * title: window title
+	/// * size: size of the window
+	/// * flags: a combination of [SceneSettings]
+	/// 
+	/// Furthermore, the behavior is controlled by the following environment variables
+	/// - OPENCV_OVIS_VERBOSE_LOG: print all of OGRE log output
+	/// - OPENCV_OVIS_RENDERSYSTEM: the name of the OGRE RenderSystem to use
+	/// - OPENCV_OVIS_NOVSYNC: disable VSYNC for all windows
+	/// 
+	/// ## Note
+	/// This alternative version of [create_window] function uses the following default values for its arguments:
+	/// * flags: SCENE_INTERACTIVE|SCENE_AA
+	#[inline]
+	pub fn create_window_def(title: &str, size: core::Size) -> Result<core::Ptr<crate::ovis::WindowScene>> {
+		extern_container_arg!(title);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ovis_createWindow_const_StringR_const_SizeR(title.opencv_as_extern(), &size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::ovis::WindowScene>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -321,6 +434,26 @@ pub mod ovis {
 	/// ## Returns
 	/// the code of the pressed key or -1 if no key was pressed
 	/// 
+	/// ## Note
+	/// This alternative version of [wait_key] function uses the following default values for its arguments:
+	/// * delay: 0
+	#[inline]
+	pub fn wait_key_def() -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ovis_waitKey(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// update all windows and wait for keyboard event
+	/// 
+	/// ## Parameters
+	/// * delay: 0 is the special value that means "forever".
+	///        Any positive number returns after sync to blank (typically 16ms).
+	/// ## Returns
+	/// the code of the pressed key or -1 if no key was pressed
+	/// 
 	/// ## C++ default parameters
 	/// * delay: 0
 	#[inline]
@@ -414,6 +547,33 @@ pub mod ovis {
 			Ok(ret)
 		}
 		
+		/// place an entity of a mesh in the scene
+		/// 
+		/// the mesh needs to be created beforehand. Either programmatically
+		/// by e.g. [createPointCloudMesh] or by placing the respective file in a resource location.
+		/// ## Parameters
+		/// * name: entity name
+		/// * meshname: mesh name
+		/// * tvec: translation
+		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
+		/// ## See also
+		/// addResourceLocation
+		/// 
+		/// ## Note
+		/// This alternative version of [create_entity] function uses the following default values for its arguments:
+		/// * tvec: noArray()
+		/// * rot: noArray()
+		#[inline]
+		fn create_entity_def(&mut self, name: &str, meshname: &str) -> Result<()> {
+			extern_container_arg!(name);
+			extern_container_arg!(meshname);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_createEntity_const_StringR_const_StringR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), meshname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// remove an entity from the scene
 		/// ## Parameters
 		/// * name: entity name
@@ -442,6 +602,27 @@ pub mod ovis {
 			extern_container_arg!(value);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_StringR_int(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), prop, value.opencv_as_extern(), sub_entity_idx, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// set the property of an entity to the given value
+		/// ## Parameters
+		/// * name: entity name
+		/// * prop: [EntityProperty]
+		/// * value: the value
+		/// * subEntityIdx: index of the sub-entity (default: all)
+		/// 
+		/// ## Note
+		/// This alternative version of [set_entity_property] function uses the following default values for its arguments:
+		/// * sub_entity_idx: -1
+		#[inline]
+		fn set_entity_property_def(&mut self, name: &str, prop: i32, value: &str) -> Result<()> {
+			extern_container_arg!(name);
+			extern_container_arg!(value);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_setEntityProperty_const_StringR_int_const_StringR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), prop, value.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -512,6 +693,36 @@ pub mod ovis {
 			Ok(ret)
 		}
 		
+		/// convenience method to visualize a camera position
+		/// 
+		/// ## Parameters
+		/// * name: entity name
+		/// * K: intrinsic matrix
+		/// * imsize: image size
+		/// * zFar: far plane in camera coordinates
+		/// * tvec: translation
+		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
+		/// * color: line color
+		/// ## Returns
+		/// the extents of the Frustum at far plane, where the top left corner denotes the principal
+		/// point offset
+		/// 
+		/// ## Note
+		/// This alternative version of [create_camera_entity] function uses the following default values for its arguments:
+		/// * tvec: noArray()
+		/// * rot: noArray()
+		/// * color: Scalar::all(1)
+		#[inline]
+		fn create_camera_entity_def(&mut self, name: &str, k: &impl core::ToInputArray, imsize: core::Size, z_far: f32) -> Result<core::Rect2d> {
+			extern_container_arg!(name);
+			input_array_arg!(k);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_createCameraEntity_const_StringR_const__InputArrayR_const_SizeR_float(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), k.as_raw__InputArray(), &imsize, z_far, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// creates a point light in the scene
 		/// ## Parameters
 		/// * name: entity name
@@ -537,6 +748,30 @@ pub mod ovis {
 			Ok(ret)
 		}
 		
+		/// creates a point light in the scene
+		/// ## Parameters
+		/// * name: entity name
+		/// * tvec: translation
+		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
+		/// * diffuseColor: 
+		/// * specularColor: 
+		/// 
+		/// ## Note
+		/// This alternative version of [create_light_entity] function uses the following default values for its arguments:
+		/// * tvec: noArray()
+		/// * rot: noArray()
+		/// * diffuse_color: Scalar::all(1)
+		/// * specular_color: Scalar::all(1)
+		#[inline]
+		fn create_light_entity_def(&mut self, name: &str) -> Result<()> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_createLightEntity_const_StringR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// update entity pose by transformation in the parent coordinate space. (pre-rotation)
 		/// ## Parameters
 		/// * name: entity name
@@ -553,6 +788,26 @@ pub mod ovis {
 			input_array_arg!(rot);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_updateEntityPose_const_StringR_const__InputArrayR_const__InputArrayR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), tvec.as_raw__InputArray(), rot.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// update entity pose by transformation in the parent coordinate space. (pre-rotation)
+		/// ## Parameters
+		/// * name: entity name
+		/// * tvec: translation
+		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
+		/// 
+		/// ## Note
+		/// This alternative version of [update_entity_pose] function uses the following default values for its arguments:
+		/// * tvec: noArray()
+		/// * rot: noArray()
+		#[inline]
+		fn update_entity_pose_def(&mut self, name: &str) -> Result<()> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_updateEntityPose_const_StringR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -581,6 +836,28 @@ pub mod ovis {
 			Ok(ret)
 		}
 		
+		/// set entity pose in the world coordinate space.
+		/// ## Parameters
+		/// * name: enitity name
+		/// * tvec: translation
+		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
+		/// * invert: use the inverse of the given pose
+		/// 
+		/// ## Note
+		/// This alternative version of [set_entity_pose] function uses the following default values for its arguments:
+		/// * tvec: noArray()
+		/// * rot: noArray()
+		/// * invert: false
+		#[inline]
+		fn set_entity_pose_def(&mut self, name: &str) -> Result<()> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_setEntityPose_const_StringR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Retrieves the current pose of an entity
 		/// ## Parameters
 		/// * name: entity name
@@ -599,6 +876,28 @@ pub mod ovis {
 			output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_getEntityPose_const_StringR_const__OutputArrayR_const__OutputArrayR_bool(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), r.as_raw__OutputArray(), tvec.as_raw__OutputArray(), invert, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Retrieves the current pose of an entity
+		/// ## Parameters
+		/// * name: entity name
+		/// * R: 3x3 rotation matrix
+		/// * tvec: translation vector
+		/// * invert: return the inverted pose
+		/// 
+		/// ## Note
+		/// This alternative version of [get_entity_pose] function uses the following default values for its arguments:
+		/// * r: noArray()
+		/// * tvec: noArray()
+		/// * invert: false
+		#[inline]
+		fn get_entity_pose_def(&mut self, name: &str) -> Result<()> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_getEntityPose_const_StringR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -634,6 +933,28 @@ pub mod ovis {
 			extern_container_arg!(animname);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_playEntityAnimation_const_StringR_const_StringR_bool(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), animname.opencv_as_extern(), loop_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// play entity animation
+		/// ## Parameters
+		/// * name: entity name
+		/// * animname: animation name
+		/// * loop: enable or disable animation loop
+		/// ## See also
+		/// getEntityAnimations
+		/// 
+		/// ## Note
+		/// This alternative version of [play_entity_animation] function uses the following default values for its arguments:
+		/// * loop_: true
+		#[inline]
+		fn play_entity_animation_def(&mut self, name: &str, animname: &str) -> Result<()> {
+			extern_container_arg!(name);
+			extern_container_arg!(animname);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_playEntityAnimation_const_StringR_const_StringR(self.as_raw_mut_WindowScene(), name.opencv_as_extern(), animname.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -686,6 +1007,28 @@ pub mod ovis {
 			Ok(ret)
 		}
 		
+		/// read back the texture of an active compositor
+		/// ## Parameters
+		/// * compname: name of the compositor
+		/// * texname: name of the texture inside the compositor
+		/// * mrtIndex: if texture is a MRT, specifies the attachment
+		/// * out: the texture contents
+		/// 
+		/// ## Note
+		/// This alternative version of [get_compositor_texture] function uses the following default values for its arguments:
+		/// * mrt_index: 0
+		#[inline]
+		fn get_compositor_texture_def(&mut self, compname: &str, texname: &str, out: &mut impl core::ToOutputArray) -> Result<()> {
+			extern_container_arg!(compname);
+			extern_container_arg!(texname);
+			output_array_arg!(out);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_getCompositorTexture_const_StringR_const_StringR_const__OutputArrayR(self.as_raw_mut_WindowScene(), compname.opencv_as_extern(), texname.opencv_as_extern(), out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// get the depth for the current frame.
 		/// 
 		/// return the per pixel distance to the camera in world units
@@ -718,6 +1061,25 @@ pub mod ovis {
 			Ok(ret)
 		}
 		
+		/// convenience method to force the "up" axis to stay fixed
+		/// 
+		/// works with both programmatic changes and SCENE_INTERACTIVE
+		/// ## Parameters
+		/// * useFixed: whether to enforce the fixed yaw axis
+		/// * up: the axis to be fixed
+		/// 
+		/// ## Note
+		/// This alternative version of [fix_camera_yaw_axis] function uses the following default values for its arguments:
+		/// * up: noArray()
+		#[inline]
+		fn fix_camera_yaw_axis_def(&mut self, use_fixed: bool) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_fixCameraYawAxis_bool(self.as_raw_mut_WindowScene(), use_fixed, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Sets the current camera pose
 		/// ## Parameters
 		/// * tvec: translation
@@ -739,6 +1101,26 @@ pub mod ovis {
 			Ok(ret)
 		}
 		
+		/// Sets the current camera pose
+		/// ## Parameters
+		/// * tvec: translation
+		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
+		/// * invert: use the inverse of the given pose
+		/// 
+		/// ## Note
+		/// This alternative version of [set_camera_pose] function uses the following default values for its arguments:
+		/// * tvec: noArray()
+		/// * rot: noArray()
+		/// * invert: false
+		#[inline]
+		fn set_camera_pose_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_setCameraPose(self.as_raw_mut_WindowScene(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// convenience method to orient the camera to a specific entity
 		/// ## Parameters
 		/// * target: entity name
@@ -752,6 +1134,24 @@ pub mod ovis {
 			input_array_arg!(offset);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_setCameraLookAt_const_StringR_const__InputArrayR(self.as_raw_mut_WindowScene(), target.opencv_as_extern(), offset.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// convenience method to orient the camera to a specific entity
+		/// ## Parameters
+		/// * target: entity name
+		/// * offset: offset from entity centre
+		/// 
+		/// ## Note
+		/// This alternative version of [set_camera_look_at] function uses the following default values for its arguments:
+		/// * offset: noArray()
+		#[inline]
+		fn set_camera_look_at_def(&mut self, target: &str) -> Result<()> {
+			extern_container_arg!(target);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_setCameraLookAt_const_StringR(self.as_raw_mut_WindowScene(), target.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -778,6 +1178,27 @@ pub mod ovis {
 			Ok(ret)
 		}
 		
+		/// convenience method to orient an entity to a specific entity.
+		/// If target is an empty string the entity looks at the given offset point
+		/// ## Parameters
+		/// * origin: entity to make look at
+		/// * target: name of target entity
+		/// * offset: offset from entity centre
+		/// 
+		/// ## Note
+		/// This alternative version of [set_entity_look_at] function uses the following default values for its arguments:
+		/// * offset: noArray()
+		#[inline]
+		fn set_entity_look_at_def(&mut self, origin: &str, target: &str) -> Result<()> {
+			extern_container_arg!(origin);
+			extern_container_arg!(target);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_setEntityLookAt_const_StringR_const_StringR(self.as_raw_mut_WindowScene(), origin.opencv_as_extern(), target.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Retrieves the current camera pose
 		/// ## Parameters
 		/// * R: 3x3 rotation matrix
@@ -794,6 +1215,26 @@ pub mod ovis {
 			output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_getCameraPose_const__OutputArrayR_const__OutputArrayR_bool(self.as_raw_mut_WindowScene(), r.as_raw__OutputArray(), tvec.as_raw__OutputArray(), invert, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Retrieves the current camera pose
+		/// ## Parameters
+		/// * R: 3x3 rotation matrix
+		/// * tvec: translation vector
+		/// * invert: return the inverted pose
+		/// 
+		/// ## Note
+		/// This alternative version of [get_camera_pose] function uses the following default values for its arguments:
+		/// * r: noArray()
+		/// * tvec: noArray()
+		/// * invert: false
+		#[inline]
+		fn get_camera_pose_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_getCameraPose(self.as_raw_mut_WindowScene(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -816,6 +1257,29 @@ pub mod ovis {
 			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_setCameraIntrinsics_const__InputArrayR_const_SizeR_float_float(self.as_raw_mut_WindowScene(), k.as_raw__InputArray(), &imsize, z_near, z_far, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// set intrinsics of the camera
+		/// 
+		/// ## Parameters
+		/// * K: intrinsic matrix or noArray(). If noArray() is specified, imsize
+		/// is ignored and zNear/ zFar can be set separately.
+		/// * imsize: image size
+		/// * zNear: near clip distance or -1 to keep the current
+		/// * zFar: far clip distance or -1 to keep the current
+		/// 
+		/// ## Note
+		/// This alternative version of [set_camera_intrinsics] function uses the following default values for its arguments:
+		/// * z_near: -1
+		/// * z_far: -1
+		#[inline]
+		fn set_camera_intrinsics_def(&mut self, k: &impl core::ToInputArray, imsize: core::Size) -> Result<()> {
+			input_array_arg!(k);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ovis_WindowScene_setCameraIntrinsics_const__InputArrayR_const_SizeR(self.as_raw_mut_WindowScene(), k.as_raw__InputArray(), &imsize, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

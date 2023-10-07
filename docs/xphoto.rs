@@ -15,7 +15,7 @@ pub mod xphoto {
 	pub const HAAR: i32 = 0;
 	/// Performs Frequency Selective Reconstruction (FSR).
 	/// One of the two quality profiles BEST and FAST can be chosen, depending on the time available for reconstruction.
-	/// See [GenserPCS2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
+	/// See [GenserPCS2018](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
 	/// 
 	/// The algorithm may be utilized for the following areas of application:
 	/// 1. %Error Concealment (Inpainting).
@@ -23,7 +23,7 @@ pub mod xphoto {
 	///    image to be reconstructed.
 	/// 2. Non-Regular Sampling.
 	///    For more information on how to choose a good sampling mask, please review
-	///    [GroscheICIP2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
+	///    [GroscheICIP2018](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_GroscheIST2018).
 	/// 
 	/// 1-channel grayscale or 3-channel BGR image are accepted.
 	/// 
@@ -64,7 +64,7 @@ pub mod xphoto {
 		INPAINT_SHIFTMAP = 0,
 		/// Performs Frequency Selective Reconstruction (FSR).
 		/// One of the two quality profiles BEST and FAST can be chosen, depending on the time available for reconstruction.
-		/// See [GenserPCS2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
+		/// See [GenserPCS2018](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
 		/// 
 		/// The algorithm may be utilized for the following areas of application:
 		/// 1. %Error Concealment (Inpainting).
@@ -72,7 +72,7 @@ pub mod xphoto {
 		///    image to be reconstructed.
 		/// 2. Non-Regular Sampling.
 		///    For more information on how to choose a good sampling mask, please review
-		///    [GroscheICIP2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
+		///    [GroscheICIP2018](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_GroscheIST2018).
 		/// 
 		/// 1-channel grayscale or 3-channel BGR image are accepted.
 		/// 
@@ -112,6 +112,68 @@ pub mod xphoto {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_applyChannelGains_const__InputArrayR_const__OutputArrayR_float_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), gain_b, gain_g, gain_r, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs image denoising using the Block-Matching and 3D-filtering algorithm
+	/// <http://www.cs.tut.fi/~foi/GCF-BM3D/BM3D_TIP_2007.pdf> with several computational
+	/// optimizations. Noise expected to be a gaussian white noise.
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit or 16-bit 1-channel image.
+	/// * dstStep1: Output image of the first step of BM3D with the same size and type as src.
+	/// * dstStep2: Output image of the second step of BM3D with the same size and type as src.
+	/// * h: Parameter regulating filter strength. Big h value perfectly removes noise but also
+	/// removes image details, smaller h value preserves details but also preserves some noise.
+	/// * templateWindowSize: Size in pixels of the template patch that is used for block-matching.
+	/// Should be power of 2.
+	/// * searchWindowSize: Size in pixels of the window that is used to perform block-matching.
+	/// Affect performance linearly: greater searchWindowsSize - greater denoising time.
+	/// Must be larger than templateWindowSize.
+	/// * blockMatchingStep1: Block matching threshold for the first step of BM3D (hard thresholding),
+	/// i.e. maximum distance for which two blocks are considered similar.
+	/// Value expressed in euclidean distance.
+	/// * blockMatchingStep2: Block matching threshold for the second step of BM3D (Wiener filtering),
+	/// i.e. maximum distance for which two blocks are considered similar.
+	/// Value expressed in euclidean distance.
+	/// * groupSize: Maximum size of the 3D group for collaborative filtering.
+	/// * slidingStep: Sliding step to process every next reference block.
+	/// * beta: Kaiser window parameter that affects the sidelobe attenuation of the transform of the
+	/// window. Kaiser window is used in order to reduce border effects. To prevent usage of the window,
+	/// set beta to zero.
+	/// * normType: Norm used to calculate distance between blocks. L2 is slower than L1
+	/// but yields more accurate results.
+	/// * step: Step of BM3D to be executed. Possible variants are: step 1, step 2, both steps.
+	/// * transformType: Type of the orthogonal transform used in collaborative filtering step.
+	/// Currently only Haar transform is supported.
+	/// 
+	/// This function expected to be applied to grayscale images. Advanced usage of this function
+	/// can be manual denoising of colored image in different colorspaces.
+	/// ## See also
+	/// fastNlMeansDenoising
+	/// 
+	/// ## Note
+	/// This alternative version of [bm3d_denoising] function uses the following default values for its arguments:
+	/// * h: 1
+	/// * template_window_size: 4
+	/// * search_window_size: 16
+	/// * block_matching_step1: 2500
+	/// * block_matching_step2: 400
+	/// * group_size: 8
+	/// * sliding_step: 1
+	/// * beta: 2.0f
+	/// * norm_type: cv::NORM_L2
+	/// * step: cv::xphoto::BM3D_STEPALL
+	/// * transform_type: cv::xphoto::HAAR
+	#[inline]
+	pub fn bm3d_denoising_def(src: &impl core::ToInputArray, dst_step1: &mut impl core::ToInputOutputArray, dst_step2: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_output_array_arg!(dst_step1);
+		output_array_arg!(dst_step2);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst_step1.as_raw__InputOutputArray(), dst_step2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -215,6 +277,67 @@ pub mod xphoto {
 	/// ## See also
 	/// fastNlMeansDenoising
 	/// 
+	/// ## Note
+	/// This alternative version of [bm3d_denoising_1] function uses the following default values for its arguments:
+	/// * h: 1
+	/// * template_window_size: 4
+	/// * search_window_size: 16
+	/// * block_matching_step1: 2500
+	/// * block_matching_step2: 400
+	/// * group_size: 8
+	/// * sliding_step: 1
+	/// * beta: 2.0f
+	/// * norm_type: cv::NORM_L2
+	/// * step: cv::xphoto::BM3D_STEPALL
+	/// * transform_type: cv::xphoto::HAAR
+	#[inline]
+	pub fn bm3d_denoising_1_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xphoto_bm3dDenoising_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs image denoising using the Block-Matching and 3D-filtering algorithm
+	/// <http://www.cs.tut.fi/~foi/GCF-BM3D/BM3D_TIP_2007.pdf> with several computational
+	/// optimizations. Noise expected to be a gaussian white noise.
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit or 16-bit 1-channel image.
+	/// * dst: Output image with the same size and type as src.
+	/// * h: Parameter regulating filter strength. Big h value perfectly removes noise but also
+	/// removes image details, smaller h value preserves details but also preserves some noise.
+	/// * templateWindowSize: Size in pixels of the template patch that is used for block-matching.
+	/// Should be power of 2.
+	/// * searchWindowSize: Size in pixels of the window that is used to perform block-matching.
+	/// Affect performance linearly: greater searchWindowsSize - greater denoising time.
+	/// Must be larger than templateWindowSize.
+	/// * blockMatchingStep1: Block matching threshold for the first step of BM3D (hard thresholding),
+	/// i.e. maximum distance for which two blocks are considered similar.
+	/// Value expressed in euclidean distance.
+	/// * blockMatchingStep2: Block matching threshold for the second step of BM3D (Wiener filtering),
+	/// i.e. maximum distance for which two blocks are considered similar.
+	/// Value expressed in euclidean distance.
+	/// * groupSize: Maximum size of the 3D group for collaborative filtering.
+	/// * slidingStep: Sliding step to process every next reference block.
+	/// * beta: Kaiser window parameter that affects the sidelobe attenuation of the transform of the
+	/// window. Kaiser window is used in order to reduce border effects. To prevent usage of the window,
+	/// set beta to zero.
+	/// * normType: Norm used to calculate distance between blocks. L2 is slower than L1
+	/// but yields more accurate results.
+	/// * step: Step of BM3D to be executed. Allowed are only BM3D_STEP1 and BM3D_STEPALL.
+	/// BM3D_STEP2 is not allowed as it requires basic estimate to be present.
+	/// * transformType: Type of the orthogonal transform used in collaborative filtering step.
+	/// Currently only Haar transform is supported.
+	/// 
+	/// This function expected to be applied to grayscale images. Advanced usage of this function
+	/// can be manual denoising of colored image in different colorspaces.
+	/// ## See also
+	/// fastNlMeansDenoising
+	/// 
 	/// ## C++ default parameters
 	/// * h: 1
 	/// * template_window_size: 4
@@ -246,6 +369,24 @@ pub mod xphoto {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::xphoto::GrayworldWB>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates an instance of LearningBasedWB
+	/// 
+	/// ## Parameters
+	/// * path_to_model: Path to a .yml file with the model. If not specified, the default model is used
+	/// 
+	/// ## Note
+	/// This alternative version of [create_learning_based_wb] function uses the following default values for its arguments:
+	/// * path_to_model: String()
+	#[inline]
+	pub fn create_learning_based_wb_def() -> Result<core::Ptr<crate::xphoto::LearningBasedWB>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xphoto_createLearningBasedWB(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xphoto::LearningBasedWB>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -290,6 +431,35 @@ pub mod xphoto {
 	/// * sigma_color: bilateral filter sigma in color space
 	/// * sigma_space: bilateral filter sigma in coordinate space
 	/// 
+	/// ## Note
+	/// This alternative version of [create_tonemap_durand] function uses the following default values for its arguments:
+	/// * gamma: 1.0f
+	/// * contrast: 4.0f
+	/// * saturation: 1.0f
+	/// * sigma_color: 2.0f
+	/// * sigma_space: 2.0f
+	#[inline]
+	pub fn create_tonemap_durand_def() -> Result<core::Ptr<crate::xphoto::TonemapDurand>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xphoto_createTonemapDurand(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::xphoto::TonemapDurand>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates TonemapDurand object
+	/// 
+	/// You need to set the OPENCV_ENABLE_NONFREE option in cmake to use those. Use them at your own risk.
+	/// 
+	/// ## Parameters
+	/// * gamma: gamma value for gamma correction. See createTonemap
+	/// * contrast: resulting contrast on logarithmic scale, i. e. log(max / min), where max and min
+	/// are maximum and minimum luminance values of the resulting image.
+	/// * saturation: saturation enhancement value. See createTonemapDrago
+	/// * sigma_color: bilateral filter sigma in color space
+	/// * sigma_space: bilateral filter sigma in coordinate space
+	/// 
 	/// ## C++ default parameters
 	/// * gamma: 1.0f
 	/// * contrast: 4.0f
@@ -317,6 +487,29 @@ pub mod xphoto {
 	/// ## See also
 	/// fastNlMeansDenoising
 	/// 
+	/// ## Note
+	/// This alternative version of [dct_denoising] function uses the following default values for its arguments:
+	/// * psize: 16
+	#[inline]
+	pub fn dct_denoising_def(src: &core::Mat, dst: &mut core::Mat, sigma: f64) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_xphoto_dctDenoising_const_MatR_MatR_const_double(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// The function implements simple dct-based denoising
+	/// 
+	/// <http://www.ipol.im/pub/art/2011/ys-dct/>.
+	/// ## Parameters
+	/// * src: source image
+	/// * dst: destination image
+	/// * sigma: expected noise standard deviation
+	/// * psize: size of block side where dct is computed
+	/// ## See also
+	/// fastNlMeansDenoising
+	/// 
 	/// ## C++ default parameters
 	/// * psize: 16
 	#[inline]
@@ -330,7 +523,7 @@ pub mod xphoto {
 	
 	/// The function implements different single-image inpainting algorithms.
 	/// 
-	/// See the original papers [He2012](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_He2012) (Shiftmap) or [GenserPCS2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) (FSR) for details.
+	/// See the original papers [He2012](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_He2012) (Shiftmap) or [GenserPCS2018](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_SeilerTIP2015) (FSR) for details.
 	/// 
 	/// ## Parameters
 	/// * src: source image
@@ -338,7 +531,7 @@ pub mod xphoto {
 	/// 3- and 4-channels images the function expect them in CIELab colorspace or similar one, where first
 	/// color component shows intensity, while second and third shows colors. Nonetheless you can try any
 	/// colorspaces.
-	/// - #INPAINT_FSR_BEST or #INPAINT_FSR_FAST: 1-channel grayscale or 3-channel BGR image.
+	/// - [INPAINT_FSR_BEST] or #INPAINT_FSR_FAST: 1-channel grayscale or 3-channel BGR image.
 	/// * mask: mask (#CV_8UC1), where non-zero pixels indicate valid image area, while zero pixels
 	/// indicate area to be inpainted
 	/// * dst: destination image
@@ -353,7 +546,7 @@ pub mod xphoto {
 	}
 	
 	/// oilPainting
-	/// See the book [Holzmann1988](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
+	/// See the book [Holzmann1988](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
 	/// ## Parameters
 	/// * src: Input three-channel or one channel image (either CV_8UC3 or CV_8UC1)
 	/// * dst: Output image of the same size and type as src.
@@ -371,7 +564,7 @@ pub mod xphoto {
 	}
 	
 	/// oilPainting
-	/// See the book [Holzmann1988](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
+	/// See the book [Holzmann1988](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
 	/// ## Parameters
 	/// * src: Input three-channel or one channel image (either CV_8UC3 or CV_8UC1)
 	/// * dst: Output image of the same size and type as src.
@@ -553,7 +746,7 @@ pub mod xphoto {
 	
 		/// Implements the feature extraction part of the algorithm.
 		/// 
-		/// In accordance with [Cheng2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
+		/// In accordance with [Cheng2015](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
 		/// 1. Chromaticity of an average (R,G,B) tuple
 		/// 2. Chromaticity of the brightest (R,G,B) tuple (while ignoring saturated pixels)
 		/// 3. Chromaticity of the dominant (R,G,B) tuple (the one that has the highest value in the RGB histogram)
@@ -623,7 +816,7 @@ pub mod xphoto {
 	/// As [GrayworldWB], this algorithm works by applying different gains to the input
 	/// image channels, but their computation is a bit more involved compared to the
 	/// simple gray-world assumption. More details about the algorithm can be found in
-	/// [Cheng2015](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Cheng2015) .
+	/// [Cheng2015](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Cheng2015) .
 	/// 
 	/// To mask out saturated pixels this function uses only pixels that satisfy the
 	/// following condition:
@@ -965,7 +1158,7 @@ pub mod xphoto {
 	/// 
 	/// Saturation enhancement is possible as in cv::TonemapDrago.
 	/// 
-	/// For more information see [DD02](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_DD02) .
+	/// For more information see [DD02](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_DD02) .
 	pub struct TonemapDurand {
 		ptr: *mut c_void
 	}

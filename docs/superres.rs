@@ -3,10 +3,23 @@ pub mod superres {
 	//! 
 	//! The Super Resolution module contains a set of functions and classes that can be used to solve the
 	//! problem of resolution enhancement. There are a few methods implemented, most of them are described in
-	//! the papers [Farsiu03](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Mitzel09) .
+	//! the papers [Farsiu03](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Mitzel09) .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::SuperRes_DenseOpticalFlowExtTraitConst, super::SuperRes_DenseOpticalFlowExtTrait, super::SuperRes_FarnebackOpticalFlowTraitConst, super::SuperRes_FarnebackOpticalFlowTrait, super::SuperRes_DualTVL1OpticalFlowTraitConst, super::SuperRes_DualTVL1OpticalFlowTrait, super::SuperRes_BroxOpticalFlowTraitConst, super::SuperRes_BroxOpticalFlowTrait, super::SuperRes_PyrLKOpticalFlowTraitConst, super::SuperRes_PyrLKOpticalFlowTrait, super::SuperRes_FrameSourceTraitConst, super::SuperRes_FrameSourceTrait, super::SuperRes_SuperResolutionTraitConst, super::SuperRes_SuperResolutionTrait };
+	}
+	
+	/// ## Note
+	/// This alternative version of [create_frame_source_camera] function uses the following default values for its arguments:
+	/// * device_id: 0
+	#[inline]
+	pub fn create_frame_source_camera_def() -> Result<core::Ptr<crate::superres::SuperRes_FrameSource>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_superres_createFrameSource_Camera(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::superres::SuperRes_FrameSource>::opencv_from_extern(ret) };
+		Ok(ret)
 	}
 	
 	/// ## C++ default parameters
@@ -115,8 +128,8 @@ pub mod superres {
 	
 	/// Create Bilateral TV-L1 Super Resolution.
 	/// 
-	/// This class implements Super Resolution algorithm described in the papers [Farsiu03](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Farsiu03) and
-	/// [Mitzel09](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Mitzel09) .
+	/// This class implements Super Resolution algorithm described in the papers [Farsiu03](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Farsiu03) and
+	/// [Mitzel09](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Mitzel09) .
 	/// 
 	/// Here are important members of the class that control the algorithm, which you can set after
 	/// constructing the class instance:
@@ -381,6 +394,21 @@ pub mod superres {
 			output_array_arg!(flow2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SuperRes_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), flow2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// * flow2: noArray()
+		#[inline]
+		fn calc_def(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray, flow1: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(frame0);
+			input_array_arg!(frame1);
+			output_array_arg!(flow1);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_superres_DenseOpticalFlowExt_calc_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_SuperRes_DenseOpticalFlowExt(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow1.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

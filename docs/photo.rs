@@ -37,7 +37,7 @@ pub mod photo {
 	
 	/// Use Navier-Stokes based method
 	pub const INPAINT_NS: i32 = 0;
-	/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Telea04)
+	/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Telea04)
 	pub const INPAINT_TELEA: i32 = 1;
 	pub const LDR_SIZE: i32 = 256;
 	/// The classic method, color-based selection and alpha masking might be time consuming and often leaves an undesirable
@@ -51,6 +51,36 @@ pub mod photo {
 	pub const NORMCONV_FILTER: i32 = 2;
 	/// Recursive Filtering
 	pub const RECURS_FILTER: i32 = 1;
+	/// Given an original color image, two differently colored versions of this image can be mixed
+	/// seamlessly.
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 3-channel image.
+	/// * mask: Input 8-bit 1 or 3-channel image.
+	/// * dst: Output image with the same size and type as src .
+	/// * red_mul: R-channel multiply factor.
+	/// * green_mul: G-channel multiply factor.
+	/// * blue_mul: B-channel multiply factor.
+	/// 
+	/// Multiplication factor is between .5 to 2.5.
+	/// 
+	/// ## Note
+	/// This alternative version of [color_change] function uses the following default values for its arguments:
+	/// * red_mul: 1.0f
+	/// * green_mul: 1.0f
+	/// * blue_mul: 1.0f
+	#[inline]
+	pub fn color_change_def(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_colorChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Given an original color image, two differently colored versions of this image can be mixed
 	/// seamlessly.
 	/// 
@@ -89,6 +119,30 @@ pub mod photo {
 	/// median value.
 	/// * cut: if true cuts images, otherwise fills the new regions with zeros.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_align_mtb] function uses the following default values for its arguments:
+	/// * max_bits: 6
+	/// * exclude_range: 4
+	/// * cut: true
+	#[inline]
+	pub fn create_align_mtb_def() -> Result<core::Ptr<crate::photo::AlignMTB>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createAlignMTB(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::photo::AlignMTB>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates AlignMTB object
+	/// 
+	/// ## Parameters
+	/// * max_bits: logarithm to the base 2 of maximal shift in each dimension. Values of 5 and 6 are
+	/// usually good enough (31 and 63 pixels shift respectively).
+	/// * exclude_range: range for exclusion bitmap that is constructed to suppress noise around the
+	/// median value.
+	/// * cut: if true cuts images, otherwise fills the new regions with zeros.
+	/// 
 	/// ## C++ default parameters
 	/// * max_bits: 6
 	/// * exclude_range: 4
@@ -112,6 +166,30 @@ pub mod photo {
 	/// * random: if true sample pixel locations are chosen at random, otherwise they form a
 	/// rectangular grid.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_calibrate_debevec] function uses the following default values for its arguments:
+	/// * samples: 70
+	/// * lambda: 10.0f
+	/// * random: false
+	#[inline]
+	pub fn create_calibrate_debevec_def() -> Result<core::Ptr<crate::photo::CalibrateDebevec>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createCalibrateDebevec(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::photo::CalibrateDebevec>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates CalibrateDebevec object
+	/// 
+	/// ## Parameters
+	/// * samples: number of pixel locations to use
+	/// * lambda: smoothness term weight. Greater values produce smoother results, but can alter the
+	/// response.
+	/// * random: if true sample pixel locations are chosen at random, otherwise they form a
+	/// rectangular grid.
+	/// 
 	/// ## C++ default parameters
 	/// * samples: 70
 	/// * lambda: 10.0f
@@ -123,6 +201,26 @@ pub mod photo {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::CalibrateDebevec>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates CalibrateRobertson object
+	/// 
+	/// ## Parameters
+	/// * max_iter: maximal number of Gauss-Seidel solver iterations.
+	/// * threshold: target difference between results of two successive steps of the minimization.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_calibrate_robertson] function uses the following default values for its arguments:
+	/// * max_iter: 30
+	/// * threshold: 0.01f
+	#[inline]
+	pub fn create_calibrate_robertson_def() -> Result<core::Ptr<crate::photo::CalibrateRobertson>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createCalibrateRobertson(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::photo::CalibrateRobertson>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -163,6 +261,28 @@ pub mod photo {
 	/// * saturation_weight: saturation measure weight
 	/// * exposure_weight: well-exposedness measure weight
 	/// 
+	/// ## Note
+	/// This alternative version of [create_merge_mertens] function uses the following default values for its arguments:
+	/// * contrast_weight: 1.0f
+	/// * saturation_weight: 1.0f
+	/// * exposure_weight: 0.0f
+	#[inline]
+	pub fn create_merge_mertens_def() -> Result<core::Ptr<crate::photo::MergeMertens>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createMergeMertens(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::photo::MergeMertens>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates MergeMertens object
+	/// 
+	/// ## Parameters
+	/// * contrast_weight: contrast measure weight. See MergeMertens.
+	/// * saturation_weight: saturation measure weight
+	/// * exposure_weight: well-exposedness measure weight
+	/// 
 	/// ## C++ default parameters
 	/// * contrast_weight: 1.0f
 	/// * saturation_weight: 1.0f
@@ -185,6 +305,50 @@ pub mod photo {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::MergeRobertson>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates simple linear mapper with gamma correction
+	/// 
+	/// ## Parameters
+	/// * gamma: positive value for gamma correction. Gamma value of 1.0 implies no correction, gamma
+	/// equal to 2.2f is suitable for most displays.
+	/// Generally gamma \> 1 brightens the image and gamma \< 1 darkens it.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_tonemap] function uses the following default values for its arguments:
+	/// * gamma: 1.0f
+	#[inline]
+	pub fn create_tonemap_def() -> Result<core::Ptr<crate::photo::Tonemap>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createTonemap(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::photo::Tonemap>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates TonemapDrago object
+	/// 
+	/// ## Parameters
+	/// * gamma: gamma value for gamma correction. See createTonemap
+	/// * saturation: positive saturation enhancement value. 1.0 preserves saturation, values greater
+	/// than 1 increase saturation and values less than 1 decrease it.
+	/// * bias: value for bias function in [0, 1] range. Values from 0.7 to 0.9 usually give best
+	/// results, default value is 0.85.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_tonemap_drago] function uses the following default values for its arguments:
+	/// * gamma: 1.0f
+	/// * saturation: 1.0f
+	/// * bias: 0.85f
+	#[inline]
+	pub fn create_tonemap_drago_def() -> Result<core::Ptr<crate::photo::TonemapDrago>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createTonemapDrago(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::photo::TonemapDrago>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -219,6 +383,29 @@ pub mod photo {
 	/// dynamic range. Values from 0.6 to 0.9 produce best results.
 	/// * saturation: saturation enhancement value. See createTonemapDrago
 	/// 
+	/// ## Note
+	/// This alternative version of [create_tonemap_mantiuk] function uses the following default values for its arguments:
+	/// * gamma: 1.0f
+	/// * scale: 0.7f
+	/// * saturation: 1.0f
+	#[inline]
+	pub fn create_tonemap_mantiuk_def() -> Result<core::Ptr<crate::photo::TonemapMantiuk>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createTonemapMantiuk(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::photo::TonemapMantiuk>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates TonemapMantiuk object
+	/// 
+	/// ## Parameters
+	/// * gamma: gamma value for gamma correction. See createTonemap
+	/// * scale: contrast scale factor. HVS response is multiplied by this parameter, thus compressing
+	/// dynamic range. Values from 0.6 to 0.9 produce best results.
+	/// * saturation: saturation enhancement value. See createTonemapDrago
+	/// 
 	/// ## C++ default parameters
 	/// * gamma: 1.0f
 	/// * scale: 0.7f
@@ -230,6 +417,32 @@ pub mod photo {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::photo::TonemapMantiuk>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates TonemapReinhard object
+	/// 
+	/// ## Parameters
+	/// * gamma: gamma value for gamma correction. See createTonemap
+	/// * intensity: result intensity in [-8, 8] range. Greater intensity produces brighter results.
+	/// * light_adapt: light adaptation in [0, 1] range. If 1 adaptation is based only on pixel
+	/// value, if 0 it's global, otherwise it's a weighted mean of this two cases.
+	/// * color_adapt: chromatic adaptation in [0, 1] range. If 1 channels are treated independently,
+	/// if 0 adaptation level is the same for each channel.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_tonemap_reinhard] function uses the following default values for its arguments:
+	/// * gamma: 1.0f
+	/// * intensity: 0.0f
+	/// * light_adapt: 1.0f
+	/// * color_adapt: 0.0f
+	#[inline]
+	pub fn create_tonemap_reinhard_def() -> Result<core::Ptr<crate::photo::TonemapReinhard>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createTonemapReinhard(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::photo::TonemapReinhard>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -277,6 +490,20 @@ pub mod photo {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising_colored_1] function uses the following default values for its arguments:
+	/// * search_window: 21
+	/// * block_size: 7
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn fast_nl_means_denoising_colored_1_def(src: &core::GpuMat, dst: &mut core::GpuMat, h_luminance: f32, photo_render: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const_GpuMatR_GpuMatR_float_float(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h_luminance, photo_render, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * search_window: 21
 	/// * block_size: 7
@@ -285,6 +512,43 @@ pub mod photo {
 	pub fn fast_nl_means_denoising_colored_1(src: &core::GpuMat, dst: &mut core::GpuMat, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const_GpuMatR_GpuMatR_float_float_int_int_StreamR(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h_luminance, photo_render, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Modification of fastNlMeansDenoising function for colored images
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 3-channel image.
+	/// * dst: Output image with the same size and type as src .
+	/// * h_luminance: Parameter regulating filter strength. Big h value perfectly removes noise but
+	/// also removes image details, smaller h value preserves details but also preserves some noise
+	/// * photo_render: float The same as h but for color components. For most images value equals 10 will be
+	/// enough to remove colored noise and do not distort colors
+	/// * search_window: Size in pixels of the window that is used to compute weighted average for
+	/// given pixel. Should be odd. Affect performance linearly: greater search_window - greater
+	/// denoising time. Recommended value 21 pixels
+	/// * block_size: Size in pixels of the template patch that is used to compute weights. Should be
+	/// odd. Recommended value 7 pixels
+	/// * stream: Stream for the asynchronous invocations.
+	/// 
+	/// The function converts image to CIELAB colorspace and then separately denoise L and AB components
+	/// with given h parameters using FastNonLocalMeansDenoising::simpleMethod function.
+	/// ## See also
+	/// fastNlMeansDenoisingColored
+	/// 
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising_colored_cuda] function uses the following default values for its arguments:
+	/// * search_window: 21
+	/// * block_size: 7
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn fast_nl_means_denoising_colored_cuda_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h_luminance: f32, photo_render: f32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h_luminance, photo_render, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -326,6 +590,20 @@ pub mod photo {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising_1] function uses the following default values for its arguments:
+	/// * search_window: 21
+	/// * block_size: 7
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn fast_nl_means_denoising_1_def(src: &core::GpuMat, dst: &mut core::GpuMat, h: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_fastNlMeansDenoising_const_GpuMatR_GpuMatR_float(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * search_window: 21
 	/// * block_size: 7
@@ -334,6 +612,43 @@ pub mod photo {
 	pub fn fast_nl_means_denoising_1(src: &core::GpuMat, dst: &mut core::GpuMat, h: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoising_const_GpuMatR_GpuMatR_float_int_int_StreamR(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Perform image denoising using Non-local Means Denoising algorithm
+	/// <http://www.ipol.im/pub/algo/bcm_non_local_means_denoising> with several computational
+	/// optimizations. Noise expected to be a gaussian white noise
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 1-channel, 2-channel or 3-channel image.
+	/// * dst: Output image with the same size and type as src .
+	/// * h: Parameter regulating filter strength. Big h value perfectly removes noise but also
+	/// removes image details, smaller h value preserves details but also preserves some noise
+	/// * search_window: Size in pixels of the window that is used to compute weighted average for
+	/// given pixel. Should be odd. Affect performance linearly: greater search_window - greater
+	/// denoising time. Recommended value 21 pixels
+	/// * block_size: Size in pixels of the template patch that is used to compute weights. Should be
+	/// odd. Recommended value 7 pixels
+	/// * stream: Stream for the asynchronous invocations.
+	/// 
+	/// This function expected to be applied to grayscale images. For colored images look at
+	/// FastNonLocalMeansDenoising::labMethod.
+	/// ## See also
+	/// fastNlMeansDenoising
+	/// 
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising_cuda] function uses the following default values for its arguments:
+	/// * search_window: 21
+	/// * block_size: 7
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn fast_nl_means_denoising_cuda_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -375,6 +690,21 @@ pub mod photo {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [non_local_means_1] function uses the following default values for its arguments:
+	/// * search_window: 21
+	/// * block_size: 7
+	/// * border_mode: BORDER_DEFAULT
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn non_local_means_1_def(src: &core::GpuMat, dst: &mut core::GpuMat, h: f32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_nonLocalMeans_const_GpuMatR_GpuMatR_float(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * search_window: 21
 	/// * block_size: 7
@@ -384,6 +714,37 @@ pub mod photo {
 	pub fn non_local_means_1(src: &core::GpuMat, dst: &mut core::GpuMat, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut core::Stream) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_nonLocalMeans_const_GpuMatR_GpuMatR_float_int_int_int_StreamR(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, search_window, block_size, border_mode, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Performs pure non local means denoising without any simplification, and thus it is not fast.
+	/// 
+	/// ## Parameters
+	/// * src: Source image. Supports only CV_8UC1, CV_8UC2 and CV_8UC3.
+	/// * dst: Destination image.
+	/// * h: Filter sigma regulating filter strength for color.
+	/// * search_window: Size of search window.
+	/// * block_size: Size of block used for computing weights.
+	/// * borderMode: Border type. See borderInterpolate for details. BORDER_REFLECT101 ,
+	/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// fastNlMeansDenoising
+	/// 
+	/// ## Note
+	/// This alternative version of [non_local_means] function uses the following default values for its arguments:
+	/// * search_window: 21
+	/// * block_size: 7
+	/// * border_mode: BORDER_DEFAULT
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn non_local_means_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_nonLocalMeans_const__InputArrayR_const__OutputArrayR_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -421,7 +782,7 @@ pub mod photo {
 	
 	/// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
 	/// black-and-white photograph rendering, and in many single channel image processing applications
-	/// [CL12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_CL12) .
+	/// [CL12](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_CL12) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -447,12 +808,63 @@ pub mod photo {
 	/// exactly what is implemented.
 	/// 
 	/// It should be noted, that this implementation was taken from the July 2013 blog entry
-	/// [MA13](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
+	/// [MA13](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 	/// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 	/// of July 2013 and finally it was slightly adapted by later authors.
 	/// 
 	/// Although the thorough discussion and justification of the algorithm involved may be found in
-	/// [ChambolleEtAl](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
+	/// [ChambolleEtAl](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MA13) . To begin
+	/// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
+	/// pixels (it may be seen as set
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
+	/// ![inline formula](https://latex.codecogs.com/png.latex?m%2C%5C%3Bn%5Cin%5Cmathbb%7BN%7D)) into ![inline formula](https://latex.codecogs.com/png.latex?%5C%7B0%2C1%2C%5Cdots%2C255%5C%7D). We shall denote the noised images as ![inline formula](https://latex.codecogs.com/png.latex?f%5Fi) and with
+	/// this view, given some image ![inline formula](https://latex.codecogs.com/png.latex?x) of the same size, we may measure how bad it is by the formula
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7C%5Cleft%5C%7C%5Cnabla%20x%5Cright%5C%7C%5Cright%5C%7C%20%2B%20%5Clambda%5Csum%5Fi%5Cleft%5C%7C%5Cleft%5C%7Cx%2Df%5Fi%5Cright%5C%7C%5Cright%5C%7C)
+	/// 
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%5C%7C%5Ccdot%5C%7C%5C%7C) here denotes ![inline formula](https://latex.codecogs.com/png.latex?L%5F2)-norm and as you see, the first addend states that we want our
+	/// image to be smooth (ideally, having zero gradient, thus being constant) and the second states that
+	/// we want our result to be close to the observations we've got. If we treat ![inline formula](https://latex.codecogs.com/png.latex?x) as a function, this is
+	/// exactly the functional what we seek to minimize and here the Primal-Dual algorithm comes into play.
+	/// 
+	/// ## Parameters
+	/// * observations: This array should contain one or more noised versions of the image that is to
+	/// be restored.
+	/// * result: Here the denoised image will be stored. There is no need to do pre-allocation of
+	/// storage space, as it will be automatically allocated, if necessary.
+	/// * lambda: Corresponds to ![inline formula](https://latex.codecogs.com/png.latex?%5Clambda) in the formulas above. As it is enlarged, the smooth
+	/// (blurred) images are treated more favorably than detailed (but maybe more noised) ones. Roughly
+	/// speaking, as it becomes smaller, the result will be more blur but more sever outliers will be
+	/// removed.
+	/// * niters: Number of iterations that the algorithm will run. Of course, as more iterations as
+	/// better, but it is hard to quantitatively refine this statement, so just use the default and
+	/// increase it if the results are poor.
+	/// 
+	/// ## Note
+	/// This alternative version of [denoise_tvl1] function uses the following default values for its arguments:
+	/// * lambda: 1.0
+	/// * niters: 30
+	#[inline]
+	pub fn denoise_tvl1_def(observations: &core::Vector<core::Mat>, result: &mut core::Mat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_denoise_TVL1_const_vectorLMatGR_MatR(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Primal-dual algorithm is an algorithm for solving special types of variational problems (that is,
+	/// finding a function to minimize some functional). As the image denoising, in particular, may be seen
+	/// as the variational problem, primal-dual algorithm then can be used to perform denoising and this is
+	/// exactly what is implemented.
+	/// 
+	/// It should be noted, that this implementation was taken from the July 2013 blog entry
+	/// [MA13](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
+	/// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
+	/// of July 2013 and finally it was slightly adapted by later authors.
+	/// 
+	/// Although the thorough discussion and justification of the algorithm involved may be found in
+	/// [ChambolleEtAl](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MA13) . To begin
 	/// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 	/// pixels (it may be seen as set
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
@@ -499,6 +911,29 @@ pub mod photo {
 	/// * sigma_s: %Range between 0 to 200.
 	/// * sigma_r: %Range between 0 to 1.
 	/// 
+	/// ## Note
+	/// This alternative version of [detail_enhance] function uses the following default values for its arguments:
+	/// * sigma_s: 10
+	/// * sigma_r: 0.15f
+	#[inline]
+	pub fn detail_enhance_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_detailEnhance_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// This filter enhances the details of a particular image.
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 3-channel image.
+	/// * dst: Output image with the same size and type as src.
+	/// * sigma_s: %Range between 0 to 200.
+	/// * sigma_r: %Range between 0 to 1.
+	/// 
 	/// ## C++ default parameters
 	/// * sigma_s: 10
 	/// * sigma_r: 0.15f
@@ -514,7 +949,33 @@ pub mod photo {
 	}
 	
 	/// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
-	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EM11) .
+	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_EM11) .
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 3-channel image.
+	/// * dst: Output 8-bit 3-channel image.
+	/// * flags: Edge preserving filters: cv::RECURS_FILTER or cv::NORMCONV_FILTER
+	/// * sigma_s: %Range between 0 to 200.
+	/// * sigma_r: %Range between 0 to 1.
+	/// 
+	/// ## Note
+	/// This alternative version of [edge_preserving_filter] function uses the following default values for its arguments:
+	/// * flags: 1
+	/// * sigma_s: 60
+	/// * sigma_r: 0.4f
+	#[inline]
+	pub fn edge_preserving_filter_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_edgePreservingFilter_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
+	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_EM11) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -533,6 +994,47 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_edgePreservingFilter_const__InputArrayR_const__OutputArrayR_int_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Modification of fastNlMeansDenoisingMulti function for colored images sequences
+	/// 
+	/// ## Parameters
+	/// * srcImgs: Input 8-bit 3-channel images sequence. All images should have the same type and
+	/// size.
+	/// * imgToDenoiseIndex: Target image to denoise index in srcImgs sequence
+	/// * temporalWindowSize: Number of surrounding images to use for target image denoising. Should
+	/// be odd. Images from imgToDenoiseIndex - temporalWindowSize / 2 to
+	/// imgToDenoiseIndex - temporalWindowSize / 2 from srcImgs will be used to denoise
+	/// srcImgs[imgToDenoiseIndex] image.
+	/// * dst: Output image with the same size and type as srcImgs images.
+	/// * templateWindowSize: Size in pixels of the template patch that is used to compute weights.
+	/// Should be odd. Recommended value 7 pixels
+	/// * searchWindowSize: Size in pixels of the window that is used to compute weighted average for
+	/// given pixel. Should be odd. Affect performance linearly: greater searchWindowsSize - greater
+	/// denoising time. Recommended value 21 pixels
+	/// * h: Parameter regulating filter strength for luminance component. Bigger h value perfectly
+	/// removes noise but also removes image details, smaller h value preserves details but also preserves
+	/// some noise.
+	/// * hColor: The same as h but for color components.
+	/// 
+	/// The function converts images to CIELAB colorspace and then separately denoise L and AB components
+	/// with given h parameters using fastNlMeansDenoisingMulti function.
+	/// 
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising_colored_multi] function uses the following default values for its arguments:
+	/// * h: 3
+	/// * h_color: 3
+	/// * template_window_size: 7
+	/// * search_window_size: 21
+	#[inline]
+	pub fn fast_nl_means_denoising_colored_multi_def(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32) -> Result<()> {
+		input_array_arg!(src_imgs);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_fastNlMeansDenoisingColoredMulti_const__InputArrayR_const__OutputArrayR_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -597,6 +1099,42 @@ pub mod photo {
 	/// The function converts image to CIELAB colorspace and then separately denoise L and AB components
 	/// with given h parameters using fastNlMeansDenoising function.
 	/// 
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising_colored] function uses the following default values for its arguments:
+	/// * h: 3
+	/// * h_color: 3
+	/// * template_window_size: 7
+	/// * search_window_size: 21
+	#[inline]
+	pub fn fast_nl_means_denoising_colored_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_fastNlMeansDenoisingColored_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Modification of fastNlMeansDenoising function for colored images
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 3-channel image.
+	/// * dst: Output image with the same size and type as src .
+	/// * templateWindowSize: Size in pixels of the template patch that is used to compute weights.
+	/// Should be odd. Recommended value 7 pixels
+	/// * searchWindowSize: Size in pixels of the window that is used to compute weighted average for
+	/// given pixel. Should be odd. Affect performance linearly: greater searchWindowsSize - greater
+	/// denoising time. Recommended value 21 pixels
+	/// * h: Parameter regulating filter strength for luminance component. Bigger h value perfectly
+	/// removes noise but also removes image details, smaller h value preserves details but also preserves
+	/// some noise
+	/// * hColor: The same as h but for color components. For most images value equals 10
+	/// will be enough to remove colored noise and do not distort colors
+	/// 
+	/// The function converts image to CIELAB colorspace and then separately denoise L and AB components
+	/// with given h parameters using fastNlMeansDenoising function.
+	/// 
 	/// ## C++ default parameters
 	/// * h: 3
 	/// * h_color: 3
@@ -615,7 +1153,89 @@ pub mod photo {
 	
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
+	/// 
+	/// ## Parameters
+	/// * srcImgs: Input 8-bit 1-channel, 2-channel, 3-channel or
+	/// 4-channel images sequence. All images should have the same type and
+	/// size.
+	/// * imgToDenoiseIndex: Target image to denoise index in srcImgs sequence
+	/// * temporalWindowSize: Number of surrounding images to use for target image denoising. Should
+	/// be odd. Images from imgToDenoiseIndex - temporalWindowSize / 2 to
+	/// imgToDenoiseIndex - temporalWindowSize / 2 from srcImgs will be used to denoise
+	/// srcImgs[imgToDenoiseIndex] image.
+	/// * dst: Output image with the same size and type as srcImgs images.
+	/// * templateWindowSize: Size in pixels of the template patch that is used to compute weights.
+	/// Should be odd. Recommended value 7 pixels
+	/// * searchWindowSize: Size in pixels of the window that is used to compute weighted average for
+	/// given pixel. Should be odd. Affect performance linearly: greater searchWindowsSize - greater
+	/// denoising time. Recommended value 21 pixels
+	/// * h: Parameter regulating filter strength. Bigger h value
+	/// perfectly removes noise but also removes image details, smaller h
+	/// value preserves details but also preserves some noise
+	/// 
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising_multi] function uses the following default values for its arguments:
+	/// * h: 3
+	/// * template_window_size: 7
+	/// * search_window_size: 21
+	#[inline]
+	pub fn fast_nl_means_denoising_multi_def(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32) -> Result<()> {
+		input_array_arg!(src_imgs);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
+	/// captured in small period of time. For example video. This version of the function is for grayscale
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
+	/// 
+	/// ## Parameters
+	/// * srcImgs: Input 8-bit or 16-bit (only with NORM_L1) 1-channel,
+	/// 2-channel, 3-channel or 4-channel images sequence. All images should
+	/// have the same type and size.
+	/// * imgToDenoiseIndex: Target image to denoise index in srcImgs sequence
+	/// * temporalWindowSize: Number of surrounding images to use for target image denoising. Should
+	/// be odd. Images from imgToDenoiseIndex - temporalWindowSize / 2 to
+	/// imgToDenoiseIndex - temporalWindowSize / 2 from srcImgs will be used to denoise
+	/// srcImgs[imgToDenoiseIndex] image.
+	/// * dst: Output image with the same size and type as srcImgs images.
+	/// * templateWindowSize: Size in pixels of the template patch that is used to compute weights.
+	/// Should be odd. Recommended value 7 pixels
+	/// * searchWindowSize: Size in pixels of the window that is used to compute weighted average for
+	/// given pixel. Should be odd. Affect performance linearly: greater searchWindowsSize - greater
+	/// denoising time. Recommended value 21 pixels
+	/// * h: Array of parameters regulating filter strength, either one
+	/// parameter applied to all channels or one per channel in dst. Big h value
+	/// perfectly removes noise but also removes image details, smaller h
+	/// value preserves details but also preserves some noise
+	/// * normType: Type of norm used for weight calculation. Can be either NORM_L2 or NORM_L1
+	/// 
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising_multi_vec] function uses the following default values for its arguments:
+	/// * template_window_size: 7
+	/// * search_window_size: 21
+	/// * norm_type: NORM_L2
+	#[inline]
+	pub fn fast_nl_means_denoising_multi_vec_def(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &core::Vector<f32>) -> Result<()> {
+		input_array_arg!(src_imgs);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_const_vectorLfloatGR(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
+	/// captured in small period of time. For example video. This version of the function is for grayscale
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	/// 
 	/// ## Parameters
@@ -656,7 +1276,7 @@ pub mod photo {
 	
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	/// 
 	/// ## Parameters
@@ -688,6 +1308,84 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_fastNlMeansDenoisingMulti_const__InputArrayR_const__OutputArrayR_int_int_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, template_window_size, search_window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Perform image denoising using Non-local Means Denoising algorithm
+	/// <http://www.ipol.im/pub/algo/bcm_non_local_means_denoising/> with several computational
+	/// optimizations. Noise expected to be a gaussian white noise
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 1-channel, 2-channel, 3-channel or 4-channel image.
+	/// * dst: Output image with the same size and type as src .
+	/// * templateWindowSize: Size in pixels of the template patch that is used to compute weights.
+	/// Should be odd. Recommended value 7 pixels
+	/// * searchWindowSize: Size in pixels of the window that is used to compute weighted average for
+	/// given pixel. Should be odd. Affect performance linearly: greater searchWindowsSize - greater
+	/// denoising time. Recommended value 21 pixels
+	/// * h: Parameter regulating filter strength. Big h value perfectly removes noise but also
+	/// removes image details, smaller h value preserves details but also preserves some noise
+	/// 
+	/// This function expected to be applied to grayscale images. For colored images look at
+	/// fastNlMeansDenoisingColored. Advanced usage of this functions can be manual denoising of colored
+	/// image in different colorspaces. Such approach is used in fastNlMeansDenoisingColored by converting
+	/// image to CIELAB colorspace and then separately denoise L and AB components with different h
+	/// parameter.
+	/// 
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising] function uses the following default values for its arguments:
+	/// * h: 3
+	/// * template_window_size: 7
+	/// * search_window_size: 21
+	#[inline]
+	pub fn fast_nl_means_denoising_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Perform image denoising using Non-local Means Denoising algorithm
+	/// <http://www.ipol.im/pub/algo/bcm_non_local_means_denoising/> with several computational
+	/// optimizations. Noise expected to be a gaussian white noise
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit or 16-bit (only with NORM_L1) 1-channel,
+	/// 2-channel, 3-channel or 4-channel image.
+	/// * dst: Output image with the same size and type as src .
+	/// * templateWindowSize: Size in pixels of the template patch that is used to compute weights.
+	/// Should be odd. Recommended value 7 pixels
+	/// * searchWindowSize: Size in pixels of the window that is used to compute weighted average for
+	/// given pixel. Should be odd. Affect performance linearly: greater searchWindowsSize - greater
+	/// denoising time. Recommended value 21 pixels
+	/// * h: Array of parameters regulating filter strength, either one
+	/// parameter applied to all channels or one per channel in dst. Big h value
+	/// perfectly removes noise but also removes image details, smaller h
+	/// value preserves details but also preserves some noise
+	/// * normType: Type of norm used for weight calculation. Can be either NORM_L2 or NORM_L1
+	/// 
+	/// This function expected to be applied to grayscale images. For colored images look at
+	/// fastNlMeansDenoisingColored. Advanced usage of this functions can be manual denoising of colored
+	/// image in different colorspaces. Such approach is used in fastNlMeansDenoisingColored by converting
+	/// image to CIELAB colorspace and then separately denoise L and AB components with different h
+	/// parameter.
+	/// 
+	/// ## Note
+	/// This alternative version of [fast_nl_means_denoising_vec] function uses the following default values for its arguments:
+	/// * template_window_size: 7
+	/// * search_window_size: 21
+	/// * norm_type: NORM_L2
+	#[inline]
+	pub fn fast_nl_means_denoising_vec_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: &core::Vector<f32>) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_fastNlMeansDenoising_const__InputArrayR_const__OutputArrayR_const_vectorLfloatGR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -781,6 +1479,34 @@ pub mod photo {
 	/// 
 	/// This is useful to highlight under-exposed foreground objects or to reduce specular reflections.
 	/// 
+	/// ## Note
+	/// This alternative version of [illumination_change] function uses the following default values for its arguments:
+	/// * alpha: 0.2f
+	/// * beta: 0.4f
+	#[inline]
+	pub fn illumination_change_def(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_illuminationChange_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Applying an appropriate non-linear transformation to the gradient field inside the selection and
+	/// then integrating back with a Poisson solver, modifies locally the apparent illumination of an image.
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 3-channel image.
+	/// * mask: Input 8-bit 1 or 3-channel image.
+	/// * dst: Output image with the same size and type as src.
+	/// * alpha: Value ranges between 0-2.
+	/// * beta: Value ranges between 0-2.
+	/// 
+	/// This is useful to highlight under-exposed foreground objects or to reduce specular reflections.
+	/// 
 	/// ## C++ default parameters
 	/// * alpha: 0.2f
 	/// * beta: 0.4f
@@ -842,6 +1568,36 @@ pub mod photo {
 	/// * sigma_r: %Range between 0 to 1.
 	/// * shade_factor: %Range between 0 to 0.1.
 	/// 
+	/// ## Note
+	/// This alternative version of [pencil_sketch] function uses the following default values for its arguments:
+	/// * sigma_s: 60
+	/// * sigma_r: 0.07f
+	/// * shade_factor: 0.02f
+	#[inline]
+	pub fn pencil_sketch_def(src: &impl core::ToInputArray, dst1: &mut impl core::ToOutputArray, dst2: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst1);
+		output_array_arg!(dst2);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_pencilSketch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst1.as_raw__OutputArray(), dst2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @example samples/cpp/tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp
+	/// An example using non-photorealistic line drawing functions
+	/// 
+	/// Pencil-like non-photorealistic line drawing
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 3-channel image.
+	/// * dst1: Output 8-bit 1-channel image.
+	/// * dst2: Output image with the same size and type as src.
+	/// * sigma_s: %Range between 0 to 200.
+	/// * sigma_r: %Range between 0 to 1.
+	/// * shade_factor: %Range between 0 to 0.1.
+	/// 
 	/// ## C++ default parameters
 	/// * sigma_s: 60
 	/// * sigma_r: 0.07f
@@ -865,7 +1621,7 @@ pub mod photo {
 	/// deformations) or local changes concerned to a selection. Here we are interested in achieving local
 	/// changes, ones that are restricted to a region manually selected (ROI), in a seamless and effortless
 	/// manner. The extent of the changes ranges from slight distortions to complete replacement by novel
-	/// content [PM03](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_PM03) .
+	/// content [PM03](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_PM03) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -897,6 +1653,31 @@ pub mod photo {
 	/// * sigma_s: %Range between 0 to 200.
 	/// * sigma_r: %Range between 0 to 1.
 	/// 
+	/// ## Note
+	/// This alternative version of [stylization] function uses the following default values for its arguments:
+	/// * sigma_s: 60
+	/// * sigma_r: 0.45f
+	#[inline]
+	pub fn stylization_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_stylization_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Stylization aims to produce digital imagery with a wide variety of effects not focused on
+	/// photorealism. Edge-aware filters are ideal for stylization, as they can abstract regions of low
+	/// contrast while preserving, or enhancing, high-contrast features.
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 3-channel image.
+	/// * dst: Output image with the same size and type as src.
+	/// * sigma_s: %Range between 0 to 200.
+	/// * sigma_r: %Range between 0 to 1.
+	/// 
 	/// ## C++ default parameters
 	/// * sigma_s: 60
 	/// * sigma_r: 0.45f
@@ -906,6 +1687,40 @@ pub mod photo {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_stylization_const__InputArrayR_const__OutputArrayR_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// By retaining only the gradients at edge locations, before integrating with the Poisson solver, one
+	/// washes out the texture of the selected region, giving its contents a flat aspect. Here Canny Edge %Detector is used.
+	/// 
+	/// ## Parameters
+	/// * src: Input 8-bit 3-channel image.
+	/// * mask: Input 8-bit 1 or 3-channel image.
+	/// * dst: Output image with the same size and type as src.
+	/// * low_threshold: %Range from 0 to 100.
+	/// * high_threshold: Value \> 100.
+	/// * kernel_size: The size of the Sobel kernel to be used.
+	/// 
+	/// 
+	/// Note:
+	/// The algorithm assumes that the color of the source image is close to that of the destination. This
+	/// assumption means that when the colors don't match, the source image color gets tinted toward the
+	/// color of the destination image.
+	/// 
+	/// ## Note
+	/// This alternative version of [texture_flattening] function uses the following default values for its arguments:
+	/// * low_threshold: 30
+	/// * high_threshold: 45
+	/// * kernel_size: 3
+	#[inline]
+	pub fn texture_flattening_def(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(mask);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_textureFlattening_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1175,7 +1990,7 @@ pub mod photo {
 	/// 
 	/// In this implementation new image regions are filled with zeros.
 	/// 
-	/// For more information see [GW03](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GW03) .
+	/// For more information see [GW03](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_GW03) .
 	pub struct AlignMTB {
 		ptr: *mut c_void
 	}
@@ -1379,7 +2194,7 @@ pub mod photo {
 	/// function as linear system. Objective function is constructed using pixel values on the same position
 	/// in all images, extra term is added to make the result smoother.
 	/// 
-	/// For more information see [DM97](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_DM97) .
+	/// For more information see [DM97](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_DM97) .
 	pub struct CalibrateDebevec {
 		ptr: *mut c_void
 	}
@@ -1495,7 +2310,7 @@ pub mod photo {
 	/// Inverse camera response function is extracted for each brightness value by minimizing an objective
 	/// function as linear system. This algorithm uses all image pixels.
 	/// 
-	/// For more information see [RB99](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RB99) .
+	/// For more information see [RB99](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RB99) .
 	pub struct CalibrateRobertson {
 		ptr: *mut c_void
 	}
@@ -1590,7 +2405,7 @@ pub mod photo {
 	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 	/// values and camera response.
 	/// 
-	/// For more information see [DM97](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_DM97) .
+	/// For more information see [DM97](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_DM97) .
 	pub struct MergeDebevec {
 		ptr: *mut c_void
 	}
@@ -1833,7 +2648,7 @@ pub mod photo {
 	/// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
 	/// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
 	/// 
-	/// For more information see [MK07](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MK07) .
+	/// For more information see [MK07](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MK07) .
 	pub struct MergeMertens {
 		ptr: *mut c_void
 	}
@@ -1928,7 +2743,7 @@ pub mod photo {
 	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 	/// values and camera response.
 	/// 
-	/// For more information see [RB99](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RB99) .
+	/// For more information see [RB99](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RB99) .
 	pub struct MergeRobertson {
 		ptr: *mut c_void
 	}
@@ -2134,9 +2949,9 @@ pub mod photo {
 	/// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
 	/// bias parameter.
 	/// 
-	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_FL02) .
+	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_FL02) .
 	/// 
-	/// For more information see [DM03](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_DM03) .
+	/// For more information see [DM03](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_DM03) .
 	pub struct TonemapDrago {
 		ptr: *mut c_void
 	}
@@ -2243,7 +3058,7 @@ pub mod photo {
 	/// transforms contrast values to HVS response and scales the response. After this the image is
 	/// reconstructed from new contrast values.
 	/// 
-	/// For more information see [MM06](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MM06) .
+	/// For more information see [MM06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MM06) .
 	pub struct TonemapMantiuk {
 		ptr: *mut c_void
 	}
@@ -2369,7 +3184,7 @@ pub mod photo {
 	/// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
 	/// color adaptation.
 	/// 
-	/// For more information see [RD05](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RD05) .
+	/// For more information see [RD05](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RD05) .
 	pub struct TonemapReinhard {
 		ptr: *mut c_void
 	}

@@ -395,6 +395,40 @@ pub mod gapi {
 	/// L2gradient=true ), or whether the default ![inline formula](https://latex.codecogs.com/png.latex?L%5F1) norm ![inline formula](https://latex.codecogs.com/png.latex?%3D%7CdI%2Fdx%7C%2B%7CdI%2Fdy%7C) is enough (
 	/// L2gradient=false ).
 	/// 
+	/// ## Note
+	/// This alternative version of [canny] function uses the following default values for its arguments:
+	/// * aperture_size: 3
+	/// * l2gradient: false
+	#[inline]
+	pub fn canny_def(image: &crate::gapi::GMat, threshold1: f64, threshold2: f64) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_Canny_const_GMatR_double_double(image.as_raw_GMat(), threshold1, threshold2, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Finds edges in an image using the Canny algorithm.
+	/// 
+	/// The function finds edges in the input image and marks them in the output map edges using the
+	/// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
+	/// largest value is used to find initial segments of strong edges. See
+	/// <http://en.wikipedia.org/wiki/Canny_edge_detector>
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.imgproc.feature.canny"
+	/// 
+	/// ## Parameters
+	/// * image: 8-bit input image.
+	/// * threshold1: first threshold for the hysteresis procedure.
+	/// * threshold2: second threshold for the hysteresis procedure.
+	/// * apertureSize: aperture size for the Sobel operator.
+	/// * L2gradient: a flag, indicating whether a more accurate ![inline formula](https://latex.codecogs.com/png.latex?L%5F2) norm
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%3D%5Csqrt%7B%28dI%2Fdx%29%5E2%20%2B%20%28dI%2Fdy%29%5E2%7D) should be used to calculate the image gradient magnitude (
+	/// L2gradient=true ), or whether the default ![inline formula](https://latex.codecogs.com/png.latex?L%5F1) norm ![inline formula](https://latex.codecogs.com/png.latex?%3D%7CdI%2Fdx%7C%2B%7CdI%2Fdy%7C) is enough (
+	/// L2gradient=false ).
+	/// 
 	/// ## C++ default parameters
 	/// * aperture_size: 3
 	/// * l2gradient: false
@@ -529,12 +563,57 @@ pub mod gapi {
 	/// ## Parameters
 	/// * src: Source image.
 	/// * ddepth: Desired depth of the destination image.
-	/// * ksize: Aperture size used to compute the second-derivative filters. See #getDerivKernels for
+	/// * ksize: Aperture size used to compute the second-derivative filters. See [get_deriv_kernels] for
 	/// details. The size must be positive and odd.
 	/// * scale: Optional scale factor for the computed Laplacian values. By default, no scaling is
-	/// applied. See #getDerivKernels for details.
+	/// applied. See [get_deriv_kernels] for details.
 	/// * delta: Optional delta value that is added to the results prior to storing them in dst .
-	/// * borderType: Pixel extrapolation method, see #BorderTypes. #BORDER_WRAP is not supported.
+	/// * borderType: Pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
+	/// ## Returns
+	/// Destination image of the same size and the same number of channels as src.
+	/// ## See also
+	/// Sobel, Scharr
+	/// 
+	/// ## Note
+	/// This alternative version of [laplacian] function uses the following default values for its arguments:
+	/// * ksize: 1
+	/// * scale: 1
+	/// * delta: 0
+	/// * border_type: BORDER_DEFAULT
+	#[inline]
+	pub fn laplacian_def(src: &crate::gapi::GMat, ddepth: i32) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_Laplacian_const_GMatR_int(src.as_raw_GMat(), ddepth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the Laplacian of an image.
+	/// 
+	/// The function calculates the Laplacian of the source image by adding up the second x and y
+	/// derivatives calculated using the Sobel operator:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5CDelta%20%5Ctexttt%7Bsrc%7D%20%3D%20%20%5Cfrac%7B%5Cpartial%5E2%20%5Ctexttt%7Bsrc%7D%7D%7B%5Cpartial%20x%5E2%7D%20%2B%20%20%5Cfrac%7B%5Cpartial%5E2%20%5Ctexttt%7Bsrc%7D%7D%7B%5Cpartial%20y%5E2%7D)
+	/// 
+	/// This is done when `ksize > 1`. When `ksize == 1`, the Laplacian is computed by filtering the image
+	/// with the following ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) aperture:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%200%20%26%201%20%26%200%5C%5C%201%20%26%20%2D4%20%26%201%5C%5C%200%20%26%201%20%26%200%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.imgproc.filters.laplacian"
+	/// 
+	/// ## Parameters
+	/// * src: Source image.
+	/// * ddepth: Desired depth of the destination image.
+	/// * ksize: Aperture size used to compute the second-derivative filters. See [get_deriv_kernels] for
+	/// details. The size must be positive and odd.
+	/// * scale: Optional scale factor for the computed Laplacian values. By default, no scaling is
+	/// applied. See [get_deriv_kernels] for details.
+	/// * delta: Optional delta value that is added to the results prior to storing them in dst .
+	/// * borderType: Pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
 	/// ## Returns
 	/// Destination image of the same size and the same number of channels as src.
 	/// ## See also
@@ -913,6 +992,72 @@ pub mod gapi {
 	/// ## See also
 	/// filter2D, gaussianBlur, cartToPolar
 	/// 
+	/// ## Note
+	/// This alternative version of [sobel_xy] function uses the following default values for its arguments:
+	/// * ksize: 3
+	/// * scale: 1
+	/// * delta: 0
+	/// * border_type: BORDER_DEFAULT
+	/// * border_value: Scalar(0)
+	#[inline]
+	pub fn sobel_xy_def(src: &crate::gapi::GMat, ddepth: i32, order: i32) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_SobelXY_const_GMatR_int_int(src.as_raw_GMat(), ddepth, order, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Tuple::<(crate::gapi::GMat, crate::gapi::GMat)>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
+	/// 
+	/// In all cases except one, the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bksize%7D%20%5Ctimes%20%5Ctexttt%7Bksize%7D) separable kernel is used to
+	/// calculate the derivative. When ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bksize%20%3D%201%7D), the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%201) or ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%203)
+	/// kernel is used (that is, no Gaussian smoothing is done). `ksize = 1` can only be used for the first
+	/// or the second x- or y- derivatives.
+	/// 
+	/// There is also the special value `ksize = FILTER_SCHARR (-1)` that corresponds to the ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) Scharr
+	/// filter that may give more accurate results than the ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) Sobel. The Scharr aperture is
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%2D3%20%26%200%20%26%203%5C%5C%20%2D10%20%26%200%20%26%2010%5C%5C%20%2D3%20%26%200%20%26%203%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// for the x-derivative, or transposed for the y-derivative.
+	/// 
+	/// The function calculates an image derivative by convolving the image with the appropriate kernel:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Cfrac%7B%5Cpartial%5E%7Bxorder%2Byorder%7D%20%5Ctexttt%7Bsrc%7D%7D%7B%5Cpartial%20x%5E%7Bxorder%7D%20%5Cpartial%20y%5E%7Byorder%7D%7D)
+	/// 
+	/// The Sobel operators combine Gaussian smoothing and differentiation, so the result is more or less
+	/// resistant to the noise. Most often, the function is called with ( xorder = 1, yorder = 0, ksize = 3)
+	/// or ( xorder = 0, yorder = 1, ksize = 3) to calculate the first x- or y- image derivative. The first
+	/// case corresponds to a kernel of:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%2D1%20%26%200%20%26%201%5C%5C%20%2D2%20%26%200%20%26%202%5C%5C%20%2D1%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// The second case corresponds to a kernel of:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%2D1%20%26%20%2D2%20%26%20%2D1%5C%5C%200%20%26%200%20%26%200%5C%5C%201%20%26%202%20%26%201%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// 
+	/// Note:
+	///  - First returned matrix correspons to dx derivative while the second one to dy.
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.sobelxy"
+	/// 
+	/// ## Parameters
+	/// * src: input image.
+	/// * ddepth: output image depth, see [filter_depths] "combinations"; in the case of
+	///    8-bit input images it will result in truncated derivatives.
+	/// * order: order of the derivatives.
+	/// * ksize: size of the extended Sobel kernel; it must be odd.
+	/// * scale: optional scale factor for the computed derivative values; by default, no scaling is
+	/// applied (see cv::getDerivKernels for details).
+	/// * delta: optional delta value that is added to the results prior to storing them in dst.
+	/// * borderType: pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of constant border type
+	/// ## See also
+	/// filter2D, gaussianBlur, cartToPolar
+	/// 
 	/// ## C++ default parameters
 	/// * ksize: 3
 	/// * scale: 1
@@ -926,6 +1071,72 @@ pub mod gapi {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Tuple::<(crate::gapi::GMat, crate::gapi::GMat)>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
+	/// 
+	/// In all cases except one, the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bksize%7D%20%5Ctimes%20%5Ctexttt%7Bksize%7D) separable kernel is used to
+	/// calculate the derivative. When ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bksize%20%3D%201%7D), the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%201) or ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%203)
+	/// kernel is used (that is, no Gaussian smoothing is done). `ksize = 1` can only be used for the first
+	/// or the second x- or y- derivatives.
+	/// 
+	/// There is also the special value `ksize = FILTER_SCHARR (-1)` that corresponds to the ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) Scharr
+	/// filter that may give more accurate results than the ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) Sobel. The Scharr aperture is
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%2D3%20%26%200%20%26%203%5C%5C%20%2D10%20%26%200%20%26%2010%5C%5C%20%2D3%20%26%200%20%26%203%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// for the x-derivative, or transposed for the y-derivative.
+	/// 
+	/// The function calculates an image derivative by convolving the image with the appropriate kernel:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Cfrac%7B%5Cpartial%5E%7Bxorder%2Byorder%7D%20%5Ctexttt%7Bsrc%7D%7D%7B%5Cpartial%20x%5E%7Bxorder%7D%20%5Cpartial%20y%5E%7Byorder%7D%7D)
+	/// 
+	/// The Sobel operators combine Gaussian smoothing and differentiation, so the result is more or less
+	/// resistant to the noise. Most often, the function is called with ( xorder = 1, yorder = 0, ksize = 3)
+	/// or ( xorder = 0, yorder = 1, ksize = 3) to calculate the first x- or y- image derivative. The first
+	/// case corresponds to a kernel of:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%2D1%20%26%200%20%26%201%5C%5C%20%2D2%20%26%200%20%26%202%5C%5C%20%2D1%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// The second case corresponds to a kernel of:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%2D1%20%26%20%2D2%20%26%20%2D1%5C%5C%200%20%26%200%20%26%200%5C%5C%201%20%26%202%20%26%201%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// 
+	/// Note:
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.sobel"
+	/// 
+	/// ## Parameters
+	/// * src: input image.
+	/// * ddepth: output image depth, see [filter_depths] "combinations"; in the case of
+	///    8-bit input images it will result in truncated derivatives.
+	/// * dx: order of the derivative x.
+	/// * dy: order of the derivative y.
+	/// * ksize: size of the extended Sobel kernel; it must be odd.
+	/// * scale: optional scale factor for the computed derivative values; by default, no scaling is
+	/// applied (see cv::getDerivKernels for details).
+	/// * delta: optional delta value that is added to the results prior to storing them in dst.
+	/// * borderType: pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of constant border type
+	/// ## See also
+	/// filter2D, gaussianBlur, cartToPolar
+	/// 
+	/// ## Note
+	/// This alternative version of [sobel] function uses the following default values for its arguments:
+	/// * ksize: 3
+	/// * scale: 1
+	/// * delta: 0
+	/// * border_type: BORDER_DEFAULT
+	/// * border_value: Scalar(0)
+	#[inline]
+	pub fn sobel_def(src: &crate::gapi::GMat, ddepth: i32, dx: i32, dy: i32) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_Sobel_const_GMatR_int_int_int(src.as_raw_GMat(), ddepth, dx, dy, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -1117,12 +1328,62 @@ pub mod gapi {
 	/// ## See also
 	/// sub, addWeighted
 	/// 
+	/// ## Note
+	/// This alternative version of [add_c] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn add_c_def(src1: &crate::gapi::GMat, c: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_addC_const_GMatR_const_GScalarR(src1.as_raw_GMat(), c.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element sum of matrix and given scalar.
+	/// 
+	/// The function addC adds a given scalar value to each element of given matrix.
+	/// The function can be replaced with matrix expressions:
+	/// 
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%2B%20%5Ctexttt%7Bc%7D)
+	/// 
+	/// Depth of the output matrix is determined by the ddepth parameter.
+	/// If ddepth is set to default -1, the depth of output matrix will be the same as the depth of input matrix.
+	/// The matrices can be single or multi channel. Output matrix must have the same size and number of channels as the input matrix.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.addC"
+	/// ## Parameters
+	/// * src1: first input matrix.
+	/// * c: scalar value to be added.
+	/// * ddepth: optional depth of the output matrix.
+	/// ## See also
+	/// sub, addWeighted
+	/// 
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
 	pub fn add_c(src1: &crate::gapi::GMat, c: &crate::gapi::GScalar, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_addC_const_GMatR_const_GScalarR_int(src1.as_raw_GMat(), c.as_raw_GScalar(), ddepth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [add_c_1] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn add_c_1_def(c: &crate::gapi::GScalar, src1: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_addC_const_GScalarR_const_GMatR(c.as_raw_GScalar(), src1.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -1189,12 +1450,87 @@ pub mod gapi {
 	/// ## See also
 	/// add, sub
 	/// 
+	/// ## Note
+	/// This alternative version of [add_weighted] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn add_weighted_def(src1: &crate::gapi::GMat, alpha: f64, src2: &crate::gapi::GMat, beta: f64, gamma: f64) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_addWeighted_const_GMatR_double_const_GMatR_double_double(src1.as_raw_GMat(), alpha, src2.as_raw_GMat(), beta, gamma, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the weighted sum of two matrices.
+	/// 
+	/// The function addWeighted calculates the weighted sum of two matrices as follows:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2A%20%5Ctexttt%7Balpha%7D%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%2A%20%5Ctexttt%7Bbeta%7D%20%2B%20%20%5Ctexttt%7Bgamma%7D%20%29)
+	/// where I is a multi-dimensional index of array elements. In case of multi-channel matrices, each
+	/// channel is processed independently.
+	/// 
+	/// The function can be replaced with a matrix expression:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Balpha%7D%20%2A%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2D%20%5Ctexttt%7Bbeta%7D%20%2A%20%5Ctexttt%7Bsrc2%7D%28I%29%20%2B%20%5Ctexttt%7Bgamma%7D%20)
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.matrixop.addweighted"
+	/// ## Parameters
+	/// * src1: first input matrix.
+	/// * alpha: weight of the first matrix elements.
+	/// * src2: second input matrix of the same size and channel number as src1.
+	/// * beta: weight of the second matrix elements.
+	/// * gamma: scalar added to each sum.
+	/// * ddepth: optional depth of the output matrix.
+	/// ## See also
+	/// add, sub
+	/// 
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
 	pub fn add_weighted(src1: &crate::gapi::GMat, alpha: f64, src2: &crate::gapi::GMat, beta: f64, gamma: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_addWeighted_const_GMatR_double_const_GMatR_double_double_int(src1.as_raw_GMat(), alpha, src2.as_raw_GMat(), beta, gamma, ddepth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element sum of two matrices.
+	/// 
+	/// The function add calculates sum of two matrices of the same size and the same number of channels:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2B%20%20%5Ctexttt%7Bsrc2%7D%28I%29%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
+	/// 
+	/// The function can be replaced with matrix expressions:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%2B%20%5Ctexttt%7Bsrc2%7D)
+	/// 
+	/// The input matrices and the output matrix can all have the same or different depths. For example, you
+	/// can add a 16-bit unsigned matrix to a 8-bit signed matrix and store the sum as a 32-bit
+	/// floating-point matrix. Depth of the output matrix is determined by the ddepth parameter.
+	/// If src1.depth() == src2.depth(), ddepth can be set to the default -1. In this case, the output matrix will have
+	/// the same depth as the input matrices.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.add"
+	/// ## Parameters
+	/// * src1: first input matrix.
+	/// * src2: second input matrix.
+	/// * ddepth: optional depth of the output matrix.
+	/// ## See also
+	/// sub, addWeighted
+	/// 
+	/// ## Note
+	/// This alternative version of [add] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn add_def(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_add_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -1268,7 +1604,54 @@ pub mod gapi {
 	/// farther pixels will influence each other as long as their colors are close enough (see sigmaColor
 	/// ). When d\>0, it specifies the neighborhood size regardless of sigmaSpace. Otherwise, d is
 	/// proportional to sigmaSpace.
-	/// * borderType: border mode used to extrapolate pixels outside of the image, see #BorderTypes
+	/// * borderType: border mode used to extrapolate pixels outside of the image, see [border_types]
+	/// ## Returns
+	/// Destination image of the same size and type as src.
+	/// 
+	/// ## Note
+	/// This alternative version of [bilateral_filter] function uses the following default values for its arguments:
+	/// * border_type: BORDER_DEFAULT
+	#[inline]
+	pub fn bilateral_filter_def(src: &crate::gapi::GMat, d: i32, sigma_color: f64, sigma_space: f64) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_bilateralFilter_const_GMatR_int_double_double(src.as_raw_GMat(), d, sigma_color, sigma_space, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Applies the bilateral filter to an image.
+	/// 
+	/// The function applies bilateral filtering to the input image, as described in
+	/// <http://www.dai.ed.ac.uk/CVonline/LOCAL_COPIES/MANDUCHI1/Bilateral_Filtering.html>
+	/// bilateralFilter can reduce unwanted noise very well while keeping edges fairly sharp. However, it is
+	/// very slow compared to most filters.
+	/// 
+	/// _Sigma values_: For simplicity, you can set the 2 sigma values to be the same. If they are small (\<
+	/// 10), the filter will not have much effect, whereas if they are large (\> 150), they will have a very
+	/// strong effect, making the image look "cartoonish".
+	/// 
+	/// _Filter size_: Large filters (d \> 5) are very slow, so it is recommended to use d=5 for real-time
+	/// applications, and perhaps d=9 for offline applications that need heavy noise filtering.
+	/// 
+	/// This filter does not work inplace.
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.imgproc.filters.bilateralfilter"
+	/// 
+	/// ## Parameters
+	/// * src: Source 8-bit or floating-point, 1-channel or 3-channel image.
+	/// * d: Diameter of each pixel neighborhood that is used during filtering. If it is non-positive,
+	/// it is computed from sigmaSpace.
+	/// * sigmaColor: Filter sigma in the color space. A larger value of the parameter means that
+	/// farther colors within the pixel neighborhood (see sigmaSpace) will be mixed together, resulting
+	/// in larger areas of semi-equal color.
+	/// * sigmaSpace: Filter sigma in the coordinate space. A larger value of the parameter means that
+	/// farther pixels will influence each other as long as their colors are close enough (see sigmaColor
+	/// ). When d\>0, it specifies the neighborhood size regardless of sigmaSpace. Otherwise, d is
+	/// proportional to sigmaSpace.
+	/// * borderType: border mode used to extrapolate pixels outside of the image, see [border_types]
 	/// ## Returns
 	/// Destination image of the same size and type as src.
 	/// 
@@ -1522,6 +1905,47 @@ pub mod gapi {
 	/// ## See also
 	/// boxFilter, bilateralFilter, GaussianBlur, medianBlur
 	/// 
+	/// ## Note
+	/// This alternative version of [blur] function uses the following default values for its arguments:
+	/// * anchor: Point(-1,-1)
+	/// * border_type: BORDER_DEFAULT
+	/// * border_value: Scalar(0)
+	#[inline]
+	pub fn blur_def(src: &crate::gapi::GMat, ksize: core::Size) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_blur_const_GMatR_const_SizeR(src.as_raw_GMat(), &ksize, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Blurs an image using the normalized box filter.
+	/// 
+	/// The function smooths an image using the kernel:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BK%7D%20%3D%20%20%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize%2Ewidth%2Aksize%2Eheight%7D%7D%20%5Cbegin%7Bbmatrix%7D%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cdots%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// The call `blur(src, ksize, anchor, borderType)` is equivalent to `boxFilter(src, src.type(), ksize, anchor,
+	/// true, borderType)`.
+	/// 
+	/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// Output image must have the same type, size, and number of channels as the input image.
+	/// 
+	/// Note:
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.blur"
+	/// 
+	/// ## Parameters
+	/// * src: Source image.
+	/// * ksize: blurring kernel size.
+	/// * anchor: anchor point; default value Point(-1,-1) means that the anchor is at the kernel
+	/// center.
+	/// * borderType: border mode used to extrapolate pixels outside of the image, see cv::BorderTypes
+	/// * borderValue: border value in case of constant border type
+	/// ## See also
+	/// boxFilter, bilateralFilter, GaussianBlur, medianBlur
+	/// 
 	/// ## C++ default parameters
 	/// * anchor: Point(-1,-1)
 	/// * border_type: BORDER_DEFAULT
@@ -1530,6 +1954,55 @@ pub mod gapi {
 	pub fn blur(src: &crate::gapi::GMat, ksize: core::Size, anchor: core::Point, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_blur_const_GMatR_const_SizeR_const_PointR_int_const_ScalarR(src.as_raw_GMat(), &ksize, &anchor, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Blurs an image using the box filter.
+	/// 
+	/// The function smooths an image using the kernel:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BK%7D%20%3D%20%20%5Calpha%20%5Cbegin%7Bbmatrix%7D%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cdots%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%5Cend%7Bbmatrix%7D)
+	/// 
+	/// where
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Calpha%20%3D%20%5Cbegin%7Bcases%7D%20%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize%2Ewidth%2Aksize%2Eheight%7D%7D%20%26%20%5Ctexttt%7Bwhen%20%7D%20%5Ctexttt%7Bnormalize%3Dtrue%7D%20%20%5C%5C1%20%26%20%5Ctexttt%7Botherwise%7D%20%5Cend%7Bcases%7D)
+	/// 
+	/// Unnormalized box filter is useful for computing various integral characteristics over each pixel
+	/// neighborhood, such as covariance matrices of image derivatives (used in dense optical flow
+	/// algorithms, and so on). If you need to compute pixel sums over variable-size windows, use cv::integral.
+	/// 
+	/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// Output image must have the same type, size, and number of channels as the input image.
+	/// 
+	/// Note:
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.boxfilter"
+	/// 
+	/// ## Parameters
+	/// * src: Source image.
+	/// * dtype: the output image depth (-1 to set the input image data type).
+	/// * ksize: blurring kernel size.
+	/// * anchor: Anchor position within the kernel. The default value ![inline formula](https://latex.codecogs.com/png.latex?%28%2D1%2C%2D1%29) means that the anchor
+	/// is at the kernel center.
+	/// * normalize: flag, specifying whether the kernel is normalized by its area or not.
+	/// * borderType: Pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of constant border type
+	/// ## See also
+	/// sepFilter, gaussianBlur, medianBlur, integral
+	/// 
+	/// ## Note
+	/// This alternative version of [box_filter] function uses the following default values for its arguments:
+	/// * anchor: Point(-1,-1)
+	/// * normalize: true
+	/// * border_type: BORDER_DEFAULT
+	/// * border_value: Scalar(0)
+	#[inline]
+	pub fn box_filter_def(src: &crate::gapi::GMat, dtype: i32, ksize: core::Size) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_boxFilter_const_GMatR_int_const_SizeR(src.as_raw_GMat(), dtype, &ksize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -1581,6 +2054,43 @@ pub mod gapi {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the magnitude and angle of 2D vectors.
+	/// 
+	/// The function cartToPolar calculates either the magnitude, angle, or both
+	/// for every 2D vector (x(I),y(I)):
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%3D%20%5Csqrt%7B%5Ctexttt%7Bx%7D%28I%29%5E2%2B%5Ctexttt%7By%7D%28I%29%5E2%7D%20%2C%20%5C%5C%20%5Ctexttt%7Bangle%7D%20%28I%29%3D%20%5Ctexttt%7Batan2%7D%20%28%20%5Ctexttt%7By%7D%20%28I%29%2C%20%5Ctexttt%7Bx%7D%20%28I%29%29%5B%20%5Ccdot180%20%2F%20%5Cpi%20%5D%20%5Cend%7Barray%7D)
+	/// 
+	/// The angles are calculated with accuracy about 0.3 degrees. For the point
+	/// (0,0), the angle is set to 0.
+	/// 
+	/// First output is a matrix of magnitudes of the same size and depth as input x.
+	/// Second output is a matrix of angles that has the same size and depth as
+	/// x; the angles are measured in radians (from 0 to 2\*Pi) or in degrees (0 to 360 degrees).
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.cartToPolar"
+	/// 
+	/// ## Parameters
+	/// * x: matrix of [CV_32FC1] x-coordinates.
+	/// * y: array of [CV_32FC1] y-coordinates.
+	/// * angleInDegrees: a flag, indicating whether the angles are measured
+	/// in radians (which is by default), or in degrees.
+	/// ## See also
+	/// polarToCart
+	/// 
+	/// ## Note
+	/// This alternative version of [cart_to_polar] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	#[inline]
+	pub fn cart_to_polar_def(x: &crate::gapi::GMat, y: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_cartToPolar_const_GMatR_const_GMatR(x.as_raw_GMat(), y.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Tuple::<(crate::gapi::GMat, crate::gapi::GMat)>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -2246,6 +2756,37 @@ pub mod gapi {
 	/// * alpha: optional scale factor.
 	/// * beta: optional delta added to the scaled values.
 	/// 
+	/// ## Note
+	/// This alternative version of [convert_to] function uses the following default values for its arguments:
+	/// * alpha: 1
+	/// * beta: 0
+	#[inline]
+	pub fn convert_to_def(src: &crate::gapi::GMat, rdepth: i32) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_convertTo_const_GMatR_int(src.as_raw_GMat(), rdepth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Converts a matrix to another data depth with optional scaling.
+	/// 
+	/// The method converts source pixel values to the target data depth. saturate_cast\<\> is applied at
+	/// the end to avoid possible overflows:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?m%28x%2Cy%29%20%3D%20saturate%20%5C%5F%20cast%3CrType%3E%28%20%5Calpha%20%28%2Athis%29%28x%2Cy%29%20%2B%20%20%5Cbeta%20%29)
+	/// Output matrix must be of the same size as input one.
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.transform.convertTo"
+	/// ## Parameters
+	/// * src: input matrix to be converted from.
+	/// * rdepth: desired output matrix depth or, rather, the depth since the number of channels are the
+	/// same as the input has; if rdepth is negative, the output matrix will have the same depth as the input.
+	/// * alpha: optional scale factor.
+	/// * beta: optional delta added to the scaled values.
+	/// 
 	/// ## C++ default parameters
 	/// * alpha: 1
 	/// * beta: 0
@@ -2347,6 +2888,43 @@ pub mod gapi {
 	/// ## See also
 	/// dilate, erode3x3
 	/// 
+	/// ## Note
+	/// This alternative version of [dilate3x3] function uses the following default values for its arguments:
+	/// * iterations: 1
+	/// * border_type: BORDER_CONSTANT
+	/// * border_value: morphologyDefaultBorderValue()
+	#[inline]
+	pub fn dilate3x3_def(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_dilate3x3_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Dilates an image by using 3 by 3 rectangular structuring element.
+	/// 
+	/// The function dilates the source image using the specified structuring element that determines the
+	/// shape of a pixel neighborhood over which the maximum is taken:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmax%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
+	/// 
+	/// Dilation can be applied several (iterations) times. In case of multi-channel images, each channel is processed independently.
+	/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], and [CV_32FC1].
+	/// Output image must have the same type, size, and number of channels as the input image.
+	/// 
+	/// Note:
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.dilate"
+	/// 
+	/// ## Parameters
+	/// * src: input image.
+	/// * iterations: number of times dilation is applied.
+	/// * borderType: pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of a constant border
+	/// ## See also
+	/// dilate, erode3x3
+	/// 
 	/// ## C++ default parameters
 	/// * iterations: 1
 	/// * border_type: BORDER_CONSTANT
@@ -2355,6 +2933,48 @@ pub mod gapi {
 	pub fn dilate3x3(src: &crate::gapi::GMat, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_dilate3x3_const_GMatR_int_int_const_ScalarR(src.as_raw_GMat(), iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Dilates an image by using a specific structuring element.
+	/// 
+	/// The function dilates the source image using the specified structuring element that determines the
+	/// shape of a pixel neighborhood over which the maximum is taken:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmax%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
+	/// 
+	/// Dilation can be applied several (iterations) times. In case of multi-channel images, each channel is processed independently.
+	/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], and [CV_32FC1].
+	/// Output image must have the same type, size, and number of channels as the input image.
+	/// 
+	/// Note:
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.dilate"
+	/// 
+	/// ## Parameters
+	/// * src: input image.
+	/// * kernel: structuring element used for dilation; if elemenat=Mat(), a 3 x 3 rectangular
+	/// structuring element is used. Kernel can be created using getStructuringElement
+	/// * anchor: position of the anchor within the element; default value (-1, -1) means that the
+	/// anchor is at the element center.
+	/// * iterations: number of times dilation is applied.
+	/// * borderType: pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of a constant border
+	/// ## See also
+	/// erode, morphologyEx, getStructuringElement
+	/// 
+	/// ## Note
+	/// This alternative version of [dilate] function uses the following default values for its arguments:
+	/// * anchor: Point(-1,-1)
+	/// * iterations: 1
+	/// * border_type: BORDER_CONSTANT
+	/// * border_value: morphologyDefaultBorderValue()
+	#[inline]
+	pub fn dilate_def(src: &crate::gapi::GMat, kernel: &core::Mat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_dilate_const_GMatR_const_MatR(src.as_raw_GMat(), kernel.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -2424,6 +3044,41 @@ pub mod gapi {
 	/// ## See also
 	/// add, sub, div, addWeighted
 	/// 
+	/// ## Note
+	/// This alternative version of [div_c] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn div_c_def(src: &crate::gapi::GMat, divisor: &crate::gapi::GScalar, scale: f64) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_divC_const_GMatR_const_GScalarR_double(src.as_raw_GMat(), divisor.as_raw_GScalar(), scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Divides matrix by scalar.
+	/// 
+	/// The function divC divides each element of matrix src by given scalar value:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%28I%29%20%3D%20saturate%28src%28I%29%2Ascale%2Fdivisor%29%7D)
+	/// 
+	/// When divisor is zero, dst(I) will also be zero. Different channels of
+	/// multi-channel matrices are processed independently.
+	/// The matrices can be single or multi channel. Output matrix must have the same size and depth as src.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.divC"
+	/// ## Parameters
+	/// * src: input matrix.
+	/// * divisor: number to be divided by.
+	/// * ddepth: optional depth of the output matrix. If -1, the depth of output matrix will be the same as input matrix depth.
+	/// * scale: scale factor.
+	/// ## See also
+	/// add, sub, div, addWeighted
+	/// 
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
@@ -2458,12 +3113,84 @@ pub mod gapi {
 	/// ## See also
 	/// add, sub, div, addWeighted
 	/// 
+	/// ## Note
+	/// This alternative version of [div_rc] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn div_rc_def(divident: &crate::gapi::GScalar, src: &crate::gapi::GMat, scale: f64) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_divRC_const_GScalarR_const_GMatR_double(divident.as_raw_GScalar(), src.as_raw_GMat(), scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Divides scalar by matrix.
+	/// 
+	/// The function divRC divides given scalar by each element of matrix src and keep the division result in new matrix of the same size and type as src:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%28I%29%20%3D%20saturate%28divident%2Ascale%2Fsrc%28I%29%29%7D)
+	/// 
+	/// When src(I) is zero, dst(I) will also be zero. Different channels of
+	/// multi-channel matrices are processed independently.
+	/// The matrices can be single or multi channel. Output matrix must have the same size and depth as src.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.divRC"
+	/// ## Parameters
+	/// * src: input matrix.
+	/// * divident: number to be divided.
+	/// * ddepth: optional depth of the output matrix. If -1, the depth of output matrix will be the same as input matrix depth.
+	/// * scale: scale factor
+	/// ## See also
+	/// add, sub, div, addWeighted
+	/// 
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
 	pub fn div_rc(divident: &crate::gapi::GScalar, src: &crate::gapi::GMat, scale: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_divRC_const_GScalarR_const_GMatR_double_int(divident.as_raw_GScalar(), src.as_raw_GMat(), scale, ddepth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Performs per-element division of two matrices.
+	/// 
+	/// The function divides one matrix by another:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%28I%29%20%3D%20saturate%28src1%28I%29%2Ascale%2Fsrc2%28I%29%29%7D)
+	/// 
+	/// For integer types when src2(I) is zero, dst(I) will also be zero.
+	/// Floating point case returns Inf/NaN (according to IEEE).
+	/// 
+	/// Different channels of
+	/// multi-channel matrices are processed independently.
+	/// The matrices can be single or multi channel. Output matrix must have the same size and depth as src.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.div"
+	/// ## Parameters
+	/// * src1: first input matrix.
+	/// * src2: second input matrix of the same size and depth as src1.
+	/// * scale: scalar factor.
+	/// * ddepth: optional depth of the output matrix; you can only pass -1 when src1.depth() == src2.depth().
+	/// ## See also
+	/// mul, add, sub
+	/// 
+	/// ## Note
+	/// This alternative version of [div] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn div_def(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, scale: f64) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_div_const_GMatR_const_GMatR_double(src1.as_raw_GMat(), src2.as_raw_GMat(), scale, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -2555,6 +3282,40 @@ pub mod gapi {
 	/// ## See also
 	/// erode, dilate3x3
 	/// 
+	/// ## Note
+	/// This alternative version of [erode3x3] function uses the following default values for its arguments:
+	/// * iterations: 1
+	/// * border_type: BORDER_CONSTANT
+	/// * border_value: morphologyDefaultBorderValue()
+	#[inline]
+	pub fn erode3x3_def(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_erode3x3_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Erodes an image by using 3 by 3 rectangular structuring element.
+	/// 
+	/// The function erodes the source image using the rectangular structuring element with rectangle center as an anchor.
+	/// Erosion can be applied several (iterations) times. In case of multi-channel images, each channel is processed independently.
+	/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], and [CV_32FC1].
+	/// Output image must have the same type, size, and number of channels as the input image.
+	/// 
+	/// Note:
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.erode"
+	/// 
+	/// ## Parameters
+	/// * src: input image
+	/// * iterations: number of times erosion is applied.
+	/// * borderType: pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of a constant border
+	/// ## See also
+	/// erode, dilate3x3
+	/// 
 	/// ## C++ default parameters
 	/// * iterations: 1
 	/// * border_type: BORDER_CONSTANT
@@ -2563,6 +3324,49 @@ pub mod gapi {
 	pub fn erode3x3(src: &crate::gapi::GMat, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_erode3x3_const_GMatR_int_int_const_ScalarR(src.as_raw_GMat(), iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Erodes an image by using a specific structuring element.
+	/// 
+	/// The function erodes the source image using the specified structuring element that determines the
+	/// shape of a pixel neighborhood over which the minimum is taken:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmin%20%5F%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
+	/// 
+	/// Erosion can be applied several (iterations) times. In case of multi-channel images, each channel is processed independently.
+	/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], and [CV_32FC1].
+	/// Output image must have the same type, size, and number of channels as the input image.
+	/// 
+	/// Note:
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.erode"
+	/// 
+	/// ## Parameters
+	/// * src: input image
+	/// * kernel: structuring element used for erosion; if `element=Mat()`, a `3 x 3` rectangular
+	/// structuring element is used. Kernel can be created using getStructuringElement.
+	/// * anchor: position of the anchor within the element; default value (-1, -1) means that the
+	/// anchor is at the element center.
+	/// * iterations: number of times erosion is applied.
+	/// * borderType: pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of a constant border
+	/// ## See also
+	/// dilate, morphologyEx
+	/// 
+	/// ## Note
+	/// This alternative version of [erode] function uses the following default values for its arguments:
+	/// * anchor: Point(-1,-1)
+	/// * iterations: 1
+	/// * border_type: BORDER_CONSTANT
+	/// * border_value: morphologyDefaultBorderValue()
+	#[inline]
+	pub fn erode_def(src: &crate::gapi::GMat, kernel: &core::Mat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_erode_const_GMatR_const_MatR(src.as_raw_GMat(), kernel.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -2605,6 +3409,58 @@ pub mod gapi {
 	pub fn erode(src: &crate::gapi::GMat, kernel: &core::Mat, anchor: core::Point, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_erode_const_GMatR_const_MatR_const_PointR_int_int_const_ScalarR(src.as_raw_GMat(), kernel.as_raw_Mat(), &anchor, iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Convolves an image with the kernel.
+	/// 
+	/// The function applies an arbitrary linear filter to an image. When
+	/// the aperture is partially outside the image, the function interpolates outlier pixel values
+	/// according to the specified border mode.
+	/// 
+	/// The function does actually compute correlation, not the convolution:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Csum%20%5F%7B%20%5Csubstack%7B0%5Cleq%20x%27%20%3C%20%5Ctexttt%7Bkernel%2Ecols%7D%5C%5C%7B0%5Cleq%20y%27%20%3C%20%5Ctexttt%7Bkernel%2Erows%7D%7D%7D%7D%20%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%2A%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2D%20%5Ctexttt%7Banchor%2Ex%7D%20%2Cy%2By%27%2D%20%5Ctexttt%7Banchor%2Ey%7D%20%29)
+	/// 
+	/// That is, the kernel is not mirrored around the anchor point. If you need a real convolution, flip
+	/// the kernel using flip and set the new anchor to `(kernel.cols - anchor.x - 1, kernel.rows -
+	/// anchor.y - 1)`.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// Output image must have the same size and number of channels an input image.
+	/// 
+	/// Note:
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.filter2D"
+	/// 
+	/// ## Parameters
+	/// * src: input image.
+	/// * ddepth: desired depth of the destination image
+	/// * kernel: convolution kernel (or rather a correlation kernel), a single-channel floating point
+	/// matrix; if you want to apply different kernels to different channels, split the image into
+	/// separate color planes using split and process them individually.
+	/// * anchor: anchor of the kernel that indicates the relative position of a filtered point within
+	/// the kernel; the anchor should lie within the kernel; default value (-1,-1) means that the anchor
+	/// is at the kernel center.
+	/// * delta: optional value added to the filtered pixels before storing them in dst.
+	/// * borderType: pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of constant border type
+	/// ## See also
+	/// sepFilter
+	/// 
+	/// ## Note
+	/// This alternative version of [filter_2d] function uses the following default values for its arguments:
+	/// * anchor: Point(-1,-1)
+	/// * delta: Scalar(0)
+	/// * border_type: BORDER_DEFAULT
+	/// * border_value: Scalar(0)
+	#[inline]
+	pub fn filter_2d_def(src: &crate::gapi::GMat, ddepth: i32, kernel: &core::Mat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_filter2D_const_GMatR_int_const_MatR(src.as_raw_GMat(), ddepth, kernel.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -2729,6 +3585,48 @@ pub mod gapi {
 	/// ## See also
 	/// sepFilter, boxFilter, medianBlur
 	/// 
+	/// ## Note
+	/// This alternative version of [gaussian_blur] function uses the following default values for its arguments:
+	/// * sigma_y: 0
+	/// * border_type: BORDER_DEFAULT
+	/// * border_value: Scalar(0)
+	#[inline]
+	pub fn gaussian_blur_def(src: &crate::gapi::GMat, ksize: core::Size, sigma_x: f64) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_gaussianBlur_const_GMatR_const_SizeR_double(src.as_raw_GMat(), &ksize, sigma_x, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Blurs an image using a Gaussian filter.
+	/// 
+	/// The function filter2Ds the source image with the specified Gaussian kernel.
+	/// Output image must have the same type and number of channels an input image.
+	/// 
+	/// Supported input matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// Output image must have the same type, size, and number of channels as the input image.
+	/// 
+	/// Note:
+	///  - Rounding to nearest even is procedeed if hardware supports it, if not - to nearest.
+	///  - Function textual ID is "org.opencv.imgproc.filters.gaussianBlur"
+	/// 
+	/// ## Parameters
+	/// * src: input image;
+	/// * ksize: Gaussian kernel size. ksize.width and ksize.height can differ but they both must be
+	/// positive and odd. Or, they can be zero's and then they are computed from sigma.
+	/// * sigmaX: Gaussian kernel standard deviation in X direction.
+	/// * sigmaY: Gaussian kernel standard deviation in Y direction; if sigmaY is zero, it is set to be
+	/// equal to sigmaX, if both sigmas are zeros, they are computed from ksize.width and ksize.height,
+	/// respectively (see cv::getGaussianKernel for details); to fully control the result regardless of
+	/// possible future modifications of all this semantics, it is recommended to specify all of ksize,
+	/// sigmaX, and sigmaY.
+	/// * borderType: pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of constant border type
+	/// ## See also
+	/// sepFilter, boxFilter, medianBlur
+	/// 
 	/// ## C++ default parameters
 	/// * sigma_y: 0
 	/// * border_type: BORDER_DEFAULT
@@ -2766,6 +3664,40 @@ pub mod gapi {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the integral of an image.
+	/// 
+	/// The function calculates one or more integral images for the source image as follows:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20%5F%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsqsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20%5F%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%5E2)
+	/// 
+	/// The function return integral image as ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) , 32-bit integer or floating-point (32f or 64f) and
+	///  integral image for squared pixel values; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B%29), double-precision floating-point (64f) array.
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.matrixop.integral"
+	/// 
+	/// ## Parameters
+	/// * src: input image.
+	/// * sdepth: desired depth of the integral and the tilted integral images, CV_32S, CV_32F, or
+	/// CV_64F.
+	/// * sqdepth: desired depth of the integral image of squared pixel values, CV_32F or CV_64F.
+	/// 
+	/// ## Note
+	/// This alternative version of [integral] function uses the following default values for its arguments:
+	/// * sdepth: -1
+	/// * sqdepth: -1
+	#[inline]
+	pub fn integral_def(src: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_integral_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Tuple::<(crate::gapi::GMat, crate::gapi::GMat)>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -3003,12 +3935,57 @@ pub mod gapi {
 	/// 
 	/// ## Parameters
 	/// * src: Input image.
-	/// * op: Type of a morphological operation, see #MorphTypes
+	/// * op: Type of a morphological operation, see [morph_types]
 	/// * kernel: Structuring element. It can be created using #getStructuringElement.
 	/// * anchor: Anchor position within the element. Both negative values mean that the anchor is at
 	/// the kernel center.
 	/// * iterations: Number of times erosion and dilation are applied.
-	/// * borderType: Pixel extrapolation method, see #BorderTypes. #BORDER_WRAP is not supported.
+	/// * borderType: Pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
+	/// * borderValue: Border value in case of a constant border. The default value has a special
+	/// meaning.
+	/// ## See also
+	/// dilate, erode, getStructuringElement
+	/// 
+	/// ## Note
+	/// This alternative version of [morphology_ex] function uses the following default values for its arguments:
+	/// * anchor: Point(-1,-1)
+	/// * iterations: 1
+	/// * border_type: BORDER_CONSTANT
+	/// * border_value: morphologyDefaultBorderValue()
+	#[inline]
+	pub fn morphology_ex_def(src: &crate::gapi::GMat, op: crate::imgproc::MorphTypes, kernel: &core::Mat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_morphologyEx_const_GMatR_const_MorphTypes_const_MatR(src.as_raw_GMat(), op, kernel.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Performs advanced morphological transformations.
+	/// 
+	/// The function can perform advanced morphological transformations using an erosion and dilation as
+	/// basic operations.
+	/// 
+	/// Any of the operations can be done in-place. In case of multi-channel images, each channel is
+	/// processed independently.
+	/// 
+	/// 
+	/// Note:
+	///  - Function textual ID is "org.opencv.imgproc.filters.morphologyEx"
+	///  - The number of iterations is the number of times erosion or dilatation operation will be
+	/// applied. For instance, an opening operation (#MORPH_OPEN) with two iterations is equivalent to
+	/// apply successively: erode -> erode -> dilate -> dilate
+	/// (and not erode -> dilate -> erode -> dilate).
+	/// 
+	/// ## Parameters
+	/// * src: Input image.
+	/// * op: Type of a morphological operation, see [morph_types]
+	/// * kernel: Structuring element. It can be created using #getStructuringElement.
+	/// * anchor: Anchor position within the element. Both negative values mean that the anchor is at
+	/// the kernel center.
+	/// * iterations: Number of times erosion and dilation are applied.
+	/// * borderType: Pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
 	/// * borderValue: Border value in case of a constant border. The default value has a special
 	/// meaning.
 	/// ## See also
@@ -3023,6 +4000,21 @@ pub mod gapi {
 	pub fn morphology_ex(src: &crate::gapi::GMat, op: crate::imgproc::MorphTypes, kernel: &core::Mat, anchor: core::Point, iterations: i32, border_type: core::BorderTypes, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_morphologyEx_const_GMatR_const_MorphTypes_const_MatR_const_PointR_const_int_const_BorderTypes_const_ScalarR(src.as_raw_GMat(), op, kernel.as_raw_Mat(), &anchor, iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [mul_c_1] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn mul_c_1_def(src: &crate::gapi::GMat, multiplier: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_mulC_const_GMatR_const_GScalarR(src.as_raw_GMat(), multiplier.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -3081,12 +4073,59 @@ pub mod gapi {
 	/// ## See also
 	/// add, sub, div, addWeighted
 	/// 
+	/// ## Note
+	/// This alternative version of [mul_c] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn mul_c_def(src: &crate::gapi::GMat, multiplier: f64) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_mulC_const_GMatR_double(src.as_raw_GMat(), multiplier, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Multiplies matrix by scalar.
+	/// 
+	/// The function mulC multiplies each element of matrix src by given scalar value:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Ccdot%20%5Ctexttt%7Bmultiplier%7D%20%29)
+	/// 
+	/// The matrices can be single or multi channel. Output matrix must have the same size as src.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.mulC"
+	/// ## Parameters
+	/// * src: input matrix.
+	/// * multiplier: factor to be multiplied.
+	/// * ddepth: optional depth of the output matrix. If -1, the depth of output matrix will be the same as input matrix depth.
+	/// ## See also
+	/// add, sub, div, addWeighted
+	/// 
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
 	pub fn mul_c(src: &crate::gapi::GMat, multiplier: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mulC_const_GMatR_double_int(src.as_raw_GMat(), multiplier, ddepth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [mul_c_2] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn mul_c_2_def(multiplier: &crate::gapi::GScalar, src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_mulC_const_GScalarR_const_GMatR(multiplier.as_raw_GScalar(), src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -3120,6 +4159,42 @@ pub mod gapi {
 	pub fn mul_c_2(multiplier: &crate::gapi::GScalar, src: &crate::gapi::GMat, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mulC_const_GScalarR_const_GMatR_int(multiplier.as_raw_GScalar(), src.as_raw_GMat(), ddepth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element scaled product of two matrices.
+	/// 
+	/// The function mul calculates the per-element product of two matrices:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
+	/// 
+	/// If src1.depth() == src2.depth(), ddepth can be set to the default -1. In this case, the output matrix will have
+	/// the same depth as the input matrices. The matrices can be single or multi channel.
+	/// Output matrix must have the same size as input matrices.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.mul"
+	/// ## Parameters
+	/// * src1: first input matrix.
+	/// * src2: second input matrix of the same size and the same depth as src1.
+	/// * scale: optional scale factor.
+	/// * ddepth: optional depth of the output matrix.
+	/// ## See also
+	/// add, sub, div, addWeighted
+	/// 
+	/// ## Note
+	/// This alternative version of [mul] function uses the following default values for its arguments:
+	/// * scale: 1.0
+	/// * ddepth: -1
+	#[inline]
+	pub fn mul_def(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_mul_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -3282,12 +4357,78 @@ pub mod gapi {
 	/// ## See also
 	/// norm, Mat::convertTo
 	/// 
+	/// ## Note
+	/// This alternative version of [normalize] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn normalize_def(src: &crate::gapi::GMat, alpha: f64, beta: f64, norm_type: i32) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_normalize_const_GMatR_double_double_int(src.as_raw_GMat(), alpha, beta, norm_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Normalizes the norm or value range of an array.
+	/// 
+	/// The function normalizes scale and shift the input array elements so that
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7Bdst%7D%20%5C%7C%20%5F%7BL%5Fp%7D%3D%20%5Ctexttt%7Balpha%7D)
+	/// (where p=Inf, 1 or 2) when normType=NORM_INF, NORM_L1, or NORM_L2, respectively; or so that
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmin%20%5FI%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Balpha%7D%20%2C%20%5C%2C%20%5C%2C%20%5Cmax%20%5FI%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bbeta%7D)
+	/// when normType=NORM_MINMAX (for dense arrays only).
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.normalize"
+	/// 
+	/// ## Parameters
+	/// * src: input array.
+	/// * alpha: norm value to normalize to or the lower range boundary in case of the range
+	/// normalization.
+	/// * beta: upper range boundary in case of the range normalization; it is not used for the norm
+	/// normalization.
+	/// * norm_type: normalization type (see cv::NormTypes).
+	/// * ddepth: when negative, the output array has the same type as src; otherwise, it has the same
+	/// number of channels as src and the depth =ddepth.
+	/// ## See also
+	/// norm, Mat::convertTo
+	/// 
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
 	pub fn normalize(src: &crate::gapi::GMat, alpha: f64, beta: f64, norm_type: i32, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_normalize_const_GMatR_double_double_int_int(src.as_raw_GMat(), alpha, beta, norm_type, ddepth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the rotation angle of 2D vectors.
+	/// 
+	/// The function cv::phase calculates the rotation angle of each 2D vector that
+	/// is formed from the corresponding elements of x and y :
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bangle%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Batan2%7D%20%28%20%5Ctexttt%7By%7D%20%28I%29%2C%20%5Ctexttt%7Bx%7D%20%28I%29%29)
+	/// 
+	/// The angle estimation accuracy is about 0.3 degrees. When x(I)=y(I)=0 ,
+	/// the corresponding angle(I) is set to 0.
+	/// ## Parameters
+	/// * x: input floating-point array of x-coordinates of 2D vectors.
+	/// * y: input array of y-coordinates of 2D vectors; it must have the
+	/// same size and the same type as x.
+	/// * angleInDegrees: when true, the function calculates the angle in
+	/// degrees, otherwise, they are measured in radians.
+	/// ## Returns
+	/// array of vector angles; it has the same size and same type as x.
+	/// 
+	/// ## Note
+	/// This alternative version of [phase] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	#[inline]
+	pub fn phase_def(x: &crate::gapi::GMat, y: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_phase_const_GMatR_const_GMatR(x.as_raw_GMat(), y.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -3320,6 +4461,42 @@ pub mod gapi {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates x and y coordinates of 2D vectors from their magnitude and angle.
+	/// 
+	/// The function polarToCart calculates the Cartesian coordinates of each 2D
+	/// vector represented by the corresponding elements of magnitude and angle:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%5Ctexttt%7Bx%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%20%5Ccos%20%28%20%5Ctexttt%7Bangle%7D%20%28I%29%29%20%5C%5C%20%5Ctexttt%7By%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%20%5Csin%20%28%20%5Ctexttt%7Bangle%7D%20%28I%29%29%20%5C%5C%20%5Cend%7Barray%7D)
+	/// 
+	/// The relative accuracy of the estimated coordinates is about 1e-6.
+	/// 
+	/// First output is a matrix of x-coordinates of 2D vectors.
+	/// Second output is a matrix of y-coordinates of 2D vectors.
+	/// Both output must have the same size and depth as input matrices.
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.polarToCart"
+	/// 
+	/// ## Parameters
+	/// * magnitude: input floating-point [CV_32FC1] matrix (1xN) of magnitudes of 2D vectors;
+	/// * angle: input floating-point [CV_32FC1] matrix (1xN) of angles of 2D vectors.
+	/// * angleInDegrees: when true, the input angles are measured in
+	/// degrees, otherwise, they are measured in radians.
+	/// ## See also
+	/// cartToPolar, exp, log, pow, sqrt
+	/// 
+	/// ## Note
+	/// This alternative version of [polar_to_cart] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	#[inline]
+	pub fn polar_to_cart_def(magnitude: &crate::gapi::GMat, angle: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_polarToCart_const_GMatR_const_GMatR(magnitude.as_raw_GMat(), angle.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Tuple::<(crate::gapi::GMat, crate::gapi::GMat)>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -3384,8 +4561,55 @@ pub mod gapi {
 	/// CV_32FC1, or CV_32FC2.
 	/// * map2: The second map of y values having the type CV_16UC1, CV_32FC1, or none (empty map
 	/// if map1 is (x,y) points), respectively.
-	/// * interpolation: Interpolation method (see cv::InterpolationFlags). The methods #INTER_AREA
-	/// and #INTER_LINEAR_EXACT are not supported by this function.
+	/// * interpolation: Interpolation method (see cv::InterpolationFlags). The methods [INTER_AREA]
+	/// and [INTER_LINEAR_EXACT] are not supported by this function.
+	/// * borderMode: Pixel extrapolation method (see cv::BorderTypes). When
+	/// borderMode=BORDER_TRANSPARENT, it means that the pixels in the destination image that
+	/// corresponds to the "outliers" in the source image are not modified by the function.
+	/// * borderValue: Value used in case of a constant border. By default, it is 0.
+	/// 
+	/// ## Note
+	/// This alternative version of [remap] function uses the following default values for its arguments:
+	/// * border_mode: BORDER_CONSTANT
+	/// * border_value: Scalar()
+	#[inline]
+	pub fn remap_def(src: &crate::gapi::GMat, map1: &core::Mat, map2: &core::Mat, interpolation: i32) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_remap_const_GMatR_const_MatR_const_MatR_int(src.as_raw_GMat(), map1.as_raw_Mat(), map2.as_raw_Mat(), interpolation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Applies a generic geometrical transformation to an image.
+	/// 
+	/// The function remap transforms the source image using the specified map:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28map%5Fx%28x%2Cy%29%2Cmap%5Fy%28x%2Cy%29%29)
+	/// 
+	/// where values of pixels with non-integer coordinates are computed using one of available
+	/// interpolation methods. ![inline formula](https://latex.codecogs.com/png.latex?map%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?map%5Fy) can be encoded as separate floating-point maps
+	/// in ![inline formula](https://latex.codecogs.com/png.latex?map%5F1) and ![inline formula](https://latex.codecogs.com/png.latex?map%5F2) respectively, or interleaved floating-point maps of ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29) in
+	/// ![inline formula](https://latex.codecogs.com/png.latex?map%5F1), or fixed-point maps created by using convertMaps. The reason you might want to
+	/// convert from floating to fixed-point representations of a map is that they can yield much faster
+	/// (\~2x) remapping operations. In the converted case, ![inline formula](https://latex.codecogs.com/png.latex?map%5F1) contains pairs (cvFloor(x),
+	/// cvFloor(y)) and ![inline formula](https://latex.codecogs.com/png.latex?map%5F2) contains indices in a table of interpolation coefficients.
+	/// Output image must be of the same size and depth as input one.
+	/// 
+	/// 
+	/// Note:
+	///  - Function textual ID is "org.opencv.core.transform.remap"
+	///  - Due to current implementation limitations the size of an input and output images should be less than 32767x32767.
+	/// 
+	/// ## Parameters
+	/// * src: Source image.
+	/// * map1: The first map of either (x,y) points or just x values having the type CV_16SC2,
+	/// CV_32FC1, or CV_32FC2.
+	/// * map2: The second map of y values having the type CV_16UC1, CV_32FC1, or none (empty map
+	/// if map1 is (x,y) points), respectively.
+	/// * interpolation: Interpolation method (see cv::InterpolationFlags). The methods [INTER_AREA]
+	/// and [INTER_LINEAR_EXACT] are not supported by this function.
 	/// * borderMode: Pixel extrapolation method (see cv::BorderTypes). When
 	/// borderMode=BORDER_TRANSPARENT, it means that the pixels in the destination image that
 	/// corresponds to the "outliers" in the source image are not modified by the function.
@@ -3422,6 +4646,37 @@ pub mod gapi {
 	/// ## See also
 	/// warpAffine, warpPerspective, remap, resize
 	/// 
+	/// ## Note
+	/// This alternative version of [resize_p] function uses the following default values for its arguments:
+	/// * interpolation: cv::INTER_LINEAR
+	#[inline]
+	pub fn resize_p_def(src: &crate::gapi::GMatP, dsize: core::Size) -> Result<crate::gapi::GMatP> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_resizeP_const_GMatPR_const_SizeR(src.as_raw_GMatP(), &dsize, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMatP::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Resizes a planar image.
+	/// 
+	/// The function resizes the image src down to or up to the specified size.
+	/// Planar image memory layout is three planes laying in the memory contiguously,
+	/// so the image height should be plane_height*plane_number, image type is [CV_8UC1].
+	/// 
+	/// Output image size will have the size dsize, the depth of output is the same as of src.
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.imgproc.transform.resizeP"
+	/// 
+	/// ## Parameters
+	/// * src: input image, must be of [CV_8UC1] type;
+	/// * dsize: output image size;
+	/// * interpolation: interpolation method, only cv::INTER_LINEAR is supported at the moment
+	/// ## See also
+	/// warpAffine, warpPerspective, remap, resize
+	/// 
 	/// ## C++ default parameters
 	/// * interpolation: cv::INTER_LINEAR
 	#[inline]
@@ -3431,6 +4686,62 @@ pub mod gapi {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMatP::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Resizes an image.
+	/// 
+	/// The function resizes the image src down to or up to the specified size.
+	/// 
+	/// Output image size will have the size dsize (when dsize is non-zero) or the size computed from
+	/// src.size(), fx, and fy; the depth of output is the same as of src.
+	/// 
+	/// If you want to resize src so that it fits the pre-created dst,
+	/// you may call the function as follows:
+	/// ```C++
+	///  explicitly specify dsize=dst.size(); fx and fy will be computed from that.
+	///    resize(src, dst, dst.size(), 0, 0, interpolation);
+	/// ```
+	/// 
+	/// If you want to decimate the image by factor of 2 in each direction, you can call the function this
+	/// way:
+	/// ```C++
+	///  specify fx and fy and let the function compute the destination image size.
+	///    resize(src, dst, Size(), 0.5, 0.5, interpolation);
+	/// ```
+	/// 
+	/// To shrink an image, it will generally look best with cv::INTER_AREA interpolation, whereas to
+	/// enlarge an image, it will generally look best with cv::INTER_CUBIC (slow) or cv::INTER_LINEAR
+	/// (faster but still looks OK).
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.imgproc.transform.resize"
+	/// 
+	/// ## Parameters
+	/// * src: input image.
+	/// * dsize: output image size; if it equals zero, it is computed as:
+	///  ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdsize%20%3D%20Size%28round%28fx%2Asrc%2Ecols%29%2C%20round%28fy%2Asrc%2Erows%29%29%7D)
+	///  Either dsize or both fx and fy must be non-zero.
+	/// * fx: scale factor along the horizontal axis; when it equals 0, it is computed as
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28double%29dsize%2Ewidth%2Fsrc%2Ecols%7D)
+	/// * fy: scale factor along the vertical axis; when it equals 0, it is computed as
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28double%29dsize%2Eheight%2Fsrc%2Erows%7D)
+	/// * interpolation: interpolation method, see cv::InterpolationFlags
+	/// ## See also
+	/// warpAffine, warpPerspective, remap, resizeP
+	/// 
+	/// ## Note
+	/// This alternative version of [resize] function uses the following default values for its arguments:
+	/// * fx: 0
+	/// * fy: 0
+	/// * interpolation: INTER_LINEAR
+	#[inline]
+	pub fn resize_def(src: &crate::gapi::GMat, dsize: core::Size) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_resize_const_GMatR_const_SizeR(src.as_raw_GMat(), &dsize, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -3508,6 +4819,53 @@ pub mod gapi {
 	pub fn select(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, mask: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_select_const_GMatR_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), mask.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Applies a separable linear filter to a matrix(image).
+	/// 
+	/// The function applies a separable linear filter to the matrix. That is, first, every row of src is
+	/// filtered with the 1D kernel kernelX. Then, every column of the result is filtered with the 1D
+	/// kernel kernelY. The final result is returned.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// Output image must have the same type, size, and number of channels as the input image.
+	/// 
+	/// Note:
+	///  - In case of floating-point computation, rounding to nearest even is procedeed
+	/// if hardware supports it (if not - to nearest value).
+	///  - Function textual ID is "org.opencv.imgproc.filters.sepfilter"
+	/// ## Parameters
+	/// * src: Source image.
+	/// * ddepth: desired depth of the destination image (the following combinations of src.depth() and ddepth are supported:
+	/// 
+	///        src.depth() = CV_8U, ddepth = -1/CV_16S/CV_32F/CV_64F
+	///        src.depth() = CV_16U/CV_16S, ddepth = -1/CV_32F/CV_64F
+	///        src.depth() = CV_32F, ddepth = -1/CV_32F/CV_64F
+	///        src.depth() = CV_64F, ddepth = -1/CV_64F
+	/// 
+	/// when ddepth=-1, the output image will have the same depth as the source)
+	/// * kernelX: Coefficients for filtering each row.
+	/// * kernelY: Coefficients for filtering each column.
+	/// * anchor: Anchor position within the kernel. The default value ![inline formula](https://latex.codecogs.com/png.latex?%28%2D1%2C%2D1%29) means that the anchor
+	/// is at the kernel center.
+	/// * delta: Value added to the filtered results before storing them.
+	/// * borderType: Pixel extrapolation method, see cv::BorderTypes
+	/// * borderValue: border value in case of constant border type
+	/// ## See also
+	/// boxFilter, gaussianBlur, medianBlur
+	/// 
+	/// ## Note
+	/// This alternative version of [sep_filter] function uses the following default values for its arguments:
+	/// * border_type: BORDER_DEFAULT
+	/// * border_value: Scalar(0)
+	#[inline]
+	pub fn sep_filter_def(src: &crate::gapi::GMat, ddepth: i32, kernel_x: &core::Mat, kernel_y: &core::Mat, anchor: core::Point, delta: core::Scalar) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_sepFilter_const_GMatR_int_const_MatR_const_MatR_const_PointR_const_ScalarR(src.as_raw_GMat(), ddepth, kernel_x.as_raw_Mat(), kernel_y.as_raw_Mat(), &anchor, &delta, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -3762,6 +5120,39 @@ pub mod gapi {
 	/// ## See also
 	/// add, addC, subRC
 	/// 
+	/// ## Note
+	/// This alternative version of [sub_c] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn sub_c_def(src: &crate::gapi::GMat, c: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_subC_const_GMatR_const_GScalarR(src.as_raw_GMat(), c.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element difference between matrix and given scalar.
+	/// 
+	/// The function can be replaced with matrix expressions:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bc%7D)
+	/// 
+	/// Depth of the output matrix is determined by the ddepth parameter.
+	/// If ddepth is set to default -1, the depth of output matrix will be the same as the depth of input matrix.
+	/// The matrices can be single or multi channel. Output matrix must have the same size as src.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.subC"
+	/// ## Parameters
+	/// * src: first input matrix.
+	/// * c: scalar value to subtracted.
+	/// * ddepth: optional depth of the output matrix.
+	/// ## See also
+	/// add, addC, subRC
+	/// 
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
@@ -3794,12 +5185,84 @@ pub mod gapi {
 	/// ## See also
 	/// add, addC, subC
 	/// 
+	/// ## Note
+	/// This alternative version of [sub_rc] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn sub_rc_def(c: &crate::gapi::GScalar, src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_subRC_const_GScalarR_const_GMatR(c.as_raw_GScalar(), src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element difference between given scalar and the matrix.
+	/// 
+	/// The function can be replaced with matrix expressions:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Bc%7D%20%2D%20%5Ctexttt%7Bsrc%7D)
+	/// 
+	/// Depth of the output matrix is determined by the ddepth parameter.
+	/// If ddepth is set to default -1, the depth of output matrix will be the same as the depth of input matrix.
+	/// The matrices can be single or multi channel. Output matrix must have the same size as src.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.subRC"
+	/// ## Parameters
+	/// * c: scalar value to subtract from.
+	/// * src: input matrix to be subtracted.
+	/// * ddepth: optional depth of the output matrix.
+	/// ## See also
+	/// add, addC, subC
+	/// 
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
 	pub fn sub_rc(c: &crate::gapi::GScalar, src: &crate::gapi::GMat, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_subRC_const_GScalarR_const_GMatR_int(c.as_raw_GScalar(), src.as_raw_GMat(), ddepth, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Calculates the per-element difference between two matrices.
+	/// 
+	/// The function sub calculates difference between two matrices, when both matrices have the same size and the same number of
+	/// channels:
+	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2D%20%20%5Ctexttt%7Bsrc2%7D%28I%29)
+	/// 
+	/// The function can be replaced with matrix expressions:
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%20%5Ctexttt%7Bsrc1%7D%20%2D%20%20%5Ctexttt%7Bsrc2%7D)
+	/// 
+	/// The input matrices and the output matrix can all have the same or different depths. For example, you
+	/// can subtract two 8-bit unsigned matrices store the result as a 16-bit signed matrix.
+	/// Depth of the output matrix is determined by the ddepth parameter.
+	/// If src1.depth() == src2.depth(), ddepth can be set to the default -1. In this case, the output matrix will have
+	/// the same depth as the input matrices. The matrices can be single or multi channel.
+	/// 
+	/// Supported matrix data types are [CV_8UC1], [CV_8UC3], [CV_16UC1], [CV_16SC1], [CV_32FC1].
+	/// 
+	/// 
+	/// Note: Function textual ID is "org.opencv.core.math.sub"
+	/// ## Parameters
+	/// * src1: first input matrix.
+	/// * src2: second input matrix.
+	/// * ddepth: optional depth of the output matrix.
+	/// ## See also
+	/// add, addC
+	/// 
+	/// ## Note
+	/// This alternative version of [sub] function uses the following default values for its arguments:
+	/// * ddepth: -1
+	#[inline]
+	pub fn sub_def(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_sub_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
@@ -3976,8 +5439,8 @@ pub mod gapi {
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BM%7D%20%5F%7B11%7D%20x%20%2B%20%20%5Ctexttt%7BM%7D%20%5F%7B12%7D%20y%20%2B%20%20%5Ctexttt%7BM%7D%20%5F%7B13%7D%2C%20%5Ctexttt%7BM%7D%20%5F%7B21%7D%20x%20%2B%20%20%5Ctexttt%7BM%7D%20%5F%7B22%7D%20y%20%2B%20%20%5Ctexttt%7BM%7D%20%5F%7B23%7D%29)
 	/// 
-	/// when the flag #WARP_INVERSE_MAP is set. Otherwise, the transformation is first inverted
-	/// with #invertAffineTransform and then put in the formula above instead of M. The function cannot
+	/// when the flag [WARP_INVERSE_MAP] is set. Otherwise, the transformation is first inverted
+	/// with [invert_affine_transform] and then put in the formula above instead of M. The function cannot
 	/// operate in-place.
 	/// 
 	/// ## Parameters
@@ -3985,10 +5448,48 @@ pub mod gapi {
 	/// * M: ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) transformation matrix.
 	/// * dsize: size of the output image.
 	/// * flags: combination of interpolation methods (see #InterpolationFlags) and the optional
-	/// flag #WARP_INVERSE_MAP that means that M is the inverse transformation (
+	/// flag [WARP_INVERSE_MAP] that means that M is the inverse transformation (
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%5Crightarrow%5Ctexttt%7Bsrc%7D) ).
 	/// * borderMode: pixel extrapolation method (see #BorderTypes);
-	/// borderMode=#BORDER_TRANSPARENT isn't supported
+	/// borderMode=[BORDER_TRANSPARENT] isn't supported
+	/// * borderValue: value used in case of a constant border; by default, it is 0.
+	/// ## See also
+	/// warpPerspective, resize, remap, getRectSubPix, transform
+	/// 
+	/// ## Note
+	/// This alternative version of [warp_affine] function uses the following default values for its arguments:
+	/// * flags: cv::INTER_LINEAR
+	/// * border_mode: cv::BORDER_CONSTANT
+	/// * border_value: Scalar()
+	#[inline]
+	pub fn warp_affine_def(src: &crate::gapi::GMat, m: &core::Mat, dsize: core::Size) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_warpAffine_const_GMatR_const_MatR_const_SizeR(src.as_raw_GMat(), m.as_raw_Mat(), &dsize, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Applies an affine transformation to an image.
+	/// 
+	/// The function warpAffine transforms the source image using the specified matrix:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BM%7D%20%5F%7B11%7D%20x%20%2B%20%20%5Ctexttt%7BM%7D%20%5F%7B12%7D%20y%20%2B%20%20%5Ctexttt%7BM%7D%20%5F%7B13%7D%2C%20%5Ctexttt%7BM%7D%20%5F%7B21%7D%20x%20%2B%20%20%5Ctexttt%7BM%7D%20%5F%7B22%7D%20y%20%2B%20%20%5Ctexttt%7BM%7D%20%5F%7B23%7D%29)
+	/// 
+	/// when the flag [WARP_INVERSE_MAP] is set. Otherwise, the transformation is first inverted
+	/// with [invert_affine_transform] and then put in the formula above instead of M. The function cannot
+	/// operate in-place.
+	/// 
+	/// ## Parameters
+	/// * src: input image.
+	/// * M: ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) transformation matrix.
+	/// * dsize: size of the output image.
+	/// * flags: combination of interpolation methods (see #InterpolationFlags) and the optional
+	/// flag [WARP_INVERSE_MAP] that means that M is the inverse transformation (
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%5Crightarrow%5Ctexttt%7Bsrc%7D) ).
+	/// * borderMode: pixel extrapolation method (see #BorderTypes);
+	/// borderMode=[BORDER_TRANSPARENT] isn't supported
 	/// * borderValue: value used in case of a constant border; by default, it is 0.
 	/// ## See also
 	/// warpPerspective, resize, remap, getRectSubPix, transform
@@ -4013,17 +5514,53 @@ pub mod gapi {
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%5Cleft%20%28%20%5Cfrac%7BM%5F%7B11%7D%20x%20%2B%20M%5F%7B12%7D%20y%20%2B%20M%5F%7B13%7D%7D%7BM%5F%7B31%7D%20x%20%2B%20M%5F%7B32%7D%20y%20%2B%20M%5F%7B33%7D%7D%20%2C%0A%20%20%20%20%20%5Cfrac%7BM%5F%7B21%7D%20x%20%2B%20M%5F%7B22%7D%20y%20%2B%20M%5F%7B23%7D%7D%7BM%5F%7B31%7D%20x%20%2B%20M%5F%7B32%7D%20y%20%2B%20M%5F%7B33%7D%7D%20%5Cright%20%29)
 	/// 
-	/// when the flag #WARP_INVERSE_MAP is set. Otherwise, the transformation is first inverted with invert
+	/// when the flag [WARP_INVERSE_MAP] is set. Otherwise, the transformation is first inverted with invert
 	/// and then put in the formula above instead of M. The function cannot operate in-place.
 	/// 
 	/// ## Parameters
 	/// * src: input image.
 	/// * M: ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) transformation matrix.
 	/// * dsize: size of the output image.
-	/// * flags: combination of interpolation methods (#INTER_LINEAR or #INTER_NEAREST) and the
+	/// * flags: combination of interpolation methods ([INTER_LINEAR] or #INTER_NEAREST) and the
 	/// optional flag #WARP_INVERSE_MAP, that sets M as the inverse transformation (
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%5Crightarrow%5Ctexttt%7Bsrc%7D) ).
-	/// * borderMode: pixel extrapolation method (#BORDER_CONSTANT or #BORDER_REPLICATE).
+	/// * borderMode: pixel extrapolation method ([BORDER_CONSTANT] or #BORDER_REPLICATE).
+	/// * borderValue: value used in case of a constant border; by default, it equals 0.
+	/// ## See also
+	/// warpAffine, resize, remap, getRectSubPix, perspectiveTransform
+	/// 
+	/// ## Note
+	/// This alternative version of [warp_perspective] function uses the following default values for its arguments:
+	/// * flags: cv::INTER_LINEAR
+	/// * border_mode: cv::BORDER_CONSTANT
+	/// * border_value: Scalar()
+	#[inline]
+	pub fn warp_perspective_def(src: &crate::gapi::GMat, m: &core::Mat, dsize: core::Size) -> Result<crate::gapi::GMat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_gapi_warpPerspective_const_GMatR_const_MatR_const_SizeR(src.as_raw_GMat(), m.as_raw_Mat(), &dsize, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Applies a perspective transformation to an image.
+	/// 
+	/// The function warpPerspective transforms the source image using the specified matrix:
+	/// 
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%5Cleft%20%28%20%5Cfrac%7BM%5F%7B11%7D%20x%20%2B%20M%5F%7B12%7D%20y%20%2B%20M%5F%7B13%7D%7D%7BM%5F%7B31%7D%20x%20%2B%20M%5F%7B32%7D%20y%20%2B%20M%5F%7B33%7D%7D%20%2C%0A%20%20%20%20%20%5Cfrac%7BM%5F%7B21%7D%20x%20%2B%20M%5F%7B22%7D%20y%20%2B%20M%5F%7B23%7D%7D%7BM%5F%7B31%7D%20x%20%2B%20M%5F%7B32%7D%20y%20%2B%20M%5F%7B33%7D%7D%20%5Cright%20%29)
+	/// 
+	/// when the flag [WARP_INVERSE_MAP] is set. Otherwise, the transformation is first inverted with invert
+	/// and then put in the formula above instead of M. The function cannot operate in-place.
+	/// 
+	/// ## Parameters
+	/// * src: input image.
+	/// * M: ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) transformation matrix.
+	/// * dsize: size of the output image.
+	/// * flags: combination of interpolation methods ([INTER_LINEAR] or #INTER_NEAREST) and the
+	/// optional flag #WARP_INVERSE_MAP, that sets M as the inverse transformation (
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%5Crightarrow%5Ctexttt%7Bsrc%7D) ).
+	/// * borderMode: pixel extrapolation method ([BORDER_CONSTANT] or #BORDER_REPLICATE).
 	/// * borderValue: value used in case of a constant border; by default, it equals 0.
 	/// ## See also
 	/// warpAffine, resize, remap, getRectSubPix, perspectiveTransform
@@ -4657,12 +6194,38 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [yield_] function uses the following default values for its arguments:
+		/// * output: 0
+		#[inline]
+		fn yield__def(&mut self) -> Result<crate::gapi::GMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GCall_yield(self.as_raw_mut_GCall(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * output: 0
 		#[inline]
 		fn yield_p(&mut self, output: i32) -> Result<crate::gapi::GMatP> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GCall_yieldP_int(self.as_raw_mut_GCall(), output, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GMatP::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [yield_p] function uses the following default values for its arguments:
+		/// * output: 0
+		#[inline]
+		fn yield_p_def(&mut self) -> Result<crate::gapi::GMatP> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GCall_yieldP(self.as_raw_mut_GCall(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::GMatP::opencv_from_extern(ret) };
@@ -4681,12 +6244,38 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [yield_scalar] function uses the following default values for its arguments:
+		/// * output: 0
+		#[inline]
+		fn yield_scalar_def(&mut self) -> Result<crate::gapi::GScalar> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GCall_yieldScalar(self.as_raw_mut_GCall(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GScalar::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * output: 0
 		#[inline]
 		fn yield_frame(&mut self, output: i32) -> Result<crate::gapi::GFrame> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GCall_yieldFrame_int(self.as_raw_mut_GCall(), output, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GFrame::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [yield_frame] function uses the following default values for its arguments:
+		/// * output: 0
+		#[inline]
+		fn yield_frame_def(&mut self) -> Result<crate::gapi::GFrame> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GCall_yieldFrame(self.as_raw_mut_GCall(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::GFrame::opencv_from_extern(ret) };
@@ -5198,12 +6787,41 @@ pub mod gapi {
 		
 		/// @private -- Exclude this function from OpenCV documentation
 		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * args: {}
+		#[inline]
+		fn apply_def(&mut self, callback: &crate::gapi::Detail_ExtractArgsCallback) -> Result<core::Vector<crate::gapi::GRunArg>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_apply_const_ExtractArgsCallbackR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractArgsCallback(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<crate::gapi::GRunArg>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @private -- Exclude this function from OpenCV documentation
+		/// 
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
 		fn apply_1(&mut self, ins: &core::Vector<core::Mat>, outs: &core::Vector<core::Mat>, mut args: crate::gapi::GCompileArgs) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_const_vectorLMatGR_const_vectorLMatGR_GCompileArgsRR(self.as_raw_mut_GComputation(), ins.as_raw_VectorOfMat(), outs.as_raw_VectorOfMat(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @private -- Exclude this function from OpenCV documentation
+		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * args: {}
+		#[inline]
+		fn apply_def_1(&mut self, ins: &core::Vector<core::Mat>, outs: &core::Vector<core::Mat>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_apply_const_vectorLMatGR_const_vectorLMatGR(self.as_raw_mut_GComputation(), ins.as_raw_VectorOfMat(), outs.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5234,6 +6852,27 @@ pub mod gapi {
 		
 		/// Execute an unary computation (with compilation on the fly)
 		/// 
+		/// @overload
+		/// ## Parameters
+		/// * in: input cv::Mat for unary computation
+		/// * out: output cv::Mat for unary computation
+		/// * args: compilation arguments for underlying compilation
+		/// process.
+		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * args: {}
+		#[inline]
+		fn apply_def_2(&mut self, mut in_: core::Mat, out: &mut core::Mat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_apply_Mat_MatR(self.as_raw_mut_GComputation(), in_.as_raw_mut_Mat(), out.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Execute an unary computation (with compilation on the fly)
+		/// 
 		///  @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## Overloaded parameters
@@ -5250,6 +6889,27 @@ pub mod gapi {
 		fn apply_3(&mut self, mut in_: core::Mat, out: &mut core::Scalar, mut args: crate::gapi::GCompileArgs) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_ScalarR_GCompileArgsRR(self.as_raw_mut_GComputation(), in_.as_raw_mut_Mat(), out, args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Execute an unary computation (with compilation on the fly)
+		/// 
+		/// @overload
+		/// ## Parameters
+		/// * in: input cv::Mat for unary computation
+		/// * out: output cv::Scalar for unary computation
+		/// * args: compilation arguments for underlying compilation
+		/// process.
+		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * args: {}
+		#[inline]
+		fn apply_def_3(&mut self, mut in_: core::Mat, out: &mut core::Scalar) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_apply_Mat_ScalarR(self.as_raw_mut_GComputation(), in_.as_raw_mut_Mat(), out, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5279,6 +6939,28 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+		/// Execute a binary computation (with compilation on the fly)
+		/// 
+		/// @overload
+		/// ## Parameters
+		/// * in1: first input cv::Mat for binary computation
+		/// * in2: second input cv::Mat for binary computation
+		/// * out: output cv::Mat for binary computation
+		/// * args: compilation arguments for underlying compilation
+		/// process.
+		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * args: {}
+		#[inline]
+		fn apply_def_4(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Mat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_apply_Mat_Mat_MatR(self.as_raw_mut_GComputation(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Execute an binary computation (with compilation on the fly)
 		/// 
 		///  @private -- Exclude this function from OpenCV documentation
@@ -5298,6 +6980,28 @@ pub mod gapi {
 		fn apply_5(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Scalar, mut args: crate::gapi::GCompileArgs) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_Mat_ScalarR_GCompileArgsRR(self.as_raw_mut_GComputation(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out, args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Execute an binary computation (with compilation on the fly)
+		/// 
+		/// @overload
+		/// ## Parameters
+		/// * in1: first input cv::Mat for binary computation
+		/// * in2: second input cv::Mat for binary computation
+		/// * out: output cv::Scalar for binary computation
+		/// * args: compilation arguments for underlying compilation
+		/// process.
+		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * args: {}
+		#[inline]
+		fn apply_def_5(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Scalar) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_apply_Mat_Mat_ScalarR(self.as_raw_mut_GComputation(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5327,6 +7031,33 @@ pub mod gapi {
 		fn apply_6(&mut self, ins: &core::Vector<core::Mat>, outs: &mut core::Vector<core::Mat>, mut args: crate::gapi::GCompileArgs) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_const_vectorLMatGR_vectorLMatGR_GCompileArgsRR(self.as_raw_mut_GComputation(), ins.as_raw_VectorOfMat(), outs.as_raw_mut_VectorOfMat(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Execute a computation with arbitrary number of
+		/// inputs/outputs (with compilation on-the-fly).
+		/// 
+		/// @overload
+		/// ## Parameters
+		/// * ins: vector of input cv::Mat objects to process by the
+		/// computation.
+		/// * outs: vector of output cv::Mat objects to produce by the
+		/// computation.
+		/// * args: compilation arguments for underlying compilation
+		/// process.
+		/// 
+		/// Numbers of elements in ins/outs vectors must match numbers of
+		/// inputs/outputs which were used to define this GComputation.
+		/// 
+		/// ## Note
+		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// * args: {}
+		#[inline]
+		fn apply_def_6(&mut self, ins: &core::Vector<core::Mat>, outs: &mut core::Vector<core::Mat>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_apply_const_vectorLMatGR_vectorLMatGR(self.as_raw_mut_GComputation(), ins.as_raw_VectorOfMat(), outs.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5364,6 +7095,39 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+		/// Compile the computation for streaming mode.
+		/// 
+		/// This method triggers compilation process and produces a new
+		/// GStreamingCompiled object which then can process video stream
+		/// data in any format. Underlying mechanisms will be adjusted to
+		/// every new input video stream automatically, but please note that
+		/// _not all_ existing backends support this (see reshape()).
+		/// 
+		/// ## Parameters
+		/// * args: compilation arguments for this compilation
+		/// process. Compilation arguments directly affect what kind of
+		/// executable object would be produced, e.g. which kernels (and
+		/// thus, devices) would be used to execute computation.
+		/// 
+		/// ## Returns
+		/// GStreamingCompiled, a streaming-oriented executable
+		/// computation compiled for any input image format.
+		/// ## See also
+		/// [gapi_compile_args]
+		/// 
+		/// ## Note
+		/// This alternative version of [compile_streaming] function uses the following default values for its arguments:
+		/// * args: {}
+		#[inline]
+		fn compile_streaming_def(&mut self) -> Result<crate::gapi::GStreamingCompiled> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_compileStreaming(self.as_raw_mut_GComputation(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GStreamingCompiled::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## C++ default parameters
@@ -5372,6 +7136,21 @@ pub mod gapi {
 		fn compile_streaming_1(&mut self, callback: &crate::gapi::Detail_ExtractMetaCallback, mut args: crate::gapi::GCompileArgs) -> Result<crate::gapi::GStreamingCompiled> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_compileStreaming_const_ExtractMetaCallbackR_GCompileArgsRR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractMetaCallback(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GStreamingCompiled::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @private -- Exclude this function from OpenCV documentation
+		/// 
+		/// ## Note
+		/// This alternative version of [compile_streaming] function uses the following default values for its arguments:
+		/// * args: {}
+		#[inline]
+		fn compile_streaming_def_1(&mut self, callback: &crate::gapi::Detail_ExtractMetaCallback) -> Result<crate::gapi::GStreamingCompiled> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_compileStreaming_const_ExtractMetaCallbackR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractMetaCallback(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::GStreamingCompiled::opencv_from_extern(ret) };
@@ -5395,11 +7174,11 @@ pub mod gapi {
 	///  executed. The below example expresses calculation of Sobel operator
 	///  for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
 	/// 
-	///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	///  Full pipeline can be now captured with this object declaration:
 	/// 
-	///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	///  Input/output data objects on which a call graph should be
 	///  reconstructed are passed using special wrappers cv::GIn and
@@ -5412,7 +7191,7 @@ pub mod gapi {
 	///  expects that image gradients are already pre-calculated may be
 	///  defined like this:
 	/// 
-	///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	///  The resulting graph would expect two inputs and produce one
 	///  output. In this case, it doesn't matter if gx/gy data objects are
@@ -6555,6 +8334,19 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * p: false
+		#[inline]
+		pub fn new_def(d: i32, c: i32, s: core::Size) -> Result<crate::gapi::GMatDesc> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GMatDesc_GMatDesc_int_int_Size(d, c, s.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn new_1(d: i32, dd: &core::Vector<i32>) -> Result<crate::gapi::GMatDesc> {
 			return_send!(via ocvrs_return);
@@ -6966,7 +8758,7 @@ pub mod gapi {
 		///  This constructor overload is not marked `explicit` and can be
 		///  used in G-API expression code like this:
 		/// 
-		///  [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.8.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+		///  [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 		/// 
 		///  Here operator+(GMat,GScalar) is used to wrap cv::gapi::addC()
 		///  and a value-initialized GScalar is created on the fly.
@@ -7946,6 +9738,18 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [step] function uses the following default values for its arguments:
+		/// * i: 0
+		#[inline]
+		fn step_def(&self) -> Result<size_t> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RMat_View_step_const(self.as_raw_RMat_View(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn steps(&self) -> Result<core::Vector<size_t>> {
 			return_send!(via ocvrs_return);
@@ -8448,6 +10252,20 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * v2: 0
+		/// * v3: 0
+		#[inline]
+		pub fn new_def(v0: f64, v1: f64) -> Result<crate::gapi::Scalar> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_own_Scalar_Scalar_double_double(v0, v1, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::Scalar::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn all(v0: f64) -> Result<crate::gapi::Scalar> {
 			return_send!(via ocvrs_return);
@@ -8495,6 +10313,18 @@ pub mod gapi {
 		pub fn new(cap: size_t) -> Result<crate::gapi::queue_capacity> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_streaming_queue_capacity_queue_capacity_size_t(cap, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * cap: 1
+		#[inline]
+		pub fn new_def() -> Result<crate::gapi::queue_capacity> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_streaming_queue_capacity_queue_capacity(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -8659,7 +10489,7 @@ pub mod gapi {
 		/// * radius_: The radius of the circle
 		/// * color_: The color of the  circle
 		/// * thick_: The thickness of the circle outline, if positive. Negative values, like #FILLED, mean that a filled circle is to be drawn
-		/// * lt_: The Type of the circle boundary. See #LineTypes
+		/// * lt_: The Type of the circle boundary. See [line_types]
 		/// * shift_: The Number of fractional bits in the coordinates of the center and in the radius value
 		/// 
 		/// ## C++ default parameters
@@ -8670,6 +10500,30 @@ pub mod gapi {
 		pub fn new(center_: core::Point, radius_: i32, color_: core::Scalar, thick_: i32, lt_: i32, shift_: i32) -> Result<crate::gapi::Circle> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_wip_draw_Circle_Circle_const_PointR_int_const_ScalarR_int_int_int(&center_, radius_, &color_, thick_, lt_, shift_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Circle constructor
+		/// 
+		/// ## Parameters
+		/// * center_: The center of the circle
+		/// * radius_: The radius of the circle
+		/// * color_: The color of the  circle
+		/// * thick_: The thickness of the circle outline, if positive. Negative values, like #FILLED, mean that a filled circle is to be drawn
+		/// * lt_: The Type of the circle boundary. See [line_types]
+		/// * shift_: The Number of fractional bits in the coordinates of the center and in the radius value
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thick_: 1
+		/// * lt_: 8
+		/// * shift_: 0
+		#[inline]
+		pub fn new_def(center_: core::Point, radius_: i32, color_: core::Scalar) -> Result<crate::gapi::Circle> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Circle_Circle_const_PointR_int_const_ScalarR(&center_, radius_, &color_, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -8859,7 +10713,7 @@ pub mod gapi {
 		/// * pt2_: The second point of the line segment
 		/// * color_: The line color
 		/// * thick_: The thickness of line
-		/// * lt_: The Type of the line. See #LineTypes
+		/// * lt_: The Type of the line. See [line_types]
 		/// * shift_: The number of fractional bits in the point coordinates
 		/// 
 		/// ## C++ default parameters
@@ -8870,6 +10724,30 @@ pub mod gapi {
 		pub fn new(pt1_: core::Point, pt2_: core::Point, color_: core::Scalar, thick_: i32, lt_: i32, shift_: i32) -> Result<crate::gapi::Line> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_wip_draw_Line_Line_const_PointR_const_PointR_const_ScalarR_int_int_int(&pt1_, &pt2_, &color_, thick_, lt_, shift_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Line constructor
+		/// 
+		/// ## Parameters
+		/// * pt1_: The first point of the line segment
+		/// * pt2_: The second point of the line segment
+		/// * color_: The line color
+		/// * thick_: The thickness of line
+		/// * lt_: The Type of the line. See [line_types]
+		/// * shift_: The number of fractional bits in the point coordinates
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thick_: 1
+		/// * lt_: 8
+		/// * shift_: 0
+		#[inline]
+		pub fn new_def(pt1_: core::Point, pt2_: core::Point, color_: core::Scalar) -> Result<crate::gapi::Line> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Line_Line_const_PointR_const_PointR_const_ScalarR(&pt1_, &pt2_, &color_, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9052,7 +10930,7 @@ pub mod gapi {
 		/// * points_: Points to connect
 		/// * color_: The line color
 		/// * thick_: The thickness of line
-		/// * lt_: The Type of the line. See #LineTypes
+		/// * lt_: The Type of the line. See [line_types]
 		/// * shift_: The number of fractional bits in the point coordinate
 		/// 
 		/// ## C++ default parameters
@@ -9063,6 +10941,30 @@ pub mod gapi {
 		pub fn new(points_: &core::Vector<core::Point>, color_: core::Scalar, thick_: i32, lt_: i32, shift_: i32) -> Result<crate::gapi::Poly> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_wip_draw_Poly_Poly_const_vectorLPointGR_const_ScalarR_int_int_int(points_.as_raw_VectorOfPoint(), &color_, thick_, lt_, shift_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::Poly::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Mosaic constructor
+		/// 
+		/// ## Parameters
+		/// * points_: Points to connect
+		/// * color_: The line color
+		/// * thick_: The thickness of line
+		/// * lt_: The Type of the line. See [line_types]
+		/// * shift_: The number of fractional bits in the point coordinate
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thick_: 1
+		/// * lt_: 8
+		/// * shift_: 0
+		#[inline]
+		pub fn new_def(points_: &core::Vector<core::Point>, color_: core::Scalar) -> Result<crate::gapi::Poly> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Poly_Poly_const_vectorLPointGR_const_ScalarR(points_.as_raw_VectorOfPoint(), &color_, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::Poly::opencv_from_extern(ret) };
@@ -9133,7 +11035,7 @@ pub mod gapi {
 		/// * rect_: Coordinates of the rectangle
 		/// * color_: The bottom-left corner of the text string in the image
 		/// * thick_: The thickness of lines that make up the rectangle. Negative values, like #FILLED, mean that the function has to draw a filled rectangle
-		/// * lt_: The type of the line. See #LineTypes
+		/// * lt_: The type of the line. See [line_types]
 		/// * shift_: The number of fractional bits in the point coordinates
 		/// 
 		/// ## C++ default parameters
@@ -9144,6 +11046,29 @@ pub mod gapi {
 		pub fn new(rect_: core::Rect, color_: core::Scalar, thick_: i32, lt_: i32, shift_: i32) -> Result<crate::gapi::Rect> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_wip_draw_Rect_Rect_const_RectR_const_ScalarR_int_int_int(&rect_, &color_, thick_, lt_, shift_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Rect constructor
+		/// 
+		/// ## Parameters
+		/// * rect_: Coordinates of the rectangle
+		/// * color_: The bottom-left corner of the text string in the image
+		/// * thick_: The thickness of lines that make up the rectangle. Negative values, like #FILLED, mean that the function has to draw a filled rectangle
+		/// * lt_: The type of the line. See [line_types]
+		/// * shift_: The number of fractional bits in the point coordinates
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thick_: 1
+		/// * lt_: 8
+		/// * shift_: 0
+		#[inline]
+		pub fn new_def(rect_: core::Rect, color_: core::Scalar) -> Result<crate::gapi::Rect> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Rect_Rect_const_RectR_const_ScalarR(&rect_, &color_, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9329,11 +11254,11 @@ pub mod gapi {
 		/// ## Parameters
 		/// * text_: The text string to be drawn
 		/// * org_: The bottom-left corner of the text string in the image
-		/// * ff_: The font type, see #HersheyFonts
+		/// * ff_: The font type, see [hershey_fonts]
 		/// * fs_: The font scale factor that is multiplied by the font-specific base size
 		/// * color_: The text color
 		/// * thick_: The thickness of the lines used to draw a text
-		/// * lt_: The line type. See #LineTypes
+		/// * lt_: The line type. See [line_types]
 		/// * bottom_left_origin_: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
 		/// 
 		/// ## C++ default parameters
@@ -9345,6 +11270,34 @@ pub mod gapi {
 			extern_container_arg!(text_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_wip_draw_Text_Text_const_stringR_const_PointR_int_double_const_ScalarR_int_int_bool(text_.opencv_as_extern(), &org_, ff_, fs_, &color_, thick_, lt_, bottom_left_origin_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::Text::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Text constructor
+		/// 
+		/// ## Parameters
+		/// * text_: The text string to be drawn
+		/// * org_: The bottom-left corner of the text string in the image
+		/// * ff_: The font type, see [hershey_fonts]
+		/// * fs_: The font scale factor that is multiplied by the font-specific base size
+		/// * color_: The text color
+		/// * thick_: The thickness of the lines used to draw a text
+		/// * lt_: The line type. See [line_types]
+		/// * bottom_left_origin_: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thick_: 1
+		/// * lt_: 8
+		/// * bottom_left_origin_: false
+		#[inline]
+		pub fn new_def(text_: &str, org_: core::Point, ff_: i32, fs_: f64, color_: core::Scalar) -> Result<crate::gapi::Text> {
+			extern_container_arg!(text_);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Text_Text_const_stringR_const_PointR_int_double_const_ScalarR(text_.opencv_as_extern(), &org_, ff_, fs_, &color_, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::Text::opencv_from_extern(ret) };

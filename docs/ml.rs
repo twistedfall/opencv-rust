@@ -15,7 +15,7 @@ pub mod ml {
 		pub use { super::ParamGridTraitConst, super::ParamGridTrait, super::TrainDataTraitConst, super::TrainDataTrait, super::StatModelTraitConst, super::StatModelTrait, super::NormalBayesClassifierTraitConst, super::NormalBayesClassifierTrait, super::KNearestTraitConst, super::KNearestTrait, super::SVM_KernelTraitConst, super::SVM_KernelTrait, super::SVMTraitConst, super::SVMTrait, super::EMTraitConst, super::EMTrait, super::DTrees_NodeTraitConst, super::DTrees_NodeTrait, super::DTrees_SplitTraitConst, super::DTrees_SplitTrait, super::DTreesTraitConst, super::DTreesTrait, super::RTreesTraitConst, super::RTreesTrait, super::BoostTraitConst, super::BoostTrait, super::ANN_MLPTraitConst, super::ANN_MLPTrait, super::LogisticRegressionTraitConst, super::LogisticRegressionTrait, super::SVMSGDTraitConst, super::SVMSGDTrait };
 	}
 	
-	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 	pub const ANN_MLP_ANNEAL: i32 = 2;
 	/// The back-propagation algorithm.
 	pub const ANN_MLP_BACKPROP: i32 = 0;
@@ -37,7 +37,7 @@ pub mod ml {
 	pub const ANN_MLP_NO_OUTPUT_SCALE: i32 = 4;
 	/// ReLU function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dmax%280%2Cx%29)
 	pub const ANN_MLP_RELU: i32 = 3;
-	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 	pub const ANN_MLP_RPROP: i32 = 1;
 	/// Symmetrical sigmoid: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Cbeta%2A%281%2De%5E%7B%2D%5Calpha%20x%7D%29%2F%281%2Be%5E%7B%2D%5Calpha%20x%7D%29)
 	/// 
@@ -139,7 +139,7 @@ pub mod ml {
 	/// the decision boundary) is used instead of C.
 	pub const SVM_NU_SVC: i32 = 101;
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
-	/// See [LibSVM](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+	/// See [LibSVM](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 	pub const SVM_NU_SVR: i32 = 104;
 	/// Distribution Estimation (One-class %SVM). All the training data are from
 	/// the same class, %SVM builds a boundary that separates the class from the rest of the feature
@@ -217,9 +217,9 @@ pub mod ml {
 	pub enum ANN_MLP_TrainingMethods {
 		/// The back-propagation algorithm.
 		BACKPROP = 0,
-		/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+		/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 		RPROP = 1,
-		/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+		/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 		ANNEAL = 2,
 	}
 	
@@ -362,7 +362,7 @@ pub mod ml {
 	/// SVM::C_SVC SVMs have been trained (one against rest) with auto_train. Evaluation on three
 	/// different kernels (SVM::CHI2, SVM::INTER, SVM::RBF). The color depicts the class with max score.
 	/// Bright means max-score \> 0, dark means max-score \< 0.
-	/// ![image](https://docs.opencv.org/4.8.0/SVM_Comparison.png)
+	/// ![image](https://docs.opencv.org/4.8.1/SVM_Comparison.png)
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SVM_KernelTypes {
@@ -422,7 +422,7 @@ pub mod ml {
 		/// penalty multiplier C is used.
 		EPS_SVR = 103,
 		/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
-		/// See [LibSVM](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+		/// See [LibSVM](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 		NU_SVR = 104,
 	}
 	
@@ -724,6 +724,25 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Sets training method and common parameters.
+		/// ## Parameters
+		/// * method: Default value is ANN_MLP::RPROP. See ANN_MLP::TrainingMethods.
+		/// * param1: passed to setRpropDW0 for ANN_MLP::RPROP and to setBackpropWeightScale for ANN_MLP::BACKPROP and to initialT for ANN_MLP::ANNEAL.
+		/// * param2: passed to setRpropDWMin for ANN_MLP::RPROP and to setBackpropMomentumScale for ANN_MLP::BACKPROP and to finalT for ANN_MLP::ANNEAL.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_train_method] function uses the following default values for its arguments:
+		/// * param1: 0
+		/// * param2: 0
+		#[inline]
+		fn set_train_method_def(&mut self, method: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_ANN_MLP_setTrainMethod_int(self.as_raw_mut_ANN_MLP(), method, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Initialize the activation function for each neuron.
 		/// Currently the default and the only fully supported activation function is ANN_MLP::SIGMOID_SYM.
 		/// ## Parameters
@@ -738,6 +757,26 @@ pub mod ml {
 		fn set_activation_function(&mut self, typ: i32, param1: f64, param2: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setActivationFunction_int_double_double(self.as_raw_mut_ANN_MLP(), typ, param1, param2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Initialize the activation function for each neuron.
+		/// Currently the default and the only fully supported activation function is ANN_MLP::SIGMOID_SYM.
+		/// ## Parameters
+		/// * type: The type of activation function. See ANN_MLP::ActivationFunctions.
+		/// * param1: The first parameter of the activation function, ![inline formula](https://latex.codecogs.com/png.latex?%5Calpha). Default value is 0.
+		/// * param2: The second parameter of the activation function, ![inline formula](https://latex.codecogs.com/png.latex?%5Cbeta). Default value is 0.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_activation_function] function uses the following default values for its arguments:
+		/// * param1: 0
+		/// * param2: 0
+		#[inline]
+		fn set_activation_function_def(&mut self, typ: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_ANN_MLP_setActivationFunction_int(self.as_raw_mut_ANN_MLP(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1206,6 +1245,30 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Loads and creates a serialized Boost from a file
+		/// 
+		/// Use Boost::save to serialize and store an RTree to disk.
+		/// Load the Boost from this file again, by calling this function with the path to the file.
+		/// Optionally specify the node for the file containing the classifier
+		/// 
+		/// ## Parameters
+		/// * filepath: path to serialized Boost
+		/// * nodeName: name of node containing the classifier
+		/// 
+		/// ## Note
+		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// * node_name: String()
+		#[inline]
+		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::Boost>> {
+			extern_container_arg!(filepath);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_Boost_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::Boost>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { Boost, core::Algorithm, cv_ml_Boost_to_Algorithm }
@@ -1668,6 +1731,30 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::DTrees>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Loads and creates a serialized DTrees from a file
+		/// 
+		/// Use DTree::save to serialize and store an DTree to disk.
+		/// Load the DTree from this file again, by calling this function with the path to the file.
+		/// Optionally specify the node for the file containing the classifier
+		/// 
+		/// ## Parameters
+		/// * filepath: path to serialized DTree
+		/// * nodeName: name of node containing the classifier
+		/// 
+		/// ## Note
+		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// * node_name: String()
+		#[inline]
+		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::DTrees>> {
+			extern_container_arg!(filepath);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_DTrees_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::DTrees>::opencv_from_extern(ret) };
@@ -2146,6 +2233,28 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Returns posterior probabilities for the provided samples
+		/// 
+		/// ## Parameters
+		/// * samples: The input samples, floating-point matrix
+		/// * results: The optional output ![inline formula](https://latex.codecogs.com/png.latex?%20nSamples%20%5Ctimes%20nClusters) matrix of results. It contains
+		/// posterior probabilities for each sample from the input
+		/// * flags: This parameter will be ignored
+		/// 
+		/// ## Note
+		/// This alternative version of [predict] function uses the following default values for its arguments:
+		/// * results: noArray()
+		/// * flags: 0
+		#[inline]
+		fn predict_def(&self, samples: &impl core::ToInputArray) -> Result<f32> {
+			input_array_arg!(samples);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_EM_predict_const_const__InputArrayR(self.as_raw_EM(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Returns a likelihood logarithm value and an index of the most probable mixture component
 		/// for the given sample.
 		/// 
@@ -2266,6 +2375,50 @@ pub mod ml {
 		
 		/// Estimate the Gaussian mixture parameters from a samples set.
 		/// 
+		/// This variation starts with Expectation step. Initial values of the model parameters will be
+		/// estimated by the k-means algorithm.
+		/// 
+		/// Unlike many of the ML models, %EM is an unsupervised learning algorithm and it does not take
+		/// responses (class labels or function values) as input. Instead, it computes the *Maximum
+		/// Likelihood Estimate* of the Gaussian mixture parameters from an input sample set, stores all the
+		/// parameters inside the structure: ![inline formula](https://latex.codecogs.com/png.latex?p%5F%7Bi%2Ck%7D) in probs, ![inline formula](https://latex.codecogs.com/png.latex?a%5Fk) in means , ![inline formula](https://latex.codecogs.com/png.latex?S%5Fk) in
+		/// covs[k], ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi%5Fk) in weights , and optionally computes the output "class label" for each
+		/// sample: ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D%5Fi%3D%5Ctexttt%7Barg%20max%7D%5Fk%28p%5F%7Bi%2Ck%7D%29%2C%20i%3D1%2E%2EN) (indices of the most
+		/// probable mixture component for each sample).
+		/// 
+		/// The trained model can be used further for prediction, just like any other classifier. The
+		/// trained model is similar to the NormalBayesClassifier.
+		/// 
+		/// ## Parameters
+		/// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
+		///    one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
+		///    it will be converted to the inner matrix of such type for the further computing.
+		/// * logLikelihoods: The optional output matrix that contains a likelihood logarithm value for
+		///    each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_64FC1 type.
+		/// * labels: The optional output "class label" for each sample:
+		///    ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D%5Fi%3D%5Ctexttt%7Barg%20max%7D%5Fk%28p%5F%7Bi%2Ck%7D%29%2C%20i%3D1%2E%2EN) (indices of the most probable
+		///    mixture component for each sample). It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_32SC1 type.
+		/// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
+		///    mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
+		///    CV_64FC1 type.
+		/// 
+		/// ## Note
+		/// This alternative version of [train_em] function uses the following default values for its arguments:
+		/// * log_likelihoods: noArray()
+		/// * labels: noArray()
+		/// * probs: noArray()
+		#[inline]
+		fn train_em_def(&mut self, samples: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(samples);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_EM_trainEM_const__InputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Estimate the Gaussian mixture parameters from a samples set.
+		/// 
 		/// This variation starts with Expectation step. You need to provide initial means ![inline formula](https://latex.codecogs.com/png.latex?a%5Fk) of
 		/// mixture components. Optionally you can pass initial weights ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi%5Fk) and covariance matrices
 		/// ![inline formula](https://latex.codecogs.com/png.latex?S%5Fk) of mixture components.
@@ -2316,6 +2469,52 @@ pub mod ml {
 		
 		/// Estimate the Gaussian mixture parameters from a samples set.
 		/// 
+		/// This variation starts with Expectation step. You need to provide initial means ![inline formula](https://latex.codecogs.com/png.latex?a%5Fk) of
+		/// mixture components. Optionally you can pass initial weights ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi%5Fk) and covariance matrices
+		/// ![inline formula](https://latex.codecogs.com/png.latex?S%5Fk) of mixture components.
+		/// 
+		/// ## Parameters
+		/// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
+		///    one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
+		///    it will be converted to the inner matrix of such type for the further computing.
+		/// * means0: Initial means ![inline formula](https://latex.codecogs.com/png.latex?a%5Fk) of mixture components. It is a one-channel matrix of
+		///    ![inline formula](https://latex.codecogs.com/png.latex?nclusters%20%5Ctimes%20dims) size. If the matrix does not have CV_64F type it will be
+		///    converted to the inner matrix of such type for the further computing.
+		/// * covs0: The vector of initial covariance matrices ![inline formula](https://latex.codecogs.com/png.latex?S%5Fk) of mixture components. Each of
+		///    covariance matrices is a one-channel matrix of ![inline formula](https://latex.codecogs.com/png.latex?dims%20%5Ctimes%20dims) size. If the matrices
+		///    do not have CV_64F type they will be converted to the inner matrices of such type for the
+		///    further computing.
+		/// * weights0: Initial weights ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi%5Fk) of mixture components. It should be a one-channel
+		///    floating-point matrix with ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20nclusters) or ![inline formula](https://latex.codecogs.com/png.latex?nclusters%20%5Ctimes%201) size.
+		/// * logLikelihoods: The optional output matrix that contains a likelihood logarithm value for
+		///    each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_64FC1 type.
+		/// * labels: The optional output "class label" for each sample:
+		///    ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D%5Fi%3D%5Ctexttt%7Barg%20max%7D%5Fk%28p%5F%7Bi%2Ck%7D%29%2C%20i%3D1%2E%2EN) (indices of the most probable
+		///    mixture component for each sample). It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_32SC1 type.
+		/// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
+		///    mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
+		///    CV_64FC1 type.
+		/// 
+		/// ## Note
+		/// This alternative version of [train_e] function uses the following default values for its arguments:
+		/// * covs0: noArray()
+		/// * weights0: noArray()
+		/// * log_likelihoods: noArray()
+		/// * labels: noArray()
+		/// * probs: noArray()
+		#[inline]
+		fn train_e_def(&mut self, samples: &impl core::ToInputArray, means0: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(samples);
+			input_array_arg!(means0);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_EM_trainE_const__InputArrayR_const__InputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), means0.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Estimate the Gaussian mixture parameters from a samples set.
+		/// 
 		/// This variation starts with Maximization step. You need to provide initial probabilities
 		/// ![inline formula](https://latex.codecogs.com/png.latex?p%5F%7Bi%2Ck%7D) to use this option.
 		/// 
@@ -2346,6 +2545,41 @@ pub mod ml {
 			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainM_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), probs0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Estimate the Gaussian mixture parameters from a samples set.
+		/// 
+		/// This variation starts with Maximization step. You need to provide initial probabilities
+		/// ![inline formula](https://latex.codecogs.com/png.latex?p%5F%7Bi%2Ck%7D) to use this option.
+		/// 
+		/// ## Parameters
+		/// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
+		///    one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
+		///    it will be converted to the inner matrix of such type for the further computing.
+		/// * probs0: the probabilities
+		/// * logLikelihoods: The optional output matrix that contains a likelihood logarithm value for
+		///    each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_64FC1 type.
+		/// * labels: The optional output "class label" for each sample:
+		///    ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D%5Fi%3D%5Ctexttt%7Barg%20max%7D%5Fk%28p%5F%7Bi%2Ck%7D%29%2C%20i%3D1%2E%2EN) (indices of the most probable
+		///    mixture component for each sample). It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_32SC1 type.
+		/// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
+		///    mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
+		///    CV_64FC1 type.
+		/// 
+		/// ## Note
+		/// This alternative version of [train_m] function uses the following default values for its arguments:
+		/// * log_likelihoods: noArray()
+		/// * labels: noArray()
+		/// * probs: noArray()
+		#[inline]
+		fn train_m_def(&mut self, samples: &impl core::ToInputArray, probs0: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(samples);
+			input_array_arg!(probs0);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_EM_trainM_const__InputArrayR_const__InputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), probs0.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2427,6 +2661,30 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::EM>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Loads and creates a serialized EM from a file
+		/// 
+		/// Use EM::save to serialize and store an EM to disk.
+		/// Load the EM from this file again, by calling this function with the path to the file.
+		/// Optionally specify the node for the file containing the classifier
+		/// 
+		/// ## Parameters
+		/// * filepath: path to serialized EM
+		/// * nodeName: name of node containing the classifier
+		/// 
+		/// ## Note
+		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// * node_name: String()
+		#[inline]
+		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::EM>> {
+			extern_container_arg!(filepath);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_EM_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::EM>::opencv_from_extern(ret) };
@@ -2537,6 +2795,48 @@ pub mod ml {
 			output_array_arg!(dist);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_KNearest_findNearest_const_const__InputArrayR_int_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_KNearest(), samples.as_raw__InputArray(), k, results.as_raw__OutputArray(), neighbor_responses.as_raw__OutputArray(), dist.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Finds the neighbors and predicts responses for input vectors.
+		/// 
+		/// ## Parameters
+		/// * samples: Input samples stored by rows. It is a single-precision floating-point matrix of
+		///    `<number_of_samples> * k` size.
+		/// * k: Number of used nearest neighbors. Should be greater than 1.
+		/// * results: Vector with results of prediction (regression or classification) for each input
+		///    sample. It is a single-precision floating-point vector with `<number_of_samples>` elements.
+		/// * neighborResponses: Optional output values for corresponding neighbors. It is a single-
+		///    precision floating-point matrix of `<number_of_samples> * k` size.
+		/// * dist: Optional output distances from the input vectors to the corresponding neighbors. It
+		///    is a single-precision floating-point matrix of `<number_of_samples> * k` size.
+		/// 
+		/// For each input vector (a row of the matrix samples), the method finds the k nearest neighbors.
+		/// In case of regression, the predicted result is a mean value of the particular vector's neighbor
+		/// responses. In case of classification, the class is determined by voting.
+		/// 
+		/// For each input vector, the neighbors are sorted by their distances to the vector.
+		/// 
+		/// In case of C++ interface you can use output pointers to empty matrices and the function will
+		/// allocate memory itself.
+		/// 
+		/// If only a single input vector is passed, all output matrices are optional and the predicted
+		/// value is returned by the method.
+		/// 
+		/// The function is parallelized with the TBB library.
+		/// 
+		/// ## Note
+		/// This alternative version of [find_nearest] function uses the following default values for its arguments:
+		/// * neighbor_responses: noArray()
+		/// * dist: noArray()
+		#[inline]
+		fn find_nearest_def(&self, samples: &impl core::ToInputArray, k: i32, results: &mut impl core::ToOutputArray) -> Result<f32> {
+			input_array_arg!(samples);
+			output_array_arg!(results);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_KNearest_findNearest_const_const__InputArrayR_int_const__OutputArrayR(self.as_raw_KNearest(), samples.as_raw__InputArray(), k, results.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2786,6 +3086,28 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Predicts responses for input samples and returns a float type.
+		/// 
+		/// ## Parameters
+		/// * samples: The input data for the prediction algorithm. Matrix [m x n], where each row
+		///    contains variables (features) of one object being classified. Should have data type CV_32F.
+		/// * results: Predicted labels as a column matrix of type CV_32S.
+		/// * flags: Not used.
+		/// 
+		/// ## Note
+		/// This alternative version of [predict] function uses the following default values for its arguments:
+		/// * results: noArray()
+		/// * flags: 0
+		#[inline]
+		fn predict_def(&self, samples: &impl core::ToInputArray) -> Result<f32> {
+			input_array_arg!(samples);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_LogisticRegression_predict_const_const__InputArrayR(self.as_raw_LogisticRegression(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// This function returns the trained parameters arranged across rows.
 		/// 
 		/// For a two class classification problem, it returns a row matrix. It returns learnt parameters of
@@ -2962,6 +3284,30 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Loads and creates a serialized LogisticRegression from a file
+		/// 
+		/// Use LogisticRegression::save to serialize and store an LogisticRegression to disk.
+		/// Load the LogisticRegression from this file again, by calling this function with the path to the file.
+		/// Optionally specify the node for the file containing the classifier
+		/// 
+		/// ## Parameters
+		/// * filepath: path to serialized LogisticRegression
+		/// * nodeName: name of node containing the classifier
+		/// 
+		/// ## Note
+		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// * node_name: String()
+		#[inline]
+		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::LogisticRegression>> {
+			extern_container_arg!(filepath);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_LogisticRegression_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::LogisticRegression>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { LogisticRegression, core::Algorithm, cv_ml_LogisticRegression_to_Algorithm }
@@ -2997,6 +3343,29 @@ pub mod ml {
 			output_array_arg!(output_probs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_NormalBayesClassifier_predictProb_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(self.as_raw_NormalBayesClassifier(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), output_probs.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Predicts the response for sample(s).
+		/// 
+		/// The method estimates the most probable classes for input vectors. Input vectors (one or more)
+		/// are stored as rows of the matrix inputs. In case of multiple input vectors, there should be one
+		/// output vector outputs. The predicted class for a single input vector is returned by the method.
+		/// The vector outputProbs contains the output probabilities corresponding to each element of
+		/// result.
+		/// 
+		/// ## Note
+		/// This alternative version of [predict_prob] function uses the following default values for its arguments:
+		/// * flags: 0
+		#[inline]
+		fn predict_prob_def(&self, inputs: &impl core::ToInputArray, outputs: &mut impl core::ToOutputArray, output_probs: &mut impl core::ToOutputArray) -> Result<f32> {
+			input_array_arg!(inputs);
+			output_array_arg!(outputs);
+			output_array_arg!(output_probs);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_NormalBayesClassifier_predictProb_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_NormalBayesClassifier(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), output_probs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3083,6 +3452,30 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_NormalBayesClassifier_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::NormalBayesClassifier>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Loads and creates a serialized NormalBayesClassifier from a file
+		/// 
+		/// Use NormalBayesClassifier::save to serialize and store an NormalBayesClassifier to disk.
+		/// Load the NormalBayesClassifier from this file again, by calling this function with the path to the file.
+		/// Optionally specify the node for the file containing the classifier
+		/// 
+		/// ## Parameters
+		/// * filepath: path to serialized NormalBayesClassifier
+		/// * nodeName: name of node containing the classifier
+		/// 
+		/// ## Note
+		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// * node_name: String()
+		#[inline]
+		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::NormalBayesClassifier>> {
+			extern_container_arg!(filepath);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_NormalBayesClassifier_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::NormalBayesClassifier>::opencv_from_extern(ret) };
@@ -3234,6 +3627,28 @@ pub mod ml {
 		pub fn create(min_val: f64, max_val: f64, logstep: f64) -> Result<core::Ptr<crate::ml::ParamGrid>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ParamGrid_create_double_double_double(min_val, max_val, logstep, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::ParamGrid>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates a ParamGrid Ptr that can be given to the %SVM::trainAuto method
+		/// 
+		/// ## Parameters
+		/// * minVal: minimum value of the parameter grid
+		/// * maxVal: maximum value of the parameter grid
+		/// * logstep: Logarithmic step for iterating the statmodel parameter
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * min_val: 0.
+		/// * max_val: 0.
+		/// * logstep: 1.
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::ml::ParamGrid>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_ParamGrid_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::ParamGrid>::opencv_from_extern(ret) };
@@ -3482,6 +3897,30 @@ pub mod ml {
 			extern_container_arg!(node_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_RTrees_load_const_StringR_const_StringR(filepath.opencv_as_extern(), node_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::RTrees>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Loads and creates a serialized RTree from a file
+		/// 
+		/// Use RTree::save to serialize and store an RTree to disk.
+		/// Load the RTree from this file again, by calling this function with the path to the file.
+		/// Optionally specify the node for the file containing the classifier
+		/// 
+		/// ## Parameters
+		/// * filepath: path to serialized RTree
+		/// * nodeName: name of node containing the classifier
+		/// 
+		/// ## Note
+		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// * node_name: String()
+		#[inline]
+		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::RTrees>> {
+			extern_container_arg!(filepath);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_RTrees_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::RTrees>::opencv_from_extern(ret) };
@@ -3900,6 +4339,60 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Trains an %SVM with optimal parameters.
+		/// 
+		/// ## Parameters
+		/// * data: the training data that can be constructed using TrainData::create or
+		///    TrainData::loadFromCSV.
+		/// * kFold: Cross-validation parameter. The training set is divided into kFold subsets. One
+		///    subset is used to test the model, the others form the train set. So, the %SVM algorithm is
+		///    executed kFold times.
+		/// * Cgrid: grid for C
+		/// * gammaGrid: grid for gamma
+		/// * pGrid: grid for p
+		/// * nuGrid: grid for nu
+		/// * coeffGrid: grid for coeff
+		/// * degreeGrid: grid for degree
+		/// * balanced: If true and the problem is 2-class classification then the method creates more
+		///    balanced cross-validation subsets that is proportions between classes in subsets are close
+		///    to such proportion in the whole train dataset.
+		/// 
+		/// The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
+		/// nu, coef0, degree. Parameters are considered optimal when the cross-validation
+		/// estimate of the test set error is minimal.
+		/// 
+		/// If there is no need to optimize a parameter, the corresponding grid step should be set to any
+		/// value less than or equal to 1. For example, to avoid optimization in gamma, set `gammaGrid.step
+		/// = 0`, `gammaGrid.minVal`, `gamma_grid.maxVal` as arbitrary numbers. In this case, the value
+		/// `Gamma` is taken for gamma.
+		/// 
+		/// And, finally, if the optimization in a parameter is required but the corresponding grid is
+		/// unknown, you may call the function SVM::getDefaultGrid. To generate a grid, for example, for
+		/// gamma, call `SVM::getDefaultGrid(SVM::GAMMA)`.
+		/// 
+		/// This function works for the classification (SVM::C_SVC or SVM::NU_SVC) as well as for the
+		/// regression (SVM::EPS_SVR or SVM::NU_SVR). If it is SVM::ONE_CLASS, no optimization is made and
+		/// the usual %SVM with parameters specified in params is executed.
+		/// 
+		/// ## Note
+		/// This alternative version of [train_auto] function uses the following default values for its arguments:
+		/// * k_fold: 10
+		/// * cgrid: getDefaultGrid(C)
+		/// * gamma_grid: getDefaultGrid(GAMMA)
+		/// * p_grid: getDefaultGrid(P)
+		/// * nu_grid: getDefaultGrid(NU)
+		/// * coeff_grid: getDefaultGrid(COEF)
+		/// * degree_grid: getDefaultGrid(DEGREE)
+		/// * balanced: false
+		#[inline]
+		fn train_auto_def(&mut self, data: &core::Ptr<crate::ml::TrainData>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_SVM_trainAuto_const_PtrLTrainDataGR(self.as_raw_mut_SVM(), data.as_raw_PtrOfTrainData(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Trains an %SVM with optimal parameters
 		/// 
 		/// ## Parameters
@@ -3944,6 +4437,56 @@ pub mod ml {
 			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR_int_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_PtrLParamGridG_bool(self.as_raw_mut_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), k_fold, cgrid.as_raw_mut_PtrOfParamGrid(), gamma_grid.as_raw_mut_PtrOfParamGrid(), p_grid.as_raw_mut_PtrOfParamGrid(), nu_grid.as_raw_mut_PtrOfParamGrid(), coeff_grid.as_raw_mut_PtrOfParamGrid(), degree_grid.as_raw_mut_PtrOfParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Trains an %SVM with optimal parameters
+		/// 
+		/// ## Parameters
+		/// * samples: training samples
+		/// * layout: See ml::SampleTypes.
+		/// * responses: vector of responses associated with the training samples.
+		/// * kFold: Cross-validation parameter. The training set is divided into kFold subsets. One
+		///    subset is used to test the model, the others form the train set. So, the %SVM algorithm is
+		/// * Cgrid: grid for C
+		/// * gammaGrid: grid for gamma
+		/// * pGrid: grid for p
+		/// * nuGrid: grid for nu
+		/// * coeffGrid: grid for coeff
+		/// * degreeGrid: grid for degree
+		/// * balanced: If true and the problem is 2-class classification then the method creates more
+		///    balanced cross-validation subsets that is proportions between classes in subsets are close
+		///    to such proportion in the whole train dataset.
+		/// 
+		/// The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
+		/// nu, coef0, degree. Parameters are considered optimal when the cross-validation
+		/// estimate of the test set error is minimal.
+		/// 
+		/// This function only makes use of SVM::getDefaultGrid for parameter optimization and thus only
+		/// offers rudimentary parameter options.
+		/// 
+		/// This function works for the classification (SVM::C_SVC or SVM::NU_SVC) as well as for the
+		/// regression (SVM::EPS_SVR or SVM::NU_SVR). If it is SVM::ONE_CLASS, no optimization is made and
+		/// the usual %SVM with parameters specified in params is executed.
+		/// 
+		/// ## Note
+		/// This alternative version of [train_auto_with_data] function uses the following default values for its arguments:
+		/// * k_fold: 10
+		/// * cgrid: SVM::getDefaultGridPtr(SVM::C)
+		/// * gamma_grid: SVM::getDefaultGridPtr(SVM::GAMMA)
+		/// * p_grid: SVM::getDefaultGridPtr(SVM::P)
+		/// * nu_grid: SVM::getDefaultGridPtr(SVM::NU)
+		/// * coeff_grid: SVM::getDefaultGridPtr(SVM::COEF)
+		/// * degree_grid: SVM::getDefaultGridPtr(SVM::DEGREE)
+		/// * balanced: false
+		#[inline]
+		fn train_auto_with_data_def(&mut self, samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray) -> Result<bool> {
+			input_array_arg!(samples);
+			input_array_arg!(responses);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayR_int_const__InputArrayR(self.as_raw_mut_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4273,6 +4816,24 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Function sets optimal parameters values for chosen SVM SGD model.
+		/// ## Parameters
+		/// * svmsgdType: is the type of SVMSGD classifier.
+		/// * marginType: is the type of margin constraint.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_optimal_parameters] function uses the following default values for its arguments:
+		/// * svmsgd_type: SVMSGD::ASGD
+		/// * margin_type: SVMSGD::SOFT_MARGIN
+		#[inline]
+		fn set_optimal_parameters_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_SVMSGD_setOptimalParameters(self.as_raw_mut_SVMSGD(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// %Algorithm type, one of SVMSGD::SvmsgdType.
 		/// ## See also
 		/// setSvmsgdType getSvmsgdType
@@ -4353,7 +4914,7 @@ pub mod ml {
 	/// Stochastic Gradient Descent SVM classifier
 	/// 
 	/// SVMSGD provides a fast and easy-to-use implementation of the SVM classifier using the Stochastic Gradient Descent approach,
-	/// as presented in [bottou2010large](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_bottou2010large).
+	/// as presented in [bottou2010large](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_bottou2010large).
 	/// 
 	/// The classifier has following parameters:
 	/// - model type,
@@ -4376,7 +4937,7 @@ pub mod ml {
 	/// - \ref ASGD is Average Stochastic Gradient Descent SVM Classifier. ASGD classifier averages weights vector on each step of algorithm by the formula
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cwidehat%7Bw%7D%5F%7Bt%2B1%7D%20%3D%20%5Cfrac%7Bt%7D%7B1%2Bt%7D%5Cwidehat%7Bw%7D%5F%7Bt%7D%20%2B%20%5Cfrac%7B1%7D%7B1%2Bt%7Dw%5F%7Bt%2B1%7D)
 	/// 
-	/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_bottou2010large)).
+	/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_bottou2010large)).
 	/// 
 	/// The margin type may have one of the following values: \ref SOFT_MARGIN or \ref HARD_MARGIN.
 	/// 
@@ -4497,6 +5058,30 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Loads and creates a serialized SVMSGD from a file
+		/// 
+		/// Use SVMSGD::save to serialize and store an SVMSGD to disk.
+		/// Load the SVMSGD from this file again, by calling this function with the path to the file.
+		/// Optionally specify the node for the file containing the classifier
+		/// 
+		/// ## Parameters
+		/// * filepath: path to serialized SVMSGD
+		/// * nodeName: name of node containing the classifier
+		/// 
+		/// ## Note
+		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// * node_name: String()
+		#[inline]
+		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::SVMSGD>> {
+			extern_container_arg!(filepath);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_SVMSGD_load_const_StringR(filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::SVMSGD>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { SVMSGD, core::Algorithm, cv_ml_SVMSGD_to_Algorithm }
@@ -4598,6 +5183,27 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Predicts response(s) for the provided sample(s)
+		/// 
+		/// ## Parameters
+		/// * samples: The input samples, floating-point matrix
+		/// * results: The optional output matrix of results.
+		/// * flags: The optional flags, model-dependent. See cv::ml::StatModel::Flags.
+		/// 
+		/// ## Note
+		/// This alternative version of [predict] function uses the following default values for its arguments:
+		/// * results: noArray()
+		/// * flags: 0
+		#[inline]
+		fn predict_def(&self, samples: &impl core::ToInputArray) -> Result<f32> {
+			input_array_arg!(samples);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_StatModel_predict_const_const__InputArrayR(self.as_raw_StatModel(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::ml::StatModel]
@@ -4618,6 +5224,26 @@ pub mod ml {
 		fn train_with_data(&mut self, train_data: &core::Ptr<crate::ml::TrainData>, flags: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_train_const_PtrLTrainDataGR_int(self.as_raw_mut_StatModel(), train_data.as_raw_PtrOfTrainData(), flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Trains the statistical model
+		/// 
+		/// ## Parameters
+		/// * trainData: training data that can be loaded from file using TrainData::loadFromCSV or
+		///    created with TrainData::create.
+		/// * flags: optional flags, depending on the model. Some of the models can be updated with the
+		///    new training samples, not completely overwritten (such as NormalBayesClassifier or ANN_MLP).
+		/// 
+		/// ## Note
+		/// This alternative version of [train_with_data] function uses the following default values for its arguments:
+		/// * flags: 0
+		#[inline]
+		fn train_with_data_def(&mut self, train_data: &core::Ptr<crate::ml::TrainData>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_StatModel_train_const_PtrLTrainDataGR(self.as_raw_mut_StatModel(), train_data.as_raw_PtrOfTrainData(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4816,6 +5442,34 @@ pub mod ml {
 		fn get_train_samples(&self, layout: i32, compress_samples: bool, compress_vars: bool) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getTrainSamples_const_int_bool_bool(self.as_raw_TrainData(), layout, compress_samples, compress_vars, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Returns matrix of train samples
+		/// 
+		/// ## Parameters
+		/// * layout: The requested layout. If it's different from the initial one, the matrix is
+		///    transposed. See ml::SampleTypes.
+		/// * compressSamples: if true, the function returns only the training samples (specified by
+		///    sampleIdx)
+		/// * compressVars: if true, the function returns the shorter training samples, containing only
+		///    the active variables.
+		/// 
+		/// In current implementation the function tries to avoid physical data copying and returns the
+		/// matrix stored inside TrainData (unless the transposition or compression is needed).
+		/// 
+		/// ## Note
+		/// This alternative version of [get_train_samples] function uses the following default values for its arguments:
+		/// * layout: ROW_SAMPLE
+		/// * compress_samples: true
+		/// * compress_vars: true
+		#[inline]
+		fn get_train_samples_def(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_TrainData_getTrainSamples_const(self.as_raw_TrainData(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -5095,6 +5749,22 @@ pub mod ml {
 		}
 		
 		/// Splits the training data into the training and test parts
+		/// ## See also
+		/// TrainData::setTrainTestSplitRatio
+		/// 
+		/// ## Note
+		/// This alternative version of [set_train_test_split] function uses the following default values for its arguments:
+		/// * shuffle: true
+		#[inline]
+		fn set_train_test_split_def(&mut self, count: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_TrainData_setTrainTestSplit_int(self.as_raw_mut_TrainData(), count, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Splits the training data into the training and test parts
 		/// 
 		/// The function selects a subset of specified relative size and then returns it as the training
 		/// set. If the function is not called, all the data is used for training. Please, note that for
@@ -5109,6 +5779,27 @@ pub mod ml {
 		fn set_train_test_split_ratio(&mut self, ratio: f64, shuffle: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_setTrainTestSplitRatio_double_bool(self.as_raw_mut_TrainData(), ratio, shuffle, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Splits the training data into the training and test parts
+		/// 
+		/// The function selects a subset of specified relative size and then returns it as the training
+		/// set. If the function is not called, all the data is used for training. Please, note that for
+		/// each of TrainData::getTrain\* there is corresponding TrainData::getTest\*, so that the test
+		/// subset can be retrieved and processed as well.
+		/// ## See also
+		/// TrainData::setTrainTestSplit
+		/// 
+		/// ## Note
+		/// This alternative version of [set_train_test_split_ratio] function uses the following default values for its arguments:
+		/// * shuffle: true
+		#[inline]
+		fn set_train_test_split_ratio_def(&mut self, ratio: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_TrainData_setTrainTestSplitRatio_double(self.as_raw_mut_TrainData(), ratio, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5244,6 +5935,55 @@ pub mod ml {
 			Ok(ret)
 		}
 		
+		/// Reads the dataset from a .csv file and returns the ready-to-use training data.
+		/// 
+		/// ## Parameters
+		/// * filename: The input file name
+		/// * headerLineCount: The number of lines in the beginning to skip; besides the header, the
+		///    function also skips empty lines and lines staring with `#`
+		/// * responseStartIdx: Index of the first output variable. If -1, the function considers the
+		///    last variable as the response
+		/// * responseEndIdx: Index of the last output variable + 1. If -1, then there is single
+		///    response variable at responseStartIdx.
+		/// * varTypeSpec: The optional text string that specifies the variables' types. It has the
+		///    format `ord[n1-n2,n3,n4-n5,...]cat[n6,n7-n8,...]`. That is, variables from `n1 to n2`
+		///    (inclusive range), `n3`, `n4 to n5` ... are considered ordered and `n6`, `n7 to n8` ... are
+		///    considered as categorical. The range `[n1..n2] + [n3] + [n4..n5] + ... + [n6] + [n7..n8]`
+		///    should cover all the variables. If varTypeSpec is not specified, then algorithm uses the
+		///    following rules:
+		///    - all input variables are considered ordered by default. If some column contains has non-
+		///       numerical values, e.g. 'apple', 'pear', 'apple', 'apple', 'mango', the corresponding
+		///       variable is considered categorical.
+		///    - if there are several output variables, they are all considered as ordered. Error is
+		///       reported when non-numerical values are used.
+		///    - if there is a single output variable, then if its values are non-numerical or are all
+		///       integers, then it's considered categorical. Otherwise, it's considered ordered.
+		/// * delimiter: The character used to separate values in each line.
+		/// * missch: The character used to specify missing measurements. It should not be a digit.
+		///    Although it's a non-numerical value, it surely does not affect the decision of whether the
+		///    variable ordered or categorical.
+		/// 
+		/// Note: If the dataset only contains input variables and no responses, use responseStartIdx = -2
+		///    and responseEndIdx = 0. The output variables vector will just contain zeros.
+		/// 
+		/// ## Note
+		/// This alternative version of [load_from_csv] function uses the following default values for its arguments:
+		/// * response_start_idx: -1
+		/// * response_end_idx: -1
+		/// * var_type_spec: String()
+		/// * delimiter: ','
+		/// * missch: '?'
+		#[inline]
+		pub fn load_from_csv_def(filename: &str, header_line_count: i32) -> Result<core::Ptr<crate::ml::TrainData>> {
+			extern_container_arg!(filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_TrainData_loadFromCSV_const_StringR_int(filename.opencv_as_extern(), header_line_count, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Creates training data from in-memory arrays.
 		/// 
 		/// ## Parameters
@@ -5279,6 +6019,44 @@ pub mod ml {
 			input_array_arg!(var_type);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_create_const__InputArrayR_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), var_idx.as_raw__InputArray(), sample_idx.as_raw__InputArray(), sample_weights.as_raw__InputArray(), var_type.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates training data from in-memory arrays.
+		/// 
+		/// ## Parameters
+		/// * samples: matrix of samples. It should have CV_32F type.
+		/// * layout: see ml::SampleTypes.
+		/// * responses: matrix of responses. If the responses are scalar, they should be stored as a
+		///    single row or as a single column. The matrix should have type CV_32F or CV_32S (in the
+		///    former case the responses are considered as ordered by default; in the latter case - as
+		///    categorical)
+		/// * varIdx: vector specifying which variables to use for training. It can be an integer vector
+		///    (CV_32S) containing 0-based variable indices or byte vector (CV_8U) containing a mask of
+		///    active variables.
+		/// * sampleIdx: vector specifying which samples to use for training. It can be an integer
+		///    vector (CV_32S) containing 0-based sample indices or byte vector (CV_8U) containing a mask
+		///    of training samples.
+		/// * sampleWeights: optional vector with weights for each sample. It should have CV_32F type.
+		/// * varType: optional vector of type CV_8U and size `<number_of_variables_in_samples> +
+		///    <number_of_variables_in_responses>`, containing types of each input and output variable. See
+		///    ml::VariableTypes.
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * var_idx: noArray()
+		/// * sample_idx: noArray()
+		/// * sample_weights: noArray()
+		/// * var_type: noArray()
+		#[inline]
+		pub fn create_def(samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray) -> Result<core::Ptr<crate::ml::TrainData>> {
+			input_array_arg!(samples);
+			input_array_arg!(responses);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ml_TrainData_create_const__InputArrayR_int_const__InputArrayR(samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };

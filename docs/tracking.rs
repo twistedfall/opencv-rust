@@ -49,7 +49,7 @@ pub mod tracking {
 	
 	/// the CSRT tracker
 	/// 
-	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
+	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
 	pub struct TrackerCSRT {
 		ptr: *mut c_void
 	}
@@ -92,6 +92,23 @@ pub mod tracking {
 		pub fn create(parameters: &crate::tracking::TrackerCSRT_Params) -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_create_const_ParamsR(parameters.as_raw_TrackerCSRT_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::tracking::TrackerCSRT>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create CSRT tracker instance
+		/// ## Parameters
+		/// * parameters: CSRT parameters TrackerCSRT::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * parameters: TrackerCSRT::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_tracking_TrackerCSRT_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::tracking::TrackerCSRT>::opencv_from_extern(ret) };
@@ -551,12 +568,24 @@ pub mod tracking {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [set_feature_extractor] function uses the following default values for its arguments:
+		/// * pca_func: false
+		#[inline]
+		fn set_feature_extractor_def(&mut self, callback: crate::tracking::TrackerKCF_FeatureExtractorCallbackFN) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_tracking_TrackerKCF_setFeatureExtractor_FeatureExtractorCallbackFN(self.as_raw_mut_TrackerKCF(), callback, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// the KCF (Kernelized Correlation Filter) tracker
 	/// 
 	/// * KCF is a novel tracking framework that utilizes properties of circulant matrix to enhance the processing speed.
-	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
+	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_KCF_CN)).
 	/// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 	/// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 	/// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.
@@ -602,6 +631,23 @@ pub mod tracking {
 		pub fn create(parameters: crate::tracking::TrackerKCF_Params) -> Result<core::Ptr<crate::tracking::TrackerKCF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerKCF_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::tracking::TrackerKCF>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create KCF tracker instance
+		/// ## Parameters
+		/// * parameters: KCF parameters TrackerKCF::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * parameters: TrackerKCF::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::tracking::TrackerKCF>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_tracking_TrackerKCF_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::tracking::TrackerKCF>::opencv_from_extern(ret) };

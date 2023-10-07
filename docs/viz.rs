@@ -179,6 +179,23 @@ pub mod viz {
 	
 	/// Displays image in specified window
 	/// 
+	/// ## Note
+	/// This alternative version of [imshow] function uses the following default values for its arguments:
+	/// * window_size: Size(-1,-1)
+	#[inline]
+	pub fn imshow_def(window_name: &str, image: &impl core::ToInputArray) -> Result<crate::viz::Viz3d> {
+		extern_container_arg!(window_name);
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_imshow_const_StringR_const__InputArrayR(window_name.opencv_as_extern(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Displays image in specified window
+	/// 
 	/// ## C++ default parameters
 	/// * window_size: Size(-1,-1)
 	#[inline]
@@ -225,6 +242,32 @@ pub mod viz {
 	/// The returned transforms can transform a point in the given coordinate frame to the global
 	/// coordinate frame.
 	/// 
+	/// ## Note
+	/// This alternative version of [make_transform_to_global] function uses the following default values for its arguments:
+	/// * origin: Vec3d::all(0)
+	#[inline]
+	pub fn make_transform_to_global_def(axis_x: core::Vec3d, axis_y: core::Vec3d, axis_z: core::Vec3d) -> Result<core::Affine3d> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_makeTransformToGlobal_const_Vec3dR_const_Vec3dR_const_Vec3dR(&axis_x, &axis_y, &axis_z, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Takes coordinate frame data and builds transform to global coordinate frame.
+	/// 
+	/// ## Parameters
+	/// * axis_x: X axis vector in global coordinate frame.
+	/// * axis_y: Y axis vector in global coordinate frame.
+	/// * axis_z: Z axis vector in global coordinate frame.
+	/// * origin: Origin of the coordinate frame in global coordinate frame.
+	/// 
+	/// ## Returns
+	/// An affine transform that describes transformation between global coordinate frame
+	/// and a given coordinate frame.
+	/// The returned transforms can transform a point in the given coordinate frame to the global
+	/// coordinate frame.
+	/// 
 	/// ## C++ default parameters
 	/// * origin: Vec3d::all(0)
 	#[inline]
@@ -233,6 +276,29 @@ pub mod viz {
 		unsafe { sys::cv_viz_makeTransformToGlobal_const_Vec3dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(&axis_x, &axis_y, &axis_z, &origin, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * file: Filename with extension. Supported formats: PLY, XYZ, OBJ and STL.
+	/// * colors: Used by PLY and STL formats only.
+	/// * normals: Used by PLY, OBJ and STL formats only.
+	/// ## Returns
+	/// A mat containing the point coordinates with depth CV_32F or CV_64F and number of
+	///        channels 3 or 4 with only 1 row.
+	/// 
+	/// ## Note
+	/// This alternative version of [read_cloud] function uses the following default values for its arguments:
+	/// * colors: noArray()
+	/// * normals: noArray()
+	#[inline]
+	pub fn read_cloud_def(file: &str) -> Result<core::Mat> {
+		extern_container_arg!(file);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_readCloud_const_StringR(file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -278,6 +344,24 @@ pub mod viz {
 	/// * pose: Output matrix.
 	/// * tag: Name of the pose in the file.
 	/// 
+	/// ## Note
+	/// This alternative version of [read_pose] function uses the following default values for its arguments:
+	/// * tag: "pose"
+	#[inline]
+	pub fn read_pose_def(file: &str, pose: &mut core::Affine3d) -> Result<bool> {
+		extern_container_arg!(file);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_readPose_const_StringR_Affine3dR(file.opencv_as_extern(), pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * file: Filename of type supported by cv::FileStorage.
+	/// * pose: Output matrix.
+	/// * tag: Name of the pose in the file.
+	/// 
 	/// ## C++ default parameters
 	/// * tag: "pose"
 	#[inline]
@@ -286,6 +370,34 @@ pub mod viz {
 		extern_container_arg!(tag);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_readPose_const_StringR_Affine3dR_const_StringR(file.opencv_as_extern(), pose, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// takes vector<Affine3<T>> with T = float/double and loads poses from sequence of files
+	/// 
+	/// ## Parameters
+	/// * traj: Output array containing a lists of poses. It can be
+	///            - std::vector<cv::Affine3f>, std::vector<cv::Affine3d>
+	///            - cv::Mat
+	/// * files_format: Format specifier string for constructing filenames.
+	///                    The only placeholder in the string should support `int`.
+	/// * start: The initial counter for files_format. It must be greater than or equal to 0.
+	/// * end: The final  counter for files_format.
+	/// * tag: Name of the matrix in the file.
+	/// 
+	/// ## Note
+	/// This alternative version of [read_trajectory] function uses the following default values for its arguments:
+	/// * files_format: "pose%05d.xml"
+	/// * start: 0
+	/// * end: INT_MAX
+	/// * tag: "pose"
+	#[inline]
+	pub fn read_trajectory_def(traj: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(traj);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_readTrajectory_const__OutputArrayR(traj.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -338,6 +450,30 @@ pub mod viz {
 	///                Supported channels: 3 and 4.
 	/// * binary: Used only for PLY format.
 	/// 
+	/// ## Note
+	/// This alternative version of [write_cloud] function uses the following default values for its arguments:
+	/// * colors: noArray()
+	/// * normals: noArray()
+	/// * binary: false
+	#[inline]
+	pub fn write_cloud_def(file: &str, cloud: &impl core::ToInputArray) -> Result<()> {
+		extern_container_arg!(file);
+		input_array_arg!(cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_writeCloud_const_StringR_const__InputArrayR(file.opencv_as_extern(), cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * file: Filename with extension. Supported formats: PLY, XYZ and OBJ.
+	/// * cloud: Supported depths: CV_32F and CV_64F. Supported channels: 3 and 4.
+	/// * colors: Used by PLY format only. Supported depth: CV_8U. Supported channels: 1, 3 and 4.
+	/// * normals: Used by PLY and OBJ format only. Supported depths: CV_32F and CV_64F.
+	///                Supported channels: 3 and 4.
+	/// * binary: Used only for PLY format.
+	/// 
 	/// ## C++ default parameters
 	/// * colors: noArray()
 	/// * normals: noArray()
@@ -360,6 +496,24 @@ pub mod viz {
 	/// * pose: Input matrix.
 	/// * tag: Name of the pose to be saved into the given file.
 	/// 
+	/// ## Note
+	/// This alternative version of [write_pose] function uses the following default values for its arguments:
+	/// * tag: "pose"
+	#[inline]
+	pub fn write_pose_def(file: &str, pose: core::Affine3d) -> Result<()> {
+		extern_container_arg!(file);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_writePose_const_StringR_const_Affine3dR(file.opencv_as_extern(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * file: Filename.
+	/// * pose: Input matrix.
+	/// * tag: Name of the pose to be saved into the given file.
+	/// 
 	/// ## C++ default parameters
 	/// * tag: "pose"
 	#[inline]
@@ -368,6 +522,32 @@ pub mod viz {
 		extern_container_arg!(tag);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_writePose_const_StringR_const_Affine3dR_const_StringR(file.opencv_as_extern(), &pose, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// takes vector<Affine3<T>> with T = float/double and writes to a sequence of files with given filename format
+	/// ## Parameters
+	/// * traj: Trajectory containing a list of poses. It can be
+	///          - std::vector<cv::Mat>, each cv::Mat is of type CV_32F16 or CV_64FC16
+	///          - std::vector<cv::Affine3f>, std::vector<cv::Affine3d>
+	///          - cv::Mat of type CV_32FC16 OR CV_64F16
+	/// * files_format: Format specifier string for constructing filenames.
+	///                    The only placeholder in the string should support `int`.
+	/// * start: The initial counter for files_format.
+	/// * tag: Name of the matrix in the file.
+	/// 
+	/// ## Note
+	/// This alternative version of [write_trajectory] function uses the following default values for its arguments:
+	/// * files_format: "pose%05d.xml"
+	/// * start: 0
+	/// * tag: "pose"
+	#[inline]
+	pub fn write_trajectory_def(traj: &impl core::ToInputArray) -> Result<()> {
+		input_array_arg!(traj);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_writeTrajectory_const__InputArrayR(traj.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1380,6 +1560,30 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Loads a mesh from a ply or a obj file.
+		/// 
+		/// ## Parameters
+		/// * file: File name
+		/// * type: File type (for now only PLY and OBJ are supported)
+		/// 
+		/// **File type** can be one of the following:
+		/// *   **LOAD_PLY**
+		/// *   **LOAD_OBJ**
+		/// 
+		/// ## Note
+		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// * typ: LOAD_PLY
+		#[inline]
+		pub fn load_def(file: &str) -> Result<crate::viz::Mesh> {
+			extern_container_arg!(file);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Mesh_load_const_StringR(file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl Clone for Mesh {
@@ -1651,6 +1855,25 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Shows a widget in the window.
+		/// 
+		/// ## Parameters
+		/// * id: A unique id for the widget. @param widget The widget to be displayed in the window.
+		/// * pose: Pose of the widget.
+		/// 
+		/// ## Note
+		/// This alternative version of [show_widget] function uses the following default values for its arguments:
+		/// * pose: Affine3d::Identity()
+		#[inline]
+		fn show_widget_def(&mut self, id: &str, widget: &crate::viz::Widget) -> Result<()> {
+			extern_container_arg!(id);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), widget.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Removes a widget from the window.
 		/// 
 		/// ## Parameters
@@ -1688,6 +1911,25 @@ pub mod viz {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR_const_SizeR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Removed all widgets and displays image scaled to whole window area.
+		/// 
+		/// ## Parameters
+		/// * image: Image to be displayed.
+		/// * window_size: Size of Viz3d window. Default value means no change.
+		/// 
+		/// ## Note
+		/// This alternative version of [show_image] function uses the following default values for its arguments:
+		/// * window_size: Size(-1,-1)
+		#[inline]
+		fn show_image_def(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1792,7 +2034,7 @@ pub mod viz {
 		/// * window_coord: Point in window coordinate system. @param origin Output origin of the ray.
 		/// * direction: Output direction of the ray.
 		#[inline]
-		fn conver_to3_d_ray(&mut self, window_coord: core::Point3d, origin: &mut core::Point3d, direction: &mut core::Vec3d) -> Result<()> {
+		fn conver_to_3d_ray(&mut self, window_coord: core::Point3d, origin: &mut core::Point3d, direction: &mut core::Vec3d) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_converTo3DRay_const_Point3dR_Point3dR_Vec3dR(self.as_raw_mut_Viz3d(), &window_coord, origin, direction, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1856,6 +2098,23 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Sets or unsets full-screen rendering mode.
+		/// 
+		/// ## Parameters
+		/// * mode: If true, window will use full-screen mode.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_full_screen] function uses the following default values for its arguments:
+		/// * mode: true
+		#[inline]
+		fn set_full_screen_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_setFullScreen(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Sets background color.
 		/// 
 		/// ## C++ default parameters
@@ -1870,6 +2129,21 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Sets background color.
+		/// 
+		/// ## Note
+		/// This alternative version of [set_background_color] function uses the following default values for its arguments:
+		/// * color: Color::black()
+		/// * color2: Color::not_set()
+		#[inline]
+		fn set_background_color_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_setBackgroundColor(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * image: noArray()
 		#[inline]
@@ -1877,6 +2151,18 @@ pub mod viz {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_setBackgroundTexture_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [set_background_texture] function uses the following default values for its arguments:
+		/// * image: noArray()
+		#[inline]
+		fn set_background_texture_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_setBackgroundTexture(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1914,6 +2200,25 @@ pub mod viz {
 		fn spin_once(&mut self, time: i32, force_redraw: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_spinOnce_int_bool(self.as_raw_mut_Viz3d(), time, force_redraw, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Starts the event loop for a given time.
+		/// 
+		/// ## Parameters
+		/// * time: Amount of time in milliseconds for the event loop to keep running.
+		/// * force_redraw: If true, window renders.
+		/// 
+		/// ## Note
+		/// This alternative version of [spin_once] function uses the following default values for its arguments:
+		/// * time: 1
+		/// * force_redraw: false
+		#[inline]
+		fn spin_once_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_spinOnce(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1959,6 +2264,32 @@ pub mod viz {
 		fn add_light(&mut self, position: core::Vec3d, focal_point: core::Vec3d, color: &crate::viz::Viz3d_Color, diffuse_color: &crate::viz::Viz3d_Color, ambient_color: &crate::viz::Viz3d_Color, specular_color: &crate::viz::Viz3d_Color) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_addLight_const_Vec3dR_const_Vec3dR_const_ColorR_const_ColorR_const_ColorR_const_ColorR(self.as_raw_mut_Viz3d(), &position, &focal_point, color.as_raw_Color(), diffuse_color.as_raw_Color(), ambient_color.as_raw_Color(), specular_color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Add a light in the scene.
+		/// 
+		/// ## Parameters
+		/// * position: The position of the light.
+		/// * focalPoint: The point at which the light is shining
+		/// * color: The color of the light
+		/// * diffuseColor: The diffuse color of the light
+		/// * ambientColor: The ambient color of the light
+		/// * specularColor: The specular color of the light
+		/// 
+		/// ## Note
+		/// This alternative version of [add_light] function uses the following default values for its arguments:
+		/// * focal_point: Vec3d(0,0,0)
+		/// * color: Color::white()
+		/// * diffuse_color: Color::white()
+		/// * ambient_color: Color::black()
+		/// * specular_color: Color::white()
+		#[inline]
+		fn add_light_def(&mut self, position: core::Vec3d) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_addLight_const_Vec3dR(self.as_raw_mut_Viz3d(), &position, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2110,6 +2441,18 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [set_global_warnings] function uses the following default values for its arguments:
+		/// * enabled: false
+		#[inline]
+		fn set_global_warnings_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_setGlobalWarnings(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// The Viz3d class represents a 3D visualizer window. This class is implicitly shared.
@@ -2149,6 +2492,24 @@ pub mod viz {
 			extern_container_arg!(window_name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringR(window_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// The constructors.
+		/// 
+		/// ## Parameters
+		/// * window_name: Name of the window.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * window_name: String()
+		#[inline]
+		pub fn new_def() -> Result<crate::viz::Viz3d> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_Viz3d(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
@@ -2252,6 +2613,31 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs an WArrow.
+		/// 
+		/// ## Parameters
+		/// * pt1: Start point of the arrow.
+		/// * pt2: End point of the arrow.
+		/// * thickness: Thickness of the arrow. Thickness of arrow head is also adjusted
+		/// accordingly.
+		/// * color: Color of the arrow.
+		/// 
+		/// Arrow head is located at the end point of the arrow.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thickness: 0.03
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(pt1: core::Point3d, pt2: core::Point3d) -> Result<crate::viz::WArrow> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WArrow_WArrow_const_Point3dR_const_Point3dR(&pt1, &pt2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WArrow::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { WArrow, crate::viz::Widget, cv_viz_WArrow_to_Widget }
@@ -2321,7 +2707,7 @@ pub mod viz {
 	impl WCameraPosition {
 		/// Creates camera coordinate frame at the origin.
 		/// 
-		/// ![Camera coordinate frame](https://docs.opencv.org/4.8.0/cpw1.png)
+		/// ![Camera coordinate frame](https://docs.opencv.org/4.8.1/cpw1.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2329,6 +2715,23 @@ pub mod viz {
 		pub fn new(scale: f64) -> Result<crate::viz::WCameraPosition> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_double(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates camera coordinate frame at the origin.
+		/// 
+		/// ![Camera coordinate frame](https://docs.opencv.org/4.8.1/cpw1.png)
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.0
+		#[inline]
+		pub fn new_def() -> Result<crate::viz::WCameraPosition> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
@@ -2343,7 +2746,7 @@ pub mod viz {
 		/// 
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K.
 		/// 
-		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.0/cpw2.png)
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.1/cpw2.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2360,13 +2763,37 @@ pub mod viz {
 		
 		/// Display the viewing frustum
 		/// ## Parameters
+		/// * K: Intrinsic matrix of the camera.
+		/// * scale: Scale of the frustum.
+		/// * color: Color of the frustum.
+		/// 
+		/// Creates viewing frustum of the camera based on its intrinsic matrix K.
+		/// 
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.1/cpw2.png)
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.0
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def_1(k: core::Matx33d) -> Result<crate::viz::WCameraPosition> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR(&k, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Display the viewing frustum
+		/// ## Parameters
 		/// * fov: Field of view of the camera (horizontal, vertical).
 		/// * scale: Scale of the frustum.
 		/// * color: Color of the frustum.
 		/// 
 		/// Creates viewing frustum of the camera based on its field of view fov.
 		/// 
-		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.0/cpw2.png)
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.1/cpw2.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2375,6 +2802,30 @@ pub mod viz {
 		pub fn new_2(fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_double_const_ColorR(&fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Display the viewing frustum
+		/// ## Parameters
+		/// * fov: Field of view of the camera (horizontal, vertical).
+		/// * scale: Scale of the frustum.
+		/// * color: Color of the frustum.
+		/// 
+		/// Creates viewing frustum of the camera based on its field of view fov.
+		/// 
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.1/cpw2.png)
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.0
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def_2(fov: core::Vec2d) -> Result<crate::viz::WCameraPosition> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR(&fov, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
@@ -2392,7 +2843,7 @@ pub mod viz {
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 		/// the far end plane.
 		/// 
-		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.0/cpw3.png)
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.1/cpw3.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2411,6 +2862,34 @@ pub mod viz {
 		/// Display image on the far plane of the viewing frustum
 		/// 
 		/// ## Parameters
+		/// * K: Intrinsic matrix of the camera.
+		/// * image: BGR or Gray-Scale image that is going to be displayed on the far plane of the frustum.
+		/// * scale: Scale of the frustum and image.
+		/// * color: Color of the frustum.
+		/// 
+		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
+		/// the far end plane.
+		/// 
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.1/cpw3.png)
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.0
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def_3(k: core::Matx33d, image: &impl core::ToInputArray) -> Result<crate::viz::WCameraPosition> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR(&k, image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Display image on the far plane of the viewing frustum
+		/// 
+		/// ## Parameters
 		/// * fov: Field of view of the camera (horizontal, vertical).
 		/// * image: BGR or Gray-Scale image that is going to be displayed on the far plane of the frustum.
 		/// * scale: Scale of the frustum and image.
@@ -2419,7 +2898,7 @@ pub mod viz {
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 		/// the far end plane.
 		/// 
-		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.0/cpw3.png)
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.1/cpw3.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2429,6 +2908,34 @@ pub mod viz {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR_double_const_ColorR(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Display image on the far plane of the viewing frustum
+		/// 
+		/// ## Parameters
+		/// * fov: Field of view of the camera (horizontal, vertical).
+		/// * image: BGR or Gray-Scale image that is going to be displayed on the far plane of the frustum.
+		/// * scale: Scale of the frustum and image.
+		/// * color: Color of the frustum.
+		/// 
+		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
+		/// the far end plane.
+		/// 
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.1/cpw3.png)
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.0
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def_4(fov: core::Vec2d, image: &impl core::ToInputArray) -> Result<crate::viz::WCameraPosition> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR(&fov, image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
@@ -2522,6 +3029,27 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs default planar circle centered at origin with plane normal along z-axis
+		/// 
+		/// ## Parameters
+		/// * radius: Radius of the circle.
+		/// * thickness: Thickness of the circle.
+		/// * color: Color of the circle.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thickness: 0.01
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(radius: f64) -> Result<crate::viz::WCircle> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCircle_WCircle_double(radius, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCircle::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Constructs repositioned planar circle.
 		/// 
 		/// ## Parameters
@@ -2538,6 +3066,29 @@ pub mod viz {
 		pub fn new_1(radius: f64, center: core::Point3d, normal: core::Vec3d, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WCircle> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCircle_WCircle_double_const_Point3dR_const_Vec3dR_double_const_ColorR(radius, &center, &normal, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCircle::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs repositioned planar circle.
+		/// 
+		/// ## Parameters
+		/// * radius: Radius of the circle.
+		/// * center: Center of the circle.
+		/// * normal: Normal of the plane in which the circle lies.
+		/// * thickness: Thickness of the circle.
+		/// * color: Color of the circle.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thickness: 0.01
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def_1(radius: f64, center: core::Point3d, normal: core::Vec3d) -> Result<crate::viz::WCircle> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCircle_WCircle_double_const_Point3dR_const_Vec3dR(radius, &center, &normal, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WCircle::opencv_from_extern(ret) };
@@ -2656,6 +3207,27 @@ pub mod viz {
 		/// Constructs a WCloud.
 		/// ## Parameters
 		/// * cloud: Set of points which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+		/// * color: A single Color for the whole cloud.
+		/// 
+		/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(cloud: &impl core::ToInputArray) -> Result<crate::viz::WCloud> {
+			input_array_arg!(cloud);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR(cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs a WCloud.
+		/// ## Parameters
+		/// * cloud: Set of points which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
 		/// * colors: Set of colors. It has to be of the same size with cloud.
 		/// * normals: Normals for each point in cloud. Size and type should match with the cloud parameter.
 		/// 
@@ -2741,6 +3313,27 @@ pub mod viz {
 		/// 
 		/// ## Parameters
 		/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+		/// * colors: Set of colors. It has to be of the same size with cloud.
+		/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+		/// 
+		/// ## Note
+		/// This alternative version of [add_cloud] function uses the following default values for its arguments:
+		/// * pose: Affine3d::Identity()
+		#[inline]
+		fn add_cloud_def(&mut self, cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(cloud);
+			input_array_arg!(colors);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const__InputArrayR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Adds a cloud to the collection.
+		/// 
+		/// ## Parameters
+		/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
 		/// * color: A single Color for the whole cloud.
 		/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 		/// 
@@ -2752,6 +3345,27 @@ pub mod viz {
 			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const_ColorR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), color.as_raw_Color(), &pose, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Adds a cloud to the collection.
+		/// 
+		/// ## Parameters
+		/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+		/// * color: A single Color for the whole cloud.
+		/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+		/// 
+		/// ## Note
+		/// This alternative version of [add_cloud] function uses the following default values for its arguments:
+		/// * color: Color::white()
+		/// * pose: Affine3d::Identity()
+		#[inline]
+		fn add_cloud_def_1(&mut self, cloud: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(cloud);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2919,6 +3533,35 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs a WCloudNormals.
+		/// 
+		/// ## Parameters
+		/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+		/// * normals: A set of normals that has to be of same type with cloud.
+		/// * level: Display only every level th normal.
+		/// * scale: Scale of the arrows that represent normals.
+		/// * color: Color of the arrows that represent normals.
+		/// 
+		/// 
+		/// Note: In case there are four channels in the cloud, fourth channel is ignored.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * level: 64
+		/// * scale: 0.1
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(cloud: &impl core::ToInputArray, normals: &impl core::ToInputArray) -> Result<crate::viz::WCloudNormals> {
+			input_array_arg!(cloud);
+			input_array_arg!(normals);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCloudNormals::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { WCloudNormals, crate::viz::Widget, cv_viz_WCloudNormals_to_Widget }
@@ -3007,6 +3650,28 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs default cone oriented along x-axis with center of its base located at origin
+		/// 
+		/// ## Parameters
+		/// * length: Length of the cone.
+		/// * radius: Radius of the cone.
+		/// * resolution: Resolution of the cone.
+		/// * color: Color of the cone.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * resolution: 6
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(length: f64, radius: f64) -> Result<crate::viz::WCone> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCone_WCone_double_double(length, radius, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCone::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Constructs repositioned planar cone.
 		/// 
 		/// ## Parameters
@@ -3023,6 +3688,29 @@ pub mod viz {
 		pub fn new_1(radius: f64, center: core::Point3d, tip: core::Point3d, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dR_const_Point3dR_int_const_ColorR(radius, &center, &tip, resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCone::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs repositioned planar cone.
+		/// 
+		/// ## Parameters
+		/// * radius: Radius of the cone.
+		/// * center: Center of the cone base.
+		/// * tip: Tip of the cone.
+		/// * resolution: Resolution of the cone.
+		/// * color: Color of the cone.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * resolution: 6
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def_1(radius: f64, center: core::Point3d, tip: core::Point3d) -> Result<crate::viz::WCone> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dR_const_Point3dR(radius, &center, &tip, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WCone::opencv_from_extern(ret) };
@@ -3113,6 +3801,24 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs a WCoordinateSystem.
+		/// 
+		/// ## Parameters
+		/// * scale: Determines the size of the axes.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.0
+		#[inline]
+		pub fn new_def() -> Result<crate::viz::WCoordinateSystem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCoordinateSystem_WCoordinateSystem(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCoordinateSystem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget, cv_viz_WCoordinateSystem_to_Widget }
@@ -3188,7 +3894,7 @@ pub mod viz {
 		/// * wire_frame: If true, cube is represented as wireframe.
 		/// * color: Color of the cube.
 		/// 
-		/// ![Cube Widget](https://docs.opencv.org/4.8.0/cube_widget.png)
+		/// ![Cube Widget](https://docs.opencv.org/4.8.1/cube_widget.png)
 		/// 
 		/// ## C++ default parameters
 		/// * min_point: Vec3d::all(-0.5)
@@ -3199,6 +3905,32 @@ pub mod viz {
 		pub fn new(min_point: core::Point3d, max_point: core::Point3d, wire_frame: bool, color: &crate::viz::Color) -> Result<crate::viz::WCube> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCube_WCube_const_Point3dR_const_Point3dR_bool_const_ColorR(&min_point, &max_point, wire_frame, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCube::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs a WCube.
+		/// 
+		/// ## Parameters
+		/// * min_point: Specifies minimum (or maximum) point of the bounding box.
+		/// * max_point: Specifies maximum (or minimum) point of the bounding box, opposite to the first parameter.
+		/// * wire_frame: If true, cube is represented as wireframe.
+		/// * color: Color of the cube.
+		/// 
+		/// ![Cube Widget](https://docs.opencv.org/4.8.1/cube_widget.png)
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * min_point: Vec3d::all(-0.5)
+		/// * max_point: Vec3d::all(0.5)
+		/// * wire_frame: true
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def() -> Result<crate::viz::WCube> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCube_WCube(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WCube::opencv_from_extern(ret) };
@@ -3294,6 +4026,29 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs a WCylinder.
+		/// 
+		/// ## Parameters
+		/// * axis_point1: A point1 on the axis of the cylinder.
+		/// * axis_point2: A point2 on the axis of the cylinder.
+		/// * radius: Radius of the cylinder.
+		/// * numsides: Resolution of the cylinder.
+		/// * color: Color of the cylinder.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * numsides: 30
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(axis_point1: core::Point3d, axis_point2: core::Point3d, radius: f64) -> Result<crate::viz::WCylinder> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCylinder_WCylinder_const_Point3dR_const_Point3dR_double(&axis_point1, &axis_point2, radius, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCylinder::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { WCylinder, crate::viz::Widget, cv_viz_WCylinder_to_Widget }
@@ -3382,6 +4137,28 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs a WGrid.
+		/// 
+		/// ## Parameters
+		/// * cells: Number of cell columns and rows, respectively.
+		/// * cells_spacing: Size of each cell, respectively.
+		/// * color: Color of the grid.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * cells: Vec2i::all(10)
+		/// * cells_spacing: Vec2d::all(1.0)
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def() -> Result<crate::viz::WGrid> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WGrid_WGrid(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WGrid::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Creates repositioned grid
 		/// 
 		/// ## C++ default parameters
@@ -3392,6 +4169,23 @@ pub mod viz {
 		pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, cells: core::Vec2i, cells_spacing: core::Vec2d, color: &crate::viz::Color) -> Result<crate::viz::WGrid> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WGrid_WGrid_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Vec2iR_const_Vec2dR_const_ColorR(&center, &normal, &new_yaxis, &cells, &cells_spacing, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WGrid::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates repositioned grid
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * cells: Vec2i::all(10)
+		/// * cells_spacing: Vec2d::all(1.0)
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d) -> Result<crate::viz::WGrid> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WGrid_WGrid_const_Point3dR_const_Vec3dR_const_Vec3dR(&center, &normal, &new_yaxis, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WGrid::opencv_from_extern(ret) };
@@ -3710,6 +4504,26 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs a WLine.
+		/// 
+		/// ## Parameters
+		/// * pt1: Start point of the line.
+		/// * pt2: End point of the line.
+		/// * color: Color of the line.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(pt1: core::Point3d, pt2: core::Point3d) -> Result<crate::viz::WLine> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WLine_WLine_const_Point3dR_const_Point3dR(&pt1, &pt2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WLine::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { WLine, crate::viz::Widget, cv_viz_WLine_to_Widget }
@@ -3805,6 +4619,22 @@ pub mod viz {
 			input_array_arg!(normals);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WMesh::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * colors: noArray()
+		/// * normals: noArray()
+		#[inline]
+		pub fn new_def(cloud: &impl core::ToInputArray, polygons: &impl core::ToInputArray) -> Result<crate::viz::WMesh> {
+			input_array_arg!(cloud);
+			input_array_arg!(polygons);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WMesh::opencv_from_extern(ret) };
@@ -3999,6 +4829,26 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs a default plane with center point at origin and normal oriented along z-axis.
+		/// 
+		/// ## Parameters
+		/// * size: Size of the plane
+		/// * color: Color of the plane.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * size: Size2d(1.0,1.0)
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def() -> Result<crate::viz::WPlane> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WPlane_WPlane(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WPlane::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Constructs a repositioned plane
 		/// 
 		/// ## Parameters
@@ -4015,6 +4865,29 @@ pub mod viz {
 		pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, size: core::Size2d, color: &crate::viz::Color) -> Result<crate::viz::WPlane> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPlane_WPlane_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Size2dR_const_ColorR(&center, &normal, &new_yaxis, &size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WPlane::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs a repositioned plane
+		/// 
+		/// ## Parameters
+		/// * center: Center of the plane
+		/// * normal: Plane normal orientation
+		/// * new_yaxis: Up-vector. New orientation of plane y-axis.
+		/// * size: 
+		/// * color: Color of the plane.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * size: Size2d(1.0,1.0)
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d) -> Result<crate::viz::WPlane> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WPlane_WPlane_const_Point3dR_const_Vec3dR_const_Vec3dR(&center, &normal, &new_yaxis, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WPlane::opencv_from_extern(ret) };
@@ -4119,6 +4992,26 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs a WPolyLine.
+		/// 
+		/// ## Parameters
+		/// * points: Point set.
+		/// * color: Color of the poly line.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(points: &impl core::ToInputArray) -> Result<crate::viz::WPolyLine> {
+			input_array_arg!(points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WPolyLine::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { WPolyLine, crate::viz::Widget, cv_viz_WPolyLine_to_Widget }
@@ -4201,6 +5094,28 @@ pub mod viz {
 		pub fn new(center: core::Point3d, radius: f64, sphere_resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WSphere> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WSphere_WSphere_const_Point3dR_double_int_const_ColorR(&center, radius, sphere_resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WSphere::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs a WSphere.
+		/// 
+		/// ## Parameters
+		/// * center: Center of the sphere.
+		/// * radius: Radius of the sphere.
+		/// * sphere_resolution: Resolution of the sphere.
+		/// * color: Color of the sphere.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * sphere_resolution: 10
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(center: core::Point3d, radius: f64) -> Result<crate::viz::WSphere> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WSphere_WSphere_const_Point3dR_double(&center, radius, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WSphere::opencv_from_extern(ret) };
@@ -4315,6 +5230,29 @@ pub mod viz {
 			extern_container_arg!(text);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WText_WText_const_StringR_const_PointR_int_const_ColorR(text.opencv_as_extern(), &pos, font_size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WText::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs a WText.
+		/// 
+		/// ## Parameters
+		/// * text: Text content of the widget.
+		/// * pos: Position of the text.
+		/// * font_size: Font size.
+		/// * color: Color of the text.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * font_size: 20
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(text: &str, pos: core::Point) -> Result<crate::viz::WText> {
+			extern_container_arg!(text);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WText_WText_const_StringR_const_PointR(text.opencv_as_extern(), &pos, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WText::opencv_from_extern(ret) };
@@ -4437,6 +5375,31 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs a WText3D.
+		/// 
+		/// ## Parameters
+		/// * text: Text content of the widget.
+		/// * position: Position of the text.
+		/// * text_scale: Size of the text.
+		/// * face_camera: If true, text always faces the camera.
+		/// * color: Color of the text.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * text_scale: 1.
+		/// * face_camera: true
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(text: &str, position: core::Point3d) -> Result<crate::viz::WText3D> {
+			extern_container_arg!(text);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WText3D_WText3D_const_StringR_const_Point3dR(text.opencv_as_extern(), &position, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WText3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { WText3D, crate::viz::Widget, cv_viz_WText3D_to_Widget }
@@ -4527,6 +5490,36 @@ pub mod viz {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR_int_double_const_ColorR(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WTrajectory::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs a WTrajectory.
+		/// 
+		/// ## Parameters
+		/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+		/// * display_mode: Display mode. This can be PATH, FRAMES, and BOTH.
+		/// * scale: Scale of the frames. Polyline is not affected.
+		/// * color: Color of the polyline that represents path.
+		/// 
+		/// Frames are not affected.
+		/// Displays trajectory of the given path as follows:
+		/// *   PATH : Displays a poly line that represents the path.
+		/// *   FRAMES : Displays coordinate frames at each pose.
+		/// *   PATH & FRAMES : Displays both poly line and coordinate frames.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * display_mode: WTrajectory::PATH
+		/// * scale: 1.0
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(path: &impl core::ToInputArray) -> Result<crate::viz::WTrajectory> {
+			input_array_arg!(path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR(path.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WTrajectory::opencv_from_extern(ret) };
@@ -4628,6 +5621,31 @@ pub mod viz {
 		/// 
 		/// ## Parameters
 		/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+		/// * K: Intrinsic matrix of the camera.
+		/// * scale: Scale of the frustums.
+		/// * color: Color of the frustums.
+		/// 
+		/// Displays frustums at each pose of the trajectory.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def(path: &impl core::ToInputArray, k: core::Matx33d) -> Result<crate::viz::WTrajectoryFrustums> {
+			input_array_arg!(path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR(path.as_raw__InputArray(), &k, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs a WTrajectoryFrustums.
+		/// 
+		/// ## Parameters
+		/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
 		/// * fov: Field of view of the camera (horizontal, vertical).
 		/// * scale: Scale of the frustums.
 		/// * color: Color of the frustums.
@@ -4642,6 +5660,31 @@ pub mod viz {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR_double_const_ColorR(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructs a WTrajectoryFrustums.
+		/// 
+		/// ## Parameters
+		/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+		/// * fov: Field of view of the camera (horizontal, vertical).
+		/// * scale: Scale of the frustums.
+		/// * color: Color of the frustums.
+		/// 
+		/// Displays frustums at each pose of the trajectory.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.
+		/// * color: Color::white()
+		#[inline]
+		pub fn new_def_1(path: &impl core::ToInputArray, fov: core::Vec2d) -> Result<crate::viz::WTrajectoryFrustums> {
+			input_array_arg!(path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR(path.as_raw__InputArray(), &fov, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(ret) };
@@ -4743,6 +5786,32 @@ pub mod viz {
 			Ok(ret)
 		}
 		
+		/// Constructs a WTrajectorySpheres.
+		/// 
+		/// ## Parameters
+		/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+		/// * line_length: Max length of the lines which point to previous position
+		/// * radius: Radius of the spheres.
+		/// * from: Color for first sphere.
+		/// * to: Color for last sphere. Intermediate spheres will have interpolated color.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * line_length: 0.05
+		/// * radius: 0.007
+		/// * from: Color::red()
+		/// * to: Color::white()
+		#[inline]
+		pub fn new_def(path: &impl core::ToInputArray) -> Result<crate::viz::WTrajectorySpheres> {
+			input_array_arg!(path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR(path.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WTrajectorySpheres::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget, cv_viz_WTrajectorySpheres_to_Widget }
@@ -4775,6 +5844,20 @@ pub mod viz {
 		fn add_widget(&mut self, widget: &crate::viz::Widget3D, pose: core::Affine3d) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WWidgetMerger_addWidget_const_Widget3DR_const_Affine3dR(self.as_raw_mut_WWidgetMerger(), widget.as_raw_Widget3D(), &pose, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Add widget to merge with optional position change
+		/// 
+		/// ## Note
+		/// This alternative version of [add_widget] function uses the following default values for its arguments:
+		/// * pose: Affine3d::Identity()
+		#[inline]
+		fn add_widget_def(&mut self, widget: &crate::viz::Widget3D) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WWidgetMerger_addWidget_const_Widget3DR(self.as_raw_mut_WWidgetMerger(), widget.as_raw_Widget3D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

@@ -5,6 +5,56 @@ pub mod cudabgsegm {
 		pub use { super::CUDA_BackgroundSubtractorMOGTraitConst, super::CUDA_BackgroundSubtractorMOGTrait, super::CUDA_BackgroundSubtractorMOG2TraitConst, super::CUDA_BackgroundSubtractorMOG2Trait };
 	}
 	
+	/// Creates mixture-of-gaussian background subtractor
+	/// 
+	/// ## Parameters
+	/// * history: Length of the history.
+	/// * nmixtures: Number of Gaussian mixtures.
+	/// * backgroundRatio: Background ratio.
+	/// * noiseSigma: Noise strength (standard deviation of the brightness or each color channel). 0
+	/// means some automatic value.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_mog] function uses the following default values for its arguments:
+	/// * history: 200
+	/// * nmixtures: 5
+	/// * background_ratio: 0.7
+	/// * noise_sigma: 0
+	#[inline]
+	pub fn create_background_subtractor_mog_def() -> Result<core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createBackgroundSubtractorMOG(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates MOG2 Background Subtractor
+	/// 
+	/// ## Parameters
+	/// * history: Length of the history.
+	/// * varThreshold: Threshold on the squared Mahalanobis distance between the pixel and the model
+	/// to decide whether a pixel is well described by the background model. This parameter does not
+	/// affect the background update.
+	/// * detectShadows: If true, the algorithm will detect shadows and mark them. It decreases the
+	/// speed a bit, so if you do not need this feature, set the parameter to false.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_mog2] function uses the following default values for its arguments:
+	/// * history: 500
+	/// * var_threshold: 16
+	/// * detect_shadows: true
+	#[inline]
+	pub fn create_background_subtractor_mog2_def() -> Result<core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createBackgroundSubtractorMOG2(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Creates MOG2 Background Subtractor
 	/// 
 	/// ## Parameters
@@ -171,7 +221,7 @@ pub mod cudabgsegm {
 	/// 
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MOG2001) .
+	/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MOG2001) .
 	/// ## See also
 	/// BackgroundSubtractorMOG
 	/// 
@@ -279,7 +329,7 @@ pub mod cudabgsegm {
 	/// 
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
+	/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
 	/// ## See also
 	/// BackgroundSubtractorMOG2
 	pub struct CUDA_BackgroundSubtractorMOG2 {

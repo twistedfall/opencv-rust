@@ -2,8 +2,8 @@ pub mod objdetect {
 	//! # Object Detection
 	//!    # Cascade Classifier for Object Detection
 	//! 
-	//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Viola01) and
-	//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
+	//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Viola01) and
+	//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lienhart02) .
 	//! 
 	//! First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 	//! trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -29,7 +29,7 @@ pub mod objdetect {
 	//! classifiers, and are calculated as described below. The current algorithm uses the following
 	//! Haar-like features:
 	//! 
-	//! ![image](https://docs.opencv.org/4.8.0/haarfeatures.png)
+	//! ![image](https://docs.opencv.org/4.8.1/haarfeatures.png)
 	//! 
 	//! The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 	//! the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -67,11 +67,11 @@ pub mod objdetect {
 	//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
 	//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
 	//! 
-	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Aruco2014).
+	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Aruco2014).
 	//! 
-	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 	//! ## See also
-	//! [Aruco2014](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Aruco2014)
+	//! [Aruco2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Aruco2014)
 	//!        This code has been originally developed by Sergio Garrido-Jurado as a project
 	//!        for Google Summer of Code 2015 (GSoC 15).
 	use crate::{mod_prelude::*, core, sys, types};
@@ -83,7 +83,7 @@ pub mod objdetect {
 	pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
 	pub const CASCADE_FIND_BIGGEST_OBJECT: i32 = 4;
 	pub const CASCADE_SCALE_IMAGE: i32 = 2;
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_wang2016iros)
 	pub const CORNER_REFINE_APRILTAG: i32 = 3;
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -168,7 +168,7 @@ pub mod objdetect {
 		CORNER_REFINE_SUBPIX = 1,
 		/// ArUco approach and refine the corners locations using the contour-points line fitting
 		CORNER_REFINE_CONTOUR = 2,
-		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_wang2016iros)
 		CORNER_REFINE_APRILTAG = 3,
 	}
 	
@@ -314,6 +314,32 @@ pub mod objdetect {
 	/// This function draws a set of detected Charuco corners. If identifiers vector is provided, it also
 	/// draws the id of each corner.
 	/// 
+	/// ## Note
+	/// This alternative version of [draw_detected_corners_charuco] function uses the following default values for its arguments:
+	/// * charuco_ids: noArray()
+	/// * corner_color: Scalar(255,0,0)
+	#[inline]
+	pub fn draw_detected_corners_charuco_def(image: &mut impl core::ToInputOutputArray, charuco_corners: &impl core::ToInputArray) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(charuco_corners);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_drawDetectedCornersCharuco_const__InputOutputArrayR_const__InputArrayR(image.as_raw__InputOutputArray(), charuco_corners.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Draws a set of Charuco corners
+	/// ## Parameters
+	/// * image: input/output image. It must have 1 or 3 channels. The number of channels is not
+	/// altered.
+	/// * charucoCorners: vector of detected charuco corners
+	/// * charucoIds: list of identifiers for each corner in charucoCorners
+	/// * cornerColor: color of the square surrounding each corner
+	/// 
+	/// This function draws a set of detected Charuco corners. If identifiers vector is provided, it also
+	/// draws the id of each corner.
+	/// 
 	/// ## C++ default parameters
 	/// * charuco_ids: noArray()
 	/// * corner_color: Scalar(255,0,0)
@@ -324,6 +350,39 @@ pub mod objdetect {
 		input_array_arg!(charuco_ids);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_aruco_drawDetectedCornersCharuco_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_Scalar(image.as_raw__InputOutputArray(), charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), corner_color.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Draw a set of detected ChArUco Diamond markers
+	/// 
+	/// ## Parameters
+	/// * image: input/output image. It must have 1 or 3 channels. The number of channels is not
+	/// altered.
+	/// * diamondCorners: positions of diamond corners in the same format returned by
+	/// detectCharucoDiamond(). (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers,
+	/// the dimensions of this array should be Nx4. The order of the corners should be clockwise.
+	/// * diamondIds: vector of identifiers for diamonds in diamondCorners, in the same format
+	/// returned by detectCharucoDiamond() (e.g. std::vector<Vec4i>).
+	/// Optional, if not provided, ids are not painted.
+	/// * borderColor: color of marker borders. Rest of colors (text color and first corner color)
+	/// are calculated based on this one.
+	/// 
+	/// Given an array of detected diamonds, this functions draws them in the image. The marker borders
+	/// are painted and the markers identifiers if provided.
+	/// Useful for debugging purposes.
+	/// 
+	/// ## Note
+	/// This alternative version of [draw_detected_diamonds] function uses the following default values for its arguments:
+	/// * diamond_ids: noArray()
+	/// * border_color: Scalar(0,0,255)
+	#[inline]
+	pub fn draw_detected_diamonds_def(image: &mut impl core::ToInputOutputArray, diamond_corners: &impl core::ToInputArray) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(diamond_corners);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_drawDetectedDiamonds_const__InputOutputArrayR_const__InputArrayR(image.as_raw__InputOutputArray(), diamond_corners.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -378,6 +437,37 @@ pub mod objdetect {
 	/// the markers in the image. The marker borders are painted and the markers identifiers if provided.
 	/// Useful for debugging purposes.
 	/// 
+	/// ## Note
+	/// This alternative version of [draw_detected_markers] function uses the following default values for its arguments:
+	/// * ids: noArray()
+	/// * border_color: Scalar(0,255,0)
+	#[inline]
+	pub fn draw_detected_markers_def(image: &mut impl core::ToInputOutputArray, corners: &impl core::ToInputArray) -> Result<()> {
+		input_output_array_arg!(image);
+		input_array_arg!(corners);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_drawDetectedMarkers_const__InputOutputArrayR_const__InputArrayR(image.as_raw__InputOutputArray(), corners.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Draw detected markers in image
+	/// 
+	/// ## Parameters
+	/// * image: input/output image. It must have 1 or 3 channels. The number of channels is not altered.
+	/// * corners: positions of marker corners on input image.
+	/// (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers, the dimensions of
+	/// this array should be Nx4. The order of the corners should be clockwise.
+	/// * ids: vector of identifiers for markers in markersCorners .
+	/// Optional, if not provided, ids are not painted.
+	/// * borderColor: color of marker borders. Rest of colors (text color and first corner color)
+	/// are calculated based on this one to improve visualization.
+	/// 
+	/// Given an array of detected marker corners and its corresponding ids, this functions draws
+	/// the markers in the image. The marker borders are painted and the markers identifiers if provided.
+	/// Useful for debugging purposes.
+	/// 
 	/// ## C++ default parameters
 	/// * ids: noArray()
 	/// * border_color: Scalar(0,255,0)
@@ -406,6 +496,33 @@ pub mod objdetect {
 	/// included and the rest are generated based on them. If the size of baseDictionary is higher
 	/// than nMarkers, only the first nMarkers in baseDictionary are taken and no new marker is added.
 	/// 
+	/// ## Note
+	/// This alternative version of [extend_dictionary] function uses the following default values for its arguments:
+	/// * base_dictionary: Dictionary()
+	/// * random_seed: 0
+	#[inline]
+	pub fn extend_dictionary_def(n_markers: i32, marker_size: i32) -> Result<crate::objdetect::Dictionary> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_extendDictionary_int_int(n_markers, marker_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Extend base dictionary by new nMarkers
+	/// 
+	/// ## Parameters
+	/// * nMarkers: number of markers in the dictionary
+	/// * markerSize: number of bits per dimension of each markers
+	/// * baseDictionary: Include the markers in this dictionary at the beginning (optional)
+	/// * randomSeed: a user supplied seed for theRNG()
+	/// 
+	/// This function creates a new dictionary composed by nMarkers markers and each markers composed
+	/// by markerSize x markerSize bits. If baseDictionary is provided, its markers are directly
+	/// included and the rest are generated based on them. If the size of baseDictionary is higher
+	/// than nMarkers, only the first nMarkers in baseDictionary are taken and no new marker is added.
+	/// 
 	/// ## C++ default parameters
 	/// * base_dictionary: Dictionary()
 	/// * random_seed: 0
@@ -416,6 +533,30 @@ pub mod objdetect {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Generate a canonical marker image
+	/// 
+	/// ## Parameters
+	/// * dictionary: dictionary of markers indicating the type of markers
+	/// * id: identifier of the marker that will be returned. It has to be a valid id in the specified dictionary.
+	/// * sidePixels: size of the image in pixels
+	/// * img: output image with the marker
+	/// * borderBits: width of the marker border.
+	/// 
+	/// This function returns a marker image in its canonical form (i.e. ready to be printed)
+	/// 
+	/// ## Note
+	/// This alternative version of [generate_image_marker] function uses the following default values for its arguments:
+	/// * border_bits: 1
+	#[inline]
+	pub fn generate_image_marker_def(dictionary: &crate::objdetect::Dictionary, id: i32, side_pixels: i32, img: &mut impl core::ToOutputArray) -> Result<()> {
+		output_array_arg!(img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_aruco_generateImageMarker_const_DictionaryR_int_int_const__OutputArrayR(dictionary.as_raw_Dictionary(), id, side_pixels, img.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -474,6 +615,21 @@ pub mod objdetect {
 		Ok(ret)
 	}
 	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [group_rectangles_meanshift] function uses the following default values for its arguments:
+	/// * detect_threshold: 0.0
+	/// * win_det_size: Size(64,128)
+	#[inline]
+	pub fn group_rectangles_meanshift_def(rect_list: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>, found_scales: &mut core::Vector<f64>) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_groupRectangles_meanshift_vectorLRectGR_vectorLdoubleGR_vectorLdoubleGR(rect_list.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), found_scales.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 	/// 
 	/// ## C++ default parameters
@@ -483,6 +639,34 @@ pub mod objdetect {
 	pub fn group_rectangles_meanshift(rect_list: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>, found_scales: &mut core::Vector<f64>, detect_threshold: f64, win_det_size: core::Size) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_groupRectangles_meanshift_vectorLRectGR_vectorLdoubleGR_vectorLdoubleGR_double_Size(rect_list.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), found_scales.as_raw_mut_VectorOff64(), detect_threshold, win_det_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Groups the object candidate rectangles.
+	/// 
+	/// ## Parameters
+	/// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
+	/// rectangles. (The Python list is not modified in place.)
+	/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
+	/// group of rectangles to retain it.
+	/// * eps: Relative difference between sides of the rectangles to merge them into a group.
+	/// 
+	/// The function is a wrapper for the generic function partition . It clusters all the input rectangles
+	/// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
+	/// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
+	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
+	/// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
+	/// cluster, the average rectangle is computed and put into the output rectangle list.
+	/// 
+	/// ## Note
+	/// This alternative version of [group_rectangles] function uses the following default values for its arguments:
+	/// * eps: 0.2
+	#[inline]
+	pub fn group_rectangles_def(rect_list: &mut core::Vector<core::Rect>, group_threshold: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_groupRectangles_vectorLRectGR_int(rect_list.as_raw_mut_VectorOfRect(), group_threshold, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -541,6 +725,20 @@ pub mod objdetect {
 		Ok(ret)
 	}
 	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [group_rectangles_weights] function uses the following default values for its arguments:
+	/// * eps: 0.2
+	#[inline]
+	pub fn group_rectangles_weights_def(rect_list: &mut core::Vector<core::Rect>, weights: &mut core::Vector<i32>, group_threshold: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_groupRectangles_vectorLRectGR_vectorLintGR_int(rect_list.as_raw_mut_VectorOfRect(), weights.as_raw_mut_VectorOfi32(), group_threshold, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Groups the object candidate rectangles.
 	/// 
 	/// ## Parameters
@@ -565,6 +763,20 @@ pub mod objdetect {
 	pub fn group_rectangles_weights(rect_list: &mut core::Vector<core::Rect>, weights: &mut core::Vector<i32>, group_threshold: i32, eps: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_groupRectangles_vectorLRectGR_vectorLintGR_int_double(rect_list.as_raw_mut_VectorOfRect(), weights.as_raw_mut_VectorOfi32(), group_threshold, eps, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [group_rectangles_levels] function uses the following default values for its arguments:
+	/// * eps: 0.2
+	#[inline]
+	pub fn group_rectangles_levels_def(rect_list: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>, group_threshold: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_groupRectangles_vectorLRectGR_vectorLintGR_vectorLdoubleGR_int(rect_list.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), group_threshold, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -959,6 +1171,38 @@ pub mod objdetect {
 		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
 		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
 		/// 
+		/// ## Note
+		/// This alternative version of [detect_multi_scale] function uses the following default values for its arguments:
+		/// * scale_factor: 1.1
+		/// * min_neighbors: 3
+		/// * flags: 0
+		/// * min_size: Size()
+		/// * max_size: Size()
+		#[inline]
+		fn detect_multi_scale_def(&mut self, image: &impl core::ToInputArray, objects: &mut core::Vector<core::Rect>) -> Result<()> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
+		/// of rectangles.
+		/// 
+		/// ## Parameters
+		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
+		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
+		/// rectangles may be partially outside the original image.
+		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
+		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
+		/// to retain it.
+		/// * flags: Parameter with the same meaning for an old cascade as in the function
+		/// cvHaarDetectObjects. It is not used for a new cascade.
+		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
+		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
@@ -986,6 +1230,39 @@ pub mod objdetect {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_double_int_int_Size_Size(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), scale_factor, min_neighbors, flags, min_size.opencv_as_extern(), max_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
+		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
+		/// rectangles may be partially outside the original image.
+		/// * numDetections: Vector of detection numbers for the corresponding objects. An object's number
+		/// of detections is the number of neighboring positively classified rectangles that were joined
+		/// together to form the object.
+		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
+		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
+		/// to retain it.
+		/// * flags: Parameter with the same meaning for an old cascade as in the function
+		/// cvHaarDetectObjects. It is not used for a new cascade.
+		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
+		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_multi_scale2] function uses the following default values for its arguments:
+		/// * scale_factor: 1.1
+		/// * min_neighbors: 3
+		/// * flags: 0
+		/// * min_size: Size()
+		/// * max_size: Size()
+		#[inline]
+		fn detect_multi_scale2_def(&mut self, image: &impl core::ToInputArray, objects: &mut core::Vector<core::Rect>, num_detections: &mut core::Vector<i32>) -> Result<()> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), num_detections.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1037,6 +1314,42 @@ pub mod objdetect {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), scale_factor, min_neighbors, flags, min_size.opencv_as_extern(), max_size.opencv_as_extern(), output_reject_levels, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// This function allows you to retrieve the final stage decision certainty of classification.
+		/// For this, one needs to set `outputRejectLevels` on true and provide the `rejectLevels` and `levelWeights` parameter.
+		/// For each resulting detection, `levelWeights` will then contain the certainty of classification at the final stage.
+		/// This value can then be used to separate strong from weaker classifications.
+		/// 
+		/// A code sample on how to use it efficiently can be found below:
+		/// ```C++
+		/// Mat img;
+		/// vector<double> weights;
+		/// vector<int> levels;
+		/// vector<Rect> detections;
+		/// CascadeClassifier model("/path/to/your/model.xml");
+		/// model.detectMultiScale(img, detections, levels, weights, 1.1, 3, 0, Size(), Size(), true);
+		/// cerr << "Detection " << detections[0] << " with weight " << weights[0] << endl;
+		/// ```
+		/// 
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_multi_scale3] function uses the following default values for its arguments:
+		/// * scale_factor: 1.1
+		/// * min_neighbors: 3
+		/// * flags: 0
+		/// * min_size: Size()
+		/// * max_size: Size()
+		/// * output_reject_levels: false
+		#[inline]
+		fn detect_multi_scale3_def(&mut self, image: &impl core::ToInputArray, objects: &mut core::Vector<core::Rect>, reject_levels: &mut core::Vector<i32>, level_weights: &mut core::Vector<f64>) -> Result<()> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR(self.as_raw_mut_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_mut_VectorOfRect(), reject_levels.as_raw_mut_VectorOfi32(), level_weights.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1803,7 +2116,7 @@ pub mod objdetect {
 		
 		/// Detects faces in the input image. Following is an example output.
 		/// 
-		/// * ![image](https://docs.opencv.org/4.8.0/lena-face-detection.jpg)
+		/// * ![image](https://docs.opencv.org/4.8.1/lena-face-detection.jpg)
 		/// 
 		/// ## Parameters
 		/// * image: an image to detect
@@ -1886,6 +2199,37 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Creates an instance of this class with given parameters
+		/// 
+		/// ## Parameters
+		/// * model: the path to the requested model
+		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * input_size: the size of the input image
+		/// * score_threshold: the threshold to filter out bounding boxes of score smaller than the given value
+		/// * nms_threshold: the threshold to suppress bounding boxes of IoU bigger than the given value
+		/// * top_k: keep top K bboxes before NMS
+		/// * backend_id: the id of backend
+		/// * target_id: the id of target device
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * score_threshold: 0.9f
+		/// * nms_threshold: 0.3f
+		/// * top_k: 5000
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create_def(model: &str, config: &str, input_size: core::Size) -> Result<core::Ptr<crate::objdetect::FaceDetectorYN>> {
+			extern_container_arg!(model);
+			extern_container_arg!(config);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FaceDetectorYN_create_const_StringR_const_StringR_const_SizeR(model.opencv_as_extern(), config.opencv_as_extern(), &input_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::FaceDetectorYN>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl std::fmt::Debug for FaceDetectorYN {
@@ -1931,6 +2275,26 @@ pub mod objdetect {
 			input_array_arg!(face_feature2);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FaceRecognizerSF_match_const_const__InputArrayR_const__InputArrayR_int(self.as_raw_FaceRecognizerSF(), face_feature1.as_raw__InputArray(), face_feature2.as_raw__InputArray(), dis_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Calculating the distance between two face features
+		/// ## Parameters
+		/// * face_feature1: the first input feature
+		/// * face_feature2: the second input feature of the same size and the same type as face_feature1
+		/// * dis_type: defining the similarity with optional values "FR_OSINE" or "FR_NORM_L2"
+		/// 
+		/// ## Note
+		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// * dis_type: FaceRecognizerSF::FR_COSINE
+		#[inline]
+		fn match__def(&self, face_feature1: &impl core::ToInputArray, face_feature2: &impl core::ToInputArray) -> Result<f64> {
+			input_array_arg!(face_feature1);
+			input_array_arg!(face_feature2);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FaceRecognizerSF_match_const_const__InputArrayR_const__InputArrayR(self.as_raw_FaceRecognizerSF(), face_feature1.as_raw__InputArray(), face_feature2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2008,6 +2372,29 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Creates an instance of this class with given parameters
+		/// ## Parameters
+		/// * model: the path of the onnx model used for face recognition
+		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * backend_id: the id of backend
+		/// * target_id: the id of target device
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create_def(model: &str, config: &str) -> Result<core::Ptr<crate::objdetect::FaceRecognizerSF>> {
+			extern_container_arg!(model);
+			extern_container_arg!(config);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FaceRecognizerSF_create_const_StringR_const_StringR(model.opencv_as_extern(), config.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::FaceRecognizerSF>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl std::fmt::Debug for FaceRecognizerSF {
@@ -2060,6 +2447,29 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Decodes graphical code in image once it's found by the detect() method.
+		/// 
+		/// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing graphical code.
+		/// * points: Quadrangle vertices found by detect() method (or some other algorithm).
+		/// * straight_code: The optional output image containing binarized code, will be empty if not found.
+		/// 
+		/// ## Note
+		/// This alternative version of [decode] function uses the following default values for its arguments:
+		/// * straight_code: noArray()
+		#[inline]
+		fn decode_def(&self, img: &impl core::ToInputArray, points: &impl core::ToInputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			input_array_arg!(points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_decode_const_const__InputArrayR_const__InputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Both detects and decodes graphical code
 		/// 
 		/// ## Parameters
@@ -2077,6 +2487,28 @@ pub mod objdetect {
 			output_array_arg!(straight_code);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GraphicalCodeDetector_detectAndDecode_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_code.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Both detects and decodes graphical code
+		/// 
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing graphical code.
+		/// * points: optional output array of vertices of the found graphical code quadrangle, will be empty if not found.
+		/// * straight_code: The optional output image containing binarized code
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_and_decode] function uses the following default values for its arguments:
+		/// * points: noArray()
+		/// * straight_code: noArray()
+		#[inline]
+		fn detect_and_decode_def(&self, img: &impl core::ToInputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_detectAndDecode_const_const__InputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
@@ -2119,6 +2551,27 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Decodes graphical codes in image once it's found by the detect() method.
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing graphical codes.
+		/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
+		/// * points: vector of Quadrangle vertices found by detect() method (or some other algorithm).
+		/// * straight_code: The optional output vector of images containing binarized codes
+		/// 
+		/// ## Note
+		/// This alternative version of [decode_multi] function uses the following default values for its arguments:
+		/// * straight_code: noArray()
+		#[inline]
+		fn decode_multi_def(&self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>) -> Result<bool> {
+			input_array_arg!(img);
+			input_array_arg!(points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_decodeMulti_const_const__InputArrayR_const__InputArrayR_vectorLstringGR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Both detects and decodes graphical codes
 		/// ## Parameters
 		/// * img: grayscale or color (BGR) image containing graphical codes.
@@ -2136,6 +2589,27 @@ pub mod objdetect {
 			output_array_arg!(straight_code);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GraphicalCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vectorLstringGR_const__OutputArrayR_const__OutputArrayR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), points.as_raw__OutputArray(), straight_code.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Both detects and decodes graphical codes
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing graphical codes.
+		/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
+		/// * points: optional output vector of vertices of the found graphical code quadrangles. Will be empty if not found.
+		/// * straight_code: The optional vector of images containing binarized codes
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_and_decode_multi] function uses the following default values for its arguments:
+		/// * points: noArray()
+		/// * straight_code: noArray()
+		#[inline]
+		fn detect_and_decode_multi_def(&self, img: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>) -> Result<bool> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GraphicalCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vectorLstringGR(self.as_raw_GraphicalCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2397,6 +2871,24 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// saves HOGDescriptor parameters and coefficients for the linear SVM classifier to a file
+		/// ## Parameters
+		/// * filename: File name
+		/// * objname: Object name
+		/// 
+		/// ## Note
+		/// This alternative version of [save] function uses the following default values for its arguments:
+		/// * objname: String()
+		#[inline]
+		fn save_def(&self, filename: &str) -> Result<()> {
+			extern_container_arg!(filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_save_const_const_StringR(self.as_raw_HOGDescriptor(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// clones the HOGDescriptor
 		/// ## Parameters
 		/// * c: cloned HOGDescriptor
@@ -2433,6 +2925,31 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// @example samples/cpp/train_HOG.cpp
+		/// /
+		/// Computes HOG descriptors of given image.
+		/// ## Parameters
+		/// * img: Matrix of the type CV_8U containing an image where HOG features will be calculated.
+		/// * descriptors: Matrix of the type CV_32F
+		/// * winStride: Window stride. It must be a multiple of block stride.
+		/// * padding: Padding
+		/// * locations: Vector of Point
+		/// 
+		/// ## Note
+		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// * win_stride: Size()
+		/// * padding: Size()
+		/// * locations: std::vector<Point>()
+		#[inline]
+		fn compute_def(&self, img: &impl core::ToInputArray, descriptors: &mut core::Vector<f32>) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_compute_const_const__InputArrayR_vectorLfloatGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), descriptors.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Performs object detection without a multi-scale window.
 		/// ## Parameters
 		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
@@ -2464,6 +2981,34 @@ pub mod objdetect {
 		/// ## Parameters
 		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
 		/// * foundLocations: Vector of point where each point contains left-top corner point of detected object boundaries.
+		/// * weights: Vector that will contain confidence values for each detected object.
+		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
+		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
+		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
+		/// * winStride: Window stride. It must be a multiple of block stride.
+		/// * padding: Padding
+		/// * searchLocations: Vector of Point includes set of requested locations to be evaluated.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_weights] function uses the following default values for its arguments:
+		/// * hit_threshold: 0
+		/// * win_stride: Size()
+		/// * padding: Size()
+		/// * search_locations: std::vector<Point>()
+		#[inline]
+		fn detect_weights_def(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>, weights: &mut core::Vector<f64>) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), weights.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Performs object detection without a multi-scale window.
+		/// ## Parameters
+		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
+		/// * foundLocations: Vector of point where each point contains left-top corner point of detected object boundaries.
 		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
 		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
 		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
@@ -2481,6 +3026,33 @@ pub mod objdetect {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_double_Size_Size_const_vectorLPointGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), hit_threshold, win_stride.opencv_as_extern(), padding.opencv_as_extern(), search_locations.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Performs object detection without a multi-scale window.
+		/// ## Parameters
+		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
+		/// * foundLocations: Vector of point where each point contains left-top corner point of detected object boundaries.
+		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
+		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
+		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
+		/// * winStride: Window stride. It must be a multiple of block stride.
+		/// * padding: Padding
+		/// * searchLocations: Vector of Point includes locations to search.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// * hit_threshold: 0
+		/// * win_stride: Size()
+		/// * padding: Size()
+		/// * search_locations: std::vector<Point>()
+		#[inline]
+		fn detect_def(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2524,6 +3096,40 @@ pub mod objdetect {
 		/// ## Parameters
 		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
 		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
+		/// * foundWeights: Vector that will contain confidence values for each detected object.
+		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
+		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
+		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
+		/// * winStride: Window stride. It must be a multiple of block stride.
+		/// * padding: Padding
+		/// * scale: Coefficient of the detection window increase.
+		/// * groupThreshold: Coefficient to regulate the similarity threshold. When detected, some objects can be covered
+		/// by many rectangles. 0 means not to perform grouping.
+		/// * useMeanshiftGrouping: indicates grouping algorithm
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_multi_scale_weights] function uses the following default values for its arguments:
+		/// * hit_threshold: 0
+		/// * win_stride: Size()
+		/// * padding: Size()
+		/// * scale: 1.05
+		/// * group_threshold: 2.0
+		/// * use_meanshift_grouping: false
+		#[inline]
+		fn detect_multi_scale_weights_def(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, found_weights: &mut core::Vector<f64>) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), found_weights.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
+		/// of rectangles.
+		/// ## Parameters
+		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
+		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
 		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
 		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
 		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
@@ -2551,6 +3157,39 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Detects objects of different sizes in the input image. The detected objects are returned as a list
+		/// of rectangles.
+		/// ## Parameters
+		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
+		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
+		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane.
+		/// Usually it is 0 and should be specified in the detector coefficients (as the last free coefficient).
+		/// But if the free coefficient is omitted (which is allowed), you can specify it manually here.
+		/// * winStride: Window stride. It must be a multiple of block stride.
+		/// * padding: Padding
+		/// * scale: Coefficient of the detection window increase.
+		/// * groupThreshold: Coefficient to regulate the similarity threshold. When detected, some objects can be covered
+		/// by many rectangles. 0 means not to perform grouping.
+		/// * useMeanshiftGrouping: indicates grouping algorithm
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_multi_scale] function uses the following default values for its arguments:
+		/// * hit_threshold: 0
+		/// * win_stride: Size()
+		/// * padding: Size()
+		/// * scale: 1.05
+		/// * group_threshold: 2.0
+		/// * use_meanshift_grouping: false
+		#[inline]
+		fn detect_multi_scale_def(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Computes gradients and quantized gradient orientations.
 		/// ## Parameters
 		/// * img: Matrix contains the image to be computed
@@ -2569,6 +3208,30 @@ pub mod objdetect {
 			input_output_array_arg!(angle_ofs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_computeGradient_const_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), grad.as_raw__InputOutputArray(), angle_ofs.as_raw__InputOutputArray(), padding_tl.opencv_as_extern(), padding_br.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Computes gradients and quantized gradient orientations.
+		/// ## Parameters
+		/// * img: Matrix contains the image to be computed
+		/// * grad: Matrix of type CV_32FC2 contains computed gradients
+		/// * angleOfs: Matrix of type CV_8UC2 contains quantized gradient orientations
+		/// * paddingTL: Padding from top-left
+		/// * paddingBR: Padding from bottom-right
+		/// 
+		/// ## Note
+		/// This alternative version of [compute_gradient] function uses the following default values for its arguments:
+		/// * padding_tl: Size()
+		/// * padding_br: Size()
+		#[inline]
+		fn compute_gradient_def(&self, img: &impl core::ToInputArray, grad: &mut impl core::ToInputOutputArray, angle_ofs: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_array_arg!(img);
+			input_output_array_arg!(grad);
+			input_output_array_arg!(angle_ofs);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_computeGradient_const_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), grad.as_raw__InputOutputArray(), angle_ofs.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2600,6 +3263,33 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// evaluate specified ROI and return confidence value for each location
+		/// ## Parameters
+		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
+		/// * locations: Vector of Point
+		/// * foundLocations: Vector of Point where each Point is detected object's top-left point.
+		/// * confidences: confidences
+		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane. Usually
+		/// it is 0 and should be specified in the detector coefficients (as the last free coefficient). But if
+		/// the free coefficient is omitted (which is allowed), you can specify it manually here
+		/// * winStride: winStride
+		/// * padding: padding
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_roi] function uses the following default values for its arguments:
+		/// * hit_threshold: 0
+		/// * win_stride: Size()
+		/// * padding: Size()
+		#[inline]
+		fn detect_roi_def(&self, img: &impl core::ToInputArray, locations: &core::Vector<core::Point>, found_locations: &mut core::Vector<core::Point>, confidences: &mut core::Vector<f64>) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_detectROI_const_const__InputArrayR_const_vectorLPointGR_vectorLPointGR_vectorLdoubleGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), locations.as_raw_VectorOfPoint(), found_locations.as_raw_mut_VectorOfPoint(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// evaluate specified ROI and return confidence value for each location in multiple scales
 		/// ## Parameters
 		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
@@ -2617,6 +3307,29 @@ pub mod objdetect {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_detectMultiScaleROI_const_const__InputArrayR_vectorLRectGR_vectorLDetectionROIGR_double_int(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), locations.as_raw_mut_VectorOfDetectionROI(), hit_threshold, group_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// evaluate specified ROI and return confidence value for each location in multiple scales
+		/// ## Parameters
+		/// * img: Matrix of the type CV_8U or CV_8UC3 containing an image where objects are detected.
+		/// * foundLocations: Vector of rectangles where each rectangle contains the detected object.
+		/// * locations: Vector of DetectionROI
+		/// * hitThreshold: Threshold for the distance between features and SVM classifying plane. Usually it is 0 and should be specified
+		/// in the detector coefficients (as the last free coefficient). But if the free coefficient is omitted (which is allowed), you can specify it manually here.
+		/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a group of rectangles to retain it.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_multi_scale_roi] function uses the following default values for its arguments:
+		/// * hit_threshold: 0
+		/// * group_threshold: 0
+		#[inline]
+		fn detect_multi_scale_roi_def(&self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>, locations: &mut core::Vector<crate::objdetect::DetectionROI>) -> Result<()> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_detectMultiScaleROI_const_const__InputArrayR_vectorLRectGR_vectorLDetectionROIGR(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_mut_VectorOfRect(), locations.as_raw_mut_VectorOfDetectionROI(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2793,11 +3506,29 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file
+		/// ## Parameters
+		/// * filename: Name of the file to read.
+		/// * objname: The optional name of the node to read (if empty, the first top-level node will be used).
+		/// 
+		/// ## Note
+		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// * objname: String()
+		#[inline]
+		fn load_def(&mut self, filename: &str) -> Result<bool> {
+			extern_container_arg!(filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_load_const_StringR(self.as_raw_mut_HOGDescriptor(), filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 	/// 
-	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
+	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Dalal2005) .
 	/// 
 	/// useful links:
 	/// 
@@ -2879,6 +3610,40 @@ pub mod objdetect {
 		pub fn new(_win_size: core::Size, _block_size: core::Size, _block_stride: core::Size, _cell_size: core::Size, _nbins: i32, _deriv_aperture: i32, _win_sigma: f64, _histogram_norm_type: crate::objdetect::HOGDescriptor_HistogramNormType, _l2_hys_threshold: f64, _gamma_correction: bool, _nlevels: i32, _signed_gradient: bool) -> Result<crate::objdetect::HOGDescriptor> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_HOGDescriptor_Size_Size_Size_Size_int_int_double_HistogramNormType_double_bool_int_bool(_win_size.opencv_as_extern(), _block_size.opencv_as_extern(), _block_stride.opencv_as_extern(), _cell_size.opencv_as_extern(), _nbins, _deriv_aperture, _win_sigma, _histogram_norm_type, _l2_hys_threshold, _gamma_correction, _nlevels, _signed_gradient, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * _winSize: sets winSize with given value.
+		/// * _blockSize: sets blockSize with given value.
+		/// * _blockStride: sets blockStride with given value.
+		/// * _cellSize: sets cellSize with given value.
+		/// * _nbins: sets nbins with given value.
+		/// * _derivAperture: sets derivAperture with given value.
+		/// * _winSigma: sets winSigma with given value.
+		/// * _histogramNormType: sets histogramNormType with given value.
+		/// * _L2HysThreshold: sets L2HysThreshold with given value.
+		/// * _gammaCorrection: sets gammaCorrection with given value.
+		/// * _nlevels: sets nlevels with given value.
+		/// * _signedGradient: sets signedGradient with given value.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * _deriv_aperture: 1
+		/// * _win_sigma: -1
+		/// * _histogram_norm_type: HOGDescriptor::L2Hys
+		/// * _l2_hys_threshold: 0.2
+		/// * _gamma_correction: false
+		/// * _nlevels: HOGDescriptor::DEFAULT_NLEVELS
+		/// * _signed_gradient: false
+		#[inline]
+		pub fn new_def(_win_size: core::Size, _block_size: core::Size, _block_stride: core::Size, _cell_size: core::Size, _nbins: i32) -> Result<crate::objdetect::HOGDescriptor> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_HOGDescriptor_HOGDescriptor_Size_Size_Size_Size_int(_win_size.opencv_as_extern(), _block_size.opencv_as_extern(), _block_stride.opencv_as_extern(), _cell_size.opencv_as_extern(), _nbins, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::objdetect::HOGDescriptor::opencv_from_extern(ret) };
@@ -3047,6 +3812,29 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Decodes QR code on a curved surface in image once it's found by the detect() method.
+		/// 
+		/// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing QR code.
+		/// * points: Quadrangle vertices found by detect() method (or some other algorithm).
+		/// * straight_qrcode: The optional output image containing rectified and binarized QR code
+		/// 
+		/// ## Note
+		/// This alternative version of [decode_curved] function uses the following default values for its arguments:
+		/// * straight_qrcode: noArray()
+		#[inline]
+		fn decode_curved_def(&mut self, img: &impl core::ToInputArray, points: &impl core::ToInputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			input_array_arg!(points);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetector_decodeCurved_const__InputArrayR_const__InputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Both detects and decodes QR code on a curved surface
 		/// 
 		/// ## Parameters
@@ -3064,6 +3852,28 @@ pub mod objdetect {
 			output_array_arg!(straight_qrcode);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_QRCodeDetector_detectAndDecodeCurved_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Both detects and decodes QR code on a curved surface
+		/// 
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing QR code.
+		/// * points: optional output array of vertices of the found QR code quadrangle. Will be empty if not found.
+		/// * straight_qrcode: The optional output image containing rectified and binarized QR code
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_and_decode_curved] function uses the following default values for its arguments:
+		/// * points: noArray()
+		/// * straight_qrcode: noArray()
+		#[inline]
+		fn detect_and_decode_curved_def(&mut self, img: &impl core::ToInputArray) -> Result<Vec<u8>> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetector_detectAndDecodeCurved_const__InputArrayR(self.as_raw_mut_QRCodeDetector(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { Vec::<u8>::opencv_from_extern(ret) };
@@ -3381,6 +4191,23 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: QR code encoder parameters QRCodeEncoder::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// * parameters: QRCodeEncoder::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::objdetect::QRCodeEncoder>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeEncoder_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::QRCodeEncoder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl std::fmt::Debug for QRCodeEncoder {
@@ -3544,6 +4371,44 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Basic marker detection
+		/// 
+		/// ## Parameters
+		/// * image: input image
+		/// * corners: vector of detected marker corners. For each marker, its four corners
+		/// are provided, (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers,
+		/// the dimensions of this array is Nx4. The order of the corners is clockwise.
+		/// * ids: vector of identifiers of the detected markers. The identifier is of type int
+		/// (e.g. std::vector<int>). For N detected markers, the size of ids is also N.
+		/// The identifiers have the same order than the markers in the imgPoints array.
+		/// * rejectedImgPoints: contains the imgPoints of those squares whose inner code has not a
+		/// correct codification. Useful for debugging purposes.
+		/// 
+		/// Performs marker detection in the input image. Only markers included in the specific dictionary
+		/// are searched. For each detected marker, it returns the 2D position of its corner in the image
+		/// and its corresponding identifier.
+		/// Note that this function does not perform pose estimation.
+		/// 
+		/// Note: The function does not correct lens distortion or takes it into account. It's recommended to undistort
+		/// input image with corresponding camera model, if camera parameters are known
+		/// ## See also
+		/// undistort, estimatePoseSingleMarkers,  estimatePoseBoard
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_markers] function uses the following default values for its arguments:
+		/// * rejected_img_points: noArray()
+		#[inline]
+		fn detect_markers_def(&self, image: &impl core::ToInputArray, corners: &mut impl core::ToOutputArray, ids: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(corners);
+			output_array_arg!(ids);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_detectMarkers_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), corners.as_raw__OutputArray(), ids.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Refine not detected markers based on the already detected and the board layout
 		/// 
 		/// ## Parameters
@@ -3582,6 +4447,47 @@ pub mod objdetect {
 			output_array_arg!(recovered_idxs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_ArucoDetector_refineDetectedMarkers_const_const__InputArrayR_const_BoardR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), board.as_raw_Board(), detected_corners.as_raw__InputOutputArray(), detected_ids.as_raw__InputOutputArray(), rejected_corners.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), recovered_idxs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Refine not detected markers based on the already detected and the board layout
+		/// 
+		/// ## Parameters
+		/// * image: input image
+		/// * board: layout of markers in the board.
+		/// * detectedCorners: vector of already detected marker corners.
+		/// * detectedIds: vector of already detected marker identifiers.
+		/// * rejectedCorners: vector of rejected candidates during the marker detection process.
+		/// * cameraMatrix: optional input 3x3 floating-point camera matrix
+		/// ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D)
+		/// * distCoeffs: optional vector of distortion coefficients
+		/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5D%2C%5Bs%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5D%5D%29) of 4, 5, 8 or 12 elements
+		/// * recoveredIdxs: Optional array to returns the indexes of the recovered candidates in the
+		/// original rejectedCorners array.
+		/// 
+		/// This function tries to find markers that were not detected in the basic detecMarkers function.
+		/// First, based on the current detected marker and the board layout, the function interpolates
+		/// the position of the missing markers. Then it tries to find correspondence between the reprojected
+		/// markers and the rejected candidates based on the minRepDistance and errorCorrectionRate parameters.
+		/// If camera parameters and distortion coefficients are provided, missing markers are reprojected
+		/// using projectPoint function. If not, missing marker projections are interpolated using global
+		/// homography, and all the marker corners in the board must have the same Z coordinate.
+		/// 
+		/// ## Note
+		/// This alternative version of [refine_detected_markers] function uses the following default values for its arguments:
+		/// * camera_matrix: noArray()
+		/// * dist_coeffs: noArray()
+		/// * recovered_idxs: noArray()
+		#[inline]
+		fn refine_detected_markers_def(&self, image: &impl core::ToInputArray, board: &crate::objdetect::Board, detected_corners: &mut impl core::ToInputOutputArray, detected_ids: &mut impl core::ToInputOutputArray, rejected_corners: &mut impl core::ToInputOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			input_output_array_arg!(detected_corners);
+			input_output_array_arg!(detected_ids);
+			input_output_array_arg!(rejected_corners);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_refineDetectedMarkers_const_const__InputArrayR_const_BoardR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_ArucoDetector(), image.as_raw__InputArray(), board.as_raw_Board(), detected_corners.as_raw__InputOutputArray(), detected_ids.as_raw__InputOutputArray(), rejected_corners.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3741,6 +4647,28 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Basic ArucoDetector constructor
+		/// 
+		/// ## Parameters
+		/// * dictionary: indicates the type of markers that will be searched
+		/// * detectorParams: marker detection parameters
+		/// * refineParams: marker refine detection parameters
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * dictionary: getPredefinedDictionary(cv::aruco::DICT_4X4_50)
+		/// * detector_params: DetectorParameters()
+		/// * refine_params: RefineParameters()
+		#[inline]
+		pub fn new_def() -> Result<crate::objdetect::ArucoDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_ArucoDetector_ArucoDetector(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::ArucoDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { ArucoDetector, core::Algorithm, cv_aruco_ArucoDetector_to_Algorithm }
@@ -3860,6 +4788,31 @@ pub mod objdetect {
 			output_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Board_generateImage_const_Size_const__OutputArrayR_int_int(self.as_raw_Board(), out_size.opencv_as_extern(), img.as_raw__OutputArray(), margin_size, border_bits, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Draw a planar board
+		/// 
+		/// ## Parameters
+		/// * outSize: size of the output image in pixels.
+		/// * img: output image with the board. The size of this image will be outSize
+		/// and the board will be on the center, keeping the board proportions.
+		/// * marginSize: minimum margins (in pixels) of the board in the output image
+		/// * borderBits: width of the marker borders.
+		/// 
+		/// This function return the image of the board, ready to be printed.
+		/// 
+		/// ## Note
+		/// This alternative version of [generate_image] function uses the following default values for its arguments:
+		/// * margin_size: 0
+		/// * border_bits: 1
+		#[inline]
+		fn generate_image_def(&self, out_size: core::Size, img: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Board_generateImage_const_Size_const__OutputArrayR(self.as_raw_Board(), out_size.opencv_as_extern(), img.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4129,6 +5082,29 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// CharucoBoard constructor
+		/// 
+		/// ## Parameters
+		/// * size: number of chessboard squares in x and y directions
+		/// * squareLength: squareLength chessboard square side length (normally in meters)
+		/// * markerLength: marker side length (same unit than squareLength)
+		/// * dictionary: dictionary of markers indicating the type of markers
+		/// * ids: array of id used markers
+		/// The first markers in the dictionary are used to fill the white chessboard squares.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * ids: noArray()
+		#[inline]
+		pub fn new_def(size: core::Size, square_length: f32, marker_length: f32, dictionary: &crate::objdetect::Dictionary) -> Result<crate::objdetect::CharucoBoard> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_CharucoBoard_CharucoBoard_const_SizeR_float_float_const_DictionaryR(&size, square_length, marker_length, dictionary.as_raw_Dictionary(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::CharucoBoard::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn default() -> Result<crate::objdetect::CharucoBoard> {
 			return_send!(via ocvrs_return);
@@ -4241,6 +5217,45 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// detect aruco markers and interpolate position of ChArUco board corners
+		/// ## Parameters
+		/// * image: input image necesary for corner refinement. Note that markers are not detected and
+		/// should be sent in corners and ids parameters.
+		/// * charucoCorners: interpolated chessboard corners.
+		/// * charucoIds: interpolated chessboard corners identifiers.
+		/// * markerCorners: vector of already detected markers corners. For each marker, its four
+		/// corners are provided, (e.g std::vector<std::vector<cv::Point2f> > ). For N detected markers, the
+		/// dimensions of this array should be Nx4. The order of the corners should be clockwise.
+		/// If markerCorners and markerCorners are empty, the function detect aruco markers and ids.
+		/// * markerIds: list of identifiers for each marker in corners.
+		///  If markerCorners and markerCorners are empty, the function detect aruco markers and ids.
+		/// 
+		/// This function receives the detected markers and returns the 2D position of the chessboard corners
+		/// from a ChArUco board using the detected Aruco markers.
+		/// 
+		/// If markerCorners and markerCorners are empty, the detectMarkers() will run and detect aruco markers and ids.
+		/// 
+		/// If camera parameters are provided, the process is based in an approximated pose estimation, else it is based on local homography.
+		/// Only visible corners are returned. For each corner, its corresponding identifier is also returned in charucoIds.
+		/// ## See also
+		/// findChessboardCorners
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_board] function uses the following default values for its arguments:
+		/// * marker_corners: noArray()
+		/// * marker_ids: noArray()
+		#[inline]
+		fn detect_board_def(&self, image: &impl core::ToInputArray, charuco_corners: &mut impl core::ToOutputArray, charuco_ids: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(charuco_corners);
+			output_array_arg!(charuco_ids);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_CharucoDetector_detectBoard_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_CharucoDetector(), image.as_raw__InputArray(), charuco_corners.as_raw__OutputArray(), charuco_ids.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Detect ChArUco Diamond markers
 		/// 
 		/// ## Parameters
@@ -4273,6 +5288,42 @@ pub mod objdetect {
 			input_output_array_arg!(marker_ids);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_CharucoDetector_detectDiamonds_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_CharucoDetector(), image.as_raw__InputArray(), diamond_corners.as_raw__OutputArray(), diamond_ids.as_raw__OutputArray(), marker_corners.as_raw__InputOutputArray(), marker_ids.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Detect ChArUco Diamond markers
+		/// 
+		/// ## Parameters
+		/// * image: input image necessary for corner subpixel.
+		/// * diamondCorners: output list of detected diamond corners (4 corners per diamond). The order
+		/// is the same than in marker corners: top left, top right, bottom right and bottom left. Similar
+		/// format than the corners returned by detectMarkers (e.g std::vector<std::vector<cv::Point2f> > ).
+		/// * diamondIds: ids of the diamonds in diamondCorners. The id of each diamond is in fact of
+		/// type Vec4i, so each diamond has 4 ids, which are the ids of the aruco markers composing the
+		/// diamond.
+		/// * markerCorners: list of detected marker corners from detectMarkers function.
+		/// If markerCorners and markerCorners are empty, the function detect aruco markers and ids.
+		/// * markerIds: list of marker ids in markerCorners.
+		/// If markerCorners and markerCorners are empty, the function detect aruco markers and ids.
+		/// 
+		/// This function detects Diamond markers from the previous detected ArUco markers. The diamonds
+		/// are returned in the diamondCorners and diamondIds parameters. If camera calibration parameters
+		/// are provided, the diamond search is based on reprojection. If not, diamond search is based on
+		/// homography. Homography is faster than reprojection, but less accurate.
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_diamonds] function uses the following default values for its arguments:
+		/// * marker_corners: noArray()
+		/// * marker_ids: noArray()
+		#[inline]
+		fn detect_diamonds_def(&self, image: &impl core::ToInputArray, diamond_corners: &mut impl core::ToOutputArray, diamond_ids: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(diamond_corners);
+			output_array_arg!(diamond_ids);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_CharucoDetector_detectDiamonds_const_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_CharucoDetector(), image.as_raw__InputArray(), diamond_corners.as_raw__OutputArray(), diamond_ids.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4370,6 +5421,29 @@ pub mod objdetect {
 		pub fn new(board: &crate::objdetect::CharucoBoard, charuco_params: &crate::objdetect::CharucoParameters, detector_params: &crate::objdetect::DetectorParameters, refine_params: crate::objdetect::RefineParameters) -> Result<crate::objdetect::CharucoDetector> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_CharucoDetector_CharucoDetector_const_CharucoBoardR_const_CharucoParametersR_const_DetectorParametersR_const_RefineParametersR(board.as_raw_CharucoBoard(), charuco_params.as_raw_CharucoParameters(), detector_params.as_raw_DetectorParameters(), &refine_params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::CharucoDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Basic CharucoDetector constructor
+		/// 
+		/// ## Parameters
+		/// * board: ChAruco board
+		/// * charucoParams: charuco detection parameters
+		/// * detectorParams: marker detection parameters
+		/// * refineParams: marker refine detection parameters
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * charuco_params: CharucoParameters()
+		/// * detector_params: DetectorParameters()
+		/// * refine_params: RefineParameters()
+		#[inline]
+		pub fn new_def(board: &crate::objdetect::CharucoBoard) -> Result<crate::objdetect::CharucoDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_CharucoDetector_CharucoDetector_const_CharucoBoardR(board.as_raw_CharucoBoard(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::objdetect::CharucoDetector::opencv_from_extern(ret) };
@@ -5045,6 +6119,20 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Write a set of DetectorParameters to FileStorage
+		/// 
+		/// ## Note
+		/// This alternative version of [write_detector_parameters] function uses the following default values for its arguments:
+		/// * name: String()
+		#[inline]
+		fn write_detector_parameters_def(&mut self, fs: &mut core::FileStorage) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_DetectorParameters_writeDetectorParameters_FileStorageR(self.as_raw_mut_DetectorParameters(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// struct DetectorParameters is used by ArucoDetector
@@ -5182,6 +6270,23 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Returns the distance of the input bits to the specific id.
+		/// 
+		/// If allRotations is true, the four posible bits rotation are considered
+		/// 
+		/// ## Note
+		/// This alternative version of [get_distance_to_id] function uses the following default values for its arguments:
+		/// * all_rotations: true
+		#[inline]
+		fn get_distance_to_id_def(&self, bits: &impl core::ToInputArray, id: i32) -> Result<i32> {
+			input_array_arg!(bits);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Dictionary_getDistanceToId_const_const__InputArrayR_int(self.as_raw_Dictionary(), bits.as_raw__InputArray(), id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Generate a canonical marker image
 		/// 
 		/// ## C++ default parameters
@@ -5191,6 +6296,21 @@ pub mod objdetect {
 			output_array_arg!(_img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Dictionary_generateImageMarker_const_int_int_const__OutputArrayR_int(self.as_raw_Dictionary(), id, side_pixels, _img.as_raw__OutputArray(), border_bits, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Generate a canonical marker image
+		/// 
+		/// ## Note
+		/// This alternative version of [generate_image_marker] function uses the following default values for its arguments:
+		/// * border_bits: 1
+		#[inline]
+		fn generate_image_marker_def(&self, id: i32, side_pixels: i32, _img: &mut impl core::ToOutputArray) -> Result<()> {
+			output_array_arg!(_img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Dictionary_generateImageMarker_const_int_int_const__OutputArrayR(self.as_raw_Dictionary(), id, side_pixels, _img.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5258,6 +6378,20 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Write a dictionary to FileStorage, format is the same as in readDictionary().
+		/// 
+		/// ## Note
+		/// This alternative version of [write_dictionary] function uses the following default values for its arguments:
+		/// * name: String()
+		#[inline]
+		fn write_dictionary_def(&mut self, fs: &mut core::FileStorage) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Dictionary_writeDictionary_FileStorageR(self.as_raw_mut_Dictionary(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Dictionary/Set of markers, it contains the inner codification
@@ -5308,6 +6442,19 @@ pub mod objdetect {
 		pub fn new(bytes_list: &core::Mat, _marker_size: i32, maxcorr: i32) -> Result<crate::objdetect::Dictionary> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_Dictionary_Dictionary_const_MatR_int_int(bytes_list.as_raw_Mat(), _marker_size, maxcorr, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * maxcorr: 0
+		#[inline]
+		pub fn new_def(bytes_list: &core::Mat, _marker_size: i32) -> Result<crate::objdetect::Dictionary> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_Dictionary_Dictionary_const_MatR_int(bytes_list.as_raw_Mat(), _marker_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::objdetect::Dictionary::opencv_from_extern(ret) };
@@ -5453,6 +6600,28 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// GridBoard constructor
+		/// 
+		/// ## Parameters
+		/// * size: number of markers in x and y directions
+		/// * markerLength: marker side length (normally in meters)
+		/// * markerSeparation: separation between two markers (same unit as markerLength)
+		/// * dictionary: dictionary of markers indicating the type of markers
+		/// * ids: set of marker ids in dictionary to use on board.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * ids: noArray()
+		#[inline]
+		pub fn new_def(size: core::Size, marker_length: f32, marker_separation: f32, dictionary: &crate::objdetect::Dictionary) -> Result<crate::objdetect::GridBoard> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_GridBoard_GridBoard_const_SizeR_float_float_const_DictionaryR(&size, marker_length, marker_separation, dictionary.as_raw_Dictionary(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::GridBoard::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		pub fn default() -> Result<crate::objdetect::GridBoard> {
 			return_send!(via ocvrs_return);
@@ -5515,6 +6684,20 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * min_rep_distance: 10.f
+		/// * error_correction_rate: 3.f
+		/// * check_all_orders: true
+		#[inline]
+		pub fn new_def() -> Result<crate::objdetect::RefineParameters> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_RefineParameters_RefineParameters(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Read a new set of RefineParameters from FileNode (use FileStorage.root()).
 		#[inline]
 		pub fn read_refine_parameters(self, fn_: &core::FileNode) -> Result<bool> {
@@ -5534,6 +6717,20 @@ pub mod objdetect {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_aruco_RefineParameters_writeRefineParameters_FileStorageR_const_StringR(self.opencv_as_extern(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Write a set of RefineParameters to FileStorage
+		/// 
+		/// ## Note
+		/// This alternative version of [write_refine_parameters] function uses the following default values for its arguments:
+		/// * name: String()
+		#[inline]
+		pub fn write_refine_parameters_def(self, fs: &mut core::FileStorage) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_RefineParameters_writeRefineParameters_FileStorageR(self.opencv_as_extern(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5585,6 +6782,29 @@ pub mod objdetect {
 			output_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_barcode_BarcodeDetector_detectAndDecodeWithType_const_const__InputArrayR_vectorLstringGR_vectorLstringGR_const__OutputArrayR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfString(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Both detects and decodes barcode
+		/// 
+		/// ## Parameters
+		/// * img: grayscale or color (BGR) image containing barcode.
+		/// * decoded_info: UTF8-encoded output vector of string(s) or empty vector of string if the codes cannot be decoded.
+		/// * decoded_type: vector of strings, specifies the type of these barcodes
+		/// * points: optional output vector of vertices of the found  barcode rectangle. Will be empty if not found.
+		/// ## Returns
+		/// true if at least one valid barcode have been found
+		/// 
+		/// ## Note
+		/// This alternative version of [detect_and_decode_with_type] function uses the following default values for its arguments:
+		/// * points: noArray()
+		#[inline]
+		fn detect_and_decode_with_type_def(&self, img: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<String>) -> Result<bool> {
+			input_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_detectAndDecodeWithType_const_const__InputArrayR_vectorLstringGR_vectorLstringGR(self.as_raw_BarcodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_mut_VectorOfString(), decoded_type.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

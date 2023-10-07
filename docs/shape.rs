@@ -36,6 +36,20 @@ pub mod shape {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [create_chi_histogram_cost_extractor] function uses the following default values for its arguments:
+	/// * n_dummies: 25
+	/// * default_cost: 0.2f
+	#[inline]
+	pub fn create_chi_histogram_cost_extractor_def() -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createChiHistogramCostExtractor(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * n_dummies: 25
 	/// * default_cost: 0.2f
@@ -43,6 +57,21 @@ pub mod shape {
 	pub fn create_chi_histogram_cost_extractor(n_dummies: i32, default_cost: f32) -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createChiHistogramCostExtractor_int_float(n_dummies, default_cost, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [create_emd_histogram_cost_extractor] function uses the following default values for its arguments:
+	/// * flag: DIST_L2
+	/// * n_dummies: 25
+	/// * default_cost: 0.2f
+	#[inline]
+	pub fn create_emd_histogram_cost_extractor_def() -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createEMDHistogramCostExtractor(ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
@@ -63,6 +92,20 @@ pub mod shape {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [create_emdl1_histogram_cost_extractor] function uses the following default values for its arguments:
+	/// * n_dummies: 25
+	/// * default_cost: 0.2f
+	#[inline]
+	pub fn create_emdl1_histogram_cost_extractor_def() -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createEMDL1HistogramCostExtractor(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * n_dummies: 25
 	/// * default_cost: 0.2f
@@ -73,6 +116,20 @@ pub mod shape {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [create_hausdorff_distance_extractor] function uses the following default values for its arguments:
+	/// * distance_flag: cv::NORM_L2
+	/// * rank_prop: 0.6f
+	#[inline]
+	pub fn create_hausdorff_distance_extractor_def() -> Result<core::Ptr<crate::shape::HausdorffDistanceExtractor>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createHausdorffDistanceExtractor(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::shape::HausdorffDistanceExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -89,6 +146,21 @@ pub mod shape {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [create_norm_histogram_cost_extractor] function uses the following default values for its arguments:
+	/// * flag: DIST_L2
+	/// * n_dummies: 25
+	/// * default_cost: 0.2f
+	#[inline]
+	pub fn create_norm_histogram_cost_extractor_def() -> Result<core::Ptr<crate::shape::HistogramCostExtractor>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createNormHistogramCostExtractor(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * flag: DIST_L2
 	/// * n_dummies: 25
@@ -100,6 +172,25 @@ pub mod shape {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::HistogramCostExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## Note
+	/// This alternative version of [create_shape_context_distance_extractor] function uses the following default values for its arguments:
+	/// * n_angular_bins: 12
+	/// * n_radial_bins: 4
+	/// * inner_radius: 0.2f
+	/// * outer_radius: 2
+	/// * iterations: 3
+	/// * comparer: createChiHistogramCostExtractor()
+	/// * transformer: createThinPlateSplineShapeTransformer()
+	#[inline]
+	pub fn create_shape_context_distance_extractor_def() -> Result<core::Ptr<crate::shape::ShapeContextDistanceExtractor>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createShapeContextDistanceExtractor(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::shape::ShapeContextDistanceExtractor>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -118,6 +209,21 @@ pub mod shape {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::shape::ShapeContextDistanceExtractor>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Complete constructor
+	/// 
+	/// ## Note
+	/// This alternative version of [create_thin_plate_spline_shape_transformer] function uses the following default values for its arguments:
+	/// * regularization_parameter: 0
+	#[inline]
+	pub fn create_thin_plate_spline_shape_transformer_def() -> Result<core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createThinPlateSplineShapeTransformer(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::shape::ThinPlateSplineShapeTransformer>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -1240,6 +1346,31 @@ pub mod shape {
 			Ok(ret)
 		}
 		
+		/// Apply a transformation, given a pre-estimated transformation parameters, to an Image.
+		/// 
+		/// ## Parameters
+		/// * transformingImage: Input image.
+		/// * output: Output image.
+		/// * flags: Image interpolation method.
+		/// * borderMode: border style.
+		/// * borderValue: border value.
+		/// 
+		/// ## Note
+		/// This alternative version of [warp_image] function uses the following default values for its arguments:
+		/// * flags: INTER_LINEAR
+		/// * border_mode: BORDER_CONSTANT
+		/// * border_value: Scalar()
+		#[inline]
+		fn warp_image_def(&self, transforming_image: &impl core::ToInputArray, output: &mut impl core::ToOutputArray) -> Result<()> {
+			input_array_arg!(transforming_image);
+			output_array_arg!(output);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ShapeTransformer_warpImage_const_const__InputArrayR_const__OutputArrayR(self.as_raw_ShapeTransformer(), transforming_image.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::shape::ShapeTransformer]
@@ -1277,6 +1408,25 @@ pub mod shape {
 			output_array_arg!(output);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_applyTransformation_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_ShapeTransformer(), input.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Apply a transformation, given a pre-estimated transformation parameters.
+		/// 
+		/// ## Parameters
+		/// * input: Contour (set of points) to apply the transformation.
+		/// * output: Output contour.
+		/// 
+		/// ## Note
+		/// This alternative version of [apply_transformation] function uses the following default values for its arguments:
+		/// * output: noArray()
+		#[inline]
+		fn apply_transformation_def(&mut self, input: &impl core::ToInputArray) -> Result<f32> {
+			input_array_arg!(input);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ShapeTransformer_applyTransformation_const__InputArrayR(self.as_raw_mut_ShapeTransformer(), input.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

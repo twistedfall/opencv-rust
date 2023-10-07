@@ -145,6 +145,30 @@ pub mod bioinspired {
 		/// You can retrieve the current parameters structure using the method Retina::getParameters and update
 		/// it before running method Retina::setup.
 		/// 
+		/// ## Note
+		/// This alternative version of [setup_from_file] function uses the following default values for its arguments:
+		/// * retina_parameter_file: ""
+		/// * apply_default_setup_on_failure: true
+		#[inline]
+		fn setup_from_file_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_Retina_setup(self.as_raw_mut_Retina(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Try to open an XML retina parameters file to adjust current retina instance setup
+		/// 
+		/// - if the xml file does not exist, then default setup is applied
+		/// - warning, Exceptions are thrown if read XML file is not valid
+		/// ## Parameters
+		/// * retinaParameterFile: the parameters filename
+		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
+		/// 
+		/// You can retrieve the current parameters structure using the method Retina::getParameters and update
+		/// it before running method Retina::setup.
+		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// * fs: the open Filestorage which contains retina parameters
@@ -156,6 +180,23 @@ pub mod bioinspired {
 		fn setup_from_storage(&mut self, fs: &mut core::FileStorage, apply_default_setup_on_failure: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_setup_FileStorageR_const_bool(self.as_raw_mut_Retina(), fs.as_raw_mut_FileStorage(), apply_default_setup_on_failure, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * fs: the open Filestorage which contains retina parameters
+		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
+		/// 
+		/// ## Note
+		/// This alternative version of [setup_from_storage] function uses the following default values for its arguments:
+		/// * apply_default_setup_on_failure: true
+		#[inline]
+		fn setup_from_storage_def(&mut self, fs: &mut core::FileStorage) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_Retina_setup_FileStorageR(self.as_raw_mut_Retina(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -263,6 +304,61 @@ pub mod bioinspired {
 			Ok(ret)
 		}
 		
+		/// Setup the OPL and IPL parvo channels (see biologocal model)
+		/// 
+		/// OPL is referred as Outer Plexiform Layer of the retina, it allows the spatio-temporal filtering
+		/// which withens the spectrum and reduces spatio-temporal noise while attenuating global luminance
+		/// (low frequency energy) IPL parvo is the OPL next processing stage, it refers to a part of the
+		/// Inner Plexiform layer of the retina, it allows high contours sensitivity in foveal vision. See
+		/// reference papers for more informations.
+		/// for more informations, please have a look at the paper Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
+		/// ## Parameters
+		/// * colorMode: specifies if (true) color is processed of not (false) to then processing gray
+		/// level image
+		/// * normaliseOutput: specifies if (true) output is rescaled between 0 and 255 of not (false)
+		/// * photoreceptorsLocalAdaptationSensitivity: the photoreceptors sensitivity renage is 0-1
+		/// (more log compression effect when value increases)
+		/// * photoreceptorsTemporalConstant: the time constant of the first order low pass filter of
+		/// the photoreceptors, use it to cut high temporal frequencies (noise or fast motion), unit is
+		/// frames, typical value is 1 frame
+		/// * photoreceptorsSpatialConstant: the spatial constant of the first order low pass filter of
+		/// the photoreceptors, use it to cut high spatial frequencies (noise or thick contours), unit is
+		/// pixels, typical value is 1 pixel
+		/// * horizontalCellsGain: gain of the horizontal cells network, if 0, then the mean value of
+		/// the output is zero, if the parameter is near 1, then, the luminance is not filtered and is
+		/// still reachable at the output, typicall value is 0
+		/// * HcellsTemporalConstant: the time constant of the first order low pass filter of the
+		/// horizontal cells, use it to cut low temporal frequencies (local luminance variations), unit is
+		/// frames, typical value is 1 frame, as the photoreceptors
+		/// * HcellsSpatialConstant: the spatial constant of the first order low pass filter of the
+		/// horizontal cells, use it to cut low spatial frequencies (local luminance), unit is pixels,
+		/// typical value is 5 pixel, this value is also used for local contrast computing when computing
+		/// the local contrast adaptation at the ganglion cells level (Inner Plexiform Layer parvocellular
+		/// channel model)
+		/// * ganglionCellsSensitivity: the compression strengh of the ganglion cells local adaptation
+		/// output, set a value between 0.6 and 1 for best results, a high value increases more the low
+		/// value sensitivity... and the output saturates faster, recommended value: 0.7
+		/// 
+		/// ## Note
+		/// This alternative version of [setup_op_land_ipl_parvo_channel] function uses the following default values for its arguments:
+		/// * color_mode: true
+		/// * normalise_output: true
+		/// * photoreceptors_local_adaptation_sensitivity: 0.7f
+		/// * photoreceptors_temporal_constant: 0.5f
+		/// * photoreceptors_spatial_constant: 0.53f
+		/// * horizontal_cells_gain: 0.f
+		/// * hcells_temporal_constant: 1.f
+		/// * hcells_spatial_constant: 7.f
+		/// * ganglion_cells_sensitivity: 0.7f
+		#[inline]
+		fn setup_op_land_ipl_parvo_channel_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_Retina_setupOPLandIPLParvoChannel(self.as_raw_mut_Retina(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Set parameters values for the Inner Plexiform Layer (IPL) magnocellular channel
 		/// 
 		/// this channel processes signals output from OPL processing stage in peripheral vision, it allows
@@ -302,6 +398,51 @@ pub mod bioinspired {
 		fn setup_ipl_magno_channel(&mut self, normalise_output: bool, parasol_cells_beta: f32, parasol_cells_tau: f32, parasol_cells_k: f32, amacrin_cells_temporal_cut_frequency: f32, v0_compression_parameter: f32, local_adaptintegration_tau: f32, local_adaptintegration_k: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_setupIPLMagnoChannel_const_bool_const_float_const_float_const_float_const_float_const_float_const_float_const_float(self.as_raw_mut_Retina(), normalise_output, parasol_cells_beta, parasol_cells_tau, parasol_cells_k, amacrin_cells_temporal_cut_frequency, v0_compression_parameter, local_adaptintegration_tau, local_adaptintegration_k, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Set parameters values for the Inner Plexiform Layer (IPL) magnocellular channel
+		/// 
+		/// this channel processes signals output from OPL processing stage in peripheral vision, it allows
+		/// motion information enhancement. It is decorrelated from the details channel. See reference
+		/// papers for more details.
+		/// 
+		/// ## Parameters
+		/// * normaliseOutput: specifies if (true) output is rescaled between 0 and 255 of not (false)
+		/// * parasolCells_beta: the low pass filter gain used for local contrast adaptation at the
+		/// IPL level of the retina (for ganglion cells local adaptation), typical value is 0
+		/// * parasolCells_tau: the low pass filter time constant used for local contrast adaptation
+		/// at the IPL level of the retina (for ganglion cells local adaptation), unit is frame, typical
+		/// value is 0 (immediate response)
+		/// * parasolCells_k: the low pass filter spatial constant used for local contrast adaptation
+		/// at the IPL level of the retina (for ganglion cells local adaptation), unit is pixels, typical
+		/// value is 5
+		/// * amacrinCellsTemporalCutFrequency: the time constant of the first order high pass fiter of
+		/// the magnocellular way (motion information channel), unit is frames, typical value is 1.2
+		/// * V0CompressionParameter: the compression strengh of the ganglion cells local adaptation
+		/// output, set a value between 0.6 and 1 for best results, a high value increases more the low
+		/// value sensitivity... and the output saturates faster, recommended value: 0.95
+		/// * localAdaptintegration_tau: specifies the temporal constant of the low pas filter
+		/// involved in the computation of the local "motion mean" for the local adaptation computation
+		/// * localAdaptintegration_k: specifies the spatial constant of the low pas filter involved
+		/// in the computation of the local "motion mean" for the local adaptation computation
+		/// 
+		/// ## Note
+		/// This alternative version of [setup_ipl_magno_channel] function uses the following default values for its arguments:
+		/// * normalise_output: true
+		/// * parasol_cells_beta: 0.f
+		/// * parasol_cells_tau: 0.f
+		/// * parasol_cells_k: 7.f
+		/// * amacrin_cells_temporal_cut_frequency: 1.2f
+		/// * v0_compression_parameter: 0.95f
+		/// * local_adaptintegration_tau: 0.f
+		/// * local_adaptintegration_k: 7.f
+		#[inline]
+		fn setup_ipl_magno_channel_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_Retina_setupIPLMagnoChannel(self.as_raw_mut_Retina(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -435,6 +576,26 @@ pub mod bioinspired {
 		fn set_color_saturation(&mut self, saturate_colors: bool, color_saturation_value: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_setColorSaturation_const_bool_const_float(self.as_raw_mut_Retina(), saturate_colors, color_saturation_value, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Activate color saturation as the final step of the color demultiplexing process -\> this
+		/// saturation is a sigmoide function applied to each channel of the demultiplexed image.
+		/// ## Parameters
+		/// * saturateColors: boolean that activates color saturation (if true) or desactivate (if false)
+		/// * colorSaturationValue: the saturation factor : a simple factor applied on the chrominance
+		/// buffers
+		/// 
+		/// ## Note
+		/// This alternative version of [set_color_saturation] function uses the following default values for its arguments:
+		/// * saturate_colors: true
+		/// * color_saturation_value: 4.0f
+		#[inline]
+		fn set_color_saturation_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_Retina_setColorSaturation(self.as_raw_mut_Retina(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -598,6 +759,39 @@ pub mod bioinspired {
 			Ok(ret)
 		}
 		
+		/// Constructors from standardized interfaces : retreive a smart pointer to a Retina instance
+		/// 
+		/// ## Parameters
+		/// * inputSize: the input frame size
+		/// * colorMode: the chosen processing mode : with or without color processing
+		/// * colorSamplingMethod: specifies which kind of color sampling will be used :
+		/// *   cv::bioinspired::RETINA_COLOR_RANDOM: each pixel position is either R, G or B in a random choice
+		/// *   cv::bioinspired::RETINA_COLOR_DIAGONAL: color sampling is RGBRGBRGB..., line 2 BRGBRGBRG..., line 3, GBRGBRGBR...
+		/// *   cv::bioinspired::RETINA_COLOR_BAYER: standard bayer sampling
+		/// * useRetinaLogSampling: activate retina log sampling, if true, the 2 following parameters can
+		/// be used
+		/// * reductionFactor: only usefull if param useRetinaLogSampling=true, specifies the reduction
+		/// factor of the output frame (as the center (fovea) is high resolution and corners can be
+		/// underscaled, then a reduction of the output is allowed without precision leak
+		/// * samplingStrength: only usefull if param useRetinaLogSampling=true, specifies the strength of
+		/// the log scale that is applied
+		/// 
+		/// ## Note
+		/// This alternative version of [create_ext] function uses the following default values for its arguments:
+		/// * color_sampling_method: RETINA_COLOR_BAYER
+		/// * use_retina_log_sampling: false
+		/// * reduction_factor: 1.0f
+		/// * sampling_strength: 10.0f
+		#[inline]
+		pub fn create_ext_def(input_size: core::Size, color_mode: bool) -> Result<core::Ptr<crate::bioinspired::Retina>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_Retina_create_Size_const_bool(input_size.opencv_as_extern(), color_mode, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::bioinspired::Retina>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { Retina, core::Algorithm, cv_bioinspired_Retina_to_Algorithm }
@@ -663,6 +857,28 @@ pub mod bioinspired {
 		fn setup(&mut self, photoreceptors_neighborhood_radius: f32, ganglioncells_neighborhood_radius: f32, mean_luminance_modulator_k: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_RetinaFastToneMapping_setup_const_float_const_float_const_float(self.as_raw_mut_RetinaFastToneMapping(), photoreceptors_neighborhood_radius, ganglioncells_neighborhood_radius, mean_luminance_modulator_k, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// updates tone mapping behaviors by adjusing the local luminance computation area
+		/// 
+		/// ## Parameters
+		/// * photoreceptorsNeighborhoodRadius: the first stage local adaptation area
+		/// * ganglioncellsNeighborhoodRadius: the second stage local adaptation area
+		/// * meanLuminanceModulatorK: the factor applied to modulate the meanLuminance information
+		/// (default is 1, see reference paper)
+		/// 
+		/// ## Note
+		/// This alternative version of [setup] function uses the following default values for its arguments:
+		/// * photoreceptors_neighborhood_radius: 3.f
+		/// * ganglioncells_neighborhood_radius: 1.f
+		/// * mean_luminance_modulator_k: 1.f
+		#[inline]
+		fn setup_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_RetinaFastToneMapping_setup(self.as_raw_mut_RetinaFastToneMapping(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1053,6 +1269,27 @@ pub mod bioinspired {
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
+		/// * segmentationParameterFile: : the parameters filename
+		/// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
+		/// 
+		/// ## Note
+		/// This alternative version of [setup_from_file] function uses the following default values for its arguments:
+		/// * segmentation_parameter_file: ""
+		/// * apply_default_setup_on_failure: true
+		#[inline]
+		fn setup_from_file_def(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup(self.as_raw_mut_TransientAreasSegmentationModule(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// try to open an XML segmentation parameters file to adjust current segmentation instance setup
+		/// 
+		/// - if the xml file does not exist, then default setup is applied
+		/// - warning, Exceptions are thrown if read XML file is not valid
+		/// ## Parameters
 		/// * fs: : the open Filestorage which contains segmentation parameters
 		/// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
 		/// 
@@ -1062,6 +1299,26 @@ pub mod bioinspired {
 		fn setup_from_storage(&mut self, fs: &mut core::FileStorage, apply_default_setup_on_failure: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_FileStorageR_const_bool(self.as_raw_mut_TransientAreasSegmentationModule(), fs.as_raw_mut_FileStorage(), apply_default_setup_on_failure, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// try to open an XML segmentation parameters file to adjust current segmentation instance setup
+		/// 
+		/// - if the xml file does not exist, then default setup is applied
+		/// - warning, Exceptions are thrown if read XML file is not valid
+		/// ## Parameters
+		/// * fs: : the open Filestorage which contains segmentation parameters
+		/// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
+		/// 
+		/// ## Note
+		/// This alternative version of [setup_from_storage] function uses the following default values for its arguments:
+		/// * apply_default_setup_on_failure: true
+		#[inline]
+		fn setup_from_storage_def(&mut self, fs: &mut core::FileStorage) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_FileStorageR(self.as_raw_mut_TransientAreasSegmentationModule(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1117,6 +1374,24 @@ pub mod bioinspired {
 			input_array_arg!(input_to_segment);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_run_const__InputArrayR_const_int(self.as_raw_mut_TransientAreasSegmentationModule(), input_to_segment.as_raw__InputArray(), channel_index, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// main processing method, get result using methods getSegmentationPicture()
+		/// ## Parameters
+		/// * inputToSegment: : the image to process, it must match the instance buffer size !
+		/// * channelIndex: : the channel to process in case of multichannel images
+		/// 
+		/// ## Note
+		/// This alternative version of [run] function uses the following default values for its arguments:
+		/// * channel_index: 0
+		#[inline]
+		fn run_def(&mut self, input_to_segment: &impl core::ToInputArray) -> Result<()> {
+			input_array_arg!(input_to_segment);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_run_const__InputArrayR(self.as_raw_mut_TransientAreasSegmentationModule(), input_to_segment.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
