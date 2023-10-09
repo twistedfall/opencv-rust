@@ -143,7 +143,7 @@ pub fn render_doc_comment_with_processor(
 		let name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
 		let space = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
 		let name = if name.contains(char::is_lowercase) {
-			Cow::Owned(name.to_snake_case())
+			Cow::Owned(name.cpp_name_to_rust_case())
 		} else {
 			Cow::Borrowed(name)
 		};

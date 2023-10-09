@@ -237,12 +237,12 @@ impl RustElement for Func<'_, '_> {
 		};
 		if let Some(&name) = settings::FUNC_RENAME.get(self.identifier().as_str()) {
 			if name.contains('+') {
-				reserved_rename(name.replace('+', rust_name.as_ref()).to_snake_case().into())
+				reserved_rename(name.replace('+', rust_name.as_ref()).cpp_name_to_rust_case().into())
 			} else {
 				name.into()
 			}
 		} else {
-			reserved_rename(rust_name.to_snake_case().into())
+			reserved_rename(rust_name.cpp_name_to_rust_case().into())
 		}
 	}
 

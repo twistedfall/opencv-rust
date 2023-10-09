@@ -35,7 +35,7 @@ impl DefaultRustNativeElement {
 	}
 
 	pub fn rust_leafname(this: &(impl Element + ?Sized)) -> Cow<str> {
-		reserved_rename(this.cpp_name(CppNameStyle::Declaration).to_snake_case().into())
+		reserved_rename(this.cpp_name(CppNameStyle::Declaration).cpp_name_to_rust_case().into())
 	}
 
 	pub fn rust_name(this: &(impl RustElement + ?Sized), entity: Entity, name_style: NameStyle) -> String {
