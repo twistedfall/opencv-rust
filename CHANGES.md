@@ -1,3 +1,6 @@
+* 0.85.1
+  * Add workaround when building with rustc version before 1.66.
+
 * 0.85.0
   * Generate companion functions `*_def()` that allow skipping the default arguments to improve API usability.
   * Remove bindings to `SparseMatIterator--` and change `OutputArray::from_gpu_mat_vec()` to take mutable argument (instead of
