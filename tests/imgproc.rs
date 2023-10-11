@@ -1,12 +1,9 @@
 #![cfg(ocvrs_has_module_imgproc)]
 
-use opencv::{
-	core::{Mat_AUTO_STEP, Point, Point2f, Size, Vec2f},
-	imgproc,
-	prelude::*,
-	types::VectorOfPoint,
-	Result,
-};
+use opencv::core::{Mat_AUTO_STEP, Point, Point2f, Rect, Size, Vec2f, Vec3b};
+use opencv::prelude::*;
+use opencv::types::VectorOfPoint;
+use opencv::{imgproc, Result};
 
 #[test]
 fn min_enclosing() -> Result<()> {
@@ -56,5 +53,40 @@ fn line_iterator() -> Result<()> {
 	line_iter.incr()?;
 	assert_eq!(Point::new(2, 2), line_iter.pos()?);
 	assert_eq!(9, unsafe { *line_iter.try_deref_mut()?.as_ref().unwrap() });
+	Ok(())
+}
+
+#[test]
+fn call_def() -> Result<()> {
+	opencv::opencv_branch_4! {
+		use opencv::imgproc::LINE_8;
+	}
+	opencv::not_opencv_branch_4! {
+		use opencv::core::LINE_8;
+	}
+
+	let rect = Rect::new(0, 0, 3, 3);
+
+	let mut mat_full = Mat::new_size_with_default(rect.size(), Vec3b::opencv_type(), Vec3b::all(0).into())?;
+	imgproc::rectangle(&mut mat_full, rect, (255, 0, 0).into(), 1, LINE_8, 0)?;
+
+	let mut mat_expect = Mat::new_rows_cols_with_default(3, 3, Vec3b::opencv_type(), Vec3b::all(0).into())?;
+	mat_expect.data_typed_mut::<Vec3b>()?.copy_from_slice(&[
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[0, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+	]);
+	assert_eq!(mat_expect.data_typed::<Vec3b>()?, mat_full.data_typed()?);
+
+	let mut mat_def = Mat::new_rows_cols_with_default(3, 3, Vec3b::opencv_type(), Vec3b::all(0).into())?;
+	imgproc::rectangle_def(&mut mat_def, rect, (255, 0, 0).into())?;
+	assert_eq!(mat_def.data_typed::<Vec3b>()?, mat_full.data_typed()?);
+
 	Ok(())
 }

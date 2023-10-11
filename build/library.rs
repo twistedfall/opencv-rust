@@ -485,7 +485,7 @@ impl Library {
 					}
 				}
 			} else {
-				eprintln!("=== Skipping probe: {name} because of the environment configuration");
+				eprintln!("=== Skipping probe: {name} because it's disabled using OPENCV_DISABLE_PROBES");
 			}
 		}
 		out.ok_or_else(|| {

@@ -18,7 +18,7 @@ jobs:
           - macos-12
         version:
           - opencv: 3.4.19
-          - opencv: 4.8.0
+          - opencv: 4.8.1
         exclude:
           - os-image: macos-12
             version:
@@ -26,7 +26,7 @@ jobs:
         include:
           - os-image: ubuntu-22.04
             version:
-              opencv: 4.8.0-static
+              opencv: 4.8.1-static
     runs-on: ${{ matrix.os-image }}
     env:
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
@@ -146,6 +146,12 @@ jobs:
       OPENCV_VERSION: 4.5.4
     steps:
       - uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/build
+          key: src-${{ matrix.version.opencv }}-${{ matrix.os-image }}
 
       - name: Install dependencies
         env:

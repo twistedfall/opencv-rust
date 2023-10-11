@@ -41,12 +41,11 @@ pub(crate) mod mod_prelude {
 		core::{CV_MAKETYPE, CV_MAKE_TYPE},
 		extern_arg_send, extern_container_send, extern_receive, extern_send,
 		hub_prelude::*,
-		input_output_array_ref_forward,
+		input_array_ref_forward,
 		mod_prelude_sys::*,
-		opencv_type_boxed, opencv_type_enum, opencv_type_simple, ptr_cast_base, ptr_extern, ptr_extern_ctor, tuple_extern,
-		vector_copy_non_bool, vector_extern, vector_non_copy_or_bool, Error, Result,
+		opencv_type_boxed, opencv_type_enum, opencv_type_simple, output_array_ref_forward, ptr_cast_base, ptr_extern,
+		ptr_extern_ctor, tuple_extern, vector_copy_non_bool, vector_extern, vector_non_copy_or_bool, Error, Result,
 	};
-	pub use std::convert::TryFrom;
 }
 
 mod cond_macros;

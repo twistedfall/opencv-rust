@@ -18,32 +18,23 @@ fn main() -> opencv::Result<()> {
 	let mut padded = Mat::default();
 	let m = core::get_optimal_dft_size(I.rows())?;
 	let n = core::get_optimal_dft_size(I.cols())?;
-	core::copy_make_border(
-		&I,
-		&mut padded,
-		0,
-		m - I.rows(),
-		0,
-		n - I.cols(),
-		core::BORDER_CONSTANT,
-		0.into(),
-	)?;
+	core::copy_make_border_def(&I, &mut padded, 0, m - I.rows(), 0, n - I.cols(), core::BORDER_CONSTANT)?;
 	let plane_size = padded.size()?;
 	let mut planes = core::Vector::<Mat>::new();
 	let mut padded_f32 = Mat::default();
-	padded.convert_to(&mut padded_f32, f32::opencv_type(), 1., 0.)?;
+	padded.convert_to_def(&mut padded_f32, f32::opencv_type())?;
 	planes.push(padded_f32);
 	planes.push(Mat::zeros_size(plane_size, f32::opencv_type())?.to_mat()?);
 	let mut complexI = Mat::default();
 	core::merge(&planes, &mut complexI)?;
 	let mut complexI_tmp = Mat::default();
-	core::dft(&complexI, &mut complexI_tmp, 0, 0)?;
+	core::dft_def(&complexI, &mut complexI_tmp)?;
 	complexI = complexI_tmp;
 	core::split(&complexI, &mut planes)?;
 	let mut magI = Mat::default();
 	core::magnitude(&planes.get(0)?, &planes.get(1)?, &mut magI)?;
 	let mut magI_tmp = Mat::default();
-	core::add(&magI, &Scalar::all(1.), &mut magI_tmp, &core::no_array(), -1)?;
+	core::add_def(&magI, &Scalar::all(1.), &mut magI_tmp)?;
 	magI = magI_tmp;
 	let mut magI_log = Mat::default();
 	core::log(&magI, &mut magI_log)?;
@@ -66,6 +57,6 @@ fn main() -> opencv::Result<()> {
 	let magI = magI_tmp;
 	highgui::imshow("Input Image", &I)?;
 	highgui::imshow("spectrum magnitude", &magI)?;
-	highgui::wait_key(0)?;
+	highgui::wait_key_def()?;
 	Ok(())
 }

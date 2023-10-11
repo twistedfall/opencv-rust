@@ -1,7 +1,7 @@
 use std::array;
 use std::ops::{Deref, DerefMut, MulAssign};
 
-use num_traits::Float;
+use num_traits::{Float, NumCast, ToPrimitive};
 
 use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray, _InputArray, _InputOutputArray, _OutputArray};
 use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
@@ -32,6 +32,7 @@ impl<T, const N: usize> VecN<T, N> {
 	}
 
 	#[inline]
+	// todo: make const when MSRV allows 1.61?
 	pub fn all(v0: T) -> Self
 	where
 		T: Copy,
@@ -49,6 +50,19 @@ impl<T, const N: usize> VecN<T, N> {
 		let mut out = *self;
 		out.iter_mut().zip(v).for_each(|(dest, m)| *dest *= m);
 		out
+	}
+
+	/// Cast `VecN` to the other element type
+	#[inline]
+	pub fn to<D: NumCast + Default + Copy>(self) -> Option<VecN<D, N>>
+	where
+		T: ToPrimitive,
+	{
+		let mut out = [D::default(); N];
+		for (dest, src) in out.iter_mut().zip(self) {
+			*dest = D::from(src)?;
+		}
+		Some(VecN(out))
 	}
 }
 

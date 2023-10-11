@@ -2,7 +2,7 @@ use std::os::raw::c_void;
 
 use crate::core::{_InputArray, _InputArrayTrait, _InputOutputArray, _InputOutputArrayTrait, _OutputArray, _OutputArrayTrait};
 use crate::traits::Boxed;
-use crate::{input_output_array, sys, Result};
+use crate::{sys, Result};
 
 /// Trait to serve as a replacement for `InputArray` in C++ OpenCV
 ///
@@ -13,8 +13,6 @@ use crate::{input_output_array, sys, Result};
 pub trait ToInputArray {
 	fn input_array(&self) -> Result<_InputArray>;
 }
-
-input_output_array! { f64, from_f64 }
 
 /// Trait to serve as a replacement for `OutputArray` in C++ OpenCV
 ///
@@ -110,6 +108,7 @@ macro_rules! input_output_array {
 	};
 }
 
+/// Adds automatic implementation for [ToInputArray] for the reference to the supplied type
 #[doc(hidden)]
 #[macro_export]
 macro_rules! input_array_ref_forward {
@@ -123,6 +122,7 @@ macro_rules! input_array_ref_forward {
 	};
 }
 
+/// Adds automatic implementations for [ToOutputArray] and [ToInputOutputArray] for the mutable references to the supplied type
 #[doc(hidden)]
 #[macro_export]
 macro_rules! output_array_ref_forward {
@@ -143,11 +143,4 @@ macro_rules! output_array_ref_forward {
 	};
 }
 
-#[doc(hidden)]
-#[macro_export]
-macro_rules! input_output_array_ref_forward {
-	($type: ty) => {
-		$crate::input_array_ref_forward! { $type }
-		$crate::output_array_ref_forward! { $type }
-	};
-}
+input_output_array! { f64, from_f64 }
