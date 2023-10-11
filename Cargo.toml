@@ -75,7 +75,7 @@ cc = { version = "<=1.0.79", features = ["parallel"] }
 dunce = "1"
 # jobserver-0.1.25 is the first one that has Client::available() method
 # 0.1.27 fails with error[E0412]: cannot find type `RawFd` in `std::os::fd` on rustc-1.59, bump when MSRV is 1.66+
-jobserver = ">=0.1.25,<0.1.27"
+jobserver = ">=0.1.25, <0.1.28"
 once_cell = "1"
 pkg-config = "0.3"
 semver = "1"
