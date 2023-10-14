@@ -1,7 +1,7 @@
 #![cfg(ocvrs_has_module_imgproc)]
 
 use opencv::{
-	core::{Mat_AUTO_STEP, Point, Point2f, Scalar, Size, Vec2f},
+	core::{Mat_AUTO_STEP, Point, Point2f, Size, Vec2f},
 	imgproc,
 	prelude::*,
 	types::VectorOfPoint,
@@ -10,7 +10,7 @@ use opencv::{
 
 #[test]
 fn min_enclosing() -> Result<()> {
-	let mut pts = Mat::new_rows_cols_with_default(1, 2, Vec2f::opencv_type(), Scalar::default())?;
+	let mut pts = Mat::new_rows_cols_with_default(1, 2, Vec2f::opencv_type(), 0.into())?;
 	let points = pts.at_row_mut::<Vec2f>(0)?;
 	points[0].copy_from_slice(&[10., 10.]);
 	points[1].copy_from_slice(&[20., 10.]);

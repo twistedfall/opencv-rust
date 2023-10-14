@@ -115,7 +115,7 @@ fn cast_descendant() -> Result<()> {
 	use opencv::rgbd::{OdometryFrame, RgbdFrame};
 	use std::convert::TryFrom;
 
-	let image = Mat::new_rows_cols_with_default(1, 2, i32::opencv_type(), Scalar::from(1.))?;
+	let image = Mat::new_rows_cols_with_default(1, 2, i32::opencv_type(), 1.into())?;
 	let depth = Mat::default();
 	let mask = Mat::default();
 	let normals = Mat::default();
@@ -125,7 +125,7 @@ fn cast_descendant() -> Result<()> {
 	let mut base = RgbdFrame::from(child);
 	assert_eq!(345, base.id());
 	assert_eq!(2, base.image().cols());
-	base.set_image(Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::from(2.))?);
+	base.set_image(Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), 2.into())?);
 	let child = OdometryFrame::try_from(base)?;
 	assert_eq!(345, child.id());
 	assert_eq!(20, child.image().cols());

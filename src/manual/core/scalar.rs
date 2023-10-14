@@ -21,17 +21,17 @@ impl<T> Scalar_<T> {
 	}
 }
 
-impl From<i32> for Scalar_<f64> {
-	#[inline]
-	fn from(v0: i32) -> Self {
-		Self::from(f64::from(v0))
-	}
-}
-
 impl<T: Zero> From<T> for Scalar_<T> {
 	#[inline]
 	fn from(v0: T) -> Self {
 		Self::from_array([v0, T::zero(), T::zero(), T::zero()])
+	}
+}
+
+impl From<i32> for Scalar_<f64> {
+	#[inline]
+	fn from(v0: i32) -> Self {
+		Self::from(f64::from(v0))
 	}
 }
 
@@ -42,6 +42,13 @@ impl<T: Zero> From<(T, T)> for Scalar_<T> {
 	}
 }
 
+impl From<(i32, i32)> for Scalar_<f64> {
+	#[inline]
+	fn from(v: (i32, i32)) -> Self {
+		Self::from((f64::from(v.0), f64::from(v.1)))
+	}
+}
+
 impl<T: Zero> From<(T, T, T)> for Scalar_<T> {
 	#[inline]
 	fn from(v: (T, T, T)) -> Self {
@@ -49,9 +56,30 @@ impl<T: Zero> From<(T, T, T)> for Scalar_<T> {
 	}
 }
 
+impl From<(i32, i32, i32)> for Scalar_<f64> {
+	#[inline]
+	fn from(v: (i32, i32, i32)) -> Self {
+		Self::from((f64::from(v.0), f64::from(v.1), f64::from(v.2)))
+	}
+}
+
 impl<T> From<(T, T, T, T)> for Scalar_<T> {
 	#[inline]
 	fn from(v: (T, T, T, T)) -> Self {
 		Self::from_array([v.0, v.1, v.2, v.3])
+	}
+}
+
+impl From<(i32, i32, i32, i32)> for Scalar_<f64> {
+	#[inline]
+	fn from(v: (i32, i32, i32, i32)) -> Self {
+		Self::from((f64::from(v.0), f64::from(v.1), f64::from(v.2), f64::from(v.3)))
+	}
+}
+
+impl From<VecN<u8, 3>> for Scalar_<f64> {
+	#[inline]
+	fn from(v: VecN<u8, 3>) -> Self {
+		Self::from((f64::from(v[0]), f64::from(v[1]), f64::from(v[2])))
 	}
 }

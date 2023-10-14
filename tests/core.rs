@@ -48,7 +48,7 @@ fn in_range() -> Result<()> {
 	let mut m = Mat::default();
 	core::merge(&cs, &mut m)?;
 	let mut out = Mat::default();
-	core::in_range(&m, &Scalar::new(2., 10., 0., 0.), &Scalar::new(6., 15., 0., 0.), &mut out)?;
+	core::in_range(&m, &Scalar::from((2, 10)), &Scalar::from((6, 15)), &mut out)?;
 	assert_eq!(&[0, 255, 255, 255, 255, 0, 0, 0, 0], &out.data_typed::<u8>()?);
 	Ok(())
 }

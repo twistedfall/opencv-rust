@@ -22,7 +22,7 @@ fn simple_struct_arg() -> Result<()> {
 
 #[test]
 fn scalar_arg() -> Result<()> {
-	let mut m = Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), Scalar::new(2., 0., 0., 0.))?;
+	let mut m = Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), 2.into())?;
 	let sum = core::sum_elems(&m)?;
 	assert_eq!(sum[0], 6.);
 	let s = m.at_row_mut::<u8>(0)?;
