@@ -27764,7 +27764,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		pub fn from_gpumat_vec_mut(d_mat: &mut core::Vector<core::GpuMat>) -> Result<core::_OutputArray> {
+		pub fn from_gpumat_vec(d_mat: &mut core::Vector<core::GpuMat>) -> Result<core::_OutputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_vectorLGpuMatGR(d_mat.as_raw_mut_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

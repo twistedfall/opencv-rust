@@ -1236,6 +1236,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Point> }
+	
 	impl core::ToOutputArray for core::Vector<core::Point> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1262,7 +1264,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point> }
+	output_array_ref_forward! { core::Vector<core::Point> }
 	
 	pub type VectorOfPoint2d = core::Vector<core::Point2d>;
 	
@@ -1298,6 +1300,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Point2d> }
+	
 	impl core::ToOutputArray for core::Vector<core::Point2d> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1324,7 +1328,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point2d> }
+	output_array_ref_forward! { core::Vector<core::Point2d> }
 	
 	pub type VectorOfPoint2f = core::Vector<core::Point2f>;
 	
@@ -1360,6 +1364,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Point2f> }
+	
 	impl core::ToOutputArray for core::Vector<core::Point2f> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1386,7 +1392,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point2f> }
+	output_array_ref_forward! { core::Vector<core::Point2f> }
 	
 	pub type VectorOfPoint3d = core::Vector<core::Point3d>;
 	
@@ -1422,6 +1428,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Point3d> }
+	
 	impl core::ToOutputArray for core::Vector<core::Point3d> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1448,7 +1456,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point3d> }
+	output_array_ref_forward! { core::Vector<core::Point3d> }
 	
 	pub type VectorOfPoint3f = core::Vector<core::Point3f>;
 	
@@ -1484,6 +1492,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Point3f> }
+	
 	impl core::ToOutputArray for core::Vector<core::Point3f> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1510,7 +1520,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point3f> }
+	output_array_ref_forward! { core::Vector<core::Point3f> }
 	
 	pub type VectorOfPoint3i = core::Vector<core::Point3i>;
 	
@@ -1546,6 +1556,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Point3i> }
+	
 	impl core::ToOutputArray for core::Vector<core::Point3i> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1572,7 +1584,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point3i> }
+	output_array_ref_forward! { core::Vector<core::Point3i> }
 	
 	pub type VectorOfRange = core::Vector<core::Range>;
 	
@@ -1626,6 +1638,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Rect> }
+	
 	impl core::ToOutputArray for core::Vector<core::Rect> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1652,7 +1666,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Rect> }
+	output_array_ref_forward! { core::Vector<core::Rect> }
 	
 	pub type VectorOfRect2d = core::Vector<core::Rect2d>;
 	
@@ -1688,6 +1702,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Rect2d> }
+	
 	impl core::ToOutputArray for core::Vector<core::Rect2d> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1714,7 +1730,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Rect2d> }
+	output_array_ref_forward! { core::Vector<core::Rect2d> }
 	
 	pub type VectorOfRotatedRect = core::Vector<core::RotatedRect>;
 	
@@ -1771,6 +1787,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Scalar> }
+	
 	impl core::ToOutputArray for core::Vector<core::Scalar> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1797,7 +1815,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Scalar> }
+	output_array_ref_forward! { core::Vector<core::Scalar> }
 	
 	pub type VectorOfSize = core::Vector<core::Size>;
 	
@@ -1833,6 +1851,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Size> }
+	
 	impl core::ToOutputArray for core::Vector<core::Size> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -1859,7 +1879,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Size> }
+	output_array_ref_forward! { core::Vector<core::Size> }
 	
 	pub type VectorOfString = core::Vector<String>;
 	
@@ -1985,6 +2005,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vec2d> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vec2d> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2011,7 +2033,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec2d> }
+	output_array_ref_forward! { core::Vector<core::Vec2d> }
 	
 	pub type VectorOfVec2f = core::Vector<core::Vec2f>;
 	
@@ -2047,6 +2069,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vec2f> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vec2f> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2073,7 +2097,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec2f> }
+	output_array_ref_forward! { core::Vector<core::Vec2f> }
 	
 	pub type VectorOfVec2i = core::Vector<core::Vec2i>;
 	
@@ -2109,6 +2133,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vec2i> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vec2i> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2135,7 +2161,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec2i> }
+	output_array_ref_forward! { core::Vector<core::Vec2i> }
 	
 	pub type VectorOfVec3d = core::Vector<core::Vec3d>;
 	
@@ -2171,6 +2197,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vec3d> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vec3d> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2197,7 +2225,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec3d> }
+	output_array_ref_forward! { core::Vector<core::Vec3d> }
 	
 	pub type VectorOfVec3f = core::Vector<core::Vec3f>;
 	
@@ -2233,6 +2261,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vec3f> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vec3f> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2259,7 +2289,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec3f> }
+	output_array_ref_forward! { core::Vector<core::Vec3f> }
 	
 	pub type VectorOfVec3i = core::Vector<core::Vec3i>;
 	
@@ -2295,6 +2325,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vec3i> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vec3i> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2321,7 +2353,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec3i> }
+	output_array_ref_forward! { core::Vector<core::Vec3i> }
 	
 	pub type VectorOfVec4f = core::Vector<core::Vec4f>;
 	
@@ -2357,6 +2389,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vec4f> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vec4f> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2383,7 +2417,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec4f> }
+	output_array_ref_forward! { core::Vector<core::Vec4f> }
 	
 	pub type VectorOfVec4i = core::Vector<core::Vec4i>;
 	
@@ -2419,6 +2453,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vec4i> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vec4i> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2445,7 +2481,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec4i> }
+	output_array_ref_forward! { core::Vector<core::Vec4i> }
 	
 	pub type VectorOfVec6f = core::Vector<core::Vec6f>;
 	
@@ -2481,6 +2517,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vec6f> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vec6f> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2507,7 +2545,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec6f> }
+	output_array_ref_forward! { core::Vector<core::Vec6f> }
 	
 	pub type VectorOfVectorOfDMatch = core::Vector<core::Vector<core::DMatch>>;
 	
@@ -2594,6 +2632,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<core::Point>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2620,7 +2660,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point>> }
 	
 	pub type VectorOfVectorOfPoint2f = core::Vector<core::Vector<core::Point2f>>;
 	
@@ -2653,6 +2693,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point2f>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<core::Point2f>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2679,7 +2721,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point2f>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point2f>> }
 	
 	pub type VectorOfVectorOfPoint3d = core::Vector<core::Vector<core::Point3d>>;
 	
@@ -2712,6 +2754,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point3d>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<core::Point3d>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2738,7 +2782,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point3d>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point3d>> }
 	
 	pub type VectorOfVectorOfPoint3f = core::Vector<core::Vector<core::Point3f>>;
 	
@@ -2771,6 +2815,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point3f>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<core::Point3f>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2797,7 +2843,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point3f>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point3f>> }
 	
 	pub type VectorOfVectorOfPoint3i = core::Vector<core::Vector<core::Point3i>>;
 	
@@ -2830,6 +2876,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point3i>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<core::Point3i>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2856,7 +2904,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point3i>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point3i>> }
 	
 	pub type VectorOfVectorOfRange = core::Vector<core::Vector<core::Range>>;
 	
@@ -2907,6 +2955,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Vec2i>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<core::Vec2i>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2933,7 +2983,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Vec2i>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2i>> }
 	
 	pub type VectorOfVectorOfVec3f = core::Vector<core::Vector<core::Vec3f>>;
 	
@@ -2966,6 +3016,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Vec3f>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<core::Vec3f>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -2992,7 +3044,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Vec3f>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Vec3f>> }
 	
 	pub type VectorOfVectorOfc_char = core::Vector<core::Vector<c_char>>;
 	
@@ -3032,6 +3084,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<f32>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<f32>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3058,7 +3112,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<f32>> }
+	output_array_ref_forward! { core::Vector<core::Vector<f32>> }
 	
 	pub type VectorOfVectorOff64 = core::Vector<core::Vector<f64>>;
 	
@@ -3091,6 +3145,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<f64>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<f64>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3117,7 +3173,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<f64>> }
+	output_array_ref_forward! { core::Vector<core::Vector<f64>> }
 	
 	pub type VectorOfVectorOfi32 = core::Vector<core::Vector<i32>>;
 	
@@ -3150,6 +3206,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<i32>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<i32>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3176,7 +3234,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<i32>> }
+	output_array_ref_forward! { core::Vector<core::Vector<i32>> }
 	
 	pub type VectorOfVectorOfi8 = core::Vector<core::Vector<i8>>;
 	
@@ -3227,6 +3285,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<core::Vector<u8>> }
+	
 	impl core::ToOutputArray for core::Vector<core::Vector<u8>> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3253,7 +3313,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<u8>> }
+	output_array_ref_forward! { core::Vector<core::Vector<u8>> }
 	
 	pub type VectorOfbool = core::Vector<bool>;
 	
@@ -3314,6 +3374,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<f32> }
+	
 	impl core::ToOutputArray for core::Vector<f32> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3340,7 +3402,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<f32> }
+	output_array_ref_forward! { core::Vector<f32> }
 	
 	pub type VectorOff64 = core::Vector<f64>;
 	
@@ -3376,6 +3438,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<f64> }
+	
 	impl core::ToOutputArray for core::Vector<f64> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3402,7 +3466,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<f64> }
+	output_array_ref_forward! { core::Vector<f64> }
 	
 	pub type VectorOfi32 = core::Vector<i32>;
 	
@@ -3438,6 +3502,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<i32> }
+	
 	impl core::ToOutputArray for core::Vector<i32> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3464,7 +3530,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<i32> }
+	output_array_ref_forward! { core::Vector<i32> }
 	
 	pub type VectorOfi8 = core::Vector<i8>;
 	
@@ -3542,6 +3608,8 @@ mod core_types {
 		
 	}
 	
+	input_array_ref_forward! { core::Vector<u8> }
+	
 	impl core::ToOutputArray for core::Vector<u8> {
 		#[inline]
 		fn output_array(&mut self) -> Result<core::_OutputArray> {
@@ -3568,7 +3636,7 @@ mod core_types {
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<u8> }
+	output_array_ref_forward! { core::Vector<u8> }
 	
 }
 #[cfg(ocvrs_has_module_core)]
