@@ -141,9 +141,9 @@ jobs:
         shell: bash
 
   msrv:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     env:
-      OPENCV_VERSION: 4.5.4
+      OPENCV_VERSION: 4.8.1
     steps:
       - uses: actions/checkout@v3
 

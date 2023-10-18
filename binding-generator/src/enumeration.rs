@@ -5,7 +5,7 @@ use std::rc::Rc;
 use clang::{Entity, EntityKind, EntityVisitResult};
 
 use crate::debug::LocationName;
-use crate::element::{ExcludeKind, UNNAMED};
+use crate::element::ExcludeKind;
 use crate::entity::WalkAction;
 use crate::type_ref::CppNameStyle;
 use crate::{Const, DefaultElement, Element, EntityElement, EntityExt, NameDebug, StrExt};
@@ -32,7 +32,7 @@ impl<'tu> Enum<'tu> {
 	}
 
 	pub fn is_anonymous(&self) -> bool {
-		self.entity.is_anonymous() || /* for clang-6 quirk */ self.cpp_name(CppNameStyle::Declaration) == UNNAMED
+		self.entity.is_anonymous() || /* clang-6 quirk */ self.cpp_name(CppNameStyle::Declaration).starts_with("(anonymous enum")
 	}
 
 	pub fn as_typedefed(&self) -> Option<Entity> {
