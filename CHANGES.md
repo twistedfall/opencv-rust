@@ -1,3 +1,7 @@
+* 0.85.2
+  * Fix binding generation using clang-6 (fixes https://github.com/twistedfall/opencv-rust/issues/496).
+  * Add more `From` implementations for `Scalar` to improve API usability.
+
 * 0.85.1
   * Add workaround when building with rustc version before 1.66.
 
