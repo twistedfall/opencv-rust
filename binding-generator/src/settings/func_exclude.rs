@@ -66,6 +66,8 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		// ### text ###
 		"cv_text_ERStat_propPixels", // fixme: reference to a vector, we don't handle it too well yet
 		"cv_text_ERStat_propPixels_vectorLintGX", // fixme: reference to a vector, we don't handle it too well yet
+		"cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_stringR_const__InputArrayR_const__InputArrayR", // with OpenCV 4.2 this leads to https://github.com/twistedfall/opencv-rust/issues/505
+		"cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR", // with OpenCV 4.2 this leads to https://github.com/twistedfall/opencv-rust/issues/505
 		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
 		// ### core ###
 		"cv_MatConstIterator_MatConstIterator_const_MatX_const_intX",
