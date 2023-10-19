@@ -4,8 +4,8 @@ use std::rc::Rc;
 
 use clang::{Entity, Type};
 
-pub use desc::TypeRefDesc;
-pub use style::{CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType};
+pub use desc::{ClangTypeExt, TypeRefDesc};
+pub use style::{CppNameStyle, Dir, ExternDir, ExternPassKind, FishStyle, NameStyle, StrEnc, StrType};
 
 use crate::class::{ClassDesc, TemplateKind};
 use crate::element::ExcludeKind;
@@ -14,8 +14,6 @@ use crate::settings::ArgOverride;
 use crate::vector::VectorDesc;
 use crate::{settings, AbstractRefWrapper, ClassSimplicity, ExportConfig};
 use crate::{Class, Element, Enum, Function, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Tuple, Typedef, Vector};
-use desc::ClangTypeExt;
-use style::ExternPassKind;
 
 mod desc;
 mod style;
@@ -169,27 +167,27 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn with_constness(&self, constness: Constness) -> Self {
-		match self {
-			&Self::Clang {
-				type_ref,
-				type_hint,
-				parent_entity,
-				gen_env,
-			} => Self::new_desc(TypeRefDesc {
-				kind: type_ref.kind(type_hint, parent_entity, gen_env),
-				inherent_constness: constness,
-				type_hint,
-				template_specialization_args: type_ref.template_specialization_args(gen_env).into(),
-			}),
-			Self::Desc(desc) => {
-				if desc.inherent_constness != constness {
+		if self.clang_constness() != constness {
+			match self {
+				&Self::Clang {
+					type_ref,
+					type_hint,
+					parent_entity,
+					gen_env,
+				} => Self::new_desc(TypeRefDesc {
+					kind: type_ref.kind(type_hint, parent_entity, gen_env),
+					inherent_constness: constness,
+					type_hint,
+					template_specialization_args: type_ref.template_specialization_args(gen_env).into(),
+				}),
+				Self::Desc(desc) => {
 					let mut desc = (**desc).clone();
 					desc.inherent_constness = constness;
 					Self::Desc(Rc::new(desc))
-				} else {
-					Self::Desc(Rc::clone(desc))
 				}
 			}
+		} else {
+			self.clone()
 		}
 	}
 
