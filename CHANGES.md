@@ -1,3 +1,7 @@
+* 0.85.3
+  * Fix https://github.com/twistedfall/opencv-rust/issues/506, https://github.com/twistedfall/opencv-rust/issues/505 and
+    https://github.com/twistedfall/opencv-rust/issues/479
+
 * 0.85.2
   * Fix binding generation using clang-6 (fixes https://github.com/twistedfall/opencv-rust/issues/496).
   * Add more `From` implementations for `Scalar` to improve API usability.

@@ -1822,42 +1822,6 @@ pub mod text {
 			Ok(ret)
 		}
 		
-		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
-		/// 
-		/// ## Parameters
-		/// * classifier: The character classifier with built in feature extractor.
-		/// 
-		/// * vocabulary: The language vocabulary (chars when ASCII English text). vocabulary.size()
-		/// must be equal to the number of classes of the classifier.
-		/// 
-		/// * transition_probabilities_table: Table with transition probabilities between character
-		/// pairs. cols == rows == vocabulary.size().
-		/// 
-		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
-		/// rows == vocabulary.size().
-		/// 
-		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
-		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
-		/// 
-		/// * beam_size: Size of the beam in Beam Search algorithm.
-		/// 
-		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
-		/// * mode: OCR_DECODER_VITERBI
-		/// * beam_size: 500
-		#[inline]
-		pub fn create_def(classifier: core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl core::ToInputArray, emission_probabilities_table: &impl core::ToInputArray) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
-			extern_container_arg!(vocabulary);
-			input_array_arg!(transition_probabilities_table);
-			input_array_arg!(emission_probabilities_table);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_stringR_const__InputArrayR_const__InputArrayR(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
 		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
 		/// 
 		///    Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
