@@ -16,6 +16,10 @@ case "$ubuntu_version" in
 "20.04")
 	# workaround to make clang_sys crate detect installed libclang
 	sudo ln -fs libclang.so.1 /usr/lib/llvm-10/lib/libclang.so
+	if [[ "$OPENCV_VERSION" == "4.2.0" ]]; then
+		sudo apt-get -y install "libopencv-dev=${OPENCV_VERSION}*"
+		exit 0
+	fi
 	;;
 
 "22.04")
@@ -163,6 +167,7 @@ else # dynamic build
 			libatlas-base-dev \
 			libavcodec-dev \
 			libavformat-dev \
+			libavresample-dev \
 			libceres-dev \
 			libdc1394-22-dev \
 			libeigen3-dev \

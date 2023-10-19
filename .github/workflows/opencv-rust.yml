@@ -107,7 +107,9 @@ jobs:
           - os-image: ubuntu-22.04
             version:
               opencv: 4.5.4
-              brew: excluded
+          - os-image: ubuntu-20.04
+            version:
+              opencv: 4.2.0
     runs-on: ${{ matrix.os-image }}
     env:
       OPENCV_VERSION: ${{ matrix.version.opencv }}
