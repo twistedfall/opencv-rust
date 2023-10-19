@@ -142,27 +142,27 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn with_type_hint(self, type_hint: TypeRefTypeHint) -> Self {
-		match self {
-			Self::Clang {
-				type_ref,
-				parent_entity,
-				gen_env,
-				..
-			} => Self::Clang {
-				type_ref,
-				type_hint,
-				parent_entity,
-				gen_env,
-			},
-			Self::Desc(desc) => {
-				if desc.type_hint != type_hint {
+		if self.type_hint() != type_hint {
+			match self {
+				Self::Clang {
+					type_ref,
+					parent_entity,
+					gen_env,
+					..
+				} => Self::Clang {
+					type_ref,
+					type_hint,
+					parent_entity,
+					gen_env,
+				},
+				Self::Desc(desc) => {
 					let mut desc = Rc::try_unwrap(desc).unwrap_or_else(|desc| desc.as_ref().clone());
 					desc.type_hint = type_hint;
 					Self::Desc(Rc::new(desc))
-				} else {
-					Self::Desc(desc)
 				}
 			}
+		} else {
+			self
 		}
 	}
 
@@ -951,6 +951,7 @@ impl Constness {
 		}
 	}
 
+	/// Returns `"const "` or `""` for usage in C++ code
 	pub fn cpp_qual(self) -> &'static str {
 		if self.is_const() {
 			"const "

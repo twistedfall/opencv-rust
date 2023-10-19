@@ -5,7 +5,6 @@ use std::fmt::Write;
 use std::rc::Rc;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
-use once_cell::sync::Lazy;
 
 pub use desc::{FuncCppBody, FuncDesc, FuncRustBody};
 
@@ -13,14 +12,12 @@ use crate::debug::LocationName;
 use crate::element::{ExcludeKind, UNNAMED};
 use crate::entity::WalkAction;
 use crate::field::FieldDesc;
-use crate::name_pool::NamePool;
 use crate::settings::TypeRefFactory;
 use crate::type_ref::{Constness, CppNameStyle, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
-use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
-	settings, Class, CompiledInterpolation, DefaultElement, Element, EntityExt, Field, FieldTypeHint, GeneratedType, GeneratorEnv,
-	IteratorExt, NameDebug, StrExt, StringExt, TypeRef,
+	settings, Class, DefaultElement, Element, EntityExt, Field, FieldTypeHint, GeneratedType, GeneratorEnv, IteratorExt,
+	NameDebug, StrExt, StringExt, TypeRef,
 };
 
 mod desc;
@@ -223,7 +220,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn is_generic(&self) -> bool {
 		match self.kind().as_ref() {
-			FuncKind::GenericFunction | FuncKind::GenericInstanceMethod(..) => !self.is_specialized(),
+			FuncKind::GenericFunction | FuncKind::GenericInstanceMethod(..) => true,
 			FuncKind::Function
 			| FuncKind::Constructor(..)
 			| FuncKind::InstanceMethod(..)
@@ -425,13 +422,6 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn cpp_body(&self) -> &FuncCppBody {
-		match self {
-			Self::Clang { .. } => &FuncCppBody::Auto,
-			Self::Desc(desc) => &desc.cpp_body,
-		}
-	}
-
 	pub fn rust_body(&self) -> &FuncRustBody {
 		match self {
 			Self::Clang { .. } => &FuncRustBody::Auto,
@@ -439,135 +429,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn cpp_call_invoke(&self) -> String {
-		static CALL_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{name}}({{args}})".compile_interpolation());
-
-		static VOID_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{call}};".compile_interpolation());
-
-		static RETURN_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| "{{ret_with_type}} = {{doref}}{{call}};".compile_interpolation());
-
-		static CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{ret_with_type}}({{args}});".compile_interpolation());
-
-		static CONSTRUCTOR_NO_ARGS_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{ret_with_type}};".compile_interpolation());
-
-		static BOXED_CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| "{{ret_type}}* ret = new {{ret_type}}({{args}});".compile_interpolation());
-
-		let return_type_ref = self.return_type_ref();
-		let kind = self.kind();
-		let cpp_body = self.cpp_body();
-
-		let args = cpp_disambiguate_names(self.arguments().into_owned())
-			.map(|(name, arg)| arg.type_ref().cpp_arg_func_call(name).into_owned())
-			.join(", ");
-
-		let ret_type = return_type_ref.cpp_name(CppNameStyle::Reference);
-		let ret_with_type = return_type_ref.cpp_name_ext(CppNameStyle::Reference, "ret", true);
-		let doref = if return_type_ref.as_fixed_array().is_some() {
-			"&"
-		} else {
-			""
-		};
-
-		let call_name = match kind.as_ref() {
-			FuncKind::Constructor(cls) => cls.cpp_name(CppNameStyle::Reference),
-			FuncKind::Function | FuncKind::GenericFunction | FuncKind::StaticMethod(..) | FuncKind::FunctionOperator(..) => {
-				self.cpp_name(CppNameStyle::Reference)
-			}
-			FuncKind::FieldAccessor(cls, fld) => cpp_method_call_name(
-				cls.type_ref().extern_pass_kind().is_by_ptr(),
-				&fld.cpp_name(CppNameStyle::Declaration),
-			)
-			.into(),
-			FuncKind::InstanceMethod(cls)
-			| FuncKind::GenericInstanceMethod(cls)
-			| FuncKind::ConversionMethod(cls)
-			| FuncKind::InstanceOperator(cls, ..) => cpp_method_call_name(
-				cls.type_ref().extern_pass_kind().is_by_ptr(),
-				&self.cpp_name(CppNameStyle::Declaration),
-			)
-			.into(),
-		};
-
-		let mut inter_vars = HashMap::from([
-			("ret_type", ret_type),
-			("ret_with_type", ret_with_type),
-			("doref", doref.into()),
-			("args", args.as_str().into()),
-			("name", call_name),
-		]);
-
-		let (call_tpl, full_tpl) = match cpp_body {
-			FuncCppBody::Auto { .. } => {
-				if let Some(cls) = kind.as_constructor() {
-					if cls.kind().is_boxed() {
-						(None, Some(Cow::Borrowed(&*BOXED_CONSTRUCTOR_TPL)))
-					} else if args.is_empty() {
-						(None, Some(Cow::Borrowed(&*CONSTRUCTOR_NO_ARGS_TPL)))
-					} else {
-						(None, Some(Cow::Borrowed(&*CONSTRUCTOR_TPL)))
-					}
-				} else {
-					(Some(Cow::Borrowed(&*CALL_TPL)), None)
-				}
-			}
-			FuncCppBody::ManualCall(call) => (Some(Cow::Owned(call.compile_interpolation())), None),
-			FuncCppBody::ManualFull(full_tpl) => (None, Some(Cow::Owned(full_tpl.compile_interpolation()))),
-		};
-		let tpl = full_tpl
-			.or_else(|| {
-				call_tpl.map(|call_tpl| {
-					let call = call_tpl.interpolate(&inter_vars);
-					inter_vars.insert("call", call.into());
-					if return_type_ref.is_void() {
-						Cow::Borrowed(&*VOID_TPL)
-					} else {
-						Cow::Borrowed(&*RETURN_TPL)
-					}
-				})
-			})
-			.expect("Impossible");
-
-		tpl.interpolate(&inter_vars)
-	}
-
-	pub fn cpp_return(&self, ret: &str, ret_cast: Option<Cow<str>>, ocv_ret_name: &str) -> Cow<'static, str> {
-		match &self.cpp_body() {
-			FuncCppBody::Auto | FuncCppBody::ManualCall(_) => match self.return_kind() {
-				ReturnKind::InfallibleNaked => {
-					if ret.is_empty() {
-						"".into()
-					} else {
-						let cast = if let Some(ret_type) = ret_cast {
-							format!("({typ})", typ = ret_type.as_ref())
-						} else {
-							"".to_string()
-						};
-						format!("return {cast}{ret};").into()
-					}
-				}
-				ReturnKind::InfallibleViaArg => {
-					if ret.is_empty() {
-						"".into()
-					} else {
-						format!("*{ocv_ret_name} = {ret};").into()
-					}
-				}
-				ReturnKind::Fallible => {
-					if ret.is_empty() {
-						format!("Ok({ocv_ret_name});").into()
-					} else {
-						let cast = if let Some(ret_type) = ret_cast {
-							format!("<{typ}>", typ = ret_type.as_ref())
-						} else {
-							"".to_string()
-						};
-						format!("Ok{cast}({ret}, {ocv_ret_name});").into()
-					}
-				}
-			},
-			FuncCppBody::ManualFull(_) => "".into(),
+	pub fn cpp_body(&self) -> &FuncCppBody {
+		match self {
+			Self::Clang { .. } => &FuncCppBody::Auto,
+			Self::Desc(desc) => &desc.cpp_body,
 		}
 	}
 }
@@ -575,32 +440,26 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 impl Element for Func<'_, '_> {
 	fn exclude_kind(&self) -> ExcludeKind {
 		let identifier = self.identifier();
-		if settings::FUNC_MANUAL.contains_key(identifier.as_str()) || settings::FUNC_SPECIALIZE.contains_key(&self.func_id()) {
+		if settings::FUNC_MANUAL.contains_key(identifier.as_str()) {
 			return ExcludeKind::Included;
 		}
 		let kind = self.kind();
 		DefaultElement::exclude_kind(self)
 			.with_reference_exclude_kind(|| self.return_type_ref().exclude_kind())
-			.with_is_ignored(|| {
+			.with_is_excluded(|| {
 				let is_unavailable = match self {
 					Func::Clang { entity, .. } => entity.get_availability() == Availability::Unavailable,
 					Func::Desc(_) => false,
 				};
-				is_unavailable || {
-					kind.as_operator().map_or(false, |(_, op)| op == OperatorKind::Unsupported)
-						|| self.arguments().iter().any(|a| a.type_ref().exclude_kind().is_ignored())
-						|| settings::FUNC_EXCLUDE.contains(identifier.as_str())
-				}
-			})
-			.with_is_excluded(|| {
-				self.is_generic()
-					|| kind.as_operator().map_or(false, |kind| {
-						if matches!(kind, (_, OperatorKind::Incr | OperatorKind::Decr)) {
-							// filter out postfix version of ++ and --: https://en.cppreference.com/w/cpp/language/operator_incdec
-							self.num_arguments() == 1
-						} else {
-							false
-						}
+				is_unavailable
+					|| settings::FUNC_EXCLUDE.contains(identifier.as_str())
+					|| self.is_generic()
+					|| self.arguments().iter().any(|a| a.type_ref().exclude_kind().is_ignored())
+					|| kind.as_operator().map_or(false, |(_, kind)| match kind {
+						OperatorKind::Unsupported => true,
+						// filter out postfix version of ++ and --: https://en.cppreference.com/w/cpp/language/operator_incdec
+						OperatorKind::Incr | OperatorKind::Decr if self.num_arguments() == 1 => true,
+						_ => false,
 					}) || kind.as_constructor().map_or(false, |cls| cls.is_abstract()) // don't generate constructors of abstract classes
 			})
 	}
@@ -675,7 +534,8 @@ impl fmt::Debug for Func<'_, '_> {
 		});
 		self
 			.update_debug_struct(&mut debug_struct)
-			.field("is_const", &self.constness())
+			.field("func_id", &self.func_id())
+			.field("constness", &self.constness())
 			.field("is_specialized", &self.is_specialized())
 			.field("return_kind", &self.return_kind())
 			.field("kind", &self.kind())
@@ -738,20 +598,6 @@ impl ReturnKind {
 		}
 	}
 }
-//
-// /// Allows generation of functions without tying them to the real C++ items
-// pub struct FuncDesc<'tu, 'ge, 'f> {
-// 	pub extern_name: Cow<'f, str>,
-// 	pub constness: Constness,
-// 	pub return_kind: ReturnKind,
-// 	pub return_type: TypeRef<'tu, 'ge>,
-// 	pub kind: FuncKind<Class, Field<'tu, 'ge>>,
-// 	pub type_hint: FunctionTypeHint,
-// 	pub call: FuncDescCppCall<'f>,
-// 	pub ret: FuncDescReturn<'f>,
-// 	pub debug: String,
-// 	pub arguments: Vec<(String, TypeRef<'tu, 'ge>)>,
-// }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum OperatorKind {
@@ -958,14 +804,19 @@ impl<'f> FuncId<'f> {
 	}
 
 	pub fn from_desc(desc: &'f FuncDesc) -> FuncId<'f> {
-		let name = desc.cpp_name.as_ref().into();
+		let mut name = if let Some(cls) = desc.kind.as_instance_method() {
+			format!("{}::", cls.cpp_name(CppNameStyle::Reference))
+		} else {
+			"".to_string()
+		};
+		name.push_str(desc.cpp_name.as_ref());
 		let args = desc
 			.arguments
 			.iter()
 			.map(|arg| arg.cpp_name(CppNameStyle::Declaration))
 			.collect();
 
-		FuncId { name, args }
+		FuncId { name: name.into(), args }
 	}
 
 	pub fn make_static(self) -> FuncId<'static> {
@@ -988,23 +839,4 @@ impl fmt::Display for FuncId<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{}({})", self.name, self.args.join(", "))
 	}
-}
-
-fn cpp_method_call_name(extern_by_ptr: bool, method_name: &str) -> String {
-	if extern_by_ptr {
-		format!("instance->{method_name}")
-	} else {
-		format!("instance.{method_name}")
-	}
-}
-
-pub fn cpp_disambiguate_names<'tu, 'ge>(
-	args: impl IntoIterator<Item = Field<'tu, 'ge>>,
-) -> impl Iterator<Item = (String, Field<'tu, 'ge>)>
-where
-	'tu: 'ge,
-{
-	let args = args.into_iter();
-	let size_hint = args.size_hint();
-	NamePool::with_capacity(size_hint.1.unwrap_or(size_hint.0)).into_disambiguator(args, |f| f.cpp_name(CppNameStyle::Declaration))
 }

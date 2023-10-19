@@ -28,10 +28,9 @@ pub trait TypeRefExt {
 	fn rust_extern_self_func_decl(&self, method_constness: Constness) -> String;
 	fn rust_extern_arg_func_decl(&self, name: &str) -> String;
 	fn rust_arg_pre_call(&self, name: &str, is_function_infallible: bool) -> String;
-	fn rust_userdata_pre_call(&self, name: &str, callback_name: &str) -> String;
 	fn rust_self_func_call(&self, method_constness: Constness) -> String;
 	fn rust_arg_func_call(&self, name: &str) -> String;
-	fn rust_arg_forward(&self, name: &str) -> String;
+	fn rust_arg_forward<'n>(&self, name: &'n str) -> Cow<'n, str>;
 	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String;
 	fn rust_extern(&self, dir: ExternDir) -> Cow<str>;
 	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str>;
@@ -249,10 +248,6 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		"".to_string()
 	}
 
-	fn rust_userdata_pre_call(&self, name: &str, callback_name: &str) -> String {
-		format!("userdata_arg!({name} in callbacks => {callback_name})")
-	}
-
 	fn rust_self_func_call(&self, method_constness: Constness) -> String {
 		self.with_constness(method_constness).rust_arg_func_call("self")
 	}
@@ -342,8 +337,8 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		name.to_string()
 	}
 
-	fn rust_arg_forward(&self, name: &str) -> String {
-		name.to_string()
+	fn rust_arg_forward<'n>(&self, name: &'n str) -> Cow<'n, str> {
+		name.into()
 	}
 
 	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String {

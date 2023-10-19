@@ -62,7 +62,7 @@ jobs:
           - ubuntu-22.04
           - windows-2022
         version:
-          - vcpkg: b7dba7f9aad09a56900f21cd78cfda1258e54e38
+          - vcpkg: 2023.10.19
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.version.vcpkg }}
@@ -151,7 +151,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/build
-          key: src-${{ matrix.version.opencv }}-${{ matrix.os-image }}
+          key: src-${{ env.OPENCV_VERSION }}-ubuntu-20.04
 
       - name: Install dependencies
         env:

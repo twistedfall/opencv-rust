@@ -10,10 +10,10 @@ use crate::element::ExcludeKind;
 use crate::type_ref::CppNameStyle;
 use crate::{settings, DefaultElement, Element, EntityElement, NameDebug};
 
-pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> Option<Value> {
+pub fn render_constant_rust(tokens: &[Token]) -> Option<Value> {
 	let mut out = Value {
 		kind: ValueKind::Integer,
-		value: String::with_capacity(128),
+		value: String::with_capacity(tokens.len() * 8),
 	};
 	for t in tokens {
 		match t.get_kind() {
@@ -45,9 +45,9 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> 
 					out.kind = ValueKind::String;
 				} else if spelling.contains('.') {
 					out.kind = ValueKind::Float;
-				} else if spelling.ends_with(&['U', 'u'][..]) {
+				} else if let Some(unsigned_value) = spelling.strip_suffix(&['U', 'u']) {
 					out.kind = ValueKind::UnsignedInteger;
-					out.value += &spelling[..spelling.len() - 1];
+					out.value += unsigned_value;
 					continue;
 				}
 				out.value += &spelling;
@@ -64,8 +64,10 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> 
 	Some(out)
 }
 
-pub fn render_constant_cpp<'f>(tokens: impl IntoIterator<Item = Token<'f>>) -> String {
-	tokens.into_iter().fold(String::new(), |out, x| out + &x.get_spelling())
+pub fn render_constant_cpp(tokens: &[Token]) -> String {
+	tokens
+		.iter()
+		.fold(String::with_capacity(tokens.len() * 8), |out, x| out + &x.get_spelling())
 }
 
 pub fn render_evaluation_result_rust(result: EvaluationResult) -> Value {
@@ -108,17 +110,11 @@ impl<'tu> Const<'tu> {
 	pub fn value(&self) -> Option<Value> {
 		match self.entity.get_kind() {
 			EntityKind::MacroDefinition => {
-				let mut tokens = self.entity.get_range().expect("Can't get macro definition range").tokenize();
+				let tokens = self.entity.get_range().expect("Can't get macro definition range").tokenize();
 				if tokens.len() <= 1 {
 					None
-				} else if let Some(ident_tok) = tokens.get(0) {
-					if ident_tok.get_kind() == TokenKind::Identifier {
-						render_constant_rust(tokens.drain(1..))
-					} else {
-						None
-					}
 				} else {
-					None
+					render_constant_rust(&tokens[1..])
 				}
 			}
 			EntityKind::EnumConstantDecl => Some(Value {

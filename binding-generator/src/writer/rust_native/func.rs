@@ -6,13 +6,14 @@ use std::rc::Rc;
 use once_cell::sync::Lazy;
 use regex::Regex;
 
-use crate::comment as crate_comment;
 use crate::field::Field;
-use crate::func::{cpp_disambiguate_names, FuncCppBody, FuncDesc, FuncKind, FuncRustBody, OperatorKind, ReturnKind, Safety};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, OperatorKind, ReturnKind, Safety};
+use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef};
 use crate::writer::rust_native::disambiguate_single_name;
 use crate::{
-	reserved_rename, settings, CompiledInterpolation, Element, Func, FuncTypeHint, IteratorExt, NameDebug, StrExt, StringExt,
+	comment as crate_comment, reserved_rename, settings, Class, CompiledInterpolation, Element, Func, FuncTypeHint, IteratorExt,
+	NameDebug, StrExt, StringExt,
 };
 
 use super::comment;
@@ -307,58 +308,44 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let args: Vec<(String, Field)> = rust_disambiguate_names(self.arguments().into_owned()).collect::<Vec<_>>();
 		let as_instance_method = kind.as_instance_method();
 		let mut decl_args = Vec::with_capacity(args.len());
-		let mut call_args = Vec::with_capacity(args.len());
 		let mut forward_args = Vec::with_capacity(args.len());
 		let mut pre_call_args = Vec::with_capacity(args.len());
 		let mut post_call_args = Vec::with_capacity(args.len());
 		if let Some(cls) = as_instance_method {
 			let cls_type_ref = cls.type_ref();
 			decl_args.push(cls_type_ref.rust_self_func_decl(constness));
-			call_args.push(cls_type_ref.rust_self_func_call(constness));
 		}
-		let mut callback_arg_name: Option<String> = None;
-		for (name, arg) in args {
+		let mut callback_arg_name: Option<&str> = None;
+		for (name, arg) in &args {
 			let arg_type_ref = arg.type_ref();
-			let arg_as_slice_len = arg.as_slice_len();
 			if arg.is_user_data() {
 				pre_post_arg_handle(
-					arg.type_ref().rust_userdata_pre_call(
-						&name,
-						callback_arg_name.as_deref().expect("Can't get name of the callback arg"),
+					format!(
+						"userdata_arg!({name} in callbacks => {callback_name})",
+						callback_name = callback_arg_name.expect("Can't get name of the callback arg")
 					),
 					&mut pre_call_args,
 				);
 			} else {
 				if arg_type_ref.as_function().is_some() {
-					callback_arg_name = Some(name.clone());
+					callback_arg_name = Some(name);
 				}
-				if !arg_as_slice_len.is_some() {
-					decl_args.push(arg_type_ref.rust_arg_func_decl(&name));
+				if !arg.as_slice_len().is_some() {
+					decl_args.push(arg_type_ref.rust_arg_func_decl(name));
 				}
 				pre_post_arg_handle(
-					arg_type_ref.rust_arg_pre_call(&name, return_kind.is_infallible()),
+					arg_type_ref.rust_arg_pre_call(name, return_kind.is_infallible()),
 					&mut pre_call_args,
 				);
 			}
-			if let Some((slice_arg, len_div)) = arg_as_slice_len {
-				let slice_call = if len_div > 1 {
-					format!("({slice_arg}.len() / {len_div}) as _")
-				} else {
-					format!("{slice_arg}.len() as _")
-				};
-				call_args.push(slice_call);
-			} else {
-				call_args.push(arg_type_ref.rust_arg_func_call(&name));
-			}
-			forward_args.push(arg_type_ref.rust_arg_forward(&name));
+			forward_args.push(arg_type_ref.rust_arg_forward(name));
 			pre_post_arg_handle(
-				arg_type_ref.rust_arg_post_call(&name, return_kind.is_infallible()),
+				arg_type_ref.rust_arg_post_call(name, return_kind.is_infallible()),
 				&mut post_call_args,
 			);
 		}
 		if !return_kind.is_naked() {
 			pre_call_args.push("return_send!(via ocvrs_return);".to_string());
-			call_args.push("ocvrs_return.as_mut_ptr()".to_string());
 		}
 
 		let doc_comment = self.rendered_doc_comment_with_prefix("///", _opencv_version);
@@ -372,14 +359,9 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			"pub "
 		};
 		let is_static_func = matches!(kind.as_ref(), FuncKind::Function | FuncKind::StaticMethod(_));
-		let return_type_func_decl = if return_kind.is_infallible() {
-			return_type_ref.rust_return(FishStyle::No, is_static_func)
-		} else {
-			format!(
-				"Result<{}>",
-				self.return_type_ref().rust_return(FishStyle::No, is_static_func)
-			)
-			.into()
+		let mut return_type_func_decl = return_type_ref.rust_return(FishStyle::No, is_static_func);
+		if !return_kind.is_infallible() {
+			return_type_func_decl = format!("Result<{return_type_func_decl}>").into()
 		};
 		let return_type_func_decl = if return_type_func_decl == "()" {
 			Cow::Borrowed("")
@@ -422,7 +404,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 
 		let decl_args = decl_args.join(", ");
 		let pre_call_args = pre_call_args.join("\n");
-		let call_args = call_args.join(", ");
 		let forward_args = forward_args.join(", ");
 		let post_call_args = post_call_args.join("\n");
 		let ret_convert = ret_convert.join("\n");
@@ -450,15 +431,9 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			("rv_rust_full", return_type_func_decl.as_ref()),
 			("pre_call_args", &pre_call_args),
 			(
-				"unsafety_call",
-				if safety.is_safe() {
-					"unsafe "
-				} else {
-					""
-				},
+				"call",
+				&rust_call(self, safety, constness, as_instance_method, &identifier, &args, return_kind),
 			),
-			("identifier", identifier.as_ref()),
-			("call_args", &call_args),
 			("forward_args", &forward_args),
 			("ret_receive", ret_receive),
 			("ret_convert", ret_convert.as_ref()),
@@ -545,12 +520,12 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		if let Some(cls) = kind.as_instance_method() {
 			decl_args.push(cls.type_ref().cpp_self_func_decl(constness));
 		}
-		for (name, arg) in args {
+		for (name, arg) in &args {
 			let arg_type_ref = arg.type_ref();
-			decl_args.push(arg_type_ref.cpp_arg_func_decl(&name));
-			pre_post_arg_handle(arg_type_ref.cpp_arg_pre_call(&name), &mut pre_call_args);
-			pre_post_arg_handle(arg_type_ref.cpp_arg_post_call(&name), &mut post_call_args);
-			pre_post_arg_handle(arg_type_ref.cpp_arg_cleanup(&name), &mut cleanup_args);
+			decl_args.push(arg_type_ref.cpp_arg_func_decl(name));
+			pre_post_arg_handle(arg_type_ref.cpp_arg_pre_call(name), &mut pre_call_args);
+			pre_post_arg_handle(arg_type_ref.cpp_arg_post_call(name), &mut post_call_args);
+			pre_post_arg_handle(arg_type_ref.cpp_arg_cleanup(name), &mut cleanup_args);
 		}
 
 		// return
@@ -616,12 +591,18 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			("decl_args", decl_args.join(", ").into()),
 			("try", func_try.into()),
 			("pre_call_args", pre_call_args.join("\n").into()),
-			("call", self.cpp_call_invoke().into()),
+			("call", cpp_call(self, &kind, &args, &return_type_ref).into()),
 			("post_call_args", post_call_args.join("\n").into()),
 			("cleanup_args", cleanup_args.join("\n").into()),
 			(
 				"return",
-				self.cpp_return(&ret, ret_cast.then(|| ret_full.as_ref().into()), ocv_ret_name),
+				cpp_return(
+					self,
+					return_kind,
+					&ret,
+					ret_cast.then(|| ret_full.as_ref().into()),
+					ocv_ret_name,
+				),
 			),
 			("catch", catch),
 			("attributes_end", attributes_end.into()),
@@ -634,6 +615,57 @@ fn pre_post_arg_handle(mut arg: String, args: &mut Vec<String>) {
 		arg.push(';');
 		args.push(arg);
 	}
+}
+
+fn rust_call(
+	f: &Func,
+	safety: Safety,
+	constness: Constness,
+	as_instance_method: Option<&Class>,
+	identifier: &str,
+	args: &[(String, Field)],
+	return_kind: ReturnKind,
+) -> String {
+	static CALL_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| "{{unsafety_call}}{ sys::{{identifier}}({{call_args}}) }".compile_interpolation());
+
+	let mut call_args = Vec::with_capacity(args.len());
+	if let Some(cls) = as_instance_method {
+		let cls_type_ref = cls.type_ref();
+		call_args.push(cls_type_ref.rust_self_func_call(constness));
+	}
+	for (name, arg) in args {
+		let arg_type_ref = arg.type_ref();
+		if let Some((slice_arg, len_div)) = arg.as_slice_len() {
+			let slice_call = if len_div > 1 {
+				format!("({slice_arg}.len() / {len_div}) as _")
+			} else {
+				format!("{slice_arg}.len() as _")
+			};
+			call_args.push(slice_call);
+		} else {
+			call_args.push(arg_type_ref.rust_arg_func_call(name));
+		}
+	}
+	if !return_kind.is_naked() {
+		call_args.push("ocvrs_return.as_mut_ptr()".to_string());
+	}
+	let tpl = match f.rust_body() {
+		FuncRustBody::Auto => Cow::Borrowed(&*CALL_TPL),
+		FuncRustBody::ManualFull(body) => Cow::Owned(body.compile_interpolation()),
+	};
+	tpl.interpolate(&HashMap::from([
+		(
+			"unsafety_call",
+			if safety.is_safe() {
+				"unsafe "
+			} else {
+				""
+			},
+		),
+		("identifier", identifier),
+		("call_args", &call_args.join(", ")),
+	]))
 }
 
 fn rust_return_map(
@@ -675,6 +707,135 @@ fn rust_return_map(
 	}
 }
 
+fn cpp_call(f: &Func, kind: &FuncKind, args: &[(String, Field)], return_type_ref: &TypeRef) -> String {
+	static CALL_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{name}}({{args}})".compile_interpolation());
+
+	static VOID_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{call}};".compile_interpolation());
+
+	static RETURN_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| "{{ret_with_type}} = {{doref}}{{call}};".compile_interpolation());
+
+	static CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{ret_with_type}}({{args}});".compile_interpolation());
+
+	static CONSTRUCTOR_NO_ARGS_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| "{{ret_with_type}};".compile_interpolation());
+
+	static BOXED_CONSTRUCTOR_TPL: Lazy<CompiledInterpolation> =
+		Lazy::new(|| "{{ret_type}}* ret = new {{ret_type}}({{args}});".compile_interpolation());
+
+	let args = args
+		.iter()
+		.map(|(name, arg)| arg.type_ref().cpp_arg_func_call(name).into_owned())
+		.join(", ");
+
+	let ret_type = return_type_ref.cpp_name(CppNameStyle::Reference);
+	let ret_with_type = return_type_ref.cpp_name_ext(CppNameStyle::Reference, "ret", true);
+	let doref = if return_type_ref.as_fixed_array().is_some() {
+		"&"
+	} else {
+		""
+	};
+
+	let call_name = match kind {
+		FuncKind::Constructor(cls) => cls.cpp_name(CppNameStyle::Reference),
+		FuncKind::Function | FuncKind::GenericFunction | FuncKind::StaticMethod(..) | FuncKind::FunctionOperator(..) => {
+			f.cpp_name(CppNameStyle::Reference)
+		}
+		FuncKind::FieldAccessor(cls, fld) => cpp_method_call_name(
+			cls.type_ref().extern_pass_kind().is_by_ptr(),
+			&fld.cpp_name(CppNameStyle::Declaration),
+		)
+		.into(),
+		FuncKind::InstanceMethod(cls)
+		| FuncKind::GenericInstanceMethod(cls)
+		| FuncKind::ConversionMethod(cls)
+		| FuncKind::InstanceOperator(cls, ..) => cpp_method_call_name(
+			cls.type_ref().extern_pass_kind().is_by_ptr(),
+			&f.cpp_name(CppNameStyle::Declaration),
+		)
+		.into(),
+	};
+
+	let mut inter_vars = HashMap::from([
+		("ret_type", ret_type),
+		("ret_with_type", ret_with_type),
+		("doref", doref.into()),
+		("args", args.as_str().into()),
+		("name", call_name),
+	]);
+
+	let (call_tpl, full_tpl) = match f.cpp_body() {
+		FuncCppBody::Auto { .. } => {
+			if let Some(cls) = kind.as_constructor() {
+				if cls.kind().is_boxed() {
+					(None, Some(Cow::Borrowed(&*BOXED_CONSTRUCTOR_TPL)))
+				} else if args.is_empty() {
+					(None, Some(Cow::Borrowed(&*CONSTRUCTOR_NO_ARGS_TPL)))
+				} else {
+					(None, Some(Cow::Borrowed(&*CONSTRUCTOR_TPL)))
+				}
+			} else {
+				(Some(Cow::Borrowed(&*CALL_TPL)), None)
+			}
+		}
+		FuncCppBody::ManualCall(call) => (Some(Cow::Owned(call.compile_interpolation())), None),
+		FuncCppBody::ManualCallReturn(full_tpl) => (None, Some(Cow::Owned(full_tpl.compile_interpolation()))),
+	};
+	let tpl = full_tpl
+		.or_else(|| {
+			call_tpl.map(|call_tpl| {
+				let call = call_tpl.interpolate(&inter_vars);
+				inter_vars.insert("call", call.into());
+				if return_type_ref.is_void() {
+					Cow::Borrowed(&*VOID_TPL)
+				} else {
+					Cow::Borrowed(&*RETURN_TPL)
+				}
+			})
+		})
+		.expect("Impossible");
+
+	tpl.interpolate(&inter_vars)
+}
+
+fn cpp_return(f: &Func, return_kind: ReturnKind, ret: &str, ret_cast: Option<Cow<str>>, ocv_ret_name: &str) -> Cow<'static, str> {
+	match &f.cpp_body() {
+		FuncCppBody::Auto | FuncCppBody::ManualCall(_) => match return_kind {
+			ReturnKind::InfallibleNaked => {
+				if ret.is_empty() {
+					"".into()
+				} else {
+					let cast = if let Some(ret_type) = ret_cast {
+						format!("({typ})", typ = ret_type.as_ref())
+					} else {
+						"".to_string()
+					};
+					format!("return {cast}{ret};").into()
+				}
+			}
+			ReturnKind::InfallibleViaArg => {
+				if ret.is_empty() {
+					"".into()
+				} else {
+					format!("*{ocv_ret_name} = {ret};").into()
+				}
+			}
+			ReturnKind::Fallible => {
+				if ret.is_empty() {
+					format!("Ok({ocv_ret_name});").into()
+				} else {
+					let cast = if let Some(ret_type) = ret_cast {
+						format!("<{typ}>", typ = ret_type.as_ref())
+					} else {
+						"".to_string()
+					};
+					format!("Ok{cast}({ret}, {ocv_ret_name});").into()
+				}
+			}
+		},
+		FuncCppBody::ManualCallReturn(_) => "".into(),
+	}
+}
+
 pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: bool) -> (Cow<'f, str>, bool) {
 	if return_type.is_void() {
 		("".into(), false)
@@ -704,4 +865,23 @@ pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: 
 	} else {
 		(name.into(), return_type.as_fixed_array().is_some())
 	}
+}
+
+fn cpp_method_call_name(extern_by_ptr: bool, method_name: &str) -> String {
+	if extern_by_ptr {
+		format!("instance->{method_name}")
+	} else {
+		format!("instance.{method_name}")
+	}
+}
+
+pub fn cpp_disambiguate_names<'tu, 'ge>(
+	args: impl IntoIterator<Item = Field<'tu, 'ge>>,
+) -> impl Iterator<Item = (String, Field<'tu, 'ge>)>
+where
+	'tu: 'ge,
+{
+	let args = args.into_iter();
+	let size_hint = args.size_hint();
+	NamePool::with_capacity(size_hint.1.unwrap_or(size_hint.0)).into_disambiguator(args, |f| f.cpp_name(CppNameStyle::Declaration))
 }

@@ -1,4 +1,3 @@
-use std::env::ArgsOs;
 use std::ffi::OsString;
 use std::iter::Peekable;
 use std::path::{Path, PathBuf};
@@ -13,7 +12,7 @@ use crate::{get_version_from_headers, GenerateFullBindings, Result};
 /// so we employ the trick and we actually run the build script itself again with some additional arguments.
 /// When those arguments are detected the build script will generate the bindings for a single
 /// OpenCV module instead of running its main logic.
-pub fn handle_running_binding_generator(mut args: Peekable<ArgsOs>) -> Result<GenerateFullBindings> {
+pub fn handle_running_binding_generator(mut args: Peekable<impl Iterator<Item = OsString>>) -> Result<GenerateFullBindings> {
 	if args.peek().is_some() {
 		run(args)?;
 		Ok(GenerateFullBindings::Stop)

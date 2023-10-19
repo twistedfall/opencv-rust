@@ -236,7 +236,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		.flag_if_supported("-Wno-unused-variable") // ‘cv::CV_VERSION_OCVRS_OVERRIDE’ defined but not used
 		.flag_if_supported("-Wno-ignored-qualifiers") // type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
 		.flag_if_supported("-Wno-return-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
-	;
+		.flag_if_supported("-Wno-overloaded-virtual");
 
 	opencv.include_paths.iter().for_each(|p| {
 		out.include(p);
@@ -258,7 +258,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		}
 	}
 	if out.get_compiler().is_like_msvc() {
-		out.flag("-std:c++latest")
+		out.flag("-std:c++14")
 			.flag("-EHsc")
 			.flag("-bigobj")
 			.flag("-utf-8")
@@ -270,7 +270,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 			.flag("-wd4127") // conditional expression is constant
 			.pic(false);
 	} else {
-		out.flag("-std=c++11").flag_if_supported("-Wa,-mbig-obj");
+		out.flag("-std=c++14").flag_if_supported("-Wa,-mbig-obj");
 	}
 	out
 }
@@ -314,8 +314,8 @@ fn main() -> Result<()> {
 		return Ok(());
 	}
 
-	let mut args = env::args_os().peekable();
-	let build_script_path = args.next().ok_or("Can't read build script path")?;
+	let args = env::args_os().skip(1).peekable();
+	let build_script_path = env::current_exe()?;
 	if matches!(handle_running_binding_generator(args)?, GenerateFullBindings::Stop) {
 		return Ok(());
 	}

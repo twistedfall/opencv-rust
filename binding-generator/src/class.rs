@@ -399,7 +399,10 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				out.extend(fields.flat_map(|fld| {
 					iter::from_fn({
 						let doc_comment = Rc::from(fld.doc_comment());
-						let fld_type_ref = fld.type_ref().with_type_hint(TypeRefTypeHint::PrimitiveRefAsPointer);
+						let fld_type_ref = fld
+							.type_ref()
+							.into_owned()
+							.with_type_hint(TypeRefTypeHint::PrimitiveRefAsPointer);
 						let mut read_yield = if constness_filter.map_or(true, |c| c == fld.constness()) {
 							let read_func = Func::new_desc(FuncDesc {
 								type_hint: FuncTypeHint::None,
@@ -429,7 +432,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							let write_func = Func::new_desc(FuncDesc {
 								type_hint: FuncTypeHint::None,
 								kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
-								cpp_name: format!("{}::set{}{rest}", fld.cpp_namespace(), first_letter.to_uppercase()).into(),
+								cpp_name: format!("set{}{rest}", first_letter.to_uppercase()).into(),
 								rust_custom_leafname: None,
 								rust_module: fld.rust_module().into(),
 								constness: Constness::Mut,

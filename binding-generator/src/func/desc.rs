@@ -78,8 +78,8 @@ pub enum FuncCppBody {
 	Auto,
 	/// Specify manual call, use the automatic return handling (e.g. `Mat ret = <manual_call>`)
 	ManualCall(Cow<'static, str>),
-	/// Specify full manual function body including the return
-	ManualFull(Cow<'static, str>),
+	/// Specify manual function call with the return
+	ManualCallReturn(Cow<'static, str>),
 }
 
 #[derive(Clone, Debug)]

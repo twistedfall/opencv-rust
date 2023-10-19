@@ -1,4 +1,4 @@
-use std::ffi::{OsStr, OsString};
+use std::ffi::OsStr;
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::ops::Deref;
@@ -15,11 +15,11 @@ use crate::docs::transfer_bindings_to_docs;
 use super::{files_with_extension, files_with_predicate, Library, Result, MODULES, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
 
 pub struct BindingGenerator {
-	build_script_path: OsString,
+	build_script_path: PathBuf,
 }
 
 impl BindingGenerator {
-	pub fn new(build_script_path: OsString) -> Self {
+	pub fn new(build_script_path: PathBuf) -> Self {
 		Self { build_script_path }
 	}
 
@@ -331,6 +331,7 @@ fn build_job_server() -> Result<Jobserver> {
 			let num_jobs = env::var("NUM_JOBS")
 				.ok()
 				.and_then(|jobs| jobs.parse().ok())
+				.or_else(|| thread::available_parallelism().map(|p| p.get()).ok())
 				.unwrap_or(2)
 				.max(1);
 			eprintln!("=== Creating a new job server with num_jobs: {num_jobs}");
