@@ -12,7 +12,7 @@ use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::{WalkAction, WalkResult};
 use crate::field::{FieldDesc, FieldTypeHint};
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, FuncRustExtern, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
@@ -316,6 +316,11 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn methods(&self, constness_filter: Option<Constness>) -> Vec<Func<'tu, 'ge>> {
 		let mut out = Vec::with_capacity(32);
 		self.for_each_method(|func| {
+			let func = if let Some(func_fact) = settings::FUNC_REPLACE.get(&func.func_id()) {
+				func_fact(&func)
+			} else {
+				func
+			};
 			if constness_filter.map_or(true, |c| c == func.constness()) {
 				if func.is_generic() {
 					if let Some(specs) = settings::FUNC_SPECIALIZE.get(&func.func_id()) {
@@ -333,7 +338,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			Class::Clang { gen_env, .. } => gen_env.module(),
 			Class::Desc(desc) => desc.rust_module.as_ref(),
 		};
-		for inject_func_fact in settings::FUNC_INJECT_MANUAL.get(rust_module).into_iter().flatten() {
+		for inject_func_fact in settings::FUNC_INJECT.get(rust_module).into_iter().flatten() {
 			let inject_func: Func = inject_func_fact();
 			if constness_filter.map_or(true, |c| c == inject_func.constness()) {
 				if let Some(cls) = inject_func.kind().as_class_method() {
@@ -414,10 +419,12 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								return_kind: ReturnKind::infallible(fld_type_ref.return_as_naked()),
 								doc_comment: Rc::clone(&doc_comment),
 								def_loc: fld.file_line_name().location,
+								rust_generic_decls: Rc::new([]),
 								arguments: Rc::new([]),
 								return_type_ref: fld_type_ref.clone(),
 								cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
 								rust_body: FuncRustBody::Auto,
+								rust_extern_definition: FuncRustExtern::Auto,
 							});
 							Some(read_func)
 						} else {
@@ -438,6 +445,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								constness: Constness::Mut,
 								doc_comment,
 								def_loc: fld.file_line_name().location,
+								rust_generic_decls: Rc::new([]),
 								arguments: Rc::new([Field::new_desc(FieldDesc {
 									cpp_fullname: "val".into(),
 									type_ref: fld_type_ref,
@@ -448,6 +456,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								return_type_ref: TypeRefDesc::void(),
 								cpp_body: FuncCppBody::ManualCall("{{name}} = {{args}}".into()),
 								rust_body: FuncRustBody::Auto,
+								rust_extern_definition: FuncRustExtern::Auto,
 							});
 							Some(write_func)
 						} else {

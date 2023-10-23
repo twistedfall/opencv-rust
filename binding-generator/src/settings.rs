@@ -9,13 +9,14 @@ pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use func_cfg_attr::FUNC_CFG_ATTR;
 pub use func_exclude::FUNC_EXCLUDE;
-pub use func_inject::{FuncFactory, FUNC_INJECT_MANUAL};
+pub use func_inject::{FuncFactory, FUNC_INJECT};
 pub use func_rename::FUNC_RENAME;
+pub use func_replace::{FuncInheritFactory, FUNC_REPLACE};
 pub use func_specialize::{TypeRefFactory, FUNC_SPECIALIZE};
 pub use func_unsafe::FUNC_UNSAFE;
 pub use generator_module_tweaks::{ModuleTweak, GENERATOR_MODULE_TWEAKS};
 
-use crate::{CompiledInterpolation, FuncId, StrExt};
+use crate::FuncId;
 
 mod argument_override;
 mod element_exclude_kind;
@@ -24,6 +25,7 @@ mod func_cfg_attr;
 mod func_exclude;
 mod func_inject;
 mod func_rename;
+mod func_replace;
 mod func_specialize;
 mod func_unsafe;
 mod generator_module_tweaks;
@@ -59,56 +61,6 @@ pub static RESERVED_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 	])
 });
 
-/// dict of functions with manual implementations
-/// key: FuncInfo.identifier
-/// value: dict
-///   keys: "rust_safe", "rust_extern", "cpp", missing key means skip particular implementation
-///   values: template to use for manual implementation or "~" to use default implementation
-pub static FUNC_MANUAL: Lazy<HashMap<&str, CompiledInterpolation>> = Lazy::new(|| {
-	HashMap::from([
-		(
-			"cv_Mat_at_int",
-			include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
-		),
-		(
-			"cv_Mat_at_const_int",
-			include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
-		),
-		(
-			"cv_Mat_at_int_int",
-			include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
-		),
-		(
-			"cv_Mat_at_const_int_int",
-			include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
-		),
-		(
-			"cv_Mat_at_Point",
-			include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
-		),
-		(
-			"cv_Mat_at_const_Point",
-			include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
-		),
-		(
-			"cv_Mat_at_int_int_int",
-			include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
-		),
-		(
-			"cv_Mat_at_const_int_int_int",
-			include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
-		),
-		(
-			"cv_Mat_at_const_intX",
-			include_str!("../tpl/settings/rust_mat_at_mut.tpl.rs").compile_interpolation(),
-		),
-		(
-			"cv_Mat_at_const_const_intX",
-			include_str!("../tpl/settings/rust_mat_at_const.tpl.rs").compile_interpolation(),
-		),
-	])
-});
-
 /// set of classes that must be generated as traits, elements are Class.cpp_name(Reference)()
 pub static FORCE_CLASS_ABSTRACT: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["cv::detail::BlocksCompensator"]));
 
@@ -119,50 +71,50 @@ pub static FORCE_CONSTANT_METHOD: Lazy<HashSet<&str>> =
 pub static FORCE_INFALLIBLE: Lazy<HashSet<FuncId>> = Lazy::new(|| {
 	HashSet::from([
 		// just returns static/constant data
-		FuncId::new("cv::noArray", []),
-		FuncId::new("cv::getVersionMajor", []),
-		FuncId::new("cv::getVersionMinor", []),
-		FuncId::new("cv::getVersionRevision", []),
+		FuncId::new_mut("cv::noArray", []),
+		FuncId::new_mut("cv::getVersionMajor", []),
+		FuncId::new_mut("cv::getVersionMinor", []),
+		FuncId::new_mut("cv::getVersionRevision", []),
 		// not doing anything that can cause an exception
-		FuncId::new("cv::Mat::empty", []),
-		FuncId::new("cv::Mat::total", []),
-		FuncId::new("cv::Mat::isContinuous", []),
-		FuncId::new("cv::Mat::isSubmatrix", []),
-		FuncId::new("cv::Mat::elemSize1", []),
-		FuncId::new("cv::Mat::type", []),
-		FuncId::new("cv::Mat::depth", []),
-		FuncId::new("cv::Mat::channels", []),
-		FuncId::new("cv::UMat::empty", []),
-		FuncId::new("cv::UMat::total", []),
-		FuncId::new("cv::UMat::isContinuous", []),
-		FuncId::new("cv::UMat::isSubmatrix", []),
-		FuncId::new("cv::UMat::elemSize1", []),
-		FuncId::new("cv::UMat::type", []),
-		FuncId::new("cv::UMat::depth", []),
-		FuncId::new("cv::UMat::channels", []),
-		FuncId::new("cv::SparseMat::elemSize", []),
-		FuncId::new("cv::SparseMat::elemSize1", []),
-		FuncId::new("cv::SparseMat::type", []),
-		FuncId::new("cv::SparseMat::depth", []),
-		FuncId::new("cv::SparseMat::channels", []),
+		FuncId::new_const("cv::Mat::empty", []),
+		FuncId::new_const("cv::Mat::total", []),
+		FuncId::new_const("cv::Mat::isContinuous", []),
+		FuncId::new_const("cv::Mat::isSubmatrix", []),
+		FuncId::new_const("cv::Mat::elemSize1", []),
+		FuncId::new_const("cv::Mat::type", []),
+		FuncId::new_const("cv::Mat::depth", []),
+		FuncId::new_const("cv::Mat::channels", []),
+		FuncId::new_const("cv::UMat::empty", []),
+		FuncId::new_const("cv::UMat::total", []),
+		FuncId::new_const("cv::UMat::isContinuous", []),
+		FuncId::new_const("cv::UMat::isSubmatrix", []),
+		FuncId::new_const("cv::UMat::elemSize1", []),
+		FuncId::new_const("cv::UMat::type", []),
+		FuncId::new_const("cv::UMat::depth", []),
+		FuncId::new_const("cv::UMat::channels", []),
+		FuncId::new_const("cv::SparseMat::elemSize", []),
+		FuncId::new_const("cv::SparseMat::elemSize1", []),
+		FuncId::new_const("cv::SparseMat::type", []),
+		FuncId::new_const("cv::SparseMat::depth", []),
+		FuncId::new_const("cv::SparseMat::channels", []),
 		// marked CV_NOEXCEPT since OpenCV 4.5.2, propagate those changes to earlier versions
-		FuncId::new("cv::Mat::Mat", []),
-		FuncId::new("cv::MatSize::MatSize", ["_p"]),
-		FuncId::new("cv::MatSize::dims", []),
-		FuncId::new("cv::MatSize::operator const int *", []),
-		FuncId::new("cv::MatStep::MatStep", []),
-		FuncId::new("cv::MatStep::operator[]", ["i"]),
-		FuncId::new("cv::UMat::UMat", ["usageFlags"]),
-		FuncId::new("cv::ocl::Context::Context", []),
-		FuncId::new("cv::ocl::Device::Device", []),
-		FuncId::new("cv::ocl::Image2D::Image2D", []),
-		FuncId::new("cv::ocl::Kernel::Kernel", []),
-		FuncId::new("cv::ocl::KernelArg::KernelArg", []),
-		FuncId::new("cv::ocl::Platform::Platform", []),
-		FuncId::new("cv::ocl::PlatformInfo::PlatformInfo", []),
-		FuncId::new("cv::ocl::Program::Program", []),
-		FuncId::new("cv::ocl::ProgramSource::ProgramSource", []),
-		FuncId::new("cv::ocl::Queue::Queue", []),
+		FuncId::new_mut("cv::Mat::Mat", []),
+		FuncId::new_mut("cv::MatSize::MatSize", ["_p"]),
+		FuncId::new_const("cv::MatSize::dims", []),
+		FuncId::new_const("cv::MatSize::operator const int *", []),
+		FuncId::new_mut("cv::MatStep::MatStep", []),
+		FuncId::new_mut("cv::MatStep::operator[]", ["i"]),
+		FuncId::new_mut("cv::UMat::UMat", ["usageFlags"]),
+		FuncId::new_mut("cv::ocl::Context::Context", []),
+		FuncId::new_mut("cv::ocl::Device::Device", []),
+		FuncId::new_mut("cv::ocl::Image2D::Image2D", []),
+		FuncId::new_mut("cv::ocl::Kernel::Kernel", []),
+		FuncId::new_mut("cv::ocl::KernelArg::KernelArg", []),
+		FuncId::new_mut("cv::ocl::Platform::Platform", []),
+		FuncId::new_mut("cv::ocl::PlatformInfo::PlatformInfo", []),
+		FuncId::new_mut("cv::ocl::Program::Program", []),
+		FuncId::new_mut("cv::ocl::ProgramSource::ProgramSource", []),
+		FuncId::new_mut("cv::ocl::Queue::Queue", []),
 	])
 });
 

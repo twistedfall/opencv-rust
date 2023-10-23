@@ -6,9 +6,9 @@ use std::rc::Rc;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 
-pub use desc::{FuncCppBody, FuncDesc, FuncRustBody};
+pub use desc::{FuncCppBody, FuncDesc, FuncRustBody, FuncRustExtern};
 
-use crate::debug::LocationName;
+use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::{ExcludeKind, UNNAMED};
 use crate::entity::WalkAction;
 use crate::field::FieldDesc;
@@ -126,21 +126,98 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			.values()
 			.map(|s| s().cpp_name(CppNameStyle::Reference).into_owned())
 			.join(", ");
-		Self::new_desc(FuncDesc {
+		let mut desc = self.to_desc(InheritConfig::empty().kind().arguments().return_type_ref());
+		desc.kind = kind;
+		desc.type_hint = FuncTypeHint::Specialized;
+		desc.arguments = arguments;
+		desc.return_type_ref = specialized(&return_type_ref).unwrap_or(return_type_ref);
+		desc.cpp_body = FuncCppBody::ManualCall(format!("{{{{name}}}}<{generic}>({{{{args}}}})").into());
+		Self::new_desc(desc)
+	}
+
+	pub(crate) fn to_desc(&self, skip_config: InheritConfig) -> FuncDesc<'tu, 'ge> {
+		let kind = if skip_config.kind {
+			FuncKind::Function
+		} else {
+			self.kind().into_owned()
+		};
+		let cpp_name = if skip_config.name {
+			Rc::from("")
+		} else {
+			self.cpp_name(CppNameStyle::Reference).into()
+		};
+		let doc_comment = if skip_config.doc_comment {
+			Rc::from("")
+		} else {
+			self.doc_comment().into()
+		};
+		let arguments: Rc<[Field]> = if skip_config.arguments {
+			Rc::new([])
+		} else {
+			self.arguments().into_owned().into()
+		};
+		let return_type_ref = if skip_config.return_type_ref {
+			TypeRefDesc::void()
+		} else {
+			self.return_type_ref()
+		};
+		let def_loc = if skip_config.definition_location {
+			DefinitionLocation::Generated
+		} else {
+			self.file_line_name().location
+		};
+		FuncDesc {
 			kind,
-			type_hint: FuncTypeHint::Specialized,
+			type_hint: FuncTypeHint::None,
 			constness: self.constness(),
 			return_kind: self.return_kind(),
-			cpp_name: self.cpp_name(CppNameStyle::Reference).into(),
-			rust_custom_leafname: None,
+			cpp_name,
+			rust_custom_leafname: self.rust_custom_leafname().map(Rc::from),
 			rust_module: self.rust_module().into(),
-			doc_comment: self.doc_comment().into(),
-			def_loc: self.file_line_name().location,
+			doc_comment,
+			def_loc,
+			rust_generic_decls: Rc::new([]),
 			arguments,
-			return_type_ref: specialized(&return_type_ref).unwrap_or(return_type_ref),
-			cpp_body: FuncCppBody::ManualCall(format!("{{{{name}}}}<{generic}>({{{{args}}}})").into()),
+			return_type_ref,
+			cpp_body: FuncCppBody::Auto,
 			rust_body: FuncRustBody::Auto,
-		})
+			rust_extern_definition: FuncRustExtern::Auto,
+		}
+	}
+
+	pub fn inherit(&mut self, ancestor: &Func<'tu, 'ge>, inherit_config: InheritConfig) {
+		#[inline]
+		fn transfer<'tu, 'ge>(desc: &mut FuncDesc<'tu, 'ge>, ancestor: &Func<'tu, 'ge>, config: InheritConfig) {
+			if config.kind {
+				desc.kind = ancestor.kind().into_owned();
+			}
+			if config.name {
+				desc.cpp_name = ancestor.cpp_name(CppNameStyle::Reference).into();
+			}
+			if config.doc_comment {
+				desc.doc_comment = ancestor.doc_comment().into();
+			}
+			if config.arguments {
+				desc.arguments = ancestor.arguments().into();
+			}
+			if config.return_type_ref {
+				desc.return_type_ref = ancestor.return_type_ref();
+			}
+			if config.definition_location {
+				desc.def_loc = ancestor.file_line_name().location;
+			}
+		}
+
+		match self {
+			Func::Clang { .. } => {
+				if inherit_config.any_enabled() {
+					let mut desc = self.to_desc(inherit_config);
+					transfer(&mut desc, ancestor, inherit_config);
+					Self::new_desc(desc);
+				}
+			}
+			Func::Desc(desc) => Self::with_desc_mut(desc, |desc| transfer(desc, ancestor, inherit_config)),
+		}
 	}
 
 	/// Returns true if function was specialized
@@ -431,6 +508,13 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
+	pub fn rust_extern_definition(&self) -> FuncRustExtern {
+		match self {
+			Self::Clang { .. } => FuncRustExtern::Auto,
+			Self::Desc(desc) => desc.rust_extern_definition,
+		}
+	}
+
 	pub fn cpp_body(&self) -> &FuncCppBody {
 		match self {
 			Self::Clang { .. } => &FuncCppBody::Auto,
@@ -441,21 +525,22 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 impl Element for Func<'_, '_> {
 	fn exclude_kind(&self) -> ExcludeKind {
-		let identifier = self.identifier();
-		if settings::FUNC_MANUAL.contains_key(identifier.as_str()) {
-			return ExcludeKind::Included;
+		let func_id = self.func_id();
+		if settings::FUNC_REPLACE.contains_key(&func_id) {
+			return ExcludeKind::Included.with_is_excluded(|| settings::FUNC_EXCLUDE.contains(self.identifier().as_str()));
 		}
 		let kind = self.kind();
 		DefaultElement::exclude_kind(self)
 			.with_reference_exclude_kind(|| self.return_type_ref().exclude_kind())
 			.with_is_excluded(|| {
+				let identifier = self.identifier();
 				let is_unavailable = match self {
 					Func::Clang { entity, .. } => entity.get_availability() == Availability::Unavailable,
 					Func::Desc(_) => false,
 				};
 				is_unavailable
 					|| settings::FUNC_EXCLUDE.contains(identifier.as_str())
-					|| self.is_generic()
+					|| (self.is_generic())
 					|| self.arguments().iter().any(|a| a.type_ref().exclude_kind().is_ignored())
 					|| kind.as_operator().map_or(false, |(_, kind)| match kind {
 						OperatorKind::Unsupported => true,
@@ -772,6 +857,7 @@ pub enum FuncTypeHint {
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
 pub struct FuncId<'f> {
 	name: Cow<'f, str>,
+	constness: Constness,
 	args: Vec<Cow<'f, str>>,
 }
 
@@ -779,9 +865,21 @@ impl<'f> FuncId<'f> {
 	/// # Parameters
 	/// name: fully qualified C++ function name (e.g. cv::Mat::create)
 	/// args: C++ argument names ("unnamed" for unnamed ones)
-	pub fn new<const ARGS: usize>(name: &'static str, args: [&'static str; ARGS]) -> FuncId<'static> {
+	pub fn new_mut<const ARGS: usize>(name: &'static str, args: [&'static str; ARGS]) -> FuncId<'static> {
 		FuncId {
 			name: name.into(),
+			constness: Constness::Mut,
+			args: args.into_iter().map(|a| a.into()).collect(),
+		}
+	}
+
+	/// # Parameters
+	/// name: fully qualified C++ function name (e.g. cv::Mat::create)
+	/// args: C++ argument names ("unnamed" for unnamed ones)
+	pub fn new_const<const ARGS: usize>(name: &'static str, args: [&'static str; ARGS]) -> FuncId<'static> {
+		FuncId {
+			name: name.into(),
+			constness: Constness::Const,
 			args: args.into_iter().map(|a| a.into()).collect(),
 		}
 	}
@@ -805,7 +903,11 @@ impl<'f> FuncId<'f> {
 				.map(|a| a.get_name().map_or_else(|| UNNAMED.into(), Cow::Owned))
 				.collect()
 		};
-		FuncId { name, args }
+		FuncId {
+			name,
+			constness: Constness::from_is_const(entity.is_const_method()),
+			args,
+		}
 	}
 
 	pub fn from_desc(desc: &'f FuncDesc) -> FuncId<'f> {
@@ -821,13 +923,18 @@ impl<'f> FuncId<'f> {
 			.map(|arg| arg.cpp_name(CppNameStyle::Declaration))
 			.collect();
 
-		FuncId { name: name.into(), args }
+		FuncId {
+			name: name.into(),
+			constness: desc.constness,
+			args,
+		}
 	}
 
 	pub fn make_static(self) -> FuncId<'static> {
 		FuncId {
 			name: self.name.into_owned().into(),
 			args: self.args.into_iter().map(|arg| arg.into_owned().into()).collect(),
+			constness: self.constness,
 		}
 	}
 
@@ -842,6 +949,69 @@ impl<'f> FuncId<'f> {
 
 impl fmt::Display for FuncId<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		write!(f, "{}({})", self.name, self.args.join(", "))
+		write!(
+			f,
+			"{cnst}{name}({args})",
+			cnst = self.constness.rust_qual_ptr(),
+			name = self.name,
+			args = self.args.join(", ")
+		)
+	}
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct InheritConfig {
+	pub kind: bool,
+	pub name: bool,
+	pub doc_comment: bool,
+	pub arguments: bool,
+	pub return_type_ref: bool,
+	pub definition_location: bool,
+}
+
+impl InheritConfig {
+	pub const fn empty() -> Self {
+		Self {
+			kind: false,
+			name: false,
+			doc_comment: false,
+			arguments: false,
+			return_type_ref: false,
+			definition_location: false,
+		}
+	}
+
+	pub fn kind(mut self) -> Self {
+		self.kind = true;
+		self
+	}
+
+	pub fn with_name(mut self) -> Self {
+		self.name = true;
+		self
+	}
+
+	pub fn doc_comment(mut self) -> Self {
+		self.doc_comment = true;
+		self
+	}
+
+	pub fn arguments(mut self) -> Self {
+		self.arguments = true;
+		self
+	}
+
+	pub fn return_type_ref(mut self) -> Self {
+		self.return_type_ref = true;
+		self
+	}
+
+	pub fn definition_location(mut self) -> Self {
+		self.definition_location = true;
+		self
+	}
+
+	pub fn any_enabled(self) -> bool {
+		self.kind || self.name || self.arguments || self.doc_comment || self.return_type_ref || self.definition_location
 	}
 }

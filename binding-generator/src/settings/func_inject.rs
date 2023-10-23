@@ -10,7 +10,7 @@ use crate::Func;
 pub type FuncFactory = fn() -> Func<'static, 'static>;
 
 /// (module name, FuncFactory)
-pub static FUNC_INJECT_MANUAL: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
+pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 	HashMap::from([
 		(
 			"core",

@@ -21,10 +21,12 @@ pub struct FuncDesc<'tu, 'ge> {
 	pub rust_module: Rc<str>,
 	pub doc_comment: Rc<str>,
 	pub def_loc: DefinitionLocation,
+	pub rust_generic_decls: Rc<[(String, String)]>,
 	pub arguments: Rc<[Field<'tu, 'ge>]>,
 	pub return_type_ref: TypeRef<'tu, 'ge>,
 	pub cpp_body: FuncCppBody,
 	pub rust_body: FuncRustBody,
+	pub rust_extern_definition: FuncRustExtern,
 }
 
 impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
@@ -50,10 +52,12 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 			rust_module: rust_module.into(),
 			doc_comment: "".into(),
 			def_loc: DefinitionLocation::Generated,
+			rust_generic_decls: Rc::new([]),
 			arguments: arguments.into(),
 			return_type_ref,
 			cpp_body,
 			rust_body,
+			rust_extern_definition: FuncRustExtern::Auto,
 		}
 	}
 
@@ -80,12 +84,24 @@ pub enum FuncCppBody {
 	ManualCall(Cow<'static, str>),
 	/// Specify manual function call with the return
 	ManualCallReturn(Cow<'static, str>),
+	/// Skip generating C++ part of the function
+	Absent,
+}
+
+#[derive(Clone, Copy, Debug)]
+pub enum FuncRustExtern {
+	/// Generate the automatic extern definition
+	Auto,
+	/// Don't generate any extern definition
+	Absent,
 }
 
 #[derive(Clone, Debug)]
 pub enum FuncRustBody {
 	/// Handle the call automatically based on the function context, usually just calls the corresponding OpenCV function
 	Auto,
-	/// Specify full manual function body
-	ManualFull(Cow<'static, str>),
+	/// Specify manual call, use the automatic return handling
+	ManualCall(Cow<'static, str>),
+	/// Specify manual call, use the automatic return handling
+	ManualCallReturn(Cow<'static, str>),
 }

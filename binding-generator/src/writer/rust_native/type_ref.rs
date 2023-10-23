@@ -31,7 +31,7 @@ pub trait TypeRefExt {
 	fn rust_self_func_call(&self, method_constness: Constness) -> String;
 	fn rust_arg_func_call(&self, name: &str) -> String;
 	fn rust_arg_forward<'n>(&self, name: &'n str) -> Cow<'n, str>;
-	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String;
+	fn rust_arg_post_success_call(&self, name: &str) -> String;
 	fn rust_extern(&self, dir: ExternDir) -> Cow<str>;
 	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str>;
 	fn rust_extern_return_fallible(&self) -> Cow<str>;
@@ -341,7 +341,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		name.into()
 	}
 
-	fn rust_arg_post_call(&self, name: &str, _is_function_infallible: bool) -> String {
+	fn rust_arg_post_success_call(&self, name: &str) -> String {
 		match self.as_string() {
 			Some(Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr)) => {
 				format!("string_arg_output_receive!({name}_via => {name})")

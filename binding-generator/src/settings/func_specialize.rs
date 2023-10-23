@@ -11,7 +11,7 @@ pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
 pub static FUNC_SPECIALIZE: Lazy<HashMap<FuncId, Vec<HashMap<&str, TypeRefFactory>>>> = Lazy::new(|| {
 	HashMap::from([
 		(
-			FuncId::new("cv::dnn::Dict::set", ["key", "value"]),
+			FuncId::new_mut("cv::dnn::Dict::set", ["key", "value"]),
 			vec![
 				HashMap::from([("const T", TypeRefDesc::cv_string as _)]),
 				HashMap::from([("const T", TypeRefDesc::cv_dnn_dict_value as _)]),
@@ -20,7 +20,7 @@ pub static FUNC_SPECIALIZE: Lazy<HashMap<FuncId, Vec<HashMap<&str, TypeRefFactor
 			],
 		),
 		(
-			FuncId::new("cv::dnn::DictValue::get", ["idx"]),
+			FuncId::new_const("cv::dnn::DictValue::get", ["idx"]),
 			vec![
 				HashMap::from([("T", TypeRefDesc::cv_string as _)]),
 				HashMap::from([("T", TypeRefDesc::double as _)]),
@@ -29,7 +29,7 @@ pub static FUNC_SPECIALIZE: Lazy<HashMap<FuncId, Vec<HashMap<&str, TypeRefFactor
 			],
 		),
 		(
-			FuncId::new("cv::CommandLineParser::get", ["name", "space_delete"]),
+			FuncId::new_const("cv::CommandLineParser::get", ["name", "space_delete"]),
 			vec![
 				HashMap::from([("T", TypeRefDesc::bool as _)]),
 				HashMap::from([("T", TypeRefDesc::int as _)]),
@@ -39,7 +39,7 @@ pub static FUNC_SPECIALIZE: Lazy<HashMap<FuncId, Vec<HashMap<&str, TypeRefFactor
 			],
 		),
 		(
-			FuncId::new("cv::CommandLineParser::get", ["index", "space_delete"]),
+			FuncId::new_const("cv::CommandLineParser::get", ["index", "space_delete"]),
 			vec![
 				HashMap::from([("T", TypeRefDesc::bool as _)]),
 				HashMap::from([("T", TypeRefDesc::int as _)]),

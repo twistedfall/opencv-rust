@@ -97,12 +97,20 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		Self::new_desc(TypeRefDesc::new(TypeRefKind::Class(cls)))
 	}
 
+	pub fn new_array(inner: TypeRef<'tu, 'ge>, size: Option<usize>) -> Self {
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::Array(inner, size)))
+	}
+
 	pub fn new_vector(vector: Vector<'tu, 'ge>) -> Self {
 		Self::new_desc(TypeRefDesc::new(TypeRefKind::StdVector(vector)))
 	}
 
 	pub fn new_smartptr(smart_ptr: SmartPtr<'tu, 'ge>) -> Self {
 		Self::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(smart_ptr)))
+	}
+
+	pub fn new_generic(name: impl Into<String>) -> Self {
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::Generic(name.into())))
 	}
 
 	/// Create a [TypeRef] from a textual C++ representation
@@ -895,7 +903,7 @@ impl<'tu, 'ge> TemplateArg<'tu, 'ge> {
 	}
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq)]
 pub enum Constness {
 	Const,
 	Mut,

@@ -9,14 +9,16 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_AsyncArray__getImpl_const",
 		"cv_MatExpr_propOp_const",               // fixme implement PointerOf types
 		"cv_Mat_Mat_const_MatR_const_RangeX",    // duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
-		"cv_Mat_copySize_const_MatR",            // internal function
-		"cv_Mat_propSize_MatSize",               // MatSize and MatStep types prevent assignment
-		"cv_Mat_propStep_MatStep",               // MatSize and MatStep types prevent assignment
-		"cv_Mat_push_back__const_voidX",         // internal method
+		"cv_Mat_at_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
+		"cv_Mat_at_const_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
+		"cv_Mat_copySize_const_MatR",          // internal function
+		"cv_Mat_propSize_MatSize",             // MatSize and MatStep types prevent assignment
+		"cv_Mat_propStep_MatStep",             // MatSize and MatStep types prevent assignment
+		"cv_Mat_push_back__const_voidX",       // internal method
 		"cv_UMat_UMat_const_UMatR_const_RangeX", // duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
-		"cv_UMat_copySize_const_UMatR",          // internal function
-		"cv_UMat_propSize_MatSize",              // MatSize and MatStep types prevent assignment
-		"cv_UMat_propStep_MatStep",              // MatSize and MatStep types prevent assignment
+		"cv_UMat_copySize_const_UMatR",        // internal function
+		"cv_UMat_propSize_MatSize",            // MatSize and MatStep types prevent assignment
+		"cv_UMat_propStep_MatStep",            // MatSize and MatStep types prevent assignment
 		"cv_addImpl_int_const_charX",
 		"cv_calcCovarMatrix_const_MatX_int_MatR_MatR_int_int", // duplicate of cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int, but with pointers
 		"cv_cv_abs_short",

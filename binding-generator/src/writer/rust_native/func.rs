@@ -7,13 +7,13 @@ use once_cell::sync::Lazy;
 use regex::Regex;
 
 use crate::field::Field;
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, OperatorKind, ReturnKind, Safety};
+use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind, Safety};
 use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef};
 use crate::writer::rust_native::disambiguate_single_name;
 use crate::{
-	comment as crate_comment, reserved_rename, settings, Class, CompiledInterpolation, Element, Func, FuncTypeHint, IteratorExt,
-	NameDebug, StrExt, StringExt,
+	comment as crate_comment, reserved_rename, settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NameDebug,
+	StrExt, StringExt,
 };
 
 use super::comment;
@@ -33,8 +33,7 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 			arg.default_value().is_some() && !arg.is_user_data() && !arg.type_ref().as_function().is_some()
 		}
 
-		let identifier = self.identifier();
-		if settings::FUNC_MANUAL.contains_key(identifier.as_str()) || self.kind().as_field_accessor().is_some() {
+		if self.kind().as_field_accessor().is_some() {
 			return None;
 		}
 
@@ -63,21 +62,13 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 			)
 				.expect("Write to String doesn't fail");
 			let desc = match self.clone() {
-				Func::Clang { .. } => FuncDesc {
-					kind: self.kind().into_owned(),
-					type_hint: FuncTypeHint::None,
-					constness: self.constness(),
-					return_kind: self.return_kind(),
-					cpp_name: self.cpp_name(CppNameStyle::Reference).into(),
-					rust_custom_leafname: Some(rust_leafname.into()),
-					rust_module: self.rust_module().into(),
-					doc_comment: doc_comment.into(),
-					def_loc: self.file_line_name().location,
-					arguments: args_without_def.into(),
-					return_type_ref: self.return_type_ref(),
-					cpp_body: FuncCppBody::Auto,
-					rust_body: FuncRustBody::Auto,
-				},
+				Func::Clang { .. } => {
+					let mut desc = self.to_desc(InheritConfig::empty().doc_comment().arguments());
+					desc.rust_custom_leafname = Some(rust_leafname.into());
+					desc.arguments = args_without_def.into();
+					desc.doc_comment = doc_comment.into();
+					desc
+				}
 				Func::Desc(desc) => {
 					let mut desc = Rc::try_unwrap(desc).unwrap_or_else(|desc| desc.as_ref().clone());
 					desc.arguments = args_without_def.into();
@@ -309,9 +300,8 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let args: Vec<(String, Field)> = rust_disambiguate_names(self.arguments().into_owned()).collect::<Vec<_>>();
 		let as_instance_method = kind.as_instance_method();
 		let mut decl_args = Vec::with_capacity(args.len());
-		let mut forward_args = Vec::with_capacity(args.len());
 		let mut pre_call_args = Vec::with_capacity(args.len());
-		let mut post_call_args = Vec::with_capacity(args.len());
+		let mut post_success_call_args = Vec::with_capacity(args.len());
 		if let Some(cls) = as_instance_method {
 			let cls_type_ref = cls.type_ref();
 			decl_args.push(cls_type_ref.rust_self_func_decl(constness));
@@ -339,14 +329,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 					&mut pre_call_args,
 				);
 			}
-			forward_args.push(arg_type_ref.rust_arg_forward(name));
-			pre_post_arg_handle(
-				arg_type_ref.rust_arg_post_call(name, return_kind.is_infallible()),
-				&mut post_call_args,
-			);
-		}
-		if !return_kind.is_naked() {
-			pre_call_args.push("return_send!(via ocvrs_return);".to_string());
+			pre_post_arg_handle(arg_type_ref.rust_arg_post_success_call(name), &mut post_success_call_args);
 		}
 
 		let doc_comment = self.rendered_doc_comment_with_prefix("///", _opencv_version);
@@ -369,54 +352,21 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else {
 			format!(" -> {return_type_func_decl}").into()
 		};
-		if return_kind.is_infallible() {
-			post_call_args.push("ret".to_string());
-		} else {
-			post_call_args.push("Ok(ret)".to_string());
-		}
-		let ret_receive = if return_kind.is_naked() {
-			"let ret = "
-		} else {
-			""
-		};
-		let mut ret_convert = Vec::with_capacity(3);
-		if !return_kind.is_naked() {
-			let spec = if safety.is_safe() {
-				"return_receive!(unsafe ocvrs_return => ret);"
-			} else {
-				"return_receive!(ocvrs_return => ret);"
-			};
-			ret_convert.push(Cow::Borrowed(spec));
-		}
-		if !return_kind.is_infallible() {
-			ret_convert.push("let ret = ret.into_result()?;".into())
-		}
-		let ret_map = rust_return_map(&return_type_ref, "ret", safety, return_kind, is_static_func);
-		if !ret_map.is_empty() {
-			ret_convert.push(format!("let ret = {ret_map};").into());
-		}
-		let mut attributes = String::new();
-		if let Some((rust_attr, _)) = settings::FUNC_CFG_ATTR.get(identifier.as_str()) {
-			attributes = format!("#[cfg({rust_attr})]");
-		}
+		let (ret_pre_call, ret_handle, ret_stmt) = rust_return(self, &return_type_ref, return_kind, safety, is_static_func);
+		let mut attributes = Vec::with_capacity(2);
 		if self.is_no_discard() {
-			attributes.push_str("#[must_use]");
+			attributes.push(Cow::Borrowed("#[must_use]"));
+		}
+		if let Some((rust_attr, _)) = settings::FUNC_CFG_ATTR.get(identifier.as_str()) {
+			if !rust_attr.is_empty() {
+				attributes.push(format!("#[cfg({rust_attr})]").into());
+			}
 		}
 
-		let decl_args = decl_args.join(", ");
-		let pre_call_args = pre_call_args.join("\n");
-		let forward_args = forward_args.join(", ");
-		let post_call_args = post_call_args.join("\n");
-		let ret_convert = ret_convert.join("\n");
-		let tpl = if let Some(tpl) = settings::FUNC_MANUAL.get(identifier.as_str()) {
-			tpl
-		} else {
-			&TPL
-		};
-		tpl.interpolate(&HashMap::from([
+		TPL.interpolate(&HashMap::from([
 			("doc_comment", doc_comment.as_str()),
 			("debug", &self.get_debug()),
-			("attributes", &attributes),
+			("attributes", &attributes.join("\n")),
 			("visibility", visibility),
 			(
 				"unsafety_decl",
@@ -427,30 +377,38 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 				},
 			),
 			("name", name.as_ref()),
-			("generic_decl", ""),
-			("decl_args", &decl_args),
+			("generic_decl", &rust_generic_decl(self)),
+			("decl_args", &decl_args.join(", ")),
 			("rv_rust_full", return_type_func_decl.as_ref()),
-			("pre_call_args", &pre_call_args),
+			("pre_call_args", &pre_call_args.join("\n")),
+			("return_pre_call", ret_pre_call),
 			(
 				"call",
-				&rust_call(self, safety, constness, as_instance_method, &identifier, &args, return_kind),
+				&rust_call(
+					self,
+					safety,
+					constness,
+					as_instance_method,
+					&identifier,
+					&name,
+					&args,
+					return_kind,
+				),
 			),
-			("forward_args", &forward_args),
-			("ret_receive", ret_receive),
-			("ret_convert", ret_convert.as_ref()),
-			("post_call_args", &post_call_args),
+			("return_handle", &ret_handle),
+			("post_success_call_args", &post_success_call_args.join("\n")),
+			("return", ret_stmt),
 		]))
 	}
 
 	fn gen_rust_exports(&self) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust_extern.tpl.rs").compile_interpolation());
 
-		let identifier = self.identifier();
-
-		if settings::FUNC_MANUAL.contains_key(identifier.as_str()) {
+		if matches!(self.rust_extern_definition(), FuncRustExtern::Absent) {
 			return "".to_string();
 		}
 
+		let identifier = self.identifier();
 		let mut attributes = String::new();
 		if let Some((rust_attr, _)) = settings::FUNC_CFG_ATTR.get(identifier.as_str()) {
 			attributes = format!("#[cfg({rust_attr})]");
@@ -493,11 +451,11 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 	fn gen_cpp(&self) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/cpp.tpl.cpp").compile_interpolation());
 
-		let identifier = self.identifier();
-
-		if settings::FUNC_MANUAL.contains_key(identifier.as_str()) {
+		if matches!(self.cpp_body(), FuncCppBody::Absent) {
 			return "".to_string();
 		}
+
+		let identifier = self.identifier();
 
 		let kind = self.kind();
 		let constness = self.constness();
@@ -624,16 +582,23 @@ fn rust_call(
 	constness: Constness,
 	as_instance_method: Option<&Class>,
 	identifier: &str,
+	func_name: &str,
 	args: &[(String, Field)],
 	return_kind: ReturnKind,
 ) -> String {
+	#![allow(clippy::too_many_arguments)]
 	static CALL_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| "{{unsafety_call}}{ sys::{{identifier}}({{call_args}}) }".compile_interpolation());
+		Lazy::new(|| "{{ret_receive}}{{unsafety_call}}{ sys::{{identifier}}({{call_args}}) };".compile_interpolation());
 
-	let mut call_args = Vec::with_capacity(args.len());
+	let ret_receive = if return_kind.is_naked() {
+		"let ret = "
+	} else {
+		""
+	};
+	let mut call_args = Vec::with_capacity(args.len() + 1);
+	let mut forward_args = Vec::with_capacity(args.len());
 	if let Some(cls) = as_instance_method {
-		let cls_type_ref = cls.type_ref();
-		call_args.push(cls_type_ref.rust_self_func_call(constness));
+		call_args.push(cls.type_ref().rust_self_func_call(constness));
 	}
 	for (name, arg) in args {
 		let arg_type_ref = arg.type_ref();
@@ -647,15 +612,18 @@ fn rust_call(
 		} else {
 			call_args.push(arg_type_ref.rust_arg_func_call(name));
 		}
+		forward_args.push(arg_type_ref.rust_arg_forward(name));
 	}
 	if !return_kind.is_naked() {
 		call_args.push("ocvrs_return.as_mut_ptr()".to_string());
 	}
 	let tpl = match f.rust_body() {
 		FuncRustBody::Auto => Cow::Borrowed(&*CALL_TPL),
-		FuncRustBody::ManualFull(body) => Cow::Owned(body.compile_interpolation()),
+		FuncRustBody::ManualCall(body) => Cow::Owned(body.compile_interpolation()),
+		FuncRustBody::ManualCallReturn(body) => Cow::Owned(body.compile_interpolation()),
 	};
 	tpl.interpolate(&HashMap::from([
+		("ret_receive", ret_receive),
 		(
 			"unsafety_call",
 			if safety.is_safe() {
@@ -665,8 +633,53 @@ fn rust_call(
 			},
 		),
 		("identifier", identifier),
+		("name", func_name),
 		("call_args", &call_args.join(", ")),
+		("forward_args", &forward_args.join(", ")),
 	]))
+}
+
+fn rust_return(
+	f: &Func,
+	return_type_ref: &TypeRef,
+	return_kind: ReturnKind,
+	safety: Safety,
+	is_static_func: bool,
+) -> (&'static str, String, &'static str) {
+	match f.rust_body() {
+		FuncRustBody::Auto | FuncRustBody::ManualCall(_) => {
+			let ret_pre = if !return_kind.is_naked() {
+				"return_send!(via ocvrs_return);"
+			} else {
+				""
+			};
+
+			let mut ret_convert = Vec::with_capacity(3);
+			if !return_kind.is_naked() {
+				let spec = if safety.is_safe() {
+					"return_receive!(unsafe ocvrs_return => ret);"
+				} else {
+					"return_receive!(ocvrs_return => ret);"
+				};
+				ret_convert.push(Cow::Borrowed(spec));
+			}
+			if !return_kind.is_infallible() {
+				ret_convert.push("let ret = ret.into_result()?;".into())
+			}
+			let ret_map = rust_return_map(return_type_ref, "ret", safety, return_kind, is_static_func);
+			if !ret_map.is_empty() {
+				ret_convert.push(format!("let ret = {ret_map};").into());
+			}
+
+			let ret_stmt = if return_kind.is_infallible() {
+				"ret"
+			} else {
+				"Ok(ret)"
+			};
+			(ret_pre, ret_convert.join("\n"), ret_stmt)
+		}
+		FuncRustBody::ManualCallReturn(_) => ("", "".to_string(), ""),
+	}
 }
 
 fn rust_return_map(
@@ -684,9 +697,7 @@ fn rust_return_map(
 	if return_type.as_string().is_some() || return_type.extern_pass_kind().is_by_void_ptr() {
 		format!(
 			"{unsafety_call}{{ {typ}::opencv_from_extern({ret_name}) }}",
-			unsafety_call = unsafety_call,
 			typ = return_type.rust_return(FishStyle::Turbo, is_static_func),
-			ret_name = ret_name,
 		)
 		.into()
 	} else if return_type.as_pointer().map_or(false, |i| !i.is_void()) && !return_type.is_rust_by_ptr()
@@ -780,6 +791,7 @@ fn cpp_call(f: &Func, kind: &FuncKind, args: &[(String, Field)], return_type_ref
 		}
 		FuncCppBody::ManualCall(call) => (Some(Cow::Owned(call.compile_interpolation())), None),
 		FuncCppBody::ManualCallReturn(full_tpl) => (None, Some(Cow::Owned(full_tpl.compile_interpolation()))),
+		FuncCppBody::Absent => (None, None),
 	};
 	let tpl = full_tpl
 		.or_else(|| {
@@ -833,7 +845,7 @@ fn cpp_return(f: &Func, return_kind: ReturnKind, ret: &str, ret_cast: Option<Cow
 				}
 			}
 		},
-		FuncCppBody::ManualCallReturn(_) => "".into(),
+		FuncCppBody::ManualCallReturn(_) | FuncCppBody::Absent => "".into(),
 	}
 }
 
@@ -885,4 +897,22 @@ where
 	let args = args.into_iter();
 	let size_hint = args.size_hint();
 	NamePool::with_capacity(size_hint.1.unwrap_or(size_hint.0)).into_disambiguator(args, |f| f.cpp_name(CppNameStyle::Declaration))
+}
+
+fn rust_generic_decl<'f>(f: &'f Func) -> Cow<'f, str> {
+	match f {
+		Func::Clang { .. } => "".into(),
+		Func::Desc(desc) => {
+			let mut decls = Vec::with_capacity(desc.rust_generic_decls.len());
+			for (typ, constraint) in desc.rust_generic_decls.as_ref() {
+				decls.push(format!("{typ}: {constraint}"));
+			}
+			let decls = decls.join(", ");
+			if decls.is_empty() {
+				"".into()
+			} else {
+				format!("<{decls}>").into()
+			}
+		}
+	}
 }

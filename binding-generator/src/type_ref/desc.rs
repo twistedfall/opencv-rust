@@ -104,6 +104,10 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		Self::try_primitive("size_t").expect("Static primitive type")
 	}
 
+	pub fn array_int(size: Option<usize>) -> TypeRef<'tu, 'ge> {
+		TypeRef::new_array(Self::int(), size)
+	}
+
 	/// `cv::Size`
 	pub fn cv_size() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_class(ClassDesc::cv_size())

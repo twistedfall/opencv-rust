@@ -216,6 +216,11 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 	fn process_func(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
 		if let Some(e) = gen_env.get_export_config(func_decl) {
 			let func = Func::new(func_decl, gen_env);
+			let func = if let Some(func_fact) = settings::FUNC_REPLACE.get(&func.func_id()) {
+				func_fact(&func)
+			} else {
+				func
+			};
 			if func.exclude_kind().is_included() {
 				let func_id = func.func_id().make_static();
 				let mut processor = |spec| {
@@ -321,7 +326,7 @@ impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
 		if found_module_comment {
 			self.visitor.visit_module_comment(comment);
 		}
-		for inject_func_fact in settings::FUNC_INJECT_MANUAL.get(self.gen_env.module()).into_iter().flatten() {
+		for inject_func_fact in settings::FUNC_INJECT.get(self.gen_env.module()).into_iter().flatten() {
 			let inject_func: Func = inject_func_fact();
 			if !inject_func.kind().as_class_method().is_some() {
 				self.visitor.visit_func(inject_func);
