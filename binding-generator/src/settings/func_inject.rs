@@ -3,11 +3,9 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 
 use crate::class::ClassDesc;
-use crate::debug::DefinitionLocation;
-use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, TypeRef, TypeRefDesc, TypeRefTypeHint};
-use crate::{Func, FuncTypeHint};
+use crate::Func;
 
 pub type FuncFactory = fn() -> Func<'static, 'static>;
 
@@ -55,26 +53,6 @@ pub static FUNC_INJECT_MANUAL: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new
 						FuncRustBody::Auto,
 						TypeRefDesc::cv_size(),
 					))
-				},
-				|| {
-					Func::new_desc(FuncDesc {
-						kind: FuncKind::InstanceMethod(ClassDesc::cv_mat()),
-						type_hint: FuncTypeHint::None,
-						constness: Constness::Mut,
-						return_kind: ReturnKind::Fallible,
-						cpp_name: "set".into(),
-						rust_custom_leafname: None,
-						rust_module: "core".into(),
-						doc_comment: "@brief Sets all or some of the array elements to the specified value.
-
-* @param s Assigned scalar converted to the actual array type."
-							.into(),
-						def_loc: DefinitionLocation::Generated,
-						arguments: vec![Field::new_desc(FieldDesc::new("s", TypeRefDesc::cv_scalar()))].into(),
-						return_type_ref: TypeRefDesc::void(),
-						cpp_body: FuncCppBody::ManualCall("*instance = *s".into()),
-						rust_body: FuncRustBody::Auto,
-					})
 				},
 				|| {
 					Func::new_desc(FuncDesc::new(

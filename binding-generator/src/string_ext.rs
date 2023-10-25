@@ -253,6 +253,7 @@ impl StringExt for String {
 		self.replace_in_place("|", "OR");
 		self.replace_in_place("^", "XOR");
 		self.replace_in_place("~", "NOTB");
+		self.replace_in_place("=", "ST");
 	}
 }
 

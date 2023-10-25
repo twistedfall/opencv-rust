@@ -13,7 +13,7 @@ use crate::element::{ExcludeKind, UNNAMED};
 use crate::entity::WalkAction;
 use crate::field::FieldDesc;
 use crate::settings::TypeRefFactory;
-use crate::type_ref::{Constness, CppNameStyle, TypeRefTypeHint};
+use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
 	settings, Class, DefaultElement, Element, EntityExt, Field, FieldTypeHint, GeneratedType, GeneratorEnv, IteratorExt,
@@ -293,6 +293,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => match self.kind().as_ref() {
 				FuncKind::Constructor(cls) => cls.type_ref(),
+				// `operator =` returns a reference to the `self` value and it's quite cumbersome to handle correctly
+				FuncKind::InstanceOperator(_, OperatorKind::Set) => TypeRefDesc::void(),
 				FuncKind::Function
 				| FuncKind::InstanceMethod(..)
 				| FuncKind::StaticMethod(..)
@@ -609,6 +611,7 @@ pub enum OperatorKind {
 	Div,
 	Deref,
 	Apply,
+	Set,
 	Equals,
 	NotEquals,
 	GreaterThan,
@@ -637,6 +640,7 @@ impl OperatorKind {
 				}
 			}
 			"()" => OperatorKind::Apply,
+			"=" => OperatorKind::Set,
 			"/" => OperatorKind::Div,
 			"==" => OperatorKind::Equals,
 			"!=" => OperatorKind::NotEquals,
@@ -673,7 +677,8 @@ impl OperatorKind {
 			| OperatorKind::Decr
 			| OperatorKind::And
 			| OperatorKind::Or
-			| OperatorKind::Xor => true,
+			| OperatorKind::Xor
+			| OperatorKind::Set => true,
 		}
 	}
 }

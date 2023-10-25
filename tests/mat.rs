@@ -28,7 +28,7 @@ fn mat_create() -> Result<()> {
 	unsafe { mat.create_rows_cols(10, 10, u16::opencv_type())? };
 	assert!(mat.is_allocated());
 	assert!(!mat.data().is_null());
-	mat.set(7.into())?;
+	mat.set_scalar(7.into())?;
 	assert_eq!(7, *mat.at_2d::<u16>(0, 0)?);
 	assert_eq!(7, *mat.at_2d::<u16>(3, 3)?);
 	assert_eq!(7, *mat.at_2d::<u16>(9, 9)?);

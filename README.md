@@ -382,6 +382,7 @@ list with the corresponding function name:
 * `+`, `-` → `add()`, `sub()`
 * `*`, `/` → `mul()`, `div()`
 * `()` (function call) → `apply()`
+* `=` → `set()`
 * `*` (deref) → `try_deref()` or `try_deref_mut()`
 * `==`, `!=` → `equals()`, `not_equals()`
 * `>`, `>=` → `greater_than()`, `greater_than_or_equal()`

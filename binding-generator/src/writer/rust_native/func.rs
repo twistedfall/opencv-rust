@@ -188,6 +188,7 @@ impl RustElement for Func<'_, '_> {
 						OperatorKind::Mul => "mul",
 						OperatorKind::Div => "div",
 						OperatorKind::Apply => "apply",
+						OperatorKind::Set => "set",
 						OperatorKind::Deref => {
 							if self.constness().is_const() {
 								"try_deref"
