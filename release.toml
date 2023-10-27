@@ -3,4 +3,3 @@ tag-name = "v{{version}}"
 pre-release-replacements = [
 	{ file = "README.md", search = "opencv = \".*?\"", replace = "opencv = \"{{version}}\"" },
 ]
-pre-release-hook = ["tools/regen-docs.sh"]
