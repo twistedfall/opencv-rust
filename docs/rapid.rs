@@ -400,7 +400,7 @@ pub mod rapid {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [Rapid_GOSTracker::create] function uses the following default values for its arguments:
 		/// * hist_bins: 4
 		/// * sobel_thesh: 10
 		#[inline]
@@ -499,7 +499,7 @@ pub mod rapid {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [Rapid_OLSTracker::create] function uses the following default values for its arguments:
 		/// * hist_bins: 8
 		/// * sobel_thesh: 10
 		#[inline]
@@ -633,7 +633,7 @@ pub mod rapid {
 		}
 		
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [Rapid_TrackerTrait::compute] function uses the following default values for its arguments:
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS,5,1.5)
 		#[inline]
 		fn compute_def(&mut self, img: &impl core::ToInputArray, num: i32, len: i32, k: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<f32> {

@@ -1347,7 +1347,7 @@ pub mod sfm {
 		/// Creates an instance of the SFMLibmvEuclideanReconstruction class. Initializes Libmv.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [SFMLibmvEuclideanReconstruction::create] function uses the following default values for its arguments:
 		/// * camera_instrinsic_options: libmv_CameraIntrinsicsOptions()
 		/// * reconstruction_options: libmv_ReconstructionOptions()
 		#[inline]

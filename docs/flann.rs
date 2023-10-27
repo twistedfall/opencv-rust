@@ -579,7 +579,7 @@ pub mod flann {
 		}
 		
 		/// ## Note
-		/// This alternative version of [build] function uses the following default values for its arguments:
+		/// This alternative version of [IndexTrait::build] function uses the following default values for its arguments:
 		/// * dist_type: cvflann::FLANN_DIST_L2
 		#[inline]
 		fn build_def(&mut self, features: &impl core::ToInputArray, params: &crate::flann::IndexParams) -> Result<()> {
@@ -606,7 +606,7 @@ pub mod flann {
 		}
 		
 		/// ## Note
-		/// This alternative version of [knn_search] function uses the following default values for its arguments:
+		/// This alternative version of [IndexTrait::knn_search] function uses the following default values for its arguments:
 		/// * params: SearchParams()
 		#[inline]
 		fn knn_search_def(&mut self, query: &impl core::ToInputArray, indices: &mut impl core::ToOutputArray, dists: &mut impl core::ToOutputArray, knn: i32) -> Result<()> {
@@ -635,7 +635,7 @@ pub mod flann {
 		}
 		
 		/// ## Note
-		/// This alternative version of [radius_search] function uses the following default values for its arguments:
+		/// This alternative version of [IndexTrait::radius_search] function uses the following default values for its arguments:
 		/// * params: SearchParams()
 		#[inline]
 		fn radius_search_def(&mut self, query: &impl core::ToInputArray, indices: &mut impl core::ToOutputArray, dists: &mut impl core::ToOutputArray, radius: f64, max_results: i32) -> Result<i32> {
@@ -761,7 +761,7 @@ pub mod flann {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_string] function uses the following default values for its arguments:
+		/// This alternative version of [IndexParamsTraitConst::get_string] function uses the following default values for its arguments:
 		/// * default_val: String()
 		#[inline]
 		fn get_string_def(&self, key: &str) -> Result<String> {
@@ -787,7 +787,7 @@ pub mod flann {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_int] function uses the following default values for its arguments:
+		/// This alternative version of [IndexParamsTraitConst::get_int] function uses the following default values for its arguments:
 		/// * default_val: -1
 		#[inline]
 		fn get_int_def(&self, key: &str) -> Result<i32> {
@@ -812,7 +812,7 @@ pub mod flann {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_double] function uses the following default values for its arguments:
+		/// This alternative version of [IndexParamsTraitConst::get_double] function uses the following default values for its arguments:
 		/// * default_val: -1
 		#[inline]
 		fn get_double_def(&self, key: &str) -> Result<f64> {

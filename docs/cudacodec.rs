@@ -888,7 +888,7 @@ pub mod cudacodec {
 		/// the method returns false and the function returns an empty image.
 		/// 
 		/// ## Note
-		/// This alternative version of [retrieve] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_VideoReaderTraitConst::retrieve] function uses the following default values for its arguments:
 		/// * idx: static_cast<size_t>(VideoReaderProps::PROP_DECODED_FRAME_IDX)
 		#[inline]
 		fn retrieve_def(&self, frame: &mut impl core::ToOutputArray) -> Result<bool> {
@@ -970,7 +970,7 @@ pub mod cudacodec {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_video_reader_props] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_VideoReaderTraitConst::get_video_reader_props] function uses the following default values for its arguments:
 		/// * property_val_in: 0
 		#[inline]
 		fn get_video_reader_props_def(&self, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val_out: &mut f64) -> Result<bool> {
@@ -1039,7 +1039,7 @@ pub mod cudacodec {
 		/// The method throws an Exception if error occurs.
 		/// 
 		/// ## Note
-		/// This alternative version of [next_frame] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_VideoReaderTrait::next_frame] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn next_frame_def(&mut self, frame: &mut core::GpuMat) -> Result<bool> {
@@ -1088,7 +1088,7 @@ pub mod cudacodec {
 		/// retrieve() can be called following grab() to retrieve all the data associated with the current video source since the last call to grab() or the creation of the VideoReader.
 		/// 
 		/// ## Note
-		/// This alternative version of [grab] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_VideoReaderTrait::grab] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn grab_def(&mut self) -> Result<bool> {

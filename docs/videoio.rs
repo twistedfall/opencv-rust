@@ -1263,7 +1263,7 @@ pub mod videoio {
 		/// The method first calls VideoCapture::release to close the already opened file or camera.
 		/// 
 		/// ## Note
-		/// This alternative version of [open_file] function uses the following default values for its arguments:
+		/// This alternative version of [VideoCaptureTrait::open_file] function uses the following default values for its arguments:
 		/// * api_preference: CAP_ANY
 		#[inline]
 		fn open_file_def(&mut self, filename: &str) -> Result<bool> {
@@ -1328,7 +1328,7 @@ pub mod videoio {
 		/// The method first calls VideoCapture::release to close the already opened file or camera.
 		/// 
 		/// ## Note
-		/// This alternative version of [open] function uses the following default values for its arguments:
+		/// This alternative version of [VideoCaptureTrait::open] function uses the following default values for its arguments:
 		/// * api_preference: CAP_ANY
 		#[inline]
 		fn open_def(&mut self, index: i32) -> Result<bool> {
@@ -1453,7 +1453,7 @@ pub mod videoio {
 		/// cvCloneImage and then do whatever you want with the copy.
 		/// 
 		/// ## Note
-		/// This alternative version of [retrieve] function uses the following default values for its arguments:
+		/// This alternative version of [VideoCaptureTrait::retrieve] function uses the following default values for its arguments:
 		/// * flag: 0
 		#[inline]
 		fn retrieve_def(&mut self, image: &mut impl core::ToOutputArray) -> Result<bool> {
@@ -1601,18 +1601,18 @@ pub mod videoio {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    Opens a video file or a capturing device or an IP video stream for video capturing with API Preference
+		/// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference
 		/// 
 		/// ## Parameters
 		/// * filename: it can be:
-		///    - name of video file (eg. `video.avi`)
-		///    - or image sequence (eg. `img_%02d.jpg`, which will read samples like `img_00.jpg, img_01.jpg, img_02.jpg, ...`)
-		///    - or URL of video stream (eg. `protocol://host:port/script_name?script_params|auth`)
-		///    - or GStreamer pipeline string in gst-launch tool format in case if GStreamer is used as backend
-		///       Note that each video stream or IP camera feed has its own URL scheme. Please refer to the
-		///       documentation of source stream to know the right URL.
+		/// - name of video file (eg. `video.avi`)
+		/// - or image sequence (eg. `img_%02d.jpg`, which will read samples like `img_00.jpg, img_01.jpg, img_02.jpg, ...`)
+		/// - or URL of video stream (eg. `protocol://host:port/script_name?script_params|auth`)
+		/// - or GStreamer pipeline string in gst-launch tool format in case if GStreamer is used as backend
+		///   Note that each video stream or IP camera feed has its own URL scheme. Please refer to the
+		///   documentation of source stream to know the right URL.
 		/// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
-		///    implementation if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
+		/// implementation if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
 		/// ## See also
 		/// cv::VideoCaptureAPIs
 		/// 
@@ -1667,10 +1667,10 @@ pub mod videoio {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters
+		/// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters
 		/// 
-		///    The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
-		///    See cv::VideoCaptureProperties
+		/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+		/// See cv::VideoCaptureProperties
 		#[inline]
 		pub fn from_file_with_params(filename: &str, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
 			extern_container_arg!(filename);
@@ -1690,13 +1690,13 @@ pub mod videoio {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    Opens a camera for video capturing
+		/// Opens a camera for video capturing
 		/// 
 		/// ## Parameters
 		/// * index: id of the video capturing device to open. To open default camera using default backend just pass 0.
-		///    (to backward compatibility usage of camera_id + domain_offset (CAP_*) is valid when apiPreference is CAP_ANY)
+		/// (to backward compatibility usage of camera_id + domain_offset (CAP_*) is valid when apiPreference is CAP_ANY)
 		/// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
-		///    implementation if multiple are available: e.g. cv::CAP_DSHOW or cv::CAP_MSMF or cv::CAP_V4L.
+		/// implementation if multiple are available: e.g. cv::CAP_DSHOW or cv::CAP_MSMF or cv::CAP_V4L.
 		/// ## See also
 		/// cv::VideoCaptureAPIs
 		/// 
@@ -1744,10 +1744,10 @@ pub mod videoio {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    Opens a camera for video capturing with API Preference and parameters
+		/// Opens a camera for video capturing with API Preference and parameters
 		/// 
-		///    The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
-		///    See cv::VideoCaptureProperties
+		/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+		/// See cv::VideoCaptureProperties
 		#[inline]
 		pub fn new_with_params(index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
 			return_send!(via ocvrs_return);
@@ -1802,7 +1802,7 @@ pub mod videoio {
 		/// After this call use VideoCapture::retrieve() to decode and fetch frame data.
 		/// 
 		/// ## Note
-		/// This alternative version of [wait_any] function uses the following default values for its arguments:
+		/// This alternative version of [VideoCapture::wait_any] function uses the following default values for its arguments:
 		/// * timeout_ns: 0
 		#[inline]
 		pub fn wait_any_def(streams: &core::Vector<crate::videoio::VideoCapture>, ready_index: &mut core::Vector<i32>) -> Result<bool> {
@@ -1906,7 +1906,7 @@ pub mod videoio {
 		/// The method first calls VideoWriter::release to close the already opened file.
 		/// 
 		/// ## Note
-		/// This alternative version of [open] function uses the following default values for its arguments:
+		/// This alternative version of [VideoWriterTrait::open] function uses the following default values for its arguments:
 		/// * is_color: true
 		#[inline]
 		fn open_def(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size) -> Result<bool> {
@@ -1944,7 +1944,7 @@ pub mod videoio {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [open_with_backend] function uses the following default values for its arguments:
+		/// This alternative version of [VideoWriterTrait::open_with_backend] function uses the following default values for its arguments:
 		/// * is_color: true
 		#[inline]
 		fn open_with_backend_def(&mut self, filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size) -> Result<bool> {
@@ -2101,25 +2101,25 @@ pub mod videoio {
 		/// ## Parameters
 		/// * filename: Name of the output video file.
 		/// * fourcc: 4-character code of codec used to compress the frames. For example,
-		///    VideoWriter::fourcc('P','I','M','1') is a MPEG-1 codec, VideoWriter::fourcc('M','J','P','G')
-		///    is a motion-jpeg codec etc. List of codes can be obtained at
-		///    [MSDN](https://docs.microsoft.com/en-us/windows/win32/medfound/video-fourccs) page
-		///    or with this [archived page](https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php)
-		///    of the fourcc site for a more complete list). FFMPEG backend with MP4 container natively uses
-		///    other values as fourcc code: see [ObjectType](http://mp4ra.org/#/codecs),
-		///    so you may receive a warning message from OpenCV about fourcc code conversion.
+		/// VideoWriter::fourcc('P','I','M','1') is a MPEG-1 codec, VideoWriter::fourcc('M','J','P','G')
+		/// is a motion-jpeg codec etc. List of codes can be obtained at
+		/// [MSDN](https://docs.microsoft.com/en-us/windows/win32/medfound/video-fourccs) page
+		/// or with this [archived page](https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php)
+		/// of the fourcc site for a more complete list). FFMPEG backend with MP4 container natively uses
+		/// other values as fourcc code: see [ObjectType](http://mp4ra.org/#/codecs),
+		/// so you may receive a warning message from OpenCV about fourcc code conversion.
 		/// * fps: Framerate of the created video stream.
 		/// * frameSize: Size of the video frames.
 		/// * isColor: If it is not zero, the encoder will expect and encode color frames, otherwise it
-		///    will work with grayscale frames.
+		/// will work with grayscale frames.
 		/// 
-		///    @b Tips:
-		///    - With some backends `fourcc=-1` pops up the codec selection dialog from the system.
-		///    - To save image sequence use a proper filename (eg. `img_%02d.jpg`) and `fourcc=0`
-		///       OR `fps=0`. Use uncompressed image format (eg. `img_%02d.BMP`) to save raw frames.
-		///    - Most codecs are lossy. If you want lossless video file you need to use a lossless codecs
-		///       (eg. FFMPEG FFV1, Huffman HFYU, Lagarith LAGS, etc...)
-		///    - If FFMPEG is enabled, using `codec=0; fps=0;` you can create an uncompressed (raw) video file.
+		/// @b Tips:
+		/// - With some backends `fourcc=-1` pops up the codec selection dialog from the system.
+		/// - To save image sequence use a proper filename (eg. `img_%02d.jpg`) and `fourcc=0`
+		///   OR `fps=0`. Use uncompressed image format (eg. `img_%02d.BMP`) to save raw frames.
+		/// - Most codecs are lossy. If you want lossless video file you need to use a lossless codecs
+		///   (eg. FFMPEG FFV1, Huffman HFYU, Lagarith LAGS, etc...)
+		/// - If FFMPEG is enabled, using `codec=0; fps=0;` you can create an uncompressed (raw) video file.
 		/// 
 		/// ## C++ default parameters
 		/// * is_color: true
@@ -2181,8 +2181,8 @@ pub mod videoio {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    The `apiPreference` parameter allows to specify API backends to use. Can be used to enforce a specific reader implementation
-		///    if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_GSTREAMER.
+		/// The `apiPreference` parameter allows to specify API backends to use. Can be used to enforce a specific reader implementation
+		/// if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_GSTREAMER.
 		/// 
 		/// ## C++ default parameters
 		/// * is_color: true
@@ -2224,8 +2224,8 @@ pub mod videoio {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///      * The `params` parameter allows to specify extra encoder parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .)
-		///      * see cv::VideoWriterProperties
+		/// The `params` parameter allows to specify extra encoder parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .)
+		/// see cv::VideoWriterProperties
 		#[inline]
 		pub fn new_1(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<crate::videoio::VideoWriter> {
 			extern_container_arg!(filename);

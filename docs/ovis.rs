@@ -560,7 +560,7 @@ pub mod ovis {
 		/// addResourceLocation
 		/// 
 		/// ## Note
-		/// This alternative version of [create_entity] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::create_entity] function uses the following default values for its arguments:
 		/// * tvec: noArray()
 		/// * rot: noArray()
 		#[inline]
@@ -615,7 +615,7 @@ pub mod ovis {
 		/// * subEntityIdx: index of the sub-entity (default: all)
 		/// 
 		/// ## Note
-		/// This alternative version of [set_entity_property] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::set_entity_property] function uses the following default values for its arguments:
 		/// * sub_entity_idx: -1
 		#[inline]
 		fn set_entity_property_def(&mut self, name: &str, prop: i32, value: &str) -> Result<()> {
@@ -708,7 +708,7 @@ pub mod ovis {
 		/// point offset
 		/// 
 		/// ## Note
-		/// This alternative version of [create_camera_entity] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::create_camera_entity] function uses the following default values for its arguments:
 		/// * tvec: noArray()
 		/// * rot: noArray()
 		/// * color: Scalar::all(1)
@@ -757,7 +757,7 @@ pub mod ovis {
 		/// * specularColor: 
 		/// 
 		/// ## Note
-		/// This alternative version of [create_light_entity] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::create_light_entity] function uses the following default values for its arguments:
 		/// * tvec: noArray()
 		/// * rot: noArray()
 		/// * diffuse_color: Scalar::all(1)
@@ -800,7 +800,7 @@ pub mod ovis {
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
 		/// 
 		/// ## Note
-		/// This alternative version of [update_entity_pose] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::update_entity_pose] function uses the following default values for its arguments:
 		/// * tvec: noArray()
 		/// * rot: noArray()
 		#[inline]
@@ -844,7 +844,7 @@ pub mod ovis {
 		/// * invert: use the inverse of the given pose
 		/// 
 		/// ## Note
-		/// This alternative version of [set_entity_pose] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::set_entity_pose] function uses the following default values for its arguments:
 		/// * tvec: noArray()
 		/// * rot: noArray()
 		/// * invert: false
@@ -889,7 +889,7 @@ pub mod ovis {
 		/// * invert: return the inverted pose
 		/// 
 		/// ## Note
-		/// This alternative version of [get_entity_pose] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::get_entity_pose] function uses the following default values for its arguments:
 		/// * r: noArray()
 		/// * tvec: noArray()
 		/// * invert: false
@@ -947,7 +947,7 @@ pub mod ovis {
 		/// getEntityAnimations
 		/// 
 		/// ## Note
-		/// This alternative version of [play_entity_animation] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::play_entity_animation] function uses the following default values for its arguments:
 		/// * loop_: true
 		#[inline]
 		fn play_entity_animation_def(&mut self, name: &str, animname: &str) -> Result<()> {
@@ -1015,7 +1015,7 @@ pub mod ovis {
 		/// * out: the texture contents
 		/// 
 		/// ## Note
-		/// This alternative version of [get_compositor_texture] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::get_compositor_texture] function uses the following default values for its arguments:
 		/// * mrt_index: 0
 		#[inline]
 		fn get_compositor_texture_def(&mut self, compname: &str, texname: &str, out: &mut impl core::ToOutputArray) -> Result<()> {
@@ -1069,7 +1069,7 @@ pub mod ovis {
 		/// * up: the axis to be fixed
 		/// 
 		/// ## Note
-		/// This alternative version of [fix_camera_yaw_axis] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::fix_camera_yaw_axis] function uses the following default values for its arguments:
 		/// * up: noArray()
 		#[inline]
 		fn fix_camera_yaw_axis_def(&mut self, use_fixed: bool) -> Result<()> {
@@ -1108,7 +1108,7 @@ pub mod ovis {
 		/// * invert: use the inverse of the given pose
 		/// 
 		/// ## Note
-		/// This alternative version of [set_camera_pose] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::set_camera_pose] function uses the following default values for its arguments:
 		/// * tvec: noArray()
 		/// * rot: noArray()
 		/// * invert: false
@@ -1145,7 +1145,7 @@ pub mod ovis {
 		/// * offset: offset from entity centre
 		/// 
 		/// ## Note
-		/// This alternative version of [set_camera_look_at] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::set_camera_look_at] function uses the following default values for its arguments:
 		/// * offset: noArray()
 		#[inline]
 		fn set_camera_look_at_def(&mut self, target: &str) -> Result<()> {
@@ -1186,7 +1186,7 @@ pub mod ovis {
 		/// * offset: offset from entity centre
 		/// 
 		/// ## Note
-		/// This alternative version of [set_entity_look_at] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::set_entity_look_at] function uses the following default values for its arguments:
 		/// * offset: noArray()
 		#[inline]
 		fn set_entity_look_at_def(&mut self, origin: &str, target: &str) -> Result<()> {
@@ -1227,7 +1227,7 @@ pub mod ovis {
 		/// * invert: return the inverted pose
 		/// 
 		/// ## Note
-		/// This alternative version of [get_camera_pose] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::get_camera_pose] function uses the following default values for its arguments:
 		/// * r: noArray()
 		/// * tvec: noArray()
 		/// * invert: false
@@ -1272,7 +1272,7 @@ pub mod ovis {
 		/// * zFar: far clip distance or -1 to keep the current
 		/// 
 		/// ## Note
-		/// This alternative version of [set_camera_intrinsics] function uses the following default values for its arguments:
+		/// This alternative version of [WindowSceneTrait::set_camera_intrinsics] function uses the following default values for its arguments:
 		/// * z_near: -1
 		/// * z_far: -1
 		#[inline]

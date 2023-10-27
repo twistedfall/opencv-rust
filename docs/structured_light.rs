@@ -195,7 +195,7 @@ pub mod structured_light {
 		/// * parameters: GrayCodePattern parameters GrayCodePattern::Params: the width and the height of the projector.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [GrayCodePattern::create] function uses the following default values for its arguments:
 		/// * parameters: GrayCodePattern::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
@@ -358,7 +358,7 @@ pub mod structured_light {
 		/// * fundamental: Fundamental matrix used to compute epipolar lines and ease the matching step.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute_phase_map] function uses the following default values for its arguments:
+		/// This alternative version of [SinusoidalPatternTrait::compute_phase_map] function uses the following default values for its arguments:
 		/// * shadow_mask: noArray()
 		/// * fundamental: noArray()
 		#[inline]
@@ -401,7 +401,7 @@ pub mod structured_light {
 		/// * shadowMask: Mask used to discard shadow regions.
 		/// 
 		/// ## Note
-		/// This alternative version of [unwrap_phase_map] function uses the following default values for its arguments:
+		/// This alternative version of [SinusoidalPatternTrait::unwrap_phase_map] function uses the following default values for its arguments:
 		/// * shadow_mask: noArray()
 		#[inline]
 		fn unwrap_phase_map_def(&mut self, wrapped_phase_map: &impl core::ToInputArray, unwrapped_phase_map: &mut impl core::ToOutputArray, cam_size: core::Size) -> Result<()> {
@@ -515,7 +515,7 @@ pub mod structured_light {
 		/// * parameters: SinusoidalPattern parameters SinusoidalPattern::Params: width, height of the projector and patterns parameters.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [SinusoidalPattern::create] function uses the following default values for its arguments:
 		/// * parameters: makePtr<SinusoidalPattern::Params>()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::structured_light::SinusoidalPattern>> {
@@ -768,7 +768,7 @@ pub mod structured_light {
 		/// Note: All the images must be at the same resolution.
 		/// 
 		/// ## Note
-		/// This alternative version of [decode] function uses the following default values for its arguments:
+		/// This alternative version of [StructuredLightPatternTraitConst::decode] function uses the following default values for its arguments:
 		/// * black_images: noArray()
 		/// * white_images: noArray()
 		/// * flags: DECODE_3D_UNDERWORLD

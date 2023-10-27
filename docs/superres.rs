@@ -400,7 +400,7 @@ pub mod superres {
 		}
 		
 		/// ## Note
-		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// This alternative version of [SuperRes_DenseOpticalFlowExtTrait::calc] function uses the following default values for its arguments:
 		/// * flow2: noArray()
 		#[inline]
 		fn calc_def(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray, flow1: &mut impl core::ToOutputArray) -> Result<()> {

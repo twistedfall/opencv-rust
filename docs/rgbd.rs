@@ -537,7 +537,7 @@ pub mod rgbd {
 		/// * colors: vector of colors which are 4-float vectors
 		/// 
 		/// ## Note
-		/// This alternative version of [get_cloud] function uses the following default values for its arguments:
+		/// This alternative version of [ColoredKinfu_ColoredKinFuTraitConst::get_cloud] function uses the following default values for its arguments:
 		/// * colors: noArray()
 		#[inline]
 		fn get_cloud_def(&self, points: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<()> {
@@ -1284,7 +1284,7 @@ pub mod rgbd {
 		///   which is a last frame camera pose.
 		/// 
 		/// ## Note
-		/// This alternative version of [render] function uses the following default values for its arguments:
+		/// This alternative version of [Dynafu_DynaFuTraitConst::render] function uses the following default values for its arguments:
 		/// * camera_pose: Matx44f::eye()
 		#[inline]
 		fn render_def(&self, image: &mut impl core::ToOutputArray) -> Result<()> {
@@ -1429,7 +1429,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [render_surface] function uses the following default values for its arguments:
+		/// This alternative version of [Dynafu_DynaFuTrait::render_surface] function uses the following default values for its arguments:
 		/// * warp: true
 		#[inline]
 		fn render_surface_def(&mut self, depth_image: &mut impl core::ToOutputArray, vert_image: &mut impl core::ToOutputArray, norm_image: &mut impl core::ToOutputArray) -> Result<()> {
@@ -2472,7 +2472,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [integrate] function uses the following default values for its arguments:
+		/// This alternative version of [Kinfu_VolumeTrait::integrate] function uses the following default values for its arguments:
 		/// * frame_id: 0
 		#[inline]
 		fn integrate_def(&mut self, _depth: &impl core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr) -> Result<()> {
@@ -2498,7 +2498,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [integrate] function uses the following default values for its arguments:
+		/// This alternative version of [Kinfu_VolumeTrait::integrate] function uses the following default values for its arguments:
 		/// * frame_id: 0
 		#[inline]
 		fn integrate_def_1(&mut self, _depth: &impl core::ToInputArray, _rgb: &impl core::ToInputArray, depth_factor: f32, camera_pose: core::Matx44f, intrinsics: crate::rgbd::Kinfu_Intr, rgb_intrinsics: crate::rgbd::Kinfu_Intr) -> Result<()> {
@@ -2927,7 +2927,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [add_edge] function uses the following default values for its arguments:
+		/// This alternative version of [Kinfu_Detail_PoseGraphTrait::add_edge] function uses the following default values for its arguments:
 		/// * _information: Matx66f::eye()
 		#[inline]
 		fn add_edge_def(&mut self, _source_node_id: size_t, _target_node_id: size_t, _transformation: core::Affine3f) -> Result<()> {
@@ -2950,7 +2950,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [optimize] function uses the following default values for its arguments:
+		/// This alternative version of [Kinfu_Detail_PoseGraphTrait::optimize] function uses the following default values for its arguments:
 		/// * tc: cv::TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,1e-6)
 		#[inline]
 		fn optimize_def(&mut self) -> Result<i32> {
@@ -3896,7 +3896,7 @@ pub mod rgbd {
 		///                       empty or the same size as its corresponding source.
 		/// 
 		/// ## Note
-		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// This alternative version of [LineMod_DetectorTraitConst::match_] function uses the following default values for its arguments:
 		/// * class_ids: std::vector<String>()
 		/// * quantized_images: noArray()
 		/// * masks: std::vector<Mat>()
@@ -4028,7 +4028,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [write_classes] function uses the following default values for its arguments:
+		/// This alternative version of [LineMod_DetectorTraitConst::write_classes] function uses the following default values for its arguments:
 		/// * format: "templates_%s.yml.gz"
 		#[inline]
 		fn write_classes_def(&self) -> Result<()> {
@@ -4076,7 +4076,7 @@ pub mod rgbd {
 		/// \return Template ID, or -1 if failed to extract a valid template.
 		/// 
 		/// ## Note
-		/// This alternative version of [add_template] function uses the following default values for its arguments:
+		/// This alternative version of [LineMod_DetectorTrait::add_template] function uses the following default values for its arguments:
 		/// * bounding_box: NULL
 		#[inline]
 		fn add_template_def(&mut self, sources: &core::Vector<core::Mat>, class_id: &str, object_mask: &core::Mat) -> Result<i32> {
@@ -4122,7 +4122,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [read_class] function uses the following default values for its arguments:
+		/// This alternative version of [LineMod_DetectorTrait::read_class] function uses the following default values for its arguments:
 		/// * class_id_override: ""
 		#[inline]
 		fn read_class_def(&mut self, fn_: &core::FileNode) -> Result<String> {
@@ -4147,7 +4147,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [read_classes] function uses the following default values for its arguments:
+		/// This alternative version of [LineMod_DetectorTrait::read_classes] function uses the following default values for its arguments:
 		/// * format: "templates_%s.yml.gz"
 		#[inline]
 		fn read_classes_def(&mut self, class_ids: &core::Vector<String>) -> Result<()> {
@@ -4465,7 +4465,7 @@ pub mod rgbd {
 		///                in quantized image and cannot be extracted as features.
 		/// 
 		/// ## Note
-		/// This alternative version of [process] function uses the following default values for its arguments:
+		/// This alternative version of [LineMod_ModalityTraitConst::process] function uses the following default values for its arguments:
 		/// * mask: Mat()
 		#[inline]
 		fn process_def(&self, src: &core::Mat) -> Result<core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>> {
@@ -4989,7 +4989,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [DepthCleaner::create] function uses the following default values for its arguments:
 		/// * window_size: 5
 		/// * method: DepthCleaner::DEPTH_CLEANER_NIL
 		#[inline]
@@ -5318,7 +5318,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FastICPOdometry::create] function uses the following default values for its arguments:
 		/// * max_dist_diff: Odometry::DEFAULT_MAX_DEPTH_DIFF()
 		/// * angle_threshold: (float)(30.*CV_PI/180.)
 		/// * sigma_depth: 0.04f
@@ -5672,7 +5672,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [ICPOdometry::create] function uses the following default values for its arguments:
 		/// * camera_matrix: Mat()
 		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
 		/// * max_depth: Odometry::DEFAULT_MAX_DEPTH()
@@ -5759,7 +5759,7 @@ pub mod rgbd {
 		/// * initRt: Initial transformation from the source frame to the destination one (optional)
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [OdometryTraitConst::compute] function uses the following default values for its arguments:
 		/// * init_rt: Mat()
 		#[inline]
 		fn compute_def(&self, src_image: &core::Mat, src_depth: &core::Mat, src_mask: &core::Mat, dst_image: &core::Mat, dst_depth: &core::Mat, dst_mask: &core::Mat, rt: &mut impl core::ToOutputArray) -> Result<bool> {
@@ -5790,7 +5790,7 @@ pub mod rgbd {
 		/// It is designed to save on computing the frame data (image pyramids, normals, etc.).
 		/// 
 		/// ## Note
-		/// This alternative version of [compute2] function uses the following default values for its arguments:
+		/// This alternative version of [OdometryTraitConst::compute2] function uses the following default values for its arguments:
 		/// * init_rt: Mat()
 		#[inline]
 		fn compute2_def(&self, src_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, dst_frame: &mut core::Ptr<crate::rgbd::OdometryFrame>, rt: &mut impl core::ToOutputArray) -> Result<bool> {
@@ -6226,7 +6226,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [OdometryFrame::create] function uses the following default values for its arguments:
 		/// * image: Mat()
 		/// * depth: Mat()
 		/// * mask: Mat()
@@ -6434,7 +6434,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [RgbdFrame::create] function uses the following default values for its arguments:
 		/// * image: Mat()
 		/// * depth: Mat()
 		/// * mask: Mat()
@@ -6815,7 +6815,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [RgbdICPOdometry::create] function uses the following default values for its arguments:
 		/// * camera_matrix: Mat()
 		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
 		/// * max_depth: Odometry::DEFAULT_MAX_DEPTH()
@@ -7108,7 +7108,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [RgbdNormals::create] function uses the following default values for its arguments:
 		/// * window_size: 5
 		/// * method: RgbdNormals::RGBD_NORMALS_METHOD_FALS
 		#[inline]
@@ -7473,7 +7473,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [RgbdOdometry::create] function uses the following default values for its arguments:
 		/// * camera_matrix: Mat()
 		/// * min_depth: Odometry::DEFAULT_MIN_DEPTH()
 		/// * max_depth: Odometry::DEFAULT_MAX_DEPTH()
@@ -7805,7 +7805,7 @@ pub mod rgbd {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [RgbdPlane::create] function uses the following default values for its arguments:
 		/// * sensor_error_a: 0
 		/// * sensor_error_b: 0
 		/// * sensor_error_c: 0

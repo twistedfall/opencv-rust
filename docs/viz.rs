@@ -740,7 +740,7 @@ pub mod viz {
 		/// 
 		/// * fov: Field of view (horizontal, vertical) in radians
 		/// * window_size: Size of the window. Principal point is at the center of the window
-		///            by default.
+		/// by default.
 		#[inline]
 		pub fn new_1(fov: core::Vec2d, window_size: core::Size) -> Result<crate::viz::Camera> {
 			return_send!(via ocvrs_return);
@@ -764,9 +764,9 @@ pub mod viz {
 		/// ## Overloaded parameters
 		/// 
 		/// * K: Intrinsic matrix of the camera with the following form
-		///            ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20f%5Fx%20%26%20%20%200%20%26%20c%5Fx%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%20%20%200%20%26%20%20%201%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cend%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20)
+		/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20f%5Fx%20%26%20%20%200%20%26%20c%5Fx%5C%5C%0A%20%20%20%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%0A%20%20%20%200%20%26%20%20%200%20%26%20%20%201%5C%5C%0A%20%20%5Cend%7Bbmatrix%7D%0A)
 		/// * window_size: Size of the window. This together with intrinsic matrix determines
-		///            the field of view.
+		/// the field of view.
 		#[inline]
 		pub fn new_2(k: core::Matx33d, window_size: core::Size) -> Result<crate::viz::Camera> {
 			return_send!(via ocvrs_return);
@@ -790,10 +790,10 @@ pub mod viz {
 		/// ## Overloaded parameters
 		/// 
 		/// * proj: Projection matrix of the camera with the following form
-		///            ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cfrac%7B2n%7D%7Br%2Dl%7D%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%5Cfrac%7Br%2Bl%7D%7Br%2Dl%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%5Cfrac%7B2n%7D%7Bt%2Db%7D%20%26%20%5Cfrac%7Bt%2Bb%7D%7Bt%2Db%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D%5Cfrac%7Bf%2Bn%7D%7Bf%2Dn%7D%20%26%20%2D%5Cfrac%7B2fn%7D%7Bf%2Dn%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cend%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20)
+		/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%5Cfrac%7B2n%7D%7Br%2Dl%7D%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%5Cfrac%7Br%2Bl%7D%7Br%2Dl%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%5Cfrac%7B2n%7D%7Bt%2Db%7D%20%26%20%5Cfrac%7Bt%2Bb%7D%7Bt%2Db%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D%5Cfrac%7Bf%2Bn%7D%7Bf%2Dn%7D%20%26%20%2D%5Cfrac%7B2fn%7D%7Bf%2Dn%7D%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%200%5C%5C%0A%20%20%5Cend%7Bbmatrix%7D%0A)
 		/// 
 		/// * window_size: Size of the window. This together with projection matrix determines
-		///            the field of view.
+		/// the field of view.
 		#[inline]
 		pub fn new_3(proj: core::Matx44d, window_size: core::Size) -> Result<crate::viz::Camera> {
 			return_send!(via ocvrs_return);
@@ -1571,7 +1571,7 @@ pub mod viz {
 		/// *   **LOAD_OBJ**
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [Mesh::load] function uses the following default values for its arguments:
 		/// * typ: LOAD_PLY
 		#[inline]
 		pub fn load_def(file: &str) -> Result<crate::viz::Mesh> {
@@ -1837,6 +1837,15 @@ pub mod viz {
 	pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
 		fn as_raw_mut_Viz3d(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, unnamed: &crate::viz::Viz3d) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_operatorST_const_Viz3dR(self.as_raw_mut_Viz3d(), unnamed.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Shows a widget in the window.
 		/// 
 		/// ## Parameters
@@ -1862,7 +1871,7 @@ pub mod viz {
 		/// * pose: Pose of the widget.
 		/// 
 		/// ## Note
-		/// This alternative version of [show_widget] function uses the following default values for its arguments:
+		/// This alternative version of [Viz3dTrait::show_widget] function uses the following default values for its arguments:
 		/// * pose: Affine3d::Identity()
 		#[inline]
 		fn show_widget_def(&mut self, id: &str, widget: &crate::viz::Widget) -> Result<()> {
@@ -1923,7 +1932,7 @@ pub mod viz {
 		/// * window_size: Size of Viz3d window. Default value means no change.
 		/// 
 		/// ## Note
-		/// This alternative version of [show_image] function uses the following default values for its arguments:
+		/// This alternative version of [Viz3dTrait::show_image] function uses the following default values for its arguments:
 		/// * window_size: Size(-1,-1)
 		#[inline]
 		fn show_image_def(&mut self, image: &impl core::ToInputArray) -> Result<()> {
@@ -2104,7 +2113,7 @@ pub mod viz {
 		/// * mode: If true, window will use full-screen mode.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_full_screen] function uses the following default values for its arguments:
+		/// This alternative version of [Viz3dTrait::set_full_screen] function uses the following default values for its arguments:
 		/// * mode: true
 		#[inline]
 		fn set_full_screen_def(&mut self) -> Result<()> {
@@ -2132,7 +2141,7 @@ pub mod viz {
 		/// Sets background color.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_background_color] function uses the following default values for its arguments:
+		/// This alternative version of [Viz3dTrait::set_background_color] function uses the following default values for its arguments:
 		/// * color: Color::black()
 		/// * color2: Color::not_set()
 		#[inline]
@@ -2157,7 +2166,7 @@ pub mod viz {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set_background_texture] function uses the following default values for its arguments:
+		/// This alternative version of [Viz3dTrait::set_background_texture] function uses the following default values for its arguments:
 		/// * image: noArray()
 		#[inline]
 		fn set_background_texture_def(&mut self) -> Result<()> {
@@ -2212,7 +2221,7 @@ pub mod viz {
 		/// * force_redraw: If true, window renders.
 		/// 
 		/// ## Note
-		/// This alternative version of [spin_once] function uses the following default values for its arguments:
+		/// This alternative version of [Viz3dTrait::spin_once] function uses the following default values for its arguments:
 		/// * time: 1
 		/// * force_redraw: false
 		#[inline]
@@ -2280,7 +2289,7 @@ pub mod viz {
 		/// * specularColor: The specular color of the light
 		/// 
 		/// ## Note
-		/// This alternative version of [add_light] function uses the following default values for its arguments:
+		/// This alternative version of [Viz3dTrait::add_light] function uses the following default values for its arguments:
 		/// * focal_point: Vec3d(0,0,0)
 		/// * color: Color::white()
 		/// * diffuse_color: Color::white()
@@ -2442,7 +2451,7 @@ pub mod viz {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set_global_warnings] function uses the following default values for its arguments:
+		/// This alternative version of [Viz3dTrait::set_global_warnings] function uses the following default values for its arguments:
 		/// * enabled: false
 		#[inline]
 		fn set_global_warnings_def(&mut self) -> Result<()> {
@@ -3317,7 +3326,7 @@ pub mod viz {
 		/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 		/// 
 		/// ## Note
-		/// This alternative version of [add_cloud] function uses the following default values for its arguments:
+		/// This alternative version of [WCloudCollectionTrait::add_cloud] function uses the following default values for its arguments:
 		/// * pose: Affine3d::Identity()
 		#[inline]
 		fn add_cloud_def(&mut self, cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<()> {
@@ -3358,7 +3367,7 @@ pub mod viz {
 		/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 		/// 
 		/// ## Note
-		/// This alternative version of [add_cloud] function uses the following default values for its arguments:
+		/// This alternative version of [WCloudCollectionTrait::add_cloud] function uses the following default values for its arguments:
 		/// * color: Color::white()
 		/// * pose: Affine3d::Identity()
 		#[inline]
@@ -5852,7 +5861,7 @@ pub mod viz {
 		/// Add widget to merge with optional position change
 		/// 
 		/// ## Note
-		/// This alternative version of [add_widget] function uses the following default values for its arguments:
+		/// This alternative version of [WWidgetMergerTrait::add_widget] function uses the following default values for its arguments:
 		/// * pose: Affine3d::Identity()
 		#[inline]
 		fn add_widget_def(&mut self, widget: &crate::viz::Widget3D) -> Result<()> {
@@ -5989,6 +5998,15 @@ pub mod viz {
 	pub trait WidgetTrait: crate::viz::WidgetTraitConst {
 		fn as_raw_mut_Widget(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, other: &crate::viz::Widget) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Widget_operatorST_const_WidgetR(self.as_raw_mut_Widget(), other.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Sets rendering property of the widget.
 		/// 
 		/// ## Parameters

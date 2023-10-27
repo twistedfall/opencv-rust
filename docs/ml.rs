@@ -731,7 +731,7 @@ pub mod ml {
 		/// * param2: passed to setRpropDWMin for ANN_MLP::RPROP and to setBackpropMomentumScale for ANN_MLP::BACKPROP and to finalT for ANN_MLP::ANNEAL.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_train_method] function uses the following default values for its arguments:
+		/// This alternative version of [ANN_MLPTrait::set_train_method] function uses the following default values for its arguments:
 		/// * param1: 0
 		/// * param2: 0
 		#[inline]
@@ -770,7 +770,7 @@ pub mod ml {
 		/// * param2: The second parameter of the activation function, ![inline formula](https://latex.codecogs.com/png.latex?%5Cbeta). Default value is 0.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_activation_function] function uses the following default values for its arguments:
+		/// This alternative version of [ANN_MLPTrait::set_activation_function] function uses the following default values for its arguments:
 		/// * param1: 0
 		/// * param2: 0
 		#[inline]
@@ -1256,7 +1256,7 @@ pub mod ml {
 		/// * nodeName: name of node containing the classifier
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [Boost::load] function uses the following default values for its arguments:
 		/// * node_name: String()
 		#[inline]
 		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::Boost>> {
@@ -1748,7 +1748,7 @@ pub mod ml {
 		/// * nodeName: name of node containing the classifier
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [DTrees::load] function uses the following default values for its arguments:
 		/// * node_name: String()
 		#[inline]
 		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::DTrees>> {
@@ -2242,7 +2242,7 @@ pub mod ml {
 		/// * flags: This parameter will be ignored
 		/// 
 		/// ## Note
-		/// This alternative version of [predict] function uses the following default values for its arguments:
+		/// This alternative version of [EMTraitConst::predict] function uses the following default values for its arguments:
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
@@ -2403,7 +2403,7 @@ pub mod ml {
 		///    CV_64FC1 type.
 		/// 
 		/// ## Note
-		/// This alternative version of [train_em] function uses the following default values for its arguments:
+		/// This alternative version of [EMTrait::train_em] function uses the following default values for its arguments:
 		/// * log_likelihoods: noArray()
 		/// * labels: noArray()
 		/// * probs: noArray()
@@ -2496,7 +2496,7 @@ pub mod ml {
 		///    CV_64FC1 type.
 		/// 
 		/// ## Note
-		/// This alternative version of [train_e] function uses the following default values for its arguments:
+		/// This alternative version of [EMTrait::train_e] function uses the following default values for its arguments:
 		/// * covs0: noArray()
 		/// * weights0: noArray()
 		/// * log_likelihoods: noArray()
@@ -2570,7 +2570,7 @@ pub mod ml {
 		///    CV_64FC1 type.
 		/// 
 		/// ## Note
-		/// This alternative version of [train_m] function uses the following default values for its arguments:
+		/// This alternative version of [EMTrait::train_m] function uses the following default values for its arguments:
 		/// * log_likelihoods: noArray()
 		/// * labels: noArray()
 		/// * probs: noArray()
@@ -2678,7 +2678,7 @@ pub mod ml {
 		/// * nodeName: name of node containing the classifier
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [EM::load] function uses the following default values for its arguments:
 		/// * node_name: String()
 		#[inline]
 		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::EM>> {
@@ -2828,7 +2828,7 @@ pub mod ml {
 		/// The function is parallelized with the TBB library.
 		/// 
 		/// ## Note
-		/// This alternative version of [find_nearest] function uses the following default values for its arguments:
+		/// This alternative version of [KNearestTraitConst::find_nearest] function uses the following default values for its arguments:
 		/// * neighbor_responses: noArray()
 		/// * dist: noArray()
 		#[inline]
@@ -3095,7 +3095,7 @@ pub mod ml {
 		/// * flags: Not used.
 		/// 
 		/// ## Note
-		/// This alternative version of [predict] function uses the following default values for its arguments:
+		/// This alternative version of [LogisticRegressionTraitConst::predict] function uses the following default values for its arguments:
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
@@ -3295,7 +3295,7 @@ pub mod ml {
 		/// * nodeName: name of node containing the classifier
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [LogisticRegression::load] function uses the following default values for its arguments:
 		/// * node_name: String()
 		#[inline]
 		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::LogisticRegression>> {
@@ -3357,7 +3357,7 @@ pub mod ml {
 		/// result.
 		/// 
 		/// ## Note
-		/// This alternative version of [predict_prob] function uses the following default values for its arguments:
+		/// This alternative version of [NormalBayesClassifierTraitConst::predict_prob] function uses the following default values for its arguments:
 		/// * flags: 0
 		#[inline]
 		fn predict_prob_def(&self, inputs: &impl core::ToInputArray, outputs: &mut impl core::ToOutputArray, output_probs: &mut impl core::ToOutputArray) -> Result<f32> {
@@ -3469,7 +3469,7 @@ pub mod ml {
 		/// * nodeName: name of node containing the classifier
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [NormalBayesClassifier::load] function uses the following default values for its arguments:
 		/// * node_name: String()
 		#[inline]
 		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::NormalBayesClassifier>> {
@@ -3641,7 +3641,7 @@ pub mod ml {
 		/// * logstep: Logarithmic step for iterating the statmodel parameter
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [ParamGrid::create] function uses the following default values for its arguments:
 		/// * min_val: 0.
 		/// * max_val: 0.
 		/// * logstep: 1.
@@ -3914,7 +3914,7 @@ pub mod ml {
 		/// * nodeName: name of node containing the classifier
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [RTrees::load] function uses the following default values for its arguments:
 		/// * node_name: String()
 		#[inline]
 		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::RTrees>> {
@@ -4375,7 +4375,7 @@ pub mod ml {
 		/// the usual %SVM with parameters specified in params is executed.
 		/// 
 		/// ## Note
-		/// This alternative version of [train_auto] function uses the following default values for its arguments:
+		/// This alternative version of [SVMTrait::train_auto] function uses the following default values for its arguments:
 		/// * k_fold: 10
 		/// * cgrid: getDefaultGrid(C)
 		/// * gamma_grid: getDefaultGrid(GAMMA)
@@ -4472,7 +4472,7 @@ pub mod ml {
 		/// the usual %SVM with parameters specified in params is executed.
 		/// 
 		/// ## Note
-		/// This alternative version of [train_auto_with_data] function uses the following default values for its arguments:
+		/// This alternative version of [SVMTrait::train_auto_with_data] function uses the following default values for its arguments:
 		/// * k_fold: 10
 		/// * cgrid: SVM::getDefaultGridPtr(SVM::C)
 		/// * gamma_grid: SVM::getDefaultGridPtr(SVM::GAMMA)
@@ -4822,7 +4822,7 @@ pub mod ml {
 		/// * marginType: is the type of margin constraint.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_optimal_parameters] function uses the following default values for its arguments:
+		/// This alternative version of [SVMSGDTrait::set_optimal_parameters] function uses the following default values for its arguments:
 		/// * svmsgd_type: SVMSGD::ASGD
 		/// * margin_type: SVMSGD::SOFT_MARGIN
 		#[inline]
@@ -5069,7 +5069,7 @@ pub mod ml {
 		/// * nodeName: name of node containing the classifier
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [SVMSGD::load] function uses the following default values for its arguments:
 		/// * node_name: String()
 		#[inline]
 		pub fn load_def(filepath: &str) -> Result<core::Ptr<crate::ml::SVMSGD>> {
@@ -5191,7 +5191,7 @@ pub mod ml {
 		/// * flags: The optional flags, model-dependent. See cv::ml::StatModel::Flags.
 		/// 
 		/// ## Note
-		/// This alternative version of [predict] function uses the following default values for its arguments:
+		/// This alternative version of [StatModelTraitConst::predict] function uses the following default values for its arguments:
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
@@ -5238,7 +5238,7 @@ pub mod ml {
 		///    new training samples, not completely overwritten (such as NormalBayesClassifier or ANN_MLP).
 		/// 
 		/// ## Note
-		/// This alternative version of [train_with_data] function uses the following default values for its arguments:
+		/// This alternative version of [StatModelTrait::train_with_data] function uses the following default values for its arguments:
 		/// * flags: 0
 		#[inline]
 		fn train_with_data_def(&mut self, train_data: &core::Ptr<crate::ml::TrainData>) -> Result<bool> {
@@ -5462,7 +5462,7 @@ pub mod ml {
 		/// matrix stored inside TrainData (unless the transposition or compression is needed).
 		/// 
 		/// ## Note
-		/// This alternative version of [get_train_samples] function uses the following default values for its arguments:
+		/// This alternative version of [TrainDataTraitConst::get_train_samples] function uses the following default values for its arguments:
 		/// * layout: ROW_SAMPLE
 		/// * compress_samples: true
 		/// * compress_vars: true
@@ -5753,7 +5753,7 @@ pub mod ml {
 		/// TrainData::setTrainTestSplitRatio
 		/// 
 		/// ## Note
-		/// This alternative version of [set_train_test_split] function uses the following default values for its arguments:
+		/// This alternative version of [TrainDataTrait::set_train_test_split] function uses the following default values for its arguments:
 		/// * shuffle: true
 		#[inline]
 		fn set_train_test_split_def(&mut self, count: i32) -> Result<()> {
@@ -5794,7 +5794,7 @@ pub mod ml {
 		/// TrainData::setTrainTestSplit
 		/// 
 		/// ## Note
-		/// This alternative version of [set_train_test_split_ratio] function uses the following default values for its arguments:
+		/// This alternative version of [TrainDataTrait::set_train_test_split_ratio] function uses the following default values for its arguments:
 		/// * shuffle: true
 		#[inline]
 		fn set_train_test_split_ratio_def(&mut self, ratio: f64) -> Result<()> {
@@ -5967,7 +5967,7 @@ pub mod ml {
 		///    and responseEndIdx = 0. The output variables vector will just contain zeros.
 		/// 
 		/// ## Note
-		/// This alternative version of [load_from_csv] function uses the following default values for its arguments:
+		/// This alternative version of [TrainData::load_from_csv] function uses the following default values for its arguments:
 		/// * response_start_idx: -1
 		/// * response_end_idx: -1
 		/// * var_type_spec: String()
@@ -6046,7 +6046,7 @@ pub mod ml {
 		///    ml::VariableTypes.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [TrainData::create] function uses the following default values for its arguments:
 		/// * var_idx: noArray()
 		/// * sample_idx: noArray()
 		/// * sample_weights: noArray()

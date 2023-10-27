@@ -287,7 +287,7 @@ pub mod cudaoptflow {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_BroxOpticalFlow::create] function uses the following default values for its arguments:
 		/// * alpha: 0.197
 		/// * gamma: 50.0
 		/// * scale_factor: 0.8
@@ -359,7 +359,7 @@ pub mod cudaoptflow {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DenseOpticalFlowTrait::calc] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn calc_def(&mut self, i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray) -> Result<()> {
@@ -572,7 +572,7 @@ pub mod cudaoptflow {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DensePyrLKOpticalFlow::create] function uses the following default values for its arguments:
 		/// * win_size: Size(13,13)
 		/// * max_level: 3
 		/// * iters: 30
@@ -818,7 +818,7 @@ pub mod cudaoptflow {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_FarnebackOpticalFlow::create] function uses the following default values for its arguments:
 		/// * num_levels: 5
 		/// * pyr_scale: 0.5
 		/// * fast_pyramids: false
@@ -938,7 +938,7 @@ pub mod cudaoptflow {
 		/// - Client must use critical sections around each calc() function if calling it from multiple threads.
 		/// 
 		/// ## Note
-		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_NvidiaHWOpticalFlowTrait::calc] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		/// * hint: cv::noArray()
 		/// * cost: cv::noArray()
@@ -1151,7 +1151,7 @@ pub mod cudaoptflow {
 		///                    If output stream is not set, the execute function will use default stream which is NULL stream;
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_NvidiaOpticalFlow_1_0::create] function uses the following default values for its arguments:
 		/// * perf_preset: cv::cuda::NvidiaOpticalFlow_1_0::NV_OF_PERF_LEVEL_SLOW
 		/// * enable_temporal_hints: false
 		/// * enable_external_hints: false
@@ -1326,7 +1326,7 @@ pub mod cudaoptflow {
 		///                    If output stream is not set, the execute function will use default stream which is NULL stream;
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_NvidiaOpticalFlow_2_0::create] function uses the following default values for its arguments:
 		/// * perf_preset: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_PERF_LEVEL_SLOW
 		/// * output_grid_size: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_OUTPUT_VECTOR_GRID_SIZE_1
 		/// * hint_grid_size: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_HINT_VECTOR_GRID_SIZE_1
@@ -1415,7 +1415,7 @@ pub mod cudaoptflow {
 		///                    If output stream is not set, the execute function will use default stream which is NULL stream;
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_NvidiaOpticalFlow_2_0::create] function uses the following default values for its arguments:
 		/// * perf_preset: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_PERF_LEVEL_SLOW
 		/// * output_grid_size: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_OUTPUT_VECTOR_GRID_SIZE_1
 		/// * hint_grid_size: cv::cuda::NvidiaOpticalFlow_2_0::NV_OF_HINT_VECTOR_GRID_SIZE_1
@@ -1730,7 +1730,7 @@ pub mod cudaoptflow {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_OpticalFlowDual_TVL1::create] function uses the following default values for its arguments:
 		/// * tau: 0.25
 		/// * lambda: 0.15
 		/// * theta: 0.3
@@ -1818,7 +1818,7 @@ pub mod cudaoptflow {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_SparseOpticalFlowTrait::calc] function uses the following default values for its arguments:
 		/// * err: cv::noArray()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -2035,7 +2035,7 @@ pub mod cudaoptflow {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_SparsePyrLKOpticalFlow::create] function uses the following default values for its arguments:
 		/// * win_size: Size(21,21)
 		/// * max_level: 3
 		/// * iters: 30

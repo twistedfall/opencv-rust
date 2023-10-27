@@ -3454,7 +3454,7 @@ pub mod cudaarithm {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [convolve] function uses the following default values for its arguments:
+		/// This alternative version of [ConvolutionTrait::convolve] function uses the following default values for its arguments:
 		/// * ccorr: false
 		/// * stream: Stream::Null()
 		#[inline]
@@ -3554,7 +3554,7 @@ pub mod cudaarithm {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [DFTTrait::compute] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn compute_def(&mut self, image: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
@@ -3654,7 +3654,7 @@ pub mod cudaarithm {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [transform] function uses the following default values for its arguments:
+		/// This alternative version of [LookUpTableTrait::transform] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn transform_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {

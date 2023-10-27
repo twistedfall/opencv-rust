@@ -6195,7 +6195,7 @@ pub mod gapi {
 		}
 		
 		/// ## Note
-		/// This alternative version of [yield_] function uses the following default values for its arguments:
+		/// This alternative version of [GCallTrait::yield_] function uses the following default values for its arguments:
 		/// * output: 0
 		#[inline]
 		fn yield__def(&mut self) -> Result<crate::gapi::GMat> {
@@ -6220,7 +6220,7 @@ pub mod gapi {
 		}
 		
 		/// ## Note
-		/// This alternative version of [yield_p] function uses the following default values for its arguments:
+		/// This alternative version of [GCallTrait::yield_p] function uses the following default values for its arguments:
 		/// * output: 0
 		#[inline]
 		fn yield_p_def(&mut self) -> Result<crate::gapi::GMatP> {
@@ -6245,7 +6245,7 @@ pub mod gapi {
 		}
 		
 		/// ## Note
-		/// This alternative version of [yield_scalar] function uses the following default values for its arguments:
+		/// This alternative version of [GCallTrait::yield_scalar] function uses the following default values for its arguments:
 		/// * output: 0
 		#[inline]
 		fn yield_scalar_def(&mut self) -> Result<crate::gapi::GScalar> {
@@ -6270,7 +6270,7 @@ pub mod gapi {
 		}
 		
 		/// ## Note
-		/// This alternative version of [yield_frame] function uses the following default values for its arguments:
+		/// This alternative version of [GCallTrait::yield_frame] function uses the following default values for its arguments:
 		/// * output: 0
 		#[inline]
 		fn yield_frame_def(&mut self) -> Result<crate::gapi::GFrame> {
@@ -6480,7 +6480,7 @@ pub mod gapi {
 	
 		/// Execute an unary computation
 		/// 
-		///  Run the compiled computation, a generic version.
+		/// Run the compiled computation, a generic version.
 		/// 
 		/// ## Parameters
 		/// * ins: vector of inputs to process.
@@ -6504,7 +6504,7 @@ pub mod gapi {
 		/// 
 		/// * in: input cv::Mat for unary computation
 		/// * out: output cv::Mat for unary computation
-		///  process.
+		/// process.
 		#[inline]
 		fn apply(&mut self, mut in_: core::Mat, out: &mut core::Mat) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -6516,7 +6516,7 @@ pub mod gapi {
 		
 		/// Execute an unary computation
 		/// 
-		///  Run the compiled computation, a generic version.
+		/// Run the compiled computation, a generic version.
 		/// 
 		/// ## Parameters
 		/// * ins: vector of inputs to process.
@@ -6540,7 +6540,7 @@ pub mod gapi {
 		/// 
 		/// * in: input cv::Mat for unary computation
 		/// * out: output cv::Scalar for unary computation
-		///  process.
+		/// process.
 		#[inline]
 		fn apply_1(&mut self, mut in_: core::Mat, out: &mut core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -6552,7 +6552,7 @@ pub mod gapi {
 		
 		/// Execute a binary computation
 		/// 
-		///  Run the compiled computation, a generic version.
+		/// Run the compiled computation, a generic version.
 		/// 
 		/// ## Parameters
 		/// * ins: vector of inputs to process.
@@ -6577,7 +6577,7 @@ pub mod gapi {
 		/// * in1: first input cv::Mat for binary computation
 		/// * in2: second input cv::Mat for binary computation
 		/// * out: output cv::Mat for binary computation
-		///  process.
+		/// process.
 		#[inline]
 		fn apply_2(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Mat) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -6589,7 +6589,7 @@ pub mod gapi {
 		
 		/// Execute an binary computation
 		/// 
-		///  Run the compiled computation, a generic version.
+		/// Run the compiled computation, a generic version.
 		/// 
 		/// ## Parameters
 		/// * ins: vector of inputs to process.
@@ -6614,7 +6614,7 @@ pub mod gapi {
 		/// * in1: first input cv::Mat for binary computation
 		/// * in2: second input cv::Mat for binary computation
 		/// * out: output cv::Scalar for binary computation
-		///  process.
+		/// process.
 		#[inline]
 		fn apply_3(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -6625,9 +6625,9 @@ pub mod gapi {
 		}
 		
 		/// Execute a computation with arbitrary number of
-		///  inputs/outputs.
+		/// inputs/outputs.
 		/// 
-		///  Run the compiled computation, a generic version.
+		/// Run the compiled computation, a generic version.
 		/// 
 		/// ## Parameters
 		/// * ins: vector of inputs to process.
@@ -6650,12 +6650,12 @@ pub mod gapi {
 		/// ## Overloaded parameters
 		/// 
 		/// * ins: vector of input cv::Mat objects to process by the
-		///  computation.
+		/// computation.
 		/// * outs: vector of output cv::Mat objects to produce by the
-		///  computation.
+		/// computation.
 		/// 
-		///  Numbers of elements in ins/outs vectors must match numbers of
-		///  inputs/outputs which were used to define the source GComputation.
+		/// Numbers of elements in ins/outs vectors must match numbers of
+		/// inputs/outputs which were used to define the source GComputation.
 		#[inline]
 		fn apply_4(&mut self, ins: &core::Vector<core::Mat>, outs: &core::Vector<core::Mat>) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -6788,7 +6788,7 @@ pub mod gapi {
 		/// @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
 		fn apply_def(&mut self, callback: &crate::gapi::Detail_ExtractArgsCallback) -> Result<core::Vector<crate::gapi::GRunArg>> {
@@ -6816,7 +6816,7 @@ pub mod gapi {
 		/// @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
 		fn apply_def_1(&mut self, ins: &core::Vector<core::Mat>, outs: &core::Vector<core::Mat>) -> Result<()> {
@@ -6829,7 +6829,7 @@ pub mod gapi {
 		
 		/// Execute an unary computation (with compilation on the fly)
 		/// 
-		///  @private -- Exclude this function from OpenCV documentation
+		/// @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## Overloaded parameters
 		/// 
@@ -6837,7 +6837,7 @@ pub mod gapi {
 		/// * in: input cv::Mat for unary computation
 		/// * out: output cv::Mat for unary computation
 		/// * args: compilation arguments for underlying compilation
-		///  process.
+		/// process.
 		/// 
 		/// ## C++ default parameters
 		/// * args: {}
@@ -6860,7 +6860,7 @@ pub mod gapi {
 		/// process.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
 		fn apply_def_2(&mut self, mut in_: core::Mat, out: &mut core::Mat) -> Result<()> {
@@ -6873,7 +6873,7 @@ pub mod gapi {
 		
 		/// Execute an unary computation (with compilation on the fly)
 		/// 
-		///  @private -- Exclude this function from OpenCV documentation
+		/// @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## Overloaded parameters
 		/// 
@@ -6881,7 +6881,7 @@ pub mod gapi {
 		/// * in: input cv::Mat for unary computation
 		/// * out: output cv::Scalar for unary computation
 		/// * args: compilation arguments for underlying compilation
-		///  process.
+		/// process.
 		/// 
 		/// ## C++ default parameters
 		/// * args: {}
@@ -6904,7 +6904,7 @@ pub mod gapi {
 		/// process.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
 		fn apply_def_3(&mut self, mut in_: core::Mat, out: &mut core::Scalar) -> Result<()> {
@@ -6917,7 +6917,7 @@ pub mod gapi {
 		
 		/// Execute a binary computation (with compilation on the fly)
 		/// 
-		///  @private -- Exclude this function from OpenCV documentation
+		/// @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## Overloaded parameters
 		/// 
@@ -6926,7 +6926,7 @@ pub mod gapi {
 		/// * in2: second input cv::Mat for binary computation
 		/// * out: output cv::Mat for binary computation
 		/// * args: compilation arguments for underlying compilation
-		///  process.
+		/// process.
 		/// 
 		/// ## C++ default parameters
 		/// * args: {}
@@ -6950,7 +6950,7 @@ pub mod gapi {
 		/// process.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
 		fn apply_def_4(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Mat) -> Result<()> {
@@ -6963,7 +6963,7 @@ pub mod gapi {
 		
 		/// Execute an binary computation (with compilation on the fly)
 		/// 
-		///  @private -- Exclude this function from OpenCV documentation
+		/// @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## Overloaded parameters
 		/// 
@@ -6972,7 +6972,7 @@ pub mod gapi {
 		/// * in2: second input cv::Mat for binary computation
 		/// * out: output cv::Scalar for binary computation
 		/// * args: compilation arguments for underlying compilation
-		///  process.
+		/// process.
 		/// 
 		/// ## C++ default parameters
 		/// * args: {}
@@ -6996,7 +6996,7 @@ pub mod gapi {
 		/// process.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
 		fn apply_def_5(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Scalar) -> Result<()> {
@@ -7008,22 +7008,22 @@ pub mod gapi {
 		}
 		
 		/// Execute a computation with arbitrary number of
-		///  inputs/outputs (with compilation on-the-fly).
+		/// inputs/outputs (with compilation on-the-fly).
 		/// 
-		///  @private -- Exclude this function from OpenCV documentation
+		/// @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## Overloaded parameters
 		/// 
 		/// ## Parameters
 		/// * ins: vector of input cv::Mat objects to process by the
-		///  computation.
+		/// computation.
 		/// * outs: vector of output cv::Mat objects to produce by the
-		///  computation.
+		/// computation.
 		/// * args: compilation arguments for underlying compilation
-		///  process.
+		/// process.
 		/// 
-		///  Numbers of elements in ins/outs vectors must match numbers of
-		///  inputs/outputs which were used to define this GComputation.
+		/// Numbers of elements in ins/outs vectors must match numbers of
+		/// inputs/outputs which were used to define this GComputation.
 		/// 
 		/// ## C++ default parameters
 		/// * args: {}
@@ -7052,7 +7052,7 @@ pub mod gapi {
 		/// inputs/outputs which were used to define this GComputation.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
 		fn apply_def_6(&mut self, ins: &core::Vector<core::Mat>, outs: &mut core::Vector<core::Mat>) -> Result<()> {
@@ -7116,7 +7116,7 @@ pub mod gapi {
 		/// [gapi_compile_args]
 		/// 
 		/// ## Note
-		/// This alternative version of [compile_streaming] function uses the following default values for its arguments:
+		/// This alternative version of [GComputationTrait::compile_streaming] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
 		fn compile_streaming_def(&mut self) -> Result<crate::gapi::GStreamingCompiled> {
@@ -7145,7 +7145,7 @@ pub mod gapi {
 		/// @private -- Exclude this function from OpenCV documentation
 		/// 
 		/// ## Note
-		/// This alternative version of [compile_streaming] function uses the following default values for its arguments:
+		/// This alternative version of [GComputationTrait::compile_streaming] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
 		fn compile_streaming_def_1(&mut self, callback: &crate::gapi::Detail_ExtractMetaCallback) -> Result<crate::gapi::GStreamingCompiled> {
@@ -7254,7 +7254,7 @@ pub mod gapi {
 	impl GComputation {
 		/// Defines an unary (one input -- one output) computation
 		/// 
-		///  Generic GComputation constructor.
+		/// Generic GComputation constructor.
 		/// 
 		/// Constructs a new graph with a given protocol, specified as a
 		/// flow of operations connecting input/output objects. Throws if
@@ -7287,7 +7287,7 @@ pub mod gapi {
 		
 		/// Defines an unary (one input -- one output) computation
 		/// 
-		///  Generic GComputation constructor.
+		/// Generic GComputation constructor.
 		/// 
 		/// Constructs a new graph with a given protocol, specified as a
 		/// flow of operations connecting input/output objects. Throws if
@@ -7320,7 +7320,7 @@ pub mod gapi {
 		
 		/// Defines a binary (two inputs -- one output) computation
 		/// 
-		///  Generic GComputation constructor.
+		/// Generic GComputation constructor.
 		/// 
 		/// Constructs a new graph with a given protocol, specified as a
 		/// flow of operations connecting input/output objects. Throws if
@@ -7354,7 +7354,7 @@ pub mod gapi {
 		
 		/// Defines a binary (two inputs -- one output) computation
 		/// 
-		///  Generic GComputation constructor.
+		/// Generic GComputation constructor.
 		/// 
 		/// Constructs a new graph with a given protocol, specified as a
 		/// flow of operations connecting input/output objects. Throws if
@@ -7388,7 +7388,7 @@ pub mod gapi {
 		
 		/// Defines a computation with arbitrary input/output number.
 		/// 
-		///  Generic GComputation constructor.
+		/// Generic GComputation constructor.
 		/// 
 		/// Constructs a new graph with a given protocol, specified as a
 		/// flow of operations connecting input/output objects. Throws if
@@ -7410,10 +7410,10 @@ pub mod gapi {
 		/// * ins: vector of inputs GMats for this computation
 		/// * outs: vector of outputs GMats for this computation
 		/// 
-		///  Use this overload for cases when number of computation
-		///  inputs/outputs is not known in compile-time -- e.g. when graph
-		///  is programmatically generated to build an image pyramid with
-		///  the given number of levels, etc.
+		/// Use this overload for cases when number of computation
+		/// inputs/outputs is not known in compile-time -- e.g. when graph
+		/// is programmatically generated to build an image pyramid with
+		/// the given number of levels, etc.
 		#[inline]
 		pub fn new_4(ins: &core::Vector<crate::gapi::GMat>, outs: &core::Vector<crate::gapi::GMat>) -> Result<crate::gapi::GComputation> {
 			return_send!(via ocvrs_return);
@@ -8540,6 +8540,24 @@ pub mod gapi {
 	pub trait GRunArgTrait: crate::gapi::GRunArgTraitConst {
 		fn as_raw_mut_GRunArg(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, arg: &crate::gapi::GRunArg) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GRunArg_operatorST_const_GRunArgR(self.as_raw_mut_GRunArg(), arg.as_raw_GRunArg(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut arg: crate::gapi::GRunArg) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GRunArg_operatorST_GRunArgRR(self.as_raw_mut_GRunArg(), arg.as_raw_mut_GRunArg(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	pub struct GRunArg {
@@ -8717,7 +8735,7 @@ pub mod gapi {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///  Constructs a value-initialized GScalar
+		/// Constructs a value-initialized GScalar
 		/// 
 		/// * s: a cv::Scalar value to associate with this GScalar object.
 		#[inline]
@@ -8749,21 +8767,21 @@ pub mod gapi {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///  Constructs a value-initialized GScalar
+		/// Constructs a value-initialized GScalar
 		/// 
 		/// * v0: A `double` value to associate with this GScalar. Note
-		///   that only the first component of a four-component cv::Scalar is
-		///   set to this value, with others remain zeros.
+		///  that only the first component of a four-component cv::Scalar is
+		///  set to this value, with others remain zeros.
 		/// 
-		///  This constructor overload is not marked `explicit` and can be
-		///  used in G-API expression code like this:
+		/// This constructor overload is not marked `explicit` and can be
+		/// used in G-API expression code like this:
 		/// 
-		///  [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+		/// [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 		/// 
-		///  Here operator+(GMat,GScalar) is used to wrap cv::gapi::addC()
-		///  and a value-initialized GScalar is created on the fly.
+		/// Here operator+(GMat,GScalar) is used to wrap cv::gapi::addC()
+		/// and a value-initialized GScalar is created on the fly.
 		/// 
-		///  @overload
+		/// @overload
 		#[inline]
 		pub fn new_2(v0: f64) -> Result<crate::gapi::GScalar> {
 			return_send!(via ocvrs_return);
@@ -9739,7 +9757,7 @@ pub mod gapi {
 		}
 		
 		/// ## Note
-		/// This alternative version of [step] function uses the following default values for its arguments:
+		/// This alternative version of [RMat_ViewTraitConst::step] function uses the following default values for its arguments:
 		/// * i: 0
 		#[inline]
 		fn step_def(&self) -> Result<size_t> {
@@ -9766,6 +9784,15 @@ pub mod gapi {
 	pub trait RMat_ViewTrait: crate::gapi::RMat_ViewTraitConst {
 		fn as_raw_mut_RMat_View(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, mut v: crate::gapi::RMat_View) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RMat_View_operatorST_ViewRR(self.as_raw_mut_RMat_View(), v.as_raw_mut_RMat_View(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	pub struct RMat_View {
@@ -11354,6 +11381,21 @@ pub mod gapi {
 	pub trait anyTrait: crate::gapi::anyTraitConst {
 		fn as_raw_mut_any(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, mut unnamed: crate::gapi::any) {
+			let ret = unsafe { sys::cv_util_any_operatorST_anyRR(self.as_raw_mut_any(), unnamed.as_raw_mut_any()) };
+			ret
+		}
+		
+		#[inline]
+		fn set_1(&mut self, src: &crate::gapi::any) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_util_any_operatorST_const_anyR(self.as_raw_mut_any(), src.as_raw_any(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	pub struct any {

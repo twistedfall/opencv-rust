@@ -497,7 +497,7 @@ pub mod cudastereo {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DisparityBilateralFilterTrait::apply] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn apply_def(&mut self, disparity: &impl core::ToInputArray, image: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
@@ -842,7 +842,7 @@ pub mod cudastereo {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_StereoBeliefPropagationTrait::compute] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn compute_def(&mut self, data: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray) -> Result<()> {

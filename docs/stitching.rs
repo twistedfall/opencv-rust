@@ -2116,7 +2116,7 @@ pub mod stitching {
 		/// Status code.
 		/// 
 		/// ## Note
-		/// This alternative version of [estimate_transform] function uses the following default values for its arguments:
+		/// This alternative version of [StitcherTrait::estimate_transform] function uses the following default values for its arguments:
 		/// * masks: noArray()
 		#[inline]
 		fn estimate_transform_def(&mut self, images: &impl core::ToInputArray) -> Result<crate::stitching::Stitcher_Status> {
@@ -2330,7 +2330,7 @@ pub mod stitching {
 		/// Stitcher class instance.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [Stitcher::create] function uses the following default values for its arguments:
 		/// * mode: Stitcher::PANORAMA
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::stitching::Stitcher>> {
@@ -3046,7 +3046,7 @@ pub mod stitching {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [Detail_BestOf2NearestMatcher::create] function uses the following default values for its arguments:
 		/// * try_use_gpu: false
 		/// * match_conf: 0.3f
 		/// * num_matches_thresh1: 6
@@ -3292,7 +3292,7 @@ pub mod stitching {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create_default] function uses the following default values for its arguments:
+		/// This alternative version of [Detail_Blender::create_default] function uses the following default values for its arguments:
 		/// * try_gpu: false
 		#[inline]
 		pub fn create_default_def(typ: i32) -> Result<core::Ptr<crate::stitching::Detail_Blender>> {
@@ -4281,6 +4281,15 @@ pub mod stitching {
 		fn set_t(&mut self, mut val: core::Mat) {
 			let ret = unsafe { sys::cv_detail_CameraParams_propT_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) };
 			ret
+		}
+		
+		#[inline]
+		fn set(&mut self, other: &crate::stitching::Detail_CameraParams) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_CameraParams_operatorST_const_CameraParamsR(self.as_raw_mut_Detail_CameraParams(), other.as_raw_Detail_CameraParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
 		}
 		
 	}
@@ -6047,7 +6056,7 @@ pub mod stitching {
 		/// detail::MatchesInfo
 		/// 
 		/// ## Note
-		/// This alternative version of [apply2] function uses the following default values for its arguments:
+		/// This alternative version of [Detail_FeaturesMatcherTrait::apply2] function uses the following default values for its arguments:
 		/// * mask: cv::UMat()
 		#[inline]
 		fn apply2_def(&mut self, features: &core::Vector<crate::stitching::Detail_ImageFeatures>, pairwise_matches: &mut core::Vector<crate::stitching::Detail_MatchesInfo>) -> Result<()> {
@@ -7266,6 +7275,15 @@ pub mod stitching {
 		fn set_confidence(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_detail_MatchesInfo_propConfidence_double(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
+		}
+		
+		#[inline]
+		fn set(&mut self, other: &crate::stitching::Detail_MatchesInfo) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_MatchesInfo_operatorST_const_MatchesInfoR(self.as_raw_mut_Detail_MatchesInfo(), other.as_raw_Detail_MatchesInfo(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
 		}
 		
 		#[inline]
@@ -9016,7 +9034,7 @@ pub mod stitching {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set_camera_params] function uses the following default values for its arguments:
+		/// This alternative version of [Detail_ProjectorBaseTrait::set_camera_params] function uses the following default values for its arguments:
 		/// * k: Mat::eye(3,3,CV_32F)
 		/// * r: Mat::eye(3,3,CV_32F)
 		/// * t: Mat::zeros(3,1,CV_32F)

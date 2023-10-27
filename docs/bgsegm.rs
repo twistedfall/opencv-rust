@@ -446,7 +446,7 @@ pub mod bgsegm {
 		}
 		
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [BackgroundSubtractorCNTTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
 		#[inline]
 		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
@@ -875,7 +875,7 @@ pub mod bgsegm {
 		}
 		
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [BackgroundSubtractorGSOCTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
 		#[inline]
 		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
@@ -981,7 +981,7 @@ pub mod bgsegm {
 		}
 		
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [BackgroundSubtractorLSBPTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
 		#[inline]
 		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {

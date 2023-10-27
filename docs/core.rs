@@ -3221,8 +3221,8 @@ pub mod core {
 	///    randu(A, Scalar(-100), Scalar(100));
 	///    Mat_<float> B = A*5 + 3;
 	///    B = abs(B);
-	///  Mat_<float> B = abs(A*5+3) will also do the job,
-	///  but it will allocate a temporary matrix
+	///    // Mat_<float> B = abs(A*5+3) will also do the job,
+	///    // but it will allocate a temporary matrix
 	/// ```
 	/// 
 	/// ## Parameters
@@ -3301,18 +3301,18 @@ pub mod core {
 	/// function does not copy src itself but simply constructs the border, for example:
 	/// 
 	/// ```C++
-	///  let border be the same in all directions
+	///    // let border be the same in all directions
 	///    int border=2;
-	///  constructs a larger image to fit both the image and the border
+	///    // constructs a larger image to fit both the image and the border
 	///    Mat gray_buf(rgb.rows + border*2, rgb.cols + border*2, rgb.depth());
-	///  select the middle part of it w/o copying data
+	///    // select the middle part of it w/o copying data
 	///    Mat gray(gray_canvas, Rect(border, border, rgb.cols, rgb.rows));
-	///  convert image from RGB to grayscale
+	///    // convert image from RGB to grayscale
 	///    cvtColor(rgb, gray, COLOR_RGB2GRAY);
-	///  form a border in-place
+	///    // form a border in-place
 	///    copyMakeBorder(gray, gray_buf, border, border,
 	///                    border, border, BORDER_REPLICATE);
-	///  now do some custom filtering ...
+	///    // now do some custom filtering ...
 	///    ...
 	/// ```
 	/// 
@@ -4163,42 +4163,42 @@ pub mod core {
 	/// ```C++
 	///    void convolveDFT(InputArray A, InputArray B, OutputArray C)
 	///    {
-	///  reallocate the output array if needed
+	///        // reallocate the output array if needed
 	///        C.create(abs(A.rows - B.rows)+1, abs(A.cols - B.cols)+1, A.type());
 	///        Size dftSize;
-	///  calculate the size of DFT transform
+	///        // calculate the size of DFT transform
 	///        dftSize.width = getOptimalDFTSize(A.cols + B.cols - 1);
 	///        dftSize.height = getOptimalDFTSize(A.rows + B.rows - 1);
 	/// 
-	///  allocate temporary buffers and initialize them with 0's
+	///        // allocate temporary buffers and initialize them with 0's
 	///        Mat tempA(dftSize, A.type(), Scalar::all(0));
 	///        Mat tempB(dftSize, B.type(), Scalar::all(0));
 	/// 
-	///  copy A and B to the top-left corners of tempA and tempB, respectively
+	///        // copy A and B to the top-left corners of tempA and tempB, respectively
 	///        Mat roiA(tempA, Rect(0,0,A.cols,A.rows));
 	///        A.copyTo(roiA);
 	///        Mat roiB(tempB, Rect(0,0,B.cols,B.rows));
 	///        B.copyTo(roiB);
 	/// 
-	///  now transform the padded A & B in-place;
-	///  use "nonzeroRows" hint for faster processing
+	///        // now transform the padded A & B in-place;
+	///        // use "nonzeroRows" hint for faster processing
 	///        dft(tempA, tempA, 0, A.rows);
 	///        dft(tempB, tempB, 0, B.rows);
 	/// 
-	///  multiply the spectrums;
-	///  the function handles packed spectrum representations well
+	///        // multiply the spectrums;
+	///        // the function handles packed spectrum representations well
 	///        mulSpectrums(tempA, tempB, tempA);
 	/// 
-	///  transform the product back from the frequency domain.
-	///  Even though all the result rows will be non-zero,
-	///  you need only the first C.rows of them, and thus you
-	///  pass nonzeroRows == C.rows
+	///        // transform the product back from the frequency domain.
+	///        // Even though all the result rows will be non-zero,
+	///        // you need only the first C.rows of them, and thus you
+	///        // pass nonzeroRows == C.rows
 	///        dft(tempA, tempA, DFT_INVERSE + DFT_SCALE, C.rows);
 	/// 
-	///  now copy the result back to C.
+	///        // now copy the result back to C.
 	///        tempA(Rect(0, 0, C.cols, C.rows)).copyTo(C);
 	/// 
-	///  all the temporary buffers will be deallocated automatically
+	///        // all the temporary buffers will be deallocated automatically
 	///    }
 	/// ```
 	/// 
@@ -5304,21 +5304,21 @@ pub mod core {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	///  ```C++
+	/// ```C++
 	///    cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 4,
-	///                                                   2, 5,
-	///                                                   3, 6);
+	///                                                  2, 5,
+	///                                                  3, 6);
 	///    cv::Mat_<float> B = (cv::Mat_<float>(3, 2) << 7, 10,
-	///                                                   8, 11,
-	///                                                   9, 12);
+	///                                                  8, 11,
+	///                                                  9, 12);
 	/// 
-	///    cv::Mat C;
+	///   cv::Mat C;
 	///    cv::hconcat(A, B, C);
 	///    //C:
 	///    //[1, 4, 7, 10;
 	///    // 2, 5, 8, 11;
 	///    // 3, 6, 9, 12]
-	///  ```
+	/// ```
 	/// 
 	/// * src1: first input array to be considered for horizontal concatenation.
 	/// * src2: second input array to be considered for horizontal concatenation.
@@ -7174,29 +7174,29 @@ pub mod core {
 	///    vector<double> positiveData = { 2.0, 8.0, 10.0 };
 	///    vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
 	/// 
-	///  Norm to probability (total count)
-	///  sum(numbers) = 20.0
-	///  2.0      0.1     (2.0/20.0)
-	///  8.0      0.4     (8.0/20.0)
-	///  10.0     0.5     (10.0/20.0)
+	///    // Norm to probability (total count)
+	///    // sum(numbers) = 20.0
+	///    // 2.0      0.1     (2.0/20.0)
+	///    // 8.0      0.4     (8.0/20.0)
+	///    // 10.0     0.5     (10.0/20.0)
 	///    normalize(positiveData, normalizedData_l1, 1.0, 0.0, NORM_L1);
 	/// 
-	///  Norm to unit vector: ||positiveData|| = 1.0
-	///  2.0      0.15
-	///  8.0      0.62
-	///  10.0     0.77
+	///    // Norm to unit vector: ||positiveData|| = 1.0
+	///    // 2.0      0.15
+	///    // 8.0      0.62
+	///    // 10.0     0.77
 	///    normalize(positiveData, normalizedData_l2, 1.0, 0.0, NORM_L2);
 	/// 
-	///  Norm to max element
-	///  2.0      0.2     (2.0/10.0)
-	///  8.0      0.8     (8.0/10.0)
-	///  10.0     1.0     (10.0/10.0)
+	///    // Norm to max element
+	///    // 2.0      0.2     (2.0/10.0)
+	///    // 8.0      0.8     (8.0/10.0)
+	///    // 10.0     1.0     (10.0/10.0)
 	///    normalize(positiveData, normalizedData_inf, 1.0, 0.0, NORM_INF);
 	/// 
-	///  Norm to range [0.0;1.0]
-	///  2.0      0.0     (shift to left border)
-	///  8.0      0.75    (6.0/8.0)
-	///  10.0     1.0     (shift to right border)
+	///    // Norm to range [0.0;1.0]
+	///    // 2.0      0.0     (shift to left border)
+	///    // 8.0      0.75    (6.0/8.0)
+	///    // 10.0     1.0     (shift to right border)
 	///    normalize(positiveData, normalizedData_minmax, 1.0, 0.0, NORM_MINMAX);
 	/// ```
 	/// 
@@ -9565,7 +9565,7 @@ pub mod core {
 	/// matrix expressions:
 	/// ```C++
 	///    Mat A = Mat::eye(4, 3, CV_32F)*5;
-	///  A will be set to [[5, 0, 0], [0, 5, 0], [0, 0, 5], [0, 0, 0]]
+	///    // A will be set to [[5, 0, 0], [0, 5, 0], [0, 0, 5], [0, 0, 0]]
 	/// ```
 	/// 
 	/// ## Parameters
@@ -11006,15 +11006,15 @@ pub mod core {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	///  ```C++
+	/// ```C++
 	///    cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 7,
-	///                                                   2, 8,
-	///                                                   3, 9);
+	///                                                  2, 8,
+	///                                                  3, 9);
 	///    cv::Mat_<float> B = (cv::Mat_<float>(3, 2) << 4, 10,
-	///                                                   5, 11,
-	///                                                   6, 12);
+	///                                                  5, 11,
+	///                                                  6, 12);
 	/// 
-	///    cv::Mat C;
+	///   cv::Mat C;
 	///    cv::vconcat(A, B, C);
 	///    //C:
 	///    //[1, 7;
@@ -11023,7 +11023,7 @@ pub mod core {
 	///    // 4, 10;
 	///    // 5, 11;
 	///    // 6, 12]
-	///  ```
+	/// ```
 	/// 
 	/// * src1: first input array to be considered for vertical concatenation.
 	/// * src2: second input array to be considered for vertical concatenation.
@@ -11254,7 +11254,7 @@ pub mod core {
 		
 		/// 
 		/// **Deprecated**: ## Note
-		/// This alternative version of [write_with_name] function uses the following default values for its arguments:
+		/// This alternative version of [AlgorithmTraitConst::write_with_name] function uses the following default values for its arguments:
 		/// * name: String()
 		#[deprecated = "## Note"]
 		#[inline]
@@ -11474,8 +11474,20 @@ pub mod core {
 		fn as_raw_mut_AsyncArray(&mut self) -> *mut c_void;
 	
 		#[inline]
+		fn set(&mut self, o: &core::AsyncArray) {
+			let ret = unsafe { sys::cv_AsyncArray_operatorST_const_AsyncArrayR(self.as_raw_mut_AsyncArray(), o.as_raw_AsyncArray()) };
+			ret
+		}
+		
+		#[inline]
 		fn release(&mut self) {
 			let ret = unsafe { sys::cv_AsyncArray_release(self.as_raw_mut_AsyncArray()) };
+			ret
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut o: core::AsyncArray) {
+			let ret = unsafe { sys::cv_AsyncArray_operatorST_AsyncArrayRR(self.as_raw_mut_AsyncArray(), o.as_raw_mut_AsyncArray()) };
 			ret
 		}
 		
@@ -11570,6 +11582,12 @@ pub mod core {
 		fn as_raw_mut_AsyncPromise(&mut self) -> *mut c_void;
 	
 		#[inline]
+		fn set(&mut self, o: &core::AsyncPromise) {
+			let ret = unsafe { sys::cv_AsyncPromise_operatorST_const_AsyncPromiseR(self.as_raw_mut_AsyncPromise(), o.as_raw_AsyncPromise()) };
+			ret
+		}
+		
+		#[inline]
 		fn release(&mut self) {
 			let ret = unsafe { sys::cv_AsyncPromise_release(self.as_raw_mut_AsyncPromise()) };
 			ret
@@ -11611,6 +11629,12 @@ pub mod core {
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut o: core::AsyncPromise) {
+			let ret = unsafe { sys::cv_AsyncPromise_operatorST_AsyncPromiseRR(self.as_raw_mut_AsyncPromise(), o.as_raw_mut_AsyncPromise()) };
+			ret
 		}
 		
 	}
@@ -12619,6 +12643,16 @@ pub mod core {
 	pub trait CommandLineParserTrait: core::CommandLineParserTraitConst {
 		fn as_raw_mut_CommandLineParser(&mut self) -> *mut c_void;
 	
+		/// Assignment operator
+		#[inline]
+		fn set(&mut self, parser: &core::CommandLineParser) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_operatorST_const_CommandLineParserR(self.as_raw_mut_CommandLineParser(), parser.as_raw_CommandLineParser(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Set the about message
 		/// 
 		/// The about message will be shown when [printMessage] is called, right before arguments table.
@@ -12907,7 +12941,7 @@ pub mod core {
 		/// MinProblemSolver::setTermCriteria.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [ConjGradSolver::create] function uses the following default values for its arguments:
 		/// * f: Ptr<ConjGradSolver::Function>()
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
 		#[inline]
@@ -13167,7 +13201,7 @@ pub mod core {
 		/// MinProblemSolver::setTermCriteria.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [DownhillSolver::create] function uses the following default values for its arguments:
 		/// * f: Ptr<MinProblemSolver::Function>()
 		/// * init_step: Mat_<double>(1,1,0.0)
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
@@ -13743,6 +13777,15 @@ pub mod core {
 		}
 		
 		#[inline]
+		fn set(&mut self, node: &core::FileNode) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_operatorST_const_FileNodeR(self.as_raw_mut_FileNode(), node.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
 		fn ptr_1(&mut self) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_ptr(self.as_raw_mut_FileNode(), ocvrs_return.as_mut_ptr()) };
@@ -13769,7 +13812,7 @@ pub mod core {
 		/// Sets the type (int, real or string) and value of the previously created node.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_value] function uses the following default values for its arguments:
+		/// This alternative version of [FileNodeTrait::set_value] function uses the following default values for its arguments:
 		/// * len: -1
 		#[inline]
 		unsafe fn set_value_def(&mut self, typ: i32, value: *const c_void) -> Result<()> {
@@ -13843,7 +13886,7 @@ pub mod core {
 		/// * blockIdx: Index of the memory block where the file node is stored
 		/// * ofs: Offset in bytes from the beginning of the serialized storage
 		/// 
-		///      @deprecated
+		/// @deprecated
 		#[inline]
 		pub fn new(fs: &core::FileStorage, block_idx: size_t, ofs: size_t) -> Result<core::FileNode> {
 			return_send!(via ocvrs_return);
@@ -13977,6 +14020,15 @@ pub mod core {
 	pub trait FileNodeIteratorTrait: core::FileNodeIteratorTraitConst {
 		fn as_raw_mut_FileNodeIterator(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, it: &core::FileNodeIterator) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNodeIterator_operatorST_const_FileNodeIteratorR(self.as_raw_mut_FileNodeIterator(), it.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// moves iterator to the next node
 		#[inline]
 		fn incr(&mut self) -> Result<core::FileNodeIterator> {
@@ -14020,7 +14072,7 @@ pub mod core {
 		///            remaining elements then all of them will be read.
 		/// 
 		/// ## Note
-		/// This alternative version of [read_raw] function uses the following default values for its arguments:
+		/// This alternative version of [FileNodeIteratorTrait::read_raw] function uses the following default values for its arguments:
 		/// * len: (size_t)INT_MAX
 		#[inline]
 		unsafe fn read_raw_def(&mut self, fmt: &str, vec: *mut c_void) -> Result<core::FileNodeIterator> {
@@ -14086,11 +14138,11 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * node: File node - the collection to iterate over;
-		///        it can be a scalar (equivalent to 1-element collection) or "none" (equivalent to empty collection).
+		///    it can be a scalar (equivalent to 1-element collection) or "none" (equivalent to empty collection).
 		/// * seekEnd: - true if iterator needs to be set after the last element of the node;
-		///        that is:
-		///            * node.begin() => FileNodeIterator(node, false)
-		///            * node.end() => FileNodeIterator(node, true)
+		///    that is:
+		///        * node.begin() => FileNodeIterator(node, false)
+		///        * node.end() => FileNodeIterator(node, true)
 		#[inline]
 		pub fn new(node: &core::FileNode, seek_end: bool) -> Result<core::FileNodeIterator> {
 			return_send!(via ocvrs_return);
@@ -14201,7 +14253,7 @@ pub mod core {
 		/// The top-level mapping.
 		/// 
 		/// ## Note
-		/// This alternative version of [root] function uses the following default values for its arguments:
+		/// This alternative version of [FileStorageTraitConst::root] function uses the following default values for its arguments:
 		/// * streamidx: 0
 		#[inline]
 		fn root_def(&self) -> Result<core::FileNode> {
@@ -14324,7 +14376,7 @@ pub mod core {
 		/// you should use 8-bit encoding instead of it.
 		/// 
 		/// ## Note
-		/// This alternative version of [open] function uses the following default values for its arguments:
+		/// This alternative version of [FileStorageTrait::open] function uses the following default values for its arguments:
 		/// * encoding: String()
 		#[inline]
 		fn open_def(&mut self, filename: &str, flags: i32) -> Result<bool> {
@@ -14490,7 +14542,7 @@ pub mod core {
 		/// line, the comment starts a new line.
 		/// 
 		/// ## Note
-		/// This alternative version of [write_comment] function uses the following default values for its arguments:
+		/// This alternative version of [FileStorageTrait::write_comment] function uses the following default values for its arguments:
 		/// * append: false
 		#[inline]
 		fn write_comment_def(&mut self, comment: &str) -> Result<()> {
@@ -14530,7 +14582,7 @@ pub mod core {
 		/// I.e. if the format has a specification for storing type information, this parameter is used.
 		/// 
 		/// ## Note
-		/// This alternative version of [start_write_struct] function uses the following default values for its arguments:
+		/// This alternative version of [FileStorageTrait::start_write_struct] function uses the following default values for its arguments:
 		/// * type_name: String()
 		#[inline]
 		fn start_write_struct_def(&mut self, name: &str, flags: i32) -> Result<()> {
@@ -14601,7 +14653,7 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///      @copydoc open()
+		/// @copydoc open()
 		/// 
 		/// ## C++ default parameters
 		/// * encoding: String()
@@ -14760,7 +14812,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set16f_precision] function uses the following default values for its arguments:
+		/// This alternative version of [FormatterTrait::set16f_precision] function uses the following default values for its arguments:
 		/// * p: 4
 		#[inline]
 		fn set16f_precision_def(&mut self) -> Result<()> {
@@ -14783,7 +14835,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set32f_precision] function uses the following default values for its arguments:
+		/// This alternative version of [FormatterTrait::set32f_precision] function uses the following default values for its arguments:
 		/// * p: 8
 		#[inline]
 		fn set32f_precision_def(&mut self) -> Result<()> {
@@ -14806,7 +14858,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set64f_precision] function uses the following default values for its arguments:
+		/// This alternative version of [FormatterTrait::set64f_precision] function uses the following default values for its arguments:
 		/// * p: 16
 		#[inline]
 		fn set64f_precision_def(&mut self) -> Result<()> {
@@ -14829,7 +14881,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set_multiline] function uses the following default values for its arguments:
+		/// This alternative version of [FormatterTrait::set_multiline] function uses the following default values for its arguments:
 		/// * ml: true
 		#[inline]
 		fn set_multiline_def(&mut self) -> Result<()> {
@@ -14880,7 +14932,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get] function uses the following default values for its arguments:
+		/// This alternative version of [Formatter::get] function uses the following default values for its arguments:
 		/// * fmt: FMT_DEFAULT
 		#[inline]
 		pub fn get_def() -> Result<core::Ptr<core::Formatter>> {
@@ -15241,7 +15293,7 @@ pub mod core {
 		/// convert only specified keypoints)
 		/// 
 		/// ## Note
-		/// This alternative version of [convert] function uses the following default values for its arguments:
+		/// This alternative version of [KeyPoint::convert] function uses the following default values for its arguments:
 		/// * keypoint_indexes: std::vector<int>()
 		#[inline]
 		pub fn convert_def(keypoints: &core::Vector<core::KeyPoint>, points2f: &mut core::Vector<core::Point2f>) -> Result<()> {
@@ -15294,7 +15346,7 @@ pub mod core {
 		/// * class_id: object id
 		/// 
 		/// ## Note
-		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// This alternative version of [KeyPoint::convert_to] function uses the following default values for its arguments:
 		/// * size: 1
 		/// * response: 1
 		/// * octave: 0
@@ -15678,7 +15730,7 @@ pub mod core {
 		/// retrieve UMat from Mat
 		/// 
 		/// ## Note
-		/// This alternative version of [get_umat] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::get_umat] function uses the following default values for its arguments:
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
 		fn get_umat_def(&self, access_flags: core::AccessFlag) -> Result<core::UMat> {
@@ -15917,7 +15969,7 @@ pub mod core {
 		/// 
 		/// 
 		/// ## Note
-		/// This alternative version of [diag] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::diag] function uses the following default values for its arguments:
 		/// * d: 0
 		#[inline]
 		fn diag_def(&self) -> Result<core::Mat> {
@@ -15990,9 +16042,9 @@ pub mod core {
 		/// ## Overloaded parameters
 		/// 
 		/// * m: Destination matrix. If it does not have a proper size or type before the operation, it is
-		///    reallocated.
+		/// reallocated.
 		/// * mask: Operation mask of the same size as \*this. Its non-zero elements indicate which matrix
-		///    elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels.
+		/// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels.
 		#[inline]
 		fn copy_to_masked(&self, m: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
 			output_array_arg!(m);
@@ -16046,7 +16098,7 @@ pub mod core {
 		/// * beta: optional delta added to the scaled values.
 		/// 
 		/// ## Note
-		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::convert_to] function uses the following default values for its arguments:
 		/// * alpha: 1
 		/// * beta: 0
 		#[inline]
@@ -16085,7 +16137,7 @@ pub mod core {
 		/// * type: Desired destination array depth (or -1 if it should be the same as the source type).
 		/// 
 		/// ## Note
-		/// This alternative version of [assign_to] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::assign_to] function uses the following default values for its arguments:
 		/// * typ: -1
 		#[inline]
 		fn assign_to_def(&self, m: &mut core::Mat) -> Result<()> {
@@ -16165,9 +16217,9 @@ pub mod core {
 		///    ...
 		///    Mat pointMat = Mat(vec). // convert vector to Mat, O(1) operation
 		///                       reshape(1). // make Nx3 1-channel matrix out of Nx1 3-channel.
-		///  Also, an O(1) operation
+		///                                   // Also, an O(1) operation
 		///                          t(); // finally, transpose the Nx3 matrix.
-		///  This involves copying all the elements
+		///                               // This involves copying all the elements
 		/// ```
 		/// 
 		/// 3-channel 2x2 matrix reshaped to 1-channel 4x3 matrix, each column has values from one of original channels:
@@ -16189,7 +16241,7 @@ pub mod core {
 		/// * rows: New number of rows. If the parameter is 0, the number of rows remains the same.
 		/// 
 		/// ## Note
-		/// This alternative version of [reshape] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::reshape] function uses the following default values for its arguments:
 		/// * rows: 0
 		#[inline]
 		fn reshape_def(&self, cn: i32) -> Result<core::Mat> {
@@ -16246,7 +16298,7 @@ pub mod core {
 		/// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
 		/// * newndims: New number of dimentions.
 		/// * newsz: Array with new matrix size by all dimentions. If some sizes are zero,
-		///      * the original sizes in those dimensions are presumed.
+		/// the original sizes in those dimensions are presumed.
 		#[inline]
 		fn reshape_nd(&self, cn: i32, newsz: &[i32]) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -16301,7 +16353,7 @@ pub mod core {
 		/// 
 		/// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
 		/// * newshape: Vector with new matrix size by all dimentions. If some sizes are zero,
-		///      * the original sizes in those dimensions are presumed.
+		/// the original sizes in those dimensions are presumed.
 		#[inline]
 		fn reshape_nd_vec(&self, cn: i32, newshape: &core::Vector<i32>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -16361,7 +16413,7 @@ pub mod core {
 		/// * method: Matrix inversion method. One of cv::DecompTypes
 		/// 
 		/// ## Note
-		/// This alternative version of [inv] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::inv] function uses the following default values for its arguments:
 		/// * method: DECOMP_LU
 		#[inline]
 		fn inv_def(&self) -> Result<core::MatExpr> {
@@ -16415,7 +16467,7 @@ pub mod core {
 		/// * scale: Optional scale factor.
 		/// 
 		/// ## Note
-		/// This alternative version of [mul] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::mul] function uses the following default values for its arguments:
 		/// * scale: 1
 		#[inline]
 		fn mul_def(&self, m: &impl core::ToInputArray) -> Result<core::MatExpr> {
@@ -16750,7 +16802,7 @@ pub mod core {
 		/// arbitrary matrix element.
 		/// 
 		/// ## Note
-		/// This alternative version of [step1] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::step1] function uses the following default values for its arguments:
 		/// * i: 0
 		#[inline]
 		fn step1_def(&self) -> Result<size_t> {
@@ -16801,7 +16853,7 @@ pub mod core {
 		/// The method returns the number of elements within a certain sub-array slice with startDim <= dim < endDim
 		/// 
 		/// ## Note
-		/// This alternative version of [total_slice] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::total_slice] function uses the following default values for its arguments:
 		/// * end_dim: INT_MAX
 		#[inline]
 		fn total_slice_def(&self, start_dim: i32) -> Result<size_t> {
@@ -16869,7 +16921,7 @@ pub mod core {
 		/// [example-3d](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// ## Note
-		/// This alternative version of [check_vector] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::check_vector] function uses the following default values for its arguments:
 		/// * depth: -1
 		/// * require_continuous: true
 		#[inline]
@@ -16904,7 +16956,7 @@ pub mod core {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// This alternative version of [MatTraitConst::ptr] function uses the following default values for its arguments:
 		/// * i0: 0
 		#[inline]
 		fn ptr_def(&self) -> Result<*const u8> {
@@ -17007,7 +17059,10 @@ pub mod core {
 		/// 
 		/// ## C++ default parameters
 		/// * i0: 0
-		fn at<T: core::DataType>(&self, i0: i32) -> Result<&T> { core::mat_forward::at(self, i0) }
+		#[inline]
+		fn at<T: core::DataType>(&self, i0: i32) -> Result<&T> {
+			core::mat_forward::at(self, i0)
+		}
 		
 		/// Returns a reference to the specified array element.
 		/// 
@@ -17045,7 +17100,10 @@ pub mod core {
 		/// 
 		/// * row: Index along the dimension 0
 		/// * col: Index along the dimension 1
-		fn at_2d<T: core::DataType>(&self, row: i32, col: i32) -> Result<&T> { core::mat_forward::at_2d(self, row, col) }
+		#[inline]
+		fn at_2d<T: core::DataType>(&self, row: i32, col: i32) -> Result<&T> {
+			core::mat_forward::at_2d(self, row, col)
+		}
 		
 		/// Returns a reference to the specified array element.
 		/// 
@@ -17084,7 +17142,10 @@ pub mod core {
 		/// * i0: Index along the dimension 0
 		/// * i1: Index along the dimension 1
 		/// * i2: Index along the dimension 2
-		fn at_3d<T: core::DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> { core::mat_forward::at_3d(self, i0, i1, i2) }
+		#[inline]
+		fn at_3d<T: core::DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
+			core::mat_forward::at_3d(self, i0, i1, i2)
+		}
 		
 		/// Returns a reference to the specified array element.
 		/// 
@@ -17121,7 +17182,10 @@ pub mod core {
 		/// ## Overloaded parameters
 		/// 
 		/// * idx: Array of Mat::dims indices.
-		fn at_nd<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> { core::mat_forward::at_nd(self, idx) }
+		#[inline]
+		fn at_nd<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> {
+			core::mat_forward::at_nd(self, idx)
+		}
 		
 		/// Returns a reference to the specified array element.
 		/// 
@@ -17157,9 +17221,12 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    special versions for 2D arrays (especially convenient for referencing image pixels)
+		/// special versions for 2D arrays (especially convenient for referencing image pixels)
 		/// * pt: Element position specified as Point(j,i) .
-		fn at_pt<T: core::DataType>(&self, pt: core::Point) -> Result<&T> { core::mat_forward::at_pt(self, pt) }
+		#[inline]
+		fn at_pt<T: core::DataType>(&self, pt: core::Point) -> Result<&T> {
+			core::mat_forward::at_pt(self, pt)
+		}
 		
 		#[inline]
 		fn size(&self) -> Result<core::Size> {
@@ -17243,6 +17310,60 @@ pub mod core {
 			ret
 		}
 		
+		/// assignment operators
+		/// 
+		/// These are available assignment operators. Since they all are very different, make sure to read the
+		/// operator parameters description.
+		/// ## Parameters
+		/// * m: Assigned, right-hand-side matrix. Matrix assignment is an O(1) operation. This means that
+		/// no data is copied but the data is shared and the reference counter, if any, is incremented. Before
+		/// assigning new data, the old data is de-referenced via Mat::release .
+		#[inline]
+		fn set(&mut self, m: &core::Mat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_operatorST_const_MatR(self.as_raw_mut_Mat(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// assignment operators
+		/// 
+		/// These are available assignment operators. Since they all are very different, make sure to read the
+		/// operator parameters description.
+		/// ## Parameters
+		/// * m: Assigned, right-hand-side matrix. Matrix assignment is an O(1) operation. This means that
+		/// no data is copied but the data is shared and the reference counter, if any, is incremented. Before
+		/// assigning new data, the old data is de-referenced via Mat::release .
+		/// 
+		/// ## Overloaded parameters
+		/// 
+		/// * expr: Assigned matrix expression object. As opposite to the first form of the assignment
+		/// operation, the second form can reuse already allocated matrix if it has the right size and type to
+		/// fit the matrix expression result. It is automatically handled by the real function that the matrix
+		/// expressions is expanded to. For example, C=A+B is expanded to add(A, B, C), and add takes care of
+		/// automatic C reallocation.
+		#[inline]
+		fn set_matexpr(&mut self, expr: &core::MatExpr) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_operatorST_const_MatExprR(self.as_raw_mut_Mat(), expr.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Sets all or some of the array elements to the specified value.
+		/// ## Parameters
+		/// * s: Assigned scalar converted to the actual array type.
+		#[inline]
+		fn set_scalar(&mut self, s: core::Scalar) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_operatorST_const_ScalarR(self.as_raw_mut_Mat(), &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Sets all or some of the array elements to the specified value.
 		/// 
 		/// This is an advanced variant of the Mat::operator=(const Scalar& s) operator.
@@ -17274,7 +17395,7 @@ pub mod core {
 		/// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels
 		/// 
 		/// ## Note
-		/// This alternative version of [set_to] function uses the following default values for its arguments:
+		/// This alternative version of [MatTrait::set_to] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		#[inline]
 		fn set_to_def(&mut self, value: &impl core::ToInputArray) -> Result<core::Mat> {
@@ -17641,7 +17762,7 @@ pub mod core {
 		/// is thrown.
 		/// 
 		/// ## Note
-		/// This alternative version of [pop_back] function uses the following default values for its arguments:
+		/// This alternative version of [MatTrait::pop_back] function uses the following default values for its arguments:
 		/// * nelems: 1
 		#[inline]
 		fn pop_back_def(&mut self) -> Result<()> {
@@ -17717,7 +17838,7 @@ pub mod core {
 		/// * i0: A 0-based row index.
 		/// 
 		/// ## Note
-		/// This alternative version of [ptr_mut] function uses the following default values for its arguments:
+		/// This alternative version of [MatTrait::ptr_mut] function uses the following default values for its arguments:
 		/// * i0: 0
 		#[inline]
 		fn ptr_mut_def(&mut self) -> Result<*mut u8> {
@@ -17816,7 +17937,10 @@ pub mod core {
 		/// 
 		/// ## C++ default parameters
 		/// * i0: 0
-		fn at_mut<T: core::DataType>(&mut self, i0: i32) -> Result<&mut T> { core::mat_forward::at_mut(self, i0) }
+		#[inline]
+		fn at_mut<T: core::DataType>(&mut self, i0: i32) -> Result<&mut T> {
+			core::mat_forward::at_mut(self, i0)
+		}
 		
 		/// Returns a reference to the specified array element.
 		/// 
@@ -17854,7 +17978,10 @@ pub mod core {
 		/// 
 		/// * row: Index along the dimension 0
 		/// * col: Index along the dimension 1
-		fn at_2d_mut<T: core::DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> { core::mat_forward::at_2d_mut(self, row, col) }
+		#[inline]
+		fn at_2d_mut<T: core::DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
+			core::mat_forward::at_2d_mut(self, row, col)
+		}
 		
 		/// Returns a reference to the specified array element.
 		/// 
@@ -17893,7 +18020,10 @@ pub mod core {
 		/// * i0: Index along the dimension 0
 		/// * i1: Index along the dimension 1
 		/// * i2: Index along the dimension 2
-		fn at_3d_mut<T: core::DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> { core::mat_forward::at_3d_mut(self, i0, i1, i2) }
+		#[inline]
+		fn at_3d_mut<T: core::DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
+			core::mat_forward::at_3d_mut(self, i0, i1, i2)
+		}
 		
 		/// Returns a reference to the specified array element.
 		/// 
@@ -17930,7 +18060,10 @@ pub mod core {
 		/// ## Overloaded parameters
 		/// 
 		/// * idx: Array of Mat::dims indices.
-		fn at_nd_mut<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> { core::mat_forward::at_nd_mut(self, idx) }
+		#[inline]
+		fn at_nd_mut<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
+			core::mat_forward::at_nd_mut(self, idx)
+		}
 		
 		/// Returns a reference to the specified array element.
 		/// 
@@ -17966,28 +18099,27 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    special versions for 2D arrays (especially convenient for referencing image pixels)
+		/// special versions for 2D arrays (especially convenient for referencing image pixels)
 		/// * pt: Element position specified as Point(j,i) .
-		fn at_pt_mut<T: core::DataType>(&mut self, pt: core::Point) -> Result<&mut T> { core::mat_forward::at_pt_mut(self, pt) }
+		#[inline]
+		fn at_pt_mut<T: core::DataType>(&mut self, pt: core::Point) -> Result<&mut T> {
+			core::mat_forward::at_pt_mut(self, pt)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut m: core::Mat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_operatorST_MatRR(self.as_raw_mut_Mat(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
 		
 		/// internal use method: updates the continuity flag
 		#[inline]
 		fn update_continuity_flag(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_updateContinuityFlag(self.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		/// Sets all or some of the array elements to the specified value.
-		/// 
-		/// ## Parameters
-		/// * s: Assigned scalar converted to the actual array type.
-		#[inline]
-		fn set(&mut self, s: core::Scalar) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_set_Scalar(self.as_raw_mut_Mat(), s.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -18244,7 +18376,7 @@ pub mod core {
 		/// * rows: Number of rows in a 2D array.
 		/// * cols: Number of columns in a 2D array.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		#[inline]
 		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -18264,9 +18396,9 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
-		///    number of columns go in the reverse order.
+		/// number of columns go in the reverse order.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		#[inline]
 		pub unsafe fn new_size(size: core::Size, typ: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -18288,10 +18420,10 @@ pub mod core {
 		/// * rows: Number of rows in a 2D array.
 		/// * cols: Number of columns in a 2D array.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-		///    the particular value after the construction, use the assignment operator
-		///    Mat::operator=(const Scalar& value) .
+		/// the particular value after the construction, use the assignment operator
+		/// Mat::operator=(const Scalar& value) .
 		#[inline]
 		pub fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -18311,12 +18443,12 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
-		///    number of columns go in the reverse order.
+		/// number of columns go in the reverse order.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-		///    the particular value after the construction, use the assignment operator
-		///    Mat::operator=(const Scalar& value) .
+		/// the particular value after the construction, use the assignment operator
+		/// Mat::operator=(const Scalar& value) .
 		#[inline]
 		pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -18338,7 +18470,7 @@ pub mod core {
 		/// * ndims: Array dimensionality.
 		/// * sizes: Array of integers specifying an n-dimensional array shape.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		#[inline]
 		pub unsafe fn new_nd(ndims: i32, sizes: &i32, typ: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -18359,7 +18491,7 @@ pub mod core {
 		/// ## Parameters
 		/// * sizes: Array of integers specifying an n-dimensional array shape.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		#[inline]
 		pub unsafe fn new_nd_vec(sizes: &core::Vector<i32>, typ: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -18381,10 +18513,10 @@ pub mod core {
 		/// * ndims: Array dimensionality.
 		/// * sizes: Array of integers specifying an n-dimensional array shape.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-		///    the particular value after the construction, use the assignment operator
-		///    Mat::operator=(const Scalar& value) .
+		/// the particular value after the construction, use the assignment operator
+		/// Mat::operator=(const Scalar& value) .
 		#[inline]
 		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -18405,10 +18537,10 @@ pub mod core {
 		/// ## Parameters
 		/// * sizes: Array of integers specifying an n-dimensional array shape.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-		///    the particular value after the construction, use the assignment operator
-		///    Mat::operator=(const Scalar& value) .
+		/// the particular value after the construction, use the assignment operator
+		/// Mat::operator=(const Scalar& value) .
 		#[inline]
 		pub fn new_nd_vec_with_default(sizes: &core::Vector<i32>, typ: i32, s: core::Scalar) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -18428,10 +18560,10 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		///    by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		///    associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		///    formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		///    have an independent copy of the sub-array, use Mat::clone() .
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
 		#[inline]
 		pub fn copy(m: &core::Mat) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -18453,15 +18585,15 @@ pub mod core {
 		/// * rows: Number of rows in a 2D array.
 		/// * cols: Number of columns in a 2D array.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		///    allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		///    data, which means that no data is copied. This operation is very efficient and can be used to
-		///    process external data using OpenCV functions. The external data is not automatically deallocated, so
-		///    you should take care of it.
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
 		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
-		///    the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
-		///    and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
 		/// 
 		/// ## C++ default parameters
 		/// * step: AUTO_STEP
@@ -18512,17 +18644,17 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
-		///    number of columns go in the reverse order.
+		/// number of columns go in the reverse order.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		///    allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		///    data, which means that no data is copied. This operation is very efficient and can be used to
-		///    process external data using OpenCV functions. The external data is not automatically deallocated, so
-		///    you should take care of it.
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
 		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
-		///    the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
-		///    and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
 		/// 
 		/// ## C++ default parameters
 		/// * step: AUTO_STEP
@@ -18575,14 +18707,14 @@ pub mod core {
 		/// * ndims: Array dimensionality.
 		/// * sizes: Array of integers specifying an n-dimensional array shape.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		///    allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		///    data, which means that no data is copied. This operation is very efficient and can be used to
-		///    process external data using OpenCV functions. The external data is not automatically deallocated, so
-		///    you should take care of it.
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
 		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
-		///    set to the element size). If not specified, the matrix is assumed to be continuous.
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
 		/// 
 		/// ## C++ default parameters
 		/// * steps: 0
@@ -18633,14 +18765,14 @@ pub mod core {
 		/// ## Parameters
 		/// * sizes: Array of integers specifying an n-dimensional array shape.
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		///    allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		///    data, which means that no data is copied. This operation is very efficient and can be used to
-		///    process external data using OpenCV functions. The external data is not automatically deallocated, so
-		///    you should take care of it.
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
 		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
-		///    set to the element size). If not specified, the matrix is assumed to be continuous.
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
 		/// 
 		/// ## C++ default parameters
 		/// * steps: 0
@@ -18689,12 +18821,12 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		///    by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		///    associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		///    formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		///    have an independent copy of the sub-array, use Mat::clone() .
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
 		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
-		///    end is exclusive. Use Range::all() to take all the rows.
+		/// end is exclusive. Use Range::all() to take all the rows.
 		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
 		/// 
 		/// ## C++ default parameters
@@ -18742,10 +18874,10 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		///    by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		///    associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		///    formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		///    have an independent copy of the sub-array, use Mat::clone() .
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
 		/// * roi: Region of interest.
 		#[inline]
 		pub fn roi(m: &core::Mat, roi: core::Rect) -> Result<core::Mat> {
@@ -18766,10 +18898,10 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		///    by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		///    associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		///    formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		///    have an independent copy of the sub-array, use Mat::clone() .
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
 		/// * ranges: Array of selected ranges of m along each dimensionality.
 		#[inline]
 		pub fn ranges(m: &core::Mat, ranges: &core::Vector<core::Range>) -> Result<core::Mat> {
@@ -19190,6 +19322,16 @@ pub mod core {
 			ret
 		}
 		
+		/// copy operator
+		#[inline]
+		fn set(&mut self, it: &core::MatConstIterator) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_operatorST_const_MatConstIteratorR(self.as_raw_mut_MatConstIterator(), it.as_raw_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// decrements the iterator
 		#[inline]
 		fn decr(&mut self) -> Result<core::MatConstIterator> {
@@ -19224,7 +19366,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [seek] function uses the following default values for its arguments:
+		/// This alternative version of [MatConstIteratorTrait::seek] function uses the following default values for its arguments:
 		/// * relative: false
 		#[inline]
 		fn seek_def(&mut self, ofs: ptrdiff_t) -> Result<()> {
@@ -19247,7 +19389,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [seek_idx] function uses the following default values for its arguments:
+		/// This alternative version of [MatConstIteratorTrait::seek_idx] function uses the following default values for its arguments:
 		/// * relative: false
 		#[inline]
 		fn seek_idx_def(&mut self, _idx: &i32) -> Result<()> {
@@ -19485,7 +19627,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [diag] function uses the following default values for its arguments:
+		/// This alternative version of [MatExprTraitConst::diag] function uses the following default values for its arguments:
 		/// * d: 0
 		#[inline]
 		fn diag_def(&self) -> Result<core::MatExpr> {
@@ -19540,7 +19682,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [inv] function uses the following default values for its arguments:
+		/// This alternative version of [MatExprTraitConst::inv] function uses the following default values for its arguments:
 		/// * method: DECOMP_LU
 		#[inline]
 		fn inv_def(&self) -> Result<core::MatExpr> {
@@ -19565,7 +19707,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [mul_matexpr] function uses the following default values for its arguments:
+		/// This alternative version of [MatExprTraitConst::mul_matexpr] function uses the following default values for its arguments:
 		/// * scale: 1
 		#[inline]
 		fn mul_matexpr_def(&self, e: &core::MatExpr) -> Result<core::MatExpr> {
@@ -19590,7 +19732,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [mul] function uses the following default values for its arguments:
+		/// This alternative version of [MatExprTraitConst::mul] function uses the following default values for its arguments:
 		/// * scale: 1
 		#[inline]
 		fn mul_def(&self, m: &core::Mat) -> Result<core::MatExpr> {
@@ -19848,7 +19990,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [assign] function uses the following default values for its arguments:
+		/// This alternative version of [MatOpTraitConst::assign] function uses the following default values for its arguments:
 		/// * typ: -1
 		#[inline]
 		fn assign_def(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
@@ -19988,7 +20130,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [multiply] function uses the following default values for its arguments:
+		/// This alternative version of [MatOpTraitConst::multiply] function uses the following default values for its arguments:
 		/// * scale: 1
 		#[inline]
 		fn multiply_def(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
@@ -20020,7 +20162,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [divide] function uses the following default values for its arguments:
+		/// This alternative version of [MatOpTraitConst::divide] function uses the following default values for its arguments:
 		/// * scale: 1
 		#[inline]
 		fn divide_def(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
@@ -20294,6 +20436,15 @@ pub mod core {
 		fn get_mut(&mut self, i: i32) -> size_t {
 			let ret = unsafe { sys::cv_MatStep_operator___int(self.as_raw_mut_MatStep(), i) };
 			ret
+		}
+		
+		#[inline]
+		fn set_size_t(&mut self, s: size_t) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatStep_operatorST_size_t(self.as_raw_mut_MatStep(), s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
 		}
 		
 	}
@@ -21225,15 +21376,15 @@ pub mod core {
 		/// ## Overloaded parameters
 		/// 
 		/// * vec: input vector(s); must have the same dimensionality and the
-		///    same layout as the input data used at PCA phase, that is, if
-		///    DATA_AS_ROW are specified, then `vec.cols==data.cols`
-		///    (vector dimensionality) and `vec.rows` is the number of vectors to
-		///    project, and the same is true for the PCA::DATA_AS_COL case.
+		/// same layout as the input data used at PCA phase, that is, if
+		/// DATA_AS_ROW are specified, then `vec.cols==data.cols`
+		/// (vector dimensionality) and `vec.rows` is the number of vectors to
+		/// project, and the same is true for the PCA::DATA_AS_COL case.
 		/// * result: output vectors; in case of PCA::DATA_AS_COL, the
-		///    output matrix has as many columns as the number of input vectors, this
-		///    means that `result.cols==vec.cols` and the number of rows match the
-		///    number of principal components (for example, `maxComponents` parameter
-		///    passed to the constructor).
+		/// output matrix has as many columns as the number of input vectors, this
+		/// means that `result.cols==vec.cols` and the number of rows match the
+		/// number of principal components (for example, `maxComponents` parameter
+		/// passed to the constructor).
 		#[inline]
 		fn project_to(&self, vec: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
 			input_array_arg!(vec);
@@ -21286,10 +21437,10 @@ pub mod core {
 		/// ## Overloaded parameters
 		/// 
 		/// * vec: coordinates of the vectors in the principal component
-		///    subspace, the layout and size are the same as of PCA::project output
-		///    vectors.
+		/// subspace, the layout and size are the same as of PCA::project output
+		/// vectors.
 		/// * result: reconstructed vectors; the layout and size are the same as
-		///    of PCA::project input vectors.
+		/// of PCA::project input vectors.
 		#[inline]
 		fn back_project_to(&self, vec: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
 			input_array_arg!(vec);
@@ -21395,7 +21546,7 @@ pub mod core {
 		/// retain; by default, all the components are retained.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [PCATrait::apply] function uses the following default values for its arguments:
 		/// * max_components: 0
 		#[inline]
 		fn apply_def(&mut self, data: &impl core::ToInputArray, mean: &impl core::ToInputArray, flags: i32) -> Result<core::PCA> {
@@ -21432,14 +21583,14 @@ pub mod core {
 		/// ## Overloaded parameters
 		/// 
 		/// * data: input samples stored as the matrix rows or as the matrix
-		///    columns.
+		/// columns.
 		/// * mean: optional mean value; if the matrix is empty (noArray()),
-		///    the mean is computed from the data.
+		/// the mean is computed from the data.
 		/// * flags: operation flags; currently the parameter is only used to
-		///    specify the data layout. (PCA::Flags)
+		/// specify the data layout. (PCA::Flags)
 		/// * retainedVariance: Percentage of variance that %PCA should retain.
-		///    Using this parameter will let the %PCA decided how many components to
-		///    retain but it will always keep at least 2.
+		/// Using this parameter will let the %PCA decided how many components to
+		/// retain but it will always keep at least 2.
 		#[inline]
 		fn apply_1(&mut self, data: &impl core::ToInputArray, mean: &impl core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
 			input_array_arg!(data);
@@ -21579,11 +21730,11 @@ pub mod core {
 		/// ## Parameters
 		/// * data: input samples stored as matrix rows or matrix columns.
 		/// * mean: optional mean value; if the matrix is empty (@c noArray()),
-		///    the mean is computed from the data.
+		/// the mean is computed from the data.
 		/// * flags: operation flags; currently the parameter is only used to
-		///    specify the data layout (PCA::Flags)
+		/// specify the data layout (PCA::Flags)
 		/// * maxComponents: maximum number of components that %PCA should
-		///    retain; by default, all the components are retained.
+		/// retain; by default, all the components are retained.
 		/// 
 		/// ## C++ default parameters
 		/// * max_components: 0
@@ -21634,12 +21785,12 @@ pub mod core {
 		/// ## Parameters
 		/// * data: input samples stored as matrix rows or matrix columns.
 		/// * mean: optional mean value; if the matrix is empty (noArray()),
-		///    the mean is computed from the data.
+		/// the mean is computed from the data.
 		/// * flags: operation flags; currently the parameter is only used to
-		///    specify the data layout (PCA::Flags)
+		/// specify the data layout (PCA::Flags)
 		/// * retainedVariance: Percentage of variance that PCA should retain.
-		///    Using this parameter will let the PCA decided how many components to
-		///    retain but it will always keep at least 2.
+		/// Using this parameter will let the PCA decided how many components to
+		/// retain but it will always keep at least 2.
 		#[inline]
 		pub fn new_with_variance(data: &impl core::ToInputArray, mean: &impl core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
 			input_array_arg!(data);
@@ -22111,7 +22262,7 @@ pub mod core {
 		/// using transform to get samples from the specified Gaussian distribution.
 		/// 
 		/// ## Note
-		/// This alternative version of [fill] function uses the following default values for its arguments:
+		/// This alternative version of [RNGTrait::fill] function uses the following default values for its arguments:
 		/// * saturate_range: false
 		#[inline]
 		fn fill_def(&mut self, mat: &mut impl core::ToInputOutputArray, dist_type: i32, a: &impl core::ToInputArray, b: &impl core::ToInputArray) -> Result<()> {
@@ -22773,7 +22924,7 @@ pub mod core {
 		/// * flags: operation flags (SVD::Flags)
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [SVDTrait::apply] function uses the following default values for its arguments:
 		/// * flags: 0
 		#[inline]
 		fn apply_def(&mut self, src: &impl core::ToInputArray) -> Result<core::SVD> {
@@ -22844,7 +22995,7 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    initializes an empty SVD structure and then calls SVD::operator()
+		/// initializes an empty SVD structure and then calls SVD::operator()
 		/// ## Parameters
 		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
 		/// * flags: operation flags (SVD::Flags)
@@ -22936,7 +23087,7 @@ pub mod core {
 		/// * flags: operation flags - see SVD::Flags.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute_ext] function uses the following default values for its arguments:
+		/// This alternative version of [SVD::compute_ext] function uses the following default values for its arguments:
 		/// * flags: 0
 		#[inline]
 		pub fn compute_ext_def(src: &impl core::ToInputArray, w: &mut impl core::ToOutputArray, u: &mut impl core::ToOutputArray, vt: &mut impl core::ToOutputArray) -> Result<()> {
@@ -22972,7 +23123,7 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    computes singular values of a matrix
+		/// computes singular values of a matrix
 		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
 		/// * w: calculated singular values
 		/// * flags: operation flags - see SVD::Flags.
@@ -22998,7 +23149,7 @@ pub mod core {
 		/// * flags: operation flags - see SVD::Flags.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [SVD::compute] function uses the following default values for its arguments:
 		/// * flags: 0
 		#[inline]
 		pub fn compute_def(src: &impl core::ToInputArray, w: &mut impl core::ToOutputArray) -> Result<()> {
@@ -23118,7 +23269,7 @@ pub mod core {
 		/// multiplies all the matrix elements by the specified scale factor alpha and converts the results to the specified data type
 		/// 
 		/// ## Note
-		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTraitConst::convert_to] function uses the following default values for its arguments:
 		/// * alpha: 1
 		#[inline]
 		fn convert_to_def(&self, m: &mut core::SparseMat, rtype: i32) -> Result<()> {
@@ -23164,7 +23315,7 @@ pub mod core {
 		/// * beta: - optional delta added to the scaled values
 		/// 
 		/// ## Note
-		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTraitConst::convert_to] function uses the following default values for its arguments:
 		/// * alpha: 1
 		/// * beta: 0
 		#[inline]
@@ -23188,7 +23339,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [assign_to] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTraitConst::assign_to] function uses the following default values for its arguments:
 		/// * typ: -1
 		#[inline]
 		fn assign_to_def(&self, m: &mut core::SparseMat) -> Result<()> {
@@ -23371,6 +23522,26 @@ pub mod core {
 			ret
 		}
 		
+		/// assignment operator. This is O(1) operation, i.e. no data is copied
+		#[inline]
+		fn set(&mut self, m: &core::SparseMat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_operatorST_const_SparseMatR(self.as_raw_mut_SparseMat(), m.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// equivalent to the corresponding constructor
+		#[inline]
+		fn set_mat(&mut self, m: &core::Mat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_operatorST_const_MatR(self.as_raw_mut_SparseMat(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// reallocates sparse matrix.
 		/// 
 		///    If the matrix already had the proper size and type,
@@ -23448,7 +23619,7 @@ pub mod core {
 		/// returns pointer to the specified element (1D case)
 		/// 
 		/// ## Note
-		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTrait::ptr] function uses the following default values for its arguments:
 		/// * hashval: 0
 		#[inline]
 		fn ptr_def(&mut self, i0: i32, create_missing: bool) -> Result<*mut u8> {
@@ -23475,7 +23646,7 @@ pub mod core {
 		/// returns pointer to the specified element (2D case)
 		/// 
 		/// ## Note
-		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTrait::ptr] function uses the following default values for its arguments:
 		/// * hashval: 0
 		#[inline]
 		fn ptr_def_1(&mut self, i0: i32, i1: i32, create_missing: bool) -> Result<*mut u8> {
@@ -23502,7 +23673,7 @@ pub mod core {
 		/// returns pointer to the specified element (3D case)
 		/// 
 		/// ## Note
-		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTrait::ptr] function uses the following default values for its arguments:
 		/// * hashval: 0
 		#[inline]
 		fn ptr_def_2(&mut self, i0: i32, i1: i32, i2: i32, create_missing: bool) -> Result<*mut u8> {
@@ -23529,7 +23700,7 @@ pub mod core {
 		/// returns pointer to the specified element (nD case)
 		/// 
 		/// ## Note
-		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTrait::ptr] function uses the following default values for its arguments:
 		/// * hashval: 0
 		#[inline]
 		fn ptr_def_3(&mut self, idx: &i32, create_missing: bool) -> Result<*mut u8> {
@@ -23556,7 +23727,7 @@ pub mod core {
 		/// erases the specified element (2D case)
 		/// 
 		/// ## Note
-		/// This alternative version of [erase] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTrait::erase] function uses the following default values for its arguments:
 		/// * hashval: 0
 		#[inline]
 		fn erase_def(&mut self, i0: i32, i1: i32) -> Result<()> {
@@ -23583,7 +23754,7 @@ pub mod core {
 		/// erases the specified element (3D case)
 		/// 
 		/// ## Note
-		/// This alternative version of [erase] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTrait::erase] function uses the following default values for its arguments:
 		/// * hashval: 0
 		#[inline]
 		fn erase_def_1(&mut self, i0: i32, i1: i32, i2: i32) -> Result<()> {
@@ -23610,7 +23781,7 @@ pub mod core {
 		/// erases the specified element (nD case)
 		/// 
 		/// ## Note
-		/// This alternative version of [erase] function uses the following default values for its arguments:
+		/// This alternative version of [SparseMatTrait::erase] function uses the following default values for its arguments:
 		/// * hashval: 0
 		#[inline]
 		fn erase_def_2(&mut self, idx: &i32) -> Result<()> {
@@ -23827,7 +23998,7 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
-		///    to sparse representation.
+		/// to sparse representation.
 		#[inline]
 		pub fn copy(m: &core::SparseMat) -> Result<core::SparseMat> {
 			return_send!(via ocvrs_return);
@@ -23844,7 +24015,7 @@ pub mod core {
 		/// 
 		/// ## Parameters
 		/// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
-		///    to sparse representation.
+		/// to sparse representation.
 		#[inline]
 		pub fn from_mat(m: &core::Mat) -> Result<core::SparseMat> {
 			return_send!(via ocvrs_return);
@@ -24190,6 +24361,16 @@ pub mod core {
 			ret
 		}
 		
+		/// the assignment operator
+		#[inline]
+		fn set(&mut self, it: &core::SparseMatConstIterator) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMatConstIterator_operatorST_const_SparseMatConstIteratorR(self.as_raw_mut_SparseMatConstIterator(), it.as_raw_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// moves iterator to the next element
 		#[inline]
 		fn incr(&mut self) -> Result<core::SparseMatConstIterator> {
@@ -24314,6 +24495,16 @@ pub mod core {
 	pub trait SparseMatIteratorTrait: core::SparseMatConstIteratorTrait + core::SparseMatIteratorTraitConst {
 		fn as_raw_mut_SparseMatIterator(&mut self) -> *mut c_void;
 	
+		/// the assignment operator
+		#[inline]
+		fn set(&mut self, it: &core::SparseMatIterator) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMatIterator_operatorST_const_SparseMatIteratorR(self.as_raw_mut_SparseMatIterator(), it.as_raw_SparseMatIterator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// moves iterator to the next element
 		#[inline]
 		fn incr(&mut self) -> Result<core::SparseMatIterator> {
@@ -24804,7 +24995,7 @@ pub mod core {
 		///  <0 - a diagonal from the lower half)
 		/// 
 		/// ## Note
-		/// This alternative version of [diag] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTraitConst::diag] function uses the following default values for its arguments:
 		/// * d: 0
 		#[inline]
 		fn diag_def(&self) -> Result<core::UMat> {
@@ -24869,7 +25060,7 @@ pub mod core {
 		/// converts matrix to another datatype with optional scaling. See cvConvertScale.
 		/// 
 		/// ## Note
-		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTraitConst::convert_to] function uses the following default values for its arguments:
 		/// * alpha: 1
 		/// * beta: 0
 		#[inline]
@@ -24894,7 +25085,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [assign_to] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTraitConst::assign_to] function uses the following default values for its arguments:
 		/// * typ: -1
 		#[inline]
 		fn assign_to_def(&self, m: &mut core::UMat) -> Result<()> {
@@ -24922,7 +25113,7 @@ pub mod core {
 		/// creates alternative matrix header for the same data, with different
 		/// 
 		/// ## Note
-		/// This alternative version of [reshape] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTraitConst::reshape] function uses the following default values for its arguments:
 		/// * rows: 0
 		#[inline]
 		fn reshape_def(&self, cn: i32) -> Result<core::UMat> {
@@ -24972,7 +25163,7 @@ pub mod core {
 		/// matrix inversion by means of matrix expressions
 		/// 
 		/// ## Note
-		/// This alternative version of [inv] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTraitConst::inv] function uses the following default values for its arguments:
 		/// * method: DECOMP_LU
 		#[inline]
 		fn inv_def(&self) -> Result<core::UMat> {
@@ -25002,7 +25193,7 @@ pub mod core {
 		/// per-element matrix multiplication by means of matrix expressions
 		/// 
 		/// ## Note
-		/// This alternative version of [mul] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTraitConst::mul] function uses the following default values for its arguments:
 		/// * scale: 1
 		#[inline]
 		fn mul_def(&self, m: &impl core::ToInputArray) -> Result<core::UMat> {
@@ -25145,7 +25336,7 @@ pub mod core {
 		/// returns step/elemSize1()
 		/// 
 		/// ## Note
-		/// This alternative version of [step1] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTraitConst::step1] function uses the following default values for its arguments:
 		/// * i: 0
 		#[inline]
 		fn step1_def(&self) -> Result<size_t> {
@@ -25187,7 +25378,7 @@ pub mod core {
 		/// returns N if the matrix is 1-channel (N x ptdim) or ptdim-channel (1 x N) or (N x 1); negative number otherwise
 		/// 
 		/// ## Note
-		/// This alternative version of [check_vector] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTraitConst::check_vector] function uses the following default values for its arguments:
 		/// * depth: -1
 		/// * require_continuous: true
 		#[inline]
@@ -25296,6 +25487,26 @@ pub mod core {
 			ret
 		}
 		
+		/// assignment operators
+		#[inline]
+		fn set(&mut self, m: &core::UMat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_operatorST_const_UMatR(self.as_raw_mut_UMat(), m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// sets every matrix element to s
+		#[inline]
+		fn set_scalar(&mut self, s: core::Scalar) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_operatorST_const_ScalarR(self.as_raw_mut_UMat(), &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// sets some of the matrix elements to s, according to the mask
 		/// 
 		/// ## C++ default parameters
@@ -25315,7 +25526,7 @@ pub mod core {
 		/// sets some of the matrix elements to s, according to the mask
 		/// 
 		/// ## Note
-		/// This alternative version of [set_to] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTrait::set_to] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		#[inline]
 		fn set_to_def(&mut self, value: &impl core::ToInputArray) -> Result<core::UMat> {
@@ -25344,7 +25555,7 @@ pub mod core {
 		/// allocates new matrix data unless the matrix already has specified size and type.
 		/// 
 		/// ## Note
-		/// This alternative version of [create_rows_cols] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTrait::create_rows_cols] function uses the following default values for its arguments:
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
 		fn create_rows_cols_def(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
@@ -25367,7 +25578,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create_size] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTrait::create_size] function uses the following default values for its arguments:
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
 		fn create_size_def(&mut self, size: core::Size, typ: i32) -> Result<()> {
@@ -25390,7 +25601,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create_nd] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTrait::create_nd] function uses the following default values for its arguments:
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
 		fn create_nd_def(&mut self, sizes: &[i32], typ: i32) -> Result<()> {
@@ -25413,7 +25624,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create_nd_vec] function uses the following default values for its arguments:
+		/// This alternative version of [UMatTrait::create_nd_vec] function uses the following default values for its arguments:
 		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
 		fn create_nd_vec_def(&mut self, sizes: &core::Vector<i32>, typ: i32) -> Result<()> {
@@ -25462,6 +25673,15 @@ pub mod core {
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut m: core::UMat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_operatorST_UMatRR(self.as_raw_mut_UMat(), m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
 			Ok(ret)
 		}
 		
@@ -26286,7 +26506,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_mat] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::get_mat] function uses the following default values for its arguments:
 		/// * idx: -1
 		#[inline]
 		fn get_mat_def(&self) -> Result<core::Mat> {
@@ -26311,7 +26531,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_mat_] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::get_mat_] function uses the following default values for its arguments:
 		/// * idx: -1
 		#[inline]
 		fn get_mat__def(&self) -> Result<core::Mat> {
@@ -26336,7 +26556,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_umat] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::get_umat] function uses the following default values for its arguments:
 		/// * idx: -1
 		#[inline]
 		fn get_umat_def(&self) -> Result<core::UMat> {
@@ -26443,7 +26663,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [dims] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::dims] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn dims_def(&self) -> Result<i32> {
@@ -26466,7 +26686,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [cols] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::cols] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn cols_def(&self) -> Result<i32> {
@@ -26489,7 +26709,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [rows] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::rows] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn rows_def(&self) -> Result<i32> {
@@ -26512,7 +26732,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [size] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::size] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn size_def(&self) -> Result<core::Size> {
@@ -26535,7 +26755,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [sizend] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::sizend] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn sizend_def(&self, sz: &mut i32) -> Result<i32> {
@@ -26568,7 +26788,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [total] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::total] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn total_def(&self) -> Result<size_t> {
@@ -26591,7 +26811,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [typ] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::typ] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn typ_def(&self) -> Result<i32> {
@@ -26614,7 +26834,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [depth] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::depth] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn depth_def(&self) -> Result<i32> {
@@ -26637,7 +26857,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [channels] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::channels] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn channels_def(&self) -> Result<i32> {
@@ -26660,7 +26880,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [is_continuous] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::is_continuous] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn is_continuous_def(&self) -> Result<bool> {
@@ -26683,7 +26903,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [is_submatrix] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::is_submatrix] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn is_submatrix_def(&self) -> Result<bool> {
@@ -26736,7 +26956,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [offset] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::offset] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn offset_def(&self) -> Result<size_t> {
@@ -26759,7 +26979,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [step] function uses the following default values for its arguments:
+		/// This alternative version of [_InputArrayTraitConst::step] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn step_def(&self) -> Result<size_t> {
@@ -27051,7 +27271,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		pub fn new_1(buf: &core::Buffer) -> Result<core::_InputArray> {
+		pub fn from_opengl(buf: &core::Buffer) -> Result<core::_InputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputArray__InputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27204,7 +27424,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		pub fn new_1(buf: &mut core::Buffer) -> Result<core::_InputOutputArray> {
+		pub fn from_opengl_mut(buf: &mut core::Buffer) -> Result<core::_InputOutputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_BufferR(buf.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27284,7 +27504,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		pub fn new_2(buf: &core::Buffer) -> Result<core::_InputOutputArray> {
+		pub fn from_opengl(buf: &core::Buffer) -> Result<core::_InputOutputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__InputOutputArray__InputOutputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27381,7 +27601,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_mat_ref] function uses the following default values for its arguments:
+		/// This alternative version of [_OutputArrayTraitConst::get_mat_ref] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn get_mat_ref_def(&self) -> Result<core::Mat> {
@@ -27406,7 +27626,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_umat_ref] function uses the following default values for its arguments:
+		/// This alternative version of [_OutputArrayTraitConst::get_umat_ref] function uses the following default values for its arguments:
 		/// * i: -1
 		#[inline]
 		fn get_umat_ref_def(&self) -> Result<core::UMat> {
@@ -27472,7 +27692,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create_size] function uses the following default values for its arguments:
+		/// This alternative version of [_OutputArrayTraitConst::create_size] function uses the following default values for its arguments:
 		/// * i: -1
 		/// * allow_transposed: false
 		/// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
@@ -27499,7 +27719,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [_OutputArrayTraitConst::create] function uses the following default values for its arguments:
 		/// * i: -1
 		/// * allow_transposed: false
 		/// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
@@ -27526,7 +27746,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create_nd] function uses the following default values for its arguments:
+		/// This alternative version of [_OutputArrayTraitConst::create_nd] function uses the following default values for its arguments:
 		/// * i: -1
 		/// * allow_transposed: false
 		/// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
@@ -27581,7 +27801,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set_to] function uses the following default values for its arguments:
+		/// This alternative version of [_OutputArrayTraitConst::set_to] function uses the following default values for its arguments:
 		/// * mask: _InputArray()
 		#[inline]
 		fn set_to_def(&self, value: &impl core::ToInputArray) -> Result<()> {
@@ -27594,7 +27814,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn assign(&self, u: &core::UMat) -> Result<()> {
+		fn assign_umat(&self, u: &core::UMat) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_assign_const_const_UMatR(self.as_raw__OutputArray(), u.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27603,7 +27823,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn assign_1(&self, m: &core::Mat) -> Result<()> {
+		fn assign_mat(&self, m: &core::Mat) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_assign_const_const_MatR(self.as_raw__OutputArray(), m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27612,7 +27832,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn assign_2(&self, v: &core::Vector<core::UMat>) -> Result<()> {
+		fn assign_umat_vec(&self, v: &core::Vector<core::UMat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_assign_const_const_vectorLUMatGR(self.as_raw__OutputArray(), v.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27621,7 +27841,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn assign_3(&self, v: &core::Vector<core::Mat>) -> Result<()> {
+		fn assign_mat_vec(&self, v: &core::Vector<core::Mat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_assign_const_const_vectorLMatGR(self.as_raw__OutputArray(), v.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27630,7 +27850,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn move_(&self, u: &mut core::UMat) -> Result<()> {
+		fn move_umat(&self, u: &mut core::UMat) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_move_const_UMatR(self.as_raw__OutputArray(), u.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27639,7 +27859,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn move__1(&self, m: &mut core::Mat) -> Result<()> {
+		fn move_mat(&self, m: &mut core::Mat) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray_move_const_MatR(self.as_raw__OutputArray(), m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27774,7 +27994,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		pub fn new_1(buf: &mut core::Buffer) -> Result<core::_OutputArray> {
+		pub fn from_opengl_mut(buf: &mut core::Buffer) -> Result<core::_OutputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_BufferR(buf.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -27844,7 +28064,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		pub fn new_2(buf: &core::Buffer) -> Result<core::_OutputArray> {
+		pub fn from_opengl(buf: &core::Buffer) -> Result<core::_OutputArray> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -28806,7 +29026,7 @@ pub mod core {
 		/// records an event
 		/// 
 		/// ## Note
-		/// This alternative version of [record] function uses the following default values for its arguments:
+		/// This alternative version of [EventTrait::record] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn record_def(&mut self) -> Result<()> {
@@ -29148,7 +29368,7 @@ pub mod core {
 		/// converts GpuMat to another datatype with scaling (Blocking call)
 		/// 
 		/// ## Note
-		/// This alternative version of [convert_to] function uses the following default values for its arguments:
+		/// This alternative version of [GpuMatTraitConst::convert_to] function uses the following default values for its arguments:
 		/// * beta: 0.0
 		#[inline]
 		fn convert_to_def(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64) -> Result<()> {
@@ -29194,7 +29414,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [assign_to] function uses the following default values for its arguments:
+		/// This alternative version of [GpuMatTraitConst::assign_to] function uses the following default values for its arguments:
 		/// * typ: -1
 		#[inline]
 		fn assign_to_def(&self, m: &mut core::GpuMat) -> Result<()> {
@@ -29217,7 +29437,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// This alternative version of [GpuMatTraitConst::ptr] function uses the following default values for its arguments:
 		/// * y: 0
 		#[inline]
 		fn ptr_def(&self) -> Result<*const u8> {
@@ -29332,7 +29552,7 @@ pub mod core {
 		/// number of channels and/or different number of rows
 		/// 
 		/// ## Note
-		/// This alternative version of [reshape] function uses the following default values for its arguments:
+		/// This alternative version of [GpuMatTraitConst::reshape] function uses the following default values for its arguments:
 		/// * rows: 0
 		#[inline]
 		fn reshape_def(&self, cn: i32) -> Result<core::GpuMat> {
@@ -29551,6 +29771,16 @@ pub mod core {
 			ret
 		}
 		
+		/// assignment operators
+		#[inline]
+		fn set(&mut self, m: &core::GpuMat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_operatorST_const_GpuMatR(self.as_raw_mut_GpuMat(), m.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// allocates new GpuMat data unless the GpuMat already has specified size and type
 		#[inline]
 		fn create(&mut self, rows: i32, cols: i32, typ: i32) -> Result<()> {
@@ -29672,7 +29902,7 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * y: 0
 		#[inline]
-		fn ptr_1(&mut self, y: i32) -> Result<*mut u8> {
+		fn ptr_mut(&mut self, y: i32) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_ptr_int(self.as_raw_mut_GpuMat(), y, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -29683,10 +29913,10 @@ pub mod core {
 		/// returns pointer to y-th row
 		/// 
 		/// ## Note
-		/// This alternative version of [ptr] function uses the following default values for its arguments:
+		/// This alternative version of [GpuMatTrait::ptr_mut] function uses the following default values for its arguments:
 		/// * y: 0
 		#[inline]
-		fn ptr_def_1(&mut self) -> Result<*mut u8> {
+		fn ptr_mut_def(&mut self) -> Result<*mut u8> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_ptr(self.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -30194,7 +30424,7 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    This overload is non-blocking, so it may return even if the copy operation is not finished.
+		/// This overload is non-blocking, so it may return even if the copy operation is not finished.
 		#[inline]
 		fn clone(&self, stream: &mut core::Stream) -> Result<core::GpuMatND> {
 			return_send!(via ocvrs_return);
@@ -30245,11 +30475,11 @@ pub mod core {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    Creates a GpuMat header if this GpuMatND is effectively 2D.
-		///     
+		/// Creates a GpuMat header if this GpuMatND is effectively 2D.
+		/// 
 		/// Note: The returned GpuMat is constructed with the constructor for user-allocated data.
-		///    That is, It does not perform reference counting.
-		///     
+		/// That is, It does not perform reference counting.
+		/// 
 		/// Note: This function does not increment this GpuMatND's reference counter.
 		#[inline]
 		fn create_gpu_mat_header_1(&self) -> Result<core::GpuMat> {
@@ -30481,6 +30711,18 @@ pub mod core {
 		}
 		
 		#[inline]
+		fn set(&mut self, unnamed: &core::GpuMatND) {
+			let ret = unsafe { sys::cv_cuda_GpuMatND_operatorST_const_GpuMatNDR(self.as_raw_mut_GpuMatND(), unnamed.as_raw_GpuMatND()) };
+			ret
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut unnamed: core::GpuMatND) {
+			let ret = unsafe { sys::cv_cuda_GpuMatND_operatorST_GpuMatNDRR(self.as_raw_mut_GpuMatND(), unnamed.as_raw_mut_GpuMatND()) };
+			ret
+		}
+		
+		#[inline]
 		fn upload(&mut self, src: &impl core::ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
@@ -30544,7 +30786,7 @@ pub mod core {
 		/// ## Parameters
 		/// * size: Array of integers specifying an n-dimensional array shape.
 		/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		#[inline]
 		pub fn new(mut size: core::GpuMatND_SizeArray, typ: i32) -> Result<core::GpuMatND> {
 			return_send!(via ocvrs_return);
@@ -30562,14 +30804,14 @@ pub mod core {
 		/// ## Parameters
 		/// * size: Array of integers specifying an n-dimensional array shape.
 		/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
-		///    CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		///    allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		///    data, which means that no data is copied. This operation is very efficient and can be used to
-		///    process external data using OpenCV functions. The external data is not automatically deallocated, so
-		///    you should take care of it.
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
 		/// * step: Array of _size.size()-1 steps in case of a multi-dimensional array (the last step is always
-		///    set to the element size). If not specified, the matrix is assumed to be continuous.
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
 		/// 
 		/// ## C++ default parameters
 		/// * step: StepArray()
@@ -30717,7 +30959,7 @@ pub mod core {
 		/// number of channels and/or different number of rows
 		/// 
 		/// ## Note
-		/// This alternative version of [reshape] function uses the following default values for its arguments:
+		/// This alternative version of [HostMemTraitConst::reshape] function uses the following default values for its arguments:
 		/// * rows: 0
 		#[inline]
 		fn reshape_def(&self, cn: i32) -> Result<core::HostMem> {
@@ -30907,6 +31149,15 @@ pub mod core {
 		fn set_alloc_type(&mut self, val: core::HostMem_AllocType) {
 			let ret = unsafe { sys::cv_cuda_HostMem_propAlloc_type_AllocType(self.as_raw_mut_HostMem(), val) };
 			ret
+		}
+		
+		#[inline]
+		fn set(&mut self, m: &core::HostMem) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_operatorST_const_HostMemR(self.as_raw_mut_HostMem(), m.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
 		}
 		
 		/// swaps with other smart pointer
@@ -31745,6 +31996,15 @@ pub mod core {
 			ret
 		}
 		
+		#[inline]
+		fn set(&mut self, unnamed: &core::NodeData) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_instr_NodeData_operatorST_const_NodeDataR(self.as_raw_mut_NodeData(), unnamed.as_raw_NodeData(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	pub struct NodeData {
@@ -31986,6 +32246,21 @@ pub mod core {
 	pub trait ContextTrait: core::ContextTraitConst {
 		fn as_raw_mut_Context(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, c: &core::Context) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Context_operatorST_const_ContextR(self.as_raw_mut_Context(), c.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut c: core::Context) {
+			let ret = unsafe { sys::cv_ocl_Context_operatorST_ContextRR(self.as_raw_mut_Context(), c.as_raw_mut_Context()) };
+			ret
+		}
+		
 		/// @deprecated
 		#[inline]
 		fn create(&mut self) -> Result<bool> {
@@ -32119,7 +32394,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_default] function uses the following default values for its arguments:
+		/// This alternative version of [Context::get_default] function uses the following default values for its arguments:
 		/// * initialize: true
 		#[inline]
 		pub fn get_default_def() -> Result<core::Context> {
@@ -32923,7 +33198,22 @@ pub mod core {
 		fn as_raw_mut_Device(&mut self) -> *mut c_void;
 	
 		#[inline]
-		unsafe fn set(&mut self, d: *mut c_void) -> Result<()> {
+		fn set(&mut self, d: &core::Device) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Device_operatorST_const_DeviceR(self.as_raw_mut_Device(), d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut d: core::Device) {
+			let ret = unsafe { sys::cv_ocl_Device_operatorST_DeviceRR(self.as_raw_mut_Device(), d.as_raw_mut_Device()) };
+			ret
+		}
+		
+		#[inline]
+		unsafe fn set_2(&mut self, d: *mut c_void) -> Result<()> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_ocl_Device_set_voidX(self.as_raw_mut_Device(), d, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -33062,6 +33352,21 @@ pub mod core {
 	pub trait Image2DTrait: core::Image2DTraitConst {
 		fn as_raw_mut_Image2D(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, i: &core::Image2D) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Image2D_operatorST_const_Image2DR(self.as_raw_mut_Image2D(), i.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut unnamed: core::Image2D) {
+			let ret = unsafe { sys::cv_ocl_Image2D_operatorST_Image2DRR(self.as_raw_mut_Image2D(), unnamed.as_raw_mut_Image2D()) };
+			ret
+		}
+		
 	}
 	
 	pub struct Image2D {
@@ -33255,6 +33560,21 @@ pub mod core {
 		fn as_raw_mut_Kernel(&mut self) -> *mut c_void;
 	
 		#[inline]
+		fn set(&mut self, k: &core::Kernel) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_operatorST_const_KernelR(self.as_raw_mut_Kernel(), k.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut k: core::Kernel) {
+			let ret = unsafe { sys::cv_ocl_Kernel_operatorST_KernelRR(self.as_raw_mut_Kernel(), k.as_raw_mut_Kernel()) };
+			ret
+		}
+		
+		#[inline]
 		fn create(&mut self, kname: &str, prog: &core::Program) -> Result<bool> {
 			extern_container_arg!(kname);
 			return_send!(via ocvrs_return);
@@ -33280,7 +33600,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create_ext] function uses the following default values for its arguments:
+		/// This alternative version of [KernelTrait::create_ext] function uses the following default values for its arguments:
 		/// * errmsg: 0
 		#[inline]
 		fn create_ext_def(&mut self, kname: &str, prog: &core::ProgramSource, buildopts: &str) -> Result<bool> {
@@ -33294,7 +33614,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		unsafe fn set(&mut self, i: i32, value: *const c_void, sz: size_t) -> Result<i32> {
+		unsafe fn set_2(&mut self, i: i32, value: *const c_void, sz: size_t) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			{ sys::cv_ocl_Kernel_set_int_const_voidX_size_t(self.as_raw_mut_Kernel(), i, value, sz, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
@@ -33303,7 +33623,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn set_1(&mut self, i: i32, image_2d: &core::Image2D) -> Result<i32> {
+		fn set_3(&mut self, i: i32, image_2d: &core::Image2D) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Kernel_set_int_const_Image2DR(self.as_raw_mut_Kernel(), i, image_2d.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -33371,7 +33691,7 @@ pub mod core {
 		/// Note: Use run_() if your kernel code doesn't support adjusted globalsize.
 		/// 
 		/// ## Note
-		/// This alternative version of [run] function uses the following default values for its arguments:
+		/// This alternative version of [KernelTrait::run] function uses the following default values for its arguments:
 		/// * q: Queue()
 		#[inline]
 		fn run_def(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
@@ -33412,7 +33732,7 @@ pub mod core {
 		/// * q: command queue
 		/// 
 		/// ## Note
-		/// This alternative version of [run_] function uses the following default values for its arguments:
+		/// This alternative version of [KernelTrait::run_] function uses the following default values for its arguments:
 		/// * q: Queue()
 		#[inline]
 		fn run__def(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
@@ -33435,7 +33755,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run_task] function uses the following default values for its arguments:
+		/// This alternative version of [KernelTrait::run_task] function uses the following default values for its arguments:
 		/// * q: Queue()
 		#[inline]
 		fn run_task_def(&mut self, sync: bool) -> Result<bool> {
@@ -33470,7 +33790,7 @@ pub mod core {
 		/// Execution time in nanoseconds or negative number on error
 		/// 
 		/// ## Note
-		/// This alternative version of [run_profiling] function uses the following default values for its arguments:
+		/// This alternative version of [KernelTrait::run_profiling] function uses the following default values for its arguments:
 		/// * q: Queue()
 		#[inline]
 		fn run_profiling_def(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t]) -> Result<i64> {
@@ -33787,7 +34107,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [read_write] function uses the following default values for its arguments:
+		/// This alternative version of [KernelArg::read_write] function uses the following default values for its arguments:
 		/// * wscale: 1
 		/// * iwscale: 1
 		#[inline]
@@ -33814,7 +34134,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [read_write_no_size] function uses the following default values for its arguments:
+		/// This alternative version of [KernelArg::read_write_no_size] function uses the following default values for its arguments:
 		/// * wscale: 1
 		/// * iwscale: 1
 		#[inline]
@@ -33841,7 +34161,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [read_only] function uses the following default values for its arguments:
+		/// This alternative version of [KernelArg::read_only] function uses the following default values for its arguments:
 		/// * wscale: 1
 		/// * iwscale: 1
 		#[inline]
@@ -33868,7 +34188,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [write_only] function uses the following default values for its arguments:
+		/// This alternative version of [KernelArg::write_only] function uses the following default values for its arguments:
 		/// * wscale: 1
 		/// * iwscale: 1
 		#[inline]
@@ -33895,7 +34215,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [read_only_no_size] function uses the following default values for its arguments:
+		/// This alternative version of [KernelArg::read_only_no_size] function uses the following default values for its arguments:
 		/// * wscale: 1
 		/// * iwscale: 1
 		#[inline]
@@ -33922,7 +34242,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [write_only_no_size] function uses the following default values for its arguments:
+		/// This alternative version of [KernelArg::write_only_no_size] function uses the following default values for its arguments:
 		/// * wscale: 1
 		/// * iwscale: 1
 		#[inline]
@@ -34075,6 +34395,18 @@ pub mod core {
 	pub trait OpenCLExecutionContextTrait: core::OpenCLExecutionContextTraitConst {
 		fn as_raw_mut_OpenCLExecutionContext(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, unnamed: &core::OpenCLExecutionContext) {
+			let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_operatorST_const_OpenCLExecutionContextR(self.as_raw_mut_OpenCLExecutionContext(), unnamed.as_raw_OpenCLExecutionContext()) };
+			ret
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut unnamed: core::OpenCLExecutionContext) {
+			let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_operatorST_OpenCLExecutionContextRR(self.as_raw_mut_OpenCLExecutionContext(), unnamed.as_raw_mut_OpenCLExecutionContext()) };
+			ret
+		}
+		
 		#[inline]
 		fn set_use_opencl(&mut self, flag: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -34272,6 +34604,21 @@ pub mod core {
 	pub trait PlatformTrait: core::PlatformTraitConst {
 		fn as_raw_mut_Platform(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, p: &core::Platform) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Platform_operatorST_const_PlatformR(self.as_raw_mut_Platform(), p.as_raw_Platform(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut p: core::Platform) {
+			let ret = unsafe { sys::cv_ocl_Platform_operatorST_PlatformRR(self.as_raw_mut_Platform(), p.as_raw_mut_Platform()) };
+			ret
+		}
+		
 	}
 	
 	/// @deprecated
@@ -34438,6 +34785,21 @@ pub mod core {
 	pub trait PlatformInfoTrait: core::PlatformInfoTraitConst {
 		fn as_raw_mut_PlatformInfo(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, i: &core::PlatformInfo) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_PlatformInfo_operatorST_const_PlatformInfoR(self.as_raw_mut_PlatformInfo(), i.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut i: core::PlatformInfo) {
+			let ret = unsafe { sys::cv_ocl_PlatformInfo_operatorST_PlatformInfoRR(self.as_raw_mut_PlatformInfo(), i.as_raw_mut_PlatformInfo()) };
+			ret
+		}
+		
 	}
 	
 	pub struct PlatformInfo {
@@ -34595,6 +34957,21 @@ pub mod core {
 		fn as_raw_mut_Program(&mut self) -> *mut c_void;
 	
 		#[inline]
+		fn set(&mut self, prog: &core::Program) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Program_operatorST_const_ProgramR(self.as_raw_mut_Program(), prog.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut prog: core::Program) {
+			let ret = unsafe { sys::cv_ocl_Program_operatorST_ProgramRR(self.as_raw_mut_Program(), prog.as_raw_mut_Program()) };
+			ret
+		}
+		
+		#[inline]
 		fn create(&mut self, src: &core::ProgramSource, buildflags: &str, errmsg: &mut String) -> Result<bool> {
 			extern_container_arg!(buildflags);
 			string_arg_output_send!(via errmsg_via);
@@ -34747,6 +35124,21 @@ pub mod core {
 	pub trait ProgramSourceTrait: core::ProgramSourceTraitConst {
 		fn as_raw_mut_ProgramSource(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, prog: &core::ProgramSource) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_ProgramSource_operatorST_const_ProgramSourceR(self.as_raw_mut_ProgramSource(), prog.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut prog: core::ProgramSource) {
+			let ret = unsafe { sys::cv_ocl_ProgramSource_operatorST_ProgramSourceRR(self.as_raw_mut_ProgramSource(), prog.as_raw_mut_ProgramSource()) };
+			ret
+		}
+		
 	}
 	
 	pub struct ProgramSource {
@@ -34870,7 +35262,7 @@ pub mod core {
 		/// created ProgramSource object
 		/// 
 		/// ## Note
-		/// This alternative version of [from_binary] function uses the following default values for its arguments:
+		/// This alternative version of [ProgramSource::from_binary] function uses the following default values for its arguments:
 		/// * build_options: cv::String()
 		#[inline]
 		pub fn from_binary_def(module: &str, name: &str, binary: &u8, size: size_t) -> Result<core::ProgramSource> {
@@ -34946,7 +35338,7 @@ pub mod core {
 		/// created ProgramSource object.
 		/// 
 		/// ## Note
-		/// This alternative version of [from_spir] function uses the following default values for its arguments:
+		/// This alternative version of [ProgramSource::from_spir] function uses the following default values for its arguments:
 		/// * build_options: cv::String()
 		#[inline]
 		pub fn from_spir_def(module: &str, name: &str, binary: &u8, size: size_t) -> Result<core::ProgramSource> {
@@ -35017,6 +35409,21 @@ pub mod core {
 	pub trait QueueTrait: core::QueueTraitConst {
 		fn as_raw_mut_Queue(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, q: &core::Queue) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Queue_operatorST_const_QueueR(self.as_raw_mut_Queue(), q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut q: core::Queue) {
+			let ret = unsafe { sys::cv_ocl_Queue_operatorST_QueueRR(self.as_raw_mut_Queue(), q.as_raw_mut_Queue()) };
+			ret
+		}
+		
 		/// ## C++ default parameters
 		/// * c: Context()
 		/// * d: Device()
@@ -35030,7 +35437,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [QueueTrait::create] function uses the following default values for its arguments:
 		/// * c: Context()
 		/// * d: Device()
 		#[inline]
@@ -35502,7 +35909,7 @@ pub mod core {
 		/// * autoRelease: Auto release mode for destination buffer.
 		/// 
 		/// ## Note
-		/// This alternative version of [clone] function uses the following default values for its arguments:
+		/// This alternative version of [BufferTraitConst::clone] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
@@ -35656,7 +36063,7 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [BufferTrait::create] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
@@ -35704,7 +36111,7 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		/// 
 		/// ## Note
-		/// This alternative version of [create_size] function uses the following default values for its arguments:
+		/// This alternative version of [BufferTrait::create_size] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
@@ -35772,7 +36179,7 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		/// 
 		/// ## Note
-		/// This alternative version of [copy_from] function uses the following default values for its arguments:
+		/// This alternative version of [BufferTrait::copy_from] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
@@ -35809,7 +36216,7 @@ pub mod core {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [copy_from] function uses the following default values for its arguments:
+		/// This alternative version of [BufferTrait::copy_from] function uses the following default values for its arguments:
 		/// * target: ARRAY_BUFFER
 		/// * auto_release: false
 		#[inline]
@@ -36243,7 +36650,7 @@ pub mod core {
 		/// * autoRelease: Auto release mode for destination buffer (if arr is OpenGL buffer or texture).
 		/// 
 		/// ## Note
-		/// This alternative version of [copy_to] function uses the following default values for its arguments:
+		/// This alternative version of [Texture2DTraitConst::copy_to] function uses the following default values for its arguments:
 		/// * ddepth: CV_32F
 		/// * auto_release: false
 		#[inline]
@@ -36355,7 +36762,7 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [Texture2DTrait::create] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
 		fn create_def(&mut self, arows: i32, acols: i32, aformat: core::Texture2D_Format) -> Result<()> {
@@ -36398,7 +36805,7 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [Texture2DTrait::create] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
 		fn create_def_1(&mut self, asize: core::Size, aformat: core::Texture2D_Format) -> Result<()> {
@@ -36465,7 +36872,7 @@ pub mod core {
 		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
 		/// 
 		/// ## Note
-		/// This alternative version of [copy_from] function uses the following default values for its arguments:
+		/// This alternative version of [Texture2DTrait::copy_from] function uses the following default values for its arguments:
 		/// * auto_release: false
 		#[inline]
 		fn copy_from_def(&mut self, arr: &impl core::ToInputArray) -> Result<()> {
@@ -37036,7 +37443,7 @@ pub mod core {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [OriginalClassName::create] function uses the following default values for its arguments:
 		/// * params: OriginalClassName::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<core::OriginalClassName>> {

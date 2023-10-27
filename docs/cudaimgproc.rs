@@ -1763,7 +1763,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_CannyEdgeDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn detect_def(&mut self, image: &impl core::ToInputArray, edges: &mut impl core::ToOutputArray) -> Result<()> {
@@ -1812,7 +1812,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_CannyEdgeDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn detect_def_1(&mut self, dx: &impl core::ToInputArray, dy: &impl core::ToInputArray, edges: &mut impl core::ToOutputArray) -> Result<()> {
@@ -1949,7 +1949,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_CornernessCriteriaTrait::compute] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn compute_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
@@ -2055,7 +2055,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_CornersDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -2223,7 +2223,7 @@ pub mod cudaimgproc {
 		/// HoughCircles
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_HoughCirclesDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn detect_def(&mut self, src: &impl core::ToInputArray, circles: &mut impl core::ToOutputArray) -> Result<()> {
@@ -2439,7 +2439,7 @@ pub mod cudaimgproc {
 		/// HoughLines
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_HoughLinesDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn detect_def(&mut self, src: &impl core::ToInputArray, lines: &mut impl core::ToOutputArray) -> Result<()> {
@@ -2484,7 +2484,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [download_results] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_HoughLinesDetectorTrait::download_results] function uses the following default values for its arguments:
 		/// * h_votes: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -2690,7 +2690,7 @@ pub mod cudaimgproc {
 		/// HoughLinesP
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_HoughSegmentDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn detect_def(&mut self, src: &impl core::ToInputArray, lines: &mut impl core::ToOutputArray) -> Result<()> {
@@ -2847,7 +2847,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_TemplateMatchingTrait::match_] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn match__def(&mut self, image: &impl core::ToInputArray, templ: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {

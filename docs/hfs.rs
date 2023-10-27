@@ -239,7 +239,7 @@ pub mod hfs {
 		/// the input image
 		/// 
 		/// ## Note
-		/// This alternative version of [perform_segment_gpu] function uses the following default values for its arguments:
+		/// This alternative version of [HfsSegmentTrait::perform_segment_gpu] function uses the following default values for its arguments:
 		/// * if_draw: true
 		#[inline]
 		fn perform_segment_gpu_def(&mut self, src: &impl core::ToInputArray) -> Result<core::Mat> {
@@ -274,7 +274,7 @@ pub mod hfs {
 		/// It is highly NOT recommanded to use it.
 		/// 
 		/// ## Note
-		/// This alternative version of [perform_segment_cpu] function uses the following default values for its arguments:
+		/// This alternative version of [HfsSegmentTrait::perform_segment_cpu] function uses the following default values for its arguments:
 		/// * if_draw: true
 		#[inline]
 		fn perform_segment_cpu_def(&mut self, src: &impl core::ToInputArray) -> Result<core::Mat> {
@@ -364,7 +364,7 @@ pub mod hfs {
 		/// * numSlicIter: : parameter numSlicIter
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [HfsSegment::create] function uses the following default values for its arguments:
 		/// * seg_egb_threshold_i: 0.08f
 		/// * min_region_size_i: 100
 		/// * seg_egb_threshold_ii: 0.28f

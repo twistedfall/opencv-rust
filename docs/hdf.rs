@@ -497,7 +497,7 @@ pub mod hdf {
 		}
 		
 		/// ## Note
-		/// This alternative version of [dscreate] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::dscreate] function uses the following default values for its arguments:
 		/// * compresslevel: HDF5::H5_NONE
 		/// * dims_chunks: vector<int>()
 		#[inline]
@@ -645,7 +645,7 @@ pub mod hdf {
 		/// will be zero.
 		/// 
 		/// ## Note
-		/// This alternative version of [dsgetsize] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::dsgetsize] function uses the following default values for its arguments:
 		/// * dims_flag: HDF5::H5_GETDIMS
 		#[inline]
 		fn dsgetsize_def(&self, dslabel: &str) -> Result<core::Vector<i32>> {
@@ -714,7 +714,7 @@ pub mod hdf {
 		}
 		
 		/// ## Note
-		/// This alternative version of [dswrite] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::dswrite] function uses the following default values for its arguments:
 		/// * dims_counts: vector<int>()
 		#[inline]
 		fn dswrite_def(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
@@ -839,7 +839,7 @@ pub mod hdf {
 		}
 		
 		/// ## Note
-		/// This alternative version of [dsinsert] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::dsinsert] function uses the following default values for its arguments:
 		/// * dims_counts: vector<int>()
 		#[inline]
 		fn dsinsert_def(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
@@ -948,7 +948,7 @@ pub mod hdf {
 		}
 		
 		/// ## Note
-		/// This alternative version of [dsread] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::dsread] function uses the following default values for its arguments:
 		/// * dims_counts: vector<int>()
 		#[inline]
 		fn dsread_def(&self, array: &mut impl core::ToOutputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
@@ -1057,7 +1057,7 @@ pub mod hdf {
 		/// returned vector size will be zero.
 		/// 
 		/// ## Note
-		/// This alternative version of [kpgetsize] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::kpgetsize] function uses the following default values for its arguments:
 		/// * dims_flag: HDF5::H5_GETDIMS
 		#[inline]
 		fn kpgetsize_def(&self, kplabel: &str) -> Result<i32> {
@@ -1135,7 +1135,7 @@ pub mod hdf {
 		/// 
 		/// - See example below that creates space for 100 keypoints in the dataset:
 		/// ```C++
-		///  open hdf5 file
+		///   // open hdf5 file
 		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
 		///   if ( ! h5io->hlexists( "keypoints" ) )
 		///    h5io->kpcreate( 100, "keypoints" );
@@ -1153,7 +1153,7 @@ pub mod hdf {
 		/// 
 		/// - See example below that creates unlimited space for keypoints chunking size of 100 but no compression:
 		/// ```C++
-		///  open hdf5 file
+		///   // open hdf5 file
 		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
 		///   if ( ! h5io->hlexists( "keypoints" ) )
 		///    h5io->kpcreate( cv::hdf::HDF5::H5_UNLIMITED, "keypoints", cv::hdf::HDF5::H5_NONE, 100 );
@@ -1163,7 +1163,7 @@ pub mod hdf {
 		/// 
 		/// 
 		/// ## Note
-		/// This alternative version of [kpcreate] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::kpcreate] function uses the following default values for its arguments:
 		/// * compresslevel: H5_NONE
 		/// * chunks: H5_NONE
 		#[inline]
@@ -1260,15 +1260,15 @@ pub mod hdf {
 		/// - Example below writes a 100 keypoints into a dataset. No dataset precreation required. If routine is called multiple
 		/// times dataset will be just overwritten:
 		/// ```C++
-		///  generate 100 dummy keypoints
+		///   // generate 100 dummy keypoints
 		///   std::vector<cv::KeyPoint> keypoints;
 		///   for(int i = 0; i < 100; i++)
 		///    keypoints.push_back( cv::KeyPoint(i, -i, 1, -1, 0, 0, -1) );
-		///  open / autocreate hdf5 file
+		///   // open / autocreate hdf5 file
 		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-		///  write / overwrite dataset
+		///   // write / overwrite dataset
 		///   h5io->kpwrite( keypoints, "keypoints" );
-		///  release
+		///   // release
 		///   h5io->close();
 		/// ```
 		/// 
@@ -1278,27 +1278,27 @@ pub mod hdf {
 		/// (75->99) of data space using offset and count parameters to settle the window for write access.If routine is called multiple times
 		/// dataset will be just overwritten:
 		/// ```C++
-		///  generate 50 dummy keypoints
+		///   // generate 50 dummy keypoints
 		///   std::vector<cv::KeyPoint> keypoints;
 		///   for(int i = 0; i < 50; i++)
 		///    keypoints.push_back( cv::KeyPoint(i, -i, 1, -1, 0, 0, -1) );
-		///  open / autocreate hdf5 file
+		///   // open / autocreate hdf5 file
 		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-		///  create maximum compressed space of size 100 with chunk size 10
+		///   // create maximum compressed space of size 100 with chunk size 10
 		///   h5io->kpcreate( 100, "keypoints", 9, 10 );
-		///  write into first half
+		///   // write into first half
 		///   h5io->kpwrite( keypoints, "keypoints", 0 );
-		///  write first 25 keypoints into second half
+		///   // write first 25 keypoints into second half
 		///   h5io->kpwrite( keypoints, "keypoints", 50, 25 );
-		///  write first 25 keypoints into remained space of second half
+		///   // write first 25 keypoints into remained space of second half
 		///   h5io->kpwrite( keypoints, "keypoints", 75, 25 );
-		///  release
+		///   // release
 		///   h5io->close();
 		/// ```
 		/// 
 		/// 
 		/// ## Note
-		/// This alternative version of [kpwrite] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::kpwrite] function uses the following default values for its arguments:
 		/// * offset: H5_NONE
 		/// * counts: H5_NONE
 		#[inline]
@@ -1378,24 +1378,24 @@ pub mod hdf {
 		/// Final dataset will have 100 keypoints. Chunks size is 10 just optimized against list of keypoints. If routine is called multiple
 		/// times dataset will be just overwritten:
 		/// ```C++
-		///  generate 10 dummy keypoints
+		///   // generate 10 dummy keypoints
 		///   std::vector<cv::KeyPoint> keypoints;
 		///   for(int i = 0; i < 10; i++)
 		///    keypoints.push_back( cv::KeyPoint(i, -i, 1, -1, 0, 0, -1) );
-		///  open / autocreate hdf5 file
+		///   // open / autocreate hdf5 file
 		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-		///  create unlimited size space with chunk size of 10
+		///   // create unlimited size space with chunk size of 10
 		///   h5io->kpcreate( cv::hdf::HDF5::H5_UNLIMITED, "keypoints", -1, 10 );
-		///  insert 10 times same 10 keypoints
+		///   // insert 10 times same 10 keypoints
 		///   for(int i = 0; i < 10; i++)
 		///    h5io->kpinsert( keypoints, "keypoints", i * 10 );
-		///  release
+		///   // release
 		///   h5io->close();
 		/// ```
 		/// 
 		/// 
 		/// ## Note
-		/// This alternative version of [kpinsert] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::kpinsert] function uses the following default values for its arguments:
 		/// * offset: H5_NONE
 		/// * counts: H5_NONE
 		#[inline]
@@ -1475,32 +1475,32 @@ pub mod hdf {
 		/// 
 		/// - Example below reads a dataset containing keypoints starting with second entry:
 		/// ```C++
-		///  open hdf5 file
+		///   // open hdf5 file
 		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-		///  blank KeyPoint container
+		///   // blank KeyPoint container
 		///   std::vector<cv::KeyPoint> keypoints;
-		///  read keypoints starting second one
+		///   // read keypoints starting second one
 		///   h5io->kpread( keypoints, "keypoints", 1 );
-		///  release
+		///   // release
 		///   h5io->close();
 		/// ```
 		/// 
 		/// 
 		/// - Example below perform read of 3 keypoints from second entry.
 		/// ```C++
-		///  open hdf5 file
+		///   // open hdf5 file
 		///   cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
-		///  blank KeyPoint container
+		///   // blank KeyPoint container
 		///   std::vector<cv::KeyPoint> keypoints;
-		///  read three keypoints starting second one
+		///   // read three keypoints starting second one
 		///   h5io->kpread( keypoints, "keypoints", 1, 3 );
-		///  release
+		///   // release
 		///   h5io->close();
 		/// ```
 		/// 
 		/// 
 		/// ## Note
-		/// This alternative version of [kpread] function uses the following default values for its arguments:
+		/// This alternative version of [HDF5TraitConst::kpread] function uses the following default values for its arguments:
 		/// * offset: H5_NONE
 		/// * counts: H5_NONE
 		#[inline]

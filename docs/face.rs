@@ -592,7 +592,7 @@ pub mod face {
 		/// Object for computing BIF.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [BIF::create] function uses the following default values for its arguments:
 		/// * num_bands: 8
 		/// * num_rotations: 12
 		#[inline]
@@ -1114,7 +1114,7 @@ pub mod face {
 		///    larger than the threshold, this method returns -1.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [EigenFaceRecognizer::create] function uses the following default values for its arguments:
 		/// * num_components: 0
 		/// * threshold: DBL_MAX
 		#[inline]
@@ -1297,7 +1297,7 @@ pub mod face {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    Saves this model to a given FileStorage.
+		/// Saves this model to a given FileStorage.
 		/// * fs: The FileStorage to store this FaceRecognizer to.
 		#[inline]
 		fn write_1(&self, fs: &mut core::FileStorage) -> Result<()> {
@@ -1916,7 +1916,7 @@ pub mod face {
 		/// initializer
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FacemarkAAM::create] function uses the following default values for its arguments:
 		/// * parameters: FacemarkAAM::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::face::FacemarkAAM>> {
@@ -2713,7 +2713,7 @@ pub mod face {
 		/// A boolean value. The function returns true if the model is trained properly or false if it is not trained.
 		/// 
 		/// ## Note
-		/// This alternative version of [training] function uses the following default values for its arguments:
+		/// This alternative version of [FacemarkKazemiTrait::training] function uses the following default values for its arguments:
 		/// * model_filename: "face_landmarks.dat"
 		#[inline]
 		fn training_def(&mut self, images: &mut core::Vector<core::Mat>, landmarks: &mut core::Vector<core::Vector<core::Point2f>>, configfile: &str, scale: core::Size) -> Result<bool> {
@@ -2804,7 +2804,7 @@ pub mod face {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FacemarkKazemi::create] function uses the following default values for its arguments:
 		/// * parameters: FacemarkKazemi::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::face::FacemarkKazemi>> {
@@ -3097,7 +3097,7 @@ pub mod face {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FacemarkLBF::create] function uses the following default values for its arguments:
 		/// * parameters: FacemarkLBF::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::face::FacemarkLBF>> {
@@ -3516,14 +3516,14 @@ pub mod face {
 		/// params.model_filename = "ibug68.model"; // filename to save the trained model
 		/// Ptr<Facemark> facemark = FacemarkLBF::create(params);
 		/// 
-		///  add training samples (see Facemark::addTrainingSample)
+		/// // add training samples (see Facemark::addTrainingSample)
 		/// 
 		/// facemark->training();
 		/// ```
 		/// 
 		/// 
 		/// ## Note
-		/// This alternative version of [training] function uses the following default values for its arguments:
+		/// This alternative version of [FacemarkTrainTrait::training] function uses the following default values for its arguments:
 		/// * parameters: 0
 		#[inline]
 		fn training_def(&mut self) -> Result<()> {
@@ -3646,7 +3646,7 @@ pub mod face {
 		/// 
 		/// 
 		/// ## Note
-		/// This alternative version of [get_data] function uses the following default values for its arguments:
+		/// This alternative version of [FacemarkTrainTrait::get_data] function uses the following default values for its arguments:
 		/// * items: 0
 		#[inline]
 		fn get_data_def(&mut self) -> Result<bool> {
@@ -3878,7 +3878,7 @@ pub mod face {
 		/// *   labels The labels corresponding to the projections.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FisherFaceRecognizer::create] function uses the following default values for its arguments:
 		/// * num_components: 0
 		/// * threshold: DBL_MAX
 		#[inline]
@@ -4170,7 +4170,7 @@ pub mod face {
 		/// *   labels Labels corresponding to the calculated Local Binary Patterns Histograms.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [LBPHFaceRecognizer::create] function uses the following default values for its arguments:
 		/// * radius: 1
 		/// * neighbors: 8
 		/// * grid_x: 8
@@ -4362,7 +4362,7 @@ pub mod face {
 		/// * objname: (optional) top-level node in the FileStorage
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [MACE::load] function uses the following default values for its arguments:
 		/// * objname: String()
 		#[inline]
 		pub fn load_def(filename: &str) -> Result<core::Ptr<crate::face::MACE>> {
@@ -4396,7 +4396,7 @@ pub mod face {
 		/// * IMGSIZE: images will get resized to this (should be an even number)
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [MACE::create] function uses the following default values for its arguments:
 		/// * imgsize: 64
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::face::MACE>> {
@@ -4541,7 +4541,7 @@ pub mod face {
 		/// Each values is a pair of label and distance.
 		/// 
 		/// ## Note
-		/// This alternative version of [get_results] function uses the following default values for its arguments:
+		/// This alternative version of [StandardCollectorTraitConst::get_results] function uses the following default values for its arguments:
 		/// * sorted: false
 		#[inline]
 		fn get_results_def(&self) -> Result<core::Vector<core::Tuple<(i32, f64)>>> {
@@ -4670,7 +4670,7 @@ pub mod face {
 		/// * threshold: set threshold
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [StandardCollector::create] function uses the following default values for its arguments:
 		/// * threshold: DBL_MAX
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::face::StandardCollector>> {

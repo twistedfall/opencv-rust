@@ -1356,7 +1356,7 @@ pub mod shape {
 		/// * borderValue: border value.
 		/// 
 		/// ## Note
-		/// This alternative version of [warp_image] function uses the following default values for its arguments:
+		/// This alternative version of [ShapeTransformerTraitConst::warp_image] function uses the following default values for its arguments:
 		/// * flags: INTER_LINEAR
 		/// * border_mode: BORDER_CONSTANT
 		/// * border_value: Scalar()
@@ -1420,7 +1420,7 @@ pub mod shape {
 		/// * output: Output contour.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply_transformation] function uses the following default values for its arguments:
+		/// This alternative version of [ShapeTransformerTrait::apply_transformation] function uses the following default values for its arguments:
 		/// * output: noArray()
 		#[inline]
 		fn apply_transformation_def(&mut self, input: &impl core::ToInputArray) -> Result<f32> {

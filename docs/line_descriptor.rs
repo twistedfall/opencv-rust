@@ -267,7 +267,7 @@ pub mod line_descriptor {
 		/// * masks: vector of mask matrices to detect only KeyLines of interest from each input image
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorTraitConst::detect] function uses the following default values for its arguments:
 		/// * masks: std::vector<Mat>()
 		#[inline]
 		fn detect_def(&self, images: &core::Vector<core::Mat>, keylines: &mut core::Vector<core::Vector<crate::line_descriptor::KeyLine>>) -> Result<()> {
@@ -306,7 +306,7 @@ pub mod line_descriptor {
 		/// * returnFloatDescr: flag (when set to true, original non-binary descriptors are returned)
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorTraitConst::compute] function uses the following default values for its arguments:
 		/// * return_float_descr: false
 		#[inline]
 		fn compute_def(&self, image: &core::Mat, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut core::Mat) -> Result<()> {
@@ -353,7 +353,7 @@ pub mod line_descriptor {
 		/// * returnFloatDescr: flag (when set to true, original non-binary descriptors are returned)
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorTraitConst::compute] function uses the following default values for its arguments:
 		/// * return_float_descr: false
 		#[inline]
 		fn compute_def_1(&self, images: &core::Vector<core::Mat>, keylines: &mut core::Vector<core::Vector<crate::line_descriptor::KeyLine>>, descriptors: &mut core::Vector<core::Mat>) -> Result<()> {
@@ -436,7 +436,7 @@ pub mod line_descriptor {
 		/// * returnFloatDescr: flag (when set to true, original non-binary descriptors are returned)
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorTraitConst::apply] function uses the following default values for its arguments:
 		/// * use_provided_key_lines: false
 		/// * return_float_descr: false
 		#[inline]
@@ -562,7 +562,7 @@ pub mod line_descriptor {
 		/// * mask: mask matrix to detect only KeyLines of interest
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorTrait::detect] function uses the following default values for its arguments:
 		/// * mask: Mat()
 		#[inline]
 		fn detect_def_1(&mut self, image: &core::Mat, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>) -> Result<()> {
@@ -857,7 +857,7 @@ pub mod line_descriptor {
 		/// * mask: mask to select which input descriptors must be matched to one in dataset
 		/// 
 		/// ## Note
-		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorMatcherTraitConst::match_] function uses the following default values for its arguments:
 		/// * mask: Mat()
 		#[inline]
 		fn match__def(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
@@ -905,7 +905,7 @@ pub mod line_descriptor {
 		/// matches for a given query is not inserted in final result)
 		/// 
 		/// ## Note
-		/// This alternative version of [knn_match] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorMatcherTraitConst::knn_match] function uses the following default values for its arguments:
 		/// * mask: Mat()
 		/// * compact_result: false
 		#[inline]
@@ -954,7 +954,7 @@ pub mod line_descriptor {
 		/// matches for a given query is not inserted in final result)
 		/// 
 		/// ## Note
-		/// This alternative version of [radius_match] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorMatcherTraitConst::radius_match] function uses the following default values for its arguments:
 		/// * mask: Mat()
 		/// * compact_result: false
 		#[inline]
@@ -1009,7 +1009,7 @@ pub mod line_descriptor {
 		/// dataset relative to *i*-th image)
 		/// 
 		/// ## Note
-		/// This alternative version of [match_query] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorMatcherTrait::match_query] function uses the following default values for its arguments:
 		/// * masks: std::vector<Mat>()
 		#[inline]
 		fn match_query_def(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
@@ -1067,7 +1067,7 @@ pub mod line_descriptor {
 		/// matches for a given query is not inserted in final result)
 		/// 
 		/// ## Note
-		/// This alternative version of [knn_match_query] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorMatcherTrait::knn_match_query] function uses the following default values for its arguments:
 		/// * masks: std::vector<Mat>()
 		/// * compact_result: false
 		#[inline]
@@ -1126,7 +1126,7 @@ pub mod line_descriptor {
 		/// matches for a given query is not inserted in final result)
 		/// 
 		/// ## Note
-		/// This alternative version of [radius_match] function uses the following default values for its arguments:
+		/// This alternative version of [BinaryDescriptorMatcherTrait::radius_match] function uses the following default values for its arguments:
 		/// * masks: std::vector<Mat>()
 		/// * compact_result: false
 		#[inline]
@@ -1436,7 +1436,7 @@ pub mod line_descriptor {
 		/// * masks: vector of mask matrices to detect only KeyLines of interest from each input image
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multiple] function uses the following default values for its arguments:
+		/// This alternative version of [LSDDetectorTraitConst::detect_multiple] function uses the following default values for its arguments:
 		/// * masks: std::vector<Mat>()
 		#[inline]
 		fn detect_multiple_def(&self, images: &core::Vector<core::Mat>, keylines: &mut core::Vector<core::Vector<crate::line_descriptor::KeyLine>>, scale: i32, num_octaves: i32) -> Result<()> {
@@ -1483,7 +1483,7 @@ pub mod line_descriptor {
 		/// * mask: mask matrix to detect only KeyLines of interest
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [LSDDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * mask: Mat()
 		#[inline]
 		fn detect_def(&mut self, image: &core::Mat, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>, scale: i32, num_octaves: i32) -> Result<()> {

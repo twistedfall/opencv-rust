@@ -1172,7 +1172,7 @@ pub mod objdetect {
 		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multi_scale] function uses the following default values for its arguments:
+		/// This alternative version of [CascadeClassifierTrait::detect_multi_scale] function uses the following default values for its arguments:
 		/// * scale_factor: 1.1
 		/// * min_neighbors: 3
 		/// * flags: 0
@@ -1207,15 +1207,15 @@ pub mod objdetect {
 		/// 
 		/// * image: Matrix of the type CV_8U containing an image where objects are detected.
 		/// * objects: Vector of rectangles where each rectangle contains the detected object, the
-		///    rectangles may be partially outside the original image.
+		/// rectangles may be partially outside the original image.
 		/// * numDetections: Vector of detection numbers for the corresponding objects. An object's number
-		///    of detections is the number of neighboring positively classified rectangles that were joined
-		///    together to form the object.
+		/// of detections is the number of neighboring positively classified rectangles that were joined
+		/// together to form the object.
 		/// * scaleFactor: Parameter specifying how much the image size is reduced at each image scale.
 		/// * minNeighbors: Parameter specifying how many neighbors each candidate rectangle should have
-		///    to retain it.
+		/// to retain it.
 		/// * flags: Parameter with the same meaning for an old cascade as in the function
-		///    cvHaarDetectObjects. It is not used for a new cascade.
+		/// cvHaarDetectObjects. It is not used for a new cascade.
 		/// * minSize: Minimum possible object size. Objects smaller than that are ignored.
 		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
 		/// 
@@ -1252,7 +1252,7 @@ pub mod objdetect {
 		/// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multi_scale2] function uses the following default values for its arguments:
+		/// This alternative version of [CascadeClassifierTrait::detect_multi_scale2] function uses the following default values for its arguments:
 		/// * scale_factor: 1.1
 		/// * min_neighbors: 3
 		/// * flags: 0
@@ -1285,21 +1285,21 @@ pub mod objdetect {
 		/// 
 		/// ## Overloaded parameters
 		/// 
-		///    This function allows you to retrieve the final stage decision certainty of classification.
-		///    For this, one needs to set `outputRejectLevels` on true and provide the `rejectLevels` and `levelWeights` parameter.
-		///    For each resulting detection, `levelWeights` will then contain the certainty of classification at the final stage.
-		///    This value can then be used to separate strong from weaker classifications.
+		/// This function allows you to retrieve the final stage decision certainty of classification.
+		/// For this, one needs to set `outputRejectLevels` on true and provide the `rejectLevels` and `levelWeights` parameter.
+		/// For each resulting detection, `levelWeights` will then contain the certainty of classification at the final stage.
+		/// This value can then be used to separate strong from weaker classifications.
 		/// 
-		///    A code sample on how to use it efficiently can be found below:
-		///    ```C++
-		///    Mat img;
-		///    vector<double> weights;
-		///    vector<int> levels;
-		///    vector<Rect> detections;
-		///    CascadeClassifier model("/path/to/your/model.xml");
-		///    model.detectMultiScale(img, detections, levels, weights, 1.1, 3, 0, Size(), Size(), true);
-		///    cerr << "Detection " << detections[0] << " with weight " << weights[0] << endl;
-		///    ```
+		/// A code sample on how to use it efficiently can be found below:
+		/// ```C++
+		/// Mat img;
+		/// vector<double> weights;
+		/// vector<int> levels;
+		/// vector<Rect> detections;
+		/// CascadeClassifier model("/path/to/your/model.xml");
+		/// model.detectMultiScale(img, detections, levels, weights, 1.1, 3, 0, Size(), Size(), true);
+		/// cerr << "Detection " << detections[0] << " with weight " << weights[0] << endl;
+		/// ```
 		/// 
 		/// 
 		/// ## C++ default parameters
@@ -1338,7 +1338,7 @@ pub mod objdetect {
 		/// 
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multi_scale3] function uses the following default values for its arguments:
+		/// This alternative version of [CascadeClassifierTrait::detect_multi_scale3] function uses the following default values for its arguments:
 		/// * scale_factor: 1.1
 		/// * min_neighbors: 3
 		/// * flags: 0
@@ -2212,7 +2212,7 @@ pub mod objdetect {
 		/// * target_id: the id of target device
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FaceDetectorYN::create] function uses the following default values for its arguments:
 		/// * score_threshold: 0.9f
 		/// * nms_threshold: 0.3f
 		/// * top_k: 5000
@@ -2287,7 +2287,7 @@ pub mod objdetect {
 		/// * dis_type: defining the similarity with optional values "FR_OSINE" or "FR_NORM_L2"
 		/// 
 		/// ## Note
-		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// This alternative version of [FaceRecognizerSFTraitConst::match_] function uses the following default values for its arguments:
 		/// * dis_type: FaceRecognizerSF::FR_COSINE
 		#[inline]
 		fn match__def(&self, face_feature1: &impl core::ToInputArray, face_feature2: &impl core::ToInputArray) -> Result<f64> {
@@ -2380,7 +2380,7 @@ pub mod objdetect {
 		/// * target_id: the id of target device
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FaceRecognizerSF::create] function uses the following default values for its arguments:
 		/// * backend_id: 0
 		/// * target_id: 0
 		#[inline]
@@ -2456,7 +2456,7 @@ pub mod objdetect {
 		/// * straight_code: The optional output image containing binarized code, will be empty if not found.
 		/// 
 		/// ## Note
-		/// This alternative version of [decode] function uses the following default values for its arguments:
+		/// This alternative version of [GraphicalCodeDetectorTraitConst::decode] function uses the following default values for its arguments:
 		/// * straight_code: noArray()
 		#[inline]
 		fn decode_def(&self, img: &impl core::ToInputArray, points: &impl core::ToInputArray) -> Result<Vec<u8>> {
@@ -2501,7 +2501,7 @@ pub mod objdetect {
 		/// * straight_code: The optional output image containing binarized code
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_and_decode] function uses the following default values for its arguments:
+		/// This alternative version of [GraphicalCodeDetectorTraitConst::detect_and_decode] function uses the following default values for its arguments:
 		/// * points: noArray()
 		/// * straight_code: noArray()
 		#[inline]
@@ -2559,7 +2559,7 @@ pub mod objdetect {
 		/// * straight_code: The optional output vector of images containing binarized codes
 		/// 
 		/// ## Note
-		/// This alternative version of [decode_multi] function uses the following default values for its arguments:
+		/// This alternative version of [GraphicalCodeDetectorTraitConst::decode_multi] function uses the following default values for its arguments:
 		/// * straight_code: noArray()
 		#[inline]
 		fn decode_multi_def(&self, img: &impl core::ToInputArray, points: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>) -> Result<bool> {
@@ -2602,7 +2602,7 @@ pub mod objdetect {
 		/// * straight_code: The optional vector of images containing binarized codes
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_and_decode_multi] function uses the following default values for its arguments:
+		/// This alternative version of [GraphicalCodeDetectorTraitConst::detect_and_decode_multi] function uses the following default values for its arguments:
 		/// * points: noArray()
 		/// * straight_code: noArray()
 		#[inline]
@@ -2621,6 +2621,18 @@ pub mod objdetect {
 	pub trait GraphicalCodeDetectorTrait: crate::objdetect::GraphicalCodeDetectorTraitConst {
 		fn as_raw_mut_GraphicalCodeDetector(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, unnamed: &crate::objdetect::GraphicalCodeDetector) {
+			let ret = unsafe { sys::cv_GraphicalCodeDetector_operatorST_const_GraphicalCodeDetectorR(self.as_raw_mut_GraphicalCodeDetector(), unnamed.as_raw_GraphicalCodeDetector()) };
+			ret
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut unnamed: crate::objdetect::GraphicalCodeDetector) {
+			let ret = unsafe { sys::cv_GraphicalCodeDetector_operatorST_GraphicalCodeDetectorRR(self.as_raw_mut_GraphicalCodeDetector(), unnamed.as_raw_mut_GraphicalCodeDetector()) };
+			ret
+		}
+		
 	}
 	
 	pub struct GraphicalCodeDetector {
@@ -2877,7 +2889,7 @@ pub mod objdetect {
 		/// * objname: Object name
 		/// 
 		/// ## Note
-		/// This alternative version of [save] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTraitConst::save] function uses the following default values for its arguments:
 		/// * objname: String()
 		#[inline]
 		fn save_def(&self, filename: &str) -> Result<()> {
@@ -2936,7 +2948,7 @@ pub mod objdetect {
 		/// * locations: Vector of Point
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTraitConst::compute] function uses the following default values for its arguments:
 		/// * win_stride: Size()
 		/// * padding: Size()
 		/// * locations: std::vector<Point>()
@@ -2990,7 +3002,7 @@ pub mod objdetect {
 		/// * searchLocations: Vector of Point includes set of requested locations to be evaluated.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_weights] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTraitConst::detect_weights] function uses the following default values for its arguments:
 		/// * hit_threshold: 0
 		/// * win_stride: Size()
 		/// * padding: Size()
@@ -3043,7 +3055,7 @@ pub mod objdetect {
 		/// * searchLocations: Vector of Point includes locations to search.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTraitConst::detect] function uses the following default values for its arguments:
 		/// * hit_threshold: 0
 		/// * win_stride: Size()
 		/// * padding: Size()
@@ -3108,7 +3120,7 @@ pub mod objdetect {
 		/// * useMeanshiftGrouping: indicates grouping algorithm
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multi_scale_weights] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTraitConst::detect_multi_scale_weights] function uses the following default values for its arguments:
 		/// * hit_threshold: 0
 		/// * win_stride: Size()
 		/// * padding: Size()
@@ -3173,7 +3185,7 @@ pub mod objdetect {
 		/// * useMeanshiftGrouping: indicates grouping algorithm
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multi_scale] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTraitConst::detect_multi_scale] function uses the following default values for its arguments:
 		/// * hit_threshold: 0
 		/// * win_stride: Size()
 		/// * padding: Size()
@@ -3222,7 +3234,7 @@ pub mod objdetect {
 		/// * paddingBR: Padding from bottom-right
 		/// 
 		/// ## Note
-		/// This alternative version of [compute_gradient] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTraitConst::compute_gradient] function uses the following default values for its arguments:
 		/// * padding_tl: Size()
 		/// * padding_br: Size()
 		#[inline]
@@ -3276,7 +3288,7 @@ pub mod objdetect {
 		/// * padding: padding
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_roi] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTraitConst::detect_roi] function uses the following default values for its arguments:
 		/// * hit_threshold: 0
 		/// * win_stride: Size()
 		/// * padding: Size()
@@ -3322,7 +3334,7 @@ pub mod objdetect {
 		/// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a group of rectangles to retain it.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multi_scale_roi] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTraitConst::detect_multi_scale_roi] function uses the following default values for its arguments:
 		/// * hit_threshold: 0
 		/// * group_threshold: 0
 		#[inline]
@@ -3512,7 +3524,7 @@ pub mod objdetect {
 		/// * objname: The optional name of the node to read (if empty, the first top-level node will be used).
 		/// 
 		/// ## Note
-		/// This alternative version of [load] function uses the following default values for its arguments:
+		/// This alternative version of [HOGDescriptorTrait::load] function uses the following default values for its arguments:
 		/// * objname: String()
 		#[inline]
 		fn load_def(&mut self, filename: &str) -> Result<bool> {
@@ -3657,7 +3669,7 @@ pub mod objdetect {
 		/// ## Overloaded parameters
 		/// 
 		/// 
-		///    Creates the HOG descriptor and detector and loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file.
+		/// Creates the HOG descriptor and detector and loads HOGDescriptor parameters and coefficients for the linear SVM classifier from a file.
 		/// ## Parameters
 		/// * filename: The file name containing HOGDescriptor properties and coefficients for the linear SVM classifier.
 		#[inline]
@@ -3821,7 +3833,7 @@ pub mod objdetect {
 		/// * straight_qrcode: The optional output image containing rectified and binarized QR code
 		/// 
 		/// ## Note
-		/// This alternative version of [decode_curved] function uses the following default values for its arguments:
+		/// This alternative version of [QRCodeDetectorTrait::decode_curved] function uses the following default values for its arguments:
 		/// * straight_qrcode: noArray()
 		#[inline]
 		fn decode_curved_def(&mut self, img: &impl core::ToInputArray, points: &impl core::ToInputArray) -> Result<Vec<u8>> {
@@ -3866,7 +3878,7 @@ pub mod objdetect {
 		/// * straight_qrcode: The optional output image containing rectified and binarized QR code
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_and_decode_curved] function uses the following default values for its arguments:
+		/// This alternative version of [QRCodeDetectorTrait::detect_and_decode_curved] function uses the following default values for its arguments:
 		/// * points: noArray()
 		/// * straight_qrcode: noArray()
 		#[inline]
@@ -4196,7 +4208,7 @@ pub mod objdetect {
 		/// * parameters: QR code encoder parameters QRCodeEncoder::Params
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [QRCodeEncoder::create] function uses the following default values for its arguments:
 		/// * parameters: QRCodeEncoder::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::objdetect::QRCodeEncoder>> {
@@ -4395,7 +4407,7 @@ pub mod objdetect {
 		/// undistort, estimatePoseSingleMarkers,  estimatePoseBoard
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_markers] function uses the following default values for its arguments:
+		/// This alternative version of [ArucoDetectorTraitConst::detect_markers] function uses the following default values for its arguments:
 		/// * rejected_img_points: noArray()
 		#[inline]
 		fn detect_markers_def(&self, image: &impl core::ToInputArray, corners: &mut impl core::ToOutputArray, ids: &mut impl core::ToOutputArray) -> Result<()> {
@@ -4476,7 +4488,7 @@ pub mod objdetect {
 		/// homography, and all the marker corners in the board must have the same Z coordinate.
 		/// 
 		/// ## Note
-		/// This alternative version of [refine_detected_markers] function uses the following default values for its arguments:
+		/// This alternative version of [ArucoDetectorTraitConst::refine_detected_markers] function uses the following default values for its arguments:
 		/// * camera_matrix: noArray()
 		/// * dist_coeffs: noArray()
 		/// * recovered_idxs: noArray()
@@ -4805,7 +4817,7 @@ pub mod objdetect {
 		/// This function return the image of the board, ready to be printed.
 		/// 
 		/// ## Note
-		/// This alternative version of [generate_image] function uses the following default values for its arguments:
+		/// This alternative version of [BoardTraitConst::generate_image] function uses the following default values for its arguments:
 		/// * margin_size: 0
 		/// * border_bits: 1
 		#[inline]
@@ -5241,7 +5253,7 @@ pub mod objdetect {
 		/// findChessboardCorners
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_board] function uses the following default values for its arguments:
+		/// This alternative version of [CharucoDetectorTraitConst::detect_board] function uses the following default values for its arguments:
 		/// * marker_corners: noArray()
 		/// * marker_ids: noArray()
 		#[inline]
@@ -5314,7 +5326,7 @@ pub mod objdetect {
 		/// homography. Homography is faster than reprojection, but less accurate.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_diamonds] function uses the following default values for its arguments:
+		/// This alternative version of [CharucoDetectorTraitConst::detect_diamonds] function uses the following default values for its arguments:
 		/// * marker_corners: noArray()
 		/// * marker_ids: noArray()
 		#[inline]
@@ -6122,7 +6134,7 @@ pub mod objdetect {
 		/// Write a set of DetectorParameters to FileStorage
 		/// 
 		/// ## Note
-		/// This alternative version of [write_detector_parameters] function uses the following default values for its arguments:
+		/// This alternative version of [DetectorParametersTrait::write_detector_parameters] function uses the following default values for its arguments:
 		/// * name: String()
 		#[inline]
 		fn write_detector_parameters_def(&mut self, fs: &mut core::FileStorage) -> Result<bool> {
@@ -6275,7 +6287,7 @@ pub mod objdetect {
 		/// If allRotations is true, the four posible bits rotation are considered
 		/// 
 		/// ## Note
-		/// This alternative version of [get_distance_to_id] function uses the following default values for its arguments:
+		/// This alternative version of [DictionaryTraitConst::get_distance_to_id] function uses the following default values for its arguments:
 		/// * all_rotations: true
 		#[inline]
 		fn get_distance_to_id_def(&self, bits: &impl core::ToInputArray, id: i32) -> Result<i32> {
@@ -6304,7 +6316,7 @@ pub mod objdetect {
 		/// Generate a canonical marker image
 		/// 
 		/// ## Note
-		/// This alternative version of [generate_image_marker] function uses the following default values for its arguments:
+		/// This alternative version of [DictionaryTraitConst::generate_image_marker] function uses the following default values for its arguments:
 		/// * border_bits: 1
 		#[inline]
 		fn generate_image_marker_def(&self, id: i32, side_pixels: i32, _img: &mut impl core::ToOutputArray) -> Result<()> {
@@ -6381,7 +6393,7 @@ pub mod objdetect {
 		/// Write a dictionary to FileStorage, format is the same as in readDictionary().
 		/// 
 		/// ## Note
-		/// This alternative version of [write_dictionary] function uses the following default values for its arguments:
+		/// This alternative version of [DictionaryTrait::write_dictionary] function uses the following default values for its arguments:
 		/// * name: String()
 		#[inline]
 		fn write_dictionary_def(&mut self, fs: &mut core::FileStorage) -> Result<()> {
@@ -6725,7 +6737,7 @@ pub mod objdetect {
 		/// Write a set of RefineParameters to FileStorage
 		/// 
 		/// ## Note
-		/// This alternative version of [write_refine_parameters] function uses the following default values for its arguments:
+		/// This alternative version of [RefineParameters::write_refine_parameters] function uses the following default values for its arguments:
 		/// * name: String()
 		#[inline]
 		pub fn write_refine_parameters_def(self, fs: &mut core::FileStorage) -> Result<bool> {
@@ -6798,7 +6810,7 @@ pub mod objdetect {
 		/// true if at least one valid barcode have been found
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_and_decode_with_type] function uses the following default values for its arguments:
+		/// This alternative version of [BarcodeDetectorTraitConst::detect_and_decode_with_type] function uses the following default values for its arguments:
 		/// * points: noArray()
 		#[inline]
 		fn detect_and_decode_with_type_def(&self, img: &impl core::ToInputArray, decoded_info: &mut core::Vector<String>, decoded_type: &mut core::Vector<String>) -> Result<bool> {

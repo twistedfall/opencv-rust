@@ -237,7 +237,7 @@ pub mod aruco {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	///  * It's the same function as [calibrate_camera_aruco] but without calibration error estimation.
+	/// It's the same function as [calibrate_camera_aruco] but without calibration error estimation.
 	/// 
 	/// ## C++ default parameters
 	/// * rvecs: noArray()

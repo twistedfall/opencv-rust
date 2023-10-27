@@ -556,7 +556,7 @@ pub mod xfeatures2d {
 		/// Optionally it can compute descriptors for the user-provided keypoints and recompute keypoints direction
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [SURF_CUDATrait::apply] function uses the following default values for its arguments:
 		/// * use_provided_keypoints: false
 		#[inline]
 		fn apply_def(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::GpuMat, descriptors: &mut core::GpuMat) -> Result<()> {
@@ -603,7 +603,7 @@ pub mod xfeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [SURF_CUDATrait::apply] function uses the following default values for its arguments:
 		/// * use_provided_keypoints: false
 		#[inline]
 		fn apply_def_1(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut core::GpuMat) -> Result<()> {
@@ -644,7 +644,7 @@ pub mod xfeatures2d {
 		/// * useProvidedKeypoints: Compute descriptors for the user-provided keypoints and recompute keypoints direction.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_with_descriptors] function uses the following default values for its arguments:
+		/// This alternative version of [SURF_CUDATrait::detect_with_descriptors] function uses the following default values for its arguments:
 		/// * use_provided_keypoints: false
 		#[inline]
 		fn detect_with_descriptors_def(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::GpuMat, descriptors: &mut core::GpuMat) -> Result<()> {
@@ -667,7 +667,7 @@ pub mod xfeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [SURF_CUDATrait::apply] function uses the following default values for its arguments:
 		/// * use_provided_keypoints: false
 		#[inline]
 		fn apply_def_2(&mut self, img: &core::GpuMat, mask: &core::GpuMat, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut core::Vector<f32>) -> Result<()> {
@@ -830,7 +830,7 @@ pub mod xfeatures2d {
 		/// false - compute orientation).
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [SURF_CUDA::create] function uses the following default values for its arguments:
 		/// * _n_octaves: 4
 		/// * _n_octave_layers: 2
 		/// * _extended: false
@@ -898,7 +898,7 @@ pub mod xfeatures2d {
 		/// performs affine adaptation to augment them with their elliptic regions.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [AffineFeature2DTrait::detect] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		#[inline]
 		fn detect_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>) -> Result<()> {
@@ -931,7 +931,7 @@ pub mod xfeatures2d {
 		/// regions, after warping them into circles.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_and_compute] function uses the following default values for its arguments:
+		/// This alternative version of [AffineFeature2DTrait::detect_and_compute] function uses the following default values for its arguments:
 		/// * use_provided_keypoints: false
 		#[inline]
 		fn detect_and_compute_def(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
@@ -1169,7 +1169,7 @@ pub mod xfeatures2d {
 		///  BEBLID::SIZE_512_BITS or BEBLID::SIZE_256_BITS.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [BEBLID::create] function uses the following default values for its arguments:
 		/// * n_bits: BEBLID::SIZE_512_BITS
 		#[inline]
 		pub fn create_def(scale_factor: f32) -> Result<core::Ptr<crate::xfeatures2d::BEBLID>> {
@@ -1334,7 +1334,7 @@ pub mod xfeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [BoostDesc::create] function uses the following default values for its arguments:
 		/// * desc: BoostDesc::BINBOOST_256
 		/// * use_scale_orientation: true
 		/// * scale_factor: 6.25f
@@ -1479,7 +1479,7 @@ pub mod xfeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [BriefDescriptorExtractor::create] function uses the following default values for its arguments:
 		/// * bytes: 32
 		/// * use_orientation: false
 		#[inline]
@@ -1866,7 +1866,7 @@ pub mod xfeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [DAISY::create] function uses the following default values for its arguments:
 		/// * radius: 15
 		/// * q_radius: 3
 		/// * q_theta: 8
@@ -2211,7 +2211,7 @@ pub mod xfeatures2d {
 		/// * selectedPairs: (Optional) user defined selected pairs indexes,
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FREAK::create] function uses the following default values for its arguments:
 		/// * orientation_normalized: true
 		/// * scale_normalized: true
 		/// * pattern_scale: 22.0f
@@ -2429,7 +2429,7 @@ pub mod xfeatures2d {
 		/// * num_layers: the number of intermediate scales per octave
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [HarrisLaplaceFeatureDetector::create] function uses the following default values for its arguments:
 		/// * num_octaves: 6
 		/// * corn_thresh: 0.01f
 		/// * dog_thresh: 0.01f
@@ -2625,7 +2625,7 @@ pub mod xfeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [LATCH::create] function uses the following default values for its arguments:
 		/// * bytes: 32
 		/// * rotation_invariance: true
 		/// * half_ssd_size: 3
@@ -2781,7 +2781,7 @@ pub mod xfeatures2d {
 		/// * blur_kernel: kernel for blurring image prior to descriptor construction, where 1=3x3, 2=5x5, 3=7x7 and so forth
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [LUCID::create] function uses the following default values for its arguments:
 		/// * lucid_kernel: 1
 		/// * blur_kernel: 2
 		#[inline]
@@ -3063,7 +3063,7 @@ pub mod xfeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [MSDDetector::create] function uses the following default values for its arguments:
 		/// * m_patch_radius: 3
 		/// * m_search_area_radius: 5
 		/// * m_nms_radius: 5
@@ -3714,7 +3714,7 @@ pub mod xfeatures2d {
 		/// Created algorithm.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [PCTSignatures::create] function uses the following default values for its arguments:
 		/// * init_sample_count: 2000
 		/// * init_seed_count: 400
 		/// * point_distribution: 0
@@ -3805,7 +3805,7 @@ pub mod xfeatures2d {
 		/// * borderThickness: Border thickness of the visualized signature.
 		/// 
 		/// ## Note
-		/// This alternative version of [draw_signature] function uses the following default values for its arguments:
+		/// This alternative version of [PCTSignatures::draw_signature] function uses the following default values for its arguments:
 		/// * radius_to_shorter_side_ratio: 1.0/8
 		/// * border_thickness: 1
 		#[inline]
@@ -3963,7 +3963,7 @@ pub mod xfeatures2d {
 		/// * similarityParameter: Parameter of the similarity function.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [PCTSignaturesSQFD::create] function uses the following default values for its arguments:
 		/// * distance_function: 3
 		/// * similarity_function: 2
 		/// * similarity_parameter: 1.0f
@@ -4205,7 +4205,7 @@ pub mod xfeatures2d {
 		/// false - compute orientation).
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [SURF::create] function uses the following default values for its arguments:
 		/// * hessian_threshold: 100
 		/// * n_octaves: 4
 		/// * n_octave_layers: 3
@@ -4409,7 +4409,7 @@ pub mod xfeatures2d {
 		/// the full constructor
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [StarDetector::create] function uses the following default values for its arguments:
 		/// * max_size: 45
 		/// * response_threshold: 30
 		/// * line_threshold_projected: 10
@@ -4603,7 +4603,7 @@ pub mod xfeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [TBMR::create] function uses the following default values for its arguments:
 		/// * min_area: 60
 		/// * max_area_relative: 0.01f
 		/// * scale_factor: 1.25f
@@ -4748,7 +4748,7 @@ pub mod xfeatures2d {
 		///  TEBLID::SIZE_256_BITS or TEBLID::SIZE_512_BITS.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [TEBLID::create] function uses the following default values for its arguments:
 		/// * n_bits: TEBLID::SIZE_256_BITS
 		#[inline]
 		pub fn create_def(scale_factor: f32) -> Result<core::Ptr<crate::xfeatures2d::TEBLID>> {
@@ -4960,7 +4960,7 @@ pub mod xfeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [VGG::create] function uses the following default values for its arguments:
 		/// * desc: VGG::VGG_120
 		/// * isigma: 1.4f
 		/// * img_normalize: true

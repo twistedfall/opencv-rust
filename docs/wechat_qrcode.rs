@@ -50,7 +50,7 @@ pub mod wechat_qrcode {
 		/// list of decoded string.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_and_decode] function uses the following default values for its arguments:
+		/// This alternative version of [WeChatQRCodeTrait::detect_and_decode] function uses the following default values for its arguments:
 		/// * points: noArray()
 		#[inline]
 		fn detect_and_decode_def(&mut self, img: &impl core::ToInputArray) -> Result<core::Vector<String>> {

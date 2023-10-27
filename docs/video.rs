@@ -774,7 +774,7 @@ pub mod video {
 		/// is completely reinitialized from the last frame.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [BackgroundSubtractorTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
 		#[inline]
 		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
@@ -1380,7 +1380,7 @@ pub mod video {
 		/// is completely reinitialized from the last frame.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [BackgroundSubtractorMOG2Trait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
 		#[inline]
 		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
@@ -1802,7 +1802,7 @@ pub mod video {
 		/// * preset: one of PRESET_ULTRAFAST, PRESET_FAST and PRESET_MEDIUM
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [DISOpticalFlow::create] function uses the following default values for its arguments:
 		/// * preset: DISOpticalFlow::PRESET_FAST
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
@@ -2136,7 +2136,7 @@ pub mod video {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FarnebackOpticalFlow::create] function uses the following default values for its arguments:
 		/// * num_levels: 5
 		/// * pyr_scale: 0.5
 		/// * fast_pyramids: false
@@ -2423,7 +2423,7 @@ pub mod video {
 		/// * type: Type of the created matrices that should be CV_32F or CV_64F.
 		/// 
 		/// ## Note
-		/// This alternative version of [init] function uses the following default values for its arguments:
+		/// This alternative version of [KalmanFilterTrait::init] function uses the following default values for its arguments:
 		/// * control_params: 0
 		/// * typ: CV_32F
 		#[inline]
@@ -2458,7 +2458,7 @@ pub mod video {
 		/// * control: The optional input control
 		/// 
 		/// ## Note
-		/// This alternative version of [predict] function uses the following default values for its arguments:
+		/// This alternative version of [KalmanFilterTrait::predict] function uses the following default values for its arguments:
 		/// * control: Mat()
 		#[inline]
 		fn predict_def(&mut self) -> Result<core::Mat> {
@@ -2644,7 +2644,7 @@ pub mod video {
 		/// * err: Optional output vector that contains error response for each point (inverse confidence).
 		/// 
 		/// ## Note
-		/// This alternative version of [calc] function uses the following default values for its arguments:
+		/// This alternative version of [SparseOpticalFlowTrait::calc] function uses the following default values for its arguments:
 		/// * err: cv::noArray()
 		#[inline]
 		fn calc_def(&mut self, prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray) -> Result<()> {
@@ -2874,7 +2874,7 @@ pub mod video {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [SparsePyrLKOpticalFlow::create] function uses the following default values for its arguments:
 		/// * win_size: Size(21,21)
 		/// * max_level: 3
 		/// * crit: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,0.01)
@@ -3068,7 +3068,7 @@ pub mod video {
 		/// * parameters: DaSiamRPN parameters TrackerDaSiamRPN::Params
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [TrackerDaSiamRPN::create] function uses the following default values for its arguments:
 		/// * parameters: TrackerDaSiamRPN::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerDaSiamRPN>> {
@@ -3305,7 +3305,7 @@ pub mod video {
 		/// * parameters: GOTURN parameters TrackerGOTURN::Params
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [TrackerGOTURN::create] function uses the following default values for its arguments:
 		/// * parameters: TrackerGOTURN::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
@@ -3494,7 +3494,7 @@ pub mod video {
 		/// * parameters: MIL parameters TrackerMIL::Params
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [TrackerMIL::create] function uses the following default values for its arguments:
 		/// * parameters: TrackerMIL::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerMIL>> {
@@ -3633,7 +3633,7 @@ pub mod video {
 		/// * parameters: NanoTrack parameters TrackerNano::Params
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [TrackerNano::create] function uses the following default values for its arguments:
 		/// * parameters: TrackerNano::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerNano>> {

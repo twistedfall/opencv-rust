@@ -428,7 +428,7 @@ pub mod img_hash {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [BlockMeanHash::create] function uses the following default values for its arguments:
 		/// * mode: BLOCK_MEAN_HASH_MODE_0
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::img_hash::BlockMeanHash>> {
@@ -733,7 +733,7 @@ pub mod img_hash {
 		/// * scale: int level of scale factor (default = 1)
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [MarrHildrethHash::create] function uses the following default values for its arguments:
 		/// * alpha: 2.0f
 		/// * scale: 1.0f
 		#[inline]
@@ -986,7 +986,7 @@ pub mod img_hash {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [RadialVarianceHash::create] function uses the following default values for its arguments:
 		/// * sigma: 1
 		/// * num_of_angle_line: 180
 		#[inline]

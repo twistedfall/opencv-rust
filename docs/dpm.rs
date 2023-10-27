@@ -146,7 +146,7 @@ pub mod dpm {
 		/// "/home/user/cat.xml" will get the name "cat".
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [DPMDetector::create] function uses the following default values for its arguments:
 		/// * class_names: std::vector<std::string>()
 		#[inline]
 		pub fn create_def(filenames: &core::Vector<String>) -> Result<core::Ptr<crate::dpm::DPMDetector>> {

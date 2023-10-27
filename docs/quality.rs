@@ -674,7 +674,7 @@ pub mod quality {
 		/// * maxPixelValue: maximum per-channel value for any individual pixel; eg 255 for uint8 image
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [QualityPSNR::create] function uses the following default values for its arguments:
 		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
 		#[inline]
 		pub fn create_def(ref_: &impl core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
@@ -720,7 +720,7 @@ pub mod quality {
 		/// PSNR value, or std::numeric_limits<double>::infinity() if the MSE between the two images == 0
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [QualityPSNR::compute] function uses the following default values for its arguments:
 		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
 		#[inline]
 		pub fn compute_def(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray) -> Result<core::Scalar> {

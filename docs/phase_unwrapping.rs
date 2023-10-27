@@ -118,7 +118,7 @@ pub mod phase_unwrapping {
 		/// * parameters: HistogramPhaseUnwrapping parameters HistogramPhaseUnwrapping::Params: width,height of the phase map and histogram characteristics.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [HistogramPhaseUnwrapping::create] function uses the following default values for its arguments:
 		/// * parameters: HistogramPhaseUnwrapping::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
@@ -215,7 +215,7 @@ pub mod phase_unwrapping {
 		/// * shadowMask: Optional CV_8UC1 mask image used when some pixels do not hold any phase information in the wrapped phase map.
 		/// 
 		/// ## Note
-		/// This alternative version of [unwrap_phase_map] function uses the following default values for its arguments:
+		/// This alternative version of [PhaseUnwrappingTrait::unwrap_phase_map] function uses the following default values for its arguments:
 		/// * shadow_mask: noArray()
 		#[inline]
 		fn unwrap_phase_map_def(&mut self, wrapped_phase_map: &impl core::ToInputArray, unwrapped_phase_map: &mut impl core::ToOutputArray) -> Result<()> {

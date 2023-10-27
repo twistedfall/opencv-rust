@@ -905,7 +905,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run] function uses the following default values for its arguments:
+		/// This alternative version of [BaseOCRTrait::run] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -938,7 +938,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run_mask] function uses the following default values for its arguments:
+		/// This alternative version of [BaseOCRTrait::run_mask] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -1641,7 +1641,7 @@ pub mod text {
 		/// * component_level: Only OCR_LEVEL_WORD is supported.
 		/// 
 		/// ## Note
-		/// This alternative version of [run_multiple] function uses the following default values for its arguments:
+		/// This alternative version of [OCRBeamSearchDecoderTrait::run_multiple] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -1674,7 +1674,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run_multiple_mask] function uses the following default values for its arguments:
+		/// This alternative version of [OCRBeamSearchDecoderTrait::run_multiple_mask] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -1704,7 +1704,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run] function uses the following default values for its arguments:
+		/// This alternative version of [OCRBeamSearchDecoderTrait::run] function uses the following default values for its arguments:
 		/// * component_level: 0
 		#[inline]
 		fn run_def(&mut self, image: &impl core::ToInputArray, min_confidence: i32) -> Result<String> {
@@ -1732,7 +1732,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run_mask] function uses the following default values for its arguments:
+		/// This alternative version of [OCRBeamSearchDecoderTrait::run_mask] function uses the following default values for its arguments:
 		/// * component_level: 0
 		#[inline]
 		fn run_mask_def(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, min_confidence: i32) -> Result<String> {
@@ -1824,7 +1824,7 @@ pub mod text {
 		
 		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
 		/// 
-		///    Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
+		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
 		/// 
 		/// ## Parameters
 		/// * classifier: The character classifier with built in feature extractor.
@@ -1867,7 +1867,7 @@ pub mod text {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [create_from_file] function uses the following default values for its arguments:
+		/// This alternative version of [OCRBeamSearchDecoder::create_from_file] function uses the following default values for its arguments:
 		/// * mode: OCR_DECODER_VITERBI
 		/// * beam_size: 500
 		#[inline]
@@ -2057,7 +2057,7 @@ pub mod text {
 		/// * component_level: Only OCR_LEVEL_WORD is supported.
 		/// 
 		/// ## Note
-		/// This alternative version of [run_multiple] function uses the following default values for its arguments:
+		/// This alternative version of [OCRHMMDecoderTrait::run_multiple] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -2138,7 +2138,7 @@ pub mod text {
 		/// * component_level: Only OCR_LEVEL_WORD is supported.
 		/// 
 		/// ## Note
-		/// This alternative version of [run_multiple_mask] function uses the following default values for its arguments:
+		/// This alternative version of [OCRHMMDecoderTrait::run_multiple_mask] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -2168,7 +2168,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run] function uses the following default values for its arguments:
+		/// This alternative version of [OCRHMMDecoderTrait::run] function uses the following default values for its arguments:
 		/// * component_level: 0
 		#[inline]
 		fn run_def(&mut self, image: &impl core::ToInputArray, min_confidence: i32) -> Result<String> {
@@ -2196,7 +2196,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run_mask] function uses the following default values for its arguments:
+		/// This alternative version of [OCRHMMDecoderTrait::run_mask] function uses the following default values for its arguments:
 		/// * component_level: 0
 		#[inline]
 		fn run_mask_def(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, min_confidence: i32) -> Result<String> {
@@ -2301,7 +2301,7 @@ pub mod text {
 		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [OCRHMMDecoder::create] function uses the following default values for its arguments:
 		/// * mode: OCR_DECODER_VITERBI
 		#[inline]
 		pub fn create_def(classifier: core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl core::ToInputArray, emission_probabilities_table: &impl core::ToInputArray) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
@@ -2318,7 +2318,7 @@ pub mod text {
 		
 		/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
 		/// 
-		///      Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
+		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
 		/// 
 		/// ## Parameters
 		/// * classifier: The character classifier with built in feature extractor.
@@ -2359,7 +2359,7 @@ pub mod text {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [create_from_file] function uses the following default values for its arguments:
+		/// This alternative version of [OCRHMMDecoder::create_from_file] function uses the following default values for its arguments:
 		/// * mode: OCR_DECODER_VITERBI
 		/// * classifier: OCR_KNN_CLASSIFIER
 		#[inline]
@@ -2487,7 +2487,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run] function uses the following default values for its arguments:
+		/// This alternative version of [OCRHolisticWordRecognizerTrait::run] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -2568,7 +2568,7 @@ pub mod text {
 		/// * component_level: must be OCR_LEVEL_WORD.
 		/// 
 		/// ## Note
-		/// This alternative version of [run_mask] function uses the following default values for its arguments:
+		/// This alternative version of [OCRHolisticWordRecognizerTrait::run_mask] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -2712,7 +2712,7 @@ pub mod text {
 		/// * component_level: OCR_LEVEL_WORD (by default), or OCR_LEVEL_TEXTLINE.
 		/// 
 		/// ## Note
-		/// This alternative version of [run_multiple] function uses the following default values for its arguments:
+		/// This alternative version of [OCRTesseractTrait::run_multiple] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -2745,7 +2745,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run_multiple_mask] function uses the following default values for its arguments:
+		/// This alternative version of [OCRTesseractTrait::run_multiple_mask] function uses the following default values for its arguments:
 		/// * component_rects: NULL
 		/// * component_texts: NULL
 		/// * component_confidences: NULL
@@ -2775,7 +2775,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run] function uses the following default values for its arguments:
+		/// This alternative version of [OCRTesseractTrait::run] function uses the following default values for its arguments:
 		/// * component_level: 0
 		#[inline]
 		fn run_def(&mut self, image: &impl core::ToInputArray, min_confidence: i32) -> Result<String> {
@@ -2803,7 +2803,7 @@ pub mod text {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run_mask] function uses the following default values for its arguments:
+		/// This alternative version of [OCRTesseractTrait::run_mask] function uses the following default values for its arguments:
 		/// * component_level: 0
 		#[inline]
 		fn run_mask_def(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, min_confidence: i32) -> Result<String> {
@@ -2929,7 +2929,7 @@ pub mod text {
 		/// Note: The char_whitelist default is changed after OpenCV 4.7.0/3.19.0 from "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" to "".
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [OCRTesseract::create] function uses the following default values for its arguments:
 		/// * datapath: NULL
 		/// * language: NULL
 		/// * char_whitelist: NULL

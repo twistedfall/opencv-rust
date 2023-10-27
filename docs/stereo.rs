@@ -421,7 +421,7 @@ pub mod stereo {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [QuasiDenseStereo::create] function uses the following default values for its arguments:
 		/// * param_filepath: cv::String()
 		#[inline]
 		pub fn create_def(mono_img_size: core::Size) -> Result<core::Ptr<crate::stereo::QuasiDenseStereo>> {

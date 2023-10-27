@@ -8844,7 +8844,7 @@ pub mod imgproc {
 	/// ```C++
 	///    Mat corners, dilated_corners;
 	///    preCornerDetect(image, corners, 3);
-	///  dilation with 3x3 rectangular structuring element
+	///    // dilation with 3x3 rectangular structuring element
 	///    dilate(corners, dilated_corners, Mat(), 1);
 	///    Mat corner_mask = corners == dilated_corners;
 	/// ```
@@ -9434,14 +9434,14 @@ pub mod imgproc {
 	/// the `src`,`dsize`,`fx`, and `fy`. If you want to resize src so that it fits the pre-created dst,
 	/// you may call the function as follows:
 	/// ```C++
-	///  explicitly specify dsize=dst.size(); fx and fy will be computed from that.
+	///    // explicitly specify dsize=dst.size(); fx and fy will be computed from that.
 	///    resize(src, dst, dst.size(), 0, 0, interpolation);
 	/// ```
 	/// 
 	/// If you want to decimate the image by factor of 2 in each direction, you can call the function this
 	/// way:
 	/// ```C++
-	///  specify fx and fy and let the function compute the destination image size.
+	///    // specify fx and fy and let the function compute the destination image size.
 	///    resize(src, dst, Size(), 0.5, 0.5, interpolation);
 	/// ```
 	/// 
@@ -10341,7 +10341,7 @@ pub mod imgproc {
 		/// set template to search
 		/// 
 		/// ## Note
-		/// This alternative version of [set_template] function uses the following default values for its arguments:
+		/// This alternative version of [GeneralizedHoughTrait::set_template] function uses the following default values for its arguments:
 		/// * templ_center: Point(-1,-1)
 		#[inline]
 		fn set_template_def(&mut self, templ: &impl core::ToInputArray) -> Result<()> {
@@ -10368,7 +10368,7 @@ pub mod imgproc {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set_template] function uses the following default values for its arguments:
+		/// This alternative version of [GeneralizedHoughTrait::set_template] function uses the following default values for its arguments:
 		/// * templ_center: Point(-1,-1)
 		#[inline]
 		fn set_template_def_1(&mut self, edges: &impl core::ToInputArray, dx: &impl core::ToInputArray, dy: &impl core::ToInputArray) -> Result<()> {
@@ -10401,7 +10401,7 @@ pub mod imgproc {
 		/// find template on image
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [GeneralizedHoughTrait::detect] function uses the following default values for its arguments:
 		/// * votes: noArray()
 		#[inline]
 		fn detect_def(&mut self, image: &impl core::ToInputArray, positions: &mut impl core::ToOutputArray) -> Result<()> {
@@ -10431,7 +10431,7 @@ pub mod imgproc {
 		}
 		
 		/// ## Note
-		/// This alternative version of [detect_with_edges] function uses the following default values for its arguments:
+		/// This alternative version of [GeneralizedHoughTrait::detect_with_edges] function uses the following default values for its arguments:
 		/// * votes: noArray()
 		#[inline]
 		fn detect_with_edges_def(&mut self, edges: &impl core::ToInputArray, dx: &impl core::ToInputArray, dy: &impl core::ToInputArray, positions: &mut impl core::ToOutputArray) -> Result<()> {
@@ -11455,7 +11455,7 @@ pub mod imgproc {
 		/// This vector will be calculated only when the objects type is #LSD_REFINE_ADV.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [LineSegmentDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * width: noArray()
 		/// * prec: noArray()
 		/// * nfa: noArray()
@@ -11519,7 +11519,7 @@ pub mod imgproc {
 		/// in order for lines1 and lines2 to be drawn in the above mentioned colors.
 		/// 
 		/// ## Note
-		/// This alternative version of [compare_segments] function uses the following default values for its arguments:
+		/// This alternative version of [LineSegmentDetectorTrait::compare_segments] function uses the following default values for its arguments:
 		/// * image: noArray()
 		#[inline]
 		fn compare_segments_def(&mut self, size: core::Size, lines1: &impl core::ToInputArray, lines2: &impl core::ToInputArray) -> Result<i32> {
@@ -11664,7 +11664,7 @@ pub mod imgproc {
 		/// vertex (x,y)
 		/// 
 		/// ## Note
-		/// This alternative version of [get_vertex] function uses the following default values for its arguments:
+		/// This alternative version of [Subdiv2DTraitConst::get_vertex] function uses the following default values for its arguments:
 		/// * first_edge: 0
 		#[inline]
 		fn get_vertex_def(&self, vertex: i32) -> Result<core::Point2f> {
@@ -11781,7 +11781,7 @@ pub mod imgproc {
 		/// vertex ID.
 		/// 
 		/// ## Note
-		/// This alternative version of [edge_org] function uses the following default values for its arguments:
+		/// This alternative version of [Subdiv2DTraitConst::edge_org] function uses the following default values for its arguments:
 		/// * orgpt: 0
 		#[inline]
 		fn edge_org_def(&self, edge: i32) -> Result<i32> {
@@ -11822,7 +11822,7 @@ pub mod imgproc {
 		/// vertex ID.
 		/// 
 		/// ## Note
-		/// This alternative version of [edge_dst] function uses the following default values for its arguments:
+		/// This alternative version of [Subdiv2DTraitConst::edge_dst] function uses the following default values for its arguments:
 		/// * dstpt: 0
 		#[inline]
 		fn edge_dst_def(&self, edge: i32) -> Result<i32> {
@@ -11959,7 +11959,7 @@ pub mod imgproc {
 		/// vertex ID.
 		/// 
 		/// ## Note
-		/// This alternative version of [find_nearest] function uses the following default values for its arguments:
+		/// This alternative version of [Subdiv2DTrait::find_nearest] function uses the following default values for its arguments:
 		/// * nearest_pt: 0
 		#[inline]
 		fn find_nearest_def(&mut self, pt: core::Point2f) -> Result<i32> {
@@ -12032,9 +12032,9 @@ pub mod imgproc {
 		/// ## Parameters
 		/// * rect: Rectangle that includes all of the 2D points that are to be added to the subdivision.
 		/// 
-		///    The function creates an empty Delaunay subdivision where 2D points can be added using the function
-		///    insert() . All of the points to be added must be within the specified rectangle, otherwise a runtime
-		///    error is raised.
+		/// The function creates an empty Delaunay subdivision where 2D points can be added using the function
+		/// insert() . All of the points to be added must be within the specified rectangle, otherwise a runtime
+		/// error is raised.
 		#[inline]
 		pub fn new(rect: core::Rect) -> Result<crate::imgproc::Subdiv2D> {
 			return_send!(via ocvrs_return);
@@ -12092,7 +12092,7 @@ pub mod imgproc {
 		/// * backward: Flag to indicate reverse order of retrived pixels (use "true" value to fetch points from the target to the source point)
 		/// 
 		/// ## Note
-		/// This alternative version of [get_contour] function uses the following default values for its arguments:
+		/// This alternative version of [IntelligentScissorsMBTraitConst::get_contour] function uses the following default values for its arguments:
 		/// * backward: false
 		#[inline]
 		fn get_contour_def(&self, target_pt: core::Point, contour: &mut impl core::ToOutputArray) -> Result<()> {
@@ -12164,7 +12164,7 @@ pub mod imgproc {
 		/// * gradient_magnitude_threshold_max: Specify gradient magnitude max value threshold (default: 0, disabled)
 		/// 
 		/// ## Note
-		/// This alternative version of [set_gradient_magnitude_max_limit] function uses the following default values for its arguments:
+		/// This alternative version of [IntelligentScissorsMBTrait::set_gradient_magnitude_max_limit] function uses the following default values for its arguments:
 		/// * gradient_magnitude_threshold_max: 0.0f
 		#[inline]
 		fn set_gradient_magnitude_max_limit_def(&mut self) -> Result<crate::imgproc::IntelligentScissorsMB> {
@@ -12221,7 +12221,7 @@ pub mod imgproc {
 		/// * gradient_magnitude_min_value: Minimal gradient magnitude value for edge pixels (default: 0, check is disabled)
 		/// 
 		/// ## Note
-		/// This alternative version of [set_edge_feature_zero_crossing_parameters] function uses the following default values for its arguments:
+		/// This alternative version of [IntelligentScissorsMBTrait::set_edge_feature_zero_crossing_parameters] function uses the following default values for its arguments:
 		/// * gradient_magnitude_min_value: 0.0f
 		#[inline]
 		fn set_edge_feature_zero_crossing_parameters_def(&mut self) -> Result<crate::imgproc::IntelligentScissorsMB> {
@@ -12261,7 +12261,7 @@ pub mod imgproc {
 		/// Canny
 		/// 
 		/// ## Note
-		/// This alternative version of [set_edge_feature_canny_parameters] function uses the following default values for its arguments:
+		/// This alternative version of [IntelligentScissorsMBTrait::set_edge_feature_canny_parameters] function uses the following default values for its arguments:
 		/// * aperture_size: 3
 		/// * l2gradient: false
 		#[inline]
@@ -12326,7 +12326,7 @@ pub mod imgproc {
 		/// * image: **Optional parameter**. Must be specified if subset of features is specified (non-specified features are calculated internally)
 		/// 
 		/// ## Note
-		/// This alternative version of [apply_image_features] function uses the following default values for its arguments:
+		/// This alternative version of [IntelligentScissorsMBTrait::apply_image_features] function uses the following default values for its arguments:
 		/// * image: noArray()
 		#[inline]
 		fn apply_image_features_def(&mut self, non_edge: &impl core::ToInputArray, gradient_direction: &impl core::ToInputArray, gradient_magnitude: &impl core::ToInputArray) -> Result<crate::imgproc::IntelligentScissorsMB> {

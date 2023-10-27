@@ -146,7 +146,7 @@ pub mod bioinspired {
 		/// it before running method Retina::setup.
 		/// 
 		/// ## Note
-		/// This alternative version of [setup_from_file] function uses the following default values for its arguments:
+		/// This alternative version of [RetinaTrait::setup_from_file] function uses the following default values for its arguments:
 		/// * retina_parameter_file: ""
 		/// * apply_default_setup_on_failure: true
 		#[inline]
@@ -191,7 +191,7 @@ pub mod bioinspired {
 		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
 		/// 
 		/// ## Note
-		/// This alternative version of [setup_from_storage] function uses the following default values for its arguments:
+		/// This alternative version of [RetinaTrait::setup_from_storage] function uses the following default values for its arguments:
 		/// * apply_default_setup_on_failure: true
 		#[inline]
 		fn setup_from_storage_def(&mut self, fs: &mut core::FileStorage) -> Result<()> {
@@ -340,7 +340,7 @@ pub mod bioinspired {
 		/// value sensitivity... and the output saturates faster, recommended value: 0.7
 		/// 
 		/// ## Note
-		/// This alternative version of [setup_op_land_ipl_parvo_channel] function uses the following default values for its arguments:
+		/// This alternative version of [RetinaTrait::setup_op_land_ipl_parvo_channel] function uses the following default values for its arguments:
 		/// * color_mode: true
 		/// * normalise_output: true
 		/// * photoreceptors_local_adaptation_sensitivity: 0.7f
@@ -430,7 +430,7 @@ pub mod bioinspired {
 		/// in the computation of the local "motion mean" for the local adaptation computation
 		/// 
 		/// ## Note
-		/// This alternative version of [setup_ipl_magno_channel] function uses the following default values for its arguments:
+		/// This alternative version of [RetinaTrait::setup_ipl_magno_channel] function uses the following default values for its arguments:
 		/// * normalise_output: true
 		/// * parasol_cells_beta: 0.f
 		/// * parasol_cells_tau: 0.f
@@ -589,7 +589,7 @@ pub mod bioinspired {
 		/// buffers
 		/// 
 		/// ## Note
-		/// This alternative version of [set_color_saturation] function uses the following default values for its arguments:
+		/// This alternative version of [RetinaTrait::set_color_saturation] function uses the following default values for its arguments:
 		/// * saturate_colors: true
 		/// * color_saturation_value: 4.0f
 		#[inline]
@@ -777,7 +777,7 @@ pub mod bioinspired {
 		/// the log scale that is applied
 		/// 
 		/// ## Note
-		/// This alternative version of [create_ext] function uses the following default values for its arguments:
+		/// This alternative version of [Retina::create_ext] function uses the following default values for its arguments:
 		/// * color_sampling_method: RETINA_COLOR_BAYER
 		/// * use_retina_log_sampling: false
 		/// * reduction_factor: 1.0f
@@ -871,7 +871,7 @@ pub mod bioinspired {
 		/// (default is 1, see reference paper)
 		/// 
 		/// ## Note
-		/// This alternative version of [setup] function uses the following default values for its arguments:
+		/// This alternative version of [RetinaFastToneMappingTrait::setup] function uses the following default values for its arguments:
 		/// * photoreceptors_neighborhood_radius: 3.f
 		/// * ganglioncells_neighborhood_radius: 1.f
 		/// * mean_luminance_modulator_k: 1.f
@@ -1273,7 +1273,7 @@ pub mod bioinspired {
 		/// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
 		/// 
 		/// ## Note
-		/// This alternative version of [setup_from_file] function uses the following default values for its arguments:
+		/// This alternative version of [TransientAreasSegmentationModuleTrait::setup_from_file] function uses the following default values for its arguments:
 		/// * segmentation_parameter_file: ""
 		/// * apply_default_setup_on_failure: true
 		#[inline]
@@ -1313,7 +1313,7 @@ pub mod bioinspired {
 		/// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
 		/// 
 		/// ## Note
-		/// This alternative version of [setup_from_storage] function uses the following default values for its arguments:
+		/// This alternative version of [TransientAreasSegmentationModuleTrait::setup_from_storage] function uses the following default values for its arguments:
 		/// * apply_default_setup_on_failure: true
 		#[inline]
 		fn setup_from_storage_def(&mut self, fs: &mut core::FileStorage) -> Result<()> {
@@ -1385,7 +1385,7 @@ pub mod bioinspired {
 		/// * channelIndex: : the channel to process in case of multichannel images
 		/// 
 		/// ## Note
-		/// This alternative version of [run] function uses the following default values for its arguments:
+		/// This alternative version of [TransientAreasSegmentationModuleTrait::run] function uses the following default values for its arguments:
 		/// * channel_index: 0
 		#[inline]
 		fn run_def(&mut self, input_to_segment: &impl core::ToInputArray) -> Result<()> {

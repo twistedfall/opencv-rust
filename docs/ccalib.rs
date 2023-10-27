@@ -610,7 +610,7 @@ pub mod ccalib {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CustomPatternTrait::create] function uses the following default values for its arguments:
 		/// * output: noArray()
 		#[inline]
 		fn create_def(&mut self, pattern: &impl core::ToInputArray, board_size: core::Size2f) -> Result<bool> {
@@ -645,7 +645,7 @@ pub mod ccalib {
 		}
 		
 		/// ## Note
-		/// This alternative version of [find_pattern] function uses the following default values for its arguments:
+		/// This alternative version of [CustomPatternTrait::find_pattern] function uses the following default values for its arguments:
 		/// * ratio: 0.7
 		/// * proj_error: 8.0
 		/// * refine_position: false
@@ -767,7 +767,7 @@ pub mod ccalib {
 		}
 		
 		/// ## Note
-		/// This alternative version of [calibrate] function uses the following default values for its arguments:
+		/// This alternative version of [CustomPatternTrait::calibrate] function uses the following default values for its arguments:
 		/// * flags: 0
 		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 		#[inline]
@@ -804,7 +804,7 @@ pub mod ccalib {
 		}
 		
 		/// ## Note
-		/// This alternative version of [find_rt] function uses the following default values for its arguments:
+		/// This alternative version of [CustomPatternTrait::find_rt] function uses the following default values for its arguments:
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
@@ -840,7 +840,7 @@ pub mod ccalib {
 		}
 		
 		/// ## Note
-		/// This alternative version of [find_rt] function uses the following default values for its arguments:
+		/// This alternative version of [CustomPatternTrait::find_rt] function uses the following default values for its arguments:
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
@@ -881,7 +881,7 @@ pub mod ccalib {
 		}
 		
 		/// ## Note
-		/// This alternative version of [find_rt_ransac] function uses the following default values for its arguments:
+		/// This alternative version of [CustomPatternTrait::find_rt_ransac] function uses the following default values for its arguments:
 		/// * use_extrinsic_guess: false
 		/// * iterations_count: 100
 		/// * reprojection_error: 8.0
@@ -926,7 +926,7 @@ pub mod ccalib {
 		}
 		
 		/// ## Note
-		/// This alternative version of [find_rt_ransac] function uses the following default values for its arguments:
+		/// This alternative version of [CustomPatternTrait::find_rt_ransac] function uses the following default values for its arguments:
 		/// * use_extrinsic_guess: false
 		/// * iterations_count: 100
 		/// * reprojection_error: 8.0
@@ -965,7 +965,7 @@ pub mod ccalib {
 		}
 		
 		/// ## Note
-		/// This alternative version of [draw_orientation] function uses the following default values for its arguments:
+		/// This alternative version of [CustomPatternTrait::draw_orientation] function uses the following default values for its arguments:
 		/// * axis_length: 3
 		/// * axis_width: 2
 		#[inline]

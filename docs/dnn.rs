@@ -5980,7 +5980,7 @@ pub mod dnn {
 		/// * nmsThreshold: A threshold used in non maximum suppression.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [DetectionModelTrait::detect] function uses the following default values for its arguments:
 		/// * conf_threshold: 0.5f
 		/// * nms_threshold: 0.0f
 		#[inline]
@@ -6489,7 +6489,7 @@ pub mod dnn {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_int_value] function uses the following default values for its arguments:
+		/// This alternative version of [DictValueTraitConst::get_int_value] function uses the following default values for its arguments:
 		/// * idx: -1
 		#[inline]
 		fn get_int_value_def(&self) -> Result<i32> {
@@ -6512,7 +6512,7 @@ pub mod dnn {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_real_value] function uses the following default values for its arguments:
+		/// This alternative version of [DictValueTraitConst::get_real_value] function uses the following default values for its arguments:
 		/// * idx: -1
 		#[inline]
 		fn get_real_value_def(&self) -> Result<f64> {
@@ -6536,7 +6536,7 @@ pub mod dnn {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_string_value] function uses the following default values for its arguments:
+		/// This alternative version of [DictValueTraitConst::get_string_value] function uses the following default values for its arguments:
 		/// * idx: -1
 		#[inline]
 		fn get_string_value_def(&self) -> Result<String> {
@@ -6554,6 +6554,15 @@ pub mod dnn {
 	pub trait DictValueTrait: crate::dnn::DictValueTraitConst {
 		fn as_raw_mut_DictValue(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, r: &crate::dnn::DictValue) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DictValue_operatorST_const_DictValueR(self.as_raw_mut_DictValue(), r.as_raw_DictValue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// This struct stores the scalar value (or array) of one of the following type: double, cv::String or int64.
@@ -8431,7 +8440,7 @@ pub mod dnn {
 		/// a vector holding the x and y coordinates of each detected keypoint
 		/// 
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [KeypointsModelTrait::estimate] function uses the following default values for its arguments:
 		/// * thresh: 0.5
 		#[inline]
 		fn estimate_def(&mut self, frame: &impl core::ToInputArray) -> Result<core::Vector<core::Point2f>> {
@@ -8786,7 +8795,7 @@ pub mod dnn {
 		/// where `Wh` is parameter from setWeights().
 		/// 
 		/// ## Note
-		/// This alternative version of [set_out_shape] function uses the following default values for its arguments:
+		/// This alternative version of [LSTMLayerTrait::set_out_shape] function uses the following default values for its arguments:
 		/// * out_tail_shape: MatShape()
 		#[inline]
 		fn set_out_shape_def(&mut self) -> Result<()> {
@@ -8830,7 +8839,7 @@ pub mod dnn {
 		/// In this case each forward() call will make one iteration and produce one timestamp with shape [`N`, `[out dims]`].
 		/// 
 		/// ## Note
-		/// This alternative version of [set_use_timstamps_dim] function uses the following default values for its arguments:
+		/// This alternative version of [LSTMLayerTrait::set_use_timstamps_dim] function uses the following default values for its arguments:
 		/// * use_: true
 		#[deprecated = "Use flag `produce_cell_output` in LayerParams."]
 		#[inline]
@@ -8865,7 +8874,7 @@ pub mod dnn {
 		/// @details Shape of the second output is the same as first output.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_produce_cell_output] function uses the following default values for its arguments:
+		/// This alternative version of [LSTMLayerTrait::set_produce_cell_output] function uses the following default values for its arguments:
 		/// * produce: false
 		#[deprecated = "Use flag `use_timestamp_dim` in LayerParams."]
 		#[inline]
@@ -9200,7 +9209,7 @@ pub mod dnn {
 		}
 		
 		/// 
-		///  Computes and sets internal parameters according to inputs, outputs and blobs.
+		/// Computes and sets internal parameters according to inputs, outputs and blobs.
 		/// ## Parameters
 		/// * inputs: vector of already allocated input blobs
 		/// * outputs:[out] vector of already allocated output blobs
@@ -9223,7 +9232,7 @@ pub mod dnn {
 		}
 		
 		/// 
-		///  Computes and sets internal parameters according to inputs, outputs and blobs.
+		/// Computes and sets internal parameters according to inputs, outputs and blobs.
 		/// ## Parameters
 		/// * inputs: vector of already allocated input blobs
 		/// * outputs:[out] vector of already allocated output blobs
@@ -10555,6 +10564,18 @@ pub mod dnn {
 	pub trait ModelTrait: crate::dnn::ModelTraitConst {
 		fn as_raw_mut_Model(&mut self) -> *mut c_void;
 	
+		#[inline]
+		fn set(&mut self, unnamed: &crate::dnn::Model) {
+			let ret = unsafe { sys::cv_dnn_Model_operatorST_const_ModelR(self.as_raw_mut_Model(), unnamed.as_raw_Model()) };
+			ret
+		}
+		
+		#[inline]
+		fn set_1(&mut self, mut unnamed: crate::dnn::Model) {
+			let ret = unsafe { sys::cv_dnn_Model_operatorST_ModelRR(self.as_raw_mut_Model(), unnamed.as_raw_mut_Model()) };
+			ret
+		}
+		
 		/// Set input size for frame.
 		/// ## Parameters
 		/// * size: New input size.
@@ -10676,7 +10697,7 @@ pub mod dnn {
 		/// blob(n, c, y, x) = scale * resize( frame(y, x, c) ) - mean(c) )
 		/// 
 		/// ## Note
-		/// This alternative version of [set_input_params] function uses the following default values for its arguments:
+		/// This alternative version of [ModelTrait::set_input_params] function uses the following default values for its arguments:
 		/// * scale: 1.0
 		/// * size: Size()
 		/// * mean: Scalar()
@@ -11077,7 +11098,7 @@ pub mod dnn {
 		/// Layer::blobs
 		/// 
 		/// ## Note
-		/// This alternative version of [get_param] function uses the following default values for its arguments:
+		/// This alternative version of [NetTraitConst::get_param] function uses the following default values for its arguments:
 		/// * num_param: 0
 		#[inline]
 		fn get_param_def(&self, layer: i32) -> Result<core::Mat> {
@@ -11103,7 +11124,7 @@ pub mod dnn {
 		}
 		
 		/// ## Note
-		/// This alternative version of [get_param] function uses the following default values for its arguments:
+		/// This alternative version of [NetTraitConst::get_param] function uses the following default values for its arguments:
 		/// * num_param: 0
 		#[inline]
 		fn get_param_def_1(&self, layer_name: &str) -> Result<core::Mat> {
@@ -11627,7 +11648,7 @@ pub mod dnn {
 		/// @details By default runs forward pass for the whole network.
 		/// 
 		/// ## Note
-		/// This alternative version of [forward_single] function uses the following default values for its arguments:
+		/// This alternative version of [NetTrait::forward_single] function uses the following default values for its arguments:
 		/// * output_name: String()
 		#[inline]
 		fn forward_single_def(&mut self) -> Result<core::Mat> {
@@ -11669,7 +11690,7 @@ pub mod dnn {
 		/// dnn::DNN_BACKEND_INFERENCE_ENGINE backend is required.
 		/// 
 		/// ## Note
-		/// This alternative version of [forward_async] function uses the following default values for its arguments:
+		/// This alternative version of [NetTrait::forward_async] function uses the following default values for its arguments:
 		/// * output_name: String()
 		#[inline]
 		fn forward_async_def(&mut self) -> Result<core::AsyncArray> {
@@ -11707,7 +11728,7 @@ pub mod dnn {
 		/// @details If @p outputName is empty, runs forward pass for the whole network.
 		/// 
 		/// ## Note
-		/// This alternative version of [forward_layer] function uses the following default values for its arguments:
+		/// This alternative version of [NetTrait::forward_layer] function uses the following default values for its arguments:
 		/// * output_name: String()
 		#[inline]
 		fn forward_layer_def(&mut self, output_blobs: &mut impl core::ToOutputArray) -> Result<()> {
@@ -11776,7 +11797,7 @@ pub mod dnn {
 		/// in per-channel way (channel-wise). Set it false to quantize model in per-tensor way (or tensor-wise).
 		/// 
 		/// ## Note
-		/// This alternative version of [quantize] function uses the following default values for its arguments:
+		/// This alternative version of [NetTrait::quantize] function uses the following default values for its arguments:
 		/// * per_channel: true
 		#[inline]
 		fn quantize_def(&mut self, calib_data: &impl core::ToInputArray, inputs_dtype: i32, outputs_dtype: i32) -> Result<crate::dnn::Net> {
@@ -11893,7 +11914,7 @@ pub mod dnn {
 		/// ![block formula](https://latex.codecogs.com/png.latex?input%28n%2Cc%2Ch%2Cw%29%20%3D%20scalefactor%20%5Ctimes%20%28blob%28n%2Cc%2Ch%2Cw%29%20%2D%20mean%5Fc%29)
 		/// 
 		/// ## Note
-		/// This alternative version of [set_input] function uses the following default values for its arguments:
+		/// This alternative version of [NetTrait::set_input] function uses the following default values for its arguments:
 		/// * name: ""
 		/// * scalefactor: 1.0
 		/// * mean: Scalar()
@@ -13383,7 +13404,7 @@ pub mod dnn {
 		/// @details Shape of the second output is the same as first output.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_produce_hidden_output] function uses the following default values for its arguments:
+		/// This alternative version of [RNNLayerTrait::set_produce_hidden_output] function uses the following default values for its arguments:
 		/// * produce: false
 		#[inline]
 		fn set_produce_hidden_output_def(&mut self) -> Result<()> {
@@ -17509,7 +17530,7 @@ pub mod dnn {
 		/// only take top @p vocPruneSize tokens in each search step, @p vocPruneSize <= 0 stands for disable this prune.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_decode_opts_ctc_prefix_beam_search] function uses the following default values for its arguments:
+		/// This alternative version of [TextRecognitionModelTrait::set_decode_opts_ctc_prefix_beam_search] function uses the following default values for its arguments:
 		/// * voc_prune_size: 0
 		#[inline]
 		fn set_decode_opts_ctc_prefix_beam_search_def(&mut self, beam_size: i32) -> Result<crate::dnn::TextRecognitionModel> {

@@ -866,7 +866,7 @@ pub mod features2d {
 		/// DIFF_CHARBONNIER
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [AKAZE::create] function uses the following default values for its arguments:
 		/// * descriptor_type: AKAZE::DESCRIPTOR_MLDB
 		/// * descriptor_size: 0
 		/// * descriptor_channels: 3
@@ -1010,7 +1010,7 @@ pub mod features2d {
 		/// * rotateStepBase: Rotation sampling step factor b in Algorithm 1 in the paper.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [AffineFeature::create] function uses the following default values for its arguments:
 		/// * max_tilt: 5
 		/// * min_tilt: 0
 		/// * tilt_step: 1.4142135623730951f
@@ -1171,7 +1171,7 @@ pub mod features2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [AgastFeatureDetector::create] function uses the following default values for its arguments:
 		/// * threshold: 10
 		/// * nonmax_suppression: true
 		/// * typ: AgastFeatureDetector::OAST_9_16
@@ -1226,7 +1226,7 @@ pub mod features2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [clone] function uses the following default values for its arguments:
+		/// This alternative version of [BFMatcherTraitConst::clone] function uses the following default values for its arguments:
 		/// * empty_train_data: false
 		#[inline]
 		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
@@ -1362,7 +1362,7 @@ pub mod features2d {
 		/// enough matches. This is alternative to the ratio test, used by D. Lowe in SIFT paper.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [BFMatcher::create] function uses the following default values for its arguments:
 		/// * norm_type: NORM_L2
 		/// * cross_check: false
 		#[inline]
@@ -1481,7 +1481,7 @@ pub mod features2d {
 		/// * descriptors: Descriptors of the image keypoints that are returned if they are non-zero.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute_desc] function uses the following default values for its arguments:
+		/// This alternative version of [BOWImgDescriptorExtractorTrait::compute_desc] function uses the following default values for its arguments:
 		/// * point_idxs_of_clusters: 0
 		/// * descriptors: 0
 		#[inline]
@@ -1511,8 +1511,8 @@ pub mod features2d {
 		/// * keypointDescriptors: Computed descriptors to match with vocabulary.
 		/// * imgDescriptor: Computed output image descriptor.
 		/// * pointIdxsOfClusters: Indices of keypoints that belong to the cluster. This means that
-		///    pointIdxsOfClusters[i] are keypoint indices that belong to the i -th cluster (word of vocabulary)
-		///    returned if it is non-zero.
+		/// pointIdxsOfClusters[i] are keypoint indices that belong to the i -th cluster (word of vocabulary)
+		/// returned if it is non-zero.
 		/// 
 		/// ## C++ default parameters
 		/// * point_idxs_of_clusters: 0
@@ -1536,7 +1536,7 @@ pub mod features2d {
 		/// returned if it is non-zero.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [BOWImgDescriptorExtractorTrait::compute] function uses the following default values for its arguments:
 		/// * point_idxs_of_clusters: 0
 		#[inline]
 		fn compute_def(&mut self, keypoint_descriptors: &impl core::ToInputArray, img_descriptor: &mut impl core::ToOutputArray) -> Result<()> {
@@ -2049,7 +2049,7 @@ pub mod features2d {
 		/// keypoint.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [BRISK::create] function uses the following default values for its arguments:
 		/// * thresh: 30
 		/// * octaves: 3
 		/// * pattern_scale: 1.0f
@@ -2104,7 +2104,7 @@ pub mod features2d {
 		/// * indexChange: index remapping of the bits.
 		/// 
 		/// ## Note
-		/// This alternative version of [create_with_pattern] function uses the following default values for its arguments:
+		/// This alternative version of [BRISK::create_with_pattern] function uses the following default values for its arguments:
 		/// * d_max: 5.85f
 		/// * d_min: 8.2f
 		/// * index_change: std::vector<int>()
@@ -2163,7 +2163,7 @@ pub mod features2d {
 		/// * indexChange: index remapping of the bits.
 		/// 
 		/// ## Note
-		/// This alternative version of [create_with_pattern_threshold_octaves] function uses the following default values for its arguments:
+		/// This alternative version of [BRISK::create_with_pattern_threshold_octaves] function uses the following default values for its arguments:
 		/// * d_max: 5.85f
 		/// * d_min: 8.2f
 		/// * index_change: std::vector<int>()
@@ -2275,7 +2275,7 @@ pub mod features2d {
 		/// mask.at\<uchar\>(i,j) is non-zero.
 		/// 
 		/// ## Note
-		/// This alternative version of [train_match] function uses the following default values for its arguments:
+		/// This alternative version of [DescriptorMatcherTraitConst::train_match] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		#[inline]
 		fn train_match_def(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
@@ -2342,7 +2342,7 @@ pub mod features2d {
 		/// for the details about query and train descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [knn_train_match] function uses the following default values for its arguments:
+		/// This alternative version of [DescriptorMatcherTraitConst::knn_train_match] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
@@ -2412,7 +2412,7 @@ pub mod features2d {
 		/// returned in the distance increasing order.
 		/// 
 		/// ## Note
-		/// This alternative version of [radius_train_match] function uses the following default values for its arguments:
+		/// This alternative version of [DescriptorMatcherTraitConst::radius_train_match] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
@@ -2473,7 +2473,7 @@ pub mod features2d {
 		/// object copy with the current parameters but with empty train data.
 		/// 
 		/// ## Note
-		/// This alternative version of [clone] function uses the following default values for its arguments:
+		/// This alternative version of [DescriptorMatcherTraitConst::clone] function uses the following default values for its arguments:
 		/// * empty_train_data: false
 		#[inline]
 		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
@@ -2575,9 +2575,9 @@ pub mod features2d {
 		/// 
 		/// * queryDescriptors: Query set of descriptors.
 		/// * matches: Matches. If a query descriptor is masked out in mask , no match is added for this
-		///    descriptor. So, matches size may be smaller than the query descriptors count.
+		/// descriptor. So, matches size may be smaller than the query descriptors count.
 		/// * masks: Set of masks. Each masks[i] specifies permissible matches between the input query
-		///    descriptors and stored train descriptors from the i-th image trainDescCollection[i].
+		/// descriptors and stored train descriptors from the i-th image trainDescCollection[i].
 		/// 
 		/// ## C++ default parameters
 		/// * masks: noArray()
@@ -2601,7 +2601,7 @@ pub mod features2d {
 		/// descriptors and stored train descriptors from the i-th image trainDescCollection[i].
 		/// 
 		/// ## Note
-		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// This alternative version of [DescriptorMatcherTrait::match_] function uses the following default values for its arguments:
 		/// * masks: noArray()
 		#[inline]
 		fn match__def(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
@@ -2637,12 +2637,12 @@ pub mod features2d {
 		/// * queryDescriptors: Query set of descriptors.
 		/// * matches: Matches. Each matches[i] is k or less matches for the same query descriptor.
 		/// * k: Count of best matches found per each query descriptor or less if a query descriptor has
-		///    less than k possible matches in total.
+		/// less than k possible matches in total.
 		/// * masks: Set of masks. Each masks[i] specifies permissible matches between the input query
-		///    descriptors and stored train descriptors from the i-th image trainDescCollection[i].
+		/// descriptors and stored train descriptors from the i-th image trainDescCollection[i].
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
-		///    false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
-		///    the matches vector does not contain matches for fully masked-out query descriptors.
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
 		/// 
 		/// ## C++ default parameters
 		/// * masks: noArray()
@@ -2671,7 +2671,7 @@ pub mod features2d {
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [knn_match] function uses the following default values for its arguments:
+		/// This alternative version of [DescriptorMatcherTrait::knn_match] function uses the following default values for its arguments:
 		/// * masks: noArray()
 		/// * compact_result: false
 		#[inline]
@@ -2709,13 +2709,13 @@ pub mod features2d {
 		/// * queryDescriptors: Query set of descriptors.
 		/// * matches: Found matches.
 		/// * maxDistance: Threshold for the distance between matched descriptors. Distance means here
-		///    metric distance (e.g. Hamming distance), not the distance between coordinates (which is measured
-		///    in Pixels)!
+		/// metric distance (e.g. Hamming distance), not the distance between coordinates (which is measured
+		/// in Pixels)!
 		/// * masks: Set of masks. Each masks[i] specifies permissible matches between the input query
-		///    descriptors and stored train descriptors from the i-th image trainDescCollection[i].
+		/// descriptors and stored train descriptors from the i-th image trainDescCollection[i].
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
-		///    false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
-		///    the matches vector does not contain matches for fully masked-out query descriptors.
+		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
+		/// the matches vector does not contain matches for fully masked-out query descriptors.
 		/// 
 		/// ## C++ default parameters
 		/// * masks: noArray()
@@ -2745,7 +2745,7 @@ pub mod features2d {
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [radius_match] function uses the following default values for its arguments:
+		/// This alternative version of [DescriptorMatcherTrait::radius_match] function uses the following default values for its arguments:
 		/// * masks: noArray()
 		/// * compact_result: false
 		#[inline]
@@ -2995,7 +2995,7 @@ pub mod features2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [FastFeatureDetector::create] function uses the following default values for its arguments:
 		/// * threshold: 10
 		/// * nonmax_suppression: true
 		/// * typ: FastFeatureDetector::TYPE_9_16
@@ -3151,7 +3151,7 @@ pub mod features2d {
 		/// matrix with non-zero values in the region of interest.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [Feature2DTrait::detect] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		#[inline]
 		fn detect_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
@@ -3176,9 +3176,9 @@ pub mod features2d {
 		/// 
 		/// * images: Image set.
 		/// * keypoints: The detected keypoints. In the second variant of the method keypoints[i] is a set
-		///    of keypoints detected in images[i] .
+		/// of keypoints detected in images[i] .
 		/// * masks: Masks for each input image specifying where to look for keypoints (optional).
-		///    masks[i] is a mask for images[i].
+		/// masks[i] is a mask for images[i].
 		/// 
 		/// ## C++ default parameters
 		/// * masks: noArray()
@@ -3202,7 +3202,7 @@ pub mod features2d {
 		/// masks[i] is a mask for images[i].
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multiple] function uses the following default values for its arguments:
+		/// This alternative version of [Feature2DTrait::detect_multiple] function uses the following default values for its arguments:
 		/// * masks: noArray()
 		#[inline]
 		fn detect_multiple_def(&mut self, images: &impl core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>) -> Result<()> {
@@ -3253,11 +3253,11 @@ pub mod features2d {
 		/// 
 		/// * images: Image set.
 		/// * keypoints: Input collection of keypoints. Keypoints for which a descriptor cannot be
-		///    computed are removed. Sometimes new keypoints can be added, for example: SIFT duplicates keypoint
-		///    with several dominant orientations (for each orientation).
+		/// computed are removed. Sometimes new keypoints can be added, for example: SIFT duplicates keypoint
+		/// with several dominant orientations (for each orientation).
 		/// * descriptors: Computed descriptors. In the second variant of the method descriptors[i] are
-		///    descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
-		///    descriptor for keypoint j-th keypoint.
+		/// descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
+		/// descriptor for keypoint j-th keypoint.
 		#[inline]
 		fn compute_multiple(&mut self, images: &impl core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
 			input_array_arg!(images);
@@ -3288,7 +3288,7 @@ pub mod features2d {
 		/// Detects keypoints and computes the descriptors
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_and_compute] function uses the following default values for its arguments:
+		/// This alternative version of [Feature2DTrait::detect_and_compute] function uses the following default values for its arguments:
 		/// * use_provided_keypoints: false
 		#[inline]
 		fn detect_and_compute_def(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
@@ -3425,7 +3425,7 @@ pub mod features2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [clone] function uses the following default values for its arguments:
+		/// This alternative version of [FlannBasedMatcherTraitConst::clone] function uses the following default values for its arguments:
 		/// * empty_train_data: false
 		#[inline]
 		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
@@ -3786,7 +3786,7 @@ pub mod features2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [GFTTDetector::create] function uses the following default values for its arguments:
 		/// * max_corners: 1000
 		/// * quality_level: 0.01
 		/// * min_distance: 1
@@ -3817,7 +3817,7 @@ pub mod features2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create_with_gradient] function uses the following default values for its arguments:
+		/// This alternative version of [GFTTDetector::create_with_gradient] function uses the following default values for its arguments:
 		/// * use_harris_detector: false
 		/// * k: 0.04
 		#[inline]
@@ -4060,7 +4060,7 @@ pub mod features2d {
 		/// DIFF_CHARBONNIER
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [KAZE::create] function uses the following default values for its arguments:
 		/// * extended: false
 		/// * upright: false
 		/// * threshold: 0.001f
@@ -4162,7 +4162,7 @@ pub mod features2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [run_by_keypoint_size] function uses the following default values for its arguments:
+		/// This alternative version of [KeyPointsFilter::run_by_keypoint_size] function uses the following default values for its arguments:
 		/// * max_size: FLT_MAX
 		#[inline]
 		pub fn run_by_keypoint_size_def(keypoints: &mut core::Vector<core::KeyPoint>, min_size: f32) -> Result<()> {
@@ -4547,7 +4547,7 @@ pub mod features2d {
 		/// * edge_blur_size: for color image, the aperture size for edge blur
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [MSER::create] function uses the following default values for its arguments:
 		/// * delta: 5
 		/// * min_area: 60
 		/// * max_area: 14400
@@ -4897,7 +4897,7 @@ pub mod features2d {
 		/// * fastThreshold: the fast threshold
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [ORB::create] function uses the following default values for its arguments:
 		/// * nfeatures: 500
 		/// * scale_factor: 1.2f
 		/// * nlevels: 8
@@ -5155,7 +5155,7 @@ pub mod features2d {
 		/// is disabled by default.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [SIFT::create] function uses the following default values for its arguments:
 		/// * nfeatures: 0
 		/// * n_octave_layers: 3
 		/// * contrast_threshold: 0.04
@@ -5243,7 +5243,7 @@ pub mod features2d {
 		/// is disabled by default.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [SIFT::create] function uses the following default values for its arguments:
 		/// * enable_precise_upscale: false
 		#[inline]
 		pub fn create_def_1(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32) -> Result<core::Ptr<crate::features2d::SIFT>> {
@@ -5402,7 +5402,7 @@ pub mod features2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [SimpleBlobDetector::create] function uses the following default values for its arguments:
 		/// * parameters: SimpleBlobDetector::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::SimpleBlobDetector>> {

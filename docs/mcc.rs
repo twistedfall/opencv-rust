@@ -760,7 +760,7 @@ pub mod mcc {
 		/// the output array.
 		/// 
 		/// ## Note
-		/// This alternative version of [infer] function uses the following default values for its arguments:
+		/// This alternative version of [ColorCorrectionModelTrait::infer] function uses the following default values for its arguments:
 		/// * islinear: false
 		#[inline]
 		fn infer_def(&mut self, img: &core::Mat) -> Result<core::Mat> {
@@ -1130,7 +1130,7 @@ pub mod mcc {
 		/// \return true if atleast one chart is detected otherwise false
 		/// 
 		/// ## Note
-		/// This alternative version of [process_with_roi] function uses the following default values for its arguments:
+		/// This alternative version of [MCC_CCheckerDetectorTrait::process_with_roi] function uses the following default values for its arguments:
 		/// * nc: 1
 		/// * use_net: false
 		/// * params: DetectorParameters::create()
@@ -1199,7 +1199,7 @@ pub mod mcc {
 		/// \return true if atleast one chart is detected otherwise false
 		/// 
 		/// ## Note
-		/// This alternative version of [process] function uses the following default values for its arguments:
+		/// This alternative version of [MCC_CCheckerDetectorTrait::process] function uses the following default values for its arguments:
 		/// * nc: 1
 		/// * use_net: false
 		/// * params: DetectorParameters::create()
@@ -1389,7 +1389,7 @@ pub mod mcc {
 		/// \return A pointer to the implementation of the CCheckerDraw
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [MCC_CCheckerDraw::create] function uses the following default values for its arguments:
 		/// * color: CV_RGB(0,250,0)
 		/// * thickness: 2
 		#[inline]

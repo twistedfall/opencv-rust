@@ -796,7 +796,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [FromFileMotionReaderTrait::estimate] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {
@@ -905,7 +905,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set_params] function uses the following default values for its arguments:
+		/// This alternative version of [GaussianMotionFilterTrait::set_params] function uses the following default values for its arguments:
 		/// * stdev: -1.f
 		#[inline]
 		fn set_params_def(&mut self, radius: i32) -> Result<()> {
@@ -1448,7 +1448,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [ImageMotionEstimatorBaseTrait::estimate] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {
@@ -1929,7 +1929,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [estimate_mat] function uses the following default values for its arguments:
+		/// This alternative version of [KeypointBasedMotionEstimatorTrait::estimate_mat] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_mat_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {
@@ -1956,7 +1956,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [KeypointBasedMotionEstimatorTrait::estimate] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_def(&mut self, frame0: &impl core::ToInputArray, frame1: &impl core::ToInputArray) -> Result<core::Mat> {
@@ -2088,7 +2088,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [KeypointBasedMotionEstimatorGpuTrait::estimate] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {
@@ -2113,7 +2113,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [KeypointBasedMotionEstimatorGpuTrait::estimate] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_def_1(&mut self, frame0: &core::GpuMat, frame1: &core::GpuMat) -> Result<core::Mat> {
@@ -2852,7 +2852,7 @@ pub mod videostab {
 		/// 3x3 2D transformation matrix (32F).
 		/// 
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [MotionEstimatorBaseTrait::estimate] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_def(&mut self, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray) -> Result<core::Mat> {
@@ -2932,7 +2932,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [MotionEstimatorL1Trait::estimate] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_def(&mut self, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray) -> Result<core::Mat> {
@@ -3083,7 +3083,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [MotionEstimatorRansacL2Trait::estimate] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_def(&mut self, points0: &impl core::ToInputArray, points1: &impl core::ToInputArray) -> Result<core::Mat> {
@@ -4728,7 +4728,7 @@ pub mod videostab {
 		}
 		
 		/// ## Note
-		/// This alternative version of [estimate] function uses the following default values for its arguments:
+		/// This alternative version of [ToFileMotionWriterTrait::estimate] function uses the following default values for its arguments:
 		/// * ok: 0
 		#[inline]
 		fn estimate_def(&mut self, frame0: &core::Mat, frame1: &core::Mat) -> Result<core::Mat> {

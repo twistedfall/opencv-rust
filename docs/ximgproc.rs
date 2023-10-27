@@ -3399,7 +3399,7 @@ pub mod ximgproc {
 		/// * joint: optional joint (also called as guided) image with any numbers of channels.
 		/// 
 		/// ## Note
-		/// This alternative version of [filter] function uses the following default values for its arguments:
+		/// This alternative version of [AdaptiveManifoldFilterTrait::filter] function uses the following default values for its arguments:
 		/// * joint: noArray()
 		#[inline]
 		fn filter_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
@@ -3619,7 +3619,7 @@ pub mod ximgproc {
 		/// * fdContour: false then src and dst are contours and true src and dst are fourier descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [estimate_transformation] function uses the following default values for its arguments:
+		/// This alternative version of [ContourFittingTrait::estimate_transformation] function uses the following default values for its arguments:
 		/// * dist: 0
 		/// * fd_contour: false
 		#[inline]
@@ -3667,7 +3667,7 @@ pub mod ximgproc {
 		/// * fdContour: false then src and dst are contours and true src and dst are fourier descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [estimate_transformation] function uses the following default values for its arguments:
+		/// This alternative version of [ContourFittingTrait::estimate_transformation] function uses the following default values for its arguments:
 		/// * fd_contour: false
 		#[inline]
 		fn estimate_transformation_def_1(&mut self, src: &impl core::ToInputArray, dst: &impl core::ToInputArray, alpha_phi_st: &mut impl core::ToOutputArray, dist: &mut f64) -> Result<()> {
@@ -3861,7 +3861,7 @@ pub mod ximgproc {
 		/// to src.depth().
 		/// 
 		/// ## Note
-		/// This alternative version of [filter] function uses the following default values for its arguments:
+		/// This alternative version of [DTFilterTrait::filter] function uses the following default values for its arguments:
 		/// * d_depth: -1
 		#[inline]
 		fn filter_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
@@ -3992,7 +3992,7 @@ pub mod ximgproc {
 		/// stereo-pair.
 		/// 
 		/// ## Note
-		/// This alternative version of [filter] function uses the following default values for its arguments:
+		/// This alternative version of [DisparityFilterTrait::filter] function uses the following default values for its arguments:
 		/// * disparity_map_right: Mat()
 		/// * roi: Rect()
 		/// * right_view: Mat()
@@ -4622,7 +4622,7 @@ pub mod ximgproc {
 		/// * scores: of the proposal boxes, provided a vector of float types.
 		/// 
 		/// ## Note
-		/// This alternative version of [get_bounding_boxes] function uses the following default values for its arguments:
+		/// This alternative version of [EdgeBoxesTrait::get_bounding_boxes] function uses the following default values for its arguments:
 		/// * scores: noArray()
 		#[inline]
 		fn get_bounding_boxes_def(&mut self, edge_map: &impl core::ToInputArray, orientation_map: &impl core::ToInputArray, boxes: &mut core::Vector<core::Rect>) -> Result<()> {
@@ -5281,7 +5281,7 @@ pub mod ximgproc {
 		/// * linethickness: Line thickness.
 		/// 
 		/// ## Note
-		/// This alternative version of [draw_segments] function uses the following default values for its arguments:
+		/// This alternative version of [FastLineDetectorTrait::draw_segments] function uses the following default values for its arguments:
 		/// * draw_arrow: false
 		/// * linecolor: Scalar(0,0,255)
 		/// * linethickness: 1
@@ -5387,7 +5387,7 @@ pub mod ximgproc {
 		/// to src.depth().
 		/// 
 		/// ## Note
-		/// This alternative version of [filter] function uses the following default values for its arguments:
+		/// This alternative version of [GuidedFilterTrait::filter] function uses the following default values for its arguments:
 		/// * d_depth: -1
 		#[inline]
 		fn filter_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
@@ -5536,7 +5536,8 @@ pub mod ximgproc {
 		/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
 		/// model for a superpixel segment. However, lower values would make the interpolation
 		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
-		///      *  see also: setK
+		/// ## See also
+		/// setK
 		#[inline]
 		fn get_k(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5549,7 +5550,7 @@ pub mod ximgproc {
 		/// Get the internal cost, i.e. edge map, used for estimating the edge-aware term.
 		/// ## See also
 		/// setCostMap
-		///      *  setSuperpixelSize
+		/// setSuperpixelSize
 		#[inline]
 		fn get_superpixel_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5561,7 +5562,8 @@ pub mod ximgproc {
 		
 		/// Parameter defines the number of nearest-neighbor matches for each superpixel considered, when fitting a locally affine
 		/// model.
-		///      *  see also: setSuperpixelNNCnt
+		/// ## See also
+		/// setSuperpixelNNCnt
 		#[inline]
 		fn get_superpixel_nn_cnt(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5574,7 +5576,7 @@ pub mod ximgproc {
 		/// Parameter to tune enforcement of superpixel smoothness factor used for oversegmentation.
 		/// ## See also
 		/// cv::ximgproc::createSuperpixelSLIC
-		///      *  setSuperpixelRuler
+		/// setSuperpixelRuler
 		#[inline]
 		fn get_superpixel_ruler(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -5590,7 +5592,7 @@ pub mod ximgproc {
 		/// - cv::ximgproc::SLICType MSLIC will optimize using manifold methods resulting in more content-sensitive superpixels (value: 102).
 		/// ## See also
 		/// cv::ximgproc::createSuperpixelSLIC
-		///      *  setSuperpixelMode
+		/// setSuperpixelMode
 		#[inline]
 		fn get_superpixel_mode(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5638,7 +5640,8 @@ pub mod ximgproc {
 		
 		/// MaxFlow is a threshold to validate the predictions using a certain piece-wise affine model.
 		/// If the prediction exceeds the treshold the translational model will be applied instead.
-		///      *  see also: setMaxFlow
+		/// ## See also
+		/// setMaxFlow
 		#[inline]
 		fn get_max_flow(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -5722,7 +5725,7 @@ pub mod ximgproc {
 		/// noticeably faster. The original implementation of [Hu2017](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Hu2017) uses 32.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_k] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_k] function uses the following default values for its arguments:
 		/// * k: 32
 		#[inline]
 		fn set_k_def(&mut self) -> Result<()> {
@@ -5771,7 +5774,7 @@ pub mod ximgproc {
 		/// setCostMap
 		/// 
 		/// ## Note
-		/// This alternative version of [set_superpixel_size] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_superpixel_size] function uses the following default values for its arguments:
 		/// * sp_size: 15
 		#[inline]
 		fn set_superpixel_size_def(&mut self) -> Result<()> {
@@ -5800,7 +5803,7 @@ pub mod ximgproc {
 		/// model.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_superpixel_nn_cnt] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_superpixel_nn_cnt] function uses the following default values for its arguments:
 		/// * sp_nn: 150
 		#[inline]
 		fn set_superpixel_nn_cnt_def(&mut self) -> Result<()> {
@@ -5831,7 +5834,7 @@ pub mod ximgproc {
 		/// cv::ximgproc::createSuperpixelSLIC
 		/// 
 		/// ## Note
-		/// This alternative version of [set_superpixel_ruler] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_superpixel_ruler] function uses the following default values for its arguments:
 		/// * ruler: 15.f
 		#[inline]
 		fn set_superpixel_ruler_def(&mut self) -> Result<()> {
@@ -5868,7 +5871,7 @@ pub mod ximgproc {
 		/// cv::ximgproc::createSuperpixelSLIC
 		/// 
 		/// ## Note
-		/// This alternative version of [set_superpixel_mode] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_superpixel_mode] function uses the following default values for its arguments:
 		/// * mode: 100
 		#[inline]
 		fn set_superpixel_mode_def(&mut self) -> Result<()> {
@@ -5895,7 +5898,7 @@ pub mod ximgproc {
 		/// Alpha is a parameter defining a global weight for transforming geodesic distance into weight.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_alpha] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_alpha] function uses the following default values for its arguments:
 		/// * alpha: 0.7f
 		#[inline]
 		fn set_alpha_def(&mut self) -> Result<()> {
@@ -5922,7 +5925,7 @@ pub mod ximgproc {
 		/// Parameter defining the number of iterations for piece-wise affine model estimation.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_model_iter] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_model_iter] function uses the following default values for its arguments:
 		/// * model_iter: 4
 		#[inline]
 		fn set_model_iter_def(&mut self) -> Result<()> {
@@ -5949,7 +5952,7 @@ pub mod ximgproc {
 		/// Parameter to choose wether additional refinement of the piece-wise affine models is employed.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_refine_models] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_refine_models] function uses the following default values for its arguments:
 		/// * refine_modles: true
 		#[inline]
 		fn set_refine_models_def(&mut self) -> Result<()> {
@@ -5978,7 +5981,7 @@ pub mod ximgproc {
 		/// If the prediction exceeds the treshold the translational model will be applied instead.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_max_flow] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_max_flow] function uses the following default values for its arguments:
 		/// * max_flow: 250.f
 		#[inline]
 		fn set_max_flow_def(&mut self) -> Result<()> {
@@ -6005,7 +6008,7 @@ pub mod ximgproc {
 		/// Parameter to choose wether the VariationalRefinement post-processing  is employed.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_use_variational_refinement] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_use_variational_refinement] function uses the following default values for its arguments:
 		/// * use_variational_refinement: false
 		#[inline]
 		fn set_use_variational_refinement_def(&mut self) -> Result<()> {
@@ -6032,7 +6035,7 @@ pub mod ximgproc {
 		/// Sets whether the fastGlobalSmootherFilter() post-processing is employed.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_use_global_smoother_filter] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_use_global_smoother_filter] function uses the following default values for its arguments:
 		/// * use_fgs: true
 		#[inline]
 		fn set_use_global_smoother_filter_def(&mut self) -> Result<()> {
@@ -6059,7 +6062,7 @@ pub mod ximgproc {
 		/// Sets the respective fastGlobalSmootherFilter() parameter.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_fgs_lambda] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_fgs_lambda] function uses the following default values for its arguments:
 		/// * lambda: 500.f
 		#[inline]
 		fn set_fgs_lambda_def(&mut self) -> Result<()> {
@@ -6086,7 +6089,7 @@ pub mod ximgproc {
 		/// Sets the respective fastGlobalSmootherFilter() parameter.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_fgs_sigma] function uses the following default values for its arguments:
+		/// This alternative version of [RICInterpolatorTrait::set_fgs_sigma] function uses the following default values for its arguments:
 		/// * sigma: 1.5f
 		#[inline]
 		fn set_fgs_sigma_def(&mut self) -> Result<()> {
@@ -6267,7 +6270,7 @@ pub mod ximgproc {
 		/// Sobel, threshold, getStructuringElement, morphologyEx.( for additional refinement)
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [RidgeDetectionFilter::create] function uses the following default values for its arguments:
 		/// * ddepth: CV_32FC1
 		/// * dx: 1
 		/// * dy: 1
@@ -6385,7 +6388,7 @@ pub mod ximgproc {
 		/// * thick_line: If false, the border is only one pixel wide, otherwise all pixels at the border are masked.
 		/// 
 		/// ## Note
-		/// This alternative version of [get_label_contour_mask] function uses the following default values for its arguments:
+		/// This alternative version of [ScanSegmentTrait::get_label_contour_mask] function uses the following default values for its arguments:
 		/// * thick_line: false
 		#[inline]
 		fn get_label_contour_mask_def(&mut self, image: &mut impl core::ToOutputArray) -> Result<()> {
@@ -6621,7 +6624,7 @@ pub mod ximgproc {
 		/// * isParallel: enables/disables parallel computing.
 		/// 
 		/// ## Note
-		/// This alternative version of [edges_nms] function uses the following default values for its arguments:
+		/// This alternative version of [StructuredEdgeDetectionTraitConst::edges_nms] function uses the following default values for its arguments:
 		/// * r: 2
 		/// * s: 0
 		/// * m: 1
@@ -6761,7 +6764,7 @@ pub mod ximgproc {
 		/// The function return the boundaries of the superpixel segmentation.
 		/// 
 		/// ## Note
-		/// This alternative version of [get_label_contour_mask] function uses the following default values for its arguments:
+		/// This alternative version of [SuperpixelLSCTraitConst::get_label_contour_mask] function uses the following default values for its arguments:
 		/// * thick_line: true
 		#[inline]
 		fn get_label_contour_mask_def(&self, image: &mut impl core::ToOutputArray) -> Result<()> {
@@ -6819,7 +6822,7 @@ pub mod ximgproc {
 		/// then refines the boundaries by proposing updates of edges boundaries.
 		/// 
 		/// ## Note
-		/// This alternative version of [iterate] function uses the following default values for its arguments:
+		/// This alternative version of [SuperpixelLSCTrait::iterate] function uses the following default values for its arguments:
 		/// * num_iterations: 10
 		#[inline]
 		fn iterate_def(&mut self) -> Result<()> {
@@ -6862,7 +6865,7 @@ pub mod ximgproc {
 		/// to this component. Calling this function may change the final number of superpixels.
 		/// 
 		/// ## Note
-		/// This alternative version of [enforce_label_connectivity] function uses the following default values for its arguments:
+		/// This alternative version of [SuperpixelLSCTrait::enforce_label_connectivity] function uses the following default values for its arguments:
 		/// * min_element_size: 25
 		#[inline]
 		fn enforce_label_connectivity_def(&mut self) -> Result<()> {
@@ -7009,7 +7012,7 @@ pub mod ximgproc {
 		/// ![image](https://docs.opencv.org/4.8.1/superpixels_blocks2.png)
 		/// 
 		/// ## Note
-		/// This alternative version of [iterate] function uses the following default values for its arguments:
+		/// This alternative version of [SuperpixelSEEDSTrait::iterate] function uses the following default values for its arguments:
 		/// * num_iterations: 4
 		#[inline]
 		fn iterate_def(&mut self, img: &impl core::ToInputArray) -> Result<()> {
@@ -7110,7 +7113,7 @@ pub mod ximgproc {
 		/// ![image](https://docs.opencv.org/4.8.1/superpixels_demo.png)
 		/// 
 		/// ## Note
-		/// This alternative version of [get_label_contour_mask] function uses the following default values for its arguments:
+		/// This alternative version of [SuperpixelSEEDSTrait::get_label_contour_mask] function uses the following default values for its arguments:
 		/// * thick_line: false
 		#[inline]
 		fn get_label_contour_mask_def(&mut self, image: &mut impl core::ToOutputArray) -> Result<()> {
@@ -7247,7 +7250,7 @@ pub mod ximgproc {
 		/// The function return the boundaries of the superpixel segmentation.
 		/// 
 		/// ## Note
-		/// This alternative version of [get_label_contour_mask] function uses the following default values for its arguments:
+		/// This alternative version of [SuperpixelSLICTraitConst::get_label_contour_mask] function uses the following default values for its arguments:
 		/// * thick_line: true
 		#[inline]
 		fn get_label_contour_mask_def(&self, image: &mut impl core::ToOutputArray) -> Result<()> {
@@ -7305,7 +7308,7 @@ pub mod ximgproc {
 		/// then refines the boundaries by proposing updates of edges boundaries.
 		/// 
 		/// ## Note
-		/// This alternative version of [iterate] function uses the following default values for its arguments:
+		/// This alternative version of [SuperpixelSLICTrait::iterate] function uses the following default values for its arguments:
 		/// * num_iterations: 10
 		#[inline]
 		fn iterate_def(&mut self) -> Result<()> {
@@ -7348,7 +7351,7 @@ pub mod ximgproc {
 		/// to this component. Calling this function may change the final number of superpixels.
 		/// 
 		/// ## Note
-		/// This alternative version of [enforce_label_connectivity] function uses the following default values for its arguments:
+		/// This alternative version of [SuperpixelSLICTrait::enforce_label_connectivity] function uses the following default values for its arguments:
 		/// * min_element_size: 25
 		#[inline]
 		fn enforce_label_connectivity_def(&mut self) -> Result<()> {
@@ -7588,7 +7591,7 @@ pub mod ximgproc {
 		/// * sigma: The sigma parameter for the graph segmentation
 		/// 
 		/// ## Note
-		/// This alternative version of [switch_to_single_strategy] function uses the following default values for its arguments:
+		/// This alternative version of [SelectiveSearchSegmentationTrait::switch_to_single_strategy] function uses the following default values for its arguments:
 		/// * k: 200
 		/// * sigma: 0.8f
 		#[inline]
@@ -7626,7 +7629,7 @@ pub mod ximgproc {
 		/// * sigma: The sigma parameter for the graph segmentation
 		/// 
 		/// ## Note
-		/// This alternative version of [switch_to_selective_search_fast] function uses the following default values for its arguments:
+		/// This alternative version of [SelectiveSearchSegmentationTrait::switch_to_selective_search_fast] function uses the following default values for its arguments:
 		/// * base_k: 150
 		/// * inc_k: 150
 		/// * sigma: 0.8f
@@ -7665,7 +7668,7 @@ pub mod ximgproc {
 		/// * sigma: The sigma parameter for the graph segmentation
 		/// 
 		/// ## Note
-		/// This alternative version of [switch_to_selective_search_quality] function uses the following default values for its arguments:
+		/// This alternative version of [SelectiveSearchSegmentationTrait::switch_to_selective_search_quality] function uses the following default values for its arguments:
 		/// * base_k: 150
 		/// * inc_k: 150
 		/// * sigma: 0.8f
@@ -7844,7 +7847,7 @@ pub mod ximgproc {
 		/// * image_id: If not set to -1, try to cache pre-computations. If the same set og (img, regions, size) is used, the image_id need to be the same.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_image] function uses the following default values for its arguments:
+		/// This alternative version of [SelectiveSearchSegmentationStrategyTrait::set_image] function uses the following default values for its arguments:
 		/// * image_id: -1
 		#[inline]
 		fn set_image_def(&mut self, img: &impl core::ToInputArray, regions: &impl core::ToInputArray, sizes: &impl core::ToInputArray) -> Result<()> {

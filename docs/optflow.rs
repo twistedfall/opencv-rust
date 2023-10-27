@@ -823,7 +823,7 @@ pub mod optflow {
 		/// Configuration of the RLOF alogrithm.
 		/// ## See also
 		/// optflow::RLOFOpticalFlowParameter, getRLOFOpticalFlowParameter
-		///    optflow::RLOFOpticalFlowParameter, setRLOFOpticalFlowParameter
+		/// optflow::RLOFOpticalFlowParameter, setRLOFOpticalFlowParameter
 		#[inline]
 		fn get_rlof_optical_flow_parameter(&self) -> Result<core::Ptr<crate::optflow::RLOFOpticalFlowParameter>> {
 			return_send!(via ocvrs_return);
@@ -869,8 +869,9 @@ pub mod optflow {
 		/// Two interpolation algorithms are supported
 		///      * - **INTERP_GEO** applies the fast geodesic interpolation, see [Geistert2016](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Geistert2016).
 		///      * - **INTERP_EPIC_RESIDUAL** applies the edge-preserving interpolation, see [Revaud2015](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Revaud2015),Geistert2016.
-		///      * see also: ximgproc::EdgeAwareInterpolator, getInterpolation
-		///      *    see also: ximgproc::EdgeAwareInterpolator, setInterpolation
+		///      * ximgproc::EdgeAwareInterpolator, getInterpolation
+		/// ## See also
+		/// ximgproc::EdgeAwareInterpolator, setInterpolation
 		#[inline]
 		fn get_interpolation(&self) -> Result<crate::optflow::InterpolationType> {
 			return_send!(via ocvrs_return);
@@ -946,8 +947,9 @@ pub mod optflow {
 		
 		/// enables ximgproc::fastGlobalSmootherFilter
 		/// 
-		/// * see also: getUsePostProc
-		///      *    see also: ximgproc::fastGlobalSmootherFilter, setUsePostProc
+		/// * getUsePostProc
+		/// ## See also
+		/// ximgproc::fastGlobalSmootherFilter, setUsePostProc
 		#[inline]
 		fn get_use_post_proc(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -959,8 +961,9 @@ pub mod optflow {
 		
 		/// enables VariationalRefinement
 		/// 
-		/// * see also: getUseVariationalRefinement
-		///      *    see also: ximgproc::fastGlobalSmootherFilter, setUsePostProc
+		/// * getUseVariationalRefinement
+		/// ## See also
+		/// ximgproc::fastGlobalSmootherFilter, setUsePostProc
 		#[inline]
 		fn get_use_variational_refinement(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -972,8 +975,9 @@ pub mod optflow {
 		
 		/// Parameter to tune the approximate size of the superpixel used for oversegmentation.
 		/// 
-		/// * see also: cv::ximgproc::createSuperpixelSLIC, cv::ximgproc::RICInterpolator
-		///    *    see also: setRICSPSize
+		/// * cv::ximgproc::createSuperpixelSLIC, cv::ximgproc::RICInterpolator
+		/// ## See also
+		/// setRICSPSize
 		#[inline]
 		fn get_ricsp_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -989,7 +993,7 @@ pub mod optflow {
 		/// - cv::ximgproc::SLICType MSLIC will optimize using manifold methods resulting in more content-sensitive superpixels (value: 102).
 		/// ## See also
 		/// cv::ximgproc::createSuperpixelSLIC, cv::ximgproc::RICInterpolator
-		///      *    setRICSLICType
+		/// setRICSLICType
 		#[inline]
 		fn get_ricslic_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1036,8 +1040,9 @@ pub mod optflow {
 		/// Size of the grid to spawn the motion vectors.
 		/// For each grid point a motion vector is computed. Some motion vectors will be removed due to the forwatd backward
 		///      *  threshold (if set >0). The rest will be the base of the vector field interpolation.
-		///      *    see also: getForwardBackward, setGridStep
-		///      *    see also: getGridStep
+		///      *    getForwardBackward, setGridStep
+		/// ## See also
+		/// getGridStep
 		#[inline]
 		fn set_grid_step(&mut self, val: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1064,8 +1069,9 @@ pub mod optflow {
 		/// see ximgproc::EdgeAwareInterpolator() K value.
 		/// K is a number of nearest-neighbor matches considered, when fitting a locally affine
 		///      *    model. Usually it should be around 128. However, lower values would make the interpolation noticeably faster.
-		///      *    see also: ximgproc::EdgeAwareInterpolator,  setEPICK
-		///      *    see also: ximgproc::EdgeAwareInterpolator, getEPICK
+		///      *    ximgproc::EdgeAwareInterpolator,  setEPICK
+		/// ## See also
+		/// ximgproc::EdgeAwareInterpolator, getEPICK
 		#[inline]
 		fn set_epick(&mut self, val: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1079,8 +1085,9 @@ pub mod optflow {
 		/// Sigma is a parameter defining how fast the weights decrease in the locally-weighted affine
 		///      *  fitting. Higher values can help preserve fine details, lower values can help to get rid of noise in the
 		///      *  output flow.
-		///      *    see also: ximgproc::EdgeAwareInterpolator, setEPICSigma
-		///      *  see also: ximgproc::EdgeAwareInterpolator, getEPICSigma
+		///      *    ximgproc::EdgeAwareInterpolator, setEPICSigma
+		/// ## See also
+		/// ximgproc::EdgeAwareInterpolator, getEPICSigma
 		#[inline]
 		fn set_epic_sigma(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1093,8 +1100,9 @@ pub mod optflow {
 		/// see ximgproc::EdgeAwareInterpolator() lambda value.
 		/// Lambda is a parameter defining the weight of the edge-aware term in geodesic distance,
 		///      *    should be in the range of 0 to 1000.
-		///      *    see also: ximgproc::EdgeAwareInterpolator, setEPICSigma
-		///      *    see also: ximgproc::EdgeAwareInterpolator, getEPICLambda
+		///      *    ximgproc::EdgeAwareInterpolator, setEPICSigma
+		/// ## See also
+		/// ximgproc::EdgeAwareInterpolator, getEPICLambda
 		#[inline]
 		fn set_epic_lambda(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1106,8 +1114,9 @@ pub mod optflow {
 		
 		/// see ximgproc::EdgeAwareInterpolator().
 		/// Sets the respective fastGlobalSmootherFilter() parameter.
-		///      *    see also: ximgproc::EdgeAwareInterpolator, setFgsLambda
-		///      *    see also: ximgproc::EdgeAwareInterpolator, ximgproc::fastGlobalSmootherFilter, getFgsLambda
+		///      *    ximgproc::EdgeAwareInterpolator, setFgsLambda
+		/// ## See also
+		/// ximgproc::EdgeAwareInterpolator, ximgproc::fastGlobalSmootherFilter, getFgsLambda
 		#[inline]
 		fn set_fgs_lambda(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1119,8 +1128,9 @@ pub mod optflow {
 		
 		/// see ximgproc::EdgeAwareInterpolator().
 		/// Sets the respective fastGlobalSmootherFilter() parameter.
-		///      *    see also: ximgproc::EdgeAwareInterpolator, ximgproc::fastGlobalSmootherFilter, setFgsSigma
-		///      *    see also: ximgproc::EdgeAwareInterpolator, ximgproc::fastGlobalSmootherFilter, getFgsSigma
+		///      *    ximgproc::EdgeAwareInterpolator, ximgproc::fastGlobalSmootherFilter, setFgsSigma
+		/// ## See also
+		/// ximgproc::EdgeAwareInterpolator, ximgproc::fastGlobalSmootherFilter, getFgsSigma
 		#[inline]
 		fn set_fgs_sigma(&mut self, val: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1309,7 +1319,7 @@ pub mod optflow {
 		/// * use_variational_refinement: see setUseVariationalRefinement
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [DenseRLOFOpticalFlow::create] function uses the following default values for its arguments:
 		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
 		/// * forward_backward_threshold: 1.f
 		/// * grid_step: Size(6,6)
@@ -1756,7 +1766,7 @@ pub mod optflow {
 		/// Creates instance of cv::DualTVL1OpticalFlow
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [DualTVL1OpticalFlow::create] function uses the following default values for its arguments:
 		/// * tau: 0.25
 		/// * lambda: 0.15
 		/// * theta: 0.3
@@ -2303,7 +2313,7 @@ pub mod optflow {
 		}
 		
 		/// ## Note
-		/// This alternative version of [train] function uses the following default values for its arguments:
+		/// This alternative version of [GPCTreeTrait::train] function uses the following default values for its arguments:
 		/// * params: GPCTrainingParams()
 		#[inline]
 		fn train_def(&mut self, samples: &mut crate::optflow::GPCTrainingSamples) -> Result<()> {
@@ -3207,8 +3217,9 @@ pub mod optflow {
 		///      *     is larger than threshold given by this function then the status  will not be used by the following
 		///      *    vector field interpolation. ![inline formula](https://latex.codecogs.com/png.latex?%20d%5F%7BI1%2CI0%7D%20) denotes the backward flow. Note, the forward backward test
 		///      *    will only be applied if the threshold > 0. This may results into a doubled runtime for the motion estimation.
-		///      *    see also: setForwardBackward
-		///      *    see also: setForwardBackward
+		///      *    setForwardBackward
+		/// ## See also
+		/// setForwardBackward
 		#[inline]
 		fn get_forward_backward(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -3332,7 +3343,7 @@ pub mod optflow {
 		/// * forwardBackwardThreshold: see setForwardBackward
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [SparseRLOFOpticalFlow::create] function uses the following default values for its arguments:
 		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
 		/// * forward_backward_threshold: 1.f
 		#[inline]

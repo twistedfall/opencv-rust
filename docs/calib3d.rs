@@ -3184,8 +3184,8 @@ pub mod calib3d {
 	///    Mat gray = ....; //source image
 	///    vector<Point2f> corners; //this will be filled by the detected corners
 	/// 
-	/// CALIB_CB_FAST_CHECK saves a lot of time on images
-	/// that do not contain any chessboard corners
+	///    //CALIB_CB_FAST_CHECK saves a lot of time on images
+	///    //that do not contain any chessboard corners
 	///    bool patternfound = findChessboardCorners(gray, patternsize, corners,
 	///            CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE
 	///            + CALIB_CB_FAST_CHECK);
@@ -4119,12 +4119,12 @@ pub mod calib3d {
 	/// epipolar lines corresponding to the specified points. It can also be passed to
 	/// [stereo_rectify_uncalibrated] to compute the rectification transformation. :
 	/// ```C++
-	///  Example. Estimation of fundamental matrix using the RANSAC algorithm
+	///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 	///    int point_count = 100;
 	///    vector<Point2f> points1(point_count);
 	///    vector<Point2f> points2(point_count);
 	/// 
-	///  initialize the points here ...
+	///    // initialize the points here ...
 	///    for( int i = 0; i < point_count; i++ )
 	///    {
 	///        points1[i] = ...;
@@ -5933,22 +5933,22 @@ pub mod calib3d {
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for findEssentialMat.:
 	/// ```C++
-	///  Example. Estimation of fundamental matrix using the RANSAC algorithm
+	///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 	///    int point_count = 100;
 	///    vector<Point2f> points1(point_count);
 	///    vector<Point2f> points2(point_count);
 	/// 
-	///  initialize the points here ...
+	///    // initialize the points here ...
 	///    for( int i = 0; i < point_count; i++ )
 	///    {
 	///        points1[i] = ...;
 	///        points2[i] = ...;
 	///    }
 	/// 
-	///  Input: camera calibration of both cameras, for example using intrinsic chessboard calibration.
+	///    // Input: camera calibration of both cameras, for example using intrinsic chessboard calibration.
 	///    Mat cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2;
 	/// 
-	///  Output: Essential matrix, relative rotation and relative translation.
+	///    // Output: Essential matrix, relative rotation and relative translation.
 	///    Mat E, R, t, mask;
 	/// 
 	///    recoverPose(points1, points2, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, E, R, t, mask);
@@ -6098,19 +6098,19 @@ pub mod calib3d {
 	/// This function can be used to process the output E and mask from [findEssentialMat]. In this
 	/// scenario, points1 and points2 are the same input for [find_essential_mat] :
 	/// ```C++
-	///  Example. Estimation of fundamental matrix using the RANSAC algorithm
+	///    // Example. Estimation of fundamental matrix using the RANSAC algorithm
 	///    int point_count = 100;
 	///    vector<Point2f> points1(point_count);
 	///    vector<Point2f> points2(point_count);
 	/// 
-	///  initialize the points here ...
+	///    // initialize the points here ...
 	///    for( int i = 0; i < point_count; i++ )
 	///    {
 	///        points1[i] = ...;
 	///        points2[i] = ...;
 	///    }
 	/// 
-	///  cametra matrix with both focal lengths = 1, and principal point = (0, 0)
+	///    // cametra matrix with both focal lengths = 1, and principal point = (0, 0)
 	///    Mat cameraMatrix = Mat::eye(3, 3, CV_64F);
 	/// 
 	///    Mat E, R, t, mask;
@@ -8570,7 +8570,7 @@ pub mod calib3d {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	///     
+	/// 
 	/// Note: Default version of [undistort_points] does 5 iterations to compute undistorted points.
 	#[inline]
 	pub fn undistort_points_iter(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, r: &impl core::ToInputArray, p: &impl core::ToInputArray, criteria: core::TermCriteria) -> Result<()> {
@@ -9184,7 +9184,7 @@ pub mod calib3d {
 		/// a specific stereo pair.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [StereoBM::create] function uses the following default values for its arguments:
 		/// * num_disparities: 0
 		/// * block_size: 21
 		#[inline]
@@ -9659,7 +9659,7 @@ pub mod calib3d {
 		/// to a custom value.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [StereoSGBM::create] function uses the following default values for its arguments:
 		/// * min_disparity: 0
 		/// * num_disparities: 16
 		/// * block_size: 3

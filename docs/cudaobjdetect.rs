@@ -210,7 +210,7 @@ pub mod cudaobjdetect {
 		/// CascadeClassifier::detectMultiScale
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multi_scale] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_CascadeClassifierTrait::detect_multi_scale] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn detect_multi_scale_def(&mut self, image: &impl core::ToInputArray, objects: &mut impl core::ToOutputArray) -> Result<()> {
@@ -584,7 +584,7 @@ pub mod cudaobjdetect {
 		/// * confidences: Optional output array for confidences.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_HOGTrait::detect] function uses the following default values for its arguments:
 		/// * confidences: NULL
 		#[inline]
 		fn detect_def(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Point>) -> Result<()> {
@@ -648,7 +648,7 @@ pub mod cudaobjdetect {
 		/// * confidences: Optional output array for confidences.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_multi_scale] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_HOGTrait::detect_multi_scale] function uses the following default values for its arguments:
 		/// * confidences: NULL
 		#[inline]
 		fn detect_multi_scale_def(&mut self, img: &impl core::ToInputArray, found_locations: &mut core::Vector<core::Rect>) -> Result<()> {
@@ -713,7 +713,7 @@ pub mod cudaobjdetect {
 		/// * stream: CUDA stream.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_HOGTrait::compute] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn compute_def(&mut self, img: &impl core::ToInputArray, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
@@ -805,7 +805,7 @@ pub mod cudaobjdetect {
 		/// * nbins: Number of bins. Only 9 bins per cell are supported for now.
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_HOG::create] function uses the following default values for its arguments:
 		/// * win_size: Size(64,128)
 		/// * block_size: Size(16,16)
 		/// * block_stride: Size(8,8)

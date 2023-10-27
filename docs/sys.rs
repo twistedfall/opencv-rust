@@ -1095,6 +1095,7 @@ mod core_sys {
 		pub fn cv_Algorithm_delete(instance: *mut c_void);
 		pub fn cv_AsyncArray_AsyncArray() -> *mut c_void;
 		pub fn cv_AsyncArray_AsyncArray_const_AsyncArrayR(o: *const c_void) -> *mut c_void;
+		pub fn cv_AsyncArray_operatorST_const_AsyncArrayR(instance: *mut c_void, o: *const c_void);
 		pub fn cv_AsyncArray_release(instance: *mut c_void);
 		pub fn cv_AsyncArray_get_const_const__OutputArrayR(instance: *const c_void, dst: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_AsyncArray_get_const_const__OutputArrayR_int64_t(instance: *const c_void, dst: *const c_void, timeout_ns: i64, ocvrs_return: *mut Result<bool>);
@@ -1103,18 +1104,22 @@ mod core_sys {
 		pub fn cv_AsyncArray_wait_for_const_double(instance: *const c_void, timeout_ns: f64, ocvrs_return: *mut Result<bool>);
 		pub fn cv_AsyncArray_valid_const(instance: *const c_void) -> bool;
 		pub fn cv_AsyncArray_AsyncArray_AsyncArrayRR(o: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_AsyncArray_operatorST_AsyncArrayRR(instance: *mut c_void, o: *mut c_void);
 		pub fn cv_AsyncArray_delete(instance: *mut c_void);
 		pub fn cv_AsyncPromise_AsyncPromise() -> *mut c_void;
 		pub fn cv_AsyncPromise_AsyncPromise_const_AsyncPromiseR(o: *const c_void) -> *mut c_void;
+		pub fn cv_AsyncPromise_operatorST_const_AsyncPromiseR(instance: *mut c_void, o: *const c_void);
 		pub fn cv_AsyncPromise_release(instance: *mut c_void);
 		pub fn cv_AsyncPromise_getArrayResult(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_AsyncPromise_setValue_const__InputArrayR(instance: *mut c_void, value: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_AsyncPromise_setException_const_ExceptionR(instance: *mut c_void, exception: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_AsyncPromise_AsyncPromise_AsyncPromiseRR(o: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_AsyncPromise_operatorST_AsyncPromiseRR(instance: *mut c_void, o: *mut c_void);
 		pub fn cv_AsyncPromise__getImpl_const(instance: *const c_void) -> *mut c_void;
 		pub fn cv_AsyncPromise_delete(instance: *mut c_void);
 		pub fn cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringR(argc: i32, argv: *const *const c_char, keys: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_CommandLineParser_CommandLineParser_const_CommandLineParserR(parser: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_CommandLineParser_operatorST_const_CommandLineParserR(instance: *mut c_void, parser: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_CommandLineParser_getPathToApplication_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_CommandLineParser_get_bool_const_const_StringR_bool(instance: *const c_void, name: *const c_char, space_delete: bool, ocvrs_return: *mut Result<bool>);
 		pub fn cv_CommandLineParser_get_bool_const_const_StringR(instance: *const c_void, name: *const c_char, ocvrs_return: *mut Result<bool>);
@@ -1178,6 +1183,7 @@ mod core_sys {
 		pub fn cv_FileNode_FileNode(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNode_FileNode_const_FileStorageX_size_t_size_t(fs: *const c_void, block_idx: size_t, ofs: size_t, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNode_FileNode_const_FileNodeR(node: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_FileNode_operatorST_const_FileNodeR(instance: *mut c_void, node: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_FileNode_operator___const_const_StringR(instance: *const c_void, nodename: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNode_operator___const_const_charX(instance: *const c_void, nodename: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNode_operator___const_int(instance: *const c_void, i: i32, ocvrs_return: *mut Result<*mut c_void>);
@@ -1222,6 +1228,7 @@ mod core_sys {
 		pub fn cv_FileNodeIterator_FileNodeIterator(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNodeIterator_FileNodeIterator_const_FileNodeR_bool(node: *const c_void, seek_end: bool, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNodeIterator_FileNodeIterator_const_FileNodeIteratorR(it: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_FileNodeIterator_operatorST_const_FileNodeIteratorR(instance: *mut c_void, it: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_FileNodeIterator_operatorX_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNodeIterator_operatorAA(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileNodeIterator_readRaw_const_StringR_voidX_size_t(instance: *mut c_void, fmt: *const c_char, vec: *mut c_void, len: size_t, ocvrs_return: *mut Result<*mut c_void>);
@@ -1341,6 +1348,8 @@ mod core_sys {
 		pub fn cv_Mat_Mat_const_MatR_const_RectR(m: *const c_void, roi: *const core::Rect, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Mat_Mat_const_MatR_const_vectorLRangeGR(m: *const c_void, ranges: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Mat_Mat_const_GpuMatR(m: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_Mat_operatorST_const_MatR(instance: *mut c_void, m: *const c_void, ocvrs_return: *mut Result_void);
+		pub fn cv_Mat_operatorST_const_MatExprR(instance: *mut c_void, expr: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags(instance: *const c_void, access_flags: core::AccessFlag, usage_flags: core::UMatUsageFlags, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Mat_getUMat_const_AccessFlag(instance: *const c_void, access_flags: core::AccessFlag, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Mat_row_const_int(instance: *const c_void, y: i32, ocvrs_return: *mut Result<*mut c_void>);
@@ -1359,6 +1368,7 @@ mod core_sys {
 		pub fn cv_Mat_convertTo_const_const__OutputArrayR_int(instance: *const c_void, m: *const c_void, rtype: i32, ocvrs_return: *mut Result_void);
 		pub fn cv_Mat_assignTo_const_MatR_int(instance: *const c_void, m: *mut c_void, typ: i32, ocvrs_return: *mut Result_void);
 		pub fn cv_Mat_assignTo_const_MatR(instance: *const c_void, m: *mut c_void, ocvrs_return: *mut Result_void);
+		pub fn cv_Mat_operatorST_const_ScalarR(instance: *mut c_void, s: *const core::Scalar, ocvrs_return: *mut Result_void);
 		pub fn cv_Mat_setTo_const__InputArrayR_const__InputArrayR(instance: *mut c_void, value: *const c_void, mask: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Mat_setTo_const__InputArrayR(instance: *mut c_void, value: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Mat_reshape_const_int_int(instance: *const c_void, cn: i32, rows: i32, ocvrs_return: *mut Result<*mut c_void>);
@@ -1426,9 +1436,9 @@ mod core_sys {
 		pub fn cv_Mat_ptr_const_intX(instance: *mut c_void, idx: *const i32, ocvrs_return: *mut Result<*mut u8>);
 		pub fn cv_Mat_ptr_const_const_intX(instance: *const c_void, idx: *const i32, ocvrs_return: *mut Result<*const u8>);
 		pub fn cv_Mat_Mat_MatRR(m: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_Mat_operatorST_MatRR(instance: *mut c_void, m: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_Mat_updateContinuityFlag(instance: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_Mat_size_const(instance: *const c_void, ocvrs_return: *mut Result<core::Size>);
-		pub fn cv_Mat_set_Scalar(instance: *mut c_void, s: *const core::Scalar, ocvrs_return: *mut Result_void);
 		pub fn cv_Mat_data_const(instance: *const c_void) -> *const u8;
 		pub fn cv_Mat_propFlags_const(instance: *const c_void) -> i32;
 		pub fn cv_Mat_propFlags_int(instance: *mut c_void, val: i32);
@@ -1454,6 +1464,7 @@ mod core_sys {
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatX_int(_m: *const c_void, _row: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m: *const c_void, _pt: *const core::Point, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(it: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_MatConstIterator_operatorST_const_MatConstIteratorR(instance: *mut c_void, it: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_MatConstIterator_operatorX_const(instance: *const c_void, ocvrs_return: *mut Result<*const u8>);
 		pub fn cv_MatConstIterator_operator___const_ptrdiff_t(instance: *const c_void, i: ptrdiff_t, ocvrs_return: *mut Result<*const u8>);
 		pub fn cv_MatConstIterator_operatorSS(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -1557,6 +1568,7 @@ mod core_sys {
 		pub fn cv_MatStep_operator___const_int(instance: *const c_void, i: i32) -> size_t;
 		pub fn cv_MatStep_operator___int(instance: *mut c_void, i: i32) -> size_t;
 		pub fn cv_MatStep_operator_size_t_const(instance: *const c_void, ocvrs_return: *mut Result<size_t>);
+		pub fn cv_MatStep_operatorST_size_t(instance: *mut c_void, s: size_t, ocvrs_return: *mut Result_void);
 		pub fn cv_MatStep_propP(instance: *mut c_void) -> *mut size_t;
 		pub fn cv_MatStep_propP_size_tX(instance: *mut c_void, val: *mut size_t);
 		pub fn cv_MatStep_propBuf(instance: *mut c_void) -> *mut [size_t; 2];
@@ -1697,6 +1709,8 @@ mod core_sys {
 		pub fn cv_SparseMat_SparseMat_int_const_intX_int(dims: i32, _sizes: *const i32, _type: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMat_SparseMat_const_SparseMatR(m: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMat_SparseMat_const_MatR(m: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_SparseMat_operatorST_const_SparseMatR(instance: *mut c_void, m: *const c_void, ocvrs_return: *mut Result_void);
+		pub fn cv_SparseMat_operatorST_const_MatR(instance: *mut c_void, m: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_SparseMat_clone_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMat_copyTo_const_SparseMatR(instance: *const c_void, m: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_SparseMat_copyTo_const_MatR(instance: *const c_void, m: *mut c_void, ocvrs_return: *mut Result_void);
@@ -1780,6 +1794,7 @@ mod core_sys {
 		pub fn cv_SparseMatConstIterator_SparseMatConstIterator(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatX(_m: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorR(it: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_SparseMatConstIterator_operatorST_const_SparseMatConstIteratorR(instance: *mut c_void, it: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_SparseMatConstIterator_node_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_operatorAA(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatConstIterator_seekEnd(instance: *mut c_void, ocvrs_return: *mut Result_void);
@@ -1792,6 +1807,7 @@ mod core_sys {
 		pub fn cv_SparseMatIterator_SparseMatIterator(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(it: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_SparseMatIterator_operatorST_const_SparseMatIteratorR(instance: *mut c_void, it: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_SparseMatIterator_node_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatIterator_operatorAA(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_SparseMatIterator_to_SparseMatConstIterator(instance: *mut c_void) -> *mut c_void;
@@ -1831,6 +1847,7 @@ mod core_sys {
 		pub fn cv_UMat_UMat_const_UMatR_const_RangeR(m: *const c_void, row_range: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_UMat_UMat_const_UMatR_const_RectR(m: *const c_void, roi: *const core::Rect, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_UMat_UMat_const_UMatR_const_vectorLRangeGR(m: *const c_void, ranges: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_UMat_operatorST_const_UMatR(instance: *mut c_void, m: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_UMat_getMat_const_AccessFlag(instance: *const c_void, flags: core::AccessFlag, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_UMat_row_const_int(instance: *const c_void, y: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_UMat_col_const_int(instance: *const c_void, x: i32, ocvrs_return: *mut Result<*mut c_void>);
@@ -1849,6 +1866,7 @@ mod core_sys {
 		pub fn cv_UMat_convertTo_const_const__OutputArrayR_int(instance: *const c_void, m: *const c_void, rtype: i32, ocvrs_return: *mut Result_void);
 		pub fn cv_UMat_assignTo_const_UMatR_int(instance: *const c_void, m: *mut c_void, typ: i32, ocvrs_return: *mut Result_void);
 		pub fn cv_UMat_assignTo_const_UMatR(instance: *const c_void, m: *mut c_void, ocvrs_return: *mut Result_void);
+		pub fn cv_UMat_operatorST_const_ScalarR(instance: *mut c_void, s: *const core::Scalar, ocvrs_return: *mut Result_void);
 		pub fn cv_UMat_setTo_const__InputArrayR_const__InputArrayR(instance: *mut c_void, value: *const c_void, mask: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_UMat_setTo_const__InputArrayR(instance: *mut c_void, value: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_UMat_reshape_const_int_int(instance: *const c_void, cn: i32, rows: i32, ocvrs_return: *mut Result<*mut c_void>);
@@ -1907,6 +1925,7 @@ mod core_sys {
 		pub fn cv_UMat_checkVector_const_int_int_bool(instance: *const c_void, elem_channels: i32, depth: i32, require_continuous: bool, ocvrs_return: *mut Result<i32>);
 		pub fn cv_UMat_checkVector_const_int(instance: *const c_void, elem_channels: i32, ocvrs_return: *mut Result<i32>);
 		pub fn cv_UMat_UMat_UMatRR(m: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_UMat_operatorST_UMatRR(instance: *mut c_void, m: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_UMat_handle_const_AccessFlag(instance: *const c_void, access_flags: core::AccessFlag, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_UMat_ndoffset_const_size_tX(instance: *const c_void, ofs: *mut size_t, ocvrs_return: *mut Result_void);
 		pub fn cv_UMat_updateContinuityFlag(instance: *mut c_void, ocvrs_return: *mut Result_void);
@@ -2197,6 +2216,7 @@ mod core_sys {
 		pub fn cv_cuda_GpuMat_GpuMat_const_GpuMatR_Rect(m: *const c_void, roi: *const core::Rect, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr: *const c_void, allocator: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_GpuMat_GpuMat_const__InputArrayR(arr: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_cuda_GpuMat_operatorST_const_GpuMatR(instance: *mut c_void, m: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_cuda_GpuMat_create_int_int_int(instance: *mut c_void, rows: i32, cols: i32, typ: i32, ocvrs_return: *mut Result_void);
 		pub fn cv_cuda_GpuMat_create_Size_int(instance: *mut c_void, size: *const core::Size, typ: i32, ocvrs_return: *mut Result_void);
 		pub fn cv_cuda_GpuMat_release(instance: *mut c_void, ocvrs_return: *mut Result_void);
@@ -2285,7 +2305,9 @@ mod core_sys {
 		pub fn cv_cuda_GpuMatND_operator___const_IndexArray_Range_Range(instance: *const c_void, idx: *mut c_void, row_range: *mut c_void, col_range: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_GpuMatND_operator_cv_cuda_GpuMat_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_GpuMatND_GpuMatND_const_GpuMatNDR(unnamed: *const c_void) -> *mut c_void;
+		pub fn cv_cuda_GpuMatND_operatorST_const_GpuMatNDR(instance: *mut c_void, unnamed: *const c_void);
 		pub fn cv_cuda_GpuMatND_GpuMatND_GpuMatNDRR(unnamed: *mut c_void) -> *mut c_void;
+		pub fn cv_cuda_GpuMatND_operatorST_GpuMatNDRR(instance: *mut c_void, unnamed: *mut c_void);
 		pub fn cv_cuda_GpuMatND_upload_const__InputArrayR(instance: *mut c_void, src: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_cuda_GpuMatND_upload_const__InputArrayR_StreamR(instance: *mut c_void, src: *const c_void, stream: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_cuda_GpuMatND_download_const_const__OutputArrayR(instance: *const c_void, dst: *const c_void, ocvrs_return: *mut Result_void);
@@ -2318,6 +2340,7 @@ mod core_sys {
 		pub fn cv_cuda_HostMem_HostMem_Size_int(size: *const core::Size, typ: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_HostMem_HostMem_const__InputArrayR_AllocType(arr: *const c_void, alloc_type: core::HostMem_AllocType, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_HostMem_HostMem_const__InputArrayR(arr: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_cuda_HostMem_operatorST_const_HostMemR(instance: *mut c_void, m: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_cuda_HostMem_swap_HostMemR(instance: *mut c_void, b: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_cuda_HostMem_clone_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_HostMem_create_int_int_int(instance: *mut c_void, rows: i32, cols: i32, typ: i32, ocvrs_return: *mut Result_void);
@@ -2388,6 +2411,7 @@ mod core_sys {
 		pub fn cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(fun_name: *const c_char, file_name: *const c_char, line_num: i32, ret_address: *mut c_void, always_expand: bool, instr_type: core::TYPE, impl_type: core::IMPL, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_instr_NodeData_NodeData(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_instr_NodeData_NodeData_NodeDataR(ref_: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_instr_NodeData_operatorST_const_NodeDataR(instance: *mut c_void, unnamed: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_instr_NodeData_getTotalMs_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_instr_NodeData_getMeanMs_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_instr_NodeData_propM_funName_const(instance: *const c_void) -> *mut c_void;
@@ -2418,7 +2442,9 @@ mod core_sys {
 		pub fn cv_ocl_Context_Context() -> *mut c_void;
 		pub fn cv_ocl_Context_Context_int(dtype: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Context_Context_const_ContextR(c: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_ocl_Context_operatorST_const_ContextR(instance: *mut c_void, c: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_Context_Context_ContextRR(c: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_Context_operatorST_ContextRR(instance: *mut c_void, c: *mut c_void);
 		pub fn cv_ocl_Context_create(instance: *mut c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_ocl_Context_create_int(instance: *mut c_void, dtype: i32, ocvrs_return: *mut Result<bool>);
 		pub fn cv_ocl_Context_ndevices_const(instance: *const c_void, ocvrs_return: *mut Result<size_t>);
@@ -2441,7 +2467,9 @@ mod core_sys {
 		pub fn cv_ocl_Device_Device() -> *mut c_void;
 		pub fn cv_ocl_Device_Device_voidX(d: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Device_Device_const_DeviceR(d: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_ocl_Device_operatorST_const_DeviceR(instance: *mut c_void, d: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_Device_Device_DeviceRR(d: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_Device_operatorST_DeviceRR(instance: *mut c_void, d: *mut c_void);
 		pub fn cv_ocl_Device_set_voidX(instance: *mut c_void, d: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_Device_name_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Device_extensions_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -2526,7 +2554,9 @@ mod core_sys {
 		pub fn cv_ocl_Image2D_Image2D_const_UMatR_bool_bool(src: *const c_void, norm: bool, alias: bool, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Image2D_Image2D_const_UMatR(src: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Image2D_Image2D_const_Image2DR(i: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_ocl_Image2D_operatorST_const_Image2DR(instance: *mut c_void, i: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_Image2D_Image2D_Image2DRR(unnamed: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_Image2D_operatorST_Image2DRR(instance: *mut c_void, unnamed: *mut c_void);
 		pub fn cv_ocl_Image2D_canCreateAlias_const_UMatR(u: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_ocl_Image2D_isFormatSupported_int_int_bool(depth: i32, cn: i32, norm: bool, ocvrs_return: *mut Result<bool>);
 		pub fn cv_ocl_Image2D_ptr_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -2536,7 +2566,9 @@ mod core_sys {
 		pub fn cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR_const_StringR_StringX(kname: *const c_char, prog: *const c_void, buildopts: *const c_char, errmsg: *mut *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR(kname: *const c_char, prog: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Kernel_Kernel_const_KernelR(k: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_ocl_Kernel_operatorST_const_KernelR(instance: *mut c_void, k: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_Kernel_Kernel_KernelRR(k: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_Kernel_operatorST_KernelRR(instance: *mut c_void, k: *mut c_void);
 		pub fn cv_ocl_Kernel_empty_const(instance: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_ocl_Kernel_create_const_charX_const_ProgramR(instance: *mut c_void, kname: *const c_char, prog: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_ocl_Kernel_create_const_charX_const_ProgramSourceR_const_StringR_StringX(instance: *mut c_void, kname: *const c_char, prog: *const c_void, buildopts: *const c_char, errmsg: *mut *mut c_void, ocvrs_return: *mut Result<bool>);
@@ -2594,6 +2626,8 @@ mod core_sys {
 		pub fn cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() -> *mut c_void;
 		pub fn cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(unnamed: *const c_void) -> *mut c_void;
 		pub fn cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextRR(unnamed: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_OpenCLExecutionContext_operatorST_const_OpenCLExecutionContextR(instance: *mut c_void, unnamed: *const c_void);
+		pub fn cv_ocl_OpenCLExecutionContext_operatorST_OpenCLExecutionContextRR(instance: *mut c_void, unnamed: *mut c_void);
 		pub fn cv_ocl_OpenCLExecutionContext_getContext_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_OpenCLExecutionContext_getDevice_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_OpenCLExecutionContext_getQueue_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -2612,7 +2646,9 @@ mod core_sys {
 		pub fn cv_ocl_OpenCLExecutionContext_delete(instance: *mut c_void);
 		pub fn cv_ocl_Platform_Platform() -> *mut c_void;
 		pub fn cv_ocl_Platform_Platform_const_PlatformR(p: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_ocl_Platform_operatorST_const_PlatformR(instance: *mut c_void, p: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_Platform_Platform_PlatformRR(p: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_Platform_operatorST_PlatformRR(instance: *mut c_void, p: *mut c_void);
 		pub fn cv_ocl_Platform_ptr_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Platform_getDefault(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Platform_empty_const(instance: *const c_void, ocvrs_return: *mut Result<bool>);
@@ -2620,7 +2656,9 @@ mod core_sys {
 		pub fn cv_ocl_PlatformInfo_PlatformInfo() -> *mut c_void;
 		pub fn cv_ocl_PlatformInfo_PlatformInfo_voidX(id: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoR(i: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_ocl_PlatformInfo_operatorST_const_PlatformInfoR(instance: *mut c_void, i: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_PlatformInfo_PlatformInfo_PlatformInfoRR(i: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_PlatformInfo_operatorST_PlatformInfoRR(instance: *mut c_void, i: *mut c_void);
 		pub fn cv_ocl_PlatformInfo_name_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_PlatformInfo_vendor_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_PlatformInfo_version_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -2633,7 +2671,9 @@ mod core_sys {
 		pub fn cv_ocl_Program_Program() -> *mut c_void;
 		pub fn cv_ocl_Program_Program_const_ProgramSourceR_const_StringR_StringR(src: *const c_void, buildflags: *const c_char, errmsg: *mut *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Program_Program_const_ProgramR(prog: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_ocl_Program_operatorST_const_ProgramR(instance: *mut c_void, prog: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_Program_Program_ProgramRR(prog: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_Program_operatorST_ProgramRR(instance: *mut c_void, prog: *mut c_void);
 		pub fn cv_ocl_Program_create_const_ProgramSourceR_const_StringR_StringR(instance: *mut c_void, src: *const c_void, buildflags: *const c_char, errmsg: *mut *mut c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_ocl_Program_ptr_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Program_getBinary_const_vectorLcharGR(instance: *const c_void, binary: *mut c_void, ocvrs_return: *mut Result_void);
@@ -2648,7 +2688,9 @@ mod core_sys {
 		pub fn cv_ocl_ProgramSource_ProgramSource_const_StringR_const_StringR_const_StringR_const_StringR(module: *const c_char, name: *const c_char, code_str: *const c_char, code_hash: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_ProgramSource_ProgramSource_const_StringR(prog: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_ProgramSource_ProgramSource_const_ProgramSourceR(prog: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_ocl_ProgramSource_operatorST_const_ProgramSourceR(instance: *mut c_void, prog: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_ProgramSource_ProgramSource_ProgramSourceRR(prog: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_ProgramSource_operatorST_ProgramSourceRR(instance: *mut c_void, prog: *mut c_void);
 		pub fn cv_ocl_ProgramSource_source_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_ProgramSource_hash_const(instance: *const c_void, ocvrs_return: *mut Result<core::ProgramSource_hash_t>);
 		pub fn cv_ocl_ProgramSource_fromBinary_const_StringR_const_StringR_const_unsigned_charX_const_size_t_const_StringR(module: *const c_char, name: *const c_char, binary: *const u8, size: size_t, build_options: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
@@ -2661,7 +2703,9 @@ mod core_sys {
 		pub fn cv_ocl_Queue_Queue_const_ContextR_const_DeviceR(c: *const c_void, d: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Queue_Queue_const_ContextR(c: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ocl_Queue_Queue_const_QueueR(q: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_ocl_Queue_operatorST_const_QueueR(instance: *mut c_void, q: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_ocl_Queue_Queue_QueueRR(q: *mut c_void) -> *mut c_void;
+		pub fn cv_ocl_Queue_operatorST_QueueRR(instance: *mut c_void, q: *mut c_void);
 		pub fn cv_ocl_Queue_create_const_ContextR_const_DeviceR(instance: *mut c_void, c: *const c_void, d: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_ocl_Queue_create(instance: *mut c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_ocl_Queue_finish(instance: *mut c_void, ocvrs_return: *mut Result_void);
@@ -5317,6 +5361,7 @@ mod dnn_sys {
 		pub fn cv_dnn_DictValue_getRealValue_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_dnn_DictValue_getStringValue_const_int(instance: *const c_void, idx: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_dnn_DictValue_getStringValue_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_dnn_DictValue_operatorST_const_DictValueR(instance: *mut c_void, r: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_dnn_DictValue_delete(instance: *mut c_void);
 		pub fn cv_dnn_ELULayer_create_const_LayerParamsR(params: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_dnn_ELULayer_propAlpha_const(instance: *const c_void) -> f32;
@@ -5662,6 +5707,8 @@ mod dnn_sys {
 		pub fn cv_dnn_Model_Model(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_dnn_Model_Model_const_ModelR(unnamed: *const c_void) -> *mut c_void;
 		pub fn cv_dnn_Model_Model_ModelRR(unnamed: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_Model_operatorST_const_ModelR(instance: *mut c_void, unnamed: *const c_void);
+		pub fn cv_dnn_Model_operatorST_ModelRR(instance: *mut c_void, unnamed: *mut c_void);
 		pub fn cv_dnn_Model_Model_const_StringR_const_StringR(model: *const c_char, config: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_dnn_Model_Model_const_StringR(model: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_dnn_Model_Model_const_NetR(network: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -8396,6 +8443,8 @@ mod gapi_sys {
 		pub fn cv_GRunArg_GRunArg(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_GRunArg_GRunArg_const_GRunArgR(arg: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_GRunArg_GRunArg_GRunArgRR(arg: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_GRunArg_operatorST_const_GRunArgR(instance: *mut c_void, arg: *const c_void, ocvrs_return: *mut Result_void);
+		pub fn cv_GRunArg_operatorST_GRunArgRR(instance: *mut c_void, arg: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_GRunArg_delete(instance: *mut c_void);
 		pub fn cv_GScalar_GScalar(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_GScalar_GScalar_const_ScalarR(s: *const core::Scalar, ocvrs_return: *mut Result<*mut c_void>);
@@ -8443,6 +8492,7 @@ mod gapi_sys {
 		pub fn cv_RMat_IAdapter_delete(instance: *mut c_void);
 		pub fn cv_RMat_View_View() -> *mut c_void;
 		pub fn cv_RMat_View_View_ViewRR(unnamed: *mut c_void) -> *mut c_void;
+		pub fn cv_RMat_View_operatorST_ViewRR(instance: *mut c_void, v: *mut c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_RMat_View_size_const(instance: *const c_void, ocvrs_return: *mut Result<core::Size>);
 		pub fn cv_RMat_View_dims_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_RMat_View_cols_const(instance: *const c_void, ocvrs_return: *mut Result<i32>);
@@ -8544,6 +8594,8 @@ mod gapi_sys {
 		pub fn cv_util_any_any_anyR(src: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_util_any_any() -> *mut c_void;
 		pub fn cv_util_any_any_anyRR(unnamed: *mut c_void) -> *mut c_void;
+		pub fn cv_util_any_operatorST_anyRR(instance: *mut c_void, unnamed: *mut c_void);
+		pub fn cv_util_any_operatorST_const_anyR(instance: *mut c_void, src: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_util_any_delete(instance: *mut c_void);
 		pub fn std_pairLcv_gapi_GBackend__cv_GKernelImplG_new_const_GBackend_GKernelImpl(arg: *mut c_void, arg_1: *mut c_void) -> *mut c_void;
 		pub fn std_pairLcv_gapi_GBackend__cv_GKernelImplG_get_0_const(instance: *const c_void, ocvrs_return: *mut *mut c_void);
@@ -10300,6 +10352,8 @@ mod objdetect_sys {
 		pub fn cv_GraphicalCodeDetector_GraphicalCodeDetector(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_GraphicalCodeDetector_GraphicalCodeDetector_const_GraphicalCodeDetectorR(unnamed: *const c_void) -> *mut c_void;
 		pub fn cv_GraphicalCodeDetector_GraphicalCodeDetector_GraphicalCodeDetectorRR(unnamed: *mut c_void) -> *mut c_void;
+		pub fn cv_GraphicalCodeDetector_operatorST_const_GraphicalCodeDetectorR(instance: *mut c_void, unnamed: *const c_void);
+		pub fn cv_GraphicalCodeDetector_operatorST_GraphicalCodeDetectorRR(instance: *mut c_void, unnamed: *mut c_void);
 		pub fn cv_GraphicalCodeDetector_detect_const_const__InputArrayR_const__OutputArrayR(instance: *const c_void, img: *const c_void, points: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_GraphicalCodeDetector_decode_const_const__InputArrayR_const__InputArrayR_const__OutputArrayR(instance: *const c_void, img: *const c_void, points: *const c_void, straight_code: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_GraphicalCodeDetector_decode_const_const__InputArrayR_const__InputArrayR(instance: *const c_void, img: *const c_void, points: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -12999,6 +13053,7 @@ mod stitching_sys {
 		pub fn cv_detail_BundleAdjusterReproj_delete(instance: *mut c_void);
 		pub fn cv_detail_CameraParams_CameraParams(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_detail_CameraParams_CameraParams_const_CameraParamsR(other: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_detail_CameraParams_operatorST_const_CameraParamsR(instance: *mut c_void, other: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_detail_CameraParams_K_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_detail_CameraParams_implicitClone_const(instance: *const c_void) -> *mut c_void;
 		pub fn cv_detail_CameraParams_propFocal_const(instance: *const c_void) -> f64;
@@ -13212,6 +13267,7 @@ mod stitching_sys {
 		pub fn cv_detail_ImageFeatures_delete(instance: *mut c_void);
 		pub fn cv_detail_MatchesInfo_MatchesInfo(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_detail_MatchesInfo_MatchesInfo_const_MatchesInfoR(other: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_detail_MatchesInfo_operatorST_const_MatchesInfoR(instance: *mut c_void, other: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_detail_MatchesInfo_getMatches(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_detail_MatchesInfo_getInliers(instance: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_detail_MatchesInfo_implicitClone_const(instance: *const c_void) -> *mut c_void;
@@ -15500,6 +15556,7 @@ mod viz_sys {
 		pub fn cv_viz_Viz3d_Viz3d_const_StringR(window_name: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_viz_Viz3d_Viz3d(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_viz_Viz3d_Viz3d_const_Viz3dR(unnamed: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_viz_Viz3d_operatorST_const_Viz3dR(instance: *mut c_void, unnamed: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR_const_Affine3dR(instance: *mut c_void, id: *const c_char, widget: *const c_void, pose: *const core::Affine3d, ocvrs_return: *mut Result_void);
 		pub fn cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR(instance: *mut c_void, id: *const c_char, widget: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_viz_Viz3d_removeWidget_const_StringR(instance: *mut c_void, id: *const c_char, ocvrs_return: *mut Result_void);
@@ -15711,6 +15768,7 @@ mod viz_sys {
 		pub fn cv_viz_WWidgetMerger_delete(instance: *mut c_void);
 		pub fn cv_viz_Widget_Widget(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_viz_Widget_Widget_const_WidgetR(other: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_viz_Widget_operatorST_const_WidgetR(instance: *mut c_void, other: *const c_void, ocvrs_return: *mut Result_void);
 		pub fn cv_viz_Widget_fromPlyFile_const_StringR(file_name: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_viz_Widget_setRenderingProperty_int_double(instance: *mut c_void, property: i32, value: f64, ocvrs_return: *mut Result_void);
 		pub fn cv_viz_Widget_getRenderingProperty_const_int(instance: *const c_void, property: i32, ocvrs_return: *mut Result<f64>);

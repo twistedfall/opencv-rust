@@ -573,7 +573,7 @@ pub mod surface_matching {
 		/// * useWeightedClustering: The algorithm by default clusters the poses without weighting. A non-zero value would indicate that the pose clustering should take into account the number of votes as the weights and perform a weighted averaging instead of a simple one.
 		/// 
 		/// ## Note
-		/// This alternative version of [set_search_params] function uses the following default values for its arguments:
+		/// This alternative version of [PPF3DDetectorTrait::set_search_params] function uses the following default values for its arguments:
 		/// * position_threshold: -1
 		/// * rotation_threshold: -1
 		/// * use_weighted_clustering: false
@@ -630,7 +630,7 @@ pub mod surface_matching {
 		/// * relativeSceneDistance: Set the distance threshold relative to the diameter of the model. This parameter is equivalent to relativeSamplingStep in the training stage. This parameter acts like a prior sampling with the relativeSceneSampleStep parameter.
 		/// 
 		/// ## Note
-		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// This alternative version of [PPF3DDetectorTrait::match_] function uses the following default values for its arguments:
 		/// * relative_scene_sample_step: 1.0/5.0
 		/// * relative_scene_distance: 0.03
 		#[inline]

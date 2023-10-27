@@ -134,7 +134,7 @@ pub mod cudafeatures2d {
 		/// mask.at\<uchar\>(i,j) is non-zero.
 		/// 
 		/// ## Note
-		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		#[inline]
 		fn match__def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
@@ -181,7 +181,7 @@ pub mod cudafeatures2d {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [match_] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
 		#[inline]
 		fn match__def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
@@ -246,7 +246,7 @@ pub mod cudafeatures2d {
 		/// mask.at\<uchar\>(i,j) is non-zero.
 		/// 
 		/// ## Note
-		/// This alternative version of [match_async] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_async] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -298,7 +298,7 @@ pub mod cudafeatures2d {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [match_async] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_async] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -384,7 +384,7 @@ pub mod cudafeatures2d {
 		/// for the details about query and train descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [knn_match] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
@@ -435,7 +435,7 @@ pub mod cudafeatures2d {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [knn_match] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
 		#[inline]
@@ -501,7 +501,7 @@ pub mod cudafeatures2d {
 		/// for the details about query and train descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [knn_match_async] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match_async] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -553,7 +553,7 @@ pub mod cudafeatures2d {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [knn_match_async] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match_async] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -604,7 +604,7 @@ pub mod cudafeatures2d {
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [knn_match_convert] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match_convert] function uses the following default values for its arguments:
 		/// * compact_result: false
 		#[inline]
 		fn knn_match_convert_def(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>) -> Result<()> {
@@ -672,7 +672,7 @@ pub mod cudafeatures2d {
 		/// returned in the distance increasing order.
 		/// 
 		/// ## Note
-		/// This alternative version of [radius_match] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
@@ -724,7 +724,7 @@ pub mod cudafeatures2d {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [radius_match] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
 		#[inline]
@@ -792,7 +792,7 @@ pub mod cudafeatures2d {
 		/// returned in the distance increasing order.
 		/// 
 		/// ## Note
-		/// This alternative version of [radius_match_async] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match_async] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -845,7 +845,7 @@ pub mod cudafeatures2d {
 		/// @overload
 		/// 
 		/// ## Note
-		/// This alternative version of [radius_match_async] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match_async] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -896,7 +896,7 @@ pub mod cudafeatures2d {
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [radius_match_convert] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match_convert] function uses the following default values for its arguments:
 		/// * compact_result: false
 		#[inline]
 		fn radius_match_convert_def(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>) -> Result<()> {
@@ -981,7 +981,7 @@ pub mod cudafeatures2d {
 		/// BRIEF).
 		/// 
 		/// ## Note
-		/// This alternative version of [create_bf_matcher] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_DescriptorMatcher::create_bf_matcher] function uses the following default values for its arguments:
 		/// * norm_type: cv::NORM_L2
 		#[inline]
 		pub fn create_bf_matcher_def() -> Result<core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>> {
@@ -1113,7 +1113,7 @@ pub mod cudafeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_FastFeatureDetector::create] function uses the following default values for its arguments:
 		/// * threshold: 10
 		/// * nonmax_suppression: true
 		/// * typ: cv::FastFeatureDetector::TYPE_9_16
@@ -1188,7 +1188,7 @@ pub mod cudafeatures2d {
 		/// * stream: CUDA stream.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_async] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_Feature2DAsyncTrait::detect_async] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
@@ -1233,7 +1233,7 @@ pub mod cudafeatures2d {
 		/// * stream: CUDA stream.
 		/// 
 		/// ## Note
-		/// This alternative version of [compute_async] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_Feature2DAsyncTrait::compute_async] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn compute_async_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
@@ -1268,7 +1268,7 @@ pub mod cudafeatures2d {
 		/// Detects keypoints and computes the descriptors.
 		/// 
 		/// ## Note
-		/// This alternative version of [detect_and_compute_async] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_Feature2DAsyncTrait::detect_and_compute_async] function uses the following default values for its arguments:
 		/// * use_provided_keypoints: false
 		/// * stream: Stream::Null()
 		#[inline]
@@ -1629,7 +1629,7 @@ pub mod cudafeatures2d {
 		}
 		
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [CUDA_ORB::create] function uses the following default values for its arguments:
 		/// * nfeatures: 500
 		/// * scale_factor: 1.2f
 		/// * nlevels: 8

@@ -839,7 +839,7 @@ pub mod cudafilters {
 		/// * stream: Stream for the asynchronous version.
 		/// 
 		/// ## Note
-		/// This alternative version of [apply] function uses the following default values for its arguments:
+		/// This alternative version of [FilterTrait::apply] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
 		fn apply_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {

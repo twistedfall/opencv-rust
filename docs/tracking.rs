@@ -103,7 +103,7 @@ pub mod tracking {
 		/// * parameters: CSRT parameters TrackerCSRT::Params
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [TrackerCSRT::create] function uses the following default values for its arguments:
 		/// * parameters: TrackerCSRT::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
@@ -569,7 +569,7 @@ pub mod tracking {
 		}
 		
 		/// ## Note
-		/// This alternative version of [set_feature_extractor] function uses the following default values for its arguments:
+		/// This alternative version of [TrackerKCFTrait::set_feature_extractor] function uses the following default values for its arguments:
 		/// * pca_func: false
 		#[inline]
 		fn set_feature_extractor_def(&mut self, callback: crate::tracking::TrackerKCF_FeatureExtractorCallbackFN) -> Result<()> {
@@ -642,7 +642,7 @@ pub mod tracking {
 		/// * parameters: KCF parameters TrackerKCF::Params
 		/// 
 		/// ## Note
-		/// This alternative version of [create] function uses the following default values for its arguments:
+		/// This alternative version of [TrackerKCF::create] function uses the following default values for its arguments:
 		/// * parameters: TrackerKCF::Params()
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::tracking::TrackerKCF>> {
