@@ -23,8 +23,8 @@ impl RustElement for Enum<'_> {
 		self.cpp_name(CppNameStyle::Declaration)
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self.entity(), prefix, opencv_version)
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment(self.entity(), comment_marker, opencv_version)
 	}
 }
 
@@ -33,7 +33,7 @@ impl RustNativeGeneratedElement for Enum<'_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &str) -> String {
 		static ENUM_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/enum/enum.tpl.rs").compile_interpolation());
 
 		static CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/enum/const.tpl.rs").compile_interpolation());
@@ -54,11 +54,12 @@ impl RustNativeGeneratedElement for Enum<'_> {
 				} else {
 					&CONST_TPL
 				};
-				let doc_comment = if duplicate_name.is_some() {
-					c.rendered_doc_comment_with_prefix("//", _opencv_version)
+				let comment_marker = if duplicate_name.is_some() {
+					"//"
 				} else {
-					c.rendered_doc_comment(_opencv_version)
+					"///"
 				};
+				let doc_comment = c.rendered_doc_comment(comment_marker, opencv_version);
 				generated_values.insert(value.clone(), name.clone());
 				tpl.interpolate(&HashMap::from([
 					("doc_comment", doc_comment),
@@ -69,7 +70,7 @@ impl RustNativeGeneratedElement for Enum<'_> {
 			})
 			.collect::<Vec<_>>();
 		ENUM_TPL.interpolate(&HashMap::from([
-			("doc_comment", self.rendered_doc_comment(_opencv_version).into()),
+			("doc_comment", self.rendered_doc_comment("///", opencv_version).into()),
 			("debug", self.get_debug().into()),
 			("rust_local", self.rust_name(NameStyle::decl())),
 			("rust_full", self.rust_name(NameStyle::ref_())),

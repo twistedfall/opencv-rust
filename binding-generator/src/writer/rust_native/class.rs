@@ -56,7 +56,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	let type_ref = c.type_ref();
 	let is_trait = c.is_trait();
 	let class_kind = c.kind();
-	let doc_comment = c.rendered_doc_comment(opencv_version);
+	let doc_comment = c.rendered_doc_comment("///", opencv_version);
 
 	let mut out = String::new();
 
@@ -239,7 +239,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					}
 				}
 				SIMPLE_FIELD_TPL.interpolate(&HashMap::from([
-					("doc_comment", Cow::Owned(f.rendered_doc_comment(opencv_version))),
+					("doc_comment", Cow::Owned(f.rendered_doc_comment("///", opencv_version))),
 					("visibility", "pub ".into()),
 					("name", f.rust_leafname(FishStyle::No)),
 					("type", typ),
@@ -412,11 +412,9 @@ impl RustElement for Class<'_, '_> {
 		}
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
 		match self {
-			&Self::Clang { entity, .. } => {
-				DefaultRustNativeElement::rendered_doc_comment_with_prefix(entity, prefix, opencv_version)
-			}
+			&Self::Clang { entity, .. } => DefaultRustNativeElement::rendered_doc_comment(entity, comment_marker, opencv_version),
 			Self::Desc(_) => "".to_string(),
 		}
 	}

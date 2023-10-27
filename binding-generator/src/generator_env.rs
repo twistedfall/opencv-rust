@@ -10,7 +10,7 @@ use clang::{Entity, EntityKind, EntityVisitResult};
 use crate::class::ClassKind;
 use crate::type_ref::CppNameStyle;
 use crate::{
-	comment, is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
+	is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
 	MemoizeMapExt, NamePool, WalkAction,
 };
 
@@ -106,7 +106,7 @@ impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 			let name = entity.cpp_name(CppNameStyle::Reference).into_owned();
 			let line = entity.get_location().map_or(0, |l| l.get_file_location().line);
 			let defs = self.gen_env.func_comments.entry(name).or_default();
-			defs.push((line, comment::strip_comment_markers(&raw_comment)));
+			defs.push((line, raw_comment.into_owned()));
 			// reverse sort due to how we're querying this; the amount of elements in this Vec doesn't go above 7
 			defs.sort_unstable_by(|(left_line, _), (right_line, _)| right_line.cmp(left_line));
 		}

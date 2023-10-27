@@ -86,10 +86,7 @@ impl Element for SmartPtr<'_, '_> {
 	}
 
 	fn doc_comment(&self) -> Cow<str> {
-		match self {
-			&Self::Clang { entity, .. } => entity.get_comment().unwrap_or_default().into(),
-			Self::Desc(_) => "".into(),
-		}
+		"".into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {

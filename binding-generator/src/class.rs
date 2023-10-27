@@ -8,6 +8,7 @@ use clang::{Accessibility, Entity, EntityKind};
 
 pub use desc::ClassDesc;
 
+use crate::comment::strip_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::{WalkAction, WalkResult};
@@ -545,7 +546,7 @@ impl Element for Class<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<str> {
 		match self {
-			&Self::Clang { entity, .. } => entity.get_comment().unwrap_or_default().into(),
+			&Self::Clang { entity, .. } => strip_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Self::Desc(_) => "".into(),
 		}
 	}

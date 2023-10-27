@@ -9,13 +9,15 @@ use dunce::canonicalize;
 use once_cell::sync::Lazy;
 
 use class::ClassExt;
+use comment::RenderComment;
 use element::{RustElement, RustNativeGeneratedElement};
+use func::FuncExt;
 pub use string_ext::RustStringExt;
 
+use crate::comment::strip_comment_markers;
 use crate::field::Field;
 use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
-use crate::writer::rust_native::func::FuncExt;
 use crate::{
 	opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func, GeneratedType, GeneratorVisitor,
 	IteratorExt, StrExt, Typedef,
@@ -120,7 +122,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	}
 
 	fn visit_module_comment(&mut self, comment: String) {
-		self.comment = comment;
+		self.comment = strip_comment_markers(&comment);
 	}
 
 	fn visit_const(&mut self, cnst: Const) {
@@ -244,7 +246,9 @@ impl Drop for RustNativeBindingWriter<'_> {
 		rust += &join(&mut self.rust_funcs);
 		rust += &join(&mut self.rust_classes);
 		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("traits", self.prelude_traits.join(", "))]));
-		let comment = comment::render_doc_comment(&self.comment, "//!", self.opencv_version);
+		let comment = RenderComment::new(&self.comment, self.opencv_version)
+			.render_with_comment_marker("//!")
+			.into_owned();
 		File::create(&self.rust_path)
 			.expect("Can't create rust file")
 			.write_all(

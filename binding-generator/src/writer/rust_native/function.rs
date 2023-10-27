@@ -33,7 +33,7 @@ impl RustElement for Function<'_, '_> {
 		}
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, _prefix: &str, _opencv_version: &str) -> String {
+	fn rendered_doc_comment(&self, _comment_marker: &str, _opencv_version: &str) -> String {
 		"".to_string()
 	}
 }

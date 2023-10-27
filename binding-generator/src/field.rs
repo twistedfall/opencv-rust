@@ -8,6 +8,7 @@ use std::rc::Rc;
 use clang::token::TokenKind;
 use clang::{Entity, EntityKind, EntityVisitResult};
 
+use crate::comment::strip_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName, NameDebug};
 use crate::element::{ExcludeKind, UNNAMED};
 use crate::settings::ArgOverride;
@@ -164,7 +165,7 @@ impl Element for Field<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<str> {
 		match self {
-			Field::Clang { entity, .. } => entity.get_comment().unwrap_or_default().into(),
+			Field::Clang { entity, .. } => strip_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Field::Desc(_) => "".into(),
 		}
 	}

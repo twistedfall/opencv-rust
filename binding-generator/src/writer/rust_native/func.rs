@@ -4,22 +4,17 @@ use std::fmt::Write;
 use std::rc::Rc;
 
 use once_cell::sync::Lazy;
-use regex::Regex;
 
 use crate::field::Field;
 use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind, Safety};
 use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef};
-use crate::writer::rust_native::disambiguate_single_name;
-use crate::{
-	comment as crate_comment, reserved_rename, settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NameDebug,
-	StrExt, StringExt,
-};
+use crate::{reserved_rename, settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
 
-use super::comment;
+use super::comment::{render_ref, RenderComment};
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
-use super::{rust_disambiguate_names, RustNativeGeneratedElement};
+use super::{comment, disambiguate_single_name, rust_disambiguate_names, RustNativeGeneratedElement};
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_func_default_args(&self) -> Option<Func<'tu, 'ge>>;
@@ -50,7 +45,7 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 				([].as_slice(), args.as_ref())
 			};
 			let original_rust_leafname = self.rust_leafname(FishStyle::No);
-			let mut doc_comment = crate_comment::strip_comment_markers(&self.doc_comment());
+			let mut doc_comment = self.doc_comment().into_owned();
 			let rust_leafname = format!("{}_def", original_rust_leafname);
 			let default_args = comment::render_cpp_default_args(args_with_def);
 			if !doc_comment.is_empty() {
@@ -58,9 +53,10 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 			}
 			write!(
 				&mut doc_comment,
-				"## Note\nThis alternative version of #{original_rust_leafname} function uses the following default values for its arguments:\n{default_args}"
+				"## Note\nThis alternative version of [{refr}] function uses the following default values for its arguments:\n{default_args}",
+				refr = render_ref(self, Some(&original_rust_leafname))
 			)
-				.expect("Write to String doesn't fail");
+			.expect("Write to String doesn't fail");
 			let desc = match self.clone() {
 				Func::Clang { .. } => {
 					let mut desc = self.to_desc(InheritConfig::empty().doc_comment().arguments());
@@ -239,45 +235,17 @@ impl RustElement for Func<'_, '_> {
 		}
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		let comment = match self {
-			&Self::Clang { entity, gen_env, .. } => {
-				let mut comment = entity.doc_comment().into_owned();
-				let line = self.file_line_name().location.as_file().map_or(0, |(_, line)| line);
-				const OVERLOAD: &str = "@overload";
-				if let Some(idx) = comment.find(OVERLOAD) {
-					let rep = if let Some(copy) = gen_env.get_func_comment(line, entity.cpp_name(CppNameStyle::Reference).as_ref()) {
-						Cow::Owned(format!("{copy}\n\n## Overloaded parameters\n"))
-					} else {
-						Cow::Borrowed("This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.")
-					};
-					comment.replace_range(idx..idx + OVERLOAD.len(), &rep);
-				}
-				static COPY_BRIEF: Lazy<Regex> = Lazy::new(|| Regex::new(r"@copybrief\s+(\w+)").unwrap());
-				comment.replace_in_place_regex_cb(&COPY_BRIEF, |comment, caps| {
-					let copy_name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
-					let mut copy_full_name = self.cpp_namespace().into_owned();
-					copy_full_name.extend_sep("::", copy_name);
-					if let Some(copy) = gen_env.get_func_comment(line, &copy_full_name) {
-						Some(copy.into())
-					} else {
-						Some("".into())
-					}
-				});
-				Cow::Owned(comment)
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+		let mut comment = RenderComment::new(&self.doc_comment_overloaded(), opencv_version);
+		let default_args_comment = comment::render_cpp_default_args(self.arguments().as_ref());
+		if !default_args_comment.is_empty() {
+			if !comment.comment.is_empty() {
+				comment.comment.push_str("\n\n");
 			}
-			Self::Desc(desc) => desc.doc_comment.as_ref().into(),
-		};
-		comment::render_doc_comment_with_processor(&comment, prefix, opencv_version, |out| {
-			let default_args_comment = comment::render_cpp_default_args(self.arguments().as_ref());
-			if !default_args_comment.is_empty() {
-				if !out.is_empty() {
-					out.push_str("\n\n");
-				}
-				out.push_str("## C++ default parameters\n");
-				out.push_str(default_args_comment.trim_end());
-			}
-		})
+			comment.comment.push_str("## C++ default parameters\n");
+			comment.comment.push_str(default_args_comment.trim_end());
+		}
+		comment.render_with_comment_marker(comment_marker).into_owned()
 	}
 }
 
@@ -332,7 +300,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			pre_post_arg_handle(arg_type_ref.rust_arg_post_success_call(name), &mut post_success_call_args);
 		}
 
-		let doc_comment = self.rendered_doc_comment_with_prefix("///", _opencv_version);
+		let doc_comment = self.rendered_doc_comment("///", _opencv_version);
 		let visibility = if let Some(cls) = as_instance_method {
 			if cls.is_trait() {
 				""

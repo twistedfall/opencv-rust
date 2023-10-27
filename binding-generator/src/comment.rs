@@ -9,8 +9,14 @@ pub fn strip_comment_markers(comment: &str) -> String {
 	const DETAIL: &str = "!";
 	const SINGLELINE_DETAIL: &str = "/";
 	const SINGLELINE_SIDE: &str = "<";
-	let mut singleline_delimited = true;
-	let mut asterisk_indented = false;
+
+	fn trim_last_empty_lines(lines: &mut Vec<&str>) {
+		while lines.last().map_or(false, |line| line.is_empty()) {
+			lines.pop();
+		}
+	}
+
+	let mut comment_type = CommentType::SingleLineDelimited;
 	let mut lines = Vec::with_capacity(128);
 	// first pass:
 	// 1. checks whether the comment is single-line or multi-line delimited
@@ -18,59 +24,44 @@ pub fn strip_comment_markers(comment: &str) -> String {
 	// 3. strips comment delimiters for multiline and single line comments
 	// 4. collects resulting stripped lines into `lines` Vec
 	for (i, mut line) in comment.lines_with_nl().enumerate() {
-		let mut line_clean = line.trim_start();
+		let mut line_trimmed = line.trim_start();
 		if i == 0 {
-			if let Some(new_line) = line_clean.strip_prefix(MULTILINE_PREFIX) {
+			if let Some(new_line) = line_trimmed.strip_prefix(MULTILINE_PREFIX) {
 				line = new_line;
-				singleline_delimited = false;
 				if let Some(new_line) = line.strip_prefix(MULTILINE_CONT) {
 					line = new_line;
-					asterisk_indented = true;
+					comment_type = CommentType::MultilineAsteriskPrefixed;
 				} else {
-					asterisk_indented = false;
+					comment_type = CommentType::MultilineWithoutAsteriskPrefix;
 				}
-				line_clean = line.trim_start();
-			} else {
-				singleline_delimited = true;
-				asterisk_indented = false;
+				line_trimmed = line.trim_start();
 			}
-		} else if let Some(line_clean) = line_clean.strip_prefix(MULTILINE_PREFIX) {
+		} else if let Some(line_clean) = line_trimmed.strip_prefix(MULTILINE_PREFIX) {
 			line = line_clean
 				.trim_start_matches(DETAIL)
 				.trim_start_matches(MULTILINE_CONT)
 				.trim_start();
 		}
-		if singleline_delimited && line_clean.starts_with(SINGLELINE) {
-			line = &line_clean[SINGLELINE.len()..];
-			if let Some(new_line) = line.strip_prefix(SINGLELINE_DETAIL) {
-				line = new_line;
-			} else if let Some(new_line) = line.strip_prefix(DETAIL) {
-				line = new_line;
+		if comment_type == CommentType::SingleLineDelimited {
+			if let Some(new_line) = line_trimmed.strip_prefix(SINGLELINE) {
+				line = new_line
+					.strip_prefix(SINGLELINE_DETAIL)
+					.or_else(|| new_line.strip_prefix(DETAIL))
+					.unwrap_or(new_line);
+				line = line.strip_prefix(SINGLELINE_SIDE).unwrap_or(line);
 			}
-			if let Some(new_line) = line.strip_prefix(SINGLELINE_SIDE) {
-				line = new_line;
-			}
-		} else if asterisk_indented && i == 1 && !line_clean.starts_with(MULTILINE_CONT) {
-			asterisk_indented = false;
+		} else if i == 1 && comment_type == CommentType::MultilineAsteriskPrefixed && !line_trimmed.starts_with(MULTILINE_CONT) {
+			comment_type = CommentType::MultilineWithoutAsteriskPrefix;
 		}
 		lines.push(line);
 	}
-	let trim_last_empty_lines = |lines: &mut Vec<&str>| {
-		while let Some(last_line) = lines.last() {
-			if last_line.is_empty() {
-				lines.pop();
-			} else {
-				break;
-			}
-		}
-	};
 	trim_last_empty_lines(&mut lines);
 	// trim ending multiline delimiter
 	if let Some(last_line) = lines.last_mut() {
-		if !singleline_delimited {
+		if comment_type != CommentType::SingleLineDelimited {
 			*last_line = last_line.trim_end();
-			if last_line.ends_with(MULTILINE_SUFFIX) {
-				*last_line = last_line[..last_line.len() - MULTILINE_SUFFIX.len()].trim_end();
+			if let Some(new_line) = last_line.strip_suffix(MULTILINE_SUFFIX) {
+				*last_line = new_line.trim_end();
 			}
 		}
 	}
@@ -81,7 +72,7 @@ pub fn strip_comment_markers(comment: &str) -> String {
 	let mut first_line_indent = None;
 	let mut common_indent: Option<Indent> = None;
 	for line in &mut lines {
-		if !singleline_delimited && asterisk_indented {
+		if comment_type == CommentType::MultilineAsteriskPrefixed {
 			let line_trimmed = line.trim_start();
 			if let Some(line_trimmed) = line_trimmed.strip_prefix(MULTILINE_CONT) {
 				*line = line_trimmed;
@@ -130,4 +121,46 @@ pub fn strip_comment_markers(comment: &str) -> String {
 	let out_trim_end = out.trim_end_idx();
 	out.drain(out_trim_end..);
 	out
+}
+
+#[derive(PartialEq)]
+enum CommentType {
+	/// Each line starts with `//`
+	SingleLineDelimited,
+	/// Comment starting with `/*` or `/**` and every remaining line within starts with `*`
+	MultilineAsteriskPrefixed,
+	/// Comment starting with `/*` or `/**`, but without any prefix for the remaining lines
+	MultilineWithoutAsteriskPrefix,
+}
+
+#[cfg(test)]
+mod test {
+	use super::strip_comment_markers;
+
+	#[test]
+	fn test_strip_comment_markers() {
+		assert_eq!("test", &strip_comment_markers("/** test */"));
+		assert_eq!("test", &strip_comment_markers("//   test"));
+		assert_eq!("test", &strip_comment_markers("/*test */"));
+
+		{
+			let comment = "/** @overload
+ * @brief It's the same function as #calibrateCameraAruco but without calibration error estimation.
+ */";
+
+			let expected = "@overload
+@brief It's the same function as #calibrateCameraAruco but without calibration error estimation.";
+			assert_eq!(expected, &strip_comment_markers(comment));
+		}
+
+		{
+			let comment = "// @overload
+// @brief It's the same function as #calibrateCameraAruco but without calibration error estimation.
+//";
+
+			let expected = "@overload
+@brief It's the same function as #calibrateCameraAruco but without calibration error estimation.";
+			assert_eq!(expected, &strip_comment_markers(comment));
+		}
+	}
 }

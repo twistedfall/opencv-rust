@@ -9,7 +9,7 @@ use crate::{
 	StringExt,
 };
 
-use super::comment;
+use super::comment::RenderComment;
 
 pub struct DefaultRustNativeElement;
 
@@ -93,13 +93,10 @@ impl DefaultRustNativeElement {
 		}
 	}
 
-	pub fn rendered_doc_comment_with_prefix(entity: Entity, prefix: &str, opencv_version: &str) -> String {
-		let comment = entity.get_comment();
-		comment::render_doc_comment(comment.as_deref().unwrap_or(""), prefix, opencv_version)
-	}
-
-	pub fn rendered_doc_comment(this: &(impl RustElement + ?Sized), opencv_version: &str) -> String {
-		this.rendered_doc_comment_with_prefix("///", opencv_version)
+	pub fn rendered_doc_comment(entity: Entity, comment_marker: &str, opencv_version: &str) -> String {
+		RenderComment::new(&entity.doc_comment(), opencv_version)
+			.render_with_comment_marker(comment_marker)
+			.into_owned()
 	}
 }
 
@@ -141,11 +138,7 @@ pub trait RustElement: Element {
 		DefaultRustNativeElement::rust_leafname(self)
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String;
-
-	fn rendered_doc_comment(&self, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment(self, opencv_version)
-	}
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String;
 }
 
 pub trait DebugRust {

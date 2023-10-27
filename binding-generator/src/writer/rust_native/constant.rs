@@ -30,8 +30,8 @@ impl RustElement for Const<'_> {
 		self.cpp_name(CppNameStyle::Declaration)
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self.entity(), prefix, opencv_version)
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment(self.entity(), comment_marker, opencv_version)
 	}
 }
 
@@ -64,7 +64,7 @@ impl RustNativeGeneratedElement for Const<'_> {
 				}
 			};
 			RUST_TPL.interpolate(&HashMap::from([
-				("doc_comment", Cow::Owned(self.rendered_doc_comment(opencv_version))),
+				("doc_comment", Cow::Owned(self.rendered_doc_comment("///", opencv_version))),
 				("debug", self.get_debug().into()),
 				("name", name),
 				("type", typ.into()),

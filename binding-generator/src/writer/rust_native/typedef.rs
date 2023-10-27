@@ -31,8 +31,8 @@ impl RustElement for Typedef<'_, '_> {
 		}
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self.entity(), prefix, opencv_version)
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment(self.entity(), comment_marker, opencv_version)
 	}
 }
 
@@ -41,7 +41,7 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &str) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/typedef/tpl.rs").compile_interpolation());
 		let underlying_type = self.underlying_type_ref();
 		let lifetimes = Lifetime::explicit()
@@ -56,7 +56,7 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 		};
 
 		TPL.interpolate(&HashMap::from([
-			("doc_comment", Cow::Owned(self.rendered_doc_comment(_opencv_version))),
+			("doc_comment", Cow::Owned(self.rendered_doc_comment("///", opencv_version))),
 			("debug", self.get_debug().into()),
 			("rust_local", self.rust_name(NameStyle::decl())),
 			("generic_args", generic_args.into()),

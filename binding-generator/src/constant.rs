@@ -5,6 +5,7 @@ use std::fmt::Write;
 use clang::token::{Token, TokenKind};
 use clang::{Entity, EntityKind, EvaluationResult};
 
+use crate::comment::strip_comment_markers;
 use crate::debug::LocationName;
 use crate::element::ExcludeKind;
 use crate::type_ref::CppNameStyle;
@@ -157,7 +158,7 @@ impl Element for Const<'_> {
 	}
 
 	fn doc_comment(&self) -> Cow<str> {
-		self.entity.get_comment().unwrap_or_default().into()
+		strip_comment_markers(&self.entity.get_comment().unwrap_or_default()).into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
