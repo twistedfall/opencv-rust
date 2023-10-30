@@ -1,3 +1,6 @@
+* 0.86.1
+  * Provide a clearer message for the case when `libclang` can't be loaded.
+
 * 0.86.0
   * Add support for `operator =` via `set` method.
   * Improve documentation generation.
