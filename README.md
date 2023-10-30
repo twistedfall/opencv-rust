@@ -192,12 +192,12 @@ command line arguments to use when crosscompiling the project inside the contain
    You might be running into the issue on the recent macOS versions where this environment variable remains empty after setting,
    please check [this issue](https://github.com/twistedfall/opencv-rust/issues/343) for some workarounds.
 
-8. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
+8. You're getting the ```a `libclang` shared library is not loaded on this thread``` error during crate build.
 
    Enable the `clang-runtime` feature. The reason for the issue is that some `clang-sys` crate can either link to the
    corresponding dynamic library statically or load it at runtime based on whether its feature `runtime` is enabled.
-   And if enabled this feature starts to apply to all crates that depend on `clang-sys` even if they didn't enable that
-   feature themselves (applicable with Rust `edition` before 2021 and Cargo `resolver` before 2).
+   If enabled this crate feature applies to all crates that depend on `clang-sys` even if they didn't explicitly enable that
+   feature themselves (at least with Rust `edition` before 2021 and Cargo `resolver` before 2).
 
 9. You're getting `'limits' file not found` error during crate build.
 

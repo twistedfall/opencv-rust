@@ -403,6 +403,17 @@ impl Generator {
 		}
 	}
 
+	pub fn is_clang_loaded(&self) -> bool {
+		#[cfg(feature = "clang-runtime")]
+		{
+			clang_sys::is_loaded()
+		}
+		#[cfg(not(feature = "clang-runtime"))]
+		{
+			true
+		}
+	}
+
 	pub fn clang_version(&self) -> String {
 		clang::get_version()
 	}
