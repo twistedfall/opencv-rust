@@ -1,5 +1,4 @@
-use std::ffi::CStr;
-use std::os::raw::c_char;
+use std::ffi::{c_char, CStr};
 use std::slice;
 
 use crate::platform_types::size_t;
@@ -93,7 +92,10 @@ macro_rules! string_array_arg {
 #[allow(unused_macros)]
 macro_rules! string_array_arg_mut {
 	($name: ident) => {
-		let mut $name = $name.iter().map(|x| x.as_ptr() as _).collect::<::std::vec::Vec<_>>();
+		let mut $name = $name
+			.iter()
+			.map(|x| x.as_ptr().cast::<::std::ffi::c_char>().cast_mut())
+			.collect::<::std::vec::Vec<_>>();
 	};
 }
 

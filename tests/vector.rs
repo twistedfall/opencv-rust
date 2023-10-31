@@ -1,5 +1,5 @@
 use std::any::TypeId;
-use std::os::raw::c_char;
+use std::ffi::c_char;
 
 use matches::assert_matches;
 

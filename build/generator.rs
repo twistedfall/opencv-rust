@@ -4,7 +4,6 @@ use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::process::Command;
-use std::sync::Arc;
 use std::time::Instant;
 use std::{env, fs, io, thread};
 
@@ -61,12 +60,12 @@ impl BindingGenerator {
 		Ok(())
 	}
 
-	fn run(&self, modules: &'static [String], opencv_header_dir: &Path, opencv: &Library) -> Result<()> {
+	fn run(&self, modules: &[String], opencv_header_dir: &Path, opencv: &Library) -> Result<()> {
 		let additional_include_dirs = opencv
 			.include_paths
 			.iter()
-			.map(|path| path.as_path())
 			.filter(|&include_path| include_path != opencv_header_dir)
+			.map(|path| path.as_path())
 			.collect::<Vec<_>>();
 
 		let gen = Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR);
@@ -80,49 +79,46 @@ impl BindingGenerator {
 		eprintln!("=== Clang: {}", gen.clang_version());
 		eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 
-		let additional_include_dirs = Arc::new(
-			additional_include_dirs
-				.into_iter()
-				.map(|p| p.to_str().expect("Can't convert additional include dir to UTF-8 string"))
-				.join(","),
-		);
-		let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
+		let additional_include_dirs = additional_include_dirs
+			.into_iter()
+			.map(|p| p.to_str().expect("Can't convert additional include dir to UTF-8 string"))
+			.join(",");
 		let job_server = build_job_server()?;
-		let mut join_handles = Vec::with_capacity(modules.len());
 		let start = Instant::now();
-		// todo use thread::scope when MSRV is 1.63
 		eprintln!("=== Generating {} modules", modules.len());
-		modules.iter().for_each(|module| {
-			let token = job_server.acquire().expect("Can't acquire token from job server");
-			let join_handle = thread::spawn({
-				let additional_include_dirs = Arc::clone(&additional_include_dirs);
-				let opencv_header_dir = Arc::clone(&opencv_header_dir);
-				let build_script_path = self.build_script_path.clone();
-				move || {
-					let module_start = Instant::now();
-					let mut bin_generator = Command::new(build_script_path);
-					bin_generator
-						.arg(&*opencv_header_dir)
-						.arg(&*SRC_CPP_DIR)
-						.arg(&*OUT_DIR)
-						.arg(module)
-						.arg(&*additional_include_dirs);
-					eprintln!("=== Running: {bin_generator:?}");
-					let res = bin_generator
-						.status()
-						.unwrap_or_else(|e| panic!("Can't run bindings generator for module: {module}, error: {e}"));
-					if !res.success() {
-						panic!("Failed to run the bindings generator for module: {module}");
-					}
-					eprintln!("=== Generated: {module} in {:?}", module_start.elapsed());
-					drop(token); // needed to move the token to the thread
-				}
-			});
-			join_handles.push(join_handle);
+		thread::scope(|scope| {
+			let join_handles = modules
+				.iter()
+				.map(|module| {
+					let token = job_server.acquire().expect("Can't acquire token from job server");
+					scope.spawn({
+						let additional_include_dirs = additional_include_dirs.as_str();
+						move || {
+							let module_start = Instant::now();
+							let mut bin_generator = Command::new(&self.build_script_path);
+							bin_generator
+								.arg(opencv_header_dir)
+								.arg(&*SRC_CPP_DIR)
+								.arg(&*OUT_DIR)
+								.arg(module)
+								.arg(additional_include_dirs);
+							eprintln!("=== Running: {bin_generator:?}");
+							let res = bin_generator
+								.status()
+								.unwrap_or_else(|e| panic!("Can't run bindings generator for module: {module}, error: {e}"));
+							if !res.success() {
+								panic!("Failed to run the bindings generator for module: {module}");
+							}
+							eprintln!("=== Generated: {module} in {:?}", module_start.elapsed());
+							drop(token); // needed to move the token to the thread
+						}
+					})
+				})
+				.collect::<Vec<_>>();
+			for join_handle in join_handles {
+				join_handle.join().expect("Generator process panicked");
+			}
 		});
-		for join_handle in join_handles {
-			join_handle.join().expect("Generator process panicked");
-		}
 		eprintln!("=== Total binding generation time: {:?}", start.elapsed());
 		Ok(())
 	}

@@ -49,10 +49,8 @@ macro_rules! ptr_extern {
 macro_rules! ptr_extern_ctor {
 	($type: ty, $extern_new: ident) => {
 		impl $crate::core::PtrExternCtor<$type> for $crate::core::Ptr<$type> {
-			// `clippy::needless_lifetimes` needed because of the support for Rust 1.59
-			#[allow(clippy::needless_lifetimes)]
 			#[inline]
-			unsafe fn extern_new<'a>(val: extern_container_send!(mut $type: 'a)) -> extern_receive!(Self: 'a) {
+			unsafe fn extern_new(val: extern_container_send!(mut $type)) -> extern_receive!(Self) {
 				$crate::sys::$extern_new(val)
 			}
 		}

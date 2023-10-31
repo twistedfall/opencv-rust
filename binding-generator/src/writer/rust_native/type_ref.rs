@@ -141,37 +141,35 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	}
 
 	fn rust_arg_func_decl(&self, name: &str) -> String {
-		#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
-		let typ = 'decl_type: loop {
-			if let Some(dir) = self.as_string() {
-				break 'decl_type match dir {
-					Dir::In(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr) => "&str".into(),
-					Dir::In(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) => "&[u8]".into(),
-					Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr) => {
-						"&mut String".into()
-					}
-					Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) => "&mut Vec<u8>".into(),
-				};
-			} else if self.is_input_array() {
-				break 'decl_type "&impl core::ToInputArray".into();
-			} else if self.is_output_array() {
-				break 'decl_type "&mut impl core::ToOutputArray".into();
-			} else if self.is_input_output_array() {
-				break 'decl_type "&mut impl core::ToInputOutputArray".into();
-			} else if let Some((_, size)) = self.as_string_array() {
-				break 'decl_type self.format_as_array("&str", size).into();
-			} else if self.is_rust_char() {
-				break 'decl_type "char".into();
-			} else if let Some((tref, cls)) = self.as_abstract_class_ptr() {
-				let constness = tref.constness();
-				break 'decl_type format!(
-					"&{cnst}impl {name}",
-					cnst = constness.rust_qual(),
-					name = cls.rust_trait_name(NameStyle::ref_(), constness)
-				)
-				.into();
+		let typ = if let Some(dir) = self.as_string() {
+			match dir {
+				Dir::In(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr) => "&str".into(),
+				Dir::In(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) => "&[u8]".into(),
+				Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr) => {
+					"&mut String".into()
+				}
+				Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) => "&mut Vec<u8>".into(),
 			}
-			break 'decl_type self.rust_name(NameStyle::ref_());
+		} else if self.is_input_array() {
+			"&impl core::ToInputArray".into()
+		} else if self.is_output_array() {
+			"&mut impl core::ToOutputArray".into()
+		} else if self.is_input_output_array() {
+			"&mut impl core::ToInputOutputArray".into()
+		} else if let Some((_, size)) = self.as_string_array() {
+			self.format_as_array("&str", size).into()
+		} else if self.is_rust_char() {
+			"char".into()
+		} else if let Some((tref, cls)) = self.as_abstract_class_ptr() {
+			let constness = tref.constness();
+			format!(
+				"&{cnst}impl {name}",
+				cnst = constness.rust_qual(),
+				name = cls.rust_trait_name(NameStyle::ref_(), constness)
+			)
+			.into()
+		} else {
+			self.rust_name(NameStyle::ref_())
 		};
 		let cnst = Constness::from_is_mut(
 			self.is_by_move()
@@ -358,57 +356,49 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			ExternDir::Pure | ExternDir::ToCpp => self.constness(),
 			ExternDir::FromCpp => Constness::Mut,
 		};
-		#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
-		'typ: loop {
-			if let Some(arg_dir) = self.as_string() {
-				break 'typ match dir {
-					ExternDir::ToCpp | ExternDir::Pure => match arg_dir {
-						Dir::In(_) => format!("*{cnst}c_char", cnst = constness.rust_qual_ptr()).into(),
-						Dir::Out(_) => "*mut *mut c_void".into(),
-					},
-					ExternDir::FromCpp => "*mut c_void".into(),
-				};
+		if let Some(arg_dir) = self.as_string() {
+			match dir {
+				ExternDir::ToCpp | ExternDir::Pure => match arg_dir {
+					Dir::In(_) => format!("*{cnst}c_char", cnst = constness.rust_qual_ptr()).into(),
+					Dir::Out(_) => "*mut *mut c_void".into(),
+				},
+				ExternDir::FromCpp => "*mut c_void".into(),
 			}
-			if self.extern_pass_kind().is_by_void_ptr() {
-				break 'typ format!("*{cnst}c_void", cnst = constness.rust_qual_ptr()).into();
+		} else if self.extern_pass_kind().is_by_void_ptr() {
+			format!("*{cnst}c_void", cnst = constness.rust_qual_ptr()).into()
+		} else if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
+			let mut out = String::with_capacity(64);
+			write!(out, "*{}", self.constness().rust_qual_ptr()).expect("Impossible");
+			if inner.is_void() {
+				out += "c_void";
+			} else if self.as_string().is_some() {
+				out += "c_char";
+			} else {
+				out += inner.rust_extern(ExternDir::Pure).as_ref()
 			}
-			if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
-				let mut out = String::with_capacity(64);
-				write!(out, "*{}", self.constness().rust_qual_ptr()).expect("Impossible");
-				if inner.is_void() {
-					out += "c_void";
-				} else if self.as_string().is_some() {
-					out += "c_char";
-				} else {
-					out += inner.rust_extern(ExternDir::Pure).as_ref()
-				}
-				break 'typ out.into();
-			}
-			if let Some((elem, len)) = self.as_fixed_array() {
-				break 'typ format!(
-					"*{cnst}[{typ}; {len}]",
-					cnst = self.constness().rust_qual_ptr(),
-					typ = elem.rust_extern(ExternDir::Pure),
-				)
-				.into();
-			}
-			if let Some(elem) = self.as_variable_array() {
-				let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr))) {
-					// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
-					// argv is treated as array of output arguments and it doesn't seem to be meant this way
-					format!("*{cnst}c_char", cnst = elem.clang_constness().rust_qual_ptr()).into()
-				} else {
-					elem.rust_extern(ExternDir::Pure)
-				};
-				break 'typ format!("*{cnst}{typ}", cnst = self.constness().rust_qual_ptr()).into();
-			}
-			if let Some(func) = self.as_function() {
-				break 'typ func.rust_extern().into_owned().into();
-			}
-			if self.as_simple_class().is_some() && matches!(dir, ExternDir::ToCpp) {
-				break 'typ format!("*const {}", self.rust_name(NameStyle::ref_())).into();
-			}
-			break 'typ self.rust_name(NameStyle::ref_());
+			out.into()
+		} else if let Some((elem, len)) = self.as_fixed_array() {
+			format!(
+				"*{cnst}[{typ}; {len}]",
+				cnst = self.constness().rust_qual_ptr(),
+				typ = elem.rust_extern(ExternDir::Pure),
+			)
+			.into()
+		} else if let Some(elem) = self.as_variable_array() {
+			let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr))) {
+				// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
+				// argv is treated as array of output arguments and it doesn't seem to be meant this way
+				format!("*{cnst}c_char", cnst = elem.clang_constness().rust_qual_ptr()).into()
+			} else {
+				elem.rust_extern(ExternDir::Pure)
+			};
+			format!("*{cnst}{typ}", cnst = self.constness().rust_qual_ptr()).into()
+		} else if let Some(func) = self.as_function() {
+			func.rust_extern().into_owned().into()
+		} else if self.as_simple_class().is_some() && matches!(dir, ExternDir::ToCpp) {
+			format!("*const {}", self.rust_name(NameStyle::ref_())).into()
+		} else {
+			self.rust_name(NameStyle::ref_())
 		}
 	}
 

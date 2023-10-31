@@ -1,4 +1,4 @@
-use std::os::raw::c_void;
+use std::ffi::c_void;
 
 use crate::core::{_InputArray, _InputArrayTrait, _InputOutputArray, _InputOutputArrayTrait, _OutputArray, _OutputArrayTrait};
 use crate::traits::Boxed;

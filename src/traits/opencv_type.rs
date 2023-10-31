@@ -1,5 +1,4 @@
-use std::ffi::{c_void, CString};
-use std::os::raw::c_char;
+use std::ffi::{c_char, c_void, CString};
 
 use crate::Result;
 
@@ -290,7 +289,7 @@ impl OpenCVTypeExternContainer for CString {
 
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-		self.as_ptr() as _ // fixme: use as_mut_ptr() when it's stabilized or cast_mut() when MSRV is 1.65
+		self.as_ptr().cast_mut()
 	}
 }
 

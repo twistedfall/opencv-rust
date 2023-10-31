@@ -126,7 +126,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		} else {
 			let simplicity = settings::DATA_TYPES
 				.contains(cpp_refname)
-				.then(|| ClassSimplicity::Simple)
+				.then_some(ClassSimplicity::Simple)
 				.unwrap_or_else(|| {
 					settings::ELEMENT_EXPORT_TWEAK
 						.get(cpp_refname)

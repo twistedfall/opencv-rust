@@ -133,8 +133,7 @@ impl RustElement for Func<'_, '_> {
 			let kind = self.kind();
 			if let Some(cls) = kind.as_constructor() {
 				let args = self.arguments();
-				#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
-				'ctor_name: loop {
+				'ctor_name: {
 					if args.is_empty() {
 						break 'ctor_name "default";
 					} else if args.len() == 1 {
@@ -152,7 +151,7 @@ impl RustElement for Func<'_, '_> {
 							}
 						}
 					}
-					break 'ctor_name "new";
+					"new"
 				}
 				.into()
 			} else if kind.as_conversion_method().is_some() {

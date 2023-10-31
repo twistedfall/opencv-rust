@@ -26,7 +26,7 @@ pub mod platform_types {
 
 /// Prelude for sys (externs) module and types
 pub(crate) mod mod_prelude_sys {
-	pub use std::os::raw::{c_char, c_void};
+	pub use std::ffi::{c_char, c_void};
 
 	pub use crate::{
 		platform_types::*,
