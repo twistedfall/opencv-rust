@@ -1,60 +1,75 @@
-use crate::core::*;
-use crate::Result;
 use std::ops::*;
 
+use crate::core::*;
+use crate::{Error, Result};
+
+/// Intermediate result type that's produced by the [Mat] operations. Call [MatExprResult::into_result] to get the regular
+/// [Result].
+///
+/// This type is needed because of Rust orphan rules.
 pub enum MatExprResult<T> {
 	Ok(T),
-	Err(crate::Error),
+	Err(Error),
 }
 
-impl<T> From<Result<T, crate::Error>> for MatExprResult<T> {
-	fn from(r: Result<T, crate::Error>) -> Self {
+impl<T> From<Result<T, Error>> for MatExprResult<T> {
+	#[inline]
+	fn from(r: Result<T, Error>) -> Self {
 		match r {
-			Result::Ok(val) => MatExprResult::Ok(val),
-			Result::Err(e) => MatExprResult::Err(e),
+			Ok(val) => Self::Ok(val),
+			Err(e) => Self::Err(e),
 		}
 	}
 }
 
 impl<T> MatExprResult<T> {
-	pub fn into_result(self) -> Result<T, crate::Error> {
+	#[inline]
+	pub fn into_result(self) -> Result<T, Error> {
 		match self {
-			MatExprResult::Ok(val) => std::result::Result::Ok(val),
-			MatExprResult::Err(e) => std::result::Result::Err(e),
+			Self::Ok(val) => Ok(val),
+			Self::Err(e) => Err(e),
 		}
 	}
 }
 
-/// elementwise multiplication
+/// Elementwise multiplication
 pub trait ElemMul<Rhs = Self> {
 	type Output;
 	fn elem_mul(self, rhs: Rhs) -> Self::Output;
 }
 
-// only for internal usage
-trait ToUnderlyingArg<'a, T: 'a> {
-	fn to_underlying_arg(&'a self) -> T;
+#[inline]
+fn elemmul_mat_mat(a: &Mat, b: &Mat) -> Result<MatExpr> {
+	MatTraitConst::mul_def(a, b)
 }
-impl<'a> ToUnderlyingArg<'a, &'a Mat> for Mat {
-	fn to_underlying_arg(&'a self) -> &'a Mat {
+
+#[inline]
+fn elemmul_mat_matexpr(a: &Mat, b: &MatExpr) -> Result<MatExpr> {
+	MatTraitConst::mul_def(a, b)
+}
+
+#[inline]
+fn elemmul_matexpr_mat(a: &MatExpr, b: &Mat) -> Result<MatExpr> {
+	MatExprTraitConst::mul_def(a, b)
+}
+
+#[inline]
+fn elemmul_matexpr_matexpr(a: &MatExpr, b: &MatExpr) -> Result<MatExpr> {
+	MatExprTraitConst::mul_matexpr_def(a, b)
+}
+
+/// Hints Rust about whether we need a borrow or a move for an argument passed to Mat operation function, only for internal usage
+trait OpsArg: Sized {
+	#[inline]
+	fn ops_arg(self) -> Self {
 		self
 	}
 }
-impl<'a> ToUnderlyingArg<'a, &'a MatExpr> for MatExpr {
-	fn to_underlying_arg(&'a self) -> &'a MatExpr {
-		self
-	}
-}
-impl<'a> ToUnderlyingArg<'a, Scalar> for Scalar {
-	fn to_underlying_arg(&'a self) -> Scalar {
-		*self
-	}
-}
-impl<'a> ToUnderlyingArg<'a, f64> for f64 {
-	fn to_underlying_arg(&'a self) -> f64 {
-		*self
-	}
-}
+
+impl OpsArg for &Mat {}
+impl OpsArg for &MatExpr {}
+impl OpsArg for Scalar {}
+impl OpsArg for f64 {}
 
 macro_rules! impl_ops_core {
 	($func_name:ident, $op_type:ident, $lhs_type:ty, $rhs_type:ty, $op_func:ident) => {
@@ -62,9 +77,10 @@ macro_rules! impl_ops_core {
 		impl $op_type<$rhs_type> for $lhs_type {
 			type Output = MatExprResult<MatExpr>;
 
+			#[inline]
 			fn $op_func(self, rhs: $rhs_type) -> Self::Output {
 				let lhs = self;
-				$func_name(lhs.to_underlying_arg(), rhs.to_underlying_arg()).into()
+				$func_name(lhs.ops_arg(), rhs.ops_arg()).into()
 			}
 		}
 
@@ -72,10 +88,11 @@ macro_rules! impl_ops_core {
 		impl $op_type<$rhs_type> for MatExprResult<$lhs_type> {
 			type Output = MatExprResult<MatExpr>;
 
+			#[inline]
 			fn $op_func(self, rhs: $rhs_type) -> Self::Output {
 				let lhs = self;
 				match lhs {
-					MatExprResult::Ok(lhs) => $func_name(lhs.to_underlying_arg(), rhs.to_underlying_arg()).into(),
+					MatExprResult::Ok(lhs) => $func_name(lhs.ops_arg(), rhs.ops_arg()).into(),
 					MatExprResult::Err(e) => MatExprResult::Err(e),
 				}
 			}
@@ -85,10 +102,11 @@ macro_rules! impl_ops_core {
 		impl $op_type<MatExprResult<$rhs_type>> for $lhs_type {
 			type Output = MatExprResult<MatExpr>;
 
+			#[inline]
 			fn $op_func(self, rhs: MatExprResult<$rhs_type>) -> Self::Output {
 				let lhs = self;
 				match rhs {
-					MatExprResult::Ok(rhs) => $func_name(lhs.to_underlying_arg(), rhs.to_underlying_arg()).into(),
+					MatExprResult::Ok(rhs) => $func_name(lhs.ops_arg(), rhs.ops_arg()).into(),
 					MatExprResult::Err(e) => MatExprResult::Err(e),
 				}
 			}
@@ -98,20 +116,17 @@ macro_rules! impl_ops_core {
 		impl $op_type<MatExprResult<$rhs_type>> for MatExprResult<$lhs_type> {
 			type Output = MatExprResult<MatExpr>;
 
+			#[inline]
 			fn $op_func(self, rhs: MatExprResult<$rhs_type>) -> Self::Output {
 				let lhs = self;
 				match (lhs, rhs) {
-					(MatExprResult::Ok(lhs), MatExprResult::Ok(rhs)) => {
-						$func_name(lhs.to_underlying_arg(), rhs.to_underlying_arg()).into()
+					(MatExprResult::Ok(lhs), MatExprResult::Ok(rhs)) => $func_name(lhs.ops_arg(), rhs.ops_arg()).into(),
+					(MatExprResult::Err(e), MatExprResult::Ok(_)) | (MatExprResult::Ok(_), MatExprResult::Err(e)) => {
+						MatExprResult::Err(e)
 					}
-					(MatExprResult::Err(e), MatExprResult::Ok(_)) => MatExprResult::Err(e),
-					(MatExprResult::Ok(_), MatExprResult::Err(e)) => MatExprResult::Err(e),
 					(MatExprResult::Err(lhs_e), MatExprResult::Err(rhs_e)) => MatExprResult::Err(crate::Error::new(
-						0,
-						format!(
-							"Both side of operator has error: lhs-error={} rhs-error={}",
-							lhs_e, rhs_e
-						),
+						StsBadArg,
+						format!("Both sides of operator have error: lhs-error={lhs_e} rhs-error={rhs_e}"),
 					)),
 				}
 			}
@@ -167,19 +182,6 @@ impl_ops!(div_mat_f64, Div, Mat, f64, div);
 impl_ops!(div_matexpr_f64, Div, MatExpr, f64, div);
 impl_ops!(div_f64_mat, Div, f64, Mat, div);
 impl_ops!(div_f64_matexpr, Div, f64, MatExpr, div);
-
-fn elemmul_mat_mat(a: &Mat, b: &Mat) -> Result<MatExpr> {
-	MatTraitConst::mul(a, b, 1.0)
-}
-fn elemmul_mat_matexpr(a: &Mat, b: &MatExpr) -> Result<MatExpr> {
-	MatTraitConst::mul(a, b, 1.0)
-}
-fn elemmul_matexpr_mat(a: &MatExpr, b: &Mat) -> Result<MatExpr> {
-	MatExprTraitConst::mul(a, b, 1.0)
-}
-fn elemmul_matexpr_matexpr(a: &MatExpr, b: &MatExpr) -> Result<MatExpr> {
-	MatExprTraitConst::mul_matexpr(a, b, 1.0)
-}
 
 impl_ops!(elemmul_mat_mat, ElemMul, Mat, Mat, elem_mul);
 impl_ops!(elemmul_mat_matexpr, ElemMul, Mat, MatExpr, elem_mul);
