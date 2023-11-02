@@ -296,7 +296,7 @@ impl OpenCVTypeExternContainer for CString {
 
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-		self.as_ptr().cast_mut()
+		unimplemented!("Casting CString::as_ptr() to mut is UB")
 	}
 }
 
@@ -306,7 +306,7 @@ impl OpenCVType<'_> for Vec<u8> {
 
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		crate::templ::receive_byte_string(s as *mut Vec<u8>)
+		crate::templ::receive_string(s.cast::<Vec<u8>>())
 	}
 }
 

@@ -197,7 +197,6 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 	}
 }
 
-#[inline]
 fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let element_type = vec.element_type();
 	let mut out = Vec::with_capacity(7);

@@ -57,22 +57,21 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 				refr = render_ref(self, Some(&original_rust_leafname))
 			)
 			.expect("Write to String doesn't fail");
-			let desc = match self.clone() {
+			let out = match self.clone() {
 				Func::Clang { .. } => {
 					let mut desc = self.to_desc(InheritConfig::empty().doc_comment().arguments());
 					desc.rust_custom_leafname = Some(rust_leafname.into());
 					desc.arguments = args_without_def.into();
 					desc.doc_comment = doc_comment.into();
-					desc
+					Self::new_desc(desc)
 				}
-				Func::Desc(desc) => {
-					let mut desc = Rc::try_unwrap(desc).unwrap_or_else(|desc| desc.as_ref().clone());
-					desc.arguments = args_without_def.into();
-					desc.rust_custom_leafname = Some(rust_leafname.into());
-					desc
+				Func::Desc(mut desc) => {
+					let desc_ref = Rc::make_mut(&mut desc);
+					desc_ref.arguments = args_without_def.into();
+					desc_ref.rust_custom_leafname = Some(rust_leafname.into());
+					Self::Desc(desc)
 				}
 			};
-			let out = Self::new_desc(desc);
 			if out.exclude_kind().is_included() {
 				Some(out)
 			} else {
@@ -120,7 +119,7 @@ impl RustElement for Func<'_, '_> {
 		let cpp_name = match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				if let Some(name) = gen_env.get_rename_config(entity).map(|c| &c.rename) {
-					name.into()
+					name.as_ref().into()
 				} else {
 					self.cpp_name(CppNameStyle::Declaration)
 				}
@@ -570,10 +569,16 @@ fn rust_call(
 	for (name, arg) in args {
 		let arg_type_ref = arg.type_ref();
 		if let Some((slice_arg, len_div)) = arg.as_slice_len() {
-			let slice_call = if len_div > 1 {
-				format!("({slice_arg}.len() / {len_div}) as _")
+			let slice_call = if arg_type_ref.is_size_t() {
+				if len_div > 1 {
+					format!("{slice_arg}.len() / {len_div}")
+				} else {
+					format!("{slice_arg}.len()")
+				}
+			} else if len_div > 1 {
+				format!("({slice_arg}.len() / {len_div}).try_into()?")
 			} else {
-				format!("{slice_arg}.len() as _")
+				format!("{slice_arg}.len().try_into()?")
 			};
 			call_args.push(slice_call);
 		} else {

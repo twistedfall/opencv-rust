@@ -7,6 +7,7 @@ use once_cell::sync::Lazy;
 pub use argument_override::{ArgOverride, ARGUMENT_OVERRIDE, RETURN_HINT};
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
+pub use force_infallible::FORCE_INFALLIBLE;
 pub use func_cfg_attr::FUNC_CFG_ATTR;
 pub use func_exclude::FUNC_EXCLUDE;
 pub use func_inject::{FuncFactory, FUNC_INJECT};
@@ -16,11 +17,10 @@ pub use func_specialize::{TypeRefFactory, FUNC_SPECIALIZE};
 pub use func_unsafe::FUNC_UNSAFE;
 pub use generator_module_tweaks::{ModuleTweak, GENERATOR_MODULE_TWEAKS};
 
-use crate::FuncId;
-
 mod argument_override;
 mod element_exclude_kind;
 mod element_export_tweak;
+mod force_infallible;
 mod func_cfg_attr;
 mod func_exclude;
 mod func_inject;
@@ -68,56 +68,6 @@ pub static FORCE_CLASS_ABSTRACT: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::fro
 pub static FORCE_CONSTANT_METHOD: Lazy<HashSet<&str>> =
 	Lazy::new(|| HashSet::from(["cv::Mat::size", "cv::Mat::step", "cv::UMat::size", "cv::UMat::step"]));
 
-pub static FORCE_INFALLIBLE: Lazy<HashSet<FuncId>> = Lazy::new(|| {
-	HashSet::from([
-		// just returns static/constant data
-		FuncId::new_mut("cv::noArray", []),
-		FuncId::new_mut("cv::getVersionMajor", []),
-		FuncId::new_mut("cv::getVersionMinor", []),
-		FuncId::new_mut("cv::getVersionRevision", []),
-		// not doing anything that can cause an exception
-		FuncId::new_const("cv::Mat::empty", []),
-		FuncId::new_const("cv::Mat::total", []),
-		FuncId::new_const("cv::Mat::isContinuous", []),
-		FuncId::new_const("cv::Mat::isSubmatrix", []),
-		FuncId::new_const("cv::Mat::elemSize1", []),
-		FuncId::new_const("cv::Mat::type", []),
-		FuncId::new_const("cv::Mat::depth", []),
-		FuncId::new_const("cv::Mat::channels", []),
-		FuncId::new_const("cv::UMat::empty", []),
-		FuncId::new_const("cv::UMat::total", []),
-		FuncId::new_const("cv::UMat::isContinuous", []),
-		FuncId::new_const("cv::UMat::isSubmatrix", []),
-		FuncId::new_const("cv::UMat::elemSize1", []),
-		FuncId::new_const("cv::UMat::type", []),
-		FuncId::new_const("cv::UMat::depth", []),
-		FuncId::new_const("cv::UMat::channels", []),
-		FuncId::new_const("cv::SparseMat::elemSize", []),
-		FuncId::new_const("cv::SparseMat::elemSize1", []),
-		FuncId::new_const("cv::SparseMat::type", []),
-		FuncId::new_const("cv::SparseMat::depth", []),
-		FuncId::new_const("cv::SparseMat::channels", []),
-		// marked CV_NOEXCEPT since OpenCV 4.5.2, propagate those changes to earlier versions
-		FuncId::new_mut("cv::Mat::Mat", []),
-		FuncId::new_mut("cv::MatSize::MatSize", ["_p"]),
-		FuncId::new_const("cv::MatSize::dims", []),
-		FuncId::new_const("cv::MatSize::operator const int *", []),
-		FuncId::new_mut("cv::MatStep::MatStep", []),
-		FuncId::new_mut("cv::MatStep::operator[]", ["i"]),
-		FuncId::new_mut("cv::UMat::UMat", ["usageFlags"]),
-		FuncId::new_mut("cv::ocl::Context::Context", []),
-		FuncId::new_mut("cv::ocl::Device::Device", []),
-		FuncId::new_mut("cv::ocl::Image2D::Image2D", []),
-		FuncId::new_mut("cv::ocl::Kernel::Kernel", []),
-		FuncId::new_mut("cv::ocl::KernelArg::KernelArg", []),
-		FuncId::new_mut("cv::ocl::Platform::Platform", []),
-		FuncId::new_mut("cv::ocl::PlatformInfo::PlatformInfo", []),
-		FuncId::new_mut("cv::ocl::Program::Program", []),
-		FuncId::new_mut("cv::ocl::ProgramSource::ProgramSource", []),
-		FuncId::new_mut("cv::ocl::Queue::Queue", []),
-	])
-});
-
 /// cpp_name(Reference) => ( rust_name(Reference(No)), cpp_name(Reference) )
 pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {
 	HashMap::from([
@@ -140,9 +90,8 @@ pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| 
 
 pub static STATIC_MODULES: Lazy<BTreeSet<&str>> = Lazy::new(|| BTreeSet::from(["core", "sys", "types"]));
 
-// fixme, it can be made better
-pub static DATA_TYPES: Lazy<BTreeSet<&str>> = Lazy::new(|| {
-	BTreeSet::from([
+pub static DATA_TYPES: Lazy<HashSet<&str>> = Lazy::new(|| {
+	HashSet::from([
 		"unsigned char",
 		"char",
 		"uint8_t",

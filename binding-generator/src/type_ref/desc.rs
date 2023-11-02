@@ -34,7 +34,7 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 	}
 
 	pub fn try_primitive(cpp_name: &str) -> Option<TypeRef<'tu, 'ge>> {
-		let rust_name = match cpp_name {
+		let names = match cpp_name {
 			"void" => Some(("()", "void")),
 			"bool" => Some(("bool", "bool")),
 			"char" => Some(("c_char", "char")),
@@ -57,7 +57,7 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 			"double" => Some(("f64", "double")),
 			_ => settings::PRIMITIVE_TYPEDEFS.get(cpp_name).copied(),
 		};
-		rust_name.map(|(rust, cpp)| TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Primitive(rust, cpp))))
+		names.map(|(rust, cpp)| TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Primitive(rust, cpp))))
 	}
 
 	pub fn void() -> TypeRef<'tu, 'ge> {

@@ -56,16 +56,6 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	fn with_desc_mut(desc: &mut Rc<FuncDesc<'tu, 'ge>>, cb: impl FnOnce(&mut FuncDesc<'tu, 'ge>)) {
-		if let Some(desc) = Rc::get_mut(desc) {
-			cb(desc);
-		} else {
-			let mut new_desc = desc.as_ref().clone();
-			cb(&mut new_desc);
-			*desc = Rc::new(new_desc);
-		}
-	}
-
 	/// Sets custom rust_leafname for this func, used to e.g. disambiguate function names
 	pub fn set_rust_custom_leafname(&mut self, rust_custom_leafname: Option<Rc<str>>) {
 		match self {
@@ -75,7 +65,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			} => *old_rust_custom_leafname = rust_custom_leafname,
 			Self::Desc(desc) => {
 				if desc.rust_custom_leafname != rust_custom_leafname {
-					Self::with_desc_mut(desc, |desc| desc.rust_custom_leafname = rust_custom_leafname);
+					Rc::make_mut(desc).rust_custom_leafname = rust_custom_leafname;
 				}
 			}
 		}
@@ -219,7 +209,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					Self::new_desc(desc);
 				}
 			}
-			Func::Desc(desc) => Self::with_desc_mut(desc, |desc| transfer(desc, ancestor, inherit_config)),
+			Func::Desc(desc) => transfer(Rc::make_mut(desc), ancestor, inherit_config),
 		}
 	}
 

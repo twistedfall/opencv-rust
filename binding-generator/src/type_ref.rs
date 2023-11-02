@@ -163,10 +163,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					parent_entity,
 					gen_env,
 				},
-				Self::Desc(desc) => {
-					let mut desc = Rc::try_unwrap(desc).unwrap_or_else(|desc| desc.as_ref().clone());
-					desc.type_hint = type_hint;
-					Self::Desc(Rc::new(desc))
+				Self::Desc(mut desc) => {
+					Rc::make_mut(&mut desc).type_hint = type_hint;
+					Self::Desc(desc)
 				}
 			}
 		} else {
@@ -280,10 +279,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Generic(_) | TypeRefKind::Ignored => ExcludeKind::Ignored,
 			TypeRefKind::StdVector(vec) => vec.exclude_kind(),
 			TypeRefKind::StdTuple(tuple) => tuple.exclude_kind(),
-			TypeRefKind::Array(inner, ..)
-			| TypeRefKind::Pointer(inner)
-			| TypeRefKind::Reference(inner)
-			| TypeRefKind::RValueReference(inner) => inner.exclude_kind(),
+			TypeRefKind::Array(inner, ..) => ExcludeKind::Included.with_is_ignored(|| !inner.is_copy()),
+			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
+				inner.exclude_kind()
+			}
 			TypeRefKind::SmartPtr(ptr) => ptr.exclude_kind(),
 			TypeRefKind::Class(cls) => cls.exclude_kind(),
 			TypeRefKind::Typedef(tdef) => tdef.exclude_kind(),
@@ -384,15 +383,21 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_std_string(&self) -> bool {
-		matches!(self.as_string(), Some(Dir::In(StrType::StdString(_))))
+		matches!(
+			self.as_string(),
+			Some(Dir::In(StrType::StdString(_)) | Dir::Out(StrType::StdString(_)))
+		)
 	}
 
 	pub fn is_cv_string(&self) -> bool {
-		matches!(self.as_string(), Some(Dir::In(StrType::CvString(_))))
+		matches!(
+			self.as_string(),
+			Some(Dir::In(StrType::CvString(_)) | Dir::Out(StrType::CvString(_)))
+		)
 	}
 
 	pub fn is_char_ptr_string(&self) -> bool {
-		matches!(self.as_string(), Some(Dir::In(StrType::CharPtr)))
+		matches!(self.as_string(), Some(Dir::In(StrType::CharPtr) | Dir::Out(StrType::CharPtr)))
 	}
 
 	pub fn is_input_array(&self) -> bool {
@@ -449,6 +454,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn is_void_ptr(&self) -> bool {
 		self.as_pointer().map_or(false, |inner| inner.is_void())
+	}
+
+	pub fn is_size_t(&self) -> bool {
+		self.as_primitive().map_or(false, |(_, cpp)| cpp == "size_t")
 	}
 
 	pub fn as_pointer(&self) -> Option<TypeRef<'tu, 'ge>> {
@@ -619,7 +628,14 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				inner.extern_pass_kind()
 			}
 			TypeRefKind::SmartPtr(_) | TypeRefKind::StdVector(_) | TypeRefKind::StdTuple(_) => ExternPassKind::ByVoidPtr,
-			_ => ExternPassKind::AsIs,
+			TypeRefKind::Primitive(_, _)
+			| TypeRefKind::Array(_, _)
+			| TypeRefKind::Class(_)
+			| TypeRefKind::Enum(_)
+			| TypeRefKind::Function(_)
+			| TypeRefKind::Typedef(_)
+			| TypeRefKind::Generic(_)
+			| TypeRefKind::Ignored => ExternPassKind::AsIs,
 		}
 	}
 
@@ -634,20 +650,29 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			.map_or_else(|| self.is_data_type(), |vec| vec.element_type().is_data_type())
 	}
 
+	/// True for types that can be returned via C++ `return`, otherwise they are returned through an argument
+	///
+	/// Some types especially larger `struct`s are not safe to just `return` over the FFI boundary because compilers don't always
+	/// agree on how exactly those should be returned. So only designated simpler and shorter types are returned this way. For
+	/// all other cases the return is passed through an additional argument.
 	pub fn return_as_naked(&self) -> bool {
 		match self.kind().as_ref() {
-			TypeRefKind::Primitive(..) | TypeRefKind::Pointer(_) | TypeRefKind::Array(_, _) => true,
+			TypeRefKind::Primitive(..) | TypeRefKind::Pointer(_) => true,
+			TypeRefKind::Array(elem, _) => elem.is_copy(),
 			_ => self.extern_pass_kind().is_by_void_ptr() || self.as_string().is_some(),
 		}
 	}
 
+	/// True for types that can be exposed as Rust pointer
+	///
+	/// Currently a pointer to a primitive type with the exception of `char *`
 	fn can_rust_by_ptr(&self) -> bool {
 		self
 			.as_pointer()
 			.map_or(false, |inner| inner.as_primitive().is_some() && !self.as_string().is_some())
 	}
 
-	/// True for types that get passed by Rust pointer as opposed to a reference or an owned value
+	/// True for types that get passed in Rust by pointer as opposed to a reference or an owned value
 	pub fn is_rust_by_ptr(&self) -> bool {
 		self.is_void_ptr() || matches!(self.type_hint(), TypeRefTypeHint::PrimitiveRefAsPointer) && self.can_rust_by_ptr()
 	}
@@ -774,7 +799,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn cpp_extern_return_fallible(&self) -> Cow<str> {
 		if self.is_void() {
-			"Result_void".into()
+			"ResultVoid".into()
 		} else {
 			format!("Result<{ext}>", ext = self.cpp_extern_return()).into()
 		}

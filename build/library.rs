@@ -8,9 +8,7 @@ use dunce::canonicalize;
 use semver::Version;
 
 use super::cmake_probe::CmakeProbe;
-use super::{
-	cleanup_lib_filename, get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_OS_WINDOWS, TARGET_VENDOR_APPLE,
-};
+use super::{cleanup_lib_filename, get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_VENDOR_APPLE};
 
 struct PackageName;
 
@@ -415,7 +413,7 @@ impl Library {
 			|| env::var_os("OPENCV_CMAKE_NAME").is_some()
 			|| env::var_os("CMAKE_PREFIX_PATH").is_some()
 			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
-		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some() || *TARGET_OS_WINDOWS;
+		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some();
 		eprintln!(
 			"=== Detected probe priority based on environment vars: pkg_config: {explicit_pkg_config}, cmake: {explicit_cmake}, vcpkg: {explicit_vcpkg}"
 		);

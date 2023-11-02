@@ -2,7 +2,7 @@ use std::convert::TryInto;
 use std::ffi::c_void;
 use std::marker::PhantomData;
 use std::ops::Deref;
-use std::{fmt, slice};
+use std::{fmt, ptr, slice};
 
 pub use mat_::*;
 
@@ -14,13 +14,15 @@ use crate::{core, input_output_array, Error, Result};
 mod mat_;
 
 #[inline(always)]
+/// We rely on OpenCV to make sure that the pointer is correctly aligned
 unsafe fn convert_ptr<'r, T>(r: *const u8) -> &'r T {
-	&*(r as *const T)
+	&*(r.cast::<T>())
 }
 
 #[inline(always)]
+/// We rely on OpenCV to make sure that the pointer is correctly aligned
 unsafe fn convert_ptr_mut<'r, T>(r: *mut u8) -> &'r mut T {
-	&mut *(r as *mut T)
+	&mut *(r.cast::<T>())
 }
 
 #[inline]
@@ -42,6 +44,7 @@ fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 
 #[inline]
 fn match_dims(mat: &(impl MatTraitConst + ?Sized), dims: usize) -> Result<()> {
+	// safe because `Mat::dims()` returns value >= 2
 	let mat_dims = mat.dims() as usize;
 	if mat_dims == dims {
 		Ok(())
@@ -56,8 +59,7 @@ fn match_dims(mat: &(impl MatTraitConst + ?Sized), dims: usize) -> Result<()> {
 fn match_indices(mat: &(impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<()> {
 	let size = mat.mat_size();
 	match_dims(mat, idx.len())?;
-	let mut out_of_bounds = size.iter().enumerate().filter(|&(i, &x)| idx[i] < 0 || idx[i] >= x);
-	if let Some((out_dim, out_size)) = out_of_bounds.next() {
+	if let Some((out_dim, out_size)) = size.iter().enumerate().find(|&(i, &x)| idx[i] < 0 || idx[i] >= x) {
 		Err(Error::new(
 			core::StsOutOfRange,
 			format!(
@@ -73,6 +75,7 @@ fn match_indices(mat: &(impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<()>
 #[inline]
 fn match_total(mat: &(impl MatTraitConst + ?Sized), idx: i32) -> Result<()> {
 	let size = mat.total();
+	// safe because of the `0 <= idx` check
 	if 0 <= idx && (idx as usize) < size {
 		Ok(())
 	} else {
@@ -129,7 +132,7 @@ impl Mat {
 		for (i, x) in s.enumerate() {
 			// safe because `row_count_i32` ensures that len of `s` fits `i32`
 			let i = i as i32;
-			unsafe { ({ out.at_unchecked_mut::<T>(i) }? as *mut T).write(x) };
+			unsafe { ptr::write(out.at_unchecked_mut::<T>(i)?, x) };
 		}
 		Ok(out)
 	}
@@ -192,7 +195,7 @@ impl Mat {
 				row_count_i32(row_count)?,
 				col_count_i32(col_count)?,
 				T::opencv_type(),
-				s.as_ptr() as *mut c_void,
+				s.as_ptr().cast::<c_void>().cast_mut(),
 				core::Mat_AUTO_STEP,
 			)
 		}?
@@ -380,6 +383,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
 	unsafe fn at_row_unchecked<T: DataType>(&self, row: i32) -> Result<&[T]> {
+		// safe because Mat::size() can't be negative
 		let width = self.size()?.width as usize;
 		self.ptr(row).map(|x| slice::from_raw_parts(convert_ptr(x), width))
 	}
@@ -417,18 +421,20 @@ pub trait MatTraitConstManual: MatTraitConst {
 		if data.is_null() {
 			Err(Error::new(core::StsNullPtr, "Function returned null pointer"))
 		} else {
-			Ok(slice::from_raw_parts(data as *const T, self.total()))
+			Ok(slice::from_raw_parts(data.cast::<T>(), self.total()))
 		}
 	}
 
 	fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
 		match_format::<T>(self.typ()).and_then(|_| match_dims(self, 2)).and_then(|_| {
-			let size = Self::size(self)?;
+			let size = self.size()?;
+			// safe because Mat size can't be negative
 			let width = size.width as usize;
 			if self.is_continuous() {
 				let data = self.data_typed()?;
 				Ok((0..size.height)
 					.map(|row_n| {
+						// safe because the iteration starts from 0
 						let row_n = row_n as usize;
 						let mut row = Vec::with_capacity(width);
 						row.extend_from_slice(&data[row_n * width..(row_n + 1) * width]);
@@ -504,6 +510,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
 	unsafe fn at_row_unchecked_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
+		// safe because Mat::size() can't be negative
 		let width = self.size()?.width as usize;
 		self
 			.ptr_mut(row)
@@ -528,7 +535,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	#[inline]
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total();
-		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut T, total))
+		Ok(slice::from_raw_parts_mut(self.data_mut().cast::<T>(), total))
 	}
 }
 
@@ -571,7 +578,9 @@ impl Deref for MatSize {
 
 	#[inline]
 	fn deref(&self) -> &Self::Target {
-		unsafe { slice::from_raw_parts(self.to_xconst_i32(), self.dims() as usize) }
+		// safe because `Mat::dims()` returns value >= 2
+		let dims = self.dims() as usize;
+		unsafe { slice::from_raw_parts(self.to_xconst_i32(), dims) }
 	}
 }
 

@@ -43,7 +43,7 @@ template<typename T> struct Result {
 	T result;
 };
 
-struct Result_void {
+struct ResultVoid {
 	int error_code;
 	void* error_msg;
 };
@@ -54,7 +54,7 @@ template<typename T, typename R> inline void Ok(T result, Result<R>* ocvrs_retur
 	ocvrs_return->result = *const_cast<R*>(&result);
 }
 
-inline void Ok(Result_void* ocvrs_return) {
+inline void Ok(ResultVoid* ocvrs_return) {
 	ocvrs_return->error_code = 0;
 	ocvrs_return->error_msg = NULL;
 }

@@ -341,11 +341,8 @@ impl TypeRefExt for TypeRef<'_, '_> {
 
 	fn rust_arg_post_success_call(&self, name: &str) -> String {
 		match self.as_string() {
-			Some(Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr)) => {
+			Some(Dir::Out(_)) => {
 				format!("string_arg_output_receive!({name}_via => {name})")
-			}
-			Some(Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary))) => {
-				format!("byte_string_arg_output_receive!({name}_via => {name})")
 			}
 			_ => "".to_string(),
 		}
@@ -353,12 +350,12 @@ impl TypeRefExt for TypeRef<'_, '_> {
 
 	fn rust_extern(&self, dir: ExternDir) -> Cow<str> {
 		let constness = match dir {
-			ExternDir::Pure | ExternDir::ToCpp => self.constness(),
+			ExternDir::Contained | ExternDir::ToCpp => self.constness(),
 			ExternDir::FromCpp => Constness::Mut,
 		};
 		if let Some(arg_dir) = self.as_string() {
 			match dir {
-				ExternDir::ToCpp | ExternDir::Pure => match arg_dir {
+				ExternDir::ToCpp | ExternDir::Contained => match arg_dir {
 					Dir::In(_) => format!("*{cnst}c_char", cnst = constness.rust_qual_ptr()).into(),
 					Dir::Out(_) => "*mut *mut c_void".into(),
 				},
@@ -374,14 +371,14 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			} else if self.as_string().is_some() {
 				out += "c_char";
 			} else {
-				out += inner.rust_extern(ExternDir::Pure).as_ref()
+				out += inner.rust_extern(ExternDir::Contained).as_ref()
 			}
 			out.into()
 		} else if let Some((elem, len)) = self.as_fixed_array() {
 			format!(
 				"*{cnst}[{typ}; {len}]",
 				cnst = self.constness().rust_qual_ptr(),
-				typ = elem.rust_extern(ExternDir::Pure),
+				typ = elem.rust_extern(ExternDir::Contained),
 			)
 			.into()
 		} else if let Some(elem) = self.as_variable_array() {
@@ -390,7 +387,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				// argv is treated as array of output arguments and it doesn't seem to be meant this way
 				format!("*{cnst}c_char", cnst = elem.clang_constness().rust_qual_ptr()).into()
 			} else {
-				elem.rust_extern(ExternDir::Pure)
+				elem.rust_extern(ExternDir::Contained)
 			};
 			format!("*{cnst}{typ}", cnst = self.constness().rust_qual_ptr()).into()
 		} else if let Some(func) = self.as_function() {
@@ -433,7 +430,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 
 	fn rust_extern_return_fallible(&self) -> Cow<str> {
 		if self.is_void() {
-			"Result_void".into()
+			"ResultVoid".into()
 		} else {
 			format!("Result<{ext}>", ext = self.rust_extern(ExternDir::FromCpp)).into()
 		}
@@ -631,7 +628,7 @@ impl fmt::Display for Lifetime {
 				f.write_str("'static")?;
 				write_align(f)
 			}
-			Self::Explicit(n) if n >= 25 => {
+			Self::Explicit(n) if n > 25 => {
 				panic!("Too many lifetimes")
 			}
 			Self::Explicit(n) => {

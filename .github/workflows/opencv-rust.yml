@@ -33,9 +33,8 @@ jobs:
       OPENCV_VERSION: ${{ matrix.version.opencv }}
     steps:
       - uses: actions/checkout@v3
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/cache@v3
         with:
           path: ~/build
           key: src-${{ matrix.version.opencv }}-${{ matrix.os-image }}
@@ -45,8 +44,6 @@ jobs:
           OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
-
-      - uses: dtolnay/rust-toolchain@stable
 
       - name: Test project
         env:
@@ -68,9 +65,8 @@ jobs:
       VCPKG_VERSION: ${{ matrix.version.vcpkg }}
     steps:
       - uses: actions/checkout@v3
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/cache@v3
         with:
           path: ~/build
           key: vcpkg-${{ matrix.version.vcpkg }}-${{ matrix.os-image }}
@@ -80,8 +76,6 @@ jobs:
           OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
-
-      - uses: dtolnay/rust-toolchain@stable
 
       - name: Test project
         env:
@@ -116,14 +110,13 @@ jobs:
       BREW_OPENCV_VERSION: ${{ matrix.version.brew }}
     steps:
       - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
 
       - name: Install dependencies
         env:
           OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
-
-      - uses: dtolnay/rust-toolchain@stable
 
       - name: Test project
         env:
@@ -135,7 +128,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-
       - uses: dtolnay/rust-toolchain@stable
 
       - name: Run a documentation generation test
@@ -148,18 +140,10 @@ jobs:
       OPENCV_VERSION: 4.8.1
     steps:
       - uses: actions/checkout@v3
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         with:
           path: ~/build
           key: src-${{ env.OPENCV_VERSION }}-ubuntu-20.04
-
-      - name: Install dependencies
-        env:
-          OS_FAMILY: ${{ runner.os }}
-        run: ci/install.sh
-        shell: bash
 
       - name: Get MSRV package metadata
         id: metadata
@@ -168,6 +152,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ steps.metadata.outputs.msrv }}
+
+      - name: Install dependencies
+        env:
+          OS_FAMILY: ${{ runner.os }}
+        run: ci/install.sh
+        shell: bash
 
       - name: Check project
         env:

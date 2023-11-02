@@ -39,8 +39,6 @@ static TARGET_ENV_MSVC: Lazy<bool> =
 	Lazy::new(|| env::var("CARGO_CFG_TARGET_ENV").map_or(false, |target_env| target_env == "msvc"));
 static TARGET_VENDOR_APPLE: Lazy<bool> =
 	Lazy::new(|| env::var("CARGO_CFG_TARGET_VENDOR").map_or(false, |target_vendor| target_vendor == "apple"));
-static TARGET_OS_WINDOWS: Lazy<bool> =
-	Lazy::new(|| env::var("CARGO_CFG_TARGET_OS").map_or(false, |target_os| target_os == "windows"));
 
 static OPENCV_BRANCH_32: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~3.2").expect("Can't parse OpenCV 3.2 version requirement"));

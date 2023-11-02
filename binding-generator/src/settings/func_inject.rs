@@ -76,7 +76,7 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 						"size",
 						"core",
 						vec![],
-						FuncCppBody::ManualCall("instance->size()".into()),
+						FuncCppBody::Auto,
 						FuncRustBody::Auto,
 						TypeRefDesc::cv_size(),
 					))

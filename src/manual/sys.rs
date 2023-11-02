@@ -1,5 +1,3 @@
-#![allow(non_camel_case_types)]
-
 // note to self, you can't use union here to store both result and error code because C++ side doesn't
 // support non-POD types as union fields
 
@@ -22,10 +20,10 @@ impl<S: Into<O>, O> Result<S, O> {
 			Ok(unsafe { self.result.assume_init() }.into())
 		} else {
 			Err(Error::new(self.error_code, unsafe {
-				crate::templ::receive_string(self.error_msg as *mut String)
+				crate::templ::receive_string(self.error_msg.cast::<String>())
 			}))
 		}
 	}
 }
 
-pub type Result_void = Result<Unit, ()>;
+pub type ResultVoid = Result<Unit, ()>;

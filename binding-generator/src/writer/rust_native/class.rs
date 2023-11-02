@@ -441,7 +441,6 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 	}
 }
 
-#[inline]
 fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let methods = c.methods(None);
 

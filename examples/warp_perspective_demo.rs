@@ -214,8 +214,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 				highgui::imshow("Warped Image", &warped_image)?;
 			}
 		}
-		let c = highgui::wait_key(10)? as u8 as char;
-		if c == 'q' || c == 'Q' || c as u8 == 27 {
+		let c = char::from(u8::try_from(highgui::wait_key(10)?)?);
+		if c == 'q' || c == 'Q' || c == '\x1B' {
 			end_program = true;
 		}
 		if c == 'c' || c == 'C' {

@@ -26,9 +26,9 @@ fn decode() -> Result<()> {
 		let src = unsafe {
 			Mat::new_rows_cols_with_data(
 				1,
-				PIXEL.len() as _,
+				PIXEL.len().try_into()?,
 				u8::opencv_type(),
-				bytes.as_mut_ptr() as *mut c_void,
+				bytes.as_mut_ptr().cast::<c_void>(),
 				core::Mat_AUTO_STEP,
 			)
 		}?;

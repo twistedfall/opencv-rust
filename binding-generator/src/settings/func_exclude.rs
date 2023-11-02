@@ -12,13 +12,11 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_Mat_at_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
 		"cv_Mat_at_const_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
 		"cv_Mat_copySize_const_MatR",          // internal function
-		"cv_Mat_propSize_MatSize",             // MatSize and MatStep types prevent assignment
-		"cv_Mat_propStep_MatStep",             // MatSize and MatStep types prevent assignment
+		"cv_Mat_propStep_const_MatStep",       // MatStep type prevents assignment
 		"cv_Mat_push_back__const_voidX",       // internal method
 		"cv_UMat_UMat_const_UMatR_const_RangeX", // duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
 		"cv_UMat_copySize_const_UMatR",        // internal function
-		"cv_UMat_propSize_MatSize",            // MatSize and MatStep types prevent assignment
-		"cv_UMat_propStep_MatStep",            // MatSize and MatStep types prevent assignment
+		"cv_UMat_propStep_const_MatStep",      // MatStep type prevents assignment
 		"cv_addImpl_int_const_charX",
 		"cv_calcCovarMatrix_const_MatX_int_MatR_MatR_int_int", // duplicate of cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int, but with pointers
 		"cv_cv_abs_short",
@@ -42,14 +40,20 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_dnn_DictValue_DictValue_const_StringR", // effectively duplicate of cv_dnn_DictValue_DictValue_const_charX
 		"cv_dnn_Layer_finalize_const_vectorLMatXGR_vectorLMatGR", // dup of cv_dnn_Layer_finalize_const__InputArrayR_const__OutputArrayR
 		"cv_dnn_Model_operator_cv_dnn_Net_const",   // fixme, should generate fine, it's a dup of get_network_() anyway
-		// ### face ###
-		"cv_face_FacemarkLBF_Params_propPupils", // fixme array of vectors
 		// ### gapi ###
 		"cv_MediaFrame_IAdapter_access_Access", // use of deleted function ‘cv::MediaFrame::View::View(const cv::MediaFrame::View&)’
 		"cv_MediaFrame_access_const_Access",    // use of deleted function ‘cv::MediaFrame::View::View(const cv::MediaFrame::View&)’
 		"cv_RMat_Adapter_access_Access",        // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
 		"cv_RMat_IAdapter_access_Access",       // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
 		"cv_RMat_access_const_Access",          // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
+		// ### hdf ###
+		"cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR_const_int_const_intX", // has corresponding Vector version
+		"cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX",                      // has corresponding Vector version
+		"cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX_const_intX",           // has corresponding Vector version
+		"cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_intX",                       // has corresponding Vector version
+		"cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_intX_const_intX",            // has corresponding Vector version
+		"cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX",                       // has corresponding Vector version
+		"cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX_const_intX",            // has corresponding Vector version
 		// ### imgproc ###
 		"cv_calcBackProject_const_MatX_int_const_intX_const_SparseMatR_const__OutputArrayR_const_floatXX_double_bool", // slice pointers
 		"cv_calcBackProject_const_MatX_int_const_intX_const__InputArrayR_const__OutputArrayR_const_floatXX_double_bool", // slice pointers

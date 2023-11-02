@@ -32,13 +32,13 @@ macro_rules! ptr_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_inner_as_ptr(&self) -> *const std::ffi::c_void {
-				$crate::sys::$extern_inner_as_ptr(self.as_raw()) as *const _
+			unsafe fn extern_inner_as_ptr(&self) -> *const ::std::ffi::c_void {
+				$crate::sys::$extern_inner_as_ptr(self.as_raw()).cast::<::std::ffi::c_void>()
 			}
 
 			#[inline]
-			unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut std::ffi::c_void {
-				$crate::sys::$extern_inner_as_ptr_mut(self.as_raw_mut()) as *mut _
+			unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut ::std::ffi::c_void {
+				$crate::sys::$extern_inner_as_ptr_mut(self.as_raw_mut()).cast::<::std::ffi::c_void>()
 			}
 		}
 	};

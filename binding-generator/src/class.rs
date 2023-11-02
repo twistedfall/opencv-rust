@@ -112,6 +112,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
+	/// Returns `Some` with the string type if the current class name refers to a C++ `std::string` or `cv::String`
 	pub fn string_type(&self) -> Option<StrType> {
 		let cpp_refname = self.cpp_name(CppNameStyle::Reference);
 		if cpp_refname.starts_with("std::") && cpp_refname.ends_with("::string") {
@@ -129,7 +130,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				if entity.get_template_kind().is_some() {
 					TemplateKind::Template
 				} else if let Some(template_entity) = entity.get_template() {
-					TemplateKind::Specialization(Box::new(Self::new(template_entity, gen_env)))
+					TemplateKind::Specialization(Self::new(template_entity, gen_env))
 				} else {
 					TemplateKind::No
 				}
@@ -449,7 +450,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								rust_generic_decls: Rc::new([]),
 								arguments: Rc::new([Field::new_desc(FieldDesc {
 									cpp_fullname: "val".into(),
-									type_ref: fld_type_ref,
+									type_ref: fld_type_ref.with_constness(Constness::Const),
 									type_hint: FieldTypeHint::None,
 									default_value: fld.default_value().map(|v| v.into()),
 								})]),
@@ -718,7 +719,7 @@ pub enum TemplateKind<'tu, 'ge> {
 	/// Base class template, e.g. `Point_<T>`
 	Template,
 	/// A specific instance (`Point_<int>`) of the class template (`Point_<T>`)
-	Specialization(Box<Class<'tu, 'ge>>),
+	Specialization(Class<'tu, 'ge>),
 }
 
 impl<'tu, 'ge> TemplateKind<'tu, 'ge> {
@@ -731,7 +732,7 @@ impl<'tu, 'ge> TemplateKind<'tu, 'ge> {
 
 	pub fn as_template_specialization(&self) -> Option<&Class<'tu, 'ge>> {
 		match self {
-			TemplateKind::Specialization(cls) => Some(cls.as_ref()),
+			TemplateKind::Specialization(cls) => Some(cls),
 			TemplateKind::No | TemplateKind::Template => None,
 		}
 	}

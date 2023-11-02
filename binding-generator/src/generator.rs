@@ -104,11 +104,12 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 						self.gen_env.make_export_config(entity).simplicity = ClassSimplicity::Simple;
 					} else if let Some(rename_macro) = RENAME.iter().find(|&r| r == &name) {
 						if let Some(new_name) = get_definition_text(entity)
-							.strip_prefix(&format!("{rename_macro}("))
+							.strip_prefix(rename_macro)
+							.and_then(|s| s.strip_prefix('('))
 							.and_then(|d| d.strip_suffix(')'))
 						{
 							self.gen_env.make_export_config(entity);
-							self.gen_env.make_rename_config(entity).rename = new_name.trim().to_string();
+							self.gen_env.make_rename_config(entity).rename = new_name.trim().into();
 						}
 					} else if name == "CV_NORETURN" {
 						self.gen_env.make_export_config(entity).no_return = true;

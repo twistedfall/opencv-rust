@@ -45,9 +45,13 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 			TypeRefKind::Array(inner, size) => {
 				if let Some(size) = size {
 					if self.name.is_empty() {
-						format!("{typ}**", typ = inner.render(self.recurse()))
+						format!("{cnst}{typ}**", typ = inner.render(self.recurse()))
 					} else {
-						format!("{typ}(*{name})[{size}]", typ = inner.render(self.recurse()), name = self.name)
+						format!(
+							"{cnst}{typ}(*{name})[{size}]",
+							typ = inner.render(self.recurse()),
+							name = self.name
+						)
 					}
 				} else {
 					format!("{typ}*{space_name}", typ = inner.render(self.recurse()))
