@@ -159,6 +159,13 @@ macro_rules! opencv_type_copy {
 macro_rules! opencv_type_enum {
 	($type: ty) => {
 		$crate::opencv_type_copy! { $type }
+
+		impl From<$type> for i32 {
+			#[inline]
+			fn from(v: $type) -> Self {
+				v as Self
+			}
+		}
 	};
 }
 
