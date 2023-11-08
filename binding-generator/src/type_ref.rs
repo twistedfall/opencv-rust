@@ -40,7 +40,7 @@ pub enum TypeRefKind<'tu, 'ge> {
 	Ignored,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum TypeRefTypeHint {
 	None,
 	ArgOverride(ArgOverride),
@@ -142,15 +142,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn type_hint(&self) -> TypeRefTypeHint {
+	pub fn type_hint(&self) -> &TypeRefTypeHint {
 		match self {
-			&Self::Clang { type_hint, .. } => type_hint,
-			Self::Desc(desc) => desc.type_hint,
+			Self::Clang { type_hint, .. } => type_hint,
+			Self::Desc(desc) => &desc.type_hint,
 		}
 	}
 
 	pub fn with_type_hint(self, type_hint: TypeRefTypeHint) -> Self {
-		if self.type_hint() != type_hint {
+		if *self.type_hint() != type_hint {
 			match self {
 				Self::Clang {
 					type_ref,
@@ -177,15 +177,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn with_constness(&self, constness: Constness) -> Self {
 		if self.clang_constness() != constness {
 			match self {
-				&Self::Clang {
+				Self::Clang {
 					type_ref,
 					type_hint,
 					parent_entity,
 					gen_env,
 				} => Self::new_desc(TypeRefDesc {
-					kind: type_ref.kind(type_hint, parent_entity, gen_env),
+					kind: type_ref.kind(type_hint.clone(), *parent_entity, gen_env),
 					inherent_constness: constness,
-					type_hint,
+					type_hint: type_hint.clone(),
 					template_specialization_args: type_ref.template_specialization_args(gen_env).into(),
 				}),
 				Self::Desc(desc) => {
@@ -208,12 +208,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn kind(&self) -> Cow<TypeRefKind<'tu, 'ge>> {
 		match self {
-			&Self::Clang {
+			Self::Clang {
 				type_ref,
 				type_hint,
 				parent_entity,
 				gen_env,
-			} => Cow::Owned(type_ref.kind(type_hint, parent_entity, gen_env)),
+			} => Cow::Owned(type_ref.kind(type_hint.clone(), *parent_entity, gen_env)),
 			Self::Desc(desc) => Cow::Borrowed(&desc.kind),
 		}
 	}
@@ -365,7 +365,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Pointer(inner) => {
 				if let Some(dir) = inner.as_string().map(|d| d.with_out_dir(inner.clang_constness().is_mut())) {
 					return Some(dir);
-				} else if self.type_hint() != TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString) && inner.is_char() {
+				} else if *self.type_hint() != TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString) && inner.is_char() {
 					return if inner.clang_constness().is_const() {
 						Some(Dir::In(StrType::CharPtr))
 					} else {

@@ -4,7 +4,7 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 
 use once_cell::sync::Lazy;
 
-pub use argument_override::{ArgOverride, ARGUMENT_OVERRIDE};
+pub use argument_override::{ArgOverride, ARGUMENT_OVERRIDE, RETURN_HINT};
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use func_cfg_attr::FUNC_CFG_ATTR;

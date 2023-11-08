@@ -370,7 +370,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 
 			TypeKind::Pointer => {
 				let pointee = self.get_pointee_type().expect("No pointee type for pointer");
-				let pointee_typeref = TypeRef::new_ext(pointee, type_hint, parent_entity, gen_env);
+				let pointee_typeref = TypeRef::new_ext(pointee, type_hint.clone(), parent_entity, gen_env);
 				if pointee_typeref.as_function().is_some() {
 					pointee_typeref.kind().into_owned()
 				} else if matches!(

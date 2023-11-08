@@ -3,12 +3,14 @@ use std::collections::HashMap;
 
 use crate::FuncId;
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+pub const RETURN_HINT: &str = "return";
+
+#[derive(Clone, Debug, PartialEq)]
 pub enum ArgOverride {
 	Nullable,
 	NullableSlice,
 	Slice,
-	LenForSlice(&'static str, usize),
+	LenForSlice(String, usize),
 	/// Treat C++ string as a byte buffer (`Vec<u8>`) instead of an actual string
 	StringAsBytes,
 	/// when C++ char needs to be represented as Rust char
@@ -37,79 +39,15 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 		),
 		(
 			FuncId::new_mut("cv::Mat::Mat", ["sizes", "type", "data", "steps"]),
-			HashMap::from([
-				("steps", ArgOverride::NullableSlice),
-				("sizes", ArgOverride::Slice),
-				("ndims", ArgOverride::LenForSlice("sizes", 1)),
-			]),
+			HashMap::from([("steps", ArgOverride::NullableSlice)]),
 		),
 		(
 			FuncId::new_mut("cv::Mat::Mat", ["ndims", "sizes", "type", "s"]),
-			HashMap::from([
-				("steps", ArgOverride::NullableSlice),
-				("sizes", ArgOverride::Slice),
-				("ndims", ArgOverride::LenForSlice("sizes", 1)),
-			]),
+			HashMap::from([("steps", ArgOverride::NullableSlice)]),
 		),
 		(
 			FuncId::new_mut("cv::Mat::Mat", ["ndims", "sizes", "type", "data", "steps"]),
-			HashMap::from([
-				("steps", ArgOverride::NullableSlice),
-				("sizes", ArgOverride::Slice),
-				("ndims", ArgOverride::LenForSlice("sizes", 1)),
-			]),
-		),
-		(
-			FuncId::new_mut("cv::Mat::zeros", ["ndims", "sz", "type"]),
-			HashMap::from([("sz", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sz", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::Mat::ones", ["ndims", "sz", "type"]),
-			HashMap::from([("sz", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sz", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::Mat::create", ["ndims", "sizes", "type"]),
-			HashMap::from([("sizes", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sizes", 1))]),
-		),
-		(
-			FuncId::new_const("cv::Mat::reshape", ["cn", "newndims", "newsz"]),
-			HashMap::from([
-				("newsz", ArgOverride::Slice),
-				("newndims", ArgOverride::LenForSlice("newsz", 1)),
-			]),
-		),
-		(
-			FuncId::new_mut("cv::SparseMat::Hdr::Hdr", ["_dims", "_sizes", "_type"]),
-			HashMap::from([
-				("_sizes", ArgOverride::Slice),
-				("_dims", ArgOverride::LenForSlice("_sizes", 1)),
-			]),
-		),
-		(
-			FuncId::new_mut("cv::UMat::UMat", ["ndims", "sizes", "type", "usageFlags"]),
-			HashMap::from([("sizes", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sizes", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::UMat::UMat", ["ndims", "sizes", "type", "s", "usageFlags"]),
-			HashMap::from([("sizes", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sizes", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::UMat::create", ["ndims", "sizes", "type", "usageFlags"]),
-			HashMap::from([("sizes", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sizes", 1))]),
-		),
-		(
-			FuncId::new_const(
-				"cv::_OutputArray::create",
-				["dims", "size", "type", "i", "allowTransposed", "fixedDepthMask"],
-			),
-			HashMap::from([("size", ArgOverride::Slice), ("dims", ArgOverride::LenForSlice("size", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::mixChannels", ["src", "dst", "fromTo", "npairs"]),
-			HashMap::from([
-				("fromTo", ArgOverride::Slice),
-				("npairs", ArgOverride::LenForSlice("from_to", 2)),
-			]),
+			HashMap::from([("steps", ArgOverride::NullableSlice)]),
 		),
 		(
 			FuncId::new_mut(
@@ -158,33 +96,33 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 		),
 		(
 			FuncId::new_mut("cv::QRCodeDetector::decode", ["img", "points", "straight_qrcode"]),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, ArgOverride::StringAsBytes)]),
 		),
 		(
 			FuncId::new_mut("cv::QRCodeDetector::decodeCurved", ["img", "points", "straight_qrcode"]),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, ArgOverride::StringAsBytes)]),
 		),
 		(
 			FuncId::new_mut("cv::QRCodeDetector::detectAndDecode", ["img", "points", "straight_qrcode"]),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, ArgOverride::StringAsBytes)]),
 		),
 		(
 			FuncId::new_mut(
 				"cv::QRCodeDetector::detectAndDecodeCurved",
 				["img", "points", "straight_qrcode"],
 			),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, ArgOverride::StringAsBytes)]),
 		),
 		(
 			FuncId::new_const("cv::GraphicalCodeDetector::decode", ["img", "points", "straight_code"]),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, ArgOverride::StringAsBytes)]),
 		),
 		(
 			FuncId::new_const(
 				"cv::GraphicalCodeDetector::detectAndDecode",
 				["img", "points", "straight_code"],
 			),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, ArgOverride::StringAsBytes)]),
 		),
 		(
 			FuncId::new_mut(

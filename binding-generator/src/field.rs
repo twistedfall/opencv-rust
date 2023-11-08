@@ -15,7 +15,7 @@ use crate::settings::ArgOverride;
 use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefTypeHint};
 use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum FieldTypeHint {
 	None,
 	ArgOverride(ArgOverride),
@@ -48,23 +48,33 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	pub fn type_hint(&self) -> FieldTypeHint {
+	pub fn type_hint(&self) -> &FieldTypeHint {
 		match self {
-			&Self::Clang { type_hint, .. } => type_hint,
-			Self::Desc(desc) => desc.type_hint,
+			Self::Clang { type_hint, .. } => type_hint,
+			Self::Desc(desc) => &desc.type_hint,
+		}
+	}
+
+	pub fn set_type_hint(&mut self, type_hint: FieldTypeHint) {
+		match self {
+			Self::Clang {
+				type_hint: old_type_hint,
+				..
+			} => *old_type_hint = type_hint,
+			Self::Desc(desc) => Rc::make_mut(desc).type_hint = type_hint,
 		}
 	}
 
 	pub fn type_ref(&self) -> Cow<TypeRef<'tu, 'ge>> {
 		match self {
-			&Self::Clang {
+			Self::Clang {
 				entity,
 				type_hint,
 				gen_env,
 				..
 			} => {
 				let type_hint = match type_hint {
-					FieldTypeHint::ArgOverride(over) => TypeRefTypeHint::ArgOverride(over),
+					FieldTypeHint::ArgOverride(over) => TypeRefTypeHint::ArgOverride(over.clone()),
 					_ => {
 						let default_value_string = self
 							.default_value()
@@ -79,7 +89,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 				Cow::Owned(TypeRef::new_ext(
 					entity.get_type().expect("Can't get type"),
 					type_hint,
-					Some(entity),
+					Some(*entity),
 					gen_env,
 				))
 			}
@@ -135,9 +145,23 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 			&& self.type_ref().is_void_ptr()
 	}
 
-	pub fn as_slice_len(&self) -> Option<(&'static str, usize)> {
+	pub fn can_be_slice_arg(&self) -> bool {
+		let type_ref = self.type_ref();
+		type_ref.constness().is_const() && type_ref.as_pointer().is_some()
+	}
+
+	pub fn can_be_slice_arg_len(&self) -> bool {
+		let name = self.cpp_name(CppNameStyle::Declaration);
+		let type_ref = self.type_ref();
+		type_ref
+			.as_primitive()
+			.map_or(false, |(_, cpp)| cpp == "int" || cpp == "size_t")
+			&& (name.ends_with('s') && name.contains('n') || name.contains("dims"))
+	}
+
+	pub fn as_slice_len(&self) -> Option<(&str, usize)> {
 		if let FieldTypeHint::ArgOverride(ArgOverride::LenForSlice(ptr_arg, len_div)) = self.type_hint() {
-			Some((ptr_arg, len_div))
+			Some((ptr_arg.as_str(), *len_div))
 		} else {
 			None
 		}

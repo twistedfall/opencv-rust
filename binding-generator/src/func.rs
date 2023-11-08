@@ -15,12 +15,12 @@ use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::{ExcludeKind, UNNAMED};
 use crate::entity::WalkAction;
 use crate::field::FieldDesc;
-use crate::settings::TypeRefFactory;
+use crate::settings::{ArgOverride, TypeRefFactory, RETURN_HINT};
 use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
 	settings, Class, DefaultElement, Element, EntityExt, Field, FieldTypeHint, GeneratedType, GeneratorEnv, IteratorExt,
-	NameDebug, StrExt, StringExt, TypeRef,
+	NameDebug, NameStyle, StrExt, StringExt, TypeRef,
 };
 
 mod desc;
@@ -423,8 +423,11 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 						None,
 						gen_env,
 					);
-					if let Some(&over) = settings::ARGUMENT_OVERRIDE.get(&self.func_id()).and_then(|x| x.get("return")) {
-						out = out.with_type_hint(TypeRefTypeHint::ArgOverride(over))
+					if let Some(over) = settings::ARGUMENT_OVERRIDE
+						.get(&self.func_id())
+						.and_then(|x| x.get(RETURN_HINT))
+					{
+						out = out.with_type_hint(TypeRefTypeHint::ArgOverride(over.clone()))
 					}
 					if let Some(type_ref) = out.as_reference() {
 						type_ref
@@ -468,18 +471,40 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
-				self
+				let mut slice_arg_idx = None;
+				let mut slice_len_arg_idx = None;
+				let mut out = self
 					.clang_arguments(entity)
 					.into_iter()
-					.map(|a| {
+					.enumerate()
+					.map(|(idx, a)| {
 						let arg_override = arg_overrides.and_then(|o| a.get_name().and_then(|arg_name| o.get(arg_name.as_str())));
 						if let Some(arg_override) = arg_override {
-							return Field::new_ext(a, FieldTypeHint::ArgOverride(*arg_override), gen_env);
+							return Field::new_ext(a, FieldTypeHint::ArgOverride(arg_override.clone()), gen_env);
 						}
-
-						Field::new(a, gen_env)
+						let out = Field::new(a, gen_env);
+						if slice_arg_idx.is_none() && out.can_be_slice_arg() {
+							slice_arg_idx = Some(idx);
+						}
+						if slice_len_arg_idx.is_none() && out.can_be_slice_arg_len() {
+							slice_len_arg_idx = Some(idx);
+						}
+						out
 					})
-					.collect()
+					.collect::<Vec<_>>();
+				if let (Some(slice_arg_idx), Some(slice_len_arg_idx)) = (slice_arg_idx, slice_len_arg_idx) {
+					let slice_arg = &mut out[slice_arg_idx];
+					let slice_arg_name = slice_arg.rust_name(NameStyle::ref_()).into_owned();
+					slice_arg.set_type_hint(FieldTypeHint::ArgOverride(ArgOverride::Slice));
+					let slice_len_arg = &mut out[slice_len_arg_idx];
+					let divisor = if slice_len_arg.cpp_name(CppNameStyle::Declaration).contains("pair") {
+						2
+					} else {
+						1
+					};
+					slice_len_arg.set_type_hint(FieldTypeHint::ArgOverride(ArgOverride::LenForSlice(slice_arg_name, divisor)));
+				}
+				out.into()
 			}
 			Self::Desc(desc) => desc.arguments.as_ref().into(),
 		}
