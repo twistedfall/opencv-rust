@@ -4249,37 +4249,37 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_focal(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propFocal_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propFocal_const_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_aspect(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propAspect_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propAspect_const_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ppx(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propPpx_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propPpx_const_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ppy(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propPpy_double(self.as_raw_mut_Detail_CameraParams(), val) };
+			let ret = unsafe { sys::cv_detail_CameraParams_propPpy_const_double(self.as_raw_mut_Detail_CameraParams(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_r(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propR_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) };
+		fn set_r(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_detail_CameraParams_propR_const_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_t(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_detail_CameraParams_propT_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_mut_Mat()) };
+		fn set_t(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_detail_CameraParams_propT_const_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_Mat()) };
 			ret
 		}
 		
@@ -4556,13 +4556,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propA_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propA_const_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propB_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_propB_const_float(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector(), val) };
 			ret
 		}
 		
@@ -4629,6 +4629,11 @@ pub mod stitching {
 				.field("a", &crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst::a(self))
 				.field("b", &crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst::b(self))
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -4740,13 +4745,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propA_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propA_const_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propB_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_propB_const_float(self.as_raw_mut_Detail_CompressedRectilinearProjector(), val) };
 			ret
 		}
 		
@@ -4813,6 +4818,11 @@ pub mod stitching {
 				.field("a", &crate::stitching::Detail_CompressedRectilinearProjectorTraitConst::a(self))
 				.field("b", &crate::stitching::Detail_CompressedRectilinearProjectorTraitConst::b(self))
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -4971,6 +4981,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_CylindricalPortraitProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -5112,6 +5127,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_CylindricalProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -5364,14 +5384,14 @@ pub mod stitching {
 		fn as_raw_mut_Detail_DisjointSets(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_parent(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_detail_DisjointSets_propParent_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
+		fn set_parent(&mut self, val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_detail_DisjointSets_propParent_const_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_VectorOfi32()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_size(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_detail_DisjointSets_propSize_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_mut_VectorOfi32()) };
+		fn set_size(&mut self, val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_detail_DisjointSets_propSize_const_vectorLintG(self.as_raw_mut_Detail_DisjointSets(), val.as_raw_VectorOfi32()) };
 			ret
 		}
 		
@@ -6191,6 +6211,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_FisheyeProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -6891,19 +6916,19 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_from(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_GraphEdge_propFrom_int(self.as_raw_mut_Detail_GraphEdge(), val) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propFrom_const_int(self.as_raw_mut_Detail_GraphEdge(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_to(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_GraphEdge_propTo_int(self.as_raw_mut_Detail_GraphEdge(), val) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propTo_const_int(self.as_raw_mut_Detail_GraphEdge(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_weight(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_GraphEdge_propWeight_float(self.as_raw_mut_Detail_GraphEdge(), val) };
+			let ret = unsafe { sys::cv_detail_GraphEdge_propWeight_const_float(self.as_raw_mut_Detail_GraphEdge(), val) };
 			ret
 		}
 		
@@ -7078,25 +7103,25 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_img_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_idx_int(self.as_raw_mut_Detail_ImageFeatures(), val) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_idx_const_int(self.as_raw_mut_Detail_ImageFeatures(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_img_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_size_Size(self.as_raw_mut_Detail_ImageFeatures(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propImg_size_const_Size(self.as_raw_mut_Detail_ImageFeatures(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_keypoints(&mut self, mut val: core::Vector<core::KeyPoint>) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_propKeypoints_vectorLKeyPointG(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_VectorOfKeyPoint()) };
+		fn set_keypoints(&mut self, val: core::Vector<core::KeyPoint>) {
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propKeypoints_const_vectorLKeyPointG(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_VectorOfKeyPoint()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_descriptors(&mut self, mut val: core::UMat) {
-			let ret = unsafe { sys::cv_detail_ImageFeatures_propDescriptors_UMat(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_mut_UMat()) };
+		fn set_descriptors(&mut self, val: core::UMat) {
+			let ret = unsafe { sys::cv_detail_ImageFeatures_propDescriptors_const_UMat(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_UMat()) };
 			ret
 		}
 		
@@ -7232,48 +7257,48 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_src_img_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propSrc_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propSrc_img_idx_const_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 		
 		/// Images indices (optional)
 		#[inline]
 		fn set_dst_img_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propDst_img_idx_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propDst_img_idx_const_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_matches(&mut self, mut val: core::Vector<core::DMatch>) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propMatches_vectorLDMatchG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfDMatch()) };
+		fn set_matches(&mut self, val: core::Vector<core::DMatch>) {
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propMatches_const_vectorLDMatchG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_VectorOfDMatch()) };
 			ret
 		}
 		
 		/// Geometrically consistent matches mask
 		#[inline]
-		fn set_inliers_mask(&mut self, mut val: core::Vector<u8>) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propInliers_mask_vectorLunsigned_charG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_VectorOfu8()) };
+		fn set_inliers_mask(&mut self, val: core::Vector<u8>) {
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propInliers_mask_const_vectorLunsigned_charG(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_VectorOfu8()) };
 			ret
 		}
 		
 		/// Number of geometrically consistent matches
 		#[inline]
 		fn set_num_inliers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propNum_inliers_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propNum_inliers_const_int(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 		
 		/// Estimated transformation
 		#[inline]
-		fn set_h(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propH_Mat(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_mut_Mat()) };
+		fn set_h(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propH_const_Mat(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// Confidence two images are from the same panorama
 		#[inline]
 		fn set_confidence(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_detail_MatchesInfo_propConfidence_double(self.as_raw_mut_Detail_MatchesInfo(), val) };
+			let ret = unsafe { sys::cv_detail_MatchesInfo_propConfidence_const_double(self.as_raw_mut_Detail_MatchesInfo(), val) };
 			ret
 		}
 		
@@ -7453,6 +7478,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_MercatorProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -7990,13 +8020,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propA_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propA_const_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propB_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_propB_const_float(self.as_raw_mut_Detail_PaniniPortraitProjector(), val) };
 			ret
 		}
 		
@@ -8063,6 +8093,11 @@ pub mod stitching {
 				.field("a", &crate::stitching::Detail_PaniniPortraitProjectorTraitConst::a(self))
 				.field("b", &crate::stitching::Detail_PaniniPortraitProjectorTraitConst::b(self))
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -8174,13 +8209,13 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_a(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniProjector_propA_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniProjector_propA_const_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_b(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_PaniniProjector_propB_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
+			let ret = unsafe { sys::cv_detail_PaniniProjector_propB_const_float(self.as_raw_mut_Detail_PaniniProjector(), val) };
 			ret
 		}
 		
@@ -8247,6 +8282,11 @@ pub mod stitching {
 				.field("a", &crate::stitching::Detail_PaniniProjectorTraitConst::a(self))
 				.field("b", &crate::stitching::Detail_PaniniProjectorTraitConst::b(self))
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -8405,6 +8445,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_PlanePortraitProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -8546,6 +8591,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_PlaneProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -8970,6 +9020,41 @@ pub mod stitching {
 			ret
 		}
 		
+		#[inline]
+		fn k(&self) -> &[f32; 9] {
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propK_const(self.as_raw_Detail_ProjectorBase()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
+		#[inline]
+		fn rinv(&self) -> &[f32; 9] {
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propRinv_const(self.as_raw_Detail_ProjectorBase()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
+		#[inline]
+		fn r_kinv(&self) -> &[f32; 9] {
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propR_kinv_const(self.as_raw_Detail_ProjectorBase()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
+		#[inline]
+		fn k_rinv(&self) -> &[f32; 9] {
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propK_rinv_const(self.as_raw_Detail_ProjectorBase()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
+		#[inline]
+		fn t(&self) -> &[f32; 3] {
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propT_const(self.as_raw_Detail_ProjectorBase()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::stitching::Detail_ProjectorBase]
@@ -8978,40 +9063,40 @@ pub mod stitching {
 	
 		#[inline]
 		fn set_scale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_detail_ProjectorBase_propScale_float(self.as_raw_mut_Detail_ProjectorBase(), val) };
+			let ret = unsafe { sys::cv_detail_ProjectorBase_propScale_const_float(self.as_raw_mut_Detail_ProjectorBase(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn k(&mut self) -> &mut [f32; 9] {
+		fn k_mut(&mut self) -> &mut [f32; 9] {
 			let ret = unsafe { sys::cv_detail_ProjectorBase_propK(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
 		
 		#[inline]
-		fn rinv(&mut self) -> &mut [f32; 9] {
+		fn rinv_mut(&mut self) -> &mut [f32; 9] {
 			let ret = unsafe { sys::cv_detail_ProjectorBase_propRinv(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
 		
 		#[inline]
-		fn r_kinv(&mut self) -> &mut [f32; 9] {
+		fn r_kinv_mut(&mut self) -> &mut [f32; 9] {
 			let ret = unsafe { sys::cv_detail_ProjectorBase_propR_kinv(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
 		
 		#[inline]
-		fn k_rinv(&mut self) -> &mut [f32; 9] {
+		fn k_rinv_mut(&mut self) -> &mut [f32; 9] {
 			let ret = unsafe { sys::cv_detail_ProjectorBase_propK_rinv(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
 		}
 		
 		#[inline]
-		fn t(&mut self) -> &mut [f32; 3] {
+		fn t_mut(&mut self) -> &mut [f32; 3] {
 			let ret = unsafe { sys::cv_detail_ProjectorBase_propT(self.as_raw_mut_Detail_ProjectorBase()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -9092,6 +9177,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_ProjectorBase")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -9441,6 +9531,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_SphericalPortraitProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -9593,6 +9688,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_SphericalProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -9904,6 +10004,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_StereographicProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}
@@ -10045,6 +10150,11 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_TransverseMercatorProjector")
 				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
 		}
 	}

@@ -6037,7 +6037,7 @@ pub mod gapi {
 		/// * val: detail::ArgKind::OPAQUE_VAL
 		#[inline]
 		fn set_kind(&mut self, val: crate::gapi::Detail_ArgKind) {
-			let ret = unsafe { sys::cv_GArg_propKind_ArgKind(self.as_raw_mut_GArg(), val) };
+			let ret = unsafe { sys::cv_GArg_propKind_const_ArgKind(self.as_raw_mut_GArg(), val) };
 			ret
 		}
 		
@@ -6045,7 +6045,7 @@ pub mod gapi {
 		/// * val: detail::OpaqueKind::CV_UNKNOWN
 		#[inline]
 		fn set_opaque_kind(&mut self, val: crate::gapi::Detail_OpaqueKind) {
-			let ret = unsafe { sys::cv_GArg_propOpaque_kind_OpaqueKind(self.as_raw_mut_GArg(), val) };
+			let ret = unsafe { sys::cv_GArg_propOpaque_kind_const_OpaqueKind(self.as_raw_mut_GArg(), val) };
 			ret
 		}
 		
@@ -6376,8 +6376,8 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_tag(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GCompileArg_propTag_string(self.as_raw_mut_GCompileArg(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_GCompileArg_propTag_const_string(self.as_raw_mut_GCompileArg(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -7570,13 +7570,13 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_fmt(&mut self, val: crate::gapi::MediaFormat) {
-			let ret = unsafe { sys::cv_GFrameDesc_propFmt_MediaFormat(self.as_raw_mut_GFrameDesc(), val) };
+			let ret = unsafe { sys::cv_GFrameDesc_propFmt_const_MediaFormat(self.as_raw_mut_GFrameDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_GFrameDesc_propSize_Size(self.as_raw_mut_GFrameDesc(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_GFrameDesc_propSize_const_Size(self.as_raw_mut_GFrameDesc(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -7666,33 +7666,33 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_name(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GKernel_propName_string(self.as_raw_mut_GKernel(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_GKernel_propName_const_string(self.as_raw_mut_GKernel(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_tag(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GKernel_propTag_string(self.as_raw_mut_GKernel(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_GKernel_propTag_const_string(self.as_raw_mut_GKernel(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_out_shapes(&mut self, mut val: crate::gapi::GShapes) {
-			let ret = unsafe { sys::cv_GKernel_propOutShapes_GShapes(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfGShape()) };
+		fn set_out_shapes(&mut self, val: crate::gapi::GShapes) {
+			let ret = unsafe { sys::cv_GKernel_propOutShapes_const_GShapes(self.as_raw_mut_GKernel(), val.as_raw_VectorOfGShape()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_in_kinds(&mut self, mut val: crate::gapi::GKinds) {
-			let ret = unsafe { sys::cv_GKernel_propInKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
+		fn set_in_kinds(&mut self, val: crate::gapi::GKinds) {
+			let ret = unsafe { sys::cv_GKernel_propInKinds_const_GKinds(self.as_raw_mut_GKernel(), val.as_raw_VectorOfDetail_OpaqueKind()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_out_kinds(&mut self, mut val: crate::gapi::GKinds) {
-			let ret = unsafe { sys::cv_GKernel_propOutKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
+		fn set_out_kinds(&mut self, val: crate::gapi::GKinds) {
+			let ret = unsafe { sys::cv_GKernel_propOutKinds_const_GKinds(self.as_raw_mut_GKernel(), val.as_raw_VectorOfDetail_OpaqueKind()) };
 			ret
 		}
 		
@@ -7755,8 +7755,8 @@ pub mod gapi {
 		fn as_raw_mut_GKernelImpl(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_opaque(&mut self, mut val: crate::gapi::any) {
-			let ret = unsafe { sys::cv_GKernelImpl_propOpaque_any(self.as_raw_mut_GKernelImpl(), val.as_raw_mut_any()) };
+		fn set_opaque(&mut self, val: crate::gapi::any) {
+			let ret = unsafe { sys::cv_GKernelImpl_propOpaque_const_any(self.as_raw_mut_GKernelImpl(), val.as_raw_any()) };
 			ret
 		}
 		
@@ -8267,31 +8267,31 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_depth(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_GMatDesc_propDepth_int(self.as_raw_mut_GMatDesc(), val) };
+			let ret = unsafe { sys::cv_GMatDesc_propDepth_const_int(self.as_raw_mut_GMatDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_chan(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_GMatDesc_propChan_int(self.as_raw_mut_GMatDesc(), val) };
+			let ret = unsafe { sys::cv_GMatDesc_propChan_const_int(self.as_raw_mut_GMatDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_GMatDesc_propSize_Size(self.as_raw_mut_GMatDesc(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_GMatDesc_propSize_const_Size(self.as_raw_mut_GMatDesc(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_planar(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_GMatDesc_propPlanar_bool(self.as_raw_mut_GMatDesc(), val) };
+			let ret = unsafe { sys::cv_GMatDesc_propPlanar_const_bool(self.as_raw_mut_GMatDesc(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_dims(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_GMatDesc_propDims_vectorLintG(self.as_raw_mut_GMatDesc(), val.as_raw_mut_VectorOfi32()) };
+		fn set_dims(&mut self, val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_GMatDesc_propDims_const_vectorLintG(self.as_raw_mut_GMatDesc(), val.as_raw_VectorOfi32()) };
 			ret
 		}
 		
@@ -9134,8 +9134,8 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_description(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GTransform_propDescription_string(self.as_raw_mut_GTransform(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_GTransform_propDescription_const_string(self.as_raw_mut_GTransform(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -9204,13 +9204,13 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_shape(&mut self, val: crate::gapi::GShape) {
-			let ret = unsafe { sys::cv_GTypeInfo_propShape_GShape(self.as_raw_mut_GTypeInfo(), val) };
+			let ret = unsafe { sys::cv_GTypeInfo_propShape_const_GShape(self.as_raw_mut_GTypeInfo(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kind(&mut self, val: crate::gapi::Detail_OpaqueKind) {
-			let ret = unsafe { sys::cv_GTypeInfo_propKind_OpaqueKind(self.as_raw_mut_GTypeInfo(), val) };
+			let ret = unsafe { sys::cv_GTypeInfo_propKind_const_OpaqueKind(self.as_raw_mut_GTypeInfo(), val) };
 			ret
 		}
 		
@@ -10193,6 +10193,13 @@ pub mod gapi {
 		fn as_raw_Scalar(&self) -> *const c_void;
 	
 		#[inline]
+		fn val(&self) -> &[f64; 4] {
+			let ret = unsafe { sys::cv_gapi_own_Scalar_propVal_const(self.as_raw_Scalar()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
+		#[inline]
 		fn get(&self, i: i32) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_own_Scalar_operator___const_int(self.as_raw_Scalar(), i, ocvrs_return.as_mut_ptr()) };
@@ -10208,7 +10215,7 @@ pub mod gapi {
 		fn as_raw_mut_Scalar(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn val(&mut self) -> &mut [f64; 4] {
+		fn val_mut(&mut self) -> &mut [f64; 4] {
 			let ret = unsafe { sys::cv_gapi_own_Scalar_propVal(self.as_raw_mut_Scalar()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -10309,6 +10316,7 @@ pub mod gapi {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Scalar")
+				.field("val", &crate::gapi::ScalarTraitConst::val(self))
 				.finish()
 		}
 	}
@@ -10377,8 +10385,8 @@ pub mod gapi {
 		fn as_raw_mut_use_only(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_pkg(&mut self, mut val: crate::gapi::GKernelPackage) {
-			let ret = unsafe { sys::cv_gapi_use_only_propPkg_GKernelPackage(self.as_raw_mut_use_only(), val.as_raw_mut_GKernelPackage()) };
+		fn set_pkg(&mut self, val: crate::gapi::GKernelPackage) {
+			let ret = unsafe { sys::cv_gapi_use_only_propPkg_const_GKernelPackage(self.as_raw_mut_use_only(), val.as_raw_GKernelPackage()) };
 			ret
 		}
 		
@@ -10612,21 +10620,21 @@ pub mod gapi {
 		/// The bottom-left corner of the image
 		#[inline]
 		fn set_org(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propOrg_Point(self.as_raw_mut_Image(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propOrg_const_Point(self.as_raw_mut_Image(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Image to draw
 		#[inline]
-		fn set_img(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propImg_Mat(self.as_raw_mut_Image(), val.as_raw_mut_Mat()) };
+		fn set_img(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propImg_const_Mat(self.as_raw_mut_Image(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// Alpha channel for image to draw (same size and number of channels)
 		#[inline]
-		fn set_alpha(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propAlpha_Mat(self.as_raw_mut_Image(), val.as_raw_mut_Mat()) };
+		fn set_alpha(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propAlpha_const_Mat(self.as_raw_mut_Image(), val.as_raw_Mat()) };
 			ret
 		}
 		
@@ -10891,36 +10899,36 @@ pub mod gapi {
 	
 		/// Points to connect
 		#[inline]
-		fn set_points(&mut self, mut val: core::Vector<core::Point>) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propPoints_vectorLPointG(self.as_raw_mut_Poly(), val.as_raw_mut_VectorOfPoint()) };
+		fn set_points(&mut self, val: core::Vector<core::Point>) {
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propPoints_const_vectorLPointG(self.as_raw_mut_Poly(), val.as_raw_VectorOfPoint()) };
 			ret
 		}
 		
 		/// The line color
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propColor_Scalar(self.as_raw_mut_Poly(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propColor_const_Scalar(self.as_raw_mut_Poly(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The thickness of line
 		#[inline]
 		fn set_thick(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propThick_int(self.as_raw_mut_Poly(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propThick_const_int(self.as_raw_mut_Poly(), val) };
 			ret
 		}
 		
 		/// The Type of the line. See #LineTypes
 		#[inline]
 		fn set_lt(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propLt_int(self.as_raw_mut_Poly(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propLt_const_int(self.as_raw_mut_Poly(), val) };
 			ret
 		}
 		
 		/// The number of fractional bits in the point coordinate
 		#[inline]
 		fn set_shift(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propShift_int(self.as_raw_mut_Poly(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propShift_const_int(self.as_raw_mut_Poly(), val) };
 			ret
 		}
 		
@@ -11193,57 +11201,57 @@ pub mod gapi {
 		/// The text string to be drawn
 		#[inline]
 		fn set_text(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propText_string(self.as_raw_mut_Text(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propText_const_string(self.as_raw_mut_Text(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The bottom-left corner of the text string in the image
 		#[inline]
 		fn set_org(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propOrg_Point(self.as_raw_mut_Text(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propOrg_const_Point(self.as_raw_mut_Text(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The font type, see #HersheyFonts
 		#[inline]
 		fn set_ff(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFf_int(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFf_const_int(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// The font scale factor that is multiplied by the font-specific base size
 		#[inline]
 		fn set_fs(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFs_double(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFs_const_double(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// The text color
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propColor_Scalar(self.as_raw_mut_Text(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propColor_const_Scalar(self.as_raw_mut_Text(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The thickness of the lines used to draw a text
 		#[inline]
 		fn set_thick(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propThick_int(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propThick_const_int(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// The line type. See #LineTypes
 		#[inline]
 		fn set_lt(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propLt_int(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propLt_const_int(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
 		#[inline]
 		fn set_bottom_left_origin(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propBottom_left_origin_bool(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propBottom_left_origin_const_bool(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		

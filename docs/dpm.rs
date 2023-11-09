@@ -200,19 +200,19 @@ pub mod dpm {
 	
 		#[inline]
 		fn set_rect(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_const_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_score(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propScore_float(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propScore_const_float(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_class_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propClassID_int(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propClassID_const_int(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
 			ret
 		}
 		

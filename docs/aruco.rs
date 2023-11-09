@@ -991,19 +991,19 @@ pub mod aruco {
 	
 		#[inline]
 		fn set_pattern(&mut self, val: crate::aruco::PatternPositionType) {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_propPattern_PatternPositionType(self.as_raw_mut_EstimateParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propPattern_const_PatternPositionType(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_extrinsic_guess(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_propUseExtrinsicGuess_bool(self.as_raw_mut_EstimateParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propUseExtrinsicGuess_const_bool(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_solve_pnp_method(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_propSolvePnPMethod_int(self.as_raw_mut_EstimateParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propSolvePnPMethod_const_int(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
 		

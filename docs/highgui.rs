@@ -1789,54 +1789,54 @@ pub mod highgui {
 		/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_QtFont_propColor_Scalar(self.as_raw_mut_QtFont(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_QtFont_propColor_const_Scalar(self.as_raw_mut_QtFont(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// See cv::QtFontStyles
 		#[inline]
 		fn set_font_face(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_propFont_face_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propFont_face_const_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_hscale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propHscale_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propHscale_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_vscale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propVscale_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propVscale_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// slope coefficient: 0 - normal, >0 - italic
 		#[inline]
 		fn set_shear(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propShear_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propShear_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// See cv::QtFontWeights
 		#[inline]
 		fn set_thickness(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_propThickness_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propThickness_const_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// horizontal interval between letters
 		#[inline]
 		fn set_dx(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propDx_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propDx_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// PointSize
 		#[inline]
 		fn set_line_type(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_propLine_type_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propLine_type_const_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		

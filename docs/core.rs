@@ -6578,7 +6578,7 @@ pub mod core {
 		input_array_arg!(src);
 		input_output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_intX_size_t(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_ptr(), (from_to.len() / 2) as _, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_mixChannels_const__InputArrayR_const__InputOutputArrayR_const_intX_size_t(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_ptr(), from_to.len() / 2, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -13300,46 +13300,46 @@ pub mod core {
 		/// the formatted error message
 		#[inline]
 		fn set_msg(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_Exception_propMsg_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_Exception_propMsg_const_String(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// error code see also: CVStatus
 		#[inline]
 		fn set_code(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Exception_propCode_int(self.as_raw_mut_Exception(), val) };
+			let ret = unsafe { sys::cv_Exception_propCode_const_int(self.as_raw_mut_Exception(), val) };
 			ret
 		}
 		
 		/// error description
 		#[inline]
 		fn set_err(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_Exception_propErr_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_Exception_propErr_const_String(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// function name. Available only when the compiler supports getting it
 		#[inline]
 		fn set_func(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_Exception_propFunc_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_Exception_propFunc_const_String(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// source file name where the error has occurred
 		#[inline]
 		fn set_file(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_Exception_propFile_String(self.as_raw_mut_Exception(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_Exception_propFile_const_String(self.as_raw_mut_Exception(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// line number in the source file where the error has occurred
 		#[inline]
 		fn set_line(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Exception_propLine_int(self.as_raw_mut_Exception(), val) };
+			let ret = unsafe { sys::cv_Exception_propLine_const_int(self.as_raw_mut_Exception(), val) };
 			ret
 		}
 		
@@ -13766,13 +13766,13 @@ pub mod core {
 	
 		#[inline]
 		fn set_block_idx(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_FileNode_propBlockIdx_size_t(self.as_raw_mut_FileNode(), val) };
+			let ret = unsafe { sys::cv_FileNode_propBlockIdx_const_size_t(self.as_raw_mut_FileNode(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ofs(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_FileNode_propOfs_size_t(self.as_raw_mut_FileNode(), val) };
+			let ret = unsafe { sys::cv_FileNode_propOfs_const_size_t(self.as_raw_mut_FileNode(), val) };
 			ret
 		}
 		
@@ -14319,14 +14319,14 @@ pub mod core {
 	
 		#[inline]
 		fn set_state(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_FileStorage_propState_int(self.as_raw_mut_FileStorage(), val) };
+			let ret = unsafe { sys::cv_FileStorage_propState_const_int(self.as_raw_mut_FileStorage(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_elname(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_FileStorage_propElname_string(self.as_raw_mut_FileStorage(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_FileStorage_propElname_const_string(self.as_raw_mut_FileStorage(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -15079,14 +15079,14 @@ pub mod core {
 		/// coordinates of the keypoints
 		#[inline]
 		fn set_pt(&mut self, val: core::Point2f) {
-			let ret = unsafe { sys::cv_KeyPoint_propPt_Point2f(self.as_raw_mut_KeyPoint(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_KeyPoint_propPt_const_Point2f(self.as_raw_mut_KeyPoint(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// diameter of the meaningful keypoint neighborhood
 		#[inline]
 		fn set_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_propSize_float(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propSize_const_float(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
@@ -15095,28 +15095,28 @@ pub mod core {
 		/// image coordinate system, ie in clockwise.
 		#[inline]
 		fn set_angle(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_propAngle_float(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propAngle_const_float(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
 		/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
 		#[inline]
 		fn set_response(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_propResponse_float(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propResponse_const_float(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
 		/// octave (pyramid layer) from which the keypoint has been extracted
 		#[inline]
 		fn set_octave(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_KeyPoint_propOctave_int(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propOctave_const_int(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
 		/// object class (if the keypoints need to be clustered by an object they belong to)
 		#[inline]
 		fn set_class_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_KeyPoint_propClass_id_int(self.as_raw_mut_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_KeyPoint_propClass_id_const_int(self.as_raw_mut_KeyPoint(), val) };
 			ret
 		}
 		
@@ -15677,6 +15677,13 @@ pub mod core {
 		#[inline]
 		fn cols(&self) -> i32 {
 			let ret = unsafe { sys::cv_Mat_propCols_const(self.as_raw_Mat()) };
+			ret
+		}
+		
+		/// pointer to the data
+		#[inline]
+		fn data(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_Mat_propData_const(self.as_raw_Mat()) };
 			ret
 		}
 		
@@ -16302,7 +16309,7 @@ pub mod core {
 		#[inline]
 		fn reshape_nd(&self, cn: i32, newsz: &[i32]) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_reshape_const_int_int_const_intX(self.as_raw_Mat(), cn, newsz.len() as _, newsz.as_ptr(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_reshape_const_int_int_const_intX(self.as_raw_Mat(), cn, newsz.len().try_into()?, newsz.as_ptr(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -17237,12 +17244,6 @@ pub mod core {
 			Ok(ret)
 		}
 		
-		#[inline]
-		fn data(&self) -> *const u8 {
-			let ret = unsafe { sys::cv_Mat_data_const(self.as_raw_Mat()) };
-			ret
-		}
-		
 	}
 	
 	/// Mutable methods for [core::Mat]
@@ -17256,28 +17257,28 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_propFlags_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propFlags_const_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 		
 		/// the matrix dimensionality, >= 2
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_propDims_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propDims_const_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 		
 		/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_propRows_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propRows_const_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 		
 		/// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Mat_propCols_int(self.as_raw_mut_Mat(), val) };
+			let ret = unsafe { sys::cv_Mat_propCols_const_int(self.as_raw_mut_Mat(), val) };
 			ret
 		}
 		
@@ -17290,7 +17291,7 @@ pub mod core {
 		
 		/// pointer to the data
 		#[inline]
-		unsafe fn set_data(&mut self, val: *mut u8) {
+		unsafe fn set_data(&mut self, val: *const u8) {
 			let ret = { sys::cv_Mat_propData_unsigned_charX(self.as_raw_mut_Mat(), val) };
 			ret
 		}
@@ -17305,8 +17306,14 @@ pub mod core {
 		
 		/// interaction with UMat
 		#[inline]
-		fn set_u(&mut self, val: &mut core::UMatData) {
-			let ret = unsafe { sys::cv_Mat_propU_UMatDataX(self.as_raw_mut_Mat(), val.as_raw_mut_UMatData()) };
+		fn set_u(&mut self, val: &core::UMatData) {
+			let ret = unsafe { sys::cv_Mat_propU_UMatDataX(self.as_raw_mut_Mat(), val.as_raw_UMatData()) };
+			ret
+		}
+		
+		#[inline]
+		fn set_size(&mut self, val: core::MatSize) {
+			let ret = unsafe { sys::cv_Mat_propSize_const_MatSize(self.as_raw_mut_Mat(), val.as_raw_MatSize()) };
 			ret
 		}
 		
@@ -17545,7 +17552,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_nd(&mut self, sizes: &[i32], typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_create_int_const_intX_int(self.as_raw_mut_Mat(), sizes.len() as _, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			{ sys::cv_Mat_create_int_const_intX_int(self.as_raw_mut_Mat(), sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -18472,9 +18479,9 @@ pub mod core {
 		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
 		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
 		#[inline]
-		pub unsafe fn new_nd(ndims: i32, sizes: &i32, typ: i32) -> Result<core::Mat> {
+		pub unsafe fn new_nd(sizes: &[i32], typ: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_const_intX_int(ndims, sizes, typ, ocvrs_return.as_mut_ptr()) };
+			{ sys::cv_Mat_Mat_int_const_intX_int(sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::Mat::opencv_from_extern(ret) };
@@ -18520,7 +18527,7 @@ pub mod core {
 		#[inline]
 		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_int_const_intX_int_const_ScalarR(sizes.len() as _, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_Mat_int_const_intX_int_const_ScalarR(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -18721,7 +18728,7 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd_with_data(sizes: &[i32], typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len() as _, sizes.as_ptr(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
+			{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::Mat::opencv_from_extern(ret) };
@@ -18748,7 +18755,7 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd_with_data_def(sizes: &[i32], typ: i32, data: *mut c_void) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_const_intX_int_voidX(sizes.len() as _, sizes.as_ptr(), typ, data, ocvrs_return.as_mut_ptr()) };
+			{ sys::cv_Mat_Mat_int_const_intX_int_voidX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::Mat::opencv_from_extern(ret) };
@@ -19022,7 +19029,7 @@ pub mod core {
 		#[must_use]
 		pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_zeros_int_const_intX_int(sz.len() as _, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_zeros_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -19120,7 +19127,7 @@ pub mod core {
 		#[must_use]
 		pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_ones_int_const_intX_int(sz.len() as _, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_Mat_ones_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
@@ -19299,12 +19306,6 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn has_elements(&self) -> bool {
-			let ret = unsafe { sys::cv_MatConstIterator_hasElements_const(self.as_raw_MatConstIterator()) };
-			ret
-		}
-		
-		#[inline]
 		fn typ(&self) -> i32 {
 			let ret = unsafe { sys::cv_MatConstIterator_type_const(self.as_raw_MatConstIterator()) };
 			ret
@@ -19318,7 +19319,7 @@ pub mod core {
 	
 		#[inline]
 		fn set_elem_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_MatConstIterator_propElemSize_size_t(self.as_raw_mut_MatConstIterator(), val) };
+			let ret = unsafe { sys::cv_MatConstIterator_propElemSize_const_size_t(self.as_raw_mut_MatConstIterator(), val) };
 			ret
 		}
 		
@@ -19771,43 +19772,43 @@ pub mod core {
 	
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_MatExpr_propFlags_int(self.as_raw_mut_MatExpr(), val) };
+			let ret = unsafe { sys::cv_MatExpr_propFlags_const_int(self.as_raw_mut_MatExpr(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_a(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_MatExpr_propA_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
+		fn set_a(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_MatExpr_propA_const_Mat(self.as_raw_mut_MatExpr(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_b(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_MatExpr_propB_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
+		fn set_b(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_MatExpr_propB_const_Mat(self.as_raw_mut_MatExpr(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_c(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_MatExpr_propC_Mat(self.as_raw_mut_MatExpr(), val.as_raw_mut_Mat()) };
+		fn set_c(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_MatExpr_propC_const_Mat(self.as_raw_mut_MatExpr(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_alpha(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_MatExpr_propAlpha_double(self.as_raw_mut_MatExpr(), val) };
+			let ret = unsafe { sys::cv_MatExpr_propAlpha_const_double(self.as_raw_mut_MatExpr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_beta(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_MatExpr_propBeta_double(self.as_raw_mut_MatExpr(), val) };
+			let ret = unsafe { sys::cv_MatExpr_propBeta_const_double(self.as_raw_mut_MatExpr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_s(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_MatExpr_propS_Scalar(self.as_raw_mut_MatExpr(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_MatExpr_propS_const_Scalar(self.as_raw_mut_MatExpr(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -20284,6 +20285,12 @@ pub mod core {
 		fn as_raw_MatSize(&self) -> *const c_void;
 	
 		#[inline]
+		fn p(&self) -> *const i32 {
+			let ret = unsafe { sys::cv_MatSize_propP_const(self.as_raw_MatSize()) };
+			ret
+		}
+		
+		#[inline]
 		fn dims(&self) -> i32 {
 			let ret = unsafe { sys::cv_MatSize_dims_const(self.as_raw_MatSize()) };
 			ret
@@ -20332,13 +20339,13 @@ pub mod core {
 		fn as_raw_mut_MatSize(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn p(&mut self) -> *mut i32 {
+		fn p_mut(&mut self) -> *mut i32 {
 			let ret = unsafe { sys::cv_MatSize_propP(self.as_raw_mut_MatSize()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_p(&mut self, val: *mut i32) {
+		unsafe fn set_p(&mut self, val: *const i32) {
 			let ret = { sys::cv_MatSize_propP_intX(self.as_raw_mut_MatSize(), val) };
 			ret
 		}
@@ -20393,6 +20400,19 @@ pub mod core {
 		fn as_raw_MatStep(&self) -> *const c_void;
 	
 		#[inline]
+		fn p(&self) -> *const size_t {
+			let ret = unsafe { sys::cv_MatStep_propP_const(self.as_raw_MatStep()) };
+			ret
+		}
+		
+		#[inline]
+		fn buf(&self) -> &[size_t; 2] {
+			let ret = unsafe { sys::cv_MatStep_propBuf_const(self.as_raw_MatStep()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
+		#[inline]
 		fn get(&self, i: i32) -> size_t {
 			let ret = unsafe { sys::cv_MatStep_operator___const_int(self.as_raw_MatStep(), i) };
 			ret
@@ -20414,19 +20434,19 @@ pub mod core {
 		fn as_raw_mut_MatStep(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn p(&mut self) -> *mut size_t {
+		fn p_mut(&mut self) -> *mut size_t {
 			let ret = unsafe { sys::cv_MatStep_propP(self.as_raw_mut_MatStep()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_p(&mut self, val: *mut size_t) {
+		unsafe fn set_p(&mut self, val: *const size_t) {
 			let ret = { sys::cv_MatStep_propP_size_tX(self.as_raw_mut_MatStep(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn buf(&mut self) -> &mut [size_t; 2] {
+		fn buf_mut(&mut self) -> &mut [size_t; 2] {
 			let ret = unsafe { sys::cv_MatStep_propBuf(self.as_raw_mut_MatStep()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -20488,6 +20508,16 @@ pub mod core {
 			ret
 		}
 		
+	}
+	
+	impl std::fmt::Debug for MatStep {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MatStep")
+				.field("p", &core::MatStepTraitConst::p(self))
+				.field("buf", &core::MatStepTraitConst::buf(self))
+				.finish()
+		}
 	}
 	
 	impl Default for MatStep {
@@ -21472,22 +21502,22 @@ pub mod core {
 	
 		/// eigenvectors of the covariation matrix
 		#[inline]
-		fn set_eigenvectors(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_PCA_propEigenvectors_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
+		fn set_eigenvectors(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_PCA_propEigenvectors_const_Mat(self.as_raw_mut_PCA(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// eigenvalues of the covariation matrix
 		#[inline]
-		fn set_eigenvalues(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_PCA_propEigenvalues_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
+		fn set_eigenvalues(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_PCA_propEigenvalues_const_Mat(self.as_raw_mut_PCA(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// mean value subtracted before the projection and added after the back projection
 		#[inline]
-		fn set_mean(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_PCA_propMean_Mat(self.as_raw_mut_PCA(), val.as_raw_mut_Mat()) };
+		fn set_mean(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_PCA_propMean_const_Mat(self.as_raw_mut_PCA(), val.as_raw_Mat()) };
 			ret
 		}
 		
@@ -21901,7 +21931,7 @@ pub mod core {
 	
 		#[inline]
 		fn set_state(&mut self, val: u64) {
-			let ret = unsafe { sys::cv_RNG_propState_uint64_t(self.as_raw_mut_RNG(), val) };
+			let ret = unsafe { sys::cv_RNG_propState_const_uint64_t(self.as_raw_mut_RNG(), val) };
 			ret
 		}
 		
@@ -22594,13 +22624,13 @@ pub mod core {
 	
 		#[inline]
 		fn set_start(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Range_propStart_int(self.as_raw_mut_Range(), val) };
+			let ret = unsafe { sys::cv_Range_propStart_const_int(self.as_raw_mut_Range(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_end(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_Range_propEnd_int(self.as_raw_mut_Range(), val) };
+			let ret = unsafe { sys::cv_Range_propEnd_const_int(self.as_raw_mut_Range(), val) };
 			ret
 		}
 		
@@ -22869,20 +22899,20 @@ pub mod core {
 		fn as_raw_mut_SVD(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_u(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_propU_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
+		fn set_u(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_SVD_propU_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_w(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_propW_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
+		fn set_w(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_SVD_propW_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_vt(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_propVt_Mat(self.as_raw_mut_SVD(), val.as_raw_mut_Mat()) };
+		fn set_vt(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_SVD_propVt_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
 			ret
 		}
 		
@@ -23505,7 +23535,7 @@ pub mod core {
 	
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_propFlags_int(self.as_raw_mut_SparseMat(), val) };
+			let ret = unsafe { sys::cv_SparseMat_propFlags_const_int(self.as_raw_mut_SparseMat(), val) };
 			ret
 		}
 		
@@ -23517,8 +23547,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn set_hdr(&mut self, val: &mut core::SparseMat_Hdr) {
-			let ret = unsafe { sys::cv_SparseMat_propHdr_HdrX(self.as_raw_mut_SparseMat(), val.as_raw_mut_SparseMat_Hdr()) };
+		fn set_hdr(&mut self, val: &core::SparseMat_Hdr) {
+			let ret = unsafe { sys::cv_SparseMat_propHdr_HdrX(self.as_raw_mut_SparseMat(), val.as_raw_SparseMat_Hdr()) };
 			ret
 		}
 		
@@ -23548,9 +23578,9 @@ pub mod core {
 		///    it is simply cleared with clear(), otherwise,
 		///    the old matrix is released (using release()) and the new one is allocated.
 		#[inline]
-		fn create(&mut self, dims: i32, _sizes: &i32, _type: i32) -> Result<()> {
+		fn create(&mut self, _sizes: &[i32], _type: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_create_int_const_intX_int(self.as_raw_mut_SparseMat(), dims, _sizes, _type, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_create_int_const_intX_int(self.as_raw_mut_SparseMat(), _sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -23983,9 +24013,9 @@ pub mod core {
 		/// * _sizes: Sparce matrix size on all dementions.
 		/// * _type: Sparse matrix data type.
 		#[inline]
-		pub fn new(dims: i32, _sizes: &i32, _type: i32) -> Result<core::SparseMat> {
+		pub fn new(_sizes: &[i32], _type: i32) -> Result<core::SparseMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_SparseMat_int_const_intX_int(dims, _sizes, _type, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_SparseMat_int_const_intX_int(_sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
@@ -24099,6 +24129,13 @@ pub mod core {
 			ret
 		}
 		
+		#[inline]
+		fn size(&self) -> &[i32; 32] {
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propSize_const(self.as_raw_SparseMat_Hdr()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
 	}
 	
 	/// Mutable methods for [core::SparseMat_Hdr]
@@ -24107,54 +24144,54 @@ pub mod core {
 	
 		#[inline]
 		fn set_refcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propRefcount_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propRefcount_const_int(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propDims_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propDims_const_int(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_value_offset(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propValueOffset_int(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propValueOffset_const_int(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_node_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeSize_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeSize_const_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_node_count(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeCount_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propNodeCount_const_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_free_list(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propFreeList_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propFreeList_const_size_t(self.as_raw_mut_SparseMat_Hdr(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_pool(&mut self, mut val: core::Vector<u8>) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propPool_vectorLunsigned_charG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfu8()) };
+		fn set_pool(&mut self, val: core::Vector<u8>) {
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propPool_const_vectorLunsigned_charG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_VectorOfu8()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_hashtab(&mut self, mut val: core::Vector<size_t>) {
-			let ret = unsafe { sys::cv_SparseMat_Hdr_propHashtab_vectorLsize_tG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_mut_VectorOfsize_t()) };
+		fn set_hashtab(&mut self, val: core::Vector<size_t>) {
+			let ret = unsafe { sys::cv_SparseMat_Hdr_propHashtab_const_vectorLsize_tG(self.as_raw_mut_SparseMat_Hdr(), val.as_raw_VectorOfsize_t()) };
 			ret
 		}
 		
 		#[inline]
-		fn size(&mut self) -> &mut [i32; 32] {
+		fn size_mut(&mut self) -> &mut [i32; 32] {
 			let ret = unsafe { sys::cv_SparseMat_Hdr_propSize(self.as_raw_mut_SparseMat_Hdr()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -24199,7 +24236,7 @@ pub mod core {
 		#[inline]
 		pub fn new(_sizes: &[i32], _type: i32) -> Result<core::SparseMat_Hdr> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_Hdr_Hdr_int_const_intX_int(_sizes.len() as _, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMat_Hdr_Hdr_int_const_intX_int(_sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::SparseMat_Hdr::opencv_from_extern(ret) };
@@ -24220,6 +24257,7 @@ pub mod core {
 				.field("free_list", &core::SparseMat_HdrTraitConst::free_list(self))
 				.field("pool", &core::SparseMat_HdrTraitConst::pool(self))
 				.field("hashtab", &core::SparseMat_HdrTraitConst::hashtab(self))
+				.field("size", &core::SparseMat_HdrTraitConst::size(self))
 				.finish()
 		}
 	}
@@ -24242,6 +24280,14 @@ pub mod core {
 			ret
 		}
 		
+		/// index of the matrix element
+		#[inline]
+		fn idx(&self) -> &[i32; 32] {
+			let ret = unsafe { sys::cv_SparseMat_Node_propIdx_const(self.as_raw_SparseMat_Node()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
 	}
 	
 	/// Mutable methods for [core::SparseMat_Node]
@@ -24251,20 +24297,20 @@ pub mod core {
 		/// hash value
 		#[inline]
 		fn set_hashval(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Node_propHashval_size_t(self.as_raw_mut_SparseMat_Node(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Node_propHashval_const_size_t(self.as_raw_mut_SparseMat_Node(), val) };
 			ret
 		}
 		
 		/// index of the next node in the same hash table entry
 		#[inline]
 		fn set_next(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMat_Node_propNext_size_t(self.as_raw_mut_SparseMat_Node(), val) };
+			let ret = unsafe { sys::cv_SparseMat_Node_propNext_const_size_t(self.as_raw_mut_SparseMat_Node(), val) };
 			ret
 		}
 		
 		/// index of the matrix element
 		#[inline]
-		fn idx(&mut self) -> &mut [i32; 32] {
+		fn idx_mut(&mut self) -> &mut [i32; 32] {
 			let ret = unsafe { sys::cv_SparseMat_Node_propIdx(self.as_raw_mut_SparseMat_Node()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -24305,6 +24351,7 @@ pub mod core {
 			f.debug_struct("SparseMat_Node")
 				.field("hashval", &core::SparseMat_NodeTraitConst::hashval(self))
 				.field("next", &core::SparseMat_NodeTraitConst::next(self))
+				.field("idx", &core::SparseMat_NodeTraitConst::idx(self))
 				.finish()
 		}
 	}
@@ -24323,6 +24370,12 @@ pub mod core {
 		#[inline]
 		fn hashidx(&self) -> size_t {
 			let ret = unsafe { sys::cv_SparseMatConstIterator_propHashidx_const(self.as_raw_SparseMatConstIterator()) };
+			ret
+		}
+		
+		#[inline]
+		fn ptr(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_SparseMatConstIterator_propPtr_const(self.as_raw_SparseMatConstIterator()) };
 			ret
 		}
 		
@@ -24345,18 +24398,18 @@ pub mod core {
 	
 		#[inline]
 		fn set_hashidx(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_SparseMatConstIterator_propHashidx_size_t(self.as_raw_mut_SparseMatConstIterator(), val) };
+			let ret = unsafe { sys::cv_SparseMatConstIterator_propHashidx_const_size_t(self.as_raw_mut_SparseMatConstIterator(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn ptr(&mut self) -> *mut u8 {
+		fn ptr_mut(&mut self) -> *mut u8 {
 			let ret = unsafe { sys::cv_SparseMatConstIterator_propPtr(self.as_raw_mut_SparseMatConstIterator()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_ptr(&mut self, val: *mut u8) {
+		unsafe fn set_ptr(&mut self, val: *const u8) {
 			let ret = { sys::cv_SparseMatConstIterator_propPtr_unsigned_charX(self.as_raw_mut_SparseMatConstIterator(), val) };
 			ret
 		}
@@ -24470,6 +24523,7 @@ pub mod core {
 			f.debug_struct("SparseMatConstIterator")
 				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
 				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
+				.field("ptr", &core::SparseMatConstIteratorTraitConst::ptr(self))
 				.finish()
 		}
 	}
@@ -24597,6 +24651,7 @@ pub mod core {
 			f.debug_struct("SparseMatIterator")
 				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
 				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
+				.field("ptr", &core::SparseMatConstIteratorTraitConst::ptr(self))
 				.finish()
 		}
 	}
@@ -25126,9 +25181,9 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn reshape_1(&self, cn: i32, newndims: i32, newsz: &i32) -> Result<core::UMat> {
+		fn reshape_nd(&self, cn: i32, newsz: &[i32]) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_reshape_const_int_int_const_intX(self.as_raw_UMat(), cn, newndims, newsz, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_reshape_const_int_int_const_intX(self.as_raw_UMat(), cn, newsz.len().try_into()?, newsz.as_ptr(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -25433,35 +25488,35 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_propFlags_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propFlags_const_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
 		/// the matrix dimensionality, >= 2
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_propDims_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propDims_const_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
 		/// number of rows in the matrix; -1 when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_propRows_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propRows_const_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
 		/// number of columns in the matrix; -1 when the matrix has more than 2 dimensions
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMat_propCols_int(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propCols_const_int(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
 		/// usage flags for allocator; recommend do not set directly, instead set during construct/create/getUMat
 		#[inline]
 		fn set_usage_flags(&mut self, val: core::UMatUsageFlags) {
-			let ret = unsafe { sys::cv_UMat_propUsageFlags_UMatUsageFlags(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propUsageFlags_const_UMatUsageFlags(self.as_raw_mut_UMat(), val) };
 			ret
 		}
 		
@@ -25475,15 +25530,22 @@ pub mod core {
 		
 		/// black-box container of UMat data
 		#[inline]
-		fn set_u(&mut self, val: &mut core::UMatData) {
-			let ret = unsafe { sys::cv_UMat_propU_UMatDataX(self.as_raw_mut_UMat(), val.as_raw_mut_UMatData()) };
+		fn set_u(&mut self, val: &core::UMatData) {
+			let ret = unsafe { sys::cv_UMat_propU_UMatDataX(self.as_raw_mut_UMat(), val.as_raw_UMatData()) };
 			ret
 		}
 		
 		/// offset of the submatrix (or 0)
 		#[inline]
 		fn set_offset(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_UMat_propOffset_size_t(self.as_raw_mut_UMat(), val) };
+			let ret = unsafe { sys::cv_UMat_propOffset_const_size_t(self.as_raw_mut_UMat(), val) };
+			ret
+		}
+		
+		/// dimensional size of the matrix; accessible in various formats
+		#[inline]
+		fn set_size(&mut self, val: core::MatSize) {
+			let ret = unsafe { sys::cv_UMat_propSize_const_MatSize(self.as_raw_mut_UMat(), val.as_raw_MatSize()) };
 			ret
 		}
 		
@@ -25594,7 +25656,7 @@ pub mod core {
 		#[inline]
 		unsafe fn create_nd(&mut self, sizes: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_create_int_const_intX_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.len() as _, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			{ sys::cv_UMat_create_int_const_intX_int_UMatUsageFlags(self.as_raw_mut_UMat(), sizes.len().try_into()?, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -25606,7 +25668,7 @@ pub mod core {
 		#[inline]
 		fn create_nd_def(&mut self, sizes: &[i32], typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_create_int_const_intX_int(self.as_raw_mut_UMat(), sizes.len() as _, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_create_int_const_intX_int(self.as_raw_mut_UMat(), sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -25860,7 +25922,7 @@ pub mod core {
 		#[inline]
 		pub unsafe fn new_nd(sizes: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(sizes.len() as _, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			{ sys::cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(sizes.len().try_into()?, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = { core::UMat::opencv_from_extern(ret) };
@@ -25875,7 +25937,7 @@ pub mod core {
 		#[inline]
 		pub fn new_nd_def(sizes: &[i32], typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_int_const_intX_int(sizes.len() as _, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_UMat_int_const_intX_int(sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -25887,7 +25949,7 @@ pub mod core {
 		#[inline]
 		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR_UMatUsageFlags(sizes.len() as _, sizes.as_ptr(), typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR_UMatUsageFlags(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -25900,7 +25962,7 @@ pub mod core {
 		#[inline]
 		pub fn new_nd_with_default_def(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR(sizes.len() as _, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -25970,7 +26032,7 @@ pub mod core {
 		/// constructs a square diagonal matrix which main diagonal is vector "d"
 		#[inline]
 		#[must_use]
-		pub fn diag(d: &core::UMat, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		pub fn diag_flags(d: &core::UMat, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_diag_const_UMatR_UMatUsageFlags(d.as_raw_UMat(), usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -25981,7 +26043,7 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn diag_1(d: &core::UMat) -> Result<core::UMat> {
+		pub fn diag(d: &core::UMat) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_diag_const_UMatR(d.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -25993,7 +26055,7 @@ pub mod core {
 		/// Matlab-style matrix initialization
 		#[inline]
 		#[must_use]
-		pub fn zeros(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		pub fn zeros_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -26004,7 +26066,7 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn zeros_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		pub fn zeros_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -26015,9 +26077,9 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn zeros_2(ndims: i32, sz: &i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		pub fn zeros_nd_flags(sz: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(sz.len().try_into()?, sz.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -26026,7 +26088,7 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn zeros_3(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+		pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -26037,7 +26099,7 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn zeros_4(size: core::Size, typ: i32) -> Result<core::UMat> {
+		pub fn zeros_size(size: core::Size, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_zeros_Size_int(size.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -26048,9 +26110,9 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn zeros_5(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
+		pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_zeros_int_const_intX_int(ndims, sz, typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_zeros_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -26059,7 +26121,7 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn ones(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		pub fn ones_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -26070,7 +26132,7 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn ones_1(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		pub fn ones_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_Size_int_UMatUsageFlags(size.opencv_as_extern(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -26081,9 +26143,9 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn ones_2(ndims: i32, sz: &i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+		pub fn ones_nd_flags(sz: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_ones_int_const_intX_int_UMatUsageFlags(ndims, sz, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_ones_int_const_intX_int_UMatUsageFlags(sz.len().try_into()?, sz.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -26092,7 +26154,7 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn ones_3(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+		pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -26103,7 +26165,7 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn ones_4(size: core::Size, typ: i32) -> Result<core::UMat> {
+		pub fn ones_size(size: core::Size, typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_UMat_ones_Size_int(size.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -26114,9 +26176,9 @@ pub mod core {
 		
 		#[inline]
 		#[must_use]
-		pub fn ones_5(ndims: i32, sz: &i32, typ: i32) -> Result<core::UMat> {
+		pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_ones_int_const_intX_int(ndims, sz, typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_UMat_ones_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
@@ -26220,6 +26282,18 @@ pub mod core {
 		}
 		
 		#[inline]
+		fn data(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_UMatData_propData_const(self.as_raw_UMatData()) };
+			ret
+		}
+		
+		#[inline]
+		fn origdata(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_UMatData_propOrigdata_const(self.as_raw_UMatData()) };
+			ret
+		}
+		
+		#[inline]
 		fn size(&self) -> size_t {
 			let ret = unsafe { sys::cv_UMatData_propSize_const(self.as_raw_UMatData()) };
 			ret
@@ -26307,49 +26381,49 @@ pub mod core {
 	
 		#[inline]
 		fn set_urefcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_propUrefcount_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propUrefcount_const_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_refcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_propRefcount_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propRefcount_const_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn data(&mut self) -> *mut u8 {
+		fn data_mut(&mut self) -> *mut u8 {
 			let ret = unsafe { sys::cv_UMatData_propData(self.as_raw_mut_UMatData()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_data(&mut self, val: *mut u8) {
+		unsafe fn set_data(&mut self, val: *const u8) {
 			let ret = { sys::cv_UMatData_propData_unsigned_charX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn origdata(&mut self) -> *mut u8 {
+		fn origdata_mut(&mut self) -> *mut u8 {
 			let ret = unsafe { sys::cv_UMatData_propOrigdata(self.as_raw_mut_UMatData()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_origdata(&mut self, val: *mut u8) {
+		unsafe fn set_origdata(&mut self, val: *const u8) {
 			let ret = { sys::cv_UMatData_propOrigdata_unsigned_charX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_UMatData_propSize_size_t(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propSize_const_size_t(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_flags(&mut self, val: core::UMatData_MemoryFlag) {
-			let ret = unsafe { sys::cv_UMatData_propFlags_MemoryFlag(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propFlags_const_MemoryFlag(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
@@ -26360,7 +26434,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		unsafe fn set_handle(&mut self, val: *mut c_void) {
+		unsafe fn set_handle(&mut self, val: *const c_void) {
 			let ret = { sys::cv_UMatData_propHandle_voidX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
@@ -26372,20 +26446,20 @@ pub mod core {
 		}
 		
 		#[inline]
-		unsafe fn set_userdata(&mut self, val: *mut c_void) {
+		unsafe fn set_userdata(&mut self, val: *const c_void) {
 			let ret = { sys::cv_UMatData_propUserdata_voidX(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_allocator_flags_(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_propAllocatorFlags__int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propAllocatorFlags__const_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_mapcount(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_UMatData_propMapcount_int(self.as_raw_mut_UMatData(), val) };
+			let ret = unsafe { sys::cv_UMatData_propMapcount_const_int(self.as_raw_mut_UMatData(), val) };
 			ret
 		}
 		
@@ -26397,8 +26471,8 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn set_original_umat_data(&mut self, val: &mut core::UMatData) {
-			let ret = unsafe { sys::cv_UMatData_propOriginalUMatData_UMatDataX(self.as_raw_mut_UMatData(), val.as_raw_mut_UMatData()) };
+		fn set_original_umat_data(&mut self, val: &core::UMatData) {
+			let ret = unsafe { sys::cv_UMatData_propOriginalUMatData_UMatDataX(self.as_raw_mut_UMatData(), val.as_raw_UMatData()) };
 			ret
 		}
 		
@@ -26481,6 +26555,8 @@ pub mod core {
 			f.debug_struct("UMatData")
 				.field("urefcount", &core::UMatDataTraitConst::urefcount(self))
 				.field("refcount", &core::UMatDataTraitConst::refcount(self))
+				.field("data", &core::UMatDataTraitConst::data(self))
+				.field("origdata", &core::UMatDataTraitConst::origdata(self))
 				.field("size", &core::UMatDataTraitConst::size(self))
 				.field("flags", &core::UMatDataTraitConst::flags(self))
 				.field("allocator_flags_", &core::UMatDataTraitConst::allocator_flags_(self))
@@ -27739,7 +27815,7 @@ pub mod core {
 		#[inline]
 		fn create_nd(&self, size: &[i32], typ: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask(self.as_raw__OutputArray(), size.len() as _, size.as_ptr(), typ, i, allow_transposed, fixed_depth_mask, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask(self.as_raw__OutputArray(), size.len().try_into()?, size.as_ptr(), typ, i, allow_transposed, fixed_depth_mask, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -27753,7 +27829,7 @@ pub mod core {
 		#[inline]
 		fn create_nd_def(&self, size: &[i32], typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray_create_const_int_const_intX_int(self.as_raw__OutputArray(), size.len() as _, size.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv__OutputArray_create_const_int_const_intX_int(self.as_raw__OutputArray(), size.len().try_into()?, size.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -29123,6 +29199,12 @@ pub mod core {
 		fn as_raw_GpuData(&self) -> *const c_void;
 	
 		#[inline]
+		fn data(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_cuda_GpuData_propData_const(self.as_raw_GpuData()) };
+			ret
+		}
+		
+		#[inline]
 		fn size(&self) -> size_t {
 			let ret = unsafe { sys::cv_cuda_GpuData_propSize_const(self.as_raw_GpuData()) };
 			ret
@@ -29135,20 +29217,20 @@ pub mod core {
 		fn as_raw_mut_GpuData(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn data(&mut self) -> *mut u8 {
+		fn data_mut(&mut self) -> *mut u8 {
 			let ret = unsafe { sys::cv_cuda_GpuData_propData(self.as_raw_mut_GpuData()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_data(&mut self, val: *mut u8) {
+		unsafe fn set_data(&mut self, val: *const u8) {
 			let ret = { sys::cv_cuda_GpuData_propData_unsigned_charX(self.as_raw_mut_GpuData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_cuda_GpuData_propSize_size_t(self.as_raw_mut_GpuData(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuData_propSize_const_size_t(self.as_raw_mut_GpuData(), val) };
 			ret
 		}
 		
@@ -29194,6 +29276,7 @@ pub mod core {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GpuData")
+				.field("data", &core::GpuDataTraitConst::data(self))
 				.field("size", &core::GpuDataTraitConst::size(self))
 				.finish()
 		}
@@ -29232,6 +29315,28 @@ pub mod core {
 		#[inline]
 		fn step(&self) -> size_t {
 			let ret = unsafe { sys::cv_cuda_GpuMat_propStep_const(self.as_raw_GpuMat()) };
+			ret
+		}
+		
+		/// pointer to the data
+		#[inline]
+		fn data(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_cuda_GpuMat_propData_const(self.as_raw_GpuMat()) };
+			ret
+		}
+		
+		/// pointer to the reference counter;
+		/// when GpuMat points to user-allocated data, the pointer is NULL
+		#[inline]
+		fn refcount(&self) -> *const i32 {
+			let ret = unsafe { sys::cv_cuda_GpuMat_propRefcount_const(self.as_raw_GpuMat()) };
+			ret
+		}
+		
+		/// helper fields used in locateROI and adjustROI
+		#[inline]
+		fn datastart(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_cuda_GpuMat_propDatastart_const(self.as_raw_GpuMat()) };
 			ret
 		}
 		
@@ -29687,41 +29792,41 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_propFlags_int(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propFlags_const_int(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// the number of rows and columns
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_propRows_int(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propRows_const_int(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// the number of rows and columns
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_propCols_int(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propCols_const_int(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// a distance between successive rows in bytes; includes the gap if any
 		#[inline]
 		fn set_step(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_cuda_GpuMat_propStep_size_t(self.as_raw_mut_GpuMat(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMat_propStep_const_size_t(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// pointer to the data
 		#[inline]
-		fn data(&mut self) -> *mut u8 {
+		fn data_mut(&mut self) -> *mut u8 {
 			let ret = unsafe { sys::cv_cuda_GpuMat_propData(self.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
 		/// pointer to the data
 		#[inline]
-		unsafe fn set_data(&mut self, val: *mut u8) {
+		unsafe fn set_data(&mut self, val: *const u8) {
 			let ret = { sys::cv_cuda_GpuMat_propData_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
@@ -29729,7 +29834,7 @@ pub mod core {
 		/// pointer to the reference counter;
 		/// when GpuMat points to user-allocated data, the pointer is NULL
 		#[inline]
-		fn refcount(&mut self) -> *mut i32 {
+		fn refcount_mut(&mut self) -> *mut i32 {
 			let ret = unsafe { sys::cv_cuda_GpuMat_propRefcount(self.as_raw_mut_GpuMat()) };
 			ret
 		}
@@ -29737,21 +29842,21 @@ pub mod core {
 		/// pointer to the reference counter;
 		/// when GpuMat points to user-allocated data, the pointer is NULL
 		#[inline]
-		unsafe fn set_refcount(&mut self, val: *mut i32) {
+		unsafe fn set_refcount(&mut self, val: *const i32) {
 			let ret = { sys::cv_cuda_GpuMat_propRefcount_intX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
 		
 		/// helper fields used in locateROI and adjustROI
 		#[inline]
-		fn datastart(&mut self) -> *mut u8 {
+		fn datastart_mut(&mut self) -> *mut u8 {
 			let ret = unsafe { sys::cv_cuda_GpuMat_propDatastart(self.as_raw_mut_GpuMat()) };
 			ret
 		}
 		
 		/// helper fields used in locateROI and adjustROI
 		#[inline]
-		unsafe fn set_datastart(&mut self, val: *mut u8) {
+		unsafe fn set_datastart(&mut self, val: *const u8) {
 			let ret = { sys::cv_cuda_GpuMat_propDatastart_unsigned_charX(self.as_raw_mut_GpuMat(), val) };
 			ret
 		}
@@ -29767,7 +29872,7 @@ pub mod core {
 		/// allocator
 		#[inline]
 		unsafe fn set_allocator(&mut self, val: &mut impl core::GpuMat_AllocatorTrait) {
-			let ret = { sys::cv_cuda_GpuMat_propAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_mut_GpuMat_Allocator()) };
+			let ret = { sys::cv_cuda_GpuMat_propAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_GpuMat_Allocator()) };
 			ret
 		}
 		
@@ -30295,6 +30400,9 @@ pub mod core {
 				.field("rows", &core::GpuMatTraitConst::rows(self))
 				.field("cols", &core::GpuMatTraitConst::cols(self))
 				.field("step", &core::GpuMatTraitConst::step(self))
+				.field("data", &core::GpuMatTraitConst::data(self))
+				.field("refcount", &core::GpuMatTraitConst::refcount(self))
+				.field("datastart", &core::GpuMatTraitConst::datastart(self))
 				.field("dataend", &core::GpuMatTraitConst::dataend(self))
 				.finish()
 		}
@@ -30654,29 +30762,29 @@ pub mod core {
 		/// - number of channels
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_propFlags_int(self.as_raw_mut_GpuMatND(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propFlags_const_int(self.as_raw_mut_GpuMatND(), val) };
 			ret
 		}
 		
 		/// matrix dimensionality
 		#[inline]
 		fn set_dims(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_propDims_int(self.as_raw_mut_GpuMatND(), val) };
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propDims_const_int(self.as_raw_mut_GpuMatND(), val) };
 			ret
 		}
 		
 		/// shape of this array
 		#[inline]
-		fn set_size(&mut self, mut val: core::GpuMatND_SizeArray) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_propSize_SizeArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfi32()) };
+		fn set_size(&mut self, val: core::GpuMatND_SizeArray) {
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propSize_const_SizeArray(self.as_raw_mut_GpuMatND(), val.as_raw_VectorOfi32()) };
 			ret
 		}
 		
 		/// ! step values
 		/// Their semantics is identical to the semantics of step for Mat.
 		#[inline]
-		fn set_step(&mut self, mut val: core::GpuMatND_StepArray) {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_propStep_StepArray(self.as_raw_mut_GpuMatND(), val.as_raw_mut_VectorOfsize_t()) };
+		fn set_step(&mut self, val: core::GpuMatND_StepArray) {
+			let ret = unsafe { sys::cv_cuda_GpuMatND_propStep_const_StepArray(self.as_raw_mut_GpuMatND(), val.as_raw_VectorOfsize_t()) };
 			ret
 		}
 		
@@ -30916,6 +31024,24 @@ pub mod core {
 		}
 		
 		#[inline]
+		fn data(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_cuda_HostMem_propData_const(self.as_raw_HostMem()) };
+			ret
+		}
+		
+		#[inline]
+		fn refcount(&self) -> *const i32 {
+			let ret = unsafe { sys::cv_cuda_HostMem_propRefcount_const(self.as_raw_HostMem()) };
+			ret
+		}
+		
+		#[inline]
+		fn datastart(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_cuda_HostMem_propDatastart_const(self.as_raw_HostMem()) };
+			ret
+		}
+		
+		#[inline]
 		fn dataend(&self) -> *const u8 {
 			let ret = unsafe { sys::cv_cuda_HostMem_propDataend_const(self.as_raw_HostMem()) };
 			ret
@@ -31087,67 +31213,67 @@ pub mod core {
 	
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propFlags_int(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propFlags_const_int(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_rows(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propRows_int(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propRows_const_int(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_cols(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propCols_int(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propCols_const_int(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_step(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propStep_size_t(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propStep_const_size_t(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn data(&mut self) -> *mut u8 {
+		fn data_mut(&mut self) -> *mut u8 {
 			let ret = unsafe { sys::cv_cuda_HostMem_propData(self.as_raw_mut_HostMem()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_data(&mut self, val: *mut u8) {
+		unsafe fn set_data(&mut self, val: *const u8) {
 			let ret = { sys::cv_cuda_HostMem_propData_unsigned_charX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn refcount(&mut self) -> *mut i32 {
+		fn refcount_mut(&mut self) -> *mut i32 {
 			let ret = unsafe { sys::cv_cuda_HostMem_propRefcount(self.as_raw_mut_HostMem()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_refcount(&mut self, val: *mut i32) {
+		unsafe fn set_refcount(&mut self, val: *const i32) {
 			let ret = { sys::cv_cuda_HostMem_propRefcount_intX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn datastart(&mut self) -> *mut u8 {
+		fn datastart_mut(&mut self) -> *mut u8 {
 			let ret = unsafe { sys::cv_cuda_HostMem_propDatastart(self.as_raw_mut_HostMem()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_datastart(&mut self, val: *mut u8) {
+		unsafe fn set_datastart(&mut self, val: *const u8) {
 			let ret = { sys::cv_cuda_HostMem_propDatastart_unsigned_charX(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_alloc_type(&mut self, val: core::HostMem_AllocType) {
-			let ret = unsafe { sys::cv_cuda_HostMem_propAlloc_type_AllocType(self.as_raw_mut_HostMem(), val) };
+			let ret = unsafe { sys::cv_cuda_HostMem_propAlloc_type_const_AllocType(self.as_raw_mut_HostMem(), val) };
 			ret
 		}
 		
@@ -31374,6 +31500,9 @@ pub mod core {
 				.field("rows", &core::HostMemTraitConst::rows(self))
 				.field("cols", &core::HostMemTraitConst::cols(self))
 				.field("step", &core::HostMemTraitConst::step(self))
+				.field("data", &core::HostMemTraitConst::data(self))
+				.field("refcount", &core::HostMemTraitConst::refcount(self))
+				.field("datastart", &core::HostMemTraitConst::datastart(self))
 				.field("dataend", &core::HostMemTraitConst::dataend(self))
 				.field("alloc_type", &core::HostMemTraitConst::alloc_type(self))
 				.finish()
@@ -31763,13 +31892,13 @@ pub mod core {
 	
 		#[inline]
 		fn set_line(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_detail_CheckContext_propLine_int(self.as_raw_mut_Detail_CheckContext(), val) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propLine_const_int(self.as_raw_mut_Detail_CheckContext(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_test_op(&mut self, val: core::Detail_TestOp) {
-			let ret = unsafe { sys::cv_detail_CheckContext_propTestOp_TestOp(self.as_raw_mut_Detail_CheckContext(), val) };
+			let ret = unsafe { sys::cv_detail_CheckContext_propTestOp_const_TestOp(self.as_raw_mut_Detail_CheckContext(), val) };
 			ret
 		}
 		
@@ -31931,26 +32060,26 @@ pub mod core {
 	
 		#[inline]
 		fn set_m_fun_name(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_instr_NodeData_propM_funName_String(self.as_raw_mut_NodeData(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_instr_NodeData_propM_funName_const_String(self.as_raw_mut_NodeData(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_instr_type(&mut self, val: core::TYPE) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_instrType_TYPE(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_instrType_const_TYPE(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_impl_type(&mut self, val: core::IMPL) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_implType_IMPL(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_implType_const_IMPL(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_line_num(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_lineNum_int(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_lineNum_const_int(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
@@ -31961,38 +32090,38 @@ pub mod core {
 		}
 		
 		#[inline]
-		unsafe fn set_m_ret_address(&mut self, val: *mut c_void) {
+		unsafe fn set_m_ret_address(&mut self, val: *const c_void) {
 			let ret = { sys::cv_instr_NodeData_propM_retAddress_voidX(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_always_expand(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_alwaysExpand_bool(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_alwaysExpand_const_bool(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_fun_error(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_funError_bool(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_funError_const_bool(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_counter(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_counter_int(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_counter_const_int(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_ticks_total(&mut self, val: u64) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_ticksTotal_uint64_t(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_ticksTotal_const_uint64_t(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_m_threads(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_instr_NodeData_propM_threads_int(self.as_raw_mut_NodeData(), val) };
+			let ret = unsafe { sys::cv_instr_NodeData_propM_threads_const_int(self.as_raw_mut_NodeData(), val) };
 			ret
 		}
 		
@@ -33954,7 +34083,7 @@ pub mod core {
 	
 		#[inline]
 		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_int(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_const_int(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 		
@@ -33966,26 +34095,26 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn set_m(&mut self, val: &mut core::UMat) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propM_UMatX(self.as_raw_mut_KernelArg(), val.as_raw_mut_UMat()) };
+		fn set_m(&mut self, val: &core::UMat) {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propM_UMatX(self.as_raw_mut_KernelArg(), val.as_raw_UMat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_sz(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_size_t(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_const_size_t(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_wscale(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_int(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_const_int(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_iwscale(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_int(self.as_raw_mut_KernelArg(), val) };
+			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_const_int(self.as_raw_mut_KernelArg(), val) };
 			ret
 		}
 		
@@ -37197,7 +37326,7 @@ pub mod core {
 		/// * val: -1
 		#[inline]
 		fn set_lambda(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_utils_FunctionParams_propLambda_int(self.as_raw_mut_FunctionParams(), val) };
+			let ret = unsafe { sys::cv_utils_FunctionParams_propLambda_const_int(self.as_raw_mut_FunctionParams(), val) };
 			ret
 		}
 		
@@ -37205,7 +37334,7 @@ pub mod core {
 		/// * val: 0.0f
 		#[inline]
 		fn set_sigma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_utils_FunctionParams_propSigma_float(self.as_raw_mut_FunctionParams(), val) };
+			let ret = unsafe { sys::cv_utils_FunctionParams_propSigma_const_float(self.as_raw_mut_FunctionParams(), val) };
 			ret
 		}
 		
@@ -37288,7 +37417,7 @@ pub mod core {
 	
 		#[inline]
 		fn set_level(&mut self, val: core::LogLevel) {
-			let ret = unsafe { sys::cv_utils_logging_LogTag_propLevel_LogLevel(self.as_raw_mut_LogTag(), val) };
+			let ret = unsafe { sys::cv_utils_logging_LogTag_propLevel_const_LogLevel(self.as_raw_mut_LogTag(), val) };
 			ret
 		}
 		

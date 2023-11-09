@@ -846,7 +846,7 @@ pub mod flann {
 		}
 		
 		#[inline]
-		unsafe fn set_params(&mut self, val: *mut c_void) {
+		unsafe fn set_params(&mut self, val: *const c_void) {
 			let ret = { sys::cv_flann_IndexParams_propParams_voidX(self.as_raw_mut_IndexParams(), val) };
 			ret
 		}

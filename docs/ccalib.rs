@@ -1220,25 +1220,25 @@ pub mod ccalib {
 	
 		#[inline]
 		fn set_camera_vertex(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propCameraVertex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propCameraVertex_const_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_photo_vertex(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoVertex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoVertex_const_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_photo_index(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoIndex_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoIndex_const_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_transform(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propTransform_Mat(self.as_raw_mut_MultiCameraCalibration_edge(), val.as_raw_mut_Mat()) };
+		fn set_transform(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propTransform_const_Mat(self.as_raw_mut_MultiCameraCalibration_edge(), val.as_raw_Mat()) };
 			ret
 		}
 		
@@ -1316,14 +1316,14 @@ pub mod ccalib {
 		fn as_raw_mut_MultiCameraCalibration_vertex(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_pose(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propPose_Mat(self.as_raw_mut_MultiCameraCalibration_vertex(), val.as_raw_mut_Mat()) };
+		fn set_pose(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propPose_const_Mat(self.as_raw_mut_MultiCameraCalibration_vertex(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_timestamp(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propTimestamp_int(self.as_raw_mut_MultiCameraCalibration_vertex(), val) };
+			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propTimestamp_const_int(self.as_raw_mut_MultiCameraCalibration_vertex(), val) };
 			ret
 		}
 		

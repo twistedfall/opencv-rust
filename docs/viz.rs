@@ -1320,26 +1320,26 @@ pub mod viz {
 	
 		#[inline]
 		fn set_action(&mut self, val: crate::viz::KeyboardEvent_Action) {
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_propAction_Action(self.as_raw_mut_KeyboardEvent(), val) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propAction_const_Action(self.as_raw_mut_KeyboardEvent(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_symbol(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_propSymbol_String(self.as_raw_mut_KeyboardEvent(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propSymbol_const_String(self.as_raw_mut_KeyboardEvent(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_code(&mut self, val: u8) {
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_propCode_unsigned_char(self.as_raw_mut_KeyboardEvent(), val) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propCode_const_unsigned_char(self.as_raw_mut_KeyboardEvent(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_modifiers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_viz_KeyboardEvent_propModifiers_int(self.as_raw_mut_KeyboardEvent(), val) };
+			let ret = unsafe { sys::cv_viz_KeyboardEvent_propModifiers_const_int(self.as_raw_mut_KeyboardEvent(), val) };
 			ret
 		}
 		
@@ -1461,42 +1461,42 @@ pub mod viz {
 	
 		/// point coordinates of type CV_32FC3 or CV_64FC3 with only 1 row
 		#[inline]
-		fn set_cloud(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_propCloud_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+		fn set_cloud(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_viz_Mesh_propCloud_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// point color of type CV_8UC3 or CV_8UC4 with only 1 row
 		#[inline]
-		fn set_colors(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_propColors_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+		fn set_colors(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_viz_Mesh_propColors_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// point normals of type CV_32FC3, CV_32FC4, CV_64FC3 or CV_64FC4 with only 1 row
 		#[inline]
-		fn set_normals(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_propNormals_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+		fn set_normals(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_viz_Mesh_propNormals_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// CV_32SC1 with only 1 row
 		#[inline]
-		fn set_polygons(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_propPolygons_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+		fn set_polygons(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_viz_Mesh_propPolygons_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_texture(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_propTexture_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+		fn set_texture(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_viz_Mesh_propTexture_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// CV_32FC2 or CV_64FC2 with only 1 row
 		#[inline]
-		fn set_tcoords(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_viz_Mesh_propTcoords_Mat(self.as_raw_mut_Mesh(), val.as_raw_mut_Mat()) };
+		fn set_tcoords(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_viz_Mesh_propTcoords_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
@@ -1649,25 +1649,25 @@ pub mod viz {
 	
 		#[inline]
 		fn set_type(&mut self, val: crate::viz::MouseEvent_Type) {
-			let ret = unsafe { sys::cv_viz_MouseEvent_propType_Type(self.as_raw_mut_MouseEvent(), val) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propType_const_Type(self.as_raw_mut_MouseEvent(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_button(&mut self, val: crate::viz::MouseEvent_MouseButton) {
-			let ret = unsafe { sys::cv_viz_MouseEvent_propButton_MouseButton(self.as_raw_mut_MouseEvent(), val) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propButton_const_MouseButton(self.as_raw_mut_MouseEvent(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pointer(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_viz_MouseEvent_propPointer_Point(self.as_raw_mut_MouseEvent(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propPointer_const_Point(self.as_raw_mut_MouseEvent(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_modifiers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_viz_MouseEvent_propModifiers_int(self.as_raw_mut_MouseEvent(), val) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propModifiers_const_int(self.as_raw_mut_MouseEvent(), val) };
 			ret
 		}
 		

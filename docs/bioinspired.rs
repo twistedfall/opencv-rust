@@ -982,13 +982,13 @@ pub mod bioinspired {
 	
 		#[inline]
 		fn set_op_land_ipl_parvo(&mut self, val: crate::bioinspired::RetinaParameters_OPLandIplParvoParameters) {
-			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propOPLandIplParvo_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propOPLandIplParvo_const_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ipl_magno(&mut self, val: crate::bioinspired::RetinaParameters_IplMagnoParameters) {
-			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propIplMagno_IplMagnoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propIplMagno_const_IplMagnoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
 			ret
 		}
 		

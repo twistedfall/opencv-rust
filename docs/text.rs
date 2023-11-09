@@ -1261,6 +1261,22 @@ pub mod text {
 			ret
 		}
 		
+		/// order 1 raw moments to derive the centroid
+		#[inline]
+		fn raw_moments(&self) -> &[f64; 2] {
+			let ret = unsafe { sys::cv_text_ERStat_propRaw_moments_const(self.as_raw_ERStat()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
+		/// order 2 central moments to construct the covariance matrix
+		#[inline]
+		fn central_moments(&self) -> &[f64; 3] {
+			let ret = unsafe { sys::cv_text_ERStat_propCentral_moments_const(self.as_raw_ERStat()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
 		/// median of the crossings at three different height levels
 		#[inline]
 		fn med_crossings(&self) -> f32 {
@@ -1310,45 +1326,45 @@ pub mod text {
 		/// seed point and the threshold (max grey-level value)
 		#[inline]
 		fn set_pixel(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propPixel_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propPixel_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_level(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propLevel_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propLevel_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// incrementally computable features
 		#[inline]
 		fn set_area(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propArea_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propArea_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_perimeter(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propPerimeter_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propPerimeter_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// Euler's number
 		#[inline]
 		fn set_euler(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propEuler_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propEuler_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_rect(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_text_ERStat_propRect_Rect(self.as_raw_mut_ERStat(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_text_ERStat_propRect_const_Rect(self.as_raw_mut_ERStat(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// order 1 raw moments to derive the centroid
 		#[inline]
-		fn raw_moments(&mut self) -> &mut [f64; 2] {
+		fn raw_moments_mut(&mut self) -> &mut [f64; 2] {
 			let ret = unsafe { sys::cv_text_ERStat_propRaw_moments(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -1356,7 +1372,7 @@ pub mod text {
 		
 		/// order 2 central moments to construct the covariance matrix
 		#[inline]
-		fn central_moments(&mut self) -> &mut [f64; 3] {
+		fn central_moments_mut(&mut self) -> &mut [f64; 3] {
 			let ret = unsafe { sys::cv_text_ERStat_propCentral_moments(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -1365,33 +1381,33 @@ pub mod text {
 		/// median of the crossings at three different height levels
 		#[inline]
 		fn set_med_crossings(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_propMed_crossings_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propMed_crossings_const_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// 2nd stage features
 		#[inline]
 		fn set_hole_area_ratio(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_propHole_area_ratio_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propHole_area_ratio_const_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_convex_hull_ratio(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_propConvex_hull_ratio_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propConvex_hull_ratio_const_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_inflexion_points(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_propNum_inflexion_points_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propNum_inflexion_points_const_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// probability that the ER belongs to the class we are looking for
 		#[inline]
 		fn set_probability(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_text_ERStat_propProbability_double(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propProbability_const_double(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
@@ -1405,8 +1421,8 @@ pub mod text {
 		
 		/// pointers preserving the tree structure of the component tree
 		#[inline]
-		fn set_parent(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propParent_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_parent(&mut self, val: &crate::text::ERStat) {
+			let ret = unsafe { sys::cv_text_ERStat_propParent_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1418,8 +1434,8 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_child(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propChild_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_child(&mut self, val: &crate::text::ERStat) {
+			let ret = unsafe { sys::cv_text_ERStat_propChild_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1431,8 +1447,8 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_next(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propNext_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_next(&mut self, val: &crate::text::ERStat) {
+			let ret = unsafe { sys::cv_text_ERStat_propNext_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1444,15 +1460,15 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_prev(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propPrev_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_prev(&mut self, val: &crate::text::ERStat) {
+			let ret = unsafe { sys::cv_text_ERStat_propPrev_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
 		/// whenever the regions is a local maxima of the probability
 		#[inline]
 		fn set_local_maxima(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_text_ERStat_propLocal_maxima_bool(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propLocal_maxima_const_bool(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
@@ -1464,8 +1480,8 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_max_probability_ancestor(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propMax_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_max_probability_ancestor(&mut self, val: &crate::text::ERStat) {
+			let ret = unsafe { sys::cv_text_ERStat_propMax_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1477,8 +1493,8 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_min_probability_ancestor(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propMin_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_min_probability_ancestor(&mut self, val: &crate::text::ERStat) {
+			let ret = unsafe { sys::cv_text_ERStat_propMin_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1560,6 +1576,8 @@ pub mod text {
 				.field("perimeter", &crate::text::ERStatTraitConst::perimeter(self))
 				.field("euler", &crate::text::ERStatTraitConst::euler(self))
 				.field("rect", &crate::text::ERStatTraitConst::rect(self))
+				.field("raw_moments", &crate::text::ERStatTraitConst::raw_moments(self))
+				.field("central_moments", &crate::text::ERStatTraitConst::central_moments(self))
 				.field("med_crossings", &crate::text::ERStatTraitConst::med_crossings(self))
 				.field("hole_area_ratio", &crate::text::ERStatTraitConst::hole_area_ratio(self))
 				.field("convex_hull_ratio", &crate::text::ERStatTraitConst::convex_hull_ratio(self))

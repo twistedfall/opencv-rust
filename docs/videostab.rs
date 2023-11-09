@@ -4145,28 +4145,28 @@ pub mod videostab {
 		/// subset size
 		#[inline]
 		fn set_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_propSize_int(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propSize_const_int(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
 		/// max error to classify as inlier
 		#[inline]
 		fn set_thresh(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_propThresh_float(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propThresh_const_float(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
 		/// max outliers ratio
 		#[inline]
 		fn set_eps(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_propEps_float(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propEps_const_float(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
 		/// probability of success
 		#[inline]
 		fn set_prob(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_propProb_float(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propProb_const_float(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		

@@ -738,27 +738,27 @@ pub mod line_descriptor {
 		/// the number of image octaves (default = 1)
 		#[inline]
 		fn set_num_of_octave_(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propNumOfOctave__int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propNumOfOctave__const_int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
 			ret
 		}
 		
 		/// the width of band; (default: 7)
 		#[inline]
 		fn set_width_of_band_(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propWidthOfBand__int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propWidthOfBand__const_int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
 			ret
 		}
 		
 		/// image's reduction ratio in construction of Gaussian pyramids
 		#[inline]
 		fn set_reduction_ratio(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propReductionRatio_int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propReductionRatio_const_int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ksize_(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propKsize__int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
+			let ret = unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_propKsize__const_int(self.as_raw_mut_BinaryDescriptor_Params(), val) };
 			ret
 		}
 		

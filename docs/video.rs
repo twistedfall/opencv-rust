@@ -2296,101 +2296,101 @@ pub mod video {
 	
 		/// predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
 		#[inline]
-		fn set_state_pre(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propStatePre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_state_pre(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propStatePre_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
 		#[inline]
-		fn set_state_post(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propStatePost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_state_post(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propStatePost_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// state transition matrix (A)
 		#[inline]
-		fn set_transition_matrix(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTransitionMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_transition_matrix(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTransitionMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// control matrix (B) (not used if there is no control)
 		#[inline]
-		fn set_control_matrix(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propControlMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_control_matrix(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propControlMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// measurement matrix (H)
 		#[inline]
-		fn set_measurement_matrix(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_measurement_matrix(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// process noise covariance matrix (Q)
 		#[inline]
-		fn set_process_noise_cov(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propProcessNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_process_noise_cov(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propProcessNoiseCov_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// measurement noise covariance matrix (R)
 		#[inline]
-		fn set_measurement_noise_cov(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_measurement_noise_cov(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementNoiseCov_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)
 		#[inline]
-		fn set_error_cov_pre(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_error_cov_pre(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPre_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
 		#[inline]
-		fn set_gain(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propGain_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_gain(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propGain_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// posteriori error estimate covariance matrix (P(k)): P(k)=(I-K(k)*H)*P'(k)
 		#[inline]
-		fn set_error_cov_post(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_error_cov_post(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPost_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp1(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp1_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp1(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp1_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp2(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp2_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp2(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp2_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp3(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp3_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp3(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp3_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp4(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp4_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp4(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp4_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp5(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp5_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp5(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp5_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
@@ -3137,34 +3137,34 @@ pub mod video {
 	
 		#[inline]
 		fn set_model(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propModel_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propModel_const_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kernel_cls1(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_cls1_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_cls1_const_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kernel_r1(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_r1_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_r1_const_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_backend(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propBackend_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propBackend_const_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_target(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propTarget_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propTarget_const_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
 			ret
 		}
 		
@@ -3355,15 +3355,15 @@ pub mod video {
 	
 		#[inline]
 		fn set_model_txt(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelTxt_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelTxt_const_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_model_bin(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelBin_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelBin_const_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -3695,27 +3695,27 @@ pub mod video {
 	
 		#[inline]
 		fn set_backbone(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerNano_Params_propBackbone_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerNano_Params_propBackbone_const_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_neckhead(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerNano_Params_propNeckhead_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerNano_Params_propNeckhead_const_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_backend(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerNano_Params_propBackend_int(self.as_raw_mut_TrackerNano_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerNano_Params_propBackend_const_int(self.as_raw_mut_TrackerNano_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_target(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerNano_Params_propTarget_int(self.as_raw_mut_TrackerNano_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerNano_Params_propTarget_const_int(self.as_raw_mut_TrackerNano_Params(), val) };
 			ret
 		}
 		

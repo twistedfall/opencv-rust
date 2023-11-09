@@ -10956,6 +10956,12 @@ pub mod imgproc {
 		fn as_raw_LineIterator(&self) -> *const c_void;
 	
 		#[inline]
+		fn ptr(&self) -> *const u8 {
+			let ret = unsafe { sys::cv_LineIterator_propPtr_const(self.as_raw_LineIterator()) };
+			ret
+		}
+		
+		#[inline]
 		fn ptr0(&self) -> *const u8 {
 			let ret = unsafe { sys::cv_LineIterator_propPtr0_const(self.as_raw_LineIterator()) };
 			ret
@@ -11052,86 +11058,86 @@ pub mod imgproc {
 		fn as_raw_mut_LineIterator(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn ptr(&mut self) -> *mut u8 {
+		fn ptr_mut(&mut self) -> *mut u8 {
 			let ret = unsafe { sys::cv_LineIterator_propPtr(self.as_raw_mut_LineIterator()) };
 			ret
 		}
 		
 		#[inline]
-		unsafe fn set_ptr(&mut self, val: *mut u8) {
+		unsafe fn set_ptr(&mut self, val: *const u8) {
 			let ret = { sys::cv_LineIterator_propPtr_unsigned_charX(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propStep_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propStep_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_elem_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propElemSize_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propElemSize_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_err(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propErr_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propErr_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_count(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propCount_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propCount_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_minus_delta(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propMinusDelta_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propMinusDelta_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_plus_delta(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propPlusDelta_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propPlusDelta_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_minus_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propMinusStep_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propMinusStep_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_plus_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propPlusStep_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propPlusStep_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_minus_shift(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propMinusShift_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propMinusShift_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_plus_shift(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_LineIterator_propPlusShift_int(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propPlusShift_const_int(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_p(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_LineIterator_propP_Point(self.as_raw_mut_LineIterator(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_LineIterator_propP_const_Point(self.as_raw_mut_LineIterator(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ptmode(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_LineIterator_propPtmode_bool(self.as_raw_mut_LineIterator(), val) };
+			let ret = unsafe { sys::cv_LineIterator_propPtmode_const_bool(self.as_raw_mut_LineIterator(), val) };
 			ret
 		}
 		
@@ -11367,6 +11373,7 @@ pub mod imgproc {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LineIterator")
+				.field("ptr", &crate::imgproc::LineIteratorTraitConst::ptr(self))
 				.field("ptr0", &crate::imgproc::LineIteratorTraitConst::ptr0(self))
 				.field("step", &crate::imgproc::LineIteratorTraitConst::step(self))
 				.field("elem_size", &crate::imgproc::LineIteratorTraitConst::elem_size(self))

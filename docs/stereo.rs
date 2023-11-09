@@ -221,7 +221,7 @@ pub mod stereo {
 	
 		#[inline]
 		fn set_param(&mut self, val: crate::stereo::PropagationParameters) {
-			let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_propParam_PropagationParameters(self.as_raw_mut_QuasiDenseStereo(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_propParam_const_PropagationParameters(self.as_raw_mut_QuasiDenseStereo(), val.opencv_as_extern()) };
 			ret
 		}
 		

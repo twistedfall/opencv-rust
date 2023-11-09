@@ -805,49 +805,49 @@ pub mod surface_matching {
 	
 		#[inline]
 		fn set_alpha(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAlpha_double(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAlpha_const_double(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_residual(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propResidual_double(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propResidual_const_double(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_model_index(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propModelIndex_size_t(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propModelIndex_const_size_t(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_votes(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propNumVotes_size_t(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propNumVotes_const_size_t(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pose(&mut self, val: core::Matx44d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propPose_Matx44d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propPose_const_Matx44d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_angle(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAngle_double(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAngle_const_double(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_t(&mut self, val: core::Vec3d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propT_Vec3d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propT_const_Vec3d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_q(&mut self, val: core::Vec4d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propQ_Vec4d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propQ_const_Vec4d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -1046,20 +1046,20 @@ pub mod surface_matching {
 		fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_pose_list(&mut self, mut val: core::Vector<crate::surface_matching::Pose3DPtr>) {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propPoseList_vectorLPose3DPtrG(self.as_raw_mut_PoseCluster3D(), val.as_raw_mut_VectorOfPose3DPtr()) };
+		fn set_pose_list(&mut self, val: core::Vector<crate::surface_matching::Pose3DPtr>) {
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propPoseList_const_vectorLPose3DPtrG(self.as_raw_mut_PoseCluster3D(), val.as_raw_VectorOfPose3DPtr()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_votes(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propNumVotes_size_t(self.as_raw_mut_PoseCluster3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propNumVotes_const_size_t(self.as_raw_mut_PoseCluster3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propId_int(self.as_raw_mut_PoseCluster3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propId_const_int(self.as_raw_mut_PoseCluster3D(), val) };
 			ret
 		}
 		

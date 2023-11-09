@@ -418,74 +418,74 @@ pub mod xfeatures2d {
 	
 		#[inline]
 		fn set_hessian_threshold(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propHessianThreshold_double(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propHessianThreshold_const_double(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_n_octaves(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaves_int(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaves_const_int(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_n_octave_layers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaveLayers_int(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaveLayers_const_int(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_extended(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propExtended_bool(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propExtended_const_bool(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_upright(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propUpright_bool(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propUpright_const_bool(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		/// max keypoints = min(keypointsRatio * img.size().area(), 65535)
 		#[inline]
 		fn set_keypoints_ratio(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propKeypointsRatio_float(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propKeypointsRatio_const_float(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_sum(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_sum(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propSum_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_mask1(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMask1_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_mask1(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMask1_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_mask_sum(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaskSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_mask_sum(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaskSum_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_det(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propDet_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_det(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propDet_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_trace(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propTrace_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_trace(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propTrace_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_max_pos_buffer(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaxPosBuffer_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_max_pos_buffer(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaxPosBuffer_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
@@ -1937,21 +1937,21 @@ pub mod xfeatures2d {
 		/// the lengths of the major and minor ellipse axes
 		#[inline]
 		fn set_axes(&mut self, val: core::Size_<f32>) {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propAxes_Size_LfloatG(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propAxes_const_Size_LfloatG(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// the integration scale at which the parameters were estimated
 		#[inline]
 		fn set_si(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propSi_float(self.as_raw_mut_Elliptic_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propSi_const_float(self.as_raw_mut_Elliptic_KeyPoint(), val) };
 			ret
 		}
 		
 		/// the transformation between image space and local patch space
 		#[inline]
 		fn set_transf(&mut self, val: core::Matx23f) {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propTransf_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propTransf_const_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
 			ret
 		}
 		

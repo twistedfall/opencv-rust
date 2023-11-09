@@ -1091,8 +1091,8 @@ pub mod objdetect {
 		}
 		
 		#[inline]
-		fn set_cc(&mut self, mut val: core::Ptr<crate::objdetect::BaseCascadeClassifier>) {
-			let ret = unsafe { sys::cv_CascadeClassifier_propCc_PtrLBaseCascadeClassifierG(self.as_raw_mut_CascadeClassifier(), val.as_raw_mut_PtrOfBaseCascadeClassifier()) };
+		fn set_cc(&mut self, val: core::Ptr<crate::objdetect::BaseCascadeClassifier>) {
+			let ret = unsafe { sys::cv_CascadeClassifier_propCc_const_PtrLBaseCascadeClassifierG(self.as_raw_mut_CascadeClassifier(), val.as_raw_PtrOfBaseCascadeClassifier()) };
 			ret
 		}
 		
@@ -1641,19 +1641,19 @@ pub mod objdetect {
 	
 		#[inline]
 		fn set_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propId_int(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propId_const_int(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_location(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propLocation_Rect(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propLocation_const_Rect(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_status(&mut self, val: crate::objdetect::DetectionBasedTracker_ObjectStatus) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propStatus_ObjectStatus(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propStatus_const_ObjectStatus(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
 			ret
 		}
 		
@@ -1864,13 +1864,13 @@ pub mod objdetect {
 	
 		#[inline]
 		fn set_max_track_lifetime(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMaxTrackLifetime_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMaxTrackLifetime_const_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_detection_period(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMinDetectionPeriod_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMinDetectionPeriod_const_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
 			ret
 		}
 		
@@ -1958,21 +1958,21 @@ pub mod objdetect {
 		/// scale(size) of the bounding box
 		#[inline]
 		fn set_scale(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_DetectionROI_propScale_double(self.as_raw_mut_DetectionROI(), val) };
+			let ret = unsafe { sys::cv_DetectionROI_propScale_const_double(self.as_raw_mut_DetectionROI(), val) };
 			ret
 		}
 		
 		/// set of requested locations to be evaluated
 		#[inline]
-		fn set_locations(&mut self, mut val: core::Vector<core::Point>) {
-			let ret = unsafe { sys::cv_DetectionROI_propLocations_vectorLPointG(self.as_raw_mut_DetectionROI(), val.as_raw_mut_VectorOfPoint()) };
+		fn set_locations(&mut self, val: core::Vector<core::Point>) {
+			let ret = unsafe { sys::cv_DetectionROI_propLocations_const_vectorLPointG(self.as_raw_mut_DetectionROI(), val.as_raw_VectorOfPoint()) };
 			ret
 		}
 		
 		/// vector that will contain confidence values for each location
 		#[inline]
-		fn set_confidences(&mut self, mut val: core::Vector<f64>) {
-			let ret = unsafe { sys::cv_DetectionROI_propConfidences_vectorLdoubleG(self.as_raw_mut_DetectionROI(), val.as_raw_mut_VectorOff64()) };
+		fn set_confidences(&mut self, val: core::Vector<f64>) {
+			let ret = unsafe { sys::cv_DetectionROI_propConfidences_const_vectorLdoubleG(self.as_raw_mut_DetectionROI(), val.as_raw_VectorOff64()) };
 			ret
 		}
 		
@@ -3371,105 +3371,105 @@ pub mod objdetect {
 		/// Detection window size. Align to block size and block stride. Default value is Size(64,128).
 		#[inline]
 		fn set_win_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propWinSize_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propWinSize_const_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Block size in pixels. Align to cell size. Default value is Size(16,16).
 		#[inline]
 		fn set_block_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propBlockSize_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propBlockSize_const_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Block stride. It must be a multiple of cell size. Default value is Size(8,8).
 		#[inline]
 		fn set_block_stride(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propBlockStride_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propBlockStride_const_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Cell size. Default value is Size(8,8).
 		#[inline]
 		fn set_cell_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propCellSize_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propCellSize_const_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Number of bins used in the calculation of histogram of gradients. Default value is 9.
 		#[inline]
 		fn set_nbins(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNbins_int(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propNbins_const_int(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// not documented
 		#[inline]
 		fn set_deriv_aperture(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propDerivAperture_int(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propDerivAperture_const_int(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// Gaussian smoothing window parameter.
 		#[inline]
 		fn set_win_sigma(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propWinSigma_double(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propWinSigma_const_double(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// histogramNormType
 		#[inline]
 		fn set_histogram_norm_type(&mut self, val: crate::objdetect::HOGDescriptor_HistogramNormType) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propHistogramNormType_HistogramNormType(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propHistogramNormType_const_HistogramNormType(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// L2-Hys normalization method shrinkage.
 		#[inline]
 		fn set_l2_hys_threshold(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propL2HysThreshold_double(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propL2HysThreshold_const_double(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// Flag to specify whether the gamma correction preprocessing is required or not.
 		#[inline]
 		fn set_gamma_correction(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propGammaCorrection_bool(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propGammaCorrection_const_bool(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// coefficients for the linear SVM classifier.
 		#[inline]
-		fn set_svm_detector_vec(&mut self, mut val: core::Vector<f32>) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSvmDetector_vectorLfloatG(self.as_raw_mut_HOGDescriptor(), val.as_raw_mut_VectorOff32()) };
+		fn set_svm_detector_vec(&mut self, val: core::Vector<f32>) {
+			let ret = unsafe { sys::cv_HOGDescriptor_propSvmDetector_const_vectorLfloatG(self.as_raw_mut_HOGDescriptor(), val.as_raw_VectorOff32()) };
 			ret
 		}
 		
 		/// coefficients for the linear SVM classifier used when OpenCL is enabled
 		#[inline]
-		fn set_ocl_svm_detector(&mut self, mut val: core::UMat) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propOclSvmDetector_UMat(self.as_raw_mut_HOGDescriptor(), val.as_raw_mut_UMat()) };
+		fn set_ocl_svm_detector(&mut self, val: core::UMat) {
+			let ret = unsafe { sys::cv_HOGDescriptor_propOclSvmDetector_const_UMat(self.as_raw_mut_HOGDescriptor(), val.as_raw_UMat()) };
 			ret
 		}
 		
 		/// not documented
 		#[inline]
 		fn set_free_coef(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propFree_coef_float(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propFree_coef_const_float(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// Maximum number of detection window increases. Default value is 64
 		#[inline]
 		fn set_nlevels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNlevels_int(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propNlevels_const_int(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// Indicates signed gradient will be used or not
 		#[inline]
 		fn set_signed_gradient(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSignedGradient_bool(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propSignedGradient_const_bool(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
@@ -4287,7 +4287,7 @@ pub mod objdetect {
 	
 		#[inline]
 		fn set_eps(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_SimilarRects_propEps_double(self.as_raw_mut_SimilarRects(), val) };
+			let ret = unsafe { sys::cv_SimilarRects_propEps_const_double(self.as_raw_mut_SimilarRects(), val) };
 			ret
 		}
 		
@@ -5516,29 +5516,29 @@ pub mod objdetect {
 	
 		/// cameraMatrix optional 3x3 floating-point camera matrix
 		#[inline]
-		fn set_camera_matrix(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCameraMatrix_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_mut_Mat()) };
+		fn set_camera_matrix(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCameraMatrix_const_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// distCoeffs optional vector of distortion coefficients
 		#[inline]
-		fn set_dist_coeffs(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propDistCoeffs_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_mut_Mat()) };
+		fn set_dist_coeffs(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propDistCoeffs_const_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// minMarkers number of adjacent markers that must be detected to return a charuco corner, default = 2
 		#[inline]
 		fn set_min_markers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propMinMarkers_int(self.as_raw_mut_CharucoParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propMinMarkers_const_int(self.as_raw_mut_CharucoParameters(), val) };
 			ret
 		}
 		
 		/// try to use refine board, default false
 		#[inline]
 		fn set_try_refine_markers(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propTryRefineMarkers_bool(self.as_raw_mut_CharucoParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propTryRefineMarkers_const_bool(self.as_raw_mut_CharucoParameters(), val) };
 			ret
 		}
 		
@@ -5861,28 +5861,28 @@ pub mod objdetect {
 		/// minimum window size for adaptive thresholding before finding contours (default 3).
 		#[inline]
 		fn set_adaptive_thresh_win_size_min(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMin_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMin_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// maximum window size for adaptive thresholding before finding contours (default 23).
 		#[inline]
 		fn set_adaptive_thresh_win_size_max(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMax_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMax_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// increments from adaptiveThreshWinSizeMin to adaptiveThreshWinSizeMax during the thresholding (default 10).
 		#[inline]
 		fn set_adaptive_thresh_win_size_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeStep_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeStep_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// constant for adaptive thresholding before finding contours (default 7)
 		#[inline]
 		fn set_adaptive_thresh_constant(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshConstant_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshConstant_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5891,7 +5891,7 @@ pub mod objdetect {
 		/// This is defined as a rate respect to the maximum dimension of the input image (default 0.03).
 		#[inline]
 		fn set_min_marker_perimeter_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerPerimeterRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5900,28 +5900,28 @@ pub mod objdetect {
 		/// This is defined as a rate respect to the maximum dimension of the input image (default 4.0).
 		#[inline]
 		fn set_max_marker_perimeter_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxMarkerPerimeterRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum accuracy during the polygonal approximation process to determine which contours are squares. (default 0.03)
 		#[inline]
 		fn set_polygonal_approx_accuracy_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPolygonalApproxAccuracyRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPolygonalApproxAccuracyRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum distance between corners for detected markers relative to its perimeter (default 0.05)
 		#[inline]
 		fn set_min_corner_distance_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinCornerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinCornerDistanceRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum distance of any corner to the image border for detected markers (in pixels) (default 3)
 		#[inline]
 		fn set_min_distance_to_border(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinDistanceToBorder_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinDistanceToBorder_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5930,49 +5930,49 @@ pub mod objdetect {
 		/// The rate is relative to the smaller perimeter of the two markers (default 0.05).
 		#[inline]
 		fn set_min_marker_distance_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerDistanceRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// default value CORNER_REFINE_NONE
 		#[inline]
 		fn set_corner_refinement_method(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMethod_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMethod_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// window size for the corner refinement process (in pixels) (default 5).
 		#[inline]
 		fn set_corner_refinement_win_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementWinSize_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementWinSize_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// maximum number of iterations for stop criteria of the corner refinement process (default 30).
 		#[inline]
 		fn set_corner_refinement_max_iterations(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMaxIterations_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMaxIterations_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum error for the stop cristeria of the corner refinement process (default: 0.1)
 		#[inline]
 		fn set_corner_refinement_min_accuracy(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMinAccuracy_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMinAccuracy_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// number of bits of the marker border, i.e. marker border width (default 1).
 		#[inline]
 		fn set_marker_border_bits(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMarkerBorderBits_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMarkerBorderBits_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// number of bits (per dimension) for each cell of the marker when removing the perspective (default 4).
 		#[inline]
 		fn set_perspective_remove_pixel_per_cell(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemovePixelPerCell_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemovePixelPerCell_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5981,7 +5981,7 @@ pub mod objdetect {
 		/// Represents the rate respect to the total size of the cell, i.e. perspectiveRemovePixelPerCell (default 0.13)
 		#[inline]
 		fn set_perspective_remove_ignored_margin_per_cell(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemoveIgnoredMarginPerCell_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemoveIgnoredMarginPerCell_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5990,7 +5990,7 @@ pub mod objdetect {
 		/// Represented as a rate respect to the total number of bits per marker (default 0.35).
 		#[inline]
 		fn set_max_erroneous_bits_in_border_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxErroneousBitsInBorderRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxErroneousBitsInBorderRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5998,14 +5998,14 @@ pub mod objdetect {
 		/// thresholding (otherwise, all the bits are set to 0 or 1 depending on mean higher than 128 or not) (default 5.0)
 		#[inline]
 		fn set_min_otsu_std_dev(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinOtsuStdDev_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinOtsuStdDev_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// error correction rate respect to the maximun error correction capability for each dictionary (default 0.6).
 		#[inline]
 		fn set_error_correction_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propErrorCorrectionRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propErrorCorrectionRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6015,28 +6015,28 @@ pub mod objdetect {
 		/// pose accuracy and a slight decrease in detection rate. Decoding the binary payload is still
 		#[inline]
 		fn set_april_tag_quad_decimate(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadDecimate_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadDecimate_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// what Gaussian blur should be applied to the segmented image (used for quad detection?)
 		#[inline]
 		fn set_april_tag_quad_sigma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadSigma_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadSigma_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// reject quads containing too few pixels (default 5).
 		#[inline]
 		fn set_april_tag_min_cluster_pixels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinClusterPixels_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinClusterPixels_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// how many corner candidates to consider when segmenting a group of pixels into a quad (default 10).
 		#[inline]
 		fn set_april_tag_max_nmaxima(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxNmaxima_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxNmaxima_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6045,14 +6045,14 @@ pub mod objdetect {
 		/// Zero means that no quads are rejected. (In radians) (default 10*PI/180)
 		#[inline]
 		fn set_april_tag_critical_rad(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagCriticalRad_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagCriticalRad_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// when fitting lines to the contours, what is the maximum mean squared error
 		#[inline]
 		fn set_april_tag_max_line_fit_mse(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxLineFitMse_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxLineFitMse_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6062,14 +6062,14 @@ pub mod objdetect {
 		/// brighter than the black model. How much brighter? (in pixel values, [0,255]), (default 5)
 		#[inline]
 		fn set_april_tag_min_white_black_diff(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinWhiteBlackDiff_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinWhiteBlackDiff_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// should the thresholded image be deglitched? Only useful for very noisy images (default 0).
 		#[inline]
 		fn set_april_tag_deglitch(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagDeglitch_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagDeglitch_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6078,7 +6078,7 @@ pub mod objdetect {
 		/// In order to generate a "white" marker just invert a normal marker by using a tilde, ~markerImage. (default false)
 		#[inline]
 		fn set_detect_inverted_marker(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propDetectInvertedMarker_bool(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propDetectInvertedMarker_const_bool(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6089,21 +6089,21 @@ pub mod objdetect {
 		/// <https://www.researchgate.net/publication/325787310_Speeded_Up_Detection_of_Squared_Fiducial_Markers>
 		#[inline]
 		fn set_use_aruco3_detection(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propUseAruco3Detection_bool(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propUseAruco3Detection_const_bool(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum side length of a marker in the canonical image. Latter is the binarized image in which contours are searched.
 		#[inline]
 		fn set_min_side_length_canonical_img(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinSideLengthCanonicalImg_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinSideLengthCanonicalImg_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// range [0,1], eq (2) from paper. The parameter tau_i has a direct influence on the processing speed.
 		#[inline]
 		fn set_min_marker_length_ratio_original_img(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerLengthRatioOriginalImg_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerLengthRatioOriginalImg_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6335,20 +6335,20 @@ pub mod objdetect {
 		fn as_raw_mut_Dictionary(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_bytes_list(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_aruco_Dictionary_propBytesList_Mat(self.as_raw_mut_Dictionary(), val.as_raw_mut_Mat()) };
+		fn set_bytes_list(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_aruco_Dictionary_propBytesList_const_Mat(self.as_raw_mut_Dictionary(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_marker_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_Dictionary_propMarkerSize_int(self.as_raw_mut_Dictionary(), val) };
+			let ret = unsafe { sys::cv_aruco_Dictionary_propMarkerSize_const_int(self.as_raw_mut_Dictionary(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_max_correction_bits(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_Dictionary_propMaxCorrectionBits_int(self.as_raw_mut_Dictionary(), val) };
+			let ret = unsafe { sys::cv_aruco_Dictionary_propMaxCorrectionBits_const_int(self.as_raw_mut_Dictionary(), val) };
 			ret
 		}
 		

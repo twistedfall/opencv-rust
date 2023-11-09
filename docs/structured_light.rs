@@ -255,13 +255,13 @@ pub mod structured_light {
 	
 		#[inline]
 		fn set_width(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propWidth_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propWidth_const_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_height(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propHeight_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propHeight_const_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
 			ret
 		}
 		
@@ -608,55 +608,55 @@ pub mod structured_light {
 	
 		#[inline]
 		fn set_width(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propWidth_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propWidth_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_height(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHeight_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHeight_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_nbr_of_periods(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPeriods_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPeriods_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_shift_value(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propShiftValue_float(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propShiftValue_const_float(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_method_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMethodId_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMethodId_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_nbr_of_pixels_between_markers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPixelsBetweenMarkers_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPixelsBetweenMarkers_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_horizontal(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHorizontal_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHorizontal_const_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_set_markers(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propSetMarkers_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propSetMarkers_const_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_markers_location(&mut self, mut val: core::Vector<core::Point2f>) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMarkersLocation_vectorLPoint2fG(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_mut_VectorOfPoint2f()) };
+		fn set_markers_location(&mut self, val: core::Vector<core::Point2f>) {
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMarkersLocation_const_vectorLPoint2fG(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_VectorOfPoint2f()) };
 			ret
 		}
 		

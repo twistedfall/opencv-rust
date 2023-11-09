@@ -1845,7 +1845,7 @@ pub mod ml {
 		/// function value in case of regression.
 		#[inline]
 		fn set_value(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propValue_double(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propValue_const_double(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
@@ -1853,28 +1853,28 @@ pub mod ml {
 		/// node. It is used internally in classification trees and tree ensembles.
 		#[inline]
 		fn set_class_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propClassIdx_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propClassIdx_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of the parent node
 		#[inline]
 		fn set_parent(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propParent_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propParent_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of the left child node
 		#[inline]
 		fn set_left(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propLeft_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propLeft_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of right child node
 		#[inline]
 		fn set_right(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propRight_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propRight_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
@@ -1882,14 +1882,14 @@ pub mod ml {
 		/// case of missing values.
 		#[inline]
 		fn set_default_dir(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propDefaultDir_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propDefaultDir_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of the first split
 		#[inline]
 		fn set_split(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propSplit_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propSplit_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
@@ -2017,7 +2017,7 @@ pub mod ml {
 		/// Index of variable on which the split is created.
 		#[inline]
 		fn set_var_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propVarIdx_int(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propVarIdx_const_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -2025,21 +2025,21 @@ pub mod ml {
 		/// branches are exchanged in the rule expressions below).
 		#[inline]
 		fn set_inversed(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propInversed_bool(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propInversed_const_bool(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
 		/// The split quality, a positive number. It is used to choose the best split.
 		#[inline]
 		fn set_quality(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propQuality_float(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propQuality_const_float(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
 		/// Index of the next split in the list of splits for the node
 		#[inline]
 		fn set_next(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propNext_int(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propNext_const_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -2053,7 +2053,7 @@ pub mod ml {
 		/// 
 		#[inline]
 		fn set_c(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propC_float(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propC_const_float(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -2067,7 +2067,7 @@ pub mod ml {
 		/// 
 		#[inline]
 		fn set_subset_ofs(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propSubsetOfs_int(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propSubsetOfs_const_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -3536,14 +3536,14 @@ pub mod ml {
 		/// Minimum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn set_min_val(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_ParamGrid_propMinVal_double(self.as_raw_mut_ParamGrid(), val) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propMinVal_const_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
 		
 		/// Maximum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn set_max_val(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_ParamGrid_propMaxVal_double(self.as_raw_mut_ParamGrid(), val) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propMaxVal_const_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
 		
@@ -3556,7 +3556,7 @@ pub mod ml {
 		/// The grid is logarithmic, so logStep must always be greater than 1. Default value is 1.
 		#[inline]
 		fn set_log_step(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_ParamGrid_propLogStep_double(self.as_raw_mut_ParamGrid(), val) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propLogStep_const_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
 		

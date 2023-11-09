@@ -4833,7 +4833,7 @@ pub mod ximgproc {
 	
 		#[inline]
 		fn set_params(&mut self, val: crate::ximgproc::EdgeDrawing_Params) {
-			let ret = unsafe { sys::cv_ximgproc_EdgeDrawing_propParams_Params(self.as_raw_mut_EdgeDrawing(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ximgproc_EdgeDrawing_propParams_const_Params(self.as_raw_mut_EdgeDrawing(), val.opencv_as_extern()) };
 			ret
 		}
 		
