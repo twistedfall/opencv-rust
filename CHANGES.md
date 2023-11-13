@@ -1,3 +1,190 @@
+* 0.86.1
+  * Provide a clearer message for the case when `libclang` can't be loaded.
+
+* 0.86.0
+  * Add support for `operator =` via `set` method.
+  * Improve documentation generation.
+  * Fix several automatically functions.
+
+* 0.85.3
+  * Fix https://github.com/twistedfall/opencv-rust/issues/506, https://github.com/twistedfall/opencv-rust/issues/505 and
+    https://github.com/twistedfall/opencv-rust/issues/479
+
+* 0.85.2
+  * Fix binding generation using clang-6 (fixes https://github.com/twistedfall/opencv-rust/issues/496).
+  * Add more `From` implementations for `Scalar` to improve API usability.
+
+* 0.85.1
+  * Add workaround when building with rustc version before 1.66.
+
+* 0.85.0
+  * Generate companion functions `*_def()` that allow skipping the default arguments to improve API usability.
+  * Remove bindings to `SparseMatIterator--` and change `OutputArray::from_gpu_mat_vec()` to take mutable argument (instead of
+    `OutputArray::from_gpu_mat_vec_mut()` which is now removed). Those functions were often missing in the OpenCV shared libraries
+    causing linking errors.
+  * Update automatic case conversion algorithm to increase performance and improve correctness. Some function names are now slightly
+    different. Especially those containing `2d` and `3d`.
+  * Improve documentation generation.
+ 
+* 0.84.5
+  * Improve parallel build performance (more noticeable on lower thread count).
+  * Take `VCPKGRS_TRIPLET` environment var into account for crate rebuild.
+  * Add a way to select MSVC CRT library with `OPENCV_MSVC_CRT` environment variable.
+  * Make sure to always generate bindings for `Ptr<float>` (fixes https://github.com/twistedfall/opencv-rust/issues/487).
+
+* 0.84.4
+  * Workaround for a build hang due to `cc` dependency
+
+* 0.84.3
+  * Update docs
+
+* 0.84.2
+  * Fix build targeting Android even more (definitely fixes https://github.com/twistedfall/opencv-rust/issues/477).
+  * Fix double-free crash and linker errors when using CUDA (fixes https://github.com/twistedfall/opencv-rust/issues/478 and
+    https://github.com/twistedfall/opencv-rust/issues/470).
+  * Add `CommandLineParser::get()` function.
+  * Improve examples.
+
+* 0.84.1
+  * Fix build targeting Android (fixes https://github.com/twistedfall/opencv-rust/issues/477).
+
+* 0.84.0
+  * Detect more cases where a Rust `char` can be used.
+  * Remove deprecated `DataType::depth()`, `DataType::channels()` and `DataType::typ()` functions.
+  * Speed up binding generation by reducing number of passes (3 → 2) and removing the usage of `ocvrs_ephemeral.hpp`.
+  * Generate more casts (to base and to decendants) for `Ptr`s and classes.
+
+* 0.83.0
+  * Add support for OpenCV 4.8.
+  * Tune naming for classes in `rapid` and CUDA modules.
+  * Add a `Debug` implementation for all classes and smart pointers.
+
+* 0.82.1
+  * Fix generation issue with specific module setup involving `dnn` module.
+
+* 0.82.0
+  * Change the handling of abstract C++ classes, they are no longer exposed as `dyn Class` but a struct is generated for
+    them making them easier to use from Rust. One notable change is calling static methods on those classes no longer
+    requires UCS. So `<dyn ORB>::default()` becomes just `ORB::default()`. You might also need to adjust your imports
+    because while traits are imported as part of the prelude, the structs need to be imported explicitly.
+  * Functions that take `Input/OutputArray` now take them by `&impl` instead of `&dyn` making those calls faster because
+    they don't use dynamic dispatch anymore.
+
+* 0.81.5
+  * Bring back the `clang-runtime` feature to improve cooperation with other crates.
+
+* 0.81.4
+  * Change the way the binding generator is run decreasing the complexity and improving the compatibility with vendored builds.
+
+* 0.81.3
+  * Don't require `runtime` feature of `clang`.
+
+* 0.81.2
+  * Fix building when crosscompiling with target-specific RUSTFLAGS.
+
+* 0.81.1
+  * Fix building on macOS (fixes https://github.com/twistedfall/opencv-rust/issues/460).
+
+* 0.81.0
+  * Fix compilation when using clang-6.
+  * Add hough_lines example.
+  * Add `Scalar::is_real()`.
+  * Apply proper naming to some methods from RNG.
+
+* 0.80.0
+  * Generate default constructors for some classes that were missing any form of construction.
+
+* 0.79.0
+  * `DataType` can now be implemented by downstream types that will allow storage of some custom types inside `Mat`.
+    Previously this trait was sealed, now it's an unsafe trait because types must guarantee the memory layout.0
+  * Calling `.iter()` on an empty `Mat` no longer returns an error, but an empty iterator.
+  * Some functions like `Point_::new()` or `Size_::new()` are now `const`.
+  * Minor documentation updates.
+
+* 0.78.2
+  * Fix compilation with clang 16
+
+* 0.78.1
+  * Automatically implement `Clone` for those classes that are constructor-copiable in C++, e.g. `KeyPoint`.
+  * Fixes for crosscompiling (kudos to icedrocket).
+
+* 0.78.0
+  * Don't strip "lib" prefix from linked libraries when building with MSVC (kudos to icedrocket)
+  * Fix newline handling on Windows (kudos to grindvoll)
+  * Fix for the build failure against the upcoming OpenCV version.
+
+* 0.77.0
+  * Rename `typ()`, `channels()`, `depth()` to `opencv_type()`, `opencv_channels()`, `opencv_depth()`. The old functions are
+    scheduled for removal mid-2023.
+  * Generate `DrawLinesMatchesFlags` enum correctly.
+  * Make sure to generate `Vector<Point2d>` for `calib3d` module (fixes https://github.com/twistedfall/opencv-rust/issues/422).
+
+* 0.76.4
+  * Fix autocomplete and documentation for rust-analyzer based IDEs.
+
+* 0.76.3
+  * Introduce `Mat::from_slice_rows_cols()` function to simplify creation of 2d matrices from byte buffers.
+  * Improve documentation.
+
+* 0.76.2
+  * Fix incorrect display of macros in documentation, some internal macros were showing up, but some usable were not.
+
+* 0.76.1
+  * Fix build failure.
+
+* 0.76.0
+  * Change the way the generated bindings are stored. They are no longer generated under `src/`, but stored in the output directory
+    and included dynamically. Previously it didn't work very well with IDEs which resulted in missing autocomplete and documentation.
+    This looks to be no longer the case at least in `rust-analyzer` and `intellij-rust`.
+  * Bump crate edition to 2021 (from 2018) and require at least Rust 1.59.0 (the MSRV check is now included in CI).
+  * Start phasing out OpenCV 3.2 support. This does not mean immediate breakage, but it's no longer going to be tested and problems
+    in generation for that outdated and unsupported version will no longer be addressed.
+
+* 0.75.0
+  * Add support for OpenCV 4.7.0.
+  * Add support for C++ function call operator: `operator ()`.
+
+* 0.74.2
+  * Adjust dependencies to ensure that `jobserver` is the appropriate version (fixes https://github.com/twistedfall/opencv-rust/issues/400).
+
+* 0.74.1
+  * Fix building when `-j1` cargo option is specified (fixes https://github.com/twistedfall/opencv-rust/issues/380).
+
+* 0.74.0
+  * Add support aruco_detector module present in the future opencv_contrib.
+
+* 0.73.0
+  * Add basic support for the Graph-API (gapi) module.
+  * Generate bindings for `std::tuple` and `std::pair`.
+  * Add support for the following operators: `!=`, `>`, `>=`, `<`, `<=`, `&`, `|`, `^`, `~`.
+  * Correctly handle rvalue reference (`&&`) as move operation.
+  * Due to multiple internal improvements some functions have slightly changed names.
+
+* 0.72.0/0.72.1
+  * Make `lower_bound` argument of `imgproc::emd()` optional.
+  * Fix semantics of `VectorIterator::nth` to follow the documentation for `Iterator`.
+  * Fix Android build failure ([#392](https://github.com/twistedfall/opencv-rust/issues/392))
+  * Fix constant crate recompilation ([#390](https://github.com/twistedfall/opencv-rust/issues/390))
+
+* 0.71.0
+  * Multiple improvements to the `Vector` type:
+    * `VectorRefIterator` is now cloneable.
+    * Better performance and correctness for `Vector` iterators.
+    * Implement `Vector::from_elem()`.
+    * Make sure that `Vector<T: Send + Sync>` is also `Send + Sync`.
+  * Fix building on platforms where `c_char` ≠ `u8`.
+
+* 0.70.0
+  * Internal improvements and reorganization
+
+* 0.69.0
+  * Fix building with clang-15.
+  * Rename `distort_points` to `fisheye_distort_points` for consistency.
+
+* 0.68.0
+  * Make sure that `howToGetFeatures` argument of the `createStructuredEdgeDetection()` is nullable.
+  * Add `OutputArray` and `InputOutputArray` implementations for `Mat_`.
+
 * 0.67.0
   * Change `fourcc` method to accept `char`s instead of `i8`s.
   * Remove `gapi` feature as this module is not supported at the moment.
@@ -19,7 +206,7 @@
   * Disable generation of `merge_slice` function because it's not usable from Rust.
 
 * 0.63.2
-  * Introduce macros that allow external crates to conditionally include code based on the OpenCV branch (3.2, 3.4 or 4). 
+  * Introduce macros that allow external crates to conditionally include code based on the OpenCV branch (3.2, 3.4 or 4).
 
 * 0.63.1
   * Provide `From` implementations from tuples and similar C++ conversions for `Point`, `Size`, `Rect` and `Point3`.
@@ -52,10 +239,10 @@
     element.
 
 * 0.60.0
-  * The features for OpenCV module selections now have inter-dependencies so that you can't exclude a module that's needed for 
+  * The features for OpenCV module selections now have inter-dependencies so that you can't exclude a module that's needed for
     some other one.
   * Infallible functions returning references should be faster now due to the streamlined error handling.
-  * More simple functions are marked as infallible (e.g. `Mat::total()`, `Mat::depth()`). 
+  * More simple functions are marked as infallible (e.g. `Mat::total()`, `Mat::depth()`).
   * Functions that returned references to some internal data (e.g. `Mat::ptr()`, `Mat::data_mut()`) now return raw pointers, it
     makes more sense and allows checking for null pointer outside of call. The corresponding property setters also accept pointers.
   * Functions that accept raw pointers are now marked as unsafe.
@@ -118,7 +305,7 @@
     * Support for `OPENCV_CLANG_STDLIB_PATH` environment variable is removed. If you were using it, then you
       can add that directory as part of `OPENCV_INCLUDE_PATHS`. E.g.:
       ```
-      OPENCV_INCLUDE_PATHS="<path_to_clang_stdlib_path>,+" 
+      OPENCV_INCLUDE_PATHS="<path_to_clang_stdlib_path>,+"
       ```
     * Support for `OPENCV_HEADER_DIR` is also removed. It was meant to be development-only environment variable,
       and it's no longer needed in the development process.
@@ -178,7 +365,7 @@
 
 * 0.45.1
   * Internal improvements in const handling
-  * Fix warnings in beta 
+  * Fix warnings in beta
   * Misc CI improvements
 
 * 0.45.0
@@ -271,7 +458,7 @@
     accessor methods, APIs involving this class have also been updated.
   * C++ operators * (multiplication, dereferencing), / (division), + (addition) and - (subtraction) are now
     also exposed to Rust under function names `mul_*`/`try_deref`, `div_*`, `add_*` and `sub_*`.
-  
+
 
 * 0.35.0
   * Add beta-level support for doing OpenCV library discovery using cmake, which is now a recommended method
@@ -378,7 +565,7 @@
 
   * with `buildtime-bidngen` feature enabled the crate no longer uses bundled source files for code
     generation by default, but the ones installed with OpenCV library detected by `pkg_config`, `vcpkg` or
-    environment; set `OPENCV_HEADER_DIR` environment variable to override this behavior  
+    environment; set `OPENCV_HEADER_DIR` environment variable to override this behavior
 
 * 0.26.6
   * ...

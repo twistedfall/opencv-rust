@@ -2,18 +2,22 @@
 name = "opencv-binding-generator"
 description = "Binding generator for opencv crate"
 repository = "https://github.com/twistedfall/opencv-rust"
-version = "0.46.0"
+version = "0.77.0"
 license = "MIT"
 authors = ["Pro <twisted.fall@gmail.com>"]
-edition = "2018"
+edition = "2021"
+rust-version = "1.59"
+exclude = ["release.toml"]
 
 [lib]
 
 [dependencies]
-clang = {version = "2", features = ["clang_6_0"]}
-clang-sys = {version = "1.0", features = ["clang_6_0"]}
+clang = { version = "2", features = ["clang_6_0"] }
+clang-sys = { version = "1", features = ["clang_6_0"] }
 dunce = "1"
-maplit = "1"
 once_cell = "1"
 percent-encoding = "2"
 regex = "1"
+
+[features]
+clang-runtime = ["clang/runtime", "clang-sys/runtime"]

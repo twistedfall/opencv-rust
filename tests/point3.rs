@@ -6,13 +6,12 @@ fn point3_add() {
 
 	let res = Point3i::new(11, 22, 33);
 	{
-		let src = src.clone();
 		let out = src + Point3i::new(10, 20, 30);
 		assert_eq!(out, res);
 	}
 
 	{
-		let mut out = src.clone();
+		let mut out = src;
 		out += Point3i::new(10, 20, 30);
 		assert_eq!(out, res);
 	}
@@ -24,13 +23,12 @@ fn point3_sub() {
 
 	let res = Point3i::new(9, 18, 27);
 	{
-		let src = src.clone();
 		let out = src - Point3i::new(1, 2, 3);
 		assert_eq!(out, res);
 	}
 
 	{
-		let mut out = src.clone();
+		let mut out = src;
 		out -= Point3i::new(1, 2, 3);
 		assert_eq!(out, res);
 	}
@@ -42,13 +40,12 @@ fn point3_mul() {
 
 	let res = Point3f::new(20., 40., 60.);
 	{
-		let src = src.clone();
 		let out = src * 2.;
 		assert_eq!(out, res);
 	}
 
 	{
-		let mut out = src.clone();
+		let mut out = src;
 		out *= 2.;
 		assert_eq!(out, res);
 	}
@@ -60,13 +57,12 @@ fn point3_div() {
 
 	let res = Point3i::new(5, 10, 15);
 	{
-		let src = src.clone();
 		let out = src / 2;
 		assert_eq!(out, res);
 	}
 
 	{
-		let mut out = src.clone();
+		let mut out = src;
 		out /= 2;
 		assert_eq!(out, res);
 	}

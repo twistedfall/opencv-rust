@@ -1,14 +1,12 @@
 #!/bin/bash
 
-set -e
+set -eu
 
 branch="${1:-4}"
 
 script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 
 . "$script_dir/env-$branch.sh"
-
-export RUSTFLAGS="-Clink-arg=-fuse-ld=lld"
 
 cd "$BINDINGS_OUT_DIR"
 
@@ -17,10 +15,12 @@ rm -rf "$bindings_dir"
 mkdir -p "$bindings_dir"
 
 temp_proj="opencv-temp-$branch"
+rm -rf "$temp_proj"
 git clone --depth=1 "file://$script_dir/.." "$temp_proj"
 rm -rf "$temp_proj/.git"
 pushd "$temp_proj"
 
+export OCVRS_DOCS_GENERATE_DIR=docs
 cargo -vv build
 
 bindings_cpp_dir="$bindings_dir/cpp"
@@ -29,8 +29,7 @@ mv -v target/debug/build/opencv-*/out/*.{cpp,hpp} -t "$bindings_cpp_dir"
 
 bindings_rust_dir="$bindings_dir/rust"
 mkdir -p "$bindings_rust_dir"
-mv -v src/opencv/hub -t "$bindings_rust_dir"
-mv -v src/opencv/hub.rs -t "$bindings_rust_dir"
+mv -v docs/*.rs -t "$bindings_rust_dir"
 
 popd
 

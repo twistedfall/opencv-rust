@@ -1,18 +1,16 @@
-use std::{
-	convert::TryFrom,
-	ffi::c_void,
-	fmt,
-	marker::PhantomData,
-};
+use std::convert::TryFrom;
+use std::ffi::c_void;
+use std::fmt;
+use std::marker::PhantomData;
 
-use crate::{
-	core::{_InputArray, Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray},
-	Error,
-	Result,
-	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
+use crate::core::{
+	Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray, ToInputOutputArray, ToOutputArray,
+	_InputArray, _InputOutputArray, _OutputArray,
 };
+use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove};
+use crate::{Error, Result};
 
-use super::{DataType, match_dims, match_format, match_is_continuous, match_total};
+use super::{match_dims, match_format, match_is_continuous, match_total, DataType};
 
 /// [docs.opencv.org](https://docs.opencv.org/master/df/dfc/classcv_1_1Mat__.html)
 ///
@@ -29,8 +27,10 @@ impl<T: DataType> TryFrom<Mat> for Mat_<T> {
 
 	#[inline]
 	fn try_from(mat: Mat) -> Result<Self, Self::Error> {
-		match_format::<T>(mat.typ())
-			.map(|_| Self { inner: mat, _type: PhantomData })
+		match_format::<T>(mat.typ()).map(|_| Self {
+			inner: mat,
+			_type: PhantomData,
+		})
 	}
 }
 
@@ -73,15 +73,13 @@ impl<T: DataType> Mat_<T> {
 
 	#[inline]
 	pub fn at_mut(&mut self, i0: i32) -> Result<&mut T> {
-		match_dims(self, 2)
-			.and_then(|_| match_total(self, i0))?;
+		match_dims(self, 2).and_then(|_| match_total(self, i0))?;
 		unsafe { self.at_unchecked_mut(i0) }
 	}
 
 	#[inline]
 	pub fn data_typed(&self) -> Result<&[T]> {
-		match_is_continuous(self)
-			.and_then(|_| unsafe { self.data_typed_unchecked() })
+		match_is_continuous(self).and_then(|_| unsafe { self.data_typed_unchecked() })
 	}
 
 	#[inline]
@@ -93,18 +91,25 @@ impl<T: DataType> Mat_<T> {
 
 impl<T> MatTraitConst for Mat_<T> {
 	#[inline]
-	fn as_raw_Mat(&self) -> *const c_void { self.inner.as_raw_Mat() }
+	fn as_raw_Mat(&self) -> *const c_void {
+		self.inner.as_raw_Mat()
+	}
 }
 
 impl<T> MatTrait for Mat_<T> {
 	#[inline]
-	fn as_raw_mut_Mat(&mut self) -> *mut c_void { self.inner.as_raw_mut_Mat() }
+	fn as_raw_mut_Mat(&mut self) -> *mut c_void {
+		self.inner.as_raw_mut_Mat()
+	}
 }
 
 impl<T> Boxed for Mat_<T> {
 	#[inline]
 	unsafe fn from_raw(ptr: *mut c_void) -> Self {
-		Self { inner: Mat::from_raw(ptr), _type: PhantomData }
+		Self {
+			inner: Mat::from_raw(ptr),
+			_type: PhantomData,
+		}
 	}
 
 	#[inline]
@@ -130,15 +135,23 @@ impl<T> ToInputArray for Mat_<T> {
 	}
 }
 
+impl<T> ToOutputArray for Mat_<T> {
+	#[inline]
+	fn output_array(&mut self) -> Result<_OutputArray> {
+		self.inner.output_array()
+	}
+}
+
+impl<T> ToInputOutputArray for Mat_<T> {
+	#[inline]
+	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
+		self.inner.input_output_array()
+	}
+}
+
 impl<T> OpenCVType<'_> for Mat_<T> {
 	type Arg = Self;
 	type ExternReceive = *mut c_void;
-	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-		self
-	}
 
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
@@ -168,7 +181,9 @@ impl<T> OpenCVTypeExternContainer for Mat_<T> {
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_raw_mut()
 	}
+}
 
+impl<T> OpenCVTypeExternContainerMove for Mat_<T> {
 	#[inline]
 	fn opencv_into_extern(self) -> Self::ExternSendMut {
 		self.into_raw()

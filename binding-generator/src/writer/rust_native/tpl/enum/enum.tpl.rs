@@ -1,7 +1,7 @@
 {{doc_comment}}
 {{debug}}
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum {{rust_local}} {
 	{{consts}}
 }

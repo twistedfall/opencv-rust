@@ -1,11 +1,9 @@
 use matches::assert_matches;
 
-use opencv::{
-	core::{self, Matx22d, Matx23f, Matx32f, Matx33d, Matx66f, Point2f, Scalar},
-	imgproc,
-	prelude::*,
-	Result,
-};
+use opencv::core;
+use opencv::core::{Matx22d, Matx23f, Matx32f, Matx33d, Matx66f, Scalar};
+use opencv::prelude::*;
+use opencv::Result;
 
 #[test]
 fn matx_get() {
@@ -40,6 +38,9 @@ fn matx_set() {
 #[cfg(all(ocvrs_opencv_branch_4, not(target_env = "msvc")))]
 #[test]
 fn matx_return() -> Result<()> {
+	use opencv::core::Point2f;
+	use opencv::imgproc;
+
 	let mat = imgproc::get_rotation_matrix_2d_matx(Point2f::new(10., 10.), 90., 2.)?;
 	assert_eq!(2, mat.rows());
 	assert_eq!(3, mat.cols());
@@ -48,7 +49,7 @@ fn matx_return() -> Result<()> {
 	Ok(())
 }
 
-#[cfg(all(ocvrs_has_module_surface_matching, not(ocvrs_opencv_branch_32)))]
+#[cfg(ocvrs_has_module_surface_matching)]
 #[test]
 fn matx_arg() -> Result<()> {
 	use opencv::{core::Matx44d, surface_matching::Pose3D};
@@ -62,24 +63,16 @@ fn matx_arg() -> Result<()> {
 
 #[test]
 fn matx_input_array() -> Result<()> {
-	assert_eq!(Scalar::from(2.), core::sum_elems(&Matx32f::eye())?);
-	assert_eq!(Scalar::from(2.), core::sum_elems(&Matx23f::eye())?);
+	assert_eq!(Scalar::from(2), core::sum_elems(&Matx32f::eye())?);
+	assert_eq!(Scalar::from(2), core::sum_elems(&Matx23f::eye())?);
 	Ok(())
 }
 
 #[test]
 fn matx_input_output_array() -> Result<()> {
-	let mut mat = Matx33d::from([
-		1., 2., 3.,
-		4., 5., 6.,
-		9., 8., 9.,
-	]);
+	let mut mat = Matx33d::from_array([1., 2., 3., 4., 5., 6., 9., 8., 9.]);
 	core::complete_symm(&mut mat, false)?;
-	let expected = Matx33d::from([
-		1., 2., 3.,
-		2., 5., 6.,
-		3., 6., 9.,
-	]);
+	let expected = Matx33d::from_array([1., 2., 3., 2., 5., 6., 3., 6., 9.]);
 	assert_eq!(expected, mat);
 	Ok(())
 }

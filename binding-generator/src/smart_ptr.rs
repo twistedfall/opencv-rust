@@ -1,132 +1,117 @@
-use std::{
-	borrow::Cow,
-	fmt,
-};
+use std::borrow::Cow;
+use std::fmt;
+use std::rc::Rc;
 
 use clang::Entity;
 
-use crate::{
-	DefaultElement,
-	DependentType,
-	Element,
-	EntityElement,
-	GeneratorEnv,
-	type_ref::{DependentTypeMode, FishStyle, Lifetime, NameStyle, TemplateArg},
-	TypeRef,
-};
+pub use desc::SmartPtrDesc;
+
+use crate::element::ExcludeKind;
+use crate::type_ref::{CppNameStyle, TypeRef, TypeRefDesc, TypeRefKind};
+use crate::{DefaultElement, Element, GeneratedType, GeneratorEnv, StrExt};
+
+mod desc;
 
 #[derive(Clone)]
-pub struct SmartPtr<'tu, 'ge> {
-	entity: Entity<'tu>,
-	pub(crate) gen_env: &'ge GeneratorEnv<'tu>,
+pub enum SmartPtr<'tu, 'ge> {
+	Clang {
+		entity: Entity<'tu>,
+		gen_env: &'ge GeneratorEnv<'tu>,
+	},
+	Desc(Rc<SmartPtrDesc<'tu, 'ge>>),
 }
 
 impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self { entity, gen_env }
+		Self::Clang { entity, gen_env }
+	}
+
+	pub fn new_desc(desc: SmartPtrDesc<'tu, 'ge>) -> Self {
+		Self::Desc(Rc::new(desc))
 	}
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
-		TypeRef::new(self.entity.get_type().expect("Can't get smart pointer type"), self.gen_env)
-	}
-
-	pub fn pointee(&self) -> TypeRef<'tu, 'ge> {
-		self.type_ref().template_specialization_args().into_iter()
-			.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
-				Some(type_ref)
-			} else {
-				None
-			}).expect("Smart pointer template argument list is empty")
-	}
-
-	pub fn dependent_types(&self) -> Vec<DependentType<'tu, 'ge>> {
-		if self.pointee().as_typedef().is_some() {
-			self.type_ref().canonical_clang().dependent_types(DependentTypeMode::None)
-		} else {
-			vec![]
+		match self {
+			&Self::Clang { entity, gen_env, .. } => TypeRef::new(entity.get_type().expect("Can't get smart pointer type"), gen_env),
+			Self::Desc(_) => TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(self.clone()))),
 		}
 	}
 
-	pub fn rust_localalias(&self) -> Cow<str> {
-		format!("PtrOf{typ}", typ=self.pointee().rust_safe_id_ext(false)).into()
+	pub fn pointee(&self) -> TypeRef<'tu, 'ge> {
+		match self {
+			&Self::Clang { .. } => self
+				.type_ref()
+				.template_specialization_args()
+				.iter()
+				.find_map(|arg| arg.as_typename())
+				.cloned()
+				.expect("Smart pointer template argument list is empty"),
+			Self::Desc(desc) => desc.pointee_type_ref.clone(),
+		}
 	}
 
-	pub fn rust_fullalias(&self) -> Cow<str> {
-		format!("types::{}", self.rust_localalias()).into()
-	}
-}
-
-impl<'tu> EntityElement<'tu> for SmartPtr<'tu, '_> {
-	fn entity(&self) -> Entity<'tu> {
-		self.entity
+	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
+		let mut out = if let Some(cls) = self.pointee().as_class() {
+			cls.all_family()
+				.into_iter()
+				.map(|desc| GeneratedType::SmartPtr(SmartPtr::new_desc(SmartPtrDesc::new(TypeRef::new_class(desc)))))
+				.collect()
+		} else {
+			vec![]
+		};
+		if let Some(typedef) = self.pointee().as_typedef() {
+			out.extend(typedef.generated_types());
+		}
+		out
 	}
 }
 
 impl Element for SmartPtr<'_, '_> {
-	fn is_excluded(&self) -> bool {
-		DefaultElement::is_excluded(self) || self.pointee().is_excluded()
-	}
-
-	fn is_ignored(&self) -> bool {
-		DefaultElement::is_ignored(self) || self.pointee().is_ignored()
+	fn exclude_kind(&self) -> ExcludeKind {
+		DefaultElement::exclude_kind(self).with_exclude_kind(|| self.pointee().exclude_kind())
 	}
 
 	fn is_system(&self) -> bool {
-		DefaultElement::is_system(self)
+		match self {
+			&Self::Clang { entity, .. } => DefaultElement::is_system(entity),
+			Self::Desc(_) => false,
+		}
 	}
 
 	fn is_public(&self) -> bool {
-		DefaultElement::is_public(self)
+		match self {
+			&Self::Clang { entity, .. } => DefaultElement::is_public(entity),
+			Self::Desc(_) => true,
+		}
 	}
 
-	fn usr(&self) -> Cow<str> {
-		DefaultElement::usr(self)
-	}
-
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+	fn doc_comment(&self) -> Cow<str> {
+		"".into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
 		"cv".into()
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		"Ptr".into()
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		self.pointee().rust_module().into_owned().into()
-	}
-
-	fn rust_namespace(&self) -> Cow<str> {
-		"core".into()
-	}
-
-	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
-		format!(
-			"Ptr{fish}<{typ}>",
-			fish=fish_style.rust_qual(),
-			typ=self.pointee().rust_name(NameStyle::Reference(FishStyle::Turbo), Lifetime::elided()),
-		).into()
-	}
-
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_localname(self, fish_style)
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+		"cv::Ptr".cpp_name_from_fullname(style).into()
 	}
 }
 
-impl fmt::Display for SmartPtr<'_, '_> {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
+impl PartialEq for SmartPtr<'_, '_> {
+	fn eq(&self, other: &Self) -> bool {
+		self.pointee() == other.pointee()
 	}
 }
 
 impl fmt::Debug for SmartPtr<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		let mut debug_struct = f.debug_struct("SmartPtr");
-		self.update_debug_struct(&mut debug_struct)
-			.field("export_config", &self.gen_env.get_export_config(self.entity))
+		let mut debug_struct = f.debug_struct(match self {
+			Self::Clang { .. } => "SmartPtr::Clang",
+			Self::Desc(_) => "SmartPtr::Desc",
+		});
+		self
+			.update_debug_struct(&mut debug_struct)
 			.field("pointee", &self.pointee())
 			.finish()
 	}

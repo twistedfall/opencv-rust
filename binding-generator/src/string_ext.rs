@@ -1,20 +1,30 @@
-use std::{
-	borrow::Cow,
-	collections::HashMap,
-	iter,
-};
+use std::borrow::Cow;
+use std::collections::HashMap;
+use std::iter;
 
 use once_cell::sync::Lazy;
 use regex::{CaptureLocations, Regex};
+
+use crate::CppNameStyle;
 
 pub trait StringExt {
 	fn replacen_in_place(&mut self, from: &str, limit: usize, to: &str) -> bool;
 	fn replace_in_place(&mut self, from: &str, to: &str) -> bool;
 	fn replacen_in_place_regex(&mut self, from: &Regex, limit: usize, to: &str) -> bool;
 	fn replace_in_place_regex(&mut self, from: &Regex, to: &str) -> bool;
-	fn replacen_in_place_regex_cb<'a>(&mut self, from: &Regex, limit: usize, replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a) -> bool;
-	fn replace_in_place_regex_cb<'a>(&mut self, from: &Regex, replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a) -> bool;
-	fn extend_join(&mut self, it: impl Iterator<Item=impl AsRef<str>>, sep: &str);
+	fn replacen_in_place_regex_cb<'a>(
+		&mut self,
+		from: &Regex,
+		limit: usize,
+		replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a,
+	) -> bool;
+	fn replace_in_place_regex_cb<'a>(
+		&mut self,
+		from: &Regex,
+		replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a,
+	) -> bool;
+	fn extend_join(&mut self, it: impl Iterator<Item = impl AsRef<str>>, sep: &str);
+	fn extend_sep(&mut self, sep: &str, s: &str);
 	fn push_indented_str(&mut self, indent: Indent, val: &str);
 	fn bump_counter(&mut self);
 	fn cleanup_name(&mut self);
@@ -61,16 +71,23 @@ impl StringExt for String {
 						if next_char == '$' {
 							out.push(Elem::Literal(&rep[last_idx..next_idx]));
 							last_idx = next_idx + 1;
-							continue
+							continue;
 						}
-						if let Some(mut num_end_idx) = rep[next_idx..].char_indices().take_while(|(_, c)| c.is_ascii_digit()).map(|(i, _)| i).last() {
+						if let Some(mut num_end_idx) = rep[next_idx..]
+							.char_indices()
+							.take_while(|(_, c)| c.is_ascii_digit())
+							.map(|(i, _)| i)
+							.last()
+						{
 							num_end_idx += next_idx + 1;
 							out.push(Elem::Literal(&rep[last_idx..idx]));
-							out.push(Elem::CaptureGroup(rep[next_idx..num_end_idx].parse().expect("Can't parse as group number")));
+							out.push(Elem::CaptureGroup(
+								rep[next_idx..num_end_idx].parse().expect("Can't parse as group number"),
+							));
 							last_idx = num_end_idx;
 						}
 					} else {
-						break
+						break;
 					}
 				}
 				out.push(Elem::Literal(&rep[last_idx..]));
@@ -87,10 +104,8 @@ impl StringExt for String {
 							} else {
 								0
 							}
-						},
-						Elem::Literal(s) => {
-							s.len()
-						},
+						}
+						Elem::Literal(s) => s.len(),
 					}
 				});
 				let out = rep.iter().fold(String::with_capacity(cap_len), |out, x| {
@@ -101,10 +116,8 @@ impl StringExt for String {
 							} else {
 								""
 							}
-						},
-						Elem::Literal(s) => {
-							s
-						},
+						}
+						Elem::Literal(s) => s,
 					}
 				});
 				Some(out.into())
@@ -130,7 +143,12 @@ impl StringExt for String {
 		self.replacen_in_place_regex(from, 0, to)
 	}
 
-	fn replacen_in_place_regex_cb<'a>(&mut self, from: &Regex, limit: usize, mut replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a) -> bool {
+	fn replacen_in_place_regex_cb<'a>(
+		&mut self,
+		from: &Regex,
+		limit: usize,
+		mut replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a,
+	) -> bool {
 		let mut idx = 0;
 		let mut caps = from.capture_locations();
 		let mut count = 0;
@@ -152,24 +170,42 @@ impl StringExt for String {
 		count != 0
 	}
 
-	fn replace_in_place_regex_cb<'a>(&mut self, from: &Regex, replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a) -> bool {
+	fn replace_in_place_regex_cb<'a>(
+		&mut self,
+		from: &Regex,
+		replacer: impl FnMut(&str, &CaptureLocations) -> Option<Cow<'a, str>> + 'a,
+	) -> bool {
 		self.replacen_in_place_regex_cb(from, 0, replacer)
 	}
 
-	fn extend_join(&mut self, it: impl IntoIterator<Item=impl AsRef<str>>, sep: &str) {
+	fn extend_join(&mut self, it: impl IntoIterator<Item = impl AsRef<str>>, sep: &str) {
 		let mut it = it.into_iter();
-		if let Some(first) = it.next() {
+		let first = it.find(|e| !e.as_ref().is_empty());
+		if let Some(first) = first {
 			let first = first.as_ref();
-			let needed_cap = it.size_hint().1.unwrap_or(16) + first.len();
-			if needed_cap > self.capacity() {
-				self.reserve(needed_cap - self.capacity());
+			if !first.is_empty() {
+				let needed_cap = it.size_hint().1.unwrap_or(8) * (first.len() + sep.len());
+				if needed_cap > self.capacity() {
+					self.reserve(needed_cap - self.capacity());
+				}
+				self.push_str(first);
+				it.for_each(|part| {
+					let part = part.as_ref();
+					if !part.is_empty() {
+						self.push_str(sep);
+						self.push_str(part.as_ref());
+					}
+				})
 			}
-			self.push_str(first);
-			it.for_each(|part| {
-				self.push_str(sep);
-				self.push_str(part.as_ref());
-			})
 		}
+	}
+
+	fn extend_sep(&mut self, sep: &str, s: &str) {
+		if !self.is_empty() {
+			self.reserve(s.len() + sep.len());
+			self.push_str(sep);
+		}
+		self.push_str(s);
 	}
 
 	fn push_indented_str(&mut self, indent: Indent, val: &str) {
@@ -184,24 +220,23 @@ impl StringExt for String {
 	}
 
 	fn bump_counter(&mut self) {
-		let idx = self.rfind(|c: char| !c.is_ascii_digit())
+		let idx = self
+			.rfind(|c: char| !c.is_ascii_digit())
 			.map_or_else(|| self.len(), |idx| idx + 1);
 		match self[idx..].parse::<u32>() {
 			// parsing an empty string yields an error so that makes sure that [idx - 1] doesn't panic
-			Ok(counter) if self.as_bytes()[idx - 1] == b'_' => {
-				self.replace_range(idx.., &(counter + 1).to_string())
-			}
-			_ => {
-				self.push_str("_1")
-			}
+			Ok(counter) if self.as_bytes()[idx - 1] == b'_' => self.replace_range(idx.., &(counter + 1).to_string()),
+			_ => self.push_str("_1"),
 		}
 	}
 
 	fn cleanup_name(&mut self) {
 		// todo aho-corasick?
 		self.replace_in_place(" ", "_");
-		self.replace_in_place("<", "_");
-		self.replace_in_place(">", "_");
+		self.replace_in_place(">=", "GE");
+		self.replace_in_place("<=", "LE");
+		self.replace_in_place("<", "L");
+		self.replace_in_place(">", "G");
 		self.replace_in_place("(", "_");
 		self.replace_in_place(")", "_");
 		self.replace_in_place("*", "X");
@@ -214,6 +249,11 @@ impl StringExt for String {
 		self.replace_in_place("-", "S");
 		self.replace_in_place("/", "D");
 		self.replace_in_place("==", "EQ");
+		self.replace_in_place("!=", "NE");
+		self.replace_in_place("|", "OR");
+		self.replace_in_place("^", "XOR");
+		self.replace_in_place("~", "NOTB");
+		self.replace_in_place("=", "ST");
 	}
 }
 
@@ -283,13 +323,15 @@ impl CompiledInterpolation<'_> {
 
 		const INVALID_PARAM_NAME: &str = "<parameter not found>";
 
-		let result_len = self.elems.iter()
-			.fold(0, |len, elem| len + match elem {
+		let result_len = self.elems.iter().fold(0, |len, elem| {
+			len + match elem {
 				Compiled::IntpLineStart(s) | Compiled::IntpLiteral(s) => s.len(),
 				Compiled::IntpLineEnd(s) | Compiled::LiteralLine(s) => s.len() + 1,
-				Compiled::Var(name) => params.get(name)
-					.map_or_else(|| INVALID_PARAM_NAME.len(), |x| x.as_ref().len())
-			});
+				Compiled::Var(name) => params
+					.get(name)
+					.map_or_else(|| INVALID_PARAM_NAME.len(), |x| x.as_ref().len()),
+			}
+		});
 		let mut out = String::with_capacity(result_len);
 		let mut line_indent = Indent::default();
 		// interpolate vars keeping indent
@@ -299,14 +341,9 @@ impl CompiledInterpolation<'_> {
 					line_indent = s.detect_indent();
 					out += s;
 				}
-				Compiled::IntpLiteral(s) =>
-					out += s,
+				Compiled::IntpLiteral(s) => out += s,
 				Compiled::Var(name) => {
-					out.push_indented_str(
-						line_indent,
-						params.get(name)
-							.map_or(INVALID_PARAM_NAME, |x| x.as_ref()),
-					)
+					out.push_indented_str(line_indent, params.get(name).map_or(INVALID_PARAM_NAME, |x| x.as_ref()))
 				}
 				Compiled::IntpLineEnd(s) => {
 					out += s;
@@ -321,7 +358,7 @@ impl CompiledInterpolation<'_> {
 				}
 			}
 		}
-		if let Some('\n') = out.chars().rev().next() {
+		if let Some('\n') = out.chars().next_back() {
 			out.pop();
 		}
 		out
@@ -329,54 +366,87 @@ impl CompiledInterpolation<'_> {
 }
 
 pub trait StrExt {
-	fn to_snake_case(&self) -> String;
+	fn cpp_name_to_rust_case(&self) -> String;
 	fn lines_with_nl(&self) -> LinesWithNl;
 	fn detect_indent(&self) -> Indent;
 	fn compile_interpolation(&self) -> CompiledInterpolation;
 	fn trim_start_idx(&self) -> usize;
 	fn trim_end_idx(&self) -> usize;
+	/// For `cv::rapid::Rapid` returns `Rapid`
 	fn localname(&self) -> &str;
+	/// For `cv::rapid::Rapid` returns `cv::rapid`
 	fn namespace(&self) -> &str;
+	/// For `crate::rapid::Rapid` and `rapid::Rapid` returns `rapid`
+	fn module(&self) -> &str;
+	fn cpp_name_from_fullname(&self, style: CppNameStyle) -> &str;
 }
 
 impl StrExt for str {
-	fn to_snake_case(&self) -> String {
-		static R1: Lazy<Regex> = Lazy::new(|| Regex::new(r#"([^_])([A-Z][a-z]+)"#).expect("Can't compile regex"));
-		let out = R1.replace_all(self, "${1}_$2");
-
-		static R2: Lazy<Regex> = Lazy::new(|| Regex::new(r#"([a-z0-9])([A-Z])"#).expect("Can't compile regex"));
-		let out = R2.replace_all(&out, "${1}_$2");
-
-		static R3: Lazy<Regex> = Lazy::new(|| Regex::new(r#"\B([23])_(D)\b"#).expect("Can't compile regex"));
-		let out = R3.replace_all(&out, "_$1$2");
-
-		static R4: Lazy<Regex> = Lazy::new(|| Regex::new(r#"_(P[n3])_(P)"#).expect("Can't compile regex"));
-		let out = R4.replace_all(&out, "_$1$2");
-
-		static R5: Lazy<Regex> = Lazy::new(|| Regex::new(r#"Open_(CL|Gl|VX)"#).expect("Can't compile regex"));
-		let out = R5.replace_all(&out, "Open$1");
-
-		#[allow(clippy::trivial_regex)]
-		static R6: Lazy<Regex> = Lazy::new(|| Regex::new(r#"U_Mat"#).expect("Can't compile regex"));
-		let out = R6.replace_all(&out, "UMat");
-
-		out.to_lowercase()
+	fn cpp_name_to_rust_case(&self) -> String {
+		let mut out = String::with_capacity(self.len() + 8);
+		#[derive(Copy, Clone)]
+		enum State {
+			StartOrLastUnderscore,
+			LastLowercase,
+			LastUppercase,
+		}
+		let mut state = State::StartOrLastUnderscore;
+		let mut chars = self.chars().peekable();
+		while let Some(cur_c) = chars.next() {
+			let (add_c, new_state) = match cur_c {
+				_ if cur_c.is_ascii_uppercase() => {
+					match state {
+						State::StartOrLastUnderscore => {}
+						State::LastLowercase => out.push('_'),
+						State::LastUppercase => {
+							// SVDValue => svd_value
+							if chars.peek().map_or(false, |next_c| next_c.is_lowercase()) {
+								out.push('_');
+							}
+						}
+					}
+					(cur_c.to_ascii_lowercase(), State::LastUppercase)
+				}
+				'_' => (cur_c, State::StartOrLastUnderscore),
+				_ => (cur_c, State::LastLowercase),
+			};
+			out.push(add_c);
+			state = new_state;
+		}
+		out.replacen_in_place("pn_p", 1, "pnp");
+		out.replacen_in_place("p3_p", 1, "p3p");
+		out.replacen_in_place("_u_mat", 1, "_umat");
+		out.replacen_in_place("i_d3_d", 1, "id_3d_");
+		out.replacen_in_place("2_d", 1, "_2d");
+		out.replacen_in_place("3_d", 1, "_3d");
+		out.replacen_in_place("open_gl", 1, "opengl");
+		out.replacen_in_place("open_cl", 1, "opencl");
+		out.replacen_in_place("open_vx", 1, "openvx");
+		out.replacen_in_place("aruco_3detect", 1, "aruco3_detect");
+		out
 	}
 
 	fn lines_with_nl(&self) -> LinesWithNl {
-		LinesWithNl { string: self, len: self.len(), idx: 0 }
+		LinesWithNl {
+			string: self,
+			len: self.len(),
+			idx: 0,
+		}
 	}
 
 	fn detect_indent(&self) -> Indent {
-		self.char_indices()
+		self
+			.char_indices()
 			.take_while(|&(_, c)| c == ' ' || c == '\t')
 			.last()
-			.map(|(idx, chr)| Indent { len: idx + 1, symbol: chr })
-			.unwrap_or_default()
+			.map_or_else(Indent::default, |(idx, chr)| Indent {
+				len: idx + 1,
+				symbol: chr,
+			})
 	}
 
 	fn compile_interpolation(&self) -> CompiledInterpolation {
-		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r#"\{\{\s*([^{}]+?)\s*}}"#).expect("Can't compile regex"));
+		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r"\{\{\s*([^{}]+?)\s*}}").expect("Can't compile regex"));
 
 		// trim leading newline
 		let tpl = self.strip_prefix('\n').unwrap_or(self);
@@ -426,31 +496,40 @@ impl StrExt for str {
 	}
 
 	fn trim_start_idx(&self) -> usize {
-		self.char_indices()
+		self
+			.char_indices()
 			.find(|(_, c)| !c.is_whitespace())
 			.map_or_else(|| self.len(), |(i, _)| i)
 	}
 
 	fn trim_end_idx(&self) -> usize {
-		self.char_indices()
+		self
+			.char_indices()
 			.rfind(|(_, c)| !c.is_whitespace())
 			.map_or(0, |(i, _)| i + 1)
 	}
 
 	fn localname(&self) -> &str {
-		const SEP: &str = "::";
-		if let Some(idx) = self.rfind(SEP) {
-			&self[idx + SEP.len()..]
-		} else {
-			self
-		}
+		self.rsplit("::").next().unwrap_or(self)
 	}
 
 	fn namespace(&self) -> &str {
-		if let Some(idx) = self.rfind("::") {
-			&self[..idx]
-		} else {
-			self
+		self.rsplit_once("::").map_or(self, |(left, _right)| left)
+	}
+
+	fn module(&self) -> &str {
+		self
+			.strip_prefix("crate::")
+			.unwrap_or(self)
+			.split("::")
+			.next()
+			.unwrap_or(self)
+	}
+
+	fn cpp_name_from_fullname(&self, style: CppNameStyle) -> &str {
+		match style {
+			CppNameStyle::Declaration => self.localname(),
+			CppNameStyle::Reference => self,
 		}
 	}
 }

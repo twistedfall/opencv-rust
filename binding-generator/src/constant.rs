@@ -1,45 +1,34 @@
-use std::{
-	borrow::Cow,
-	fmt::{self, Write},
-};
+use std::borrow::Cow;
+use std::fmt;
+use std::fmt::Write;
 
-use clang::{
-	Entity,
-	EntityKind,
-	EvaluationResult,
-	token::{Token, TokenKind},
-};
+use clang::token::{Token, TokenKind};
+use clang::{Entity, EntityKind, EvaluationResult};
 
-use crate::{
-	DefaultElement,
-	Element,
-	EntityElement,
-	settings,
-	type_ref::FishStyle,
-};
+use crate::comment::strip_comment_markers;
+use crate::debug::LocationName;
+use crate::element::ExcludeKind;
+use crate::type_ref::CppNameStyle;
+use crate::{settings, DefaultElement, Element, EntityElement, NameDebug};
 
-pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item=Token<'f>>) -> Option<Value> {
+pub fn render_constant_rust(tokens: &[Token]) -> Option<Value> {
 	let mut out = Value {
 		kind: ValueKind::Integer,
-		value: String::with_capacity(128),
+		value: String::with_capacity(tokens.len() * 8),
 	};
 	for t in tokens {
 		match t.get_kind() {
 			TokenKind::Comment => {
-				write!(&mut out.value, "/* {} */", t.get_spelling()).expect("write! to String shouldn't fail");
+				write!(out.value, "/* {} */", t.get_spelling()).expect("write! to String shouldn't fail");
 			}
 			TokenKind::Identifier => {
 				let spelling = t.get_spelling();
 				if let Some(entity) = t.get_location().get_entity() {
-					#[allow(clippy::single_match)] // using the single pattern for future extensibility
-					match entity.get_kind() {
-						EntityKind::MacroExpansion => {
-							let cnst = Const::new(entity);
-							if cnst.is_excluded() {
-								return None;
-							}
+					if let EntityKind::MacroExpansion = entity.get_kind() {
+						let cnst = Const::new(entity);
+						if cnst.exclude_kind().is_excluded() {
+							return None;
 						}
-						_ => {}
 					}
 				}
 				if spelling.starts_with("CV_") {
@@ -53,13 +42,13 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item=Token<'f>>) -> Op
 			}
 			TokenKind::Literal => {
 				let spelling = t.get_spelling();
-				if spelling.contains('"') {
+				if spelling.contains(|c| c == '"' || c == '\'') {
 					out.kind = ValueKind::String;
 				} else if spelling.contains('.') {
 					out.kind = ValueKind::Float;
-				} else if spelling.ends_with(&['U', 'u'][..]) {
+				} else if let Some(unsigned_value) = spelling.strip_suffix(&['U', 'u']) {
 					out.kind = ValueKind::UnsignedInteger;
-					out.value += &spelling[..spelling.len() - 1];
+					out.value += unsigned_value;
 					continue;
 				}
 				out.value += &spelling;
@@ -76,9 +65,10 @@ pub fn render_constant_rust<'f>(tokens: impl IntoIterator<Item=Token<'f>>) -> Op
 	Some(out)
 }
 
-pub fn render_constant_cpp<'f>(tokens: impl IntoIterator<Item=Token<'f>>) -> String {
-	tokens.into_iter()
-		.fold(String::new(), |out, x| out + &x.get_spelling())
+pub fn render_constant_cpp(tokens: &[Token]) -> String {
+	tokens
+		.iter()
+		.fold(String::with_capacity(tokens.len() * 8), |out, x| out + &x.get_spelling())
 }
 
 pub fn render_evaluation_result_rust(result: EvaluationResult) -> Value {
@@ -86,31 +76,25 @@ pub fn render_evaluation_result_rust(result: EvaluationResult) -> Value {
 		EvaluationResult::Unexposed => {
 			panic!("Can't render evaluation result")
 		}
-		EvaluationResult::SignedInteger(x) => {
-			Value {
-				kind: ValueKind::Integer,
-				value: x.to_string(),
-			}
-		}
-		EvaluationResult::UnsignedInteger(x) => {
-			Value {
-				kind: ValueKind::UnsignedInteger,
-				value: x.to_string(),
-			}
-		}
-		EvaluationResult::Float(x) => {
-			Value {
-				kind: ValueKind::Float,
-				value: x.to_string(),
-			}
-		}
-		EvaluationResult::String(x) | EvaluationResult::ObjCString(x) | EvaluationResult::CFString(x)
-		| EvaluationResult::Other(x) => {
-			Value {
-				kind: ValueKind::String,
-				value: format!(r#""{}""#, x.to_string_lossy()),
-			}
-		}
+		EvaluationResult::SignedInteger(x) => Value {
+			kind: ValueKind::Integer,
+			value: x.to_string(),
+		},
+		EvaluationResult::UnsignedInteger(x) => Value {
+			kind: ValueKind::UnsignedInteger,
+			value: x.to_string(),
+		},
+		EvaluationResult::Float(x) => Value {
+			kind: ValueKind::Float,
+			value: x.to_string(),
+		},
+		EvaluationResult::String(x)
+		| EvaluationResult::ObjCString(x)
+		| EvaluationResult::CFString(x)
+		| EvaluationResult::Other(x) => Value {
+			kind: ValueKind::String,
+			value: format!(r#""{}""#, x.to_string_lossy()),
+		},
 	}
 }
 
@@ -127,29 +111,23 @@ impl<'tu> Const<'tu> {
 	pub fn value(&self) -> Option<Value> {
 		match self.entity.get_kind() {
 			EntityKind::MacroDefinition => {
-				let mut tokens = self.entity.get_range().expect("Can't get macro definition range")
-					.tokenize();
+				let tokens = self.entity.get_range().expect("Can't get macro definition range").tokenize();
 				if tokens.len() <= 1 {
 					None
-				} else if let Some(ident_tok) = tokens.get(0) {
-					if ident_tok.get_kind() == TokenKind::Identifier {
-						render_constant_rust(tokens.drain(1..))
-					} else {
-						None
-					}
 				} else {
-					None
+					render_constant_rust(&tokens[1..])
 				}
 			}
-			EntityKind::EnumConstantDecl => {
-				Some(Value {
-					kind: ValueKind::Integer,
-					value: self.entity.get_enum_constant_value().expect("Can't get enum constant value").0.to_string(),
-				})
-			}
-			EntityKind::VarDecl => {
-				self.entity.evaluate().map(render_evaluation_result_rust)
-			}
+			EntityKind::EnumConstantDecl => Some(Value {
+				kind: ValueKind::Integer,
+				value: self
+					.entity
+					.get_enum_constant_value()
+					.expect("Can't get enum constant value")
+					.0
+					.to_string(),
+			}),
+			EntityKind::VarDecl => self.entity.evaluate().map(render_evaluation_result_rust),
 			_ => {
 				unreachable!("Invalid entity type for constant")
 			}
@@ -164,57 +142,37 @@ impl<'tu> EntityElement<'tu> for Const<'tu> {
 }
 
 impl Element for Const<'_> {
-	fn is_excluded(&self) -> bool {
-		DefaultElement::is_excluded(self)
-			|| (self.entity.is_function_like_macro() && !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_fullname().as_ref()))
+	fn exclude_kind(&self) -> ExcludeKind {
+		DefaultElement::exclude_kind(self).with_is_excluded(|| {
+			self.entity.is_function_like_macro()
+				&& !settings::IMPLEMENTED_FUNCTION_LIKE_MACROS.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
+		})
 	}
 
 	fn is_system(&self) -> bool {
-		DefaultElement::is_system(self)
+		DefaultElement::is_system(self.entity)
 	}
 
 	fn is_public(&self) -> bool {
-		DefaultElement::is_public(self)
+		DefaultElement::is_public(self.entity)
 	}
 
-	fn usr(&self) -> Cow<str> {
-		DefaultElement::usr(self)
-	}
-
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultElement::rendered_doc_comment_with_prefix(self, prefix, opencv_version)
+	fn doc_comment(&self) -> Cow<str> {
+		strip_comment_markers(&self.entity.get_comment().unwrap_or_default()).into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self).into()
+		DefaultElement::cpp_namespace(self.entity).into()
 	}
 
-	fn cpp_localname(&self) -> Cow<str> {
-		DefaultElement::cpp_localname(self)
-	}
-
-	fn rust_module(&self) -> Cow<str> {
-		DefaultElement::rust_module(self)
-	}
-
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		self.cpp_localname()
-	}
-
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str> {
-		let mut out = DefaultElement::rust_localname(self, fish_style);
-		const SUFFIX: &str = "_OCVRS_OVERRIDE";
-		if out.ends_with(SUFFIX) {
-			let suffix_start = out.len() - SUFFIX.len();
-			out.to_mut().drain(suffix_start..);
-		}
-		out
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
+		DefaultElement::cpp_name(self, self.entity(), style)
 	}
 }
 
-impl fmt::Display for Const<'_> {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		write!(f, "{}", self.entity.get_display_name().expect("Can't get display name"))
+impl<'me> NameDebug<'me> for &'me Const<'_> {
+	fn file_line_name(self) -> LocationName<'me> {
+		self.entity.file_line_name()
 	}
 }
 
@@ -241,4 +199,3 @@ impl fmt::Display for Value {
 		}
 	}
 }
-

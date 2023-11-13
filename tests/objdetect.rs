@@ -1,24 +1,20 @@
-#![cfg(all(ocvrs_has_module_objdetect, not(ocvrs_opencv_branch_32)))]
+#![cfg(ocvrs_has_module_objdetect)]
 
 use std::path::Path;
 
-use opencv::{
-	core,
-	imgcodecs,
-	objdetect,
-	prelude::*,
-	Result,
-	types::VectorOfPoint,
-};
+use opencv::{core, imgcodecs, objdetect, prelude::*, types::VectorOfPoint, Result};
 
 #[test]
 fn qr_code() -> Result<()> {
 	let qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr.png");
 
 	// workaround for the missing (and not runtime detectable) QUIRC support in repository OpenCV in Ubuntu 20.04
-	let objdetect_missing_quirc = cfg!(target_os = "linux") && core::get_build_information()?.contains("/opencv-4.2.0+dfsg/");
+	let build_info = core::get_build_information()?;
+	let objdetect_missing_quirc =
+		cfg!(target_os = "linux") && (build_info.contains("/opencv-4.2.0+dfsg/") || build_info.contains("/opencv-4.5.4+dfsg/"));
 
 	{
+		#[allow(unused_mut)]
 		let mut detector = objdetect::QRCodeDetector::default()?;
 		let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
 		let mut pts = VectorOfPoint::new();
@@ -35,6 +31,7 @@ fn qr_code() -> Result<()> {
 	}
 
 	{
+		#[allow(unused_mut)]
 		let mut detector = objdetect::QRCodeDetector::default()?;
 		let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
 		let mut pts = VectorOfPoint::new();
@@ -55,6 +52,7 @@ fn qr_code() -> Result<()> {
 	let binary_qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr-binary.png");
 
 	{
+		#[allow(unused_mut)]
 		let mut detector = objdetect::QRCodeDetector::default()?;
 		let src = imgcodecs::imread(binary_qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
 		let mut pts = VectorOfPoint::new();
@@ -91,5 +89,5 @@ fn output_byte_string() -> Result<()> {
 	assert_eq!(out, b"https://crates.io/crates/opencv");
 	assert!(!straight.empty());
 
-		Ok(())
+	Ok(())
 }

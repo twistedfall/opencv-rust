@@ -2,22 +2,19 @@ use std::ffi::c_void;
 
 use matches::assert_matches;
 
-use opencv::{
-	core::{self, MatConstIterator, Point, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f, Vec4w},
-	Error,
-	prelude::*,
-	Result,
-	types::{VectorOfi32, VectorOfMat},
-};
+use opencv::core::{MatConstIterator, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w};
+use opencv::prelude::*;
+use opencv::types::{VectorOfMat, VectorOfi32};
+use opencv::{core, Error, Result};
 
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
 #[test]
 fn mat_default() -> Result<()> {
 	let mat = Mat::default();
-	assert_eq!(u8::typ(), mat.typ());
-	assert_eq!(u8::depth(), mat.depth());
-	assert_eq!(u8::channels(), mat.channels());
+	assert_eq!(u8::opencv_type(), mat.typ());
+	assert_eq!(u8::opencv_depth(), mat.depth());
+	assert_eq!(u8::opencv_channels(), mat.channels());
 	assert_eq!(Size::new(0, 0), mat.size()?);
 	assert_eq!(0, mat.dims());
 	assert!(!mat.is_allocated());
@@ -28,10 +25,10 @@ fn mat_default() -> Result<()> {
 #[test]
 fn mat_create() -> Result<()> {
 	let mut mat = Mat::default();
-	unsafe { mat.create_rows_cols(10, 10, u16::typ())? };
+	unsafe { mat.create_rows_cols(10, 10, u16::opencv_type())? };
 	assert!(mat.is_allocated());
 	assert!(!mat.data().is_null());
-	mat.set(Scalar::from(7.))?;
+	mat.set_scalar(7.into())?;
 	assert_eq!(7, *mat.at_2d::<u16>(0, 0)?);
 	assert_eq!(7, *mat.at_2d::<u16>(3, 3)?);
 	assert_eq!(7, *mat.at_2d::<u16>(9, 9)?);
@@ -52,7 +49,7 @@ fn mat_from_iter() -> Result<()> {
 		let mat = Mat::from_exact_iter(vec.into_iter())?;
 		assert_eq!(3, mat.rows());
 		assert_eq!(1, mat.cols());
-		assert_eq!(i32::typ(), mat.typ());
+		assert_eq!(i32::opencv_type(), mat.typ());
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
 		assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
 		assert_eq!(3, *mat.at_2d::<i32>(2, 0)?);
@@ -63,7 +60,7 @@ fn mat_from_iter() -> Result<()> {
 		let mat = Mat::from_exact_iter(vec.into_iter())?;
 		assert_eq!(3, mat.rows());
 		assert_eq!(1, mat.cols());
-		assert_eq!(i32::typ(), mat.typ());
+		assert_eq!(i32::opencv_type(), mat.typ());
 		assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
 		assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
 		assert_eq!(3, *mat.at_2d::<i32>(2, 0)?);
@@ -73,10 +70,10 @@ fn mat_from_iter() -> Result<()> {
 
 #[test]
 fn mat_for_rows_and_cols() -> Result<()> {
-	let mat = unsafe { Mat::new_rows_cols(400, 300, Vec3d::typ()) }?;
-	assert_eq!(Vec3d::typ(), mat.typ());
-	assert_eq!(Vec3d::depth(), mat.depth());
-	assert_eq!(Vec3d::channels(), mat.channels());
+	let mat = unsafe { Mat::new_rows_cols(400, 300, Vec3d::opencv_type()) }?;
+	assert_eq!(Vec3d::opencv_type(), mat.typ());
+	assert_eq!(Vec3d::opencv_depth(), mat.depth());
+	assert_eq!(Vec3d::opencv_channels(), mat.channels());
 	assert!(mat.is_continuous());
 	assert!(!mat.is_submatrix());
 	assert_eq!(Size::new(300, 400), mat.size()?);
@@ -100,8 +97,14 @@ fn mat_for_rows_and_cols() -> Result<()> {
 #[test]
 fn mat_nd() -> Result<()> {
 	{
-		let mut mat = Mat::new_nd_with_default(&[3, 3, 3], Vec4w::typ(), Scalar::default())?;
-		assert_matches!(mat.at::<Vec4w>(0), Err(Error { code: core::StsUnmatchedSizes, ..}));
+		let mut mat = Mat::new_nd_with_default(&[3, 3, 3], Vec4w::opencv_type(), 0.into())?;
+		assert_matches!(
+			mat.at::<Vec4w>(0),
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
 		assert_eq!(0, mat.at_3d::<Vec4w>(1, 1, 1)?[0]);
 		*mat.at_3d_mut::<Vec4w>(1, 1, 1)? = Vec4w::all(10);
 		assert_eq!(10, mat.at_3d::<Vec4w>(1, 1, 1)?[0]);
@@ -112,15 +115,51 @@ fn mat_nd() -> Result<()> {
 
 	{
 		let dims = VectorOfi32::from_iter(vec![2, 3, 4, 5, 6, 7]);
-		let mut mat = Mat::new_nd_vec_with_default(&dims, Vec4w::typ(), Scalar::default())?;
+		let mut mat = Mat::new_nd_vec_with_default(&dims, Vec4w::opencv_type(), 0.into())?;
 		assert_eq!(-1, mat.rows());
 		assert_eq!(-1, mat.cols());
-		assert_matches!(mat.at_nd::<Vec4w>(&[1, 1, 1]), Err(Error { code: core::StsUnmatchedSizes, ..}));
-		assert_matches!(mat.at_nd::<Vec4w>(&[1, 1, 1, 1, 1, 1, 1]), Err(Error { code: core::StsUnmatchedSizes, ..}));
-		assert_matches!(mat.at_nd::<Vec4w>(&[10, 10, 10, 10, 10, 10]), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at_nd::<Vec4w>(&[-1, 10, 10, 10, 10, 10]), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at_nd::<Vec4w>(&[2, 3, 4, 5, 10, 10]), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at_nd::<Vec4w>(&[2, 3, 4, 5, 6, 10]), Err(Error { code: core::StsOutOfRange, ..}));
+		assert_matches!(
+			mat.at_nd::<Vec4w>(&[1, 1, 1]),
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_nd::<Vec4w>(&[1, 1, 1, 1, 1, 1, 1]),
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_nd::<Vec4w>(&[10, 10, 10, 10, 10, 10]),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_nd::<Vec4w>(&[-1, 10, 10, 10, 10, 10]),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_nd::<Vec4w>(&[2, 3, 4, 5, 10, 10]),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_nd::<Vec4w>(&[2, 3, 4, 5, 6, 10]),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
 		assert_eq!(Vec4w::default(), *mat.at_nd::<Vec4w>(&[1, 2, 3, 4, 5, 6])?);
 		*mat.at_nd_mut::<Vec4w>(&[1, 2, 3, 4, 5, 6])? = Vec4w::from([5, 6, 7, 8]);
 		assert_eq!(Vec4w::from([5, 6, 7, 8]), *mat.at_nd::<Vec4w>(&[1, 2, 3, 4, 5, 6])?);
@@ -130,21 +169,41 @@ fn mat_nd() -> Result<()> {
 
 #[test]
 fn mat_at_1d() -> Result<()> {
-	let s: Vec<Vec<f32>> = vec![
-		vec![1., 2., 3.],
-		vec![4., 5., 6.],
-		vec![7., 8., 9.],
-	];
+	let s: Vec<Vec<f32>> = vec![vec![1., 2., 3.], vec![4., 5., 6.], vec![7., 8., 9.]];
 
 	{
 		let mat = Mat::from_slice_2d(&s)?;
 		let mut mat = mat.reshape(1, 1)?;
 		assert_eq!(1, mat.rows());
 		assert_eq!(9, mat.cols());
-		assert_matches!(mat.at::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at::<f32>(10), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at_mut::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at_mut::<f32>(10), Err(Error { code: core::StsOutOfRange, ..}));
+		assert_matches!(
+			mat.at::<f32>(-1),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at::<f32>(10),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_mut::<f32>(-1),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_mut::<f32>(10),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
 		assert_eq!(*mat.at::<f32>(0)?, 1.);
 		assert_eq!(*mat.at::<f32>(5)?, 6.);
 		assert_eq!(*mat.at::<f32>(8)?, 9.);
@@ -157,10 +216,34 @@ fn mat_at_1d() -> Result<()> {
 		let mut mat = mat.reshape(1, 9)?;
 		assert_eq!(9, mat.rows());
 		assert_eq!(1, mat.cols());
-		assert_matches!(mat.at::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at::<f32>(10), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at_mut::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at_mut::<f32>(10), Err(Error { code: core::StsOutOfRange, ..}));
+		assert_matches!(
+			mat.at::<f32>(-1),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at::<f32>(10),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_mut::<f32>(-1),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_mut::<f32>(10),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
 		assert_eq!(*mat.at::<f32>(0)?, 1.);
 		assert_eq!(*mat.at::<f32>(4)?, 5.);
 		assert_eq!(*mat.at::<f32>(8)?, 9.);
@@ -170,10 +253,34 @@ fn mat_at_1d() -> Result<()> {
 
 	{
 		let mut mat = Mat::from_slice_2d(&s)?;
-		assert_matches!(mat.at::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at::<f32>(10), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at_mut::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
-		assert_matches!(mat.at_mut::<f32>(10), Err(Error { code: core::StsOutOfRange, ..}));
+		assert_matches!(
+			mat.at::<f32>(-1),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at::<f32>(10),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_mut::<f32>(-1),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
+		assert_matches!(
+			mat.at_mut::<f32>(10),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
 		assert_eq!(*mat.at::<f32>(0)?, 1.);
 		assert_eq!(*mat.at::<f32>(6)?, 7.);
 		assert_eq!(*mat.at::<f32>(8)?, 9.);
@@ -186,7 +293,7 @@ fn mat_at_1d() -> Result<()> {
 #[test]
 fn mat_2d_i0_is_rows_i1_is_cols() -> Result<()> {
 	// Just a sanity check about which Mat dimension corresponds to which in Size
-	let mat = Mat::new_size_with_default(Size::new(6, 5), f32::typ(), Scalar::from(1.23))?;
+	let mat = Mat::new_size_with_default(Size::new(6, 5), f32::opencv_type(), 1.23.into())?;
 	let size = mat.size()?;
 	assert_eq!(size.width, 6);
 	assert_eq!(size.height, 5);
@@ -195,18 +302,30 @@ fn mat_2d_i0_is_rows_i1_is_cols() -> Result<()> {
 
 #[test]
 fn mat_at_2d() -> Result<()> {
-	let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::from(1.23))?;
+	let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::opencv_type(), 1.23.into())?;
 	assert_eq!(*mat.at_2d::<f32>(0, 0)?, 1.23);
 	*mat.at_2d_mut::<f32>(0, 0)? = 1.;
 	assert_eq!(*mat.at_2d::<f32>(0, 0)?, 1.);
-	assert_matches!(mat.at::<i32>(0), Err(Error { code: core::StsUnmatchedFormats, ..}));
-	assert_matches!(mat.at::<f32>(10000), Err(Error { code: core::StsOutOfRange, ..}));
+	assert_matches!(
+		mat.at::<i32>(0),
+		Err(Error {
+			code: core::StsUnmatchedFormats,
+			..
+		})
+	);
+	assert_matches!(
+		mat.at::<f32>(10000),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
 	Ok(())
 }
 
 #[test]
 fn mat_at_2d_multichannel() -> Result<()> {
-	let mut mat = Mat::new_rows_cols_with_default(100, 100, Vec3f::typ(), Scalar::all(1.23))?;
+	let mut mat = Mat::new_rows_cols_with_default(100, 100, Vec3f::opencv_type(), Scalar::all(1.23))?;
 	let pix = *mat.at_2d::<Vec3f>(0, 0)?;
 	assert_eq!(pix[0], 1.23);
 	assert_eq!(pix[1], 1.23);
@@ -219,15 +338,33 @@ fn mat_at_2d_multichannel() -> Result<()> {
 	assert_eq!(pix[1], 2.2);
 	assert_eq!(pix[2], 3.3);
 
-	assert_matches!(mat.at_2d::<i32>(0, 0), Err(Error {code: core::StsUnmatchedFormats, ..}));
-	assert_matches!(mat.at_2d::<Vec3f>(100, 1), Err(Error {code: core::StsOutOfRange, ..}));
-	assert_matches!(mat.at_2d::<Vec3f>(1, 100), Err(Error {code: core::StsOutOfRange, ..}));
+	assert_matches!(
+		mat.at_2d::<i32>(0, 0),
+		Err(Error {
+			code: core::StsUnmatchedFormats,
+			..
+		})
+	);
+	assert_matches!(
+		mat.at_2d::<Vec3f>(100, 1),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
+	assert_matches!(
+		mat.at_2d::<Vec3f>(1, 100),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
 	Ok(())
 }
 
 #[test]
 fn mat_at_row() -> Result<()> {
-	let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::from(1.23))?;
+	let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::opencv_type(), 1.23.into())?;
 
 	let row = mat.at_row::<f32>(0)?;
 	assert_eq!(row.len(), 100);
@@ -243,41 +380,69 @@ fn mat_at_row() -> Result<()> {
 	assert_eq!(data[102], 30.);
 	assert_eq!(data[103], 40.);
 
-	assert_matches!(mat.at_row::<i32>(0), Err(Error {code: core::StsUnmatchedFormats, ..}));
-	assert_matches!(mat.at_row::<f32>(100), Err(Error {code: core::StsOutOfRange, ..}));
-	assert_matches!(mat.at_row_mut::<i32>(0), Err(Error {code: core::StsUnmatchedFormats, ..}));
-	assert_matches!(mat.at_row_mut::<f32>(100), Err(Error {code: core::StsOutOfRange, ..}));
+	assert_matches!(
+		mat.at_row::<i32>(0),
+		Err(Error {
+			code: core::StsUnmatchedFormats,
+			..
+		})
+	);
+	assert_matches!(
+		mat.at_row::<f32>(100),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
+	assert_matches!(
+		mat.at_row_mut::<i32>(0),
+		Err(Error {
+			code: core::StsUnmatchedFormats,
+			..
+		})
+	);
+	assert_matches!(
+		mat.at_row_mut::<f32>(100),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
 	Ok(())
 }
 
 #[test]
 fn mat_at_pt() -> Result<()> {
-	let s: Vec<Vec<f32>> = vec![
-		vec![1., 2., 3.],
-		vec![4., 5., 6.],
-		vec![7., 8., 9.],
-	];
+	let s: Vec<Vec<f32>> = vec![vec![1., 2., 3.], vec![4., 5., 6.], vec![7., 8., 9.]];
 	let mut m = Mat::from_slice_2d(&s)?;
 	assert_eq!(5., *m.at_pt::<f32>(Point::new(1, 1))?);
 	assert_eq!(4., *m.at_pt_mut::<f32>(Point::new(0, 1))?);
 	assert_eq!(3., unsafe { *m.at_pt_unchecked::<f32>(Point::new(2, 0))? });
 	assert_eq!(9., unsafe { *m.at_pt_unchecked_mut::<f32>(Point::new(2, 2))? });
-	assert_matches!(m.at_pt::<f32>(Point::new(-1, -3)), Err(Error {code: core::StsOutOfRange, ..}));
-	assert_matches!(m.at_pt::<f32>(Point::new(3, -3)), Err(Error {code: core::StsOutOfRange, ..}));
+	assert_matches!(
+		m.at_pt::<f32>(Point::new(-1, -3)),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
+	assert_matches!(
+		m.at_pt::<f32>(Point::new(3, -3)),
+		Err(Error {
+			code: core::StsOutOfRange,
+			..
+		})
+	);
 	Ok(())
 }
 
 #[test]
 fn mat_vec() -> Result<()> {
 	{
-		let s: Vec<Vec<f32>> = vec![
-			vec![1., 2., 3.],
-			vec![4., 5., 6.],
-			vec![7., 8., 9.],
-		];
+		let s: Vec<Vec<f32>> = vec![vec![1., 2., 3.], vec![4., 5., 6.], vec![7., 8., 9.]];
 
 		let mat = Mat::from_slice_2d(&s)?;
-		assert_eq!(mat.size()?, core::Size { width: 3, height: 3 });
+		assert_eq!(mat.size()?, Size { width: 3, height: 3 });
 		assert_eq!(*mat.at_2d::<f32>(1, 1)?, 5.);
 
 		let v = mat.to_vec_2d::<f32>()?;
@@ -289,11 +454,11 @@ fn mat_vec() -> Result<()> {
 		dims.push(3);
 		dims.push(3);
 		dims.push(3);
-		let mut mat = Mat::new_nd_vec_with_default(&dims, f64::typ(), Scalar::from(2.))?;
+		let mut mat = Mat::new_nd_vec_with_default(&dims, f64::opencv_type(), 2.into())?;
 		*mat.at_3d_mut::<f64>(1, 1, 1)? = 10.;
 		assert_eq!(3, mat.dims());
 		if mat.to_vec_2d::<f64>().is_ok() {
-			assert!(false, "dims too high");
+			panic!("dims too high");
 		}
 	}
 
@@ -302,11 +467,7 @@ fn mat_vec() -> Result<()> {
 
 #[test]
 fn mat_continuous() -> Result<()> {
-	let s: Vec<Vec<f32>> = vec![
-		vec![1., 2., 3.],
-		vec![4., 5., 6.],
-		vec![7., 8., 9.],
-	];
+	let s: Vec<Vec<f32>> = vec![vec![1., 2., 3.], vec![4., 5., 6.], vec![7., 8., 9.]];
 
 	let mat = Mat::from_slice_2d(&s)?;
 
@@ -362,21 +523,33 @@ fn mat_continuous() -> Result<()> {
 	{
 		let mut sub_mat_non_cont = Mat::roi(&mat, Rect::new(1, 1, 1, 2))?;
 		assert!(!sub_mat_non_cont.is_continuous());
-		assert_matches!(sub_mat_non_cont.data_typed::<f32>(), Err(Error { code: core::StsUnmatchedSizes, .. }));
-		assert_matches!(sub_mat_non_cont.data_typed_mut::<f32>(), Err(Error { code: core::StsUnmatchedSizes, .. }));
+		assert_matches!(
+			sub_mat_non_cont.data_typed::<f32>(),
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
+		assert_matches!(
+			sub_mat_non_cont.data_typed_mut::<f32>(),
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
 	}
 
 	Ok(())
 }
 
 #[test]
-fn mat_operations() -> Result<()> {
+fn mat_merge_split() -> Result<()> {
 	let mut src = VectorOfMat::new();
-	src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::from(1.))?);
-	src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::from(2.))?);
+	src.push(Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), 1.into())?);
+	src.push(Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), 2.into())?);
 	let mut merged = Mat::default();
 	core::merge(&src, &mut merged)?;
-	assert_eq!(merged.typ(), Vec2b::typ());
+	assert_eq!(merged.typ(), Vec2b::opencv_type());
 	assert_eq!(merged.at_2d::<Vec2b>(0, 1)?[0], 1);
 	assert_eq!(merged.at_2d::<Vec2b>(0, 2)?[1], 2);
 
@@ -384,11 +557,11 @@ fn mat_operations() -> Result<()> {
 	core::split(&merged, &mut split)?;
 	assert_eq!(2, split.len());
 	let mat = split.get(0)?;
-	assert_eq!(u8::typ(), mat.typ());
+	assert_eq!(u8::opencv_type(), mat.typ());
 	assert_eq!(1, mat.channels());
 	assert_eq!(1, *mat.at_2d::<u8>(0, 2)?);
 	let mat = split.get(1)?;
-	assert_eq!(u8::typ(), mat.typ());
+	assert_eq!(u8::opencv_type(), mat.typ());
 	assert_eq!(1, mat.channels());
 	assert_eq!(2, *mat.at_2d::<u8>(0, 0)?);
 
@@ -405,7 +578,7 @@ fn mat_from_data() -> Result<()> {
 			Mat::new_rows_cols_with_data(
 				1,
 				PIXEL.len() as _,
-				u8::typ(),
+				u8::opencv_type(),
 				bytes.as_mut_ptr() as *mut c_void,
 				core::Mat_AUTO_STEP,
 			)?
@@ -421,15 +594,8 @@ fn mat_from_data() -> Result<()> {
 	}
 
 	{
-		let src = unsafe {
-			Mat::new_nd_with_data(
-				&[3, 5, 6],
-				u8::typ(),
-				bytes.as_mut_ptr() as *mut c_void,
-				None,
-			)?
-		};
-		assert_eq!(Size::new(5_, 3), src.size()?);
+		let src = unsafe { Mat::new_nd_with_data(&[3, 5, 6], u8::opencv_type(), bytes.as_mut_ptr() as *mut c_void, None)? };
+		assert_eq!(Size::new(5, 3), src.size()?);
 		assert_eq!(PIXEL.len(), src.total());
 		assert_eq!(0x89, *src.at_3d::<u8>(0, 0, 0)?);
 		assert_eq!(0x50, *src.at_3d::<u8>(0, 0, 1)?);
@@ -444,7 +610,7 @@ fn mat_from_data() -> Result<()> {
 			Mat::new_rows_cols_with_data(
 				1,
 				bytes.len() as i32,
-				u8::typ(),
+				u8::opencv_type(),
 				bytes.as_mut_ptr() as *mut c_void,
 				core::Mat_AUTO_STEP,
 			)?
@@ -452,7 +618,7 @@ fn mat_from_data() -> Result<()> {
 		assert_eq!(mat.data(), bytes.as_ptr());
 		bytes[0] = 0xFF;
 		assert_eq!(0xFF, *mat.at::<u8>(0)?);
-		mat.resize_with_default(100, Scalar::all(0.))?;
+		mat.resize_with_default(100, 0.into())?;
 		assert_ne!(mat.data(), bytes.as_ptr());
 		bytes[0] = 0xAA;
 		let row = mat.at_row::<u8>(0)?;
@@ -472,7 +638,7 @@ fn mat_from_data() -> Result<()> {
 #[test]
 fn mat_from_matexpr() -> Result<()> {
 	{
-		let mat = Mat::zeros(3, 4, f32::typ())?.to_mat()?;
+		let mat = Mat::zeros(3, 4, f32::opencv_type())?.to_mat()?;
 		assert_eq!(4, mat.cols());
 		assert_eq!(3, mat.rows());
 		assert_eq!(0., *mat.at_2d::<f32>(0, 0)?);
@@ -481,7 +647,7 @@ fn mat_from_matexpr() -> Result<()> {
 	}
 
 	{
-		let mat = Mat::ones_nd(&[6, 5], f32::typ())?.to_mat()?;
+		let mat = Mat::ones_nd(&[6, 5], f32::opencv_type())?.to_mat()?;
 		assert_eq!(5, mat.cols());
 		assert_eq!(6, mat.rows());
 		assert_eq!(1., *mat.at_2d::<f32>(0, 0)?);
@@ -513,20 +679,29 @@ fn mat_iterator() -> Result<()> {
 		assert_eq!(Point::new(3, 0), iter.pos()?);
 		assert!(iter.has_elements());
 		iter.seek(1, true)?;
-		assert_matches!(iter.current::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
+		assert_matches!(
+			iter.current::<i32>(),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
 		assert_eq!(Point::new(0, 1), iter.pos()?);
 		assert!(!iter.has_elements());
 		iter.seek(1, true)?;
-		assert_matches!(iter.current::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
+		assert_matches!(
+			iter.current::<i32>(),
+			Err(Error {
+				code: core::StsOutOfRange,
+				..
+			})
+		);
 		assert_eq!(Point::new(0, 1), iter.pos()?);
 		assert!(!iter.has_elements());
 	}
 
 	{
-		let mat = Mat::from_slice_2d(&[
-			[1, 2],
-			[3, 4]
-		])?;
+		let mat = Mat::from_slice_2d(&[[1, 2], [3, 4]])?;
 		for (pos, x) in mat.iter::<i32>()? {
 			match pos {
 				Point { x: 0, y: 0 } => assert_eq!(x, 1),
@@ -535,6 +710,13 @@ fn mat_iterator() -> Result<()> {
 				Point { x: 1, y: 1 } => assert_eq!(x, 4),
 				_ => panic!("Too many elements"),
 			}
+		}
+	}
+
+	{
+		let mat = Mat::from_slice::<u8>(&[])?;
+		for _ in mat.iter::<u8>()? {
+			panic!("Mat must be empty");
 		}
 	}
 	Ok(())
@@ -569,29 +751,29 @@ fn mat_convert() -> Result<()> {
 #[test]
 fn mat_mul() -> Result<()> {
 	{
-		let expr = Mat::ones(1, 5, f64::typ())?;
+		let expr = Mat::ones(1, 5, f64::opencv_type())?;
 		let res = core::mul_matexpr_f64(&expr, 4.)?.to_mat()?;
-		assert_eq!(res.typ(), f64::typ());
+		assert_eq!(res.typ(), f64::opencv_type());
 		assert_eq!(res.data_typed::<f64>()?, &[4., 4., 4., 4., 4.]);
 	}
 	{
-		let expr = Mat::new_rows_cols_with_default(2, 3, i32::typ(), Scalar::from(9.))?;
-		let res = core::sub_mat_scalar(&expr, Scalar::from(5.))?.to_mat()?;
-		assert_eq!(res.typ(), i32::typ());
+		let expr = Mat::new_rows_cols_with_default(2, 3, i32::opencv_type(), 9.into())?;
+		let res = core::sub_mat_scalar(&expr, 5.into())?.to_mat()?;
+		assert_eq!(res.typ(), i32::opencv_type());
 		assert_eq!(res.data_typed::<i32>()?, &[4, 4, 4, 4, 4, 4]);
 	}
 	{
 		let mat1 = Mat::from_slice_2d(&[[1f32, 2., 3.], [4., 5., 6.]])?;
 		let mat2 = Mat::from_slice_2d(&[[7f32, 8.], [9., 10.], [11., 12.]])?;
 		let res = core::mul_mat_mat(&mat1, &mat2)?.to_mat()?;
-		assert_eq!(res.typ(), f32::typ());
+		assert_eq!(res.typ(), f32::opencv_type());
 		assert_eq!(res.size()?, Size::new(2, 2));
 		assert_eq!(res.data_typed::<f32>()?, &[58., 64., 139., 154.]);
 	}
 	{
 		let mat = Mat::from_slice(&[1u8, 2, 3, 4, 5, 6])?;
 		let res = core::div_mat_f64(&mat, 2.)?.to_mat()?;
-		assert_eq!(res.typ(), u8::typ());
+		assert_eq!(res.typ(), u8::opencv_type());
 		assert_eq!(res.data_typed::<u8>()?, &[0, 1, 2, 2, 2, 3]);
 	}
 	Ok(())
@@ -610,7 +792,13 @@ fn mat_data() -> Result<()> {
 		let mat = Mat::from_slice_2d(&[[6, 7], [16, 17u8]])?;
 		assert_eq!(&[6, 7, 16, 17], mat.data_bytes()?);
 		let roi = Mat::roi(&mat, Rect::new(0, 0, 1, 2))?;
-		assert_matches!(roi.data_bytes(), Err(Error { code: core::StsUnmatchedSizes, .. }));
+		assert_matches!(
+			roi.data_bytes(),
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
 	}
 
 	{
@@ -625,12 +813,12 @@ fn mat_data() -> Result<()> {
 
 #[test]
 fn mat_equals() -> Result<()> {
-	let mat1 = Mat::new_rows_cols_with_default(3, 3, i32::typ(), Scalar::all(0.))?;
-	let mat2 = Mat::new_rows_cols_with_default(3, 3, i32::typ(), Scalar::all(0.))?;
-	let mat3 = Mat::new_rows_cols_with_default(3, 3, i32::typ(), Scalar::all(1.))?;
-	let res = core::equals(&mat1, &mat2)?.to_mat()?;
+	let mat1 = Mat::new_rows_cols_with_default(3, 3, i32::opencv_type(), 0.into())?;
+	let mat2 = Mat::new_rows_cols_with_default(3, 3, i32::opencv_type(), 0.into())?;
+	let mat3 = Mat::new_rows_cols_with_default(3, 3, i32::opencv_type(), Scalar::all(1.))?;
+	let res = core::equals_mat_mat(&mat1, &mat2)?.to_mat()?;
 	assert!(res.data_typed::<u8>()?.iter().all(|&e| e != 0));
-	let res = core::equals(&mat1, &mat3)?.to_mat()?;
+	let res = core::equals_mat_mat(&mat1, &mat3)?.to_mat()?;
 	assert!(res.data_typed::<u8>()?.iter().all(|&e| e == 0));
 	Ok(())
 }
@@ -638,8 +826,86 @@ fn mat_equals() -> Result<()> {
 #[test]
 fn mat_rgb() -> Result<()> {
 	#![cfg(feature = "rgb")]
-	let m = Mat::new_rows_cols_with_default(3, 3, rgb::RGBA8::typ(), Scalar::all(1.))?;
+	let m = Mat::new_rows_cols_with_default(3, 3, rgb::RGBA8::opencv_type(), Scalar::all(1.))?;
 	assert_eq!(rgb::RGBA::new(1, 1, 1, 1), *m.at_2d(1, 1)?);
-	assert_matches!(m.at_2d::<rgb::RGB8>(1, 1), Err(Error { code: core::StsUnmatchedFormats, .. }));
+	assert_matches!(
+		m.at_2d::<rgb::RGB8>(1, 1),
+		Err(Error {
+			code: core::StsUnmatchedFormats,
+			..
+		})
+	);
+	Ok(())
+}
+
+#[test]
+fn mat_from_slice() -> Result<()> {
+	let src_u8 = [0u8, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+	let src_point = [
+		Point2d::new(10.1, 20.2),
+		Point2d::new(30.3, 40.4),
+		Point2d::new(50.5, 60.6),
+		Point2d::new(70.7, 80.8),
+	];
+
+	{
+		let mat = Mat::from_slice(&src_u8)?;
+		assert_eq!(10, mat.total());
+		assert_eq!(5u8, *mat.at(5)?);
+
+		let mat = Mat::from_slice(&src_point)?;
+		assert_eq!(4, mat.total());
+		assert_eq!(Point2d::new(30.3, 40.4), *mat.at(1)?);
+	}
+
+	{
+		let mat = Mat::from_slice_rows_cols(&src_u8, 2, 5)?;
+		assert_eq!(10, mat.total());
+		assert_eq!(2, mat.rows());
+		assert_eq!(5, mat.cols());
+		assert_eq!(6u8, *mat.at_2d(1, 1)?);
+
+		let mat_res = Mat::from_slice_rows_cols(&src_u8, 3, 3);
+		assert_matches!(
+			mat_res,
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
+
+		let mat = Mat::from_slice_rows_cols(&src_point, 2, 2)?;
+		assert_eq!(4, mat.total());
+		assert_eq!(2, mat.rows());
+		assert_eq!(2, mat.cols());
+		assert_eq!(Point2d::new(50.5, 60.6), *mat.at_2d(1, 0)?);
+	}
+
+	Ok(())
+}
+
+#[test]
+fn mat_custom_data_type() -> Result<()> {
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug)]
+	struct A {
+		a: i16,
+		b: i16,
+	}
+
+	unsafe impl DataType for A {
+		fn opencv_depth() -> i32 {
+			core::CV_16S
+		}
+
+		fn opencv_channels() -> i32 {
+			2
+		}
+	}
+
+	let m = Mat::new_rows_cols_with_default(10, 10, Vec2s::opencv_type(), (-10, 20).into())?;
+	let data = m.data_typed::<A>()?;
+	assert!(!data.is_empty());
+	assert!(data.iter().all(|el| el.a == -10 && el.b == 20));
 	Ok(())
 }

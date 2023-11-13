@@ -1,6 +1,6 @@
 # Rust OpenCV bindings
 
-[![Github Actions](https://github.com/twistedfall/opencv-rust/workflows/opencv-rust/badge.svg)](https://github.com/twistedfall/opencv-rust/actions?query=workflow%3Aopencv-rust)
+[![Build status](https://github.com/twistedfall/opencv-rust/workflows/opencv-rust/badge.svg)](https://github.com/twistedfall/opencv-rust/actions/workflows/opencv-rust.yml)
 [![Documentation](https://docs.rs/opencv/badge.svg)](https://docs.rs/opencv)
 [![Package](https://img.shields.io/crates/v/opencv.svg)](https://crates.io/crates/opencv)
 
@@ -8,14 +8,16 @@ Experimental Rust bindings for OpenCV 3 and 4.
 
 The API is usable, but unstable and not very battle-tested; use at your own risk.
 
+[Changelog](https://github.com/twistedfall/opencv-rust/blob/master/CHANGES.md)
+
 ## Quickstart
 
-Make sure the supported OpenCV version (3.2, 3.4 or 4.x) and Clang (part of LLVM, needed for automatic binding
+Make sure the supported OpenCV version (3.4 or 4.x) and Clang (part of LLVM, needed for automatic binding
 generation) are installed in your system.
 
 Update your Cargo.toml
 ```toml
-opencv = "0.66"
+opencv = "0.86.1"
 ```
 
 Import prelude
@@ -29,13 +31,21 @@ use opencv::prelude::*;
 
 #### Arch Linux:
 
-OpenCV package in Arch is suitable for this.
+OpenCV package in Arch is suitable for this:
 
-`pacman -S clang qt5-base opencv`
+`pacman -S clang qt6-base opencv`
+
+and additionally to support more OpenCV modules:
+
+`pacman -S vtk glew fmt openmpi`
 
 #### Ubuntu:
 
-`sudo apt install libopencv-dev clang libclang-dev`
+`apt install libopencv-dev clang libclang-dev`
+
+#### Opensuse:
+
+`zypper install opencv-devel clang-devel gcc-c++`
 
 #### Other Linux:
 You have several options of getting the OpenCV library:
@@ -63,7 +73,7 @@ Installing OpenCV is easy through the following sources:
   ```
   also set `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` environment variables (see below
   for details).
-  
+
   Also, check the user guides [here](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278)
   and [here](https://github.com/twistedfall/opencv-rust/issues/113#issue-596076777).
 
@@ -84,7 +94,7 @@ Get OpenCV from homebrew:
   brew install opencv
   ```
   You will also need a working C++ compiler and libclang, you can install Command Line Tools (`xcode-select
-  --install`), XCode (from AppStore) or `llvm` (from Brew). You most probably need to also check the item 6 of the
+  --install`), XCode (from AppStore) or `llvm` (from Brew). You most probably need to also check the item 7 of the
   troubleshooting below.
 
 ### Manual build
@@ -92,8 +102,34 @@ Get OpenCV from homebrew:
 You can of course always compile OpenCV of the version you prefer manually. This is also supported, but it
 requires some additional configuration.
 
-You need to set up the following environment variables to point to the installed files of your OpenCV build: 
+You need to set up the following environment variables to point to the installed files of your OpenCV build:
 `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` (see below for details).
+
+### Static build
+
+Static linking to OpenCV is supported and tested at least on Linux. For some hints on building OpenCV statically
+please check this [comment](https://github.com/twistedfall/opencv-rust/issues/364#issuecomment-1308794985). Also,
+you can get some information on how to perform the build in CI scripts:
+[install-ubuntu.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-ubuntu.sh) and
+[script.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh), search for `non_static_version` variable.
+
+### Crosscompilation
+
+Cross-compilation is supported to at least some extent. The ability to crosscompile projects using `opencv` from x86-64
+Linux host machine to Raspberry Pi is tested regularly. Cross-compilation is notoriously difficult to set up, so you can
+use this example [rpi-xcompile.Dockerfile](https://github.com/twistedfall/opencv-rust/blob/master/tools/docker/rpi-xcompile.Dockerfile).
+
+```shell
+docker build -t rpi-xcompile -f tools/docker/rpi-xcompile.Dockerfile tools
+```
+
+Building this image requries `qemu-arm` to be present on the host system and the corresponding `binfmt-misc` set up 
+- see e.g. https://wiki.debian.org/QemuUserEmulation, only `Installing packages` should be enough for debian-based distros,
+- for opensuse, install `qemu-linux-user` via zypper to set up the host correctly.
+
+After the successful build you will have an image configured for cross-compilation to Raspberry Pi. It will contain the
+sample build script `/usr/local/bin/cargo-xbuild` that you can check for the correct environment setup and the specific
+command line arguments to use when crosscompiling the project inside the container created from that image.
 
 ## Troubleshooting
 
@@ -129,19 +165,25 @@ You need to set up the following environment variables to point to the installed
 
 5. On Windows with VCPKG you're getting a lot of linking errors in multiple files like in
    [this issue](https://github.com/twistedfall/opencv-rust/issues/161).
-   
+
    Unless you're doing a very specific build, you want to have environment variable `VCPKGRS_DYNAMIC` set to
    "1".
 
-6. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
+6. On Windows with OpenCV 4.6.0 you're getting linking errors related to `img_hash` module like in
+   [this issue](https://github.com/twistedfall/opencv-rust/issues/360).
 
-   OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up 
+   Be sure to add `opencv_img_hash460` to your `OPENCV_LINK_LIBS` environment variable because it's being built as a separate
+   file.
+
+7. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
+
+   OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up
    the `DYLD_FALLBACK_LIBRARY_PATH` environment variable to point to the path where libclang.dylib can be
    found, e.g. for Command Line Tools:
    ```
    export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/usr/lib/"
    ```
-   
+
    or XCode:
    ```
    export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
@@ -150,15 +192,23 @@ You need to set up the following environment variables to point to the installed
    You might be running into the issue on the recent macOS versions where this environment variable remains empty after setting,
    please check [this issue](https://github.com/twistedfall/opencv-rust/issues/343) for some workarounds.
 
-7. You're getting the panic: ```a `libclang` shared library is not loaded on this thread```.
+8. You're getting the ```a `libclang` shared library is not loaded on this thread``` error during crate build.
 
-   Enable the `clang-runtime` feature or use crate version `0.66` and newer. The reason for the issue is that some crates
-   (like `bindgen`) depend on `clang-sys` with hard-enabled `runtime` feature and because of that cargo makes this feature also 
-   enabled for every other crate that depends on `clang-sys` (`opencv` in this case). During binding generation phase
-   `opencv` crate tries to use multiple threads and `clang-sys` with `runtime` feature enabled doesn't like
-   that (hence the panic). Enabling `clang-runtime` feature switches to using multiple processes instead of
-   multiple threads. This makes the build a bit longer because of the need to build the helper binary, but the
-   end result is the same. Additionally since crate version `0.66` this behavior is now the default.
+   Enable the `clang-runtime` feature. The reason for the issue is that some `clang-sys` crate can either link to the
+   corresponding dynamic library statically or load it at runtime based on whether its feature `runtime` is enabled.
+   If enabled this crate feature applies to all crates that depend on `clang-sys` even if they didn't explicitly enable that
+   feature themselves (at least with Rust `edition` before 2021 and Cargo `resolver` before 2).
+
+9. You're getting `'limits' file not found` error during crate build.
+
+   This error is caused by the missing/invalid installation of C++ standard library (e.g. libstdc++ for GCC). To fix this make
+   sure that the toolchain you're using has the corresponding C++ standard library. The toolchain is used through `libclang`, so
+   to get useful diagnostic info run:
+   ```shell
+   clang -E -x c++ - -v
+   ```
+   Look for `Selected GCC installation` and `#include <...> search starts here` to get the sense of what system toolchain is used
+   by clang. Refer to this [issue](https://github.com/twistedfall/opencv-rust/issues/322) for more fixes and workarounds.
 
 ## Reporting issues
 
@@ -166,12 +216,13 @@ If you still have trouble using the crate after going through the Troubleshootin
 report it to the [bugtracker](https://github.com/twistedfall/opencv-rust/issues).
 
 When reporting an issue please state:
+
 1. Operating system
 2. The way you installed OpenCV: package, official binary distribution, manual compilation, etc.
 3. OpenCV version
 4. Attach the full output of the following command from your project directory:
    ```shell script
-   RUST_BACKTRACE=full cargo build -vv 
+   RUST_BACKTRACE=full cargo build -vv
    ```
 
 ## Environment variables
@@ -184,7 +235,7 @@ on any platform, the specified values will override those automatically discover
   specify the ".framework" extension then build script will link a macOS framework instead of plain shared
   library.
   E.g. "opencv_world411".
-  
+
   If this list starts with '+' (plus sign) then the specified items will be appended to whatever the system
   probe returned. E.g. a value of "+dc1394" will do a system discovery of the OpenCV library and its linked
   libraries and then will additionally link `dc1394` library at the end. Can be useful if the system probe
@@ -230,9 +281,9 @@ The following variables are rarely used, but you might need them under some circ
       cmake (cmake related environment variables are applicable with this probe)
     * vcpkg
 
-* `OPENCV_MODULE_WHITELIST` and `OPENCV_MODULE_BLACKLIST`
-  Not used anymore. These used to be used to select modules that get their binding generated. We have switched to
-  using cargo features for module selection. Please see the section on features to learn how to switch.
+* `OPENCV_MSVC_CRT`
+  Allows selecting the CRT library when building with MSVC for Windows. Allowed values are `"static"` for `/MT`
+  and `"dynamic"` for `/MD`.
 
 The following variables affect the building the of the `opencv` crate, but belong to external components:
 
@@ -240,8 +291,8 @@ The following variables affect the building the of the `opencv` crate, but belon
   Where to look for `*.pc` files see the [man pkg-config](https://linux.die.net/man/1/pkg-config)
   Path specified here must contain `opencv.pc` (pre OpenCV 4) or `opencv4.pc` (OpenCV 4 and later).
 
-* `VCPKG_ROOT` and `VCPKGRS_DYNAMIC`
-  The root of `vcpkg` installation and flag allowing use of `*.dll` libraries, see the
+* `VCPKG_ROOT`, `VCPKGRS_DYNAMIC` and `VCPKGRS_TRIPLET`
+  The root of `vcpkg` installation, flag allowing use of `*.dll` libraries and selected `vcpkg` triplet, see the
   [documentation for `vcpkg` crate](https://docs.rs/vcpkg)
 
 * `OpenCV_DIR`
@@ -274,7 +325,6 @@ The following variables affect the building the of the `opencv` crate, but belon
   opencv = { version = ..., default-features = false, features = ["calib3d", "features2d", "flann"]}
   ```
 * `rgb` - allow using [`rgb`](https://crates.io/crates/rgb) crate types as `Mat` elements
-* `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
 
 ## API details
 
@@ -285,13 +335,12 @@ as well.
 ### OpenCV version support
 
 The following OpenCV versions are supported at the moment:
-* 3.2
 * 3.4
 * 4.x
 
-### Minimum rustc version
+### Minimum rustc version (MSRV)
 
-Currently, version 1.53.0 is required, but generally you should use the latest stable rustc to compile this crate.
+Currently, version 1.59.0 or later is required.
 
 ### Platform support
 
@@ -299,7 +348,7 @@ Currently, the main development and testing of the crate is performed on Linux, 
 also supported: macOS and Windows.
 
 For some more details please refer to the CI build scripts:
-[Linux OpenCV install](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-bionic.sh),
+[Linux OpenCV install](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-ubuntu.sh),
 [macOS OpenCV install as framework](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-macos-framework.sh),
 [macOS OpenCV install via brew](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-macos-brew.sh),
 [Windows OpenCV install via Chocolatey](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-windows-chocolatey.sh),
@@ -317,27 +366,41 @@ that.
 Most functions return a `Result` to expose a potential C++ exception. Although some methods like property reads
 or functions that are marked CV_NOEXCEPT in the OpenCV headers are infallible and return a naked value.
 
-### Properties
+### CV_MAKETYPE
 
-Properties of OpenCV classes are accessible through setters and getters. Those functions are infallible, they
-return the value directly instead of `Result`.
+`CV_MAKETYPE` and related `CV_MAT_DEPTH` constant functions are available to replace the corresponding OpenCV macros.
+Yet it's usually easier to call `::opencv_type()` function on the corresponding Rust type. E.g.:
+```rust
+let t = u16::opencv_type(); // equivalent to CV_MAKETYPE(CV_16U, 1)
+let t = Vec2f::opencv_type(); // equivalent to CV_MAKETYPE(CV_32F, 2)
+```
 
 ### C++ operators
 Some C++ operators are supported, they are converted to the corresponding functions on Rust side. Here is the
 list with the corresponding function name:
 * `[]` → `get()` or `get_mut()`
-* `+` → `add()`
-* `-` → `sub()`
-* `*` → `mul()`
-* `/` → `div()`
-* `==` → `equals()`
-* `*` (deref) → `deref()` or `deref_mut()`
+* `+`, `-` → `add()`, `sub()`
+* `*`, `/` → `mul()`, `div()`
+* `()` (function call) → `apply()`
+* `=` → `set()`
+* `*` (deref) → `try_deref()` or `try_deref_mut()`
+* `==`, `!=` → `equals()`, `not_equals()`
+* `>`, `>=` → `greater_than()`, `greater_than_or_equal()`
+* `<`, `<=` → `less_than()`, `less_than_or_equal()`
+* `++`, `--` → `incr()`, `decr()`
+* `&`, `|`, `^` → `and()`, `or()`, `xor()`
+* `!` → `negate()`
+
+### Class fields
+
+Fields of OpenCV classes are accessible through setters and getters. Those functions are infallible, they
+return the value directly instead of `Result`.
 
 ### Infallible functions
 
 For infallible functions (like setters) that accept `&str` values the following logic applies: if a Rust
 string passed as argument contains null byte then this string will be truncated up to that null byte. So if
-for example you pass "123\0456" to the setter, the property will be set to "123". 
+for example you pass "123\0456" to the setter, the property will be set to "123".
 
 ### Callbacks
 
@@ -345,7 +408,7 @@ Some API functions accept callbacks, e.g. `set_mouse_callback`. While currently 
 use those functions there are some limitations to keep in mind. Current implementation of callback handling
 leaks the passed callback argument. That means that the closure used as a callback will never be freed during
 the lifetime of a program and moreover Drop will not be called for it. There is a plan to implement possibility
-to be able to free at least some of the closures.
+to be able to free at least some closures.
 
 ### Unsafety
 
@@ -380,17 +443,23 @@ values, but they are reported in the API documentation.
 
 Overloaded methods have been mostly manually given different names or automatically renamed to *_1, *_2, etc.
 
-## OpenCV 2 support
+## Older OpenCV branches support
+### OpenCV 2
 
 If you can't use OpenCV 3.x or higher, the (no longer maintained) `0.2.4` version of this crate is known to
 work with OpenCV `2.4.7.13` (and probably other 2.4 versions). Please refer to the README.md file for that
 version because the crate has gone through the considerable rewrite since.
 
+### OpenCV 3.2
+
+The last version with confirmed OpenCV 3.2 support is 0.75.0, after that this branch of OpenCV is no longer
+tested and supported. It may still work though.
+
 ## Contributor's Guide
 
 The binding generator code lives in a separate crate under [binding-generator](binding-generator). During the
 build phase it creates bindings from the header files and puts them into [bindings](bindings) directory. Those
-are then transferred to [src](src) for the consumption by the crate users. 
+are then transferred to [src](src) for the consumption by the crate users.
 
 The crate itself, as imported by users, consists of generated rust code in [src](src) committed to the repo.
 This way, users don't have to handle the code generation overhead in their builds. When developing this crate,

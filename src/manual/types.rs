@@ -1,9 +1,6 @@
 pub use abstract_ref::*;
 
-use crate::{
-	input_output_array,
-	types,
-};
+use crate::{input_output_array, types};
 
 mod abstract_ref;
 

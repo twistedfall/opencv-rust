@@ -5,15 +5,13 @@ use matches::assert_matches;
 use opencv::{
 	core,
 	dnn::{DictValue, LayerParams, Net},
-	Error,
 	prelude::*,
-	Result,
 	types::VectorOfMat,
+	Error, Result,
 };
 
 /// Specialization, passing Vector of boxed objects
 #[test]
-#[cfg(not(ocvrs_opencv_branch_32))]
 fn net() -> Result<()> {
 	let mut net = Net::default()?;
 	assert!(net.empty()?);
@@ -57,11 +55,28 @@ fn dict_value() -> Result<()> {
 		assert!(!v.is_int()?);
 		assert!(!v.is_string()?);
 		assert_eq!(1, v.size()?);
-		assert_matches!(v.get_i64(-1), Err(Error{code: core::StsAssert, ..}));
+		assert_matches!(
+			v.get_i64(-1),
+			Err(Error {
+				code: core::StsAssert,
+				..
+			})
+		);
 		assert_eq!(123.456, v.get_f64(-1)?);
-		#[cfg(not(ocvrs_opencv_branch_32))]
-		assert_matches!(v.get_int_value(-1), Err(Error{code: core::StsAssert, ..}));
-		assert_matches!(v.get_i32(-1), Err(Error{code: core::StsAssert, ..}));
+		assert_matches!(
+			v.get_int_value(-1),
+			Err(Error {
+				code: core::StsAssert,
+				..
+			})
+		);
+		assert_matches!(
+			v.get_i32(-1),
+			Err(Error {
+				code: core::StsAssert,
+				..
+			})
+		);
 	}
 
 	{
@@ -73,9 +88,20 @@ fn dict_value() -> Result<()> {
 		assert_eq!(123, v.get_i64(-1)?);
 		assert_eq!(123, v.get_i32(-1)?);
 		assert_eq!(123., v.get_f64(-1)?);
-		#[cfg(not(ocvrs_opencv_branch_32))]
-		assert_matches!(v.get_string_value(-1), Err(Error{code: core::StsAssert, ..}));
-		assert_matches!(v.get_str(-1), Err(Error{code: core::StsAssert, ..}));
+		assert_matches!(
+			v.get_string_value(-1),
+			Err(Error {
+				code: core::StsAssert,
+				..
+			})
+		);
+		assert_matches!(
+			v.get_str(-1),
+			Err(Error {
+				code: core::StsAssert,
+				..
+			})
+		);
 	}
 
 	{
@@ -84,11 +110,9 @@ fn dict_value() -> Result<()> {
 		assert!(!v.is_real()?);
 		assert!(v.is_string()?);
 		assert_eq!(1, v.size()?);
-		#[cfg(not(ocvrs_opencv_branch_32))] {
-			assert_eq!(876543, v.get_i64(-1)?);
-			assert_eq!(876543.123, v.get_real_value(-1)?);
-			assert_eq!("876543.123", v.get_string_value(-1)?);
-		}
+		assert_eq!(876543, v.get_i64(-1)?);
+		assert_eq!(876543.123, v.get_real_value(-1)?);
+		assert_eq!("876543.123", v.get_string_value(-1)?);
 		assert_eq!("876543.123", v.get_str(-1)?);
 	}
 	Ok(())

@@ -1,7 +1,4 @@
-use opencv::{
-	Result,
-	core,
-};
+use opencv::{core, Result};
 
 #[test]
 fn convert_type_str() -> Result<()> {

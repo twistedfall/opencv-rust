@@ -1,3 +1,4 @@
 {{doc_comment}}
-// {{name}} = {{value}} as isize, // duplicate discriminant
+// Duplicate, use {{duplicate_name}} instead
+// {{name}} = {{value}},
 
