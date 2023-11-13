@@ -1,11 +1,16 @@
 //! Contains all tests that cover marshalling types to and from C++
 
-use opencv::{core::{self, Scalar}, Error, prelude::*, Result};
+use opencv::core::{self, Scalar};
+use opencv::prelude::*;
+use opencv::Result;
 
 /// Passing simple struct as argument
 #[test]
 fn simple_struct_arg() -> Result<()> {
-	use opencv::{imgproc, core::{Point, Size}};
+	use opencv::{
+		core::{Point, Size},
+		imgproc,
+	};
 
 	let res = imgproc::get_structuring_element(imgproc::MORPH_CROSS, Size { width: 100, height: 100 }, Point { x: 50, y: 50 })?;
 	assert_eq!(res.typ(), 0);
@@ -17,7 +22,7 @@ fn simple_struct_arg() -> Result<()> {
 
 #[test]
 fn scalar_arg() -> Result<()> {
-	let mut m = Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::new(2., 0., 0., 0.))?;
+	let mut m = Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), 2.into())?;
 	let sum = core::sum_elems(&m)?;
 	assert_eq!(sum[0], 6.);
 	let s = m.at_row_mut::<u8>(0)?;
@@ -49,20 +54,32 @@ fn callback() -> Result<()> {
 	#![cfg(ocvrs_has_module_highgui)]
 	use std::sync::{Arc, Mutex};
 
-	use opencv::highgui;
+	use opencv::{core, highgui, Error};
 
 	// only run under X11 on linux
 	if cfg!(target_os = "linux") && option_env!("DISPLAY").is_some() {
 		{
-			highgui::named_window("test_1", 0)?;
+			if let Err(Error {
+				code: core::StsError, ..
+			}) = highgui::named_window_def("test_1")
+			{
+				// means that OpenCV is not built with GUI support, just skip the test
+				return Ok(());
+			}
 			let mut value = 50;
 			let cb_value = Arc::new(Mutex::new(0));
-			highgui::create_trackbar("test_track_1", "test_1", Some(&mut value), 100, Some(Box::new({
-				let cb_value = cb_value.clone();
-				move |s| {
-					*cb_value.lock().unwrap() = s;
-				}
-			})))?;
+			highgui::create_trackbar(
+				"test_track_1",
+				"test_1",
+				Some(&mut value),
+				100,
+				Some(Box::new({
+					let cb_value = cb_value.clone();
+					move |s| {
+						*cb_value.lock().unwrap() = s;
+					}
+				})),
+			)?;
 			assert_eq!(value, 50);
 			highgui::set_trackbar_pos("test_track_1", "test_1", 10)?;
 			assert_eq!(value, 10);
@@ -70,14 +87,20 @@ fn callback() -> Result<()> {
 		}
 
 		{
-			highgui::named_window("test_2", 0)?;
+			highgui::named_window_def("test_2")?;
 			let cb_value = Arc::new(Mutex::new(0));
-			highgui::create_trackbar("test_track_2", "test_2", None, 100, Some(Box::new({
-				let cb_value = cb_value.clone();
-				move |s| {
-					*cb_value.lock().unwrap() = s;
-				}
-			})))?;
+			highgui::create_trackbar(
+				"test_track_2",
+				"test_2",
+				None,
+				100,
+				Some(Box::new({
+					let cb_value = cb_value.clone();
+					move |s| {
+						*cb_value.lock().unwrap() = s;
+					}
+				})),
+			)?;
 			highgui::set_trackbar_pos("test_track_2", "test_2", 10)?;
 			assert_eq!(*cb_value.lock().unwrap(), 10);
 		}
@@ -90,7 +113,7 @@ fn callback() -> Result<()> {
 fn fixed_array_return() -> Result<()> {
 	// mutable fixed array return and modification
 	{
-		let m = Mat::new_rows_cols_with_default(5, 3, i32::typ(), Scalar::all(1.))?;
+		let m = Mat::new_rows_cols_with_default(5, 3, i32::opencv_type(), Scalar::all(1.))?;
 		let mut mat_step = m.mat_step();
 		assert_eq!([12, 4], *mat_step.buf());
 		mat_step.buf()[0] = 16;
@@ -113,7 +136,8 @@ fn string_return() -> Result<()> {
 #[test]
 fn string_out_argument() -> Result<()> {
 	#![cfg(ocvrs_opencv_branch_4)]
-	use opencv::core::{FileStorage_Mode, FileStorage, FileNode};
+	use opencv::core::{FileNode, FileStorage, FileStorage_Mode};
+	use opencv::Error;
 
 	use matches::assert_matches;
 
@@ -133,98 +157,15 @@ fn string_out_argument() -> Result<()> {
 		let st = FileStorage::new("", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32, "")?;
 		let node = FileNode::new(&st, 0, 0)?;
 		let mut out = String::new();
-		assert_matches!(core::read_str(&node, &mut out, "123"), Err(Error { code: core::StsAssert, .. }));
+		assert_matches!(
+			core::read_str(&node, &mut out, "123"),
+			Err(Error {
+				code: core::StsAssert,
+				..
+			})
+		);
 		assert_eq!("", out);
 	}
-
-	Ok(())
-}
-
-/// Setting and getting fields through Ptr
-#[test]
-fn field_access_on_ptr() -> Result<()> {
-	#![cfg(ocvrs_has_module_aruco)]
-	use opencv::aruco::DetectorParameters;
-
-	let mut ptr = DetectorParameters::create()?;
-	let mut plain = DetectorParameters::default()?;
-
-	assert_eq!(plain.adaptive_thresh_win_size_min(), ptr.adaptive_thresh_win_size_min());
-	ptr.set_adaptive_thresh_win_size_min(4);
-	assert_eq!(ptr.adaptive_thresh_win_size_min(), 4);
-
-	assert_eq!(plain.adaptive_thresh_win_size_max(), ptr.adaptive_thresh_win_size_max());
-	ptr.set_adaptive_thresh_win_size_max(24);
-	assert_eq!(ptr.adaptive_thresh_win_size_max(), 24);
-
-	assert_eq!(plain.adaptive_thresh_win_size_step(), ptr.adaptive_thresh_win_size_step());
-	ptr.set_adaptive_thresh_win_size_step(11);
-	assert_eq!(ptr.adaptive_thresh_win_size_step(), 11);
-
-	assert_eq!(plain.adaptive_thresh_constant(), ptr.adaptive_thresh_constant());
-	ptr.set_adaptive_thresh_constant(8.0);
-	assert_eq!(ptr.adaptive_thresh_constant(), 8.0);
-
-	assert_eq!(plain.min_marker_perimeter_rate(), ptr.min_marker_perimeter_rate());
-	ptr.set_min_marker_perimeter_rate(1.0);
-	assert_eq!(ptr.min_marker_perimeter_rate(), 1.0);
-
-	assert_eq!(plain.max_marker_perimeter_rate(), ptr.max_marker_perimeter_rate());
-	ptr.set_max_marker_perimeter_rate(5.0);
-	assert_eq!(ptr.max_marker_perimeter_rate(), 5.0);
-
-	assert_eq!(plain.min_corner_distance_rate(), ptr.min_corner_distance_rate());
-	ptr.set_min_corner_distance_rate(1.0);
-	assert_eq!(ptr.min_corner_distance_rate(), 1.0);
-
-	assert_eq!(plain.min_distance_to_border(), ptr.min_distance_to_border());
-	ptr.set_min_distance_to_border(4);
-	assert_eq!(ptr.min_distance_to_border(), 4);
-
-	assert_eq!(plain.min_marker_distance_rate(), ptr.min_marker_distance_rate());
-	ptr.set_min_marker_distance_rate(1.0);
-	assert_eq!(ptr.min_marker_distance_rate(), 1.0);
-
-	assert_eq!(plain.corner_refinement_win_size(), ptr.corner_refinement_win_size());
-	ptr.set_corner_refinement_win_size(6);
-	assert_eq!(ptr.corner_refinement_win_size(), 6);
-
-	assert_eq!(plain.corner_refinement_max_iterations(), ptr.corner_refinement_max_iterations());
-	ptr.set_corner_refinement_max_iterations(31);
-	assert_eq!(ptr.corner_refinement_max_iterations(), 31);
-
-	assert_eq!(plain.corner_refinement_min_accuracy(), ptr.corner_refinement_min_accuracy());
-	ptr.set_corner_refinement_min_accuracy(1.0);
-	assert_eq!(ptr.corner_refinement_min_accuracy(), 1.0);
-
-	assert_eq!(plain.marker_border_bits(), ptr.marker_border_bits());
-	ptr.set_marker_border_bits(2);
-	assert_eq!(ptr.marker_border_bits(), 2);
-
-	assert_eq!(plain.perspective_remove_ignored_margin_per_cell(), ptr.perspective_remove_ignored_margin_per_cell());
-	ptr.set_perspective_remove_ignored_margin_per_cell(1.0);
-	assert_eq!(ptr.perspective_remove_ignored_margin_per_cell(), 1.0);
-
-	assert_eq!(plain.max_erroneous_bits_in_border_rate(), ptr.max_erroneous_bits_in_border_rate());
-	ptr.set_max_erroneous_bits_in_border_rate(1.0);
-	assert_eq!(ptr.max_erroneous_bits_in_border_rate(), 1.0);
-
-	assert_eq!(plain.min_otsu_std_dev(), ptr.min_otsu_std_dev());
-	ptr.set_min_otsu_std_dev(6.0);
-	assert_eq!(ptr.min_otsu_std_dev(), 6.0);
-
-	assert_eq!(plain.error_correction_rate(), ptr.error_correction_rate());
-	ptr.set_error_correction_rate(1.0);
-	assert_eq!(ptr.error_correction_rate(), 1.0);
-
-	assert_eq!(plain.perspective_remove_pixel_per_cell(), ptr.perspective_remove_pixel_per_cell());
-	ptr.set_perspective_remove_pixel_per_cell(5);
-	assert_eq!(ptr.perspective_remove_pixel_per_cell(), 5);
-
-	plain.set_adaptive_thresh_constant(123.);
-	assert_eq!(123., plain.adaptive_thresh_constant());
-	plain.set_adaptive_thresh_constant(87.);
-	assert_eq!(87., plain.adaptive_thresh_constant());
 
 	Ok(())
 }
@@ -234,29 +175,74 @@ fn field_access_on_ptr() -> Result<()> {
 fn simple_struct_return_infallible() -> Result<()> {
 	#![cfg(ocvrs_has_module_imgproc)]
 	use opencv::{
-		core::{Vector, Rect, Point2f, Size2f},
+		core::{Point2f, Rect, Size2f, Vector},
 		imgproc,
 	};
 	/*
-	There previously was in issue that return of the small simple structs like Point2f (2 floats, 64 bits in total) was handled
+	There previously was an issue that return of the small simple structs like Point2f (2 floats, 64 bits in total) was handled
 	differently by Rust (v1.57.0) and default compilers in Ubuntu 20.04 (Gcc 9.3.0 & Clang 10.0.0). That mismatch led to
 	miscellaneous memory problems like segmentation faults. That shouldn't happen anymore because such returns are now handled by
 	the output argument.
 	 */
-	let contour = Vector::<Point2f>::from_iter(IntoIterator::into_iter([
+	let contour = Vector::<Point2f>::from_iter([
 		Point2f::new(5., 5.),
 		Point2f::new(5., 15.),
 		Point2f::new(15., 15.),
 		Point2f::new(15., 5.),
 		Point2f::new(5., 5.),
-	]));
+	]);
 	let bound_rect = imgproc::bounding_rect(&contour)?;
 	assert_eq!(Rect::new(5, 5, 11, 11), bound_rect);
 	let min_area_rect = imgproc::min_area_rect(&contour)?;
-	assert_eq!(Point2f::new(10., 10.), min_area_rect.center());
-	assert_eq!(Size2f::new(10., 10.), min_area_rect.size());
+	assert_eq!(Point2f::new(10., 10.), min_area_rect.center);
+	assert_eq!(Size2f::new(10., 10.), min_area_rect.size);
 	// different versions of OpenCV return -90 and 90
-	assert_eq!(90., min_area_rect.angle().abs());
+	assert_eq!(90., min_area_rect.angle.abs());
+	Ok(())
+}
+
+#[test]
+fn tuple() -> Result<()> {
+	#[cfg(all(ocvrs_has_module_imgproc, ocvrs_opencv_branch_4))]
+	{
+		use opencv::types::TupleOfi32_f32;
+
+		let src_tuple = (10, 20.);
+		let tuple = TupleOfi32_f32::new(src_tuple);
+		assert_eq!(10, tuple.get_0());
+		assert_eq!(20., tuple.get_1());
+		assert_eq!(src_tuple, tuple.into_tuple());
+	}
+
+	#[cfg(ocvrs_has_module_objdetect)]
+	{
+		use opencv::core::Rect;
+		use opencv::types::TupleOfRect_i32;
+
+		let src_tuple = (Rect::new(1, 2, 3, 4), 98);
+		let tuple = TupleOfRect_i32::new(src_tuple);
+		assert_eq!(Rect::new(1, 2, 3, 4), tuple.get_0());
+		assert_eq!(98, tuple.get_1());
+		assert_eq!(src_tuple, tuple.into_tuple());
+	}
+
+	#[cfg(all(ocvrs_has_module_stitching, ocvrs_opencv_branch_4))]
+	{
+		use opencv::core::{AccessFlag, UMatUsageFlags};
+		use opencv::types::TupleOfUMat_u8;
+
+		let mat = Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::all(76.))?;
+		let src_tuple = (mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?, 8);
+		let tuple = TupleOfUMat_u8::new(src_tuple);
+		assert_eq!(10, tuple.get_0().rows());
+		assert_eq!(8, tuple.get_1());
+		let (res_umat, res_val) = tuple.into_tuple();
+		let res_mat = res_umat.get_mat(AccessFlag::ACCESS_READ)?;
+		assert_eq!(10, res_mat.rows());
+		assert_eq!(20, res_mat.cols());
+		assert_eq!(76., *res_mat.at_2d::<f64>(5, 5)?);
+		assert_eq!(8, res_val);
+	}
 	Ok(())
 }
 
@@ -269,7 +255,7 @@ fn simple_struct_return_infallible() -> Result<()> {
 // 	use opencv::{tracking::TrackerSamplerPF_Params};
 // 	let mut params = TrackerSamplerPF_Params::default()?;
 // 	assert_eq!(&[15., 15., 15., 15.], params.std().data_typed()?);
-// 	let mat = Mat::new_rows_cols_with_default(1, 4, f64::typ(), Scalar::all(8.))?.try_into_typed::<f64>()?;
+// 	let mat = Mat::new_rows_cols_with_default(1, 4, f64::opencv_type(), Scalar::all(8.))?.try_into_typed::<f64>()?;
 // 	let mat_src = mat.try_clone()?.try_into_typed::<f64>()?;
 // 	params.set_std(mat);
 // 	let mat = params.std();

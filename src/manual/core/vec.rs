@@ -1,29 +1,23 @@
-use std::{
-	array,
-	ffi::c_void,
-	ops::{Deref, DerefMut, MulAssign},
-};
+use std::array;
+use std::ops::{Deref, DerefMut, MulAssign};
 
-use num_traits::Float;
+use num_traits::{Float, NumCast, ToPrimitive};
 
-use crate::{
-	core::{_InputArray, _InputOutputArray, _OutputArray, ToInputArray, ToInputOutputArray, ToOutputArray},
-	Result,
-	sys,
-	traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer},
-};
+use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray, _InputArray, _InputOutputArray, _OutputArray};
+use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::{extern_receive, extern_send, sys, Result};
 
 mod operations;
 
 /// [docs.opencv.org](https://docs.opencv.org/master/d6/dcf/classcv_1_1Vec.html)
 /// Named `VecN` to avoid name clash with std's `Vec`.
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
-pub struct VecN<T, const N: usize> (pub [T; N]);
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd)]
+pub struct VecN<T, const N: usize>(pub [T; N]);
 
 impl<T, const N: usize> Default for VecN<T, N>
-	where
-		[T; N]: Default
+where
+	[T; N]: Default,
 {
 	#[inline]
 	fn default() -> Self {
@@ -31,27 +25,51 @@ impl<T, const N: usize> Default for VecN<T, N>
 	}
 }
 
-impl<T: Copy, const N: usize> VecN<T, N> {
+impl<T, const N: usize> VecN<T, N> {
 	#[inline]
-	pub fn all(v0: T) -> Self {
-		Self::from([v0; N])
+	pub const fn from_array(val: [T; N]) -> Self {
+		Self(val)
+	}
+
+	#[inline]
+	// todo: make const when MSRV allows 1.61?
+	pub fn all(v0: T) -> Self
+	where
+		T: Copy,
+	{
+		Self::from_array([v0; N])
 	}
 
 	/// per-element multiplication
 	#[inline]
-	pub fn mul(&self, v: Self) -> Self where T: MulAssign {
+	pub fn mul(&self, v: Self) -> Self
+	where
+		T: MulAssign,
+		Self: Copy,
+	{
 		let mut out = *self;
-		out.iter_mut()
-			.zip(v.into_iter())
-			.for_each(|(dest, m)| *dest *= m);
+		out.iter_mut().zip(v).for_each(|(dest, m)| *dest *= m);
 		out
+	}
+
+	/// Cast `VecN` to the other element type
+	#[inline]
+	pub fn to<D: NumCast + Default + Copy>(self) -> Option<VecN<D, N>>
+	where
+		T: ToPrimitive,
+	{
+		let mut out = [D::default(); N];
+		for (dest, src) in out.iter_mut().zip(self) {
+			*dest = D::from(src)?;
+		}
+		Some(VecN(out))
 	}
 }
 
 impl<T, const N: usize> From<[T; N]> for VecN<T, N> {
 	#[inline]
 	fn from(s: [T; N]) -> Self {
-		Self(s)
+		Self::from_array(s)
 	}
 }
 
@@ -77,7 +95,7 @@ impl<T, const N: usize> IntoIterator for VecN<T, N> {
 
 	#[inline]
 	fn into_iter(self) -> array::IntoIter<T, N> {
-		IntoIterator::into_iter(self.0)
+		self.0.into_iter()
 	}
 }
 
@@ -96,7 +114,7 @@ impl<F: Float> VecN<F, 3> {
 		Self([
 			self[1] * v[2] - self[2] * v[1],
 			self[2] * v[0] - self[0] * v[2],
-			self[0] * v[1] - self[1] * v[0]
+			self[0] * v[1] - self[1] * v[0],
 		])
 	}
 }
@@ -112,20 +130,20 @@ impl<F: Float> VecN<F, 4> {
 impl<T, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	type Arg = Self;
 	type ExternReceive = Self;
-	type ExternContainer = Self;
 
 	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self { self }
-
-	#[inline]
-	unsafe fn opencv_from_extern(s: Self) -> Self { s }
+	unsafe fn opencv_from_extern(s: Self) -> Self {
+		s
+	}
 }
 
 impl<T, const N: usize> OpenCVTypeArg<'_> for VecN<T, N> {
 	type ExternContainer = Self;
 
 	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self { self }
+	fn opencv_into_extern_container_nofail(self) -> Self {
+		self
+	}
 }
 
 impl<T, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
@@ -133,16 +151,20 @@ impl<T, const N: usize> OpenCVTypeExternContainer for VecN<T, N> {
 	type ExternSendMut = *mut Self;
 
 	#[inline]
-	fn opencv_as_extern(&self) -> Self::ExternSend { self }
+	fn opencv_as_extern(&self) -> Self::ExternSend {
+		self
+	}
 
 	#[inline]
-	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut { self }
-
-	#[inline]
-	fn opencv_into_extern(self) -> Self::ExternSendMut { &mut *std::mem::ManuallyDrop::new(self) as _ }
+	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
+		self
+	}
 }
 
-impl<T, const N: usize> ToInputArray for VecN<T, N> where Self: VecExtern<T, N> {
+impl<T, const N: usize> ToInputArray for VecN<T, N>
+where
+	Self: VecExtern,
+{
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		unsafe { self.extern_input_array() }
@@ -151,14 +173,20 @@ impl<T, const N: usize> ToInputArray for VecN<T, N> where Self: VecExtern<T, N> 
 	}
 }
 
-impl<T, const N: usize> ToInputArray for &VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
+impl<T, const N: usize> ToInputArray for &VecN<T, N>
+where
+	VecN<T, N>: VecExtern,
+{
 	#[inline]
 	fn input_array(&self) -> Result<_InputArray> {
 		(*self).input_array()
 	}
 }
 
-impl<T, const N: usize> ToOutputArray for VecN<T, N> where Self: VecExtern<T, N> {
+impl<T, const N: usize> ToOutputArray for VecN<T, N>
+where
+	Self: VecExtern,
+{
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
 		unsafe { self.extern_output_array() }
@@ -167,14 +195,20 @@ impl<T, const N: usize> ToOutputArray for VecN<T, N> where Self: VecExtern<T, N>
 	}
 }
 
-impl<T, const N: usize> ToOutputArray for &mut VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
+impl<T, const N: usize> ToOutputArray for &mut VecN<T, N>
+where
+	VecN<T, N>: VecExtern,
+{
 	#[inline]
 	fn output_array(&mut self) -> Result<_OutputArray> {
 		(*self).output_array()
 	}
 }
 
-impl<T, const N: usize> ToInputOutputArray for VecN<T, N> where Self: VecExtern<T, N> {
+impl<T, const N: usize> ToInputOutputArray for VecN<T, N>
+where
+	Self: VecExtern,
+{
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
 		unsafe { self.extern_input_output_array() }
@@ -183,7 +217,10 @@ impl<T, const N: usize> ToInputOutputArray for VecN<T, N> where Self: VecExtern<
 	}
 }
 
-impl<T, const N: usize> ToInputOutputArray for &mut VecN<T, N> where VecN<T, N>: VecExtern<T, N> {
+impl<T, const N: usize> ToInputOutputArray for &mut VecN<T, N>
+where
+	VecN<T, N>: VecExtern,
+{
 	#[inline]
 	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
 		(*self).input_output_array()
@@ -191,18 +228,26 @@ impl<T, const N: usize> ToInputOutputArray for &mut VecN<T, N> where VecN<T, N>:
 }
 
 #[doc(hidden)]
-pub trait VecExtern<T, const N: usize> {
-	#[doc(hidden)] unsafe fn extern_input_array(&self) -> sys::Result<*mut c_void>;
-	#[doc(hidden)] unsafe fn extern_output_array(&mut self) -> sys::Result<*mut c_void>;
-	#[doc(hidden)] unsafe fn extern_input_output_array(&mut self) -> sys::Result<*mut c_void>;
+pub trait VecExtern {
+	#[doc(hidden)]
+	unsafe fn extern_input_array(&self) -> sys::Result<extern_receive!(_InputArray)>;
+	#[doc(hidden)]
+	unsafe fn extern_output_array(&mut self) -> sys::Result<extern_receive!(_OutputArray)>;
+	#[doc(hidden)]
+	unsafe fn extern_input_output_array(&mut self) -> sys::Result<extern_receive!(_InputOutputArray)>;
 }
 
 macro_rules! vecn_extern {
 	($type: ty, $len: expr, $extern_input_array: ident, $extern_ouput_array: ident, $extern_input_array_output: ident) => {
-		impl $crate::manual::core::VecExtern<$type, $len> for $crate::manual::core::VecN<$type, $len> {
+		extern "C" {
+			fn $extern_input_array(instance: extern_send!($crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_InputArray)>);
+			fn $extern_ouput_array(instance: extern_send!(mut $crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_OutputArray)>);
+			fn $extern_input_array_output(instance: extern_send!(mut $crate::core::VecN<$type, $len>), ocvrs_return: *mut $crate::sys::Result<extern_receive!($crate::core::_InputOutputArray)>);
+		}
+
+		impl $crate::core::VecExtern for $crate::core::VecN<$type, $len> {
 			#[inline]
-			unsafe fn extern_input_array(&self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_input_array(instance: *const $crate::manual::core::VecN<$type, $len>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+			unsafe fn extern_input_array(&self) -> $crate::sys::Result<extern_receive!($crate::core::_InputArray)> {
 				return_send!(via ocvrs_return);
 				$extern_input_array(self, ocvrs_return.as_mut_ptr());
 				return_receive!(ocvrs_return => ret);
@@ -210,8 +255,7 @@ macro_rules! vecn_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_output_array(&mut self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_ouput_array(instance: *mut $crate::manual::core::VecN<$type, $len>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+			unsafe fn extern_output_array(&mut self) -> $crate::sys::Result<extern_receive!($crate::core::_OutputArray)> {
 				return_send!(via ocvrs_return);
 				$extern_ouput_array(self, ocvrs_return.as_mut_ptr());
 				return_receive!(ocvrs_return => ret);
@@ -219,8 +263,7 @@ macro_rules! vecn_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_input_output_array(&mut self) -> $crate::sys::Result<*mut ::std::ffi::c_void> {
-				extern "C" { fn $extern_input_array_output(instance: *mut $crate::manual::core::VecN<$type, $len>, ocvrs_return: *mut $crate::sys::Result<*mut ::std::ffi::c_void>); }
+			unsafe fn extern_input_output_array(&mut self) -> $crate::sys::Result<extern_receive!($crate::core::_InputOutputArray)> {
 				return_send!(via ocvrs_return);
 				$extern_input_array_output(self, ocvrs_return.as_mut_ptr());
 				return_receive!(ocvrs_return => ret);
@@ -230,31 +273,169 @@ macro_rules! vecn_extern {
 	}
 }
 
-vecn_extern!(u8, 2, cv_Vec2b_input_array, cv_Vec2b_output_array, cv_Vec2b_input_output_array);
-vecn_extern!(f64, 2, cv_Vec2d_input_array, cv_Vec2d_output_array, cv_Vec2d_input_output_array);
-vecn_extern!(f32, 2, cv_Vec2f_input_array, cv_Vec2f_output_array, cv_Vec2f_input_output_array);
-vecn_extern!(i32, 2, cv_Vec2i_input_array, cv_Vec2i_output_array, cv_Vec2i_input_output_array);
-vecn_extern!(i16, 2, cv_Vec2s_input_array, cv_Vec2s_output_array, cv_Vec2s_input_output_array);
-vecn_extern!(u16, 2, cv_Vec2w_input_array, cv_Vec2w_output_array, cv_Vec2w_input_output_array);
+vecn_extern!(
+	u8,
+	2,
+	cv_Vec2b_input_array,
+	cv_Vec2b_output_array,
+	cv_Vec2b_input_output_array
+);
+vecn_extern!(
+	f64,
+	2,
+	cv_Vec2d_input_array,
+	cv_Vec2d_output_array,
+	cv_Vec2d_input_output_array
+);
+vecn_extern!(
+	f32,
+	2,
+	cv_Vec2f_input_array,
+	cv_Vec2f_output_array,
+	cv_Vec2f_input_output_array
+);
+vecn_extern!(
+	i32,
+	2,
+	cv_Vec2i_input_array,
+	cv_Vec2i_output_array,
+	cv_Vec2i_input_output_array
+);
+vecn_extern!(
+	i16,
+	2,
+	cv_Vec2s_input_array,
+	cv_Vec2s_output_array,
+	cv_Vec2s_input_output_array
+);
+vecn_extern!(
+	u16,
+	2,
+	cv_Vec2w_input_array,
+	cv_Vec2w_output_array,
+	cv_Vec2w_input_output_array
+);
 
-vecn_extern!(u8, 3, cv_Vec3b_input_array, cv_Vec3b_output_array, cv_Vec3b_input_output_array);
-vecn_extern!(f64, 3, cv_Vec3d_input_array, cv_Vec3d_output_array, cv_Vec3d_input_output_array);
-vecn_extern!(f32, 3, cv_Vec3f_input_array, cv_Vec3f_output_array, cv_Vec3f_input_output_array);
-vecn_extern!(i32, 3, cv_Vec3i_input_array, cv_Vec3i_output_array, cv_Vec3i_input_output_array);
-vecn_extern!(i16, 3, cv_Vec3s_input_array, cv_Vec3s_output_array, cv_Vec3s_input_output_array);
-vecn_extern!(u16, 3, cv_Vec3w_input_array, cv_Vec3w_output_array, cv_Vec3w_input_output_array);
+vecn_extern!(
+	u8,
+	3,
+	cv_Vec3b_input_array,
+	cv_Vec3b_output_array,
+	cv_Vec3b_input_output_array
+);
+vecn_extern!(
+	f64,
+	3,
+	cv_Vec3d_input_array,
+	cv_Vec3d_output_array,
+	cv_Vec3d_input_output_array
+);
+vecn_extern!(
+	f32,
+	3,
+	cv_Vec3f_input_array,
+	cv_Vec3f_output_array,
+	cv_Vec3f_input_output_array
+);
+vecn_extern!(
+	i32,
+	3,
+	cv_Vec3i_input_array,
+	cv_Vec3i_output_array,
+	cv_Vec3i_input_output_array
+);
+vecn_extern!(
+	i16,
+	3,
+	cv_Vec3s_input_array,
+	cv_Vec3s_output_array,
+	cv_Vec3s_input_output_array
+);
+vecn_extern!(
+	u16,
+	3,
+	cv_Vec3w_input_array,
+	cv_Vec3w_output_array,
+	cv_Vec3w_input_output_array
+);
 
-vecn_extern!(u8, 4, cv_Vec4b_input_array, cv_Vec4b_output_array, cv_Vec4b_input_output_array);
-vecn_extern!(f64, 4, cv_Vec4d_input_array, cv_Vec4d_output_array, cv_Vec4d_input_output_array);
-vecn_extern!(f32, 4, cv_Vec4f_input_array, cv_Vec4f_output_array, cv_Vec4f_input_output_array);
-vecn_extern!(i32, 4, cv_Vec4i_input_array, cv_Vec4i_output_array, cv_Vec4i_input_output_array);
-vecn_extern!(i16, 4, cv_Vec4s_input_array, cv_Vec4s_output_array, cv_Vec4s_input_output_array);
-vecn_extern!(u16, 4, cv_Vec4w_input_array, cv_Vec4w_output_array, cv_Vec4w_input_output_array);
+vecn_extern!(
+	u8,
+	4,
+	cv_Vec4b_input_array,
+	cv_Vec4b_output_array,
+	cv_Vec4b_input_output_array
+);
+vecn_extern!(
+	f64,
+	4,
+	cv_Vec4d_input_array,
+	cv_Vec4d_output_array,
+	cv_Vec4d_input_output_array
+);
+vecn_extern!(
+	f32,
+	4,
+	cv_Vec4f_input_array,
+	cv_Vec4f_output_array,
+	cv_Vec4f_input_output_array
+);
+vecn_extern!(
+	i32,
+	4,
+	cv_Vec4i_input_array,
+	cv_Vec4i_output_array,
+	cv_Vec4i_input_output_array
+);
+vecn_extern!(
+	i16,
+	4,
+	cv_Vec4s_input_array,
+	cv_Vec4s_output_array,
+	cv_Vec4s_input_output_array
+);
+vecn_extern!(
+	u16,
+	4,
+	cv_Vec4w_input_array,
+	cv_Vec4w_output_array,
+	cv_Vec4w_input_output_array
+);
 
-vecn_extern!(f64, 6, cv_Vec6d_input_array, cv_Vec6d_output_array, cv_Vec6d_input_output_array);
-vecn_extern!(f32, 6, cv_Vec6f_input_array, cv_Vec6f_output_array, cv_Vec6f_input_output_array);
-vecn_extern!(i32, 6, cv_Vec6i_input_array, cv_Vec6i_output_array, cv_Vec6i_input_output_array);
+vecn_extern!(
+	f64,
+	6,
+	cv_Vec6d_input_array,
+	cv_Vec6d_output_array,
+	cv_Vec6d_input_output_array
+);
+vecn_extern!(
+	f32,
+	6,
+	cv_Vec6f_input_array,
+	cv_Vec6f_output_array,
+	cv_Vec6f_input_output_array
+);
+vecn_extern!(
+	i32,
+	6,
+	cv_Vec6i_input_array,
+	cv_Vec6i_output_array,
+	cv_Vec6i_input_output_array
+);
 
-vecn_extern!(i32, 8, cv_Vec8i_input_array, cv_Vec8i_output_array, cv_Vec8i_input_output_array);
+vecn_extern!(
+	i32,
+	8,
+	cv_Vec8i_input_array,
+	cv_Vec8i_output_array,
+	cv_Vec8i_input_output_array
+);
 
-vecn_extern!(f64, 18, cv_Vec18d_input_array, cv_Vec18d_output_array, cv_Vec18d_input_output_array);
+vecn_extern!(
+	f64,
+	18,
+	cv_Vec18d_input_array,
+	cv_Vec18d_output_array,
+	cv_Vec18d_input_output_array
+);

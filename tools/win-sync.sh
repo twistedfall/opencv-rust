@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 
 script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 
@@ -8,4 +8,6 @@ script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 
 cd "$script_dir/.."
 
-rsync -av --progress --exclude "/target" --exclude "/.idea" ./ "$WIN_ADDR:opencv-rust/"
+rsync -av --progress --delete \
+	--exclude "/.idea" --exclude "/.git" --exclude "/out" --exclude "/target" --exclude "/ci/test-proj/target" \
+	./ "$WIN_ADDR:/c/Users/win/opencv-rust/"

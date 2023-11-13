@@ -1,251 +1,223 @@
-use std::{
-	borrow::Cow,
-	ffi::OsStr,
-	fmt,
-	path::{Component, Path},
-};
+use std::borrow::Cow;
+use std::ffi::OsStr;
+use std::fmt;
+use std::path::{Component, Path};
 
-use clang::{
-	Accessibility,
-	Entity,
-	EntityKind,
-};
+use clang::{Accessibility, Entity, EntityKind};
 
-use crate::{
-	comment,
-	IteratorExt,
-	reserved_rename,
-	settings,
-	StrExt,
-	type_ref::{FishStyle, NameStyle},
-};
+use crate::type_ref::CppNameStyle;
+use crate::{settings, IteratorExt, StrExt, StringExt};
+
+pub const UNNAMED: &str = "unnamed";
 
 pub struct DefaultElement;
 
 impl DefaultElement {
-	pub fn is_excluded(this: &(impl Element + ?Sized)) -> bool {
-		this.is_ignored() || this.is_system() || settings::ELEMENT_EXCLUDE.contains(this.cpp_fullname().as_ref())
+	pub fn exclude_kind(this: &(impl Element + ?Sized)) -> ExcludeKind {
+		let cpp_refname = this.cpp_name(CppNameStyle::Reference);
+		ExcludeKind::Included
+			.with_is_ignored(|| {
+				!this.is_public()
+					|| settings::ELEMENT_EXCLUDE_KIND
+						.get(cpp_refname.as_ref())
+						.map_or(false, |ek| ek.is_ignored())
+			})
+			.with_is_excluded(|| {
+				(this.is_system() && !settings::IMPLEMENTED_SYSTEM_CLASSES.contains(cpp_refname.as_ref()))
+					|| settings::ELEMENT_EXCLUDE_KIND
+						.get(cpp_refname.as_ref())
+						.map_or(false, |ek| ek.is_excluded())
+			})
 	}
 
-	pub fn is_ignored(this: &(impl Element + ?Sized)) -> bool {
-		!this.is_public() || settings::ELEMENT_IGNORE.contains(this.cpp_fullname().as_ref())
+	pub fn is_system(entity: Entity) -> bool {
+		entity.is_in_system_header()
+			&& !is_opencv_path(
+				&entity
+					.get_location()
+					.expect("Can't get entity location")
+					.get_spelling_location()
+					.file
+					.expect("Can't get location path")
+					.get_path(),
+			)
 	}
 
-	pub fn is_system<'tu>(this: &impl EntityElement<'tu>) -> bool {
-		this.entity().is_in_system_header() && !is_opencv_path(&this.entity()
-				.get_location().expect("Can't get entity location")
-				.get_spelling_location()
-				.file.expect("Can't get location path")
-				.get_path()
-		)
+	pub fn is_public(entity: Entity) -> bool {
+		entity.get_accessibility().map_or(true, |a| Accessibility::Public == a)
 	}
 
-	pub fn is_public<'tu>(this: &impl EntityElement<'tu>) -> bool {
-		this.entity().get_accessibility()
-			.map_or(true, |a| Accessibility::Public == a)
-	}
-
-	pub fn usr<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
-		this.entity().get_usr().expect("Can't get USR").0.into()
-	}
-
-	pub fn rendered_doc_comment_with_prefix<'tu>(this: &impl EntityElement<'tu>, prefix: &str, opencv_version: &str) -> String {
-		comment::render_doc_comment(&this.entity().get_comment().unwrap_or_default(), prefix, opencv_version)
-	}
-
-	pub fn rendered_doc_comment(this: &(impl Element + ?Sized), opencv_version: &str) -> String {
-		this.rendered_doc_comment_with_prefix("///", opencv_version)
-	}
-
-	pub fn cpp_namespace<'tu>(this: &impl EntityElement<'tu>) -> String {
+	pub fn cpp_namespace(entity: Entity) -> String {
+		let mut entity = entity;
 		let mut parts = vec![];
-		let mut e = this.entity();
-		while let Some(parent) = e.get_semantic_parent() {
+		while let Some(parent) = entity.get_semantic_parent() {
 			match parent.get_kind() {
-				EntityKind::ClassDecl | EntityKind::Namespace | EntityKind::StructDecl
-				| EntityKind::EnumDecl | EntityKind::UnionDecl | EntityKind::ClassTemplate
-				| EntityKind::ClassTemplatePartialSpecialization => {
+				EntityKind::ClassDecl
+				| EntityKind::Namespace
+				| EntityKind::StructDecl
+				| EntityKind::EnumDecl
+				| EntityKind::UnionDecl
+				| EntityKind::ClassTemplate
+				| EntityKind::ClassTemplatePartialSpecialization
+				| EntityKind::FunctionTemplate
+				| EntityKind::Method => {
 					// handle anonymous enums inside classes and anonymous namespaces
 					if let Some(parent_name) = parent.get_name() {
 						parts.push(parent_name);
 					}
 				}
-				EntityKind::TranslationUnit | EntityKind::UnexposedDecl => {}
+				EntityKind::TranslationUnit | EntityKind::UnexposedDecl | EntityKind::NotImplemented => {}
 				_ => {
 					unreachable!("Can't get kind of parent for cpp namespace: {:#?}", parent)
 				}
 			}
-			e = parent;
+			entity = parent;
 		}
-		parts.into_iter()
-			.rev()
-			.join("::")
+		parts.into_iter().rev().join("::")
 	}
 
-	pub fn cpp_name(this: &(impl Element + ?Sized), style: NameStyle) -> Cow<str> {
-		if style.is_reference() {
-			this.cpp_fullname()
-		} else {
-			this.cpp_localname()
-		}
+	pub fn cpp_decl_name_with_namespace<'t>(this: &'t (impl Element + ?Sized), decl_name: &str) -> Cow<'t, str> {
+		let mut out = this.cpp_namespace();
+		out.to_mut().extend_sep("::", decl_name);
+		out
 	}
 
-	pub fn cpp_localname<'tu>(this: &(impl EntityElement<'tu> + ?Sized)) -> Cow<str> {
-		this.entity().get_name().unwrap_or_else(|| "unnamed".to_string()).into()
-	}
-
-	pub fn cpp_fullname(this: &(impl Element + ?Sized)) -> Cow<str> {
-		let mut out: String = this.cpp_namespace().into_owned();
-		let cpp_name = this.cpp_localname();
-		out.reserve(cpp_name.len() + 2);
-		if !out.is_empty() {
-			out += "::";
-		}
-		out += &cpp_name;
-		out.into()
-	}
-
-	pub fn rust_module<'tu>(this: &(impl EntityElement<'tu> + ?Sized)) -> Cow<str> {
-		let loc = this.entity().get_location().expect("Can't get location")
-			.get_spelling_location().file.expect("Can't file")
-			.get_path();
-		opencv_module_from_path(&loc)
-			.map_or_else(|| "core".into(), |x| x.to_string().into())
-	}
-
-	pub fn rust_namespace(this: &(impl Element + ?Sized)) -> Cow<str> {
-		let module = this.rust_module();
-		if settings::STATIC_MODULES.contains(module.as_ref()) {
-			module
-		} else {
-			format!("crate::{}", this.rust_module()).into()
-		}
-	}
-
-	pub fn rust_name(this: &(impl Element + ?Sized), name_style: NameStyle) -> Cow<str> {
-		match name_style {
-			NameStyle::Declaration => {
-				this.rust_localname(FishStyle::No)
-			}
-			NameStyle::Reference(fish_style) => {
-				this.rust_fullname(fish_style)
-			}
-		}
-	}
-
-	pub fn rust_leafname(this: &(impl Element + ?Sized)) -> Cow<str> {
-		reserved_rename(this.cpp_localname().to_snake_case().into())
-	}
-
-	pub fn rust_localname<'tu>(this: &(impl EntityElement<'tu> + Element + ?Sized), fish_style: FishStyle) -> Cow<str> {
-		let mut parts = Vec::with_capacity(4);
-		parts.push(this.rust_leafname(fish_style).into_owned());
-		let module = Self::rust_module(this);
-		let mut e = this.entity();
-		while let Some(parent) = e.get_semantic_parent() {
-			match parent.get_kind() {
-				EntityKind::ClassDecl | EntityKind::StructDecl => {
-					parts.push(parent.get_name().expect("Can't get parent name"));
+	pub fn cpp_name<'t>(this: &'t (impl Element + ?Sized), entity: Entity, style: CppNameStyle) -> Cow<'t, str> {
+		let decl_name = entity
+			.get_name()
+			.or_else(|| {
+				if matches!(
+					entity.get_kind(),
+					EntityKind::StructDecl | EntityKind::ClassDecl | EntityKind::EnumDecl
+				) {
+					// for <clang-16 the classes and enums defined with `typedef struct` will have no name
+					// and the only way to get the name from the typedef is to rely on the type's `get_display_name`
+					entity.get_type().map(|typ| {
+						typ.get_display_name()
+							.cpp_name_from_fullname(CppNameStyle::Declaration)
+							.to_string()
+					})
+				} else {
+					None
 				}
-				EntityKind::EnumDecl => {
-					if parent.is_scoped() {
-						parts.push(parent.get_name().expect("Can't get parent name"));
-					}
-				}
-				EntityKind::TranslationUnit | EntityKind::UnexposedDecl => {
-					break;
-				}
-				EntityKind::Namespace => {
-					let no_skip_prefix = settings::NO_SKIP_NAMESPACE_IN_LOCALNAME.get(module.as_ref())
-						.or_else(|| settings::NO_SKIP_NAMESPACE_IN_LOCALNAME.get("*"))
-						.and_then(|config| config.get(parent.get_name().expect("Can't get parent name").as_str()));
-					if let Some(&prefix) = no_skip_prefix {
-						parts.push(prefix.to_string());
-					} else {
-						break
-					}
-				}
-				EntityKind::Constructor | EntityKind::FunctionTemplate | EntityKind::FunctionDecl
-				| EntityKind::Method => {}
-				_ => {
-					unreachable!("Can't get kind of parent: {:#?} for element: {:#?}", parent, e)
-				}
-			}
-			e = parent;
+			})
+			.map_or(Cow::Borrowed(UNNAMED), Cow::Owned);
+		match style {
+			CppNameStyle::Declaration => decl_name,
+			CppNameStyle::Reference => DefaultElement::cpp_decl_name_with_namespace(this, &decl_name),
 		}
-		parts.into_iter()
-			.rev()
-			.join("_")
-			.into()
-	}
-
-	pub fn rust_fullname(this: &(impl Element + ?Sized), fish_style: FishStyle) -> Cow<str> {
-		format!("{}::{}", this.rust_namespace(), this.rust_localname(fish_style)).into()
 	}
 }
 
 pub trait Element: fmt::Debug {
-	fn update_debug_struct<'dref, 'a, 'b>(&self, struct_debug: &'dref mut fmt::DebugStruct<'a, 'b>) -> &'dref mut fmt::DebugStruct<'a, 'b> {
-		struct_debug.field("cpp_fullname", &self.cpp_fullname())
-			.field("rust_fullname", &self.rust_fullname(FishStyle::No))
-			.field("is_excluded", &self.is_excluded())
-			.field("is_ignored", &self.is_ignored())
+	fn update_debug_struct<'dref, 'a, 'b>(
+		&self,
+		struct_debug: &'dref mut fmt::DebugStruct<'a, 'b>,
+	) -> &'dref mut fmt::DebugStruct<'a, 'b> {
+		struct_debug
+			.field("cpp_fullname", &self.cpp_name(CppNameStyle::Reference))
+			.field("exclude_kind", &self.exclude_kind())
 			.field("is_system", &self.is_system())
 			.field("is_public", &self.is_public())
 	}
 
-	/// true if an element shouldn't be generated
-	fn is_excluded(&self) -> bool {
-		DefaultElement::is_excluded(self)
-	}
-
-	/// true if there shouldn't be any references to that element
-	fn is_ignored(&self) -> bool {
-		DefaultElement::is_ignored(self)
+	fn exclude_kind(&self) -> ExcludeKind {
+		DefaultElement::exclude_kind(self)
 	}
 
 	fn is_system(&self) -> bool;
 
 	fn is_public(&self) -> bool;
 
-	fn usr(&self) -> Cow<str>;
-
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String;
-
-	fn rendered_doc_comment(&self, opencv_version: &str) -> String {
-		DefaultElement::rendered_doc_comment(self, opencv_version)
-	}
+	fn doc_comment(&self) -> Cow<str>;
 
 	fn cpp_namespace(&self) -> Cow<str>;
 
-	fn cpp_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultElement::cpp_name(self, style)
+	fn cpp_name(&self, style: CppNameStyle) -> Cow<str>;
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub enum ExcludeKind {
+	Included,
+	/// The bindings will not be generated for this element
+	Excluded,
+	/// Like [ExcludeKind::Excluded], but any element that references this element will also be excluded
+	Ignored,
+}
+
+impl ExcludeKind {
+	pub fn is_excluded(self) -> bool {
+		match self {
+			Self::Excluded | Self::Ignored => true,
+			Self::Included => false,
+		}
 	}
 
-	fn cpp_localname(&self) -> Cow<str>;
-
-	fn cpp_fullname(&self) -> Cow<str> {
-		DefaultElement::cpp_fullname(self)
+	pub fn is_ignored(self) -> bool {
+		match self {
+			Self::Ignored => true,
+			Self::Included | Self::Excluded => false,
+		}
 	}
 
-	fn rust_module(&self) -> Cow<str>;
-
-	fn rust_namespace(&self) -> Cow<str> {
-		DefaultElement::rust_namespace(self)
+	pub fn is_included(self) -> bool {
+		match self {
+			Self::Included => true,
+			Self::Ignored | Self::Excluded => false,
+		}
 	}
 
-	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultElement::rust_name(self, style)
+	/// Return [ExcludeKind::Excluded] if `is_excluded` is true and `self` is [ExcludeKind::Included],
+	/// `self` otherwise
+	pub fn with_is_excluded(self, is_excluded: impl FnOnce() -> bool) -> ExcludeKind {
+		match self {
+			Self::Included => {
+				if is_excluded() {
+					Self::Excluded
+				} else {
+					self
+				}
+			}
+			Self::Excluded | Self::Ignored => self,
+		}
 	}
 
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_leafname(self)
+	/// Return [ExcludeKind::Ignored] if `is_ignored` is true, `self` otherwise
+	pub fn with_is_ignored(self, is_ignored: impl FnOnce() -> bool) -> ExcludeKind {
+		match self {
+			Self::Included | Self::Excluded => {
+				if is_ignored() {
+					Self::Ignored
+				} else {
+					self
+				}
+			}
+			Self::Ignored => self,
+		}
 	}
 
-	fn rust_localname(&self, fish_style: FishStyle) -> Cow<str>;
+	/// Return the most ignored kind between `self` and `new()`
+	pub fn with_exclude_kind(self, new: impl FnOnce() -> ExcludeKind) -> ExcludeKind {
+		match self {
+			Self::Included => new(),
+			Self::Excluded => match new() {
+				Self::Ignored => Self::Ignored,
+				Self::Included | Self::Excluded => self,
+			},
+			Self::Ignored => self,
+		}
+	}
 
-	fn rust_fullname(&self, fish_style: FishStyle) -> Cow<str> {
-		DefaultElement::rust_fullname(self, fish_style)
+	/// Like [ExcludeKind::with_exclude_kind], but will return [ExcludeKind::Excluded] if `new()`
+	/// returns [ExcludeKind::Ignored], useful for container types like [crate::Vector]
+	pub fn with_reference_exclude_kind(self, new: impl FnOnce() -> ExcludeKind) -> ExcludeKind {
+		match self {
+			Self::Included => match new() {
+				Self::Ignored => Self::Excluded,
+				Self::Included | Self::Excluded => self,
+			},
+			Self::Excluded | Self::Ignored => self,
+		}
 	}
 }
 
@@ -254,7 +226,8 @@ pub trait EntityElement<'tu> {
 }
 
 pub fn is_opencv_path(path: &Path) -> bool {
-	path.components()
+	path
+		.components()
 		.rfind(|c| {
 			if let Component::Normal(c) = c {
 				if *c == "opencv2" || *c == "Headers" {
@@ -269,9 +242,16 @@ pub fn is_opencv_path(path: &Path) -> bool {
 /// Returns path component that corresponds to OpenCV module name. It's either a directory
 /// (e.g. "calib3d") or a header file (e.g. "dnn.hpp")
 fn opencv_module_component(path: &Path) -> Option<&OsStr> {
-	let mut module_comp = path.components()
+	let mut module_comp = path
+		.components()
 		.rev()
-		.filter_map(|c| if let Component::Normal(c) = c { Some(c) } else { None })
+		.filter_map(|c| {
+			if let Component::Normal(c) = c {
+				Some(c)
+			} else {
+				None
+			}
+		})
 		.peekable();
 	let mut module = None;
 	while let Some(cur) = module_comp.next() {
@@ -283,13 +263,6 @@ fn opencv_module_component(path: &Path) -> Option<&OsStr> {
 		}
 	}
 	module
-}
-
-/// Return OpenCV module name if the path points to the main header file, e.g. "opencv2/dnn.hpp".
-pub fn main_opencv_module_from_path(path: &Path) -> Option<&str> {
-	opencv_module_component(path)
-		.and_then(|m| m.to_str())
-		.and_then(|m| m.strip_suffix(".hpp"))
 }
 
 /// Return OpenCV module from the given path

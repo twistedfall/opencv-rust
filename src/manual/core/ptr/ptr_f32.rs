@@ -1,3 +1,4 @@
+use std::fmt;
 use std::ops::{Deref, DerefMut};
 
 use crate::core::Ptr;
@@ -22,3 +23,8 @@ impl DerefMut for Ptr<f32> {
 	}
 }
 
+impl fmt::Debug for Ptr<f32> {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		f.debug_struct("PtrOff32").field("value", &**self).finish()
+	}
+}

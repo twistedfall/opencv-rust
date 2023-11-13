@@ -1,8 +1,4 @@
-use std::{
-	char::TryFromCharError,
-	ffi::NulError,
-	fmt,
-};
+use std::{char::TryFromCharError, ffi::NulError, fmt};
 
 use crate::core;
 
@@ -15,7 +11,10 @@ pub struct Error {
 impl Error {
 	#[inline]
 	pub fn new(code: i32, message: impl Into<String>) -> Self {
-		Self { code, message: message.into() }
+		Self {
+			code,
+			message: message.into(),
+		}
 	}
 }
 

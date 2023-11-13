@@ -1,4 +1,4 @@
-use opencv::core::{Vec2d, Vec2i, Vec3b, Vec3d, Vec4f, Vec4s};
+use opencv::core::{Vec2d, Vec2i, Vec3b, Vec3d, Vec3i, Vec3s, Vec4f, Vec4s};
 
 #[test]
 fn vec() {
@@ -77,4 +77,19 @@ fn vec_sub() {
 fn vec_neg() {
 	let a = Vec2i::from([10, -15]);
 	assert_eq!(Vec2i::from([-10, 15]), -a);
+}
+
+#[test]
+fn vec_to() {
+	{
+		let a = Vec3s::from([1, 100, 500]);
+		assert_eq!(None, a.to::<u8>());
+		assert_eq!(Some(Vec3i::from([1, 100, 500])), a.to());
+	}
+
+	{
+		let a = Vec3s::from([1, 10, 50]);
+		assert_eq!(Some(Vec3b::from([1, 10, 50])), a.to());
+		assert_eq!(Some(Vec3i::from([1, 10, 50])), a.to());
+	}
 }

@@ -6,6 +6,7 @@ authors = ["Pro"]
 edition = "2018"
 
 [dependencies]
-opencv = { path = "../.." }
+opencv = { path = "../..", features = ["clang-runtime"] }
+bindgen = { version = "0.60", features= ["runtime"] }
 
 [workspace]

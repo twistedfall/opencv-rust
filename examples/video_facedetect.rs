@@ -1,35 +1,18 @@
-use std::{thread, time::Duration};
+use std::thread;
+use std::time::Duration;
 
-use opencv::{
-	core,
-	highgui,
-	imgproc,
-	objdetect,
-	prelude::*,
-	Result,
-	types,
-	videoio,
-};
+use opencv::prelude::*;
+use opencv::{core, highgui, imgproc, objdetect, types, videoio, Result};
 
 fn main() -> Result<()> {
 	let window = "video capture";
-	highgui::named_window(window, 1)?;
-	opencv::opencv_branch_32! {
-		let (xml, mut cam) = {
-			(
-				"/usr/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml".to_owned(),
-				videoio::VideoCapture::new_default(0)?, // 0 is the default camera
-			)
-		};
-	}
-	opencv::not_opencv_branch_32! {
-		let (xml, mut cam) = {
-			(
-				core::find_file("haarcascades/haarcascade_frontalface_alt.xml", true, false)?,
-				videoio::VideoCapture::new(0, videoio::CAP_ANY)?, // 0 is the default camera
-			)
-		};
-	}
+	highgui::named_window_def(window)?;
+	let (xml, mut cam) = {
+		(
+			core::find_file_def("haarcascades/haarcascade_frontalface_alt.xml")?,
+			videoio::VideoCapture::new(0, videoio::CAP_ANY)?, // 0 is the default camera
+		)
+	};
 	let opened = videoio::VideoCapture::is_opened(&cam)?;
 	if !opened {
 		panic!("Unable to open default camera!");
@@ -43,20 +26,12 @@ fn main() -> Result<()> {
 			continue;
 		}
 		let mut gray = Mat::default();
-		imgproc::cvt_color(
-			&frame,
-			&mut gray,
-			imgproc::COLOR_BGR2GRAY,
-			0,
-		)?;
+		imgproc::cvt_color_def(&frame, &mut gray, imgproc::COLOR_BGR2GRAY)?;
 		let mut reduced = Mat::default();
 		imgproc::resize(
 			&gray,
 			&mut reduced,
-			core::Size {
-				width: 0,
-				height: 0,
-			},
+			core::Size { width: 0, height: 0 },
 			0.25f64,
 			0.25f64,
 			imgproc::INTER_LINEAR,
@@ -68,32 +43,14 @@ fn main() -> Result<()> {
 			1.1,
 			2,
 			objdetect::CASCADE_SCALE_IMAGE,
-			core::Size {
-				width: 30,
-				height: 30,
-			},
-			core::Size {
-				width: 0,
-				height: 0,
-			},
+			core::Size { width: 30, height: 30 },
+			core::Size { width: 0, height: 0 },
 		)?;
 		println!("faces: {}", faces.len());
 		for face in faces {
-			println!("face {:?}", face);
-			let scaled_face = core::Rect {
-				x: face.x * 4,
-				y: face.y * 4,
-				width: face.width * 4,
-				height: face.height * 4,
-			};
-			imgproc::rectangle(
-				&mut frame,
-				scaled_face,
-				core::Scalar::new(0f64, -1f64, -1f64, -1f64),
-				1,
-				8,
-				0,
-			)?;
+			println!("face {face:?}");
+			let scaled_face = core::Rect::new(face.x * 4, face.y * 4, face.width * 4, face.height * 4);
+			imgproc::rectangle_def(&mut frame, scaled_face, (0, 255, 0).into())?;
 		}
 		highgui::imshow(window, &frame)?;
 		if highgui::wait_key(10)? > 0 {

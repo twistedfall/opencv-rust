@@ -1,0 +1,5 @@
+allow-branch = ["master"]
+tag-name = "v{{version}}"
+pre-release-replacements = [
+	{ file = "README.md", search = "opencv = \".*?\"", replace = "opencv = \"{{version}}\"" },
+]

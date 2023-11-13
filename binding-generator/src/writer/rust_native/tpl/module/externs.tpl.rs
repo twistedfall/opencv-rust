@@ -1,4 +1,2 @@
-extern "C" {
-	{{code}}
-}
+{{code}}
 

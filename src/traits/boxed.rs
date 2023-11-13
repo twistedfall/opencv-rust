@@ -1,5 +1,7 @@
 use std::ffi::c_void;
 
+/// Trait for structures that are created on the C++ side, usually only the raw void pointer is stored to point to the allocated
+/// data on the heap.
 pub trait Boxed: Sized {
 	/// Wrap the specified raw pointer
 	/// # Safety
@@ -25,6 +27,7 @@ pub trait Boxed: Sized {
 	fn as_raw_mut(&mut self) -> *mut c_void;
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_type_boxed {
 	($type: ty) => {
@@ -53,17 +56,6 @@ macro_rules! opencv_type_boxed {
 		impl $crate::traits::OpenCVType<'_> for $type {
 			type Arg = Self;
 			type ExternReceive = *mut ::std::ffi::c_void;
-			type ExternContainer = Self;
-
-			#[inline]
-			fn opencv_into_extern_container(self) -> $crate::Result<Self::ExternContainer> {
-				Ok(self)
-			}
-
-			#[inline]
-			fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-				self
-			}
 
 			#[inline]
 			unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
@@ -73,11 +65,6 @@ macro_rules! opencv_type_boxed {
 
 		impl $crate::traits::OpenCVTypeArg<'_> for $type {
 			type ExternContainer = Self;
-
-			#[inline]
-			fn opencv_into_extern_container(self) -> $crate::Result<Self::ExternContainer> {
-				Ok(self)
-			}
 
 			#[inline]
 			fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
@@ -98,7 +85,9 @@ macro_rules! opencv_type_boxed {
 			fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 				self.as_raw_mut()
 			}
+		}
 
+		impl $crate::traits::OpenCVTypeExternContainerMove for $type {
 			#[inline]
 			fn opencv_into_extern(self) -> Self::ExternSendMut {
 				self.into_raw()
@@ -107,20 +96,20 @@ macro_rules! opencv_type_boxed {
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! boxed_cast_base {
 	($type: ty, $base: ty, $extern_convert: ident $(,)?) => {
 		impl ::std::convert::From<$type> for $base {
 			#[inline]
 			fn from(s: $type) -> Self {
-				extern "C" { fn $extern_convert(val: *mut ::std::ffi::c_void) -> *mut ::std::ffi::c_void; }
-
-				unsafe { Self::from_raw($extern_convert(s.into_raw())) }
+				unsafe { Self::from_raw($crate::sys::$extern_convert(s.into_raw())) }
 			}
 		}
 	};
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! boxed_cast_descendant {
 	($type: ty, $descendant: ty, $extern_convert: ident $(,)?) => {
@@ -129,11 +118,16 @@ macro_rules! boxed_cast_descendant {
 
 			#[inline]
 			fn try_from(s: $type) -> $crate::Result<Self> {
-				extern "C" { fn $extern_convert(val: *mut ::std::ffi::c_void) -> *mut ::std::ffi::c_void; }
-
-				let ret = unsafe { $extern_convert(s.into_raw()) };
+				let ret = unsafe { $crate::sys::$extern_convert(s.into_raw()) };
 				if ret.is_null() {
-					Err($crate::Error::new($crate::core::StsBadArg, format!("Unable to cast base class: {} to: {}", stringify!($type), stringify!($descendant))))
+					Err($crate::Error::new(
+						$crate::core::StsBadArg,
+						format!(
+							"Unable to cast base class: {} to: {}",
+							stringify!($type),
+							stringify!($descendant)
+						),
+					))
 				} else {
 					Ok(unsafe { Self::from_raw(ret) })
 				}

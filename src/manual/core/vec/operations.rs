@@ -7,20 +7,16 @@ use super::VecN;
 impl<T: AddAssign, const N: usize> AddAssign for VecN<T, N> {
 	#[inline]
 	fn add_assign(&mut self, rhs: Self) {
-		self.iter_mut()
-			.zip(rhs.into_iter())
-			.for_each(|(out, v)| *out += v)
+		self.iter_mut().zip(rhs).for_each(|(out, v)| *out += v)
 	}
 }
 
-impl<T: Add<Output=T> + Copy, const N: usize> Add for VecN<T, N> {
+impl<T: Add<Output = T> + Copy, const N: usize> Add for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
 	fn add(mut self, rhs: Self) -> Self::Output {
-		self.iter_mut()
-			.zip(rhs.into_iter())
-			.for_each(|(out, v)| *out = *out + v);
+		self.iter_mut().zip(rhs).for_each(|(out, v)| *out = *out + v);
 		self
 	}
 }
@@ -28,20 +24,16 @@ impl<T: Add<Output=T> + Copy, const N: usize> Add for VecN<T, N> {
 impl<T: SubAssign, const N: usize> SubAssign for VecN<T, N> {
 	#[inline]
 	fn sub_assign(&mut self, rhs: Self) {
-		self.iter_mut()
-			.zip(rhs.into_iter())
-			.for_each(|(out, v)| *out -= v)
+		self.iter_mut().zip(rhs).for_each(|(out, v)| *out -= v)
 	}
 }
 
-impl<T: Sub<Output=T> + Copy, const N: usize> Sub for VecN<T, N> {
+impl<T: Sub<Output = T> + Copy, const N: usize> Sub for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
 	fn sub(mut self, rhs: Self) -> Self::Output {
-		self.iter_mut()
-			.zip(rhs.into_iter())
-			.for_each(|(out, v)| *out = *out - v);
+		self.iter_mut().zip(rhs).for_each(|(out, v)| *out = *out - v);
 		self
 	}
 }
@@ -49,53 +41,48 @@ impl<T: Sub<Output=T> + Copy, const N: usize> Sub for VecN<T, N> {
 impl<Rhs: Num + Copy, T: MulAssign<Rhs>, const N: usize> MulAssign<Rhs> for VecN<T, N> {
 	#[inline]
 	fn mul_assign(&mut self, rhs: Rhs) {
-		self.iter_mut()
-			.for_each(|out| *out *= rhs)
+		self.iter_mut().for_each(|out| *out *= rhs)
 	}
 }
 
 impl<Rhs: Copy, T: DivAssign<Rhs>, const N: usize> DivAssign<Rhs> for VecN<T, N> {
 	#[inline]
 	fn div_assign(&mut self, rhs: Rhs) {
-		self.iter_mut()
-			.for_each(|out| *out /= rhs)
+		self.iter_mut().for_each(|out| *out /= rhs)
 	}
 }
 
-impl<Rhs: Num + Copy, T: Mul<Rhs, Output=T> + Copy, const N: usize> Mul<Rhs> for VecN<T, N> {
+impl<Rhs: Num + Copy, T: Mul<Rhs, Output = T> + Copy, const N: usize> Mul<Rhs> for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
 	fn mul(mut self, rhs: Rhs) -> Self::Output {
-		self.iter_mut()
-			.for_each(|out| *out = *out * rhs);
+		self.iter_mut().for_each(|out| *out = *out * rhs);
 		self
 	}
 }
 
-impl<Rhs: Copy, T: Div<Rhs, Output=T> + Copy, const N: usize> Div<Rhs> for VecN<T, N> {
+impl<Rhs: Copy, T: Div<Rhs, Output = T> + Copy, const N: usize> Div<Rhs> for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
 	fn div(mut self, rhs: Rhs) -> Self::Output {
-		self.iter_mut()
-			.for_each(|out| *out = *out / rhs);
+		self.iter_mut().for_each(|out| *out = *out / rhs);
 		self
 	}
 }
 
-impl<T: Neg<Output=T> + Copy, const N: usize> Neg for VecN<T, N> {
+impl<T: Neg<Output = T> + Copy, const N: usize> Neg for VecN<T, N> {
 	type Output = Self;
 
 	#[inline]
 	fn neg(mut self) -> Self::Output {
-		self.iter_mut()
-			.for_each(|out| *out = -*out);
+		self.iter_mut().for_each(|out| *out = -*out);
 		self
 	}
 }
 
-impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> Mul for VecN<T, 4> {
+impl<T: Mul<Output = T> + Sub<Output = T> + Add<Output = T> + Copy> Mul for VecN<T, 4> {
 	type Output = Self;
 
 	#[inline]
@@ -109,7 +96,7 @@ impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> Mul for VecN<T, 4>
 	}
 }
 
-impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Copy> MulAssign for VecN<T, 4> {
+impl<T: Mul<Output = T> + Sub<Output = T> + Add<Output = T> + Copy> MulAssign for VecN<T, 4> {
 	#[inline]
 	fn mul_assign(&mut self, rhs: Self) {
 		*self = *self * rhs;
