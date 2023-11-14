@@ -223,6 +223,7 @@ fn make_modules(opencv_dir: &Path) -> Result<()> {
 fn build_compiler(opencv: &Library) -> cc::Build {
 	let mut out = cc::Build::new();
 	out.cpp(true)
+		.std("c++14") // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
 		.include(&*SRC_CPP_DIR)
 		.include(&*OUT_DIR)
 		.include(".")
@@ -245,8 +246,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		}
 	});
 
-	if *TARGET_ENV_MSVC {
-		out.flag_if_supported("-std=c++14"); // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
+	if out.get_compiler().is_like_msvc() {
 		if let Ok(crt) = env::var("OPENCV_MSVC_CRT") {
 			if crt.trim().to_lowercase() == "dynamic" {
 				out.static_crt(false);
@@ -256,10 +256,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 				panic!("Invalid value of OPENCV_MSVC_CRT var, expected \"static\" or \"dynamic\"");
 			}
 		}
-	}
-	if out.get_compiler().is_like_msvc() {
-		out.flag("-std:c++14")
-			.flag("-EHsc")
+		out.flag("-EHsc")
 			.flag("-bigobj")
 			.flag("-utf-8")
 			.flag("-wd4996")
@@ -270,7 +267,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 			.flag("-wd4127") // conditional expression is constant
 			.pic(false);
 	} else {
-		out.flag("-std=c++14").flag_if_supported("-Wa,-mbig-obj");
+		out.flag_if_supported("-Wa,-mbig-obj");
 	}
 	out
 }

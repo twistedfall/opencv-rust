@@ -340,7 +340,8 @@ The following OpenCV versions are supported at the moment:
 
 ### Minimum rustc version (MSRV)
 
-Currently, version 1.59.0 or later is required.
+Currently, version 1.66.0 or later is required. General policy is that rust version from 1 year ago is supported.
+Bumping versions older than that is not considered a breaking change.
 
 ### Platform support
 
