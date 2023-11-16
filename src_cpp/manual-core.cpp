@@ -40,10 +40,6 @@ template<typename T> inline void ocvrs_input_output_array(T* instance, Result<vo
 	ocvrs_ioa(base##w)
 
 extern "C" {
-	const size_t* cv_manual_MatStep_deref(const cv::MatStep* instance) {
-		return instance->p;
-	}
-
 	void cv_InputArray_input_array(cv::_InputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_input_array(instance, ocvrs_return); }
 	void cv_OutputArray_output_array(cv::_OutputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_output_array(instance, ocvrs_return); }
 	void cv_InputOutputArray_input_output_array(cv::_InputOutputArray* instance, Result<void*>* ocvrs_return) { return ocvrs_input_output_array(instance, ocvrs_return); }

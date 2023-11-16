@@ -116,8 +116,8 @@ fn fixed_array_return() -> Result<()> {
 		let m = Mat::new_rows_cols_with_default(5, 3, i32::opencv_type(), Scalar::all(1.))?;
 		let mut mat_step = m.mat_step();
 		assert_eq!([12, 4], *mat_step.buf());
-		mat_step.buf()[0] = 16;
-		mat_step.buf()[1] = 2;
+		mat_step.buf_mut()[0] = 16;
+		mat_step.buf_mut()[1] = 2;
 		assert_eq!([16, 2], *mat_step.buf());
 	}
 

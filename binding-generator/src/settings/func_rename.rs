@@ -116,7 +116,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_Mat_getUMat_const_int_UMatUsageFlags", "get_umat"), // 3.2 only
 		("cv_Mat_ones_Size_int", "+_size"),
 		("cv_Mat_ones_int_const_intX_int", "+_nd"),
-		("cv_Mat_propData", "+_mut"),
 		("cv_Mat_propSize_const", "mat_size"),
 		("cv_Mat_propStep_const", "mat_step"),
 		("cv_Mat_ptr_const_const_intX", "+_nd"),
@@ -420,7 +419,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool", "+_weights"),
 		("cv_HOGDescriptor_detect_const_const_MatR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 3.2 3.4
 		("cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 4.x
-		("cv_HOGDescriptor_propSvmDetector_vectorLfloatG", "+_vec"),
+		("cv_HOGDescriptor_propSvmDetector_const_vectorLfloatG", "+_vec"),
 		("cv_groupRectangles_vectorLRectGR_vectorLintGR_vectorLdoubleGR_int_double", "+_levels"),
 		("cv_groupRectangles_vectorLRectGR_vectorLintGR_int_double", "+_weights"),
 		("cv_groupRectangles_vectorLRectGR_int_double_vectorLintGX_vectorLdoubleGX", "+_levelweights"),

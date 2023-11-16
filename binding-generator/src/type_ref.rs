@@ -663,6 +663,41 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	/// True for types that can be returned as direct reference to the underlying data that's allocated on C++ side
+	pub fn can_return_as_direct_reference(&self) -> bool {
+		match self.canonical().kind().as_ref() {
+			TypeRefKind::Array(elem, _) => elem.is_copy(),
+			TypeRefKind::Pointer(inner) => match inner.canonical().kind().as_ref() {
+				TypeRefKind::Primitive(_, cpp) => *cpp != "void",
+				TypeRefKind::Enum(_) => true,
+				TypeRefKind::Class(cls) => cls.kind().is_simple(),
+				TypeRefKind::Array(_, _)
+				| TypeRefKind::StdVector(_)
+				| TypeRefKind::StdTuple(_)
+				| TypeRefKind::Pointer(_)
+				| TypeRefKind::Reference(_)
+				| TypeRefKind::RValueReference(_)
+				| TypeRefKind::SmartPtr(_)
+				| TypeRefKind::Function(_)
+				| TypeRefKind::Typedef(_)
+				| TypeRefKind::Generic(_)
+				| TypeRefKind::Ignored => false,
+			},
+			TypeRefKind::Primitive(_, _)
+			| TypeRefKind::StdVector(_)
+			| TypeRefKind::StdTuple(_)
+			| TypeRefKind::Reference(_)
+			| TypeRefKind::RValueReference(_)
+			| TypeRefKind::SmartPtr(_)
+			| TypeRefKind::Class(_)
+			| TypeRefKind::Enum(_)
+			| TypeRefKind::Function(_)
+			| TypeRefKind::Typedef(_)
+			| TypeRefKind::Generic(_)
+			| TypeRefKind::Ignored => false,
+		}
+	}
+
 	/// True for types that can be exposed as Rust pointer
 	///
 	/// Currently a pointer to a primitive type with the exception of `char *`

@@ -4,7 +4,7 @@ use once_cell::sync::Lazy;
 
 use crate::class::ClassDesc;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
-use crate::type_ref::{Constness, TypeRef, TypeRefDesc, TypeRefTypeHint};
+use crate::type_ref::{Constness, TypeRef, TypeRefDesc};
 use crate::Func;
 
 pub type FuncFactory = fn() -> Func<'static, 'static>;
@@ -20,19 +20,6 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 						FuncKind::InstanceMethod(ClassDesc::cv_matconstiterator()),
 						Constness::Const,
 						ReturnKind::InfallibleNaked,
-						"hasElements",
-						"core",
-						vec![],
-						FuncCppBody::ManualCall("instance->ptr != instance->sliceEnd".into()),
-						FuncRustBody::Auto,
-						TypeRefDesc::bool(),
-					))
-				}) as FuncFactory, // todo: remove this cast when MSRV allows
-				|| {
-					Func::new_desc(FuncDesc::new(
-						FuncKind::InstanceMethod(ClassDesc::cv_matconstiterator()),
-						Constness::Const,
-						ReturnKind::InfallibleNaked,
 						"type",
 						"core",
 						vec![],
@@ -40,7 +27,7 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 						FuncRustBody::Auto,
 						TypeRefDesc::int(),
 					))
-				},
+				}) as FuncFactory, // todo: remove this cast when MSRV allows
 				|| {
 					Func::new_desc(FuncDesc::new(
 						FuncKind::InstanceMethod(ClassDesc::cv_mat()),
@@ -52,20 +39,6 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 						FuncCppBody::Auto,
 						FuncRustBody::Auto,
 						TypeRefDesc::cv_size(),
-					))
-				},
-				|| {
-					Func::new_desc(FuncDesc::new(
-						FuncKind::InstanceMethod(ClassDesc::cv_mat()),
-						Constness::Const,
-						ReturnKind::InfallibleNaked,
-						"data",
-						"core",
-						vec![],
-						FuncCppBody::ManualCall("instance->data".into()),
-						FuncRustBody::Auto,
-						TypeRef::new_pointer(TypeRefDesc::uchar().with_constness(Constness::Const))
-							.with_type_hint(TypeRefTypeHint::PrimitiveRefAsPointer),
 					))
 				},
 				|| {

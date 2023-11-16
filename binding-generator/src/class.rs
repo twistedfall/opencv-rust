@@ -410,27 +410,77 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							.type_ref()
 							.into_owned()
 							.with_type_hint(TypeRefTypeHint::PrimitiveRefAsPointer);
-						let mut read_yield = if constness_filter.map_or(true, |c| c == fld.constness()) {
-							let read_func = Func::new_desc(FuncDesc {
-								type_hint: FuncTypeHint::None,
-								kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
-								cpp_name: fld.cpp_name(CppNameStyle::Reference).into(),
-								rust_custom_leafname: None,
-								rust_module: fld.rust_module().into(),
-								constness: fld.constness(),
-								return_kind: ReturnKind::infallible(fld_type_ref.return_as_naked()),
-								doc_comment: Rc::clone(&doc_comment),
-								def_loc: fld.file_line_name().location,
-								rust_generic_decls: Rc::new([]),
-								arguments: Rc::new([]),
-								return_type_ref: fld_type_ref.clone(),
-								cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
-								rust_body: FuncRustBody::Auto,
-								rust_extern_definition: FuncRustExtern::Auto,
-							});
-							Some(read_func)
+						let fld_type_ref_return_as_naked = fld_type_ref.return_as_naked();
+						let fld_const = fld.constness();
+						let passed_by_ref = fld_type_ref.can_return_as_direct_reference();
+						let (mut read_const_yield, mut read_mut_yield) = if passed_by_ref && fld_const.is_mut() {
+							let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
+								Some(Func::new_desc(FuncDesc {
+									type_hint: FuncTypeHint::None,
+									kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
+									cpp_name: fld.cpp_name(CppNameStyle::Reference).into(),
+									rust_custom_leafname: None,
+									rust_module: fld.rust_module().into(),
+									constness: Constness::Const,
+									return_kind: ReturnKind::infallible(fld_type_ref_return_as_naked),
+									doc_comment: Rc::clone(&doc_comment),
+									def_loc: fld.file_line_name().location,
+									rust_generic_decls: Rc::new([]),
+									arguments: Rc::new([]),
+									return_type_ref: fld_type_ref.with_constness(Constness::Const),
+									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
+									rust_body: FuncRustBody::Auto,
+									rust_extern_definition: FuncRustExtern::Auto,
+								}))
+							} else {
+								None
+							};
+							let read_mut_func = if constness_filter.map_or(true, |c| c.is_mut()) {
+								let cpp_name = fld.cpp_name(CppNameStyle::Declaration);
+								Some(Func::new_desc(FuncDesc {
+									type_hint: FuncTypeHint::None,
+									kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
+									cpp_name: format!("{cpp_name}Mut").into(),
+									rust_custom_leafname: None,
+									rust_module: fld.rust_module().into(),
+									constness: Constness::Mut,
+									return_kind: ReturnKind::infallible(fld_type_ref_return_as_naked),
+									doc_comment: Rc::clone(&doc_comment),
+									def_loc: fld.file_line_name().location,
+									rust_generic_decls: Rc::new([]),
+									arguments: Rc::new([]),
+									return_type_ref: fld_type_ref.with_constness(Constness::Mut),
+									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
+									rust_body: FuncRustBody::Auto,
+									rust_extern_definition: FuncRustExtern::Auto,
+								}))
+							} else {
+								None
+							};
+							(read_const_func, read_mut_func)
 						} else {
-							None
+							let read_const_func = if constness_filter.map_or(true, |c| c == fld_const) {
+								Some(Func::new_desc(FuncDesc {
+									type_hint: FuncTypeHint::None,
+									kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
+									cpp_name: fld.cpp_name(CppNameStyle::Reference).into(),
+									rust_custom_leafname: None,
+									rust_module: fld.rust_module().into(),
+									constness: fld_const,
+									return_kind: ReturnKind::infallible(fld_type_ref_return_as_naked),
+									doc_comment: Rc::clone(&doc_comment),
+									def_loc: fld.file_line_name().location,
+									rust_generic_decls: Rc::new([]),
+									arguments: Rc::new([]),
+									return_type_ref: fld_type_ref.clone(),
+									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
+									rust_body: FuncRustBody::Auto,
+									rust_extern_definition: FuncRustExtern::Auto,
+								}))
+							} else {
+								None
+							};
+							(read_const_func, None)
 						};
 						let mut write_yield = if constness_filter.map_or(true, |c| c.is_mut())
 							&& !fld_type_ref.constness().is_const()
@@ -464,7 +514,12 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						} else {
 							None
 						};
-						move || read_yield.take().or_else(|| write_yield.take())
+						move || {
+							read_const_yield
+								.take()
+								.or_else(|| read_mut_yield.take())
+								.or_else(|| write_yield.take())
+						}
 					})
 				}));
 				out

@@ -6,8 +6,7 @@ use std::{fmt, ptr, slice};
 
 pub use mat_::*;
 
-use crate::core::{MatConstIterator, MatExpr, MatSize, MatStep, Point, Scalar, UMat};
-use crate::platform_types::size_t;
+use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Scalar, UMat};
 use crate::prelude::*;
 use crate::{core, input_output_array, Error, Result};
 
@@ -580,7 +579,7 @@ impl Deref for MatSize {
 	fn deref(&self) -> &Self::Target {
 		// safe because `Mat::dims()` returns value >= 2
 		let dims = self.dims() as usize;
-		unsafe { slice::from_raw_parts(self.to_xconst_i32(), dims) }
+		unsafe { slice::from_raw_parts(self.p(), dims) }
 	}
 }
 
@@ -590,26 +589,12 @@ impl fmt::Debug for MatSize {
 	}
 }
 
-impl Deref for MatStep {
-	type Target = [size_t];
-
-	#[inline]
-	fn deref(&self) -> &Self::Target {
-		extern "C" {
-			fn cv_manual_MatStep_deref(instance: *const c_void) -> *const size_t;
-		}
-		let ptr = unsafe { cv_manual_MatStep_deref(self.as_raw_MatStep()) };
-		unsafe { slice::from_raw_parts(ptr, 2) }
-	}
-}
-
-impl fmt::Debug for MatStep {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		writeln!(f, "{:#?}", self.deref())
-	}
-}
-
 pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
+	#[inline]
+	fn has_elements(&self) -> bool {
+		self.ptr() != self.slice_end()
+	}
+
 	#[inline]
 	fn current<T: DataType>(&self) -> Result<&T> {
 		match_format::<T>(self.typ())?;
