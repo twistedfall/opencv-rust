@@ -118,9 +118,14 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		TypeRef::new_class(ClassDesc::cv_point())
 	}
 
+	/// `cv::Point2f`
+	pub fn cv_point2f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_point2f())
+	}
+
 	/// `cv::Point2d`
 	pub fn cv_point2d() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_point())
+		TypeRef::new_class(ClassDesc::cv_point2d())
 	}
 
 	/// `cv::Point3i`
@@ -225,9 +230,19 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_vec3f())))
 	}
 
+	/// `std::vector<std::vector<cv::Vec2f>>`
+	pub fn vector_of_vector_of_cv_vec2f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::vector_of_cv_vec2f())))
+	}
+
 	/// `std::vector<std::vector<cv::Vec3f>>`
 	pub fn vector_of_vector_of_cv_vec3f() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::vector_of_cv_vec3f())))
+	}
+
+	/// `std::vector<std::vector<cv::Vec3d>>`
+	pub fn vector_of_vector_of_cv_vec3d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::vector_of_cv_vec3d())))
 	}
 
 	/// `std::vector<cv::Vec3d>`
@@ -245,6 +260,11 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRef::new_vector(Vector::new_desc(
 			VectorDesc::new(TypeRefDesc::cv_point()),
 		)))))
+	}
+
+	/// `std::vector<cv::Point2f>`
+	pub fn vector_of_cv_point2f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_point2f())))
 	}
 
 	/// `std::vector<cv::Point2d>`
@@ -275,6 +295,11 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 	/// `std::vector<cv::Point3d>`
 	pub fn vector_of_cv_point3d() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_point3d())))
+	}
+
+	/// `std::vector<std::vector<cv::Point2f>>`
+	pub fn vector_of_vector_of_cv_point2f() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(Self::vector_of_cv_point2f())))
 	}
 
 	/// `std::vector<std::vector<cv::Point3d>>`

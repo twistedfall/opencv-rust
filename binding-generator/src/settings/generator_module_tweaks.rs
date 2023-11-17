@@ -24,6 +24,21 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 			},
 		),
 		(
+			"ccalib",
+			ModuleTweak {
+				generate_types: vec![
+					// for cv::omnidir::calibrate objectPoints
+					TypeRefDesc::vector_of_vector_of_cv_vec3f,
+					TypeRefDesc::vector_of_vector_of_cv_vec3d,
+					TypeRefDesc::vector_of_vector_of_cv_point3f,
+					TypeRefDesc::vector_of_vector_of_cv_point3d,
+					// for cv::omnidir::calibrate imagePoints
+					TypeRefDesc::vector_of_vector_of_cv_vec2f,
+					TypeRefDesc::vector_of_vector_of_cv_point2f,
+				],
+			},
+		),
+		(
 			"calib3d",
 			ModuleTweak {
 				generate_types: vec![
