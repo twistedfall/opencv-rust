@@ -1,10 +1,13 @@
-* 0.87.0
+* 0.88.0
   * Detect more cases where a Rust slice can be passed to an OpenCV function.
   * Generate both const and mut property readers where possible. Previously only mut readers were generated.
   * Rename some more automatically named functions.
   * Add conversion from an enum into a `i32`.
   * Bump minimum supported Rust version to 1.65.
   * Generate additional `Vector` bindings for `ccalib` module.
+
+* 0.87.0
+  * This version is skipped due to the release process gone wrong.
 
 * 0.86.1
   * Provide a clearer message for the case when `libclang` can't be loaded.
