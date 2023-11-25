@@ -17,7 +17,7 @@ generation) are installed in your system.
 
 Update your Cargo.toml
 ```toml
-opencv = "0.88.0"
+opencv = "0.88.1"
 ```
 
 Import prelude
