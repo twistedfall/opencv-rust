@@ -35,6 +35,8 @@ pub static GENERATOR_MODULE_TWEAKS: Lazy<HashMap<&str, ModuleTweak>> = Lazy::new
 					// for cv::omnidir::calibrate imagePoints
 					TypeRefDesc::vector_of_vector_of_cv_vec2f,
 					TypeRefDesc::vector_of_vector_of_cv_point2f,
+					TypeRefDesc::vector_of_vector_of_cv_vec2d,
+					TypeRefDesc::vector_of_vector_of_cv_point2d,
 				],
 			},
 		),

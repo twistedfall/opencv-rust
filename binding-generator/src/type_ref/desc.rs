@@ -235,6 +235,11 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::vector_of_cv_vec2f())))
 	}
 
+	/// `std::vector<std::vector<cv::Vec2d>>`
+	pub fn vector_of_vector_of_cv_vec2d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::vector_of_cv_vec2d())))
+	}
+
 	/// `std::vector<std::vector<cv::Vec3f>>`
 	pub fn vector_of_vector_of_cv_vec3f() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::vector_of_cv_vec3f())))
@@ -300,6 +305,11 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 	/// `std::vector<std::vector<cv::Point2f>>`
 	pub fn vector_of_vector_of_cv_point2f() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(Self::vector_of_cv_point2f())))
+	}
+
+	/// `std::vector<std::vector<cv::Point2d>>`
+	pub fn vector_of_vector_of_cv_point2d() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(Self::vector_of_cv_point2d())))
 	}
 
 	/// `std::vector<std::vector<cv::Point3d>>`
