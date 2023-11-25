@@ -1,3 +1,6 @@
+* 0.88.1
+  * Generate `Vector<Vector<Point2d>>` bindings for `ccalib` module.
+
 * 0.88.0
   * Detect more cases where a Rust slice can be passed to an OpenCV function.
   * Generate both const and mut property readers where possible. Previously only mut readers were generated.
