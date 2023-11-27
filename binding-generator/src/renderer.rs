@@ -32,7 +32,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 	type Recursed = Self;
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
-		let cnst = type_ref.clang_constness().cpp_qual();
+		let cnst = type_ref.inherent_constness().cpp_qual();
 		let (space_name, space_const_name) = if self.name.is_empty() {
 			("".to_string(), "".to_string())
 		} else {

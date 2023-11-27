@@ -10,9 +10,9 @@ use regex::Regex;
 
 pub use desc::{FuncCppBody, FuncDesc, FuncRustBody, FuncRustExtern};
 
-use crate::comment::strip_comment_markers;
+use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
-use crate::element::{ExcludeKind, UNNAMED};
+use crate::element::ExcludeKind;
 use crate::entity::WalkAction;
 use crate::field::FieldDesc;
 use crate::settings::{ArgOverride, TypeRefFactory, RETURN_HINT};
@@ -22,8 +22,12 @@ use crate::{
 	settings, Class, DefaultElement, Element, EntityExt, Field, FieldTypeHint, GeneratedType, GeneratorEnv, IteratorExt,
 	NameDebug, NameStyle, StrExt, StringExt, TypeRef,
 };
+pub use func_id::FuncId;
+pub use kind::{FuncKind, OperatorKind, ReturnKind};
 
 mod desc;
+mod func_id;
+mod kind;
 
 #[derive(Clone)]
 pub enum Func<'tu, 'ge> {
@@ -85,7 +89,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			if type_ref.is_generic() {
 				spec
 					.get(type_ref.source().cpp_name(CppNameStyle::Declaration).as_ref())
-					.map(|spec_type| type_ref.map(|_| spec_type().with_constness(type_ref.constness())))
+					.map(|spec_type| type_ref.map(|_| spec_type().with_inherent_constness(type_ref.constness())))
 			} else {
 				None
 			}
@@ -129,52 +133,90 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub(crate) fn to_desc(&self, skip_config: InheritConfig) -> FuncDesc<'tu, 'ge> {
-		let kind = if skip_config.kind {
-			FuncKind::Function
-		} else {
-			self.kind().into_owned()
-		};
-		let cpp_name = if skip_config.name {
-			Rc::from("")
-		} else {
-			self.cpp_name(CppNameStyle::Reference).into()
-		};
-		let doc_comment = if skip_config.doc_comment {
-			Rc::from("")
-		} else {
-			self.doc_comment().into()
-		};
-		let arguments: Rc<[Field]> = if skip_config.arguments {
-			Rc::new([])
-		} else {
-			self.arguments().into_owned().into()
-		};
-		let return_type_ref = if skip_config.return_type_ref {
-			TypeRefDesc::void()
-		} else {
-			self.return_type_ref()
-		};
-		let def_loc = if skip_config.definition_location {
-			DefinitionLocation::Generated
-		} else {
-			self.file_line_name().location
-		};
-		FuncDesc {
-			kind,
-			type_hint: FuncTypeHint::None,
-			constness: self.constness(),
-			return_kind: self.return_kind(),
-			cpp_name,
-			rust_custom_leafname: self.rust_custom_leafname().map(Rc::from),
-			rust_module: self.rust_module().into(),
-			doc_comment,
-			def_loc,
-			rust_generic_decls: Rc::new([]),
-			arguments,
-			return_type_ref,
-			cpp_body: FuncCppBody::Auto,
-			rust_body: FuncRustBody::Auto,
-			rust_extern_definition: FuncRustExtern::Auto,
+		match self {
+			Func::Clang { .. } => {
+				let kind = if skip_config.kind {
+					FuncKind::Function
+				} else {
+					self.kind().into_owned()
+				};
+				let cpp_name = if skip_config.name {
+					Rc::from("")
+				} else {
+					self.cpp_name(CppNameStyle::Reference).into()
+				};
+				let doc_comment = if skip_config.doc_comment {
+					Rc::from("")
+				} else {
+					self.doc_comment().into()
+				};
+				let arguments: Rc<[Field]> = if skip_config.arguments {
+					Rc::new([])
+				} else {
+					self.arguments().into_owned().into()
+				};
+				let return_type_ref = if skip_config.return_type_ref {
+					TypeRefDesc::void()
+				} else {
+					self.return_type_ref()
+				};
+				let def_loc = if skip_config.definition_location {
+					DefinitionLocation::Generated
+				} else {
+					self.file_line_name().location
+				};
+				FuncDesc {
+					kind,
+					type_hint: FuncTypeHint::None,
+					constness: self.constness(),
+					return_kind: self.return_kind(),
+					cpp_name,
+					rust_custom_leafname: self.rust_custom_leafname().map(Rc::from),
+					rust_module: self.rust_module().into(),
+					doc_comment,
+					def_loc,
+					rust_generic_decls: Rc::new([]),
+					arguments,
+					return_type_ref,
+					cpp_body: FuncCppBody::Auto,
+					rust_body: FuncRustBody::Auto,
+					rust_extern_definition: FuncRustExtern::Auto,
+				}
+			}
+			Func::Desc(desc) => {
+				let kind = if skip_config.kind {
+					FuncKind::Function
+				} else {
+					desc.kind.clone()
+				};
+				let return_type_ref = if skip_config.return_type_ref {
+					TypeRefDesc::void()
+				} else {
+					desc.return_type_ref.clone()
+				};
+				let def_loc = if skip_config.definition_location {
+					DefinitionLocation::Generated
+				} else {
+					desc.def_loc.clone()
+				};
+				FuncDesc {
+					kind,
+					type_hint: FuncTypeHint::None,
+					constness: desc.constness,
+					return_kind: desc.return_kind,
+					cpp_name: Rc::clone(&desc.cpp_name),
+					rust_custom_leafname: desc.rust_custom_leafname.as_ref().map(Rc::clone),
+					rust_module: Rc::clone(&desc.rust_module),
+					doc_comment: Rc::clone(&desc.doc_comment),
+					def_loc,
+					rust_generic_decls: Rc::new([]),
+					arguments: Rc::clone(&desc.arguments),
+					return_type_ref,
+					cpp_body: FuncCppBody::Auto,
+					rust_body: FuncRustBody::Auto,
+					rust_extern_definition: FuncRustExtern::Auto,
+				}
+			}
 		}
 	}
 
@@ -271,13 +313,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn constness(&self) -> Constness {
-		if settings::FORCE_CONSTANT_METHOD.contains(self.cpp_name(CppNameStyle::Reference).as_ref()) {
-			Constness::Const
-		} else {
-			match self {
-				&Self::Clang { entity, .. } => Constness::from_is_const(entity.is_const_method()),
-				Self::Desc(desc) => desc.constness,
-			}
+		match self {
+			&Self::Clang { entity, .. } => Constness::from_is_const(entity.is_const_method()),
+			Self::Desc(desc) => desc.constness,
 		}
 	}
 
@@ -444,7 +482,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	fn clang_arguments(&self, entity: Entity<'tu>) -> Vec<Entity<'tu>> {
 		match self.kind().as_ref() {
 			FuncKind::GenericFunction | FuncKind::GenericInstanceMethod(..) => {
-				let mut out = vec![];
+				let mut out = Vec::with_capacity(8);
 				entity.walk_children_while(|child| {
 					if child.get_kind() == EntityKind::ParmDecl {
 						out.push(child);
@@ -618,7 +656,7 @@ impl Element for Func<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<str> {
 		match self {
-			&Self::Clang { entity, .. } => strip_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
+			&Self::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Self::Desc(desc) => desc.doc_comment.as_ref().into(),
 		}
 	}
@@ -706,308 +744,10 @@ impl Safety {
 	}
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum ReturnKind {
-	InfallibleNaked,
-	InfallibleViaArg,
-	Fallible,
-}
-
-impl ReturnKind {
-	pub fn infallible(is_naked: bool) -> Self {
-		if is_naked {
-			Self::InfallibleNaked
-		} else {
-			Self::InfallibleViaArg
-		}
-	}
-
-	pub fn is_infallible(&self) -> bool {
-		match self {
-			ReturnKind::InfallibleNaked | ReturnKind::InfallibleViaArg => true,
-			ReturnKind::Fallible => false,
-		}
-	}
-
-	pub fn is_naked(&self) -> bool {
-		match self {
-			ReturnKind::InfallibleNaked => true,
-			ReturnKind::InfallibleViaArg | ReturnKind::Fallible => false,
-		}
-	}
-}
-
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum OperatorKind {
-	Unsupported,
-	Index,
-	Add,
-	Sub,
-	Mul,
-	Div,
-	Deref,
-	Apply,
-	Set,
-	Equals,
-	NotEquals,
-	GreaterThan,
-	GreaterThanOrEqual,
-	LessThan,
-	LessThanOrEqual,
-	Incr,
-	Decr,
-	And,
-	Or,
-	Xor,
-	BitwiseNot,
-}
-
-impl OperatorKind {
-	pub fn new(token: &str, arg_count: usize) -> Self {
-		match token.trim() {
-			"[]" => OperatorKind::Index,
-			"+" => OperatorKind::Add,
-			"-" => OperatorKind::Sub,
-			"*" => {
-				if arg_count == 0 {
-					OperatorKind::Deref
-				} else {
-					OperatorKind::Mul
-				}
-			}
-			"()" => OperatorKind::Apply,
-			"=" => OperatorKind::Set,
-			"/" => OperatorKind::Div,
-			"==" => OperatorKind::Equals,
-			"!=" => OperatorKind::NotEquals,
-			">" => OperatorKind::GreaterThan,
-			">=" => OperatorKind::GreaterThanOrEqual,
-			"<" => OperatorKind::LessThan,
-			"<=" => OperatorKind::LessThanOrEqual,
-			"++" => OperatorKind::Incr,
-			"--" => OperatorKind::Decr,
-			"&" => OperatorKind::And,
-			"|" => OperatorKind::Or,
-			"^" => OperatorKind::Xor,
-			"~" => OperatorKind::BitwiseNot,
-			_ => OperatorKind::Unsupported,
-		}
-	}
-
-	pub fn add_args_to_name(&self) -> bool {
-		match self {
-			OperatorKind::Index | OperatorKind::BitwiseNot | OperatorKind::Apply => false,
-			OperatorKind::Unsupported
-			| OperatorKind::Add
-			| OperatorKind::Sub
-			| OperatorKind::Mul
-			| OperatorKind::Div
-			| OperatorKind::Deref
-			| OperatorKind::Equals
-			| OperatorKind::NotEquals
-			| OperatorKind::GreaterThan
-			| OperatorKind::GreaterThanOrEqual
-			| OperatorKind::LessThan
-			| OperatorKind::LessThanOrEqual
-			| OperatorKind::Incr
-			| OperatorKind::Decr
-			| OperatorKind::And
-			| OperatorKind::Or
-			| OperatorKind::Xor
-			| OperatorKind::Set => true,
-		}
-	}
-}
-
-#[derive(Clone, Debug)]
-pub enum FuncKind<'tu, 'ge> {
-	Function,
-	FunctionOperator(OperatorKind),
-	Constructor(Class<'tu, 'ge>),
-	InstanceMethod(Class<'tu, 'ge>),
-	StaticMethod(Class<'tu, 'ge>),
-	FieldAccessor(Class<'tu, 'ge>, Field<'tu, 'ge>),
-	ConversionMethod(Class<'tu, 'ge>),
-	InstanceOperator(Class<'tu, 'ge>, OperatorKind),
-	GenericFunction,
-	GenericInstanceMethod(Class<'tu, 'ge>),
-}
-
-impl<'tu, 'ge> FuncKind<'tu, 'ge> {
-	pub fn as_instance_method(&self) -> Option<&Class<'tu, 'ge>> {
-		match self {
-			Self::InstanceMethod(out)
-			| Self::FieldAccessor(out, _)
-			| Self::GenericInstanceMethod(out)
-			| Self::ConversionMethod(out)
-			| Self::InstanceOperator(out, ..) => Some(out),
-			_ => None,
-		}
-	}
-
-	pub fn as_constructor(&self) -> Option<&Class<'tu, 'ge>> {
-		if let Self::Constructor(out) = self {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_static_method(&self) -> Option<&Class<'tu, 'ge>> {
-		if let Self::StaticMethod(out) = self {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_conversion_method(&self) -> Option<&Class<'tu, 'ge>> {
-		if let Self::ConversionMethod(out) = self {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	/// Any function with a connection to a class: instance method, static method or a constructor
-	pub fn as_class_method(&self) -> Option<&Class<'tu, 'ge>> {
-		if let Some(out) = self.as_instance_method() {
-			Some(out)
-		} else if let Some(out) = self.as_constructor() {
-			Some(out)
-		} else if let Some(out) = self.as_static_method() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_operator(&self) -> Option<(Option<&Class<'tu, 'ge>>, OperatorKind)> {
-		match self {
-			Self::FunctionOperator(kind) => Some((None, *kind)),
-			Self::InstanceOperator(cls, kind) => Some((Some(cls), *kind)),
-			_ => None,
-		}
-	}
-
-	pub fn as_field_accessor(&self) -> Option<(&Class<'tu, 'ge>, &Field<'tu, 'ge>)> {
-		if let FuncKind::FieldAccessor(cls, fld) = self {
-			Some((cls, fld))
-		} else {
-			None
-		}
-	}
-}
-
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FuncTypeHint {
 	None,
 	Specialized,
-}
-
-#[derive(Clone, Debug, Eq, Hash, PartialEq)]
-pub struct FuncId<'f> {
-	name: Cow<'f, str>,
-	constness: Constness,
-	args: Vec<Cow<'f, str>>,
-}
-
-impl<'f> FuncId<'f> {
-	/// # Parameters
-	/// name: fully qualified C++ function name (e.g. cv::Mat::create)
-	/// args: C++ argument names ("unnamed" for unnamed ones)
-	pub fn new_mut<const ARGS: usize>(name: &'static str, args: [&'static str; ARGS]) -> FuncId<'static> {
-		FuncId {
-			name: name.into(),
-			constness: Constness::Mut,
-			args: args.into_iter().map(|a| a.into()).collect(),
-		}
-	}
-
-	/// # Parameters
-	/// name: fully qualified C++ function name (e.g. cv::Mat::create)
-	/// args: C++ argument names ("unnamed" for unnamed ones)
-	pub fn new_const<const ARGS: usize>(name: &'static str, args: [&'static str; ARGS]) -> FuncId<'static> {
-		FuncId {
-			name: name.into(),
-			constness: Constness::Const,
-			args: args.into_iter().map(|a| a.into()).collect(),
-		}
-	}
-
-	pub fn from_entity(entity: Entity) -> FuncId<'static> {
-		let name = entity.cpp_name(CppNameStyle::Reference).into_owned().into();
-		let args = if let EntityKind::FunctionTemplate = entity.get_kind() {
-			let mut args = Vec::with_capacity(8);
-			entity.walk_children_while(|child| {
-				if child.get_kind() == EntityKind::ParmDecl {
-					args.push(child.get_name().map_or_else(|| UNNAMED.into(), Cow::Owned));
-				}
-				WalkAction::Continue
-			});
-			args
-		} else {
-			entity
-				.get_arguments()
-				.into_iter()
-				.flatten()
-				.map(|a| a.get_name().map_or_else(|| UNNAMED.into(), Cow::Owned))
-				.collect()
-		};
-		FuncId {
-			name,
-			constness: Constness::from_is_const(entity.is_const_method()),
-			args,
-		}
-	}
-
-	pub fn from_desc(desc: &'f FuncDesc) -> FuncId<'f> {
-		let mut name = if let Some(cls) = desc.kind.as_instance_method() {
-			format!("{}::", cls.cpp_name(CppNameStyle::Reference))
-		} else {
-			"".to_string()
-		};
-		name.push_str(desc.cpp_name.as_ref());
-		let args = desc
-			.arguments
-			.iter()
-			.map(|arg| arg.cpp_name(CppNameStyle::Declaration))
-			.collect();
-
-		FuncId {
-			name: name.into(),
-			constness: desc.constness,
-			args,
-		}
-	}
-
-	pub fn make_static(self) -> FuncId<'static> {
-		FuncId {
-			name: self.name.into_owned().into(),
-			args: self.args.into_iter().map(|arg| arg.into_owned().into()).collect(),
-			constness: self.constness,
-		}
-	}
-
-	pub fn name(&self) -> &str {
-		self.name.as_ref()
-	}
-
-	pub fn args(&self) -> &[Cow<str>] {
-		&self.args
-	}
-}
-
-impl fmt::Display for FuncId<'_> {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		write!(
-			f,
-			"{cnst}{name}({args})",
-			cnst = self.constness.rust_qual_ptr(),
-			name = self.name,
-			args = self.args.join(", ")
-		)
-	}
 }
 
 #[derive(Debug, Clone, Copy)]

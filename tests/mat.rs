@@ -730,7 +730,6 @@ fn mat_iterator() -> Result<()> {
 		let mat = Mat::from_slice_2d(&[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])?;
 		let roi = Mat::roi(&mat, Rect::new(1, 1, 2, 2))?;
 		for (pos, x) in roi.iter::<i32>()? {
-			dbg!(&pos);
 			match pos {
 				Point { x: 0, y: 0 } => assert_eq!(x, 6),
 				Point { x: 1, y: 0 } => assert_eq!(x, 7),

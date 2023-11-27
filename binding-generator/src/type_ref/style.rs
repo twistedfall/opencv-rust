@@ -67,6 +67,7 @@ impl FishStyle {
 		}
 	}
 
+	/// Returns "::" when turbo fish style is requested, otherwise returns empty string
 	pub fn rust_qual(&self) -> &'static str {
 		match self {
 			FishStyle::No => "",
@@ -135,6 +136,13 @@ impl StrType {
 			StrType::CharPtr => {}
 		}
 	}
+
+	pub fn is_binary(&self) -> bool {
+		match self {
+			StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary) => true,
+			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr => false,
+		}
+	}
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -152,13 +160,17 @@ pub enum Dir<T> {
 
 impl<T> Dir<T> {
 	pub fn with_out_dir(self, is_out_dir: bool) -> Self {
-		let inner = match self {
-			Self::In(inner) | Self::Out(inner) => inner,
-		};
+		let inner = self.inner();
 		if is_out_dir {
 			Self::Out(inner)
 		} else {
 			Self::In(inner)
+		}
+	}
+
+	pub fn inner(self) -> T {
+		match self {
+			Self::In(inner) | Self::Out(inner) => inner,
 		}
 	}
 }

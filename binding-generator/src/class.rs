@@ -8,7 +8,7 @@ use clang::{Accessibility, Entity, EntityKind};
 
 pub use desc::ClassDesc;
 
-use crate::comment::strip_comment_markers;
+use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::{WalkAction, WalkResult};
@@ -427,7 +427,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 									def_loc: fld.file_line_name().location,
 									rust_generic_decls: Rc::new([]),
 									arguments: Rc::new([]),
-									return_type_ref: fld_type_ref.with_constness(Constness::Const),
+									return_type_ref: fld_type_ref.with_inherent_constness(Constness::Const),
 									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
 									rust_body: FuncRustBody::Auto,
 									rust_extern_definition: FuncRustExtern::Auto,
@@ -449,7 +449,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 									def_loc: fld.file_line_name().location,
 									rust_generic_decls: Rc::new([]),
 									arguments: Rc::new([]),
-									return_type_ref: fld_type_ref.with_constness(Constness::Mut),
+									return_type_ref: fld_type_ref.with_inherent_constness(Constness::Mut),
 									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
 									rust_body: FuncRustBody::Auto,
 									rust_extern_definition: FuncRustExtern::Auto,
@@ -500,7 +500,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								rust_generic_decls: Rc::new([]),
 								arguments: Rc::new([Field::new_desc(FieldDesc {
 									cpp_fullname: "val".into(),
-									type_ref: fld_type_ref.with_constness(Constness::Const),
+									type_ref: fld_type_ref.with_inherent_constness(Constness::Const),
 									type_hint: FieldTypeHint::None,
 									default_value: fld.default_value().map(|v| v.into()),
 								})]),
@@ -602,7 +602,7 @@ impl Element for Class<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<str> {
 		match self {
-			&Self::Clang { entity, .. } => strip_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
+			&Self::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Self::Desc(_) => "".into(),
 		}
 	}

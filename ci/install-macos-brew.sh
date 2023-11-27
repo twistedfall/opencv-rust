@@ -27,3 +27,4 @@ brew uninstall --force node@18
 brew upgrade --force --display-times
 brew list --versions
 brew -v install --force --display-times opencv"$BREW_OPENCV_VERSION"
+brew link opencv"$BREW_OPENCV_VERSION"

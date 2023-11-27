@@ -84,9 +84,9 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 
 		let extern_delete = FuncDesc::method_delete(smartptr_class.clone()).identifier();
 		let extern_get_inner_ptr =
-			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_constness(Constness::Const)).identifier();
+			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_inherent_constness(Constness::Const)).identifier();
 		let extern_get_inner_ptr_mut =
-			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_constness(Constness::Mut)).identifier();
+			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_inherent_constness(Constness::Mut)).identifier();
 
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.clone()),
@@ -177,11 +177,11 @@ fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let mut out = Vec::with_capacity(6);
 	out.push(method_get_inner_ptr(
 		smartptr_class.clone(),
-		pointee_type.with_constness(Constness::Const),
+		pointee_type.with_inherent_constness(Constness::Const),
 	));
 	out.push(method_get_inner_ptr(
 		smartptr_class.clone(),
-		pointee_type.with_constness(Constness::Mut),
+		pointee_type.with_inherent_constness(Constness::Mut),
 	));
 	out.push(FuncDesc::method_delete(smartptr_class.clone()));
 	if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
@@ -308,16 +308,11 @@ fn method_get_inner_ptr<'tu, 'ge>(smartptr_class: Class<'tu, 'ge>, pointee_type:
 	} else {
 		TypeRef::new_pointer(pointee_type)
 	};
-	let name_suffix = if constness.is_mut() {
-		"Mut"
-	} else {
-		""
-	};
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(smartptr_class),
 		constness,
 		ReturnKind::InfallibleNaked,
-		format!("getInnerPtr{name_suffix}"),
+		format!("getInnerPtr{}", constness.rust_name_qual()),
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualCallReturn("return instance->get();".into()),

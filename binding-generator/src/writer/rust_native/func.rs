@@ -56,7 +56,7 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 				"## Note\nThis alternative version of [{refr}] function uses the following default values for its arguments:\n{default_args}",
 				refr = render_ref(self, Some(&original_rust_leafname))
 			)
-			.expect("Write to String doesn't fail");
+			.expect("Impossible");
 			let out = match self.clone() {
 				Func::Clang { .. } => {
 					let mut desc = self.to_desc(InheritConfig::empty().doc_comment().arguments());
@@ -314,9 +314,9 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			return_type_func_decl = format!("Result<{return_type_func_decl}>").into()
 		};
 		let return_type_func_decl = if return_type_func_decl == "()" {
-			Cow::Borrowed("")
+			String::new()
 		} else {
-			format!(" -> {return_type_func_decl}").into()
+			format!(" -> {return_type_func_decl}")
 		};
 		let (ret_pre_call, ret_handle, ret_stmt) = rust_return(self, &return_type_ref, return_kind, safety, is_static_func);
 		let mut attributes = Vec::with_capacity(2);
@@ -345,7 +345,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			("name", name.as_ref()),
 			("generic_decl", &rust_generic_decl(self)),
 			("decl_args", &decl_args.join(", ")),
-			("rv_rust_full", return_type_func_decl.as_ref()),
+			("rv_rust_full", &return_type_func_decl),
 			("pre_call_args", &pre_call_args.join("\n")),
 			("return_pre_call", ret_pre_call),
 			(
@@ -463,12 +463,12 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		};
 		let mut_ret_wrapper_full = if return_kind.is_infallible() {
 			return_type_ref
-				.with_constness(Constness::Mut)
+				.with_inherent_constness(Constness::Mut)
 				.cpp_extern_return()
 				.into_owned()
 		} else {
 			return_type_ref
-				.with_constness(Constness::Mut)
+				.with_inherent_constness(Constness::Mut)
 				.cpp_extern_return_fallible()
 				.into_owned()
 		};

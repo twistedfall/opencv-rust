@@ -56,7 +56,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 
 	fn rust_safe_id(&self, add_const: bool) -> Cow<str> {
 		let mut out = String::with_capacity(64);
-		if add_const && self.clang_constness().is_const() {
+		if add_const && self.inherent_constness().is_const() {
 			out.push_str("const_");
 		}
 		match self.kind().as_ref() {
@@ -158,8 +158,6 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			"&mut impl core::ToInputOutputArray".into()
 		} else if let Some((_, size)) = self.as_string_array() {
 			self.format_as_array("&str", size).into()
-		} else if self.is_rust_char() {
-			"char".into()
 		} else if let Some((tref, cls)) = self.as_abstract_class_ptr() {
 			let constness = tref.constness();
 			format!(
@@ -168,6 +166,8 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				name = cls.rust_trait_name(NameStyle::ref_(), constness)
 			)
 			.into()
+		} else if self.is_rust_char() {
+			"char".into()
 		} else {
 			self.rust_name(NameStyle::ref_())
 		};
@@ -183,7 +183,9 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	}
 
 	fn rust_extern_self_func_decl(&self, method_constness: Constness) -> String {
-		self.with_constness(method_constness).rust_extern_arg_func_decl("instance")
+		self
+			.with_inherent_constness(method_constness)
+			.rust_extern_arg_func_decl("instance")
 	}
 
 	fn rust_extern_arg_func_decl(&self, name: &str) -> String {
@@ -247,13 +249,13 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	}
 
 	fn rust_self_func_call(&self, method_constness: Constness) -> String {
-		self.with_constness(method_constness).rust_arg_func_call("self")
+		self.with_inherent_constness(method_constness).rust_arg_func_call("self")
 	}
 
 	fn rust_arg_func_call(&self, name: &str) -> String {
 		let constness = self.constness();
 		if let Some(dir) = self.as_string() {
-			return match dir {
+			match dir {
 				Dir::In(_) => {
 					if constness.is_const() {
 						format!("{name}.opencv_as_extern()")
@@ -262,77 +264,62 @@ impl TypeRefExt for TypeRef<'_, '_> {
 					}
 				}
 				Dir::Out(_) => format!("&mut {name}_via"),
-			};
-		}
-		if self.as_reference().map_or(false, |inner| {
+			}
+		} else if self.as_reference().map_or(false, |inner| {
 			(inner.as_simple_class().is_some() || inner.is_enum()) && (inner.constness().is_const() || self.is_by_move())
 		}) {
-			return format!("&{cnst}{name}", cnst = constness.rust_qual());
-		}
-		if self.as_simple_class().is_some() {
-			return format!("{name}.opencv_as_extern()");
-		}
-		if self.extern_pass_kind().is_by_void_ptr() {
+			format!("&{cnst}{name}", cnst = constness.rust_qual())
+		} else if self.as_simple_class().is_some() {
+			format!("{name}.opencv_as_extern()")
+		} else if self.extern_pass_kind().is_by_void_ptr() {
 			let typ = self.source();
 			let by_ptr = if constness.is_const() {
 				format!("{name}.as_raw_{rust_safe_id}()", rust_safe_id = typ.rust_safe_id(false))
 			} else {
 				format!("{name}.as_raw_mut_{rust_safe_id}()", rust_safe_id = typ.rust_safe_id(false))
 			};
-			return if self.is_nullable() {
+			if self.is_nullable() {
 				format!(
 					"{name}.map_or({null_ptr}, |{name}| {by_ptr})",
 					null_ptr = constness.rust_null_ptr()
 				)
 			} else {
 				by_ptr
-			};
-		}
-		if self.as_variable_array().is_some() {
+			}
+		} else if self.as_variable_array().is_some() {
 			let arr = if constness.is_const() {
 				format!("{name}.as_ptr()")
 			} else {
 				format!("{name}.as_mut_ptr()")
 			};
-			return if self.is_nullable() {
+			if self.is_nullable() {
 				format!(
 					"{name}.map_or({null_ptr}, |{name}| {arr})",
 					null_ptr = constness.rust_null_ptr()
 				)
 			} else {
 				arr
-			};
-		}
-		if let Some(func) = self.as_function() {
-			if func.arguments().into_iter().any(|a| a.is_user_data()) {
-				return format!("{name}_trampoline");
 			}
-		}
-		if let Some(inner) = self.as_pointer() {
-			if inner.as_pointer().is_some() {
-				// some special care for double pointers
-				return format!(
-					"{name} as *{cnst} _ as *{cnst} *{const_inner} _",
-					cnst = self.clang_constness().rust_qual_ptr(),
-					const_inner = inner.clang_constness().rust_qual_ptr()
-				);
-			}
-		}
-		if self.is_nullable() && (self.as_reference().is_some() || self.as_pointer().is_some()) {
-			let arg = if constness.is_const() {
-				format!("{name} as *const _")
-			} else {
-				format!("{name} as *mut _")
-			};
+		} else if self
+			.as_function()
+			.map_or(false, |f| f.arguments().into_iter().any(|a| a.is_user_data()))
+		{
+			format!("{name}_trampoline")
+		} else if let Some(inner) = self.as_pointer().filter(|inner| inner.as_pointer().is_some()) {
+			// some special care for double pointers
 			return format!(
-				"{name}.map_or({null_ptr}, |{name}| {arg})",
-				null_ptr = constness.rust_null_ptr(),
+				"{name} as *{cnst} _ as *{cnst} *{const_inner} _",
+				cnst = self.inherent_constness().rust_qual_ptr(),
+				const_inner = inner.inherent_constness().rust_qual_ptr()
 			);
+		} else if self.is_nullable() && (self.as_reference().is_some() || self.as_pointer().is_some()) {
+			// unwrap_or doesn't work here because reference doesn't coerce to pointer in this case
+			format!("{name}.map_or({null_ptr}, |x| x)", null_ptr = constness.rust_null_ptr())
+		} else if self.is_rust_char() {
+			format!("u8::try_from({name})? as c_char")
+		} else {
+			name.to_string()
 		}
-		if self.is_rust_char() {
-			return format!("u8::try_from({name})? as c_char");
-		}
-		name.to_string()
 	}
 
 	fn rust_arg_forward<'n>(&self, name: &'n str) -> Cow<'n, str> {
@@ -364,32 +351,32 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		} else if self.extern_pass_kind().is_by_void_ptr() {
 			format!("*{cnst}c_void", cnst = constness.rust_qual_ptr()).into()
 		} else if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
-			let mut out = String::with_capacity(64);
-			write!(out, "*{}", self.constness().rust_qual_ptr()).expect("Impossible");
-			if inner.is_void() {
-				out += "c_void";
+			let typ = if inner.is_void() {
+				"c_void".into()
 			} else if self.as_string().is_some() {
-				out += "c_char";
+				"c_char".into()
 			} else {
-				out += inner.rust_extern(ExternDir::Contained).as_ref()
-			}
-			out.into()
-		} else if let Some((elem, len)) = self.as_fixed_array() {
-			format!(
-				"*{cnst}[{typ}; {len}]",
-				cnst = self.constness().rust_qual_ptr(),
-				typ = elem.rust_extern(ExternDir::Contained),
-			)
-			.into()
-		} else if let Some(elem) = self.as_variable_array() {
-			let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr))) {
-				// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
-				// argv is treated as array of output arguments and it doesn't seem to be meant this way
-				format!("*{cnst}c_char", cnst = elem.clang_constness().rust_qual_ptr()).into()
-			} else {
-				elem.rust_extern(ExternDir::Contained)
+				inner.rust_extern(ExternDir::Contained)
 			};
 			format!("*{cnst}{typ}", cnst = self.constness().rust_qual_ptr()).into()
+		} else if let Some((elem, len)) = self.as_array() {
+			if let Some(len) = len {
+				format!(
+					"*{cnst}[{typ}; {len}]",
+					cnst = self.constness().rust_qual_ptr(),
+					typ = elem.rust_extern(ExternDir::Contained),
+				)
+			} else {
+				let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr))) {
+					// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
+					// argv is treated as array of output arguments and it doesn't seem to be meant this way
+					format!("*{cnst}c_char", cnst = elem.inherent_constness().rust_qual_ptr()).into()
+				} else {
+					elem.rust_extern(ExternDir::Contained)
+				};
+				format!("*{cnst}{typ}", cnst = self.constness().rust_qual_ptr())
+			}
+			.into()
 		} else if let Some(func) = self.as_function() {
 			func.rust_extern().into_owned().into()
 		} else if self.as_simple_class().is_some() && matches!(dir, ExternDir::ToCpp) {
@@ -401,11 +388,6 @@ impl TypeRefExt for TypeRef<'_, '_> {
 
 	fn rust_return(&self, turbo_fish_style: FishStyle, is_static_func: bool) -> Cow<str> {
 		if self.as_abstract_class_ptr().is_some() {
-			let mut_suf = if self.constness().is_const() {
-				""
-			} else {
-				"Mut"
-			};
 			let lt = if is_static_func {
 				"'static, "
 			} else {
@@ -413,6 +395,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			};
 			format!(
 				"types::AbstractRef{mut_suf}{fish}<{lt}{typ}>",
+				mut_suf = self.constness().rust_name_qual(),
 				fish = turbo_fish_style.rust_qual(),
 				typ = self.source().rust_name(NameStyle::Reference(turbo_fish_style)),
 			)
@@ -442,14 +425,14 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		} else {
 			match self.kind().as_ref() {
 				TypeRefKind::Pointer(inner) => {
-					if inner.is_void() {
+					if self.is_rust_by_ptr() {
 						0
 					} else {
 						1 + inner.rust_lifetime_count()
 					}
 				}
 				TypeRefKind::Reference(inner) => {
-					if !((inner.as_simple_class().is_some() || inner.is_enum()) && inner.clang_constness().is_const()) {
+					if !((inner.as_simple_class().is_some() || inner.is_enum()) && inner.inherent_constness().is_const()) {
 						1 + inner.rust_lifetime_count()
 					} else {
 						0
@@ -466,7 +449,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	// }
 
 	fn cpp_self_func_decl(&self, method_constness: Constness) -> String {
-		let mut self_with_constness = self.with_constness(method_constness);
+		let mut self_with_constness = self.with_inherent_constness(method_constness);
 		if self.extern_pass_kind().is_by_ptr() {
 			self_with_constness = TypeRef::new_pointer(self_with_constness);
 		}

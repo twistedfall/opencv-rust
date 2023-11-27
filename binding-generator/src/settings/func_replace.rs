@@ -36,7 +36,7 @@ pub static FUNC_REPLACE: Lazy<HashMap<FuncId, FuncInheritFactory>> = Lazy::new(|
 			def_loc: DefinitionLocation::Generated,
 			rust_generic_decls: vec![("T".to_string(), "core::DataType".to_string())].into(),
 			arguments: Rc::new([]),
-			return_type_ref: TypeRef::new_pointer(TypeRef::new_generic("T").with_constness(Constness::Const)),
+			return_type_ref: TypeRef::new_pointer(TypeRef::new_generic("T").with_inherent_constness(Constness::Const)),
 			cpp_body: FuncCppBody::Absent,
 			rust_body: FuncRustBody::ManualCallReturn(MAT_FORWARD),
 			rust_extern_definition: FuncRustExtern::Absent,

@@ -4,6 +4,7 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 
 use once_cell::sync::Lazy;
 
+pub use argument_names::ARGUMENT_NAMES_USERDATA;
 pub use argument_override::{ArgOverride, ARGUMENT_OVERRIDE, RETURN_HINT};
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
@@ -17,6 +18,7 @@ pub use func_specialize::{TypeRefFactory, FUNC_SPECIALIZE};
 pub use func_unsafe::FUNC_UNSAFE;
 pub use generator_module_tweaks::{ModuleTweak, GENERATOR_MODULE_TWEAKS};
 
+mod argument_names;
 mod argument_override;
 mod element_exclude_kind;
 mod element_export_tweak;
@@ -60,13 +62,6 @@ pub static RESERVED_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("yield", "yield_"),
 	])
 });
-
-/// set of classes that must be generated as traits, elements are Class.cpp_name(Reference)()
-pub static FORCE_CLASS_ABSTRACT: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["cv::detail::BlocksCompensator"]));
-
-/// cpp_name(Reference)
-pub static FORCE_CONSTANT_METHOD: Lazy<HashSet<&str>> =
-	Lazy::new(|| HashSet::from(["cv::Mat::size", "cv::Mat::step", "cv::UMat::size", "cv::UMat::step"]));
 
 /// cpp_name(Reference) => ( rust_name(Reference(No)), cpp_name(Reference) )
 pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| {

@@ -54,12 +54,10 @@ impl RenderComment {
 			let name = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			if path.starts_with("samples/") {
 				// fixme: hack to detect hdf snippets
-				Some(
-					format!("[{name}](https://github.com/opencv/opencv_contrib/blob/{opencv_version}/modules/hdf/{path}#L1)",).into(),
-				)
+				Some(format!("[{name}](https://github.com/opencv/opencv_contrib/blob/{opencv_version}/modules/hdf/{path}#L1)").into())
 			} else {
 				Some(
-					format!("[{name}](https://github.com/opencv/opencv/blob/{opencv_version}/samples/cpp/tutorial_code/{path}#L1)",)
+					format!("[{name}](https://github.com/opencv/opencv/blob/{opencv_version}/samples/cpp/tutorial_code/{path}#L1)")
 						.into(),
 				)
 			}
@@ -266,7 +264,7 @@ pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&str>) -> Cow
 			"{}::{}",
 			cls.rust_trait_name(NameStyle::Declaration, referenced.constness()),
 			force_cpp_name
-				.map_or_else(|| referenced.cpp_name(CppNameStyle::Declaration), Cow::Borrowed,)
+				.map_or_else(|| referenced.cpp_name(CppNameStyle::Declaration), Cow::Borrowed)
 				.cpp_name_to_rust_case()
 		)
 		.into(),
@@ -274,7 +272,7 @@ pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&str>) -> Cow
 			"{}::{}",
 			cls.rust_name(NameStyle::Declaration),
 			force_cpp_name
-				.map_or_else(|| referenced.cpp_name(CppNameStyle::Declaration), Cow::Borrowed,)
+				.map_or_else(|| referenced.cpp_name(CppNameStyle::Declaration), Cow::Borrowed)
 				.cpp_name_to_rust_case()
 		)
 		.into(),
@@ -289,7 +287,7 @@ pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&str>) -> Cow
 
 #[cfg(test)]
 mod test {
-	use crate::comment::strip_comment_markers;
+	use crate::comment::strip_doxygen_comment_markers;
 
 	use super::RenderComment;
 
@@ -305,7 +303,10 @@ mod test {
 			let res = "\
 line1
 line2";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -318,7 +319,10 @@ line1
 			let res = "\
 line1
  line2";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -331,7 +335,10 @@ line1
 line1
 line2
 line3";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -347,7 +354,10 @@ line1
 * line2
   line3
 * line4";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -362,7 +372,10 @@ line1
 line1
 line2
                        line3";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -375,7 +388,10 @@ line2
 line1
 line2
 line3";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -386,7 +402,10 @@ line3";
 			let res = "\
 line1
 line2";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -399,7 +418,10 @@ line2";
 line1
   line2
 line3";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -414,7 +436,10 @@ line2
 line1
 
 line2";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -429,7 +454,10 @@ line2";
 line1
 
 line2";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -443,7 +471,10 @@ line2";
 line1
 
 line2";
-			assert_eq!(res, &RenderComment::new(&strip_comment_markers(comment), "master").comment);
+			assert_eq!(
+				res,
+				&RenderComment::new(&strip_doxygen_comment_markers(comment), "master").comment
+			);
 		}
 
 		{
@@ -456,7 +487,7 @@ test"
 					.to_string(),
 				attributes: vec!["#[deprecated = \"test\"]".to_string()],
 			};
-			assert_eq!(res, RenderComment::new(&strip_comment_markers(comment), "master"));
+			assert_eq!(res, RenderComment::new(&strip_doxygen_comment_markers(comment), "master"));
 		}
 	}
 

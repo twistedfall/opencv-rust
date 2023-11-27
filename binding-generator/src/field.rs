@@ -8,11 +8,11 @@ use std::rc::Rc;
 use clang::token::TokenKind;
 use clang::{Entity, EntityKind, EntityVisitResult};
 
-use crate::comment::strip_comment_markers;
+use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName, NameDebug};
-use crate::element::{ExcludeKind, UNNAMED};
-use crate::settings::ArgOverride;
-use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefTypeHint};
+use crate::element::ExcludeKind;
+use crate::settings::{ArgOverride, ARGUMENT_NAMES_USERDATA};
+use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefKind, TypeRefTypeHint};
 use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 
 #[derive(Clone, Debug, PartialEq)]
@@ -21,6 +21,7 @@ pub enum FieldTypeHint {
 	ArgOverride(ArgOverride),
 }
 
+/// Represents a field of a struct or a class or a function argument. Basically a name + type.
 #[derive(Clone)]
 pub enum Field<'tu, 'ge> {
 	Clang {
@@ -99,11 +100,20 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 
 	pub fn constness(&self) -> Constness {
 		let type_ref = self.type_ref();
-		Constness::from_is_mut(
-			type_ref.as_array().is_some()
-				|| type_ref.as_smart_ptr().is_some()
-				|| type_ref.as_pointer().map_or(false, |r| r.constness().is_mut()),
-		)
+		match type_ref.canonical().kind().as_ref() {
+			TypeRefKind::Array(_, _) | TypeRefKind::SmartPtr(_) => Constness::Mut,
+			TypeRefKind::Pointer(pointee) | TypeRefKind::Reference(pointee) => pointee.constness(),
+			TypeRefKind::Primitive(_, _)
+			| TypeRefKind::StdVector(_)
+			| TypeRefKind::StdTuple(_)
+			| TypeRefKind::RValueReference(_)
+			| TypeRefKind::Class(_)
+			| TypeRefKind::Enum(_)
+			| TypeRefKind::Function(_)
+			| TypeRefKind::Typedef(_)
+			| TypeRefKind::Generic(_)
+			| TypeRefKind::Ignored => Constness::Const,
+		}
 	}
 
 	pub fn default_value(&self) -> Option<Cow<str>> {
@@ -140,9 +150,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 
 	/// whether argument is used for passing user data to callback
 	pub fn is_user_data(&self) -> bool {
-		let leafname = self.cpp_name(CppNameStyle::Declaration);
-		(leafname == "userdata" || leafname == "userData" || leafname == "cookie" || leafname == UNNAMED)
-			&& self.type_ref().is_void_ptr()
+		self.type_ref().is_void_ptr() && ARGUMENT_NAMES_USERDATA.contains(self.cpp_name(CppNameStyle::Declaration).as_ref())
 	}
 
 	pub fn can_be_slice_arg(&self) -> bool {
@@ -189,7 +197,7 @@ impl Element for Field<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<str> {
 		match self {
-			Field::Clang { entity, .. } => strip_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
+			Field::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Field::Desc(_) => "".into(),
 		}
 	}

@@ -8,7 +8,7 @@ pub use crate::opencv::hub::*;
 #[macro_use]
 mod templ;
 
-mod error;
+pub mod error;
 mod manual;
 mod opencv;
 mod traits;
@@ -16,7 +16,9 @@ mod traits;
 pub mod prelude {
 	#[cfg(ocvrs_has_module_core)]
 	pub use crate::core::{DataType, Mat};
-	pub use crate::{hub_prelude::*, manual::prelude::*, traits::Boxed};
+	pub use crate::hub_prelude::*;
+	pub use crate::manual::prelude::*;
+	pub use crate::traits::Boxed;
 }
 
 /// Reexported platform types that are used by OpenCV

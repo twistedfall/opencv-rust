@@ -44,6 +44,7 @@ pub enum TypeRefKind<'tu, 'ge> {
 pub enum TypeRefTypeHint {
 	None,
 	ArgOverride(ArgOverride),
+	/// render a reference to a primitive type as a raw Rust pointer
 	PrimitiveRefAsPointer,
 }
 
@@ -173,8 +174,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn with_constness(&self, constness: Constness) -> Self {
-		if self.clang_constness() != constness {
+	pub fn with_inherent_constness(&self, constness: Constness) -> Self {
+		if self.inherent_constness() != constness {
 			match self {
 				Self::Clang {
 					type_ref,
@@ -305,29 +306,27 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn constness(&self) -> Constness {
-		if self.clang_constness().is_const() {
+		if self.inherent_constness().is_const() {
 			Constness::Const
 		} else {
 			match self.kind().as_ref() {
-				TypeRefKind::Primitive(..)
-				| TypeRefKind::Generic(..)
-				| TypeRefKind::Enum(..)
-				| TypeRefKind::Class(..)
-				| TypeRefKind::Function(..)
-				| TypeRefKind::Ignored => Constness::Mut,
-				TypeRefKind::Array(elem, ..) => elem.clang_constness(),
-				TypeRefKind::StdVector(vec) => vec.element_type().clang_constness(),
+				TypeRefKind::Class(_) | TypeRefKind::Enum(..) => self.inherent_constness(),
+				TypeRefKind::Primitive(..) | TypeRefKind::Generic(..) | TypeRefKind::Function(..) | TypeRefKind::Ignored => {
+					Constness::Mut
+				}
+				TypeRefKind::Array(elem, ..) => elem.inherent_constness(),
+				TypeRefKind::StdVector(vec) => vec.element_type().inherent_constness(),
 				TypeRefKind::StdTuple(tuple) => tuple.constness(),
 				TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
-					inner.clang_constness()
+					inner.inherent_constness()
 				}
-				TypeRefKind::SmartPtr(ptr) => ptr.pointee().clang_constness(),
+				TypeRefKind::SmartPtr(ptr) => ptr.pointee().inherent_constness(),
 				TypeRefKind::Typedef(decl) => decl.underlying_type_ref().constness(),
 			}
 		}
 	}
 
-	pub fn clang_constness(&self) -> Constness {
+	pub fn inherent_constness(&self) -> Constness {
 		match self {
 			TypeRef::Clang { type_ref, .. } => Constness::from_is_const(type_ref.is_const_qualified()),
 			TypeRef::Desc(desc) => desc.inherent_constness,
@@ -357,15 +356,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				}
 			}
 			TypeRefKind::Reference(inner) => {
-				if let Some(dir) = inner.as_string().map(|d| d.with_out_dir(inner.clang_constness().is_mut())) {
+				if let Some(dir) = inner.as_string().map(|d| d.with_out_dir(inner.inherent_constness().is_mut())) {
 					return Some(dir);
 				}
 			}
 			TypeRefKind::Pointer(inner) => {
-				if let Some(dir) = inner.as_string().map(|d| d.with_out_dir(inner.clang_constness().is_mut())) {
+				if let Some(dir) = inner.as_string().map(|d| d.with_out_dir(inner.inherent_constness().is_mut())) {
 					return Some(dir);
 				} else if *self.type_hint() != TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString) && inner.is_char() {
-					return if inner.clang_constness().is_const() {
+					return if inner.inherent_constness().is_const() {
 						Some(Dir::In(StrType::CharPtr))
 					} else {
 						Some(Dir::Out(StrType::CharPtr))
@@ -383,21 +382,19 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn is_std_string(&self) -> bool {
-		matches!(
-			self.as_string(),
-			Some(Dir::In(StrType::StdString(_)) | Dir::Out(StrType::StdString(_)))
-		)
+		self
+			.as_string()
+			.map_or(false, |dir| matches!(dir.inner(), StrType::StdString(_)))
 	}
 
 	pub fn is_cv_string(&self) -> bool {
-		matches!(
-			self.as_string(),
-			Some(Dir::In(StrType::CvString(_)) | Dir::Out(StrType::CvString(_)))
-		)
+		self
+			.as_string()
+			.map_or(false, |dir| matches!(dir.inner(), StrType::CvString(_)))
 	}
 
 	pub fn is_char_ptr_string(&self) -> bool {
-		matches!(self.as_string(), Some(Dir::In(StrType::CharPtr) | Dir::Out(StrType::CharPtr)))
+		self.as_string().map_or(false, |dir| matches!(dir.inner(), StrType::CharPtr))
 	}
 
 	pub fn is_input_array(&self) -> bool {
@@ -818,7 +815,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			if self.as_pointer().is_some() || self.as_reference().is_some() {
 				self.cpp_name_ext(CppNameStyle::Reference, name, true)
 			} else {
-				TypeRef::new_pointer(self.with_constness(self.constness()))
+				TypeRef::new_pointer(self.with_inherent_constness(self.constness()))
 					.cpp_name_ext(CppNameStyle::Reference, name, true)
 					.into_owned()
 					.into()
@@ -933,7 +930,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 			.field("type_hint", &self.type_hint())
 			.field("exclude_kind", &self.exclude_kind())
 			.field("constness", &self.constness())
-			.field("clang_constness", &self.clang_constness())
+			.field("inherent_constness", &self.inherent_constness())
 			.field("extern_pass_kind", &self.extern_pass_kind())
 			.field("template_types", &self.template_specialization_args())
 			.finish()
@@ -999,6 +996,15 @@ impl Constness {
 			""
 		} else {
 			"mut "
+		}
+	}
+
+	/// Returns `""` or `"Mut"`, for usage within Rust names, e.g. `BoxRefMut`
+	pub fn rust_name_qual(self) -> &'static str {
+		if self.is_const() {
+			""
+		} else {
+			"Mut"
 		}
 	}
 

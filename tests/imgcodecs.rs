@@ -2,12 +2,9 @@
 
 use std::ffi::c_void;
 
-use opencv::{
-	core::{self, Size, Vec3b},
-	imgcodecs,
-	prelude::*,
-	Result,
-};
+use opencv::core::{Size, Vec3b};
+use opencv::prelude::*;
+use opencv::{core, imgcodecs, Result};
 
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 

@@ -3,7 +3,7 @@ use std::fmt;
 
 use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
 
-use crate::comment::strip_comment_markers;
+use crate::comment::strip_doxygen_comment_markers;
 use crate::type_ref::CppNameStyle;
 use crate::{DefaultElement, Element, EntityElement};
 
@@ -23,7 +23,7 @@ impl Element for Entity<'_> {
 	}
 
 	fn doc_comment(&self) -> Cow<str> {
-		strip_comment_markers(&self.get_comment().unwrap_or_default()).into()
+		strip_doxygen_comment_markers(&self.get_comment().unwrap_or_default()).into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {

@@ -444,14 +444,13 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					let mut generic_type = self.get_display_name();
 					// workaround for clang6, FunctionPrototype is seen as Unexposed
 					if generic_type.contains('(') && generic_type.contains(')') {
-						return TypeRefKind::Function(Function::new(
-							self,
-							parent_entity.expect("Can't get parent entity in function prototype"),
-							gen_env,
-						));
-					}
-					// uint64_t in gapi module ends here for some reason
-					if let Some(&(rust, cpp)) = settings::PRIMITIVE_TYPEDEFS.get(generic_type.as_str()) {
+						if let Some(parent_entity) = parent_entity {
+							TypeRefKind::Function(Function::new(self, parent_entity, gen_env))
+						} else {
+							TypeRefKind::Ignored
+						}
+					} else if let Some(&(rust, cpp)) = settings::PRIMITIVE_TYPEDEFS.get(generic_type.as_str()) {
+						// uint64_t in gapi module ends here for some reason
 						TypeRefKind::Primitive(rust, cpp)
 					} else {
 						generic_type.replace_in_place("const ", "");
