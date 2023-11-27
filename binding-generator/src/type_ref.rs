@@ -662,7 +662,13 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	/// True for types that get passed in Rust by pointer as opposed to a reference or an owned value
 	pub fn is_rust_by_ptr(&self) -> bool {
-		self.is_void_ptr() || matches!(self.type_hint(), TypeRefTypeHint::PrimitivePtrAsRaw) && self.can_rust_by_ptr()
+		self.is_void_ptr()
+			// todo: support receiving slices for CUDA_RawVideoSourceTrait::get_next_packet
+			|| self
+				.as_pointer()
+				.and_then(|inner| inner.as_pointer())
+				.map_or(false, |inner| inner.is_copy())
+			|| matches!(self.type_hint(), TypeRefTypeHint::PrimitivePtrAsRaw) && self.can_rust_by_ptr()
 	}
 
 	pub fn template_specialization_args(&self) -> Cow<[TemplateArg<'tu, 'ge>]> {

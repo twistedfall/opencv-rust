@@ -300,13 +300,6 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			.map_or(false, |f| f.arguments().into_iter().any(|a| a.is_user_data()))
 		{
 			format!("{name}_trampoline")
-		} else if let Some(inner) = self.as_pointer().filter(|inner| inner.as_pointer().is_some()) {
-			// some special care for double pointers
-			return format!(
-				"{name} as *{cnst} _ as *{cnst} *{const_inner} _",
-				cnst = self.inherent_constness().rust_qual_ptr(),
-				const_inner = inner.inherent_constness().rust_qual_ptr()
-			);
 		} else if self.is_nullable() && (self.as_reference().is_some() || self.as_pointer().is_some()) {
 			// unwrap_or doesn't work here because reference doesn't coerce to pointer in this case
 			format!("{name}.map_or({null_ptr}, |x| x)", null_ptr = constness.rust_null_ptr())
