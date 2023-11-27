@@ -395,6 +395,13 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		self.as_primitive().map_or(false, |(_, cpp)| cpp == "size_t")
 	}
 
+	/// Returns true if the type is a slice (judging by the type_hint) and its element is C++ `void`
+	///
+	/// We want to present such cases as `&[u8]` on the Rust side.
+	pub fn is_void_slice(&self) -> bool {
+		self.as_variable_array().map_or(false, |inner| inner.is_void()) && matches!(self.type_hint(), TypeRefTypeHint::Slice)
+	}
+
 	pub fn as_pointer(&self) -> Option<TypeRef<'tu, 'ge>> {
 		if let TypeRefKind::Pointer(out) = self.canonical().kind().into_owned() {
 			Some(out)
@@ -663,6 +670,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	/// True for types that get passed in Rust by pointer as opposed to a reference or an owned value
 	pub fn is_rust_by_ptr(&self) -> bool {
 		self.is_void_ptr()
+			|| self.as_pointer().and_then(|inner| inner.as_primitive()).map_or(false, |(_, cpp)| cpp == "unsigned char")
 			// todo: support receiving slices for CUDA_RawVideoSourceTrait::get_next_packet
 			|| self
 				.as_pointer()

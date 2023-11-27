@@ -8,7 +8,7 @@ use once_cell::sync::Lazy;
 use crate::field::Field;
 use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind, Safety};
 use crate::name_pool::NamePool;
-use crate::type_ref::{Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef};
+use crate::type_ref::{Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
 use crate::{reserved_rename, settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
 
 use super::comment::{render_ref, RenderComment};
@@ -25,7 +25,12 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 	/// Companion function with all optional arguments as defaults
 	fn companion_func_default_args(&self) -> Option<Func<'tu, 'ge>> {
 		fn viable_default_arg(arg: &Field) -> bool {
-			arg.default_value().is_some() && !arg.is_user_data() && !arg.type_ref().as_function().is_some()
+			arg.default_value().is_some() && !arg.is_user_data() && {
+				let type_ref = arg.type_ref();
+				!type_ref.as_function().is_some()
+					// don't remove the arguments that are used to pass the slice or its length
+					&& !matches!(type_ref.type_hint(),TypeRefTypeHint::Slice | TypeRefTypeHint::LenForSlice(..))
+			}
 		}
 
 		if self.kind().as_field_accessor().is_some() {
@@ -539,19 +544,29 @@ fn rust_call(
 	}
 	for (name, arg) in args {
 		let arg_type_ref = arg.type_ref();
-		if let Some((slice_arg, len_div)) = arg.as_slice_len() {
-			let slice_call = if arg_type_ref.is_size_t() {
-				if len_div > 1 {
+		if let Some((slice_args, len_div)) = arg.as_slice_len() {
+			let arg_is_size_t = arg_type_ref.is_size_t();
+			let mut slice_len_call = String::new();
+			for slice_arg in slice_args {
+				let len_divided = if len_div > 1 {
 					format!("{slice_arg}.len() / {len_div}")
 				} else {
 					format!("{slice_arg}.len()")
+				};
+				if slice_len_call.is_empty() {
+					if len_div > 1 && (!arg_is_size_t || slice_args.len() > 1) {
+						write!(&mut slice_len_call, "({len_divided})").expect("Impossible");
+					} else {
+						slice_len_call.push_str(&len_divided);
+					}
+				} else {
+					write!(&mut slice_len_call, ".min({len_divided})").expect("Impossible");
 				}
-			} else if len_div > 1 {
-				format!("({slice_arg}.len() / {len_div}).try_into()?")
-			} else {
-				format!("{slice_arg}.len().try_into()?")
-			};
-			call_args.push(slice_call);
+			}
+			if !arg_is_size_t {
+				slice_len_call.push_str(".try_into()?");
+			}
+			call_args.push(slice_len_call);
 		} else {
 			call_args.push(arg_type_ref.rust_arg_func_call(name));
 		}

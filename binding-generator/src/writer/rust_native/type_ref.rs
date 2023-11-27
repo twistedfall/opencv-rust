@@ -3,7 +3,9 @@ use std::fmt;
 use std::fmt::Write;
 
 use crate::renderer::TypeRefRenderer;
-use crate::type_ref::{Constness, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefKind, TypeRefTypeHint};
+use crate::type_ref::{
+	Constness, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefKind, TypeRefTypeHint,
+};
 use crate::writer::rust_native::class::ClassExt;
 use crate::{IteratorExt, StringExt};
 
@@ -169,6 +171,12 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				name = cls.rust_trait_name(NameStyle::ref_(), constness)
 			)
 			.into()
+		} else if self.is_void_slice() {
+			TypeRefDesc::array_uchar(None)
+				.with_inherent_constness(self.inherent_constness())
+				.rust_name(NameStyle::ref_())
+				.into_owned()
+				.into()
 		} else if self.is_rust_char() {
 			"char".into()
 		} else {
@@ -281,12 +289,16 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			} else {
 				by_ptr
 			}
-		} else if self.as_variable_array().is_some() {
-			let arr = if constness.is_const() {
+		} else if let Some(elem) = self.as_variable_array() {
+			let mut arr = if constness.is_const() {
 				format!("{name}.as_ptr()")
 			} else {
 				format!("{name}.as_mut_ptr()")
 			};
+			// partial logic from is_void_slice()
+			if elem.is_void() && matches!(self.type_hint(), TypeRefTypeHint::Slice) {
+				arr.push_str(".cast()");
+			}
 			if self.is_nullable() {
 				format!(
 					"{name}.map_or({null_ptr}, |{name}| {arr})",
@@ -324,10 +336,6 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	}
 
 	fn rust_extern(&self, dir: ExternDir) -> Cow<str> {
-		let constness = match dir {
-			ExternDir::Contained | ExternDir::ToCpp => self.constness(),
-			ExternDir::FromCpp => Constness::Mut,
-		};
 		if let Some(arg_dir) = self.as_string() {
 			match dir {
 				ExternDir::ToCpp | ExternDir::Contained => match arg_dir {
@@ -336,8 +344,15 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				},
 				ExternDir::FromCpp => "*mut c_void".into(),
 			}
-		} else if self.extern_pass_kind().is_by_void_ptr() {
-			format!("*{cnst}c_void", cnst = constness.rust_qual_ptr()).into()
+		} else if self.extern_pass_kind().is_by_void_ptr() || self.is_void_slice() {
+			let void_ptr_constness = match dir {
+				ExternDir::Contained | ExternDir::ToCpp => self.constness(),
+				ExternDir::FromCpp => Constness::Mut,
+			};
+			TypeRef::new_pointer(TypeRefDesc::void().with_inherent_constness(void_ptr_constness))
+				.rust_extern(dir)
+				.into_owned()
+				.into()
 		} else if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
 			let typ = if inner.is_void() {
 				"c_void".into()

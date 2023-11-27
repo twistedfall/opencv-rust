@@ -11,7 +11,7 @@ use clang::{Entity, EntityKind, EntityVisitResult};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName, NameDebug};
 use crate::element::ExcludeKind;
-use crate::settings::ARGUMENT_NAMES_USERDATA;
+use crate::settings::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
 use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefKind, TypeRefTypeHint};
 use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 
@@ -152,9 +152,21 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		ARGUMENT_NAMES_USERDATA.contains(self.cpp_name(CppNameStyle::Declaration).as_ref()) && self.type_ref().is_void_ptr()
 	}
 
-	pub fn can_be_slice_arg(&self) -> bool {
-		let type_ref = self.type_ref();
-		type_ref.constness().is_const() && type_ref.as_pointer().is_some()
+	pub fn slice_arg_eligibility(&self) -> SliceArgEligibility {
+		self
+			.type_ref()
+			.as_pointer()
+			.filter(|inner| inner.is_copy())
+			.map_or(SliceArgEligibility::NotEligible, |_| {
+				let name = self.cpp_name(CppNameStyle::Declaration);
+				if ARGUMENT_NAMES_NOT_SLICE.contains(name.as_ref()) {
+					SliceArgEligibility::NotEligible
+				} else if ARGUMENT_NAMES_MULTIPLE_SLICE.contains(name.as_ref()) {
+					SliceArgEligibility::EligibleWithMultiple
+				} else {
+					SliceArgEligibility::Eligible
+				}
+			})
 	}
 
 	pub fn can_be_slice_arg_len(&self) -> bool {
@@ -163,12 +175,16 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		type_ref
 			.as_primitive()
 			.map_or(false, |(_, cpp)| cpp == "int" || cpp == "size_t")
-			&& (name.ends_with('s') && name.contains('n') || name.contains("dims"))
+			&& (name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness
+				|| name.contains("dims")
+				|| name == "size"
+				|| name.ends_with("Size")
+				|| name == "len")
 	}
 
-	pub fn as_slice_len(&self) -> Option<(&str, usize)> {
+	pub fn as_slice_len(&self) -> Option<(&[String], usize)> {
 		if let TypeRefTypeHint::LenForSlice(ptr_arg, len_div) = self.type_ref_type_hint() {
-			Some((ptr_arg.as_str(), *len_div))
+			Some((ptr_arg.as_slice(), *len_div))
 		} else {
 			None
 		}
@@ -256,4 +272,10 @@ impl<'tu, 'ge> FieldDesc<'tu, 'ge> {
 			default_value: None,
 		}
 	}
+}
+
+pub enum SliceArgEligibility {
+	NotEligible,
+	Eligible,
+	EligibleWithMultiple,
 }

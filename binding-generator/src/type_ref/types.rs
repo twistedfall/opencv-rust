@@ -13,7 +13,7 @@ pub enum TypeRefTypeHint {
 	/// Treat this pointer argument as slice
 	Slice,
 	/// This argument specified the length of the slice, arguments are (rust_arg_name, divisor)
-	LenForSlice(String, usize),
+	LenForSlice(Vec<String>, usize),
 	/// Treat C++ string as a byte buffer (`Vec<u8>`) instead of an actual string, argument is optional cpp_arg_name of the argument that specifies the buffer byte length
 	StringAsBytes(Option<String>),
 	/// when C++ char needs to be represented as Rust char

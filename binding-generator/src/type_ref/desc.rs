@@ -114,6 +114,10 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		TypeRef::new_array(Self::int(), size)
 	}
 
+	pub fn array_uchar(size: Option<usize>) -> TypeRef<'tu, 'ge> {
+		TypeRef::new_array(Self::uchar(), size)
+	}
+
 	/// `cv::Size`
 	pub fn cv_size() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_class(ClassDesc::cv_size())

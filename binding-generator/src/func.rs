@@ -9,6 +9,9 @@ use once_cell::sync::Lazy;
 use regex::bytes::Regex;
 
 pub use desc::{FuncCppBody, FuncDesc, FuncRustBody, FuncRustExtern};
+pub use func_id::FuncId;
+pub use kind::{FuncKind, OperatorKind, ReturnKind};
+use slice_arg_finder::SliceArgFinder;
 
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
@@ -22,12 +25,11 @@ use crate::{
 	settings, Class, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug, NameStyle,
 	StrExt, StringExt, TypeRef,
 };
-pub use func_id::FuncId;
-pub use kind::{FuncKind, OperatorKind, ReturnKind};
 
 mod desc;
 mod func_id;
 mod kind;
+mod slice_arg_finder;
 
 #[derive(Clone)]
 pub enum Func<'tu, 'ge> {
@@ -491,9 +493,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn arguments(&self) -> Cow<[Field<'tu, 'ge>]> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
+				let mut slice_arg_finder = SliceArgFinder::new();
 				let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
-				let mut slice_arg_idx = None;
-				let mut slice_len_arg_idx = None;
 				let mut out = self
 					.clang_arguments(entity)
 					.into_iter()
@@ -505,26 +506,24 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 							}
 						}
 						let out = Field::new(a, gen_env);
-						if slice_arg_idx.is_none() && out.can_be_slice_arg() {
-							slice_arg_idx = Some(idx);
-						}
-						if slice_len_arg_idx.is_none() && out.can_be_slice_arg_len() {
-							slice_len_arg_idx = Some(idx);
-						}
+						slice_arg_finder.feed(idx, &out);
 						out
 					})
 					.collect::<Vec<_>>();
-				if let (Some(slice_arg_idx), Some(slice_len_arg_idx)) = (slice_arg_idx, slice_len_arg_idx) {
-					let slice_arg = &mut out[slice_arg_idx];
-					let slice_arg_name = slice_arg.rust_name(NameStyle::ref_()).into_owned();
-					slice_arg.set_type_ref_type_hint(TypeRefTypeHint::Slice);
+				for (slice_arg_indices, slice_len_arg_idx) in slice_arg_finder.finish() {
+					let mut slice_arg_names = Vec::with_capacity(slice_arg_indices.len());
+					for &slice_arg_idx in &slice_arg_indices {
+						let slice_arg = &mut out[slice_arg_idx];
+						slice_arg_names.push(slice_arg.rust_name(NameStyle::ref_()).into_owned());
+						slice_arg.set_type_ref_type_hint(TypeRefTypeHint::Slice);
+					}
 					let slice_len_arg = &mut out[slice_len_arg_idx];
 					let divisor = if slice_len_arg.cpp_name(CppNameStyle::Declaration).contains("pair") {
 						2
 					} else {
 						1
 					};
-					slice_len_arg.set_type_ref_type_hint(TypeRefTypeHint::LenForSlice(slice_arg_name, divisor));
+					slice_len_arg.set_type_ref_type_hint(TypeRefTypeHint::LenForSlice(slice_arg_names, divisor));
 				}
 				out.into()
 			}
