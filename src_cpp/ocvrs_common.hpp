@@ -17,22 +17,14 @@
 #include <opencv2/core.hpp>
 
 #define OCVRS_ONLY_DEPENDENT_TYPES
-// needed to be able to handle commas in the type name in call to OCVRS_CATCH
-#define OCVRS_TYPE(...) __VA_ARGS__
 
-#define OCVRS_HANDLE(code, msg, return_type, return_name) Err<return_type>(code, msg, return_name)
+#define OCVRS_HANDLE(code, msg, return_name) Err(code, msg, return_name)
 
-#define OCVRS_HANDLE_OPENCV(e, return_type, return_name) \
-OCVRS_HANDLE(e.code, e.what(), OCVRS_TYPE(return_type), return_name)
-
-#define OCVRS_HANDLE_UNSPECIFIED(return_type, return_name) \
-OCVRS_HANDLE(-99999, "unspecified error in OpenCV guts", OCVRS_TYPE(return_type), return_name)
-
-#define OCVRS_CATCH(return_type, return_name) \
+#define OCVRS_CATCH(return_name) \
 catch (cv::Exception& e) { \
-	OCVRS_HANDLE_OPENCV(e, OCVRS_TYPE(return_type), return_name); \
+	OCVRS_HANDLE(e.code, e.what(), return_name); \
 } catch (...) { \
-	OCVRS_HANDLE_UNSPECIFIED(OCVRS_TYPE(return_type), return_name); \
+	OCVRS_HANDLE(-99999, "unspecified error in OpenCV guts", return_name); \
 }
 
 // defined in src/templ.rs

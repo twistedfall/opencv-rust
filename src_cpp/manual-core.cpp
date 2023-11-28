@@ -7,19 +7,19 @@ template struct Result<const unsigned char*>;
 template<typename T> inline void ocvrs_input_array(const T* instance, Result<void*>* ocvrs_return) {
 	try {
 		Ok<void*>(new cv::_InputArray(*instance), ocvrs_return);
-	} OCVRS_CATCH(Result<void*>, ocvrs_return)
+	} OCVRS_CATCH(ocvrs_return)
 }
 
 template<typename T> inline void ocvrs_output_array(T* instance, Result<void*>* ocvrs_return) {
 	try {
 		Ok<void*>(new cv::_OutputArray(*instance), ocvrs_return);
-	} OCVRS_CATCH(Result<void*>, ocvrs_return)
+	} OCVRS_CATCH(ocvrs_return)
 }
 
 template<typename T> inline void ocvrs_input_output_array(T* instance, Result<void*>* ocvrs_return) {
 	try {
 		Ok<void*>(new cv::_InputOutputArray(*instance), ocvrs_return);
-	} OCVRS_CATCH(Result<void*>, ocvrs_return)
+	} OCVRS_CATCH(ocvrs_return)
 }
 
 #define ocvrs_ioa(base) \

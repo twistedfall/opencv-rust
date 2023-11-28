@@ -489,12 +489,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let catch = if return_kind.is_infallible() {
 			"".into()
 		} else {
-			let typ = if mut_ret_wrapper_full.contains(',') {
-				format!("OCVRS_TYPE({mut_ret_wrapper_full})")
-			} else {
-				mut_ret_wrapper_full
-			};
-			format!("}} OCVRS_CATCH({typ}, {ocv_ret_name});").into()
+			format!("}} OCVRS_CATCH({ocv_ret_name});").into()
 		};
 
 		TPL.interpolate(&HashMap::from([
