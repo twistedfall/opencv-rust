@@ -23,8 +23,10 @@
 #define OCVRS_CATCH(return_name) \
 catch (cv::Exception& e) { \
 	OCVRS_HANDLE(e.code, e.what(), return_name); \
+} catch (std::exception &e) { \
+	OCVRS_HANDLE(cv::Error::StsError, e.what(), return_name); \
 } catch (...) { \
-	OCVRS_HANDLE(-99999, "unspecified error in OpenCV guts", return_name); \
+	OCVRS_HANDLE(cv::Error::StsError, "Unspecified error, neither from OpenCV nor from std", return_name); \
 }
 
 // defined in src/templ.rs
